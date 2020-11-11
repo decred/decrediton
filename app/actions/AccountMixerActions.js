@@ -38,7 +38,7 @@ export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
 export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const value = !walletCfg.get("send_from_unmixed")
+  const value = !walletCfg.get("send_from_unmixed");
   walletCfg.set("send_from_unmixed", value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
 };

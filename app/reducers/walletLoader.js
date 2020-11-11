@@ -223,7 +223,7 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         allowSendFromUnmixed: action.allow
-      }
+      };
     default:
       return state;
   }
