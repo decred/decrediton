@@ -1,4 +1,4 @@
-import Modal from "./SeedCopyConfirmModalContent";
+import Modal from "./SendFromUnmixedAccountContent";
 import useSeedCopyConfirmModal from "./hooks";
 import { defineMessages } from "react-intl";
 
