@@ -5,6 +5,7 @@ import { ReceiveAccountsSelect, PathBrowseInput } from "inputs";
 import { PassphraseModalButton, TextToggle, InfoDocModalButton, KeyBlueButton } from "buttons";
 import { TransitionMotionWrapper, Documentation } from "shared";
 import { lnPage } from "connectors";
+import { Checkbox } from "pi-ui";
 import {
   CREATE_LN_ACCOUNT,
   LNWALLET_STARTUPSTAGE_STARTDCRLND,
@@ -13,6 +14,7 @@ import {
   LNWALLET_STARTUPSTAGE_STARTUPSYNC,
   LNWALLET_STARTUPSTAGE_SCBRESTORE
 } from "actions/LNActions";
+import "style/ConnectPage.css";
 
 const ConnectPageHeader = () => (
   <StandaloneHeader
@@ -73,7 +75,7 @@ const LNCreationWarning = ({ onAcceptCreationWarning }) => (
   </div>
 );
 
-const wrapperComponent = (props) => <div className="account-list" {...props} />;
+const wrapperComponent = (props) => <div className="accountList" {...props} />;
 
 // The below constant MUST match what TextToggle expects/uses.
 const NEW_ACCOUNT = "left";
@@ -143,7 +145,7 @@ class ConnectPage extends React.Component {
               showAccountsButton={false}
               hideSpendable={false}
             />
-            <div className="existing-account-warning">
+            <div className="existingAccountWarning">
               <T
                 id="ln.connectPage.useExistingAccountWarning"
                 m={`Attention: note that a running LN wallet maintains unencrypted keys
@@ -185,11 +187,11 @@ class ConnectPage extends React.Component {
     const { accountOption } = this.state;
 
     return (
-      <div className="ln-connect-opt">
+      <div className="connectOpt">
         <div className="label">
-          <T id="ln.connectPage.account" m="Account to use" />
+          <T id="ln.connectPage.account" m="Wallet account to use" />
         </div>
-        <div className="account-selection">
+        <div className="accountSelection">
           <div>
             {/* XXX: Can we use here pi-iu's toggle? */}
             <TextToggle
@@ -209,12 +211,6 @@ class ConnectPage extends React.Component {
             }}
           />
         </div>
-        <div className="description">
-          <T
-            id="ln.connectPage.accountDescr"
-            m="The wallet account to use for LN operations."
-          />
-        </div>
       </div>
     );
   }
@@ -223,25 +219,25 @@ class ConnectPage extends React.Component {
     return (
       <>
         {this.renderSelectLNAccount()}
-        <div className="ln-connect-opt">
+        <div className="connectOpt">
           <div className="label">
-            <T id="ln.connectPage.backupFile" m="Restore SCB backup file" />
+            <T id="ln.connectPage.backupFile" m="Restore SCB backup" />
           </div>
-          <div>
+          <div className="fileInput">
             <PathBrowseInput
               open
               type="file"
               value={this.state.scbFile}
               onChange={(value) => this.setScbFile(value)}
             />
-
-            <InfoDocModalButton
-              document="LNBackupInfo"
-              modalClassName="info-modal-fields"
-              double
-              draggable
-            />
           </div>
+
+          <InfoDocModalButton
+            document="LNBackupInfo"
+            modalClassName="info-modal-fields"
+            double
+            draggable
+          />
         </div>
       </>
     );
@@ -267,30 +263,27 @@ class ConnectPage extends React.Component {
     return (
       <StandalonePage header={header}>
         <div>
-          <div className="ln-connect-opts">
-            <div className="ln-connect-opt">
-              <div className="label">
-                <T
+          <div className="connectOpts">
+            {!lightningWalletExists ? this.renderCreateLNWallet() : null}
+            <div className="connectOpt checkbox">
+              <Checkbox
+                label={
+                  <T
                   id="ln.connectPage.enableAutopilot"
                   m="Enable Automatic Channel Creation"
                 />
-              </div>
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  checked={autopilotEnabled}
-                  onChange={onChangeEnableAutopilot}
-                />
-              </div>
-              <div className="description">
+                }
+                description={
                 <T
                   id="ln.connectPage.enableAutopilotDescr"
-                  m="This enables the 'autopilot' feature, which tries to automatically open channels for up to 60% of the account's spendable amounts."
+                  m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
                 />
-              </div>
+                }
+                checked={autopilotEnabled}
+                onChange={onChangeEnableAutopilot}
+              />
             </div>
 
-            {!lightningWalletExists ? this.renderCreateLNWallet() : null}
           </div>
 
           <PassphraseModalButton

@@ -278,9 +278,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 #. [ln.connectPage.account]
 #. defaultMessage is:
-#. Account to use
+#. Wallet account to use
 msgctxt "ln.connectPage.account"
-msgid "Account to use"
+msgid "Wallet account to use"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
@@ -5883,9 +5883,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 #. [ln.connectPage.backupFile]
 #. defaultMessage is:
-#. Restore SCB backup file
+#. Restore SCB backup
 msgctxt "ln.connectPage.backupFile"
-msgid "Restore SCB backup file"
+msgid "Restore SCB backup"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
@@ -7100,14 +7100,6 @@ msgctxt "settings.resetNetworkContent"
 msgid "The setting you have chosen to change requires Decrediton to be restarted.  Please confirm this action before proceeding."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
-#. [ln.connectPage.accountDescr]
-#. defaultMessage is:
-#. The wallet account to use for LN operations.
-msgctxt "ln.connectPage.accountDescr"
-msgid "The wallet account to use for LN operations."
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/VotingPrefs.json
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
@@ -7151,9 +7143,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 #. [ln.connectPage.enableAutopilotDescr]
 #. defaultMessage is:
-#. This enables the 'autopilot' feature, which tries to automatically open channels for up to 60% of the account's spendable amounts.
+#. This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds.
 msgctxt "ln.connectPage.enableAutopilotDescr"
-msgid "This enables the 'autopilot' feature, which tries to automatically open channels for up to 60% of the account's spendable amounts."
+msgid "This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json

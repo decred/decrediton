@@ -410,7 +410,6 @@
   "ln.confirmBackupOverwrite.content": "Realmente sobrescrever o arquivo de backup {file}? Os dados no arquivo existente serão PERDIDOS.",
   "ln.confirmBackupOverwrite.title": "Confirmar Sobrescrever Backup",
   "ln.connectPage.account": "Conta",
-  "ln.connectPage.accountDescr": "A conta da carteira que será usada para operações da LN.",
   "ln.connectPage.backupFile": "Restaurar arquivo de backup SCB",
   "ln.connectPage.createAccount": "Criar nova",
   "ln.connectPage.description": "Iniciar, destrancar e conectar a carteira dcrlnd",

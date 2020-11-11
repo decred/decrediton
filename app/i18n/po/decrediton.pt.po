@@ -296,10 +296,10 @@ msgstr "Número da conta"
 
 #. [ln.connectPage.account]
 #. defaultMessage is:
-#. Account to use
+#. Wallet account to use
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.account"
-msgid "Account to use"
+msgid "Wallet account to use"
 msgstr "Conta"
 
 #. [getstarted.setAccount.acctIdxRow]
@@ -6153,10 +6153,10 @@ msgstr "Recuperar Carteira Existente"
 
 #. [ln.connectPage.backupFile]
 #. defaultMessage is:
-#. Restore SCB backup file
+#. Restore SCB backup
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.backupFile"
-msgid "Restore SCB backup file"
+msgid "Restore SCB backup"
 msgstr "Restaurar arquivo de backup SCB"
 
 #. [loaderBar.preCreateWalletRestore]
@@ -7432,14 +7432,6 @@ msgstr ""
 "A configuração que você mudou requer que a Decrediton seja reiniciada. Por "
 "favor confirme essa ação antes de continuar."
 
-#. [ln.connectPage.accountDescr]
-#. defaultMessage is:
-#. The wallet account to use for LN operations.
-#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
-msgctxt "ln.connectPage.accountDescr"
-msgid "The wallet account to use for LN operations."
-msgstr "A conta da carteira que será usada para operações da LN."
-
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
 #. There are currently no agendas for voting.
@@ -7488,12 +7480,12 @@ msgstr ""
 #. [ln.connectPage.enableAutopilotDescr]
 #. defaultMessage is:
 #. This enables the 'autopilot' feature, which tries to automatically open
-#. channels for up to 60% of the account's spendable amounts.
+#. channels using up to 60% of the account's spendable funds.
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.enableAutopilotDescr"
 msgid ""
 "This enables the 'autopilot' feature, which tries to automatically open "
-"channels for up to 60% of the account's spendable amounts."
+"channels using up to 60% of the account's spendable funds."
 msgstr ""
 "Isso habilita a funcionalidade de 'piloto automático - autopilot' que tenta "
 "abrir canais automaticamente usando até 60% dos fundos disponíveis da conta."
