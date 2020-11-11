@@ -58,8 +58,6 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("vsp_is_legacy")) {
     config.set("vsp_is_legacy", false);
   }
-  // TODO remove this from here before release, as it will be an optional
-  // config option for now.
   if (!config.has("enableprivacy")) {
     config.set("enableprivacy", true);
   }
@@ -94,6 +92,7 @@ function cleanWalletCfg(config) {
     "ln_wallet_exists",
     "ln_account",
     "enableprivacy",
+    "send_from_unmixed",
     "mixedaccount",
     "mixedaccbranch",
     "changeaccount",

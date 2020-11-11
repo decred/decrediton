@@ -131,6 +131,7 @@ export const syncFetchHeadersComplete = get([
 ]);
 export const syncFetchTimeStart = get(["walletLoader", "syncFetchTimeStart"]);
 export const getPrivacyEnabled = get(["walletLoader", "privacyEnabled"]);
+export const getAllowSendFromUnmixed = get(["walletLoader", "allowSendFromUnmixed"]);
 // getMixedAccount gets the account number (int) which represents the mixed
 // account at decrediton.
 export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
@@ -211,14 +212,14 @@ export const spendableTotalBalance = createSelector(
 
 // getNotMixedAccounts Is an array of all accountNumbers which is not the mixedaccount.
 // this ways we can filter our mixedAccount to send transactions in privacy wallets.
+// If allowSendFromUnmixed is enabled, it returns null.
 export const getNotMixedAccounts = createSelector(
-  [getMixedAccount, balances],
-  (mixedAcc, balances) =>
-    mixedAcc
-      ? balances
+  [getMixedAccount, balances, getAllowSendFromUnmixed],
+  (mixedAcc, balances, allowSendFromUnmixed) => 
+    !mixedAcc || allowSendFromUnmixed ? null :
+      balances
           .filter(({ accountNumber }) => accountNumber !== mixedAcc)
           .map(({ accountNumber }) => accountNumber)
-      : null
 );
 
 export const lockedBalance = createSelector(

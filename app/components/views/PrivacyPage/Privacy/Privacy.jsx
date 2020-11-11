@@ -14,7 +14,9 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     accounts,
     accountMixerError,
     onStartMixerAttempt,
-    onGetPrivacyLogs
+    onGetPrivacyLogs,
+    allowSendFromUnmixed,
+    toggleAllowSendFromUnmixed
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");
@@ -48,7 +50,9 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         accountMixerError,
         onStartMixerAttempt,
         stopAccountMixer,
-        logs
+        logs,
+        allowSendFromUnmixed,
+        toggleAllowSendFromUnmixed
       }}
     />
   );
