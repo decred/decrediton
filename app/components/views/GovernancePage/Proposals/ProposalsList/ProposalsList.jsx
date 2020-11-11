@@ -5,17 +5,23 @@ import { useProposalsList } from "../hooks";
 import { LoadingError } from "shared";
 import styles from "./ProposalsList.module.css";
 import { useCallback, useLayoutEffect, useState, useEffect } from "react";
+import ProposalsFilter from "../ProposalsFilter/ProposalsFilter";
 
 const ProposalsList = ({ finishedVote, tab }) => {
+  const [filterTab, setFilterTab] = useState(tab);
   const {
-    noMoreProposals,
-    state,
-    proposals,
-    loadMore,
     getProposalError,
     inventoryError,
+    loadMore,
+    noMoreProposals,
+    proposals,
+    state,
     send
-  } = useProposalsList(tab);
+  } = useProposalsList(filterTab);
+
+  const handleSetFilterTab = (tab) => {
+    setFilterTab(tab);
+  };
 
   // This part of the code is meant to solve the situation when the window
   // is too tall, and the user can not trigger `loadMore` with scrolling.
@@ -48,13 +54,18 @@ const ProposalsList = ({ finishedVote, tab }) => {
         </div>
       );
     case "success":
-      return proposals && proposals[tab] && proposals[tab].length ? (
+      return proposals &&
+        proposals[filterTab] &&
+        proposals[filterTab].length ? (
         <div
           ref={ref}
           style={{
             height: "100%",
             overflow: "auto"
           }}>
+          {tab === "finishedVote" && (
+            <ProposalsFilter setFilterTab={handleSetFilterTab} />
+          )}
           <InfiniteScroll
             hasMore={!noMoreProposals}
             loadMore={loadMore}
@@ -62,7 +73,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
             useWindow={false}
             threshold={300}>
             <div className={styles.proposalList}>
-              {proposals[tab].map((v) => (
+              {proposals[filterTab].map((v) => (
                 <ProposalsListItem
                   key={v.token}
                   {...v}

@@ -12,11 +12,25 @@
 }
 
 .proposalList {
-  margin-top: 30px;
+  margin-top: 15px;
   margin-left: 85px;
   padding-bottom: 50px;
+  display: block;
 }
 
+.proposalListWrapper {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 50px;
+  overflow-y: auto;
+  height: calc(100% - 50px);
+}
+
+@media screen and (max-width: 768px) {
+  .proposalList {
+    padding-bottom: 100px;
+  }
+}
 @media screen and (max-width: 1179px) {
   .proposalList {
     margin-left: 35px;

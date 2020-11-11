@@ -33,7 +33,9 @@ const defaultInventory = {
   activeVote: [],
   abandonedVote: [],
   finishedVote: [],
-  preVote: []
+  preVote: [],
+  approvedVote: [],
+  rejectedVote: []
 };
 
 // getDefaultInventory gets the inventory default's state.
@@ -136,6 +138,8 @@ const updateInventoryFromApiData = (data) => {
   inventory.activeVote = data.active;
   inventory.finishedVote = [...data.approved, ...data.rejected];
   inventory.abandonedVote = data.abandoned;
+  inventory.approvedVote = data.approved;
+  inventory.rejectedVote = data.rejected;
 
   return inventory;
 };
@@ -211,7 +215,9 @@ export const compareInventory = () => async (dispatch, getState) => {
       oInventoryCopy.activeVote,
       oInventoryCopy.abandonedVote,
       oInventoryCopy.finishedVote,
-      oInventoryCopy.preVote
+      oInventoryCopy.preVote,
+      oInventoryCopy.approvedVote,
+      oInventoryCopy.rejectedVote
     ].reduce((acc, v) => {
       v.forEach((p) => {
         return (acc[p] = p);
@@ -222,7 +228,9 @@ export const compareInventory = () => async (dispatch, getState) => {
       inventory.activeVote,
       inventory.abandonedVote,
       inventory.finishedVote,
-      inventory.preVote
+      inventory.preVote,
+      inventory.approvedVote,
+      inventory.rejectedVote
     ].reduce((acc, v) => {
       v.forEach((p) => (acc[p] = p));
       return acc;
@@ -415,7 +423,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
     const { bestBlock } = summaries;
     tokensBatch.forEach((token) => {
       const proposalSummary = summaries[token];
-      const { status } = proposalSummary;
+      const { status, approved } = proposalSummary;
       const prop = findProposal(proposals, token);
       prop.token = token;
       prop.proposalStatus = prop.status;
@@ -447,6 +455,11 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
             break;
           case VOTESTATUS_FINISHEDVOTE:
             proposalsUpdated.finishedVote.push(prop);
+            if (approved) {
+              proposalsUpdated.approvedVote.push(prop);
+            } else {
+              proposalsUpdated.rejectedVote.push(prop);
+            }
             break;
           default:
             proposalsUpdated.preVote.push(prop);

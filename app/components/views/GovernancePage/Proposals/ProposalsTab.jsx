@@ -58,6 +58,7 @@ const ProposalsTab = () => {
     tab,
     getTokenAndInitialBatch
   } = useProposalsTab();
+
   if (!politeiaEnabled) {
     return <PoliteiaDisabled {...{ getTokenAndInitialBatch }} />;
   }

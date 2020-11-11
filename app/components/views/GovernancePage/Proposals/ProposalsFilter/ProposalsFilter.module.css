@@ -1,0 +1,44 @@
+.tabs {
+  text-align: right;
+  max-width: 738px;
+  margin-left: 85px;
+  margin-top: 15px;
+}
+
+.tabs > div > ul {
+  justify-content: right;
+  position: relative;
+  right: -20px;
+  width: fit-content;
+  margin-left: auto;
+  top: 0;
+}
+
+.tabs > div {
+  background-color: transparent;
+  padding-top: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  .allIcon {
+    background-image: var(--ticket-live-icon);
+  }
+
+  .approvedIcon {
+    background-image: var(--ticket-voted-icon);
+  }
+
+  .rejectedIcon {
+    background-image: var(--ticket-revoked-icon);
+  }
+  .tabs > div > ul {
+    left: 0px;
+  }
+}
+
+@media screen and (max-width: 1179px) {
+  .tabs {
+    margin-left: 0;
+    max-width: 673px;
+  }
+}

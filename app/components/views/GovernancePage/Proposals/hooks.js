@@ -7,6 +7,8 @@ import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "hooks";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
 
+const MAX_PAGE_SIZE = 20; // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+
 export function useProposalsTab() {
   // TODO: move reducers which only control local states from reducer/governance.js to here.
   const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
@@ -18,7 +20,7 @@ export function useProposalsTab() {
   const [tab, setTab] = useReducer(() => getProposalsTab(location));
 
   useEffect(() => {
-    dispatch(setLastPoliteiaAccessTime());
+    return () => dispatch(setLastPoliteiaAccessTime());
   }, [dispatch]);
   const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
   useEffect(() => {
@@ -28,11 +30,12 @@ export function useProposalsTab() {
 
   return {
     activeVoteCount,
+    getTokenAndInitialBatch,
+    isTestnet,
     preVoteCount,
     politeiaEnabled,
-    isTestnet,
     tab,
-    getTokenAndInitialBatch
+    window
   };
 }
 
@@ -60,7 +63,10 @@ export function useProposalsList(tab) {
         if (!proposals || !proposals[tab] || !inventory || !inventory[tab])
           return send("FETCH");
         if (inventory[tab].length === 0) return;
-        if (proposals[tab].length === 0) {
+        if (
+          proposals[tab].length === 0 ||
+          proposals[tab].length < inventory[tab].length
+        ) {
           return send("FETCH");
         }
         if (proposals[tab].length === inventory[tab].length) {
@@ -119,13 +125,6 @@ export function useProposalsList(tab) {
       send(getProposalError ? "REJECT" : "RETRY");
       return;
     }
-
-    // if proposals list is bigger goes to success. This is needed because
-    // if enabling politeia decrediton gets the inventory and initial batch
-    // in the same request.
-    if (proposals[tab].length > previous.proposals[tab].length) {
-      send("RESOLVE");
-    }
   }, [proposals, previous, send, tab, getProposalError, inventoryError]);
 
   const loadMore = useCallback(() => send("FETCH"), [send]);
@@ -145,7 +144,7 @@ const onLoadMoreProposals = async (
   proposals,
   inventory,
   getProposalsAndUpdateVoteStatus,
-  proposallistpagesize = 20 // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+  proposallistpagesize = MAX_PAGE_SIZE // TODO: Get proposallistpagesize from politeia's request: /v1/policy
 ) => {
   const proposalLength = proposals.length;
   let proposalNumber;
@@ -157,7 +156,7 @@ const onLoadMoreProposals = async (
 
   const proposalBatch = inventory.slice(proposalLength, proposalNumber);
   try {
-    await getProposalsAndUpdateVoteStatus(proposalBatch);
+    return await getProposalsAndUpdateVoteStatus(proposalBatch);
   } catch (err) {
     console.log(err);
     throw err;
