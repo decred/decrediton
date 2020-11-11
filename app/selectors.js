@@ -215,11 +215,20 @@ export const spendableTotalBalance = createSelector(
 // If allowSendFromUnmixed is enabled, it returns null.
 export const getNotMixedAccounts = createSelector(
   [getMixedAccount, balances, getAllowSendFromUnmixed],
-  (mixedAcc, balances, allowSendFromUnmixed) =>
-    !mixedAcc || allowSendFromUnmixed ? null :
+  (mixedAcc, balances) =>
+    !mixedAcc ? [] :
       balances
           .filter(({ accountNumber }) => accountNumber !== mixedAcc)
           .map(({ accountNumber }) => accountNumber)
+);
+
+// getNotMixedAcctIfAllowed checks if it is allowed to send from unmixed
+// accounts and returns an empty array, if that's the case.
+export const getNotMixedAcctIfAllowed = createSelector(
+  [getNotMixedAccounts, getAllowSendFromUnmixed],
+  (notMixedAccts, allowSendFromUnmixed) => {
+    return !allowSendFromUnmixed ? notMixedAccts : [];
+  }
 );
 
 export const lockedBalance = createSelector(

@@ -18,7 +18,8 @@ const TicketAutoBuyerForm = ({
   availableVSPs,
   isValid,
   onClick,
-  clicked
+  clicked,
+  notMixedAccounts
 }) => (
   <>
     <Subtitle
@@ -90,6 +91,7 @@ const TicketAutoBuyerForm = ({
             onChange={changeAccount}
             showAccountsButton={false}
             hideSpendable={true}
+            filterAccounts={notMixedAccounts}
           />
         </div>
       </div>

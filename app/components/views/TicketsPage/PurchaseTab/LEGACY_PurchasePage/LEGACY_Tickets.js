@@ -38,6 +38,7 @@ const Tickets = ({
   sidebarOnBottom,
   isWatchingOnly,
   toggleIsLegacy,
+  notMixedAccounts,
   ...props
 }) => {
   return (
@@ -58,7 +59,7 @@ const Tickets = ({
           }
         />
       ) : (
-          <PurchaseTickets {...{ ...props }} />
+          <PurchaseTickets {...{ ...props, notMixedAccounts }} />
         )}
       {isWatchingOnly ? (
         <UnsignedTickets {...{ ...props }} />
@@ -70,7 +71,7 @@ const Tickets = ({
           />
         </div>
       ) : (
-            <TicketAutoBuyer {...{ ...props }} />
+            <TicketAutoBuyer {...{ ...props, notMixedAccounts }} />
           )}
     </div>
   );

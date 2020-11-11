@@ -16,7 +16,7 @@ export function useSendTab() {
   const nextAddressAccount = useSelector(sel.nextAddressAccount);
   const constructTxLowBalance = useSelector(sel.constructTxLowBalance);
   const publishTxResponse = useSelector(sel.publishTxResponse);
-  const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
+  const notMixedAccounts = useSelector(sel.getNotMixedAcctIfAllowed);
   const isTrezor = useSelector(sel.isTrezor);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
   const isConstructingTransaction = useSelector(sel.isConstructingTransaction);
