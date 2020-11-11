@@ -33,7 +33,7 @@
 
 .sendIconWrapper.add.disabled {
   background-image: var(--add-icon);
-  background-color: #E7EAED;
+  background-color: var(--disabled-background-color-lighter);
   cursor: auto;
 }
 
