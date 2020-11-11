@@ -390,7 +390,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (dispatch, getStat
         "dismiss_backup_msg_redeem_script"
       );
       const enablePrivacy = walletCfg.get("enableprivacy");
-      const sendFromUnmixed = walletCfg.get("sendFromUnmixed");
+      const sendFromUnmixed = walletCfg.get("send_from_unmixed");
       const mixedAccount = walletCfg.get("mixedaccount");
       const changeAccount = walletCfg.get("changeaccount");
       const csppServer = walletCfg.get("csppserver");
