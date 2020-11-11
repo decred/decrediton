@@ -12,7 +12,8 @@ import {
   GetDcrdLogs,
   GetDcrwalletLogs,
   GetDcrlndLogs,
-  getPrivacyLogs
+  getPrivacyLogs,
+  cleanPrivacyLogs
 } from "./main_dev/logging";
 import {
   getWalletsDirectoryPath,
@@ -450,6 +451,10 @@ ipcMain.on("get-decrediton-logs", (event) => {
 
 ipcMain.on("get-last-log-line-dcrd", (event) => {
   event.returnValue = lastLogLine(GetDcrdLogs());
+});
+
+ipcMain.on("clean-privacy-logs", (event) => {
+  event.returnValue = cleanPrivacyLogs();
 });
 
 ipcMain.on("get-last-log-line-dcrwallet", (event) => {

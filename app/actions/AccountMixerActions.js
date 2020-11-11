@@ -78,7 +78,11 @@ export const runAccountMixer = ({
         }
         mixerStreamer.on("data", () => resolve());
         mixerStreamer.on("error", (error) => {
-          dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+          // if context was cancelled we can ignore it, as it probably means
+          // mixer was stopped.
+          if (!String(error).includes("Cancelled")) {
+            dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+          }
         });
         mixerStreamer.on("end", (data) => {
           // not supposed to get here, but if it does, we log to see.
@@ -95,13 +99,16 @@ export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
 export const STOPMIXER_FAILED = "STOPMIXER_FAILED";
 export const STOPMIXER_SUCCESS = "STOPMIXER_SUCCESS";
 
-export const stopAccountMixer = () => {
+export const stopAccountMixer = (cleanLogs) => {
   return (dispatch, getState) => {
     const { mixerStreamer } = getState().grpc;
     if (!mixerStreamer) return;
     dispatch({ type: STOPMIXER_ATTEMPT });
     try {
       mixerStreamer.cancel();
+      if (cleanLogs) {
+        wallet.cleanPrivacyLogs();
+      }
       dispatch({ type: STOPMIXER_SUCCESS });
     } catch (error) {
       dispatch({ type: STOPMIXER_FAILED, error });

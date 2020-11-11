@@ -122,6 +122,8 @@ export const AddToPrivacyLog = (destIO, data, debug) => {
   });
 };
 
+export const cleanPrivacyLogs = () => privacyLogs = Buffer.from("");
+
 export const GetDcrdLogs = () => dcrdLogs;
 
 export const GetDcrwalletLogs = () => dcrwalletLogs;
