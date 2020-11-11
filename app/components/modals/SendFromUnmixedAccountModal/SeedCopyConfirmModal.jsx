@@ -4,7 +4,7 @@ import { defineMessages } from "react-intl";
 
 const message = defineMessages({
   copyConfirmationPhrase: {
-    id: "seedCopyConfirmModal.copyConfirmationPhrase",
+    id: "sendFromUnmixedModal.copyConfirmationPhrase",
     defaultMessage: "I understand the risks"
   }
 });

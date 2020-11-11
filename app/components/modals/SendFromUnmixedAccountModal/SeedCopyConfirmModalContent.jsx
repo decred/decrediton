@@ -16,13 +16,13 @@ const Modal = ({
 }) => (
   <DefaultModal className={style.confirmSendFromUnmixed} {...{ show }}>
     <div className={style.titleConfirmSendFromUnmixed}>
-      <T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" />
+      <T id="SendFromUnmixed.titleWarning" m="Seed Clipboard Copy Warning" />
     </div>
     <div className={style.confirmSeedCopyContent}>
       <div className={style.confirmSeedCopyWarningText}>
         <Documentation name="SendFromUnmixedInfo" />
         <T
-          id="seedCopyConfirmModal.confirmPhraseInstruction"
+          id="SendFromUnmixed.confirmPhraseInstruction"
           m="Please type {confirmationPhrase} to allow sending from unmixed accounts."
           values={{
             confirmationPhrase: (
@@ -51,12 +51,12 @@ const Modal = ({
           typedConfirmationPhrase.toLowerCase() !==
           copyConfirmationPhrase.toLowerCase()
         }>
-        <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
+        <T id="SendFromUnmixed.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
       <InvisibleButton
         className={style.confirmCloseButton}
         onClick={onCancelModal}>
-        <T id="seedCopyConfirm.btnCancel" m="Cancel" />
+        <T id="SendFromUnmixed.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>
   </DefaultModal>
