@@ -34,7 +34,7 @@
 .sendIconWrapper.add.disabled {
   background-image: var(--add-icon);
   background-color: var(--disabled-background-color-lighter);
-  cursor: auto;
+  cursor: not-allowed;
 }
 
 .sendIconWrapper.delete {
