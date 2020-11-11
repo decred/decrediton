@@ -113,7 +113,8 @@ export const AddToPrivacyLog = (destIO, data, debug) => {
     "Dialed CSPPServer",
     "Mixing output",
     "Completed CoinShuffle++ mix of output",
-    "wallet.MixOutput"
+    "wallet.MixOutput",
+    "AccountMixer"
   ];
   privacyLogsArray.forEach((log) => {
     if (data.toString("utf8").indexOf(log) > 0) {
