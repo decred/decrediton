@@ -1,5 +1,4 @@
 import ReactTimeout from "react-timeout";
-import { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
