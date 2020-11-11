@@ -215,10 +215,10 @@ msgstr "Account-Nummer"
 
 #. [ln.connectPage.account]
 #. defaultMessage is:
-#. Account to use
+#. Wallet account to use
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.account"
-msgid "Account to use"
+msgid "Wallet account to use"
 msgstr ""
 
 #. [accountsButton.tip]
@@ -6145,14 +6145,6 @@ msgstr ""
 "\n"
 "        Bitte aktualisieren Sie Daemon (dcrd) und Wallet (dcrwallet) auf die aktuellste Version und versuchen Sie es anschließend erneut."
 
-#. [ln.connectPage.accountDescr]
-#. defaultMessage is:
-#. The account to use for LN operations.
-#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
-msgctxt "ln.connectPage.accountDescr"
-msgid "The account to use for LN operations."
-msgstr ""
-
 #. [snackbar.errorObject]
 #. defaultMessage is:
 #. The following error happened: {error}
@@ -6206,12 +6198,12 @@ msgstr ""
 #. [ln.connectPage.enableAutopilotDescr]
 #. defaultMessage is:
 #. This enables the 'autopilot' feature, which tries to automatically open
-#. channels for up to 60% of the account's spendable amounts.
+#. channels using up to 60% of the account's spendable funds.
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.enableAutopilotDescr"
 msgid ""
 "This enables the 'autopilot' feature, which tries to automatically open "
-"channels for up to 60% of the account's spendable amounts."
+"channels using up to 60% of the account's spendable funds."
 msgstr ""
 
 #. [fatal.suggestion.corrupted]

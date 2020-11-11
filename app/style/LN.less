@@ -23,40 +23,30 @@
   }
 }
 
-.ln-connect-form {
+.ln-connect-opts {
   background-color: var(--background-back-color);
-  padding: 1em;
-  margin: 1em 0em;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  padding: 8px 25px 40px 25px;
+  margin-bottom: 37px;
+}
+
+.checkbox {
+  max-width: 420px;
 }
 
 .ln-connect-opts .ln-connect-opt {
   flex-wrap: wrap;
   display: flex;
-  margin-bottom: 18px;
+  padding-top: 18px;
 
   .label {
     display: inline-block;
-    vertical-align: middle;
+    margin-top: 8px;
     margin-right: 14px;
-    text-align: right;
     width: 125px;
-  }
-
-  .checkbox {
-    margin-top: 2px;
-
-    input[type="checkbox"] {
-      display: initial;
-    }
   }
 
   .account-selection {
     display: grid;
-    grid-row: 2;
     grid-row-gap: 10px;
     justify-items: right;
   }
@@ -72,13 +62,8 @@
     margin-top: 5px;
   }
 
-  .description {
-    font-style: italic;
-    text-align: right;
-    margin-right: 28px;
-    color: var(--disabled-color);
-    font-size: 11px;
-    line-height: 15px;
-    width: 175px;
+  .fileInput {
+    padding-right: 10px;
+    margin-top: 8px;
   }
 }
