@@ -1,7 +1,18 @@
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, PassphraseModalField } from "inputs";
 import { PassphraseModal } from "modals";
 import { useMountEffect } from "hooks";
+
+const messages = defineMessages({
+  mixedAccountName: {
+    id: "addMixerAccountModal.mixedAccountName",
+    defaultMessage: "Mixed Account Name"
+  },
+  changeAccountName: {
+    id: "addMixerAccountModal.changeAccountName",
+    defaultMessage: "Unmixed Account Name"
+  }
+});
 
 const AddMixerAccountsModal = ({
   mixedAccountName,
@@ -9,6 +20,7 @@ const AddMixerAccountsModal = ({
   setMixedAccountName,
   setChangeAccountName,
   show,
+  intl,
   ...props
 }) => {
   useMountEffect(() => {
@@ -30,7 +42,7 @@ const AddMixerAccountsModal = ({
           required
           id="name"
           type="text"
-          placeholder="Mixed Account Name"
+          placeholder={intl.formatMessage(messages.mixedAccountName)}
           value={mixedAccountName}
           onChange={(e) => setMixedAccountName(e.target.value)}
         />
@@ -47,7 +59,7 @@ const AddMixerAccountsModal = ({
           required
           id="name"
           type="text"
-          placeholder="Unmixed Account Name"
+          placeholder={intl.formatMessage(messages.changeAccountName)}
           value={changeAccountName}
           onChange={(e) => setChangeAccountName(e.target.value)}
         />
@@ -56,4 +68,4 @@ const AddMixerAccountsModal = ({
   );
 };
 
-export default AddMixerAccountsModal;
+export default injectIntl(AddMixerAccountsModal);
