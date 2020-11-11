@@ -1,5 +1,6 @@
 import { IntlProvider } from "react-intl";
 import { defaultFormats } from "i18n/locales";
+// XXX useTheming already exists in app/hooks
 import { app, theming } from "connectors";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";

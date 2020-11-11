@@ -1,3 +1,4 @@
+// XXX useTheming hook already exists in app/hooks
 import { routing, theming } from "connectors";
 import { NavLink as Link } from "react-router-dom";
 import { spring, Motion } from "react-motion";

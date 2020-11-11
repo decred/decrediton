@@ -1,16 +1,16 @@
 import { cloneElement as k, createElement as h } from "react";
 import { TransitionMotion } from "react-motion";
-import { theming } from "connectors";
 import { isFunction } from "util";
+import { useTheming } from "hooks";
 
 const TransitionMotionWrapper = ({
   willEnter,
   willLeave,
   defaultStyles,
   styles,
-  uiAnimations,
   ...props
 }) => {
+  const { uiAnimations } = useTheming();
   const tmProps = { willEnter, willLeave, defaultStyles, styles };
   const child = ({ key, style, data }) => {
     const childProps = { ...{ key }, style: props.mapStyles(style) };
@@ -32,4 +32,4 @@ TransitionMotionWrapper.defaultProps = {
   mapStyles: (val) => val
 };
 
-export default theming(TransitionMotionWrapper);
+export default TransitionMotionWrapper;

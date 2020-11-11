@@ -6,3 +6,4 @@ export { default as useMountEffect } from "./useMountEffect";
 export { default as useAccounts } from "./useAccounts";
 export { default as useRescan } from "./useRescan";
 export { default as useClickOutside } from "./useClickOutside";
+export { default as useTheming } from "./useTheming";
