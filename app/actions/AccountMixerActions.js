@@ -102,13 +102,14 @@ export const STOPMIXER_SUCCESS = "STOPMIXER_SUCCESS";
 export const stopAccountMixer = (cleanLogs) => {
   return (dispatch, getState) => {
     const { mixerStreamer } = getState().grpc;
+    // clean logs if needed.
+    if (cleanLogs) {
+      wallet.cleanPrivacyLogs();
+    }
     if (!mixerStreamer) return;
     dispatch({ type: STOPMIXER_ATTEMPT });
     try {
       mixerStreamer.cancel();
-      if (cleanLogs) {
-        wallet.cleanPrivacyLogs();
-      }
       dispatch({ type: STOPMIXER_SUCCESS });
     } catch (error) {
       dispatch({ type: STOPMIXER_FAILED, error });
