@@ -36,3 +36,19 @@
 .contentTitleButtonsArea {
   margin-left: auto;
 }
+.logs{
+  font-family: var(--font-family-monospace);
+  font-size: 13px;
+  resize: none;
+  width: 100%;
+  background-color: var(--background-back-color);
+  border: none;
+  color: var(--modal-text);
+  white-space: pre-line;
+  padding: 10px;
+}
+.logsTitle {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}

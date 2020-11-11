@@ -167,29 +167,6 @@ export const getDaemonInfo = log(
   "Get Daemon network info"
 );
 
-export const getDcrdLogs = () =>
-  Promise.resolve(ipcRenderer.sendSync("get-dcrd-logs")).then((logs) => {
-    if (logs) return logs;
-    throw "Error getting dcrd logs";
-  });
-
-export const getDcrwalletLogs = () =>
-  Promise.resolve(ipcRenderer.sendSync("get-dcrwallet-logs")).then((logs) => {
-    if (logs) return logs;
-    throw "Error getting dcrwallet logs";
-  });
-
-export const getDcrlndLogs = () =>
-  Promise.resolve(ipcRenderer.sendSync("get-dcrlnd-logs")).then((logs) => {
-    if (logs) return logs;
-    throw "Error getting dcrlnd logs";
-  });
-
-export const getDecreditonLogs = () =>
-  Promise.resolve(ipcRenderer.sendSync("get-decrediton-logs")).then((logs) => {
-    if (logs) return logs;
-    throw "Error getting decrediton logs";
-  });
 
 export const getAvailableWallets = log(
   (network) =>
@@ -225,12 +202,6 @@ export const allowStakePoolHost = log(
   "Allow StakePool Host"
 );
 
-export const getDcrdLastLogLine = () =>
-  Promise.resolve(ipcRenderer.sendSync("get-last-log-line-dcrd"));
-
-export const getDcrwalletLastLogLine = () =>
-  Promise.resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
-
 export const connectDaemon = log(
   (params) =>
     new Promise((resolve, reject) => {
@@ -246,3 +217,41 @@ export const connectDaemon = log(
     }),
   "Connect Daemon"
 );
+
+// TODO create a wallet/log and move those method not related to daemon to there.
+
+export const cleanPrivacyLogs = () =>
+  Promise.resolve(ipcRenderer.sendSync("clean-privacy-logs"));
+
+export const getDcrdLastLogLine = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-last-log-line-dcrd"));
+
+export const getDcrwalletLastLogLine = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
+
+export const getPrivacyLogs = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-privacy-logs"));
+
+export const getDcrdLogs = () =>
+Promise.resolve(ipcRenderer.sendSync("get-dcrd-logs")).then((logs) => {
+  if (logs) return logs;
+  throw "Error getting dcrd logs";
+});
+
+export const getDcrwalletLogs = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-dcrwallet-logs")).then((logs) => {
+    if (logs) return logs;
+    throw "Error getting dcrwallet logs";
+  });
+
+export const getDcrlndLogs = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-dcrlnd-logs")).then((logs) => {
+    if (logs) return logs;
+    throw "Error getting dcrlnd logs";
+  });
+
+export const getDecreditonLogs = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-decrediton-logs")).then((logs) => {
+    if (logs) return logs;
+    throw "Error getting decrediton logs";
+  });

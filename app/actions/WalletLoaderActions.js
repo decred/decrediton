@@ -30,6 +30,7 @@ import { stopDcrlnd } from "./LNActions";
 import { TESTNET } from "constants";
 import { ipcRenderer } from "electron";
 import { RESCAN_PROGRESS } from "./ControlActions";
+import { stopAccountMixer } from "./AccountMixerActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -250,6 +251,7 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
     await dispatch(rescanCancel());
     await dispatch(stopDcrlnd());
     await dispatch(ticketBuyerCancel());
+    await dispatch(stopAccountMixer(true));
     await dispatch(setSelectedWallet(null));
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);

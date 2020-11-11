@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as act from "actions/AccountMixerActions";
+import { getPrivacyLogs } from "actions/DaemonActions";
 import * as sel from "selectors";
 
 export function usePrivacy() {
   const dispatch = useDispatch();
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
+  const onGetPrivacyLogs = () => dispatch(getPrivacyLogs());
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
@@ -45,6 +47,7 @@ export function usePrivacy() {
     accountMixerError,
     onStartMixerAttempt,
     createNeededAccounts,
-    createMixerAccountAttempt
+    createMixerAccountAttempt,
+    onGetPrivacyLogs
   };
 }

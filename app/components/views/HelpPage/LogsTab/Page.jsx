@@ -26,6 +26,9 @@ const Logs = ({
   onHideDcrlndLogs
 }) => (
   <>
+    {/*
+      TODO Create shared component and use it here and on the privacy page logs.
+    */}
     <Subtitle title={<T id="logs.subtitle" m="System Logs" />} />
     {!isDaemonRemote ? (
       !showDcrdLogs ? (

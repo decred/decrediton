@@ -18,7 +18,8 @@ import {
   lastErrorLine,
   lastPanicLine,
   ClearDcrwalletLogs,
-  CheckDaemonLogs
+  CheckDaemonLogs,
+  AddToPrivacyLog
 } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS, UPGD_ELECTRON8 } from "constants";
@@ -673,12 +674,13 @@ export const launchDCRWallet = (
     ClearDcrwalletLogs();
   });
 
-  const addStdoutToLogListener = (data) =>
+  dcrwallet.stdout.on("data", (data) => {
     AddToDcrwalletLog(process.stdout, data, debug);
-
-  dcrwallet.stdout.on("data", addStdoutToLogListener);
+    AddToPrivacyLog(process.stdout, data, debug);
+  });
   dcrwallet.stderr.on("data", (data) => {
     AddToDcrwalletLog(process.stderr, data, debug);
+    AddToPrivacyLog(process.stderr, data, debug);
   });
 
   dcrwPID = dcrwallet.pid;
