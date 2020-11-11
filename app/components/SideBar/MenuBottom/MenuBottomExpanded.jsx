@@ -47,7 +47,7 @@ const MenuBarExpanded = ({
           <a className={styles.latestBlockName}>
             <T id="sidebar.latestBlock" m="Latest Block" />
             <span className={styles.latestBlockNumber}>
-              {currentBlockHeight}
+              &nbsp;{currentBlockHeight}
             </span>
           </a>
           <div className={styles.latestBlockTime}>

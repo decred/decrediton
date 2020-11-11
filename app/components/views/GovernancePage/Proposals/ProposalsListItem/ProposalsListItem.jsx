@@ -59,7 +59,7 @@ const ProposalsListItem = ({
           <div className={styles.timestamp}>
             <T
               id="proposalItem.lastUpdatedAt"
-              m="Last Updated {reldate}"
+              m="Last updated {reldate}"
               values={{
                 reldate: <FormattedRelative value={tsDate(timestamp)} />
               }}

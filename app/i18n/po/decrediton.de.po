@@ -3186,10 +3186,10 @@ msgstr "Zuletzt aktualisiert"
 
 #. [proposalItem.lastUpdatedAt]
 #. defaultMessage is:
-#. Last Updated {reldate}
+#. Last updated {reldate}
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalList/Page.json
 msgctxt "proposalItem.lastUpdatedAt"
-msgid "Last Updated {reldate}"
+msgid "Last updated {reldate}"
 msgstr "Zuletzt aktualisiert {reldate}"
 
 #. [walletselection.lastAccess]
