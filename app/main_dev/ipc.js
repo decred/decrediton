@@ -147,35 +147,41 @@ export const removeWallet = (testnet, walletPath) => {
 
 // updateTrezorFirmware attempts to make a temporary connection to a trezor
 // device and update it with the firmware at path. It returns an error string
-// in case of error.
+// in case of error and whether the update process was started at all.
 export const updateTrezorFirmware = async ( firmwarePath ) => {
+  let started = false;
+  let completed = false;
   const rawFirmware = fs.readFileSync(firmwarePath);
   const hexFirmware = rawToHex(rawFirmware);
   let session = connect.default;
-  let completed = false;
   try {
     await initTransport(session, false);
     session.on(connect.UI_EVENT, (event) => {
       if (event.type == connect.UI.FIRMWARE_PROGRESS) {
         logger.log("info", "Trezor update progress: " + event.payload.progress+"%");
-        // session.cancel() will cause an error but we ignore it if completed.
+        // Ignore disconnect errors if completed.
         if (event.payload.progress == 100) {
           completed = true;
-          if (session) session.cancel();
         }
       }
     });
+    started = true;
     const res = await session.firmwareUpdate({
        binary: hexFirmware
     });
-    if (res.payload && res.payload.error) {
-      throw res.payload.error;
+    if (res.payload) {
+      if (res.payload.error) {
+        throw res.payload.error;
+      }
+      if (!res.payload.success) {
+        throw res.payload.code;
+      }
     }
-    return null;
+    return { error: null, started };
   } catch (e) {
-    if (completed) return null;
+    if (completed) return { error: null, started };
     logger.log("error", "error uploading trezor firmware: " + e);
-    return e.toString();
+    return { error: e.toString(), started };
   } finally {
     session = null;
   }

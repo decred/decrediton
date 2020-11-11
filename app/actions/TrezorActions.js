@@ -782,7 +782,7 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
   // Attempting to update the firmware while already updating will cause the
   // trezor to lock up.
   const {
-    trezor: { performingUpdate }
+    trezor: { performingUpdate, device }
   } = getState();
   if (performingUpdate) {
     console.log("already updating firmware");
@@ -800,9 +800,13 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
   }
 
   try {
+    if (device != BOOTLOADER_MODE) throw "device must be in bootloader mode";
     // Ask main.development.js to send the firmware for us.
-    const errorStr = await ipcRenderer.invoke("upload-firmware", path);
-    if (errorStr) throw errorStr;
+    const { error, started } = await ipcRenderer.invoke("upload-firmware", path);
+    // If the updated started, the device must be disconnected before further
+    // use.
+    if (started) alertNoConnectedDevice()(dispatch);
+    if (error) throw error;
     dispatch({ type: TRZ_UPDATEFIRMWARE_SUCCESS });
   } catch (error) {
     dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });
