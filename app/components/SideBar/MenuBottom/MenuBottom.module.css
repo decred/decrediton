@@ -103,7 +103,6 @@
   background-color: transparent;
   background-image: var(--menu-peers-icon);
   background-size: 16px 16px;
-  cursor: pointer;
 }
 
 .peersCountLabel {
