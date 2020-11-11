@@ -20,6 +20,21 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");
+  const [showingSendUnmixModal, showModal] = useState(false);
+  const onToggleSendFromUnmixed = () => {
+    if (showingSendUnmixModal) {
+      toggleAllowSendFromUnmixed();
+      showModal(false);
+    }
+  };
+  const onChangeCheckbox = () => {
+    if (!allowSendFromUnmixed) {
+      showModal(true);
+      return;
+    }
+    toggleAllowSendFromUnmixed(false);
+  };
+
   useMountEffect(() => {
     // get initial logs
     onGetPrivacyLogs()
@@ -52,7 +67,10 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         stopAccountMixer,
         logs,
         allowSendFromUnmixed,
-        toggleAllowSendFromUnmixed
+        showingSendUnmixModal,
+        onToggleSendFromUnmixed,
+        showModal,
+        onChangeCheckbox
       }}
     />
   );

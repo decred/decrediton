@@ -644,6 +644,24 @@
   opacity: 0.7;
 }
 
+.confirmSendFromUnmixed {
+  top: 50px;
+  margin: 20px;
+  padding: 20px;
+  width: 75%;
+}
+
+.titleConfirmSendFromUnmixed {
+  font-size: 27px;
+  margin-bottom: 20px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 25px;
+  padding-left: 42px;
+  margin-left: 10px;
+  background-position: 0 center;
+}
+
 @media screen and (max-width: 768px) {
   .confirmSeedCopyWarningText {
     column-count: 1;
