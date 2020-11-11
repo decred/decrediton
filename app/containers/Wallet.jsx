@@ -39,6 +39,8 @@ const Wallet = ({ setInterval }) => {
 
   const { uiAnimations } = useTheming();
 
+  // Notice that we return a cleanup logic as a function in useEffect/useMountEffect
+  // which will run on unmount.
   useMountEffect(() => {
     // Compare politeias inventory and update proposal list if they are different
     // every 1 minute.
