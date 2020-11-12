@@ -42,7 +42,7 @@ export default ({ toggleSpv }) => (
         description={
           <T
             id="spv.options.disable.description"
-            m="This will use the regular Decred daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted."
+            m="This will use the regular Decred daemon and fully verify blocks.  This will take longer but is fully secure.  Any block or mined transaction can be fully trusted."
           />
         }
         onClick={() => toggleSpv(false)}

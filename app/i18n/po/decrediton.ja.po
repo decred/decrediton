@@ -6223,13 +6223,13 @@ msgstr ""
 #. [spv.options.disable.description]
 #. defaultMessage is:
 #. This will use the regular Decred daemon and fully verify blocks.  This will
-#. take longer, but is fully secure.  Any block or mined transaction can be
+#. take longer but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
 "This will use the regular Decred daemon and fully verify blocks.  This will "
-"take longer, but is fully secure.  Any block or mined transaction can be "
+"take longer but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr ""
 "これは通常のDecredデーモンを使用し、ブロックを完全に確認します。時間はかかりますが、確実に安全です。すべてのブロックおよび採掘した取引を完全に信頼できます。"
