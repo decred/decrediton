@@ -2074,13 +2074,13 @@ msgstr "已启用"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, stakepool listing, politeia,
+#. access to features (such as version update, stakepool listing, Politeia,
 #. etc). Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, stakepool listing, politeia, "
+"access to features (such as version update, stakepool listing, Politeia, "
 "etc). Recommended for most users."
 msgstr "启用与大多数服务的连接，以获得更好的用户体验和对功能的全面访问（如版本更新、选票矿池列表、Politeia 等）。建议大多数用户开启。"
 

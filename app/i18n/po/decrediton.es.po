@@ -2110,13 +2110,13 @@ msgstr "Habilitado"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, stakepool listing, politeia,
+#. access to features (such as version update, stakepool listing, Politeia,
 #. etc). Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, stakepool listing, politeia, "
+"access to features (such as version update, stakepool listing, Politeia, "
 "etc). Recommended for most users."
 msgstr ""
 "Se habilitan conexiones a gran parte de los servicios para brindar una mejor"

@@ -680,7 +680,7 @@
   "privacy.options.custom.title": "Customizar Conexões",
   "privacy.options.disabled.description": "Desabilita as conexões third party (non-dcrd/non-dcrwallet) services. This may prevent you from using certain features of the app. Recommended for advanced users.",
   "privacy.options.disabled.title": "Nenhuma conexão de saída",
-  "privacy.options.standard.description": "Habilita conexões a serviços services for a better user experience and full access to features (such as version update, stakepool listing, politeia, etc). Recommended for most users.",
+  "privacy.options.standard.description": "Habilita conexões a serviços services for a better user experience and full access to features (such as version update, stakepool listing, Politeia, etc). Recommended for most users.",
   "privacy.options.standard.title": "Padrão",
   "privacy.start.mixer": "Iniciar Mixer",
   "privacy.start.mixer.confirmation": "Iniciar mixer",

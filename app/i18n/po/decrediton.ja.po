@@ -2078,13 +2078,13 @@ msgstr "有効化"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, stakepool listing, politeia,
+#. access to features (such as version update, stakepool listing, Politeia,
 #. etc). Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, stakepool listing, politeia, "
+"access to features (such as version update, stakepool listing, Politeia, "
 "etc). Recommended for most users."
 msgstr ""
 "ユーザーエクスペリエンス向上のため、ほとんどのサービスへの接続と全機能へのアクセス（バージョンアップデートやステークプールリスト、Politeiaなど）を有効にします。ほとんどのユーザーに推奨。"

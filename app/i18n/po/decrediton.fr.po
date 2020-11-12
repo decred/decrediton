@@ -2109,18 +2109,18 @@ msgstr "Activé"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, stakepool listing, politeia,
+#. access to features (such as version update, stakepool listing, Politeia,
 #. etc). Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, stakepool listing, politeia, "
+"access to features (such as version update, stakepool listing, Politeia, "
 "etc). Recommended for most users."
 msgstr ""
 "Active les connexions à la plupart des services pour une meilleure "
 "expérience utilisateur et un accès complet aux fonctionnalités, telles que "
-"la mise à jour, la liste de pools d'enjeu, politeia, etc. Recommandé pour la"
+"la mise à jour, la liste de pools d'enjeu, Politeia, etc. Recommandé pour la"
 " plupart des utilisateurs."
 
 #. [stake.revokeTicketsPassphrase]

@@ -2516,9 +2516,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 #. [privacy.options.standard.description]
 #. defaultMessage is:
-#. Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, politeia, etc). Recommended for most users.
+#. Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, Politeia, etc). Recommended for most users.
 msgctxt "privacy.options.standard.description"
-msgid "Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, politeia, etc). Recommended for most users."
+msgid "Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, Politeia, etc). Recommended for most users."
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json

@@ -680,7 +680,7 @@
   "privacy.options.custom.title": "Customize Allowed Connections",
   "privacy.options.disabled.description": "Disables all connections to third party (non-dcrd/non-dcrwallet) services. This may prevent you from using certain features of the app. Recommended for advanced users.",
   "privacy.options.disabled.title": "No Outbound Connections",
-  "privacy.options.standard.description": "Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, politeia, etc). Recommended for most users.",
+  "privacy.options.standard.description": "Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, Politeia, etc). Recommended for most users.",
   "privacy.options.standard.title": "Standard",
   "privacy.start.mixer": "Start Mixer",
   "privacy.start.mixer.confirmation": "Start Mixer",
