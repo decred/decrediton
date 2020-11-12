@@ -20,7 +20,7 @@ const useTrezor = () => {
   const onCancelCurrentOperation = useCallback(() => dispatch(trza.cancelCurrentOperation()), [dispatch]);
   const onSubmitPin = useCallback((pin) => dispatch(trza.submitPin(pin)), [dispatch]);
   const onSubmitPassPhrase = useCallback((passPhrase) => dispatch(trza.submitPassPhrase(passPhrase)), [dispatch]);
-  const onSubmitWord = useCallback(() => dispatch(trza.submitWord()), [dispatch]);
+  const onSubmitWord = useCallback((word) => dispatch(trza.submitWord(word)), [dispatch]);
   const onTogglePinProtection = useCallback(() => dispatch(trza.togglePinProtection()), [dispatch]);
   const onTogglePassPhraseProtection = useCallback(() => dispatch(trza.togglePassPhraseProtection()), [dispatch]);
   const onChangeToDecredHomeScreen = useCallback(() => dispatch(trza.changeToDecredHomeScreen()), [dispatch]);
@@ -56,8 +56,8 @@ const useTrezor = () => {
     onInitDevice,
     onBackupDevice,
     onUpdateFirmware,
-    onEnableTrezor,
-  }
-}
+    onEnableTrezor
+  };
+};
 
 export default useTrezor;

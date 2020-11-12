@@ -1,7 +1,8 @@
-import { PassphraseModal } from "modals";
+import { useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
+import { PassphraseModal } from "modals";
 import { classNames } from "pi-ui";
-import styles from "./trezor.module.css";
+import styles from "./TrezorModals.module.css";
 
 const TrezorPassphraseModal = ({
   isGetStarted,
@@ -10,15 +11,15 @@ const TrezorPassphraseModal = ({
   onSubmitPassPhrase,
   onCancelModal
 }) => {
-  const onSubmit = (passPhrase) => {
+  const onSubmit = useCallback((passPhrase) => {
     onSubmitPassPhrase(passPhrase);
-  };
+  }, [onSubmitPassPhrase]);
 
   const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
     styles.trezorPassphraseModal,
-    isGetStarted && getStarted
+    isGetStarted && styles.getStarted
   );
 
   return (

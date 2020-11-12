@@ -1,12 +1,12 @@
-import Modal from "../Modal";
+import { useState, useMemo, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
+import Modal from "../Modal";
 import { PasswordInput } from "inputs";
 import { ButtonsToolbar } from "shared";
 import { InvisibleButton } from "buttons";
-import { useState, useMemo } from "react";
-import styles from "./trezor.module.css";
-import { classNames } from "pi-ui";
 import { PIN_LABELS } from "constants/trezor";
+import { classNames } from "pi-ui";
+import styles from "./TrezorModals.module.css";
 
 const PinButton = ({ index, label, onClick }) => (
   <div className={styles.pinPadButton} onClick={() => onClick(index)}>
@@ -14,27 +14,36 @@ const PinButton = ({ index, label, onClick }) => (
   </div>
 );
 
-const PinModal = ({ isGetStarted, device, deviceLabel, onCancelModal }) => {
+const TrezorPinModal = ({
+  isGetStarted,
+  device,
+  deviceLabel,
+  onSubmitPin,
+  onCancelModal
+}) => {
   const [currentPin, setCurrentPin] = useState("");
 
-  const onPinButtonClick = (index) => {
-    setCurrentPin(currentPin + index);
-  };
+  const onPinButtonClick = useCallback(
+    (index) => {
+      setCurrentPin(currentPin + index);
+    },
+    [currentPin]
+  );
 
-  const onCancelPinModal = () => {
+  const onCancelPinModal = useCallback(() => {
     setCurrentPin("");
     onCancelModal();
-  };
+  }, [onCancelModal]);
 
-  const onSubmit = () => {
-    submitPin(currentPin);
-  };
+  const onSubmit = useCallback(() => {
+    onSubmitPin(currentPin);
+  }, [onSubmitPin, currentPin]);
 
-  const onClearPin = () => {
+  const onClearPin = useCallback(() => {
     setCurrentPin("");
-  };
+  }, []);
 
-  const onChangeCurrentPin = (e) => {
+  const onChangeCurrentPin = useCallback((e) => {
     const txt = (e.target.value || "").toUpperCase().trim();
     let pin = "";
     for (let i = 0; i < txt.length; i++) {
@@ -42,7 +51,7 @@ const PinModal = ({ isGetStarted, device, deviceLabel, onCancelModal }) => {
       if (idx > -1) pin = pin + "" + (idx + 1);
     }
     setCurrentPin(pin);
-  };
+  }, []);
 
   const currentPinMemo = useMemo(
     () =>
@@ -53,18 +62,9 @@ const PinModal = ({ isGetStarted, device, deviceLabel, onCancelModal }) => {
     [currentPin]
   );
 
-  const Button = ({ index }) => (
-    <PinButton
-      label={PIN_LABELS[index - 1]}
-      index={index}
-      onClick={onPinButtonClick}
-    />
-  );
-
   const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
-    "passphrase-modal",
     styles.trezorPinModal,
     isGetStarted && styles.getStarted
   );
@@ -84,22 +84,16 @@ const PinModal = ({ isGetStarted, device, deviceLabel, onCancelModal }) => {
         />
       </p>
       <div className={styles.pinPad}>
-        <Button index={7} />
-        <Button index={8} />
-        <Button index={9} />
-        <Button index={4} />
-        <Button index={5} />
-        <Button index={6} />
-        <Button index={1} />
-        <Button index={2} />
-        <Button index={3} />
+        {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((index) => (
+          <PinButton index={index} onClick={onPinButtonClick} />
+        ))}
       </div>
       <div>
-        <InvisibleButton onClick={onClearPin} className="pin-pad-clear-btn">
+        <InvisibleButton onClick={onClearPin}>
           <T id="trezor.pinModal.clear" m="clear" />
         </InvisibleButton>
       </div>
-      <div className="password-field">
+      <div className={styles.passwordField}>
         <PasswordInput value={currentPinMemo} onChange={onChangeCurrentPin} />
       </div>
       <ButtonsToolbar {...{ onCancelModal: onCancelPinModal, onSubmit }} />
@@ -107,4 +101,4 @@ const PinModal = ({ isGetStarted, device, deviceLabel, onCancelModal }) => {
   );
 };
 
-export default PinModal;
+export default TrezorPinModal;

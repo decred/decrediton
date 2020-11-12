@@ -1,8 +1,8 @@
-import PinModal from "./PinModal";
-import PassPhraseModal from "./PassPhraseModal";
-import WalletCreationPassPhraseModal from "./WalletCreationPassPhraseModal";
-import WordModal from "./WordModal";
 import { useTrezor } from "hooks";
+import PinModal from "./TrezorPinModal";
+import PassPhraseModal from "./TrezorPassphraseModal";
+import WalletCreationPassPhraseModal from "./TrezorWalletCreationPassphraseModal";
+import WordModal from "./TrezorWordModal";
 
 const TrezorModals = () => {
   const {
@@ -29,8 +29,7 @@ const TrezorModals = () => {
     Component = WordModal;
   }
 
-  if (!Component) return null;
-  return isTrezor ? (
+  return Component && isTrezor ? (
     <Component
       {...{
         ...props,
@@ -38,7 +37,7 @@ const TrezorModals = () => {
         waitingForPin,
         waitingForPassPhrase,
         waitingForWord,
-        walletCreationMasterPubkeyAttempt,
+        walletCreationMasterPubkeyAttempt
       }}
       onCancelModal={onCancelCurrentOperation}
     />

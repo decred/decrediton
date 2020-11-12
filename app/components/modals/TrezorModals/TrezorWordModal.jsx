@@ -1,52 +1,56 @@
-import Modal from "../Modal";
+import { useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { ButtonsToolbar } from "shared";
 import Select from "react-select";
-import { word_list } from "constants/trezor";
-import styles from "./trezor.module.css";
+import Modal from "../Modal";
+import { ButtonsToolbar } from "shared";
+import { WORD_LIST } from "constants/trezor";
+import { classNames } from "pi-ui";
+import styles from "./TrezorModals.module.css";
 
-const input_options = word_list.map((w) => ({ word: w }));
+const inputOptions = WORD_LIST.map((w) => ({ word: w }));
 
-const WordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
+const getSeedWords = (input, callback) => {
+  input = input.toLowerCase();
+  const options = inputOptions.filter(
+    (w) => w.word.toLowerCase().substr(0, input.length) === input
+  );
+  callback(null, {
+    options: options.slice(0, 5)
+  });
+};
+
+const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
   const [word, setWord] = useState("");
   const [value, setValue] = useState(null);
 
-  const onCancelWordModal = () => {
+  const onCancelWordModal = useCallback(() => {
     setWord("");
     setValue(null);
     onCancelModal();
-  };
+  }, [onCancelModal]);
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!word) return;
     onSubmitWord(word);
     setWord("");
     setValue(null);
-  };
+  }, [word, onSubmitWord]);
 
-  const onWordChanged = (value) => {
+  const onWordChanged = useCallback((value) => {
     setWord(value);
     setValue({ word: value });
-  };
+  }, []);
 
-  const onSelectKeyDown = (e) => {
-    if (e.keyCode === 13 && word) {
-      onSubmit();
-    }
-  };
-
-  const getSeedWords = (input, callback) => {
-    input = input.toLowerCase();
-    const options = input_options.filter(
-      (w) => w.word.toLowerCase().substr(0, input.length) === input
-    );
-    callback(null, {
-      options: options.slice(0, 5)
-    });
-  };
+  const onSelectKeyDown = useCallback(
+    (e) => {
+      if (e.keyCode === 13 && word) {
+        onSubmit();
+      }
+    },
+    [word, onSubmit]
+  );
 
   const className = classNames(
-    "passphrase-modal",
     styles.trezorWordModal,
     isGetStarted && styles.getStarted
   );
@@ -72,8 +76,8 @@ const WordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
           clearable={false}
           multi={false}
           filterOptions={false}
-          valueKey="word"
-          labelKey="word"
+          valueKey={"word"}
+          labelKey={"word"}
           loadOptions={getSeedWords}
           onChange={onWordChanged}
           value={value}
@@ -92,4 +96,4 @@ const WordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
   );
 };
 
-export default WordModal;
+export default TrezorWordModal;

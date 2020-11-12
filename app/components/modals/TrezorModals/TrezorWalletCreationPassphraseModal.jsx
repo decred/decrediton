@@ -1,10 +1,10 @@
-import Modal from "../Modal";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Documentation } from "shared";
+import Modal from "../Modal";
 import { PasswordInput, PassphraseModalField } from "inputs";
-import { ButtonsToolbar } from "shared";
-import { useEffect, useState } from "react";
-import styles from "./trezor.module.css";
+import { Documentation, ButtonsToolbar } from "shared";
+import { classNames } from "pi-ui";
+import styles from "./TrezorModals.module.css";
 
 const TrezorWalletCreationPassphraseModal = ({
   isGetStarted,
@@ -16,7 +16,7 @@ const TrezorWalletCreationPassphraseModal = ({
   const [passphraseValue, setPassphraseValue] = useState("");
   const [passphraseConfirmValue, setPassphraseConfirmValue] = useState("");
   const [submitAttempted, setSubmitAttempted] = useState(false);
-  const [mismatchedValues, setMismatchedValues] = useState(false);
+  const [, setMismatchedValues] = useState(false);
 
   useEffect(
     () => () => {
@@ -26,7 +26,7 @@ const TrezorWalletCreationPassphraseModal = ({
     []
   );
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (passphraseValue != passphraseConfirmValue) {
       setSubmitAttempted(true);
       setMismatchedValues(true);
@@ -36,26 +36,31 @@ const TrezorWalletCreationPassphraseModal = ({
     onSubmitPassPhrase(passphraseValue);
     setPassphraseValue("");
     setPassphraseConfirmValue("");
-  };
+  }, [passphraseValue, passphraseConfirmValue, onSubmitPassPhrase]);
 
-  const onChangePassphraseValue = (passphraseValue) => {
+  const onChangePassphraseValue = useCallback((passphraseValue) => {
     setPassphraseValue(passphraseValue);
     setSubmitAttempted(false);
     setMismatchedValues(false);
-  };
+  }, []);
 
-  const onChangePassphraseConfirmValue = (passphraseConfirmValue) => {
-    setPassphraseConfirmValue(passphraseConfirmValue);
-    setSubmitAttempted(false);
-    setMismatchedValues(false);
-  };
+  const onChangePassphraseConfirmValue = useCallback(
+    (passphraseConfirmValue) => {
+      setPassphraseConfirmValue(passphraseConfirmValue);
+      setSubmitAttempted(false);
+      setMismatchedValues(false);
+    },
+    []
+  );
 
   const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
     styles.trezorPassphraseModal,
-    isGetStarted && styles.getStarted);
+    isGetStarted && styles.getStarted
+  );
 
+<<<<<<< HEAD:app/components/modals/trezor/WalletCreationPassPhraseModal.jsx
 <<<<<<< HEAD
     const isValid =
       passphraseValue === passphraseConfirmValue && !!passphraseValue;
@@ -63,6 +68,12 @@ const TrezorWalletCreationPassphraseModal = ({
   const isValid =
     passphraseValue === passphraseConfirmValue && !!passphraseValue;
 >>>>>>> 1544365d (Create trezor.module.css)
+=======
+  const isValid = useMemo(
+    () => passphraseValue === passphraseConfirmValue && !!passphraseValue,
+    [passphraseValue, passphraseConfirmValue]
+  );
+>>>>>>> 517dc3e7 (Test all modals and align them to center):app/components/modals/TrezorModals/TrezorWalletCreationPassphraseModal.jsx
 
   return (
     <Modal className={className} onCancelModal={onCancelModal}>
