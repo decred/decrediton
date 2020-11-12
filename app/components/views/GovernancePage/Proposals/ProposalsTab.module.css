@@ -60,6 +60,10 @@
   padding: 38px 60px 30px 63px;
 }
 
+.politeiaDisabledMsg {
+  padding-bottom: 24px;
+}
+
 .proposalsLink {
   color: var(--button-text) !important;
 }

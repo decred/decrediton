@@ -4336,13 +4336,13 @@ msgstr "Politeia"
 
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
-#. Politeia integration is currently disabled in your privacy settings. Please
-#. enable it if you want to be able to access the proposal system.
+#. Politeia integration is disabled by privacy settings.
+#. It must be enabled to access the proposal system.
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/PoliteiaDisabled.json
 msgctxt "proposals.enablePoliteia.description"
 msgid ""
-"Politeia integration is currently disabled in your privacy settings. Please "
-"enable it if you want to be able to access the proposal system."
+"Politeia integration is disabled by privacy settings. "
+"It must be enabled to access the proposal system."
 msgstr ""
 "L'intégration de Politeia est actuellement désactivée dans vos paramètres de"
 " confidentialité. Veuillez l'activer si vous souhaitez accéder au système de"
@@ -5847,7 +5847,7 @@ msgstr "Récompenses d'enjeu"
 
 #. [stake.enableStakePoolListing.description]
 #. defaultMessage is:
-#. StakePool listing from external API endpoint is currently disabled. Please
+#. StakePool listing from external API endpoint is currently disabled
 #. enable the access to this third party service or manually configure the
 #. stakepool.
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/index.json
