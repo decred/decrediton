@@ -24,7 +24,8 @@ const ProposalsListItem = ({
   finishedVote
 }) => {
   const { viewProposalDetailsHandler, tsDate } = useProposalsListItem(token);
-  const isVoting = voteStatus == VOTESTATUS_ACTIVEVOTE;
+  const isVoting = voteStatus === VOTESTATUS_ACTIVEVOTE;
+  const isVotingFinished = voteStatus === VOTESTATUS_FINISHEDVOTE;
   const isModified =
     (!isVoting && modifiedSinceLastAccess) ||
     (isVoting && votingSinceLastAccess);
@@ -43,13 +44,13 @@ const ProposalsListItem = ({
         <div className={styles.token}>{token.substring(0, 7)}</div>
       </div>
       <div className={styles.resultsArea}>
-        {(voteStatus === VOTESTATUS_ACTIVEVOTE ||
-          voteStatus === VOTESTATUS_FINISHEDVOTE) && (
+        {(isVoting || isVotingFinished) && (
           <div className={classNames("is-row", styles.votingIndicator)}>
             <div
               className={classNames(
                 styles.voteChoice,
-                currentVoteChoice && styles[currentVoteChoice.id]
+                isVotingFinished && quorumPass && styles[voteResult],
+                isVoting && currentVoteChoice && styles[currentVoteChoice.id]
               )}
             />
             <VotingProgress {...{ voteCounts, quorumMinimumVotes }} />

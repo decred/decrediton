@@ -80,10 +80,10 @@
   margin-right: 10px;
 }
 
-.voteChoice.yes {
+.voteChoice.yes, .voteChoice.passed {
   background-color: var(--vote-yes-color);
 }
-.voteChoice.no {
+.voteChoice.no, .voteChoice.declined {
   background-color: var(--vote-no-color);
 }
 
