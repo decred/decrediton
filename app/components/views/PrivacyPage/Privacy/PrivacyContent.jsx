@@ -74,8 +74,8 @@ const PrivacyContent = ({
     <Checkbox
       label={
         <T
-          id="Privacy.checkbox"
-          m="Send From Unmixed accounts"
+          id="privacy.sendFromUnmixedCheckbox"
+          m="Send from unmixed accounts"
         />
       }
       id="privacyCheckbox"

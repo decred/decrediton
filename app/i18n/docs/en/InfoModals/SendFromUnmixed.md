@@ -1,3 +1,3 @@
-## Allow Send from other unmixed accounts
+Sending from unmixed accounts has been disabled by the privacy settings of this wallet. This is for your protection.
 
-Currently, you have privacy settings enabled.  As part of this, we have turned off the ability to create external spends from non-mixed accounts.  Any funds sent from the non-mixed account will not be private and will be able to be tracked.  If you would like to turn off this setting please type in 'I understand the risks' below.  You may re-engage this setting at any time.
+Sending from unmixed accounts is not private and could possibly be traced back to you.  If you would like to turn off this setting please type 'I understand the risks' below.  You may re-engage this setting at any time.

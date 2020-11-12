@@ -16,7 +16,7 @@ const Modal = ({
 }) => (
   <DefaultModal className={style.confirmSendFromUnmixed} {...{ show }}>
     <div className={style.titleConfirmSendFromUnmixed}>
-      <T id="SendFromUnmixed.titleWarning" m="Seed Clipboard Copy Warning" />
+      <T id="SendFromUnmixed.titleWarning" m="Sending from Unmixed Accounts" />
     </div>
     <div className={style.confirmSeedCopyContent}>
       <div className={style.confirmSeedCopyWarningText}>
@@ -51,7 +51,7 @@ const Modal = ({
           typedConfirmationPhrase.toLowerCase() !==
           copyConfirmationPhrase.toLowerCase()
         }>
-        <T id="SendFromUnmixed.btnConfirm" m="Allow send from Unmixed" />
+        <T id="SendFromUnmixed.btnConfirm" m="Enable sending from unmixed accounts" />
       </DangerButton>
       <InvisibleButton
         className={style.confirmCloseButton}
