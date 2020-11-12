@@ -1,12 +1,11 @@
 [main]
 host = https://www.transifex.com
 
-# [decrediton-pot]
-# file_filter = app/i18n/po/decrediton.<lang>.po
-# minimum_perc = 80
-# source_file = app/i18n/pot/decrediton.pot
-# source_lang = en
-# type = PO
+[decrediton.backupinfomd]
+file_filter = app/i18n/docs/<lang>/LN/BackupInfo.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN
 
 [decrediton.decrediton]
 file_filter = app/i18n/po/decrediton.<lang>.po
@@ -14,14 +13,20 @@ source_lang = en
 minimum_perc = 80
 type = PO
 
-[decrediton.seedcopymd]
-file_filter = app/i18n/docs/<lang>/Warnings/SeedCopy.md
+[decrediton.lnforceclosechannelmd]
+file_filter = app/i18n/docs/<lang>/Warnings/LNForceCloseChannel.md
 source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN
 
-[decrediton.walletcreationmd]
-file_filter = app/i18n/docs/<lang>/Warnings/WalletCreation.md
+[decrediton.lnwalletcreationmd]
+file_filter = app/i18n/docs/<lang>/Warnings/LNWalletCreation.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN
+
+[decrediton.seedcopymd]
+file_filter = app/i18n/docs/<lang>/Warnings/SeedCopy.md
 source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN
@@ -44,8 +49,8 @@ source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN
 
-[decrediton.lnforceclosechannelmd]
-file_filter = app/i18n/docs/<lang>/Warnings/LNForceCloseChannel.md
+[decrediton.walletcreationmd]
+file_filter = app/i18n/docs/<lang>/Warnings/WalletCreation.md
 source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN

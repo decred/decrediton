@@ -4,7 +4,7 @@
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2020-10-23T21:12:45.382Z\n"
+"POT-Creation-Date: 2020-10-27T14:32:57.476Z\n"
 "Last-Translator: Matheus Degiovani, 2020\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -273,7 +273,7 @@ msgstr "Conta"
 #. [privacy.mixing.account.branch]
 #. defaultMessage is:
 #. Account Branch
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account.branch"
 msgid "Account Branch"
 msgstr "Galho da Conta"
@@ -296,10 +296,10 @@ msgstr "Número da conta"
 
 #. [ln.connectPage.account]
 #. defaultMessage is:
-#. Wallet account to use
+#. Account to use
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.account"
-msgid "Wallet account to use"
+msgid "Account to use"
 msgstr "Conta"
 
 #. [getstarted.setAccount.acctIdxRow]
@@ -1171,7 +1171,7 @@ msgstr "Cancelar"
 #. [mytickets.loadingMoreTickets.cancelBtn]
 #. defaultMessage is:
 #. Cancel listing tickets
-#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
 msgctxt "mytickets.loadingMoreTickets.cancelBtn"
 msgid "Cancel listing tickets"
 msgstr "Cancelar listagem de tickets"
@@ -1234,26 +1234,26 @@ msgstr "Mudar"
 
 #. [privacy.change.account]
 #. defaultMessage is:
-#. Unmixed Account
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#. Change Account
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.change.account"
-msgid "Unmixed Account"
+msgid "Change Account"
 msgstr "Conta de Troco"
 
 #. [addMixerAccountModal.changeAccountName]
 #. defaultMessage is:
-#. Unmixed Account Name
+#. Change Account Name
 #: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
 msgctxt "addMixerAccountModal.changeAccountName"
-msgid "Unmixed Account Name"
+msgid "Change Account Name"
 msgstr "Nome da Conta de Troco"
 
 #. [getstarted.setAcct.changAcct]
 #. defaultMessage is:
-#. Unmixed Account: {value}
+#. Change Acct: {value}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAcct.changAcct"
-msgid "Unmixed Account: {value}"
+msgid "Change Acct: {value}"
 msgstr "Conta Troco: {value}"
 
 #. [trezorPage.changeHomeScreen]
@@ -1944,11 +1944,11 @@ msgstr "Criar Contas Padrão"
 
 #. [ln.createLNWalletPage.title]
 #. defaultMessage is:
-#. Create LN Wallet
+#. Create Lightning Wallet
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.createLNWalletPage.title"
-msgid "Create LN Wallet"
-msgstr "Criar Carteira LN"
+msgid "Create Lightning Wallet"
+msgstr ""
 
 #. [privacy.create.accounts]
 #. defaultMessage is:
@@ -1992,11 +1992,11 @@ msgstr "Criar uma Proposta"
 
 #. [ln.createLNWalletPage.description]
 #. defaultMessage is:
-#. Create a new LN wallet backed by the Decrediton wallet.
+#. Create a new Lightning Network wallet backed by the Decrediton wallet.
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.createLNWalletPage.description"
-msgid "Create a new LN wallet backed by the Decrediton wallet."
-msgstr "Criar uma nova carteira LN suportada pela carteira Decrediton"
+msgid "Create a new Lightning Network wallet backed by the Decrediton wallet."
+msgstr ""
 
 #. [createWallet.title]
 #. defaultMessage is:
@@ -2520,6 +2520,17 @@ msgstr ""
 "Deseja iniciar o mixer?\n"
 "A Decrediton deve permanecer em execução para que o mixer possa misturar as entradas."
 
+#. [privacy.create.default.description]
+#. defaultMessage is:
+#. Do you wish to create default mixing accounts {mixed} and {change}?
+#. {boldMessage}
+#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
+msgctxt "privacy.create.default.description"
+msgid ""
+"Do you wish to create default mixing accounts {mixed} and {change}? "
+"{boldMessage}"
+msgstr ""
+
 #. [docs.unavailable]
 #. defaultMessage is:
 #. Document '{name}' is unavailable in the current language. Please request it
@@ -2552,7 +2563,7 @@ msgstr "Documentação"
 #. [myTickets.loadingMoreTicketsProgressDesc]
 #. defaultMessage is:
 #. Down to block {block} ({blockPerc, number, percent})
-#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
 msgctxt "myTickets.loadingMoreTicketsProgressDesc"
 msgid "Down to block {block} ({blockPerc, number, percent})"
 msgstr "Até o bloco {block} ({blockPerc, number, percent})"
@@ -2653,13 +2664,13 @@ msgstr "Habilitada"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, VSP listing, Politeia, etc).
+#. access to features (such as version update, VSP listing, politeia, etc).
 #. Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, VSP listing, Politeia, etc). "
+"access to features (such as version update, VSP listing, politeia, etc). "
 "Recommended for most users."
 msgstr ""
 "Habilita conexões a maior parte dos serviços para melhor experiência de "
@@ -3097,11 +3108,11 @@ msgstr "Falha ao sincronizar dcrlnd durante setup inicial: {originalError}"
 
 #. [ln.ntf.unlockFailed]
 #. defaultMessage is:
-#. Failed to unlock ln wallet: {originalError}
+#. Failed to unlock LN wallet: {originalError}
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.unlockFailed"
-msgid "Failed to unlock ln wallet: {originalError}"
-msgstr "Falha ao destrancar carteira LN: {originalError}"
+msgid "Failed to unlock LN wallet: {originalError}"
+msgstr ""
 
 #. [fatal.header.title]
 #. defaultMessage is:
@@ -3482,7 +3493,7 @@ msgstr "Ajuda"
 #. [help.title]
 #. defaultMessage is:
 #. Help
-#: app/i18n/extracted/app/components/views/HelpPage/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/HelpPage.json
 msgctxt "help.title"
 msgid "Help"
 msgstr "Ajuda"
@@ -3582,19 +3593,6 @@ msgstr "Eu entendo os riscos"
 msgctxt "txDetails.io.title"
 msgid "I/O Details"
 msgstr "Detalhes de E/S"
-
-#. [privacy.create.default.description]
-#. defaultMessage is:
-#. If continue the accounts {mixed} and {change} are going to be created.
-#.           Which are the default ones for the mixer. {boldMessage}
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
-msgctxt "privacy.create.default.description"
-msgid ""
-"If continue the accounts {mixed} and {change} are going to be created.\n"
-"          Which are the default ones for the mixer. {boldMessage}"
-msgstr ""
-"Se continuar as contas {mixed} e {change} serão criadas.\n"
-"Elas serão as contas padrão para o mixer. {boldMessage}"
 
 #. [help.description.links]
 #. defaultMessage is:
@@ -3844,42 +3842,42 @@ msgstr "Faturas (pedidos de pagamento) criados por essa carteira LN"
 
 #. [myTickets.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Use Legacy VSP
+#. Is Legacy
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
 msgctxt "myTickets.isLegacy.legacy.add"
-msgid "Use Legacy VSP"
+msgid "Is Legacy"
 msgstr "Legado"
 
 #. [mytickets.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Use Legacy VSP
+#. Is Legacy
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
 msgctxt "mytickets.isLegacy.legacy.add"
-msgid "Use Legacy VSP"
+msgid "Is Legacy"
 msgstr "Legado"
 
 #. [purchase.isLegacy.legacy.add]
 #. defaultMessage is:
-#. Use Legacy VSP
+#. Is Legacy
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 msgctxt "purchase.isLegacy.legacy.add"
-msgid "Use Legacy VSP"
+msgid "Is Legacy"
 msgstr "Legado"
 
 #. [purchase.isLegacy.legacy]
 #. defaultMessage is:
-#. Use Legacy VSP
+#. Is Legacy
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_Tickets.json
 msgctxt "purchase.isLegacy.legacy"
-msgid "Use Legacy VSP"
+msgid "Is Legacy"
 msgstr "Legado"
 
 #. [purchase.isLegacy]
 #. defaultMessage is:
-#. Use Legacy VSP
+#. Is Legacy
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 msgctxt "purchase.isLegacy"
-msgid "Use Legacy VSP"
+msgid "Is Legacy"
 msgstr "Legado"
 
 #. [privacy.create.needed.description]
@@ -3947,10 +3945,10 @@ msgstr "Última Mudança"
 
 #. [proposalItem.lastUpdatedAt]
 #. defaultMessage is:
-#. Last updated {reldate}
+#. Last Updated {reldate}
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsListItem/ProposalsListItem.json
 msgctxt "proposalItem.lastUpdatedAt"
-msgid "Last updated {reldate}"
+msgid "Last Updated {reldate}"
 msgstr "Última Mudança {reldate}"
 
 #. [ln.backupInfo.lastUpdated]
@@ -4013,7 +4011,7 @@ msgstr "Iniciar Carteira"
 #. [tutorials.ticketLifecycle]
 #. defaultMessage is:
 #. Learn About the Ticket Lifecycle
-#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/TutorialsTab.json
 msgctxt "tutorials.ticketLifecycle"
 msgid "Learn About the Ticket Lifecycle"
 msgstr "Conhecer o ciclo de vida de um Ticket"
@@ -4037,7 +4035,7 @@ msgstr "Saber Mais"
 #. [help.description.tutorials]
 #. defaultMessage is:
 #. Learn about the various aspects of the Decred network.
-#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/TutorialsTab.json
 msgctxt "help.description.tutorials"
 msgid "Learn about the various aspects of the Decred network."
 msgstr "Conhecer sobre vários aspectos da rede Decred"
@@ -4154,6 +4152,14 @@ msgctxt "vspselct.loading"
 msgid "Loading"
 msgstr "Carregando"
 
+#. [tickets.purchase.loading]
+#. defaultMessage is:
+#. Loading
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
+msgctxt "tickets.purchase.loading"
+msgid "Loading"
+msgstr ""
+
 #. [getStarted.chainLoading.syncEstimation.small]
 #. defaultMessage is:
 #. Loading Decred blockchain, completion estimated
@@ -4162,10 +4168,18 @@ msgctxt "getStarted.chainLoading.syncEstimation.small"
 msgid "Loading Decred blockchain, completion estimated"
 msgstr "Carregando blockchain Decred, conclusão estimada"
 
+#. [myTickets.noloadingMoreTickets]
+#. defaultMessage is:
+#. Loading more tickets canceled
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
+msgctxt "myTickets.noloadingMoreTickets"
+msgid "Loading more tickets canceled"
+msgstr ""
+
 #. [myTickets.loadingMoreTickets]
 #. defaultMessage is:
 #. Loading more tickets...
-#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
 msgctxt "myTickets.loadingMoreTickets"
 msgid "Loading more tickets..."
 msgstr "Carregando mais tickets..."
@@ -4261,7 +4275,7 @@ msgstr "Logs"
 #. [help.tab.logs]
 #. defaultMessage is:
 #. Logs
-#: app/i18n/extracted/app/components/views/HelpPage/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/HelpPage.json
 msgctxt "help.tab.logs"
 msgid "Logs"
 msgstr "Logs"
@@ -4271,8 +4285,8 @@ msgstr "Logs"
 #. Looks like you have accounts with coinjoin outputs. Past
 #.                 account names cannot be restored during Recovery, so it is
 #. not
-#.                 possible to know which account was the mixed account. You can
-#.                 set a mixed and unmixed account now or this can be done later
+#.                 possible to know which account was the mix account. You can
+#.                 set a mix and unmix account now or this can be done later
 #. on
 #.                 the privacy page.
 #.                 With this action the chosen accounts will be renamed.
@@ -4281,8 +4295,8 @@ msgctxt "getstarted.setAccount.description"
 msgid ""
 "Looks like you have accounts with coinjoin outputs. Past\n"
 "                account names cannot be restored during Recovery, so it is not\n"
-"                possible to know which account was the mixed account. You can\n"
-"                set a mixed and unmixed account now or this can be done later on\n"
+"                possible to know which account was the mix account. You can\n"
+"                set a mix and unmix account now or this can be done later on\n"
 "                the privacy page.\n"
 "                \n"
 "                With this action the chosen accounts will be renamed."
@@ -4447,18 +4461,18 @@ msgstr "Nome da Conta Mix"
 
 #. [getstarted.setAcct.mixedAcct]
 #. defaultMessage is:
-#. Mixed Account: {value}
+#. Mixed Acct: {value}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAcct.mixedAcct"
-msgid "Mixed Account: {value}"
+msgid "Mixed Acct: {value}"
 msgstr "Conta Mix: {value}"
 
 #. [privacy.mixing.account]
 #. defaultMessage is:
-#. Mixed Account
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#. Mixing Account
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account"
-msgid "Mixed Account"
+msgid "Mixing Account"
 msgstr "Conta Mix"
 
 #. [mytickets.subtitle]
@@ -5144,10 +5158,10 @@ msgstr "Pagamentos enviados por essa carteira LN."
 
 #. [sidebar.peersCount]
 #. defaultMessage is:
-#. Peers
+#. Peers Count
 #: app/i18n/extracted/app/components/SideBar/Logo/Logo.json
 msgctxt "sidebar.peersCount"
-msgid "Peers"
+msgid "Peers Count"
 msgstr "Número de Pares"
 
 #. [txHistory.Pending]
@@ -5299,13 +5313,13 @@ msgstr "Politeia"
 
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
-#. Politeia integration is disabled by privacy settings.
-#. It must be enabled to access the proposal system.
+#. Politeia integration is currently disabled in your privacy settings. Please
+#. enable it if you want to be able to access the proposal system.
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/PoliteiaDisabled.json
 msgctxt "proposals.enablePoliteia.description"
 msgid ""
-"Politeia integration is disabled by privacy settings. "
-"It must be enabled to access the proposal system."
+"Politeia integration is currently disabled in your privacy settings. Please "
+"enable it if you want to be able to access the proposal system."
 msgstr ""
 "Integração da Politeia está desabilitada nas suas preferências de "
 "privacidade. Por favor habilite-a se você quer ser capaz de acessar o "
@@ -5446,6 +5460,14 @@ msgstr "Configuração Privacidade"
 msgctxt "privacy.title"
 msgid "Privacy Options"
 msgstr "Opções de Privacidade"
+
+#. [stake.privacySettings]
+#. defaultMessage is:
+#. Privacy Settings
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PrivacyInfo/PrivacyInfo.json
+msgctxt "stake.privacySettings"
+msgid "Privacy Settings"
+msgstr ""
 
 #. [settings.group-title.privacy-and-security]
 #. defaultMessage is:
@@ -6153,10 +6175,10 @@ msgstr "Recuperar Carteira Existente"
 
 #. [ln.connectPage.backupFile]
 #. defaultMessage is:
-#. Restore SCB backup
+#. Restore SCB backup file
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.backupFile"
-msgid "Restore SCB backup"
+msgid "Restore SCB backup file"
 msgstr "Restaurar arquivo de backup SCB"
 
 #. [loaderBar.preCreateWalletRestore]
@@ -6182,6 +6204,14 @@ msgstr "Recuperar carteira existente"
 msgctxt "ln.startupStage.scbRestore"
 msgid "Restoring backup"
 msgstr "Restaurando backup"
+
+#. [mytickets.loadingMoreTickets.returnBtn]
+#. defaultMessage is:
+#. Return listing tickets
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
+msgctxt "mytickets.loadingMoreTickets.returnBtn"
+msgid "Return listing tickets"
+msgstr ""
 
 #. [fatal.retry.connection.button]
 #. defaultMessage is:
@@ -6598,13 +6628,13 @@ msgstr ""
 
 #. [spv.titleSub]
 #. defaultMessage is:
-#. Select how Decrediton should connect to the Decred network. You can
+#. Select how Decrediton wallet's should connect to the network. You can
 #. change this in the application settings later. For more in-depth
 #. information about SPV and how it works, you can go {link}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
-"Select how Decrediton should connect to the Decred network. You can change"
+"Select how Decrediton wallet's should connect to the network. You can change"
 " this in the application settings later. For more in-depth information about"
 " SPV and how it works, you can go {link}"
 msgstr ""
@@ -6771,10 +6801,10 @@ msgstr "Sessões {sessions}"
 
 #. [getstarted.setAccount.change]
 #. defaultMessage is:
-#. Set Unmixed Account
+#. Set Change Account
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAccount.change"
-msgid "Set Unmixed Account"
+msgid "Set Change Account"
 msgstr "Selecionar Conta de Troco"
 
 #. [getstarted.setAccount.title]
@@ -6876,7 +6906,7 @@ msgstr "Exibir arquivos de logs da Carteira"
 #. [privacy.mixing.server.port]
 #. defaultMessage is:
 #. Shuffle Port
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.server.port"
 msgid "Shuffle Port"
 msgstr "Porta do Mixer"
@@ -6884,7 +6914,7 @@ msgstr "Porta do Mixer"
 #. [privacy.mixing.server]
 #. defaultMessage is:
 #. Shuffle Server
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.server"
 msgid "Shuffle Server"
 msgstr "Servidor do Mixer"
@@ -7012,7 +7042,7 @@ msgstr "Ordenado Por"
 #. [help.tab.sources]
 #. defaultMessage is:
 #. Sources
-#: app/i18n/extracted/app/components/views/HelpPage/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/HelpPage.json
 msgctxt "help.tab.sources"
 msgid "Sources"
 msgstr "Fontes"
@@ -7432,6 +7462,14 @@ msgstr ""
 "A configuração que você mudou requer que a Decrediton seja reiniciada. Por "
 "favor confirme essa ação antes de continuar."
 
+#. [ln.connectPage.accountDescr]
+#. defaultMessage is:
+#. The wallet account to use for LN operations.
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.accountDescr"
+msgid "The wallet account to use for LN operations."
+msgstr "A conta da carteira que será usada para operações da LN."
+
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
 #. There are currently no agendas for voting.
@@ -7480,12 +7518,12 @@ msgstr ""
 #. [ln.connectPage.enableAutopilotDescr]
 #. defaultMessage is:
 #. This enables the 'autopilot' feature, which tries to automatically open
-#. channels using up to 60% of the account's spendable funds.
+#. channels for up to 60% of the account's spendable amounts.
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.enableAutopilotDescr"
 msgid ""
 "This enables the 'autopilot' feature, which tries to automatically open "
-"channels using up to 60% of the account's spendable funds."
+"channels for up to 60% of the account's spendable amounts."
 msgstr ""
 "Isso habilita a funcionalidade de 'piloto automático - autopilot' que tenta "
 "abrir canais automaticamente usando até 60% dos fundos disponíveis da conta."
@@ -7616,14 +7654,14 @@ msgstr ""
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular Decred daemon and fully verify blocks.  This will
-#. take longer but is fully secure.  Any block or mined transaction can be
+#. This will use the regular Decred Daemon and fully verify blocks.  This will
+#. take longer, but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
-"This will use the regular Decred daemon and fully verify blocks.  This will "
-"take longer but is fully secure.  Any block or mined transaction can be "
+"This will use the regular Decred Daemon and fully verify blocks.  This will "
+"take longer, but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr ""
 "Essa opção irá utilizar o Daemon Decred e irá verificar completamente os "
@@ -8489,7 +8527,7 @@ msgstr "Tutorial"
 #. [help.tab.tutorials]
 #. defaultMessage is:
 #. Tutorials
-#: app/i18n/extracted/app/components/views/HelpPage/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/HelpPage.json
 msgctxt "help.tab.tutorials"
 msgid "Tutorials"
 msgstr "Tutoriais"
@@ -8497,7 +8535,7 @@ msgstr "Tutoriais"
 #. [tutorials.subtitle]
 #. defaultMessage is:
 #. Tutorials
-#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/TutorialsTab.json
 msgctxt "tutorials.subtitle"
 msgid "Tutorials"
 msgstr "Tutoriais"
@@ -8742,7 +8780,7 @@ msgstr "Tickets não gastos"
 #. [myTickets.loadingMoreTicketsProgressAsc]
 #. defaultMessage is:
 #. Up to block {block} ({blockPerc, number, percent})
-#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets.json
+#: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
 msgctxt "myTickets.loadingMoreTicketsProgressAsc"
 msgid "Up to block {block} ({blockPerc, number, percent})"
 msgstr "Até bloco {block} ({blockPerc, number, percent})"
@@ -9376,7 +9414,7 @@ msgstr "Bem-vindo a Carteira Decrediton"
 #. [tutorials.staking]
 #. defaultMessage is:
 #. What is Staking (Proof-of-Stake)?
-#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
+#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/TutorialsTab.json
 msgctxt "tutorials.staking"
 msgid "What is Staking (Proof-of-Stake)?"
 msgstr "O que é Staking (Proof-ofStake)?"
@@ -9538,12 +9576,12 @@ msgstr ""
 
 #. [getstarted.setAccount.isValidMessage]
 #. defaultMessage is:
-#. You need to set a mixed and unmixed account, and they can not
+#. You need to set a mixed and change account and they can not
 #.                   be  the same
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAccount.isValidMessage"
 msgid ""
-"You need to set a mixed and unmixed account, and they can not\n"
+"You need to set a mixed and change account and they can not\n"
 "                  be  the same"
 msgstr ""
 "Você precisa especificar as contas mix e de troco e elas não podem ser a "
@@ -9583,16 +9621,14 @@ msgstr "Seu saldo a manter é inválido"
 
 #. [governance.ntf.updateVoteChoiceSuccess]
 #. defaultMessage is:
-#. Your vote has been casted with success!
-#.  Thanks for participating in decred's governance
+#. Your vote has been cast!
+#. Thanks for participating in Decred's governance
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "governance.ntf.updateVoteChoiceSuccess"
 msgid ""
-"Your vote has been casted with success!\n"
-" Thanks for participating in decred's governance"
+"Your vote has been cast!\n"
+"Thanks for participating in Decred's governance"
 msgstr ""
-"Seu voto foi enviado com sucesso!\n"
-"Obrigado por participar na governança da Decred!"
 
 #. [proposal.details.description]
 #. defaultMessage is:
