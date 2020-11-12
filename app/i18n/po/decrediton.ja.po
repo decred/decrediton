@@ -5296,13 +5296,13 @@ msgstr "Decreditonの外部サービスへの接続方法を選択してくだ�
 
 #. [spv.titleSub]
 #. defaultMessage is:
-#. Select how Decrediton wallet's should connect to the network. You can
+#. Select how Decrediton should connect to the Decred network. You can
 #. change this in the application settings later. For more in-depth
 #. information about SPV and how it works, you can go
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
-"Select how Decrediton wallet's should connect to the network. You can change"
+"Select how Decrediton should connect to the Decred network. You can change"
 " this in the application settings later. For more in-depth information about"
 " SPV and how it works, you can go"
 msgstr ""

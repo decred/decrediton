@@ -12,7 +12,7 @@ export default ({ toggleSpv }) => (
       <T
         id="spv.titleSub"
         m={
-          "Select how Decrediton wallet's should connect to the network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go {link}"
+          "Select how Decrediton should connect to the Decred network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go {link}"
         }
         values={{
           link: (
