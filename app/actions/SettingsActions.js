@@ -88,8 +88,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   }
 
   if (needNetworkReset) {
-    // we need to cleanup politeia's csrf and cached inventory tokens here,
-    // as this info is network specific.
+    // we need to cleanup politeia's csrf as this info is network specific.
     dispatch(cleanupPoliteiaCSRF());
     dispatch(closeWalletRequest());
     dispatch(cleanupPoliteiaCSRF());
