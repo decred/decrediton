@@ -30,7 +30,6 @@ import { spawn } from "child_process";
 import isRunning from "is-running";
 import stringArgv from "string-argv";
 import { concat, isString } from "../fp";
-import * as ln from "wallet/ln";
 import webSocket from "ws";
 import path from "path";
 import ini from "ini";
@@ -43,7 +42,7 @@ const logger = createLogger(debug);
 let dcrdPID, dcrwPID, dcrlndPID;
 
 // windows-only stuff
-let dcrwPipeRx, dcrwPipeTx, dcrdPipeRx, dcrwTxStream;
+let dcrwPipeRx, dcrwPipeTx, dcrwTxStream, dcrdPipeRx, dcrlndPipeRx;
 
 // general data that needs to keep consistency while decrediton is running.
 let dcrwPort;
@@ -162,19 +161,6 @@ export const closeDCRW = () => {
   }
 };
 
-// Send a shutdown request to the dcrlnd daemon. Only used in windows while
-// we don't have piperx/pipetx to command it.
-const rpcStopDcrlnd = async (creds) => {
-  logger.log("info", "Stopping dcrlnd daemon via RPC call");
-  const lnClient = await ln.getLightningClient(
-    creds.address,
-    creds.port,
-    creds.certPath,
-    creds.macaroonPath
-  );
-  await ln.stopDaemon(lnClient);
-};
-
 export const closeDcrlnd = () => {
   if (dcrlndPID === -1) {
     // process is not started by decrediton
@@ -186,9 +172,6 @@ export const closeDcrlnd = () => {
     dcrlndPID = null;
     dcrlndCreds = null;
   } else if (require("is-running")(dcrlndPID)) {
-    // TODO: needs piperx (and ideally pipetx) in dcrlnd
-    // For the moment we'll use the StopDaemon() rpc call in dcrlnd.
-    /*
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
       win32ipc.closePipe(dcrlndPipeRx);
@@ -198,8 +181,6 @@ export const closeDcrlnd = () => {
       logger.log("error", "Error closing dcrlnd piperx: " + e);
       return false;
     }
-    */
-    rpcStopDcrlnd(dcrlndCreds);
     dcrlndPID = null;
     dcrlndCreds = null;
   }
@@ -741,17 +722,15 @@ export const launchDCRLnd = (
       reject("The dcrlnd executable does not exist at " + dcrlndExe);
     }
 
-    /*
-  if (os.platform() == "win32") {
-    try {
-      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      dcrdPipeRx = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", dcrdPipeRx.readEnd));
-    } catch (e) {
-      logger.log("error", "can't find proper module to launch dcrd: " + e);
+    if (os.platform() == "win32") {
+      try {
+        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+        dcrlndPipeRx = win32ipc.createPipe("out");
+        args.push(util.format("--piperx=%d", dcrlndPipeRx.readEnd));
+      } catch (e) {
+        logger.log("error", "can't find proper module to launch dcrlnd: " + e);
+      }
     }
-  }
-  */
 
     const fullArgs = args.join(" ");
     logger.log("info", `Starting ${dcrlndExe} with ${fullArgs}`);
