@@ -7231,9 +7231,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular Decred Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted.
+#. This will use the regular Decred daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted.
 msgctxt "spv.options.disable.description"
-msgid "This will use the regular Decred Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted."
+msgid "This will use the regular Decred daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted."
 msgstr ""
 
 #: app/i18n/extracted/app/components/inputs/NumTicketsInput.json
