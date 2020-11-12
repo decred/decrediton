@@ -618,7 +618,7 @@
   "snackbar.defaults.error": "{originalError}",
   "snackbar.defaults.success": "Erfolg!",
   "spv.auto.buyer.warn": "Automatischer Ticketkauf bei Nutzung von SPV nicht verfügbar",
-  "spv.options.disable.description": "Dadurch werden der reguläre Decred Daemon und vollständig überprüfte Blocks verwendet. Das benötigt mehr Zeit, ist aber vollkommen sicher. Sie können jedem Block und jeder gemineden Transaktion vollkommen vertrauen.",
+  "spv.options.disable.description": "Dadurch werden der reguläre Decred daemon und vollständig überprüfte Blocks verwendet. Das benötigt mehr Zeit, ist aber vollkommen sicher. Sie können jedem Block und jeder gemineden Transaktion vollkommen vertrauen.",
   "spv.options.disable.title": "SPV deaktivieren",
   "spv.options.enable.description": "Mit SPV können Sie Ihre Wallets schneller wiederherstellen und verwenden. Diese Geschwindigkeit geht auf Kosten von nicht vollständig überprüften Blöcken. Es ist 'weniger sicher', aber sehr unwahrscheinlich, dass es zu Problemen kommt.",
   "spv.options.enable.title": "SPV aktivieren",

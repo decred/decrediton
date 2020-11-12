@@ -2109,13 +2109,13 @@ msgstr "Aktiviert"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, stakepool listing, politeia,
+#. access to features (such as version update, stakepool listing, Politeia,
 #. etc). Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, stakepool listing, politeia, "
+"access to features (such as version update, stakepool listing, Politeia, "
 "etc). Recommended for most users."
 msgstr ""
 "Ermöglicht die Verbindung zu den meisten Diensten für ein besseres "
@@ -5376,13 +5376,13 @@ msgstr ""
 
 #. [spv.titleSub]
 #. defaultMessage is:
-#. Select how Decrediton wallet's should connect to the network. You can
+#. Select how Decrediton should connect to the Decred network. You can
 #. change this in the application settings later. For more in-depth
 #. information about SPV and how it works, you can go
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
-"Select how Decrediton wallet's should connect to the network. You can change"
+"Select how Decrediton should connect to the Decred network. You can change"
 " this in the application settings later. For more in-depth information about"
 " SPV and how it works, you can go"
 msgstr ""
@@ -6325,17 +6325,17 @@ msgstr ""
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular Decred Daemon and fully verify blocks.  This will
-#. take longer, but is fully secure.  Any block or mined transaction can be
+#. This will use the regular Decred daemon and fully verify blocks.  This will
+#. take longer but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
-"This will use the regular Decred Daemon and fully verify blocks.  This will "
-"take longer, but is fully secure.  Any block or mined transaction can be "
+"This will use the regular Decred daemon and fully verify blocks.  This will "
+"take longer but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr ""
-"Dadurch werden der reguläre Decred Daemon und vollständig überprüfte Blocks "
+"Dadurch werden der reguläre Decred daemon und vollständig überprüfte Blocks "
 "verwendet. Das benötigt mehr Zeit, ist aber vollkommen sicher. Sie können "
 "jedem Block und jeder gemineden Transaktion vollkommen vertrauen."
 

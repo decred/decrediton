@@ -27,7 +27,7 @@ export default ({
         description={
           <T
             id="privacy.options.standard.description"
-            m="Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, politeia, etc). Recommended for most users."
+            m="Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, Politeia, etc). Recommended for most users."
           />
         }
         onClick={setupStandardPrivacy}
