@@ -5,10 +5,10 @@ import styles from "./ProposalsTab.module.css";
 
 export default ({ getTokenAndInitialBatch }) => (
   <div className={styles.politeiaDisabled}>
-    <p>
+    <p className={styles.politeiaDisabledMsg}>
       <T
         id="proposals.enablePoliteia.description"
-        m="Politeia integration is currently disabled in your privacy settings. Please enable it if you want to be able to access the proposal system."
+        m="Politeia integration is disabled by privacy settings. It must be enabled to access the proposal system."
       />
     </p>
     <EnableExternalRequestButton

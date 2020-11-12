@@ -87,11 +87,16 @@
   text-decoration: none;
 }
 
-.peersCount {
+.bottomBar {
   display: flex;
   align-items: center;
   padding: 0 16px 8px;
   background-color: var(--info-modal-button-text);
+}
+
+.peersCount {
+  display: flex;
+  align-items: center;
 }
 
 .peersIcon {
@@ -130,12 +135,14 @@
   animation: spin 1s linear infinite;
 }
 
+.spvIconContainer {
+  margin-left: auto;
+}
+
 .spvIcon {
   background-image: var(--enable-spv);
-  height: 1.6rem;
-  width: 1.6rem;
-  align-items: center;
-  left: 16rem;
+  height: 2.0rem;
+  width: 2.0rem; 
 }
 
 .spvLabel {

@@ -5051,9 +5051,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/PoliteiaDisabled.json
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
-#. Politeia integration is currently disabled in your privacy settings. Please enable it if you want to be able to access the proposal system.
+#. Politeia integration is disabled by privacy settings. It must be enabled to access the proposal system.
 msgctxt "proposals.enablePoliteia.description"
-msgid "Politeia integration is currently disabled in your privacy settings. Please enable it if you want to be able to access the proposal system."
+msgid "Politeia integration is disabled by privacy settings. It must be enabled to access the proposal system."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json

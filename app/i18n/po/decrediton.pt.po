@@ -5299,13 +5299,13 @@ msgstr "Politeia"
 
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
-#. Politeia integration is currently disabled in your privacy settings. Please
-#. enable it if you want to be able to access the proposal system.
+#. Politeia integration is disabled by privacy settings.
+#. It must be enabled to access the proposal system.
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/PoliteiaDisabled.json
 msgctxt "proposals.enablePoliteia.description"
 msgid ""
-"Politeia integration is currently disabled in your privacy settings. Please "
-"enable it if you want to be able to access the proposal system."
+"Politeia integration is disabled by privacy settings. "
+"It must be enabled to access the proposal system."
 msgstr ""
 "Integração da Politeia está desabilitada nas suas preferências de "
 "privacidade. Por favor habilite-a se você quer ser capaz de acessar o "

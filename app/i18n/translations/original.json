@@ -718,7 +718,7 @@
   "proposals.detail.wallet.eligible.headers.status": "Ticket Status",
   "proposals.detail.wallet.eligible.headers.transaction": "Transaction",
   "proposals.enablePoliteia.button": "Enable Politeia Integration",
-  "proposals.enablePoliteia.description": "Politeia integration is currently disabled in your privacy settings. Please enable it if you want to be able to access the proposal system.",
+  "proposals.enablePoliteia.description": "Politeia integration is disabled by privacy settings. It must be enabled to access the proposal system.",
   "proposals.quorumNotMet": "Quorum not met",
   "proposals.statusLinks.abandoned": "Abandoned",
   "proposals.statusLinks.preVote": "In Discussion",

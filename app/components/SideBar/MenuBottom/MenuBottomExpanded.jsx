@@ -1,10 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
+import { Balance, Tooltip } from "shared";
 import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
 import styles from "./MenuBottom.module.css";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames } from "pi-ui";
 
 const MenuBarExpanded = ({
   isShowingAccounts,
@@ -56,16 +56,20 @@ const MenuBarExpanded = ({
         </>
       )}
     </div>
-    <div className={styles.peersCount}>
-      <div className={styles.peersIcon}></div>
-      <span className={styles.peersCountLabel}>
-        <T id="sidebar.peersCount" m="Peers" />
-      </span>
-      <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
+    <div className={styles.bottomBar}>
+      <div className={styles.peersCount}>
+        <div className={styles.peersIcon}></div>
+        <span className={styles.peersCountLabel}>
+          <T id="sidebar.peersCount" m="Peers" />
+        </span>
+        <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
+      </div>
       {isSPV && (
-        <Tooltip className={styles.spvIcon} content={<T id="sidebar.spvMode" m="SPV Mode" />}>
-          <div  />
-        </Tooltip>
+        <div className={styles.spvIconContainer}>
+          <Tooltip text={<T id="sidebar.spvMode" m="SPV Mode" />}>
+            <div className={styles.spvIcon} />
+          </Tooltip>
+        </div>
       )}
     </div>
   </div>
