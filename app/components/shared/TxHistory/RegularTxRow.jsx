@@ -50,6 +50,7 @@ const RegularTxRow = ({
   txAccountNameDebited,
   timeMessage,
   className,
+  isMix,
   ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
@@ -80,6 +81,7 @@ const RegularTxRow = ({
       {!pending && (
         <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
       )}
+      { isMix && <span className={styles.isMix}>mixed</span> }
     </div>
   </Row>
 );
