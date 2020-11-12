@@ -73,6 +73,10 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("ln_macaroonpath")) {
     config.set("ln_macaroonpath", "");
   }
+  // if privacy if configured, set send_from_unmixed if not set.
+  if (!config.has("send_from_unmixed") && config.has("mixedaccount")) {
+    config.set("send_from_unmixed", false);
+  }
 
   stakePoolInfo(function (foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
