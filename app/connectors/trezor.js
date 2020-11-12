@@ -6,6 +6,7 @@ import * as trza from "../actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   isTrezor: sel.isTrezor,
+  isPerformingUpdate: sel.isPerformingTrezorUpdate,
   waitingForPin: sel.trezorWaitingForPin,
   waitingForPassPhrase: sel.trezorWaitingForPassPhrase,
   waitingForWord: sel.trezorWaitingForWord,

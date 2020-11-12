@@ -1456,6 +1456,7 @@ export const autobuyerRunningModalVisible = get([
 ]);
 
 export const isTrezor = get(["trezor", "enabled"]);
+export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
 
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isChangePassPhraseDisabled = isWatchingOnly;
