@@ -2,7 +2,8 @@ import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
+  TRANSACTION_DIR_TRANSFERRED,
+  TRANSACTION_MIXED
 } from "constants";
 
 export const selectedTxTypeFromFilter = (filter) => {
@@ -33,22 +34,31 @@ export const getSortTypes = () => ([
 export const getTxTypes = () => ([
   {
     key: "all",
-    value: { direction: null },
+    value: { direction: null, type: -1 },
     label: <T id="txFilter.type.all" m="All" />
   },
+  // -1 cleans the filter types, and right now we are cleaning transaction
+  // types if a direction is set, instead of acumullating them, because we
+  // need to apply changes on EyeFilterMenu Component, for having multiple
+  // options marked.
   {
     key: "sent",
-    value: { direction: TRANSACTION_DIR_SENT },
+    value: { direction: TRANSACTION_DIR_SENT, type: -1 },
     label: <T id="txFilter.type.sent" m="Sent" />
   },
   {
     key: "receiv",
-    value: { direction: TRANSACTION_DIR_RECEIVED },
+    value: { direction: TRANSACTION_DIR_RECEIVED, type: -1 },
     label: <T id="txFilter.type.received" m="Received" />
   },
   {
     key: "transf",
-    value: { direction: TRANSACTION_DIR_TRANSFERRED },
+    value: { direction: TRANSACTION_DIR_TRANSFERRED, type: -1 },
     label: <T id="txFilter.type.transfered" m="Transfered" />
+  },
+  {
+    key: "mixed",
+    value: { type: TRANSACTION_MIXED },
+    label: <T id="txFilter.type.mixed" m="Mixed" />
   }
 ]);

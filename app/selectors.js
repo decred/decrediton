@@ -31,6 +31,7 @@ import {
   DCRDATA_URL_MAINNET
 } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
+import { isMixTx } from "./helpers/transactions";
 import {
   MIN_RELAY_FEE,
   DCR,
@@ -41,6 +42,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
+  TRANSACTION_MIXED,
   VOTED,
   LIVE,
   UNMINED,
@@ -544,8 +546,8 @@ export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
 
 // transactionNormalizer normalizes regular decred's regular transactions
 export const transactionNormalizer = createSelector(
-  [accounts, txURLBuilder, blockURLBuilder],
-  (accounts, txURLBuilder, blockURLBuilder) => {
+  [accounts, txURLBuilder, blockURLBuilder, chainParams],
+  (accounts, txURLBuilder, blockURLBuilder, chainParams) => {
     const findAccount = (num) =>
       accounts.find((account) => account.getAccountNumber() === num);
     const getAccountName = (num) =>
@@ -623,6 +625,11 @@ export const transactionNormalizer = createSelector(
               txAccountName: creditedAccountName
             };
 
+      const { isMix } = isMixTx(wallet.decodeRawTransaction(
+        Buffer.from(tx.getTransaction()),
+        chainParams
+      ));
+
       return {
         txUrl,
         txBlockUrl,
@@ -636,9 +643,11 @@ export const transactionNormalizer = createSelector(
         txOutputs,
         txBlockHash,
         txNumericType: type,
+        txIsMixed: isMix,
         rawTx,
         outputs,
         creditAddresses,
+        isMix,
         ...txDetails
       };
     };
@@ -725,7 +734,18 @@ export const filteredRegularTxs = createSelector(
       )
       .filter((v) =>
         filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
-      );
+      )
+      .filter((v) => {
+        let isSameType = true;
+        if (filter.types.length > 0) {
+          isSameType = false;
+          filter.types.forEach(type =>
+            type === v.txType || (type === TRANSACTION_MIXED && v.isMix) ?
+              isSameType = true : null
+          );
+        }
+        return isSameType;
+      });
 
     return filteredTxs;
   }

@@ -92,7 +92,6 @@
 
 .overviewInfo {
   display: grid;
-  grid-template-columns: 1fr 8fr 8fr;
 }
 
 .overviewInfo .txDirection {
@@ -328,6 +327,11 @@
   display: none !important;
 }
 
+.isMix {
+  font-size: 7pt;
+  margin-left: auto;
+}
+
 @media screen and (max-width: 1179px) {
   .overviewRow {
     width: 315px;
@@ -364,7 +368,6 @@
     padding: 5px 20px 27px 20px !important;
   }
   .info {
-    grid-template-columns: 0.5fr 3fr 3fr;
     padding-bottom: 1rem;
   }
   .myTickets {

@@ -73,12 +73,14 @@ export const TRANSFER = "transfer";
 export const COINBASE = "coinbase";
 export const REGULAR = "regular";
 export const ELIGIBLE = "eligible";
+export const MIXED = "mixed";
 export const ALL = "all";
 
 // tx directions
 export const TRANSACTION_DIR_SENT = "sent";
 export const TRANSACTION_DIR_RECEIVED = "received";
 export const TRANSACTION_DIR_TRANSFERRED = "transfer";
+export const TRANSACTION_MIXED = "mixed";
 
 // Default name to particular accounts
 export const DEFAULT_ACCOUNT = "default";
