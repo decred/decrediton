@@ -3,11 +3,12 @@ import {
   setSelectedWallet,
   openWalletAttempt
 } from "./WalletLoaderActions";
-import { getVersionServiceAttempt } from "./VersionActions";
+import { getVersionServiceAttempt, semverCompatible } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
-import { semverCompatible } from "./VersionActions";
+import { enableTrezor } from "./TrezorActions";
+import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { ipcRenderer } from "electron";
@@ -16,9 +17,6 @@ import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
-import { enableTrezor } from "./TrezorActions";
-import { TOGGLE_ISLEGACY } from "actions/VSPActions";
-import { SET_REMEMBERED_VSP_HOST } from "actions/VSPActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -335,7 +333,10 @@ export const closeDaemonRequest = () => async (dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet, hasPassPhrase) => (dispatch, getState) =>
+export const startWallet = (selectedWallet, hasPassPhrase) => (
+  dispatch,
+  getState
+) =>
   new Promise((resolve, reject) => {
     const start = async () => {
       const { currentSettings } = getState().settings;
@@ -593,11 +594,13 @@ export const getDcrdLogs = () => {
     });
 };
 
-export const getDcrdLastLineLogs = () => () => new Promise((resolve, reject) =>
-  wallet.getDcrdLastLogLine()
-    .then((log) => resolve(log))
-    .catch(err => reject(err))
-);
+export const getDcrdLastLineLogs = () => () =>
+  new Promise((resolve, reject) =>
+    wallet
+      .getDcrdLastLogLine()
+      .then((log) => resolve(log))
+      .catch((err) => reject(err))
+  );
 
 export const getDcrwalletLogs = () => () =>
   new Promise((resolve, reject) =>
@@ -607,11 +610,13 @@ export const getDcrwalletLogs = () => () =>
       .catch((err) => reject(err))
   );
 
-export const getPrivacyLogs = () => () => new Promise((resolve, reject) =>
-  wallet.getPrivacyLogs()
-    .then((logs) => resolve(logs))
-    .catch(err => reject(err))
-);
+export const getPrivacyLogs = () => () =>
+  new Promise((resolve, reject) =>
+    wallet
+      .getPrivacyLogs()
+      .then((logs) => resolve(logs))
+      .catch((err) => reject(err))
+  );
 
 export const getDecreditonLogs = () => {
   wallet

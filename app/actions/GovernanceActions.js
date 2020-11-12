@@ -148,6 +148,8 @@ export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
 export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
 export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
 
+export const cleanupPoliteiaCSRF = () => () => pi.cleanupCSRF();
+
 const getTokenInventory = () => async (dispatch, getState) => {
   dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
@@ -429,7 +431,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
       prop.proposalStatus = prop.status;
 
       fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
-      prop.currentVoteChoice = getVoteOption(
+      prop.currentVoteChoice = walletName && getVoteOption(
         token,
         prop,
         null,

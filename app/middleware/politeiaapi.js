@@ -38,6 +38,8 @@ function POST(piURL, path, payload) {
   });
 }
 
+export const cleanupCSRF = () => CSRFPromise = null;
+
 export const getProposal = ({ piURL, token }, cb) =>
   GET(piURL, "/v1/proposals/" + token).then(function (response) {
     cb(response);
