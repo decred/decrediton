@@ -84,13 +84,25 @@ const HistoryTab = () => {
   };
 
   const onChangeFilter = (value) => {
+    console.log(value);
     if (isChangingFilterTimer) {
       clearTimeout(isChangingFilterTimer);
     }
-    const changeFilter = (vs) => {
+    const changeFilter = (newFilterOpt) => {
+      if (newFilterOpt.type) {
+        // if -1 it is all options, so we clean the filter.
+        if (newFilterOpt.type === -1) {
+          // TODO enable filtering more than one type each time.
+          transactionsFilter.types = [];
+        } else {
+          // otherwise we push it to the array option.
+          transactionsFilter.types.push(newFilterOpt.type);
+        }
+        delete(newFilterOpt.type);
+      }
       const newFilter = {
         ...transactionsFilter,
-        ...vs
+        ...newFilterOpt
       };
       clearTimeout(isChangingFilterTimer);
       onChangeTransactionsFilter(newFilter);
