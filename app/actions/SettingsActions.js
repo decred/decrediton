@@ -17,6 +17,7 @@ import {
   getTokenAndInitialBatch,
   resetInventoryAndProposals
 } from "actions/GovernanceActions";
+import { cleanupPoliteiaCSRF } from "./GovernanceActions";
 import * as configConstants from "constants/config";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
@@ -59,16 +60,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
     walletConfig.set("currency_display", settings.currencyDisplay);
     walletConfig.set("gaplimit", settings.gapLimit);
-
-    // We can not enable politeia without wallet name as we need it to check for cached votes.
-    const newPoliteiaEnabled =
-      settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
-    if (newPoliteiaEnabled === true) {
-      dispatch(getTokenAndInitialBatch());
-    }
-    if (newPoliteiaEnabled === false) {
-      dispatch(resetInventoryAndProposals());
-    }
   }
 
   if (
@@ -97,9 +88,23 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   }
 
   if (needNetworkReset) {
+    // we need to cleanup politeia's csrf and cached inventory tokens here,
+    // as this info is network specific.
+    dispatch(cleanupPoliteiaCSRF());
     dispatch(closeWalletRequest());
+    dispatch(cleanupPoliteiaCSRF());
     await dispatch(closeDaemonRequest());
     dispatch(backToCredentials());
+  }
+
+  // This should happen after dispatching `SETTINGS_SAVE` action
+  const newPoliteiaEnabled =
+    settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+  if (newPoliteiaEnabled === true) {
+    dispatch(getTokenAndInitialBatch());
+  }
+  if (newPoliteiaEnabled === false) {
+    dispatch(resetInventoryAndProposals());
   }
 };
 
@@ -159,6 +164,7 @@ export function updateStateSettingsChanged(settings, norestart) {
       false
     );
 
+    console.log(3333333);
     if (newDiffersFromTemp) {
       const newDiffersFromCurrent = settingsFields.reduce(
         (d, f) => d || newSettings[f] !== currentSettings[f],

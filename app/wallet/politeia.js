@@ -12,6 +12,8 @@ const promisifyReqLogNoData = (fnName, Req) => {
   );
 };
 
+export const cleanupCSRF = () => api.cleanupCSRF();
+
 export const getProposal = promisifyReqLogNoData(
   "getProposal",
   api.getProposal
