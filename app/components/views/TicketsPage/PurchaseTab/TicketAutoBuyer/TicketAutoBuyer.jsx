@@ -11,7 +11,8 @@ function TicketAutoBuyer({ intl }) {
     ticketAutoBuyerRunning,
     buyerAccount,
     buyerBalanceToMantain,
-    buyerVSP
+    buyerVSP,
+    notMixedAccounts
   } = usePurchaseTab();
   const [balanceToMaintain, setBalanceToMaintain] = useState(buyerBalanceToMantain);
   const [account, setAccount] = useState(buyerAccount);
@@ -73,7 +74,8 @@ function TicketAutoBuyer({ intl }) {
         isRunning: ticketAutoBuyerRunning,
         isValid,
         onClick,
-        clicked
+        clicked,
+        notMixedAccounts
       }}
     />
   );

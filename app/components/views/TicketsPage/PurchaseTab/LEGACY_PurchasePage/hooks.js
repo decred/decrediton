@@ -15,6 +15,7 @@ export function useLegacyPurchasePage(toggleShowVsp) {
   const updatedStakePoolList = useSelector(sel.updatedStakePoolList);
   const isSavingStakePoolConfig = useSelector(sel.isSavingStakePoolConfig);
   const isImportingScript = useSelector(sel.isImportingScript);
+  const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
   const dispatch = useDispatch();
 
@@ -202,6 +203,7 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     addCustomStakePool,
     onEnableTicketAutoBuyer,
     onDisableTicketAutoBuyer,
-    isTicketAutoBuyerEnabled
+    isTicketAutoBuyerEnabled,
+    notMixedAccounts
   };
 }

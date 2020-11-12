@@ -16,6 +16,8 @@ export function usePrivacy() {
   const accounts = useSelector(sel.sortedAccounts);
   const accountMixerError = useSelector(sel.getAccountMixerError);
   const createMixerAccountAttempt = useSelector(sel.createMixerAccountAttempt);
+  const allowSendFromUnmixed = useSelector(sel.getAllowSendFromUnmixed);
+
   const createNeededAccounts = (
     passphrase,
     mixedAccountName,
@@ -24,6 +26,8 @@ export function usePrivacy() {
     dispatch(
       act.createNeededAccounts(passphrase, mixedAccountName, changeAccountName)
     );
+  const toggleAllowSendFromUnmixed = (allow) =>
+    dispatch(act.toggleAllowSendFromUnmixed(allow));
 
   const onStartMixerAttempt = (passphrase) => {
     const request = {
@@ -48,6 +52,8 @@ export function usePrivacy() {
     onStartMixerAttempt,
     createNeededAccounts,
     createMixerAccountAttempt,
-    onGetPrivacyLogs
+    onGetPrivacyLogs,
+    allowSendFromUnmixed,
+    toggleAllowSendFromUnmixed
   };
 }

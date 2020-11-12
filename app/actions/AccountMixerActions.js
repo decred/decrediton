@@ -33,6 +33,16 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
     .catch((error) => dispatch({ error, type: GETACCOUNTMIXERSERVICE_FAILED }));
 };
 
+export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
+
+export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
+  const walletName = sel.getWalletName(getState());
+  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const value = !walletCfg.get("send_from_unmixed");
+  walletCfg.set("send_from_unmixed", value);
+  dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
+};
+
 export const RUNACCOUNTMIXER_ATTEMPT = "RUNACCOUNTMIXER_ATTEMPT";
 export const RUNACCOUNTMIXER_FAILED = "RUNACCOUNTMIXER_FAILED";
 export const RUNACCOUNTMIXER_SUCCESS = "RUNACCOUNTMIXER_SUCCESS";
@@ -171,6 +181,8 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
   cfg.set("mixedaccount", mixedNumber);
   cfg.set("changeaccount", changeNumber);
   cfg.set("mixedaccbranch", 0);
+  // by default it is only allowed to send from mixed account.
+  cfg.set("send_from_unmixed", false);
 
   dispatch({
     type: CREATEMIXERACCOUNTS_SUCCESS,

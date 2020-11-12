@@ -69,7 +69,8 @@ const LEGACY_PurchasePage = ({
     addCustomStakePool,
     onEnableTicketAutoBuyer,
     onDisableTicketAutoBuyer,
-    isTicketAutoBuyerEnabled
+    isTicketAutoBuyerEnabled,
+    notMixedAccounts
   } = useLegacyPurchasePage(toggleShowVsp);
 
   return getNoAvailableStakepools && !getStakepoolListingEnabled() ? (
@@ -117,6 +118,7 @@ const LEGACY_PurchasePage = ({
         onEnableTicketAutoBuyer,
         onDisableTicketAutoBuyer,
         isTicketAutoBuyerEnabled,
+        notMixedAccounts,
         ...props
       }}
     />

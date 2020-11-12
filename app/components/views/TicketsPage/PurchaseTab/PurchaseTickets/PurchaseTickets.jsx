@@ -21,7 +21,8 @@ const Tickets = ({ toggleIsLegacy }) => {
     isLoading,
     rememberedVspHost,
     setRememberedVspHost,
-    onRevokeTickets
+    onRevokeTickets,
+    notMixedAccounts
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -84,7 +85,8 @@ const Tickets = ({ toggleIsLegacy }) => {
       isLoading,
       rememberedVspHost,
       toggleRememberVspHostCheckBox,
-      onRevokeTickets
+      onRevokeTickets,
+      notMixedAccounts
     }} />;
 };
 

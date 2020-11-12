@@ -6,7 +6,8 @@ import {
   MixerSwitch
 } from "buttons";
 import "style/Privacy.less";
-import { classNames } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
+import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
 
 const PrivacyContent = ({
@@ -14,7 +15,12 @@ const PrivacyContent = ({
   accountMixerRunning,
   stopAccountMixer,
   onStartMixerAttempt,
-  logs
+  logs,
+  allowSendFromUnmixed,
+  onToggleSendFromUnmixed,
+  showingSendUnmixModal,
+  showModal,
+  onChangeCheckbox
 }) => (
   <>
     <Subtitle
@@ -60,6 +66,22 @@ const PrivacyContent = ({
       TODO
       create a shared component and use it on logs page and here.
     */}
+    <SendFromUnmixedAccountModal
+      show={showingSendUnmixModal}
+      onSubmit={onToggleSendFromUnmixed}
+      onCancelModal={() => showModal(false)}
+    />
+    <Checkbox
+      label={
+        <T
+          id="privacy.sendFromUnmixedCheckbox"
+          m="Send from unmixed accounts"
+        />
+      }
+      id="privacyCheckbox"
+      checked={allowSendFromUnmixed}
+      onChange={onChangeCheckbox}
+    />
     <Subtitle title={<T id="privacy.logs" m="Logs" />} />
     <div className={style.logs}>
       <textarea rows="10" value={logs} disabled />

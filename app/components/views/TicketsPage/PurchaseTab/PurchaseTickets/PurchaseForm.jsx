@@ -26,7 +26,8 @@ const PurchaseTicketsForm = ({
   availableVSPs,
   isLoading,
   rememberedVspHost,
-  toggleRememberVspHostCheckBox
+  toggleRememberVspHostCheckBox,
+  notMixedAccounts
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, "is-row")}>
@@ -37,6 +38,7 @@ const PurchaseTicketsForm = ({
           </div>
           <div className={"stakepool-purchase-ticket-input-select-container"}>
             <AccountsSelect
+              filterAccounts={notMixedAccounts}
               className="stakepool-purchase-ticket-input-select"
               {...{ account, onChange: setAccount }}
             />

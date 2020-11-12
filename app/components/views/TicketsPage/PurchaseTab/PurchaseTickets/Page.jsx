@@ -60,6 +60,7 @@ export function PurchasePage({
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
   onRevokeTickets,
+  notMixedAccounts,
   ...props
 }) {
   return (
@@ -83,6 +84,7 @@ export function PurchasePage({
       ) : (
         <PurchaseForm
           {...{
+            notMixedAccounts,
             ticketPrice,
             setAccount,
             setNumTickets,

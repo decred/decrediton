@@ -39,7 +39,8 @@ const PurchaseTicketsForm = ({
   toggleShowVsp,
   dismissBackupRedeemScript,
   onDismissBackupRedeemScript,
-  isWatchingOnly
+  isWatchingOnly,
+  notMixedAccounts
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -49,6 +50,7 @@ const PurchaseTicketsForm = ({
         </div>
         <AccountsSelect
           className="stakepool-purchase-ticket-input-select"
+          filterAccounts={notMixedAccounts}
           {...{ account, onChange: onChangeAccount }}
         />
         <div className="stakepool-info-icon account-select-icon"></div>

@@ -34,7 +34,7 @@ import {
   WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
-import { CREATEMIXERACCOUNTS_SUCCESS } from "actions/AccountMixerActions";
+import { CREATEMIXERACCOUNTS_SUCCESS, TOGGLE_ALLOW_SEND_FROM_UNMIXED } from "actions/AccountMixerActions";
 
 import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
@@ -102,6 +102,7 @@ export default function walletLoader(state = {}, action) {
         discoverAccountsComplete: action.discoverAccountsComplete,
         needsPassPhrase: action.needsPassPhrase,
         privacyEnabled: action.enablePrivacy,
+        allowSendFromUnmixed: action.sendFromUnmixed,
         mixedAccount: action.mixedAccount,
         changeAccount: action.changeAccount,
         csppServer: action.csppServer,
@@ -217,6 +218,11 @@ export default function walletLoader(state = {}, action) {
         csppServer: action.csppServer,
         csppPort: action.csppPort,
         mixedAccountBranch: action.mixedAccountBranch
+      };
+    case TOGGLE_ALLOW_SEND_FROM_UNMIXED:
+      return {
+        ...state,
+        allowSendFromUnmixed: action.allow
       };
     default:
       return state;
