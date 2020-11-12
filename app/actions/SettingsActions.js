@@ -91,7 +91,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     // we need to cleanup politeia's csrf as this info is network specific.
     dispatch(cleanupPoliteiaCSRF());
     dispatch(closeWalletRequest());
-    dispatch(cleanupPoliteiaCSRF());
     await dispatch(closeDaemonRequest());
     dispatch(backToCredentials());
   }
@@ -163,7 +162,6 @@ export function updateStateSettingsChanged(settings, norestart) {
       false
     );
 
-    console.log(3333333);
     if (newDiffersFromTemp) {
       const newDiffersFromCurrent = settingsFields.reduce(
         (d, f) => d || newSettings[f] !== currentSettings[f],

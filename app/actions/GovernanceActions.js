@@ -148,9 +148,7 @@ export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
 export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
 export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
 
-export const cleanupPoliteiaCSRF = () => () => {
-  pi.cleanupCSRF();
-};
+export const cleanupPoliteiaCSRF = () => () => pi.cleanupCSRF();
 
 const getTokenInventory = () => async (dispatch, getState) => {
   dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
