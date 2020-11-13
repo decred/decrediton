@@ -46,10 +46,6 @@ class TrezorConfigSections extends React.Component {
     this.props.backupDevice();
   }
 
-  isUpdating() {
-   return this.props.isPerformingUpdate;
-  }
-
   render() {
     const {
       onTogglePinProtection,
@@ -61,7 +57,6 @@ class TrezorConfigSections extends React.Component {
       onInitDevice,
       onBackupDevice,
       onUpdateFirmware,
-      isUpdating,
       loading
     } = this;
 
@@ -82,7 +77,7 @@ class TrezorConfigSections extends React.Component {
           {...{ onWipeDevice, onRecoverDevice, onInitDevice, onBackupDevice, loading }}
         />
 
-        <FirmwareUpdate {...{ onUpdateFirmware, loading, isUpdating }} />
+        <FirmwareUpdate {...{ onUpdateFirmware, loading }} />
       </>
     );
   }
