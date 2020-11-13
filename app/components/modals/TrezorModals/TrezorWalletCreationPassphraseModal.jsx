@@ -133,7 +133,10 @@ const TrezorWalletCreationPassphraseModal = ({
         />
       </PassphraseModalField>
 
-      <ButtonsToolbar {...{ isValid, onCancelModal, onSubmit }} />
+      <ButtonsToolbar
+        {...{ isValid, onCancelModal, onSubmit }}
+        className={styles.trezorModalsButtons}
+      />
     </Modal>
   );
 };

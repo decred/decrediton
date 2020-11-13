@@ -91,7 +91,10 @@ const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
         />
       </div>
 
-      <ButtonsToolbar {...{ onCancelModal: onCancelWordModal, onSubmit }} />
+      <ButtonsToolbar
+        {...{ onCancelModal: onCancelWordModal, onSubmit }}
+        className={styles.trezorModalsButtons}
+      />
     </Modal>
   );
 };

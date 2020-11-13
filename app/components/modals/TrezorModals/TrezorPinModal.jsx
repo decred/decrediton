@@ -8,9 +8,9 @@ import { PIN_LABELS } from "constants/trezor";
 import { classNames } from "pi-ui";
 import styles from "./TrezorModals.module.css";
 
-const PinButton = ({ index, label, onClick }) => (
+const PinButton = ({ index, onClick }) => (
   <div className={styles.pinPadButton} onClick={() => onClick(index)}>
-    {label}
+    {PIN_LABELS[index - 1]}
   </div>
 );
 
@@ -83,20 +83,25 @@ const TrezorPinModal = ({
           }}
         />
       </p>
-      <div className={styles.pinPad}>
-        {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((index) => (
-          <PinButton index={index} onClick={onPinButtonClick} />
-        ))}
-      </div>
-      <div>
-        <InvisibleButton onClick={onClearPin}>
-          <T id="trezor.pinModal.clear" m="clear" />
-        </InvisibleButton>
+      <div className={styles.pinPadContainer}>
+        <div className={styles.pinPad}>
+          {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((index) => (
+            <PinButton index={index} onClick={onPinButtonClick} key={index} />
+          ))}
+        </div>
+        <div>
+          <InvisibleButton onClick={onClearPin}>
+            <T id="trezor.pinModal.clear" m="clear" />
+          </InvisibleButton>
+        </div>
       </div>
       <div className={styles.passwordField}>
         <PasswordInput value={currentPinMemo} onChange={onChangeCurrentPin} />
       </div>
-      <ButtonsToolbar {...{ onCancelModal: onCancelPinModal, onSubmit }} />
+      <ButtonsToolbar
+        {...{ onCancelModal: onCancelPinModal, onSubmit }}
+        className={styles.trezorModalsButtons}
+      />
     </Modal>
   );
 };

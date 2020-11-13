@@ -1,12 +1,28 @@
 .trezorPinModal,
 .trezorPassphraseModal,
 .trezorWordModal {
-  width: 550px;
+  /* width: 550px; */
   padding: 20px;
 }
 
 h1 {
   margin-bottom: 20px;
+}
+
+.trezorPinModal > p,
+.trezorWordModal > p {
+  margin-bottom: 10px
+}
+
+.pinPadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trezorModalsButtons {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .trezorPinModal .pinPad {
