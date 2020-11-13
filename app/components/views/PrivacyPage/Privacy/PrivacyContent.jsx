@@ -62,10 +62,6 @@ const PrivacyContent = ({
     {accountMixerError && (
       <div className={style.error}>{accountMixerError}</div>
     )}
-    {/*
-      TODO
-      create a shared component and use it on logs page and here.
-    */}
     <SendFromUnmixedAccountModal
       show={showingSendUnmixModal}
       onSubmit={onToggleSendFromUnmixed}

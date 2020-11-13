@@ -1,0 +1,77 @@
+.logArea {
+  background-color: var(--background-back-color);
+  color: var(--title-text-and-button-background);
+  width: 100%;
+  margin-top: 15px;
+  padding-bottom: 5px;
+}
+
+.logArea:nth-of-type(1n) {
+  margin-top: 8px;
+}
+
+textarea {
+  font-family: var(--font-family-monospace);
+  font-size: 13px;
+  resize: none;
+  width: 100%;
+  background-color: var(--background-back-color);
+  border: none;
+  color: var(--modal-text);
+  white-space: pre-line;
+}
+
+.title {
+  padding: 15px 0 15px 40px;
+  margin-right: 20px;
+  font-size: 18px;
+  background-position: right center;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.title.expanded {
+  background-image: var(--arrow-down-mid-blue-icon);
+}
+
+.title.expanded:hover {
+  background-image: var(--arrow-down-key-blue-icon);
+}
+
+.title.hidden {
+  background-image: var(--arrow-right-gray-icon);
+  background-size: 5px;
+}
+
+.title.hidden:hover {
+  background-image: var(--arrow-right-key-blue-icon);
+  background-size: 5px;
+}
+
+@media screen and (max-width: 1179px) {
+  .logArea {
+    width: 634px;
+  }
+
+  .title {
+    padding-left: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .logArea {
+    width: 355px;
+    margin-left: 0;
+  }
+
+  .title {
+    padding-left: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .logArea {
+    width: 100%;
+  }
+}
