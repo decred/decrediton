@@ -16,7 +16,7 @@ const Logs = ({ expanded, onShowLog, onHideLog, log, title }) =>
       <div
         className={classNames(styles.title, styles.expanded)}
         onClick={onHideLog}>
-        <T id="help.logs.dcrd" m="dcrd" />
+        {title}
       </div>
       <div className={styles.logs}>
         <textarea rows="30" value={log} disabled />
