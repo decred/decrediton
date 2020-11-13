@@ -512,7 +512,7 @@ const render = () =>
         <Provider store={store}>
           <ConnectedRouter history={history}>
             <Switch>
-              <Route path="/" render={(props) => <App {...props} autobuyerRunningModalVisible={initialState.control.autobuyerRunningModalVisible} />} />
+              <Route path="/" component={App} />
             </Switch>
           </ConnectedRouter>
         </Provider>
