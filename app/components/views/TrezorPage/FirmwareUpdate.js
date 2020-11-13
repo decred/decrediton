@@ -30,7 +30,7 @@ class FirmwareUpdate extends React.Component {
       </>
     );
 
-    const { loading, isUpdating } = this.props;
+    const { loading } = this.props;
 
     return (
       <VerticalAccordion
@@ -54,8 +54,8 @@ class FirmwareUpdate extends React.Component {
 
         <DangerButton
           onClick={this.onUpdateFirmware}
-          loading={loading || isUpdating()}
-          disabled={loading || isUpdating()}>
+          loading={loading}
+          disabled={loading}>
           <T id="trezorPage.updateFirmwareBtn" m="Update Firmware" />
         </DangerButton>
       </VerticalAccordion>
