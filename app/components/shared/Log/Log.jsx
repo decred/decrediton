@@ -1,4 +1,3 @@
-import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
 import styles from "./Log.module.css";
 

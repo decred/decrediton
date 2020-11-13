@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Subtitle, PrivacyForm } from "shared";
+import { Subtitle, PrivacyForm, Log } from "shared";
 import {
   InfoDocModalButton,
   MixerPassphraseModalSwitch,
   MixerSwitch
 } from "buttons";
-import "style/Privacy.less";
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
@@ -21,27 +21,30 @@ const PrivacyContent = ({
   showingSendUnmixModal,
   showModal,
   onChangeCheckbox
-}) => (
-  <>
-    <Subtitle
-      title={<T id="privacy.subtitle" m="Privacy" />}
-      className={classNames(style.isRow)}
-      children={
-        <div className={classNames(style.contentTitleButtonsArea)}>
-          <InfoDocModalButton
-            document="MixerIntroduction"
-            draggable
-          />
-        </div>
-      }
-    />
-    <PrivacyForm
-      className={classNames(style.pageWrapper, style.isColumn)}
-    />
-    <div className={classNames(style.buttonArea, style.row)}>
-      {accountMixerRunning ? (
-        <MixerSwitch enabled onClick={stopAccountMixer} />
-      ) : (
+}) => {
+  // Logs expanded by default
+  const [expandedLogs, setExpandedLogs] = useState(true);
+
+  const onHideLog = () => setExpandedLogs(false);
+
+  const onShowLog = () => setExpandedLogs(true);
+
+  return (
+    <>
+      <Subtitle
+        title={<T id="privacy.subtitle" m="Privacy" />}
+        className={classNames(style.isRow)}
+        children={
+          <div className={classNames(style.contentTitleButtonsArea)}>
+            <InfoDocModalButton document="MixerIntroduction" draggable />
+          </div>
+        }
+      />
+      <PrivacyForm className={classNames(style.pageWrapper, style.isColumn)} />
+      <div className={classNames(style.buttonArea, style.row)}>
+        {accountMixerRunning ? (
+          <MixerSwitch enabled onClick={stopAccountMixer} />
+        ) : (
           <MixerPassphraseModalSwitch
             modalTitle={
               <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
@@ -58,31 +61,37 @@ const PrivacyContent = ({
             onSubmit={(passaphrase) => onStartMixerAttempt(passaphrase)}
           />
         )}
-    </div>
-    {accountMixerError && (
-      <div className={style.error}>{accountMixerError}</div>
-    )}
-    <SendFromUnmixedAccountModal
-      show={showingSendUnmixModal}
-      onSubmit={onToggleSendFromUnmixed}
-      onCancelModal={() => showModal(false)}
-    />
-    <Checkbox
-      label={
-        <T
-          id="privacy.sendFromUnmixedCheckbox"
-          m="Send from unmixed accounts"
+      </div>
+      {accountMixerError && (
+        <div className={style.error}>{accountMixerError}</div>
+      )}
+      <SendFromUnmixedAccountModal
+        show={showingSendUnmixModal}
+        onSubmit={onToggleSendFromUnmixed}
+        onCancelModal={() => showModal(false)}
+      />
+      <Checkbox
+        label={
+          <T
+            id="privacy.sendFromUnmixedCheckbox"
+            m="Send from unmixed accounts"
+          />
+        }
+        id="privacyCheckbox"
+        checked={allowSendFromUnmixed}
+        onChange={onChangeCheckbox}
+      />
+      {accountMixerRunning && (
+        <Log
+           title={<T id="privacy.logs" m="Logs" />}
+          log={logs}
+          expanded={expandedLogs}
+          onShowLog={onShowLog}
+          onHideLog={onHideLog}
         />
-      }
-      id="privacyCheckbox"
-      checked={allowSendFromUnmixed}
-      onChange={onChangeCheckbox}
-    />
-    <Subtitle title={<T id="privacy.logs" m="Logs" />} />
-    <div className={style.logs}>
-      <textarea rows="10" value={logs} disabled />
-    </div>
-  </>
-);
+      )}
+    </>
+  );
+};
 
 export default PrivacyContent;
