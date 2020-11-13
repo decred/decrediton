@@ -5,12 +5,12 @@ import { useMountEffect } from "hooks";
 
 const messages = defineMessages({
   mixedAccountName: {
-    id: "addMixerAccountModal.mixedAccountName",
-    defaultMessage: "Mixed Account Name"
+    id: "addMixerAccountModal.mixedAccountName.placeholder",
+    defaultMessage: "Enter the mixed account name"
   },
   changeAccountName: {
-    id: "addMixerAccountModal.changeAccountName",
-    defaultMessage: "Unmixed Account Name"
+    id: "addMixerAccountModal.changeAccountName.placeholder",
+    defaultMessage: "Enter the unmixed account name"
   }
 });
 
