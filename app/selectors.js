@@ -604,7 +604,7 @@ export const transactionNormalizer = createSelector(
         const address = credit.getAddress();
         const creditedAccount = credit.getAccount();
         const currentCreditedAccountName = getAccountName(creditedAccount);
-        // If we find crediton account differnt than default, then we pick 
+        // If we find crediton account differnt than default, then we pick
         // it as receiver
         if (currentCreditedAccountName !== "default" || !creditedAccountName) {
           creditedAccountName = currentCreditedAccountName;
