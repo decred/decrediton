@@ -12,6 +12,7 @@ var goog = jspb;
 var global = Function('return this')();
 
 var rpc_pb = require('./rpc_pb.js');
+goog.object.extend(proto, rpc_pb);
 goog.exportSymbol('proto.lnrpc.ChangePasswordRequest', null, global);
 goog.exportSymbol('proto.lnrpc.ChangePasswordResponse', null, global);
 goog.exportSymbol('proto.lnrpc.GenSeedRequest', null, global);
@@ -194,7 +195,7 @@ proto.lnrpc.GenSeedRequest.prototype.getAezeedPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.GenSeedRequest.prototype.setAezeedPassphrase = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -233,7 +234,7 @@ proto.lnrpc.GenSeedRequest.prototype.getSeedEntropy_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.GenSeedRequest.prototype.setSeedEntropy = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -385,21 +386,21 @@ proto.lnrpc.GenSeedResponse.serializeBinaryToWriter = function(message, writer) 
 
 /**
  * repeated string cipher_seed_mnemonic = 1;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.GenSeedResponse.prototype.getCipherSeedMnemonicList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 1));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.lnrpc.GenSeedResponse.prototype.setCipherSeedMnemonicList = function(value) {
   jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.lnrpc.GenSeedResponse.prototype.addCipherSeedMnemonic = function(value, opt_index) {
@@ -447,7 +448,7 @@ proto.lnrpc.GenSeedResponse.prototype.getEncipheredSeed_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.GenSeedResponse.prototype.setEncipheredSeed = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -670,27 +671,27 @@ proto.lnrpc.InitWalletRequest.prototype.getWalletPassword_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.InitWalletRequest.prototype.setWalletPassword = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
  * repeated string cipher_seed_mnemonic = 2;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.InitWalletRequest.prototype.getCipherSeedMnemonicList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.lnrpc.InitWalletRequest.prototype.setCipherSeedMnemonicList = function(value) {
   jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.lnrpc.InitWalletRequest.prototype.addCipherSeedMnemonic = function(value, opt_index) {
@@ -738,7 +739,7 @@ proto.lnrpc.InitWalletRequest.prototype.getAezeedPassphrase_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.InitWalletRequest.prototype.setAezeedPassphrase = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -753,7 +754,7 @@ proto.lnrpc.InitWalletRequest.prototype.getRecoveryWindow = function() {
 
 /** @param {number} value */
 proto.lnrpc.InitWalletRequest.prototype.setRecoveryWindow = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -780,7 +781,7 @@ proto.lnrpc.InitWalletRequest.prototype.clearChannelBackups = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.InitWalletRequest.prototype.hasChannelBackups = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -1103,7 +1104,7 @@ proto.lnrpc.UnlockWalletRequest.prototype.getWalletPassword_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.UnlockWalletRequest.prototype.setWalletPassword = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1118,7 +1119,7 @@ proto.lnrpc.UnlockWalletRequest.prototype.getRecoveryWindow = function() {
 
 /** @param {number} value */
 proto.lnrpc.UnlockWalletRequest.prototype.setRecoveryWindow = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -1145,7 +1146,7 @@ proto.lnrpc.UnlockWalletRequest.prototype.clearChannelBackups = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.UnlockWalletRequest.prototype.hasChannelBackups = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -1187,7 +1188,7 @@ proto.lnrpc.UnlockWalletRequest.prototype.getDcrwClientKeyCert_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.UnlockWalletRequest.prototype.setDcrwClientKeyCert = function(value) {
-  jspb.Message.setField(this, 901, value);
+  jspb.Message.setProto3BytesField(this, 901, value);
 };
 
 
@@ -1481,7 +1482,7 @@ proto.lnrpc.ChangePasswordRequest.prototype.getCurrentPassword_asU8 = function()
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChangePasswordRequest.prototype.setCurrentPassword = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1520,7 +1521,7 @@ proto.lnrpc.ChangePasswordRequest.prototype.getNewPassword_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChangePasswordRequest.prototype.setNewPassword = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 

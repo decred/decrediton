@@ -396,7 +396,7 @@ proto.lnrpc.Utxo.prototype.getAddressType = function() {
 
 /** @param {!proto.lnrpc.AddressType} value */
 proto.lnrpc.Utxo.prototype.setAddressType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -411,7 +411,7 @@ proto.lnrpc.Utxo.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.Utxo.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -426,7 +426,7 @@ proto.lnrpc.Utxo.prototype.getAmountAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Utxo.prototype.setAmountAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -441,7 +441,7 @@ proto.lnrpc.Utxo.prototype.getPkScript = function() {
 
 /** @param {string} value */
 proto.lnrpc.Utxo.prototype.setPkScript = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -468,7 +468,7 @@ proto.lnrpc.Utxo.prototype.clearOutpoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.Utxo.prototype.hasOutpoint = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -486,7 +486,7 @@ proto.lnrpc.Utxo.prototype.getConfirmations = function() {
 
 /** @param {number} value */
 proto.lnrpc.Utxo.prototype.setConfirmations = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -743,7 +743,7 @@ proto.lnrpc.Transaction.prototype.getTxHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.Transaction.prototype.setTxHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -758,7 +758,7 @@ proto.lnrpc.Transaction.prototype.getAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.Transaction.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -773,7 +773,7 @@ proto.lnrpc.Transaction.prototype.getNumConfirmations = function() {
 
 /** @param {number} value */
 proto.lnrpc.Transaction.prototype.setNumConfirmations = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -788,7 +788,7 @@ proto.lnrpc.Transaction.prototype.getBlockHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.Transaction.prototype.setBlockHash = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -803,7 +803,7 @@ proto.lnrpc.Transaction.prototype.getBlockHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.Transaction.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -818,7 +818,7 @@ proto.lnrpc.Transaction.prototype.getTimeStamp = function() {
 
 /** @param {number} value */
 proto.lnrpc.Transaction.prototype.setTimeStamp = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -833,27 +833,27 @@ proto.lnrpc.Transaction.prototype.getTotalFees = function() {
 
 /** @param {number} value */
 proto.lnrpc.Transaction.prototype.setTotalFees = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
  * repeated string dest_addresses = 8;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.Transaction.prototype.getDestAddressesList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 8));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.lnrpc.Transaction.prototype.setDestAddressesList = function(value) {
   jspb.Message.setField(this, 8, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.lnrpc.Transaction.prototype.addDestAddresses = function(value, opt_index) {
@@ -877,7 +877,7 @@ proto.lnrpc.Transaction.prototype.getRawTxHex = function() {
 
 /** @param {string} value */
 proto.lnrpc.Transaction.prototype.setRawTxHex = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -892,7 +892,7 @@ proto.lnrpc.Transaction.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.lnrpc.Transaction.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
@@ -1046,7 +1046,7 @@ proto.lnrpc.GetTransactionsRequest.prototype.getStartHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetTransactionsRequest.prototype.setStartHeight = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -1061,7 +1061,7 @@ proto.lnrpc.GetTransactionsRequest.prototype.getEndHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetTransactionsRequest.prototype.setEndHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -1204,15 +1204,15 @@ proto.lnrpc.TransactionDetails.serializeBinaryToWriter = function(message, write
 
 /**
  * repeated Transaction transactions = 1;
- * @return {!Array.<!proto.lnrpc.Transaction>}
+ * @return {!Array<!proto.lnrpc.Transaction>}
  */
 proto.lnrpc.TransactionDetails.prototype.getTransactionsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Transaction>} */ (
+  return /** @type{!Array<!proto.lnrpc.Transaction>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Transaction, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Transaction>} value */
+/** @param {!Array<!proto.lnrpc.Transaction>} value */
 proto.lnrpc.TransactionDetails.prototype.setTransactionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -1433,7 +1433,7 @@ proto.lnrpc.FeeLimit.prototype.clearFixed = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FeeLimit.prototype.hasFixed = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -1462,7 +1462,7 @@ proto.lnrpc.FeeLimit.prototype.clearFixedMAtoms = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FeeLimit.prototype.hasFixedMAtoms = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -1491,7 +1491,7 @@ proto.lnrpc.FeeLimit.prototype.clearPercent = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FeeLimit.prototype.hasPercent = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -1660,7 +1660,7 @@ proto.lnrpc.SendRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 12:
       var value = msg.getDestCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
          });
       break;
     case 15:
@@ -1668,7 +1668,7 @@ proto.lnrpc.SendRequest.deserializeBinaryFromReader = function(msg, reader) {
       msg.setAllowSelfPayment(value);
       break;
     case 16:
-      var value = /** @type {!Array.<!proto.lnrpc.FeatureBit>} */ (reader.readPackedEnum());
+      var value = /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (reader.readPackedEnum());
       msg.setDestFeaturesList(value);
       break;
     default:
@@ -1848,7 +1848,7 @@ proto.lnrpc.SendRequest.prototype.getDest_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SendRequest.prototype.setDest = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1863,7 +1863,7 @@ proto.lnrpc.SendRequest.prototype.getDestString = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendRequest.prototype.setDestString = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1878,7 +1878,7 @@ proto.lnrpc.SendRequest.prototype.getAmt = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendRequest.prototype.setAmt = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -1893,7 +1893,7 @@ proto.lnrpc.SendRequest.prototype.getAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendRequest.prototype.setAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -1932,7 +1932,7 @@ proto.lnrpc.SendRequest.prototype.getPaymentHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SendRequest.prototype.setPaymentHash = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -1947,7 +1947,7 @@ proto.lnrpc.SendRequest.prototype.getPaymentHashString = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendRequest.prototype.setPaymentHashString = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -1962,7 +1962,7 @@ proto.lnrpc.SendRequest.prototype.getPaymentRequest = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendRequest.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -1977,7 +1977,7 @@ proto.lnrpc.SendRequest.prototype.getFinalCltvDelta = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendRequest.prototype.setFinalCltvDelta = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -2004,7 +2004,7 @@ proto.lnrpc.SendRequest.prototype.clearFeeLimit = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.SendRequest.prototype.hasFeeLimit = function() {
   return jspb.Message.getField(this, 8) != null;
@@ -2022,7 +2022,7 @@ proto.lnrpc.SendRequest.prototype.getOutgoingChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendRequest.prototype.setOutgoingChanId = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3StringIntField(this, 10, value);
 };
 
 
@@ -2039,7 +2039,7 @@ proto.lnrpc.SendRequest.prototype.getIgnoreMaxOutboundAmt = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.SendRequest.prototype.setIgnoreMaxOutboundAmt = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -2078,7 +2078,7 @@ proto.lnrpc.SendRequest.prototype.getLastHopPubkey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SendRequest.prototype.setLastHopPubkey = function(value) {
-  jspb.Message.setField(this, 14, value);
+  jspb.Message.setProto3BytesField(this, 14, value);
 };
 
 
@@ -2093,7 +2093,7 @@ proto.lnrpc.SendRequest.prototype.getCltvLimit = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendRequest.prototype.setCltvLimit = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -2128,20 +2128,20 @@ proto.lnrpc.SendRequest.prototype.getAllowSelfPayment = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.SendRequest.prototype.setAllowSelfPayment = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 
 /**
  * repeated FeatureBit dest_features = 16;
- * @return {!Array.<!proto.lnrpc.FeatureBit>}
+ * @return {!Array<!proto.lnrpc.FeatureBit>}
  */
 proto.lnrpc.SendRequest.prototype.getDestFeaturesList = function() {
-  return /** @type {!Array.<!proto.lnrpc.FeatureBit>} */ (jspb.Message.getRepeatedField(this, 16));
+  return /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (jspb.Message.getRepeatedField(this, 16));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.FeatureBit>} value */
+/** @param {!Array<!proto.lnrpc.FeatureBit>} value */
 proto.lnrpc.SendRequest.prototype.setDestFeaturesList = function(value) {
   jspb.Message.setField(this, 16, value || []);
 };
@@ -2337,7 +2337,7 @@ proto.lnrpc.SendResponse.prototype.getPaymentError = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendResponse.prototype.setPaymentError = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -2376,7 +2376,7 @@ proto.lnrpc.SendResponse.prototype.getPaymentPreimage_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SendResponse.prototype.setPaymentPreimage = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -2403,7 +2403,7 @@ proto.lnrpc.SendResponse.prototype.clearPaymentRoute = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.SendResponse.prototype.hasPaymentRoute = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -2445,7 +2445,7 @@ proto.lnrpc.SendResponse.prototype.getPaymentHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SendResponse.prototype.setPaymentHash = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -2637,7 +2637,7 @@ proto.lnrpc.SendToRouteRequest.prototype.getPaymentHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SendToRouteRequest.prototype.setPaymentHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -2652,7 +2652,7 @@ proto.lnrpc.SendToRouteRequest.prototype.getPaymentHashString = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendToRouteRequest.prototype.setPaymentHashString = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -2679,7 +2679,7 @@ proto.lnrpc.SendToRouteRequest.prototype.clearRoute = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.SendToRouteRequest.prototype.hasRoute = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -2992,7 +2992,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getNodePubkey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setNodePubkey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -3031,7 +3031,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getChainHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setChainHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -3070,7 +3070,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -3085,7 +3085,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getFundingAmt = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setFundingAmt = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -3100,7 +3100,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getPushAmt = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setPushAmt = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -3115,7 +3115,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getDustLimit = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setDustLimit = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -3130,7 +3130,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getMaxValueInFlight = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setMaxValueInFlight = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -3145,7 +3145,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getChannelReserve = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setChannelReserve = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -3160,7 +3160,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getMinHtlc = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setMinHtlc = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -3175,7 +3175,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getFeePerKb = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setFeePerKb = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -3190,7 +3190,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getCsvDelay = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setCsvDelay = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -3205,7 +3205,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getMaxAcceptedHtlcs = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setMaxAcceptedHtlcs = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -3220,7 +3220,7 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getChannelFlags = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelAcceptRequest.prototype.setChannelFlags = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -3376,7 +3376,7 @@ proto.lnrpc.ChannelAcceptResponse.prototype.getAccept = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ChannelAcceptResponse.prototype.setAccept = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -3415,7 +3415,7 @@ proto.lnrpc.ChannelAcceptResponse.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelAcceptResponse.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -3642,7 +3642,7 @@ proto.lnrpc.ChannelPoint.prototype.clearFundingTxidBytes = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelPoint.prototype.hasFundingTxidBytes = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -3671,7 +3671,7 @@ proto.lnrpc.ChannelPoint.prototype.clearFundingTxidStr = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelPoint.prototype.hasFundingTxidStr = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -3689,7 +3689,7 @@ proto.lnrpc.ChannelPoint.prototype.getOutputIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelPoint.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -3879,7 +3879,7 @@ proto.lnrpc.OutPoint.prototype.getTxidBytes_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.OutPoint.prototype.setTxidBytes = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -3894,7 +3894,7 @@ proto.lnrpc.OutPoint.prototype.getTxidStr = function() {
 
 /** @param {string} value */
 proto.lnrpc.OutPoint.prototype.setTxidStr = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -3909,7 +3909,7 @@ proto.lnrpc.OutPoint.prototype.getOutputIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.OutPoint.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -4063,7 +4063,7 @@ proto.lnrpc.LightningAddress.prototype.getPubkey = function() {
 
 /** @param {string} value */
 proto.lnrpc.LightningAddress.prototype.setPubkey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -4078,7 +4078,7 @@ proto.lnrpc.LightningAddress.prototype.getHost = function() {
 
 /** @param {string} value */
 proto.lnrpc.LightningAddress.prototype.setHost = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -4170,7 +4170,7 @@ proto.lnrpc.EstimateFeeRequest.deserializeBinaryFromReader = function(msg, reade
     case 1:
       var value = msg.getAddrtoamountMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64, null, "");
          });
       break;
     case 2:
@@ -4249,7 +4249,7 @@ proto.lnrpc.EstimateFeeRequest.prototype.getTargetConf = function() {
 
 /** @param {number} value */
 proto.lnrpc.EstimateFeeRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -4403,7 +4403,7 @@ proto.lnrpc.EstimateFeeResponse.prototype.getFeeAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.EstimateFeeResponse.prototype.setFeeAtoms = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -4418,7 +4418,7 @@ proto.lnrpc.EstimateFeeResponse.prototype.getFeerateAtomsPerByte = function() {
 
 /** @param {number} value */
 proto.lnrpc.EstimateFeeResponse.prototype.setFeerateAtomsPerByte = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -4512,7 +4512,7 @@ proto.lnrpc.SendManyRequest.deserializeBinaryFromReader = function(msg, reader) 
     case 1:
       var value = msg.getAddrtoamountMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64, null, "");
          });
       break;
     case 3:
@@ -4613,7 +4613,7 @@ proto.lnrpc.SendManyRequest.prototype.getTargetConf = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendManyRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -4628,7 +4628,7 @@ proto.lnrpc.SendManyRequest.prototype.getAtomsPerByte = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendManyRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -4643,7 +4643,7 @@ proto.lnrpc.SendManyRequest.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendManyRequest.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -4785,7 +4785,7 @@ proto.lnrpc.SendManyResponse.prototype.getTxid = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendManyResponse.prototype.setTxid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -4987,7 +4987,7 @@ proto.lnrpc.SendCoinsRequest.prototype.getAddr = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendCoinsRequest.prototype.setAddr = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5002,7 +5002,7 @@ proto.lnrpc.SendCoinsRequest.prototype.getAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendCoinsRequest.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -5017,7 +5017,7 @@ proto.lnrpc.SendCoinsRequest.prototype.getTargetConf = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendCoinsRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -5032,7 +5032,7 @@ proto.lnrpc.SendCoinsRequest.prototype.getAtomsPerByte = function() {
 
 /** @param {number} value */
 proto.lnrpc.SendCoinsRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -5049,7 +5049,7 @@ proto.lnrpc.SendCoinsRequest.prototype.getSendAll = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.SendCoinsRequest.prototype.setSendAll = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -5064,7 +5064,7 @@ proto.lnrpc.SendCoinsRequest.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendCoinsRequest.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -5206,7 +5206,7 @@ proto.lnrpc.SendCoinsResponse.prototype.getTxid = function() {
 
 /** @param {string} value */
 proto.lnrpc.SendCoinsResponse.prototype.setTxid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5360,7 +5360,7 @@ proto.lnrpc.ListUnspentRequest.prototype.getMinConfs = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListUnspentRequest.prototype.setMinConfs = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -5375,7 +5375,7 @@ proto.lnrpc.ListUnspentRequest.prototype.getMaxConfs = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListUnspentRequest.prototype.setMaxConfs = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -5518,15 +5518,15 @@ proto.lnrpc.ListUnspentResponse.serializeBinaryToWriter = function(message, writ
 
 /**
  * repeated Utxo utxos = 1;
- * @return {!Array.<!proto.lnrpc.Utxo>}
+ * @return {!Array<!proto.lnrpc.Utxo>}
  */
 proto.lnrpc.ListUnspentResponse.prototype.getUtxosList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Utxo>} */ (
+  return /** @type{!Array<!proto.lnrpc.Utxo>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Utxo, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Utxo>} value */
+/** @param {!Array<!proto.lnrpc.Utxo>} value */
 proto.lnrpc.ListUnspentResponse.prototype.setUtxosList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -5685,7 +5685,7 @@ proto.lnrpc.NewAddressRequest.prototype.getType = function() {
 
 /** @param {!proto.lnrpc.AddressType} value */
 proto.lnrpc.NewAddressRequest.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -5827,7 +5827,7 @@ proto.lnrpc.NewAddressResponse.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.NewAddressResponse.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5993,7 +5993,7 @@ proto.lnrpc.SignMessageRequest.prototype.getMsg_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.SignMessageRequest.prototype.setMsg = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -6135,7 +6135,7 @@ proto.lnrpc.SignMessageResponse.prototype.getSignature = function() {
 
 /** @param {string} value */
 proto.lnrpc.SignMessageResponse.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -6313,7 +6313,7 @@ proto.lnrpc.VerifyMessageRequest.prototype.getMsg_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.VerifyMessageRequest.prototype.setMsg = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -6328,7 +6328,7 @@ proto.lnrpc.VerifyMessageRequest.prototype.getSignature = function() {
 
 /** @param {string} value */
 proto.lnrpc.VerifyMessageRequest.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -6484,7 +6484,7 @@ proto.lnrpc.VerifyMessageResponse.prototype.getValid = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.VerifyMessageResponse.prototype.setValid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -6499,7 +6499,7 @@ proto.lnrpc.VerifyMessageResponse.prototype.getPubkey = function() {
 
 /** @param {string} value */
 proto.lnrpc.VerifyMessageResponse.prototype.setPubkey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -6667,7 +6667,7 @@ proto.lnrpc.ConnectPeerRequest.prototype.clearAddr = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ConnectPeerRequest.prototype.hasAddr = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -6687,7 +6687,7 @@ proto.lnrpc.ConnectPeerRequest.prototype.getPerm = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ConnectPeerRequest.prototype.setPerm = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -6945,7 +6945,7 @@ proto.lnrpc.DisconnectPeerRequest.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.DisconnectPeerRequest.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -7241,7 +7241,7 @@ proto.lnrpc.HTLC.prototype.getIncoming = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.HTLC.prototype.setIncoming = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -7256,7 +7256,7 @@ proto.lnrpc.HTLC.prototype.getAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.HTLC.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -7295,7 +7295,7 @@ proto.lnrpc.HTLC.prototype.getHashLock_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.HTLC.prototype.setHashLock = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -7310,7 +7310,7 @@ proto.lnrpc.HTLC.prototype.getExpirationHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.HTLC.prototype.setExpirationHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -7512,7 +7512,7 @@ proto.lnrpc.ChannelConstraints.prototype.getCsvDelay = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelConstraints.prototype.setCsvDelay = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -7527,7 +7527,7 @@ proto.lnrpc.ChannelConstraints.prototype.getChanReserveAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelConstraints.prototype.setChanReserveAtoms = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -7542,7 +7542,7 @@ proto.lnrpc.ChannelConstraints.prototype.getDustLimitAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelConstraints.prototype.setDustLimitAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -7557,7 +7557,7 @@ proto.lnrpc.ChannelConstraints.prototype.getMaxPendingAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelConstraints.prototype.setMaxPendingAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -7572,7 +7572,7 @@ proto.lnrpc.ChannelConstraints.prototype.getMinHtlcMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelConstraints.prototype.setMinHtlcMAtoms = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -7587,7 +7587,7 @@ proto.lnrpc.ChannelConstraints.prototype.getMaxAcceptedHtlcs = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelConstraints.prototype.setMaxAcceptedHtlcs = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -8093,7 +8093,7 @@ proto.lnrpc.Channel.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Channel.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -8108,7 +8108,7 @@ proto.lnrpc.Channel.prototype.getRemotePubkey = function() {
 
 /** @param {string} value */
 proto.lnrpc.Channel.prototype.setRemotePubkey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -8123,7 +8123,7 @@ proto.lnrpc.Channel.prototype.getChannelPoint = function() {
 
 /** @param {string} value */
 proto.lnrpc.Channel.prototype.setChannelPoint = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -8138,7 +8138,7 @@ proto.lnrpc.Channel.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.Channel.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringIntField(this, 4, value);
 };
 
 
@@ -8153,7 +8153,7 @@ proto.lnrpc.Channel.prototype.getCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setCapacity = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -8168,7 +8168,7 @@ proto.lnrpc.Channel.prototype.getLocalBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setLocalBalance = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -8183,7 +8183,7 @@ proto.lnrpc.Channel.prototype.getRemoteBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setRemoteBalance = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -8198,7 +8198,7 @@ proto.lnrpc.Channel.prototype.getCommitFee = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setCommitFee = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -8213,7 +8213,7 @@ proto.lnrpc.Channel.prototype.getCommitSize = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setCommitSize = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -8228,7 +8228,7 @@ proto.lnrpc.Channel.prototype.getFeePerKb = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setFeePerKb = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -8243,7 +8243,7 @@ proto.lnrpc.Channel.prototype.getUnsettledBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setUnsettledBalance = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -8258,7 +8258,7 @@ proto.lnrpc.Channel.prototype.getTotalAtomsSent = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setTotalAtomsSent = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -8273,7 +8273,7 @@ proto.lnrpc.Channel.prototype.getTotalAtomsReceived = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setTotalAtomsReceived = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -8288,21 +8288,21 @@ proto.lnrpc.Channel.prototype.getNumUpdates = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setNumUpdates = function(value) {
-  jspb.Message.setField(this, 14, value);
+  jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
 /**
  * repeated HTLC pending_htlcs = 15;
- * @return {!Array.<!proto.lnrpc.HTLC>}
+ * @return {!Array<!proto.lnrpc.HTLC>}
  */
 proto.lnrpc.Channel.prototype.getPendingHtlcsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.HTLC>} */ (
+  return /** @type{!Array<!proto.lnrpc.HTLC>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.HTLC, 15));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.HTLC>} value */
+/** @param {!Array<!proto.lnrpc.HTLC>} value */
 proto.lnrpc.Channel.prototype.setPendingHtlcsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 15, value);
 };
@@ -8334,7 +8334,7 @@ proto.lnrpc.Channel.prototype.getCsvDelay = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setCsvDelay = function(value) {
-  jspb.Message.setField(this, 16, value);
+  jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
@@ -8351,7 +8351,7 @@ proto.lnrpc.Channel.prototype.getPrivate = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Channel.prototype.setPrivate = function(value) {
-  jspb.Message.setField(this, 17, value);
+  jspb.Message.setProto3BooleanField(this, 17, value);
 };
 
 
@@ -8368,7 +8368,7 @@ proto.lnrpc.Channel.prototype.getInitiator = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Channel.prototype.setInitiator = function(value) {
-  jspb.Message.setField(this, 18, value);
+  jspb.Message.setProto3BooleanField(this, 18, value);
 };
 
 
@@ -8383,7 +8383,7 @@ proto.lnrpc.Channel.prototype.getChanStatusFlags = function() {
 
 /** @param {string} value */
 proto.lnrpc.Channel.prototype.setChanStatusFlags = function(value) {
-  jspb.Message.setField(this, 19, value);
+  jspb.Message.setProto3StringField(this, 19, value);
 };
 
 
@@ -8398,7 +8398,7 @@ proto.lnrpc.Channel.prototype.getLocalChanReserveAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setLocalChanReserveAtoms = function(value) {
-  jspb.Message.setField(this, 20, value);
+  jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
@@ -8413,7 +8413,7 @@ proto.lnrpc.Channel.prototype.getRemoteChanReserveAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setRemoteChanReserveAtoms = function(value) {
-  jspb.Message.setField(this, 21, value);
+  jspb.Message.setProto3IntField(this, 21, value);
 };
 
 
@@ -8430,7 +8430,7 @@ proto.lnrpc.Channel.prototype.getStaticRemoteKey = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Channel.prototype.setStaticRemoteKey = function(value) {
-  jspb.Message.setField(this, 22, value);
+  jspb.Message.setProto3BooleanField(this, 22, value);
 };
 
 
@@ -8445,7 +8445,7 @@ proto.lnrpc.Channel.prototype.getCommitmentType = function() {
 
 /** @param {!proto.lnrpc.CommitmentType} value */
 proto.lnrpc.Channel.prototype.setCommitmentType = function(value) {
-  jspb.Message.setField(this, 26, value);
+  jspb.Message.setProto3EnumField(this, 26, value);
 };
 
 
@@ -8460,7 +8460,7 @@ proto.lnrpc.Channel.prototype.getLifetime = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setLifetime = function(value) {
-  jspb.Message.setField(this, 23, value);
+  jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
@@ -8475,7 +8475,7 @@ proto.lnrpc.Channel.prototype.getUptime = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setUptime = function(value) {
-  jspb.Message.setField(this, 24, value);
+  jspb.Message.setProto3IntField(this, 24, value);
 };
 
 
@@ -8490,7 +8490,7 @@ proto.lnrpc.Channel.prototype.getCloseAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.Channel.prototype.setCloseAddress = function(value) {
-  jspb.Message.setField(this, 25, value);
+  jspb.Message.setProto3StringField(this, 25, value);
 };
 
 
@@ -8505,7 +8505,7 @@ proto.lnrpc.Channel.prototype.getPushAmountAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setPushAmountAtoms = function(value) {
-  jspb.Message.setField(this, 27, value);
+  jspb.Message.setProto3IntField(this, 27, value);
 };
 
 
@@ -8520,7 +8520,7 @@ proto.lnrpc.Channel.prototype.getThawHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.Channel.prototype.setThawHeight = function(value) {
-  jspb.Message.setField(this, 28, value);
+  jspb.Message.setProto3IntField(this, 28, value);
 };
 
 
@@ -8547,7 +8547,7 @@ proto.lnrpc.Channel.prototype.clearLocalConstraints = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.Channel.prototype.hasLocalConstraints = function() {
   return jspb.Message.getField(this, 29) != null;
@@ -8577,7 +8577,7 @@ proto.lnrpc.Channel.prototype.clearRemoteConstraints = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.Channel.prototype.hasRemoteConstraints = function() {
   return jspb.Message.getField(this, 30) != null;
@@ -8772,7 +8772,7 @@ proto.lnrpc.ListChannelsRequest.prototype.getActiveOnly = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListChannelsRequest.prototype.setActiveOnly = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -8789,7 +8789,7 @@ proto.lnrpc.ListChannelsRequest.prototype.getInactiveOnly = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListChannelsRequest.prototype.setInactiveOnly = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -8806,7 +8806,7 @@ proto.lnrpc.ListChannelsRequest.prototype.getPublicOnly = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListChannelsRequest.prototype.setPublicOnly = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -8823,7 +8823,7 @@ proto.lnrpc.ListChannelsRequest.prototype.getPrivateOnly = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListChannelsRequest.prototype.setPrivateOnly = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -8862,7 +8862,7 @@ proto.lnrpc.ListChannelsRequest.prototype.getPeer_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ListChannelsRequest.prototype.setPeer = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -9005,15 +9005,15 @@ proto.lnrpc.ListChannelsResponse.serializeBinaryToWriter = function(message, wri
 
 /**
  * repeated Channel channels = 11;
- * @return {!Array.<!proto.lnrpc.Channel>}
+ * @return {!Array<!proto.lnrpc.Channel>}
  */
 proto.lnrpc.ListChannelsResponse.prototype.getChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Channel>} */ (
+  return /** @type{!Array<!proto.lnrpc.Channel>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Channel, 11));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Channel>} value */
+/** @param {!Array<!proto.lnrpc.Channel>} value */
 proto.lnrpc.ListChannelsResponse.prototype.setChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 11, value);
 };
@@ -9338,7 +9338,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getChannelPoint = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setChannelPoint = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -9353,7 +9353,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringIntField(this, 2, value);
 };
 
 
@@ -9368,7 +9368,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getChainHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setChainHash = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -9383,7 +9383,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getClosingTxHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setClosingTxHash = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -9398,7 +9398,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getRemotePubkey = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setRemotePubkey = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -9413,7 +9413,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setCapacity = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -9428,7 +9428,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCloseHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setCloseHeight = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -9443,7 +9443,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getSettledBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setSettledBalance = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -9458,7 +9458,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getTimeLockedBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setTimeLockedBalance = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -9473,7 +9473,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCloseType = function() {
 
 /** @param {!proto.lnrpc.ChannelCloseSummary.ClosureType} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setCloseType = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -9488,7 +9488,7 @@ proto.lnrpc.ChannelCloseSummary.prototype.getOpenInitiator = function() {
 
 /** @param {!proto.lnrpc.Initiator} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setOpenInitiator = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3EnumField(this, 11, value);
 };
 
 
@@ -9503,21 +9503,21 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCloseInitiator = function() {
 
 /** @param {!proto.lnrpc.Initiator} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setCloseInitiator = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3EnumField(this, 12, value);
 };
 
 
 /**
  * repeated Resolution resolutions = 13;
- * @return {!Array.<!proto.lnrpc.Resolution>}
+ * @return {!Array<!proto.lnrpc.Resolution>}
  */
 proto.lnrpc.ChannelCloseSummary.prototype.getResolutionsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Resolution>} */ (
+  return /** @type{!Array<!proto.lnrpc.Resolution>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Resolution, 13));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Resolution>} value */
+/** @param {!Array<!proto.lnrpc.Resolution>} value */
 proto.lnrpc.ChannelCloseSummary.prototype.setResolutionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 13, value);
 };
@@ -9726,7 +9726,7 @@ proto.lnrpc.Resolution.prototype.getResolutionType = function() {
 
 /** @param {!proto.lnrpc.ResolutionType} value */
 proto.lnrpc.Resolution.prototype.setResolutionType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -9741,7 +9741,7 @@ proto.lnrpc.Resolution.prototype.getOutcome = function() {
 
 /** @param {!proto.lnrpc.ResolutionOutcome} value */
 proto.lnrpc.Resolution.prototype.setOutcome = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -9768,7 +9768,7 @@ proto.lnrpc.Resolution.prototype.clearOutpoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.Resolution.prototype.hasOutpoint = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -9786,7 +9786,7 @@ proto.lnrpc.Resolution.prototype.getAmountAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Resolution.prototype.setAmountAtoms = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -9801,7 +9801,7 @@ proto.lnrpc.Resolution.prototype.getSweepTxid = function() {
 
 /** @param {string} value */
 proto.lnrpc.Resolution.prototype.setSweepTxid = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -10005,7 +10005,7 @@ proto.lnrpc.ClosedChannelsRequest.prototype.getCooperative = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ClosedChannelsRequest.prototype.setCooperative = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -10022,7 +10022,7 @@ proto.lnrpc.ClosedChannelsRequest.prototype.getLocalForce = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ClosedChannelsRequest.prototype.setLocalForce = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -10039,7 +10039,7 @@ proto.lnrpc.ClosedChannelsRequest.prototype.getRemoteForce = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ClosedChannelsRequest.prototype.setRemoteForce = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -10056,7 +10056,7 @@ proto.lnrpc.ClosedChannelsRequest.prototype.getBreach = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ClosedChannelsRequest.prototype.setBreach = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -10073,7 +10073,7 @@ proto.lnrpc.ClosedChannelsRequest.prototype.getFundingCanceled = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ClosedChannelsRequest.prototype.setFundingCanceled = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -10090,7 +10090,7 @@ proto.lnrpc.ClosedChannelsRequest.prototype.getAbandoned = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ClosedChannelsRequest.prototype.setAbandoned = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -10233,15 +10233,15 @@ proto.lnrpc.ClosedChannelsResponse.serializeBinaryToWriter = function(message, w
 
 /**
  * repeated ChannelCloseSummary channels = 1;
- * @return {!Array.<!proto.lnrpc.ChannelCloseSummary>}
+ * @return {!Array<!proto.lnrpc.ChannelCloseSummary>}
  */
 proto.lnrpc.ClosedChannelsResponse.prototype.getChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelCloseSummary>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelCloseSummary>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelCloseSummary, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelCloseSummary>} value */
+/** @param {!Array<!proto.lnrpc.ChannelCloseSummary>} value */
 proto.lnrpc.ClosedChannelsResponse.prototype.setChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -10403,7 +10403,7 @@ proto.lnrpc.Peer.deserializeBinaryFromReader = function(msg, reader) {
     case 11:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
          });
       break;
     case 12:
@@ -10538,7 +10538,7 @@ proto.lnrpc.Peer.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.Peer.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -10553,7 +10553,7 @@ proto.lnrpc.Peer.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.Peer.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -10568,7 +10568,7 @@ proto.lnrpc.Peer.prototype.getBytesSent = function() {
 
 /** @param {number} value */
 proto.lnrpc.Peer.prototype.setBytesSent = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -10583,7 +10583,7 @@ proto.lnrpc.Peer.prototype.getBytesRecv = function() {
 
 /** @param {number} value */
 proto.lnrpc.Peer.prototype.setBytesRecv = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -10598,7 +10598,7 @@ proto.lnrpc.Peer.prototype.getAtomsSent = function() {
 
 /** @param {number} value */
 proto.lnrpc.Peer.prototype.setAtomsSent = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -10613,7 +10613,7 @@ proto.lnrpc.Peer.prototype.getAtomsRecv = function() {
 
 /** @param {number} value */
 proto.lnrpc.Peer.prototype.setAtomsRecv = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -10630,7 +10630,7 @@ proto.lnrpc.Peer.prototype.getInbound = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Peer.prototype.setInbound = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -10645,7 +10645,7 @@ proto.lnrpc.Peer.prototype.getPingTime = function() {
 
 /** @param {number} value */
 proto.lnrpc.Peer.prototype.setPingTime = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -10660,7 +10660,7 @@ proto.lnrpc.Peer.prototype.getSyncType = function() {
 
 /** @param {!proto.lnrpc.Peer.SyncType} value */
 proto.lnrpc.Peer.prototype.setSyncType = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -10684,15 +10684,15 @@ proto.lnrpc.Peer.prototype.clearFeaturesMap = function() {
 
 /**
  * repeated TimestampedError errors = 12;
- * @return {!Array.<!proto.lnrpc.TimestampedError>}
+ * @return {!Array<!proto.lnrpc.TimestampedError>}
  */
 proto.lnrpc.Peer.prototype.getErrorsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.TimestampedError>} */ (
+  return /** @type{!Array<!proto.lnrpc.TimestampedError>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.TimestampedError, 12));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.TimestampedError>} value */
+/** @param {!Array<!proto.lnrpc.TimestampedError>} value */
 proto.lnrpc.Peer.prototype.setErrorsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 12, value);
 };
@@ -10863,7 +10863,7 @@ proto.lnrpc.TimestampedError.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.lnrpc.TimestampedError.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -10878,7 +10878,7 @@ proto.lnrpc.TimestampedError.prototype.getError = function() {
 
 /** @param {string} value */
 proto.lnrpc.TimestampedError.prototype.setError = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -11022,7 +11022,7 @@ proto.lnrpc.ListPeersRequest.prototype.getLatestError = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListPeersRequest.prototype.setLatestError = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -11165,15 +11165,15 @@ proto.lnrpc.ListPeersResponse.serializeBinaryToWriter = function(message, writer
 
 /**
  * repeated Peer peers = 1;
- * @return {!Array.<!proto.lnrpc.Peer>}
+ * @return {!Array<!proto.lnrpc.Peer>}
  */
 proto.lnrpc.ListPeersResponse.prototype.getPeersList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Peer>} */ (
+  return /** @type{!Array<!proto.lnrpc.Peer>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Peer, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Peer>} value */
+/** @param {!Array<!proto.lnrpc.Peer>} value */
 proto.lnrpc.ListPeersResponse.prototype.setPeersList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -11468,7 +11468,7 @@ proto.lnrpc.PeerEvent.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.PeerEvent.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -11483,7 +11483,7 @@ proto.lnrpc.PeerEvent.prototype.getType = function() {
 
 /** @param {!proto.lnrpc.PeerEvent.EventType} value */
 proto.lnrpc.PeerEvent.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -11785,7 +11785,7 @@ proto.lnrpc.GetInfoResponse.deserializeBinaryFromReader = function(msg, reader) 
     case 19:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
          });
       break;
     case 901:
@@ -11966,7 +11966,7 @@ proto.lnrpc.GetInfoResponse.prototype.getVersion = function() {
 
 /** @param {string} value */
 proto.lnrpc.GetInfoResponse.prototype.setVersion = function(value) {
-  jspb.Message.setField(this, 14, value);
+  jspb.Message.setProto3StringField(this, 14, value);
 };
 
 
@@ -11981,7 +11981,7 @@ proto.lnrpc.GetInfoResponse.prototype.getCommitHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.GetInfoResponse.prototype.setCommitHash = function(value) {
-  jspb.Message.setField(this, 20, value);
+  jspb.Message.setProto3StringField(this, 20, value);
 };
 
 
@@ -11996,7 +11996,7 @@ proto.lnrpc.GetInfoResponse.prototype.getIdentityPubkey = function() {
 
 /** @param {string} value */
 proto.lnrpc.GetInfoResponse.prototype.setIdentityPubkey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -12011,7 +12011,7 @@ proto.lnrpc.GetInfoResponse.prototype.getAlias = function() {
 
 /** @param {string} value */
 proto.lnrpc.GetInfoResponse.prototype.setAlias = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -12026,7 +12026,7 @@ proto.lnrpc.GetInfoResponse.prototype.getColor = function() {
 
 /** @param {string} value */
 proto.lnrpc.GetInfoResponse.prototype.setColor = function(value) {
-  jspb.Message.setField(this, 17, value);
+  jspb.Message.setProto3StringField(this, 17, value);
 };
 
 
@@ -12041,7 +12041,7 @@ proto.lnrpc.GetInfoResponse.prototype.getNumPendingChannels = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetInfoResponse.prototype.setNumPendingChannels = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -12056,7 +12056,7 @@ proto.lnrpc.GetInfoResponse.prototype.getNumActiveChannels = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetInfoResponse.prototype.setNumActiveChannels = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -12071,7 +12071,7 @@ proto.lnrpc.GetInfoResponse.prototype.getNumInactiveChannels = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetInfoResponse.prototype.setNumInactiveChannels = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -12086,7 +12086,7 @@ proto.lnrpc.GetInfoResponse.prototype.getNumPeers = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetInfoResponse.prototype.setNumPeers = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -12101,7 +12101,7 @@ proto.lnrpc.GetInfoResponse.prototype.getBlockHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetInfoResponse.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -12116,7 +12116,7 @@ proto.lnrpc.GetInfoResponse.prototype.getBlockHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.GetInfoResponse.prototype.setBlockHash = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -12131,7 +12131,7 @@ proto.lnrpc.GetInfoResponse.prototype.getBestHeaderTimestamp = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetInfoResponse.prototype.setBestHeaderTimestamp = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -12148,7 +12148,7 @@ proto.lnrpc.GetInfoResponse.prototype.getSyncedToChain = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.GetInfoResponse.prototype.setSyncedToChain = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -12165,7 +12165,7 @@ proto.lnrpc.GetInfoResponse.prototype.getSyncedToGraph = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.GetInfoResponse.prototype.setSyncedToGraph = function(value) {
-  jspb.Message.setField(this, 18, value);
+  jspb.Message.setProto3BooleanField(this, 18, value);
 };
 
 
@@ -12182,21 +12182,21 @@ proto.lnrpc.GetInfoResponse.prototype.getTestnet = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.GetInfoResponse.prototype.setTestnet = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3BooleanField(this, 10, value);
 };
 
 
 /**
  * repeated Chain chains = 16;
- * @return {!Array.<!proto.lnrpc.Chain>}
+ * @return {!Array<!proto.lnrpc.Chain>}
  */
 proto.lnrpc.GetInfoResponse.prototype.getChainsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Chain>} */ (
+  return /** @type{!Array<!proto.lnrpc.Chain>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Chain, 16));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Chain>} value */
+/** @param {!Array<!proto.lnrpc.Chain>} value */
 proto.lnrpc.GetInfoResponse.prototype.setChainsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 16, value);
 };
@@ -12219,21 +12219,21 @@ proto.lnrpc.GetInfoResponse.prototype.clearChainsList = function() {
 
 /**
  * repeated string uris = 12;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.GetInfoResponse.prototype.getUrisList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 12));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 12));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.lnrpc.GetInfoResponse.prototype.setUrisList = function(value) {
   jspb.Message.setField(this, 12, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.lnrpc.GetInfoResponse.prototype.addUris = function(value, opt_index) {
@@ -12277,7 +12277,7 @@ proto.lnrpc.GetInfoResponse.prototype.getServerActive = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.GetInfoResponse.prototype.setServerActive = function(value) {
-  jspb.Message.setField(this, 901, value);
+  jspb.Message.setProto3BooleanField(this, 901, value);
 };
 
 
@@ -12561,7 +12561,7 @@ proto.lnrpc.GetRecoveryInfoResponse.prototype.getRecoveryMode = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.setRecoveryMode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -12578,7 +12578,7 @@ proto.lnrpc.GetRecoveryInfoResponse.prototype.getRecoveryFinished = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.setRecoveryFinished = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -12593,7 +12593,7 @@ proto.lnrpc.GetRecoveryInfoResponse.prototype.getProgress = function() {
 
 /** @param {number} value */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.setProgress = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
@@ -12747,7 +12747,7 @@ proto.lnrpc.Chain.prototype.getChain = function() {
 
 /** @param {string} value */
 proto.lnrpc.Chain.prototype.setChain = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -12762,7 +12762,7 @@ proto.lnrpc.Chain.prototype.getNetwork = function() {
 
 /** @param {string} value */
 proto.lnrpc.Chain.prototype.setNetwork = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -12952,7 +12952,7 @@ proto.lnrpc.ConfirmationUpdate.prototype.getBlockSha_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ConfirmationUpdate.prototype.setBlockSha = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -12967,7 +12967,7 @@ proto.lnrpc.ConfirmationUpdate.prototype.getBlockHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.ConfirmationUpdate.prototype.setBlockHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -12982,7 +12982,7 @@ proto.lnrpc.ConfirmationUpdate.prototype.getNumConfsLeft = function() {
 
 /** @param {number} value */
 proto.lnrpc.ConfirmationUpdate.prototype.setNumConfsLeft = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -13138,7 +13138,7 @@ proto.lnrpc.ChannelOpenUpdate.prototype.clearChannelPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelOpenUpdate.prototype.hasChannelPoint = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -13319,7 +13319,7 @@ proto.lnrpc.ChannelCloseUpdate.prototype.getClosingTxid_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelCloseUpdate.prototype.setClosingTxid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -13336,7 +13336,7 @@ proto.lnrpc.ChannelCloseUpdate.prototype.getSuccess = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ChannelCloseUpdate.prototype.setSuccess = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -13540,7 +13540,7 @@ proto.lnrpc.CloseChannelRequest.prototype.clearChannelPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.CloseChannelRequest.prototype.hasChannelPoint = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -13560,7 +13560,7 @@ proto.lnrpc.CloseChannelRequest.prototype.getForce = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.CloseChannelRequest.prototype.setForce = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -13575,7 +13575,7 @@ proto.lnrpc.CloseChannelRequest.prototype.getTargetConf = function() {
 
 /** @param {number} value */
 proto.lnrpc.CloseChannelRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -13590,7 +13590,7 @@ proto.lnrpc.CloseChannelRequest.prototype.getAtomsPerByte = function() {
 
 /** @param {number} value */
 proto.lnrpc.CloseChannelRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -13605,7 +13605,7 @@ proto.lnrpc.CloseChannelRequest.prototype.getDeliveryAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.CloseChannelRequest.prototype.setDeliveryAddress = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -13801,7 +13801,7 @@ proto.lnrpc.CloseStatusUpdate.prototype.clearClosePending = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.CloseStatusUpdate.prototype.hasClosePending = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -13831,7 +13831,7 @@ proto.lnrpc.CloseStatusUpdate.prototype.clearChanClose = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.CloseStatusUpdate.prototype.hasChanClose = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -14012,7 +14012,7 @@ proto.lnrpc.PendingUpdate.prototype.getTxid_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.PendingUpdate.prototype.setTxid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -14027,7 +14027,7 @@ proto.lnrpc.PendingUpdate.prototype.getOutputIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.PendingUpdate.prototype.setOutputIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -14193,7 +14193,7 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.getFundingAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.ReadyForPsbtFunding.prototype.setFundingAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -14208,7 +14208,7 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.getFundingAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.ReadyForPsbtFunding.prototype.setFundingAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -14247,7 +14247,7 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.getPsbt_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ReadyForPsbtFunding.prototype.setPsbt = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -14583,7 +14583,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getNodePubkey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.OpenChannelRequest.prototype.setNodePubkey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -14598,7 +14598,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getNodePubkeyString = function() {
 
 /** @param {string} value */
 proto.lnrpc.OpenChannelRequest.prototype.setNodePubkeyString = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -14613,7 +14613,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getLocalFundingAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setLocalFundingAmount = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -14628,7 +14628,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getPushAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setPushAtoms = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -14643,7 +14643,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getTargetConf = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -14658,7 +14658,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getAtomsPerByte = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -14675,7 +14675,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getPrivate = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.OpenChannelRequest.prototype.setPrivate = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -14690,7 +14690,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getMinHtlcMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setMinHtlcMAtoms = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -14705,7 +14705,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getRemoteCsvDelay = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setRemoteCsvDelay = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -14720,7 +14720,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getMinConfs = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setMinConfs = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -14737,7 +14737,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getSpendUnconfirmed = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.OpenChannelRequest.prototype.setSpendUnconfirmed = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3BooleanField(this, 12, value);
 };
 
 
@@ -14752,7 +14752,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getCloseAddress = function() {
 
 /** @param {string} value */
 proto.lnrpc.OpenChannelRequest.prototype.setCloseAddress = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3StringField(this, 13, value);
 };
 
 
@@ -14779,7 +14779,7 @@ proto.lnrpc.OpenChannelRequest.prototype.clearFundingShim = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.OpenChannelRequest.prototype.hasFundingShim = function() {
   return jspb.Message.getField(this, 14) != null;
@@ -14797,7 +14797,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getRemoteMaxValueInFlightMAtoms = funct
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setRemoteMaxValueInFlightMAtoms = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -14812,7 +14812,7 @@ proto.lnrpc.OpenChannelRequest.prototype.getRemoteMaxHtlcs = function() {
 
 /** @param {number} value */
 proto.lnrpc.OpenChannelRequest.prototype.setRemoteMaxHtlcs = function(value) {
-  jspb.Message.setField(this, 16, value);
+  jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
@@ -15035,7 +15035,7 @@ proto.lnrpc.OpenStatusUpdate.prototype.clearChanPending = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.OpenStatusUpdate.prototype.hasChanPending = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -15065,7 +15065,7 @@ proto.lnrpc.OpenStatusUpdate.prototype.clearChanOpen = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.OpenStatusUpdate.prototype.hasChanOpen = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -15095,7 +15095,7 @@ proto.lnrpc.OpenStatusUpdate.prototype.clearPsbtFund = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.OpenStatusUpdate.prototype.hasPsbtFund = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -15137,7 +15137,7 @@ proto.lnrpc.OpenStatusUpdate.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.OpenStatusUpdate.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -15291,7 +15291,7 @@ proto.lnrpc.KeyLocator.prototype.getKeyFamily = function() {
 
 /** @param {number} value */
 proto.lnrpc.KeyLocator.prototype.setKeyFamily = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -15306,7 +15306,7 @@ proto.lnrpc.KeyLocator.prototype.getKeyIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.KeyLocator.prototype.setKeyIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -15486,7 +15486,7 @@ proto.lnrpc.KeyDescriptor.prototype.getRawKeyBytes_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.KeyDescriptor.prototype.setRawKeyBytes = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -15513,7 +15513,7 @@ proto.lnrpc.KeyDescriptor.prototype.clearKeyLoc = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.KeyDescriptor.prototype.hasKeyLoc = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -15722,7 +15722,7 @@ proto.lnrpc.ChanPointShim.prototype.getAmt = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChanPointShim.prototype.setAmt = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -15749,7 +15749,7 @@ proto.lnrpc.ChanPointShim.prototype.clearChanPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChanPointShim.prototype.hasChanPoint = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -15779,7 +15779,7 @@ proto.lnrpc.ChanPointShim.prototype.clearLocalKey = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChanPointShim.prototype.hasLocalKey = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -15821,7 +15821,7 @@ proto.lnrpc.ChanPointShim.prototype.getRemoteKey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChanPointShim.prototype.setRemoteKey = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -15860,7 +15860,7 @@ proto.lnrpc.ChanPointShim.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChanPointShim.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -15875,7 +15875,7 @@ proto.lnrpc.ChanPointShim.prototype.getThawHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChanPointShim.prototype.setThawHeight = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -16065,7 +16065,7 @@ proto.lnrpc.PsbtShim.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.PsbtShim.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16104,7 +16104,7 @@ proto.lnrpc.PsbtShim.prototype.getBasePsbt_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.PsbtShim.prototype.setBasePsbt = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -16121,7 +16121,7 @@ proto.lnrpc.PsbtShim.prototype.getNoPublish = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.PsbtShim.prototype.setNoPublish = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -16317,7 +16317,7 @@ proto.lnrpc.FundingShim.prototype.clearChanPointShim = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FundingShim.prototype.hasChanPointShim = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -16347,7 +16347,7 @@ proto.lnrpc.FundingShim.prototype.clearPsbtShim = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FundingShim.prototype.hasPsbtShim = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -16516,7 +16516,7 @@ proto.lnrpc.FundingShimCancel.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.FundingShimCancel.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16694,7 +16694,7 @@ proto.lnrpc.FundingPsbtVerify.prototype.getFundedPsbt_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.FundingPsbtVerify.prototype.setFundedPsbt = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16733,7 +16733,7 @@ proto.lnrpc.FundingPsbtVerify.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.FundingPsbtVerify.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -16923,7 +16923,7 @@ proto.lnrpc.FundingPsbtFinalize.prototype.getSignedPsbt_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.FundingPsbtFinalize.prototype.setSignedPsbt = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16962,7 +16962,7 @@ proto.lnrpc.FundingPsbtFinalize.prototype.getPendingChanId_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.FundingPsbtFinalize.prototype.setPendingChanId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -17001,7 +17001,7 @@ proto.lnrpc.FundingPsbtFinalize.prototype.getFinalRawTx_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.FundingPsbtFinalize.prototype.setFinalRawTx = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -17227,7 +17227,7 @@ proto.lnrpc.FundingTransitionMsg.prototype.clearShimRegister = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FundingTransitionMsg.prototype.hasShimRegister = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -17257,7 +17257,7 @@ proto.lnrpc.FundingTransitionMsg.prototype.clearShimCancel = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FundingTransitionMsg.prototype.hasShimCancel = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -17287,7 +17287,7 @@ proto.lnrpc.FundingTransitionMsg.prototype.clearPsbtVerify = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FundingTransitionMsg.prototype.hasPsbtVerify = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -17317,7 +17317,7 @@ proto.lnrpc.FundingTransitionMsg.prototype.clearPsbtFinalize = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.FundingTransitionMsg.prototype.hasPsbtFinalize = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -17640,7 +17640,7 @@ proto.lnrpc.PendingHTLC.prototype.getIncoming = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.PendingHTLC.prototype.setIncoming = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -17655,7 +17655,7 @@ proto.lnrpc.PendingHTLC.prototype.getAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.PendingHTLC.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -17670,7 +17670,7 @@ proto.lnrpc.PendingHTLC.prototype.getOutpoint = function() {
 
 /** @param {string} value */
 proto.lnrpc.PendingHTLC.prototype.setOutpoint = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -17685,7 +17685,7 @@ proto.lnrpc.PendingHTLC.prototype.getMaturityHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.PendingHTLC.prototype.setMaturityHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -17700,7 +17700,7 @@ proto.lnrpc.PendingHTLC.prototype.getBlocksTilMaturity = function() {
 
 /** @param {number} value */
 proto.lnrpc.PendingHTLC.prototype.setBlocksTilMaturity = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -17715,7 +17715,7 @@ proto.lnrpc.PendingHTLC.prototype.getStage = function() {
 
 /** @param {number} value */
 proto.lnrpc.PendingHTLC.prototype.setStage = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -18263,7 +18263,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getRemoteNodePub = 
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setRemoteNodePub = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -18278,7 +18278,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getChannelPoint = f
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setChannelPoint = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -18293,7 +18293,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getCapacity = funct
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setCapacity = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -18308,7 +18308,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getLocalBalance = f
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setLocalBalance = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -18323,7 +18323,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getRemoteBalance = 
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setRemoteBalance = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -18338,7 +18338,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getLocalChanReserve
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setLocalChanReserveAtoms = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -18353,7 +18353,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getRemoteChanReserv
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setRemoteChanReserveAtoms = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -18368,7 +18368,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getInitiator = func
 
 /** @param {!proto.lnrpc.Initiator} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setInitiator = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -18383,7 +18383,7 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getCommitmentType =
 
 /** @param {!proto.lnrpc.CommitmentType} value */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setCommitmentType = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3EnumField(this, 9, value);
 };
 
 
@@ -18587,7 +18587,7 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.clearChannel = 
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.hasChannel = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -18605,7 +18605,7 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getConfirmation
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setConfirmationHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -18620,7 +18620,7 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getCommitFee = 
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setCommitFee = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -18635,7 +18635,7 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getCommitSize =
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setCommitSize = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -18650,7 +18650,7 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getFeePerKb = f
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setFeePerKb = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -18832,7 +18832,7 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.clearChannel =
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.hasChannel = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -18850,7 +18850,7 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.getLimboBalanc
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.setLimboBalance = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -18877,7 +18877,7 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.clearCommitmen
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.hasCommitments = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -19082,7 +19082,7 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getLocalTxid = functio
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setLocalTxid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -19097,7 +19097,7 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemoteTxid = functi
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemoteTxid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -19112,7 +19112,7 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemotePendingTxid =
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemotePendingTxid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -19127,7 +19127,7 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getLocalCommitFeeAtoms
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setLocalCommitFeeAtoms = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -19142,7 +19142,7 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemoteCommitFeeAtom
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemoteCommitFeeAtoms = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -19157,7 +19157,7 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemotePendingCommit
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemotePendingCommitFeeAtoms = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -19325,7 +19325,7 @@ proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.clearChannel = funct
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.hasChannel = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -19343,7 +19343,7 @@ proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.getClosingTxid = fun
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.setClosingTxid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -19602,7 +19602,7 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.clearChannel = 
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.hasChannel = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -19620,7 +19620,7 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getClosingTxid 
 
 /** @param {string} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setClosingTxid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -19635,7 +19635,7 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getLimboBalance
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setLimboBalance = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -19650,7 +19650,7 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getMaturityHeig
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setMaturityHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -19665,7 +19665,7 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getBlocksTilMat
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setBlocksTilMaturity = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -19680,21 +19680,21 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getRecoveredBal
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setRecoveredBalance = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
 /**
  * repeated PendingHTLC pending_htlcs = 8;
- * @return {!Array.<!proto.lnrpc.PendingHTLC>}
+ * @return {!Array<!proto.lnrpc.PendingHTLC>}
  */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getPendingHtlcsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.PendingHTLC>} */ (
+  return /** @type{!Array<!proto.lnrpc.PendingHTLC>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.PendingHTLC, 8));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.PendingHTLC>} value */
+/** @param {!Array<!proto.lnrpc.PendingHTLC>} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setPendingHtlcsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 8, value);
 };
@@ -19726,7 +19726,7 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getAnchor = fun
 
 /** @param {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.AnchorState} value */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setAnchor = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3EnumField(this, 9, value);
 };
 
 
@@ -19741,21 +19741,21 @@ proto.lnrpc.PendingChannelsResponse.prototype.getTotalLimboBalance = function() 
 
 /** @param {number} value */
 proto.lnrpc.PendingChannelsResponse.prototype.setTotalLimboBalance = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
 /**
  * repeated PendingOpenChannel pending_open_channels = 2;
- * @return {!Array.<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>}
+ * @return {!Array<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>}
  */
 proto.lnrpc.PendingChannelsResponse.prototype.getPendingOpenChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>} */ (
+  return /** @type{!Array<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.PendingChannelsResponse.PendingOpenChannel, 2));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>} value */
+/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>} value */
 proto.lnrpc.PendingChannelsResponse.prototype.setPendingOpenChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -19778,15 +19778,15 @@ proto.lnrpc.PendingChannelsResponse.prototype.clearPendingOpenChannelsList = fun
 
 /**
  * repeated ClosedChannel pending_closing_channels = 3;
- * @return {!Array.<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>}
+ * @return {!Array<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>}
  */
 proto.lnrpc.PendingChannelsResponse.prototype.getPendingClosingChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>} */ (
+  return /** @type{!Array<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.PendingChannelsResponse.ClosedChannel, 3));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>} value */
+/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>} value */
 proto.lnrpc.PendingChannelsResponse.prototype.setPendingClosingChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
@@ -19809,15 +19809,15 @@ proto.lnrpc.PendingChannelsResponse.prototype.clearPendingClosingChannelsList = 
 
 /**
  * repeated ForceClosedChannel pending_force_closing_channels = 4;
- * @return {!Array.<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>}
+ * @return {!Array<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>}
  */
 proto.lnrpc.PendingChannelsResponse.prototype.getPendingForceClosingChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>} */ (
+  return /** @type{!Array<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.PendingChannelsResponse.ForceClosedChannel, 4));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>} value */
+/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>} value */
 proto.lnrpc.PendingChannelsResponse.prototype.setPendingForceClosingChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -19840,15 +19840,15 @@ proto.lnrpc.PendingChannelsResponse.prototype.clearPendingForceClosingChannelsLi
 
 /**
  * repeated WaitingCloseChannel waiting_close_channels = 5;
- * @return {!Array.<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>}
+ * @return {!Array<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>}
  */
 proto.lnrpc.PendingChannelsResponse.prototype.getWaitingCloseChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>} */ (
+  return /** @type{!Array<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel, 5));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>} value */
+/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>} value */
 proto.lnrpc.PendingChannelsResponse.prototype.setWaitingCloseChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 5, value);
 };
@@ -20245,7 +20245,7 @@ proto.lnrpc.ChannelEventUpdate.prototype.clearOpenChannel = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEventUpdate.prototype.hasOpenChannel = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -20275,7 +20275,7 @@ proto.lnrpc.ChannelEventUpdate.prototype.clearClosedChannel = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEventUpdate.prototype.hasClosedChannel = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -20305,7 +20305,7 @@ proto.lnrpc.ChannelEventUpdate.prototype.clearActiveChannel = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEventUpdate.prototype.hasActiveChannel = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -20335,7 +20335,7 @@ proto.lnrpc.ChannelEventUpdate.prototype.clearInactiveChannel = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEventUpdate.prototype.hasInactiveChannel = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -20365,7 +20365,7 @@ proto.lnrpc.ChannelEventUpdate.prototype.clearPendingOpenChannel = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEventUpdate.prototype.hasPendingOpenChannel = function() {
   return jspb.Message.getField(this, 6) != null;
@@ -20383,7 +20383,7 @@ proto.lnrpc.ChannelEventUpdate.prototype.getType = function() {
 
 /** @param {!proto.lnrpc.ChannelEventUpdate.UpdateType} value */
 proto.lnrpc.ChannelEventUpdate.prototype.setType = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
@@ -20665,7 +20665,7 @@ proto.lnrpc.WalletBalanceResponse.prototype.getTotalBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.WalletBalanceResponse.prototype.setTotalBalance = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -20680,7 +20680,7 @@ proto.lnrpc.WalletBalanceResponse.prototype.getConfirmedBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.WalletBalanceResponse.prototype.setConfirmedBalance = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -20695,7 +20695,7 @@ proto.lnrpc.WalletBalanceResponse.prototype.getUnconfirmedBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.WalletBalanceResponse.prototype.setUnconfirmedBalance = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -20989,7 +20989,7 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getBalance = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelBalanceResponse.prototype.setBalance = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -21004,7 +21004,7 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getPendingOpenBalance = function() 
 
 /** @param {number} value */
 proto.lnrpc.ChannelBalanceResponse.prototype.setPendingOpenBalance = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -21019,7 +21019,7 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getMaxInboundAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelBalanceResponse.prototype.setMaxInboundAmount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -21034,7 +21034,7 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getMaxOutboundAmount = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelBalanceResponse.prototype.setMaxOutboundAmount = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -21197,7 +21197,7 @@ proto.lnrpc.QueryRoutesRequest.deserializeBinaryFromReader = function(msg, reade
     case 13:
       var value = msg.getDestCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
          });
       break;
     case 14:
@@ -21214,7 +21214,7 @@ proto.lnrpc.QueryRoutesRequest.deserializeBinaryFromReader = function(msg, reade
       msg.addRouteHints(value);
       break;
     case 17:
-      var value = /** @type {!Array.<!proto.lnrpc.FeatureBit>} */ (reader.readPackedEnum());
+      var value = /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (reader.readPackedEnum());
       msg.setDestFeaturesList(value);
       break;
     default:
@@ -21373,7 +21373,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -21388,7 +21388,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getAmt = function() {
 
 /** @param {number} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setAmt = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -21403,7 +21403,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -21418,7 +21418,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getFinalCltvDelta = function() {
 
 /** @param {number} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setFinalCltvDelta = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -21445,7 +21445,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.clearFeeLimit = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.hasFeeLimit = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -21464,10 +21464,10 @@ proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredNodesList = function() {
 /**
  * repeated bytes ignored_nodes = 6;
  * This is a type-conversion wrapper around `getIgnoredNodesList()`
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredNodesList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+  return /** @type {!Array<string>} */ (jspb.Message.bytesListAsB64(
       this.getIgnoredNodesList()));
 };
 
@@ -21477,10 +21477,10 @@ proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredNodesList_asB64 = function() 
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getIgnoredNodesList()`
- * @return {!Array.<!Uint8Array>}
+ * @return {!Array<!Uint8Array>}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredNodesList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+  return /** @type {!Array<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
       this.getIgnoredNodesList()));
 };
 
@@ -21507,15 +21507,15 @@ proto.lnrpc.QueryRoutesRequest.prototype.clearIgnoredNodesList = function() {
 
 /**
  * repeated EdgeLocator ignored_edges = 7;
- * @return {!Array.<!proto.lnrpc.EdgeLocator>}
+ * @return {!Array<!proto.lnrpc.EdgeLocator>}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredEdgesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.EdgeLocator>} */ (
+  return /** @type{!Array<!proto.lnrpc.EdgeLocator>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.EdgeLocator, 7));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.EdgeLocator>} value */
+/** @param {!Array<!proto.lnrpc.EdgeLocator>} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setIgnoredEdgesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 7, value);
 };
@@ -21547,7 +21547,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getSourcePubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setSourcePubKey = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -21564,21 +21564,21 @@ proto.lnrpc.QueryRoutesRequest.prototype.getUseMissionControl = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setUseMissionControl = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
 /**
  * repeated NodePair ignored_pairs = 10;
- * @return {!Array.<!proto.lnrpc.NodePair>}
+ * @return {!Array<!proto.lnrpc.NodePair>}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredPairsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.NodePair>} */ (
+  return /** @type{!Array<!proto.lnrpc.NodePair>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.NodePair, 10));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.NodePair>} value */
+/** @param {!Array<!proto.lnrpc.NodePair>} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setIgnoredPairsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 10, value);
 };
@@ -21610,7 +21610,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getCltvLimit = function() {
 
 /** @param {number} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setCltvLimit = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -21643,7 +21643,7 @@ proto.lnrpc.QueryRoutesRequest.prototype.getOutgoingChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setOutgoingChanId = function(value) {
-  jspb.Message.setField(this, 14, value);
+  jspb.Message.setProto3StringIntField(this, 14, value);
 };
 
 
@@ -21682,21 +21682,21 @@ proto.lnrpc.QueryRoutesRequest.prototype.getLastHopPubkey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setLastHopPubkey = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3BytesField(this, 15, value);
 };
 
 
 /**
  * repeated RouteHint route_hints = 16;
- * @return {!Array.<!proto.lnrpc.RouteHint>}
+ * @return {!Array<!proto.lnrpc.RouteHint>}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getRouteHintsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.RouteHint>} */ (
+  return /** @type{!Array<!proto.lnrpc.RouteHint>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.RouteHint, 16));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.RouteHint>} value */
+/** @param {!Array<!proto.lnrpc.RouteHint>} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setRouteHintsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 16, value);
 };
@@ -21719,14 +21719,14 @@ proto.lnrpc.QueryRoutesRequest.prototype.clearRouteHintsList = function() {
 
 /**
  * repeated FeatureBit dest_features = 17;
- * @return {!Array.<!proto.lnrpc.FeatureBit>}
+ * @return {!Array<!proto.lnrpc.FeatureBit>}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getDestFeaturesList = function() {
-  return /** @type {!Array.<!proto.lnrpc.FeatureBit>} */ (jspb.Message.getRepeatedField(this, 17));
+  return /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (jspb.Message.getRepeatedField(this, 17));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.FeatureBit>} value */
+/** @param {!Array<!proto.lnrpc.FeatureBit>} value */
 proto.lnrpc.QueryRoutesRequest.prototype.setDestFeaturesList = function(value) {
   jspb.Message.setField(this, 17, value || []);
 };
@@ -21920,7 +21920,7 @@ proto.lnrpc.NodePair.prototype.getFrom_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.NodePair.prototype.setFrom = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -21959,7 +21959,7 @@ proto.lnrpc.NodePair.prototype.getTo_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.NodePair.prototype.setTo = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -22113,7 +22113,7 @@ proto.lnrpc.EdgeLocator.prototype.getChannelId = function() {
 
 /** @param {string} value */
 proto.lnrpc.EdgeLocator.prototype.setChannelId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -22130,7 +22130,7 @@ proto.lnrpc.EdgeLocator.prototype.getDirectionReverse = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.EdgeLocator.prototype.setDirectionReverse = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -22285,15 +22285,15 @@ proto.lnrpc.QueryRoutesResponse.serializeBinaryToWriter = function(message, writ
 
 /**
  * repeated Route routes = 1;
- * @return {!Array.<!proto.lnrpc.Route>}
+ * @return {!Array<!proto.lnrpc.Route>}
  */
 proto.lnrpc.QueryRoutesResponse.prototype.getRoutesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Route>} */ (
+  return /** @type{!Array<!proto.lnrpc.Route>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Route, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Route>} value */
+/** @param {!Array<!proto.lnrpc.Route>} value */
 proto.lnrpc.QueryRoutesResponse.prototype.setRoutesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -22325,7 +22325,7 @@ proto.lnrpc.QueryRoutesResponse.prototype.getSuccessProb = function() {
 
 /** @param {number} value */
 proto.lnrpc.QueryRoutesResponse.prototype.setSuccessProb = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -22467,7 +22467,7 @@ proto.lnrpc.Hop.deserializeBinaryFromReader = function(msg, reader) {
     case 11:
       var value = msg.getCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
          });
       break;
     default:
@@ -22588,7 +22588,7 @@ proto.lnrpc.Hop.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.Hop.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -22603,7 +22603,7 @@ proto.lnrpc.Hop.prototype.getChanCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.Hop.prototype.setChanCapacity = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -22618,7 +22618,7 @@ proto.lnrpc.Hop.prototype.getAmtToForward = function() {
 
 /** @param {number} value */
 proto.lnrpc.Hop.prototype.setAmtToForward = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -22633,7 +22633,7 @@ proto.lnrpc.Hop.prototype.getFee = function() {
 
 /** @param {number} value */
 proto.lnrpc.Hop.prototype.setFee = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -22648,7 +22648,7 @@ proto.lnrpc.Hop.prototype.getExpiry = function() {
 
 /** @param {number} value */
 proto.lnrpc.Hop.prototype.setExpiry = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -22663,7 +22663,7 @@ proto.lnrpc.Hop.prototype.getAmtToForwardMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Hop.prototype.setAmtToForwardMAtoms = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -22678,7 +22678,7 @@ proto.lnrpc.Hop.prototype.getFeeMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Hop.prototype.setFeeMAtoms = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -22693,7 +22693,7 @@ proto.lnrpc.Hop.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.Hop.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -22710,7 +22710,7 @@ proto.lnrpc.Hop.prototype.getTlvPayload = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Hop.prototype.setTlvPayload = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -22737,7 +22737,7 @@ proto.lnrpc.Hop.prototype.clearMppRecord = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.Hop.prototype.hasMppRecord = function() {
   return jspb.Message.getField(this, 10) != null;
@@ -22936,7 +22936,7 @@ proto.lnrpc.MPPRecord.prototype.getPaymentAddr_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.MPPRecord.prototype.setPaymentAddr = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3BytesField(this, 11, value);
 };
 
 
@@ -22951,7 +22951,7 @@ proto.lnrpc.MPPRecord.prototype.getTotalAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.MPPRecord.prototype.setTotalAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -23163,7 +23163,7 @@ proto.lnrpc.Route.prototype.getTotalTimeLock = function() {
 
 /** @param {number} value */
 proto.lnrpc.Route.prototype.setTotalTimeLock = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -23178,7 +23178,7 @@ proto.lnrpc.Route.prototype.getTotalFees = function() {
 
 /** @param {number} value */
 proto.lnrpc.Route.prototype.setTotalFees = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -23193,21 +23193,21 @@ proto.lnrpc.Route.prototype.getTotalAmt = function() {
 
 /** @param {number} value */
 proto.lnrpc.Route.prototype.setTotalAmt = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
  * repeated Hop hops = 4;
- * @return {!Array.<!proto.lnrpc.Hop>}
+ * @return {!Array<!proto.lnrpc.Hop>}
  */
 proto.lnrpc.Route.prototype.getHopsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Hop>} */ (
+  return /** @type{!Array<!proto.lnrpc.Hop>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Hop, 4));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Hop>} value */
+/** @param {!Array<!proto.lnrpc.Hop>} value */
 proto.lnrpc.Route.prototype.setHopsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -23239,7 +23239,7 @@ proto.lnrpc.Route.prototype.getTotalFeesMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Route.prototype.setTotalFeesMAtoms = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -23254,7 +23254,7 @@ proto.lnrpc.Route.prototype.getTotalAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Route.prototype.setTotalAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -23408,7 +23408,7 @@ proto.lnrpc.NodeInfoRequest.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.NodeInfoRequest.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -23425,7 +23425,7 @@ proto.lnrpc.NodeInfoRequest.prototype.getIncludeChannels = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.NodeInfoRequest.prototype.setIncludeChannels = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -23627,7 +23627,7 @@ proto.lnrpc.NodeInfo.prototype.clearNode = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.NodeInfo.prototype.hasNode = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -23645,7 +23645,7 @@ proto.lnrpc.NodeInfo.prototype.getNumChannels = function() {
 
 /** @param {number} value */
 proto.lnrpc.NodeInfo.prototype.setNumChannels = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -23660,21 +23660,21 @@ proto.lnrpc.NodeInfo.prototype.getTotalCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.NodeInfo.prototype.setTotalCapacity = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
  * repeated ChannelEdge channels = 4;
- * @return {!Array.<!proto.lnrpc.ChannelEdge>}
+ * @return {!Array<!proto.lnrpc.ChannelEdge>}
  */
 proto.lnrpc.NodeInfo.prototype.getChannelsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelEdge>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelEdge>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelEdge, 4));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelEdge>} value */
+/** @param {!Array<!proto.lnrpc.ChannelEdge>} value */
 proto.lnrpc.NodeInfo.prototype.setChannelsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -23816,7 +23816,7 @@ proto.lnrpc.LightningNode.deserializeBinaryFromReader = function(msg, reader) {
     case 6:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
          });
       break;
     default:
@@ -23902,7 +23902,7 @@ proto.lnrpc.LightningNode.prototype.getLastUpdate = function() {
 
 /** @param {number} value */
 proto.lnrpc.LightningNode.prototype.setLastUpdate = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -23917,7 +23917,7 @@ proto.lnrpc.LightningNode.prototype.getPubKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.LightningNode.prototype.setPubKey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -23932,21 +23932,21 @@ proto.lnrpc.LightningNode.prototype.getAlias = function() {
 
 /** @param {string} value */
 proto.lnrpc.LightningNode.prototype.setAlias = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
  * repeated NodeAddress addresses = 4;
- * @return {!Array.<!proto.lnrpc.NodeAddress>}
+ * @return {!Array<!proto.lnrpc.NodeAddress>}
  */
 proto.lnrpc.LightningNode.prototype.getAddressesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.NodeAddress>} */ (
+  return /** @type{!Array<!proto.lnrpc.NodeAddress>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.NodeAddress, 4));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.NodeAddress>} value */
+/** @param {!Array<!proto.lnrpc.NodeAddress>} value */
 proto.lnrpc.LightningNode.prototype.setAddressesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
@@ -23978,7 +23978,7 @@ proto.lnrpc.LightningNode.prototype.getColor = function() {
 
 /** @param {string} value */
 proto.lnrpc.LightningNode.prototype.setColor = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -24150,7 +24150,7 @@ proto.lnrpc.NodeAddress.prototype.getNetwork = function() {
 
 /** @param {string} value */
 proto.lnrpc.NodeAddress.prototype.setNetwork = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -24165,7 +24165,7 @@ proto.lnrpc.NodeAddress.prototype.getAddr = function() {
 
 /** @param {string} value */
 proto.lnrpc.NodeAddress.prototype.setAddr = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -24379,7 +24379,7 @@ proto.lnrpc.RoutingPolicy.prototype.getTimeLockDelta = function() {
 
 /** @param {number} value */
 proto.lnrpc.RoutingPolicy.prototype.setTimeLockDelta = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -24394,7 +24394,7 @@ proto.lnrpc.RoutingPolicy.prototype.getMinHtlc = function() {
 
 /** @param {number} value */
 proto.lnrpc.RoutingPolicy.prototype.setMinHtlc = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -24409,7 +24409,7 @@ proto.lnrpc.RoutingPolicy.prototype.getFeeBaseMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.RoutingPolicy.prototype.setFeeBaseMAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -24424,7 +24424,7 @@ proto.lnrpc.RoutingPolicy.prototype.getFeeRateMilliMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.RoutingPolicy.prototype.setFeeRateMilliMAtoms = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -24441,7 +24441,7 @@ proto.lnrpc.RoutingPolicy.prototype.getDisabled = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.RoutingPolicy.prototype.setDisabled = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -24456,7 +24456,7 @@ proto.lnrpc.RoutingPolicy.prototype.getMaxHtlcMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.RoutingPolicy.prototype.setMaxHtlcMAtoms = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -24471,7 +24471,7 @@ proto.lnrpc.RoutingPolicy.prototype.getLastUpdate = function() {
 
 /** @param {number} value */
 proto.lnrpc.RoutingPolicy.prototype.setLastUpdate = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -24701,7 +24701,7 @@ proto.lnrpc.ChannelEdge.prototype.getChannelId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdge.prototype.setChannelId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -24716,7 +24716,7 @@ proto.lnrpc.ChannelEdge.prototype.getChanPoint = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdge.prototype.setChanPoint = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -24731,7 +24731,7 @@ proto.lnrpc.ChannelEdge.prototype.getLastUpdate = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelEdge.prototype.setLastUpdate = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -24746,7 +24746,7 @@ proto.lnrpc.ChannelEdge.prototype.getNode1Pub = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdge.prototype.setNode1Pub = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -24761,7 +24761,7 @@ proto.lnrpc.ChannelEdge.prototype.getNode2Pub = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdge.prototype.setNode2Pub = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -24776,7 +24776,7 @@ proto.lnrpc.ChannelEdge.prototype.getCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelEdge.prototype.setCapacity = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -24803,7 +24803,7 @@ proto.lnrpc.ChannelEdge.prototype.clearNode1Policy = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEdge.prototype.hasNode1Policy = function() {
   return jspb.Message.getField(this, 7) != null;
@@ -24833,7 +24833,7 @@ proto.lnrpc.ChannelEdge.prototype.clearNode2Policy = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEdge.prototype.hasNode2Policy = function() {
   return jspb.Message.getField(this, 8) != null;
@@ -24980,7 +24980,7 @@ proto.lnrpc.ChannelGraphRequest.prototype.getIncludeUnannounced = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ChannelGraphRequest.prototype.setIncludeUnannounced = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -25138,15 +25138,15 @@ proto.lnrpc.ChannelGraph.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * repeated LightningNode nodes = 1;
- * @return {!Array.<!proto.lnrpc.LightningNode>}
+ * @return {!Array<!proto.lnrpc.LightningNode>}
  */
 proto.lnrpc.ChannelGraph.prototype.getNodesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.LightningNode>} */ (
+  return /** @type{!Array<!proto.lnrpc.LightningNode>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.LightningNode, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.LightningNode>} value */
+/** @param {!Array<!proto.lnrpc.LightningNode>} value */
 proto.lnrpc.ChannelGraph.prototype.setNodesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -25169,15 +25169,15 @@ proto.lnrpc.ChannelGraph.prototype.clearNodesList = function() {
 
 /**
  * repeated ChannelEdge edges = 2;
- * @return {!Array.<!proto.lnrpc.ChannelEdge>}
+ * @return {!Array<!proto.lnrpc.ChannelEdge>}
  */
 proto.lnrpc.ChannelGraph.prototype.getEdgesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelEdge>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelEdge>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelEdge, 2));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelEdge>} value */
+/** @param {!Array<!proto.lnrpc.ChannelEdge>} value */
 proto.lnrpc.ChannelGraph.prototype.setEdgesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -25290,7 +25290,7 @@ proto.lnrpc.NodeMetricsRequest.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!Array.<!proto.lnrpc.NodeMetricType>} */ (reader.readPackedEnum());
+      var value = /** @type {!Array<!proto.lnrpc.NodeMetricType>} */ (reader.readPackedEnum());
       msg.setTypesList(value);
       break;
     default:
@@ -25334,14 +25334,14 @@ proto.lnrpc.NodeMetricsRequest.serializeBinaryToWriter = function(message, write
 
 /**
  * repeated NodeMetricType types = 1;
- * @return {!Array.<!proto.lnrpc.NodeMetricType>}
+ * @return {!Array<!proto.lnrpc.NodeMetricType>}
  */
 proto.lnrpc.NodeMetricsRequest.prototype.getTypesList = function() {
-  return /** @type {!Array.<!proto.lnrpc.NodeMetricType>} */ (jspb.Message.getRepeatedField(this, 1));
+  return /** @type {!Array<!proto.lnrpc.NodeMetricType>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.NodeMetricType>} value */
+/** @param {!Array<!proto.lnrpc.NodeMetricType>} value */
 proto.lnrpc.NodeMetricsRequest.prototype.setTypesList = function(value) {
   jspb.Message.setField(this, 1, value || []);
 };
@@ -25448,7 +25448,7 @@ proto.lnrpc.NodeMetricsResponse.deserializeBinaryFromReader = function(msg, read
     case 1:
       var value = msg.getBetweennessCentralityMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.FloatMetric.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.FloatMetric.deserializeBinaryFromReader, "");
          });
       break;
     default:
@@ -25655,7 +25655,7 @@ proto.lnrpc.FloatMetric.prototype.getValue = function() {
 
 /** @param {number} value */
 proto.lnrpc.FloatMetric.prototype.setValue = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -25670,7 +25670,7 @@ proto.lnrpc.FloatMetric.prototype.getNormalizedValue = function() {
 
 /** @param {number} value */
 proto.lnrpc.FloatMetric.prototype.setNormalizedValue = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -25812,7 +25812,7 @@ proto.lnrpc.ChanInfoRequest.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChanInfoRequest.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -26190,7 +26190,7 @@ proto.lnrpc.NetworkInfo.prototype.getGraphDiameter = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setGraphDiameter = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -26205,7 +26205,7 @@ proto.lnrpc.NetworkInfo.prototype.getAvgOutDegree = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setAvgOutDegree = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -26220,7 +26220,7 @@ proto.lnrpc.NetworkInfo.prototype.getMaxOutDegree = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setMaxOutDegree = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -26235,7 +26235,7 @@ proto.lnrpc.NetworkInfo.prototype.getNumNodes = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setNumNodes = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -26250,7 +26250,7 @@ proto.lnrpc.NetworkInfo.prototype.getNumChannels = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setNumChannels = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -26265,7 +26265,7 @@ proto.lnrpc.NetworkInfo.prototype.getTotalNetworkCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setTotalNetworkCapacity = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -26280,7 +26280,7 @@ proto.lnrpc.NetworkInfo.prototype.getAvgChannelSize = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setAvgChannelSize = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3FloatField(this, 7, value);
 };
 
 
@@ -26295,7 +26295,7 @@ proto.lnrpc.NetworkInfo.prototype.getMinChannelSize = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setMinChannelSize = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -26310,7 +26310,7 @@ proto.lnrpc.NetworkInfo.prototype.getMaxChannelSize = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setMaxChannelSize = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -26325,7 +26325,7 @@ proto.lnrpc.NetworkInfo.prototype.getMedianChannelSizeSat = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setMedianChannelSizeSat = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -26340,7 +26340,7 @@ proto.lnrpc.NetworkInfo.prototype.getNumZombieChans = function() {
 
 /** @param {number} value */
 proto.lnrpc.NetworkInfo.prototype.setNumZombieChans = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -26861,15 +26861,15 @@ proto.lnrpc.GraphTopologyUpdate.serializeBinaryToWriter = function(message, writ
 
 /**
  * repeated NodeUpdate node_updates = 1;
- * @return {!Array.<!proto.lnrpc.NodeUpdate>}
+ * @return {!Array<!proto.lnrpc.NodeUpdate>}
  */
 proto.lnrpc.GraphTopologyUpdate.prototype.getNodeUpdatesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.NodeUpdate>} */ (
+  return /** @type{!Array<!proto.lnrpc.NodeUpdate>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.NodeUpdate, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.NodeUpdate>} value */
+/** @param {!Array<!proto.lnrpc.NodeUpdate>} value */
 proto.lnrpc.GraphTopologyUpdate.prototype.setNodeUpdatesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -26892,15 +26892,15 @@ proto.lnrpc.GraphTopologyUpdate.prototype.clearNodeUpdatesList = function() {
 
 /**
  * repeated ChannelEdgeUpdate channel_updates = 2;
- * @return {!Array.<!proto.lnrpc.ChannelEdgeUpdate>}
+ * @return {!Array<!proto.lnrpc.ChannelEdgeUpdate>}
  */
 proto.lnrpc.GraphTopologyUpdate.prototype.getChannelUpdatesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelEdgeUpdate>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelEdgeUpdate>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelEdgeUpdate, 2));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelEdgeUpdate>} value */
+/** @param {!Array<!proto.lnrpc.ChannelEdgeUpdate>} value */
 proto.lnrpc.GraphTopologyUpdate.prototype.setChannelUpdatesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
@@ -26923,15 +26923,15 @@ proto.lnrpc.GraphTopologyUpdate.prototype.clearChannelUpdatesList = function() {
 
 /**
  * repeated ClosedChannelUpdate closed_chans = 3;
- * @return {!Array.<!proto.lnrpc.ClosedChannelUpdate>}
+ * @return {!Array<!proto.lnrpc.ClosedChannelUpdate>}
  */
 proto.lnrpc.GraphTopologyUpdate.prototype.getClosedChansList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ClosedChannelUpdate>} */ (
+  return /** @type{!Array<!proto.lnrpc.ClosedChannelUpdate>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ClosedChannelUpdate, 3));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ClosedChannelUpdate>} value */
+/** @param {!Array<!proto.lnrpc.ClosedChannelUpdate>} value */
 proto.lnrpc.GraphTopologyUpdate.prototype.setClosedChansList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
@@ -27136,21 +27136,21 @@ proto.lnrpc.NodeUpdate.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * repeated string addresses = 1;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.NodeUpdate.prototype.getAddressesList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 1));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.lnrpc.NodeUpdate.prototype.setAddressesList = function(value) {
   jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.lnrpc.NodeUpdate.prototype.addAddresses = function(value, opt_index) {
@@ -27174,7 +27174,7 @@ proto.lnrpc.NodeUpdate.prototype.getIdentityKey = function() {
 
 /** @param {string} value */
 proto.lnrpc.NodeUpdate.prototype.setIdentityKey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -27213,7 +27213,7 @@ proto.lnrpc.NodeUpdate.prototype.getGlobalFeatures_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.NodeUpdate.prototype.setGlobalFeatures = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -27228,7 +27228,7 @@ proto.lnrpc.NodeUpdate.prototype.getAlias = function() {
 
 /** @param {string} value */
 proto.lnrpc.NodeUpdate.prototype.setAlias = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -27243,7 +27243,7 @@ proto.lnrpc.NodeUpdate.prototype.getColor = function() {
 
 /** @param {string} value */
 proto.lnrpc.NodeUpdate.prototype.setColor = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -27449,7 +27449,7 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -27476,7 +27476,7 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.clearChanPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEdgeUpdate.prototype.hasChanPoint = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -27494,7 +27494,7 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setCapacity = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -27521,7 +27521,7 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.clearRoutingPolicy = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelEdgeUpdate.prototype.hasRoutingPolicy = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -27539,7 +27539,7 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getAdvertisingNode = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setAdvertisingNode = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -27554,7 +27554,7 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getConnectingNode = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setConnectingNode = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -27734,7 +27734,7 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ClosedChannelUpdate.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -27749,7 +27749,7 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getCapacity = function() {
 
 /** @param {number} value */
 proto.lnrpc.ClosedChannelUpdate.prototype.setCapacity = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -27764,7 +27764,7 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getClosedHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.ClosedChannelUpdate.prototype.setClosedHeight = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -27791,7 +27791,7 @@ proto.lnrpc.ClosedChannelUpdate.prototype.clearChanPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ClosedChannelUpdate.prototype.hasChanPoint = function() {
   return jspb.Message.getField(this, 4) != null;
@@ -27984,7 +27984,7 @@ proto.lnrpc.HopHint.prototype.getNodeId = function() {
 
 /** @param {string} value */
 proto.lnrpc.HopHint.prototype.setNodeId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -27999,7 +27999,7 @@ proto.lnrpc.HopHint.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.HopHint.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringIntField(this, 2, value);
 };
 
 
@@ -28014,7 +28014,7 @@ proto.lnrpc.HopHint.prototype.getFeeBaseMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.HopHint.prototype.setFeeBaseMAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -28029,7 +28029,7 @@ proto.lnrpc.HopHint.prototype.getFeeProportionalMillionths = function() {
 
 /** @param {number} value */
 proto.lnrpc.HopHint.prototype.setFeeProportionalMillionths = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -28044,7 +28044,7 @@ proto.lnrpc.HopHint.prototype.getCltvExpiryDelta = function() {
 
 /** @param {number} value */
 proto.lnrpc.HopHint.prototype.setCltvExpiryDelta = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -28187,15 +28187,15 @@ proto.lnrpc.RouteHint.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * repeated HopHint hop_hints = 1;
- * @return {!Array.<!proto.lnrpc.HopHint>}
+ * @return {!Array<!proto.lnrpc.HopHint>}
  */
 proto.lnrpc.RouteHint.prototype.getHopHintsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.HopHint>} */ (
+  return /** @type{!Array<!proto.lnrpc.HopHint>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.HopHint, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.HopHint>} value */
+/** @param {!Array<!proto.lnrpc.HopHint>} value */
 proto.lnrpc.RouteHint.prototype.setHopHintsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -28430,7 +28430,7 @@ proto.lnrpc.Invoice.deserializeBinaryFromReader = function(msg, reader) {
     case 24:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
          });
       break;
     case 25:
@@ -28664,7 +28664,7 @@ proto.lnrpc.Invoice.prototype.getMemo = function() {
 
 /** @param {string} value */
 proto.lnrpc.Invoice.prototype.setMemo = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -28703,7 +28703,7 @@ proto.lnrpc.Invoice.prototype.getRPreimage_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.Invoice.prototype.setRPreimage = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -28742,7 +28742,7 @@ proto.lnrpc.Invoice.prototype.getRHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.Invoice.prototype.setRHash = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -28757,7 +28757,7 @@ proto.lnrpc.Invoice.prototype.getValue = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setValue = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -28772,7 +28772,7 @@ proto.lnrpc.Invoice.prototype.getValueMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setValueMAtoms = function(value) {
-  jspb.Message.setField(this, 23, value);
+  jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
@@ -28789,7 +28789,7 @@ proto.lnrpc.Invoice.prototype.getSettled = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Invoice.prototype.setSettled = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -28804,7 +28804,7 @@ proto.lnrpc.Invoice.prototype.getCreationDate = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setCreationDate = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -28819,7 +28819,7 @@ proto.lnrpc.Invoice.prototype.getSettleDate = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setSettleDate = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -28834,7 +28834,7 @@ proto.lnrpc.Invoice.prototype.getPaymentRequest = function() {
 
 /** @param {string} value */
 proto.lnrpc.Invoice.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -28873,7 +28873,7 @@ proto.lnrpc.Invoice.prototype.getDescriptionHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.Invoice.prototype.setDescriptionHash = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3BytesField(this, 10, value);
 };
 
 
@@ -28888,7 +28888,7 @@ proto.lnrpc.Invoice.prototype.getExpiry = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setExpiry = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -28903,7 +28903,7 @@ proto.lnrpc.Invoice.prototype.getFallbackAddr = function() {
 
 /** @param {string} value */
 proto.lnrpc.Invoice.prototype.setFallbackAddr = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
@@ -28918,21 +28918,21 @@ proto.lnrpc.Invoice.prototype.getCltvExpiry = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setCltvExpiry = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
  * repeated RouteHint route_hints = 14;
- * @return {!Array.<!proto.lnrpc.RouteHint>}
+ * @return {!Array<!proto.lnrpc.RouteHint>}
  */
 proto.lnrpc.Invoice.prototype.getRouteHintsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.RouteHint>} */ (
+  return /** @type{!Array<!proto.lnrpc.RouteHint>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.RouteHint, 14));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.RouteHint>} value */
+/** @param {!Array<!proto.lnrpc.RouteHint>} value */
 proto.lnrpc.Invoice.prototype.setRouteHintsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 14, value);
 };
@@ -28966,7 +28966,7 @@ proto.lnrpc.Invoice.prototype.getPrivate = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Invoice.prototype.setPrivate = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 
@@ -28981,7 +28981,7 @@ proto.lnrpc.Invoice.prototype.getAddIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setAddIndex = function(value) {
-  jspb.Message.setField(this, 16, value);
+  jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
@@ -28996,7 +28996,7 @@ proto.lnrpc.Invoice.prototype.getSettleIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setSettleIndex = function(value) {
-  jspb.Message.setField(this, 17, value);
+  jspb.Message.setProto3IntField(this, 17, value);
 };
 
 
@@ -29011,7 +29011,7 @@ proto.lnrpc.Invoice.prototype.getAmtPaid = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setAmtPaid = function(value) {
-  jspb.Message.setField(this, 18, value);
+  jspb.Message.setProto3IntField(this, 18, value);
 };
 
 
@@ -29026,7 +29026,7 @@ proto.lnrpc.Invoice.prototype.getAmtPaidAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setAmtPaidAtoms = function(value) {
-  jspb.Message.setField(this, 19, value);
+  jspb.Message.setProto3IntField(this, 19, value);
 };
 
 
@@ -29041,7 +29041,7 @@ proto.lnrpc.Invoice.prototype.getAmtPaidMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Invoice.prototype.setAmtPaidMAtoms = function(value) {
-  jspb.Message.setField(this, 20, value);
+  jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
@@ -29056,21 +29056,21 @@ proto.lnrpc.Invoice.prototype.getState = function() {
 
 /** @param {!proto.lnrpc.Invoice.InvoiceState} value */
 proto.lnrpc.Invoice.prototype.setState = function(value) {
-  jspb.Message.setField(this, 21, value);
+  jspb.Message.setProto3EnumField(this, 21, value);
 };
 
 
 /**
  * repeated InvoiceHTLC htlcs = 22;
- * @return {!Array.<!proto.lnrpc.InvoiceHTLC>}
+ * @return {!Array<!proto.lnrpc.InvoiceHTLC>}
  */
 proto.lnrpc.Invoice.prototype.getHtlcsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.InvoiceHTLC>} */ (
+  return /** @type{!Array<!proto.lnrpc.InvoiceHTLC>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.InvoiceHTLC, 22));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.InvoiceHTLC>} value */
+/** @param {!Array<!proto.lnrpc.InvoiceHTLC>} value */
 proto.lnrpc.Invoice.prototype.setHtlcsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 22, value);
 };
@@ -29104,7 +29104,7 @@ proto.lnrpc.Invoice.prototype.getIgnoreMaxInboundAmt = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Invoice.prototype.setIgnoreMaxInboundAmt = function(value) {
-  jspb.Message.setField(this, 1001, value);
+  jspb.Message.setProto3BooleanField(this, 1001, value);
 };
 
 
@@ -29139,7 +29139,7 @@ proto.lnrpc.Invoice.prototype.getIsKeysend = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Invoice.prototype.setIsKeysend = function(value) {
-  jspb.Message.setField(this, 25, value);
+  jspb.Message.setProto3BooleanField(this, 25, value);
 };
 
 
@@ -29271,7 +29271,7 @@ proto.lnrpc.InvoiceHTLC.deserializeBinaryFromReader = function(msg, reader) {
     case 9:
       var value = msg.getCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
          });
       break;
     case 10:
@@ -29388,7 +29388,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.InvoiceHTLC.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -29403,7 +29403,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getHtlcIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setHtlcIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -29418,7 +29418,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -29433,7 +29433,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getAcceptHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setAcceptHeight = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -29448,7 +29448,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getAcceptTime = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setAcceptTime = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -29463,7 +29463,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getResolveTime = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setResolveTime = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -29478,7 +29478,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getExpiryHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setExpiryHeight = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -29493,7 +29493,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getState = function() {
 
 /** @param {!proto.lnrpc.InvoiceHTLCState} value */
 proto.lnrpc.InvoiceHTLC.prototype.setState = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -29526,7 +29526,7 @@ proto.lnrpc.InvoiceHTLC.prototype.getMppTotalAmtMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceHTLC.prototype.setMppTotalAmtMAtoms = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -29716,7 +29716,7 @@ proto.lnrpc.AddInvoiceResponse.prototype.getRHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.AddInvoiceResponse.prototype.setRHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -29731,7 +29731,7 @@ proto.lnrpc.AddInvoiceResponse.prototype.getPaymentRequest = function() {
 
 /** @param {string} value */
 proto.lnrpc.AddInvoiceResponse.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -29746,7 +29746,7 @@ proto.lnrpc.AddInvoiceResponse.prototype.getAddIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.AddInvoiceResponse.prototype.setAddIndex = function(value) {
-  jspb.Message.setField(this, 16, value);
+  jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
@@ -29900,7 +29900,7 @@ proto.lnrpc.PaymentHash.prototype.getRHashStr = function() {
 
 /** @param {string} value */
 proto.lnrpc.PaymentHash.prototype.setRHashStr = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -29939,7 +29939,7 @@ proto.lnrpc.PaymentHash.prototype.getRHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.PaymentHash.prototype.setRHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -30119,7 +30119,7 @@ proto.lnrpc.ListInvoiceRequest.prototype.getPendingOnly = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListInvoiceRequest.prototype.setPendingOnly = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -30134,7 +30134,7 @@ proto.lnrpc.ListInvoiceRequest.prototype.getIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListInvoiceRequest.prototype.setIndexOffset = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -30149,7 +30149,7 @@ proto.lnrpc.ListInvoiceRequest.prototype.getNumMaxInvoices = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListInvoiceRequest.prototype.setNumMaxInvoices = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -30166,7 +30166,7 @@ proto.lnrpc.ListInvoiceRequest.prototype.getReversed = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListInvoiceRequest.prototype.setReversed = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -30333,15 +30333,15 @@ proto.lnrpc.ListInvoiceResponse.serializeBinaryToWriter = function(message, writ
 
 /**
  * repeated Invoice invoices = 1;
- * @return {!Array.<!proto.lnrpc.Invoice>}
+ * @return {!Array<!proto.lnrpc.Invoice>}
  */
 proto.lnrpc.ListInvoiceResponse.prototype.getInvoicesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Invoice>} */ (
+  return /** @type{!Array<!proto.lnrpc.Invoice>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Invoice, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Invoice>} value */
+/** @param {!Array<!proto.lnrpc.Invoice>} value */
 proto.lnrpc.ListInvoiceResponse.prototype.setInvoicesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -30373,7 +30373,7 @@ proto.lnrpc.ListInvoiceResponse.prototype.getLastIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListInvoiceResponse.prototype.setLastIndexOffset = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -30388,7 +30388,7 @@ proto.lnrpc.ListInvoiceResponse.prototype.getFirstIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListInvoiceResponse.prototype.setFirstIndexOffset = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -30542,7 +30542,7 @@ proto.lnrpc.InvoiceSubscription.prototype.getAddIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceSubscription.prototype.setAddIndex = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -30557,7 +30557,7 @@ proto.lnrpc.InvoiceSubscription.prototype.getSettleIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.InvoiceSubscription.prototype.setSettleIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -30887,7 +30887,7 @@ proto.lnrpc.Payment.prototype.getPaymentHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.Payment.prototype.setPaymentHash = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -30902,7 +30902,7 @@ proto.lnrpc.Payment.prototype.getValue = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setValue = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -30917,7 +30917,7 @@ proto.lnrpc.Payment.prototype.getCreationDate = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setCreationDate = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -30932,7 +30932,7 @@ proto.lnrpc.Payment.prototype.getFee = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setFee = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -30947,7 +30947,7 @@ proto.lnrpc.Payment.prototype.getPaymentPreimage = function() {
 
 /** @param {string} value */
 proto.lnrpc.Payment.prototype.setPaymentPreimage = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -30962,7 +30962,7 @@ proto.lnrpc.Payment.prototype.getValueAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setValueAtoms = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -30977,7 +30977,7 @@ proto.lnrpc.Payment.prototype.getValueMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setValueMAtoms = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -30992,7 +30992,7 @@ proto.lnrpc.Payment.prototype.getPaymentRequest = function() {
 
 /** @param {string} value */
 proto.lnrpc.Payment.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -31007,7 +31007,7 @@ proto.lnrpc.Payment.prototype.getStatus = function() {
 
 /** @param {!proto.lnrpc.Payment.PaymentStatus} value */
 proto.lnrpc.Payment.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -31022,7 +31022,7 @@ proto.lnrpc.Payment.prototype.getFeeAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setFeeAtoms = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -31037,7 +31037,7 @@ proto.lnrpc.Payment.prototype.getFeeMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setFeeMAtoms = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -31052,21 +31052,21 @@ proto.lnrpc.Payment.prototype.getCreationTimeNs = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setCreationTimeNs = function(value) {
-  jspb.Message.setField(this, 13, value);
+  jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
  * repeated HTLCAttempt htlcs = 14;
- * @return {!Array.<!proto.lnrpc.HTLCAttempt>}
+ * @return {!Array<!proto.lnrpc.HTLCAttempt>}
  */
 proto.lnrpc.Payment.prototype.getHtlcsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.HTLCAttempt>} */ (
+  return /** @type{!Array<!proto.lnrpc.HTLCAttempt>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.HTLCAttempt, 14));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.HTLCAttempt>} value */
+/** @param {!Array<!proto.lnrpc.HTLCAttempt>} value */
 proto.lnrpc.Payment.prototype.setHtlcsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 14, value);
 };
@@ -31098,7 +31098,7 @@ proto.lnrpc.Payment.prototype.getPaymentIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.Payment.prototype.setPaymentIndex = function(value) {
-  jspb.Message.setField(this, 15, value);
+  jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -31113,7 +31113,7 @@ proto.lnrpc.Payment.prototype.getFailureReason = function() {
 
 /** @param {!proto.lnrpc.PaymentFailureReason} value */
 proto.lnrpc.Payment.prototype.setFailureReason = function(value) {
-  jspb.Message.setField(this, 16, value);
+  jspb.Message.setProto3EnumField(this, 16, value);
 };
 
 
@@ -31328,7 +31328,7 @@ proto.lnrpc.HTLCAttempt.prototype.getStatus = function() {
 
 /** @param {!proto.lnrpc.HTLCAttempt.HTLCStatus} value */
 proto.lnrpc.HTLCAttempt.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -31355,7 +31355,7 @@ proto.lnrpc.HTLCAttempt.prototype.clearRoute = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.HTLCAttempt.prototype.hasRoute = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -31373,7 +31373,7 @@ proto.lnrpc.HTLCAttempt.prototype.getAttemptTimeNs = function() {
 
 /** @param {number} value */
 proto.lnrpc.HTLCAttempt.prototype.setAttemptTimeNs = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -31388,7 +31388,7 @@ proto.lnrpc.HTLCAttempt.prototype.getResolveTimeNs = function() {
 
 /** @param {number} value */
 proto.lnrpc.HTLCAttempt.prototype.setResolveTimeNs = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -31415,7 +31415,7 @@ proto.lnrpc.HTLCAttempt.prototype.clearFailure = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.HTLCAttempt.prototype.hasFailure = function() {
   return jspb.Message.getField(this, 5) != null;
@@ -31457,7 +31457,7 @@ proto.lnrpc.HTLCAttempt.prototype.getPreimage_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.HTLCAttempt.prototype.setPreimage = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BytesField(this, 6, value);
 };
 
 
@@ -31637,7 +31637,7 @@ proto.lnrpc.ListPaymentsRequest.prototype.getIncludeIncomplete = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListPaymentsRequest.prototype.setIncludeIncomplete = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -31652,7 +31652,7 @@ proto.lnrpc.ListPaymentsRequest.prototype.getIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListPaymentsRequest.prototype.setIndexOffset = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -31667,7 +31667,7 @@ proto.lnrpc.ListPaymentsRequest.prototype.getMaxPayments = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListPaymentsRequest.prototype.setMaxPayments = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -31684,7 +31684,7 @@ proto.lnrpc.ListPaymentsRequest.prototype.getReversed = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.ListPaymentsRequest.prototype.setReversed = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -31851,15 +31851,15 @@ proto.lnrpc.ListPaymentsResponse.serializeBinaryToWriter = function(message, wri
 
 /**
  * repeated Payment payments = 1;
- * @return {!Array.<!proto.lnrpc.Payment>}
+ * @return {!Array<!proto.lnrpc.Payment>}
  */
 proto.lnrpc.ListPaymentsResponse.prototype.getPaymentsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Payment>} */ (
+  return /** @type{!Array<!proto.lnrpc.Payment>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Payment, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Payment>} value */
+/** @param {!Array<!proto.lnrpc.Payment>} value */
 proto.lnrpc.ListPaymentsResponse.prototype.setPaymentsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -31891,7 +31891,7 @@ proto.lnrpc.ListPaymentsResponse.prototype.getFirstIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListPaymentsResponse.prototype.setFirstIndexOffset = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -31906,7 +31906,7 @@ proto.lnrpc.ListPaymentsResponse.prototype.getLastIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ListPaymentsResponse.prototype.setLastIndexOffset = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -32306,7 +32306,7 @@ proto.lnrpc.AbandonChannelRequest.prototype.clearChannelPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.AbandonChannelRequest.prototype.hasChannelPoint = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -32326,7 +32326,7 @@ proto.lnrpc.AbandonChannelRequest.prototype.getPendingFundingShimOnly = function
 
 /** @param {boolean} value */
 proto.lnrpc.AbandonChannelRequest.prototype.setPendingFundingShimOnly = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -32598,7 +32598,7 @@ proto.lnrpc.DebugLevelRequest.prototype.getShow = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.DebugLevelRequest.prototype.setShow = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -32613,7 +32613,7 @@ proto.lnrpc.DebugLevelRequest.prototype.getLevelSpec = function() {
 
 /** @param {string} value */
 proto.lnrpc.DebugLevelRequest.prototype.setLevelSpec = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -32755,7 +32755,7 @@ proto.lnrpc.DebugLevelResponse.prototype.getSubSystems = function() {
 
 /** @param {string} value */
 proto.lnrpc.DebugLevelResponse.prototype.setSubSystems = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -32897,7 +32897,7 @@ proto.lnrpc.PayReqString.prototype.getPayReq = function() {
 
 /** @param {string} value */
 proto.lnrpc.PayReqString.prototype.setPayReq = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -33057,7 +33057,7 @@ proto.lnrpc.PayReq.deserializeBinaryFromReader = function(msg, reader) {
     case 13:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
          });
       break;
     default:
@@ -33192,7 +33192,7 @@ proto.lnrpc.PayReq.prototype.getDestination = function() {
 
 /** @param {string} value */
 proto.lnrpc.PayReq.prototype.setDestination = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -33207,7 +33207,7 @@ proto.lnrpc.PayReq.prototype.getPaymentHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.PayReq.prototype.setPaymentHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -33222,7 +33222,7 @@ proto.lnrpc.PayReq.prototype.getNumAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.PayReq.prototype.setNumAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -33237,7 +33237,7 @@ proto.lnrpc.PayReq.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.lnrpc.PayReq.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -33252,7 +33252,7 @@ proto.lnrpc.PayReq.prototype.getExpiry = function() {
 
 /** @param {number} value */
 proto.lnrpc.PayReq.prototype.setExpiry = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -33267,7 +33267,7 @@ proto.lnrpc.PayReq.prototype.getDescription = function() {
 
 /** @param {string} value */
 proto.lnrpc.PayReq.prototype.setDescription = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -33282,7 +33282,7 @@ proto.lnrpc.PayReq.prototype.getDescriptionHash = function() {
 
 /** @param {string} value */
 proto.lnrpc.PayReq.prototype.setDescriptionHash = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -33297,7 +33297,7 @@ proto.lnrpc.PayReq.prototype.getFallbackAddr = function() {
 
 /** @param {string} value */
 proto.lnrpc.PayReq.prototype.setFallbackAddr = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -33312,21 +33312,21 @@ proto.lnrpc.PayReq.prototype.getCltvExpiry = function() {
 
 /** @param {number} value */
 proto.lnrpc.PayReq.prototype.setCltvExpiry = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
  * repeated RouteHint route_hints = 10;
- * @return {!Array.<!proto.lnrpc.RouteHint>}
+ * @return {!Array<!proto.lnrpc.RouteHint>}
  */
 proto.lnrpc.PayReq.prototype.getRouteHintsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.RouteHint>} */ (
+  return /** @type{!Array<!proto.lnrpc.RouteHint>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.RouteHint, 10));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.RouteHint>} value */
+/** @param {!Array<!proto.lnrpc.RouteHint>} value */
 proto.lnrpc.PayReq.prototype.setRouteHintsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 10, value);
 };
@@ -33382,7 +33382,7 @@ proto.lnrpc.PayReq.prototype.getPaymentAddr_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.PayReq.prototype.setPaymentAddr = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3BytesField(this, 11, value);
 };
 
 
@@ -33397,7 +33397,7 @@ proto.lnrpc.PayReq.prototype.getNumMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.PayReq.prototype.setNumMAtoms = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -33581,7 +33581,7 @@ proto.lnrpc.Feature.prototype.getName = function() {
 
 /** @param {string} value */
 proto.lnrpc.Feature.prototype.setName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -33598,7 +33598,7 @@ proto.lnrpc.Feature.prototype.getIsRequired = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Feature.prototype.setIsRequired = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -33615,7 +33615,7 @@ proto.lnrpc.Feature.prototype.getIsKnown = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.Feature.prototype.setIsKnown = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -33921,7 +33921,7 @@ proto.lnrpc.ChannelFeeReport.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelFeeReport.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringIntField(this, 5, value);
 };
 
 
@@ -33936,7 +33936,7 @@ proto.lnrpc.ChannelFeeReport.prototype.getChannelPoint = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelFeeReport.prototype.setChannelPoint = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -33951,7 +33951,7 @@ proto.lnrpc.ChannelFeeReport.prototype.getBaseFeeMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelFeeReport.prototype.setBaseFeeMAtoms = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -33966,7 +33966,7 @@ proto.lnrpc.ChannelFeeReport.prototype.getFeePerMil = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelFeeReport.prototype.setFeePerMil = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -33981,7 +33981,7 @@ proto.lnrpc.ChannelFeeReport.prototype.getFeeRate = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelFeeReport.prototype.setFeeRate = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -34160,15 +34160,15 @@ proto.lnrpc.FeeReportResponse.serializeBinaryToWriter = function(message, writer
 
 /**
  * repeated ChannelFeeReport channel_fees = 1;
- * @return {!Array.<!proto.lnrpc.ChannelFeeReport>}
+ * @return {!Array<!proto.lnrpc.ChannelFeeReport>}
  */
 proto.lnrpc.FeeReportResponse.prototype.getChannelFeesList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelFeeReport>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelFeeReport>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelFeeReport, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelFeeReport>} value */
+/** @param {!Array<!proto.lnrpc.ChannelFeeReport>} value */
 proto.lnrpc.FeeReportResponse.prototype.setChannelFeesList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -34200,7 +34200,7 @@ proto.lnrpc.FeeReportResponse.prototype.getDayFeeSum = function() {
 
 /** @param {number} value */
 proto.lnrpc.FeeReportResponse.prototype.setDayFeeSum = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -34215,7 +34215,7 @@ proto.lnrpc.FeeReportResponse.prototype.getWeekFeeSum = function() {
 
 /** @param {number} value */
 proto.lnrpc.FeeReportResponse.prototype.setWeekFeeSum = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -34230,7 +34230,7 @@ proto.lnrpc.FeeReportResponse.prototype.getMonthFeeSum = function() {
 
 /** @param {number} value */
 proto.lnrpc.FeeReportResponse.prototype.setMonthFeeSum = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -34497,7 +34497,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.clearGlobal = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PolicyUpdateRequest.prototype.hasGlobal = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -34527,7 +34527,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.clearChanPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.PolicyUpdateRequest.prototype.hasChanPoint = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -34545,7 +34545,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getBaseFeeMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.PolicyUpdateRequest.prototype.setBaseFeeMAtoms = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -34560,7 +34560,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getFeeRate = function() {
 
 /** @param {number} value */
 proto.lnrpc.PolicyUpdateRequest.prototype.setFeeRate = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -34575,7 +34575,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getTimeLockDelta = function() {
 
 /** @param {number} value */
 proto.lnrpc.PolicyUpdateRequest.prototype.setTimeLockDelta = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -34590,7 +34590,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getMaxHtlcMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.PolicyUpdateRequest.prototype.setMaxHtlcMAtoms = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -34605,7 +34605,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getMinHtlcMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.PolicyUpdateRequest.prototype.setMinHtlcMAtoms = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -34622,7 +34622,7 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getMinHtlcMAtomsSpecified = function()
 
 /** @param {boolean} value */
 proto.lnrpc.PolicyUpdateRequest.prototype.setMinHtlcMAtomsSpecified = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -34916,7 +34916,7 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getStartTime = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setStartTime = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -34931,7 +34931,7 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getEndTime = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setEndTime = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -34946,7 +34946,7 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getIndexOffset = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setIndexOffset = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -34961,7 +34961,7 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getNumMaxEvents = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setNumMaxEvents = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -35199,7 +35199,7 @@ proto.lnrpc.ForwardingEvent.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -35214,7 +35214,7 @@ proto.lnrpc.ForwardingEvent.prototype.getChanIdIn = function() {
 
 /** @param {string} value */
 proto.lnrpc.ForwardingEvent.prototype.setChanIdIn = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringIntField(this, 2, value);
 };
 
 
@@ -35229,7 +35229,7 @@ proto.lnrpc.ForwardingEvent.prototype.getChanIdOut = function() {
 
 /** @param {string} value */
 proto.lnrpc.ForwardingEvent.prototype.setChanIdOut = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringIntField(this, 4, value);
 };
 
 
@@ -35244,7 +35244,7 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtIn = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setAmtIn = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -35259,7 +35259,7 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtOut = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setAmtOut = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -35274,7 +35274,7 @@ proto.lnrpc.ForwardingEvent.prototype.getFee = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setFee = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -35289,7 +35289,7 @@ proto.lnrpc.ForwardingEvent.prototype.getFeeMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setFeeMAtoms = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -35304,7 +35304,7 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtInMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setAmtInMAtoms = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -35319,7 +35319,7 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtOutMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ForwardingEvent.prototype.setAmtOutMAtoms = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -35474,15 +35474,15 @@ proto.lnrpc.ForwardingHistoryResponse.serializeBinaryToWriter = function(message
 
 /**
  * repeated ForwardingEvent forwarding_events = 1;
- * @return {!Array.<!proto.lnrpc.ForwardingEvent>}
+ * @return {!Array<!proto.lnrpc.ForwardingEvent>}
  */
 proto.lnrpc.ForwardingHistoryResponse.prototype.getForwardingEventsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ForwardingEvent>} */ (
+  return /** @type{!Array<!proto.lnrpc.ForwardingEvent>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ForwardingEvent, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ForwardingEvent>} value */
+/** @param {!Array<!proto.lnrpc.ForwardingEvent>} value */
 proto.lnrpc.ForwardingHistoryResponse.prototype.setForwardingEventsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -35514,7 +35514,7 @@ proto.lnrpc.ForwardingHistoryResponse.prototype.getLastOffsetIndex = function() 
 
 /** @param {number} value */
 proto.lnrpc.ForwardingHistoryResponse.prototype.setLastOffsetIndex = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -35670,7 +35670,7 @@ proto.lnrpc.ExportChannelBackupRequest.prototype.clearChanPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ExportChannelBackupRequest.prototype.hasChanPoint = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -35841,7 +35841,7 @@ proto.lnrpc.ChannelBackup.prototype.clearChanPoint = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChannelBackup.prototype.hasChanPoint = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -35883,7 +35883,7 @@ proto.lnrpc.ChannelBackup.prototype.getChanBackup_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelBackup.prototype.setChanBackup = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -36038,15 +36038,15 @@ proto.lnrpc.MultiChanBackup.serializeBinaryToWriter = function(message, writer) 
 
 /**
  * repeated ChannelPoint chan_points = 1;
- * @return {!Array.<!proto.lnrpc.ChannelPoint>}
+ * @return {!Array<!proto.lnrpc.ChannelPoint>}
  */
 proto.lnrpc.MultiChanBackup.prototype.getChanPointsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelPoint>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelPoint>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelPoint, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelPoint>} value */
+/** @param {!Array<!proto.lnrpc.ChannelPoint>} value */
 proto.lnrpc.MultiChanBackup.prototype.setChanPointsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -36102,7 +36102,7 @@ proto.lnrpc.MultiChanBackup.prototype.getMultiChanBackup_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.MultiChanBackup.prototype.setMultiChanBackup = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -36388,7 +36388,7 @@ proto.lnrpc.ChanBackupSnapshot.prototype.clearSingleChanBackups = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChanBackupSnapshot.prototype.hasSingleChanBackups = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -36418,7 +36418,7 @@ proto.lnrpc.ChanBackupSnapshot.prototype.clearMultiChanBackup = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.ChanBackupSnapshot.prototype.hasMultiChanBackup = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -36564,15 +36564,15 @@ proto.lnrpc.ChannelBackups.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * repeated ChannelBackup chan_backups = 1;
- * @return {!Array.<!proto.lnrpc.ChannelBackup>}
+ * @return {!Array<!proto.lnrpc.ChannelBackup>}
  */
 proto.lnrpc.ChannelBackups.prototype.getChanBackupsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.ChannelBackup>} */ (
+  return /** @type{!Array<!proto.lnrpc.ChannelBackup>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.ChannelBackup, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.ChannelBackup>} value */
+/** @param {!Array<!proto.lnrpc.ChannelBackup>} value */
 proto.lnrpc.ChannelBackups.prototype.setChanBackupsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -36783,7 +36783,7 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.clearChanBackups = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.RestoreChanBackupRequest.prototype.hasChanBackups = function() {
   return jspb.Message.getField(this, 1) != null;
@@ -36836,7 +36836,7 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.clearMultiChanBackup = function()
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.RestoreChanBackupRequest.prototype.hasMultiChanBackup = function() {
   return jspb.Message.getField(this, 2) != null;
@@ -37341,7 +37341,7 @@ proto.lnrpc.MacaroonPermission.prototype.getEntity = function() {
 
 /** @param {string} value */
 proto.lnrpc.MacaroonPermission.prototype.setEntity = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -37356,7 +37356,7 @@ proto.lnrpc.MacaroonPermission.prototype.getAction = function() {
 
 /** @param {string} value */
 proto.lnrpc.MacaroonPermission.prototype.setAction = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -37511,15 +37511,15 @@ proto.lnrpc.BakeMacaroonRequest.serializeBinaryToWriter = function(message, writ
 
 /**
  * repeated MacaroonPermission permissions = 1;
- * @return {!Array.<!proto.lnrpc.MacaroonPermission>}
+ * @return {!Array<!proto.lnrpc.MacaroonPermission>}
  */
 proto.lnrpc.BakeMacaroonRequest.prototype.getPermissionsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.MacaroonPermission>} */ (
+  return /** @type{!Array<!proto.lnrpc.MacaroonPermission>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.MacaroonPermission, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.MacaroonPermission>} value */
+/** @param {!Array<!proto.lnrpc.MacaroonPermission>} value */
 proto.lnrpc.BakeMacaroonRequest.prototype.setPermissionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -37551,7 +37551,7 @@ proto.lnrpc.BakeMacaroonRequest.prototype.getRootKeyId = function() {
 
 /** @param {number} value */
 proto.lnrpc.BakeMacaroonRequest.prototype.setRootKeyId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -37693,7 +37693,7 @@ proto.lnrpc.BakeMacaroonResponse.prototype.getMacaroon = function() {
 
 /** @param {string} value */
 proto.lnrpc.BakeMacaroonResponse.prototype.setMacaroon = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -37905,7 +37905,7 @@ proto.lnrpc.ListMacaroonIDsResponse.deserializeBinaryFromReader = function(msg, 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!Array.<number>} */ (reader.readPackedUint64());
+      var value = /** @type {!Array<number>} */ (reader.readPackedUint64());
       msg.setRootKeyIdsList(value);
       break;
     default:
@@ -37949,21 +37949,21 @@ proto.lnrpc.ListMacaroonIDsResponse.serializeBinaryToWriter = function(message, 
 
 /**
  * repeated uint64 root_key_ids = 1;
- * @return {!Array.<number>}
+ * @return {!Array<number>}
  */
 proto.lnrpc.ListMacaroonIDsResponse.prototype.getRootKeyIdsList = function() {
-  return /** @type {!Array.<number>} */ (jspb.Message.getRepeatedField(this, 1));
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
-/** @param {!Array.<number>} value */
+/** @param {!Array<number>} value */
 proto.lnrpc.ListMacaroonIDsResponse.prototype.setRootKeyIdsList = function(value) {
   jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
- * @param {!number} value
+ * @param {number} value
  * @param {number=} opt_index
  */
 proto.lnrpc.ListMacaroonIDsResponse.prototype.addRootKeyIds = function(value, opt_index) {
@@ -38114,7 +38114,7 @@ proto.lnrpc.DeleteMacaroonIDRequest.prototype.getRootKeyId = function() {
 
 /** @param {number} value */
 proto.lnrpc.DeleteMacaroonIDRequest.prototype.setRootKeyId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -38258,7 +38258,7 @@ proto.lnrpc.DeleteMacaroonIDResponse.prototype.getDeleted = function() {
 
 /** @param {boolean} value */
 proto.lnrpc.DeleteMacaroonIDResponse.prototype.setDeleted = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -38401,15 +38401,15 @@ proto.lnrpc.MacaroonPermissionList.serializeBinaryToWriter = function(message, w
 
 /**
  * repeated MacaroonPermission permissions = 1;
- * @return {!Array.<!proto.lnrpc.MacaroonPermission>}
+ * @return {!Array<!proto.lnrpc.MacaroonPermission>}
  */
 proto.lnrpc.MacaroonPermissionList.prototype.getPermissionsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.MacaroonPermission>} */ (
+  return /** @type{!Array<!proto.lnrpc.MacaroonPermission>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.MacaroonPermission, 1));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.MacaroonPermission>} value */
+/** @param {!Array<!proto.lnrpc.MacaroonPermission>} value */
 proto.lnrpc.MacaroonPermissionList.prototype.setPermissionsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
@@ -38633,7 +38633,7 @@ proto.lnrpc.ListPermissionsResponse.deserializeBinaryFromReader = function(msg, 
     case 1:
       var value = msg.getMethodPermissionsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.MacaroonPermissionList.deserializeBinaryFromReader);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.MacaroonPermissionList.deserializeBinaryFromReader, "");
          });
       break;
     default:
@@ -38947,7 +38947,7 @@ proto.lnrpc.Failure.prototype.getCode = function() {
 
 /** @param {!proto.lnrpc.Failure.FailureCode} value */
 proto.lnrpc.Failure.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -38974,7 +38974,7 @@ proto.lnrpc.Failure.prototype.clearChannelUpdate = function() {
 
 /**
  * Returns whether this field is set.
- * @return {!boolean}
+ * @return {boolean}
  */
 proto.lnrpc.Failure.prototype.hasChannelUpdate = function() {
   return jspb.Message.getField(this, 3) != null;
@@ -38992,7 +38992,7 @@ proto.lnrpc.Failure.prototype.getHtlcMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.Failure.prototype.setHtlcMAtoms = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -39031,7 +39031,7 @@ proto.lnrpc.Failure.prototype.getOnionSha256_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.Failure.prototype.setOnionSha256 = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -39046,7 +39046,7 @@ proto.lnrpc.Failure.prototype.getCltvExpiry = function() {
 
 /** @param {number} value */
 proto.lnrpc.Failure.prototype.setCltvExpiry = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -39061,7 +39061,7 @@ proto.lnrpc.Failure.prototype.getFlags = function() {
 
 /** @param {number} value */
 proto.lnrpc.Failure.prototype.setFlags = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -39076,7 +39076,7 @@ proto.lnrpc.Failure.prototype.getFailureSourceIndex = function() {
 
 /** @param {number} value */
 proto.lnrpc.Failure.prototype.setFailureSourceIndex = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -39091,7 +39091,7 @@ proto.lnrpc.Failure.prototype.getHeight = function() {
 
 /** @param {number} value */
 proto.lnrpc.Failure.prototype.setHeight = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -39389,7 +39389,7 @@ proto.lnrpc.ChannelUpdate.prototype.getSignature_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelUpdate.prototype.setSignature = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -39428,7 +39428,7 @@ proto.lnrpc.ChannelUpdate.prototype.getChainHash_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelUpdate.prototype.setChainHash = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -39443,7 +39443,7 @@ proto.lnrpc.ChannelUpdate.prototype.getChanId = function() {
 
 /** @param {string} value */
 proto.lnrpc.ChannelUpdate.prototype.setChanId = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringIntField(this, 3, value);
 };
 
 
@@ -39458,7 +39458,7 @@ proto.lnrpc.ChannelUpdate.prototype.getTimestamp = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setTimestamp = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -39473,7 +39473,7 @@ proto.lnrpc.ChannelUpdate.prototype.getMessageFlags = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setMessageFlags = function(value) {
-  jspb.Message.setField(this, 10, value);
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -39488,7 +39488,7 @@ proto.lnrpc.ChannelUpdate.prototype.getChannelFlags = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setChannelFlags = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -39503,7 +39503,7 @@ proto.lnrpc.ChannelUpdate.prototype.getTimeLockDelta = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setTimeLockDelta = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -39518,7 +39518,7 @@ proto.lnrpc.ChannelUpdate.prototype.getHtlcMinimumMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setHtlcMinimumMAtoms = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -39533,7 +39533,7 @@ proto.lnrpc.ChannelUpdate.prototype.getBaseFee = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setBaseFee = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -39548,7 +39548,7 @@ proto.lnrpc.ChannelUpdate.prototype.getFeeRate = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setFeeRate = function(value) {
-  jspb.Message.setField(this, 9, value);
+  jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -39563,7 +39563,7 @@ proto.lnrpc.ChannelUpdate.prototype.getHtlcMaximumMAtoms = function() {
 
 /** @param {number} value */
 proto.lnrpc.ChannelUpdate.prototype.setHtlcMaximumMAtoms = function(value) {
-  jspb.Message.setField(this, 11, value);
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -39602,7 +39602,7 @@ proto.lnrpc.ChannelUpdate.prototype.getExtraOpaqueData_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.ChannelUpdate.prototype.setExtraOpaqueData = function(value) {
-  jspb.Message.setField(this, 12, value);
+  jspb.Message.setProto3BytesField(this, 12, value);
 };
 
 
@@ -39802,7 +39802,7 @@ proto.lnrpc.MacaroonId.prototype.getNonce_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.MacaroonId.prototype.setNonce = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -39841,21 +39841,21 @@ proto.lnrpc.MacaroonId.prototype.getStorageid_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.lnrpc.MacaroonId.prototype.setStorageid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
  * repeated Op ops = 3;
- * @return {!Array.<!proto.lnrpc.Op>}
+ * @return {!Array<!proto.lnrpc.Op>}
  */
 proto.lnrpc.MacaroonId.prototype.getOpsList = function() {
-  return /** @type{!Array.<!proto.lnrpc.Op>} */ (
+  return /** @type{!Array<!proto.lnrpc.Op>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.lnrpc.Op, 3));
 };
 
 
-/** @param {!Array.<!proto.lnrpc.Op>} value */
+/** @param {!Array<!proto.lnrpc.Op>} value */
 proto.lnrpc.MacaroonId.prototype.setOpsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
@@ -40033,27 +40033,27 @@ proto.lnrpc.Op.prototype.getEntity = function() {
 
 /** @param {string} value */
 proto.lnrpc.Op.prototype.setEntity = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
  * repeated string actions = 2;
- * @return {!Array.<string>}
+ * @return {!Array<string>}
  */
 proto.lnrpc.Op.prototype.getActionsList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
-/** @param {!Array.<string>} value */
+/** @param {!Array<string>} value */
 proto.lnrpc.Op.prototype.setActionsList = function(value) {
   jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
- * @param {!string} value
+ * @param {string} value
  * @param {number=} opt_index
  */
 proto.lnrpc.Op.prototype.addActions = function(value, opt_index) {

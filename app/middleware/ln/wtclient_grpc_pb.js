@@ -1,7 +1,6 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var grpc = require('grpc');
 var wtclient_pb = require('./wtclient_pb.js');
 
 function serialize_wtclientrpc_AddTowerRequest(arg) {
@@ -137,7 +136,7 @@ function deserialize_wtclientrpc_Tower(buffer_arg) {
 }
 
 
-var WatchtowerClientService = exports.WatchtowerClientService = {
+var WatchtowerClientService = exports['wtclientrpc.WatchtowerClient'] = {
   //
 // AddTower adds a new watchtower reachable at the given address and
 // considers it for new sessions. If the watchtower already exists, then
@@ -220,4 +219,3 @@ policy: {
   },
 };
 
-exports.WatchtowerClientClient = grpc.makeGenericClientConstructor(WatchtowerClientService);
