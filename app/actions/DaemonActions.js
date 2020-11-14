@@ -250,7 +250,8 @@ export const getAvailableWallets = () => (dispatch, getState) =>
 
     get()
       .then(({ availableWallets, previousWallet }) => {
-        dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
+        const setupCompletedWallets = availableWallets.filter((w) => w.finished);
+        dispatch({ availableWallets: setupCompletedWallets, previousWallet, type: AVAILABLE_WALLETS });
         resolve({ availableWallets, previousWallet });
       })
       .catch((err) => reject(err));
