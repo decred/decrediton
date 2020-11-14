@@ -2,13 +2,12 @@ import PurchaseTickets from "./LEGACY_PurchaseTickets";
 import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "../StakeInfo/StakeInfo";
-import { ShowWarning, Subtitle, Tooltip } from "shared";
+import { ShowWarning, Subtitle } from "shared";
 import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../UnsignedTickets";
 import styles from "../PurchaseTab.module.css";
 import { Checkbox } from "pi-ui";
-import { LegacyVSPWarning } from "../PurchaseTickets/Page";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
@@ -19,15 +18,13 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
         className="info-title-icon"
         draggable
       />
-      <Tooltip md={true} text={<LegacyVSPWarning />}>
-        <Checkbox
-          label={<T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />}
-          className={styles.useLegacyLabel}
-          id="box"
-          checked={true}
-          onChange={() => toggleIsLegacy(false)}
-        />
-      </Tooltip>
+      <Checkbox
+        label={<T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />}
+        className={styles.useLegacyLabel}
+        id="box"
+        checked={true}
+        onChange={() => toggleIsLegacy(false)}
+      />
     </div>
   </>
 );
@@ -59,8 +56,8 @@ const Tickets = ({
           }
         />
       ) : (
-          <PurchaseTickets {...{ ...props, notMixedAccounts }} />
-        )}
+        <PurchaseTickets {...{ ...props, notMixedAccounts }} />
+      )}
       {isWatchingOnly ? (
         <UnsignedTickets {...{ ...props }} />
       ) : spvMode ? (
@@ -71,8 +68,8 @@ const Tickets = ({
           />
         </div>
       ) : (
-            <TicketAutoBuyer {...{ ...props, notMixedAccounts }} />
-          )}
+        <TicketAutoBuyer {...{ ...props, notMixedAccounts }} />
+      )}
     </div>
   );
 };
