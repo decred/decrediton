@@ -57,7 +57,7 @@ const PrivacyContent = ({
               />
             }
             className={style.startMixerButton}
-            onSubmit={(passaphrase) => { 
+            onSubmit={(passaphrase) => {
               onShowLog();
               onStartMixerAttempt(passaphrase);
             }}
