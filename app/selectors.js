@@ -66,7 +66,10 @@ export const getNeededBlocks = get(["daemon", "neededBlocks"]);
 export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);
 export const getDaemonSynced = get(["daemon", "daemonSynced"]);
 export const getWalletReady = get(["daemon", "walletReady"]);
-export const getSyncAttemptRequest = get(["walletLoader", "syncAttemptRequest"]);
+export const getSyncAttemptRequest = get([
+  "walletLoader",
+  "syncAttemptRequest"
+]);
 
 // general startup selector
 export const setLanguage = get(["daemon", "setLanguage"]);
@@ -133,7 +136,10 @@ export const syncFetchHeadersComplete = get([
 ]);
 export const syncFetchTimeStart = get(["walletLoader", "syncFetchTimeStart"]);
 export const getPrivacyEnabled = get(["walletLoader", "privacyEnabled"]);
-export const getAllowSendFromUnmixed = get(["walletLoader", "allowSendFromUnmixed"]);
+export const getAllowSendFromUnmixed = get([
+  "walletLoader",
+  "allowSendFromUnmixed"
+]);
 // getMixedAccount gets the account number (int) which represents the mixed
 // account at decrediton.
 export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
@@ -182,7 +188,10 @@ export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
 export const getAccountMixerError = get(["grpc", "mixerStreamerError"]);
-export const createMixerAccountAttempt = get(["grpc", "createMixerAccountAttempt"]);
+export const createMixerAccountAttempt = get([
+  "grpc",
+  "createMixerAccountAttempt"
+]);
 
 // accounts is a selector representing accountsList from gRPC response.
 export const accounts = createSelector([getAccountsResponse], (r) =>
@@ -218,8 +227,9 @@ export const spendableTotalBalance = createSelector(
 export const getNotMixedAccounts = createSelector(
   [getMixedAccount, balances, getAllowSendFromUnmixed],
   (mixedAcc, balances) =>
-    !mixedAcc ? [] :
-      balances
+    !mixedAcc
+      ? []
+      : balances
           .filter(({ accountNumber }) => accountNumber !== mixedAcc)
           .map(({ accountNumber }) => accountNumber)
 );
@@ -353,8 +363,8 @@ export const ticketNormalizer = createSelector(
       const hasSpender = spender && spender.getHash();
       const isVote = status === VOTED;
       const isPending = !timestamp;
-      const ticketHash = reverseRawHash(ticket.ticket.getHash());
-      const ticketTx = ticket.ticket;
+      const ticketTx = ticket.ticket || ticket.spender;
+      const ticketHash = reverseRawHash(ticketTx.getHash());
       const spenderTx = hasSpender ? spender : null;
       const txBlockHash = blockHash
         ? reverseHash(Buffer.from(blockHash).toString("hex"))
@@ -367,7 +377,6 @@ export const ticketNormalizer = createSelector(
         ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex"))
         : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
-
       if (spenderTx) {
         spenderTx.getDebitsList().reduce((total, debit) => {
           const debitedAccount = debit.getPreviousAccount();
@@ -440,9 +449,10 @@ export const ticketNormalizer = createSelector(
 
       // ticket change is anything returned to the wallet on ticket purchase.
       const isTicketChange = (c) => c.getIndex() > 0 && c.getIndex() % 2 === 0;
-      const ticketChange = ticketTx
-        .getCreditsList()
-        .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
+      const ticketChange =
+        ticketTx
+          .getCreditsList()
+          .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       let accountName = "";
@@ -453,7 +463,7 @@ export const ticketNormalizer = createSelector(
         // Mixer is set to ignore gap limit. If a wallet does not know tx
         // details for some reason, can be due that or some other reason which
         // needs to be investigated.
-        throw "Tx debit list is empty. Something is wrong.";
+        //throw "Tx debit list is empty. Something is wrong.";
       }
       const ticketInvestment =
         debitList.reduce((a, v) => a + v.getPreviousAmount(), 0) - ticketChange;
@@ -625,10 +635,12 @@ export const transactionNormalizer = createSelector(
               txAccountName: creditedAccountName
             };
 
-      const { isMix } = isMixTx(wallet.decodeRawTransaction(
-        Buffer.from(tx.getTransaction()),
-        chainParams
-      ));
+      const { isMix } = isMixTx(
+        wallet.decodeRawTransaction(
+          Buffer.from(tx.getTransaction()),
+          chainParams
+        )
+      );
 
       return {
         txUrl,
@@ -701,7 +713,10 @@ export const noMoreStakeTxs = get([
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const ticketsFilter = get(["grpc", "ticketsFilter"]);
 
-export const getStakeTransactionsCancel = get(["grpc", "stakeTransactionsCancel"]);
+export const getStakeTransactionsCancel = get([
+  "grpc",
+  "stakeTransactionsCancel"
+]);
 
 // filterTransactions filters a list of transactions given a filtering object.
 //
@@ -739,9 +754,10 @@ export const filteredRegularTxs = createSelector(
         let isSameType = true;
         if (filter.types.length > 0) {
           isSameType = false;
-          filter.types.forEach(type =>
-            type === v.txType || (type === TRANSACTION_MIXED && v.isMix) ?
-              isSameType = true : null
+          filter.types.forEach((type) =>
+            type === v.txType || (type === TRANSACTION_MIXED && v.isMix)
+              ? (isSameType = true)
+              : null
           );
         }
         return isSameType;
@@ -1219,12 +1235,11 @@ export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
   if (!vspTickets) return;
-  return vspTickets[VSP_FEE_PROCESS_ERRORED] ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0 : false;
+  return vspTickets[VSP_FEE_PROCESS_ERRORED]
+    ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
+    : false;
 });
-export const getCanClose = not(or(
-  isTicketAutoBuyerEnabled,
-  getHasUnpaidFee
-));
+export const getCanClose = not(or(isTicketAutoBuyerEnabled, getHasUnpaidFee));
 
 // end of selectors for closing decrediton.
 
@@ -1315,7 +1330,6 @@ export const getRunningIndicator = or(
   getTicketAutoBuyerRunning,
   purchaseTicketsRequestAttempt
 );
-
 
 const importScriptRequestAttempt = get([
   "control",
@@ -1525,7 +1539,9 @@ const allAgendasVerify = createSelector(
   // If allAgendas length is 0 we return the agenda from dcrwallet, as dcrdata
   // may be down.
   (currentAgenda, dcrdataEnabled, allAgendas) =>
-    !dcrdataEnabled || allAgendas.length === 0 ? [currentAgenda] : [currentAgenda, ...allAgendas]
+    !dcrdataEnabled || allAgendas.length === 0
+      ? [currentAgenda]
+      : [currentAgenda, ...allAgendas]
 );
 
 const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
