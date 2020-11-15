@@ -29,7 +29,7 @@
 .overviewBalance {
   font-size: 42px;
   color: var(--input-color-default);
-  font-family: var(--font-family-monospaced);
+  font-family: var(--font-family-monospace);
 }
 
 .overviewBalanceLabel {
@@ -56,7 +56,7 @@
 
 .overviewBalanceSpendableLocked.amount {
   font-size: 17px;
-  font-family: var(--font-family-monospaced);
+  font-family: var(--font-family-monospace);
   line-height: 18px;
 }
 
