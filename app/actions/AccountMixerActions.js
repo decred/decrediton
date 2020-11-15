@@ -205,7 +205,8 @@ export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
     wallet
       .getCoinjoinOutputspByAcct(walletService)
       .then((response) => {
-        const coinjoinSumByAcctResp = response.wrappers_ && response.wrappers_[1];
+        const coinjoinSumByAcctResp =
+          response.wrappers_ && response.wrappers_[1];
         const coinjoinSumByAcct = balances.reduce(
           (allAccts, { accountNumber }) => {
             // if account number is equals imported account, we ignore it.
