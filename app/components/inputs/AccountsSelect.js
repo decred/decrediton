@@ -10,7 +10,7 @@ const messages = defineMessages({
   }
 });
 
-// XXX some of this component styling is found in `style/ReactSelectGlobal` 
+// XXX some of this component styling is found in `style/ReactSelectGlobal`
 // and could be moved to a css module when this component is refactored
 @autobind
 class AccountsSelect extends React.Component {
