@@ -439,6 +439,10 @@
   }
 }
 
+.accounts-select {
+    width: 300px;
+}
+
 .accounts-select-value {
   display: flex;
   justify-content: space-between;
