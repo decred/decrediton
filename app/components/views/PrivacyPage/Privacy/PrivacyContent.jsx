@@ -22,8 +22,7 @@ const PrivacyContent = ({
   showModal,
   onChangeCheckbox
 }) => {
-  // Logs expanded by default
-  const [expandedLogs, setExpandedLogs] = useState(true);
+  const [expandedLogs, setExpandedLogs] = useState(false);
 
   const onHideLog = () => setExpandedLogs(false);
 
@@ -58,7 +57,10 @@ const PrivacyContent = ({
               />
             }
             className={style.startMixerButton}
-            onSubmit={(passaphrase) => onStartMixerAttempt(passaphrase)}
+            onSubmit={(passaphrase) => { 
+              onShowLog();
+              onStartMixerAttempt(passaphrase);
+            }}
           />
         )}
       </div>
@@ -81,15 +83,13 @@ const PrivacyContent = ({
         checked={allowSendFromUnmixed}
         onChange={onChangeCheckbox}
       />
-      {accountMixerRunning && (
-        <Log
-           title={<T id="privacy.logs" m="Logs" />}
-          log={logs}
-          expanded={expandedLogs}
-          onShowLog={onShowLog}
-          onHideLog={onHideLog}
-        />
-      )}
+      <Log
+        title={<T id="privacy.logs" m="Logs" />}
+        log={logs}
+        expanded={expandedLogs}
+        onShowLog={onShowLog}
+        onHideLog={onHideLog}
+      />
     </>
   );
 };
