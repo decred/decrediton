@@ -33,10 +33,7 @@ class App extends React.Component {
   static propTypes = {
     locale: PropTypes.object.isRequired,
     window: PropTypes.object.isRequired,
-    shutdownApp: PropTypes.func.isRequired,
-    shutdownRequested: PropTypes.bool.isRequired,
-    daemonStopped: PropTypes.bool.isRequired,
-    autobuyerRunningModalVisible: PropTypes.bool.isRequired
+    shutdownApp: PropTypes.func.isRequired
   };
 
   constructor(props) {
