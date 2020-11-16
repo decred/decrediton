@@ -28,14 +28,6 @@
   background-image: var(--menu-animation-settings);
 }
 
-.menuLink.helpIcon {
-  background-image: var(--menu-help);
-}
-
-.menuLink.helpIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-help);
-}
-
 .menuLink.ticketsIcon {
   background-image: var(--menu-tickets);
 }

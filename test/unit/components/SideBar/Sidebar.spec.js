@@ -89,7 +89,6 @@ const expectToHaveDefaultMenuLinks = (params) => {
     "/privacy",
     "securitycntr"
   );
-  expectToHaveMenuLink(/help/i, "helpIcon", "/help", "help");
   expectToHaveMenuLink(/settings/i, "settingsIcon", "/settings", "settings");
 
   if (isTrezorEnabled) {
@@ -277,7 +276,7 @@ test("renders expanded sidebar with testnet network enabled", () => {
   render(<SideBar />);
   expectToHaveDefaultMenuLinks({
     sidebarOnBottom: false,
-    expandSideBar: true,
+    expandSideBar: true
   });
   expect(screen.getByRole("button", { name: /logo/i })).toHaveClass("testnet");
 

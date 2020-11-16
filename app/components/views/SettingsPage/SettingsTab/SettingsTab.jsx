@@ -1,6 +1,19 @@
+import { FormattedMessage as T } from "react-intl";
 import ErrorScreen from "ErrorScreen";
 import SettingsPage from "./Settings";
+import { DescriptionHeader } from "layout";
 import { useSettings, useService } from "hooks";
+
+export const SettingsTabHeader = () => (
+  <DescriptionHeader
+    description={
+      <T
+        id="settings.description.settings"
+        m="Changing network settings requires a restart"
+      />
+    }
+  />
+);
 
 export const SettingsTab = () => {
   const {
@@ -22,7 +35,8 @@ export const SettingsTab = () => {
   } = useSettings();
   const { walletService } = useService();
 
-  const onSaveSettingsHandler = () => onSaveSettings && onSaveSettings(tempSettings);
+  const onSaveSettingsHandler = () =>
+    onSaveSettings && onSaveSettings(tempSettings);
 
   return !walletService ? (
     <ErrorScreen />

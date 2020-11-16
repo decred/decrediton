@@ -4,7 +4,7 @@ import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { LinksTab, LinksTabHeader } from "./LinksTab";
 import { LogsTab, LogsTabHeader } from "./LogsTab/LogsTab";
 import { TutorialsTab, TutorialsTabHeader } from "./TutorialsTab/TutorialsTab";
-import { SettingsTab/*, SettingsTabHeader*/ } from "./SettingsTab/SettingsTab";
+import { SettingsTab, SettingsTabHeader } from "./SettingsTab/SettingsTab";
 
 const SettingsPageHeader = () => (
   <TitleHeader
@@ -21,7 +21,7 @@ const SettingsPage = () => (
     <Tab
       path="/settings/settings"
       component={SettingsTab}
-      header={SettingsPageHeader}
+      header={SettingsTabHeader}
       link={<T id="settings.tab.settings" m="Settings" />}
     />
     <Tab

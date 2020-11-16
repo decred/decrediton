@@ -39,12 +39,6 @@ export const linkList = [
     ariaLabel: "Privacy"
   },
   {
-    path: "/help",
-    link: <T id="sidebar.link.help" m="Help" />,
-    icon: "help",
-    ariaLabel: "Help"
-  },
-  {
     path: "/settings",
     link: <T id="sidebar.link.settings" m="Settings" />,
     icon: "settings",

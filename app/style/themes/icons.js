@@ -120,7 +120,6 @@ const icons = {
     "url('style/icons/scanning_blocks_loader.gif')",
   "menu-animation-accounts": "url('style/animations/accountsMotion.gif')",
   "menu-animation-governance": "url('style/animations/governanceMotion.gif')",
-  "menu-animation-help": "url('style/animations/helpMotion.gif')",
   "menu-animation-overview": "url('style/animations/overviewMotion.gif')",
   "menu-animation-settings": "url('style/animations/settingsMotion.gif')",
   "menu-animation-tickets": "url('style/animations/ticketsMotion.gif')",
