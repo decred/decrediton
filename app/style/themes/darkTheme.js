@@ -136,7 +136,7 @@ const darkTheme = {
   "menu-governance-active": "url('style/icons/governanceActiveDark.svg')",
   "menu-transactions-active": "url('style/icons/transactionsActiveDark.svg')",
   "menu-overview-active": "url('style/icons/overviewActiveDark.svg')",
-  "menu-securitycntr-active": "url('style/icons/securityActiveDark.svg')",
+  "menu-securitycntr-active": "url('style/icons/privacyDark.svg')",
   "menu-tickets-active": "url('style/icons/ticketsActiveDark.svg')",
   "menu-help-active": "url('style/icons/helpActiveDark.svg')",
   "menu-ln-active": "url('style/icons/lightningDark.svg')",

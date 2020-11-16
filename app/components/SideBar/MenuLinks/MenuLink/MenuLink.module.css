@@ -75,7 +75,8 @@
 }
 
 .menuLink.securitycntrIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-security);
+  /* Todo: Add privacy animation */
+  background-image: var(--menu-securitycntr-active);
 }
 
 .menuLink.overviewIcon {

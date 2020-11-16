@@ -134,7 +134,7 @@ const lightTheme = {
   "menu-governance-active": "url('style/icons/governance-active.png')",
   "menu-transactions-active": "url('style/icons/transactions-active.png')",
   "menu-overview-active": "url('style/icons/overview-active.png')",
-  "menu-securitycntr-active": "url('style/icons/securitycntr-active.png')",
+  "menu-securitycntr-active": "url('style/icons/privacy.svg')",
   "menu-tickets-active": "url('style/icons/tickets-active.png')",
   "menu-help-active": "url('style/icons/help-active.png')",
   "menu-ln-active": "url('style/icons/lightning.svg')",
