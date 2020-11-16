@@ -1,13 +1,12 @@
 import SettingsPage from "components/views/SettingsPage/SettingsPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
 
-import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as sa from "actions/SettingsActions";
 import * as wla from "actions/WalletLoaderActions";
-// import * as da from "actions/DaemonActions";
 import { PROXYTYPE_HTTP, PROXYTYPE_PAC } from "main_dev/proxy";
 import * as conf from "config";
 import {
@@ -17,21 +16,14 @@ import {
   DEFAULT_DARK_THEME_NAME,
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
+import {
+  EXTERNALREQUEST_NETWORK_STATUS,
+  EXTERNALREQUEST_STAKEPOOL_LISTING,
+  EXTERNALREQUEST_UPDATE_CHECK,
+  EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_DCRDATA
+} from "main_dev/externalRequests";
 
-// import * as wa from "wallet/daemon";
-
-// let mockGetDaemonSynced;
-// let mockMaxWalletCount;
-// let mockIsSPV;
-// let mockAppVersion;
-// let mockGetSelectedWallet;
-// let mockGetAvailableWallets;
-// let mockGetGlobalCfg;
-// let mockConnectDaemon;
-// let mockStartDaemon;
-// let mockSyncDaemon;
-// let mockCheckNetworkMatch;
-// let mockUpdateAvailable;
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
 
@@ -62,6 +54,12 @@ const testDefaultCurrencyDisplay = "DCR";
 const testCurrencyDisplay = "atoms";
 const testDefaultGapLimit = "20";
 const testGapLimit = "30";
+const testDefaultTimezone = "utc";
+const testDefaultAllowedExternalRequests = [
+  EXTERNALREQUEST_NETWORK_STATUS,
+  EXTERNALREQUEST_POLITEIA
+];
+
 const testCurrentSettings = {
   locale: testDefaultLocale,
   theme: testDefaultTheme,
@@ -74,7 +72,9 @@ const testCurrentSettings = {
   proxyLocation: testDefaultProxyLocation,
   spvConnect: testDefaultSpvConnectValue,
   currencyDisplay: testDefaultCurrencyDisplay,
-  gapLimit: testDefaultGapLimit
+  gapLimit: testDefaultGapLimit,
+  timezone: testDefaultTimezone,
+  allowedExternalRequests: testDefaultAllowedExternalRequests
 };
 const testSettings = {
   currentSettings: testCurrentSettings,
@@ -86,50 +86,17 @@ let mockIsTestNet;
 let mockIsMainNet;
 let mockWalletService;
 let mockTicketBuyerService;
-let mockSettingsChanged;
-let mockChangePassphraseRequestAttempt;
-let mockNeedNetworkReset;
-let mockGetWalletName;
-let mockGetWalletReady;
-let mockChangePassphraseAttempt;
-let mockUpdateStateSettingsChanged;
 let mockSaveSettings;
-let mockCloseWalletRequest;
-let mockAddAllowedExternalRequest;
-let mockToggleTheme;
 let mockGetGlobalCfg;
+let mockChangePassphrase;
 
 beforeEach(() => {
-  //   mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
-  //   mockUpdateAvailable = sel.updateAvailable = jest.fn(() => true);
-  //   mockMaxWalletCount = sel.maxWalletCount = jest.fn(() => 3);
-  //   mockIsSPV = sel.isSPV = jest.fn(() => false);
-  //   mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
-  //   mockGetAvailableWallets = da.getAvailableWallets = jest.fn(() => () =>
-  //     Promise.resolve({ availableWallets: [], previousWallet: null })
-  //   );
   mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
     return {
       get: () => DEFAULT_LIGHT_THEME_NAME,
       set: () => {}
     };
   });
-  //   wa.getDcrdLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
-  //   wa.getDcrwalletLogs = jest.fn(() =>
-  //     Promise.resolve(Buffer.from("", "utf-8"))
-  //   );
-  //   wa.getDecreditonLogs = jest.fn(() =>
-  //     Promise.resolve(Buffer.from("", "utf-8"))
-  //   );
-  //   wa.getDcrlndLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
-  //   mockConnectDaemon = da.connectDaemon = jest.fn(() => () =>
-  //     Promise.resolve(true)
-  //   );
-  //   mockStartDaemon = da.startDaemon = jest.fn(() => () => Promise.resolve(true));
-  //   mockSyncDaemon = da.syncDaemon = jest.fn(() => () => Promise.resolve());
-  //   mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () =>
-  //     Promise.resolve()
-  //   );
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
   mockIsMainNet = sel.isMainNet = jest.fn(() => false);
   mockWalletService = sel.walletService = jest.fn(() => {
@@ -138,28 +105,15 @@ beforeEach(() => {
   mockTicketBuyerService = sel.ticketBuyerService = jest.fn(() => {
     return {};
   });
-  // mockSettingsChanged = sel.settingsChanged = jest.fn(() => false);
-  mockChangePassphraseRequestAttempt = sel.changePassphraseRequestAttempt = jest.fn(
-    () => false
-  );
-  mockChangePassphraseRequestAttempt = sel.changePassphraseRequestAttempt = jest.fn(
-    () => false
-  );
-  // mockNeedNetworkReset = sel.needNetworkReset = jest.fn(() => false);
-  mockGetWalletName = sel.getWalletName = jest.fn(() => testWalletName);
-  mockGetWalletReady = sel.getWalletReady = jest.fn(() => true);
-  mockChangePassphraseAttempt = ca.changePassphraseAttempt = jest.fn(
-    () => true
-  );
-  // mockUpdateStateSettingsChanged = sa.updateStateSettingsChanged = jest.fn(
-  //   () => () => {}
-  // );
+  sel.changePassphraseRequestAttempt = jest.fn(() => false);
+  sel.getWalletName = jest.fn(() => testWalletName);
+  sel.getWalletReady = jest.fn(() => true);
+  ca.changePassphraseAttempt = jest.fn(() => true);
   mockSaveSettings = sa.saveSettings = jest.fn(() => () => {});
-  mockCloseWalletRequest = wla.closeWalletRequest = jest.fn(() => () => {});
-  mockAddAllowedExternalRequest = sa.addAllowedExternalRequest = jest.fn(
-    () => true
-  );
-  mockToggleTheme = sa.toggleTheme = jest.fn(() => true);
+  wla.closeWalletRequest = jest.fn(() => () => {});
+  sa.addAllowedExternalRequest = jest.fn(() => true);
+  sa.toggleTheme = jest.fn(() => true);
+  mockChangePassphrase = ca.changePassphraseAttempt = jest.fn(() => () => {});
 });
 
 test("show error when there is no walletService", () => {
@@ -204,18 +158,19 @@ const getOptionByNameAndType = (name, type) => {
 };
 
 const testConfirmModal = (submitButtonText, confirmHeaderText) => {
+  const submitButton = screen.getByText(submitButtonText);
   // submit and cancel
-  user.click(screen.getByText(submitButtonText));
+  user.click(submitButton);
   expect(screen.getByText(confirmHeaderText)).toBeInTheDocument();
   user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(confirmHeaderText)).not.toBeInTheDocument();
   // submit and confirm
-  user.click(screen.getByText(submitButtonText));
+  user.click(submitButton);
   expect(screen.getByText(confirmHeaderText)).toBeInTheDocument();
   user.click(screen.getByText("Confirm"));
 };
 
-const testCheckBoxInput = (
+const testComboxBoxInput = (
   labelName,
   oldValue,
   option,
@@ -227,7 +182,8 @@ const testCheckBoxInput = (
       settings: testSettings
     }
   });
-  expect(screen.getByText("Save").className).toMatch("disabled");
+  const saveButton = screen.getByText("Save");
+  expect(saveButton.className).toMatch("disabled");
   const inputControl = screen.getByLabelText(labelName);
   const inputValueSpan = getOptionByNameAndType(oldValue, "value");
   expect(inputValueSpan.textContent).toMatch(oldValue);
@@ -239,7 +195,7 @@ const testCheckBoxInput = (
   if (needsConfirm) {
     testConfirmModal("Save", "Reset required");
   } else {
-    user.click(screen.getByText("Save"));
+    user.click(saveButton);
   }
 
   expect(mockSaveSettings).toHaveBeenCalledWith({
@@ -281,7 +237,7 @@ test.each([
     { theme: testTheme },
     false
   ]
-])(`change '%s' ComboBox from '%s' to '%s' expeced %s`, testCheckBoxInput);
+])(`change '%s' ComboBox from '%s' to '%s' expeced %s`, testComboxBoxInput);
 
 const testTextFieldInput = (
   labelName,
@@ -295,18 +251,19 @@ const testTextFieldInput = (
       settings: testSettings
     }
   });
-  expect(screen.getByText("Save").className).toMatch("disabled");
+  const saveButton = screen.getByText("Save");
+  expect(saveButton.className).toMatch("disabled");
 
   const inputControl = screen.getByLabelText(labelName);
   expect(inputControl.value).toMatch(oldValue);
   user.clear(inputControl);
   user.type(inputControl, newValue);
 
-  expect(screen.getByText("Save").className).not.toMatch("disabled");
+  expect(saveButton.className).not.toMatch("disabled");
   if (needsConfirm) {
     testConfirmModal("Save", "Reset required");
   } else {
-    user.click(screen.getByText("Save"));
+    user.click(saveButton);
   }
   expect(mockSaveSettings).toHaveBeenCalledWith({
     ...testCurrentSettings,
@@ -337,3 +294,196 @@ test.each([
     false
   ]
 ])(`change '%s' TextInput from '%s' to '%s' expeced %s`, testTextFieldInput);
+
+const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  const saveButton = screen.getByText("Save");
+  expect(saveButton.className).toMatch("disabled");
+
+  options.forEach((option) =>
+    expect(screen.getByLabelText(option.label).checked).toBe(
+      option.value == defaultValue
+    )
+  );
+
+  //select other radio button
+  const otherOption = options.filter(
+    (option) => option.value != defaultValue
+  )[0];
+  user.click(screen.getByLabelText(otherOption.label));
+  options.forEach((option) =>
+    expect(screen.getByLabelText(option.label).checked).toBe(
+      option.value == otherOption.value
+    )
+  );
+
+  expect(saveButton.className).not.toMatch("disabled");
+  user.click(saveButton);
+  const expectedChange = { ...testCurrentSettings };
+  expectedChange[configKey] = otherOption.value;
+  expect(mockSaveSettings).toHaveBeenCalledWith(expectedChange);
+
+  //select default radio button again
+  const defaultOption = options.filter(
+    (option) => option.value == defaultValue
+  )[0];
+  user.click(screen.getByLabelText(defaultOption.label));
+  options.forEach((option) =>
+    expect(screen.getByLabelText(option.label).checked).toBe(
+      option.value == defaultOption.value
+    )
+  );
+
+  expect(saveButton.className).toMatch("disabled");
+};
+
+test.each([
+  [
+    "timezone",
+    [
+      { label: "Local", value: "local" },
+      { label: "UTC", value: "utc" }
+    ],
+    testDefaultTimezone
+  ]
+])(`test '%s' RadioButtonGroup `, testRadioButtonGroupInput);
+
+const testCheckBoxInput = (label, configKey) => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+
+  const checkbox = screen.getByLabelText(label);
+  const defaultCheckedValue = testDefaultAllowedExternalRequests.includes(
+    configKey
+  );
+  const saveButton = screen.getByText("Save");
+
+  expect(checkbox.checked).toBe(defaultCheckedValue);
+  expect(saveButton.className).toMatch("disabled");
+  user.click(checkbox);
+  expect(checkbox.checked).toBe(!defaultCheckedValue);
+  expect(saveButton.className).not.toMatch("disabled");
+
+  user.click(saveButton);
+  const expectedChange = { ...testCurrentSettings };
+
+  if (defaultCheckedValue) {
+    var index = expectedChange.allowedExternalRequests.indexOf(configKey);
+    if (index !== -1) {
+      expectedChange.allowedExternalRequests.splice(index, 1);
+    }
+  } else {
+    expectedChange.allowedExternalRequests.push(configKey);
+  }
+  expect(mockSaveSettings).toHaveBeenCalledWith(expectedChange);
+};
+
+test.each([
+  ["Network Information", EXTERNALREQUEST_NETWORK_STATUS],
+  ["VSP Listing", EXTERNALREQUEST_STAKEPOOL_LISTING],
+  ["Update Check", EXTERNALREQUEST_UPDATE_CHECK],
+  ["Politeia", EXTERNALREQUEST_POLITEIA],
+  ["Decred Block Explorer", EXTERNALREQUEST_DCRDATA]
+])(`test '%s' Checkbox `, testCheckBoxInput);
+
+const getFieldRequiredErrorCount = () => {
+  const inputErrorString = "This field is required";
+  const inputErrors = screen.queryAllByText(inputErrorString);
+  return inputErrors ? inputErrors.length : 0;
+};
+
+const testPassphraseInputRequiedErrorMsg = (label) => {
+  const testString = "test-string";
+
+  const inputErrorsCount = getFieldRequiredErrorCount();
+  const input = screen.getByLabelText(label);
+  user.type(input, testString);
+  expect(input.value).toMatch(testString);
+  user.clear(input);
+
+  expect(getFieldRequiredErrorCount()).toBe(inputErrorsCount + 1);
+
+  // type again, error message should disappear
+  user.type(input, testString);
+  expect(getFieldRequiredErrorCount()).toBe(inputErrorsCount);
+
+  // clean up
+  user.clear(input);
+  expect(getFieldRequiredErrorCount()).toBe(inputErrorsCount + 1);
+};
+
+test("test update private passphrase", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  const updateButton = screen.getByLabelText("Update Private Passphrase");
+  const modalHeaderText = "Change your passphrase";
+  // click and cancel
+  user.click(updateButton);
+  expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
+  user.click(screen.getByText("Cancel"));
+  expect(screen.queryByText(modalHeaderText)).not.toBeInTheDocument();
+
+  user.click(updateButton);
+  expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
+
+  const continueButton = screen.getByText("Continue");
+  expect(continueButton.className).toMatch("disabled");
+  // test 'This Field is required' error message
+  testPassphraseInputRequiedErrorMsg("Private Passphrase:");
+  testPassphraseInputRequiedErrorMsg("New Private Passphrase:");
+  testPassphraseInputRequiedErrorMsg("Confirm:");
+  expect(continueButton.className).toMatch("disabled");
+
+  // fill input fields
+  const testPassphrase = "test-passphrase";
+  const testNewPassphrase = "test-new-passphrase";
+  const testConfirmPassphrase = "test-confirm-passphrase";
+  user.type(screen.getByLabelText("Private Passphrase:"), testPassphrase);
+  user.type(
+    screen.getByLabelText("New Private Passphrase:"),
+    testNewPassphrase
+  );
+  expect(continueButton.className).toMatch("disabled");
+  user.type(screen.getByLabelText("Confirm:"), testConfirmPassphrase);
+  expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
+
+  // fix confirm passphrase
+  user.clear(screen.getByLabelText("Confirm:"));
+  user.type(screen.getByLabelText("Confirm:"), testNewPassphrase);
+  expect(
+    screen.queryByText("Passwords does not match.")
+  ).not.toBeInTheDocument();
+  expect(continueButton.className).not.toMatch("disabled");
+
+  // clear confirm and new passphrases. should get an error message
+  user.clear(screen.getByLabelText("Confirm:"));
+  user.clear(screen.getByLabelText("New Private Passphrase:"));
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+  expect(continueButton.className).toMatch("disabled");
+
+  //refill inputs
+  user.type(
+    screen.getByLabelText("New Private Passphrase:"),
+    testNewPassphrase
+  );
+  user.type(screen.getByLabelText("Confirm:"), testNewPassphrase);
+  expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
+  expect(continueButton.className).not.toMatch("disabled");
+
+  user.click(screen.getByText("Continue"));
+  expect(mockChangePassphrase).toHaveBeenCalledWith(
+    testPassphrase,
+    testNewPassphrase,
+    true
+  );
+});
