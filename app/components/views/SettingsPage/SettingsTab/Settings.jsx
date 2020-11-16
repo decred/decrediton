@@ -6,10 +6,10 @@ import {
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { StandaloneHeader, StandalonePage } from "layout";
+// import { StandaloneHeader, StandalonePage } from "layout";
 import {
   KeyBlueButton,
-  CloseWalletModalButton,
+  //CloseWalletModalButton,
   ResetNetworkButton
 } from "buttons";
 import { getGlobalCfg } from "config";
@@ -24,6 +24,7 @@ import "style/StakePool.less"; // TODO: delete this as well!
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 
+/*
 const closeWalletModalContent = (walletName) => (
   <T
     id="settings.closeWalletModalContent"
@@ -70,7 +71,7 @@ const SettingsPageHeader = ({
       />
     }
   />
-);
+);*/
 
 const SettingsPage = ({
   areSettingsDirty,

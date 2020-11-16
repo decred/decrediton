@@ -2,7 +2,7 @@ import ErrorScreen from "ErrorScreen";
 import SettingsPage from "./Settings";
 import { useSettings, useService } from "hooks";
 
-const Settings = () => {
+export const SettingsTab = () => {
   const {
     onCloseWallet,
     tempSettings,
@@ -48,5 +48,3 @@ const Settings = () => {
     />
   );
 };
-
-export default Settings;
