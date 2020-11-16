@@ -49,11 +49,12 @@
 }
 
 .menuLink.trezorIcon {
-  background-image: var(--menu-trezor-default);
+  background-image: var(--menu-trezor-active);
 }
 
 .menuLink.trezorIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-trezor-hover);
+  /* Todo: Add trezor animation */
+  background-image: var(--menu-trezor-active);
 }
 
 .menuLink.transactionsIcon:not(.menuLinkActive):hover {
