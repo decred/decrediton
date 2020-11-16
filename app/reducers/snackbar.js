@@ -128,7 +128,8 @@ import {
 } from "actions/LNActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
-  CREATEMIXERACCOUNTS_FAILED
+  CREATEMIXERACCOUNTS_FAILED,
+  RUNACCOUNTMIXER_FAILED
 } from "actions/AccountMixerActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
@@ -330,8 +331,7 @@ const messages = defineMessages({
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.passphraseProtectionSuccess.disabled",
-    defaultMessage:
-      "Passphrase protection has been disabled in trezor {label}"
+    defaultMessage: "Passphrase protection has been disabled in trezor {label}"
   },
   TRZ_CHANGEHOMESCREEN_SUCCESS: {
     id: "trezor.changeHomeScreen.success",
@@ -373,7 +373,8 @@ const messages = defineMessages({
   },
   TRZ_NOTBACKEDUP: {
     id: "trezor.notBackedUp",
-    defaultMessage: "Trezor must be backed up in order to perform this operation."
+    defaultMessage:
+      "Trezor must be backed up in order to perform this operation."
   },
   ERROR_IS_OBJECT: {
     id: "snackbar.errorObject",
@@ -504,11 +505,15 @@ const messages = defineMessages({
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
-    "Your vote has been cast!\nThanks for participating in Decred's governance"
+      "Your vote has been cast!\nThanks for participating in Decred's governance"
   },
   CREATEMIXERACCOUNTS_SUCCESS: {
     id: "mixer.ntf.createdAcct",
     defaultMessage: "Accounts successfully created and mixer configured."
+  },
+  RUNACCOUNTMIXER_FAILED: {
+    id: "mixer.ntf.startMixerFailed",
+    defaultMessage: "{originalError}"
   }
 });
 
@@ -696,6 +701,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_ADDWATCHTOWER_FAILED:
     case LNWALLET_REMOVEWATCHTOWER_FAILED:
     case LNWALLET_LISTWATCHTOWERS_FAILED:
+    case RUNACCOUNTMIXER_FAILED:
       type = "Error";
       if (
         action.error &&

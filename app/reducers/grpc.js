@@ -75,6 +75,7 @@ import {
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 import {
   GETACCOUNTMIXERSERVICE_SUCCESS,
+  RUNACCOUNTMIXER_ATTEMPT,
   RUNACCOUNTMIXER_SUCCESS,
   RUNACCOUNTMIXER_FAILED,
   STOPMIXER_SUCCESS,
@@ -103,6 +104,11 @@ export default function grpc(state = {}, action) {
         ...state,
         accountMixerService: action.accountMixerService
       };
+    case RUNACCOUNTMIXER_ATTEMPT:
+      return {
+        ...state,
+        mixerStreamerError: null
+      };
     case RUNACCOUNTMIXER_SUCCESS:
       return {
         ...state,
@@ -112,6 +118,7 @@ export default function grpc(state = {}, action) {
     case RUNACCOUNTMIXER_FAILED:
       return {
         ...state,
+        accountMixerRunning: false,
         mixerStreamerError: action.error
       };
     case STOPMIXER_SUCCESS:

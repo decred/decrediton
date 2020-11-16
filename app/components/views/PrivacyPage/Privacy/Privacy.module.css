@@ -1,5 +1,6 @@
 .error {
   color: var(--error-text-color);
+  margin-bottom: 5px;
 }
 .isRow {
   display: flex;
