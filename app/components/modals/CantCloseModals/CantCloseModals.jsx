@@ -7,7 +7,7 @@ const CantCloseModals = () => {
     autBuyerRunning,
     hasUnpaidFee,
     autobuyerRunningModalVisible,
-    hideCantCloseModal,
+    onHideCantCloseModal,
     shutdownApp
   } = useCantCloseModal();
   let Component = () => <></>;
@@ -22,10 +22,10 @@ const CantCloseModals = () => {
   return <Component
     show={autobuyerRunningModalVisible}
     onSubmit={() => {
-      hideCantCloseModal();
+      onHideCantCloseModal();
       shutdownApp();
     }}
-    onCancelModal={hideCantCloseModal}
+    onCancelModal={onHideCantCloseModal}
   />;
 };
 
