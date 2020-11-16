@@ -1,3 +1,7 @@
+.logs {
+  margin: 30px 42px 30px 40px;
+}
+
 .logArea {
   background-color: var(--background-back-color);
   color: var(--title-text-and-button-background);
@@ -6,17 +10,8 @@
   padding-bottom: 5px;
 }
 
-/* is it working ? */
-.getstarted .logArea {
-  width: 100%;
-}
-
 .logArea:nth-of-type(1n) {
   margin-top: 8px;
-}
-
-.logs {
-  margin: 30px 42px 30px 40px;
 }
 
 textarea {
@@ -69,6 +64,10 @@ textarea {
 }
 
 @media screen and (max-width: 768px) {
+  .logs {
+    margin: 30px 20px;
+  }
+  
   .logArea {
     width: 355px;
     margin-left: 0;
@@ -76,9 +75,6 @@ textarea {
 
   .title {
     padding-left: 20px;
-  }
-  .logs {
-    margin: 30px 20px;
   }
 }
 

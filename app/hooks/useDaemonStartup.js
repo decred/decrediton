@@ -143,7 +143,7 @@ const useDaemonStartup = () => {
     [dispatch]
   );
   const onConnectDaemon = useCallback(
-    (rpcCreds) => dispatch(da.connectDaemon(rpcCreds)),
+    (rpcCreds, daemonRemote) => dispatch(da.connectDaemon(rpcCreds, daemonRemote)),
     [dispatch]
   );
   const checkNetworkMatch = useCallback(

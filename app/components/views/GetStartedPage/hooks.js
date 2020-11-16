@@ -106,7 +106,8 @@ export const useGetStarted = () => {
       isAtConnectingDaemon: (_, event) => {
         console.log(" is at connect daemon ");
         const { remoteCredentials } = event;
-        return onConnectDaemon(remoteCredentials)
+        const daemonRemote = !!remoteCredentials;
+        return onConnectDaemon(remoteCredentials, daemonRemote)
           .then(() => {
             send({ type: "SYNC_DAEMON" });
           })

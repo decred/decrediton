@@ -65,7 +65,12 @@ export default function version(state = {}, action) {
     case CONNECTDAEMON_ATTEMPT:
       return { ...state, daemonConnected: false, daemonError: null };
     case CONNECTDAEMON_SUCCESS:
-      return { ...state, daemonConnected: true, daemonError: null };
+      return {
+        ...state,
+        daemonRemote: action.daemonRemote,
+        daemonConnected: true,
+        daemonError: null
+      };
     case CONNECTDAEMON_FAILURE:
       return {
         ...state,

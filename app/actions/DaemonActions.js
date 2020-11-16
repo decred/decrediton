@@ -451,7 +451,7 @@ export const decreditonInit = () => (dispatch) => {
 };
 
 const TIME_TO_TIMEOUT = 15 * 1000; // 15 sec
-export const connectDaemon = (rpcCreds) => (dispatch, getState) =>
+export const connectDaemon = (rpcCreds, daemonRemote) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: CONNECTDAEMON_ATTEMPT });
     const timeBeforeConnect = new Date();
@@ -474,13 +474,12 @@ export const connectDaemon = (rpcCreds) => (dispatch, getState) =>
         return reject(error);
       }
       if (daemonConnected || daemonError) return;
-
       try {
         const connected = await wallet.connectDaemon({
           rpcCreds: creds,
           testnet: isTestNet(getState())
         });
-        dispatch({ type: CONNECTDAEMON_SUCCESS });
+        dispatch({ type: CONNECTDAEMON_SUCCESS, daemonRemote });
         resolve(connected);
       } catch (err) {
         const { error } = err;
