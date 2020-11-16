@@ -363,7 +363,7 @@ export const newPurchaseTicketsAttempt = (
       changeAccount: sel.getChangeAccount(getState()),
       csppServer: sel.getCsppServer(getState()),
       csppPort: sel.getCsppPort(getState()),
-      mixedAcctBranch: 0
+      mixedAcctBranch: sel.getMixedAccountBranch(getState())
     };
 
     const purchaseTicketsResponse = await wallet.purchaseTicketsV3(
