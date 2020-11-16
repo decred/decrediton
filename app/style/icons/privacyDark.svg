@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg26"
+   version="1.1"
+   viewBox="0 0 22 22"
+   height="22"
+   width="22">
+  <metadata
+     id="metadata32">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs30" />
+  <path
+     d="m 17.86,11.798 -3.2,-8.556 v 0 A 6.856,6.856 0 0 1 10.993,4.464 6.85,6.85 0 0 1 7.327,3.242 v 0 l -3.22,8.556 z"
+     id="path2"
+     style="fill:#99c1e3;fill-opacity:1" />
+  <path
+     d="M 11,14.72 A 23.871,23.871 0 0 1 1.108,12.4 L 0.694,12.183 1.108,11.967 A 23.845,23.845 0 0 1 11,9.646 a 23.844,23.844 0 0 1 9.892,2.321 l 0.413,0.216 -0.413,0.217 A 23.87,23.87 0 0 1 11,14.72 Z"
+     id="path4"
+     style="fill:#99c1e3;fill-opacity:1" />
+  <path
+     d="m 4.544,10.642 a 22.532,22.532 0 0 0 6.457,1 22.516,22.516 0 0 0 6.431,-0.995 l -0.484,-1.3 H 5.029 Z"
+     id="path6"
+     style="fill:#2f4d8c;fill-opacity:1" />
+  <rect
+     width="5.5"
+     height="3.6670001"
+     rx="0.73100001"
+     id="rect8"
+     x="4.8889999"
+     y="15.092"
+     style="fill:#2f4d8c;fill-opacity:1" />
+  <rect
+     width="5.5"
+     height="3.6670001"
+     rx="0.73100001"
+     id="rect10"
+     x="11.611"
+     y="15.092"
+     style="fill:#2f4d8c;fill-opacity:1" />
+  <rect
+     width="1.222"
+     height="0.611"
+     id="rect12"
+     x="4.2779999"
+     y="15.092"
+     style="fill:#2f4d8c;fill-opacity:1" />
+  <rect
+     width="1.222"
+     height="0.611"
+     id="rect14"
+     x="16.5"
+     y="15.092"
+     style="fill:#2f4d8c;fill-opacity:1" />
+  <rect
+     width="3.4400001"
+     height="0.611"
+     id="rect16"
+     x="9.2959995"
+     y="15.703"
+     style="fill:#2f4d8c;fill-opacity:1" />
+  <path
+     d="M 6.263,18.219 A 0.976,0.976 0 0 1 5.288,17.243 h 0.489 a 0.487,0.487 0 0 0 0.486,0.487 z"
+     id="path18"
+     style="fill:#99c1e3;fill-opacity:1" />
+  <path
+     d="m 12.953,18.219 a 0.976,0.976 0 0 1 -0.975,-0.976 h 0.489 a 0.487,0.487 0 0 0 0.486,0.487 z"
+     id="path20"
+     style="fill:#99c1e3;fill-opacity:1" />
+  <rect
+     id="rect24"
+     fill="none"
+     height="22"
+     width="22" />
+</svg>

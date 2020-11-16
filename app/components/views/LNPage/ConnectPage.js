@@ -25,7 +25,7 @@ const ConnectPageHeader = () => (
         m={"Start, unlock and connect to the dcrlnd wallet."}
       />
     }
-    iconClassName="accounts"
+    iconClassName="ln"
   />
 );
 
@@ -38,7 +38,7 @@ const CreateLNWalletPageHeader = () => (
         m={"Create a new Lightning Network wallet backed by the Decrediton wallet."}
       />
     }
-    iconClassName="accounts"
+    iconClassName="ln"
   />
 );
 

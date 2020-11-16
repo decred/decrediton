@@ -10,8 +10,8 @@
   font-size: 15px;
   text-decoration: none;
   transition: color 0.13s ease-in-out;
-  background-position: 20px 50%;
-  background-size: 20px;
+  background-position: 22px 50%;
+  background-size: 22px;
   background-repeat: no-repeat;
   user-select: none;
 }
@@ -21,7 +21,7 @@
 }
 
 .menuLink.settingsIcon {
-  background-image: var(--menu-settings-default);
+  background-image: var(--menu-settings);
 }
 
 .menuLink.settingsIcon:not(.menuLinkActive):hover {
@@ -29,7 +29,7 @@
 }
 
 .menuLink.helpIcon {
-  background-image: var(--menu-help-default);
+  background-image: var(--menu-help);
 }
 
 .menuLink.helpIcon:not(.menuLinkActive):hover {
@@ -37,7 +37,7 @@
 }
 
 .menuLink.ticketsIcon {
-  background-image: var(--menu-tickets-default);
+  background-image: var(--menu-tickets);
 }
 
 .menuLink.ticketsIcon:not(.menuLinkActive):hover {
@@ -45,15 +45,16 @@
 }
 
 .menuLink.transactionsIcon {
-  background-image: var(--menu-transactions-default);
+  background-image: var(--menu-transactions);
 }
 
 .menuLink.trezorIcon {
-  background-image: var(--menu-trezor-default);
+  background-image: var(--menu-trezor);
 }
 
 .menuLink.trezorIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-trezor-hover);
+  /* Todo: Add trezor animation */
+  background-image: var(--menu-trezor);
 }
 
 .menuLink.transactionsIcon:not(.menuLinkActive):hover {
@@ -61,25 +62,24 @@
 }
 
 .menuLink.accountsIcon {
-  background-image: var(--menu-accounts-default);
+  background-image: var(--menu-accounts);
 }
 
 .menuLink.accountsIcon:not(.menuLinkActive):hover {
   background-image: var(--menu-animation-accounts);
-  background-size: 22px;
-  background-position: 19px 50%;
 }
 
 .menuLink.securitycntrIcon {
-  background-image: var(--menu-securitycntr-default);
+  background-image: var(--menu-privacy);
 }
 
 .menuLink.securitycntrIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-security);
+  /* Todo: Add privacy animation */
+  background-image: var(--menu-privacy);
 }
 
 .menuLink.overviewIcon {
-  background-image: var(--menu-overview-default);
+  background-image: var(--menu-overview);
 }
 
 .menuLink.overviewIcon:not(.menuLinkActive):hover {
@@ -87,7 +87,7 @@
 }
 
 .menuLink.governanceIcon {
-  background-image: var(--menu-governance-default);
+  background-image: var(--menu-governance);
 }
 
 .menuLink.governanceIcon:not(.menuLinkActive):hover {
@@ -95,11 +95,12 @@
 }
 
 .menuLink.lnIcon {
-  background-image: var(--menu-ln-default);
+  background-image: var(--menu-ln);
 }
 
 .menuLink.lnIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-ln-hover);
+  /* Todo: Add LN animation */
+  background-image: var(--menu-ln);
 }
 
 .menuLink:hover {
@@ -108,54 +109,7 @@
 
 .menuLinkActive {
   color: var(--input-color-default);
-}
-
-.menuLinkActive.settingsIcon {
-  background-image: var(--menu-settings-active);
   cursor: default;
-}
-
-.menuLinkActive.helpIcon {
-  background-image: var(--menu-help-active);
-  cursor: default;
-}
-
-.menuLinkActive.ticketsIcon {
-  background-image: var(--menu-tickets-active);
-  cursor: default;
-}
-
-.menuLinkActive.transactionsIcon {
-  background-image: var(--menu-transactions-active);
-  cursor: default;
-}
-
-.menuLinkActive.accountsIcon {
-  background-image: var(--menu-accounts-active);
-  cursor: default;
-}
-
-.menuLinkActive.securitycntrIcon {
-  background-image: var(--menu-securitycntr-active);
-  cursor: default;
-}
-
-.menuLinkActive.overviewIcon {
-  background-image: var(--menu-overview-active);
-  cursor: default;
-}
-
-.menuLinkActive.governanceIcon {
-  background-image: var(--menu-governance-active);
-  cursor: default;
-}
-
-.menuLinkActive.trezorIcon {
-  background-image: var(--menu-trezor-active);
-}
-
-.menuLinkActive.lnIcon {
-  background-image: var(--menu-ln-active);
 }
 
 .menuLinkNotificationIcon {
