@@ -146,6 +146,10 @@ export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
 export const getChangeAccount = get(["walletLoader", "changeAccount"]);
 export const getCsppServer = get(["walletLoader", "csppServer"]);
 export const getCsppPort = get(["walletLoader", "csppPort"]);
+export const getMixedAccountBranch = get([
+  "walletLoader",
+  "mixedAccountBranch"
+]);
 
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
