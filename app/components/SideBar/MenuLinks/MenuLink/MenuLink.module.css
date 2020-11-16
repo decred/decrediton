@@ -21,7 +21,7 @@
 }
 
 .menuLink.settingsIcon {
-  background-image: var(--menu-settings-default);
+  background-image: var(--menu-settings-active);
 }
 
 .menuLink.settingsIcon:not(.menuLinkActive):hover {
@@ -29,7 +29,7 @@
 }
 
 .menuLink.helpIcon {
-  background-image: var(--menu-help-default);
+  background-image: var(--menu-help-active);
 }
 
 .menuLink.helpIcon:not(.menuLinkActive):hover {
@@ -61,7 +61,7 @@
 }
 
 .menuLink.accountsIcon {
-  background-image: var(--menu-accounts-default);
+  background-image: var(--menu-accounts-active);
 }
 
 .menuLink.accountsIcon:not(.menuLinkActive):hover {
@@ -71,7 +71,7 @@
 }
 
 .menuLink.securitycntrIcon {
-  background-image: var(--menu-securitycntr-default);
+  background-image: var(--menu-securitycntr-active);
 }
 
 .menuLink.securitycntrIcon:not(.menuLinkActive):hover {
@@ -79,7 +79,7 @@
 }
 
 .menuLink.overviewIcon {
-  background-image: var(--menu-overview-default);
+  background-image: var(--menu-overview-active);
 }
 
 .menuLink.overviewIcon:not(.menuLinkActive):hover {
@@ -87,7 +87,7 @@
 }
 
 .menuLink.governanceIcon {
-  background-image: var(--menu-governance-default);
+  background-image: var(--menu-governance-active);
 }
 
 .menuLink.governanceIcon:not(.menuLinkActive):hover {
