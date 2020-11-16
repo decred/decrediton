@@ -11,6 +11,7 @@ import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
 
 const PrivacyContent = ({
+  accountMixerError,
   accountMixerRunning,
   stopAccountMixer,
   onStartMixerAttempt,
@@ -58,6 +59,9 @@ const PrivacyContent = ({
           />
         )}
     </div>
+    {accountMixerError && (
+      <div className={style.error}>{accountMixerError}</div>
+    )}
     {/*
       TODO
       create a shared component and use it on logs page and here.

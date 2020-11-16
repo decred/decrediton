@@ -14,6 +14,7 @@ export function usePrivacy() {
   const csppServer = useSelector(sel.getCsppServer);
   const csppPort = useSelector(sel.getCsppPort);
   const accounts = useSelector(sel.sortedAccounts);
+  const accountMixerError = useSelector(sel.getAccountMixerError);
   const createMixerAccountAttempt = useSelector(sel.createMixerAccountAttempt);
   const allowSendFromUnmixed = useSelector(sel.getAllowSendFromUnmixed);
 
@@ -47,6 +48,7 @@ export function usePrivacy() {
     mixedAccount,
     changeAccount,
     accounts,
+    accountMixerError,
     onStartMixerAttempt,
     createNeededAccounts,
     createMixerAccountAttempt,
