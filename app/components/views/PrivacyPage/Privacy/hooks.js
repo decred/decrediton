@@ -13,6 +13,7 @@ export function usePrivacy() {
   const changeAccount = useSelector(sel.getChangeAccount);
   const csppServer = useSelector(sel.getCsppServer);
   const csppPort = useSelector(sel.getCsppPort);
+  const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const accounts = useSelector(sel.sortedAccounts);
   const accountMixerError = useSelector(sel.getAccountMixerError);
   const createMixerAccountAttempt = useSelector(sel.createMixerAccountAttempt);
@@ -34,7 +35,7 @@ export function usePrivacy() {
       passphrase,
       mixedAccount,
       changeAccount,
-      mixedAccountBranch: 0,
+      mixedAccountBranch,
       csppServer: `${csppServer}:${csppPort}`
     };
     runAccountMixer(request)
