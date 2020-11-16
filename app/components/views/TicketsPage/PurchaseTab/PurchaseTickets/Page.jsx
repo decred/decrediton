@@ -1,6 +1,5 @@
 import UnsignedTickets from "../UnsignedTickets";
 import StakeInfo from "../StakeInfo/StakeInfo";
-import PrivacyInfo from "../PrivacyInfo/PrivacyInfo";
 import PurchaseForm from "./PurchaseForm";
 import { ShowWarning, Subtitle, Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
@@ -15,6 +14,12 @@ export const LegacyVSPWarning = () => (
   />
 );
 
+const PrivacyInfo = () => (
+  <div className={styles.privacyInfo}>
+    <T id="purchase.vsp.privacy.enabled" m="You are purchasing mixed tickets" />
+  </div>
+);
+
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
     <div className={styles.iconWrapper}>
@@ -22,7 +27,13 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
         displayed on the new VSP form. Including this here ensures the layout is
         consistent and prevents things from moving then the "i" is hidden.
         This div can be removed when the legacy VSP form is removed. */}
-      <div style={{ width: "20px", height: "20px", padding: "3px", margin: "4px 0 4px 0" }}></div>
+      <div
+        style={{
+          width: "20px",
+          height: "20px",
+          padding: "3px",
+          margin: "4px 0 4px 0"
+        }}></div>
       <Tooltip md={true} text={<LegacyVSPWarning />}>
         <Checkbox
           label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
@@ -71,7 +82,7 @@ export function PurchasePage({
         children={getTitleIcon({ toggleIsLegacy })}
         className="is-row"
       />
-      { mixedAccount && changeAccount && <PrivacyInfo /> }
+      {mixedAccount && changeAccount && <PrivacyInfo />}
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
           warn={
@@ -106,7 +117,6 @@ export function PurchasePage({
       )}
       {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
       <TicketAutoBuyer />
-
     </div>
   );
 }

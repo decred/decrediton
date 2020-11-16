@@ -40,6 +40,11 @@
   background-color: var(--background-back-color);
 }
 
+.privacyInfo {
+  padding: 10px;
+  background-color: var(--info-message-background);
+}
+
 .title {
   font-size: 15px;
   margin-bottom: 10px;
