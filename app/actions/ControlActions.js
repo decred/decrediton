@@ -18,24 +18,26 @@ export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 
-export const getNextAddressAttempt = (accountNumber) => (dispatch, getState) =>
-  new Promise((resolve, reject) => {
-    dispatch({ type: GETNEXTADDRESS_ATTEMPT });
-    return wallet
-      .getNextAddress(sel.walletService(getState()), accountNumber)
-      .then((res) => {
-        res.accountNumber = accountNumber;
-        dispatch({
-          getNextAddressResponse: res,
-          type: GETNEXTADDRESS_SUCCESS
-        });
-        resolve(res);
-      })
-      .catch((error) => {
-        dispatch({ error, type: GETNEXTACCOUNT_FAILED });
-        reject(error);
+export const getNextAddressAttempt = (accountNumber) => (
+  dispatch,
+  getState
+) => new Promise((resolve, reject) => {
+  dispatch({ type: GETNEXTADDRESS_ATTEMPT });
+  return wallet
+    .getNextAddress(sel.walletService(getState()), accountNumber)
+    .then((res) => {
+      res.accountNumber = accountNumber;
+      dispatch({
+        getNextAddressResponse: res,
+        type: GETNEXTADDRESS_SUCCESS
       });
-  });
+      resolve(res);
+    })
+    .catch((error) => {
+      dispatch({ error, type: GETNEXTACCOUNT_FAILED });
+      reject(error);
+    });
+});
 
 export const RENAMEACCOUNT_ATTEMPT = "RENAMEACCOUNT_ATTEMPT";
 export const RENAMEACCOUNT_FAILED = "RENAMEACCOUNT_FAILED";
@@ -424,23 +426,16 @@ export const startTicketBuyerV3Attempt = (
   const changeAccount = sel.getChangeAccount(getState());
   const csppServer = sel.getCsppServer(getState());
   const csppPort = sel.getCsppPort(getState());
-  const mixedAcctBranch = sel.getMixedAccountBranch(getState());
 
   if (mixedAccount && changeAccount) {
-    if (
-      !mixedAccount ||
-      !changeAccount ||
-      !csppServer ||
-      !csppPort ||
-      typeof mixedAcctBranch === "undefined"
-    ) {
+    if (!mixedAccount || !changeAccount || !csppServer || !csppPort) {
       throw "missing cspp argument";
     }
     request.setMixedAccount(mixedAccount);
     request.setMixedSplitAccount(mixedAccount);
     request.setChangeAccount(changeAccount);
-    request.setCsppServer(`${csppServer}:${csppPort}`);
-    request.setMixedAccountBranch(mixedAcctBranch);
+    request.setCsppServer(csppServer + ":" + csppPort);
+    request.setMixedAccountBranch(0);
   }
 
   request.setBalanceToMaintain(balanceToMaintain);
@@ -544,25 +539,23 @@ export const constructTransactionAttempt = (
             dispatch({ error, type: CONSTRUCTTX_FAILED });
           };
         }
-        const newChangeAddr = await dispatch(
-          getNextAddressAttempt(unmixedAcct)
-        );
+        const newChangeAddr = await dispatch(getNextAddressAttempt(unmixedAcct));
         const outputDest = new ConstructTransactionRequest.OutputDestination();
         outputDest.setAddress(newChangeAddr.address);
         request.setChangeDestination(outputDest);
       }
     }
   } else {
-    if (outputs.length > 1) {
-      return (dispatch) => {
-        const error = "Too many outputs provided for a send all request.";
-        dispatch({ error, type: CONSTRUCTTX_FAILED });
-      };
-    }
-    if (outputs.length == 0) {
-      return (dispatch) => {
-        const error = "No destination specified for send all request.";
-        dispatch({ error, type: CONSTRUCTTX_FAILED });
+      if (outputs.length > 1) {
+        return (dispatch) => {
+          const error = "Too many outputs provided for a send all request.";
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+        };
+      }
+      if (outputs.length == 0) {
+        return (dispatch) => {
+          const error = "No destination specified for send all request.";
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
       };
     }
     // set change to same destination as it is a send all tx.
