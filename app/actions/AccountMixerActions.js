@@ -3,7 +3,7 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
-import { getAcctSpendableBalance } from "./ClientActions";
+import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
 import { MIN_RELAY_FEE_ATOMS } from "constants";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
@@ -147,6 +147,8 @@ export const createNeededAccounts = (
     const mixedAccount = await createAccount(passphrase, mixedAccountName);
     const changeAccount = await createAccount(passphrase, changeAccountName);
 
+    // update accounts selectors
+    dispatch(getAccountsAttempt(true));
     const mixedNumber = mixedAccount.getAccountNumber();
     const changeNumber = changeAccount.getAccountNumber();
 
