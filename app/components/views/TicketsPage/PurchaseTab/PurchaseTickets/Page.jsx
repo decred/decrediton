@@ -5,6 +5,7 @@ import { ShowWarning, Subtitle, Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import styles from "../PurchaseTab.module.css";
 import { Checkbox, classNames } from "pi-ui";
+import { KeyBlueButton } from "buttons";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
 import { useState } from "react";
 
@@ -39,32 +40,44 @@ const PrivacyInfo = () => {
   );
 };
 
-const getTitleIcon = ({ toggleIsLegacy }) => (
-  <>
-    <div className={styles.iconWrapper}>
-      {/* The div below is a placeholder for the info modal "i" icon which is not
+const TitleIcon = ({ toggleIsLegacy }) => (
+  <div className={styles.iconWrapper}>
+    {/* The div below is a placeholder for the info modal "i" icon which is not
         displayed on the new VSP form. Including this here ensures the layout is
         consistent and prevents things from moving then the "i" is hidden.
         This div can be removed when the legacy VSP form is removed. */}
-      <div
-        style={{
-          width: "20px",
-          height: "20px",
-          padding: "3px",
-          margin: "4px 0 4px 0"
-        }}
+    <div
+      style={{
+        width: "20px",
+        height: "20px",
+        padding: "3px",
+        margin: "4px 0 4px 0"
+      }}
+    />
+    <Tooltip md={true} text={<LegacyVSPWarning />}>
+      <Checkbox
+        label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
+        className={styles.useLegacyLabel}
+        id="box"
+        checked={false}
+        onChange={() => toggleIsLegacy(true)}
       />
-      <Tooltip md={true} text={<LegacyVSPWarning />}>
-        <Checkbox
-          label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
-          className={styles.useLegacyLabel}
-          id="box"
-          checked={false}
-          onChange={() => toggleIsLegacy(true)}
-        />
-      </Tooltip>
-    </div>
-  </>
+    </Tooltip>
+  </div>
+);
+
+const EnableVSP = ({ onEnableVSP }) => (
+  <div className={styles.enableVSPWrapper}>
+    <p>
+      <T
+        id="purchase.vsp.enableListing.description"
+        m="VSP Listing is currently disabled in your privacy settings. Please enable it if you want to be able to purchase tickets from listed VSPs."
+      />
+    </p>
+    <KeyBlueButton onClick={onEnableVSP} className={styles.enableVSPButton}>
+      <T id="purchase.vsp.enableListing.button" m="Enable VSP Listing" />
+    </KeyBlueButton>
+  </div>
 );
 
 export function PurchasePage({
@@ -93,6 +106,8 @@ export function PurchasePage({
   toggleRememberVspHostCheckBox,
   onRevokeTickets,
   notMixedAccounts,
+  isVSPListingEnabled,
+  onEnableVSPListing,
   ...props
 }) {
   return (
@@ -100,9 +115,9 @@ export function PurchasePage({
       <StakeInfo {...{ sidebarOnBottom }} />
       <Subtitle
         title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-        children={getTitleIcon({ toggleIsLegacy })}
-        className="is-row"
-      />
+        className="is-row">
+        <TitleIcon toggleIsLegacy={toggleIsLegacy} />
+      </Subtitle>
       {mixedAccount && changeAccount && <PrivacyInfo />}
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
@@ -133,12 +148,14 @@ export function PurchasePage({
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            onRevokeTickets
+            onRevokeTickets,
+            isVSPListingEnabled
           }}
         />
       )}
       {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
-      <TicketAutoBuyer />
+      <TicketAutoBuyer isVSPListingEnabled={isVSPListingEnabled} />
+      {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
     </div>
   );
 }

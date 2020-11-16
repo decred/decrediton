@@ -22,12 +22,16 @@ const Tickets = ({ toggleIsLegacy }) => {
     rememberedVspHost,
     setRememberedVspHost,
     onRevokeTickets,
-    notMixedAccounts
+    notMixedAccounts,
+    isVSPListingEnabled,
+    onEnableVSPListing
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
   // todo use this vsp to buy solo tickets.
-  const [vsp, setVSP] = useState(rememberedVspHost ? { host: rememberedVspHost } : null);
+  const [vsp, setVSP] = useState(
+    rememberedVspHost ? { host: rememberedVspHost } : null
+  );
   const [numTickets, setNumTickets] = useState(1);
   const [isValid, setIsValid] = useState(false);
 
@@ -38,7 +42,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
-    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets -1);
+    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets - 1);
   };
 
   const onV3PurchaseTicket = (passphrase) => {
@@ -66,33 +70,39 @@ const Tickets = ({ toggleIsLegacy }) => {
     (availableVSP) => availableVSP.host === vsp?.host
   )?.vspData.feepercentage;
 
-  return <PurchasePage {...{
-      spvMode,
-      blocksNumberToNextTicket,
-      sidebarOnBottom,
-      isWatchingOnly,
-      account,
-      numTickets,
-      onChangeNumTickets,
-      setNumTickets,
-      handleOnKeyDown,
-      setAccount,
-      ticketPrice,
-      isValid,
-      toggleIsLegacy,
-      availableVSPs,
-      setVSP,
-      onV3PurchaseTicket,
-      vsp,
-      vspFee,
-      mixedAccount,
-      changeAccount,
-      isLoading,
-      rememberedVspHost,
-      toggleRememberVspHostCheckBox,
-      onRevokeTickets,
-      notMixedAccounts
-    }} />;
+  return (
+    <PurchasePage
+      {...{
+        spvMode,
+        blocksNumberToNextTicket,
+        sidebarOnBottom,
+        isWatchingOnly,
+        account,
+        numTickets,
+        onChangeNumTickets,
+        setNumTickets,
+        handleOnKeyDown,
+        setAccount,
+        ticketPrice,
+        isValid,
+        toggleIsLegacy,
+        availableVSPs,
+        setVSP,
+        onV3PurchaseTicket,
+        vsp,
+        vspFee,
+        mixedAccount,
+        changeAccount,
+        isLoading,
+        rememberedVspHost,
+        toggleRememberVspHostCheckBox,
+        onRevokeTickets,
+        isVSPListingEnabled,
+        onEnableVSPListing,
+        notMixedAccounts
+      }}
+    />
+  );
 };
 
 export default Tickets;

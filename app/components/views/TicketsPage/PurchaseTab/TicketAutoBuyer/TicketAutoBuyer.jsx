@@ -12,9 +12,12 @@ function TicketAutoBuyer({ intl }) {
     buyerAccount,
     buyerBalanceToMantain,
     buyerVSP,
-    notMixedAccounts
+    notMixedAccounts,
+    isVSPListingEnabled
   } = usePurchaseTab();
-  const [balanceToMaintain, setBalanceToMaintain] = useState(buyerBalanceToMantain);
+  const [balanceToMaintain, setBalanceToMaintain] = useState(
+    buyerBalanceToMantain
+  );
   const [account, setAccount] = useState(buyerAccount);
   const [vsp, setVSP] = useState(buyerVSP);
   // we use this bool flag so the error does not show before trying.
@@ -39,7 +42,9 @@ function TicketAutoBuyer({ intl }) {
     }
 
     // balance to mantain can be 0.
-    return isValid && ((!!balanceToMaintain || balanceToMaintain === 0) && !!account);
+    return (
+      isValid && (!!balanceToMaintain || balanceToMaintain === 0) && !!account
+    );
   };
 
   const onClick = () => {
@@ -75,11 +80,11 @@ function TicketAutoBuyer({ intl }) {
         isValid,
         onClick,
         clicked,
-        notMixedAccounts
+        notMixedAccounts,
+        isVSPListingEnabled
       }}
     />
   );
 }
 
 export default injectIntl(TicketAutoBuyer);
-

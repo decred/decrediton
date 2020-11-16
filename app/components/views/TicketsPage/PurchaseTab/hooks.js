@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import { useSettings } from "hooks";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
@@ -25,34 +27,51 @@ export const usePurchaseTab = () => {
   const buyerAccount = useSelector(sel.buyerAccount);
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
 
+  // VSP listing checks
+  const { onAddAllowedRequestType, tempSettings } = useSettings();
+  const isVSPListingEnabled = useMemo(
+    () =>
+      tempSettings.allowedExternalRequests.includes(
+        EXTERNALREQUEST_STAKEPOOL_LISTING
+      ),
+    [tempSettings.allowedExternalRequests]
+  );
+  const onEnableVSPListing = () => {
+    onAddAllowedRequestType(EXTERNALREQUEST_STAKEPOOL_LISTING);
+    discoverAvailableVSPs();
+  };
+
   const dispatch = useDispatch();
-  const discoverAvailableVSPs = useCallback(() => dispatch(vspa.discoverAvailableVSPs()), [
-    dispatch
-  ]);
-  const onPurchaseTicketV3 = useCallback((passphrase, account, numTickets, vsp) =>
-    dispatch(ca.newPurchaseTicketsAttempt(
-      passphrase,
-      account,
-      numTickets,
-      vsp)
-    ),
+  const discoverAvailableVSPs = useCallback(
+    () => dispatch(vspa.discoverAvailableVSPs()),
     [dispatch]
   );
-  const onEnableTicketAutoBuyer = useCallback((passphrase, account, balanceToMaintain, vsp) =>
-    dispatch(ca.startTicketBuyerV3Attempt(
-      passphrase,
-      account,
-      balanceToMaintain,
-      vsp)
-    ),
+  const onPurchaseTicketV3 = useCallback(
+    (passphrase, account, numTickets, vsp) =>
+      dispatch(
+        ca.newPurchaseTicketsAttempt(passphrase, account, numTickets, vsp)
+      ),
+    [dispatch]
+  );
+  const onEnableTicketAutoBuyer = useCallback(
+    (passphrase, account, balanceToMaintain, vsp) =>
+      dispatch(
+        ca.startTicketBuyerV3Attempt(
+          passphrase,
+          account,
+          balanceToMaintain,
+          vsp
+        )
+      ),
     [dispatch]
   );
   const onDisableTicketAutoBuyer = useCallback(
     () => dispatch(ca.ticketBuyerCancel()),
     [dispatch]
   );
-  const getTicketStatus = useCallback((host, tickethash, passphrase) =>
-    dispatch(vspa.getVSPTicketStatus(host, tickethash, passphrase)),
+  const getTicketStatus = useCallback(
+    (host, tickethash, passphrase) =>
+      dispatch(vspa.getVSPTicketStatus(host, tickethash, passphrase)),
     [dispatch]
   );
 
@@ -102,6 +121,8 @@ export const usePurchaseTab = () => {
     rememberedVspHost,
     setRememberedVspHost,
     onRevokeTickets,
-    notMixedAccounts
+    notMixedAccounts,
+    isVSPListingEnabled,
+    onEnableVSPListing
   };
 };

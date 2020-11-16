@@ -31,7 +31,7 @@ const PurchaseTicketsForm = ({
   notMixedAccounts
 }) => (
   <>
-    <div className={classNames(styles.purchaseForm, styles.isRow)}>
+    <div className={classNames(styles.purchaseForm, "is-row")}>
       <div className="is-row purchase-ticket-input-address">
         <div className={styles.ticketForm}>
           <div className="purchase-ticket-area-row-label">
@@ -104,7 +104,8 @@ const PurchaseTicketsForm = ({
           decrementNumTickets={() => onChangeNumTickets(false)}
           onChangeNumTickets={setNumTickets}
           onKeyDown={handleOnKeyDown}
-          showErrors={true}></NumTicketsInput>
+          showErrors={true}
+        />
         {account.spendable >= numTickets * ticketPrice && (
           <div className="input-purchase-ticket-valid-message-area">
             <T
@@ -125,7 +126,7 @@ const PurchaseTicketsForm = ({
       </div>
     </div>
     <div className="stakepool-purchase-ticket-info">
-      <div className="purchase-ticket-action-buttons is-column"></div>
+      <div className="purchase-ticket-action-buttons is-column" />
       {/* ADD VSP INFO HERE */}
     </div>
     <div className="stakepool-purchase-ticket-buttons-area">
