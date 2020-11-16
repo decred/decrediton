@@ -23,8 +23,10 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
     </div>
     <div className={styles.columnContent}>
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="proxy-type-input" className={styles.label}>
           <T id="settings.proxy.type" m="Proxy Type" />
+        </label>
+        <div className={styles.label}>
         </div>
         <SettingsInput
           className={styles.input}
@@ -34,16 +36,18 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
           }
           valueKey="value"
           labelKey="name"
+          ariaLabelledBy="proxy-type-input"
           options={availableProxyTypes}
         />
       </div>
 
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="proxy-location" className={styles.label}>
           <T id="settings.proxy.location" m="Proxy Location" />
-        </div>
+        </label>
         <SettingsTextInput
           value={tempSettings.proxyLocation}
+          ariaLabelledBy="proxy-location"
           onChange={(e) =>
             onChangeTempSettings({ proxyLocation: e.target.value })
           }

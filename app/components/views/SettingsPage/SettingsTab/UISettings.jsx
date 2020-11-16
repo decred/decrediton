@@ -25,12 +25,13 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
     </div>
     <div className={styles.columnContent}>
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="theme-input" className={styles.label}>
           <T id="settings.uitheme.type" m="Tonality" />
-        </div>
+        </label>
         <SettingsInput
           className={styles.input}
           value={tempSettings.theme}
+          ariaLabelledBy="theme-input"
           onChange={(newTheme) =>
             onChangeTempSettings({ theme: newTheme.value })
           }
@@ -41,15 +42,16 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
       </div>
 
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="locale-input" className={styles.label}>
           <T id="settings.locale" m="Locale" />
-        </div>
+        </label>
         <LanguageSelectInput
           className={styles.input}
           value={tempSettings.locale}
           onChange={(newLocale) =>
             onChangeTempSettings({ locale: newLocale.key })
           }
+          ariaLabelledBy="locale-input"
           valueKey="key"
           labelKey="description"
           options={locales}

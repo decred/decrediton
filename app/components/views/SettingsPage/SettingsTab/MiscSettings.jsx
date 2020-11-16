@@ -22,15 +22,16 @@ const MiscSettings = ({
     <div className={styles.columnContent}>
       {walletReady && (
         <div className={styles.row}>
-          <div className={styles.label}>
-            <T id="settings.displayedUnits" m="Displayed Units" />
-          </div>
+          <label id="displayed-units-input" className={styles.label}>
+              <T id="settings.displayedUnits" m="Displayed Units" />
+          </label>
           <SettingsInput
             className={styles.input}
             value={tempSettings.currencyDisplay}
             onChange={(newCurrency) =>
               onChangeTempSettings({ currencyDisplay: newCurrency.name })
             }
+            ariaLabelledBy="displayed-units-input"
             valueKey="name"
             labelKey="name"
             options={currencies}
@@ -47,13 +48,14 @@ const MiscSettings = ({
               double
               draggable
             />
-            <div className={styles.infoLabel}>
+            <label id="gap-limit-input" className={styles.label}>
               <T id="settings.gapLimit.label" m="Gap Limit" />
-            </div>
+            </label>
           </div>
           <div className={styles.input}>
             <NumericInput
               value={tempSettings.gapLimit}
+              ariaLabelledBy="gap-limit-input"
               onChange={(e) =>
                 onChangeTempSettings({ gapLimit: e.target.value })
               }
