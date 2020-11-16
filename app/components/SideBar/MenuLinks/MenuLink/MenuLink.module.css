@@ -95,11 +95,12 @@
 }
 
 .menuLink.lnIcon {
-  background-image: var(--menu-ln-default);
+  background-image: var(--menu-ln-active);
 }
 
 .menuLink.lnIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-ln-hover);
+  /* Todo: Add LN animation */
+  background-image: var(--menu-ln-active);
 }
 
 .menuLink:hover {
