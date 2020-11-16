@@ -131,13 +131,13 @@
   }
 
   .overviewTab.balance {
-    background-image: var(--balance-tab-icon);
+    background-image: var(--tab-icon-balance);
   }
   .overviewTab.tickets {
-    background-image: var(--menu-tickets-default);
+    background-image: var(--tab-icon-tickets);
   }
   .overviewTab.tx {
-    background-image: var(--menu-transactions-default);
+    background-image: var(--tab-icon-transactions);
   }
 
   .overviewHeader {
@@ -173,17 +173,17 @@
 
   .balanceIcon {
     color: transparent;
-    background-image: var(--balance-tab-icon);
+    background-image: var(--tab-icon-balance);
   }
 
   .ticketsIcon {
     color: transparent;
-    background-image: var(--menu-tickets-default);
+    background-image: var(--tab-icon-tickets);
   }
 
   .txIcon {
     color: transparent;
-    background-image: var(--menu-transactions-default);
+    background-image: var(--tab-icon-transactions);
   }
 
   .overviewBalance {
