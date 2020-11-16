@@ -1,4 +1,4 @@
-import { LogsTab } from "views/HelpPage/LogsTab/LogsTab";
+import { LogsTab } from "views/SettingsPage/LogsTab/LogsTab";
 import { Tooltip } from "shared";
 import { GoBackMsg } from "../messages";
 import styles from "../GetStarted.module.css";

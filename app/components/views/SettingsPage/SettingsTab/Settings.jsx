@@ -80,13 +80,13 @@ const SettingsPage = ({
   onChangeTempSettings,
   onSaveSettings,
   onAttemptChangePassphrase,
-  onCloseWallet,
+  //onCloseWallet,
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  walletName,
-  walletReady,
-  isTicketAutoBuyerEnabled
+  //walletName,
+  walletReady
+  //isTicketAutoBuyerEnabled
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
@@ -103,14 +103,7 @@ const SettingsPage = ({
   }, [onSaveSettings, tempSettings, setThemeName]);
 
   return (
-    <StandalonePage
-      header={
-        <SettingsPageHeader
-          {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }}
-        />
-      }
-      // XXX: this is pretty tought one to change, keeping to the end as it part of layout.less!!
-      className="settings-standalone-page">
+    <>
       <div className={styles.wrapper}>
         <div className={styles.group}>
           <Subtitle
@@ -220,7 +213,7 @@ const SettingsPage = ({
           )}
         </div>
       </div>
-    </StandalonePage>
+    </>
   );
 };
 
