@@ -75,7 +75,12 @@ export const newTransactionsReceived = (
     recentRegularTransactions,
     recentStakeTransactions
   } = getState().grpc;
-  const { walletService, maturingBlockHeights } = getState().grpc;
+  const {
+    walletService,
+    maturingBlockHeights,
+    stakeTransactions,
+    regularTransactions
+  } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   // Normalize transactions with missing data.
   // All transactions must being normalized before being dispatched to the
@@ -93,9 +98,13 @@ export const newTransactionsReceived = (
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
     m[v.txHash] = v;
+    // update our txs selector value.
+    v.isStake ? stakeTransactions[v.txHash] = v : regularTransactions[v.txHash] = v;
     return m;
   }, {});
   const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {
+    // update our txs selector value.
+    v.isStake ? stakeTransactions[v.txHash] = v : regularTransactions[v.txHash] = v;
     m[v.txHash] = v;
     return m;
   }, {});
@@ -181,9 +190,6 @@ export const newTransactionsReceived = (
   const transactions = [];
   transactions.push(...newlyUnminedTransactions);
   transactions.push(...newlyMinedTransactions);
-  const { stakeTransactions, regularTransactions } = divideTransactions(
-    transactions
-  );
   dispatch({
     recentRegularTransactions,
     recentStakeTransactions,
