@@ -867,6 +867,10 @@ export const getPeerInfo = () => (dispatch, getState) => {
   return wallet
     .getPeerInfo(getState().grpc.walletService)
     .then((resp) => {
+      // if resp wrappers is null, no peers were found.
+      if (!resp.wrappers_) {
+        return dispatch({ type: GETPEERINFO_SUCCESS, peersCount: 0 })
+      }
       const peersCount = resp.wrappers_[1].length;
       dispatch({ type: GETPEERINFO_SUCCESS, peersCount });
     })
