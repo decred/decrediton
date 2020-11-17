@@ -1,48 +1,30 @@
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.rescan.spin {
-  animation: spin 1s linear infinite;
-}
-
-.rescan.spin:hover {
-  opacity: 1;
+.rescan.syncing {
+  background-image: var(--menu-animation-syncing);
 }
 
 .rescan {
-  margin: 5px;
-  width: 16px;
-  height: 16px;
+  margin: 0 0.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
   border: none;
   outline: none;
   background-color: transparent;
-  background-image: var(--menu-rescan-icon);
-  background-size: 16px 16px;
+  /*background-image: var(--menu-rescan-icon);*/
+  background-image: var(--menu-block-synced-icon);
+  background-size: 2.2rem 2.2rem;
   cursor: pointer;
 }
 
-.rescan:not(.spin):hover {
-  opacity: 0.7;
-  background-image: var(--menu-rescan-hover-icon);
-}
-
 .cancel {
-  width: 16px;
-  height: 16px;
+  width: 1.6rem;
+  height: 1.6rem;
   border: none;
   outline: none;
   background-color: transparent;
   background-image: var(--menu-cancel-rescan-icon);
-  background-size: 16px 16px;
+  background-size: 1.6rem 1.6rem;
   cursor: pointer;
-  margin: 10px;
+  margin: 1rem;
   background-repeat: no-repeat;
 }
 

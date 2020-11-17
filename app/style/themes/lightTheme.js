@@ -143,6 +143,7 @@ const lightTheme = {
   "menu-rescan-icon": "url('style/icons/menu-rescan.svg')",
   "menu-spvon-icon": "url('style/icons/menu-spvon.svg')",
   "menu-spvoff-icon": "url('style/icons/menu-spvoff.svg')",
+  "menu-block-synced-icon": "url('style/icons/blockSynced.svg')",
   "tab-icon-balance": "url('style/icons/balanceSelector.svg')",
   "tab-icon-transactions": "url('style/icons/transactions-default.png')",
   "tab-icon-tickets": "url('style/icons/tickets-default.png')",
@@ -225,7 +226,6 @@ const lightTheme = {
   "select-arrow-up": "url('style/icons/select-arrow-up.svg')",
   "info-icon": "url('style/icons/information.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menu-cancel-rescan.svg')",
-  "menu-rescan-hover-icon": "url('style/icons/menu-rescan-hover.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
   "backup-icon": "url('style/icons/harddrive.svg')",
   "loader-animation-daemon-waiting-initial":

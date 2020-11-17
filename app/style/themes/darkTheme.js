@@ -143,9 +143,10 @@ const darkTheme = {
   "menu-hamburger": "url('style/icons/hamburgerDark.svg')",
   "menu-arrow": "url('style/icons/arrowDark.svg')",
   "menu-rescan-icon": "url('style/icons/menuRescanDark.svg')",
-  // XXX add dark spv on/off icons
+  // XXX add dark icons icons
   "menu-spvon-icon": "url('style/icons/menu-spvon.svg')",
   "menu-spvoff-icon": "url('style/icons/menu-spvoff.svg')",
+  "menu-block-synced-icon": "url('style/icons/blockSyncedDark.svg')",
   "tab-icon-balance": "url('style/icons/sidebarBalanceDark.svg')",
   "tab-icon-transactions": "url('style/icons/transactionsDefaultDark.svg')",
   "tab-icon-tickets": "url('style/icons/ticketsDefaultDark.svg')",
@@ -229,7 +230,6 @@ const darkTheme = {
   "send-all-hover": "url('style/icons/sendMaxHoverDark.svg')",
   "select-arrow-up": "url('style/icons/selectArrowUpDark.svg')",
   "info-icon": "url('style/icons/informationDark.svg')",
-  "menu-rescan-hover-icon": "url('style/icons/menu-rescanDark-hover.svg')",
   "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
   "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
   "backup-icon": "url('style/icons/harddriveDark.svg')",

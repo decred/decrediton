@@ -18,7 +18,7 @@ export default ({ rescanRequest, rescanAttempt }) => (
     <button
       aria-label="Rescan"
       disabled={!!rescanRequest}
-      className={classNames(styles.rescan, rescanRequest && styles.spin)}
+      className={classNames(styles.rescan, rescanRequest && styles.syncing)}
       onClick={() => rescanAttempt(0)}
     />
   </Tooltip>

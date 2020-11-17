@@ -125,6 +125,7 @@ const icons = {
   "menu-animation-tickets": "url('style/animations/ticketsMotion.gif')",
   "menu-animation-transactions":
     "url('style/animations/transactionsMotion.gif')",
+  "menu-animation-syncing": "url('style/animations/syncingMotion.gif')",
   "release-image-v130": "url('style/icons/release-note-v130.gif')",
   "release-image-v140": "url('style/icons/release-note-v140.gif')",
   "release-image-v150": "url('style/icons/release-note-v150.png')",
