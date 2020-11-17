@@ -143,9 +143,8 @@ const darkTheme = {
   "menu-hamburger": "url('style/icons/hamburgerDark.svg')",
   "menu-arrow": "url('style/icons/arrowDark.svg')",
   "menu-rescan-icon": "url('style/icons/menuRescanDark.svg')",
-  // XXX add dark icons icons
-  "menu-spvon-icon": "url('style/icons/menu-spvon.svg')",
-  "menu-spvoff-icon": "url('style/icons/menu-spvoff.svg')",
+  "menu-spvon-icon": "url('style/icons/menuSpvOnDark.svg')",
+  "menu-spvoff-icon": "url('style/icons/menuSpvOffDark.svg')",
   "menu-block-synced-icon": "url('style/icons/blockSyncedDark.svg')",
   "tab-icon-balance": "url('style/icons/sidebarBalanceDark.svg')",
   "tab-icon-transactions": "url('style/icons/transactionsDefaultDark.svg')",
