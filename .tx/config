@@ -25,6 +25,12 @@ source_lang = en
 minimum_perc = 80
 type = GITHUBMARKDOWN
 
+[decrediton.mixerintroductionmd]
+file_filter = app/i18n/docs/<lang>/Warnings/MixerIntroduction.md
+source_lang = en
+minimum_perc = 80
+type = GITHUBMARKDOWN
+
 [decrediton.seedcopymd]
 file_filter = app/i18n/docs/<lang>/Warnings/SeedCopy.md
 source_lang = en
