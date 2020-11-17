@@ -4,6 +4,7 @@
   "loadingError.errorMessageDescription",
   "txHistory.dayMonthHourDisplay",
   "txHistory.dayMonthDisplay",
+  "sidebar.menuLinkTooltip",
   "ln.invoicesTab.invoice.creationDate",
   "ln.invoicesTab.invoice.settleDate",
   "ln.nodeInfo.updateDate",
@@ -29,5 +30,6 @@
   "tickets.errors.updateStakePoolConfigFailed",
   "tickets.errors.setStakePoolVoteChoicesFailed",
   "accounts.errors.renameAccountFailed",
-  "accounts.errors.getNextAccountFailed"
+  "accounts.errors.getNextAccountFailed",
+  "mixer.ntf.startMixerFailed"
 ]

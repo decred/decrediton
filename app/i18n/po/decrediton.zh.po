@@ -7,7 +7,7 @@
 # 
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2020-10-27T14:32:57.476Z\n"
+"POT-Creation-Date: 2020-11-17T13:35:11.661Z\n"
 "Last-Translator: DominicTing <18562551383@163.com>, 2020\n"
 "Language-Team: Chinese (https://www.transifex.com/decred/teams/79156/zh/)\n"
 "MIME-Version: 1.0\n"
@@ -258,31 +258,23 @@ msgstr "帐户"
 #. [tickets.table.header.account]
 #. defaultMessage is:
 #. Account
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.table.header.account"
 msgid "Account"
 msgstr "帐户"
 
-#. [vsptickets.table.header.account]
+#. [purchaseTickets.accountFrom]
 #. defaultMessage is:
 #. Account
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
-msgctxt "vsptickets.table.header.account"
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
+msgctxt "purchaseTickets.accountFrom"
 msgid "Account"
-msgstr "帐户"
-
-#. [privacy.mixing.account.branch]
-#. defaultMessage is:
-#. Account Branch
-#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
-msgctxt "privacy.mixing.account.branch"
-msgid "Account Branch"
-msgstr "分支帐户"
+msgstr ""
 
 #. [securitycenter.validate.owned.accountNumber]
 #. defaultMessage is:
 #. Account Number
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.owned.accountNumber"
 msgid "Account Number"
 msgstr "账户序号"
@@ -294,14 +286,6 @@ msgstr "账户序号"
 msgctxt "accounts.number"
 msgid "Account number"
 msgstr "账户序号"
-
-#. [ln.connectPage.account]
-#. defaultMessage is:
-#. Account to use
-#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
-msgctxt "ln.connectPage.account"
-msgid "Account to use"
-msgstr "要使用的帐户"
 
 #. [getstarted.setAccount.acctIdxRow]
 #. defaultMessage is:
@@ -425,7 +409,7 @@ msgstr "添加一个VSP"
 #. [securitycenter.signMessage.field.address.label]
 #. defaultMessage is:
 #. Address
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/SignMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/SignMessageForm.json
 msgctxt "securitycenter.signMessage.field.address.label"
 msgid "Address"
 msgstr "地址"
@@ -433,7 +417,7 @@ msgstr "地址"
 #. [securitycenter.validate.field.address.label]
 #. defaultMessage is:
 #. Address
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.field.address.label"
 msgid "Address"
 msgstr "地址"
@@ -441,7 +425,7 @@ msgstr "地址"
 #. [securitycenter.verify.field.address.label]
 #. defaultMessage is:
 #. Address
-#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/VerifyMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/VerifyMessage/VerifyMessageForm.json
 msgctxt "securitycenter.verify.field.address.label"
 msgid "Address"
 msgstr "地址"
@@ -457,7 +441,7 @@ msgstr "地址"
 #. [securitycenter.validate.result.notOwned]
 #. defaultMessage is:
 #. Address Valid, Not Owned
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.result.notOwned"
 msgid "Address Valid, Not Owned"
 msgstr "地址有效，但没有所有权"
@@ -489,7 +473,7 @@ msgstr "高级设置"
 #. [agenda.overview.idLabel]
 #. defaultMessage is:
 #. Agenda ID
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/AgendaCard/AgendaCard.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/AgendaCard.json
 msgctxt "agenda.overview.idLabel"
 msgid "Agenda ID"
 msgstr "议程 ID"
@@ -497,7 +481,7 @@ msgstr "议程 ID"
 #. [agenda.card.idLabel]
 #. defaultMessage is:
 #. Agenda ID
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.card.idLabel"
 msgid "Agenda ID"
 msgstr "议程 ID"
@@ -510,10 +494,18 @@ msgctxt "ln.nodeInfo.alias"
 msgid "Alias"
 msgstr "昵称"
 
+#. [proposals.statusLinks.allFinishedVote]
+#. defaultMessage is:
+#. All
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
+msgctxt "proposals.statusLinks.allFinishedVote"
+msgid "All"
+msgstr ""
+
 #. [tickets.type.all]
 #. defaultMessage is:
 #. All
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "tickets.type.all"
 msgid "All"
 msgstr "所有"
@@ -521,7 +513,7 @@ msgstr "所有"
 #. [vsptickets.type.all]
 #. defaultMessage is:
 #. All
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/MyVSPTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/MyVSPTickets.json
 msgctxt "vsptickets.type.all"
 msgid "All"
 msgstr "所有"
@@ -560,6 +552,14 @@ msgid ""
 "Allows you to choose exactly which third party services can be accessed by "
 "the app."
 msgstr "允许您选择指定的第三方服务访问此程序。"
+
+#. [purchaseTickets.alwaysUseThisVSP]
+#. defaultMessage is:
+#. Always use this VSP
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
+msgctxt "purchaseTickets.alwaysUseThisVSP"
+msgid "Always use this VSP"
+msgstr ""
 
 #. [ln.routesInfo.amount]
 #. defaultMessage is:
@@ -633,6 +633,14 @@ msgstr "支出（投票/取消）交易退回钱包的金额。"
 msgctxt "export.tickets.fields.sentAmount"
 msgid "Amount sent by the wallet into the ticket transaction."
 msgstr "从钱包发送至选票交易的金额。"
+
+#. [proposals.statusLinks.approvedVote]
+#. defaultMessage is:
+#. Approved
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
+msgctxt "proposals.statusLinks.approvedVote"
+msgid "Approved"
+msgstr ""
 
 #. [stake.addPool.modalContent]
 #. defaultMessage is:
@@ -739,7 +747,7 @@ msgstr ""
 #. [tickets.autobuyerRunning.title]
 #. defaultMessage is:
 #. Auto Ticket Buyer Still Running
-#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal.json
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
 msgctxt "tickets.autobuyerRunning.title"
 msgid "Auto Ticket Buyer Still Running"
 msgstr "自动购票仍在运行中"
@@ -752,13 +760,13 @@ msgctxt "automatictickets.subtitle"
 msgid "Automatic Ticket Purchases"
 msgstr "自动购票"
 
-#. [vsp.automatictickets.subtitle]
+#. [vsp.autobuyer.subtitle]
 #. defaultMessage is:
 #. Automatic Ticket Purchases
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
-msgctxt "vsp.automatictickets.subtitle"
+msgctxt "vsp.autobuyer.subtitle"
 msgid "Automatic Ticket Purchases"
-msgstr "自动购票"
+msgstr ""
 
 #. [charts.keys.available]
 #. defaultMessage is:
@@ -1011,7 +1019,7 @@ msgstr "区块链预计同步时间："
 #. [securitycenter.validate.owned.branch]
 #. defaultMessage is:
 #. Branch
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.owned.branch"
 msgid "Branch"
 msgstr "分支"
@@ -1059,10 +1067,18 @@ msgstr "CSV 文件"
 #. [tickets.autobuyerRunning.confirmModal.btnCancel]
 #. defaultMessage is:
 #. Cancel
-#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal.json
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
 msgctxt "tickets.autobuyerRunning.confirmModal.btnCancel"
 msgid "Cancel"
 msgstr "取消"
+
+#. [tickets.fee.error.confirmModal.btnCancel]
+#. defaultMessage is:
+#. Cancel
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "tickets.fee.error.confirmModal.btnCancel"
+msgid "Cancel"
+msgstr ""
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1087,6 +1103,14 @@ msgstr "取消"
 msgctxt "seedCopyConfirm.btnCancel"
 msgid "Cancel"
 msgstr "取消"
+
+#. [SendFromUnmixed.btnCancel]
+#. defaultMessage is:
+#. Cancel
+#: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
+msgctxt "SendFromUnmixed.btnCancel"
+msgid "Cancel"
+msgstr ""
 
 #. [passphraseModal.btnCancel]
 #. defaultMessage is:
@@ -1215,30 +1239,6 @@ msgstr "已禁用"
 msgctxt "trezor.changeLabel.changeButton"
 msgid "Change"
 msgstr "更改"
-
-#. [privacy.change.account]
-#. defaultMessage is:
-#. Change Account
-#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
-msgctxt "privacy.change.account"
-msgid "Change Account"
-msgstr "更改账户"
-
-#. [addMixerAccountModal.changeAccountName]
-#. defaultMessage is:
-#. Change Account Name
-#: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
-msgctxt "addMixerAccountModal.changeAccountName"
-msgid "Change Account Name"
-msgstr "更改账户名"
-
-#. [getstarted.setAcct.changAcct]
-#. defaultMessage is:
-#. Change Acct: {value}
-#: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
-msgctxt "getstarted.setAcct.changAcct"
-msgid "Change Acct: {value}"
-msgstr "更改账户: {value}"
 
 #. [trezorPage.changeHomeScreen]
 #. defaultMessage is:
@@ -1598,10 +1598,18 @@ msgstr "配置Trezor"
 #. [tickets.autobuyerRunning.confirmModal.btnConfirm]
 #. defaultMessage is:
 #. Confirm
-#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal.json
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
 msgctxt "tickets.autobuyerRunning.confirmModal.btnConfirm"
 msgid "Confirm"
 msgstr "确认"
+
+#. [tickets.fee.error.confirmModal.btnConfirm]
+#. defaultMessage is:
+#. Confirm
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "tickets.fee.error.confirmModal.btnConfirm"
+msgid "Confirm"
+msgstr ""
 
 #. [changePassModal.confirm]
 #. defaultMessage is:
@@ -1731,6 +1739,21 @@ msgctxt "ln.startupStage.connect"
 msgid "Connecting to dcrlnd"
 msgstr "连接到闪电网络守护进程dcrlnd"
 
+#. [getStarted.P_521_error]
+#. defaultMessage is:
+#. Connection error. Probably you got this error because Decrediton no longer
+#. supports the P-521 curve. To fix it, you need to remove the rpc.cert and
+#. rpc.key and restart dcrd with the --tlscurve=P-256 param to allow it to
+#. generate a cert and key with that supported curve.
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+msgctxt "getStarted.P_521_error"
+msgid ""
+"Connection error. Probably you got this error because Decrediton no longer "
+"supports the P-521 curve. To fix it, you need to remove the rpc.cert and "
+"rpc.key and restart dcrd with the --tlscurve=P-256 param to allow it to "
+"generate a cert and key with that supported curve."
+msgstr ""
+
 #. [settings.group-title.connectivity]
 #. defaultMessage is:
 #. Connectivity
@@ -1750,7 +1773,7 @@ msgstr "连接性"
 #. [votingPreferences.title]
 #. defaultMessage is:
 #. Consensus Changes
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/VotingPrefs.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.title"
 msgid "Consensus Changes"
 msgstr "共识更改"
@@ -1768,7 +1791,7 @@ msgstr "共识更改"
 #. Consensus changes refer to the on-chain governance aspect of Decred. This
 #. means deciding whether to adopt changes to the consensus rules of the
 #. network. Participation in voting requires (PoS) tickets.
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/VotingPrefs.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.description"
 msgid ""
 "Consensus changes refer to the on-chain governance aspect of Decred. This "
@@ -1815,6 +1838,14 @@ msgstr "继续"
 msgctxt "selectLang.continueBtn"
 msgid "Continue"
 msgstr "继续"
+
+#. [passphraseForm.continueBtn]
+#. defaultMessage is:
+#. Continue
+#: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/PassphraseForm.json
+msgctxt "passphraseForm.continueBtn"
+msgid "Continue"
+msgstr ""
 
 #. [wallet.create.button]
 #. defaultMessage is:
@@ -1912,14 +1943,6 @@ msgctxt "ln.openChannel.node"
 msgid "Counterparty (node@ip:port)"
 msgstr "交易对方(node@ip:port)"
 
-#. [privacy.create.default.title]
-#. defaultMessage is:
-#. Create Default Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
-msgctxt "privacy.create.default.title"
-msgid "Create Default Accounts"
-msgstr "创建默认帐户"
-
 #. [ln.createLNWalletPage.title]
 #. defaultMessage is:
 #. Create Lightning Wallet
@@ -1928,18 +1951,10 @@ msgctxt "ln.createLNWalletPage.title"
 msgid "Create Lightning Wallet"
 msgstr "创建闪电网络钱包"
 
-#. [privacy.create.accounts]
-#. defaultMessage is:
-#. Create Needed Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateNeededAccounts.json
-msgctxt "privacy.create.accounts"
-msgid "Create Needed Accounts"
-msgstr "创建所需帐户"
-
 #. [accounts.createNeededAcc]
 #. defaultMessage is:
 #. Create Needed Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateNeededAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateNeededAccounts.json
 msgctxt "accounts.createNeededAcc"
 msgid "Create Needed Accounts"
 msgstr "创建所需帐户"
@@ -2008,7 +2023,7 @@ msgstr "创建一个账户或者登录您在{stakePoolLink} 已有账户。登�
 #. [accounts.createDefaultAcc]
 #. defaultMessage is:
 #. Create default Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
 msgctxt "accounts.createDefaultAcc"
 msgid "Create default Accounts"
 msgstr "创建默认帐户"
@@ -2016,7 +2031,7 @@ msgstr "创建默认帐户"
 #. [accounts.defaultAccountConfirmations]
 #. defaultMessage is:
 #. Create default accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
 msgctxt "accounts.defaultAccountConfirmations"
 msgid "Create default accounts"
 msgstr "创建默认帐户"
@@ -2468,23 +2483,20 @@ msgstr "显示的单位"
 
 #. [privacy.mixer.modal.description]
 #. defaultMessage is:
-#. Do you want to start the shuffle Mixer?
-#.                 Decrediton must remain running for mixer properly mix
-#. inputs.
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#. Do you want to start the mixer?
+#.                 Decrediton should not be closed while the mixer is running.
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.mixer.modal.description"
 msgid ""
-"Do you want to start the shuffle Mixer?\n"
-"                Decrediton must remain running for mixer properly mix inputs."
+"Do you want to start the mixer?\n"
+"                Decrediton should not be closed while the mixer is running."
 msgstr ""
-"你想启动混币工具吗？\n"
-"               Decrediton必须保持运行，以便混币工具正常工作。"
 
 #. [privacy.create.default.description]
 #. defaultMessage is:
 #. Do you wish to create default mixing accounts {mixed} and {change}?
 #. {boldMessage}
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
 msgctxt "privacy.create.default.description"
 msgid ""
 "Do you wish to create default mixing accounts {mixed} and {change}? "
@@ -2593,6 +2605,14 @@ msgctxt "stake.enableStakePoolListing.button"
 msgid "Enable VSP Listing"
 msgstr "启用VSP列表"
 
+#. [SendFromUnmixed.btnConfirm]
+#. defaultMessage is:
+#. Enable sending from unmixed accounts
+#: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
+msgctxt "SendFromUnmixed.btnConfirm"
+msgid "Enable sending from unmixed accounts"
+msgstr ""
+
 #. [createWallet.restore.trezor.enabled]
 #. defaultMessage is:
 #. Enabled
@@ -2620,15 +2640,15 @@ msgstr "已启用"
 #. [privacy.options.standard.description]
 #. defaultMessage is:
 #. Enables connections to most services for a better user experience and full
-#. access to features (such as version update, VSP listing, politeia, etc).
+#. access to features (such as version update, VSP listing, Politeia, etc).
 #. Recommended for most users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.standard.description"
 msgid ""
 "Enables connections to most services for a better user experience and full "
-"access to features (such as version update, VSP listing, politeia, etc). "
+"access to features (such as version update, VSP listing, Politeia, etc). "
 "Recommended for most users."
-msgstr "启用与大多数服务的连接，以获得更好的用户体验和对功能的全面访问（如版本更新、选票矿池列表、Politeia 等）。建议大多数用户开启。"
+msgstr ""
 
 #. [trezor.pinModal.title]
 #. defaultMessage is:
@@ -2649,7 +2669,7 @@ msgstr "输入Trezor密码"
 #. [securitycenter.signMessage.field.address.placeholder]
 #. defaultMessage is:
 #. Enter an address
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/SignMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/SignMessageForm.json
 msgctxt "securitycenter.signMessage.field.address.placeholder"
 msgid "Enter an address"
 msgstr "输入一个地址"
@@ -2657,7 +2677,7 @@ msgstr "输入一个地址"
 #. [securitycenter.verify.field.address.placeholder]
 #. defaultMessage is:
 #. Enter an address
-#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/VerifyMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/VerifyMessage/VerifyMessageForm.json
 msgctxt "securitycenter.verify.field.address.placeholder"
 msgid "Enter an address"
 msgstr "输入一个地址"
@@ -2665,7 +2685,7 @@ msgstr "输入一个地址"
 #. [securitycenter.validate.field.address.placeholder]
 #. defaultMessage is:
 #. Enter an address to validate
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.field.address.placeholder"
 msgid "Enter an address to validate"
 msgstr "输入验证的地址"
@@ -2678,10 +2698,26 @@ msgctxt "createWallet.enterHexSeed.placeholder"
 msgid "Enter the hex representation of your seed..."
 msgstr "输入您十六进制表示的种子"
 
+#. [addMixerAccountModal.mixedAccountName.placeholder]
+#. defaultMessage is:
+#. Enter the mixed account name
+#: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
+msgctxt "addMixerAccountModal.mixedAccountName.placeholder"
+msgid "Enter the mixed account name"
+msgstr ""
+
+#. [addMixerAccountModal.changeAccountName.placeholder]
+#. defaultMessage is:
+#. Enter the unmixed account name
+#: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
+msgctxt "addMixerAccountModal.changeAccountName.placeholder"
+msgid "Enter the unmixed account name"
+msgstr ""
+
 #. [securitycenter.signMessage.field.message.placeholder]
 #. defaultMessage is:
 #. Enter your message
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/SignMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/SignMessageForm.json
 msgctxt "securitycenter.signMessage.field.message.placeholder"
 msgid "Enter your message"
 msgstr "输入信息"
@@ -2689,7 +2725,7 @@ msgstr "输入信息"
 #. [securitycenter.verify.field.message.placeholder]
 #. defaultMessage is:
 #. Enter your message
-#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/VerifyMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/VerifyMessage/VerifyMessageForm.json
 msgctxt "securitycenter.verify.field.message.placeholder"
 msgid "Enter your message"
 msgstr "输入信息"
@@ -2705,10 +2741,18 @@ msgstr "输入种子..."
 #. [securitycenter.verify.field.signature.placeholder]
 #. defaultMessage is:
 #. Enter your signature
-#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/VerifyMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/VerifyMessage/VerifyMessageForm.json
 msgctxt "securitycenter.verify.field.signature.placeholder"
 msgid "Enter your signature"
 msgstr "输入签名"
+
+#. [vsp.ticket.error]
+#. defaultMessage is:
+#. Error
+#: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
+msgctxt "vsp.ticket.error"
+msgid "Error"
+msgstr ""
 
 #. [daemon.connect.error]
 #. defaultMessage is:
@@ -3081,10 +3125,26 @@ msgstr "费用"
 #. [vsp.ticket.vsp.fee.errored]
 #. defaultMessage is:
 #. Fee Error
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/MyVSPTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/MyVSPTickets.json
 msgctxt "vsp.ticket.vsp.fee.errored"
 msgid "Fee Error"
 msgstr "费用错误"
+
+#. [txRow.live.feeStatus.tooltip]
+#. defaultMessage is:
+#. Fee Status
+#: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
+msgctxt "txRow.live.feeStatus.tooltip"
+msgid "Fee Status"
+msgstr ""
+
+#. [vsptickets.table.header.account]
+#. defaultMessage is:
+#. Fee Status
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
+msgctxt "vsptickets.table.header.account"
+msgid "Fee Status"
+msgstr ""
 
 #. [export.transactions.fields.fee]
 #. defaultMessage is:
@@ -3117,6 +3177,14 @@ msgstr "获取丢失的提交过滤器"
 msgctxt "error.empty.fields"
 msgid "Fill all fields."
 msgstr "填充所有字段"
+
+#. [autobuyer.startErr]
+#. defaultMessage is:
+#. Fill all fields.
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer/Form.json
+msgctxt "autobuyer.startErr"
+msgid "Fill all fields."
+msgstr ""
 
 #. [vsp.autobuyer.startErr]
 #. defaultMessage is:
@@ -3153,7 +3221,7 @@ msgstr "完成"
 #. [agenda.card.finishedIndicator]
 #. defaultMessage is:
 #. Finished
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/FinishedIndicator/FinishedIndicator.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/ProgressIndicator.json
 msgctxt "agenda.card.finishedIndicator"
 msgid "Finished"
 msgstr "已完成"
@@ -3229,22 +3297,6 @@ msgstr "来自"
 msgctxt "send.from"
 msgid "From"
 msgstr "来自"
-
-#. [purchaseTickets.accountFrom]
-#. defaultMessage is:
-#. From Account
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
-msgctxt "purchaseTickets.accountFrom"
-msgid "From Account"
-msgstr "从帐户"
-
-#. [purchaseTickets.vspFrom]
-#. defaultMessage is:
-#. From VSP
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
-msgctxt "purchaseTickets.vspFrom"
-msgid "From VSP"
-msgstr "从VSP"
 
 #. [txHistory.in.tx]
 #. defaultMessage is:
@@ -3502,6 +3554,14 @@ msgctxt "transactions.tab.history"
 msgid "History"
 msgstr "历史记录"
 
+#. [tickets.tab.mytickets]
+#. defaultMessage is:
+#. History Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
+msgctxt "tickets.tab.mytickets"
+msgid "History Tickets"
+msgstr ""
+
 #. [ln.routesInfo.hop]
 #. defaultMessage is:
 #. Hop
@@ -3534,6 +3594,14 @@ msgctxt "seedCopyConfirmModal.copyConfirmationPhrase"
 msgid "I understand the risks"
 msgstr "我了解风险"
 
+#. [sendFromUnmixedModal.copyConfirmationPhrase]
+#. defaultMessage is:
+#. I understand the risks
+#: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountModal.json
+msgctxt "sendFromUnmixedModal.copyConfirmationPhrase"
+msgid "I understand the risks"
+msgstr ""
+
 #. [txDetails.io.title]
 #. defaultMessage is:
 #. I/O Details
@@ -3556,7 +3624,7 @@ msgstr "如果您对decrediton有任何不清楚的，请使用以下链接来�
 #. [tickets.autobuyerRunning.message]
 #. defaultMessage is:
 #. If you proceed, it will be closed and no more tickets will be purchased.
-#: app/i18n/extracted/app/components/modals/AutobuyerRunningModal.json
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
 msgctxt "tickets.autobuyerRunning.message"
 msgid ""
 "If you proceed, it will be closed and no more tickets will be purchased."
@@ -3637,23 +3705,15 @@ msgstr "讨论中"
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:
 #. In Progress
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/AgendaCard/AgendaCard.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/ProgressIndicator.json
 msgctxt "agenda.card.inProgressIndicator"
-msgid "In Progress"
-msgstr "进行中"
-
-#. [agenda.overview.inProgressIndicator]
-#. defaultMessage is:
-#. In Progress
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview/Overview.json
-msgctxt "agenda.overview.inProgressIndicator"
 msgid "In Progress"
 msgstr "进行中"
 
 #. [securitycenter.validate.owned.index]
 #. defaultMessage is:
 #. Index
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.owned.index"
 msgid "Index"
 msgstr "索引"
@@ -3724,7 +3784,7 @@ msgstr "无效的主公钥"
 #. [securitycenter.validate.result.invalid]
 #. defaultMessage is:
 #. Invalid address
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.result.invalid"
 msgid "Invalid address"
 msgstr "无效地址"
@@ -3785,53 +3845,13 @@ msgctxt "ln.description.invoices"
 msgid "Invoices (payment requests) created by this LN wallet."
 msgstr "当前闪电网络钱包创建的发票（付款请求）。"
 
-#. [myTickets.isLegacy.legacy.add]
-#. defaultMessage is:
-#. Is Legacy
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
-msgctxt "myTickets.isLegacy.legacy.add"
-msgid "Is Legacy"
-msgstr ""
-
-#. [mytickets.isLegacy.legacy.add]
-#. defaultMessage is:
-#. Is Legacy
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
-msgctxt "mytickets.isLegacy.legacy.add"
-msgid "Is Legacy"
-msgstr ""
-
-#. [purchase.isLegacy.legacy.add]
-#. defaultMessage is:
-#. Is Legacy
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
-msgctxt "purchase.isLegacy.legacy.add"
-msgid "Is Legacy"
-msgstr ""
-
-#. [purchase.isLegacy.legacy]
-#. defaultMessage is:
-#. Is Legacy
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_Tickets.json
-msgctxt "purchase.isLegacy.legacy"
-msgid "Is Legacy"
-msgstr ""
-
-#. [purchase.isLegacy]
-#. defaultMessage is:
-#. Is Legacy
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
-msgctxt "purchase.isLegacy"
-msgid "Is Legacy"
-msgstr ""
-
 #. [privacy.create.needed.description]
 #. defaultMessage is:
 #. It looks like you already have one of the default accounts: {mixed} and
 #. {change}.
 #.           You will need to create 2 new accounts for using the mixer.
 #. {boldMessage}
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateNeededAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateNeededAccounts.json
 msgctxt "privacy.create.needed.description"
 msgid ""
 "It looks like you already have one of the default accounts: {mixed} and {change}.\n"
@@ -3888,14 +3908,6 @@ msgctxt "proposal.overview.lastUpdated.label"
 msgid "Last Updated"
 msgstr "最近更新时间"
 
-#. [proposalItem.lastUpdatedAt]
-#. defaultMessage is:
-#. Last Updated {reldate}
-#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsListItem/ProposalsListItem.json
-msgctxt "proposalItem.lastUpdatedAt"
-msgid "Last Updated {reldate}"
-msgstr "上次更新{reldate}"
-
 #. [ln.backupInfo.lastUpdated]
 #. defaultMessage is:
 #. Last Updated: {lastUpdate, date} {lastUpdate, time, short}
@@ -3911,6 +3923,14 @@ msgstr "最近更新: {lastUpdate, date} {lastUpdate, time, short}"
 msgctxt "walletselection.lastAccess"
 msgid "Last accessed"
 msgstr "上次访问"
+
+#. [proposalItem.lastUpdatedAt]
+#. defaultMessage is:
+#. Last updated {reldate}
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsListItem/ProposalsListItem.json
+msgctxt "proposalItem.lastUpdatedAt"
+msgid "Last updated {reldate}"
+msgstr ""
 
 #. [sidebar.latestBlock]
 #. defaultMessage is:
@@ -4040,14 +4060,6 @@ msgctxt "ln.waitCloseDetails.limboBalance"
 msgid "Limbo Balance"
 msgstr "Limbo Balance"
 
-#. [accounts.tab.listAccounts]
-#. defaultMessage is:
-#. List Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/AccountsPage.json
-msgctxt "accounts.tab.listAccounts"
-msgid "List Accounts"
-msgstr "账户列表"
-
 #. [settings.privacy.politeia.description]
 #. defaultMessage is:
 #. List and vote on proposals on proposals.decred.org
@@ -4079,6 +4091,14 @@ msgstr "成熟"
 msgctxt "stake.liveTickets"
 msgid "Live"
 msgstr "等待被选中"
+
+#. [vsp.mytickets.subtitle]
+#. defaultMessage is:
+#. Live Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
+msgctxt "vsp.mytickets.subtitle"
+msgid "Live Tickets"
+msgstr ""
 
 #. [stakeSPV.revokedTickets]
 #. defaultMessage is:
@@ -4224,14 +4244,23 @@ msgctxt "help.tab.logs"
 msgid "Logs"
 msgstr "日志"
 
+#. [privacy.logs]
+#. defaultMessage is:
+#. Logs
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
+msgctxt "privacy.logs"
+msgid "Logs"
+msgstr ""
+
 #. [getstarted.setAccount.description]
 #. defaultMessage is:
 #. Looks like you have accounts with coinjoin outputs. Past
 #.                 account names cannot be restored during Recovery, so it is
 #. not
-#.                 possible to know which account was the mix account. You can
-#.                 set a mix and unmix account now or this can be done later
-#. on
+#.                 possible to know which account was the mixed account. You
+#. can
+#.                 set a mixed and unmixed account now or this can be done
+#. later on
 #.                 the privacy page.
 #.                 With this action the chosen accounts will be renamed.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
@@ -4239,19 +4268,12 @@ msgctxt "getstarted.setAccount.description"
 msgid ""
 "Looks like you have accounts with coinjoin outputs. Past\n"
 "                account names cannot be restored during Recovery, so it is not\n"
-"                possible to know which account was the mix account. You can\n"
-"                set a mix and unmix account now or this can be done later on\n"
+"                possible to know which account was the mixed account. You can\n"
+"                set a mixed and unmixed account now or this can be done later on\n"
 "                the privacy page.\n"
 "                \n"
 "                With this action the chosen accounts will be renamed."
 msgstr ""
-"看起来你有混币输出的输出帐户。过去\n"
-"                在恢复过程中无法还原帐户名, 因此无法还原\n"
-"                可能知道哪个帐户是混合帐户。你可以\n"
-"                现在就设置一个混币帐户，或者以后可以这样做\n"
-"                隐私页面。\n"
-"                \n"
-"                通过此操作，所选帐户将被重命名。"
 
 #. [settings.network.mainnet]
 #. defaultMessage is:
@@ -4350,7 +4372,7 @@ msgstr "投票时间中位数："
 #. [securitycenter.signMessage.field.message.label]
 #. defaultMessage is:
 #. Message
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/SignMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/SignMessageForm.json
 msgctxt "securitycenter.signMessage.field.message.label"
 msgid "Message"
 msgstr "消息"
@@ -4358,7 +4380,7 @@ msgstr "消息"
 #. [securitycenter.verify.field.message.label]
 #. defaultMessage is:
 #. Message
-#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/VerifyMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/VerifyMessage/VerifyMessageForm.json
 msgctxt "securitycenter.verify.field.message.label"
 msgid "Message"
 msgstr "消息"
@@ -4395,6 +4417,22 @@ msgctxt "transaction.type.missed"
 msgid "Missed"
 msgstr "错过的票"
 
+#. [txFilter.type.mixed]
+#. defaultMessage is:
+#. Mixed
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/helpers.json
+msgctxt "txFilter.type.mixed"
+msgid "Mixed"
+msgstr ""
+
+#. [privacy.mixing.account]
+#. defaultMessage is:
+#. Mixed Account
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
+msgctxt "privacy.mixing.account"
+msgid "Mixed Account"
+msgstr ""
+
 #. [addMixerAccountModal.mixedAccountName]
 #. defaultMessage is:
 #. Mixed Account Name
@@ -4405,43 +4443,27 @@ msgstr "混币帐户名称"
 
 #. [getstarted.setAcct.mixedAcct]
 #. defaultMessage is:
-#. Mixed Acct: {value}
+#. Mixed Account: {value}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAcct.mixedAcct"
-msgid "Mixed Acct: {value}"
-msgstr "混币帐户：{value}"
+msgid "Mixed Account: {value}"
+msgstr ""
 
-#. [privacy.mixing.account]
+#. [privacy.tab.mixing]
 #. defaultMessage is:
-#. Mixing Account
-#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
-msgctxt "privacy.mixing.account"
-msgid "Mixing Account"
-msgstr "混币帐户"
+#. Mixing
+#: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
+msgctxt "privacy.tab.mixing"
+msgid "Mixing"
+msgstr ""
 
 #. [mytickets.subtitle]
 #. defaultMessage is:
 #. My Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "mytickets.subtitle"
 msgid "My Tickets"
 msgstr "我的选票"
-
-#. [tickets.tab.mytickets]
-#. defaultMessage is:
-#. My Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
-msgctxt "tickets.tab.mytickets"
-msgid "My Tickets"
-msgstr "我的选票"
-
-#. [vsp.mytickets.subtitle]
-#. defaultMessage is:
-#. My VSP Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
-msgctxt "vsp.mytickets.subtitle"
-msgid "My VSP Tickets"
-msgstr "我的VSP选票"
 
 #. [proposalDetails.votingInfo.votingPreferenceTitle]
 #. defaultMessage is:
@@ -4577,7 +4599,7 @@ msgstr "新版本"
 #. [tickets.sortby.newest]
 #. defaultMessage is:
 #. Newest
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "tickets.sortby.newest"
 msgid "Newest"
 msgstr "最新"
@@ -4847,6 +4869,14 @@ msgctxt "ln.openChannelDetails.numUpdates"
 msgid "Number of Updates"
 msgstr "更新次数"
 
+#. [privacy.ticket.old]
+#. defaultMessage is:
+#. Old VSP
+#: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
+msgctxt "privacy.ticket.old"
+msgid "Old VSP"
+msgstr ""
+
 #. [getStarted.releaseNotes.OlderVersion]
 #. defaultMessage is:
 #. Older Version
@@ -4858,7 +4888,7 @@ msgstr "旧版本"
 #. [tickets.sortby.oldest]
 #. defaultMessage is:
 #. Oldest
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "tickets.sortby.oldest"
 msgid "Oldest"
 msgstr "最初的"
@@ -4885,7 +4915,7 @@ msgstr "链上余额及闪电网络钱包详情"
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
 "Once the majority of the PoW miners have upgraded (75% of the 100 most "
@@ -4987,15 +5017,23 @@ msgstr "自己内存池：{ownMempoolTickets}  未成熟的：{immatureTickets}"
 #. [securitycenter.validate.result.owned]
 #. defaultMessage is:
 #. Owned address
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.result.owned"
 msgid "Owned address"
 msgstr "拥有的地址"
 
+#. [vsp.ticket.paid]
+#. defaultMessage is:
+#. Paid
+#: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
+msgctxt "vsp.ticket.paid"
+msgid "Paid"
+msgstr ""
+
 #. [vsp.ticket.vsp.fee.paid]
 #. defaultMessage is:
 #. Paid Fee
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/MyVSPTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/MyVSPTickets.json
 msgctxt "vsp.ticket.vsp.fee.paid"
 msgid "Paid Fee"
 msgstr "已付费用"
@@ -5090,11 +5128,11 @@ msgstr "从当前闪电网络钱包付款"
 
 #. [sidebar.peersCount]
 #. defaultMessage is:
-#. Peers Count
-#: app/i18n/extracted/app/components/SideBar/Logo/Logo.json
+#. Peers
+#: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.peersCount"
-msgid "Peers Count"
-msgstr "对等节点"
+msgid "Peers"
+msgstr ""
 
 #. [txHistory.Pending]
 #. defaultMessage is:
@@ -5217,6 +5255,15 @@ msgstr ""
 "请注意上面的错误代码并去matrix或其它频道寻求帮助\n"
 "            聊天频道以帮助解决问题。 {link}"
 
+#. [SendFromUnmixed.confirmPhraseInstruction]
+#. defaultMessage is:
+#. Please type {confirmationPhrase} to allow sending from unmixed accounts.
+#: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
+msgctxt "SendFromUnmixed.confirmPhraseInstruction"
+msgid ""
+"Please type {confirmationPhrase} to allow sending from unmixed accounts."
+msgstr ""
+
 #. [seedCopyConfirmModal.confirmPhraseInstruction]
 #. defaultMessage is:
 #. Please type {confirmationPhrase} to copy the seed.
@@ -5243,54 +5290,14 @@ msgstr "Politeia"
 
 #. [proposals.enablePoliteia.description]
 #. defaultMessage is:
-#. Politeia integration is currently disabled in your privacy settings. Please
-#. enable it if you want to be able to access the proposal system.
+#. Politeia integration is disabled by privacy settings. It must be enabled to
+#. access the proposal system.
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/PoliteiaDisabled.json
 msgctxt "proposals.enablePoliteia.description"
 msgid ""
-"Politeia integration is currently disabled in your privacy settings. Please "
-"enable it if you want to be able to access the proposal system."
-msgstr "Politeia集成在您的私人设置中当前是被禁用的，如果您想登录投票系统，请授权允许。"
-
-#. [purchaseTickets.advanced.poolAddress]
-#. defaultMessage is:
-#. Pool Address
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
-msgctxt "purchaseTickets.advanced.poolAddress"
-msgid "Pool Address"
-msgstr "票池地址"
-
-#. [purchaseTickets.poolAddress]
-#. defaultMessage is:
-#. Pool Address
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsQuickBar.json
-msgctxt "purchaseTickets.poolAddress"
-msgid "Pool Address"
-msgstr "票池地址"
-
-#. [purchaseTickets.poolFee]
-#. defaultMessage is:
-#. Pool Fee
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsQuickBar.json
-msgctxt "purchaseTickets.poolFee"
-msgid "Pool Fee"
-msgstr "票池费用"
-
-#. [purchaseTickets.poolFees]
-#. defaultMessage is:
-#. Pool Fees
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
-msgctxt "purchaseTickets.poolFees"
-msgid "Pool Fees"
-msgstr "票池费用"
-
-#. [stakePoolsList.poolFee]
-#. defaultMessage is:
-#. Pool fees: {value}
-#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList.json
-msgctxt "stakePoolsList.poolFee"
-msgid "Pool fees: {value}"
-msgstr "票池费用：{value}"
+"Politeia integration is disabled by privacy settings. It must be enabled to "
+"access the proposal system."
+msgstr ""
 
 #. [tutorial.standardPage.previousPage]
 #. defaultMessage is:
@@ -5311,7 +5318,7 @@ msgstr "价格"
 #. [tickets.table.header.price]
 #. defaultMessage is:
 #. Price
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.table.header.price"
 msgid "Price"
 msgstr "价格"
@@ -5319,7 +5326,7 @@ msgstr "价格"
 #. [vsptickets.table.header.price]
 #. defaultMessage is:
 #. Price
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "vsptickets.table.header.price"
 msgid "Price"
 msgstr "价格"
@@ -5340,21 +5347,13 @@ msgctxt "accounts.name.default"
 msgid "Primary Account"
 msgstr "主账户"
 
-#. [accounts.tab.privacy]
+#. [sidebar.link.privacy]
 #. defaultMessage is:
 #. Privacy
-#: app/i18n/extracted/app/components/views/AccountsPage/AccountsPage.json
-msgctxt "accounts.tab.privacy"
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
+msgctxt "sidebar.link.privacy"
 msgid "Privacy"
-msgstr "隐私"
-
-#. [privacy.subtitle]
-#. defaultMessage is:
-#. Privacy
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
-msgctxt "privacy.subtitle"
-msgid "Privacy"
-msgstr "隐私"
+msgstr ""
 
 #. [privacy.label]
 #. defaultMessage is:
@@ -5372,10 +5371,18 @@ msgctxt "walletselection.privacy"
 msgid "Privacy"
 msgstr "隐私"
 
+#. [privacy.subtitle]
+#. defaultMessage is:
+#. Privacy
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
+msgctxt "privacy.subtitle"
+msgid "Privacy"
+msgstr "隐私"
+
 #. [privacy.config.subtitle]
 #. defaultMessage is:
 #. Privacy Configuration
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/ConfigMixer.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/ConfigMixer.json
 msgctxt "privacy.config.subtitle"
 msgid "Privacy Configuration"
 msgstr "隐私设定"
@@ -5412,6 +5419,14 @@ msgctxt "settings.getstartpage.group-title.privacy-and-security"
 msgid "Privacy and Security"
 msgstr "隐私权与安全性"
 
+#. [privacypage.title]
+#. defaultMessage is:
+#. Privacy and Security Center
+#: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
+msgctxt "privacypage.title"
+msgid "Privacy and Security Center"
+msgstr ""
+
 #. [passphraseModal.privatePassphrase]
 #. defaultMessage is:
 #. Private Passphrase
@@ -5436,6 +5451,22 @@ msgctxt "getStarted.discoverAddresses.passphrasePlaceholder"
 msgid "Private Passphrase"
 msgstr "私人密码"
 
+#. [getStarted.decrypt.passphrasePlaceholder]
+#. defaultMessage is:
+#. Private Passphrase
+#: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/PassphraseForm.json
+msgctxt "getStarted.decrypt.passphrasePlaceholder"
+msgid "Private Passphrase"
+msgstr ""
+
+#. [getStarted.discoverAccounts.passphrase]
+#. defaultMessage is:
+#. Private Passphrase
+#: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/PassphraseForm.json
+msgctxt "getStarted.discoverAccounts.passphrase"
+msgid "Private Passphrase"
+msgstr ""
+
 #. [createWallet.passhraseInput.label]
 #. defaultMessage is:
 #. Private passphrase
@@ -5451,6 +5482,14 @@ msgstr "私人密码"
 msgctxt "ln.routesInfo.probability"
 msgid "Probability of success"
 msgstr "成功概率"
+
+#. [vsp.ticket.started]
+#. defaultMessage is:
+#. Processing
+#: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
+msgctxt "vsp.ticket.started"
+msgid "Processing"
+msgstr ""
 
 #. [help.subtitle.project]
 #. defaultMessage is:
@@ -5650,18 +5689,10 @@ msgctxt "proposals.detail.wallet.eligible.headers.purchased"
 msgid "Purchased"
 msgstr "已购买"
 
-#. [tickets.table.header.purchased]
-#. defaultMessage is:
-#. Purchased
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
-msgctxt "tickets.table.header.purchased"
-msgid "Purchased"
-msgstr "已购买"
-
 #. [vsptickets.table.header.purchased]
 #. defaultMessage is:
 #. Purchased
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "vsptickets.table.header.purchased"
 msgid "Purchased"
 msgstr "已购买"
@@ -5901,6 +5932,14 @@ msgctxt "appMenu.redo"
 msgid "Redo"
 msgstr "重做"
 
+#. [proposals.statusLinks.rejectedVote]
+#. defaultMessage is:
+#. Rejected
+#: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
+msgctxt "proposals.statusLinks.rejectedVote"
+msgid "Rejected"
+msgstr ""
+
 #. [loadingError.reloadBtn]
 #. defaultMessage is:
 #. Reload
@@ -6095,11 +6134,11 @@ msgstr "恢复现有钱包"
 
 #. [ln.connectPage.backupFile]
 #. defaultMessage is:
-#. Restore SCB backup file
+#. Restore SCB backup
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.backupFile"
-msgid "Restore SCB backup file"
-msgstr "恢复SCB备份文件"
+msgid "Restore SCB backup"
+msgstr ""
 
 #. [loaderBar.preCreateWalletRestore]
 #. defaultMessage is:
@@ -6232,16 +6271,8 @@ msgstr "已撤销选票："
 #. [tickets.table.header.reward]
 #. defaultMessage is:
 #. Reward
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.table.header.reward"
-msgid "Reward"
-msgstr "奖励"
-
-#. [vsptickets.table.header.reward]
-#. defaultMessage is:
-#. Reward
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
-msgctxt "vsptickets.table.header.reward"
 msgid "Reward"
 msgstr "奖励"
 
@@ -6424,21 +6455,13 @@ msgctxt "appMenu.searchIssues"
 msgid "Search Issues"
 msgstr "搜索问题"
 
-#. [activesidebar.link.security]
+#. [privacy.tab.security]
 #. defaultMessage is:
 #. Security
-#: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
-msgctxt "activesidebar.link.security"
+#: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
+msgctxt "privacy.tab.security"
 msgid "Security"
-msgstr "安全"
-
-#. [security.title]
-#. defaultMessage is:
-#. Security Center
-#: app/i18n/extracted/app/components/views/SecurityPage/SecurityPage.json
-msgctxt "security.title"
-msgid "Security Center"
-msgstr "安全中心"
+msgstr ""
 
 #. [notification.seeTransactionDetails]
 #. defaultMessage is:
@@ -6541,16 +6564,16 @@ msgstr "选择 Decrediton 连接至外部服务的方式。您可以稍后在应
 
 #. [spv.titleSub]
 #. defaultMessage is:
-#. Select how Decrediton wallet's should connect to the network. You can
-#. change this in the application settings later. For more in-depth
-#. information about SPV and how it works, you can go {link}
+#. Select how Decrediton should connect to the Decred network. You can change
+#. this in the application settings later. For more in-depth information about
+#. SPV and how it works, you can go {link}
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
-"Select how Decrediton wallet's should connect to the network. You can change"
-" this in the application settings later. For more in-depth information about"
-" SPV and how it works, you can go {link}"
-msgstr "选择Decrediton钱包连接网络的方式。你可以稍后在应用程序设置中更改此设置。有关SPV及其工作原理的详细信息，可以点击 {link}"
+"Select how Decrediton should connect to the Decred network. You can change "
+"this in the application settings later. For more in-depth information about "
+"SPV and how it works, you can go {link}"
+msgstr ""
 
 #. [privacy.custom.titleSub]
 #. defaultMessage is:
@@ -6619,6 +6642,14 @@ msgctxt "send.sendAllTitle.disabled"
 msgid "Send all funds from selected account - Disabled"
 msgstr "从选定帐户发送所有资金-已禁用"
 
+#. [privacy.sendFromUnmixedCheckbox]
+#. defaultMessage is:
+#. Send from unmixed accounts
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
+msgctxt "privacy.sendFromUnmixedCheckbox"
+msgid "Send from unmixed accounts"
+msgstr ""
+
 #. [send.sendSelfTitle]
 #. defaultMessage is:
 #. Send funds to another account
@@ -6634,6 +6665,14 @@ msgstr "将资金发送到另一个账户"
 msgctxt "send.sendOthersTitle"
 msgid "Send funds to another wallet"
 msgstr "将资金发送到另一个账户"
+
+#. [SendFromUnmixed.titleWarning]
+#. defaultMessage is:
+#. Sending from Unmixed Accounts
+#: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
+msgctxt "SendFromUnmixed.titleWarning"
+msgid "Sending from Unmixed Accounts"
+msgstr ""
 
 #. [charts.keys.sent]
 #. defaultMessage is:
@@ -6701,19 +6740,11 @@ msgstr "服务"
 
 #. [ln.watchtowersTab.sessions]
 #. defaultMessage is:
-#. Sessions {sessions}
+#. Sessions: {sessions}
 #: app/i18n/extracted/app/components/views/LNPage/WatchtowersTab/WatchtowersTab.json
 msgctxt "ln.watchtowersTab.sessions"
-msgid "Sessions {sessions}"
-msgstr "会话{sessions}"
-
-#. [getstarted.setAccount.change]
-#. defaultMessage is:
-#. Set Change Account
-#: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
-msgctxt "getstarted.setAccount.change"
-msgid "Set Change Account"
-msgstr "设置更改帐户"
+msgid "Sessions: {sessions}"
+msgstr ""
 
 #. [getstarted.setAccount.title]
 #. defaultMessage is:
@@ -6730,6 +6761,14 @@ msgstr "设置混币帐户"
 msgctxt "getstarted.setAccount.mix"
 msgid "Set Mixed Account"
 msgstr "设置混币帐户"
+
+#. [getstarted.setAccount.change]
+#. defaultMessage is:
+#. Set Unmixed Account
+#: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
+msgctxt "getstarted.setAccount.change"
+msgid "Set Unmixed Account"
+msgstr ""
 
 #. [sidebar.link.settings]
 #. defaultMessage is:
@@ -6838,7 +6877,7 @@ msgstr "正在关闭Decrediton"
 #. [security.signTitle]
 #. defaultMessage is:
 #. Sign Message
-#: app/i18n/extracted/app/components/views/SecurityPage/SecurityPage.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SecurityPage.json
 msgctxt "security.signTitle"
 msgid "Sign Message"
 msgstr "签名消息"
@@ -6846,7 +6885,7 @@ msgstr "签名消息"
 #. [securitycenter.signMessageModal]
 #. defaultMessage is:
 #. Sign Message
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/SignMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/SignMessageForm.json
 msgctxt "securitycenter.signMessageModal"
 msgid "Sign Message"
 msgstr "签名消息"
@@ -6854,7 +6893,7 @@ msgstr "签名消息"
 #. [securitycenter.signMessageBtn]
 #. defaultMessage is:
 #. Sign Message
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/SignMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/SignMessageForm.json
 msgctxt "securitycenter.signMessageBtn"
 msgid "Sign Message"
 msgstr "签名消息"
@@ -6862,7 +6901,7 @@ msgstr "签名消息"
 #. [security.signature]
 #. defaultMessage is:
 #. Signature
-#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Signature.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SignMessage/Signature.json
 msgctxt "security.signature"
 msgid "Signature"
 msgstr "签名"
@@ -6870,7 +6909,7 @@ msgstr "签名"
 #. [securitycenter.verify.field.signature.label]
 #. defaultMessage is:
 #. Signature
-#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/VerifyMessageForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/VerifyMessage/VerifyMessageForm.json
 msgctxt "securitycenter.verify.field.signature.label"
 msgid "Signature"
 msgstr "签名"
@@ -6923,6 +6962,14 @@ msgctxt "help.about.decrediton.subtitle"
 msgid "Software Summary"
 msgstr "软件概要"
 
+#. [privacy.ticket.solo]
+#. defaultMessage is:
+#. Solo
+#: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
+msgctxt "privacy.ticket.solo"
+msgid "Solo"
+msgstr ""
+
 #. [errors.general]
 #. defaultMessage is:
 #. Something went wrong, please go back
@@ -6934,7 +6981,7 @@ msgstr "发生错误，请返回"
 #. [tickets.sortby.tooltip]
 #. defaultMessage is:
 #. Sort By
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.sortby.tooltip"
 msgid "Sort By"
 msgstr "分类"
@@ -7062,7 +7109,7 @@ msgstr "启动闪电网络钱包"
 #. [privacy.start.mixer.confirmation]
 #. defaultMessage is:
 #. Start Mixer
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.start.mixer.confirmation"
 msgid "Start Mixer"
 msgstr "启动混币工具"
@@ -7070,7 +7117,7 @@ msgstr "启动混币工具"
 #. [privacy.start.mixer]
 #. defaultMessage is:
 #. Start Mixer
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/PrivacyContent.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.start.mixer"
 msgid "Start Mixer"
 msgstr "启动混币工具"
@@ -7106,6 +7153,14 @@ msgstr "选票，开启购票选票确认"
 msgctxt "ln.connectPage.launchBtn"
 msgid "Start and Unlock LN Wallet"
 msgstr "启动并打开闪电网络钱包"
+
+#. [mixer.disabled]
+#. defaultMessage is:
+#. Start mixing
+#: app/i18n/extracted/app/components/buttons/MixerSwitch.json
+msgctxt "mixer.disabled"
+msgid "Start mixing"
+msgstr ""
 
 #. [trezor.wordModal.selectPlaceholder]
 #. defaultMessage is:
@@ -7162,6 +7217,14 @@ msgstr "统计数据"
 msgctxt "tickets.tab.statistics"
 msgid "Statistics"
 msgstr "统计数据"
+
+#. [mixer.enabled]
+#. defaultMessage is:
+#. Stop mixing
+#: app/i18n/extracted/app/components/buttons/MixerSwitch.json
+msgctxt "mixer.enabled"
+msgid "Stop mixing"
+msgstr ""
 
 #. [snackbar.defaults.success]
 #. defaultMessage is:
@@ -7252,7 +7315,7 @@ msgstr "包含此次交易的钱包总借贷额（交易输入）。"
 #. [myTicket.syncVSP]
 #. defaultMessage is:
 #. Sync Failed VSP Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "myTicket.syncVSP"
 msgid "Sync Failed VSP Tickets"
 msgstr "同步失败的VSP选票"
@@ -7337,6 +7400,17 @@ msgstr ""
 "\n"
 "请将守护程序（dcrd）和钱包（dcrwallet）更新到最新版本，然后重试。"
 
+#. [getStarted.passphrase.info]
+#. defaultMessage is:
+#. The accounts for this wallet haven't been discovered yet. Please enter the
+#. wallet's private passphrase to perform account discovery.
+#: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/PassphraseForm.json
+msgctxt "getStarted.passphrase.info"
+msgid ""
+"The accounts for this wallet haven't been discovered yet. Please enter the "
+"wallet's private passphrase to perform account discovery."
+msgstr ""
+
 #. [snackbar.errorObject]
 #. defaultMessage is:
 #. The following error happened: {error}
@@ -7364,18 +7438,10 @@ msgid ""
 "Please confirm this action before proceeding."
 msgstr "您选择更改的设置需要重新启动Decrediton，请在继续之前确认此操作。"
 
-#. [ln.connectPage.accountDescr]
-#. defaultMessage is:
-#. The wallet account to use for LN operations.
-#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
-msgctxt "ln.connectPage.accountDescr"
-msgid "The wallet account to use for LN operations."
-msgstr "用于操作闪电网络的账户。"
-
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
 #. There are currently no agendas for voting.
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/VotingPrefs.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.noAgenda"
 msgid "There are currently no agendas for voting."
 msgstr "目前无投票议程"
@@ -7383,7 +7449,7 @@ msgstr "目前无投票议程"
 #. [privacy.create.default.undone.message]
 #. defaultMessage is:
 #. This action can not be undone
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
 msgctxt "privacy.create.default.undone.message"
 msgid "This action can not be undone"
 msgstr "此操作无法撤消"
@@ -7391,7 +7457,7 @@ msgstr "此操作无法撤消"
 #. [privacy.create.needed.undone.message]
 #. defaultMessage is:
 #. This action can not be undone
-#: app/i18n/extracted/app/components/views/AccountsPage/Privacy/ConfigMixer/CreateNeededAccounts.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateNeededAccounts.json
 msgctxt "privacy.create.needed.undone.message"
 msgid "This action can not be undone"
 msgstr "此操作无法撤消"
@@ -7408,7 +7474,7 @@ msgstr "本地址为"
 #. defaultMessage is:
 #. This agenda has finished voting and {passed}.  You may still toggle your
 #. vote choices, but they will no longer be tallied.
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/FinishedIndicator/FinishedIndicator.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/ProgressIndicator.json
 msgctxt "agenda.card.finishedTooltip"
 msgid ""
 "This agenda has finished voting and {passed}.  You may still toggle your "
@@ -7418,13 +7484,13 @@ msgstr "这项提案已完成投票并 {passed} 。你仍然可以切换你的�
 #. [ln.connectPage.enableAutopilotDescr]
 #. defaultMessage is:
 #. This enables the 'autopilot' feature, which tries to automatically open
-#. channels for up to 60% of the account's spendable amounts.
+#. channels using up to 60% of the account's spendable funds.
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.enableAutopilotDescr"
 msgid ""
 "This enables the 'autopilot' feature, which tries to automatically open "
-"channels for up to 60% of the account's spendable amounts."
-msgstr "这将启用“自动打开通道”功能，该功能将使用不超过60%可使用余额自动打开通道。"
+"channels using up to 60% of the account's spendable funds."
+msgstr ""
 
 #. [fatal.suggestion.corrupted]
 #. defaultMessage is:
@@ -7536,16 +7602,16 @@ msgstr "这已在启动decrediton是被设置为命令行"
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular Decred Daemon and fully verify blocks.  This will
-#. take longer, but is fully secure.  Any block or mined transaction can be
+#. This will use the regular Decred daemon and fully verify blocks.  This will
+#. take longer but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
-"This will use the regular Decred Daemon and fully verify blocks.  This will "
-"take longer, but is fully secure.  Any block or mined transaction can be "
+"This will use the regular Decred daemon and fully verify blocks.  This will "
+"take longer but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
-msgstr "这选项会使用正规的Decred守护进程及完全验证区块。这会需要稍长时间，但是将会完全安全。任何区块或被打包交易都可以完全信任。"
+msgstr ""
 
 #. [numTicketInput.unit]
 #. defaultMessage is:
@@ -7710,7 +7776,7 @@ msgstr "选票状态"
 #. [tickets.tickettypes.tooltip]
 #. defaultMessage is:
 #. Ticket Status
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.tickettypes.tooltip"
 msgid "Ticket Status"
 msgstr "选票状态"
@@ -7718,7 +7784,7 @@ msgstr "选票状态"
 #. [tickets.table.header.status]
 #. defaultMessage is:
 #. Ticket Status
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.table.header.status"
 msgid "Ticket Status"
 msgstr "选票状态"
@@ -7726,7 +7792,7 @@ msgstr "选票状态"
 #. [vsptickets.tickettypes.tooltip]
 #. defaultMessage is:
 #. Ticket Status
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "vsptickets.tickettypes.tooltip"
 msgid "Ticket Status"
 msgstr "选票状态"
@@ -7734,7 +7800,7 @@ msgstr "选票状态"
 #. [vsptickets.table.header.status]
 #. defaultMessage is:
 #. Ticket Status
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "vsptickets.table.header.status"
 msgid "Ticket Status"
 msgstr "选票状态"
@@ -7810,6 +7876,14 @@ msgstr "选票"
 msgctxt "export.tickets.name"
 msgid "Tickets"
 msgstr "选票"
+
+#. [tickets.tab.vsptickets]
+#. defaultMessage is:
+#. Tickets Status
+#: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
+msgctxt "tickets.tab.vsptickets"
+msgid "Tickets Status"
+msgstr ""
 
 #. [proposals.detail.wallet.eligible.header]
 #. defaultMessage is:
@@ -7914,6 +7988,16 @@ msgstr "切换密码保护"
 msgctxt "settings.uitheme.type"
 msgid "Tonality"
 msgstr "色调"
+
+#. [privacy.description]
+#. defaultMessage is:
+#. Tools that help in different aspects of cryptocurrency privacy and
+#. security.
+#: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
+msgctxt "privacy.description"
+msgid ""
+"Tools that help in different aspects of cryptocurrency privacy and security."
+msgstr ""
 
 #. [accounts.total]
 #. defaultMessage is:
@@ -8475,6 +8559,14 @@ msgctxt "trezor.walletCreationPassPhraseModal.title"
 msgid "Type Wallet Creation PassPhrase"
 msgstr "输入创建钱包密码"
 
+#. [loaderBar.walletDiscoverAccountsPass]
+#. defaultMessage is:
+#. Type passphrase to discover accounts
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+msgctxt "loaderBar.walletDiscoverAccountsPass"
+msgid "Type passphrase to discover accounts"
+msgstr ""
+
 #. [trezor.wordModal.title]
 #. defaultMessage is:
 #. Type the requested word
@@ -8614,10 +8706,34 @@ msgctxt "transaction.type.unmined"
 msgid "Unmined"
 msgstr "未打包"
 
+#. [privacy.change.account]
+#. defaultMessage is:
+#. Unmixed Account
+#: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
+msgctxt "privacy.change.account"
+msgid "Unmixed Account"
+msgstr ""
+
+#. [addMixerAccountModal.changeAccountName]
+#. defaultMessage is:
+#. Unmixed Account Name
+#: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
+msgctxt "addMixerAccountModal.changeAccountName"
+msgid "Unmixed Account Name"
+msgstr ""
+
+#. [getstarted.setAcct.changAcct]
+#. defaultMessage is:
+#. Unmixed Account: {value}
+#: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
+msgctxt "getstarted.setAcct.changAcct"
+msgid "Unmixed Account: {value}"
+msgstr ""
+
 #. [vsp.ticket.vsp.fee.started]
 #. defaultMessage is:
 #. Unpaid Fee
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/MyVSPTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/MyVSPTickets.json
 msgctxt "vsp.ticket.vsp.fee.started"
 msgid "Unpaid Fee"
 msgstr "未付费用"
@@ -8689,7 +8805,7 @@ msgstr "更新固件"
 #. [agenda.updatePreference]
 #. defaultMessage is:
 #. Update Preference
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.updatePreference"
 msgid "Update Preference"
 msgstr "更新偏好"
@@ -8727,6 +8843,30 @@ msgctxt "aboutModal.upgradeAvailable"
 msgid "Upgrade Available"
 msgstr "有可用升级"
 
+#. [purchase.isLegacy.legacy.add]
+#. defaultMessage is:
+#. Use Legacy VSP
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
+msgctxt "purchase.isLegacy.legacy.add"
+msgid "Use Legacy VSP"
+msgstr ""
+
+#. [purchase.isLegacy.legacy]
+#. defaultMessage is:
+#. Use Legacy VSP
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_Tickets.json
+msgctxt "purchase.isLegacy.legacy"
+msgid "Use Legacy VSP"
+msgstr ""
+
+#. [purchase.isLegacy]
+#. defaultMessage is:
+#. Use Legacy VSP
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
+msgctxt "purchase.isLegacy"
+msgid "Use Legacy VSP"
+msgstr ""
+
 #. [login.form.connect.button]
 #. defaultMessage is:
 #. Use Remote Daemon
@@ -8742,6 +8882,17 @@ msgstr "使用远程守护进程"
 msgctxt "settings.timezone.utx.description"
 msgid "Use Universal Coordinated Time"
 msgstr "使用世界标准时间"
+
+#. [purchase.isLegacyDescription]
+#. defaultMessage is:
+#. Use a VSP which has not updated to vspd. Not recommended, legacy VSP
+#. support will soon be removed.
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
+msgctxt "purchase.isLegacyDescription"
+msgid ""
+"Use a VSP which has not updated to vspd. Not recommended, legacy VSP support"
+" will soon be removed."
+msgstr ""
 
 #. [ln.connectPage.useAccount]
 #. defaultMessage is:
@@ -8791,6 +8942,14 @@ msgctxt "autobuyer.stakePoolLabel"
 msgid "VSP"
 msgstr "VSP"
 
+#. [purchaseTickets.vspFrom]
+#. defaultMessage is:
+#. VSP
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
+msgctxt "purchaseTickets.vspFrom"
+msgid "VSP"
+msgstr ""
+
 #. [vsp.autobuyer.modal.stakepool]
 #. defaultMessage is:
 #. VSP
@@ -8823,6 +8982,22 @@ msgctxt "mytickets.statistics.stakepoolstats.title"
 msgid "VSP"
 msgstr "VSP"
 
+#. [purchaseTickets.advanced.poolAddress]
+#. defaultMessage is:
+#. VSP Address
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
+msgctxt "purchaseTickets.advanced.poolAddress"
+msgid "VSP Address"
+msgstr ""
+
+#. [purchaseTickets.poolAddress]
+#. defaultMessage is:
+#. VSP Address
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsQuickBar.json
+msgctxt "purchaseTickets.poolAddress"
+msgid "VSP Address"
+msgstr ""
+
 #. [stake.addPoolConfirmation]
 #. defaultMessage is:
 #. VSP Confirmation
@@ -8830,6 +9005,22 @@ msgstr "VSP"
 msgctxt "stake.addPoolConfirmation"
 msgid "VSP Confirmation"
 msgstr "VSP确认"
+
+#. [purchaseTickets.poolFee]
+#. defaultMessage is:
+#. VSP Fee
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsQuickBar.json
+msgctxt "purchaseTickets.poolFee"
+msgid "VSP Fee"
+msgstr ""
+
+#. [purchaseTickets.poolFees]
+#. defaultMessage is:
+#. VSP Fees
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
+msgctxt "purchaseTickets.poolFees"
+msgid "VSP Fees"
+msgstr ""
 
 #. [settings.privacy.stakepoolListing.label]
 #. defaultMessage is:
@@ -8855,6 +9046,22 @@ msgctxt "mytickets.statistics.stakepool.stakepoolTickets"
 msgid "VSP Tickets"
 msgstr "VSP选票"
 
+#. [tickets.fee.error.title]
+#. defaultMessage is:
+#. VSP Tickets Fee Error
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "tickets.fee.error.title"
+msgid "VSP Tickets Fee Error"
+msgstr ""
+
+#. [stakePoolsList.poolFee]
+#. defaultMessage is:
+#. VSP fees: {value}
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList.json
+msgctxt "stakePoolsList.poolFee"
+msgid "VSP fees: {value}"
+msgstr ""
+
 #. [stake.enableStakePoolListing.description]
 #. defaultMessage is:
 #. VSP listing from external API endpoint is currently disabled. Please enable
@@ -8869,7 +9076,7 @@ msgstr "当前禁用了来自外部API端口的VSP列表。 请启用第三方�
 #. [security.validate.title]
 #. defaultMessage is:
 #. Validate Address
-#: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/ValidateAddressForm.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "security.validate.title"
 msgid "Validate Address"
 msgstr "验证地址"
@@ -8890,17 +9097,6 @@ msgctxt "ln.networkTab.queryRoutes.value"
 msgid "Value"
 msgstr "价值"
 
-#. [security.description]
-#. defaultMessage is:
-#. Various tools that help in different aspects of crypto currency security
-#. will be located here.
-#: app/i18n/extracted/app/components/views/SecurityPage/SecurityPage.json
-msgctxt "security.description"
-msgid ""
-"Various tools that help in different aspects of crypto currency security "
-"will be located here."
-msgstr "这里提供几个用于加密货币安全检查方面的工具"
-
 #. [ln.backup.verifyBtn]
 #. defaultMessage is:
 #. Verify Backup
@@ -8912,7 +9108,7 @@ msgstr "验证备份"
 #. [security.verifyTitle]
 #. defaultMessage is:
 #. Verify Message
-#: app/i18n/extracted/app/components/views/SecurityPage/SecurityPage.json
+#: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/SecurityPage.json
 msgctxt "security.verifyTitle"
 msgid "Verify Message"
 msgstr "验证消息"
@@ -8960,16 +9156,8 @@ msgstr "投票偏好"
 #. [tickets.table.header.votetime]
 #. defaultMessage is:
 #. Vote Time
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.table.header.votetime"
-msgid "Vote Time"
-msgstr "投票时间"
-
-#. [vsptickets.table.header.votetime]
-#. defaultMessage is:
-#. Vote Time
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyVSPTickets/Page.json
-msgctxt "vsptickets.table.header.votetime"
 msgid "Vote Time"
 msgstr "投票时间"
 
@@ -9021,6 +9209,14 @@ msgctxt "notifications.type.vote"
 msgid "Voted"
 msgstr "已投票"
 
+#. [tickets.table.header.purchased]
+#. defaultMessage is:
+#. Voted
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
+msgctxt "tickets.table.header.purchased"
+msgid "Voted"
+msgstr ""
+
 #. [txDetails.votedOn]
 #. defaultMessage is:
 #. Voted On
@@ -9036,6 +9232,14 @@ msgstr "投票于"
 msgctxt "stake.mempoolTickets"
 msgid "Voted Tickets:"
 msgstr "已投的选票"
+
+#. [agenda.votedFor]
+#. defaultMessage is:
+#. Voted for
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
+msgctxt "agenda.votedFor"
+msgid "Voted for"
+msgstr ""
 
 #. [charts.keys.voted]
 #. defaultMessage is:
@@ -9064,7 +9268,7 @@ msgstr "投票权利"
 #. [votingPreferences.dashboard]
 #. defaultMessage is:
 #. Voting Dashboard
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/VotingPrefs.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.dashboard"
 msgid "Voting Dashboard"
 msgstr "投票面板"
@@ -9080,7 +9284,7 @@ msgstr "投票截止日期"
 #. [agenda.votingFor]
 #. defaultMessage is:
 #. Voting for
-#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview/Overview.json
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.votingFor"
 msgid "Voting for"
 msgstr "正在投票"
@@ -9100,6 +9304,14 @@ msgstr "此提案的投票已结束"
 msgctxt "proposalDetails.votingInfo.noTickets"
 msgid "Voting is only available upon participation in Staking."
 msgstr "只有参与权益时才能投票。"
+
+#. [agenda.card.inProgressTooltip]
+#. defaultMessage is:
+#. Voting is still in progress.
+#: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/ProgressIndicator.json
+msgctxt "agenda.card.inProgressTooltip"
+msgid "Voting is still in progress."
+msgstr ""
 
 #. [proposals.community.descr]
 #. defaultMessage is:
@@ -9179,6 +9391,14 @@ msgstr "钱包输出"
 msgctxt "trezor.walltCreationPrivatePassphrase"
 msgid "Wallet PassPhrase"
 msgstr "钱包密码"
+
+#. [ln.connectPage.account]
+#. defaultMessage is:
+#. Wallet account to use
+#: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
+msgctxt "ln.connectPage.account"
+msgid "Wallet account to use"
+msgstr ""
 
 #. [aboutModal.paragraph3]
 #. defaultMessage is:
@@ -9432,16 +9652,26 @@ msgstr ""
 
 #. [getstarted.setAccount.isValidMessage]
 #. defaultMessage is:
-#. You need to set a mixed and change account and they can not
-#.                   be  the same
+#. You need to set a mixed and unimxed account, and they can not
+#.                   be the same
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAccount.isValidMessage"
 msgid ""
-"You need to set a mixed and change account and they can not\n"
-"                  be  the same"
+"You need to set a mixed and unimxed account, and they can not\n"
+"                  be the same"
 msgstr ""
-"你需要设置一个混币帐户和更改帐户，它们不能\n"
-"                  是相同的"
+
+#. [tickets.fee.error.message]
+#. defaultMessage is:
+#. You still have unpaid tickets fee. If you proceed and they are chosen to
+#. vote, they will
+#.           be missed.
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "tickets.fee.error.message"
+msgid ""
+"You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will\n"
+"          be missed."
+msgstr ""
 
 #. [tickets.importScriptHeader]
 #. defaultMessage is:
@@ -9587,7 +9817,7 @@ msgstr "docs.decred.org"
 #. [ticket.status.multiple.expired]
 #. defaultMessage is:
 #. expired
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.expired"
 msgid "expired"
 msgstr "过期"
@@ -9619,7 +9849,7 @@ msgstr "这里"
 #. [ticket.status.multiple.immature]
 #. defaultMessage is:
 #. immature
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.immature"
 msgid "immature"
 msgstr "未成熟"
@@ -9627,7 +9857,7 @@ msgstr "未成熟"
 #. [ticket.status.multiple.live]
 #. defaultMessage is:
 #. live
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.live"
 msgid "live"
 msgstr "成熟"
@@ -9635,7 +9865,7 @@ msgstr "成熟"
 #. [ticket.status.multiple.missed]
 #. defaultMessage is:
 #. missed
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.missed"
 msgid "missed"
 msgstr "错过"
@@ -9651,7 +9881,7 @@ msgstr "无信息"
 #. [ticket.status.multiple.revoked]
 #. defaultMessage is:
 #. revoked
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.revoked"
 msgid "revoked"
 msgstr "撤销"
@@ -9691,7 +9921,7 @@ msgstr "真"
 #. [ticket.status.multiple.unknown]
 #. defaultMessage is:
 #. unknown
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.unknown"
 msgid "unknown"
 msgstr "未知"
@@ -9699,7 +9929,7 @@ msgstr "未知"
 #. [ticket.status.multiple.unmined]
 #. defaultMessage is:
 #. unmined
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.unmined"
 msgid "unmined"
 msgstr "未打包"
@@ -9707,7 +9937,7 @@ msgstr "未打包"
 #. [ticket.status.multiple.voted]
 #. defaultMessage is:
 #. voted
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTickets/MyTickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/MyTicketsTab.json
 msgctxt "ticket.status.multiple.voted"
 msgid "voted"
 msgstr "已投票"
@@ -10046,6 +10276,14 @@ msgctxt "security.verify.failed"
 msgid "{originalError}"
 msgstr "{originalError}"
 
+#. [mixer.ntf.startMixerFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "mixer.ntf.startMixerFailed"
+msgid "{originalError}"
+msgstr ""
+
 #. [mytickets.statistics.stakepool.votedTip]
 #. defaultMessage is:
 #. {percentage}% of tickets missed
@@ -10200,6 +10438,14 @@ msgctxt "mytickets.statistics.votetime.ninetyfifthpercentile.value"
 msgid ""
 "{value, plural, =0 {in the same day} one { within one day } other {within # "
 "days} }"
+msgstr ""
+
+#. [sidebar.menuLinkTooltip]
+#. defaultMessage is:
+#. {value}
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/MenuLink/MenuLink.json
+msgctxt "sidebar.menuLinkTooltip"
+msgid "{value}"
 msgstr ""
 
 #. [stakePoolsList.poolFeePercentage]
