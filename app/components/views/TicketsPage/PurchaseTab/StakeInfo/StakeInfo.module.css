@@ -4,8 +4,7 @@
   border-radius: 5px;
   position: relative;
   display: grid;
-  grid-template-areas:
-    "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle";
+  grid-template-areas: "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle";
 }
 
 .purchaseTicketTitle {
@@ -140,12 +139,10 @@
 
 @media screen and (max-width: 768px) {
   .area {
-    height: 200px;
     grid-template-areas:
       "purchaseTicketsTitle purchaseTicketsTitle"
-      "purchaseTicketsLive purchaseTicketsTotalVoted"
-      "purchaseTicketsLastTicketVoted purchaseTicketsTotalRewardsEarned";
-    grid-template-rows: 57px 71px 71px;
+      "purchaseTicketsTitle purchaseTicketsTitle";
+    grid-template-rows: 71px 60px;
   }
 
   .details {
@@ -166,11 +163,6 @@
   .purchaseTicketLabel {
     font-size: 13px;
   }
-}
-.purchase-ticket-title {
-  box-sizing: content-box;
-  grid-area: purchaseTicketsTitle;
-  font-size: 15px;
 }
 
 .purchaseTicketTitle {

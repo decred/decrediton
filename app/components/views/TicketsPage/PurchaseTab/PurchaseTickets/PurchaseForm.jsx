@@ -30,7 +30,7 @@ const PurchaseTicketsForm = ({
   notMixedAccounts
 }) => (
   <>
-    <div className={classNames(styles.purchaseForm, "is-row")}>
+    <div className={classNames(styles.purchaseForm, styles.isRow)}>
       <div className="is-row purchase-ticket-input-address">
         <div className={styles.ticketForm}>
           <div className="purchase-ticket-area-row-label">
