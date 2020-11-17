@@ -869,7 +869,7 @@ export const getPeerInfo = () => (dispatch, getState) => {
     .then((resp) => {
       // if resp wrappers is null, no peers were found.
       if (!resp.wrappers_) {
-        return dispatch({ type: GETPEERINFO_SUCCESS, peersCount: 0 })
+        return dispatch({ type: GETPEERINFO_SUCCESS, peersCount: 0 });
       }
       const peersCount = resp.wrappers_[1].length;
       dispatch({ type: GETPEERINFO_SUCCESS, peersCount });
