@@ -1,0 +1,51 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rescan.spin {
+  animation: spin 1s linear infinite;
+}
+
+.rescan.spin:hover {
+  opacity: 1;
+}
+
+.rescan {
+  margin: 5px;
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-rescan-icon);
+  background-size: 16px 16px;
+  cursor: pointer;
+}
+
+.rescan:not(.spin):hover {
+  opacity: 0.7;
+  background-image: var(--menu-rescan-hover-icon);
+}
+
+.cancel {
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-cancel-rescan-icon);
+  background-size: 16px 16px;
+  cursor: pointer;
+  margin: 10px;
+  background-repeat: no-repeat;
+}
+
+.cancel:hover {
+  opacity: 0.7;
+}

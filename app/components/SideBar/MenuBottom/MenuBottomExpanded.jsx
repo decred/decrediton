@@ -1,10 +1,11 @@
+import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
+import { Balance } from "shared";
 import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
+import SpvIcon from "./SpvIcon/SpvIcon";
 import styles from "./MenuBottom.module.css";
-import { classNames } from "pi-ui";
 
 const MenuBarExpanded = ({
   isShowingAccounts,
@@ -38,7 +39,8 @@ const MenuBarExpanded = ({
       </div>
     </div>
     <div className={styles.latestBlock}>
-      {rescanRequest ? <RescanProgress /> : null}
+      <SpvIcon isSPV={isSPV} />
+      {rescanRequest && <RescanProgress />}
       {currentBlockHeight && !rescanRequest && (
         <>
           <div className={styles.rescanButtonArea}>
@@ -64,13 +66,6 @@ const MenuBarExpanded = ({
         </span>
         <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
       </div>
-      {isSPV && (
-        <div className={styles.spvIconContainer}>
-          <Tooltip text={<T id="sidebar.spvMode" m="SPV Mode" />}>
-            <div className={styles.spvIcon} />
-          </Tooltip>
-        </div>
-      )}
     </div>
   </div>
 );

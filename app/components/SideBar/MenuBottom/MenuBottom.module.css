@@ -135,16 +135,6 @@
   animation: spin 1s linear infinite;
 }
 
-.spvIconContainer {
-  margin-left: auto;
-}
-
-.spvIcon {
-  background-image: var(--enable-spv);
-  height: 2.0rem;
-  width: 2.0rem; 
-}
-
 .spvLabel {
   display: block;
 }

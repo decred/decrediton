@@ -1,5 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
+import styles from "./RescanButton.module.css";
+import { classNames } from "pi-ui";
 
 const rescanBtnMessage = `Initiate a transaction rescan.
 
@@ -8,6 +10,7 @@ Rescanning may help resolve some balance errors.
 Note: This scans the entire blockchain for transactions,
 but does not re-download it.`;
 
+
 export default ({ rescanRequest, rescanAttempt }) => (
   <Tooltip
     text={<T id="sidebar.rescanBtn.tip" m={rescanBtnMessage} />}
@@ -15,7 +18,7 @@ export default ({ rescanRequest, rescanAttempt }) => (
     <button
       aria-label="Rescan"
       disabled={!!rescanRequest}
-      className={"rescan-button" + (rescanRequest ? " spin" : "")}
+      className={classNames(styles.rescan, rescanRequest && styles.spin)}
       onClick={() => rescanAttempt(0)}
     />
   </Tooltip>

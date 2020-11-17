@@ -39,6 +39,7 @@ const Logo = React.memo(
               m="The mixer is running. Go to Privacy view for more information"
             />
           }>
+          {/* XXX change this as this global class is gone*/}
           <div className="rescan-button spin" />
         </Tooltip>
       )}
