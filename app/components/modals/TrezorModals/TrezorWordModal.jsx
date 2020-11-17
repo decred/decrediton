@@ -51,7 +51,7 @@ const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
   );
 
   const className = classNames(
-    styles.trezorWordModal,
+    styles.wordModal,
     isGetStarted && styles.getStarted
   );
 
@@ -67,7 +67,7 @@ const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
         />
       </p>
 
-      <div className={styles.trezorWordSelect}>
+      <div className={styles.wordSelect}>
         <Select.Async
           ref={(n) => n && n.focus()}
           autoFocus
@@ -93,7 +93,7 @@ const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
 
       <ButtonsToolbar
         {...{ onCancelModal: onCancelWordModal, onSubmit }}
-        className={styles.trezorModalsButtons}
+        className={styles.buttons}
       />
     </Modal>
   );

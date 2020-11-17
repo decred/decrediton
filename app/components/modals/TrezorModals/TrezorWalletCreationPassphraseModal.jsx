@@ -56,7 +56,7 @@ const TrezorWalletCreationPassphraseModal = ({
   const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
-    styles.trezorPassphraseModal,
+    styles.passphraseModal,
     isGetStarted && styles.getStarted
   );
 
@@ -90,7 +90,7 @@ const TrezorWalletCreationPassphraseModal = ({
             "Type the secret passphrase of the wallet to restore from the trezor device {label}"
           }
           values={{
-            label: <span className={styles.trezorLabel}>'{trezorLabel}'</span>
+            label: <span className={styles.label}>'{trezorLabel}'</span>
           }}
         />
       </p>
@@ -135,7 +135,7 @@ const TrezorWalletCreationPassphraseModal = ({
 
       <ButtonsToolbar
         {...{ isValid, onCancelModal, onSubmit }}
-        className={styles.trezorModalsButtons}
+        className={styles.buttons}
       />
     </Modal>
   );

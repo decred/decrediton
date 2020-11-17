@@ -1,17 +1,27 @@
-.trezorPinModal,
-.trezorPassphraseModal,
-.trezorWordModal {
-  /* width: 550px; */
-  padding: 20px;
-}
-
 h1 {
   margin-bottom: 20px;
 }
 
-.trezorPinModal > p,
-.trezorWordModal > p {
-  margin-bottom: 10px
+.pinModal,
+.passphraseModal,
+.wordModal {
+  width: 500px;
+  padding: 20px;
+}
+
+.pinModal.getStarted,
+.wordModal.getStarted,
+.passphraseModal.getStarted {
+  padding: 2em;
+}
+
+.pinModal > p,
+.wordModal > p {
+  margin-bottom: 10px;
+}
+
+.passphraseModal p:last-child {
+  margin-bottom: 10px;
 }
 
 .pinPadContainer {
@@ -20,58 +30,48 @@ h1 {
   align-items: center;
 }
 
-.trezorModalsButtons {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-.trezorPinModal .pinPad {
+.pinPad {
   display: grid;
   grid-template-columns: 2em 2em 2em;
   text-align: center;
   font-size: 150%;
 }
 
-.trezorPinModal .pinPad .pinPadButton {
+.pinPadButton {
   padding: 0.5em 0em;
   border: 1px solid transparent;
   cursor: pointer;
 }
 
-.trezorPinModal .pinPad .pinPadButton:hover {
+.pinPadButton:hover {
   border: 1px solid #6397ff;
 }
 
-.trezorPinModal.getStarted,
-.trezorWordModal.getStarted,
-.trezorPassphraseModal.getStarted {
-  padding: 2em;
-}
-
-.trezorLabel {
-  font-family: var(--font-family-regular);
-}
-
-.trezorWordSelect {
-  min-height: 10em;
+.passphraseModal strong {
+  color: var(--error-red);
 }
 
 .passwordField {
   margin-bottom: 20px;
 }
 
-@media screen and (max-width: 768px) {
-  .trezorPinModal,
-  .trezorPassphraseModal,
-  .trezorWordModal {
-    width: 500px;
-  }
+.wordSelect {
+  min-height: 10em;
+}
+
+.label {
+  font-family: var(--font-family-regular);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 @media screen and (max-width: 375px) {
-  .trezorPinModal,
-  .trezorPassphraseModal,
-  .trezorWordModal {
+  .pinModal,
+  .passphraseModal,
+  .wordModal {
     width: 250px;
   }
 }

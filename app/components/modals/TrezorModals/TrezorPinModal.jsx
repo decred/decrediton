@@ -65,7 +65,7 @@ const TrezorPinModal = ({
   const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
-    styles.trezorPinModal,
+    styles.pinModal,
     isGetStarted && styles.getStarted
   );
 
@@ -79,7 +79,7 @@ const TrezorPinModal = ({
           id="trezor.pinModal.description"
           m="Click button sequence that corresponds to your pin on trezor {label}"
           values={{
-            label: <span className={styles.trezorLabel}>'{trezorLabel}'</span>
+            label: <span className={styles.label}>'{trezorLabel}'</span>
           }}
         />
       </p>
@@ -100,7 +100,7 @@ const TrezorPinModal = ({
       </div>
       <ButtonsToolbar
         {...{ onCancelModal: onCancelPinModal, onSubmit }}
-        className={styles.trezorModalsButtons}
+        className={styles.buttons}
       />
     </Modal>
   );

@@ -18,7 +18,7 @@ const TrezorPassphraseModal = ({
   const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
-    styles.trezorPassphraseModal,
+    styles.passphraseModal,
     isGetStarted && styles.getStarted
   );
 
@@ -35,7 +35,7 @@ const TrezorPassphraseModal = ({
             id="trezor.passphraseModal.description"
             m="Type the secret passphrase for the wallet stored in trezor {label}"
             values={{
-              label: <span className={styles.trezorLabel}>'{trezorLabel}'</span>
+              label: <span className={styles.label}>'{trezorLabel}'</span>
             }}
           />
         </p>
