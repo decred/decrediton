@@ -363,6 +363,8 @@ export const ticketNormalizer = createSelector(
       const hasSpender = spender && spender.getHash();
       const isVote = status === VOTED;
       const isPending = !timestamp;
+      // Some legacy vsp fees wallet will have tickets without `ticket` field
+      // and only with `spender` so we use it as fallback
       const ticketTx = ticket.ticket || ticket.spender;
       const ticketHash = reverseRawHash(ticketTx.getHash());
       const spenderTx = hasSpender ? spender : null;
@@ -459,11 +461,6 @@ export const ticketNormalizer = createSelector(
       const debitList = ticketTx.getDebitsList();
       if (debitList.length > 0) {
         accountName = getAccountName(debitList[0].getPreviousAccount());
-      } else {
-        // Mixer is set to ignore gap limit. If a wallet does not know tx
-        // details for some reason, can be due that or some other reason which
-        // needs to be investigated.
-        //throw "Tx debit list is empty. Something is wrong.";
       }
       const ticketInvestment =
         debitList.reduce((a, v) => a + v.getPreviousAmount(), 0) - ticketChange;
