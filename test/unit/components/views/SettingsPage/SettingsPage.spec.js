@@ -9,13 +9,7 @@ import * as sa from "actions/SettingsActions";
 import * as wla from "actions/WalletLoaderActions";
 import { PROXYTYPE_HTTP, PROXYTYPE_PAC } from "main_dev/proxy";
 import * as conf from "config";
-import {
-  defaultLightTheme,
-  ThemeProvider,
-  defaultDarkTheme,
-  DEFAULT_DARK_THEME_NAME,
-  DEFAULT_LIGHT_THEME_NAME
-} from "pi-ui";
+import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import {
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
@@ -63,7 +57,6 @@ const testDefaultAllowedExternalRequests = [
 const testCurrentSettings = {
   locale: testDefaultLocale,
   theme: testDefaultTheme,
-  allowedExternalRequests: [],
   network: testDefaultNetwork.toLowerCase(),
   needNetworkReset: false,
   spvMode: testDefaultSpvMode == ENABLED,
@@ -89,6 +82,8 @@ let mockTicketBuyerService;
 let mockSaveSettings;
 let mockGetGlobalCfg;
 let mockChangePassphrase;
+let mockIsChangePassPhraseDisabled;
+let mockIsTicketAutoBuyerEnabled;
 
 beforeEach(() => {
   mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
@@ -99,6 +94,12 @@ beforeEach(() => {
   });
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
   mockIsMainNet = sel.isMainNet = jest.fn(() => false);
+  mockIsTicketAutoBuyerEnabled = sel.mockIsTicketAutoBuyerEnabled = jest.fn(
+    () => false
+  );
+  mockIsChangePassPhraseDisabled = sel.isChangePassPhraseDisabled = jest.fn(
+    () => false
+  );
   mockWalletService = sel.walletService = jest.fn(() => {
     return {};
   });
@@ -134,19 +135,50 @@ test("show error when there is no walletService", () => {
   expect(mockTicketBuyerService).toHaveBeenCalled();
 });
 
-test("render SettingsPage and test close wallet button", async () => {
+test("test close wallet button (ticket autobuyer is NOT running) ", () => {
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-
-  expect(screen.getByText("Settings")).toBeInTheDocument();
-  expect(
-    screen.getByText(/changing network settings requires a restart/i)
-  ).toBeInTheDocument();
-
   testConfirmModal("Close Wallet", "Confirmation Required");
+});
+
+test("test close wallet button (ticket autobuyer is running) ", () => {
+  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+    () => true
+  );
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
+  testConfirmModal(
+    "Close Wallet",
+    "Confirmation Required",
+    "Are you sure you want to close test-wallet-name and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
+  );
+});
+
+test("test cli tooltips", () => {
+  const settingsWithAlreadySetCli = Object.assign({}, testSettings);
+  settingsWithAlreadySetCli.tempSettings = {
+    ...testCurrentSettings,
+    networkFromCli: true,
+    spvModeFromCli: true,
+    spvConnectFromCli: true,
+    daemonStartAdvancedFromCli: true
+  };
+  render(<SettingsPage />, {
+    initialState: {
+      settings: settingsWithAlreadySetCli
+    }
+  });
+  const tooltips = screen.getAllByText(
+    /This was set as a command-line option/i
+  );
+  expect(tooltips.length).toBe(4);
 });
 
 const getOptionByNameAndType = (name, type) => {
@@ -157,11 +189,18 @@ const getOptionByNameAndType = (name, type) => {
   return options[0];
 };
 
-const testConfirmModal = (submitButtonText, confirmHeaderText) => {
+const testConfirmModal = (
+  submitButtonText,
+  confirmHeaderText,
+  confirmContent
+) => {
   const submitButton = screen.getByText(submitButtonText);
   // submit and cancel
   user.click(submitButton);
   expect(screen.getByText(confirmHeaderText)).toBeInTheDocument();
+  if (confirmContent) {
+    expect(screen.getByText(confirmContent)).toBeInTheDocument();
+  }
   user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(confirmHeaderText)).not.toBeInTheDocument();
   // submit and confirm
@@ -247,9 +286,7 @@ const testTextFieldInput = (
   needsConfirm
 ) => {
   render(<SettingsPage />, {
-    initialState: {
-      settings: testSettings
-    }
+    initialState: { settings: testSettings }
   });
   const saveButton = screen.getByText("Save");
   expect(saveButton.className).toMatch("disabled");
@@ -350,7 +387,7 @@ test.each([
     ],
     testDefaultTimezone
   ]
-])(`test '%s' RadioButtonGroup `, testRadioButtonGroupInput);
+])(`test '%s' RadioButtonGroup`, testRadioButtonGroupInput);
 
 const testCheckBoxInput = (label, configKey) => {
   render(<SettingsPage />, {
@@ -375,7 +412,7 @@ const testCheckBoxInput = (label, configKey) => {
   const expectedChange = { ...testCurrentSettings };
 
   if (defaultCheckedValue) {
-    var index = expectedChange.allowedExternalRequests.indexOf(configKey);
+    const index = expectedChange.allowedExternalRequests.indexOf(configKey);
     if (index !== -1) {
       expectedChange.allowedExternalRequests.splice(index, 1);
     }
@@ -391,7 +428,7 @@ test.each([
   ["Update Check", EXTERNALREQUEST_UPDATE_CHECK],
   ["Politeia", EXTERNALREQUEST_POLITEIA],
   ["Decred Block Explorer", EXTERNALREQUEST_DCRDATA]
-])(`test '%s' Checkbox `, testCheckBoxInput);
+])(`test '%s' Checkbox`, testCheckBoxInput);
 
 const getFieldRequiredErrorCount = () => {
   const inputErrorString = "This field is required";
@@ -486,4 +523,18 @@ test("test update private passphrase", () => {
     testNewPassphrase,
     true
   );
+});
+
+test("update private passphrase is disabled", () => {
+  mockIsChangePassPhraseDisabled = sel.isChangePassPhraseDisabled = jest.fn(
+    () => true
+  );
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  expect(mockIsChangePassPhraseDisabled).toHaveBeenCalled();
+  user.click(screen.getByLabelText("Update Private Passphrase"));
+  expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
 });
