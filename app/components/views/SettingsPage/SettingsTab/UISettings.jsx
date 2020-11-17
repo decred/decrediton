@@ -19,7 +19,7 @@ const availableUIThemeTypes = [
     name: <T id="settings.uitheme.type.light" m="Light" />,
     value: DEFAULT_LIGHT_THEME_NAME
   },
-  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: DEFAULT_DARK_THEME_NAME}
+  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: DEFAULT_DARK_THEME_NAME }
 ];
 
 const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
