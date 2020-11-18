@@ -55,11 +55,6 @@
   border-radius: 0px;
 }
 
-.rescanButtonArea {
-  padding-right: 5px;
-  display: inline-block;
-}
-
 .rescanCancelButtonArea {
   margin: 0 -12px 0 auto;
 }

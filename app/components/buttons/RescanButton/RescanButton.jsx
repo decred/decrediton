@@ -13,6 +13,7 @@ but does not re-download it.`;
 
 export default ({ rescanRequest, rescanAttempt }) => (
   <Tooltip
+    className={styles.tooltip}
     text={<T id="sidebar.rescanBtn.tip" m={rescanBtnMessage} />}
     disabled={rescanRequest}>
     <button

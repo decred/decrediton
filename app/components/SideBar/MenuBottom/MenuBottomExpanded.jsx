@@ -38,22 +38,20 @@ const MenuBarExpanded = ({
         <Balance amount={totalBalance} />
       </div>
     </div>
-    <div className={styles.latestBlock}>
+    <div className={styles.bottomBar}>
       <SpvIcon isSPV={isSPV} />
       {rescanRequest && <RescanProgress />}
       {currentBlockHeight && !rescanRequest && (
         <>
-          <div className={styles.rescanButtonArea}>
-            <RescanButton {...{ rescanRequest, rescanAttempt }} />
-          </div>
-          <a className={styles.latestBlockName}>
-            <T id="sidebar.latestBlock" m="Latest Block" />
-            <span className={styles.latestBlockNumber}>
+          <RescanButton {...{ rescanRequest, rescanAttempt }} />
+          <div className={styles.latestBlock}>
+            <div><T id="sidebar.latestBlock" m="Latest Block" /></div>
+            <div className={styles.latestBlockNumber}>
               &nbsp;{currentBlockHeight}
-            </span>
-          </a>
-          <div className={styles.latestBlockTime}>
-            <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+            </div>
+            <div className={styles.latestBlockTime}>
+              <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+            </div>
           </div>
         </>
       )}
