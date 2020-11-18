@@ -270,6 +270,8 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (
   };
 
   dispatch(updateAccount(updatedBalance));
+
+  return updatedBalance;
 };
 
 export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (

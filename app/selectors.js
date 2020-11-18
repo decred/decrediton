@@ -143,6 +143,8 @@ export const getAllowSendFromUnmixed = get([
 // getMixedAccount gets the account number (int) which represents the mixed
 // account at decrediton.
 export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
+// getChangeAccount get the changeaccount selector, which is used for unmixed
+// accounts on mixer.
 export const getChangeAccount = get(["walletLoader", "changeAccount"]);
 export const getCsppServer = get(["walletLoader", "csppServer"]);
 export const getCsppPort = get(["walletLoader", "csppPort"]);
