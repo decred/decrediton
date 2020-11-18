@@ -44,26 +44,31 @@ const MenuBarExpanded = ({
       {currentBlockHeight && !rescanRequest && (
         <>
           <RescanButton {...{ rescanRequest, rescanAttempt }} />
-          <div className={styles.latestBlock}>
-            <div><T id="sidebar.latestBlock" m="Latest Block" /></div>
-            <div className={styles.latestBlockNumber}>
-              &nbsp;{currentBlockHeight}
-            </div>
-            <div className={styles.latestBlockTime}>
-              <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+          <div className={styles.bottomBarContent}>
+            <div className={styles.latestBlockWithPeers}>
+              <div className={styles.latestBlock}>
+                <div>
+                  <T id="sidebar.latestBlock" m="Latest Block" />
+                </div>
+                <div className={styles.latestBlockNumber}>
+                  &nbsp;{currentBlockHeight}
+                </div>
+                <div className={styles.latestBlockTime}>
+                  <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+                </div>
+              </div>
+              <div className={styles.peersCount}>
+                <span className={styles.peersCountLabel}>
+                  <T id="sidebar.peersCount" m="Peers" />
+                </span>
+                <span className={styles.peersCountValue}>
+                  &nbsp;{peersCount}
+                </span>
+              </div>
             </div>
           </div>
         </>
       )}
-    </div>
-    <div className={styles.bottomBar}>
-      <div className={styles.peersCount}>
-        <div className={styles.peersIcon}></div>
-        <span className={styles.peersCountLabel}>
-          <T id="sidebar.peersCount" m="Peers" />
-        </span>
-        <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
-      </div>
     </div>
   </div>
 );

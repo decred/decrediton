@@ -65,11 +65,21 @@
   font-size: 11px;
 }
 
-.latestBlock {
+.bottomBarContent {
   color: var(--disabled-color);
   line-height: 10px;
   display: flex;
   align-items: center;
+}
+
+.latestBlockWithPeers {
+  display: flex;
+  flex-direction: column;
+}
+
+.latestBlock {
+  display: flex;
+  margin-bottom: 0.4rem;
 }
 
 .latestBlockNumber {
@@ -79,30 +89,11 @@
 
 .latestBlockTime {
   color: var(--disabled-color);
-  font-size: 13px;
 }
-
-/* .bottomBar {
-  display: flex;
-  align-items: center;
-  padding: 0 16px 8px;
-  background-color: var(--info-modal-button-text);
-}*/
 
 .peersCount {
   display: flex;
   align-items: center;
-}
-
-.peersIcon {
-  margin: 5px 10px 5px 5px;
-  width: 16px;
-  height: 16px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: var(--menu-peers-icon);
-  background-size: 16px 16px;
 }
 
 .peersCountLabel {
