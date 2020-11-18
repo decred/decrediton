@@ -121,7 +121,6 @@ const icons = {
   "menu-animation-accounts": "url('style/animations/accountsMotion.gif')",
   "menu-animation-governance": "url('style/animations/governanceMotion.gif')",
   "menu-animation-overview": "url('style/animations/overviewMotion.gif')",
-  "menu-animation-settings": "url('style/animations/settingsMotion.gif')",
   "menu-animation-tickets": "url('style/animations/ticketsMotion.gif')",
   "menu-animation-transactions":
     "url('style/animations/transactionsMotion.gif')",

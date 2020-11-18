@@ -89,7 +89,6 @@ const expectToHaveDefaultMenuLinks = (params) => {
     "/privacy",
     "securitycntr"
   );
-  expectToHaveMenuLink(/settings/i, "settingsIcon", "/settings", "settings");
 
   if (isTrezorEnabled) {
     expectToHaveMenuLink(/trezor/i, "trezorIcon", "/trezor", "trezor");

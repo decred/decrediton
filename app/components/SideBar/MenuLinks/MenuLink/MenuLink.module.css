@@ -20,14 +20,6 @@
   height: 52px;
 }
 
-.menuLink.settingsIcon {
-  background-image: var(--menu-settings);
-}
-
-.menuLink.settingsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-settings);
-}
-
 .menuLink.ticketsIcon {
   background-image: var(--menu-tickets);
 }

@@ -14,7 +14,7 @@ const LastBlockTime = ({ lastBlockTimestamp, clearTimeout, setTimeout }) => {
     <>
       <span>{", "}</span>
       {lastBlockIsRecent ? (
-        <T id="sidebar.lastBlockIsRecent" m="1 min ago" />
+        <T id="sidebar.lastBlockIsRecent" m="seconds ago" />
       ) : (
         <FormattedRelative value={lastBlockDate} updateInterval={1 * 1000} />
       )}

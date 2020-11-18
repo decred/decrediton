@@ -131,7 +131,7 @@ const darkTheme = {
   "toggle-bar-color": "var(--background-copy-color)",
 
   /* icons */
-  "menu-settings": "url('style/icons/settingsActiveDark.svg')",
+  "menu-settings": "url('style/icons/menuSettingsDark.svg')",
   "menu-accounts": "url('style/icons/accountsActiveDark.svg')",
   "menu-governance": "url('style/icons/governanceActiveDark.svg')",
   "menu-transactions": "url('style/icons/transactionsActiveDark.svg')",

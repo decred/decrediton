@@ -70,6 +70,8 @@
   line-height: 10px;
   display: flex;
   align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .latestBlockWithPeers {
@@ -103,6 +105,13 @@
 .peersCountValue {
   font-family: var(--font-family-monospace);
   color: var(--sidebar-bottom-light-text-color);
+}
+
+.settingsIcon {
+  background-image: var(--menu-settings);
+  height: 2.2rem;
+  width: 2.2rem;
+  background-size: 2.2rem;
 }
 
 .rescanButtonArea {

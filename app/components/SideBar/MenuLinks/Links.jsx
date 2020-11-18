@@ -37,12 +37,6 @@ export const linkList = [
     link: <T id="sidebar.link.privacy" m="Privacy" />,
     icon: "securitycntr",
     ariaLabel: "Privacy"
-  },
-  {
-    path: "/settings",
-    link: <T id="sidebar.link.settings" m="Settings" />,
-    icon: "settings",
-    ariaLabel: "Settings"
   }
 ];
 

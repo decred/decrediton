@@ -1,3 +1,4 @@
+import { NavLink as Link } from "react-router-dom";
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
@@ -66,6 +67,9 @@ const MenuBarExpanded = ({
                 </span>
               </div>
             </div>
+              <Link to="/settings" aria-label="settings">
+                <div className={styles.settingsIcon}></div>
+              </Link>
           </div>
         </>
       )}

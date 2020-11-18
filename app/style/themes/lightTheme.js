@@ -129,7 +129,7 @@ const lightTheme = {
   "coinjoin-sum-text-color": "#596d81",
 
   /* icons */
-  "menu-settings": "url('style/icons/settings-active.png')",
+  "menu-settings": "url('style/icons/menuSettings.svg')",
   "menu-accounts": "url('style/icons/accounts-active.png')",
   "menu-governance": "url('style/icons/governance-active.png')",
   "menu-transactions": "url('style/icons/transactions-active.png')",
