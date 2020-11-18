@@ -367,8 +367,10 @@ export const ticketNormalizer = createSelector(
       const hasSpender = spender && spender.getHash();
       const isVote = status === VOTED;
       const isPending = !timestamp;
-      const ticketHash = reverseRawHash(ticket.ticket.getHash());
-      const ticketTx = ticket.ticket;
+      // Some legacy vsp fees wallet will have tickets without `ticket` field
+      // and only with `spender` so we use it as fallback
+      const ticketTx = ticket.ticket || ticket.spender;
+      const ticketHash = reverseRawHash(ticketTx.getHash());
       const spenderTx = hasSpender ? spender : null;
       const txBlockHash = blockHash
         ? reverseHash(Buffer.from(blockHash).toString("hex"))
@@ -381,7 +383,6 @@ export const ticketNormalizer = createSelector(
         ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex"))
         : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
-
       if (spenderTx) {
         spenderTx.getDebitsList().reduce((total, debit) => {
           const debitedAccount = debit.getPreviousAccount();
@@ -454,20 +455,16 @@ export const ticketNormalizer = createSelector(
 
       // ticket change is anything returned to the wallet on ticket purchase.
       const isTicketChange = (c) => c.getIndex() > 0 && c.getIndex() % 2 === 0;
-      const ticketChange = ticketTx
-        .getCreditsList()
-        .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
+      const ticketChange =
+        ticketTx
+          .getCreditsList()
+          .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       let accountName = "";
       const debitList = ticketTx.getDebitsList();
       if (debitList.length > 0) {
         accountName = getAccountName(debitList[0].getPreviousAccount());
-      } else {
-        // Mixer is set to ignore gap limit. If a wallet does not know tx
-        // details for some reason, can be due that or some other reason which
-        // needs to be investigated.
-        throw "Tx debit list is empty. Something is wrong.";
       }
       const ticketInvestment =
         debitList.reduce((a, v) => a + v.getPreviousAmount(), 0) - ticketChange;
