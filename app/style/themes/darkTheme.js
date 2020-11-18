@@ -142,7 +142,7 @@ const darkTheme = {
   "menu-trezor": "url('style/icons/trezorActiveDark.svg')",
   "menu-hamburger": "url('style/icons/hamburgerDark.svg')",
   "menu-arrow": "url('style/icons/arrowDark.svg')",
-  "menu-rescan-icon": "url('style/icons/menuRescanDark.svg')",
+  "menu-mixer-icon": "url('style/icons/menuMixerDark.svg')",
   "menu-spvon-icon": "url('style/icons/menuSpvOnDark.svg')",
   "menu-spvoff-icon": "url('style/icons/menuSpvOffDark.svg')",
   "menu-block-synced-icon": "url('style/icons/blockSyncedDark.svg')",

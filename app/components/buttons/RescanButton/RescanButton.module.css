@@ -13,7 +13,6 @@
   border: none;
   outline: none;
   background-color: transparent;
-  /*background-image: var(--menu-rescan-icon);*/
   background-image: var(--menu-block-synced-icon);
   background-size: 2.2rem 2.2rem;
   cursor: pointer;

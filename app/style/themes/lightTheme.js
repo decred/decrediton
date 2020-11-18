@@ -140,7 +140,7 @@ const lightTheme = {
   "menu-trezor": "url('style/icons/trezorActive.svg')",
   "menu-hamburger": "url('style/icons/hamburger.svg')",
   "menu-arrow": "url('style/icons/arrow.svg')",
-  "menu-rescan-icon": "url('style/icons/menu-rescan.svg')",
+  "menu-mixer-icon": "url('style/icons/menuMixer.svg')",
   "menu-spvon-icon": "url('style/icons/menuSpvOn.svg')",
   "menu-spvoff-icon": "url('style/icons/menuSpvOff.svg')",
   "menu-block-synced-icon": "url('style/icons/blockSynced.svg')",

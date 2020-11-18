@@ -1,4 +1,3 @@
-import { linkList } from "./Links";
 import { Motion } from "react-motion";
 import MenuLink from "./MenuLink/MenuLink";
 import style from "../SideBar.module.css";
@@ -53,7 +52,7 @@ const MenuLinks = () => {
     nodes,
     menuLinks,
     expandSideBar
-  } = useMenuLinks(linkList);
+  } = useMenuLinks();
 
   return (
     <>

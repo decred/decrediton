@@ -67,9 +67,9 @@ const MenuBarExpanded = ({
                 </span>
               </div>
             </div>
-              <Link to="/settings" aria-label="settings">
-                <div className={styles.settingsIcon}></div>
-              </Link>
+            <Link to="/settings" aria-label="settings">
+              <div className={styles.settingsIcon}></div>
+            </Link>
           </div>
         </>
       )}
