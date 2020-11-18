@@ -21,7 +21,7 @@ const TrezorConfig = ({
       <div>
         <T
           id="trezor.getStartedConfig.noDeviceFound"
-          m="No trezor device found. Check the connection and the trezor bridge software."
+          m="No Trezor device found. Check the connection and the Trezor bridge software."
         />
       </div>
       <div>

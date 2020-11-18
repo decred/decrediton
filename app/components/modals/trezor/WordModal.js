@@ -67,7 +67,7 @@ class WordModal extends React.Component {
         <p>
           <T
             id="trezor.wordModal.description"
-            m="Type the word requested in the trezor device."
+            m="Type the word requested in the Trezor device."
           />
         </p>
 

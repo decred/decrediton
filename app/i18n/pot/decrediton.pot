@@ -1218,9 +1218,9 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.changeLabel.success]
 #. defaultMessage is:
-#. Changed label on selected trezor to {label}
+#. Changed label on selected Trezor to {label}
 msgctxt "trezor.changeLabel.success"
-msgid "Changed label on selected trezor to {label}"
+msgid "Changed label on selected Trezor to {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/Settings.json
@@ -1378,9 +1378,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json
 #. [trezor.pinModal.description]
 #. defaultMessage is:
-#. Click button sequence that corresponds to your pin on trezor {label}
+#. Click button sequence that corresponds to your pin on Trezor {label}
 msgctxt "trezor.pinModal.description"
-msgid "Click button sequence that corresponds to your pin on trezor {label}"
+msgid "Click button sequence that corresponds to your pin on Trezor {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/InfoConfirmModal.json
@@ -2964,9 +2964,9 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.getWalletCreationMasterPubKey.failed]
 #. defaultMessage is:
-#. Failed to obtain master extended pubkey from trezor device: {originalError}
+#. Failed to obtain master extended pubkey from Trezor device: {originalError}
 msgctxt "trezor.getWalletCreationMasterPubKey.failed"
-msgid "Failed to obtain master extended pubkey from trezor device: {originalError}"
+msgid "Failed to obtain master extended pubkey from Trezor device: {originalError}"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -3140,9 +3140,9 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.updateFirmware.success]
 #. defaultMessage is:
-#. Firmware updated on trezor device
+#. Firmware updated on Trezor device
 msgctxt "trezor.updateFirmware.success"
-msgid "Firmware updated on trezor device"
+msgid "Firmware updated on Trezor device"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
@@ -4577,25 +4577,25 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.noConnectedDevice]
 #. defaultMessage is:
-#. No trezor device connected. Check the device connection and trezor bridge.
+#. No Trezor device connected. Check the device connection and Trezor bridge.
 msgctxt "trezor.noConnectedDevice"
-msgid "No trezor device connected. Check the device connection and trezor bridge."
+msgid "No Trezor device connected. Check the device connection and Trezor bridge."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TrezorPage/NoDevicePage.json
 #. [trezor.noDevice.message]
 #. defaultMessage is:
-#. No trezor device detected. Connect the device and check if trezor bridge is installed and running.
+#. No Trezor device detected. Connect the device and check if Trezor bridge is installed and running.
 msgctxt "trezor.noDevice.message"
-msgid "No trezor device detected. Connect the device and check if trezor bridge is installed and running."
+msgid "No Trezor device detected. Connect the device and check if Trezor bridge is installed and running."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/TrezorConfig/TrezorConfig.json
 #. [trezor.getStartedConfig.noDeviceFound]
 #. defaultMessage is:
-#. No trezor device found. Check the connection and the trezor bridge software.
+#. No Trezor device found. Check the connection and the Trezor bridge software.
 msgctxt "trezor.getStartedConfig.noDeviceFound"
-msgid "No trezor device found. Check the connection and the trezor bridge software."
+msgid "No Trezor device found. Check the connection and the Trezor bridge software."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
@@ -4873,17 +4873,17 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.passphraseProtectionSuccess.disabled]
 #. defaultMessage is:
-#. Passphrase protection has been disabled in trezor {label}
+#. Passphrase protection has been disabled in Trezor {label}
 msgctxt "trezor.passphraseProtectionSuccess.disabled"
-msgid "Passphrase protection has been disabled in trezor {label}"
+msgid "Passphrase protection has been disabled in Trezor {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.passphraseProtectionSuccess.enabled]
 #. defaultMessage is:
-#. Passphrase protection has been enabled in trezor {label}
+#. Passphrase protection has been enabled in Trezor {label}
 msgctxt "trezor.passphraseProtectionSuccess.enabled"
-msgid "Passphrase protection has been enabled in trezor {label}"
+msgid "Passphrase protection has been enabled in Trezor {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
@@ -5001,17 +5001,17 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.pinProtectionSuccess.disabled]
 #. defaultMessage is:
-#. Pin protection has been disabled in trezor {label}
+#. Pin protection has been disabled in Trezor {label}
 msgctxt "trezor.pinProtectionSuccess.disabled"
-msgid "Pin protection has been disabled in trezor {label}"
+msgid "Pin protection has been disabled in Trezor {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.pinProtectionSuccess.enabled]
 #. defaultMessage is:
-#. Pin protection has been enabled in trezor {label}
+#. Pin protection has been enabled in Trezor {label}
 msgctxt "trezor.pinProtectionSuccess.enabled"
-msgid "Pin protection has been enabled in trezor {label}"
+msgid "Pin protection has been enabled in Trezor {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
@@ -8302,25 +8302,25 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
 #. [trezor.passphraseModal.description]
 #. defaultMessage is:
-#. Type the secret passphrase for the wallet stored in trezor {label}
+#. Type the secret passphrase for the wallet stored in Trezor {label}
 msgctxt "trezor.passphraseModal.description"
-msgid "Type the secret passphrase for the wallet stored in trezor {label}"
+msgid "Type the secret passphrase for the wallet stored in Trezor {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
 #. [trezor.walletCreationpassphraseModal.description]
 #. defaultMessage is:
-#. Type the secret passphrase of the wallet to restore from the trezor device {label}
+#. Type the secret passphrase of the wallet to restore from the Trezor device {label}
 msgctxt "trezor.walletCreationpassphraseModal.description"
-msgid "Type the secret passphrase of the wallet to restore from the trezor device {label}"
+msgid "Type the secret passphrase of the wallet to restore from the Trezor device {label}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 #. [trezor.wordModal.description]
 #. defaultMessage is:
-#. Type the word requested in the trezor device.
+#. Type the word requested in the Trezor device.
 msgctxt "trezor.wordModal.description"
-msgid "Type the word requested in the trezor device."
+msgid "Type the word requested in the Trezor device."
 msgstr ""
 
 #: app/i18n/extracted/app/components/inputs/LEGACY_StakePoolSelect.json
