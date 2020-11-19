@@ -4,7 +4,7 @@ import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
 import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
-import { MIN_RELAY_FEE_ATOMS } from "constants";
+import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
 export const GETACCOUNTMIXERSERVICE_SUCCESS = "GETACCOUNTMIXERSERVICE_SUCCESS";
@@ -61,7 +61,7 @@ export const runAccountMixer = ({
       const spendableBal = await dispatch(
         getAcctSpendableBalance(changeAccount)
       );
-      if (spendableBal < MIN_RELAY_FEE_ATOMS) {
+      if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
         return { error: "Account balance too small" };
       }
       const mixerStreamer = await wallet.runAccountMixerRequest(

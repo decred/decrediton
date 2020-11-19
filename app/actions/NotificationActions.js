@@ -13,7 +13,7 @@ import {
 } from "middleware/walletrpc/api_pb";
 import { stopAccountMixer } from "./AccountMixerActions";
 import * as sel from "selectors";
-import { MIN_RELAY_FEE_ATOMS } from "constants";
+import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -84,7 +84,7 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
         const changeAccount = sel.getChangeAccount(getState());
         const { spendable } = await dispatch(getBalanceUpdateAttempt(changeAccount, 0));
 
-        if (spendable < MIN_RELAY_FEE_ATOMS) {
+        if (spendable < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
           dispatch(stopAccountMixer());
         }
       }
