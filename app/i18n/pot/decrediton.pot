@@ -6891,9 +6891,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 #. [ln.connectPage.title]
 #. defaultMessage is:
-#. Start LN Wallet
+#. Start Lightning Wallet
 msgctxt "ln.connectPage.title"
-msgid "Start LN Wallet"
+msgid "Start Lightning Wallet"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json

@@ -425,7 +425,7 @@
   "ln.connectPage.enableAutopilot": "Enable Automatic Channel Creation",
   "ln.connectPage.enableAutopilotDescr": "This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds.",
   "ln.connectPage.launchBtn": "Start and Unlock LN Wallet",
-  "ln.connectPage.title": "Start LN Wallet",
+  "ln.connectPage.title": "Start Lightning Wallet",
   "ln.connectPage.unlockWalletModal": "Unlock LN Wallet",
   "ln.connectPage.useAccount": "Use existing",
   "ln.connectPage.useExistingAccountWarning": "Attention: note that a running LN wallet maintains unencrypted keys\n          in memory while it's running and also takes control of all funds of the\n          given account. It's recommended to have an account dedicated to LN\n          operations and only transfer the funds you intend to use in LN to it.",
