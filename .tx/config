@@ -10,7 +10,7 @@ type = GITHUBMARKDOWN
 [decrediton.decrediton]
 file_filter = app/i18n/po/decrediton.<lang>.po
 source_lang = en
-minimum_perc = 80
+minimum_perc = 30
 type = PO
 
 [decrediton.lnforceclosechannelmd]

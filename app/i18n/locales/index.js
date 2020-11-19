@@ -3,11 +3,14 @@ import staticDefaults from "../extracted/static";
 // TODO: This polyfill can probably be removed after we update to a version of
 // electron with support to Intl.RelativeTimeFormat.
 import "@formatjs/intl-relativetimeformat/polyfill";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/ar";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/de";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/en";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/es";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/fr";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/it";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/ja";
+import "@formatjs/intl-relativetimeformat/dist/locale-data/pl";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/pt";
 import "@formatjs/intl-relativetimeformat/dist/locale-data/zh";
 
@@ -42,6 +45,14 @@ export const defaultFormats = {
   }
 };
 
+const ar = {
+  key: "ar",
+  language: "ar",
+  description: "اَلْعَرَبِيَّةُ",
+  messages: require("../translations/ar.json"),
+  formats: defaultFormats
+};
+
 const de = {
   key: "de",
   language: "de",
@@ -50,7 +61,7 @@ const de = {
   formats: defaultFormats
 };
 
-const en = {
+export const en = {
   key: "en",
   language: "en",
   description: "English (US)",
@@ -90,11 +101,27 @@ const fr = {
   formats: defaultFormats
 };
 
+const it = {
+  key: "it",
+  language: "it",
+  description: "Italiano",
+  messages: require("../translations/it.json"),
+  formats: defaultFormats
+};
+
 const ja = {
   key: "ja",
   language: "ja",
   description: "日本語",
   messages: require("../translations/ja.json"),
+  formats: defaultFormats
+};
+
+const pl = {
+  key: "pl",
+  language: "pl",
+  description: "język polski",
+  messages: require("../translations/pl.json"),
   formats: defaultFormats
 };
 
@@ -124,7 +151,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [de, en, en_GB, en_AU, es, fr, ja, pt_BR, zh];
+const locales = [ar, de, en, en_GB, en_AU, es, it, fr, ja, pl, pt_BR, zh];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -139,6 +166,9 @@ export default locales;
 // The locale key returned by this function is guaranteed to exist.
 export function appLocaleFromElectronLocale(electronLocale) {
   switch (electronLocale) {
+    case "ar":
+      return "ar";
+
     case "de":
     case "de-AT":
     case "de-CH":
@@ -159,8 +189,16 @@ export function appLocaleFromElectronLocale(electronLocale) {
     case "fr-FR":
       return "fr";
 
+    case "it":
+    case "it-IT":
+    case "it-CH":
+      return "it";
+
     case "ja":
       return "ja";
+
+    case "pl":
+      return "pl";
 
     case "pt":
     case "pt-BR":
