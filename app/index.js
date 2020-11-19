@@ -35,8 +35,8 @@ import SourceSansProSemiBold from "style/fonts/SourceSansPro-SemiBold.ttf";
 import SourceSansProSemiBoldItalic from "style/fonts/SourceSansPro-SemiBoldItalic.ttf";
 import SourceSansProBold from "style/fonts/SourceSansPro-Bold.ttf";
 import SourceSansProBoldItalic from "style/fonts/SourceSansPro-BoldItalic.ttf";
-import InconsolataRegular from "style/fonts/Inconsolata-Regular.ttf";
-import InconsolataBold from "style/fonts/Inconsolata-Bold.ttf";
+import SourceCodeProRegular from "style/fonts/SourceCodePro-Regular.ttf";
+import SourceCodeProBold from "style/fonts/SourceCodePro-Bold.ttf";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
@@ -477,14 +477,14 @@ const fonts = [
     "font-weight": defaultLightTheme["font-weight-bold"],
     "font-style": "italic"
   },
-  // Inconsolata
+  // SourceCodePro
   {
-    "font-family": "Inconsolata",
-    src: `url(${InconsolataRegular}) format("truetype")`
+    "font-family": "Source Code Pro",
+    src: `url(${SourceCodeProRegular}) format("truetype")`
   },
   {
-    "font-family": "Inconsolata",
-    src: `url(${InconsolataBold}) format("truetype")`,
+    "font-family": "Source Code Pro",
+    src: `url(${SourceCodeProBold}) format("truetype")`,
     "font-weight": defaultLightTheme["font-weight-bold"]
   }
 ];
