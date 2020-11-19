@@ -269,7 +269,7 @@ msgstr "帐户"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 msgctxt "purchaseTickets.accountFrom"
 msgid "Account"
-msgstr ""
+msgstr "帐户"
 
 #. [securitycenter.validate.owned.accountNumber]
 #. defaultMessage is:
@@ -500,7 +500,7 @@ msgstr "昵称"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
 msgctxt "proposals.statusLinks.allFinishedVote"
 msgid "All"
-msgstr ""
+msgstr "所有"
 
 #. [tickets.type.all]
 #. defaultMessage is:
@@ -559,7 +559,7 @@ msgstr "允许您选择指定的第三方服务访问此程序。"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 msgctxt "purchaseTickets.alwaysUseThisVSP"
 msgid "Always use this VSP"
-msgstr ""
+msgstr "一直使用该VSP"
 
 #. [ln.routesInfo.amount]
 #. defaultMessage is:
@@ -640,7 +640,7 @@ msgstr "从钱包发送至选票交易的金额。"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
 msgctxt "proposals.statusLinks.approvedVote"
 msgid "Approved"
-msgstr ""
+msgstr "已批准"
 
 #. [stake.addPool.modalContent]
 #. defaultMessage is:
@@ -743,6 +743,10 @@ msgid ""
 "          given account. It's recommended to have an account dedicated to LN\n"
 "          operations and only transfer the funds you intend to use in LN to it."
 msgstr ""
+"注意：正在运行的闪电网络钱包会\n"
+"会将未加密的密钥保存在内存中，并控制帐户内的所有资金\n"
+"建议使用专用的闪电网络帐户操作\n"
+"，建议仅将您打算长期使用闪电网络的资金转进去。"
 
 #. [tickets.autobuyerRunning.title]
 #. defaultMessage is:
@@ -766,7 +770,7 @@ msgstr "自动购票"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "vsp.autobuyer.subtitle"
 msgid "Automatic Ticket Purchases"
-msgstr ""
+msgstr "自动购票"
 
 #. [charts.keys.available]
 #. defaultMessage is:
@@ -1078,7 +1082,7 @@ msgstr "取消"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
 msgctxt "tickets.fee.error.confirmModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1110,7 +1114,7 @@ msgstr "取消"
 #: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
 msgctxt "SendFromUnmixed.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. [passphraseModal.btnCancel]
 #. defaultMessage is:
@@ -1609,7 +1613,7 @@ msgstr "确认"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
 msgctxt "tickets.fee.error.confirmModal.btnConfirm"
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #. [changePassModal.confirm]
 #. defaultMessage is:
@@ -1753,6 +1757,8 @@ msgid ""
 "rpc.key and restart dcrd with the --tlscurve=P-256 param to allow it to "
 "generate a cert and key with that supported curve."
 msgstr ""
+"连接错误。 您可能收到此错误的原因是Decrediton不再支持P-521。 要修复此问题，您需要删除rpc.cert和rpc.key并使用--"
+"tlscurve = P-256参数重新启动dcrd，以使其能够生成具有支持该协议的证书和密钥。"
 
 #. [settings.group-title.connectivity]
 #. defaultMessage is:
@@ -1845,7 +1851,7 @@ msgstr "继续"
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/PassphraseForm.json
 msgctxt "passphraseForm.continueBtn"
 msgid "Continue"
-msgstr ""
+msgstr "继续"
 
 #. [wallet.create.button]
 #. defaultMessage is:
@@ -2491,6 +2497,8 @@ msgid ""
 "Do you want to start the mixer?\n"
 "                Decrediton should not be closed while the mixer is running."
 msgstr ""
+"您要启动混币工具吗？\n"
+"混币工具运行时，请不要关闭Decrediton。"
 
 #. [privacy.create.default.description]
 #. defaultMessage is:
@@ -2611,7 +2619,7 @@ msgstr "启用VSP列表"
 #: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
 msgctxt "SendFromUnmixed.btnConfirm"
 msgid "Enable sending from unmixed accounts"
-msgstr ""
+msgstr "启用从混币帐户发送"
 
 #. [createWallet.restore.trezor.enabled]
 #. defaultMessage is:
@@ -2648,7 +2656,7 @@ msgid ""
 "Enables connections to most services for a better user experience and full "
 "access to features (such as version update, VSP listing, Politeia, etc). "
 "Recommended for most users."
-msgstr ""
+msgstr "启用与大多数服务的连接，以提供更好的用户体验以及部分功能（例如版本更新，VSP列表，Politia等）的完整访问。 推荐用户使用。"
 
 #. [trezor.pinModal.title]
 #. defaultMessage is:
@@ -2704,7 +2712,7 @@ msgstr "输入您十六进制表示的种子"
 #: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
 msgctxt "addMixerAccountModal.mixedAccountName.placeholder"
 msgid "Enter the mixed account name"
-msgstr ""
+msgstr "输入混币帐户名"
 
 #. [addMixerAccountModal.changeAccountName.placeholder]
 #. defaultMessage is:
@@ -2712,7 +2720,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/AddMixerAccountsModal.json
 msgctxt "addMixerAccountModal.changeAccountName.placeholder"
 msgid "Enter the unmixed account name"
-msgstr ""
+msgstr "输入非混币帐户名"
 
 #. [securitycenter.signMessage.field.message.placeholder]
 #. defaultMessage is:
@@ -2752,7 +2760,7 @@ msgstr "输入签名"
 #: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
 msgctxt "vsp.ticket.error"
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #. [daemon.connect.error]
 #. defaultMessage is:
@@ -3136,7 +3144,7 @@ msgstr "费用错误"
 #: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
 msgctxt "txRow.live.feeStatus.tooltip"
 msgid "Fee Status"
-msgstr ""
+msgstr "实时费用"
 
 #. [vsptickets.table.header.account]
 #. defaultMessage is:
@@ -3144,7 +3152,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "vsptickets.table.header.account"
 msgid "Fee Status"
-msgstr ""
+msgstr "实时费用"
 
 #. [export.transactions.fields.fee]
 #. defaultMessage is:
@@ -3184,7 +3192,7 @@ msgstr "填充所有字段"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer/Form.json
 msgctxt "autobuyer.startErr"
 msgid "Fill all fields."
-msgstr ""
+msgstr "填充所有字段。"
 
 #. [vsp.autobuyer.startErr]
 #. defaultMessage is:
@@ -3560,7 +3568,7 @@ msgstr "历史记录"
 #: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
 msgctxt "tickets.tab.mytickets"
 msgid "History Tickets"
-msgstr ""
+msgstr "历史选票"
 
 #. [ln.routesInfo.hop]
 #. defaultMessage is:
@@ -3600,7 +3608,7 @@ msgstr "我了解风险"
 #: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountModal.json
 msgctxt "sendFromUnmixedModal.copyConfirmationPhrase"
 msgid "I understand the risks"
-msgstr ""
+msgstr "我了解其风险"
 
 #. [txDetails.io.title]
 #. defaultMessage is:
@@ -3930,7 +3938,7 @@ msgstr "上次访问"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsListItem/ProposalsListItem.json
 msgctxt "proposalItem.lastUpdatedAt"
 msgid "Last updated {reldate}"
-msgstr ""
+msgstr "上次更新{reldate}"
 
 #. [sidebar.latestBlock]
 #. defaultMessage is:
@@ -4098,7 +4106,7 @@ msgstr "等待被选中"
 #: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/Page.json
 msgctxt "vsp.mytickets.subtitle"
 msgid "Live Tickets"
-msgstr ""
+msgstr "等待被选中的选票"
 
 #. [stakeSPV.revokedTickets]
 #. defaultMessage is:
@@ -4250,7 +4258,7 @@ msgstr "日志"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.logs"
 msgid "Logs"
-msgstr ""
+msgstr "日志"
 
 #. [getstarted.setAccount.description]
 #. defaultMessage is:
@@ -4274,6 +4282,13 @@ msgid ""
 "                \n"
 "                With this action the chosen accounts will be renamed."
 msgstr ""
+"看起来你过去有混币帐户。\n"
+"               因此在恢复过程中无法还原帐户名, \n"
+"                你可能知道哪个帐户是混币帐户。\n"
+"                现在设置一个混币帐户，或者以后\n"
+"                隐私页面。\n"
+"                \n"
+"                通过此操作，所选帐户将被重命名。"
 
 #. [settings.network.mainnet]
 #. defaultMessage is:
@@ -4423,7 +4438,7 @@ msgstr "错过的票"
 #: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/helpers.json
 msgctxt "txFilter.type.mixed"
 msgid "Mixed"
-msgstr ""
+msgstr "混币"
 
 #. [privacy.mixing.account]
 #. defaultMessage is:
@@ -4431,7 +4446,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account"
 msgid "Mixed Account"
-msgstr ""
+msgstr "混币帐户"
 
 #. [addMixerAccountModal.mixedAccountName]
 #. defaultMessage is:
@@ -4447,7 +4462,7 @@ msgstr "混币帐户名称"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAcct.mixedAcct"
 msgid "Mixed Account: {value}"
-msgstr ""
+msgstr "混币帐户：{value}"
 
 #. [privacy.tab.mixing]
 #. defaultMessage is:
@@ -4455,7 +4470,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacy.tab.mixing"
 msgid "Mixing"
-msgstr ""
+msgstr "混币中"
 
 #. [mytickets.subtitle]
 #. defaultMessage is:
@@ -4875,7 +4890,7 @@ msgstr "更新次数"
 #: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
 msgctxt "privacy.ticket.old"
 msgid "Old VSP"
-msgstr ""
+msgstr "以前的VSP"
 
 #. [getStarted.releaseNotes.OlderVersion]
 #. defaultMessage is:
@@ -5028,7 +5043,7 @@ msgstr "拥有的地址"
 #: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
 msgctxt "vsp.ticket.paid"
 msgid "Paid"
-msgstr ""
+msgstr "支付"
 
 #. [vsp.ticket.vsp.fee.paid]
 #. defaultMessage is:
@@ -5132,7 +5147,7 @@ msgstr "从当前闪电网络钱包付款"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.peersCount"
 msgid "Peers"
-msgstr ""
+msgstr "节点数"
 
 #. [txHistory.Pending]
 #. defaultMessage is:
@@ -5262,7 +5277,7 @@ msgstr ""
 msgctxt "SendFromUnmixed.confirmPhraseInstruction"
 msgid ""
 "Please type {confirmationPhrase} to allow sending from unmixed accounts."
-msgstr ""
+msgstr "请输入{confirmationPhrase}以允许从混币帐户发送。"
 
 #. [seedCopyConfirmModal.confirmPhraseInstruction]
 #. defaultMessage is:
@@ -5297,7 +5312,7 @@ msgctxt "proposals.enablePoliteia.description"
 msgid ""
 "Politeia integration is disabled by privacy settings. It must be enabled to "
 "access the proposal system."
-msgstr ""
+msgstr "隐私设置禁用了Politeia集成。 必须启用它才能访问投票系统。"
 
 #. [tutorial.standardPage.previousPage]
 #. defaultMessage is:
@@ -5353,7 +5368,7 @@ msgstr "主账户"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.privacy"
 msgid "Privacy"
-msgstr ""
+msgstr "隐私"
 
 #. [privacy.label]
 #. defaultMessage is:
@@ -5425,7 +5440,7 @@ msgstr "隐私权与安全性"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacypage.title"
 msgid "Privacy and Security Center"
-msgstr ""
+msgstr "隐私和安全中心"
 
 #. [passphraseModal.privatePassphrase]
 #. defaultMessage is:
