@@ -1,0 +1,6 @@
+.settingsIcon {
+  background-image: var(--menu-settings);
+  height: 2.2rem;
+  width: 2.2rem;
+  background-size: 2.2rem;
+}

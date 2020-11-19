@@ -10,7 +10,6 @@ Rescanning may help resolve some balance errors.
 Note: This scans the entire blockchain for transactions,
 but does not re-download it.`;
 
-
 export default ({ rescanRequest, rescanAttempt }) => (
   <Tooltip
     className={styles.tooltip}

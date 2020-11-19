@@ -22,9 +22,7 @@ const RescanProgress = () => {
           value={rescanCurrentBlock / rescanEndBlock}
         />
       </div>
-      <div className={styles.rescanButtonArea}>
-        <RescanButton {...{ rescanRequest }} />
-      </div>
+      <RescanButton {...{ rescanRequest }} />
       <T
         id="rescan.rescanning"
         m="Rescanning {blockProgress} ({progressPercent})"

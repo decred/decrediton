@@ -74,6 +74,21 @@
   justify-content: space-between;
 }
 
+.bottomBarCollapsed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottomBarCollapsed > div {
+    margin: 10px;
+}
+
+.settingsLinkCollapsed {
+  margin-bottom: 20px;
+}
+
 .latestBlockWithPeers {
   display: flex;
   flex-direction: column;
@@ -107,31 +122,15 @@
   color: var(--sidebar-bottom-light-text-color);
 }
 
-.settingsIcon {
-  background-image: var(--menu-settings);
-  height: 2.2rem;
-  width: 2.2rem;
-  background-size: 2.2rem;
-}
-
-.rescanButtonArea {
-  padding-top: 2px;
-  padding-right: 5px;
-  float: left;
-}
-
 .rescanButtonAreaCollapsed {
-  text-align: center;
-  padding-right: 0;
-  float: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .rescanButton.spin {
   animation: spin 1s linear infinite;
-}
-
-.spvLabel {
-  display: block;
 }
 
 @media screen and (max-width: 768px) {

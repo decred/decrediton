@@ -1,4 +1,3 @@
-import { NavLink as Link } from "react-router-dom";
 import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
@@ -6,6 +5,7 @@ import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
 import SpvIcon from "./SpvIcon/SpvIcon";
+import SettingsIconLink from "./SettingsIconLink/SettingsIconLink";
 import styles from "./MenuBottom.module.css";
 
 const MenuBarExpanded = ({
@@ -64,13 +64,12 @@ const MenuBarExpanded = ({
                 </span>
                 <span className={styles.peersCountValue}>
                   &nbsp;{peersCount}
-                  &nbsp;<T id="sidebar.peersCount" m="peers" />
+                  &nbsp;
+                  <T id="sidebar.peersCount" m="peers" />
                 </span>
               </div>
             </div>
-            <Link to="/settings" aria-label="settings">
-              <div className={styles.settingsIcon}></div>
-            </Link>
+            <SettingsIconLink />
           </div>
         </>
       )}
