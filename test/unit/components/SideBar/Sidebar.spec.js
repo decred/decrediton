@@ -15,7 +15,7 @@ jest.mock("actions/ControlActions", () => {
   return {
     rescanAttempt: jest.fn(() => (dispatch) => {
       dispatch({
-        request: { getBeginHeight: () => { } },
+        request: { getBeginHeight: () => {} },
         type: RESCAN_ATTEMPT
       });
     }),
@@ -62,7 +62,12 @@ const testBalances = [
 const mockBalances = (sel.balances = jest.fn(() => testBalances));
 
 const expectToHaveDefaultMenuLinks = (params) => {
-  const { sidebarOnBottom, isTrezorEnabled, isLnEnabled = true, expandSideBar } = params || {};
+  const {
+    sidebarOnBottom,
+    isTrezorEnabled,
+    isLnEnabled = true,
+    expandSideBar
+  } = params || {};
 
   const expectToHaveMenuLink = (name, className, href, icon) => {
     const menulink = screen.queryByRole("link", { name: name });
@@ -76,12 +81,12 @@ const expectToHaveDefaultMenuLinks = (params) => {
 
   expectToHaveMenuLink(/overview/i, "overviewIcon", "/home", "overview");
   expectToHaveMenuLink(
-    /transactions/i,
+    /on-chain transactions/i,
     "transactionsIcon",
     "/transactions",
     "transactions"
   );
-  expectToHaveMenuLink(/tickets/i, "ticketsIcon", "/tickets", "tickets");
+  expectToHaveMenuLink(/staking/i, "ticketsIcon", "/tickets", "tickets");
   expectToHaveMenuLink(/accounts/i, "accountsIcon", "/accounts", "accounts");
   expectToHaveMenuLink(
     /privacy/i,
@@ -99,10 +104,10 @@ const expectToHaveDefaultMenuLinks = (params) => {
   }
 
   if (isLnEnabled) {
-    expectToHaveMenuLink(/lightning network/i, "lnIcon", "/ln", "ln");
+    expectToHaveMenuLink(/lightning transactions/i, "lnIcon", "/ln", "ln");
   } else {
     expect(
-      screen.queryByRole("link", { name: /lightning network/i })
+      screen.queryByRole("link", { name: /lightning transactions/i })
     ).not.toBeInTheDocument();
   }
 };
@@ -118,7 +123,10 @@ test("renders default sidebar", () => {
   const mockUiAnimations = (sel.uiAnimations = jest.fn(() => true));
   render(<SideBar />);
 
-  expectToHaveDefaultMenuLinks({ sidebarOnBottom: false, expandSideBar: false });
+  expectToHaveDefaultMenuLinks({
+    sidebarOnBottom: false,
+    expandSideBar: false
+  });
 
   expect(
     screen.queryByRole("link", {
@@ -182,7 +190,7 @@ test("renders default sidebar", () => {
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   //clicks tickets menu link on the sidebar
-  clickOnMenuLink("Tickets");
+  clickOnMenuLink("Staking");
 
   expect(mockUiAnimations).toHaveBeenCalled();
   expect(mockBalances).toHaveBeenCalled();
@@ -204,7 +212,7 @@ test("renders sidebar on the bottom", () => {
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   //clicks tickets menu link on the sidebar
-  clickOnMenuLink("Tickets");
+  clickOnMenuLink("Staking");
 
   // expands the sidebar
   user.click(screen.queryByRole("button", { name: /logo/i }));
@@ -246,7 +254,7 @@ test("renders sidebar on the bottom with animation enabled", () => {
 
   render(<SideBar />);
   //clicks tickets menu link on the sidebar
-  clickOnMenuLink("Tickets");
+  clickOnMenuLink("Staking");
 
   expect(mockSidebarOnBottom).toHaveBeenCalled();
   expect(mockUiAnimations).toHaveBeenCalled();
@@ -299,12 +307,12 @@ test("tests rescan on the expanded sidebar", () => {
     }
   });
 
-  expect(screen.getByText(/< 1 minute ago/i)).toBeInTheDocument();
+  expect(screen.getByText(/seconds ago/i)).toBeInTheDocument();
   expect(
     screen.getByRole("button", {
       name: /^rescan$/i
     })
-  ).toHaveClass("rescan-button");
+  ).toHaveClass("rescan");
 
   expect(
     screen.queryByRole("button", { name: /cancel rescan/i })
@@ -321,12 +329,12 @@ test("tests rescan on the expanded sidebar", () => {
     screen.getByRole("button", {
       name: /^rescan$/i
     })
-  ).toHaveClass("rescan-button spin");
+  ).toHaveClass("rescan syncing");
 
   expect(
     screen.getByRole("button", { name: /cancel rescan/i })
   ).toBeInTheDocument();
-  expect(screen.queryByText(/< 1 minute ago/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/seconds ago/i)).not.toBeInTheDocument();
   expect(screen.getByText(/rescanning/i)).toBeInTheDocument();
   expect(screen.getByText(`0/${testCurrentBlockHeight}`)).toBeInTheDocument();
   expect(screen.getByText(/(0%)/i)).toBeInTheDocument();
@@ -338,7 +346,7 @@ test("tests rescan on the expanded sidebar", () => {
     screen.getByRole("button", {
       name: /^rescan$/i
     })
-  ).toHaveClass("rescan-button");
+  ).toHaveClass("rescan");
   expect(
     screen.queryByRole("button", { name: /cancel rescan/i })
   ).not.toBeInTheDocument();
@@ -363,7 +371,7 @@ test("tests rescan on the collapsed sidebar", () => {
     screen.getByRole("button", {
       name: /^rescan$/i
     })
-  ).toHaveClass("rescan-button");
+  ).toHaveClass("rescan");
   expect(
     screen.queryByRole("button", { name: /cancel rescan/i })
   ).not.toBeInTheDocument();
@@ -376,7 +384,7 @@ test("tests rescan on the collapsed sidebar", () => {
     screen.getByRole("button", {
       name: /^rescan$/i
     })
-  ).toHaveClass("rescan-button spin");
+  ).toHaveClass("rescan syncing");
   expect(
     screen.getByRole("button", { name: /cancel rescan/i })
   ).toBeInTheDocument();
@@ -388,7 +396,7 @@ test("tests rescan on the collapsed sidebar", () => {
     screen.getByRole("button", {
       name: /^rescan$/i
     })
-  ).toHaveClass("rescan-button");
+  ).toHaveClass("rescan");
   expect(
     screen.queryByRole("button", { name: /cancel rescan/i })
   ).not.toBeInTheDocument();
@@ -443,11 +451,11 @@ test("tests notification icon on the menu link", () => {
 
 test("tests tabbedPage location", () => {
   const { history } = render(<SideBar />);
-  expect(screen.queryByRole("link", { name: /transactions/i })).not.toHaveClass(
+  expect(screen.queryByRole("link", { name: /on-chain transactions/i })).not.toHaveClass(
     "menuLinkActive"
   );
   history.push("transactions/send");
-  expect(screen.queryByRole("link", { name: /transactions/i })).toHaveClass(
+  expect(screen.queryByRole("link", { name: /on-chain transactions/i })).toHaveClass(
     "menuLinkActive"
   );
 });

@@ -14,14 +14,14 @@ export const linkList = [
     path: "/transactions",
     link: <T id="sidebar.link.transactions" m="On-chain Transactions" />,
     icon: "transactions",
-    ariaLabel: "Transactions"
+    ariaLabel: "On-chain Transactions"
   },
   {
     path: "/ln",
     link: <T id="sidebar.link.ln" m="Lightning Transactions" />,
     icon: LN_KEY,
     key: LN_KEY,
-    ariaLabel: "Lightning Network"
+    ariaLabel: "Lightning Transactions"
   },
   {
     path: "/governance",
@@ -32,9 +32,9 @@ export const linkList = [
   },
   {
     path: "/tickets",
-    link: <T id="sidebar.link.tickets" m="Staking" />,
+    link: <T id="sidebar.link.staking" m="Staking" />,
     icon: "tickets",
-    ariaLabel: "Tickets"
+    ariaLabel: "Staking"
   },
   {
     path: "/privacy",
