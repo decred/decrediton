@@ -690,6 +690,7 @@ export const launchDCRLnd = (
 
     const args = [
       "--nolisten",
+      "--norest",
       "--logdir=" + path.join(dcrlndRoot, "logs"),
       "--datadir=" + path.join(dcrlndRoot, "data"),
       "--tlscertpath=" + tlsCertPath,
