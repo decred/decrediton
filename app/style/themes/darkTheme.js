@@ -47,6 +47,7 @@ const darkTheme = {
   "sidebar-bottom-light-text-color": "#7DA7D9",
   "header-desc-color": "#769ECF",
   "sidebar-menu-link": "#6F98D3",
+  "sidebar-menu-link-active-bg": "#2F4D8C",
   "linear-progress-text": "#1B2B54",
   "wallet-label": "#3C62B0",
   "new_wallet-label": "#769ECF",

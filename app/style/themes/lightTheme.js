@@ -47,6 +47,7 @@ const lightTheme = {
   "sidebar-bottom-light-text-color": "#424F67",
   "header-desc-color": "#091440",
   "sidebar-menu-link": "#8997a5",
+  "sidebar-menu-link-active-bg": "#fff",
   "linear-progress-text": "#fff",
   "wallet-label": "#091440",
   "new_wallet-label": "#48566e",
@@ -90,7 +91,8 @@ const lightTheme = {
   "back-button-text": "#f3f5f6",
   "back-button-dark-text": "#f3f5f6",
   "tx-detail-text": "#596d81",
-  "tx-detail-raw-shadow": "linear-gradient(to top, rgb(243, 246, 246, 0.6) 10%, rgb(243, 246, 246, 0.5) 20%, rgb(243, 246, 246, 0) 70%)",
+  "tx-detail-raw-shadow":
+    "linear-gradient(to top, rgb(243, 246, 246, 0.6) 10%, rgb(243, 246, 246, 0.5) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#8997a5",
   "transfer-details-bg": "#edeff1",
   "filter-menu-arrow": "#fff",

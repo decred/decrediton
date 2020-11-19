@@ -95,7 +95,7 @@
 .menuLinkActive {
   color: var(--input-color-default);
   cursor: default;
-  background-color: #fff; /* XXX use var */
+  background-color: var(--sidebar-menu-link-active-bg);
 }
 
 .menuLinkNotificationIcon {
