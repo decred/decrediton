@@ -16,7 +16,7 @@
 
 textarea {
   font-family: var(--font-family-monospace);
-  font-size: 13px;
+  font-size: 11px;
   resize: none;
   width: 100%;
   background-color: var(--background-back-color);
