@@ -184,7 +184,7 @@
   "error.not.same.pass": "Passwords does not match.",
   "errors.general": "Something went wrong, please go back ",
   "errors.goHome": "Back to Home",
-  "errors.wrongPassphrase": "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet.",
+  "errors.wrongPassphrase": "Wrong private passphrase entered.",
   "existingSeed.errors.positionError": "Error: word on position {position} is not valid.",
   "existingSeed.errors.seedError": "Error: seed is not valid.",
   "export.balances.descr": "Export the different types of balances after each event that changes it.",

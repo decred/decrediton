@@ -315,7 +315,7 @@ const messages = defineMessages({
   WRONG_PASSPHRASE_MSG: {
     id: "errors.wrongPassphrase",
     defaultMessage:
-      "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
+      "Wrong private passphrase entered."
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",

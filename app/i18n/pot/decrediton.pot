@@ -9263,9 +9263,9 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [errors.wrongPassphrase]
 #. defaultMessage is:
-#. Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet.
+#. Wrong private passphrase entered.
 msgctxt "errors.wrongPassphrase"
-msgid "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
+msgid "Wrong private passphrase entered."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/OpenWallet.json
