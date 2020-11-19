@@ -3,13 +3,17 @@ import * as wallet from "wallet";
 import {
   getTicketPriceAttempt,
   updateAccount,
-  getAccountNumbersBalances
+  getAccountNumbersBalances,
+  getBalanceUpdateAttempt
 } from "./ClientActions";
 import { newTransactionsReceived } from "./TransactionActions";
 import {
   TransactionNotificationsRequest,
   AccountNotificationsRequest
 } from "middleware/walletrpc/api_pb";
+import { stopAccountMixer } from "./AccountMixerActions";
+import * as sel from "selectors";
+import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -38,7 +42,7 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 
   // alertNewlyReceived is the function that actually sends the state update to
   // redux, triggering all calculations.
-  const alertNewlyReceived = () => {
+  const alertNewlyReceived = async () => {
     ntfTimer = null;
 
     const mined = newlyMined;
@@ -49,7 +53,10 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
     newlyUnminedMap = {};
 
     if (currentBlockHeight) {
-      const { maturingBlockHeights } = getState().grpc;
+      const {
+        maturingBlockHeights,
+        accountMixerRunning
+      } = getState().grpc;
       dispatch({
         currentBlockHeight,
         currentBlockTimestamp,
@@ -72,6 +79,15 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 
       currentBlockHeight = null;
       currentBlockTimestamp = null;
+
+      if (accountMixerRunning) {
+        const changeAccount = sel.getChangeAccount(getState());
+        const { spendable } = await dispatch(getBalanceUpdateAttempt(changeAccount, 0));
+
+        if (spendable < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
+          dispatch(stopAccountMixer());
+        }
+      }
     }
 
     dispatch(newTransactionsReceived(mined, unmined));
