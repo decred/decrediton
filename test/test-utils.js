@@ -5,7 +5,7 @@ import configureStore from "store/configureStore";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
-import locales, { defaultFormats } from "i18n/locales";
+import { en as enLocale, defaultFormats } from "i18n/locales";
 import { IntlProvider } from "react-intl";
 import { PropTypes } from "prop-types";
 
@@ -26,7 +26,7 @@ afterEach(() => {
 });
 
 function render(ui, renderOptions) {
-  const locale = locales[1];
+  const locale = enLocale;
   const history = createMemoryHistory();
   const Wrapper = ({ children }) => {
     const initialState = (renderOptions && Object.prototype.hasOwnProperty.call(

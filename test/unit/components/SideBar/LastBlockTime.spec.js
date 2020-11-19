@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 import { advanceBy, clear } from "jest-date-mock";
 import { IntlProvider, FormattedMessage } from "react-intl";
 import { FormattedRelative } from "shared";
-import locales, { defaultFormats } from "../../../../app/i18n/locales";
+import { en as enLocale, defaultFormats } from "../../../../app/i18n/locales";
 import { render, wait } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { act } from "react-dom/test-utils";
@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 // en
-const locale = locales[1];
+const locale = enLocale;
 
 const Wrapper = ({ lastBlockTimestamp, setTimeout, clearTimeout }) => {
   return (

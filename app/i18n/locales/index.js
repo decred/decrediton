@@ -61,7 +61,7 @@ const de = {
   formats: defaultFormats
 };
 
-const en = {
+export const en = {
   key: "en",
   language: "en",
   description: "English (US)",
