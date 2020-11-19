@@ -38,7 +38,7 @@ h1 {
 }
 
 .pinPadButton {
-  padding: 0.5em 0em;
+  padding: 0.5em 0em 0.7em 0;
   border: 1px solid transparent;
   cursor: pointer;
 }
