@@ -172,7 +172,6 @@ const darkTheme = {
   "header-accounts": "url('style/icons/accountsHeaderDark.svg')",
   "header-lightning": "url('style/icons/lightningHeaderDark.svg')",
   "header-security": "url('style/icons/privacyHeaderDark.svg')",
-  "header-settings": "url('style/icons/settingsHeaderDark.svg')",
   "header-trezor": "url('style/icons/trezorHeaderDark.svg')",
   "help-docs": "url('style/icons/docsGreyDark.svg')",
   "help-github": "url('style/icons/githubGreyDark.svg')",

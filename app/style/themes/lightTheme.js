@@ -170,7 +170,6 @@ const lightTheme = {
   "header-accounts": "url('style/icons/accountsHeader.svg')",
   "header-lightning": "url('style/icons/lightningHeader.svg')",
   "header-security": "url('style/icons/privacyHeader.svg')",
-  "header-settings": "url('style/icons/settingsHeader.svg')",
   "header-trezor": "url('style/icons/trezorHeader.svg')",
   "help-docs": "url('style/icons/docsGrey.svg')",
   "help-github": "url('style/icons/githubGrey.svg')",
