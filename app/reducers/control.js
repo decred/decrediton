@@ -461,32 +461,28 @@ export default function control(state = {}, action) {
     case CONSTRUCTTX_ATTEMPT:
       return {
         ...state,
-        constructTxRequestAttempt: true,
-        constructTxLowBalance: false,
-        constructTxCall: action.constructTxCall
+        constructTxRequestAttempt: action.constructTxRequestAttempt,
+        constructTxLowBalance: false
       };
     case CONSTRUCTTX_FAILED:
       return {
         ...state,
         constructTxRequestAttempt: false,
-        constructTxResponse: null,
-        constructTxCall: null
+        constructTxResponse: null
       };
     case CONSTRUCTTX_FAILED_LOW_BALANCE:
       return {
         ...state,
         constructTxRequestAttempt: false,
         constructTxResponse: null,
-        constructTxLowBalance: true,
-        constructTxCall: null
+        constructTxLowBalance: true
       };
     case CONSTRUCTTX_SUCCESS:
       return {
         ...state,
         changeScriptByAccount: action.changeScriptByAccount,
         constructTxRequestAttempt: false,
-        constructTxResponse: action.constructTxResponse,
-        constructTxCall: null
+        constructTxResponse: action.constructTxResponse
       };
     case WALLET_AUTOBUYER_SETTINGS:
       return { ...state, balanceToMaintain: action.balanceToMaintain };

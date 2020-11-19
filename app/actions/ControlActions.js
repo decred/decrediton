@@ -572,13 +572,13 @@ export const constructTransactionAttempt = (
     request.setChangeDestination(outputDest);
   }
 
-  let { constructTxCall } = getState().control;
-  if (constructTxCall) {
-    constructTxCall.cancel();
+  let { constructTxRequestAttempt } = getState().control;
+  if (constructTxRequestAttempt) {
+    constructTxRequestAttempt.cancel();
   }
   const chainParams = sel.chainParams(getState());
   const { walletService } = getState().grpc;
-  constructTxCall = walletService.constructTransaction(request, function (
+  constructTxRequestAttempt = walletService.constructTransaction(request, function (
     error,
     constructTxResponse
   ) {
@@ -631,7 +631,7 @@ export const constructTransactionAttempt = (
       type: CONSTRUCTTX_SUCCESS
     });
   });
-  dispatch({ type: CONSTRUCTTX_ATTEMPT, constructTxCall });
+  dispatch({ type: CONSTRUCTTX_ATTEMPT, constructTxRequestAttempt });
 };
 
 export const VALIDATEADDRESS_CLEANSTORE = "VALIDATEADDRESS_CLEANSTORE";
