@@ -14,6 +14,7 @@
   background-size: 22px;
   background-repeat: no-repeat;
   user-select: none;
+  margin-left: 5px;
 }
 
 .menuLinkContainer {
@@ -94,6 +95,7 @@
 .menuLinkActive {
   color: var(--input-color-default);
   cursor: default;
+  background-color: #fff; /* XXX use var */
 }
 
 .menuLinkNotificationIcon {

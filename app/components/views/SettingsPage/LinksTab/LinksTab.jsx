@@ -1,20 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { HelpLink, HelpLinkInfoModal, HelpLinkAboutModal } from "buttons";
-import { DescriptionHeader } from "layout";
 import { Subtitle } from "shared";
 // XXX this must go!
 import "style/Help.less";
-
-export const LinksTabHeader = () => (
-  <DescriptionHeader
-    description={
-      <T
-        id="help.description.links"
-        m="If you have any difficulty with decrediton, please use the following links to help find a solution."
-      />
-    }
-  />
-);
 
 export const LinksTab = () => (
   <>

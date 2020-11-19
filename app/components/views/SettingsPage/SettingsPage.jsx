@@ -1,48 +1,97 @@
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
-import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
-import { LinksTab, LinksTabHeader } from "./LinksTab";
-import { LogsTab, LogsTabHeader } from "./LogsTab/LogsTab";
-import { TutorialsTab, TutorialsTabHeader } from "./TutorialsTab/TutorialsTab";
-import { SettingsTab, SettingsTabHeader } from "./SettingsTab/SettingsTab";
+import { CloseWalletModalButton } from "buttons";
+import { TabbedPage, TabbedPageTab as Tab, StandaloneHeader } from "layout";
+import { LinksTab } from "./LinksTab";
+import { LogsTab } from "./LogsTab/LogsTab";
+import { TutorialsTab } from "./TutorialsTab/TutorialsTab";
+import { SettingsTab } from "./SettingsTab/SettingsTab";
+import { useSettings } from "hooks";
+import styles from "./SettingsPage.module.css";
 
-const SettingsPageHeader = () => (
-  <TitleHeader
-    iconClassName="settings"
-    title={<T id="settings.title" m="Settings" />}
+const closeWalletModalContent = (walletName) => (
+  <T
+    id="settings.closeWalletModalContent"
+    m="Are you sure you want to close {walletName} and return to the launcher?"
+    values={{ walletName }}
   />
 );
 
-const SettingsPage = () => (
-  <TabbedPage header={<SettingsPageHeader />}>
-    <Switch>
-      <Redirect from="/settings" exact to="/settings/settings" />
-    </Switch>
-    <Tab
-      path="/settings/settings"
-      component={SettingsTab}
-      header={SettingsTabHeader}
-      link={<T id="settings.tab.settings" m="Settings" />}
-    />
-    <Tab
-      path="/settings/links"
-      component={LinksTab}
-      header={LinksTabHeader}
-      link={<T id="settings.tab.sources" m="Sources" />}
-    />
-    <Tab
-      path="/settings/tutorials"
-      component={TutorialsTab}
-      header={TutorialsTabHeader}
-      link={<T id="settings.tab.tutorials" m="Tutorials" />}
-    />
-    <Tab
-      path="/settings/logs"
-      component={LogsTab}
-      header={LogsTabHeader}
-      link={<T id="settings.tab.logs" m="Logs" />}
-    />
-  </TabbedPage>
+const closeWalletWithAutobuyerModal = (walletName) => (
+  <T
+    id="settings.closeWalletModalWithAutobuyerModal"
+    m="Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
+    values={{ walletName }}
+  />
 );
+
+const SettingsPageHeader = ({
+  onCloseWallet,
+  walletName,
+  isTicketAutoBuyerEnabled
+}) => (
+  <StandaloneHeader
+    title={<T id="settings.title" m="Settings" />}
+    iconClassName="settings"
+    description={
+      <T
+        id="settings.description"
+        m="Changing network settings requires a restart"
+      />
+    }
+    actionButton={
+      <CloseWalletModalButton
+        modalTitle={
+          <T id="settings.closeWalletModalTitle" m="Confirmation Required" />
+        }
+        buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
+        modalContent={
+          isTicketAutoBuyerEnabled
+            ? closeWalletWithAutobuyerModal(walletName)
+            : closeWalletModalContent(walletName)
+        }
+        className={styles.closeModalButton}
+        onSubmit={onCloseWallet}
+      />
+    }
+  />
+);
+
+const SettingsPage = () => {
+  const { onCloseWallet, isTicketAutoBuyerEnabled, walletName } = useSettings();
+
+  return (
+    <TabbedPage
+      header={
+        <SettingsPageHeader
+          {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled }}
+        />
+      }>
+      <Switch>
+        <Redirect from="/settings" exact to="/settings/settings" />
+      </Switch>
+      <Tab
+        path="/settings/settings"
+        component={SettingsTab}
+        link={<T id="settings.tab.settings" m="Settings" />}
+      />
+      <Tab
+        path="/settings/links"
+        component={LinksTab}
+        link={<T id="settings.tab.sources" m="Sources" />}
+      />
+      <Tab
+        path="/settings/tutorials"
+        component={TutorialsTab}
+        link={<T id="settings.tab.tutorials" m="Tutorials" />}
+      />
+      <Tab
+        path="/settings/logs"
+        component={LogsTab}
+        link={<T id="settings.tab.logs" m="Logs" />}
+      />
+    </TabbedPage>
+  );
+};
 
 export default SettingsPage;

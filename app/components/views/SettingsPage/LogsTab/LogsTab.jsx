@@ -7,20 +7,7 @@ import {
   getDecreditonLogs,
   getDcrlndLogs
 } from "wallet";
-import { DescriptionHeader } from "layout";
-import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
-
-export const LogsTabHeader = () => (
-  <DescriptionHeader
-    description={
-      <T
-        id="help.description.logs"
-        m="Please find your current logs below to look for any issue or error you are having."
-      />
-    }
-  />
-);
 
 const LogsTabBody = ({ setInterval, clearInterval }) => {
   const [interval, setIntervalState] = useState(null);

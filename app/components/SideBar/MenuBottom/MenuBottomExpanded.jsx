@@ -49,7 +49,7 @@ const MenuBarExpanded = ({
             <div className={styles.latestBlockWithPeers}>
               <div className={styles.latestBlock}>
                 <div>
-                  <T id="sidebar.latestBlock" m="Latest Block" />
+                  <T id="sidebar.latestBlock" m="Block" />
                 </div>
                 <div className={styles.latestBlockNumber}>
                   &nbsp;{currentBlockHeight}
@@ -60,10 +60,11 @@ const MenuBarExpanded = ({
               </div>
               <div className={styles.peersCount}>
                 <span className={styles.peersCountLabel}>
-                  <T id="sidebar.peersCount" m="Peers" />
+                  <T id="sidebar.connectedTo" m="Connected to" />
                 </span>
                 <span className={styles.peersCountValue}>
                   &nbsp;{peersCount}
+                  &nbsp;<T id="sidebar.peersCount" m="peers" />
                 </span>
               </div>
             </div>

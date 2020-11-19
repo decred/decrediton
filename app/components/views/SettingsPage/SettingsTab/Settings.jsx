@@ -6,10 +6,8 @@ import {
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-// import { StandaloneHeader, StandalonePage } from "layout";
 import {
   KeyBlueButton,
-  //CloseWalletModalButton,
   ResetNetworkButton
 } from "buttons";
 import { getGlobalCfg } from "config";
@@ -24,55 +22,6 @@ import "style/StakePool.less"; // TODO: delete this as well!
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 
-/*
-const closeWalletModalContent = (walletName) => (
-  <T
-    id="settings.closeWalletModalContent"
-    m="Are you sure you want to close {walletName} and return to the launcher?"
-    values={{ walletName }}
-  />
-);
-
-const closeWalletWithAutobuyerModal = (walletName) => (
-  <T
-    id="settings.closeWalletModalWithAutobuyerModal"
-    m="Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
-    values={{ walletName }}
-  />
-);
-
-const SettingsPageHeader = ({
-  onCloseWallet,
-  walletName,
-  isTicketAutoBuyerEnabled
-}) => (
-  <StandaloneHeader
-    title={<T id="settings.title" m="Settings" />}
-    iconClassName="settings"
-    description={
-      <T
-        id="settings.description"
-        m="Changing network settings requires a restart"
-      />
-    }
-    actionButton={
-      <CloseWalletModalButton
-        modalTitle={
-          <T id="settings.closeWalletModalTitle" m="Confirmation Required" />
-        }
-        buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
-        modalContent={
-          isTicketAutoBuyerEnabled
-            ? closeWalletWithAutobuyerModal(walletName)
-            : closeWalletModalContent(walletName)
-        }
-        className={styles.closeModalButton}
-        onSubmit={onCloseWallet}
-      />
-    }
-  />
-);*/
-
 const SettingsPage = ({
   areSettingsDirty,
   tempSettings,
@@ -81,13 +30,10 @@ const SettingsPage = ({
   onChangeTempSettings,
   onSaveSettings,
   onAttemptChangePassphrase,
-  //onCloseWallet,
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  //walletName,
   walletReady
-  //isTicketAutoBuyerEnabled
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
