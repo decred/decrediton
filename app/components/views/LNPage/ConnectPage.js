@@ -18,7 +18,7 @@ import "style/ConnectPage.css";
 
 const ConnectPageHeader = () => (
   <StandaloneHeader
-    title={<T id="ln.connectPage.title" m="Start LN Wallet" />}
+    title={<T id="ln.connectPage.title" m="Start Lightning Wallet" />}
     description={
       <T
         id="ln.connectPage.description"

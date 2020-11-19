@@ -8,7 +8,7 @@ export default ({ onConnect }) => (
     <div>
       <T
         id="trezor.noDevice.message"
-        m="No trezor device detected. Connect the device and check if trezor bridge is installed and running."
+        m="No Trezor device detected. Connect the device and check if Trezor bridge is installed and running."
       />
     </div>
     <div>

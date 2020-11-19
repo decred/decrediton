@@ -4,11 +4,11 @@ import { StandaloneHeader } from "layout";
 export default () => (
   <StandaloneHeader
     iconClassName="trezor"
-    title={<T id="trezorPage.title" m="Trezor Setup" />}
+    title={<T id="trezorPage.title" m="Trezor" />}
     description={
       <T
         id="trezorPage.description"
-        m="Perform several trezor-related actions."
+        m="Manage your Trezor device."
       />
     }
   />

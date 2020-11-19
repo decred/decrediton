@@ -83,7 +83,7 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
           <T
             id="trezor.walletCreationpassphraseModal.description"
             m={
-              "Type the secret passphrase of the wallet to restore from the trezor device {label}"
+              "Type the secret passphrase of the wallet to restore from the Trezor device {label}"
             }
             values={{
               label: <span className="trezor-label">'{trezorLabel}'</span>

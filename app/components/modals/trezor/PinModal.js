@@ -85,7 +85,7 @@ class PinModal extends React.Component {
         <p>
           <T
             id="trezor.pinModal.description"
-            m="Click button sequence that corresponds to your pin on trezor {label}"
+            m="Click button sequence that corresponds to your pin on Trezor {label}"
             values={{
               label: <span className="trezor-label">'{trezorLabel}'</span>
             }}

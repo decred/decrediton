@@ -315,23 +315,23 @@ const messages = defineMessages({
   WRONG_PASSPHRASE_MSG: {
     id: "errors.wrongPassphrase",
     defaultMessage:
-      "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
+      "Wrong private passphrase entered."
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",
-    defaultMessage: "Pin protection has been enabled in trezor {label}"
+    defaultMessage: "Pin protection has been enabled in Trezor {label}"
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.pinProtectionSuccess.disabled",
-    defaultMessage: "Pin protection has been disabled in trezor {label}"
+    defaultMessage: "Pin protection has been disabled in Trezor {label}"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.passphraseProtectionSuccess.enabled",
-    defaultMessage: "Passphrase protection has been enabled in trezor {label}"
+    defaultMessage: "Passphrase protection has been enabled in Trezor {label}"
   },
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.passphraseProtectionSuccess.disabled",
-    defaultMessage: "Passphrase protection has been disabled in trezor {label}"
+    defaultMessage: "Passphrase protection has been disabled in Trezor {label}"
   },
   TRZ_CHANGEHOMESCREEN_SUCCESS: {
     id: "trezor.changeHomeScreen.success",
@@ -339,7 +339,7 @@ const messages = defineMessages({
   },
   TRZ_CHANGELABEL_SUCCESS: {
     id: "trezor.changeLabel.success",
-    defaultMessage: "Changed label on selected trezor to {label}"
+    defaultMessage: "Changed label on selected Trezor to {label}"
   },
   TRZ_WIPEDEVICE_SUCCESS: {
     id: "trezor.wipeDevice.success",
@@ -359,17 +359,17 @@ const messages = defineMessages({
   },
   TRZ_UPDATEFIRMWARE_SUCCESS: {
     id: "trezor.updateFirmware.success",
-    defaultMessage: "Firmware updated on trezor device"
+    defaultMessage: "Firmware updated on Trezor device"
   },
   TRZ_NOCONNECTEDDEVICE: {
     id: "trezor.noConnectedDevice",
     defaultMessage:
-      "No trezor device connected. Check the device connection and trezor bridge."
+      "No Trezor device connected. Check the device connection and Trezor bridge."
   },
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
     id: "trezor.getWalletCreationMasterPubKey.failed",
     defaultMessage:
-      "Failed to obtain master extended pubkey from trezor device: {originalError}"
+      "Failed to obtain master extended pubkey from Trezor device: {originalError}"
   },
   TRZ_NOTBACKEDUP: {
     id: "trezor.notBackedUp",

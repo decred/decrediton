@@ -62,7 +62,7 @@ export const runAccountMixer = ({
         getAcctSpendableBalance(changeAccount)
       );
       if (spendableBal < MIN_RELAY_FEE_ATOMS) {
-        return { error: "Account Balance Too Small" };
+        return { error: "Account balance too small" };
       }
       const mixerStreamer = await wallet.runAccountMixerRequest(
         sel.accountMixerService(getState()),
