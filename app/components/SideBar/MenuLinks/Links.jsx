@@ -54,9 +54,9 @@ export const linkList = [
 
 export const trezorLink = {
   path: "/trezor",
-  link: <T id="sidebar.link.trezor" m="Trezor Setup" />,
+  link: <T id="sidebar.link.trezor" m="Trezor" />,
   icon: "trezor",
-  ariaLabel: "Trezor Setup"
+  ariaLabel: "Trezor"
 };
 
 export const lnLink = {

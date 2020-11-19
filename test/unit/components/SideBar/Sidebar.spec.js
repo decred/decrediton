@@ -93,10 +93,10 @@ const expectToHaveDefaultMenuLinks = (params) => {
   expectToHaveMenuLink(/settings/i, "settingsIcon", "/settings", "settings");
 
   if (isTrezorEnabled) {
-    expectToHaveMenuLink(/trezor setup/i, "trezorIcon", "/trezor", "trezor");
+    expectToHaveMenuLink(/trezor/i, "trezorIcon", "/trezor", "trezor");
   } else {
     expect(
-      screen.queryByRole("link", { name: /trezor setup/i })
+      screen.queryByRole("link", { name: /trezor/i })
     ).not.toBeInTheDocument();
   }
 

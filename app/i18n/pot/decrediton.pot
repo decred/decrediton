@@ -4993,9 +4993,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 #. [trezorPage.description]
 #. defaultMessage is:
-#. Perform several trezor-related actions.
+#. Manage your Trezor device.
 msgctxt "trezorPage.description"
-msgid "Perform several trezor-related actions."
+msgid "Manage your Trezor device."
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -8126,17 +8126,17 @@ msgstr ""
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 #. [sidebar.link.trezor]
 #. defaultMessage is:
-#. Trezor Setup
+#. Trezor
 msgctxt "sidebar.link.trezor"
-msgid "Trezor Setup"
+msgid "Trezor"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 #. [trezorPage.title]
 #. defaultMessage is:
-#. Trezor Setup
+#. Trezor
 msgctxt "trezorPage.title"
-msgid "Trezor Setup"
+msgid "Trezor"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
