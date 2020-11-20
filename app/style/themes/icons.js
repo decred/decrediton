@@ -118,12 +118,6 @@ const icons = {
     "url('style/icons/finalizing_setup_loader.gif')",
   "loader-animation-scanning-blocks":
     "url('style/icons/scanning_blocks_loader.gif')",
-  "menu-animation-accounts": "url('style/animations/accountsMotion.gif')",
-  "menu-animation-governance": "url('style/animations/governanceMotion.gif')",
-  "menu-animation-overview": "url('style/animations/overviewMotion.gif')",
-  "menu-animation-tickets": "url('style/animations/ticketsMotion.gif')",
-  "menu-animation-transactions":
-    "url('style/animations/transactionsMotion.gif')",
   "menu-animation-syncing": "url('style/animations/syncingMotion.gif')",
   "release-image-v130": "url('style/icons/release-note-v130.gif')",
   "release-image-v140": "url('style/icons/release-note-v140.gif')",

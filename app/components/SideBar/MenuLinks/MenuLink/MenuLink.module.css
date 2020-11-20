@@ -26,7 +26,7 @@
 }
 
 .menuLink.ticketsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-tickets);
+  /* Add animation here */ 
 }
 
 .menuLink.transactionsIcon {
@@ -39,11 +39,10 @@
 
 .menuLink.trezorIcon:not(.menuLinkActive):hover {
   /* Todo: Add trezor animation */
-  background-image: var(--menu-trezor);
 }
 
 .menuLink.transactionsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-transactions);
+  /* XXX add animation */ 
 }
 
 .menuLink.accountsIcon {
@@ -51,7 +50,7 @@
 }
 
 .menuLink.accountsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-accounts);
+  /* XXX add animation */ 
 }
 
 .menuLink.securitycntrIcon {
@@ -68,7 +67,7 @@
 }
 
 .menuLink.overviewIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-overview);
+  /* XXX add animation */
 }
 
 .menuLink.governanceIcon {
@@ -76,7 +75,7 @@
 }
 
 .menuLink.governanceIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-governance);
+  /* XXX add animation */
 }
 
 .menuLink.lnIcon {
