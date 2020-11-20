@@ -70,8 +70,8 @@ const EnableVSP = ({ onEnableVSP }) => (
   <div className={styles.enableVSPWrapper}>
     <p>
       <T
-        id="purchase.vsp.enableListing.description"
-        m="VSP Listing is currently disabled in your privacy settings. Please enable it if you want to be able to purchase tickets from listed VSPs."
+        id="stake.enableStakePoolListing.description"
+        m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP."
       />
     </p>
     <KeyBlueButton onClick={onEnableVSP} className={styles.enableVSPButton}>
@@ -113,6 +113,7 @@ export function PurchasePage({
   return (
     <div className="purchase-ticket-area">
       <StakeInfo {...{ sidebarOnBottom }} />
+      {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
       <Subtitle
         title={<T id="purchase.subtitle" m="Purchase Tickets" />}
         className="is-row">
@@ -148,14 +149,12 @@ export function PurchasePage({
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            onRevokeTickets,
-            isVSPListingEnabled
+            onRevokeTickets
           }}
         />
       )}
       {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
-      <TicketAutoBuyer isVSPListingEnabled={isVSPListingEnabled} />
-      {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
+      <TicketAutoBuyer />
     </div>
   );
 }

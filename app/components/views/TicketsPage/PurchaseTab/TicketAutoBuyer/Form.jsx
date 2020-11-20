@@ -19,8 +19,7 @@ const TicketAutoBuyerForm = ({
   isValid,
   onClick,
   clicked,
-  notMixedAccounts,
-  isVSPListingEnabled
+  notMixedAccounts
 }) => (
   <>
     <Subtitle
@@ -101,7 +100,7 @@ const TicketAutoBuyerForm = ({
           <div className="stakepool-autobuyer-input">
             <VSPSelect
               options={availableVSPs}
-              isDisabled={isRunning || !isVSPListingEnabled}
+              isDisabled={isRunning}
               value={vsp}
               onChange={changeVSP}
             />

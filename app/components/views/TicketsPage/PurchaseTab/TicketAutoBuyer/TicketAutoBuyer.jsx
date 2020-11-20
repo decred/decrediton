@@ -12,8 +12,7 @@ function TicketAutoBuyer({ intl }) {
     buyerAccount,
     buyerBalanceToMantain,
     buyerVSP,
-    notMixedAccounts,
-    isVSPListingEnabled
+    notMixedAccounts
   } = usePurchaseTab();
   const [balanceToMaintain, setBalanceToMaintain] = useState(
     buyerBalanceToMantain
@@ -80,8 +79,7 @@ function TicketAutoBuyer({ intl }) {
         isValid,
         onClick,
         clicked,
-        notMixedAccounts,
-        isVSPListingEnabled
+        notMixedAccounts
       }}
     />
   );

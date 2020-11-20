@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useSettings } from "hooks";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 
@@ -28,14 +28,8 @@ export const usePurchaseTab = () => {
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
 
   // VSP listing checks
-  const { onAddAllowedRequestType, tempSettings } = useSettings();
-  const isVSPListingEnabled = useMemo(
-    () =>
-      tempSettings.allowedExternalRequests.includes(
-        EXTERNALREQUEST_STAKEPOOL_LISTING
-      ),
-    [tempSettings.allowedExternalRequests]
-  );
+  const { onAddAllowedRequestType, isVSPListingEnabled } = useSettings();
+
   const onEnableVSPListing = () => {
     onAddAllowedRequestType(EXTERNALREQUEST_STAKEPOOL_LISTING);
     discoverAvailableVSPs();
@@ -104,7 +98,7 @@ export const usePurchaseTab = () => {
     ticketPrice,
     onEnableTicketAutoBuyer,
     onPurchaseTicketV3,
-    availableVSPs,
+    availableVSPs: isVSPListingEnabled ? availableVSPs : [],
     availableVSPsError,
     onDisableTicketAutoBuyer,
     getTicketStatus,
