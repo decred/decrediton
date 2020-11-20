@@ -64,7 +64,10 @@ const ProposalsList = ({ finishedVote, tab }) => {
             overflow: "auto"
           }}>
           {tab === "finishedVote" && (
-            <ProposalsFilter setFilterTab={handleSetFilterTab} />
+            <ProposalsFilter
+              filterTab={filterTab}
+              setFilterTab={handleSetFilterTab}
+            />
           )}
           <InfiniteScroll
             hasMore={!noMoreProposals}

@@ -120,7 +120,10 @@ export function useProposalsList(tab) {
       return;
     }
     if (!previous || !previous.proposals || !previous.proposals[tab]) return;
-    if (previous.tab !== tab) return;
+    if (previous.tab !== tab) {
+      send("FETCH");
+      return;
+    }
     if (previous.getProposalError != getProposalError) {
       send(getProposalError ? "REJECT" : "RETRY");
       return;
