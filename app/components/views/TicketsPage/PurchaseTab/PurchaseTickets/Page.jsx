@@ -70,7 +70,7 @@ const EnableVSP = ({ onEnableVSP }) => (
   <div className={styles.enableVSPWrapper}>
     <p>
       <T
-        id="stake.enableStakePoolListing.description"
+        id="purchase.vsp.enableListing.description"
         m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP."
       />
     </p>
