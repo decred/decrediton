@@ -1,5 +1,4 @@
 import { Tooltip } from "shared";
-import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { TabsHeader } from "shared";
 import styles from "./ProposalsFilter.module.css";
@@ -36,12 +35,9 @@ const tabs = [
   }
 ];
 
-const ProposalsFilter = ({ setFilterTab }) => {
-  const [filterTabIndex, setFilterTabIndex] = useState(0);
-
+const ProposalsFilter = ({ filterTab, setFilterTab }) => {
   const onSelectFilterTab = (index) => {
     const newTab = tabs[index].value;
-    setFilterTabIndex(index);
     setFilterTab(newTab);
   };
 
@@ -50,7 +46,7 @@ const ProposalsFilter = ({ setFilterTab }) => {
       <TabsHeader
         tabs={tabs}
         setActiveTabIndex={onSelectFilterTab}
-        activeTabIndex={filterTabIndex}
+        activeTabIndex={tabs.findIndex((tab) => tab.value === filterTab)}
       />
     </div>
   );

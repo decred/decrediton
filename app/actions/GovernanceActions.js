@@ -373,7 +373,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
   dispatch,
   getState
 ) => {
-  // tokensBatch batch legnth can not exceed politeia's proposallistpagesize limit
+  // tokensBatch batch length can not exceed politeia's proposallistpagesize limit
   // otherwise it will return ErrorStatusMaxProposalsExceededPolicy
 
   const findProposal = (proposals, token) =>
