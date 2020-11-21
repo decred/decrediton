@@ -7,6 +7,8 @@ export function usePrivacy() {
   const dispatch = useDispatch();
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
+  const showInsufficientBalanceWarning = () =>
+    dispatch(act.showInsufficientBalanceWarning());
   const onGetPrivacyLogs = () => dispatch(getPrivacyLogs());
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const mixedAccount = useSelector(sel.getMixedAccount);
@@ -55,6 +57,7 @@ export function usePrivacy() {
     createMixerAccountAttempt,
     onGetPrivacyLogs,
     allowSendFromUnmixed,
-    toggleAllowSendFromUnmixed
+    toggleAllowSendFromUnmixed,
+    showInsufficientBalanceWarning
   };
 }

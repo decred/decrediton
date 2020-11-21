@@ -1,12 +1,21 @@
+.privacyForm {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns:
+    max-content 123px minmax(max-content, 1fr) 123px minmax(max-content, 1fr)
+    30px;
+  grid-column-gap: 10px;
+  grid-row-gap: 20px;
+  align-items: center;
+  color: var(--mixer-settings-label);
+}
 .error {
   color: var(--error-text-color);
 }
-
 .isRow {
   display: flex;
   flex-direction: row;
 }
-
 .bold {
   font-weight: 700;
 }
@@ -14,7 +23,7 @@
   width: 300px;
 }
 .item {
-  padding: 10px;
+  margin: 0 30px 20px 0;
 }
 .item.error {
   color: red;
@@ -25,12 +34,28 @@
 .row {
   margin-bottom: 10px;
 }
+.textInput {
+  height: 22px;
+}
+.privacyForm label {
+  text-align: right;
+}
+.accountBranch,
+.accountBranch input {
+  width: 30px;
+}
+
+.privacyForm input:disabled {
+  color: var(--mixer-settings-disabled);
+}
 
 @media screen and (max-width: 768px) {
-  .isRow {
-    flex-direction: column;
+  .privacyForm {
+    display: grid;
+    grid-template-columns: max-content 200px;
   }
-  .item {
-    padding: 10px 0;
+  .accountBranch,
+  .accountBranchLabel {
+    grid-row: 5;
   }
 }

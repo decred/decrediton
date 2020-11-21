@@ -16,7 +16,8 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     onStartMixerAttempt,
     onGetPrivacyLogs,
     allowSendFromUnmixed,
-    toggleAllowSendFromUnmixed
+    toggleAllowSendFromUnmixed,
+    showInsufficientBalanceWarning
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");
@@ -70,7 +71,11 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         showingSendUnmixModal,
         onToggleSendFromUnmixed,
         showModal,
-        onChangeCheckbox
+        onChangeCheckbox,
+        mixedAccount,
+        changeAccount,
+        accounts,
+        showInsufficientBalanceWarning
       }}
     />
   );

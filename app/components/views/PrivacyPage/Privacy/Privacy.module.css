@@ -1,3 +1,6 @@
+.privacyContent {
+  width: 740px;
+}
 .error {
   color: var(--error-text-color);
   margin-bottom: 5px;
@@ -28,6 +31,14 @@
 .row {
   margin-bottom: 10px;
 }
+.balanceRow {
+  width: 100%;
+  align-items: center;
+}
+.highlighted {
+  background-color: var(--blue-highlight-background);
+  padding: 2px;
+}
 .pageWrapper {
   padding: 20px 40px;
   background-color: var(--background-back-color);
@@ -36,4 +47,112 @@
 }
 .contentTitleButtonsArea {
   margin-left: auto;
+}
+
+.mixerArea {
+  background-color: var(--background-back-color);
+  padding: 20px 20px 24px 20px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.mixerStatus {
+  margin-right: auto;
+  font-size: 18px;
+  color: var(--privacy-mixer-status-color);
+  margin-bottom: 20px;
+  padding-left: 38px;
+  height: 34px;
+  align-items: center;
+  background-size: 36px;
+  background-position: -2px 0;
+  background-repeat: no-repeat;
+  background-image: var(--decentralized-loop-still);
+}
+.mixerStatus.running {
+  background-image: var(--decentralized-loop-animation);
+}
+.mixerSettingsIconButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.balances {
+  display: flex;
+  flex-direction: row;
+}
+.balanceContainer {
+  background-size: 18px;
+  background-position: 2px 0;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  font-size: 17px;
+  line-height: 15px;
+  color: var(--privacy-balance-color);
+  min-width: 160px;
+  position: relative;
+  font-family: var(--font-family-monospace);
+}
+.balanceContainer .balance-base {
+  color: var(--input-color-default);
+}
+.balanceContainer.mixedAccount {
+  background-image: var(--mixed-account-icon);
+}
+.balanceContainer.unmixedAccount {
+  background-image: var(--unmixed-account-icon);
+}
+.balanceContainer label {
+  font-size: 11px;
+  color: var(--privacy-balance-label-color);
+  line-height: 20px;
+  font-family: var(--font-family-regular);
+}
+.balanceContainer .alertIcon {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -2px;
+  left: 13px;
+  background-image: var(--animated-alert-icon);
+  background-size: 10px;
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+.balanceContainer.balanceError label {
+  color: var(--error-red);
+}
+.balanceContainer.mixedAccount label {
+  color: var(--privacy-balance-mixed-label-color);
+}
+.privacyArrows {
+  width: 56px;
+  height: 16px;
+}
+.privacyArrows.running {
+  background-image: var(--privacy-running-arrows);
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+.startButtonContrainer {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 1179px) {
+  .privacyContent {
+    width: 634px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .privacyContent {
+    width: 355px;
+    margin-left: 0;
+  }
+  .mixerArea .balanceRow.isRow {
+    flex-direction: column;
+  }
+  .balanceRow {
+    align-items: flex-start;
+  }
 }

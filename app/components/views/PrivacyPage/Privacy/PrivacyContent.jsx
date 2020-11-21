@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Subtitle, PrivacyForm, Log } from "shared";
+import { Subtitle, Log, Balance } from "shared";
 import {
   InfoDocModalButton,
   MixerPassphraseModalSwitch,
-  MixerSwitch
+  MixerSettingsIconButton,
+  DangerButton
 } from "buttons";
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
@@ -20,18 +21,26 @@ const PrivacyContent = ({
   onToggleSendFromUnmixed,
   showingSendUnmixModal,
   showModal,
-  onChangeCheckbox
+  onChangeCheckbox,
+  mixedAccount,
+  changeAccount,
+  accounts,
+  showInsufficientBalanceWarning
 }) => {
   const [expandedLogs, setExpandedLogs] = useState(false);
-
   const onHideLog = () => setExpandedLogs(false);
-
   const onShowLog = () => setExpandedLogs(true);
+  const [showBalanceError, setShowBalanceError] = useState(false);
+  const isStartMixerBtnEnabled = accounts[changeAccount].spendable > 0;
+  const onShowInsufficientBalanceWarning = () => {
+    showInsufficientBalanceWarning();
+    setShowBalanceError(true)
+  };
 
   return (
-    <>
+    <div className={style.privacyContent}>
       <Subtitle
-        title={<T id="privacy.subtitle" m="Privacy" />}
+        title={<T id="privacy.coinMixer" m="Coin Mixer" />}
         className={classNames(style.isRow)}
         children={
           <div className={classNames(style.contentTitleButtonsArea)}>
@@ -39,11 +48,40 @@ const PrivacyContent = ({
           </div>
         }
       />
-      <PrivacyForm className={classNames(style.pageWrapper, style.isColumn)} />
-      <div className={classNames(style.buttonArea, style.row)}>
+      <div className={style.mixerArea}>
+        <div className={classNames(style.mixerStatus, style.isRow, accountMixerRunning && style.running)}>
+          <div>{accountMixerRunning ? (
+            <T id="privacy.mixersIsRunning" m="Mixer is running" />
+          ): (
+            <T id="privacy.mixerIsNotRunning" m="Mixer is not running" />
+          )}</div>
+        </div>
+        <div className={classNames(style.isRow, style.balanceRow)}>
+          <div className={classNames(style.balanceContainer, 
+            style.unmixedAccount,
+            showBalanceError && style.balanceError
+            )}>
+            {showBalanceError && (<div className={style.alertIcon}/>)}
+           <Balance amount={accounts[changeAccount].spendable} />
+           <label>
+             <T id="privacy.label.unmixed.balance" m="Unmixed Balance" />
+           </label>
+         </div>
+         <div className={classNames(style.privacyArrows, accountMixerRunning && style.running)}/>
+         <div className={classNames(style.balanceContainer, style.mixedAccount)}>
+           <Balance amount={accounts[mixedAccount].spendable} />
+           <label>
+             <T id="privacy.label.mixed.balance" m="Mixed Balance" />
+           </label>
+         </div>
+         <div className={style.startButtonContrainer}>
         {accountMixerRunning ? (
-          <MixerSwitch enabled onClick={stopAccountMixer} />
+          <DangerButton onClick={stopAccountMixer}>
+              <T id="privacy.stop.mixer" m="Stop Mixer" />
+          </DangerButton>
         ) : (
+          <div 
+            onClick={() => (!isStartMixerBtnEnabled && onShowInsufficientBalanceWarning())}>
           <MixerPassphraseModalSwitch
             modalTitle={
               <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
@@ -56,13 +94,18 @@ const PrivacyContent = ({
                 Decrediton should not be closed while the mixer is running.`}
               />
             }
+            disabled ={!isStartMixerBtnEnabled}
             className={style.startMixerButton}
             onSubmit={(passaphrase) => {
               onShowLog();
               onStartMixerAttempt(passaphrase);
             }}
           />
+          </div>
         )}
+         </div>
+       </div>
+        <MixerSettingsIconButton className={style.mixerSettingsIconButton}/>
       </div>
       {accountMixerError && (
         <div className={style.error}>{accountMixerError}</div>
@@ -90,7 +133,7 @@ const PrivacyContent = ({
         onShowLog={onShowLog}
         onHideLog={onHideLog}
       />
-    </>
+    </div>
   );
 };
 

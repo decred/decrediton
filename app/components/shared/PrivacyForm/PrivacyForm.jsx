@@ -9,39 +9,42 @@ const PrivacyForm = ({ className }) => {
     mixedAccountName,
     changeAccountName,
     csppServer,
-    csppPort
+    csppPort,
+    mixedAccountBranch
   } = usePrivacyForm();
 
   return (
-    <div className={className}>
-      <div className={classNames(style.isRow, style.row)}>
-        <div className={classNames(style.isRow, style.item)}>
-          <div>
-            <T id="privacy.mixing.account" m="Mixed Account" />:
-          </div>
-          <TextInput required disabled value={mixedAccountName} />
-        </div>
-        <div className={classNames(style.isRow, style.item)}>
-          <div className={""}>
-            <T id="privacy.change.account" m="Unmixed Account" />:
-          </div>
-          <TextInput required disabled value={changeAccountName} />
-        </div>
-      </div>
-      <div className={classNames(style.isRow, style.row)}>
-        <div className={classNames(style.isRow, style.item)}>
-          <div>
-            <T id="privacy.mixing.server" m="Shuffle Server" />:
-          </div>
-          <TextInput required disabled value={csppServer} />
-        </div>
-        <div className={classNames(style.isRow, style.item)}>
-          <div>
-            <T id="privacy.mixing.server.port" m="Shuffle Port" />:
-          </div>
-          <TextInput required disabled value={csppPort} />
-        </div>
-      </div>
+    <div className={classNames(className, style.privacyForm)}>
+          <label htmlFor="mixedAccountName">
+            <T id="privacy.mixing.account" m="Mixed Account" />
+          </label>
+          <TextInput required disabled value={mixedAccountName}
+            id="mixedAccountName"
+            className={style.textInput}/>
+          <label htmlFor="changeAccountName">
+            <T id="privacy.change.account" m="Unmixed Account" />
+          </label>
+          <TextInput required disabled value={changeAccountName}
+            id="changeAccountName"
+            className={style.textInput}/>
+          <label htmlFor="accountBranch" className={style.accountBranchLabel}>
+            <T id="privacy.mixing.account.branch" m="Account Branch" />
+          </label>
+          <TextInput required disabled value={mixedAccountBranch}
+            id="accountBranch"
+            className={classNames(style.textInput, style.accountBranch)}/>
+          <label htmlFor="csppServer">
+            <T id="privacy.mixing.server" m="Shuffle Server" />
+          </label>
+          <TextInput required disabled value={csppServer}
+            id="csppServer"
+            className={style.textInput}/>
+          <label htmlFor="csppPort">
+            <T id="privacy.mixing.server.port" m="Shuffle Port" />
+          </label>
+          <TextInput required disabled value={csppPort}
+            id="csppPort"
+            className={style.textInput}/>
     </div>
   );
 };
