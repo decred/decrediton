@@ -79,6 +79,8 @@ import {
   RUNACCOUNTMIXER_ATTEMPT,
   RUNACCOUNTMIXER_SUCCESS,
   RUNACCOUNTMIXER_FAILED,
+  RUNACCOUNTMIXER_NOBALANCE,
+  RUNACCOUNTMIXER_SUFFICIENTBALANCE,
   STOPMIXER_SUCCESS,
   CREATEMIXERACCOUNTS_ATTEMPT,
   CREATEMIXERACCOUNTS_FAILED,
@@ -121,6 +123,18 @@ export default function grpc(state = {}, action) {
         ...state,
         accountMixerRunning: false,
         mixerStreamerError: action.error
+      };
+    case RUNACCOUNTMIXER_NOBALANCE:
+      return {
+        ...state,
+        mixerStreamerError: action.error,
+        isMixerDisabled: true
+      };
+    case RUNACCOUNTMIXER_SUFFICIENTBALANCE:
+      return {
+        ...state,
+        mixerStreamerError: null,
+        isMixerDisabled: false
       };
     case STOPMIXER_SUCCESS:
       return {

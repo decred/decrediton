@@ -17,47 +17,47 @@ const Modal = ({
   setPassPhrase,
   submitLabel,
   isValid
-}) => {
-  return (
-    <DefaultModal
-      className={classNames(style.passphrase, modalClassName)}
-      {...{ show, onCancelModal }}>
-      <div className={style.passphraseHeader}>
-        <div className={style.passphraseHeaderTitle}>
-          {modalTitle ? (
-            modalTitle
-          ) : (
-            <T
-              id="passphraseModal.confirmationRequired"
-              m="Confirmation Required"
-            />
-          )}
-        </div>
-        <div className={style.passphraseHeaderDescription}>
-          {modalDescription}
-        </div>
-      </div>
-      <div className={style.passphraseContent}>
-        <PassphraseModalField
-          label={<T id="passphraseModal.privatePassphrase" m="Private Passphrase" />}>
-          <PasswordInput
-            autoFocus={true}
-            required
-            id="passphrase"
-            placeholder=""
-            value={passPhrase}
-            onChange={(e) => setPassPhrase(e.target.value)}
-            onKeyDownSubmit={onSubmit}
-            showErrors={passPhrase !== null && !passPhrase}
+}) => (
+  <DefaultModal
+    className={classNames(style.passphrase, modalClassName)}
+    {...{ show, onCancelModal }}>
+    <div className={style.passphraseHeader}>
+      <div className={style.passphraseHeaderTitle}>
+        {modalTitle ? (
+          modalTitle
+        ) : (
+          <T
+            id="passphraseModal.confirmationRequired"
+            m="Confirmation Required"
           />
-        </PassphraseModalField>
-        {children}
+        )}
       </div>
-      <div className={style.passphraseToolbar}>
-        <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
+      <div className={style.passphraseHeaderDescription}>
+        {modalDescription}
       </div>
-    </DefaultModal>
-  );
-};
+    </div>
+    <div className={style.passphraseContent}>
+      <PassphraseModalField
+        label={
+          <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
+        }>
+        <PasswordInput
+          autoFocus={true}
+          required
+          id="passphrase"
+          placeholder=""
+          value={passPhrase}
+          onChange={(e) => setPassPhrase(e.target.value)}
+          onKeyDownSubmit={onSubmit}
+          showErrors={passPhrase !== null && !passPhrase}
+        />
+      </PassphraseModalField>
+      {children}
+    </div>
+    <div className={style.passphraseToolbar}>
+      <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
+    </div>
+  </DefaultModal>
+);
 
 export default Modal;

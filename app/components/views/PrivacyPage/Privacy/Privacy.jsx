@@ -13,6 +13,7 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     changeAccount,
     accounts,
     accountMixerError,
+    isMixerDisabled,
     onStartMixerAttempt,
     onGetPrivacyLogs,
     allowSendFromUnmixed,
@@ -69,6 +70,7 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
       {...{
         accountMixerRunning,
         accountMixerError,
+        isMixerDisabled,
         onStartMixerAttempt,
         stopAccountMixer,
         logs,

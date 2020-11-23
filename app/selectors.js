@@ -209,6 +209,7 @@ export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
 export const getAccountMixerError = get(["grpc", "mixerStreamerError"]);
+export const getIsMixerDisabled = get(["grpc", "isMixerDisabled"]);
 export const createMixerAccountAttempt = get([
   "grpc",
   "createMixerAccountAttempt"

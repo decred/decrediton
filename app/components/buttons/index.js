@@ -1,3 +1,4 @@
+import { classNames } from "pi-ui";
 export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
 export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenu/EyeFilterMenuWithSlider/EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink";
@@ -50,7 +51,7 @@ const mbb = (className, modalComponent, buttonComponent) => (p) => (
       ...p,
       buttonComponent,
       modalComponent: p.modalComponent || modalComponent,
-      className: [className || "", p.className || ""].join(" ")
+      className: classNames(className, p.className)
     }}
   />
 );
