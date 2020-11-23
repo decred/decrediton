@@ -9,7 +9,7 @@ import styles from "./TxHistory.module.css";
 import { classNames } from "pi-ui";
 
 const TxDirection = ({ account, isCred }) => (
-  <span className="is-row">
+  <div className={styles.direction}>
     {isCred ? (
       <T
         id="txHistory.out.tx"
@@ -35,7 +35,7 @@ const TxDirection = ({ account, isCred }) => (
         }}
       />
     )}
-  </span>
+  </div>
 );
 
 const RegularTxRow = ({
@@ -81,7 +81,7 @@ const RegularTxRow = ({
       {!pending && (
         <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
       )}
-      { isMix && <span className={styles.isMix}>mixed</span> }
+      {isMix && <span className={styles.isMix}>mixed</span>}
     </div>
   </Row>
 );
