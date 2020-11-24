@@ -1,0 +1,3 @@
+I possessori di Decred possono partecipare al processo di Staking (Proof-of Stake) acquistando i biglietti. Questi biglietti sono utilizzati per votare sulla Proof-of-Work dei miners™ , per convalidare le modifiche alla Decred Blockchain, o sulle proposte di governance all'interno del sistema Politeia.
+
+Lo stakking per la verifica di PoW è premiata, in quanto ogni voto del cast riceve una parte della Ricompensa del Blocco Decred. In genere, in ogni blocco sono inclusi cinque biglietti, il che significa che ogni possessore di biglietto riceve il 6% del premio totale del blocco.
