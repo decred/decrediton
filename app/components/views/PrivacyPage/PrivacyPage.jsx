@@ -14,7 +14,7 @@ const PrivacyPageHeader = React.memo(() => (
       <T
         id="privacy.description"
         m={
-          "Create anonymity to your $DCR by using the mixing service.\nFunds in {unmixedAccount} are automatically sent to {mixedAccount} once mixed."
+          "Improve the anonymity of your $DCR.\nFunds in {unmixedAccount} are automatically sent to {mixedAccount} once mixed."
         }
         values={{
           unmixedAccount: (

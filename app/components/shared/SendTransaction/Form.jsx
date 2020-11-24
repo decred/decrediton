@@ -61,7 +61,7 @@ const Form = ({
     </div>
     <div className={styles.sendButtonArea}>
       {insuficientFunds && (
-        <div className={classNames("error", styles.error && styles.error)}>
+        <div className={styles.error}>
           <T id="send.insuficient.funds" m="Insuficient funds" />
         </div>
       )}

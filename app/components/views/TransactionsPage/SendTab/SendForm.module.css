@@ -82,6 +82,9 @@
   line-height: 21px;
   grid-column: 1;
 }
+.error {
+  color: var(--error-text-color);
+}
 
 @media screen and (max-width: 768px) {
   .isRow.sendArea {

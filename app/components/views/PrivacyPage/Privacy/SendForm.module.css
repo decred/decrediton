@@ -58,6 +58,7 @@
   width: 150px;
 }
 .error {
+  color: var(--error-text-color);
   position: absolute;
   bottom: 0;
   right: 145px;

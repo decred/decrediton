@@ -10,7 +10,6 @@ import {
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
-
 import { SendTransaction } from "shared";
 import styles from "./SendForm.module.css";
 import { useService } from "hooks";
@@ -33,7 +32,8 @@ const PrivacyContent = ({
   getMixerAcctsSpendableBalances,
   mixedAccountSpendableBalance,
   changeAccountSpendableBalance,
-  hasChangeAccountEnoughFunds
+  hasChangeAccountEnoughFunds,
+  accounts
 }) => {
   const [expandedLogs, setExpandedLogs] = useState(false);
   const onHideLog = () => setExpandedLogs(false);
@@ -44,9 +44,17 @@ const PrivacyContent = ({
     showInsufficientBalanceWarning();
     setShowBalanceError(true);
   };
+  const mixedAccountObject = accounts[mixedAccount];
+  const changeAccountObject = accounts[changeAccount];
   useEffect(() => {
     getMixerAcctsSpendableBalances();
-  }, [getMixerAcctsSpendableBalances, mixedAccount, changeAccount]);
+  }, [
+    getMixerAcctsSpendableBalances,
+    mixedAccount,
+    changeAccount,
+    mixedAccountObject.spendable,
+    changeAccountObject.spendable
+  ]);
 
   const { walletService } = useService();
   return (
@@ -164,8 +172,8 @@ const PrivacyContent = ({
       <Checkbox
         label={
           <T
-            id="privacy.sendFromUnmixedCheckbox"
-            m="Send from unmixed accounts"
+            id="privacy.allowSendingFromUnmixedAccount"
+            m="Allow sending from unmixed account"
           />
         }
         id="privacyCheckbox"

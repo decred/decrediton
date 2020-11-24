@@ -84,7 +84,8 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         getMixerAcctsSpendableBalances,
         mixedAccountSpendableBalance,
         changeAccountSpendableBalance,
-        hasChangeAccountEnoughFunds
+        hasChangeAccountEnoughFunds,
+        accounts
       }}
     />
   );
