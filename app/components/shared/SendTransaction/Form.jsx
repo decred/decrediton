@@ -1,13 +1,12 @@
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
-import { Balance, TransitionMotionWrapper, Subtitle } from "shared";
+import { Balance, TransitionMotionWrapper } from "shared";
 import { SendTransactionButton } from "buttons";
 import { UnsignedTx } from "shared";
-import styles from "./SendPage.module.css";
 
-const wrapperComponent = (props) => <div className={styles.outputRow} {...props} />;
+const wrapperComponent = (props) => <div {...props} />;
 
-const SendPage = ({
+const Form = ({
   isSendSelf,
   outputs,
   totalSpent,
@@ -23,42 +22,46 @@ const SendPage = ({
   unsignedRawTx,
   isWatchingOnly,
   isTrezor,
-  insuficientFunds
+  insuficientFunds,
+  styles,
+  hideDetails,
+  sendButtonLabel
 }) => (
   <>
-    <Subtitle title={<T id="send.subtitle" m="Send DCR" />} />
     <div className={classNames(styles.sendArea, styles.isRow)}>
       <TransitionMotionWrapper
         {...{ styles: getOutputRows(), willLeave, willEnter, wrapperComponent }}
       />
-      <div className={styles.detailsArea}>
-        <div className={styles.detailsTitle}>Details</div>
-        <div className={styles.isRow}>
-          <div className={styles.detailsLabelColumn}>
-            <div className={styles.totalAmountText}>
-              <T id="send.totalAmountEstimation" m="Total amount sending" />:
+      {!hideDetails && (
+        <div className={styles.detailsArea}>
+          <div className={styles.detailsTitle}>Details</div>
+          <div className={styles.isRow}>
+            <div className={styles.detailsLabelColumn}>
+              <div className={styles.totalAmountText}>
+                <T id="send.totalAmountEstimation" m="Total amount sending" />:
+              </div>
+              <div className={styles.estimatedFeeText}>
+                <T id="send.feeEstimation" m="Estimated Fee" />:
+              </div>
+              <div className={styles.estimatedSizeText}>
+                <T id="send.sizeEstimation" m="Estimated Size" />:
+              </div>
             </div>
-            <div className={styles.estimatedFeeText}>
-              <T id="send.feeEstimation" m="Estimated Fee" />:
-            </div>
-            <div className={styles.estimatedSizeText}>
-              <T id="send.sizeEstimation" m="Estimated Size" />:
-            </div>
-          </div>
-          <div className={styles.detailsValueColumn}>
-            <Balance flat amount={totalSpent} />
-            <Balance flat amount={estimatedFee} />
-            <div>
-              {estimatedSignedSize}
-              <span className={styles.totalAmountBytes}> Bytes</span>
+            <div className={styles.detailsValueColumn}>
+              <Balance flat amount={totalSpent} />
+              <Balance flat amount={estimatedFee} />
+              <div>
+                {estimatedSignedSize}
+                <span className={styles.totalAmountBytes}> Bytes</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
     <div className={styles.sendButtonArea}>
       {insuficientFunds && (
-        <div className="error">
+        <div className={classNames("error", styles.error && styles.error)}>
           <T id="send.insuficient.funds" m="Insuficient funds" />
         </div>
       )}
@@ -66,7 +69,8 @@ const SendPage = ({
         <SendTransactionButton
           disabled={!isValid()}
           showModal={showPassphraseModal}
-          onShow={resetShowPassphraseModal}>
+          onShow={resetShowPassphraseModal}
+          buttonLabel={sendButtonLabel}>
           <div className={styles.passphraseModal}>
             {!isSendSelf ? (
               <>
@@ -118,4 +122,4 @@ const SendPage = ({
   </>
 );
 
-export default SendPage;
+export default Form;

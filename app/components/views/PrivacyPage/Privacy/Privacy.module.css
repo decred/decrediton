@@ -137,7 +137,23 @@
 .startButtonContrainer {
   margin-left: auto;
 }
-
+.sendToUnmixedAccount {
+  background-color: var(--background-back-color);
+  padding: 20px 20px 0 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.sendToUnmixedAccount .title {
+  margin-right: auto;
+  font-size: 18px;
+  line-height: 32px;
+  color: var(--privacy-mixer-status-color);
+  padding-left: 42px;
+  background-size: 32px;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-image: var(--send-to-self-icon);
+}
 @media screen and (max-width: 1179px) {
   .privacyContent {
     width: 634px;

@@ -64,7 +64,6 @@ export const runAccountMixer = ({
         getAcctSpendableBalance(changeAccount)
       );
       if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
-        showInsufficientBalanceWarning();
         return { error: "Account balance too small" };
       }
       const mixerStreamer = await wallet.runAccountMixerRequest(
@@ -107,10 +106,6 @@ export const runAccountMixer = ({
         dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED })
       );
   });
-
-export const showInsufficientBalanceWarning = () => (dispatch) => {
-  dispatch({ error: "", type: RUNACCOUNTMIXER_INSUFFICIENT_BALANCE });
-};
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
 export const STOPMIXER_FAILED = "STOPMIXER_FAILED";

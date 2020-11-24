@@ -236,13 +236,13 @@ const lightTheme = {
   "backup-icon": "url('style/icons/harddrive.svg')",
   "loader-animation-daemon-waiting-initial":
     "url('style/icons/daemon_waiting_loader.gif')",
-  "backup-icon": "url('style/icons/harddrive.svg')",
   "mixed-account-icon": "url('style/icons/mixedAccount.svg')",
   "unmixed-account-icon": "url('style/icons/unmixedAccount.svg')",
   "privacy-running-arrows": "url('style/icons/privacyRunningArrows.svg')",
   "decentralized-loop-still": "url('style/icons/decentralizedLoopStill.gif')",
   "decentralized-loop-animation":
-    "url('style/icons/decentralizedLoopAnimation.gif')"
+    "url('style/icons/decentralizedLoopAnimation.gif')",
+  "send-to-self-icon": "url('style/icons/sentToSelfTx.svg')"
 };
 
 export default lightTheme;

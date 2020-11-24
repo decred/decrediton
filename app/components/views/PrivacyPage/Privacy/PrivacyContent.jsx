@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle, Log, Balance } from "shared";
 import {
@@ -10,6 +10,10 @@ import {
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
+
+import { SendTransaction } from "shared";
+import styles from "./SendForm.module.css";
+import { useService } from "hooks";
 
 const PrivacyContent = ({
   accountMixerError,
@@ -24,19 +28,27 @@ const PrivacyContent = ({
   onChangeCheckbox,
   mixedAccount,
   changeAccount,
-  accounts,
-  showInsufficientBalanceWarning
+  showInsufficientBalanceWarning,
+  defaultSpendingAccountDisregardMixedAccount,
+  getMixerAcctsSpendableBalances,
+  mixedAccountSpendableBalance,
+  changeAccountSpendableBalance,
+  hasChangeAccountEnoughFunds
 }) => {
   const [expandedLogs, setExpandedLogs] = useState(false);
   const onHideLog = () => setExpandedLogs(false);
   const onShowLog = () => setExpandedLogs(true);
   const [showBalanceError, setShowBalanceError] = useState(false);
-  const isStartMixerBtnEnabled = accounts[changeAccount].spendable > 0;
+  const isStartMixerBtnEnabled = hasChangeAccountEnoughFunds;
   const onShowInsufficientBalanceWarning = () => {
     showInsufficientBalanceWarning();
-    setShowBalanceError(true)
+    setShowBalanceError(true);
   };
+  useEffect(() => {
+    getMixerAcctsSpendableBalances();
+  }, [getMixerAcctsSpendableBalances, mixedAccount, changeAccount]);
 
+  const { walletService } = useService();
   return (
     <div className={style.privacyContent}>
       <Subtitle
@@ -49,63 +61,78 @@ const PrivacyContent = ({
         }
       />
       <div className={style.mixerArea}>
-        <div className={classNames(style.mixerStatus, style.isRow, accountMixerRunning && style.running)}>
-          <div>{accountMixerRunning ? (
+        <div
+          className={classNames(
+            style.mixerStatus,
+            style.isRow,
+            accountMixerRunning && style.running
+          )}>
+          {accountMixerRunning ? (
             <T id="privacy.mixersIsRunning" m="Mixer is running" />
-          ): (
+          ) : (
             <T id="privacy.mixerIsNotRunning" m="Mixer is not running" />
-          )}</div>
+          )}
         </div>
         <div className={classNames(style.isRow, style.balanceRow)}>
-          <div className={classNames(style.balanceContainer, 
-            style.unmixedAccount,
-            showBalanceError && style.balanceError
+          <div
+            className={classNames(
+              style.balanceContainer,
+              style.unmixedAccount,
+              showBalanceError && style.balanceError
             )}>
-            {showBalanceError && (<div className={style.alertIcon}/>)}
-           <Balance amount={accounts[changeAccount].spendable} />
-           <label>
-             <T id="privacy.label.unmixed.balance" m="Unmixed Balance" />
-           </label>
-         </div>
-         <div className={classNames(style.privacyArrows, accountMixerRunning && style.running)}/>
-         <div className={classNames(style.balanceContainer, style.mixedAccount)}>
-           <Balance amount={accounts[mixedAccount].spendable} />
-           <label>
-             <T id="privacy.label.mixed.balance" m="Mixed Balance" />
-           </label>
-         </div>
-         <div className={style.startButtonContrainer}>
-        {accountMixerRunning ? (
-          <DangerButton onClick={stopAccountMixer}>
-              <T id="privacy.stop.mixer" m="Stop Mixer" />
-          </DangerButton>
-        ) : (
-          <div 
-            onClick={() => (!isStartMixerBtnEnabled && onShowInsufficientBalanceWarning())}>
-          <MixerPassphraseModalSwitch
-            modalTitle={
-              <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
-            }
-            buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
-            modalDescription={
-              <T
-                id="privacy.mixer.modal.description"
-                m={`Do you want to start the mixer?
-                Decrediton should not be closed while the mixer is running.`}
-              />
-            }
-            disabled ={!isStartMixerBtnEnabled}
-            className={style.startMixerButton}
-            onSubmit={(passaphrase) => {
-              onShowLog();
-              onStartMixerAttempt(passaphrase);
-            }}
-          />
+            {showBalanceError && <div className={style.alertIcon} />}
+            <Balance amount={changeAccountSpendableBalance} />
+            <label>
+              <T id="privacy.label.unmixed.balance" m="Unmixed Balance" />
+            </label>
           </div>
-        )}
-         </div>
-       </div>
-        <MixerSettingsIconButton className={style.mixerSettingsIconButton}/>
+          <div
+            className={classNames(
+              style.privacyArrows,
+              accountMixerRunning && style.running
+            )}
+          />
+          <div
+            className={classNames(style.balanceContainer, style.mixedAccount)}>
+            <Balance amount={mixedAccountSpendableBalance} />
+            <label>
+              <T id="privacy.label.mixed.balance" m="Mixed Balance" />
+            </label>
+          </div>
+          <div className={style.startButtonContrainer}>
+            {accountMixerRunning ? (
+              <DangerButton onClick={stopAccountMixer}>
+                <T id="privacy.stop.mixer" m="Stop Mixer" />
+              </DangerButton>
+            ) : (
+              <div
+                onClick={() =>
+                  !isStartMixerBtnEnabled && onShowInsufficientBalanceWarning()
+                }>
+                <MixerPassphraseModalSwitch
+                  modalTitle={
+                    <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
+                  }
+                  buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
+                  modalDescription={
+                    <T
+                      id="privacy.mixer.modal.description"
+                      m={`Do you want to start the mixer?
+                Decrediton should not be closed while the mixer is running.`}
+                    />
+                  }
+                  disabled={!isStartMixerBtnEnabled}
+                  className={style.startMixerButton}
+                  onSubmit={(passaphrase) => {
+                    onShowLog();
+                    onStartMixerAttempt(passaphrase);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <MixerSettingsIconButton className={style.mixerSettingsIconButton} />
       </div>
       {accountMixerError && (
         <div className={style.error}>{accountMixerError}</div>
@@ -115,6 +142,25 @@ const PrivacyContent = ({
         onSubmit={onToggleSendFromUnmixed}
         onCancelModal={() => showModal(false)}
       />
+      {walletService && (
+        <div className={style.sendToUnmixedAccount}>
+          <div className={style.title}>
+            <T
+              id="privacy.sendToUnmixedAccount.title"
+              m="Send To Unmixed Account"
+            />
+          </div>
+          <SendTransaction
+            onlySendSelfAllowed={true}
+            styles={styles}
+            receiveAccountsSelectDisabled={true}
+            hideDetails={true}
+            sendButtonLabel={<T id="send.sendToSelfBtn" m="Send to Self" />}
+            receiveAccount={changeAccount}
+            spendingAccount={defaultSpendingAccountDisregardMixedAccount}
+          />
+        </div>
+      )}
       <Checkbox
         label={
           <T

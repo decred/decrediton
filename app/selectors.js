@@ -46,7 +46,9 @@ import {
   VOTED,
   LIVE,
   UNMINED,
-  IMMATURE
+  IMMATURE,
+  MIN_RELAY_FEE_ATOMS,
+  MIN_MIX_DENOMINATION_ATOMS
 } from "constants";
 import * as wallet from "wallet";
 import { VSP_FEE_PROCESS_ERRORED } from "./constants/Decrediton";
@@ -152,6 +154,19 @@ export const getMixedAccountBranch = get([
   "walletLoader",
   "mixedAccountBranch"
 ]);
+
+export const getMixedAccountSpendableBalance = get([
+  "grpc",
+  "mixedAccountSpendableBalance"
+]);
+export const getChangeAccountSpendableBalance = get([
+  "grpc",
+  "changeAccountSpendableBalance"
+]);
+export const hasChangeAccountEnoughFunds = createSelector(
+  [getChangeAccountSpendableBalance],
+  (balance) => balance > MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS
+);
 
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
@@ -1038,6 +1053,11 @@ export const defaultSpendingAccount = createSelector(
   [visibleAccounts, getMixedAccount],
   (accounts, mixedAccount) =>
     accounts.find(compose(eq(mixedAccount || 0), get("value")))
+);
+
+export const defaultSpendingAccountDisregardMixedAccount = createSelector(
+  [visibleAccounts],
+  (accounts) => accounts.find(compose(eq(0), get("value")))
 );
 
 export const changePassphraseRequestAttempt = get([
