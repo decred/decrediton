@@ -1,5 +1,5 @@
+import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
 import * as act from "actions/AccountMixerActions";
 import * as ca from "actions/ClientActions";
 import { getPrivacyLogs } from "actions/DaemonActions";
@@ -8,9 +8,11 @@ import * as sel from "selectors";
 export function usePrivacy() {
   const dispatch = useDispatch();
   const runAccountMixer = (request) => dispatch(act.runAccountMixer(request));
+  const checkUnmixedAccountBalance = useCallback(
+    (changeAccount) => dispatch(act.checkUnmixedAccountBalance(changeAccount)),
+    [dispatch]
+  );
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
-  const showInsufficientBalanceWarning = () =>
-    dispatch({ error: "", type: act.RUNACCOUNTMIXER_INSUFFICIENT_BALANCE });
   const onGetPrivacyLogs = () => dispatch(getPrivacyLogs());
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const mixedAccount = useSelector(sel.getMixedAccount);
@@ -23,8 +25,31 @@ export function usePrivacy() {
     .slice()
     .sort((a, b) => a.accountNumber - b.accountNumber);
   const accountMixerError = useSelector(sel.getAccountMixerError);
+  const isMixerDisabled = useSelector(sel.getIsMixerDisabled);
   const createMixerAccountAttempt = useSelector(sel.createMixerAccountAttempt);
   const allowSendFromUnmixed = useSelector(sel.getAllowSendFromUnmixed);
+  const mixedAccountSpendableBalance = useSelector(
+    sel.getMixedAccountSpendableBalance
+  );
+  const changeAccountSpendableBalance = useSelector(
+    sel.getChangeAccountSpendableBalance
+  );
+  const mixedAccountObject = accounts[mixedAccount];
+  const changeAccountObject = accounts[changeAccount];
+  const getMixerAcctsSpendableBalances = useCallback(
+    () => dispatch(ca.getMixerAcctsSpendableBalances()),
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getMixerAcctsSpendableBalances();
+  }, [
+    getMixerAcctsSpendableBalances,
+    mixedAccount,
+    changeAccount,
+    mixedAccountObject.spendable,
+    changeAccountObject.spendable
+  ]);
 
   const createNeededAccounts = (
     passphrase,
@@ -34,26 +59,13 @@ export function usePrivacy() {
     dispatch(
       act.createNeededAccounts(passphrase, mixedAccountName, changeAccountName)
     );
+
   const toggleAllowSendFromUnmixed = (allow) =>
     dispatch(act.toggleAllowSendFromUnmixed(allow));
 
-  const defaultSpendingAccountDisregardMixedAccount = useSelector(
-    sel.defaultSpendingAccountDisregardMixedAccount
-  );
-
-  const getMixerAcctsSpendableBalances = useCallback(
-    () => dispatch(ca.getMixerAcctsSpendableBalances()),
-    [dispatch]
-  );
-  const mixedAccountSpendableBalance = useSelector(
-    sel.getMixedAccountSpendableBalance
-  );
-  const changeAccountSpendableBalance = useSelector(
-    sel.getChangeAccountSpendableBalance
-  );
-  const hasChangeAccountEnoughFunds = useSelector(
-    sel.hasChangeAccountEnoughFunds
-  );
+  useEffect(() => {
+    changeAccount && checkUnmixedAccountBalance(changeAccount);
+  }, [changeAccount, checkUnmixedAccountBalance]);
 
   const onStartMixerAttempt = (passphrase) => {
     const request = {
@@ -74,6 +86,7 @@ export function usePrivacy() {
     mixedAccount,
     changeAccount,
     accounts,
+    isMixerDisabled,
     accountMixerError,
     onStartMixerAttempt,
     createNeededAccounts,
@@ -81,11 +94,7 @@ export function usePrivacy() {
     onGetPrivacyLogs,
     allowSendFromUnmixed,
     toggleAllowSendFromUnmixed,
-    showInsufficientBalanceWarning,
-    defaultSpendingAccountDisregardMixedAccount,
-    getMixerAcctsSpendableBalances,
     mixedAccountSpendableBalance,
-    changeAccountSpendableBalance,
-    hasChangeAccountEnoughFunds
+    changeAccountSpendableBalance
   };
 }

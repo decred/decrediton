@@ -46,8 +46,25 @@ export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
 export const RUNACCOUNTMIXER_ATTEMPT = "RUNACCOUNTMIXER_ATTEMPT";
 export const RUNACCOUNTMIXER_FAILED = "RUNACCOUNTMIXER_FAILED";
 export const RUNACCOUNTMIXER_SUCCESS = "RUNACCOUNTMIXER_SUCCESS";
-export const RUNACCOUNTMIXER_INSUFFICIENT_BALANCE =
-  "RUNACCOUNTMIXER_INSUFFICIENT_BALANCE";
+export const RUNACCOUNTMIXER_NOBALANCE = "RUNACCOUNTMIXER_NOBALANCE";
+export const RUNACCOUNTMIXER_SUFFICIENTBALANCE =
+  "RUNACCOUNTMIXER_SUFFICIENTBALANCE";
+
+export const checkUnmixedAccountBalance = (changeAccount) => async (
+  dispatch
+) => {
+  const spendableBal = await dispatch(getAcctSpendableBalance(changeAccount));
+  if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
+    dispatch({
+      error: "Insufficient unmixed account balance",
+      type: RUNACCOUNTMIXER_NOBALANCE
+    });
+  } else {
+    dispatch({
+      type: RUNACCOUNTMIXER_SUFFICIENTBALANCE
+    });
+  }
+};
 
 export const runAccountMixer = ({
   passphrase,
@@ -59,13 +76,6 @@ export const runAccountMixer = ({
   new Promise((resolve) => {
     dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
     const runMixerAsync = async () => {
-      // no start mixer if account balance is less than minimum possible fee.
-      const spendableBal = await dispatch(
-        getAcctSpendableBalance(changeAccount)
-      );
-      if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
-        return { error: "Account balance too small" };
-      }
       const mixerStreamer = await wallet.runAccountMixerRequest(
         sel.accountMixerService(getState()),
         {

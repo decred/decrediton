@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle, Log, Balance } from "shared";
 import {
@@ -16,6 +16,7 @@ import { useService } from "hooks";
 
 const PrivacyContent = ({
   accountMixerError,
+  isMixerDisabled,
   accountMixerRunning,
   stopAccountMixer,
   onStartMixerAttempt,
@@ -25,38 +26,16 @@ const PrivacyContent = ({
   showingSendUnmixModal,
   showModal,
   onChangeCheckbox,
-  mixedAccount,
   changeAccount,
-  showInsufficientBalanceWarning,
   defaultSpendingAccountDisregardMixedAccount,
-  getMixerAcctsSpendableBalances,
   mixedAccountSpendableBalance,
-  changeAccountSpendableBalance,
-  hasChangeAccountEnoughFunds,
-  accounts
+  changeAccountSpendableBalance
 }) => {
   const [expandedLogs, setExpandedLogs] = useState(false);
   const onHideLog = () => setExpandedLogs(false);
   const onShowLog = () => setExpandedLogs(true);
-  const [showBalanceError, setShowBalanceError] = useState(false);
-  const isStartMixerBtnEnabled = hasChangeAccountEnoughFunds;
-  const onShowInsufficientBalanceWarning = () => {
-    showInsufficientBalanceWarning();
-    setShowBalanceError(true);
-  };
-  const mixedAccountObject = accounts[mixedAccount];
-  const changeAccountObject = accounts[changeAccount];
-  useEffect(() => {
-    getMixerAcctsSpendableBalances();
-  }, [
-    getMixerAcctsSpendableBalances,
-    mixedAccount,
-    changeAccount,
-    mixedAccountObject.spendable,
-    changeAccountObject.spendable
-  ]);
-
   const { walletService } = useService();
+
   return (
     <div className={style.privacyContent}>
       <Subtitle
@@ -86,9 +65,9 @@ const PrivacyContent = ({
             className={classNames(
               style.balanceContainer,
               style.unmixedAccount,
-              showBalanceError && style.balanceError
+              isMixerDisabled && style.balanceError
             )}>
-            {showBalanceError && <div className={style.alertIcon} />}
+            {isMixerDisabled && <div className={style.alertIcon} />}
             <Balance amount={changeAccountSpendableBalance} />
             <label>
               <T id="privacy.label.unmixed.balance" m="Unmixed Balance" />
@@ -113,30 +92,25 @@ const PrivacyContent = ({
                 <T id="privacy.stop.mixer" m="Stop Mixer" />
               </DangerButton>
             ) : (
-              <div
-                onClick={() =>
-                  !isStartMixerBtnEnabled && onShowInsufficientBalanceWarning()
-                }>
-                <MixerPassphraseModalSwitch
-                  modalTitle={
-                    <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
-                  }
-                  buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
-                  modalDescription={
-                    <T
-                      id="privacy.mixer.modal.description"
-                      m={`Do you want to start the mixer?
+              <MixerPassphraseModalSwitch
+                modalTitle={
+                  <T id="privacy.start.mixer.confirmation" m="Start Mixer" />
+                }
+                buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
+                modalDescription={
+                  <T
+                    id="privacy.mixer.modal.description"
+                    m={`Do you want to start the mixer?
                 Decrediton should not be closed while the mixer is running.`}
-                    />
-                  }
-                  disabled={!isStartMixerBtnEnabled}
-                  className={style.startMixerButton}
-                  onSubmit={(passaphrase) => {
-                    onShowLog();
-                    onStartMixerAttempt(passaphrase);
-                  }}
-                />
-              </div>
+                  />
+                }
+                disabled={isMixerDisabled}
+                className={style.startMixerButton}
+                onSubmit={(passaphrase) => {
+                  onShowLog();
+                  onStartMixerAttempt(passaphrase);
+                }}
+              />
             )}
           </div>
         </div>

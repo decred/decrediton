@@ -46,9 +46,7 @@ import {
   VOTED,
   LIVE,
   UNMINED,
-  IMMATURE,
-  MIN_RELAY_FEE_ATOMS,
-  MIN_MIX_DENOMINATION_ATOMS
+  IMMATURE
 } from "constants";
 import * as wallet from "wallet";
 import { VSP_FEE_PROCESS_ERRORED } from "./constants/Decrediton";
@@ -163,10 +161,6 @@ export const getChangeAccountSpendableBalance = get([
   "grpc",
   "changeAccountSpendableBalance"
 ]);
-export const hasChangeAccountEnoughFunds = createSelector(
-  [getChangeAccountSpendableBalance],
-  (balance) => balance > MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS
-);
 
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
@@ -209,6 +203,7 @@ export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 export const getNetworkError = get(["grpc", "getNetworkError"]);
 export const getAccountMixerRunning = get(["grpc", "accountMixerRunning"]);
 export const getAccountMixerError = get(["grpc", "mixerStreamerError"]);
+export const getIsMixerDisabled = get(["grpc", "isMixerDisabled"]);
 export const createMixerAccountAttempt = get([
   "grpc",
   "createMixerAccountAttempt"
