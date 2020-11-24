@@ -461,7 +461,7 @@ export default function control(state = {}, action) {
     case CONSTRUCTTX_ATTEMPT:
       return {
         ...state,
-        constructTxRequestAttempt: true,
+        constructTxRequestAttempt: action.constructTxRequestAttempt,
         constructTxLowBalance: false
       };
     case CONSTRUCTTX_FAILED:

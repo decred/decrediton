@@ -572,10 +572,13 @@ export const constructTransactionAttempt = (
     request.setChangeDestination(outputDest);
   }
 
-  dispatch({ type: CONSTRUCTTX_ATTEMPT });
+  let { constructTxRequestAttempt } = getState().control;
+  if (constructTxRequestAttempt) {
+    constructTxRequestAttempt.cancel();
+  }
   const chainParams = sel.chainParams(getState());
   const { walletService } = getState().grpc;
-  walletService.constructTransaction(request, function (
+  constructTxRequestAttempt = walletService.constructTransaction(request, function (
     error,
     constructTxResponse
   ) {
@@ -596,7 +599,7 @@ export const constructTransactionAttempt = (
           1
         );
         dispatch({ error, type: CONSTRUCTTX_FAILED });
-      } else {
+      } else if (String(error).indexOf("Cancelled") == 0) {
         dispatch({ error, type: CONSTRUCTTX_FAILED });
       }
       return;
@@ -628,6 +631,7 @@ export const constructTransactionAttempt = (
       type: CONSTRUCTTX_SUCCESS
     });
   });
+  dispatch({ type: CONSTRUCTTX_ATTEMPT, constructTxRequestAttempt });
 };
 
 export const VALIDATEADDRESS_CLEANSTORE = "VALIDATEADDRESS_CLEANSTORE";
