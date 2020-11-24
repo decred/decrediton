@@ -35,7 +35,7 @@ const PrivacyContent = ({
   const onHideLog = () => setExpandedLogs(false);
   const onShowLog = () => setExpandedLogs(true);
   const { walletService } = useService();
-  
+
   return (
     <div className={style.privacyContent}>
       <Subtitle
@@ -104,7 +104,7 @@ const PrivacyContent = ({
                 Decrediton should not be closed while the mixer is running.`}
                   />
                 }
-                isDisabled={isMixerDisabled}
+                disabled={isMixerDisabled}
                 className={style.startMixerButton}
                 onSubmit={(passaphrase) => {
                   onShowLog();

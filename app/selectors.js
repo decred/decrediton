@@ -163,10 +163,6 @@ export const getChangeAccountSpendableBalance = get([
   "grpc",
   "changeAccountSpendableBalance"
 ]);
-export const hasChangeAccountEnoughFunds = createSelector(
-  [getChangeAccountSpendableBalance],
-  (balance) => balance > MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS
-);
 
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
