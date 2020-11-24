@@ -141,7 +141,7 @@ test("renders default sidebar", () => {
 
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/watch-only/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/mixer is running/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/running in the background/i)).not.toBeInTheDocument();
   expect(
     screen.queryByTestId("menu-link-notification-icon")
   ).not.toBeInTheDocument();
@@ -427,11 +427,11 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
   ));
 
   render(<SideBar />);
-  expect(screen.getByText(/mixer is running/i)).toMatchInlineSnapshot(`
+  expect(screen.getByText(/in the background/i)).toMatchInlineSnapshot(`
 <span
   class="tip "
 >
-  The mixer is running. Go to Privacy view for more information
+  One or more of the following decrediton's features running in the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt
 </span>
 `);
 
