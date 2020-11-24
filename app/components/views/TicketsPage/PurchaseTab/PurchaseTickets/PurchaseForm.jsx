@@ -62,7 +62,7 @@ const PurchaseTicketsForm = ({
             />
             {vsp && (
               <Tooltip
-                content={<T id="purchaseTickets.poolFee" m="VSP Fee" />}
+                content={<T id="purchaseTickets.vspFee" m="VSP Fee" />}
                 className="ticket_pool_fee">
                 <div className="stakepool-info-icon stakepool-pool-fee-icon">
                   {vspFee} %

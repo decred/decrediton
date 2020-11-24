@@ -150,7 +150,7 @@ const PurchaseTicketsAdvanced = ({
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
-      label={<T id="purchaseTickets.poolFees" m="VSP Fees" />}
+      label={<T id="purchaseTickets.advanced.poolFees" m="VSP Fees" />}
       className="pool-fees">
       <PercentInput
         disabled
