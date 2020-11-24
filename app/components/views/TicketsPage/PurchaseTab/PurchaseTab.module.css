@@ -49,7 +49,7 @@
   background-size: 20px;
   display: grid;
   grid-template-columns: 30fr 1fr;
-  grid-row-gap: 20px;
+  grid-row-gap: 10px;
   padding: 10px 10px 10px 40px;
 }
 .privacyInfoReadMoreIcon {
