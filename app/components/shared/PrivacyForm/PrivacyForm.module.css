@@ -25,3 +25,12 @@
 .row {
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .isRow {
+    flex-direction: column;
+  }
+  .item {
+    padding: 10px 0;
+  }
+}
