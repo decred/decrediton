@@ -26,7 +26,7 @@ export default ({ toggleSpv }) => (
     <div className={styles.privacyOptions}>
       <PrivacyOption
         title={<T id="spv.options.enable.title" m="Enable SPV" />}
-        icon="enable-spv"
+        icon="spvOn"
         description={
           <T
             id="spv.options.enable.description"
@@ -38,7 +38,7 @@ export default ({ toggleSpv }) => (
 
       <PrivacyOption
         title={<T id="spv.options.disable.title" m="Disable SPV" />}
-        icon="disable-spv"
+        icon="spvOff"
         description={
           <T
             id="spv.options.disable.description"

@@ -37,7 +37,7 @@ export default ({
         title={
           <T id="privacy.options.disabled.title" m="No Outbound Connections" />
         }
-        icon="icon-disabled"
+        icon="disabled"
         description={
           <T
             id="privacy.options.disabled.description"

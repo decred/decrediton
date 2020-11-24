@@ -4,10 +4,10 @@ import { usePrevious } from "hooks";
 import { spring } from "react-motion";
 import theme from "theme";
 import * as sel from "selectors";
-import { trezorLink, lnLink } from "./Links";
+import { linkList, TREZOR_KEY, LN_KEY } from "./Links";
 import { MENU_LINKS_PER_ROW } from "constants/Decrediton";
 
-export function useMenuLinks(linkList) {
+export function useMenuLinks() {
   const location = useSelector(sel.location);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
   const expandSideBar = useSelector(sel.expandSideBar);
@@ -37,12 +37,20 @@ export function useMenuLinks(linkList) {
   const [caretStyle, setCaretStyle] = useState({ top: 0, left: 0 });
   const [selectedTab, setSelectedTab] = useState(null);
 
+  const prepareLinkList = () => {
+    let links = linkList;
+    if (!isTrezor) {
+      links = links.filter((l) => l.key !== TREZOR_KEY);
+    }
+    if (!lnEnabled) {
+      links = links.filter((l) => l.key !== LN_KEY);
+    }
+
+    return links;
+  };
+
   const nodes = useRef(new Map());
-  const links = useRef([
-    ...linkList,
-    ...(isTrezor ? [trezorLink] : []),
-    ...(lnEnabled ? [lnLink] : [])
-  ]);
+  const links = useRef(prepareLinkList());
 
   const neededCaretPosition = useCallback(
     (path) => {

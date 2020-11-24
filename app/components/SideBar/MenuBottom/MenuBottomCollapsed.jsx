@@ -1,6 +1,7 @@
 import { RescanButton, RescanCancelButton } from "buttons";
-import style from "./MenuBottom.module.css";
-import { classNames } from "pi-ui";
+import styles from "./MenuBottom.module.css";
+import SettingsIconLink from "./SettingsIconLink/SettingsIconLink";
+import SpvIcon from "./SpvIcon/SpvIcon";
 
 const MenuBottomCollapsed = ({
   rescanRequest,
@@ -11,17 +12,15 @@ const MenuBottomCollapsed = ({
 }) => (
   <>
     {!sidebarOnBottom && (
-      <div
-        className={classNames(
-          style.latestBlock
-        )}>
-        <div className={style.rescanButtonAreaCollapsed}>
+      <div className={styles.bottomBarCollapsed}>
+        <SpvIcon isSPV={isSPV} />
+        <div className={styles.rescanButtonAreaCollapsed}>
           <RescanButton {...{ rescanRequest, rescanAttempt }} />
           {rescanRequest && (
             <RescanCancelButton {...{ rescanRequest, rescanCancel }} />
           )}
-          {isSPV && <span className={style.spvLabel}>SPV</span>}
         </div>
+        <SettingsIconLink className={styles.settingsLinkCollapsed} />
       </div>
     )}
   </>

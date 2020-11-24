@@ -36,10 +36,10 @@ const Logo = React.memo(
           text={
             <T
               id="sidebar.mixer.running"
-              m="The mixer is running. Go to Privacy view for more information"
+              m="One or more of the following decrediton's features running in the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt"
             />
           }>
-          <div className="rescan-button spin" />
+          <div className={style.mixerOn} />
         </Tooltip>
       )}
       {expandSideBar && (

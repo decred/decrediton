@@ -38,7 +38,7 @@ test("Recent mined block time displays correctly", () => {
     />
   );
 
-  expect(lbt.find(LastBlockTime).find(FormattedMessage).prop("defaultMessage")).toBe("< 1 minute ago");
+  expect(lbt.find(LastBlockTime).find(FormattedMessage).prop("defaultMessage")).toBe("seconds ago");
 });
 
 test("Old mined block time displays correctly", () => {
@@ -66,14 +66,14 @@ test("Block time updates after a minute", async () => {
   );
 
   // when the block has just been generated, shows the default message
-  expect(getByText("< 1 minute ago")).toBeInTheDocument();
+  expect(getByText("seconds ago")).toBeInTheDocument();
   // simulate that 61 seconds have passed
   act(() => {
     advanceBy(61 * 1000);
     jest.advanceTimersByTime(61 * 1000);
   });
 
-  await wait(() => expect(queryByText("< 1 minute ago")).not.toBeInTheDocument());
+  await wait(() => expect(queryByText("seconds ago")).not.toBeInTheDocument());
   await wait(() => expect(queryByText("1 minute ago")).toBeInTheDocument());
 });
 

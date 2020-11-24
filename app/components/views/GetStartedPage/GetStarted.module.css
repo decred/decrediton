@@ -749,7 +749,7 @@
   background-image: var(--stakey-privacy-standard);
 }
 
-.privacyOptionIcon.icon-disabled {
+.privacyOptionIcon.disabled {
   background-image: var(--stakey-privacy-disabled);
 }
 
@@ -757,11 +757,11 @@
   background-image: var(--stakey-privacy-custom);
 }
 
-.privacyOptionIcon.enable-spv {
+.privacyOptionIcon.spvOn {
   background-image: var(--enable-spv);
 }
 
-.privacyOptionIcon.disable-spv {
+.privacyOptionIcon.spvOff {
   background-image: var(--disable-spv);
 }
 

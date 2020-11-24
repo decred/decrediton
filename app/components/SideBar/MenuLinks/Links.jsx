@@ -1,5 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 
+export const LN_KEY = "ln";
+export const TREZOR_KEY = "trezor";
+
 export const linkList = [
   {
     path: "/home",
@@ -9,9 +12,16 @@ export const linkList = [
   },
   {
     path: "/transactions",
-    link: <T id="sidebar.link.transactions" m="Transactions" />,
+    link: <T id="sidebar.link.transactions" m="On-chain Transactions" />,
     icon: "transactions",
-    ariaLabel: "Transactions"
+    ariaLabel: "On-chain Transactions"
+  },
+  {
+    path: "/ln",
+    link: <T id="sidebar.link.ln" m="Lightning Transactions" />,
+    icon: LN_KEY,
+    key: LN_KEY,
+    ariaLabel: "Lightning Transactions"
   },
   {
     path: "/governance",
@@ -22,9 +32,15 @@ export const linkList = [
   },
   {
     path: "/tickets",
-    link: <T id="sidebar.link.tickets" m="Tickets" />,
+    link: <T id="sidebar.link.staking" m="Staking" />,
     icon: "tickets",
-    ariaLabel: "Tickets"
+    ariaLabel: "Staking"
+  },
+  {
+    path: "/privacy",
+    link: <T id="sidebar.link.privacy" m="Privacy and Security" />,
+    icon: "securitycntr",
+    ariaLabel: "Privacy"
   },
   {
     path: "/accounts",
@@ -33,35 +49,10 @@ export const linkList = [
     ariaLabel: "Accounts"
   },
   {
-    path: "/privacy",
-    link: <T id="sidebar.link.privacy" m="Privacy" />,
-    icon: "securitycntr",
-    ariaLabel: "Privacy"
-  },
-  {
-    path: "/help",
-    link: <T id="sidebar.link.help" m="Help" />,
-    icon: "help",
-    ariaLabel: "Help"
-  },
-  {
-    path: "/settings",
-    link: <T id="sidebar.link.settings" m="Settings" />,
-    icon: "settings",
-    ariaLabel: "Settings"
+    path: "/trezor",
+    link: <T id="sidebar.link.trezor" m="Trezor" />,
+    icon: TREZOR_KEY,
+    key: TREZOR_KEY,
+    ariaLabel: "Trezor"
   }
 ];
-
-export const trezorLink = {
-  path: "/trezor",
-  link: <T id="sidebar.link.trezor" m="Trezor" />,
-  icon: "trezor",
-  ariaLabel: "Trezor"
-};
-
-export const lnLink = {
-  path: "/ln",
-  link: <T id="sidebar.link.ln" m="Lightning Network" />,
-  icon: "ln",
-  ariaLabel: "Lightning Network"
-};

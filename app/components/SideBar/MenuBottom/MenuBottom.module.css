@@ -57,20 +57,46 @@
   font-size: 13px;
 }
 
-.latestBlock {
+.bottomBar {
   display: flex;
   align-items: center;
   padding: 16px;
   background-color: var(--info-modal-button-text);
-  font-size: 13px;
+  font-size: 11px;
 }
 
-.latestBlockName {
+.bottomBarContent {
   color: var(--disabled-color);
-  font-size: 13px;
   line-height: 10px;
-  text-align: left;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.bottomBarCollapsed {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottomBarCollapsed > div {
+    margin: 10px;
+}
+
+.settingsLinkCollapsed {
+  margin-bottom: 20px;
+}
+
+.latestBlockWithPeers {
+  display: flex;
+  flex-direction: column;
+}
+
+.latestBlock {
+  display: flex;
+  margin-bottom: 0.4rem;
 }
 
 .latestBlockNumber {
@@ -79,35 +105,12 @@
 }
 
 .latestBlockTime {
-  display: inline-block;
-  margin-left: auto;
   color: var(--disabled-color);
-  font-size: 13px;
-  text-align: right;
-  text-decoration: none;
-}
-
-.bottomBar {
-  display: flex;
-  align-items: center;
-  padding: 0 16px 8px;
-  background-color: var(--info-modal-button-text);
 }
 
 .peersCount {
   display: flex;
   align-items: center;
-}
-
-.peersIcon {
-  margin: 5px 10px 5px 5px;
-  width: 16px;
-  height: 16px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: var(--menu-peers-icon);
-  background-size: 16px 16px;
 }
 
 .peersCountLabel {
@@ -119,34 +122,15 @@
   color: var(--sidebar-bottom-light-text-color);
 }
 
-.rescanButtonArea {
-  padding-top: 2px;
-  padding-right: 5px;
-  float: left;
-}
-
 .rescanButtonAreaCollapsed {
-  text-align: center;
-  padding-right: 0;
-  float: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .rescanButton.spin {
   animation: spin 1s linear infinite;
-}
-
-.spvIconContainer {
-  margin-left: auto;
-}
-
-.spvIcon {
-  background-image: var(--enable-spv);
-  height: 2.0rem;
-  width: 2.0rem; 
-}
-
-.spvLabel {
-  display: block;
 }
 
 @media screen and (max-width: 768px) {

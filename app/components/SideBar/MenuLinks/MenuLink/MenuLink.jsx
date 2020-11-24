@@ -19,8 +19,8 @@ const MenuLinkContent = ({
         data-testid="menu-link-notification-icon"></span>
     )}
     <Link
-      className={classNames(style.menuLink, style[icon + "Icon"])}
-      activeClassName={classNames(style.menuLinkActive, style[icon + "Icon"])}
+      className={classNames(style.menuLink, style[`${icon}Icon`])}
+      activeClassName={classNames(style.menuLinkActive, style[`${icon}Icon`])}
       icon={icon}
       to={path}
       key={path}

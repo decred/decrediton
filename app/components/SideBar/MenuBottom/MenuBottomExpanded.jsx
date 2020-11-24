@@ -1,10 +1,12 @@
+import { classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
+import { Balance } from "shared";
 import { RescanButton } from "buttons";
 import { RescanProgress } from "indicators";
 import LastBlockTime from "./LastBlockTime/LastBlockTime";
+import SpvIcon from "./SpvIcon/SpvIcon";
+import SettingsIconLink from "./SettingsIconLink/SettingsIconLink";
 import styles from "./MenuBottom.module.css";
-import { classNames } from "pi-ui";
 
 const MenuBarExpanded = ({
   isShowingAccounts,
@@ -37,39 +39,39 @@ const MenuBarExpanded = ({
         <Balance amount={totalBalance} />
       </div>
     </div>
-    <div className={styles.latestBlock}>
-      {rescanRequest ? <RescanProgress /> : null}
+    <div className={styles.bottomBar}>
+      <SpvIcon isSPV={isSPV} />
+      {rescanRequest && <RescanProgress />}
       {currentBlockHeight && !rescanRequest && (
         <>
-          <div className={styles.rescanButtonArea}>
-            <RescanButton {...{ rescanRequest, rescanAttempt }} />
-          </div>
-          <a className={styles.latestBlockName}>
-            <T id="sidebar.latestBlock" m="Latest Block" />
-            <span className={styles.latestBlockNumber}>
-              &nbsp;{currentBlockHeight}
-            </span>
-          </a>
-          <div className={styles.latestBlockTime}>
-            <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+          <RescanButton {...{ rescanRequest, rescanAttempt }} />
+          <div className={styles.bottomBarContent}>
+            <div className={styles.latestBlockWithPeers}>
+              <div className={styles.latestBlock}>
+                <div>
+                  <T id="sidebar.latestBlock" m="Block" />
+                </div>
+                <div className={styles.latestBlockNumber}>
+                  &nbsp;{currentBlockHeight}
+                </div>
+                <div className={styles.latestBlockTime}>
+                  <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} />
+                </div>
+              </div>
+              <div className={styles.peersCount}>
+                <span className={styles.peersCountLabel}>
+                  <T id="sidebar.connectedTo" m="Connected to" />
+                </span>
+                <span className={styles.peersCountValue}>
+                  &nbsp;{peersCount}
+                  &nbsp;
+                  <T id="sidebar.peersCount" m="peers" />
+                </span>
+              </div>
+            </div>
+            <SettingsIconLink />
           </div>
         </>
-      )}
-    </div>
-    <div className={styles.bottomBar}>
-      <div className={styles.peersCount}>
-        <div className={styles.peersIcon}></div>
-        <span className={styles.peersCountLabel}>
-          <T id="sidebar.peersCount" m="Peers" />
-        </span>
-        <span className={styles.peersCountValue}>&nbsp;{peersCount}</span>
-      </div>
-      {isSPV && (
-        <div className={styles.spvIconContainer}>
-          <Tooltip text={<T id="sidebar.spvMode" m="SPV Mode" />}>
-            <div className={styles.spvIcon} />
-          </Tooltip>
-        </div>
       )}
     </div>
   </div>

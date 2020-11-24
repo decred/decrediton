@@ -1,0 +1,36 @@
+.tooltip {
+ height: 2.2rem;
+}
+
+.rescan.syncing {
+  background-image: var(--menu-animation-syncing);
+}
+
+.rescan {
+  margin: 0 0.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-block-synced-icon);
+  background-size: 2.2rem 2.2rem;
+  cursor: pointer;
+}
+
+.cancel {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-cancel-rescan-icon);
+  background-size: 1.6rem 1.6rem;
+  cursor: pointer;
+  margin: 1rem;
+  background-repeat: no-repeat;
+}
+
+.cancel:hover {
+  opacity: 0.7;
+}

@@ -26,6 +26,29 @@
   flex-direction: column;
 }
 
+.mixerOn {
+  margin: 5px;
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-mixer-icon);
+  background-size: 16px 16px;
+  cursor: pointer;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .reducedArrow {
   border: none;
   outline: none;

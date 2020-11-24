@@ -5,7 +5,7 @@
   align-items: center;
   cursor: pointer;
   height: 52px;
-  padding-left: 65px;
+  padding-left: 55px;
   color: var(--sidebar-menu-link);
   font-size: 15px;
   text-decoration: none;
@@ -14,26 +14,11 @@
   background-size: 22px;
   background-repeat: no-repeat;
   user-select: none;
+  margin-left: 5px;
 }
 
 .menuLinkContainer {
   height: 52px;
-}
-
-.menuLink.settingsIcon {
-  background-image: var(--menu-settings);
-}
-
-.menuLink.settingsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-settings);
-}
-
-.menuLink.helpIcon {
-  background-image: var(--menu-help);
-}
-
-.menuLink.helpIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-help);
 }
 
 .menuLink.ticketsIcon {
@@ -41,7 +26,7 @@
 }
 
 .menuLink.ticketsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-tickets);
+  /* Add animation here */
 }
 
 .menuLink.transactionsIcon {
@@ -54,11 +39,10 @@
 
 .menuLink.trezorIcon:not(.menuLinkActive):hover {
   /* Todo: Add trezor animation */
-  background-image: var(--menu-trezor);
 }
 
 .menuLink.transactionsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-transactions);
+  /* XXX add animation */
 }
 
 .menuLink.accountsIcon {
@@ -66,7 +50,7 @@
 }
 
 .menuLink.accountsIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-accounts);
+  /* XXX add animation */
 }
 
 .menuLink.securitycntrIcon {
@@ -83,7 +67,7 @@
 }
 
 .menuLink.overviewIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-overview);
+  /* XXX add animation */
 }
 
 .menuLink.governanceIcon {
@@ -91,7 +75,7 @@
 }
 
 .menuLink.governanceIcon:not(.menuLinkActive):hover {
-  background-image: var(--menu-animation-governance);
+  /* XXX add animation */
 }
 
 .menuLink.lnIcon {
@@ -136,6 +120,12 @@
 
 .tooltipOnBottom {
   bottom: 70% !important;
+}
+
+@media screen and (min-width: 768px) {
+  .menuLinkActive {
+    background-color: var(--background-back-color);
+  }
 }
 
 @media screen and (max-width: 768px) {

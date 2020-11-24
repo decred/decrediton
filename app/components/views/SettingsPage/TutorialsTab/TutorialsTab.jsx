@@ -1,19 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
-import { DescriptionHeader } from "layout";
 import { Subtitle } from "shared";
 import { Link } from "react-router-dom";
 import styles from "./TutorialsTab.module.css";
-
-export const TutorialsTabHeader = () => (
-  <DescriptionHeader
-    description={
-      <T
-        id="help.description.tutorials"
-        m="Learn about the various aspects of the Decred network."
-      />
-    }
-  />
-);
 
 export const TutorialsTab = () => (
   <>

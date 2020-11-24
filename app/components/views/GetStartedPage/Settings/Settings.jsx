@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { classNames } from "pi-ui";
-import NetworkSettings from "views/SettingsPage/NetworkSettings";
-import ProxySettings from "views/SettingsPage/ProxySettings";
-import PrivacySettings from "views/SettingsPage/PrivacySettings";
-import UISettings from "views/SettingsPage/UISettings";
-import TimezoneSettings from "views/SettingsPage/TimezoneSettings";
+import NetworkSettings from "views/SettingsPage/SettingsTab/NetworkSettings";
+import ProxySettings from "views/SettingsPage/SettingsTab/ProxySettings";
+import PrivacySettings from "views/SettingsPage/SettingsTab/PrivacySettings";
+import UISettings from "views/SettingsPage/SettingsTab/UISettings";
+import TimezoneSettings from "views/SettingsPage/SettingsTab/TimezoneSettings";
 import { Tooltip, Subtitle } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton } from "buttons";
@@ -16,7 +16,9 @@ import {
   DEFAULT_LIGHT_THEME_NAME,
   DEFAULT_DARK_THEME_NAME
 } from "pi-ui";
-import stylesSettigs from "views/SettingsPage/Settings.module.css";
+// XXX we shouldn't import other view css module here, this is breaking
+// css modules encapsulation principle!!
+import stylesSettigs from "views/SettingsPage/SettingsTab/Settings.module.css";
 import stylesGetStarted from "../GetStarted.module.css";
 import { useSettings } from "hooks";
 

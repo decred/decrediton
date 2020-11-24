@@ -364,43 +364,7 @@
   opacity: 0.7;
 }
 
-.rescan-button {
-  margin: 5px;
-  width: 16px;
-  height: 16px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: var(--menu-rescan-icon);
-  background-size: 16px 16px;
-  cursor: pointer;
-}
-
-.rescan-button:not(.spin):hover {
-  opacity: 0.7;
-  background-image: var(--menu-rescan-hover-icon);
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.rescan-button.spin {
-  animation: spin 1s linear infinite;
-}
-
-.rescan-button.spin:hover {
-  opacity: 1;
-}
-
-.gettickets-cancel-button,
-.rescan-cancel-button {
+.gettickets-cancel-button {
   width: 16px;
   height: 16px;
   border: none;
@@ -413,8 +377,7 @@
   background-repeat: no-repeat;
 }
 
-.gettickets-cancel-button:hover,
-.rescan-cancel-button:hover {
+.gettickets-cancel-button:hover {
   opacity: 0.7;
 }
 
