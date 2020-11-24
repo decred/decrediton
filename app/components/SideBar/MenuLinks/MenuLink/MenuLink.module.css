@@ -94,7 +94,6 @@
 .menuLinkActive {
   color: var(--input-color-default);
   cursor: default;
-  background-color: var(--sidebar-menu-link-active-bg);
 }
 
 .menuLinkNotificationIcon {
@@ -121,6 +120,12 @@
 
 .tooltipOnBottom {
   bottom: 70% !important;
+}
+
+@media screen and (min-width: 768px) {
+  .menuLinkActive {
+    background-color: var(--background-back-color);
+  }
 }
 
 @media screen and (max-width: 768px) {

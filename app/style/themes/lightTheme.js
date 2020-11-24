@@ -47,7 +47,6 @@ const lightTheme = {
   "sidebar-bottom-light-text-color": "#424F67",
   "header-desc-color": "#091440",
   "sidebar-menu-link": "#8997a5",
-  "sidebar-menu-link-active-bg": "#fff",
   "linear-progress-text": "#fff",
   "wallet-label": "#091440",
   "new_wallet-label": "#48566e",
