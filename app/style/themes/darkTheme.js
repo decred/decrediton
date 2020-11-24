@@ -126,6 +126,12 @@ const darkTheme = {
   "input-copy-hover-color": "#78d9f8",
   "coinjoin-sum-color": "#7DA7D9",
   "coinjoin-sum-text-color": "#fff",
+  "privacy-balance-color": "#b7deee",
+  "privacy-balance-label-color": "#b7deee",
+  "privacy-balance-mixed-label-color": "#b7deee",
+  "privacy-mixer-status-color": "#b7deee",
+  "mixer-settings-label": "#e9f8fe",
+  "mixer-settings-disabled": "#3c62b0",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",
@@ -232,7 +238,15 @@ const darkTheme = {
   "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
   "backup-icon": "url('style/icons/harddriveDark.svg')",
   "loader-animation-daemon-waiting-initial":
-    "url('style/icons/daemonWaitingLoaderInitialDark.gif')"
+    "url('style/icons/daemonWaitingLoaderInitialDark.gif')",
+  "mixed-account-icon": "url('style/icons/mixedAccountDark.svg')",
+  "unmixed-account-icon": "url('style/icons/unmixedAccountDark.svg')",
+  "privacy-running-arrows": "url('style/icons/privacyRunningArrowsDark.svg')",
+  "decentralized-loop-still":
+    "url('style/icons/decentralizedLoopStillDark.gif')",
+  "decentralized-loop-animation":
+    "url('style/icons/decentralizedLoopAnimationDark.gif')",
+  "send-to-self-icon": "url('style/icons/sentToSelfTxDark.svg')"
 };
 
 export default darkTheme;

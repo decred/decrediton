@@ -136,7 +136,8 @@ const icons = {
   "view-qr-icon": "url('style/icons/showQR.svg')",
   "share-icon": "url('style/icons/share.svg')",
   "decred-logo": "url('style/icons/dcrLogoShare.svg')",
-  "search-icon-light": "url('style/icons/search-light.svg')"
+  "search-icon-light": "url('style/icons/search-light.svg')",
+  "animated-alert-icon": "url('style/icons/animated_alert_icon.gif')"
 };
 
 export default icons;

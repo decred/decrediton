@@ -1,13 +1,19 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import AccountsSelect from "./AccountsSelect";
 import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
-function ReceiveAccountsSelect({ onChange, className, showAccountsButton }) {
+function ReceiveAccountsSelect({
+  onChange,
+  className,
+  showAccountsButton,
+  disabled,
+  account
+}) {
   const dispatch = useDispatch();
   const mixedAccount = useSelector(sel.getMixedAccount);
-  const account = useSelector(sel.nextAddressAccount);
+  const nextAddressAccount = useSelector(sel.nextAddressAccount);
 
   const getNextAddressAttempt = useCallback(
     (value) => dispatch(ca.getNextAddressAttempt(value)),
@@ -21,6 +27,12 @@ function ReceiveAccountsSelect({ onChange, className, showAccountsButton }) {
     [getNextAddressAttempt, onChange]
   );
 
+  useEffect(() => {
+    if (account && account != nextAddressAccount.value) {
+      getNextAddressAttempt(account);
+    }
+  }, [account, getNextAddressAttempt, nextAddressAccount.value]);
+
   return (
     <AccountsSelect
       {...{
@@ -29,7 +41,15 @@ function ReceiveAccountsSelect({ onChange, className, showAccountsButton }) {
         onChange: onChangeAccount,
         accountsType: "visible",
         filterAccounts: [mixedAccount],
-        account
+        // If account property is defined, the getNextAddressAttampt action
+        // needs to be called with it, which updates nextAddressAccount
+        // eventually. Until it happens, it's better to show no account
+        // than a previously chosen one.
+        account:
+          account && account != nextAddressAccount.value
+            ? null
+            : nextAddressAccount,
+        disabled
       }}
     />
   );

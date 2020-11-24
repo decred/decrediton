@@ -1,40 +1,21 @@
-import { useState, useEffect, useCallback } from "react";
-import SendPage from "./SendPage/SendPage";
-import SendOutputRow from "./SendOutputRow/SendOutputRow";
-import ErrorScreen from "ErrorScreen";
 import { FormattedMessage as T } from "react-intl";
+import { useSendTransaction, useOutputs } from "./hooks";
+import { useState, useEffect, useCallback } from "react";
+import SendOutputRow from "./SendOutputRow/SendOutputRow";
 import { spring, presets } from "react-motion";
-import { DescriptionHeader } from "layout";
 import { baseOutput } from "./helpers";
-import { useService, usePrevious } from "hooks";
-import { useSendTab, useOutputs } from "./hooks";
+import { usePrevious } from "hooks";
+import Form from "./Form";
 
-export const SendTabHeader = () => {
-  const { isTestNet } = useService();
-  return (
-    <DescriptionHeader
-      description={
-        isTestNet ? (
-          <T
-            id="transactions.description.send.testnet"
-            m={
-              "Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
-            }
-          />
-        ) : (
-          <T
-            id="transactions.description.send.mainnet"
-            m={
-              "Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
-            }
-          />
-        )
-      }
-    />
-  );
-};
-
-const SendTab = () => {
+const SendTransaction = ({
+  onlySendSelfAllowed,
+  receiveAccountsSelectDisabled,
+  styles,
+  hideDetails,
+  sendButtonLabel,
+  receiveAccount,
+  spendingAccount
+}) => {
   const {
     defaultSpendingAccount,
     unsignedTransaction,
@@ -54,7 +35,7 @@ const SendTab = () => {
     validateAddress,
     onClearTransaction,
     onGetNextAddressAttempt
-  } = useSendTab();
+  } = useSendTransaction();
 
   const {
     outputs,
@@ -65,11 +46,11 @@ const SendTab = () => {
     prevOutputs
   } = useOutputs();
 
-  const { walletService } = useService();
-
-  const [account, setAccount] = useState(defaultSpendingAccount);
+  const [account, setAccount] = useState(
+    spendingAccount ? spendingAccount : defaultSpendingAccount
+  );
   const [sendAllAmount, setSendAllAmount] = useState(totalSpent);
-  const [isSendSelf, setIsSendSelf] = useState(false);
+  const [isSendSelf, setIsSendSelf] = useState(onlySendSelfAllowed);
   const [isSendAll, setIsSendAll] = useState(false);
   const [insuficientFunds, setInsuficientFunds] = useState(false);
   const [showPassphraseModal, setShowPassphraseModal] = useState(false);
@@ -127,13 +108,15 @@ const SendTab = () => {
     setAccount(account);
 
     if (isSendAll) {
-      const newOutputs = [{
-        ...outputs[0],
-        data: {
-          ...outputs[0].data,
-          amount: account.spendable
+      const newOutputs = [
+        {
+          ...outputs[0],
+          data: {
+            ...outputs[0].data,
+            amount: account.spendable
+          }
         }
-      }];
+      ];
       onSetOutputs(newOutputs);
     }
   };
@@ -151,17 +134,19 @@ const SendTab = () => {
   };
 
   const onShowSendAll = () => {
-    const newOutputs = [{
-      ...outputs[0],
-      data: {
-        ...outputs[0].data,
-        amount: account.spendable,
-        error: {
-         ...outputs[0].data.error,
-          amount: null
+    const newOutputs = [
+      {
+        ...outputs[0],
+        data: {
+          ...outputs[0].data,
+          amount: account.spendable,
+          error: {
+            ...outputs[0].data.error,
+            amount: null
+          }
         }
       }
-    }];
+    ];
     setIsSendAll(true);
     onSetOutputs(newOutputs);
   };
@@ -173,32 +158,35 @@ const SendTab = () => {
   };
 
   const onHideSendAll = () => {
-    const newOutputs = [{
-      ...outputs[0],
-      data: {
-        ...outputs[0].data,
-        amount: null
+    const newOutputs = [
+      {
+        ...outputs[0],
+        data: {
+          ...outputs[0].data,
+          amount: null
+        }
       }
-    }];
+    ];
     setIsSendAll(false);
     onSetOutputs(newOutputs);
   };
 
   const hasError = useCallback(() => {
     const outputHasError = (o) =>
-        !o.data.amount ||
-        o.data.destination.length === 0 ||
-        o.data.error.amount ||
-        o.data.error.address;
+      !o.data.amount ||
+      o.data.destination.length === 0 ||
+      o.data.error.amount ||
+      o.data.error.address;
     return outputs.some(outputHasError);
   }, [outputs]);
 
-  const isValid = () => !!(
-    !hasError() &&
-    unsignedTransaction &&
-    !isConstructingTransaction &&
-    !constructTxLowBalance
-  );
+  const isValid = () =>
+    !!(
+      !hasError() &&
+      unsignedTransaction &&
+      !isConstructingTransaction &&
+      !constructTxLowBalance
+    );
 
   const willEnter = () => ({
     opacity: 0
@@ -208,8 +196,7 @@ const SendTab = () => {
     opacity: spring(0, { stiffness: 210, damping: 20 })
   });
 
-  const resetShowPassphraseModal = () =>
-    setShowPassphraseModal(false);
+  const resetShowPassphraseModal = () => setShowPassphraseModal(false);
 
   const getOutputRows = () => {
     // if sending to another accounts from same wallet, there is no need to
@@ -239,7 +226,11 @@ const SendTab = () => {
             onAddOutput,
             onKeyDown,
             filterAccounts,
-            accountsType
+            accountsType,
+            onlySendSelfAllowed,
+            receiveAccountsSelectDisabled,
+            extStyle: styles,
+            receiveAccount
           }}
         />
       ),
@@ -311,7 +302,7 @@ const SendTab = () => {
       setInsuficientFunds(false);
     }
 
-    if(prevOutputs != outputs || prevAccount != account) {
+    if (prevOutputs != outputs || prevAccount != account) {
       onAttemptConstructTransaction();
     }
   }, [
@@ -337,8 +328,8 @@ const SendTab = () => {
     return () => onClearTransaction;
   });
 
-  return !walletService ? <ErrorScreen /> : (
-    <SendPage
+  return (
+    <Form
       {...{
         isSendSelf,
         outputs,
@@ -355,10 +346,13 @@ const SendTab = () => {
         willEnter,
         isWatchingOnly,
         isTrezor,
-        insuficientFunds
+        insuficientFunds,
+        styles,
+        hideDetails,
+        sendButtonLabel
       }}
     />
   );
 };
 
-export default SendTab;
+export default SendTransaction;

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #2F4D8C;
+      }
+
+      .cls-3 {
+        fill: #99C1E3;
+      }
+
+      .cls-4 {
+        fill: #2F4D8C;
+      }
+    </style>
+  </defs>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="icon">
+      <g>
+        <g>
+          <rect class="cls-1" width="20" height="20"/>
+          <g>
+            <rect class="cls-2" x="1.11" y="3.02" width="17.78" height="13.97" rx="1.11"/>
+            <rect class="cls-3" x="1.11" y="4.29" width="17.78" height="12.7" rx="1.06"/>
+          </g>
+        </g>
+        <g>
+          <rect class="cls-4" x="4.44" y="8.97" width="5" height="3.33" rx="0.66"/>
+          <rect class="cls-4" x="10.56" y="8.97" width="5" height="3.33" rx="0.66"/>
+          <rect class="cls-4" x="3.89" y="8.97" width="1.11" height="0.56"/>
+          <rect class="cls-4" x="15" y="8.97" width="1.11" height="0.56"/>
+          <rect class="cls-4" x="8.45" y="9.52" width="3.13" height="0.56"/>
+          <path class="cls-3" d="M5.69,11.81a.88.88,0,0,1-.88-.89h.44a.45.45,0,0,0,.44.45Z"/>
+          <path class="cls-3" d="M11.78,11.81a.89.89,0,0,1-.89-.89h.44a.45.45,0,0,0,.45.45Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -46,6 +46,8 @@ export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
 export const RUNACCOUNTMIXER_ATTEMPT = "RUNACCOUNTMIXER_ATTEMPT";
 export const RUNACCOUNTMIXER_FAILED = "RUNACCOUNTMIXER_FAILED";
 export const RUNACCOUNTMIXER_SUCCESS = "RUNACCOUNTMIXER_SUCCESS";
+export const RUNACCOUNTMIXER_INSUFFICIENT_BALANCE =
+  "RUNACCOUNTMIXER_INSUFFICIENT_BALANCE";
 
 export const runAccountMixer = ({
   passphrase,

@@ -128,6 +128,12 @@ const lightTheme = {
   "input-copy-hover-color": "#78d9f8",
   "coinjoin-sum-color": "#d4f0fd",
   "coinjoin-sum-text-color": "#596d81",
+  "privacy-balance-color": "#091440",
+  "privacy-balance-label-color": "#1B2B54",
+  "privacy-balance-mixed-label-color": "#596D81",
+  "privacy-mixer-status-color": "#0C1E3E",
+  "mixer-settings-label": "#0C1E3E",
+  "mixer-settings-disabled": "#8997A5",
 
   /* icons */
   "menu-settings": "url('style/icons/menuSettings.svg')",
@@ -229,7 +235,14 @@ const lightTheme = {
   "politeia-loading-icon": "url('style/icons/politeia-loading.gif')",
   "backup-icon": "url('style/icons/harddrive.svg')",
   "loader-animation-daemon-waiting-initial":
-    "url('style/icons/daemon_waiting_loader.gif')"
+    "url('style/icons/daemon_waiting_loader.gif')",
+  "mixed-account-icon": "url('style/icons/mixedAccount.svg')",
+  "unmixed-account-icon": "url('style/icons/unmixedAccount.svg')",
+  "privacy-running-arrows": "url('style/icons/privacyRunningArrows.svg')",
+  "decentralized-loop-still": "url('style/icons/decentralizedLoopStill.gif')",
+  "decentralized-loop-animation":
+    "url('style/icons/decentralizedLoopAnimation.gif')",
+  "send-to-self-icon": "url('style/icons/sentToSelfTx.svg')"
 };
 
 export default lightTheme;

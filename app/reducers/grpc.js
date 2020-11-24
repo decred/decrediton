@@ -54,7 +54,8 @@ import {
   GETALLAGENDAS_FAILED,
   ABANDONTRANSACTION_ATTEMPT,
   ABANDONTRANSACTION_SUCCESS,
-  ABANDONTRANSACTION_FAILED
+  ABANDONTRANSACTION_FAILED,
+  MIXERACCOUNTS_SPENDABLE_BALANCE
 } from "../actions/ClientActions";
 import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -400,6 +401,14 @@ export default function grpc(state = {}, action) {
         abandonTransactionRequestAttempt: false,
         recentRegularTransactions: action.recentRegularTransactions,
         regularTransactions: action.regularTransactions
+      };
+    case MIXERACCOUNTS_SPENDABLE_BALANCE:
+      return {
+        ...state,
+        mixedAccountSpendableBalance:
+          action.balances.mixedAccountSpendableBalance,
+        changeAccountSpendableBalance:
+          action.balances.changeAccountSpendableBalance
       };
     case NEW_TRANSACTIONS_RECEIVED:
       return {

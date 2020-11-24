@@ -16,7 +16,13 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     onStartMixerAttempt,
     onGetPrivacyLogs,
     allowSendFromUnmixed,
-    toggleAllowSendFromUnmixed
+    toggleAllowSendFromUnmixed,
+    showInsufficientBalanceWarning,
+    defaultSpendingAccountDisregardMixedAccount,
+    getMixerAcctsSpendableBalances,
+    mixedAccountSpendableBalance,
+    changeAccountSpendableBalance,
+    hasChangeAccountEnoughFunds
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");
@@ -38,8 +44,8 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
   useMountEffect(() => {
     // get initial logs
     onGetPrivacyLogs()
-      .then(privacyLogs => setLogs(privacyLogs.toString("utf-8")))
-      .catch(err => err);
+      .then((privacyLogs) => setLogs(privacyLogs.toString("utf-8")))
+      .catch((err) => err);
 
     const privacyInterval = setInterval(async () => {
       try {
@@ -70,7 +76,16 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         showingSendUnmixModal,
         onToggleSendFromUnmixed,
         showModal,
-        onChangeCheckbox
+        onChangeCheckbox,
+        mixedAccount,
+        changeAccount,
+        showInsufficientBalanceWarning,
+        defaultSpendingAccountDisregardMixedAccount,
+        getMixerAcctsSpendableBalances,
+        mixedAccountSpendableBalance,
+        changeAccountSpendableBalance,
+        hasChangeAccountEnoughFunds,
+        accounts
       }}
     />
   );

@@ -36,7 +36,13 @@ class SendTransactionButton extends React.Component {
   }
 
   render() {
-    const { disabled, isSendingTransaction, children, isTrezor } = this.props;
+    const {
+      disabled,
+      isSendingTransaction,
+      children,
+      isTrezor,
+      buttonLabel
+    } = this.props;
 
     if (isTrezor) {
       return (
@@ -45,7 +51,7 @@ class SendTransactionButton extends React.Component {
           disabled={disabled || isSendingTransaction}
           className="content-send"
           loading={isSendingTransaction}>
-          <T id="send.sendBtn" m="Send" />
+          {buttonLabel ? buttonLabel : <T id="send.sendBtn" m="Send" />}
         </KeyBlueButton>
       );
     } else {
@@ -59,7 +65,9 @@ class SendTransactionButton extends React.Component {
           className="content-send"
           onSubmit={this.onAttemptSignTransaction}
           loading={isSendingTransaction}
-          buttonLabel={<T id="send.sendBtn" m="Send" />}
+          buttonLabel={
+            buttonLabel ? buttonLabel : <T id="send.sendBtn" m="Send" />
+          }
         />
       );
     }

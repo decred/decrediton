@@ -5,7 +5,7 @@ import { baseOutput } from "./helpers";
 import { useSelector, useDispatch } from "react-redux";
 import { usePrevious } from "hooks";
 
-export function useSendTab() {
+export function useSendTransaction() {
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
   const unsignedTransaction = useSelector(sel.unsignedTransaction);
   const unsignedRawTx = useSelector(sel.unsignedRawTx);
@@ -62,7 +62,7 @@ export function useOutputs() {
   const prevOutputs = usePrevious(outputs);
 
   const onAddOutput = () => {
-    const newOutputs = [ ...outputs ];
+    const newOutputs = [...outputs];
     newOutputs.push({
       key: "output_" + outputs.length,
       data: baseOutput().data
@@ -70,12 +70,13 @@ export function useOutputs() {
     setOutputs(newOutputs);
   };
 
-  const onUpdateOutput = (o) => setOutputs(outputs.map((ol) =>
-    ol.key === o.key ? { ...ol, data: o.data } : ol
-  ));
+  const onUpdateOutput = (o) =>
+    setOutputs(
+      outputs.map((ol) => (ol.key === o.key ? { ...ol, data: o.data } : ol))
+    );
 
   const onRemoveOutput = (index) => {
-    const outs = [ ...outputs];
+    const outs = [...outputs];
     outs.splice(index, 1);
     setOutputs(outs);
   };

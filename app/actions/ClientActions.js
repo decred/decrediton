@@ -759,4 +759,29 @@ export const getAcctSpendableBalance = (acctId) => async (
   return acct.getSpendable();
 };
 
+export const MIXERACCOUNTS_SPENDABLE_BALANCE =
+  "MIXERACCOUNTS_SPENDABLE_BALANCE";
+export const getMixerAcctsSpendableBalances = () => async (
+  dispatch,
+  getState
+) => {
+  const mixedAccount = sel.getMixedAccount(getState());
+  const changeAccount = sel.getChangeAccount(getState());
+  const balances = {};
+  if (mixedAccount) {
+    balances.mixedAccountSpendableBalance = await dispatch(
+      getAcctSpendableBalance(mixedAccount)
+    );
+  }
+  if (changeAccount) {
+    balances.changeAccountSpendableBalance = await dispatch(
+      getAcctSpendableBalance(changeAccount)
+    );
+  }
+  dispatch({
+    balances,
+    type: MIXERACCOUNTS_SPENDABLE_BALANCE
+  });
+};
+
 export const goToHomePage = () => (dispatch) => dispatch(pushHistory("/home"));

@@ -10,11 +10,11 @@ export { default as TicketsCogs } from "./TicketsCogs";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
+export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton/MixerSettingsIconButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
-import MixerSwitch from "./MixerSwitch";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
@@ -23,7 +23,6 @@ import InvisibleButton from "./InvisibleButton";
 export {
   ModalButton,
   ToggleSwitch,
-  MixerSwitch,
   AutoBuyerSwitch,
   KeyBlueButton,
   DangerButton,
@@ -109,7 +108,7 @@ export const AutoBuyerPassphraseModalSwitch = mbb(
 export const MixerPassphraseModalSwitch = mbb(
   null,
   PassphraseModal,
-  MixerSwitch
+  KeyBlueButton
 );
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);

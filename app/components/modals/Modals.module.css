@@ -95,6 +95,13 @@
   margin-left: 390px;
 }
 
+.mixerSettings.info {
+  background-image: none;
+  padding: 30px;
+  width: 620px !important;
+  margin: 268px 0 0 116px;
+}
+
 .standalone.info {
   margin-left: 420px;
 }
@@ -241,6 +248,10 @@
   width: 40px;
   height: 20px;
   align-self: flex-end;
+}
+
+.mixerSettings .infoCloseButton {
+  float: right;
 }
 
 .infoCloseButtonTop {
@@ -668,10 +679,16 @@
   margin-top: 10px;
   width: 150px;
 }
-
+.mixerSettingsTitle {
+  font-size: 20px;
+}
 @media screen and (max-width: 1179px) {
   .confirmSendFromUnmixed {
     margin-left: 150px;
+  }
+  .mixerSettings.info {
+    width: 594px !important;
+    margin: 100px 0 0 71px;
   }
 }
 
@@ -692,6 +709,10 @@
   .standalone.confirmSeedCopy {
     left: 20%;
     right: 20%;
+  }
+  .mixerSettings.info {
+    width: 304px !important;
+    margin: 26px 0 0 6px;
   }
 }
 

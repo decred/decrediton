@@ -23,4 +23,5 @@ export { default as ButtonsToolbar } from "./ButtonsToolbar";
 export { default as TabsHeader } from "./TabsHeader/TabsHeader";
 export { default as PrivacyForm } from "./PrivacyForm/PrivacyForm";
 export { default as Log } from "./Log/Log";
+export { default as SendTransaction } from "./SendTransaction/SendTransaction";
 export * from "./RoutedTabsHeader";
