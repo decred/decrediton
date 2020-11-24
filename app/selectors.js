@@ -457,10 +457,9 @@ export const ticketNormalizer = createSelector(
 
       // ticket change is anything returned to the wallet on ticket purchase.
       const isTicketChange = (c) => c.getIndex() > 0 && c.getIndex() % 2 === 0;
-      const ticketChange =
-        ticketTx
-          .getCreditsList()
-          .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
+      const ticketChange = ticketTx
+        .getCreditsList()
+        .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       let accountName = "";
@@ -1547,9 +1546,7 @@ const allAgendasVerify = createSelector(
   // If allAgendas length is 0 we return the agenda from dcrwallet, as dcrdata
   // may be down.
   (currentAgenda, dcrdataEnabled, allAgendas) =>
-    !dcrdataEnabled || allAgendas.length === 0
-      ? [currentAgenda]
-      : [currentAgenda, ...allAgendas]
+    !dcrdataEnabled || allAgendas.length === 0 ? [currentAgenda] : allAgendas
 );
 
 const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
