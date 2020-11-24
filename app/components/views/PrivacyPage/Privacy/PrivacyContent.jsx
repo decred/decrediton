@@ -173,7 +173,7 @@ const PrivacyContent = ({
         label={
           <T
             id="privacy.allowSendingFromUnmixedAccount"
-            m="Allow sending from unmixed account"
+            m="Allow sending from unmixed accounts"
           />
         }
         id="privacyCheckbox"
