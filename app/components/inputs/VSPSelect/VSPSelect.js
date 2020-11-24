@@ -23,7 +23,6 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
   const [newOptions, setNewOptions] = useState([]);
   const vspList = useMemo(() => {
     if (!options) return;
-    console.log(options)
     let opts = options.map((vsp) => ({
       label: (
         <Tooltip
@@ -142,7 +141,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
     }
   };
 
-  return <div className={styles.container}>{getComponentState(state)}</div>
+  return <div className={styles.container}>{getComponentState(state)}</div>;
 }
 
 export default injectIntl(VSPSelect);
