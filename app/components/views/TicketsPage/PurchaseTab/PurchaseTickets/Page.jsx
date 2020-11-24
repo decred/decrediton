@@ -6,6 +6,7 @@ import { FormattedMessage as T } from "react-intl";
 import styles from "../PurchaseTab.module.css";
 import { Checkbox } from "pi-ui";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
+import { useState } from "react";
 
 export const LegacyVSPWarning = () => (
   <T
@@ -14,11 +15,27 @@ export const LegacyVSPWarning = () => (
   />
 );
 
-const PrivacyInfo = () => (
-  <div className={styles.privacyInfo}>
-    <T id="purchase.vsp.privacy.enabled" m="You are purchasing mixed tickets" />
-  </div>
-);
+const PrivacyInfo = () => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className={styles.privacyInfo}>
+      <T
+        id="purchase.vsp.privacy.enabled"
+        m="You are purchasing mixed tickets"
+      />
+      <div
+        className={styles.privacyInfoReadMoreIcon}
+        onClick={() => setShow(!show)}
+      />
+      {show && (
+        <T
+          id="purchase.vsp.privacy.enabled.description"
+          m="Using your mixer configurations. This can take longer. Please, check your mixing settings in the Privacy page for more information regarding the mixing process."
+        />
+      )}
+    </div>
+  );
+};
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
   <>
@@ -33,7 +50,8 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
           height: "20px",
           padding: "3px",
           margin: "4px 0 4px 0"
-        }}></div>
+        }}
+      />
       <Tooltip md={true} text={<LegacyVSPWarning />}>
         <Checkbox
           label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}

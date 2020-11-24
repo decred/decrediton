@@ -41,8 +41,30 @@
 }
 
 .privacyInfo {
-  padding: 10px;
   background-color: var(--info-message-background);
+  background-image: var(--tickets-info-icon);
+  background-position-x: 10px;
+  background-position-y: 10px;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  display: grid;
+  grid-template-columns: 30fr 1fr;
+  grid-row-gap: 20px;
+  padding: 10px 10px 10px 40px;
+}
+.privacyInfoReadMoreIcon {
+  background-image: var(--arrow-down-mid-blue-icon);
+  background-position-x: right;
+  background-position-y: 8px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  height: 20px;
+  width: 30px;
+  margin-left: auto;
+}
+
+.privacyInfoReadMoreIcon:hover {
+  cursor: pointer;
 }
 
 .title {
