@@ -3,6 +3,7 @@ import { injectIntl, defineMessages } from "react-intl";
 import { useEffect, useState, useMemo } from "react";
 import { useVSPSelect } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import styles from "./VSPSelect.modules.css";
 
 const messages = defineMessages({
@@ -22,8 +23,26 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
   const [newOptions, setNewOptions] = useState([]);
   const vspList = useMemo(() => {
     if (!options) return;
+    console.log(options)
     let opts = options.map((vsp) => ({
-      label: vsp.host,
+      label: (
+        <Tooltip
+          className={styles.tooltip}
+          contentClassName={styles.tooltipContent}
+          content={
+            <div>
+              <T
+                id="vsp.feeTooltip"
+                m="Fee: {feePercentage} %"
+                values={{
+                  feePercentage: vsp.vspData.feepercentage
+                }}
+              />
+            </div>
+          }>
+          {vsp.host}
+        </Tooltip>
+      ),
       value: vsp
     }));
     opts = [
@@ -78,23 +97,23 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
 
   const getSelect = (isRetry) => {
     return <Creatable
-        options={vspList}
-        placeholder={intl.formatMessage(messages.placeholder)}
-        // className={className}
-        onChange={(option) => handleOnChange(option, isRetry)}
-        value={selectedOption}
-        newOptionCreator={() => {
-          return {
-            value: { host: newOption, label: newOption },
-            label: newOption,
-            host: newOption,
-            newOption: true
-          };
-        }}
-        disabled={isDisabled}
-        onInputChange={(input) => onSetNewOption(input)}
-        isValidNewOption={() => !!newOption}
-      />;
+      options={vspList}
+      placeholder={intl.formatMessage(messages.placeholder)}
+      // className={className}
+      onChange={(option) => handleOnChange(option, isRetry)}
+      value={selectedOption}
+      newOptionCreator={() => {
+        return {
+          value: { host: newOption, label: newOption },
+          label: newOption,
+          host: newOption,
+          newOption: true
+        };
+      }}
+      disabled={isDisabled}
+      onInputChange={(input) => onSetNewOption(input)}
+      isValidNewOption={() => !!newOption}
+    />;
   };
 
   const getComponentState = (state) => {
@@ -123,7 +142,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
     }
   };
 
-  return getComponentState(state);
+  return <div className={styles.container}>{getComponentState(state)}</div>
 }
 
 export default injectIntl(VSPSelect);

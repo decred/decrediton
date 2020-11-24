@@ -62,6 +62,10 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
+  const vspFee = availableVSPs.find(
+    (availableVSP) => availableVSP.host === vsp?.host
+  )?.vspData.feepercentage;
+
   return <PurchasePage {...{
       spvMode,
       blocksNumberToNextTicket,
@@ -80,6 +84,7 @@ const Tickets = ({ toggleIsLegacy }) => {
       setVSP,
       onV3PurchaseTicket,
       vsp,
+      vspFee,
       mixedAccount,
       changeAccount,
       isLoading,
