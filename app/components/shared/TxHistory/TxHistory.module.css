@@ -108,18 +108,20 @@
 
 .overviewInfo .txDirection .accountName {
   background: transparent;
-  padding: 0 3px;
-  height: 20px;
 }
 
 .status {
-  text-align: right;
   margin-left: 5px;
   max-width: 210px;
 }
 
 .txDirection {
   justify-self: right;
+}
+
+.direction {
+  display: flex;
+  align-items: center;
 }
 
 .accountName {
@@ -344,8 +346,6 @@
   }
   .accountName {
     background: transparent;
-    padding: 0 3px;
-    height: 20px;
   }
   .feeStatus {
     width: 70px;
