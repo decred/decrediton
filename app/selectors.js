@@ -46,9 +46,7 @@ import {
   VOTED,
   LIVE,
   UNMINED,
-  IMMATURE,
-  MIN_RELAY_FEE_ATOMS,
-  MIN_MIX_DENOMINATION_ATOMS
+  IMMATURE
 } from "constants";
 import * as wallet from "wallet";
 import { VSP_FEE_PROCESS_ERRORED } from "./constants/Decrediton";
