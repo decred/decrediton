@@ -4,7 +4,7 @@ import PurchaseForm from "./PurchaseForm";
 import { ShowWarning, Subtitle, Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import styles from "../PurchaseTab.module.css";
-import { Checkbox } from "pi-ui";
+import { Checkbox, classNames } from "pi-ui";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
 import { useState } from "react";
 
@@ -18,14 +18,16 @@ export const LegacyVSPWarning = () => (
 const PrivacyInfo = () => {
   const [show, setShow] = useState(false);
   return (
-    <div className={styles.privacyInfo}>
+    <div className={styles.privacyInfo} onClick={() => setShow(!show)}>
       <T
         id="purchase.vsp.privacy.enabled"
         m="You are purchasing mixed tickets"
       />
       <div
-        className={styles.privacyInfoReadMoreIcon}
-        onClick={() => setShow(!show)}
+        className={classNames(
+          styles.privacyInfoReadMoreIcon,
+          show && styles.active
+        )}
       />
       {show && (
         <T

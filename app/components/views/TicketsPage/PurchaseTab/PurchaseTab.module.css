@@ -58,12 +58,17 @@
   background-position-y: 8px;
   background-repeat: no-repeat;
   background-size: 12px;
-  height: 20px;
-  width: 30px;
+  height: 15px;
+  width: 12px;
   margin-left: auto;
 }
 
-.privacyInfoReadMoreIcon:hover {
+.privacyInfoReadMoreIcon.active {
+  transform: rotate(180deg);
+  background-position-y: 0px;
+}
+
+.privacyInfo:hover {
   cursor: pointer;
 }
 
