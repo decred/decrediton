@@ -40,6 +40,38 @@
   background-color: var(--background-back-color);
 }
 
+.privacyInfo {
+  background-color: var(--info-message-background);
+  background-image: var(--tickets-info-icon);
+  background-position-x: 10px;
+  background-position-y: 10px;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  display: grid;
+  grid-template-columns: 30fr 1fr;
+  grid-row-gap: 10px;
+  padding: 10px 10px 10px 40px;
+}
+.privacyInfoReadMoreIcon {
+  background-image: var(--arrow-down-mid-blue-icon);
+  background-position-x: right;
+  background-position-y: 8px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  height: 15px;
+  width: 12px;
+  margin-left: auto;
+}
+
+.privacyInfoReadMoreIcon.active {
+  transform: rotate(180deg);
+  background-position-y: 0px;
+}
+
+.privacyInfo:hover {
+  cursor: pointer;
+}
+
 .title {
   font-size: 15px;
   margin-bottom: 10px;
