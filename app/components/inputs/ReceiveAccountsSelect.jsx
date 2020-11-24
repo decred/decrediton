@@ -41,9 +41,9 @@ function ReceiveAccountsSelect({
         onChange: onChangeAccount,
         accountsType: "visible",
         filterAccounts: [mixedAccount],
-        // If account property is defined, the getNextAddressAttampt action 
-        // needs to be called with it, which updates nextAddressAccount 
-        // eventually. Until it happens, it's better to show no account 
+        // If account property is defined, the getNextAddressAttampt action
+        // needs to be called with it, which updates nextAddressAccount
+        // eventually. Until it happens, it's better to show no account
         // than a previously chosen one.
         account:
           account && account != nextAddressAccount.value
