@@ -237,6 +237,26 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
+export const getMixedAccountName = createSelector(
+  [getMixedAccount, balances],
+  (mixedAcc, balances) =>
+    !mixedAcc
+      ? null
+      : balances
+          .filter(({ accountNumber }) => accountNumber === mixedAcc)
+          .map(({ accountName }) => accountName)[0]
+);
+
+export const getChangeAccountName = createSelector(
+  [getChangeAccount, balances],
+  (changeAcc, balances) =>
+    !changeAcc
+      ? null
+      : balances
+          .filter(({ accountNumber }) => accountNumber === changeAcc)
+          .map(({ accountName }) => accountName)[0]
+);
+
 // getNotMixedAccounts Is an array of all accountNumbers which is not the mixedaccount.
 // this ways we can filter our mixedAccount to send transactions in privacy wallets.
 // If allowSendFromUnmixed is enabled, it returns null.
