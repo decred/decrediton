@@ -6,31 +6,52 @@ import PrivacyTab from "./Privacy/Privacy";
 import { usePrivacyPage } from "./hooks";
 import style from "./Privacy/Privacy.module.css";
 
-const PrivacyPageHeader = React.memo(() => (
-  <StandaloneHeader
-    iconClassName="security"
-    title={<T id="privacypage.title" m="Privacy and Security" />}
-    description={
-      <T
-        id="privacy.description"
-        m={
-          "Improve the anonymity of your $DCR.\nFunds in {unmixedAccount} are automatically sent to {mixedAccount} once mixed."
-        }
-        values={{
-          unmixedAccount: (
-            <span className={style.highlighted}>Unmixed Account</span>
-          ),
-          mixedAccount: <span className={style.highlighted}>Mixed Account</span>
-        }}
-      />
-    }
-  />
-));
+const PrivacyPageHeader = React.memo(
+  ({ mixedAccountName, changeAccountName }) => {
+    const description =
+      changeAccountName && mixedAccountName ? (
+        <T
+          id="privacy.description"
+          m={
+            "Improve the anonymity of your Decred.\nFunds in {unmixedAccount} are sent to {mixedAccount} once mixed."
+          }
+          values={{
+            unmixedAccount: (
+              <span className={style.highlighted}>{changeAccountName}</span>
+            ),
+            mixedAccount: (
+              <span className={style.highlighted}>{mixedAccountName}</span>
+            )
+          }}
+        />
+      ) : (
+        <T
+          id="privacy.description.brandnew.wallet"
+          m={
+            "Improve the anonymity of your Decred.\nFunds in the unmixed account are sent to the mixed account once mixed."
+          }
+        />
+      );
+    return (<StandaloneHeader
+      iconClassName="security"
+      title={<T id="privacypage.title" m="Privacy and Security" />}
+      description={description}
+    />);
+  }
+);
 
 const PrivacyPage = () => {
-  const { privacyEnabled, isCreateAccountDisabled } = usePrivacyPage();
+  const {
+    privacyEnabled,
+    isCreateAccountDisabled,
+    mixedAccountName,
+    changeAccountName
+  } = usePrivacyPage();
   return (
-    <TabbedPage header={<PrivacyPageHeader />}>
+    <TabbedPage
+      header={
+        <PrivacyPageHeader {...{ mixedAccountName, changeAccountName }} />
+      }>
       <Switch>
         <Redirect from="/privacy" exact to="/privacy/mixing" />
       </Switch>
