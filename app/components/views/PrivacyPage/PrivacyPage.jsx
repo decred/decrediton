@@ -14,13 +14,15 @@ const PrivacyPageHeader = React.memo(() => (
       <T
         id="privacy.description"
         m={
-          "Improve the anonymity of your $DCR.\nFunds in {unmixedAccount} are automatically sent to {mixedAccount} once mixed."
+          "Improve the anonymity of your $DCR.\nFunds in {unmixedAccount} account are automatically sent to {mixedAccount} account once mixed."
         }
         values={{
           unmixedAccount: (
-            <span className={style.highlighted}>Unmixed Account</span>
+            <span className={style.highlighted}><T id="privacy.tab.unmixed" m="unmixed" /></span>
           ),
-          mixedAccount: <span className={style.highlighted}>Mixed Account</span>
+          mixedAccount: (
+            <span className={style.highlighted}><T id="privacy.tab.mixed" m="mixed" /></span>
+          )
         }}
       />
     }
