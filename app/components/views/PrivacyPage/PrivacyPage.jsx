@@ -36,7 +36,7 @@ const PrivacyPageHeader = React.memo(
       iconClassName="security"
       title={<T id="privacypage.title" m="Privacy and Security" />}
       description={description}
-    />)
+    />);
   }
 );
 
