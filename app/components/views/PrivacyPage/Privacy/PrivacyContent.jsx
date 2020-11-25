@@ -140,6 +140,7 @@ const PrivacyContent = ({
             sendButtonLabel={<T id="send.sendToSelfBtn" m="Send to Self" />}
             receiveAccount={changeAccount}
             spendingAccount={defaultSpendingAccountDisregardMixedAccount}
+            filterFromAccounts={[changeAccount]}
           />
         </div>
       )}
