@@ -34,8 +34,6 @@ export function usePrivacy() {
   const changeAccountSpendableBalance = useSelector(
     sel.getChangeAccountSpendableBalance
   );
-  const mixedAccountObject = accounts[mixedAccount];
-  const changeAccountObject = accounts[changeAccount];
   const getMixerAcctsSpendableBalances = useCallback(
     () => dispatch(ca.getMixerAcctsSpendableBalances()),
     [dispatch]
@@ -43,13 +41,7 @@ export function usePrivacy() {
 
   useEffect(() => {
     getMixerAcctsSpendableBalances();
-  }, [
-    getMixerAcctsSpendableBalances,
-    mixedAccount,
-    changeAccount,
-    mixedAccountObject.spendable,
-    changeAccountObject.spendable
-  ]);
+  }, [getMixerAcctsSpendableBalances, mixedAccount, changeAccount, accounts]);
 
   const createNeededAccounts = (
     passphrase,
