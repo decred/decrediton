@@ -14,7 +14,8 @@ const SendTransaction = ({
   hideDetails,
   sendButtonLabel,
   receiveAccount,
-  spendingAccount
+  spendingAccount,
+  filterFromAccounts
 }) => {
   const {
     defaultSpendingAccount,
@@ -201,7 +202,11 @@ const SendTransaction = ({
   const getOutputRows = () => {
     // if sending to another accounts from same wallet, there is no need to
     // filter accounts.
-    const filterAccounts = isSendSelf ? [] : notMixedAccounts;
+    const filterAccounts = filterFromAccounts
+      ? filterFromAccounts
+      : isSendSelf
+      ? []
+      : notMixedAccounts;
     const accountsType = filterAccounts ? "visible" : "spending";
     return outputs.map((output, index) => ({
       data: (

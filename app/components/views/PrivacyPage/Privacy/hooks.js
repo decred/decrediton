@@ -38,7 +38,9 @@ export function usePrivacy() {
     () => dispatch(ca.getMixerAcctsSpendableBalances()),
     [dispatch]
   );
-
+  const defaultSpendingAccountDisregardMixedAccount = useSelector(
+    sel.defaultSpendingAccountDisregardMixedAccount
+  );
   useEffect(() => {
     getMixerAcctsSpendableBalances();
   }, [getMixerAcctsSpendableBalances, mixedAccount, changeAccount, accounts]);
@@ -87,6 +89,7 @@ export function usePrivacy() {
     allowSendFromUnmixed,
     toggleAllowSendFromUnmixed,
     mixedAccountSpendableBalance,
-    changeAccountSpendableBalance
+    changeAccountSpendableBalance,
+    defaultSpendingAccountDisregardMixedAccount
   };
 }
