@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { useSendTransaction, useOutputs } from "./hooks";
 import { useState, useEffect, useCallback } from "react";
+import { useMountEffect } from "hooks";
 import SendOutputRow from "./SendOutputRow/SendOutputRow";
 import { spring, presets } from "react-motion";
 import { baseOutput } from "./helpers";
@@ -329,8 +330,9 @@ const SendTransaction = ({
     prevAccount
   ]);
 
-  useEffect(() => {
-    return () => onClearTransaction;
+  // Clear transaction info on unmount
+  useMountEffect(() => {
+    return () => onClearTransaction();
   });
 
   return (
