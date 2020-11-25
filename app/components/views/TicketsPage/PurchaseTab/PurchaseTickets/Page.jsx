@@ -33,7 +33,7 @@ const PrivacyInfo = () => {
       {show && (
         <T
           id="purchase.vsp.privacy.enabled.description"
-          m="Using your mixer configurations. This can take longer. Please, check your mixing settings in the Privacy page for more information regarding the mixing process."
+          m="Using your mixer configurations. This can take longer. Please, check your mixing settings in the Privacy and Security page for more information regarding the mixing process."
         />
       )}
     </div>
