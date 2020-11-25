@@ -3,7 +3,7 @@
 }
 .error {
   color: var(--error-text-color);
-  margin-bottom: 5px;
+  margin-top: 8px;
 }
 .isRow {
   display: flex;

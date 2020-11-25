@@ -115,10 +115,10 @@ const PrivacyContent = ({
           </div>
         </div>
         <MixerSettingsIconButton className={style.mixerSettingsIconButton} />
+        {accountMixerError && (
+          <div className={style.error}>{accountMixerError}</div>
+        )}
       </div>
-      {accountMixerError && (
-        <div className={style.error}>{accountMixerError}</div>
-      )}
       <SendFromUnmixedAccountModal
         show={showingSendUnmixModal}
         onSubmit={onToggleSendFromUnmixed}
