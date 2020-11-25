@@ -4,6 +4,7 @@ import * as act from "actions/AccountMixerActions";
 import * as ca from "actions/ClientActions";
 import { getPrivacyLogs } from "actions/DaemonActions";
 import * as sel from "selectors";
+import { useMountEffect } from "hooks";
 
 export function usePrivacy() {
   const dispatch = useDispatch();
@@ -41,9 +42,9 @@ export function usePrivacy() {
   const defaultSpendingAccountDisregardMixedAccount = useSelector(
     sel.defaultSpendingAccountDisregardMixedAccount
   );
-  useEffect(() => {
+  useMountEffect(() => {
     getMixerAcctsSpendableBalances();
-  }, [getMixerAcctsSpendableBalances, mixedAccount, changeAccount, accounts]);
+  });
 
   const createNeededAccounts = (
     passphrase,
