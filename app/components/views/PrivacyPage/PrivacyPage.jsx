@@ -7,32 +7,37 @@ import { usePrivacyPage } from "./hooks";
 import style from "./Privacy/Privacy.module.css";
 
 const PrivacyPageHeader = React.memo(
-  ({ mixedAccountName, changeAccountName }) => (
-    <StandaloneHeader
-      iconClassName="security"
-      title={<T id="privacypage.title" m="Privacy and Security" />}
-      description={
+  ({ mixedAccountName, changeAccountName }) => {
+    const description =
+      changeAccountName && mixedAccountName ? (
         <T
           id="privacy.description"
           m={
-            "Improve the anonymity of your $DCR.\nFunds in {unmixedAccount} account are automatically sent to {mixedAccount} account once mixed."
+            "Improve the anonymity of your Decred.\nFunds in {unmixedAccount} are sent to {mixedAccount} once mixed."
           }
           values={{
-            unmixedAccount: changeAccountName ? (
+            unmixedAccount: (
               <span className={style.highlighted}>{changeAccountName}</span>
-            ) : (
-              <T id="privacy.tab.unmixed" m="unmixed" />
             ),
-            mixedAccount: mixedAccountName ? (
+            mixedAccount: (
               <span className={style.highlighted}>{mixedAccountName}</span>
-            ) : (
-              <T id="privacy.tab.mixed" m="mixed" />
             )
           }}
         />
-      }
-    />
-  )
+      ) : (
+        <T
+          id="privacy.description.brandnew.wallet"
+          m={
+            "Improve the anonymity of your Decred.\nFunds in the unmixed account are sent to the mixed account once mixed."
+          }
+        />
+      );
+    return (<StandaloneHeader
+      iconClassName="security"
+      title={<T id="privacypage.title" m="Privacy and Security" />}
+      description={description}
+    />)
+  }
 );
 
 const PrivacyPage = () => {
