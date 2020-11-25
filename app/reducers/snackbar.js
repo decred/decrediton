@@ -129,8 +129,7 @@ import {
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
   CREATEMIXERACCOUNTS_FAILED,
-  RUNACCOUNTMIXER_FAILED,
-  RUNACCOUNTMIXER_INSUFFICIENT_BALANCE
+  RUNACCOUNTMIXER_FAILED
 } from "actions/AccountMixerActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
@@ -515,11 +514,6 @@ const messages = defineMessages({
   RUNACCOUNTMIXER_FAILED: {
     id: "mixer.ntf.startMixerFailed",
     defaultMessage: "{originalError}"
-  },
-  RUNACCOUNTMIXER_INSUFFICIENT_BALANCE: {
-    id: "mixer.ntf.insufficientBalanceWarning",
-    defaultMessage:
-      "Unmixed Account balance too small. Send funds to the Unmixed account to run the mixer."
   }
 });
 
@@ -708,7 +702,6 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_REMOVEWATCHTOWER_FAILED:
     case LNWALLET_LISTWATCHTOWERS_FAILED:
     case RUNACCOUNTMIXER_FAILED:
-    case RUNACCOUNTMIXER_INSUFFICIENT_BALANCE:
       type = "Error";
       if (
         action.error &&
