@@ -61,11 +61,10 @@
   font-size: 18px;
   color: var(--privacy-mixer-status-color);
   margin-bottom: 20px;
-  padding-left: 38px;
+  padding-left: 44px;
   height: 34px;
   align-items: center;
-  background-size: 36px;
-  background-position: -2px 0;
+  background-size: 34px;
   background-repeat: no-repeat;
   background-image: var(--decentralized-loop-still);
 }

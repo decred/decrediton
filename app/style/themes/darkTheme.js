@@ -243,9 +243,9 @@ const darkTheme = {
   "unmixed-account-icon": "url('style/icons/unmixedAccountDark.svg')",
   "privacy-running-arrows": "url('style/icons/privacyRunningArrowsDark.svg')",
   "decentralized-loop-still":
-    "url('style/icons/decentralizedLoopStillDark.gif')",
+    "url('style/icons/decentralizedLoopStillDark.svg')",
   "decentralized-loop-animation":
-    "url('style/icons/decentralizedLoopAnimationDark.gif')",
+  "url('style/icons/decentralizedLoopAnimationDark.gif')",
   "send-to-self-icon": "url('style/icons/sentToSelfTxDark.svg')"
 };
 
