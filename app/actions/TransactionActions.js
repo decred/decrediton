@@ -2,7 +2,11 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { checkUnmixedAccountBalance } from "./AccountMixerActions";
-import { getStakeInfoAttempt, getBalanceUpdateAttempt, getMixerAcctsSpendableBalances } from "./ClientActions";
+import {
+  getStakeInfoAttempt,
+  getBalanceUpdateAttempt,
+  getMixerAcctsSpendableBalances
+} from "./ClientActions";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
@@ -127,7 +131,7 @@ export const newTransactionsReceived = (
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
-  // Update mixer change account balance
+  // Update mixer accounts balances
   const changeAccount = sel.getChangeAccount(getState());
   dispatch(checkUnmixedAccountBalance(changeAccount));
   dispatch(getMixerAcctsSpendableBalances());
