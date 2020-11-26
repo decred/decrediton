@@ -30,8 +30,7 @@ import {
   DCRDATA_URL_TESTNET,
   DCRDATA_URL_MAINNET
 } from "./middleware/dcrdataapi";
-import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
-import { isMixTx } from "./helpers/transactions";
+import { isMixTx, dateToLocal, dateToUTC } from "./helpers";
 import {
   MIN_RELAY_FEE,
   DCR,
