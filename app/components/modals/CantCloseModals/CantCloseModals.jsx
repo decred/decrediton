@@ -8,7 +8,8 @@ const CantCloseModals = () => {
     hasUnpaidFee,
     autobuyerRunningModalVisible,
     onHideCantCloseModal,
-    shutdownApp
+    shutdownApp,
+    runningIndicator
   } = useCantCloseModal();
   let Component = () => <></>;
 
@@ -17,6 +18,9 @@ const CantCloseModals = () => {
   }
   if (hasUnpaidFee) {
     Component = HasTicketFeeErro;
+  }
+  if (runningIndicator) {
+    Component = AutobuyerRunning;
   }
 
   return <Component

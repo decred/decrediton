@@ -1272,19 +1272,6 @@ export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
 export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
 export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
 
-// selectors for checking if decrediton can be closed.
-
-export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
-export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
-  if (!vspTickets) return;
-  return vspTickets[VSP_FEE_PROCESS_ERRORED]
-    ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
-    : false;
-});
-export const getCanClose = not(or(isTicketAutoBuyerEnabled, getHasUnpaidFee));
-
-// end of selectors for closing decrediton.
-
 const purchaseTicketsResponse = get(["control", "purchaseTicketsResponse"]);
 
 export const splitTx = createSelector(
@@ -1364,14 +1351,6 @@ export const purchaseTicketsRequestAttempt = get([
   "control",
   "purchaseTicketsRequestAttempt"
 ]);
-
-// getRunningIndicator is a indicator for indicate something is runnning on
-// decrediton, like the ticket auto buyer or the mixer.
-export const getRunningIndicator = or(
-  getAccountMixerRunning,
-  getTicketAutoBuyerRunning,
-  purchaseTicketsRequestAttempt
-);
 
 const importScriptRequestAttempt = get([
   "control",
@@ -1682,6 +1661,29 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
   "walletCreationMasterPubkeyAttempt"
 ]);
 
+// getRunningIndicator is a indicator for indicate something is runnning on
+// decrediton, like the ticket auto buyer or the mixer.
+export const getRunningIndicator = or(
+  getAccountMixerRunning,
+  getTicketAutoBuyerRunning,
+  purchaseTicketsRequestAttempt
+);
+
+// selectors for checking if decrediton can be closed.
+
+export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
+export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
+  if (!vspTickets) return;
+  return vspTickets[VSP_FEE_PROCESS_ERRORED]
+    ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
+    : false;
+});
+export const getCanClose = not(or(getRunningIndicator, isTicketAutoBuyerEnabled, getHasUnpaidFee));
+
+// end of selectors for closing decrediton.
+
+// ln selectors
+
 export const lnEnabled = bool(and(not(isWatchingOnly), not(isTrezor)));
 export const lnActive = bool(get(["ln", "active"]));
 export const lnStartupStage = get(["ln", "startupStage"]);
@@ -1706,3 +1708,5 @@ export const lnAddInvoiceAttempt = get(["ln", "addInvoiceAttempt"]);
 export const lnSCBPath = get(["ln", "scbPath"]);
 export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
 export const lnTowersList = get(["ln", "towersList"]);
+
+// end of ln selectors
