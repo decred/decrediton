@@ -2,7 +2,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { checkUnmixedAccountBalance } from "./AccountMixerActions";
-import { getStakeInfoAttempt, getBalanceUpdateAttempt } from "./ClientActions";
+import { getStakeInfoAttempt, getBalanceUpdateAttempt, getMixerAcctsSpendableBalances } from "./ClientActions";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
@@ -130,6 +130,7 @@ export const newTransactionsReceived = (
   // Update mixer change account balance
   const changeAccount = sel.getChangeAccount(getState());
   dispatch(checkUnmixedAccountBalance(changeAccount));
+  dispatch(getMixerAcctsSpendableBalances());
 
   const hasStakeTxs =
     checkForStakeTransactions(newlyUnminedTransactions) ||
