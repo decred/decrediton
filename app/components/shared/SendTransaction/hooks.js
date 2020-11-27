@@ -30,7 +30,7 @@ export function useSendTransaction() {
 
   const validateAddress = (address) => dispatch(ca.validateAddress(address));
 
-  const onClearTransaction = () => dispatch(ca.clearTransaction);
+  const onClearTransaction = () => dispatch(ca.clearTransaction());
 
   const onGetNextAddressAttempt = (account) =>
     dispatch(ca.getNextAddressAttempt(account));
