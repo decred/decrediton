@@ -3,8 +3,8 @@ import StakeTxRow from "./StakeTxRow";
 import EligibleRow from "./EligibleRow";
 import LiveStakeTxRow from "./LiveStakeTxRow";
 import * as txTypes from "constants/Decrediton";
-import { defineMessages, injectIntl } from "react-intl";
 import { withRouter } from "react-router-dom";
+import { dateFormatter, shortDatetimeFormatter } from "helpers";
 
 const TxRowByType = {
   // LiveStakeTxRow is used for tickets which can still be voted.
@@ -27,17 +27,6 @@ const TxRowByType = {
   [txTypes.ELIGIBLE]: EligibleRow
 };
 
-const timeMessageDefine = defineMessages({
-  dayMonthHourDisplay: {
-    id: "txHistory.dayMonthHourDisplay",
-    defaultMessage: "{value, date, short-month-24hour}"
-  },
-  dayMonthDisplay: {
-    id: "txHistory.dayMonthDisplay",
-    defaultMessage: "{value, date}"
-  }
-});
-
 // TxHistory is responsible for calling the right component row according to
 // the Tx row type.
 const TxHistory = ({
@@ -46,7 +35,6 @@ const TxHistory = ({
   overview,
   mode,
   tsDate,
-  intl,
   history
 }) => {
   const isEligibleTicket = mode === "eligible";
@@ -74,6 +62,7 @@ const TxHistory = ({
             .filter((o) => !o.isChange)
             .map((o) => o.address)
             .join(" ");
+
         return (
           <Component
             key={key}
@@ -81,21 +70,15 @@ const TxHistory = ({
               ...tx,
               txOutputAddresses,
               className: rowType,
-              intl,
               txTs: txTimestamp && tsDate(txTimestamp),
               txLeaveTs: tx.leaveTimestamp && tsDate(tx.leaveTimestamp),
               overview,
               pending: tx.isPending,
               onClick: () => history.push(`/transaction/history/${tx.txHash}`),
               timeMessage: (txTimestamp) =>
-                intl.formatMessage(
-                  isEligibleTicket
-                    ? timeMessageDefine.dayMonthDisplay
-                    : timeMessageDefine.dayMonthHourDisplay,
-                  {
-                    value: txTimestamp
-                  }
-                )
+                isEligibleTicket
+                  ? dateFormatter.format(txTimestamp)
+                  : shortDatetimeFormatter.format(txTimestamp)
             }}
           />
         );
@@ -104,4 +87,4 @@ const TxHistory = ({
   );
 };
 
-export default withRouter(injectIntl(TxHistory));
+export default withRouter(TxHistory);
