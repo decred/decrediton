@@ -137,7 +137,8 @@ const icons = {
   "share-icon": "url('style/icons/share.svg')",
   "decred-logo": "url('style/icons/dcrLogoShare.svg')",
   "search-icon-light": "url('style/icons/search-light.svg')",
-  "animated-alert-icon": "url('style/icons/animated_alert_icon.gif')"
+  "animated-alert-icon": "url('style/icons/animated_alert_icon.gif')",
+  "mixed-transaction-icon": "url('style/icons/mixedTx.svg')"
 };
 
 export default icons;

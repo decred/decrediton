@@ -43,6 +43,9 @@
 .icon.coinbase {
   background-image: var(--plus-small-icon);
 }
+.icon.mixed {
+  background-image: var(--mixed-transaction-icon);
+}
 .icon.transfer {
   background-image: var(--transfer-transaction-icon);
 }
@@ -327,11 +330,6 @@
 
 .overviewRow .txInfo .stakeAccount {
   display: none !important;
-}
-
-.isMix {
-  font-size: 7pt;
-  margin-left: auto;
 }
 
 @media screen and (max-width: 1179px) {
