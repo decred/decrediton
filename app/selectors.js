@@ -1237,7 +1237,6 @@ export const totalSubsidy = compose(
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 export const ticketBuyerConfig = get(["control", "ticketBuyerConfig"]);
-const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
 
 export const balanceToMaintain = get(["control", "balanceToMaintain"]);
 
@@ -1661,24 +1660,28 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
   "walletCreationMasterPubkeyAttempt"
 ]);
 
+// selectors for checking if decrediton can be closed.
+
+// TODO remove duplicated auto buyer running selector
+const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
+export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
+
 // getRunningIndicator is a indicator for indicate something is runnning on
 // decrediton, like the ticket auto buyer or the mixer.
 export const getRunningIndicator = or(
   getAccountMixerRunning,
   getTicketAutoBuyerRunning,
-  purchaseTicketsRequestAttempt
+  purchaseTicketsRequestAttempt,
+  isTicketAutoBuyerEnabled
 );
 
-// selectors for checking if decrediton can be closed.
-
-export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
   if (!vspTickets) return;
   return vspTickets[VSP_FEE_PROCESS_ERRORED]
     ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
     : false;
 });
-export const getCanClose = not(or(getRunningIndicator, isTicketAutoBuyerEnabled, getHasUnpaidFee));
+export const getCanClose = not(or(getRunningIndicator, getHasUnpaidFee));
 
 // end of selectors for closing decrediton.
 
