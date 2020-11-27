@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="400"
+   height="400.00201"
+   viewBox="0 0 400 400.00201"
+   version="1.1"
+   id="svg26">
+  <metadata
+     id="metadata32">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>decentralised</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs30" />
+  <title
+     id="title2">decentralised</title>
+  <path
+     d="M 199.989,9.8959995 37.5,105.02 V 294.993 L 199.989,389.461 362.5,294.994 V 105.02 Z M 337.5,266.001 224.743,199.994 337.5,133.989 Z M 212.489,46.180999 325.256,112.187 212.489,178.201 Z m -25,132.006001 -112.747,-66 112.747,-66.000001 z M 62.5,133.989 175.257,199.995 62.5,266.001 Z M 187.489,353.276 74.806,287.765 187.489,221.801 Z m 25,-131.486 112.7,65.974 -112.7,65.513 z"
+     id="path4"
+     style="fill:#c3cad1;fill-opacity:1" />
+  <circle
+     r="25"
+     cx="200.006"
+     cy="199.995"
+     id="circle6"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <circle
+     r="25"
+     cx="199.989"
+     cy="375.00201"
+     id="circle8"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <circle
+     r="25"
+     cx="50"
+     cy="287.802"
+     id="circle10"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <circle
+     r="25"
+     cx="199.989"
+     cy="25"
+     id="circle12"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <circle
+     r="25"
+     cx="50"
+     cy="112.187"
+     id="circle14"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <circle
+     r="25"
+     cx="350"
+     cy="112.187"
+     id="circle16"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <circle
+     r="25"
+     cx="350"
+     cy="287.802"
+     id="circle18"
+     style="fill:#091440;fill-opacity:0.94117647" />
+  <rect
+     style="fill:none"
+     y="-24.999001"
+     x="-50"
+     id="rect22"
+     height="450"
+     width="450" />
+</svg>
