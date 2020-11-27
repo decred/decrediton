@@ -575,7 +575,8 @@
     display: flex;
   }
 
-  .stakepool-purchase-ticket-input-select-container .stakepool-purchase-ticket-input-select {
+  .stakepool-purchase-ticket-input-select-container
+    .stakepool-purchase-ticket-input-select {
     width: 205px;
   }
 
@@ -614,5 +615,17 @@
 
   .num-tickets-icon.less {
     margin-left: auto;
+  }
+}
+
+.purchase-ticket-vsp-container {
+  display: flex;
+
+  .ticket_pool_fee {
+    margin-left: 10px;
+
+    & > div:nth-child(1) {
+      width: 50px;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
-import { classNames, Checkbox } from "pi-ui";
+import { classNames, Checkbox, Tooltip } from "pi-ui";
 import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
@@ -21,6 +21,7 @@ const PurchaseTicketsForm = ({
   isWatchingOnly,
   setVSP,
   vsp,
+  vspFee,
   onV3PurchaseTicket,
   onRevokeTickets,
   availableVSPs,
@@ -47,23 +48,42 @@ const PurchaseTicketsForm = ({
           <div className="purchase-ticket-area-row-label">
             <T id="purchaseTickets.vspFrom" m="VSP" />:
           </div>
-          <VSPSelect
-            className="stakepool-purchase-ticket-input-select"
-            {...{ options: availableVSPs, account, onChange: setVSP, value: vsp, isDisabled: !!rememberedVspHost }}
-          />
-          {vsp && <Checkbox
-            className={styles.rememberVspCheckBox}
-            label={
-              <T
-                id="purchaseTickets.alwaysUseThisVSP"
-                m="Always use this VSP"
-              />
-            }
-            id="rememberVspHost"
-            checked={!!rememberedVspHost}
-            onChange={toggleRememberVspHostCheckBox}
-          />
-          }
+          <div className="purchase-ticket-vsp-container">
+            <VSPSelect
+              className="stakepool-purchase-ticket-input-select"
+              style={{ width: "100%", marginRight: "10px" }}
+              {...{
+                options: availableVSPs,
+                account,
+                onChange: setVSP,
+                value: vsp,
+                isDisabled: !!rememberedVspHost
+              }}
+            />
+            {vsp && (
+              <Tooltip
+                content={<T id="purchaseTickets.vspFee" m="VSP Fee" />}
+                className="ticket_pool_fee">
+                <div className="stakepool-info-icon stakepool-pool-fee-icon">
+                  {vspFee} %
+                </div>
+              </Tooltip>
+            )}
+          </div>
+          {vsp && (
+            <Checkbox
+              className={styles.rememberVspCheckBox}
+              label={
+                <T
+                  id="purchaseTickets.alwaysUseThisVSP"
+                  m="Always use this VSP"
+                />
+              }
+              id="rememberVspHost"
+              checked={!!rememberedVspHost}
+              onChange={toggleRememberVspHostCheckBox}
+            />
+          )}
         </div>
       </div>
       <div className="is-row purchase-ticket-input-amount">
@@ -72,7 +92,7 @@ const PurchaseTicketsForm = ({
         </div>
         <NumTicketsInput
           required
-          invalid={account.spendable < (numTickets * ticketPrice)}
+          invalid={account.spendable < numTickets * ticketPrice}
           invalidMessage={
             <T
               id="purchaseTickets.errors.insufficientBalance"
@@ -85,7 +105,7 @@ const PurchaseTicketsForm = ({
           onChangeNumTickets={setNumTickets}
           onKeyDown={handleOnKeyDown}
           showErrors={true}></NumTicketsInput>
-        {account.spendable >= (numTickets * ticketPrice) && (
+        {account.spendable >= numTickets * ticketPrice && (
           <div className="input-purchase-ticket-valid-message-area">
             <T
               id="purchaseTickets.validMsg"
