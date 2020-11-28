@@ -47,7 +47,7 @@
   background-image: var(--mixed-transaction-icon);
 }
 .icon.transfer {
-  background-image: var(--transfer-transaction-icon);
+  background-image: var(--self-transaction-icon);
 }
 .icon.unknown,
 .icon.ticket {

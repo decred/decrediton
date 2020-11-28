@@ -246,7 +246,7 @@ const darkTheme = {
     "url('style/icons/decentralizedLoopStillDark.svg')",
   "decentralized-loop-animation":
   "url('style/icons/decentralizedLoopAnimationDark.gif')",
-  "send-to-self-icon": "url('style/icons/sentToSelfTxDark.svg')"
+  "self-transaction-icon": "url('style/icons/sentToSelfTxDark.svg')"
 };
 
 export default darkTheme;

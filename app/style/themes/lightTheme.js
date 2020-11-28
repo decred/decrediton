@@ -242,7 +242,7 @@ const lightTheme = {
   "decentralized-loop-still": "url('style/icons/decentralizedLoopStill.svg')",
   "decentralized-loop-animation":
     "url('style/icons/decentralizedLoopAnimation.gif')",
-  "send-to-self-icon": "url('style/icons/sentToSelfTx.svg')"
+  "self-transaction-icon": "url('style/icons/sentToSelfTx.svg')"
 };
 
 export default lightTheme;
