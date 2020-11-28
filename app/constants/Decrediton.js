@@ -70,6 +70,7 @@ export const EXPIRED = "expired";
 export const REVOKED = "revoked";
 export const LIVE = "live";
 export const TRANSFER = "transfer";
+export const SELFTRANSFER = "self";
 export const COINBASE = "coinbase";
 export const REGULAR = "regular";
 export const ELIGIBLE = "eligible";

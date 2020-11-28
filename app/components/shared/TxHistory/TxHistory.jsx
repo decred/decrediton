@@ -23,6 +23,7 @@ const TxRowByType = {
   [txTypes.TRANSACTION_DIR_SENT]: RegularTxRow,
   [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
   [txTypes.TRANSFER]: RegularTxRow,
+  [txTypes.SELFTRANSFER]: RegularTxRow,
   [txTypes.MIXED]: RegularTxRow,
   [txTypes.COINBASE]: RegularTxRow,
   [txTypes.ELIGIBLE]: EligibleRow
@@ -52,6 +53,7 @@ const TxHistory = ({
         // If it is a regular tx we use its direction to show a proper icon.
         if (rowType === txTypes.REGULAR) rowType = tx.txDirection;
         if (tx.isMix) rowType = txTypes.MIXED;
+        if (tx.selfTx) rowType = txTypes.SELFTRANSFER;
 
         // gets the proper component to show, based on it rowType
         const Component =

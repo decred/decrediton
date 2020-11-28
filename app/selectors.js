@@ -630,11 +630,22 @@ export const transactionNormalizer = createSelector(
         return total + amount;
       }, 0);
 
+      let selfTx = false;
       tx.getCreditsList().forEach((credit) => {
         const amount = credit.getAmount();
         const address = credit.getAddress();
         const creditedAccount = credit.getAccount();
         const currentCreditedAccountName = getAccountName(creditedAccount);
+        // If we find a self credited account which isn't a change output
+        // & tx has one or more wallet inputs & no non-wallet outputs we consider
+        // the transaction as self trnsaction
+        if (
+          !credit.getInternal() &&
+          txInputs.length > 0 &&
+          tx.getCreditsList().length === outputs.length
+        ) {
+          selfTx = true;
+        }
         // If we find credit which is not a change, then we pick
         // it as receiver
         if (!creditedAccountName || !credit.getInternal()) {
@@ -696,6 +707,7 @@ export const transactionNormalizer = createSelector(
         outputs,
         creditAddresses,
         isMix,
+        selfTx: !isMix && selfTx,
         ...txDetails
       };
     };
