@@ -1,0 +1,108 @@
+.icon {
+  margin-bottom: 20px;
+  margin-right: 20px;
+  height: 90px;
+  width: 320px;
+  background-color: var(--background-back-color);
+  background-size: 35px;
+  background-position: 23px 28px;
+  background-repeat: no-repeat;
+  color: var(--input-color-default);
+  cursor: pointer;
+}
+
+.text {
+  float: left;
+  margin-left: 70px;
+  margin-top: 24px;
+}
+
+.title {
+  font-size: 19px;
+  line-height: 24px;
+  color: var(--input-color-default);
+}
+
+.subtitle {
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--disabled-color);
+}
+
+.expand {
+  float: right;
+  height: 16px;
+  width: 16px;
+  margin-top: 37px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 0px;
+  background-image: var(--help-expand-default);
+}
+
+.icon:hover .expand {
+  background-image: var(--help-expand-hover);
+}
+
+.external {
+  float: right;
+  height: 16px;
+  width: 16px;
+  margin-top: 37px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: 0px;
+  background-image: var(--help-external-default);
+}
+
+.icon:hover .external {
+  background-image: var(--help-external-hover);
+}
+
+.docs {
+  background-image: var(--help-docs);
+}
+
+.pools {
+  background-image: var(--help-stakepools);
+}
+
+.explorer {
+  background-image: var(--help-blockchain-explorer);
+}
+
+.github {
+  background-image: var(--help-github);
+}
+
+.constitution {
+  background-image: var(--help-constitution);
+}
+
+.star {
+  background-image: var(--help-star);
+}
+
+.matrix {
+  background-image: var(--help-matrix);
+}
+
+.forum {
+  background-image: var(--help-forum);
+}
+
+@media screen and (max-width: 1179px) {
+  .icon {
+    margin-right:10px;
+    margin-bottom:10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .icon{
+    margin-right: 0;
+    width: 355px;
+  }
+}
