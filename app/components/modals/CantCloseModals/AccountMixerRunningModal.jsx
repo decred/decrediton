@@ -17,8 +17,9 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
       <div className={style.confirmContent}>
         <T
           id="account.mixer.running.message"
-          m="Account mixer is running. If closed no more dcr will be mixed.
-          Should decrediton close?"
+          m="Account mixer is currently running. Ongoing mixes will be
+            cancelled and no more Decred will be mixed if Decrediton is
+            closed now."
         />
       </div>
 
@@ -30,7 +31,7 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
         {
           <T
             id="account.mixer.running.btnConfirm"
-            m="Confirm"
+            m="Close Decrediton"
           />
         }
       </KeyBlueButton>

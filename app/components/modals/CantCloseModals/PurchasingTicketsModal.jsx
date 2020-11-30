@@ -17,7 +17,9 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
       <div className={style.confirmContent}>
         <T
           id="tickets.purchasing.message"
-          m="Decrediton is finishing the purchasing ticket process and should wait."
+          m="Decrediton is still finalizing ticket purchases. Tickets may not
+            be registered with the VSP if Decrediton is closed now, which can
+            result in missed votes."
         />
       </div>
 
@@ -29,7 +31,7 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
         {
           <T
             id="tickets.purchasing.confirmModal.btnConfirm"
-            m="Confirm"
+            m="Close Decrediton"
           />
         }
       </KeyBlueButton>
