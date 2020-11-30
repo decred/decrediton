@@ -8,6 +8,10 @@ export function useCantCloseModal() {
   const autBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const hasUnpaidFee = useSelector(sel.getHasUnpaidFee);
   const autobuyerRunningModalVisible = useSelector(sel.autobuyerRunningModalVisible);
+  const runningIndicator = useSelector(sel.getRunningIndicator);
+  const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
+  const purchasingTickets = useSelector(sel.purchaseTicketsRequestAttempt);
+
   const dispatch = useDispatch();
   const onHideCantCloseModal = () => dispatch(hideCantCloseModal());
   const shutdownApp = () => dispatch(da.shutdownApp());
@@ -22,6 +26,9 @@ export function useCantCloseModal() {
     autobuyerRunningModalVisible,
     onHideCantCloseModal,
     shutdownApp,
-    onGoToTicketsStatus
+    onGoToTicketsStatus,
+    runningIndicator,
+    accountMixerRunning,
+    purchasingTickets
   };
 }
