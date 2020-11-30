@@ -57,9 +57,14 @@ export function useProposalsList(tab) {
   const getProposalsAndUpdateVoteStatus = (proposalBatch) =>
     dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));
   const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
+  const proposalsAttempt = useSelector(sel.getProposalsAttempt);
+
   const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
+        if (proposalsAttempt) {
+          return send("RESOLVE");
+        }
         if (!proposals || !proposals[tab] || !inventory || !inventory[tab])
           return send("FETCH");
         if (inventory[tab].length === 0) return;
@@ -139,7 +144,8 @@ export function useProposalsList(tab) {
     loadMore,
     getProposalError,
     inventoryError,
-    send
+    send,
+    proposalsAttempt
   };
 }
 
