@@ -87,12 +87,11 @@ To ease node version management, install all top-level tools (node/npm/yarn) usi
 ### Decred Binaries
 
 Development using the master version of decrediton usually requires using a
-corresponding master version of dcrd, dcrctl, dcrwallet and dcrlnd.
+corresponding master version of dcrd, dcrwallet and dcrlnd.
 
 Follow the instructions to install these from source from their respective repos:
 
 - [dcrd installation instructions](https://github.com/decred/dcrd#updating)
-- [dcrctl installation instructions](https://github.com/decred/dcrctl#build-and-installation)
 - [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
 - [dcrlnd installation instructions](https://github.com/decred/dcrlnd#installation)
 
@@ -100,7 +99,7 @@ Follow the instructions to install these from source from their respective repos
 ### Basic Development Setup
 
 These steps are usually the only ones required for basic development on
-linux/macOS (after compiling dcrd/dcrwallet/dcrctl/dcrlnd from source).
+linux/macOS (after compiling dcrd/dcrwallet/dcrlnd from source).
 
 For Windows users, it's usually a good idea to use
 [MSYS2](https://www.msys2.org/) instead of the standard cmd.exe (see below for
@@ -126,7 +125,6 @@ these tools:
 ```bash
 cd bin
 ln -s `which dcrd` dcrd
-ln -s `which dcrctl` dcrctl
 ln -s `which dcrwallet` dcrwallet
 ln -s `which dcrlnd` dcrlnd
 ```
