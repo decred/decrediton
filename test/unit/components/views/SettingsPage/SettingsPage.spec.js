@@ -17,13 +17,14 @@ import {
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
 } from "main_dev/externalRequests";
+import { en as enLocale, de as deLocale } from "i18n/locales";
 
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
 
 const testWalletName = "test-wallet-name";
 const testDefaultNetwork = "Mainnet";
-const testDefaultLocale = "en";
+const testDefaultLocale = enLocale;
 const testLocale = "de";
 const testDefaultLocaleLabel = "English (US)";
 const testLocaleLabel = "Deutsch";
@@ -124,6 +125,7 @@ test("show error when there is no walletService", () => {
       settings: testSettings
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   expect(
     screen.getByText("Something went wrong, please go back")
   ).toBeInTheDocument();
@@ -175,6 +177,7 @@ test("test cli tooltips", () => {
       settings: settingsWithAlreadySetCli
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   const tooltips = screen.getAllByText(
     /This was set as a command-line option/i
   );
@@ -221,6 +224,7 @@ const testComboxBoxInput = (
       settings: testSettings
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   const saveButton = screen.getByText("Save");
   expect(saveButton.className).toMatch("disabled");
   const inputControl = screen.getByLabelText(labelName);
@@ -288,6 +292,7 @@ const testTextFieldInput = (
   render(<SettingsPage />, {
     initialState: { settings: testSettings }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   const saveButton = screen.getByText("Save");
   expect(saveButton.className).toMatch("disabled");
 
@@ -338,6 +343,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
       settings: testSettings
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   const saveButton = screen.getByText("Save");
   expect(saveButton.className).toMatch("disabled");
 
@@ -395,6 +401,7 @@ const testCheckBoxInput = (label, configKey) => {
       settings: testSettings
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
 
   const checkbox = screen.getByLabelText(label);
   const defaultCheckedValue = testDefaultAllowedExternalRequests.includes(
@@ -462,6 +469,7 @@ test("test update private passphrase", () => {
       settings: testSettings
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   const updateButton = screen.getByLabelText("Update Private Passphrase");
   const modalHeaderText = "Change your passphrase";
   // click and cancel
@@ -534,6 +542,7 @@ test("update private passphrase is disabled", () => {
       settings: testSettings
     }
   });
+  user.click(screen.getByRole("link", { name: "Settings" }));
   expect(mockIsChangePassPhraseDisabled).toHaveBeenCalled();
   user.click(screen.getByLabelText("Update Private Passphrase"));
   expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
