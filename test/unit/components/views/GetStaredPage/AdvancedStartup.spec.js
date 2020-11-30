@@ -118,7 +118,7 @@ test("test remote daemon form", async () => {
 
   user.click(screen.getByText(/use remote daemon/i));
   expect(mockSetRemoteCredentials).toHaveBeenCalled();
-  expect(mockConnectDaemon).toHaveBeenCalledWith(testRemoteCredentials);
+  expect(mockConnectDaemon).toHaveBeenCalledWith(testRemoteCredentials, true);
   await wait(() => screen.getByText(JSON.stringify(testConnectDaemonErrorMsg)));
 });
 

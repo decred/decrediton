@@ -75,9 +75,7 @@ beforeEach(() => {
     return { isValid: false, error: "" };
   });
   mockTrezorDevice = sel.trezorDevice = jest.fn(() => null);
-  mockTrezorConnect = trza.connect = jest.fn(
-    () => () => {}
-  );
+  mockTrezorConnect = trza.connect = jest.fn(() => () => {});
   mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
     () => () => Promise.reject()
   );
@@ -179,7 +177,7 @@ test("test wallet name input on restore wallet", async () => {
   await wait(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
-});0
+});
 
 test("test watch only control on restore wallet", async () => {
   const testRestoreSelectedWallet = {
@@ -291,7 +289,7 @@ test("test trezor switch toggling and setup device page", async () => {
   expect(
     screen.getByText(/no trezor device found/i).textContent
   ).toMatchInlineSnapshot(
-    `"No trezor device found. Check the connection and the trezor bridge software."`
+    `"No Trezor device found. Check the connection and the Trezor bridge software."`
   );
   user.click(screen.getByText(/connect to trezor/i));
   expect(mockTrezorConnect).toHaveBeenCalled();

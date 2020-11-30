@@ -4,6 +4,7 @@ import { screen, wait } from "@testing-library/react";
 import user from "@testing-library/user-event";
 
 import * as wa from "wallet/daemon";
+import * as sel from "selectors";
 
 const testDcrdLogString = "test-dcrd-log";
 const testDcrwalletLogString = "test-dcrwallet-log";
@@ -14,6 +15,11 @@ let mockGetDcrdLogs;
 let mockGetDcrwalletLogs;
 let mockGetDecreditonLogs;
 let mockGetDcrlndLogs;
+let mockLnActive;
+let mockLnStartAttempt;
+let mockIsDaemonRemote;
+let mockGetDaemonStarted;
+let mockGetWalletReady;
 
 beforeEach(() => {
   mockGetDcrdLogs = wa.getDcrdLogs = jest.fn(() =>
@@ -28,6 +34,11 @@ beforeEach(() => {
   mockGetDcrlndLogs = wa.getDcrlndLogs = jest.fn(() =>
     Promise.resolve(Buffer.from(testDcrlnLogString, "utf-8"))
   );
+  mockLnActive = sel.lnActive = jest.fn(() => false);
+  mockLnStartAttempt = sel.lnStartAttempt = jest.fn(() => false);
+  mockIsDaemonRemote = sel.isDaemonRemote = jest.fn(() => false);
+  mockGetDaemonStarted = sel.getDaemonStarted = jest.fn(() => false);
+  mockGetWalletReady = sel.getWalletReady = jest.fn(() => false);
 });
 
 const expandLogs = async (linkText, expectedLogs) => {
@@ -65,15 +76,17 @@ test("render default logs page", async () => {
   expect(mockGetDcrwalletLogs).toHaveBeenCalled();
   expect(mockGetDecreditonLogs).toHaveBeenCalled();
   expect(mockGetDcrlndLogs).toHaveBeenCalled();
+  expect(mockIsDaemonRemote).toHaveBeenCalled();
+  expect(mockGetDaemonStarted).toHaveBeenCalled();
+  expect(mockGetWalletReady).toHaveBeenCalled();
 });
 
 test("render all logs and test if auto refresh is working", async () => {
-  render(<Logs />, {
-    initialState: {
-      daemon: { daemonRemote: false, daemonStarted: true, walletReady: true },
-      ln: { active: true, startAttempt: true }
-    }
-  });
+  mockLnActive = sel.lnActive = jest.fn(() => true);
+  mockGetDaemonStarted = sel.getDaemonStarted = jest.fn(() => true);
+  mockGetWalletReady = sel.getWalletReady = jest.fn(() => true);
+  render(<Logs />);
+  expect(mockLnActive).toHaveBeenCalled();
 
   // test expand logs
   await expandLogs("decrediton", testDcrDecreditonLogString);
@@ -120,4 +133,24 @@ test("render all logs and test if auto refresh is working", async () => {
   await wait(() =>
     expect(screen.getByText(testDcrlnLogString + "+")).toBeInTheDocument()
   );
+});
+
+test("check ln logs if lnActive is true, but lnStartAttempt is false", async () => {
+  mockLnActive = sel.lnActive = jest.fn(() => true);
+  mockLnStartAttempt = sel.lnStartAttempt = jest.fn(() => false);
+  render(<Logs />);
+  expect(mockLnActive).toHaveBeenCalled();
+  expect(mockLnStartAttempt).toHaveBeenCalled();
+  await expandLogs("decrediton", testDcrDecreditonLogString);
+  expect(screen.getByText("dcrlnd")).toBeInTheDocument();
+});
+
+test("check ln logs if lnActive is false, but lnStartAttempt is true", async () => {
+  mockLnActive = sel.lnActive = jest.fn(() => false);
+  mockLnStartAttempt = sel.lnStartAttempt = jest.fn(() => true);
+  render(<Logs />);
+  expect(mockLnActive).toHaveBeenCalled();
+  expect(mockLnStartAttempt).toHaveBeenCalled();
+  await expandLogs("decrediton", testDcrDecreditonLogString);
+  expect(screen.getByText("dcrlnd")).toBeInTheDocument();
 });

@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
 import { en as enLocale, defaultFormats } from "i18n/locales";
+import locales from "i18n/locales";
 import { IntlProvider } from "react-intl";
 import { PropTypes } from "prop-types";
 import { lightTheme, darkTheme, icons } from "style/themes";
@@ -32,7 +33,7 @@ afterAll(() => {
 afterEach(() => {
   jest.clearAllMocks();
 });
-const locale = locales[1];
+const locale = enLocale;
 const fonts = [];
 const themes = {
   [DEFAULT_LIGHT_THEME_NAME]: { ...defaultLightTheme, ...lightTheme, ...icons },
@@ -40,10 +41,9 @@ const themes = {
 };
 
 function render(ui, renderOptions) {
-  const locale = enLocale;
   const history = createMemoryHistory();
   const currentSettings = {
-    locale: "en",
+    locale: locale.key,
     theme: DEFAULT_LIGHT_THEME_NAME,
     allowedExternalRequests: []
   };

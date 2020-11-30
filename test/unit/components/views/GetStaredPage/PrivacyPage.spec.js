@@ -47,7 +47,7 @@ test("render privacy page", () => {
   const standardLabel = screen.getByText(/standard/i);
   expect(standardLabel).toBeInTheDocument();
   expect(standardLabel.nextSibling.textContent).toMatchInlineSnapshot(
-    `"Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, politeia, etc). Recommended for most users."`
+    `"Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, Politeia, etc). Recommended for most users."`
   );
   user.click(standardLabel);
   expect(mockSetupStandardPrivacy).toHaveBeenCalledTimes(1);

@@ -227,13 +227,16 @@ test("test if app receive daemon connection data from cli", async () => {
   render(<GetStartedPage />);
 
   await wait(() =>
-    expect(mockConnectDaemon).toHaveBeenCalledWith({
-      rpc_user: rpcCreds.rpcUser,
-      rpc_pass: rpcCreds.rpcPass,
-      rpc_cert: rpcCreds.rpcCert,
-      rpc_host: rpcCreds.rpcHost,
-      rpc_port: rpcCreds.rpcPort
-    })
+    expect(mockConnectDaemon).toHaveBeenCalledWith(
+      {
+        rpc_user: rpcCreds.rpcUser,
+        rpc_pass: rpcCreds.rpcPass,
+        rpc_cert: rpcCreds.rpcCert,
+        rpc_host: rpcCreds.rpcHost,
+        rpc_port: rpcCreds.rpcPort
+      },
+      true
+    )
   );
   ipcRenderer.sendSync.mockRestore();
 });
