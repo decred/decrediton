@@ -82,18 +82,16 @@ The current recommended versions for the main tools are:
   - Yarn: 1.12+
   - Electron: 3.0.6
 
-To ease node version management, install all top-level tools (node/npm/yarn) using nvm ([linux/mac](https://github.com/creationix/nvm), [windows](https://github.com/creationix/nvm)).
+To ease node version management, install all top-level tools (node/npm/yarn) using [nvm](https://github.com/nvm-sh/nvm).
 
-
-### Decred binaries
+### Decred Binaries
 
 Development using the master version of decrediton usually requires using a
-corresponding master version of dcrd/dcrwallet/dcrlnd.
+corresponding master version of dcrd, dcrwallet and dcrlnd.
 
-Follow the instructions to install dcrd, dcrwallet and dcrctl from source from
-their respective repos:
+Follow the instructions to install these from source from their respective repos:
 
-- [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
+- [dcrd installation instructions](https://github.com/decred/dcrd#updating)
 - [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
 - [dcrlnd installation instructions](https://github.com/decred/dcrlnd#installation)
 
@@ -101,7 +99,7 @@ their respective repos:
 ### Basic Development Setup
 
 These steps are usually the only ones required for basic development on
-linux/macOS (after compiling dcrd/dcrwallet/dcrctl/dcrlnd from source).
+linux/macOS (after compiling dcrd/dcrwallet/dcrlnd from source).
 
 For Windows users, it's usually a good idea to use
 [MSYS2](https://www.msys2.org/) instead of the standard cmd.exe (see below for
@@ -118,7 +116,7 @@ yarn dev
 
 ### Keeping up with dcrd/dcrwallet changes
 
-If you're developing decrediton improvements on a daily basis, you need to also keep up to date with dcrd/dcrwallet changes (specially when developing things like new grpc calls).
+If you're developing decrediton improvements on a daily basis, you need to also keep up to date with dcrd/dcrwallet changes (especially when developing things like new grpc calls).
 
 In that case, instead of copying the binaries to `/bin` it's better to symlink
 them so that you only need a single step (go install) to run newer versions of
@@ -127,7 +125,6 @@ these tools:
 ```bash
 cd bin
 ln -s `which dcrd` dcrd
-ln -s `which dcrctl` dcrctl
 ln -s `which dcrwallet` dcrwallet
 ln -s `which dcrlnd` dcrlnd
 ```
@@ -276,17 +273,13 @@ yarn package
 
 ### Linux
 
-You need to make sure you have the following packages installed for the building to work:
-
-- icns2png
-- graphicsmagick
-- rpm-build
+You need to make sure you have the rpm-build package installed for the building to work.
 
 ```bash
 yarn package-linux
 ```
 
-After it is finished it will have the built rpm, deb and tar.gz in the releases/ directory.
+After it is finished it will have the built rpm, deb and tar.gz in the release/ directory.
 
 If you're only interested in a tar.gz, you can alternatively use:
 
