@@ -41,7 +41,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_MIXED,
+  MIXED,
   VOTED,
   LIVE,
   UNMINED,
@@ -802,7 +802,7 @@ export const filteredRegularTxs = createSelector(
         if (filter.types.length > 0) {
           isSameType = false;
           filter.types.forEach((type) =>
-            type === v.txType || (type === TRANSACTION_MIXED && v.mixedTx)
+            type === v.txType || (type === MIXED && v.mixedTx)
               ? (isSameType = true)
               : null
           );
