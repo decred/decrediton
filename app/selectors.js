@@ -41,7 +41,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_MIXED,
+  MIXED,
   VOTED,
   LIVE,
   UNMINED,
@@ -587,8 +587,8 @@ export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
 
 // transactionNormalizer normalizes regular decred's regular transactions
 export const transactionNormalizer = createSelector(
-  [accounts, txURLBuilder, blockURLBuilder, chainParams],
-  (accounts, txURLBuilder, blockURLBuilder, chainParams) => {
+  [accounts, txURLBuilder, blockURLBuilder, chainParams, getMixedAccountName],
+  (accounts, txURLBuilder, blockURLBuilder, chainParams, mixedAccountName) => {
     const findAccount = (num) =>
       accounts.find((account) => account.getAccountNumber() === num);
     const getAccountName = (num) =>
@@ -630,11 +630,22 @@ export const transactionNormalizer = createSelector(
         return total + amount;
       }, 0);
 
+      let selfTx = false;
       tx.getCreditsList().forEach((credit) => {
         const amount = credit.getAmount();
         const address = credit.getAddress();
         const creditedAccount = credit.getAccount();
         const currentCreditedAccountName = getAccountName(creditedAccount);
+        // If we find a self credited account which isn't a change output
+        // & tx has one or more wallet inputs & no non-wallet outputs we consider
+        // the transaction as self trnsaction
+        if (
+          !credit.getInternal() &&
+          txInputs.length > 0 &&
+          tx.getCreditsList().length === outputs.length
+        ) {
+          selfTx = true;
+        }
         // If we find credit which is not a change, then we pick
         // it as receiver
         if (!creditedAccountName || !credit.getInternal()) {
@@ -691,11 +702,11 @@ export const transactionNormalizer = createSelector(
         txOutputs,
         txBlockHash,
         txNumericType: type,
-        txIsMixed: isMix,
         rawTx,
         outputs,
         creditAddresses,
-        isMix,
+        mixedTx: isMix || debitedAccountName === mixedAccountName,
+        selfTx: !isMix && selfTx,
         ...txDetails
       };
     };
@@ -791,7 +802,7 @@ export const filteredRegularTxs = createSelector(
         if (filter.types.length > 0) {
           isSameType = false;
           filter.types.forEach((type) =>
-            type === v.txType || (type === TRANSACTION_MIXED && v.isMix)
+            type === v.txType || (type === MIXED && v.mixedTx)
               ? (isSameType = true)
               : null
           );

@@ -3,10 +3,23 @@ import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED
+  TRANSACTION_DIR_TRANSFERRED,
+  MIXED,
+  SELFTRANSFER
 } from "constants";
 import styles from "./TxHistory.module.css";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
+
+const iconTooltipByType = (type) => {
+  switch (type) {
+    case MIXED:
+      return <T id="txhistory.icon.mixed" m="Mixed" />;
+    case SELFTRANSFER:
+      return <T id="txhistory.icon.self" m="Self transfer" />;
+    default:
+      return <T id="txhistory.icon.transaction" m="Transaction" />;
+  }
+};
 
 const TxDirection = ({ account, isCred }) => (
   <div className={styles.direction}>
@@ -50,12 +63,13 @@ const RegularTxRow = ({
   txAccountNameDebited,
   timeMessage,
   className,
-  isMix,
   ...props
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
     <div className={classNames(styles.info, overview && styles.overviewInfo)}>
-      <span className={classNames(styles[className], styles.icon)} />
+      <Tooltip content={iconTooltipByType(className)} placement="right">
+        <span className={classNames(styles[className], styles.icon)} />
+      </Tooltip>
       <span className={styles.amountValue}>
         <Balance
           amount={
@@ -81,7 +95,6 @@ const RegularTxRow = ({
       {!pending && (
         <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
       )}
-      {isMix && <span className={styles.isMix}>mixed</span>}
     </div>
   </Row>
 );

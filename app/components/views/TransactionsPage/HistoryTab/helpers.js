@@ -3,7 +3,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_MIXED
+  MIXED
 } from "constants";
 
 export const selectedTxTypeFromFilter = (filter) => {
@@ -58,7 +58,7 @@ export const getTxTypes = () => ([
   },
   {
     key: "mixed",
-    value: { type: TRANSACTION_MIXED },
+    value: { type: MIXED },
     label: <T id="txFilter.type.mixed" m="Mixed" />
   }
 ]);

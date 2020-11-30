@@ -8,7 +8,9 @@ import {
   TICKET,
   VOTE,
   REVOCATION,
-  COINBASE
+  COINBASE,
+  MIXED,
+  SELFTRANSFER
 } from "constants/Decrediton";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader } from "layout";
@@ -30,7 +32,9 @@ const headerIcons = {
   [COINBASE]: "tx-detail-icon-in",
   [TICKET]: "tx-detail-icon-ticket",
   [VOTE]: "tx-detail-icon-vote",
-  [REVOCATION]: "tx-detail-icon-revocation"
+  [REVOCATION]: "tx-detail-icon-revocation",
+  [MIXED]: "tx-detail-icon-mixed",
+  [SELFTRANSFER]: "tx-detail-icon-self"
 };
 
 // If it is a regular tx we use txDirection instead
@@ -185,15 +189,18 @@ const Header = ({
   ticketReward,
   txDirection,
   intl,
-  txInputs
+  txInputs,
+  mixedTx,
+  selfTx
 }) => {
   const dispatch = useDispatch();
   const tsDate = useSelector(sel.tsDate);
   const goBack = () => dispatch(ca.goBackHistory());
+  const iconTxType = mixedTx ? MIXED : selfTx ? SELFTRANSFER : txType;
   return (
     <StandaloneHeader
       title={title({ txType, txAmount, txDirection, ticketReward, intl })}
-      iconClassName={icon({ txType, txDirection })}
+      iconClassName={icon({ txType: iconTxType, txDirection })}
       description={subtitle({
         txType,
         isPending,
