@@ -587,8 +587,8 @@ export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
 
 // transactionNormalizer normalizes regular decred's regular transactions
 export const transactionNormalizer = createSelector(
-  [accounts, txURLBuilder, blockURLBuilder, chainParams],
-  (accounts, txURLBuilder, blockURLBuilder, chainParams) => {
+  [accounts, txURLBuilder, blockURLBuilder, chainParams, getMixedAccountName],
+  (accounts, txURLBuilder, blockURLBuilder, chainParams, mixedAccountName) => {
     const findAccount = (num) =>
       accounts.find((account) => account.getAccountNumber() === num);
     const getAccountName = (num) =>
@@ -702,11 +702,10 @@ export const transactionNormalizer = createSelector(
         txOutputs,
         txBlockHash,
         txNumericType: type,
-        txIsMixed: isMix,
         rawTx,
         outputs,
         creditAddresses,
-        isMix,
+        mixedTx: isMix || debitedAccountName === mixedAccountName,
         selfTx: !isMix && selfTx,
         ...txDetails
       };
@@ -803,7 +802,7 @@ export const filteredRegularTxs = createSelector(
         if (filter.types.length > 0) {
           isSameType = false;
           filter.types.forEach((type) =>
-            type === v.txType || (type === TRANSACTION_MIXED && v.isMix)
+            type === v.txType || (type === TRANSACTION_MIXED && v.mixedTx)
               ? (isSameType = true)
               : null
           );
