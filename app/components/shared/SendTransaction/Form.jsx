@@ -62,7 +62,7 @@ const Form = ({
     <div className={styles.sendButtonArea}>
       {insuficientFunds && (
         <div className={styles.error}>
-          <T id="send.insuficient.funds" m="Insuficient funds" />
+          <T id="send.insuficient.funds" m="Insufficient funds" />
         </div>
       )}
       {((isTrezor && isWatchingOnly) || !isWatchingOnly) && (

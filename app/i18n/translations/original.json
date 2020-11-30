@@ -871,7 +871,7 @@
   "send.errors.validateAddressFailed": "{originalError}",
   "send.feeEstimation": "Estimated Fee",
   "send.from": "From",
-  "send.insuficient.funds": "Insuficient funds",
+  "send.insuficient.funds": "Insufficient funds",
   "send.publishUnminedTransactions.success": "Republished unmined transactions to the decred network.",
   "send.sendAllTitle": "Send all funds from selected account",
   "send.sendAllTitle.disabled": "Send all funds from selected account - Disabled",

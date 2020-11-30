@@ -3641,9 +3641,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/SendPage/SendPage.json
 #. [send.insuficient.funds]
 #. defaultMessage is:
-#. Insuficient funds
+#. Insufficient funds
 msgctxt "send.insuficient.funds"
-msgid "Insuficient funds"
+msgid "Insufficient funds"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
