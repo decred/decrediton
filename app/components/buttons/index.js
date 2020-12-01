@@ -1,7 +1,7 @@
 import { classNames } from "pi-ui";
 export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
 export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenu/EyeFilterMenuWithSlider/EyeFilterMenuWithSlider";
-export { default as HelpLink } from "./HelpLink";
+export { default as HelpLink } from "./HelpLink/HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
 export { default as PathButton } from "./PathButton";
 export { default as RescanButton } from "./RescanButton/RescanButton";
@@ -19,7 +19,7 @@ import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
-import HelpLink from "./HelpLink";
+import HelpLink from "./HelpLink/HelpLink";
 import InvisibleButton from "./InvisibleButton";
 export {
   ModalButton,
@@ -56,9 +56,9 @@ const mbb = (className, modalComponent, buttonComponent) => (p) => (
   />
 );
 
-const helpLinkButtonNew = ({ className, onClick, title, subtitle }) => (
+const helpLinkButtonNew = ({ icon, onClick, title, subtitle }) => (
   <HelpLink
-    className={className}
+    icon={icon}
     onClick={onClick}
     title={title}
     subtitle={subtitle}

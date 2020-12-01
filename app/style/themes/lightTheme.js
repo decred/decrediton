@@ -241,8 +241,8 @@ const lightTheme = {
   "privacy-running-arrows": "url('style/icons/privacyRunningArrows.svg')",
   "decentralized-loop-still": "url('style/icons/decentralizedLoopStill.svg')",
   "decentralized-loop-animation":
-  "url('style/icons/decentralizedLoopAnimation.gif')",
-  "send-to-self-icon": "url('style/icons/sentToSelfTx.svg')"
+    "url('style/icons/decentralizedLoopAnimation.gif')",
+  "self-transaction-icon": "url('style/icons/sentToSelfTx.svg')"
 };
 
 export default lightTheme;

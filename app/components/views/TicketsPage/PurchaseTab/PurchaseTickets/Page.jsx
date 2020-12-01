@@ -33,7 +33,7 @@ const PrivacyInfo = () => {
       {show && (
         <T
           id="purchase.vsp.privacy.enabled.description"
-          m="Using your mixer configurations. This can take longer. Please, check your mixing settings in the Privacy and Security page for more information regarding the mixing process."
+          m="Purchasing mixed tickets can take some time because mix transactions are only created every 20 minutes. The Privacy And Security page contains more information regarding the mixing process."
         />
       )}
     </div>

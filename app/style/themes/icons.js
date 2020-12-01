@@ -43,9 +43,6 @@ const icons = {
   "flag-ptbr": "url('style/icons/ptbr-flag.svg')",
   "flag-zh": "url('style/icons/zh-flag.svg')",
   "generate-addr-icon": "url('style/icons/generate-address.svg')",
-  "help-freenode": "url('style/icons/freenodeGrey.svg')",
-  "help-rocketchat": "url('style/icons/rocketchatGrey.svg')",
-  "help-telegram": "url('style/icons/telegramGrey.svg')",
   "hide-account-icon": "url('style/icons/account-eye-hide.svg')",
   "info-warning-icon": "url('style/icons/info-warning.svg')",
   "indicator-confirmed-icon": "url('style/icons/indicator-confirmed.svg')",
@@ -137,7 +134,8 @@ const icons = {
   "share-icon": "url('style/icons/share.svg')",
   "decred-logo": "url('style/icons/dcrLogoShare.svg')",
   "search-icon-light": "url('style/icons/search-light.svg')",
-  "animated-alert-icon": "url('style/icons/animated_alert_icon.gif')"
+  "animated-alert-icon": "url('style/icons/animated_alert_icon.gif')",
+  "mixed-transaction-icon": "url('style/icons/mixedTx.svg')"
 };
 
 export default icons;

@@ -41,7 +41,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERRED,
-  TRANSACTION_MIXED,
+  MIXED,
   VOTED,
   LIVE,
   UNMINED,
@@ -587,8 +587,8 @@ export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
 
 // transactionNormalizer normalizes regular decred's regular transactions
 export const transactionNormalizer = createSelector(
-  [accounts, txURLBuilder, blockURLBuilder, chainParams],
-  (accounts, txURLBuilder, blockURLBuilder, chainParams) => {
+  [accounts, txURLBuilder, blockURLBuilder, chainParams, getMixedAccountName],
+  (accounts, txURLBuilder, blockURLBuilder, chainParams, mixedAccountName) => {
     const findAccount = (num) =>
       accounts.find((account) => account.getAccountNumber() === num);
     const getAccountName = (num) =>
@@ -630,11 +630,22 @@ export const transactionNormalizer = createSelector(
         return total + amount;
       }, 0);
 
+      let selfTx = false;
       tx.getCreditsList().forEach((credit) => {
         const amount = credit.getAmount();
         const address = credit.getAddress();
         const creditedAccount = credit.getAccount();
         const currentCreditedAccountName = getAccountName(creditedAccount);
+        // If we find a self credited account which isn't a change output
+        // & tx has one or more wallet inputs & no non-wallet outputs we consider
+        // the transaction as self trnsaction
+        if (
+          !credit.getInternal() &&
+          txInputs.length > 0 &&
+          tx.getCreditsList().length === outputs.length
+        ) {
+          selfTx = true;
+        }
         // If we find credit which is not a change, then we pick
         // it as receiver
         if (!creditedAccountName || !credit.getInternal()) {
@@ -691,11 +702,11 @@ export const transactionNormalizer = createSelector(
         txOutputs,
         txBlockHash,
         txNumericType: type,
-        txIsMixed: isMix,
         rawTx,
         outputs,
         creditAddresses,
-        isMix,
+        mixedTx: isMix || debitedAccountName === mixedAccountName,
+        selfTx: !isMix && selfTx,
         ...txDetails
       };
     };
@@ -791,7 +802,7 @@ export const filteredRegularTxs = createSelector(
         if (filter.types.length > 0) {
           isSameType = false;
           filter.types.forEach((type) =>
-            type === v.txType || (type === TRANSACTION_MIXED && v.isMix)
+            type === v.txType || (type === MIXED && v.mixedTx)
               ? (isSameType = true)
               : null
           );
@@ -1236,7 +1247,6 @@ export const totalSubsidy = compose(
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 export const ticketBuyerConfig = get(["control", "ticketBuyerConfig"]);
-const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
 
 export const balanceToMaintain = get(["control", "balanceToMaintain"]);
 
@@ -1270,19 +1280,6 @@ export const startAutoBuyerError = get(["control", "startAutoBuyerError"]);
 export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
 export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
 export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
-
-// selectors for checking if decrediton can be closed.
-
-export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
-export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
-  if (!vspTickets) return;
-  return vspTickets[VSP_FEE_PROCESS_ERRORED]
-    ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
-    : false;
-});
-export const getCanClose = not(or(isTicketAutoBuyerEnabled, getHasUnpaidFee));
-
-// end of selectors for closing decrediton.
 
 const purchaseTicketsResponse = get(["control", "purchaseTicketsResponse"]);
 
@@ -1363,14 +1360,6 @@ export const purchaseTicketsRequestAttempt = get([
   "control",
   "purchaseTicketsRequestAttempt"
 ]);
-
-// getRunningIndicator is a indicator for indicate something is runnning on
-// decrediton, like the ticket auto buyer or the mixer.
-export const getRunningIndicator = or(
-  getAccountMixerRunning,
-  getTicketAutoBuyerRunning,
-  purchaseTicketsRequestAttempt
-);
 
 const importScriptRequestAttempt = get([
   "control",
@@ -1681,6 +1670,33 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
   "walletCreationMasterPubkeyAttempt"
 ]);
 
+// selectors for checking if decrediton can be closed.
+
+// TODO remove duplicated auto buyer running selector
+const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
+export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
+
+// getRunningIndicator is a indicator for indicate something is runnning on
+// decrediton, like the ticket auto buyer or the mixer.
+export const getRunningIndicator = or(
+  getAccountMixerRunning,
+  getTicketAutoBuyerRunning,
+  purchaseTicketsRequestAttempt,
+  isTicketAutoBuyerEnabled
+);
+
+export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
+  if (!vspTickets) return;
+  return vspTickets[VSP_FEE_PROCESS_ERRORED]
+    ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
+    : false;
+});
+export const getCanClose = not(or(getRunningIndicator, getHasUnpaidFee));
+
+// end of selectors for closing decrediton.
+
+// ln selectors
+
 export const lnEnabled = bool(and(not(isWatchingOnly), not(isTrezor)));
 export const lnActive = bool(get(["ln", "active"]));
 export const lnStartupStage = get(["ln", "startupStage"]);
@@ -1705,3 +1721,5 @@ export const lnAddInvoiceAttempt = get(["ln", "addInvoiceAttempt"]);
 export const lnSCBPath = get(["ln", "scbPath"]);
 export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
 export const lnTowersList = get(["ln", "towersList"]);
+
+// end of ln selectors

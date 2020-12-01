@@ -1,7 +1,12 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
-import { getStakeInfoAttempt, getBalanceUpdateAttempt } from "./ClientActions";
+import { checkUnmixedAccountBalance } from "./AccountMixerActions";
+import {
+  getStakeInfoAttempt,
+  getBalanceUpdateAttempt,
+  getMixerAcctsSpendableBalances
+} from "./ClientActions";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
@@ -99,12 +104,16 @@ export const newTransactionsReceived = (
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
     m[v.txHash] = v;
     // update our txs selector value.
-    v.isStake ? stakeTransactions[v.txHash] = v : regularTransactions[v.txHash] = v;
+    v.isStake
+      ? (stakeTransactions[v.txHash] = v)
+      : (regularTransactions[v.txHash] = v);
     return m;
   }, {});
   const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {
     // update our txs selector value.
-    v.isStake ? stakeTransactions[v.txHash] = v : regularTransactions[v.txHash] = v;
+    v.isStake
+      ? (stakeTransactions[v.txHash] = v)
+      : (regularTransactions[v.txHash] = v);
     m[v.txHash] = v;
     return m;
   }, {});
@@ -121,6 +130,11 @@ export const newTransactionsReceived = (
   );
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
+
+  // Update mixer accounts balances
+  const changeAccount = sel.getChangeAccount(getState());
+  dispatch(checkUnmixedAccountBalance(changeAccount));
+  dispatch(getMixerAcctsSpendableBalances());
 
   const hasStakeTxs =
     checkForStakeTransactions(newlyUnminedTransactions) ||
@@ -752,20 +766,17 @@ export const getTxFromInputs = (unsignedTx) => (dispatch, getState) => {
 
   // Create a map with all the unique tx hashes we need to fetch.
   const txsMap = {};
-  unsignedTx.inputs.forEach(inp => txsMap[inp.prevTxId] = true);
+  unsignedTx.inputs.forEach((inp) => (txsMap[inp.prevTxId] = true));
 
   // Start fetching all txs concurrently.
-  const txPromises = Object.keys(txsMap).map(async prevTxId => {
+  const txPromises = Object.keys(txsMap).map(async (prevTxId) => {
     const oldTx = await wallet.getTransaction(walletService, prevTxId);
     if (!oldTx) {
       throw new Error(`Transaction ${prevTxId} not found`);
     }
 
     const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-    const tx = wallet.decodeRawTransaction(
-      rawTxBuffer,
-      chainParams
-    );
+    const tx = wallet.decodeRawTransaction(rawTxBuffer, chainParams);
 
     // Fill in the hash to avoid having to recalculate it.
     tx.hash = prevTxId;

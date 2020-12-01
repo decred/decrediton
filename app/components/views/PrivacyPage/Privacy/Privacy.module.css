@@ -151,7 +151,7 @@
   background-size: 32px;
   background-position: 0 0;
   background-repeat: no-repeat;
-  background-image: var(--send-to-self-icon);
+  background-image: var(--self-transaction-icon);
 }
 @media screen and (max-width: 1179px) {
   .privacyContent {

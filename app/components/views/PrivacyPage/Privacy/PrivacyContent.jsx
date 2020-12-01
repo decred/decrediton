@@ -129,7 +129,7 @@ const PrivacyContent = ({
           <div className={style.title}>
             <T
               id="privacy.sendToUnmixedAccount.title"
-              m="Send To Unmixed Account"
+              m="Send to Unmixed Account"
             />
           </div>
           <SendTransaction
