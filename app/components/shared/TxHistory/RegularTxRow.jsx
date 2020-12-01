@@ -6,12 +6,14 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_TRANSFERRED,
   MIXED,
-  SELFTRANSFER
+  SELFTRANSFER,
+  TRANSFER
 } from "constants";
 import styles from "./TxHistory.module.css";
 import { classNames, Tooltip } from "pi-ui";
 
 const iconTooltipByType = (type) => {
+  console.log({ type });
   switch (type) {
     case MIXED:
       return <T id="txhistory.icon.mixed" m="Mix" />;
