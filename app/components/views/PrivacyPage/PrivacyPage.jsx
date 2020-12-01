@@ -11,7 +11,7 @@ const PrivacyPageHeader = React.memo(
     const description =
       changeAccountName && mixedAccountName ? (
         <T
-          id="privacy.description"
+          id="privacy.description.default"
           m={
             "Improve the anonymity of your Decred.\nFunds in {unmixedAccount} are sent to {mixedAccount} once mixed."
           }
