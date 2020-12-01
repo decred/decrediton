@@ -3,6 +3,7 @@ import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_TRANSFERRED,
   MIXED,
   SELFTRANSFER
@@ -13,9 +14,13 @@ import { classNames, Tooltip } from "pi-ui";
 const iconTooltipByType = (type) => {
   switch (type) {
     case MIXED:
-      return <T id="txhistory.icon.mixed" m="Mixed" />;
+      return <T id="txhistory.icon.mixed" m="Mix" />;
     case SELFTRANSFER:
       return <T id="txhistory.icon.self" m="Self transfer" />;
+    case TRANSACTION_DIR_RECEIVED:
+      return <T id="txhistory.icon.received" m="Received" />;
+    case TRANSACTION_DIR_SENT:
+      return <T id="txhistory.icon.sent" m="Sent" />;
     default:
       return <T id="txhistory.icon.transaction" m="Transaction" />;
   }
