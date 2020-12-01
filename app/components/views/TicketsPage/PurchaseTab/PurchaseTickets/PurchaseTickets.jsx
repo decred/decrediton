@@ -22,9 +22,7 @@ const Tickets = ({ toggleIsLegacy }) => {
     rememberedVspHost,
     setRememberedVspHost,
     onRevokeTickets,
-    notMixedAccounts,
-    isVSPListingEnabled,
-    onEnableVSPListing
+    notMixedAccounts
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -66,9 +64,10 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  const vspFee = availableVSPs.find(
-    (availableVSP) => availableVSP.host === vsp?.host
-  )?.vspData.feepercentage;
+  const vspFee =
+    availableVSPs &&
+    availableVSPs.find((availableVSP) => availableVSP.host === vsp?.host)
+      ?.vspData.feepercentage;
 
   return (
     <PurchasePage
@@ -97,8 +96,6 @@ const Tickets = ({ toggleIsLegacy }) => {
         rememberedVspHost,
         toggleRememberVspHostCheckBox,
         onRevokeTickets,
-        isVSPListingEnabled,
-        onEnableVSPListing,
         notMixedAccounts
       }}
     />
