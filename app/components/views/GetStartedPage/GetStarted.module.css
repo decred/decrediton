@@ -815,6 +815,10 @@
   padding: 10px;
 }
 
+.advancedOptionsLabel {
+  margin-left: 22px;
+}
+
 @media screen and (max-width: 1919px) {
   .settings .goBackScreenButtonArea {
     left: 1230px;
