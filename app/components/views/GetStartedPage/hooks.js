@@ -27,6 +27,7 @@ import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 // and styling defined in Loading.less and need to handled when loading.less
 // is migrated, and classes should be defined then in ./GetStarted.module.css
 // css animation classes
+const blockChainLoading = "blockchain-syncing";
 const daemonWaiting = "daemon-waiting";
 const discoveringAddresses = "discovering-addresses";
 const scanningBlocks = "scanning-blocks";
