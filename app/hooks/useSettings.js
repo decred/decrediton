@@ -22,6 +22,7 @@ const useSettings = () => {
   const needNetworkReset = useSelector(sel.needNetworkReset);
   const walletName = useSelector(sel.getWalletName);
   const walletReady = useSelector(sel.getWalletReady);
+  const hasUnpaidFee = useSelector(sel.getHasUnpaidFee);
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {
@@ -69,7 +70,8 @@ const useSettings = () => {
     onSaveSettings,
     onCloseWallet,
     onAddAllowedRequestType,
-    toggleTheme
+    toggleTheme,
+    hasUnpaidFee
   };
 };
 
