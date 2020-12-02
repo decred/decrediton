@@ -216,9 +216,7 @@ export const useGetStarted = () => {
         }
         if (isSPV) {
           return startSPVSync(passPhrase)
-            .then(() => {
-              send({ type: "SET_MIXED_ACCOUNT" });
-            })
+            .then(() => send({ type: "SET_MIXED_ACCOUNT" }))
             .catch((error) => {
               // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
               // private passphrase to discover accounts and the user typed a wrong
@@ -532,17 +530,16 @@ export const useGetStarted = () => {
         });
       }
       if (key === "settingMixedAccount") {
+        // Display a message while checking for coinjoin outputs and go to set
+        // mixed account only if coinjoin outputs found & mixed account not set yet
         animationType = establishingRpc;
-        text = <T id="loaderBar.checkingMixedAccount" m="Seaching for coinjoin transactions..." />;
+        text = (
+          <T
+            id="loaderBar.checkingMixedAccount"
+            m="Seaching for coinjoin transactions..."
+          />
+        );
         PageComponent = h(GetStartedMachinePage, {
-          submitRemoteCredentials,
-          submitAppdata,
-          error,
-          isSPV,
-          onShowReleaseNotes,
-          onShowTutorial,
-          appVersion,
-          onGetDcrdLogs,
           text: updatedText ? updatedText : text,
           animationType: updatedAnimationType
             ? updatedAnimationType
