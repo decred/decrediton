@@ -34,7 +34,6 @@ const PreCreateWallet = ({
   const [isTrezor, setIsTrezor] = useState(false);
   const [hasFailedAttemptName, setHasFailedAttemptName] = useState(false);
   const [hasFailedAttemptPubKey, setHasFailedAttemptPubKey] = useState(false);
-  const [isPrivacy, setPrivacy] = useState(false);
 
   const hideCreateWalletForm = useCallback(() => {
     if (isTrezor) {
@@ -78,9 +77,6 @@ const PreCreateWallet = ({
     setIsWatchingOnly(false);
   }, [isTrezor, trezorEnable, trezorDisable]);
 
-  const toggleIsPrivacy = () => {
-    setPrivacy(!isPrivacy);
-  };
 
   const createWallet = useCallback(() => {
     const isNew = isCreateNewWallet;
@@ -91,7 +87,6 @@ const PreCreateWallet = ({
         isWatchingOnly,
         isTrezor,
         isNew,
-        isPrivacy,
         network: isTestNet ? "testnet" : "mainnet"
       }
     };
@@ -125,7 +120,7 @@ const PreCreateWallet = ({
     }
 
     return onCreateWallet(walletSelected)
-      .then(() => onShowCreateWallet({ isNew, isPrivacy, walletMasterPubKey }))
+      .then(() => onShowCreateWallet({ isNew, walletMasterPubKey }))
       .catch((error) => onSendError(error));
   }, [
     isCreateNewWallet,
@@ -142,8 +137,7 @@ const PreCreateWallet = ({
     trezorDevice,
     trezorGetWalletCreationMasterPubKey,
     walletMasterPubKey,
-    walletNameError,
-    isPrivacy
+    walletNameError
   ]);
 
 
@@ -187,8 +181,6 @@ const PreCreateWallet = ({
         toggleWatchOnly,
         toggleTrezor,
         onChangeCreateWalletMasterPubKey,
-        isPrivacy,
-        toggleIsPrivacy,
         intl
       }}
     />

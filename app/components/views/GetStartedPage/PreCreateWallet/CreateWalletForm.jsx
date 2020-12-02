@@ -56,8 +56,6 @@ const CreateWalletForm = ({
   masterPubKeyError,
   isTrezor,
   toggleTrezor,
-  isPrivacy,
-  toggleIsPrivacy,
   onShowTrezorConfig,
   isCreateNewWallet,
   creatingWallet
