@@ -57,9 +57,9 @@ const SettingsPageHeader = ({
         modalContent={
           isTicketAutoBuyerEnabled
             ? closeWalletWithAutobuyerModal(walletName)
-            : hasUnpaidFee 
-              ? closeWalletWithUnpaidFeeModal(walletName)
-              : closeWalletModalContent(walletName)
+            : hasUnpaidFee
+            ? closeWalletWithUnpaidFeeModal(walletName)
+            : closeWalletModalContent(walletName)
         }
         className={styles.closeModalButton}
         onSubmit={onCloseWallet}
@@ -69,7 +69,7 @@ const SettingsPageHeader = ({
 );
 
 const SettingsPage = () => {
-  const { onCloseWallet, isTicketAutoBuyerEnabled, walletName, hasUnpaidFee} = useSettings();
+  const { onCloseWallet, isTicketAutoBuyerEnabled, walletName, hasUnpaidFee } = useSettings();
 
   return (
     <TabbedPage
