@@ -17,7 +17,7 @@ import {
   OPENWALLET_INPUTPRIVPASS
 } from "actions/WalletLoaderActions";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useDaemonStartup } from "hooks";
+import { useDaemonStartup, useAccounts } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
@@ -64,8 +64,10 @@ export const useGetStarted = () => {
     appVersion,
     syncAttemptRequest,
     onGetDcrdLogs,
-    daemonWarning
+    daemonWarning,
+    getCoinjoinOutputspByAcct
   } = useDaemonStartup();
+  const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
   const [state, send] = useMachine(getStartedMachine, {
@@ -530,12 +532,48 @@ export const useGetStarted = () => {
         });
       }
       if (key === "settingMixedAccount") {
-        PageComponent = h(SettingMixedAccount, { onSendBack, onSendContinue });
+        animationType = establishingRpc;
+        text = <T id="loaderBar.checkingMixedAccount" m="Seaching for coinjoin transactions..." />;
+        PageComponent = h(GetStartedMachinePage, {
+          submitRemoteCredentials,
+          submitAppdata,
+          error,
+          isSPV,
+          onShowReleaseNotes,
+          onShowTutorial,
+          appVersion,
+          onGetDcrdLogs,
+          text: updatedText ? updatedText : text,
+          animationType: updatedAnimationType
+            ? updatedAnimationType
+            : animationType,
+          StateComponent: updatedComponent ? updatedComponent : component
+        });
+        getCoinjoinOutputspByAcct()
+          .then((r) => {
+            const hasMixedOutputs = r.reduce(
+              (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
+              false
+            );
+            if (!hasMixedOutputs || mixedAccount) {
+              goToHome();
+            } else {
+              PageComponent = h(SettingMixedAccount, {
+                onSendBack,
+                onSendContinue
+              });
+              setPageComponent(PageComponent);
+            }
+          })
+          .catch((err) => console.log(err));
       }
 
       setPageComponent(PageComponent);
     },
     [
+      getCoinjoinOutputspByAcct,
+      mixedAccount,
+      goToHome,
       state,
       isTestNet,
       onSendBack,

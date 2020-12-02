@@ -12,24 +12,13 @@ import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
 export default ({ onSendBack, onSendContinue }) => {
   const { getCoinjoinOutputspByAcct, setCoinjoinCfg } = useDaemonStartup();
-  const { onRenameAccount, mixedAccount } = useAccounts();
+  const { onRenameAccount } = useAccounts();
   const [coinjoinSumByAcct, setCjSumByAcct] = useState(null);
   const [mixedAcctIdx, setMixedAcctIdx] = useState(null);
   const [changeAcctIdx, setChangeAcctIdx] = useState(null);
   const [isValid, setIsValid] = useState(false);
   useMountEffect(() => {
-    getCoinjoinOutputspByAcct()
-      .then((r) => {
-        const hasMixedOutputs = r.reduce(
-          (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
-          false
-        );
-        if (!hasMixedOutputs || mixedAccount) {
-          console.log("redirect to home");
-        }
-        setCjSumByAcct(r);
-      })
-      .catch((err) => console.log(err));
+    getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
   });
   const onSetMixedAcct = (acctIdx) => {
     // can't set same mixed and change acct
