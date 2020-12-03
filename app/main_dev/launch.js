@@ -531,6 +531,7 @@ export const launchDCRWallet = (
   // add needed dcrwallet flags
   args.push("--gaplimit=" + cfg.get("gaplimit"));
   args.push("--issueclientcert");
+  args.push("--debuglevel=debug");
 
   // add cspp cert path.
   // When in mainnet, we always include it, because if we doensn't and a user

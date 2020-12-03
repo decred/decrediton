@@ -18,6 +18,7 @@ import {
   VOTE,
   REVOCATION
 } from "constants/Decrediton";
+import { MAX_DCR_AMOUNT } from "constants/Decred";
 import {
   _blake256,
   selializeNoWitnessEncode,
@@ -351,3 +352,39 @@ export const calculateHashFromDecodedTx = (decodedTx) => {
   const checksum = _blake256(Buffer.from(rawEncodedTx));
   return reverseHash(rawToHex(checksum));
 };
+
+export const listUnspentOutputs = withLogNoData(
+  (
+    walletService,
+    accountNum,
+    dataCb
+  ) =>
+    new Promise((resolve, reject) => {
+      console.log(walletService);
+      const request = new api.UnspentOutputsRequest();
+      request.setAccount(accountNum);
+      // we set the target amount as the MAX_DCR_AMOUNT, as we want to list all
+      // unspent outputs possible.
+      request.setTargetAmount(MAX_DCR_AMOUNT);
+      // at least one confirmation.
+      request.setRequiredConfirmations(1);
+
+      const getOutputs = walletService.unspentOutputs(request);
+      getOutputs.on("data", (response) => {
+        const amount = response.getAmount();
+        const txHash = reverseHash(
+          Buffer.from(response.getTransactionHash()).toString("hex")
+        );
+        const outpointIndex = response.getOutputIndex();
+        dataCb({ amount, txHash, outpointIndex });
+      });
+      getOutputs.on("end", () => {
+        resolve();
+      });
+      getOutputs.on("error", (err) => {
+        reject(err);
+      });
+    }),
+  "Get Unspent Outputs"
+);
+withLogNoData;
