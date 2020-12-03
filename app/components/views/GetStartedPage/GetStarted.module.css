@@ -107,6 +107,14 @@
   width: 450px;
 }
 
+.advancedOption {
+  margin-left: 62px;
+}
+
+.advancedOptionsLabel {
+  margin-left: 22px;
+}
+
 .pageBody.getstarted {
   padding: 40px;
   display: block;
@@ -813,10 +821,6 @@
 
 .daemonWarning {
   padding: 10px;
-}
-
-.advancedOptionsLabel {
-  margin-left: 22px;
 }
 
 @media screen and (max-width: 1919px) {

@@ -3,7 +3,7 @@ import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton, ToggleSwitch } from "buttons";
 import { Tooltip } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import { classNames } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
 import styles from "../GetStarted.module.css";
 
 const messages = defineMessages({
@@ -16,12 +16,12 @@ const messages = defineMessages({
     defaultMessage:
       "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
   },
-  messageWalletWatchOnlyTooltip: {
+  messageWalletWatchOnlyDescription: {
     id: "createwallet.watchonly.tooltip",
     defaultMessage:
       "You’ll not be able to spend any DCR associated with that wallet. It is used only to view the balance and monitor the wallet's transaction activity"
   },
-  messageWalletTrezorTooltip: {
+  messageWalletTrezorDescription: {
     id: "createwallet.trezor.tooltip",
     defaultMessage: "Trezor is a hardware wallet."
   },
@@ -111,61 +111,39 @@ const CreateWalletForm = ({
           </div>
         </div>
         <div className={styles.daemonRow}>
-          <div className={styles.daemonLabel}>
-            <Tooltip
-              text={intl.formatMessage(messages.messageWalletWatchOnlyTooltip)}>
-              <T id="createwallet.walletOnly.label" m="Watch only" />
-            </Tooltip>
-          </div>
-          <div className={styles.daemonInput}>
-            <div className={styles.walletSwitch}>
-              <ToggleSwitch
-                enabled={isWatchingOnly}
-                onClick={toggleWatchOnly}
-                enabledText={<T id="watchOnly.enabled" m="Watch Only" />}
-                notEnabledText={<T id="watchOnly.disabled" m="Normal" />}
-              />
-            </div>
+          <div className={styles.advancedOption}>
+            <Checkbox
+              label={<T id="createwallet.walletOnly.label" m="Watch only" />}
+              id="watchonly"
+              description={intl.formatMessage(
+                messages.messageWalletWatchOnlyDescription
+              )}
+              checked={isWatchingOnly}
+              onChange={toggleWatchOnly}
+            />
           </div>
         </div>
         <div className={styles.daemonRow}>
-          <div className={styles.daemonLabel}>
-            <Tooltip
-              text={intl.formatMessage(messages.messageWalletTrezorTooltip)}>
-              <T id="createwallet.isTrezor.label" m="Trezor" />
-            </Tooltip>
-          </div>
-          <div className={styles.daemonInput}>
-            <div className={styles.walletSwitch}>
-              <ToggleSwitch
-                enabled={isTrezor}
-                onClick={toggleTrezor}
-                enabledText={
-                  <T id="createWallet.restore.trezor.enabled" m="Enabled" />
-                }
-                notEnabledText={
-                  <T id="createWallet.restore.trezor.disabled" m="Disabled" />
-                }
-              />
-              <span onClick={onShowTrezorConfig}>
-                <T id="createWallet.isTrezor.setupLink" m="(setup device)" />
-              </span>
-            </div>
+          <div className={styles.advancedOption}>
+            <Checkbox
+              label={<T id="createwallet.isTrezor.label" m="Trezor" />}
+              id="trezor"
+              description={intl.formatMessage(
+                messages.messageWalletTrezorDescription
+              )}
+              checked={isTrezor}
+              onChange={toggleTrezor}
+            />
           </div>
         </div>
         <div className={styles.daemonRow}>
-          <div className={styles.daemonLabel}>
-            <T id="privacy.label" m="Privacy" />
-          </div>
-          <div className={styles.daemonInput}>
-            <div className={styles.walletSwitch}>
-              <ToggleSwitch
-                enabled={isPrivacy}
-                onClick={toggleIsPrivacy}
-                enabledText={<T id="privacy.label" m="Privacy" />}
-                notEnabledText={<T id="watchOnly.disabled" m="Normal" />}
-              />
-            </div>
+          <div className={styles.advancedOption}>
+            <Checkbox
+              label={<T id="privacy.label" m="Privacy" />}
+              id="privacy"
+              checked={isPrivacy}
+              onChange={toggleIsPrivacy}
+            />
           </div>
         </div>
         {isWatchingOnly && (
