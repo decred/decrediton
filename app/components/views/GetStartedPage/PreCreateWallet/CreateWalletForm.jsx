@@ -1,7 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { KeyBlueButton, InvisibleButton, ToggleSwitch } from "buttons";
-import { Tooltip } from "shared";
+import { KeyBlueButton, InvisibleButton } from "buttons";
+import { Tooltip, Collapse } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { classNames, Checkbox } from "pi-ui";
 import styles from "../GetStarted.module.css";
@@ -104,76 +104,86 @@ const CreateWalletForm = ({
       </div>
     </div>
     {!isCreateNewWallet && (
-      <>
-        <div className={styles.daemonRow}>
-          <div className={styles.advancedOptionsLabel}>
-            <T id="createwallet.advancedOptions.label" m="Advanced Options" />:
-          </div>
-        </div>
-        <div className={styles.daemonRow}>
-          <div className={styles.advancedOption}>
-            <Checkbox
-              label={<T id="createwallet.walletOnly.label" m="Watch only" />}
-              id="watchonly"
-              description={intl.formatMessage(
-                messages.messageWalletWatchOnlyDescription
-              )}
-              checked={isWatchingOnly}
-              onChange={toggleWatchOnly}
-            />
-          </div>
-        </div>
-        <div className={styles.daemonRow}>
-          <div className={styles.advancedOption}>
-            <Checkbox
-              label={<T id="createwallet.isTrezor.label" m="Trezor" />}
-              id="trezor"
-              description={intl.formatMessage(
-                messages.messageWalletTrezorDescription
-              )}
-              checked={isTrezor}
-              onChange={toggleTrezor}
-            />
-          </div>
-        </div>
-        <div className={styles.daemonRow}>
-          <div className={styles.advancedOption}>
-            <Checkbox
-              label={<T id="privacy.label" m="Privacy" />}
-              id="privacy"
-              checked={isPrivacy}
-              onChange={toggleIsPrivacy}
-            />
-          </div>
-        </div>
-        {isWatchingOnly && (
-          <div className={styles.daemonRow}>
-            <div className={styles.daemonLabel}>
-              <T
-                id="createwallet.walletmasterpubkey.label"
-                m="Master Pub Key"
-              />
-            </div>
-            <div className={styles.daemonLongInput}>
-              <TextInput
-                required
-                value={walletMasterPubKey}
-                onChange={(e) =>
-                  onChangeCreateWalletMasterPubKey(e.target.value)
-                }
-                placeholder={intl.formatMessage(
-                  messages.messageWalletMasterPubKey
+      <div className={classNames(styles.daemonRow, styles.advancedOptions)}>
+        <Collapse
+          header={
+            <T id="createwallet.advancedOptions.label" m="Advanced Options" />
+          }
+          content={
+            <>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={
+                    <T id="createwallet.walletOnly.label" m="Watch only" />
+                  }
+                  id="watchonly"
+                  description={intl.formatMessage(
+                    messages.messageWalletWatchOnlyDescription
+                  )}
+                  checked={isWatchingOnly}
+                  onChange={toggleWatchOnly}
+                />
+                {isWatchingOnly && (
+                  <div className={styles.extra}>
+                    <T
+                      id="createwallet.walletmasterpubkey.label"
+                      m="Master Pub Key"
+                    />
+                    <div className={styles.daemonLongInput}>
+                      <TextInput
+                        required
+                        value={walletMasterPubKey}
+                        onChange={(e) =>
+                          onChangeCreateWalletMasterPubKey(e.target.value)
+                        }
+                        placeholder={intl.formatMessage(
+                          messages.messageWalletMasterPubKey
+                        )}
+                        showErrors={hasFailedAttemptPubKey || masterPubKeyError}
+                        invalid={masterPubKeyError}
+                        invalidMessage={intl.formatMessage(
+                          messages.messageWalletMasterPubkeyError
+                        )}
+                      />
+                    </div>
+                  </div>
                 )}
-                showErrors={hasFailedAttemptPubKey || masterPubKeyError}
-                invalid={masterPubKeyError}
-                invalidMessage={intl.formatMessage(
-                  messages.messageWalletMasterPubkeyError
-                )}
-              />
-            </div>
-          </div>
-        )}
-      </>
+              </div>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={
+                    <>
+                      <T id="createwallet.isTrezor.label" m="Trezor" />
+                      <span
+                        className={styles.whatsnew}
+                        onClick={onShowTrezorConfig}>
+                        <T
+                          id="createWallet.isTrezor.setupLink"
+                          m="(setup device)"
+                        />
+                      </span>
+                    </>
+                  }
+                  id="trezor"
+                  description={intl.formatMessage(
+                    messages.messageWalletTrezorDescription
+                  )}
+                  checked={isTrezor}
+                  onChange={toggleTrezor}
+                />
+              </div>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={<T id="privacy.label" m="Privacy" />}
+                  id="privacy"
+                  checked={isPrivacy}
+                  onChange={toggleIsPrivacy}
+                />
+              </div>
+            </>
+          }
+        />
+      </div>
     )}
     <div className={styles.daemonRow}>
       <KeyBlueButton onClick={createWallet}>

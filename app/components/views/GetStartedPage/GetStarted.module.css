@@ -103,16 +103,20 @@
 
 .daemonLongInput {
   padding-left: 20px;
-  float: left;
   width: 450px;
 }
 
 .advancedOption {
-  margin-left: 62px;
+  margin: 10px;
 }
 
-.advancedOptionsLabel {
-  margin-left: 22px;
+.advancedOption > .extra {
+  margin: 10px;
+}
+
+.advancedOptions {
+  height: 100%;
+  margin-bottom: 20px;
 }
 
 .pageBody.getstarted {
