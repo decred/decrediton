@@ -158,11 +158,7 @@ const onLoadMoreProposals = async (
   }
 
   const proposalBatch = inventory.slice(proposalLength, proposalNumber);
-  try {
     return await getProposalsAndUpdateVoteStatus(proposalBatch);
-  } catch (err) {
-    throw err;
-  }
 };
 
 const getProposalsTab = (location) => {
