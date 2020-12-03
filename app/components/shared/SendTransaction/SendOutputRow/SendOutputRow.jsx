@@ -24,43 +24,47 @@ const getSendAllFundsIcon = ({
   isSendAll,
   onShowSendAll,
   onHideSendAll,
-  outputs
-}) =>
-  outputs.length > 1 ? (
-    <Tooltip
-      text={
-        <T
-          id="send.sendAllTitle.disabled"
-          m="Send all funds from selected account - Disabled"
+  outputs,
+  extStyle
+}) => (
+  <div className={classNames(extStyle.sendAllFundsIcon)}>
+    {outputs.length > 1 ? (
+      <Tooltip
+        text={
+          <T
+            id="send.sendAllTitle.disabled"
+            m="Send all funds from selected account - Disabled"
+          />
+        }>
+        <a
+          className={classNames(
+            styles.sendIconWrapper,
+            styles.walletIcon,
+            styles.disabled
+          )}
         />
-      }>
-      <a
-        className={classNames(
-          styles.sendIconWrapper,
-          styles.walletIcon,
-          styles.disabled
-        )}
-      />
-    </Tooltip>
-  ) : !isSendAll ? (
-    <Tooltip
-      text={
-        <T id="send.sendAllTitle" m="Send all funds from selected account" />
-      }>
-      <a
-        className={classNames(styles.sendIconWrapper, styles.walletIcon)}
-        onClick={onShowSendAll}
-      />
-    </Tooltip>
-  ) : (
-    <Tooltip
-      text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds" />}>
-      <a
-        className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
-        onClick={onHideSendAll}
-      />
-    </Tooltip>
-  );
+      </Tooltip>
+    ) : !isSendAll ? (
+      <Tooltip
+        text={
+          <T id="send.sendAllTitle" m="Send all funds from selected account" />
+        }>
+        <a
+          className={classNames(styles.sendIconWrapper, styles.walletIcon)}
+          onClick={onShowSendAll}
+        />
+      </Tooltip>
+    ) : (
+      <Tooltip
+        text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds" />}>
+        <a
+          className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
+          onClick={onHideSendAll}
+        />
+      </Tooltip>
+    )}
+  </div>
+);
 
 const getAddInputIcon = ({
   isSendSelf,
@@ -200,7 +204,11 @@ const SendOutputRow = ({
     <label>
       <T id="send.amount" m="Amount" />:
     </label>
-    <div className={styles.sendInputWrapper}>
+    <div
+      className={classNames(
+        styles.sendInputWrapper,
+        extStyle.amountInputWrapper
+      )}>
       {isSendAll ? (
         <Balance
           classNameWrapper={styles.sendAll}
@@ -223,13 +231,13 @@ const SendOutputRow = ({
         />
       )}
     </div>
-    {!onlySendSelfAllowed &&
-      index === 0 &&
+    {index === 0 &&
       getSendAllFundsIcon({
         isSendAll,
         onShowSendAll,
         onHideSendAll,
-        outputs
+        outputs,
+        extStyle
       })}
   </div>
 );
