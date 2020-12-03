@@ -68,7 +68,7 @@ const TitleIcon = ({ toggleIsLegacy }) => (
 
 const EnableVSP = ({ onEnableVSP }) => (
   <div className={styles.enableVSPWrapper}>
-    <p>
+    <p className={styles.enableVSPMessage}>
       <T
         id="purchase.vsp.enableListing.description"
         m="VSP listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the VSP."

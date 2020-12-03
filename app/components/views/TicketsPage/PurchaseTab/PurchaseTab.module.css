@@ -96,10 +96,7 @@
 }
 
 .enableVSPMessage {
-  background-image: var(--info-warning-icon);
-  background-repeat: no-repeat;
-  background-size: 10px;
-  background-position: 0 center;
+  padding-bottom: 20px;
 }
 
 @media screen and (max-width: 768px) {
