@@ -3,7 +3,7 @@ import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TICKET_FEE,
   REGULAR,
   TICKET,
   VOTE,
@@ -28,7 +28,7 @@ const messages = defineMessages({
 const headerIcons = {
   [TRANSACTION_DIR_RECEIVED]: "tx-detail-icon-in",
   [TRANSACTION_DIR_SENT]: "tx-detail-icon-out",
-  [TRANSACTION_DIR_TRANSFERRED]: "tx-detail-icon-transfer",
+  [TICKET_FEE]: "tx-detail-icon-ticketfee",
   [COINBASE]: "tx-detail-icon-in",
   [TICKET]: "tx-detail-icon-ticket",
   [VOTE]: "tx-detail-icon-vote",

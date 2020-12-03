@@ -6,7 +6,7 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TICKET_FEE,
   TICKET,
   VOTE,
   REVOCATION
@@ -30,8 +30,8 @@ const messages = defineMessages({
     id: "notifications.type.send",
     defaultMessage: "Sent"
   },
-  [TRANSACTION_DIR_TRANSFERRED]: {
-    id: "notifications.type.transfer",
+  [TICKET_FEE]: {
+    id: "notifications.type.ticketfee",
     defaultMessage: "Transferred"
   },
   [TRANSACTION_DIR_RECEIVED]: {

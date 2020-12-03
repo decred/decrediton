@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TICKET_FEE,
   MIXED
 } from "constants";
 
@@ -52,9 +52,9 @@ export const getTxTypes = () => ([
     label: <T id="txFilter.type.received" m="Received" />
   },
   {
-    key: "transf",
-    value: { direction: TRANSACTION_DIR_TRANSFERRED, type: -1 },
-    label: <T id="txFilter.type.transfered" m="Transfered" />
+    key: "ticketf",
+    value: { direction: TICKET_FEE, type: -1 },
+    label: <T id="txFilter.type.ticketfee" m="Ticket fee" />
   },
   {
     key: "mixed",

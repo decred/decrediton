@@ -161,7 +161,6 @@ const onLoadMoreProposals = async (
   try {
     return await getProposalsAndUpdateVoteStatus(proposalBatch);
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };

@@ -22,7 +22,7 @@ const TxRowByType = {
   [txTypes.REVOKED]: StakeTxRow,
   [txTypes.TRANSACTION_DIR_SENT]: RegularTxRow,
   [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
-  [txTypes.TRANSFER]: RegularTxRow,
+  [txTypes.TICKET_FEE]: RegularTxRow,
   [txTypes.SELFTRANSFER]: RegularTxRow,
   [txTypes.MIXED]: RegularTxRow,
   [txTypes.COINBASE]: RegularTxRow,
@@ -51,7 +51,9 @@ const TxHistory = ({
         let rowType = tx.status || tx.txType;
         rowType = rowType.toLowerCase();
         // If it is a regular tx we use its direction to show a proper icon.
-        if (rowType === txTypes.REGULAR) rowType = tx.txDirection;
+        if (rowType === txTypes.REGULAR) {
+          rowType = tx.txDirection;
+        }
         if (tx.mixedTx) rowType = txTypes.MIXED;
         if (tx.selfTx) rowType = txTypes.SELFTRANSFER;
 

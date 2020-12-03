@@ -7,7 +7,7 @@ import {
   TRANSACTION_DIR_TRANSFERRED,
   MIXED,
   SELFTRANSFER,
-  TRANSFER
+  TICKET_FEE
 } from "constants";
 import styles from "./TxHistory.module.css";
 import { classNames, Tooltip } from "pi-ui";
@@ -22,6 +22,8 @@ const iconTooltipByType = (type) => {
       return <T id="txhistory.icon.received" m="Received" />;
     case TRANSACTION_DIR_SENT:
       return <T id="txhistory.icon.sent" m="Sent" />;
+    case TICKET_FEE:
+      return <T id="txhistory.icon.ticketfee" m="Ticket fee" />;
     default:
       return <T id="txhistory.icon.transaction" m="Transaction" />;
   }
@@ -83,7 +85,7 @@ const RegularTxRow = ({
           }
         />
       </span>
-      {txDirection === TRANSACTION_DIR_TRANSFERRED ? (
+      {txDirection === TICKET_FEE ? (
         <div className={classNames("is-row", styles.txDirection)}>
           <TxDirection account={txAccountNameDebited} />
           <TxDirection account={txAccountNameCredited} isCred />

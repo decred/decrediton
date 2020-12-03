@@ -46,8 +46,8 @@
 .icon.mixed {
   background-image: var(--mixed-transaction-icon);
 }
-.icon.transfer {
-  background-image: var(--transfer-transaction-icon);
+.icon.ticketfee {
+  background-image: var(--ticketfee-transaction-icon);
 }
 .icon.self {
   background-image: var(--self-transaction-icon);
