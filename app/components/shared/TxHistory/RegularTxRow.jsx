@@ -13,7 +13,6 @@ import styles from "./TxHistory.module.css";
 import { classNames, Tooltip } from "pi-ui";
 
 const iconTooltipByType = (type) => {
-  console.log({ type });
   switch (type) {
     case MIXED:
       return <T id="txhistory.icon.mixed" m="Mix" />;
