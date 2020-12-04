@@ -57,6 +57,16 @@
 .sendOutputContainer .dcrInput {
   width: 150px;
 }
+.sendAllFundsIcon {
+  grid-column: 2;
+  grid-row: 2;
+  margin-left: 170px;
+}
+.amountInputWrapper {
+  grid-column: 2;
+  grid-row: 2;
+  width: 160px;
+}
 .error {
   color: var(--error-text-color);
   position: absolute;
@@ -93,5 +103,9 @@
     width: 334px;
     position: relative;
     text-align: right;
+  }
+  .sendAllFundsIcon,
+  .amountInputWrapper {
+    grid-row: 3;
   }
 }
