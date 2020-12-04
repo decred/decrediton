@@ -4,7 +4,6 @@ import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT,
-  TRANSACTION_DIR_TRANSFERRED,
   MIXED,
   SELFTRANSFER,
   TICKET_FEE
