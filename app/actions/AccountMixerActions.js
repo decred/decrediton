@@ -4,8 +4,18 @@ import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
 import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
+<<<<<<< HEAD
 import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
 import * as cfgConstants from "constants/config";
+=======
+import {
+  MIN_RELAY_FEE_ATOMS,
+  MIN_MIX_DENOMINATION_ATOMS,
+  CSPP_URL,
+  CSPP_PORT_TESTNET,
+  CSPP_PORT_MAINNET
+} from "constants";
+>>>>>>> fix mixedAccount/changeAccount index = 0 bug
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
 export const GETACCOUNTMIXERSERVICE_SUCCESS = "GETACCOUNTMIXERSERVICE_SUCCESS";
@@ -184,12 +194,8 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
   const walletName = sel.getWalletName(getState());
   const cfg = getWalletCfg(isTestnet, walletName);
 
-  // TODO use constants here
-  // On this first moment we are hard coding the cspp decred's server.
-  // the idea is to allow more server on upcoming releases, but we decided
-  // to go with this approach on this first integration.
-  const csppServer = "cspp.decred.org";
-  const csppPort = isTestnet ? "15760" : "5760";
+  const csppServer = CSPP_URL;
+  const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;
 
   cfg.set(cfgConstants.CSPP_SERVER, csppServer);
   cfg.set(cfgConstants.CSPP_PORT, csppPort);
