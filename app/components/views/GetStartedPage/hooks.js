@@ -198,7 +198,7 @@ export const useGetStarted = () => {
           });
       },
       isSyncingRPC: async (context) => {
-        const { passPhrase, isPrivacy } = context;
+        const { passPhrase, isPrivacy, isSPV } = context;
         if (syncAttemptRequest) {
           return;
         }
@@ -208,9 +208,18 @@ export const useGetStarted = () => {
         if (synced === true) {
           send({ type: "GO_TO_HOME_VIEW" });
         }
-        if (context.isSPV) {
+        if (isSPV) {
           return startSPVSync(passPhrase)
-            .then(() => send({ type: "GO_TO_HOME_VIEW" }))
+            .then(() => {
+              if (isPrivacy) {
+                // if recoverying a privacy wallet, we go to settingMixedAccount
+                // state, so the user can set a mixed account based on their
+                // coinjoin outputs.
+                // This state should only be achievable if recoverying wallet.
+                send({ type: "SET_MIXED_ACCOUNT" });
+              }
+              send({ type: "GO_TO_HOME_VIEW" });
+            })
             .catch((error) => {
               // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
               // private passphrase to discover accounts and the user typed a wrong
