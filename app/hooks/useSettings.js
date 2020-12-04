@@ -18,11 +18,9 @@ const useSettings = () => {
   const changePassphraseRequestAttempt = useSelector(
     sel.changePassphraseRequestAttempt
   );
-  const isTicketAutoBuyerEnabled = useSelector(sel.isTicketAutoBuyerEnabled);
   const needNetworkReset = useSelector(sel.needNetworkReset);
   const walletName = useSelector(sel.getWalletName);
   const walletReady = useSelector(sel.getWalletReady);
-  const hasUnpaidFee = useSelector(sel.getHasUnpaidFee);
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {
@@ -61,7 +59,6 @@ const useSettings = () => {
     areSettingsDirty,
     isChangePassPhraseDisabled,
     changePassphraseRequestAttempt,
-    isTicketAutoBuyerEnabled,
     needNetworkReset,
     walletName,
     walletReady,
@@ -70,8 +67,7 @@ const useSettings = () => {
     onSaveSettings,
     onCloseWallet,
     onAddAllowedRequestType,
-    toggleTheme,
-    hasUnpaidFee
+    toggleTheme
   };
 };
 

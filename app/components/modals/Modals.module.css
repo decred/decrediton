@@ -673,12 +673,6 @@
   background-position: 0 center;
 }
 
-.goToTicketStatus {
-  display: block;
-  margin: 0 auto;
-  margin-top: 10px;
-  width: 150px;
-}
 .mixerSettingsTitle {
   font-size: 20px;
 }

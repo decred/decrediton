@@ -28,12 +28,7 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
       <KeyBlueButton
         className={style.confirmConfirmButton}
         onClick={onSubmit}>
-        {
-          <T
-            id="tickets.purchasing.confirmModal.btnConfirm"
-            m="Close Decrediton"
-          />
-        }
+        <T id="tickets.purchasing.confirmModal.closeAnyway" m="Close Anyway" />
       </KeyBlueButton>
       <InvisibleButton
         className={style.confirmCloseButton}

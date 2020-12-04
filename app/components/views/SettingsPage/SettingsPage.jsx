@@ -17,28 +17,7 @@ const closeWalletModalContent = (walletName) => (
   />
 );
 
-const closeWalletWithAutobuyerModal = (walletName) => (
-  <T
-    id="settings.closeWalletModalWithAutobuyerModal"
-    m="Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
-    values={{ walletName }}
-  />
-);
-
-const closeWalletWithUnpaidFeeModal = (walletName) => (
-  <T
-    id="settings.closeWalletModalWithUnpaidFeeModal"
-    m="Are you sure you want to close {walletName} and return to the launcher? You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will be missed."
-    values={{ walletName }}
-  />
-);
-
-const SettingsPageHeader = ({
-  onCloseWallet,
-  walletName,
-  isTicketAutoBuyerEnabled,
-  hasUnpaidFee
-}) => (
+const SettingsPageHeader = ({ onCloseWallet, walletName }) => (
   <StandaloneHeader
     title={<T id="settings.title" m="Settings" />}
     iconClassName="settings"
@@ -54,13 +33,7 @@ const SettingsPageHeader = ({
           <T id="settings.closeWalletModalTitle" m="Confirmation Required" />
         }
         buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
-        modalContent={
-          isTicketAutoBuyerEnabled
-            ? closeWalletWithAutobuyerModal(walletName)
-            : hasUnpaidFee
-            ? closeWalletWithUnpaidFeeModal(walletName)
-            : closeWalletModalContent(walletName)
-        }
+        modalContent={closeWalletModalContent(walletName)}
         className={styles.closeModalButton}
         onSubmit={onCloseWallet}
       />
@@ -69,13 +42,13 @@ const SettingsPageHeader = ({
 );
 
 const SettingsPage = () => {
-  const { onCloseWallet, isTicketAutoBuyerEnabled, walletName, hasUnpaidFee } = useSettings();
+  const { onCloseWallet, walletName } = useSettings();
 
   return (
     <TabbedPage
       header={
         <SettingsPageHeader
-          {...{ onCloseWallet, walletName, isTicketAutoBuyerEnabled, hasUnpaidFee }}
+          {...{ onCloseWallet, walletName }}
         />
       }>
       <Switch>

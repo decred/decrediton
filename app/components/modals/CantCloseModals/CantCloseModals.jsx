@@ -3,10 +3,12 @@ import AccountMixerRunningModal from "./AccountMixerRunningModal";
 import AutobuyerRunning from "./AutobuyerRunningModal";
 import HasTicketFeeErro from "./HasTicketFeeError";
 import { useCantCloseModal } from "./hooks";
+import { ConfirmModal } from "modals";
 
-const CantCloseModals = () => {
+const CantCloseModals = (props) => {
+  const { show, onSubmit, onCancelModal, modalContent } = props;
   const {
-    autBuyerRunning,
+    autoBuyerRunning,
     hasUnpaidFee,
     autobuyerRunningModalVisible,
     onHideCantCloseModal,
@@ -15,27 +17,36 @@ const CantCloseModals = () => {
     purchasingTickets
   } = useCantCloseModal();
   let Component = () => <></>;
-  if (autBuyerRunning) {
+  if (autoBuyerRunning) {
     Component = AutobuyerRunning;
-  }
-  if (hasUnpaidFee) {
+  } else if (hasUnpaidFee) {
     Component = HasTicketFeeErro;
-  }
-  if (accountMixerRunning) {
+  } else if (accountMixerRunning) {
     Component = AccountMixerRunningModal;
-  }
-  if (purchasingTickets) {
+  } else if (purchasingTickets) {
     Component = PurchasingTicketsModal;
+  } else if(modalContent){
+    return (<ConfirmModal {...props}/>);
   }
 
-  return <Component
-    show={autobuyerRunningModalVisible}
-    onSubmit={() => {
-      onHideCantCloseModal();
-      shutdownApp();
-    }}
-    onCancelModal={onHideCantCloseModal}
-  />;
+  return (
+    <Component
+      show={show ?? autobuyerRunningModalVisible}
+      onSubmit={() => {
+        if (onCancelModal) {
+          onCancelModal();
+        } else {
+          onHideCantCloseModal();
+        }
+        if (onSubmit) {
+          onSubmit();
+        } else {
+          shutdownApp();
+        }
+      }}
+      onCancelModal={onCancelModal ?? onHideCantCloseModal}
+    />
+  );
 };
 
 export default CantCloseModals;

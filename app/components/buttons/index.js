@@ -40,7 +40,8 @@ import {
   ChangePassphraseModal,
   ConfirmModal,
   DocumentationInfoModal,
-  AboutModal
+  AboutModal,
+  CantCloseModals
 } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
@@ -125,7 +126,7 @@ export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb(
   "close-modal-button",
-  ConfirmModal,
+  CantCloseModals,
   InvisibleButton
 );
 export const CloseChannelModalButton = mbb(
