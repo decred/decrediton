@@ -68,7 +68,7 @@ class App extends React.Component {
       if (this.props.canClose) {
         this.props.shutdownApp();
       } else {
-        log("warning", "Auto buyer is still running, preventing shutdown");
+        log("warning", "A process is still running, preventing shutdown");
         this.props.showCantCloseModal();
       }
     });

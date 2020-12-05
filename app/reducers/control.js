@@ -69,8 +69,8 @@ import {
   GETACCOUNTEXTENDEDKEY_ATTEMPT,
   GETACCOUNTEXTENDEDKEY_FAILED,
   GETACCOUNTEXTENDEDKEY_SUCCESS,
-  HIDE_AUTOBUYER_RUNNING_MODAL,
-  SHOW_AUTOBUYER_RUNNING_MODAL
+  HIDE_CANTCLOSE_MODAL,
+  SHOW_CANTCLOSE_MODAL
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -500,10 +500,10 @@ export default function control(state = {}, action) {
       return { ...state, aboutModalMacOSVisible: true };
     case HIDE_ABOUT_MODAL_MACOS:
       return { ...state, aboutModalMacOSVisible: false };
-    case SHOW_AUTOBUYER_RUNNING_MODAL:
-      return { ...state, autobuyerRunningModalVisible: true };
-    case HIDE_AUTOBUYER_RUNNING_MODAL:
-      return { ...state, autobuyerRunningModalVisible: false };
+    case SHOW_CANTCLOSE_MODAL:
+      return { ...state, cantCloseModalVisible: true };
+    case HIDE_CANTCLOSE_MODAL:
+      return { ...state, cantCloseModalVisible: false };
     case GETACCOUNTEXTENDEDKEY_ATTEMPT:
       return {
         ...state,

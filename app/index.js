@@ -348,7 +348,7 @@ const initialState = {
     exportingData: false,
     modalVisible: false,
     aboutModalMacOSVisible: false,
-    autobuyerRunningModalVisible: false,
+    cantCloseModalVisible: false,
     changeScriptByAccount: {}
   },
   snackbar: {

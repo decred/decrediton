@@ -10,7 +10,7 @@ const CantCloseModals = (props) => {
   const {
     autoBuyerRunning,
     hasUnpaidFee,
-    autobuyerRunningModalVisible,
+    cantCloseModalVisible,
     onHideCantCloseModal,
     shutdownApp,
     accountMixerRunning,
@@ -31,7 +31,7 @@ const CantCloseModals = (props) => {
 
   return (
     <Component
-      show={show ?? autobuyerRunningModalVisible}
+      show={show ?? cantCloseModalVisible}
       onSubmit={() => {
         if (onCancelModal) {
           onCancelModal();

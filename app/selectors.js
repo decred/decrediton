@@ -1524,10 +1524,7 @@ export const aboutModalMacOSVisible = get([
   "control",
   "aboutModalMacOSVisible"
 ]);
-export const autobuyerRunningModalVisible = get([
-  "control",
-  "autobuyerRunningModalVisible"
-]);
+export const cantCloseModalVisible = get(["control", "cantCloseModalVisible"]);
 
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);

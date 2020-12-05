@@ -7,27 +7,18 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
   <Modal className={style.confirm} {...{ show, onCancelModal }}>
     <div className={style.confirmHeader}>
       <div className={style.confirmHeaderTitle}>
-        <T
-          id="account.mixer.running.title"
-          m="Account mixer is running"
-        />
+        <T id="account.mixer.running.title" m="Account mixer is running" />
       </div>
     </div>
-    {
-      <div className={style.confirmContent}>
-        <T
-          id="account.mixer.running.message"
-          m="Account mixer is currently running. Ongoing mixes will be
-            cancelled and no more Decred will be mixed if Decrediton is
-            closed now."
-        />
-      </div>
-
-    }
+    <div className={style.confirmContent}>
+      <T
+        id="account.mixer.running.message"
+        m="Account mixer is currently running. Ongoing mixes will be
+            cancelled and no more Decred will be mixed if you proceed."
+      />
+    </div>
     <div className={style.confirmToolbar}>
-      <KeyBlueButton
-        className={style.confirmConfirmButton}
-        onClick={onSubmit}>
+      <KeyBlueButton className={style.confirmConfirmButton} onClick={onSubmit}>
         <T
           id="tickets.mixer.running.confirmModal.closeAnyway"
           m="Close Anyway"
