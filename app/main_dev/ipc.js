@@ -17,6 +17,7 @@ import {
   setDcrdRpcCredentials
 } from "./launch";
 import { MAINNET } from "constants";
+import * as cfgConstants from "constants/config";
 import { initTransport } from "actions/TrezorActions.js";
 import * as connect from "connect";
 import { rawToHex } from "helpers";
@@ -39,10 +40,10 @@ export const getAvailableWallets = (network) => {
     if (!walletDirStat.isDirectory()) return;
 
     const cfg = getWalletCfg(isTestNet, wallet);
-    const lastAccess = cfg.get("lastaccess");
-    const watchingOnly = cfg.get("iswatchonly");
-    const isTrezor = cfg.get("trezor");
-    const isPrivacy = cfg.get("mixedaccount");
+    const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
+    const watchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
+    const isTrezor = cfg.get(cfgConstants.TREZOR);
+    const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
     availableWallets.push({

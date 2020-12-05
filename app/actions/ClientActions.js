@@ -39,6 +39,7 @@ import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID
 } from "constants";
+import * as cfgConstants from "constants/config";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -118,14 +119,20 @@ export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
 export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
 export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
-export const getStartupWalletInfo = () => (dispatch) => {
+export const getStartupWalletInfo = () => (dispatch, getState) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
-  const config = getGlobalCfg();
+  const {
+    daemon: { walletName }
+  } = getState();
+
+  const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const globalCfg = getGlobalCfg();
+  const walletHasConfig = walletConfig.has(cfgConstants.ALLOW_EXTERNAL_REQUESTS);
   const dcrdataEnabled =
-    config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) >
+    (walletHasConfig ? walletConfig : globalCfg).get(cfgConstants.ALLOW_EXTERNAL_REQUESTS).indexOf(EXTERNALREQUEST_DCRDATA) >
     -1;
   const politeiaEnabled =
-    config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) >
+    (walletHasConfig ? walletConfig : globalCfg).get(cfgConstants.ALLOW_EXTERNAL_REQUESTS).indexOf(EXTERNALREQUEST_POLITEIA) >
     -1;
 
   return new Promise((resolve, reject) => {
@@ -466,7 +473,7 @@ export function hideAccount(accountNumber) {
       updatedHiddenAccounts.push(accountNumber);
     }
     const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-    cfg.set("hiddenaccounts", updatedHiddenAccounts);
+    cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
       type: UPDATEHIDDENACCOUNTS
@@ -487,7 +494,7 @@ export function showAccount(accountNumber) {
       }
     }
     const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-    cfg.set("hiddenaccounts", updatedHiddenAccounts);
+    cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
       type: UPDATEHIDDENACCOUNTS

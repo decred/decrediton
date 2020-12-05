@@ -10,6 +10,7 @@ import {
 } from "helpers/trezor";
 import { publishTransactionAttempt } from "./ControlActions";
 import { model1_decred_homescreen, modelT_decred_homescreen } from "constants/trezor";
+import * as cfgConstants from "constants/config";
 import { getWalletCfg } from "config";
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {
@@ -45,7 +46,7 @@ export const enableTrezor = () => (dispatch, getState) => {
 
   if (walletName) {
     const config = getWalletCfg(selectors.isTestNet(getState()), walletName);
-    config.set("trezor", true);
+    config.set(cfgConstants.TREZOR, true);
   }
 
   dispatch({ type: TRZ_TREZOR_ENABLED });

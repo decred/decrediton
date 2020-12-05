@@ -88,7 +88,7 @@ import {
   TESTNET,
   MAINNET
 } from "constants";
-import { DAEMON_ADVANCED, LOCALE } from "constants/config";
+import { DAEMON_ADVANCED, LOCALE, DISABLE_HARDWARE_ACCEL } from "constants/config";
 
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
@@ -120,7 +120,7 @@ const daemonIsAdvanced = argv.advanced || globalCfg.get(DAEMON_ADVANCED);
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
-if (globalCfg.get("disable_hardware_accel")) {
+if (globalCfg.get(DISABLE_HARDWARE_ACCEL)) {
   logger.log("info", "Disabling hardware acceleration");
   app.disableHardwareAcceleration();
 }
