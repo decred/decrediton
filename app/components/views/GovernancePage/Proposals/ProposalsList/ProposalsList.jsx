@@ -16,8 +16,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
     noMoreProposals,
     proposals,
     state,
-    send,
-    proposalsAttempt
+    send
   } = useProposalsList(filterTab);
 
   const handleSetFilterTab = (tab) => {
@@ -45,21 +44,16 @@ const ProposalsList = ({ finishedVote, tab }) => {
     }
   }, [isScrollable, noMoreProposals, node, loadMore]);
 
-  const loadingView = (
-    <div className={styles.loadingPage}>
-      <PoliteiaLoading center />
-    </div>
-  );
-
   switch (state.value) {
     case "idle":
       return <NoProposals />;
     case "loading":
-      return loadingView;
+      return (
+        <div className={styles.loadingPage}>
+          <PoliteiaLoading center />
+        </div>
+      );
     case "success":
-      if (proposalsAttempt) {
-        return loadingView;
-      }
       return proposals &&
         proposals[filterTab] &&
         proposals[filterTab].length ? (
