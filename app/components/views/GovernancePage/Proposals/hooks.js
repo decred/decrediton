@@ -76,7 +76,7 @@ export function useProposalsList(tab) {
         send("RESOLVE");
       },
       load: () => {
-        if (inventoryError) {
+        if (inventoryError || !inventory || !inventory[tab]) {
           // force loading for 500ms
           setTimeout(() => {
             getTokenAndInitialBatch()
