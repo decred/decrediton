@@ -6,7 +6,7 @@ import GetStartedStyles from "../GetStarted.module.css";
 import { useState } from "react";
 import { KeyBlueButton } from "buttons";
 import styles from "./SetMixedAcctPage.module.css";
-import { classNames } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
 import { useEffect } from "react";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
@@ -135,42 +135,20 @@ export default ({ onSendBack, onSendContinue }) => {
                 {acctIdx !== 0 && (
                   <div className={classNames("is-column", styles.buttons)}>
                     <div className={classNames("is-row", styles.checkboxRow)}>
-                      <input
+                      <Checkbox
                         id={`mixed${acctIdx}`}
-                        name={acctIdx}
-                        type="checkbox"
+                        label={<T id="getstarted.setAccount.mix" m="Set Mixed Account" />}
                         checked={mixedAcctIdx === acctIdx}
                         onChange={() => onSetMixedAcct(acctIdx)}
-                        value={acctIdx}
                       />
-                      <label
-                        htmlFor={`mixed${acctIdx}`}
-                        className={styles.checkboxLabel}></label>
-                      <div className={styles.label}>
-                        <T
-                          id="getstarted.setAccount.mix"
-                          m="Set Mixed Account"
-                        />
-                      </div>
                     </div>
                     <div className={classNames("is-row", styles.checkboxRow)}>
-                      <input
+                      <Checkbox
                         id={`change${acctIdx}`}
-                        name={`a${acctIdx}`}
-                        type="checkbox"
+                        label={<T id="getstarted.setAccount.change" m="Set Unmixed Account" />}
                         checked={changeAcctIdx === acctIdx}
                         onChange={() => onSubmitSetChange(acctIdx)}
-                        value={acctIdx}
                       />
-                      <label
-                        htmlFor={`change${acctIdx}`}
-                        className={styles.checkboxLabel}></label>
-                      <div className={styles.label}>
-                        <T
-                          id="getstarted.setAccount.change"
-                          m="Set Unmixed Account"
-                        />
-                      </div>
                     </div>
                   </div>
                 )}
@@ -179,9 +157,8 @@ export default ({ onSendBack, onSendContinue }) => {
           </div>
           {!isValid && (
             <div className="error">
-              <T
-                id="getstarted.setAccount.isValidMessage"
-                m="You need to set a mixed and unimxed account, and they can not
+              <T id="getstarted.setAccount.isValidMessage"
+                m="You need to set a mixed and unmixed account, and they can not
                   be the same"
               />
             </div>
