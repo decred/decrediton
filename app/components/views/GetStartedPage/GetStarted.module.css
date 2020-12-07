@@ -596,6 +596,7 @@
 @media screen and (max-width: 890px) {
   .releaseNotesText {
     max-width: inherit;
+    margin-left: 15px;
   }
   .releaseNotesImage {
     order: -1;
@@ -616,6 +617,19 @@
   font-size: 13px;
   font-family: Helvetica, sans-serif;
   max-width: 410px;
+  margin-right: 15px;
+}
+
+.releaseNotesText li {
+  list-style-position: inside;
+}
+
+.releaseNotesText p {
+  display: inline;
+}
+
+.releaseNotesText h2 {
+  margin: 10px 0;
 }
 
 .releaseNotesText a {
@@ -875,6 +889,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .releaseNotesText {
+    margin: 10px 0 0 0;
+  }
+
   .getstartedNew {
     padding: 86px 0 0 0;
   }
