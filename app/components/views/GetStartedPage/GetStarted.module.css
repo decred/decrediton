@@ -618,6 +618,16 @@
   max-width: 410px;
 }
 
+.releaseNotesText p,
+.releaseNotesText ul,
+.releaseNotesText ol,
+.releaseNotesText h1,
+.releaseNotesText h2,
+.releaseNotesText h3,
+.releaseNotesText h4 {
+  margin-bottom: 1em;
+}
+
 .releaseNotesText a {
   color: var(--link-color);
 }
