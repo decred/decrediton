@@ -1,8 +1,8 @@
-**Ostrzeżenie!** Upewnij się, że seeds dla swojego urządzenia trezorowego przechowywane są w
-bezpiecznym i dostępnym miejscu i że jest to właściwy klucz
-dla tego portfela, przed wykonaniem wyczyszczenia danych w Twoim urządzenu.
+**Ostrzeżenie!** Przed wyczyszczeniem danych na tym urządzeniu upewnij się, że ziarno dla Twojego urządzenia Trezor przechowywane jest w
+bezpiecznym i dostępnym miejscu i że jest to właściwy i poprawny klucz
+dla tego portfela.
 
-Niewykonanie tej akcji spowoduje **stratę środków**.
+Niedopełnienie powyższych czynności spowoduje **utratę środków**.
 
-Zwróć uwagę, że Decrediton obsługuje tylko odzyskanie 24 słów (256 bitów)
-oraz że seeds i importowane słowa dla trezora i dcrwallet są *różne*.
+Zwróć uwagę, że Decrediton obsługuje tylko odzyskanie ziaren złożonych z 24 słów (256 bitów)
+oraz że słowa do odzyskiwanych portfeli dla urządzenia Trezor i dcrwallet *różnią się* od siebie.
