@@ -1,15 +1,16 @@
 .rangeLabel {
   font-family: var(--font-family-regular);
   font-size: 13px;
-  padding-left: 24px;
-  padding-top: 10px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .minMaxSlider {
   width: 142px;
   height: 10px !important;
-  margin: 14px 23px 10px 23px;
 }
 
 .valueShower {
@@ -17,9 +18,8 @@
   background: var(--background-back-color);
   font-family: var(--font-family-regular);
   font-size: 13px;
-  margin-top: 10px;
-  padding-left: 24px;
-  padding-top: 8px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .valueShowerCloser {
@@ -37,18 +37,46 @@
   text-align: left;
   font-size: 13px;
   width: 200px;
-  margin-bottom: 5px;
 }
 
 .kebab {
-  height: 30px;
-  width: 30px;
+  height: 15px;
+  width: 5px;
   cursor: pointer;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: 15px;
   background-image: var(--agenda-card-kebab-disabled);
-  float: right;
-  position: absolute;
-  right: 10px;
-  top: 85px;
+}
+
+.rangeContainer {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+div.handle {
+  width: 15px;
+  height: 15px;
+  background-color: var(--color-white);
+}
+
+div.slider {
+  width: 100% !important;
+  height: 5px !important;
+  margin-bottom: 15px;
+}
+
+input.numberInput {
+  width: 60px;
+  text-align: right;
+  font-size: 13px;
+  font-family: var(--font-family-regular);
+  color: var(--input-color-default);
+  line-height: normal;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin-left: 5px;
 }
