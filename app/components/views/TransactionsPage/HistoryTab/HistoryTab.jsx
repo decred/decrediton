@@ -84,7 +84,6 @@ const HistoryTab = () => {
   };
 
   const onChangeFilter = (value) => {
-    console.log(value);
     if (isChangingFilterTimer) {
       clearTimeout(isChangingFilterTimer);
     }

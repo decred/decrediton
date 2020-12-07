@@ -94,7 +94,7 @@ const icons = {
   "tickets-plus-icon": "url('style/icons/ticketsPlusWhite.svg')",
   "ticket-voted-icon": "url('style/icons/ticket-voted.svg')",
   "tickets-cogs-closed-icon": "url('style/icons/tickets-cogs-closed.svg')",
-  "transfer-transaction-icon": "url('style/icons/ticketFeeTransaction.svg')",
+  "ticketfee-transaction-icon": "url('style/icons/ticketFeeTransaction.svg')",
   "warning-input-icon": "url('style/icons/warningExclamationOrange.svg')",
   "what-is-staking-icon": "url('style/icons/what-is-staking.svg')",
   "watch-only-icon": "url('style/icons/watchOnlyNav.svg')",

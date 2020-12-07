@@ -22,7 +22,7 @@ const TxRowByType = {
   [txTypes.REVOKED]: StakeTxRow,
   [txTypes.TRANSACTION_DIR_SENT]: RegularTxRow,
   [txTypes.TRANSACTION_DIR_RECEIVED]: RegularTxRow,
-  [txTypes.TRANSFER]: RegularTxRow,
+  [txTypes.TICKET_FEE]: RegularTxRow,
   [txTypes.SELFTRANSFER]: RegularTxRow,
   [txTypes.MIXED]: RegularTxRow,
   [txTypes.COINBASE]: RegularTxRow,

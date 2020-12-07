@@ -11,7 +11,7 @@ import * as api from "middleware/walletrpc/api_pb";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TICKET_FEE,
   REGULAR,
   COINBASE,
   TICKET,
@@ -142,7 +142,7 @@ export function formatTransaction(block, transaction, index) {
     if (amount > 0) {
       direction = TRANSACTION_DIR_RECEIVED;
     } else if (amount < 0 && fee == Math.abs(amount)) {
-      direction = TRANSACTION_DIR_TRANSFERRED;
+      direction = TICKET_FEE;
     } else {
       direction = TRANSACTION_DIR_SENT;
     }

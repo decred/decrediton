@@ -12,7 +12,7 @@ import { spring, TransitionMotion } from "react-motion";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERRED,
+  TICKET_FEE,
   TICKET,
   VOTE,
   REVOCATION
@@ -31,7 +31,7 @@ const snackbarClasses = ({ type }) =>
     [REVOCATION]: "snackbar snackbar-stake",
     [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
     [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
-    [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
+    [TICKET_FEE]: "snackbar snackbar-ticketfee",
     Warning: "snackbar snackbar-warning",
     Error: "snackbar snackbar-error",
     Success: "snackbar snackbar-success"

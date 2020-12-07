@@ -69,7 +69,7 @@ export const MISSED = "missed";
 export const EXPIRED = "expired";
 export const REVOKED = "revoked";
 export const LIVE = "live";
-export const TRANSFER = "transfer";
+export const TICKET_FEE = "ticketfee";
 export const SELFTRANSFER = "self";
 export const COINBASE = "coinbase";
 export const REGULAR = "regular";
@@ -80,7 +80,6 @@ export const ALL = "all";
 // tx directions
 export const TRANSACTION_DIR_SENT = "sent";
 export const TRANSACTION_DIR_RECEIVED = "received";
-export const TRANSACTION_DIR_TRANSFERRED = "transfer";
 
 // Default name to particular accounts
 export const DEFAULT_ACCOUNT = "default";
