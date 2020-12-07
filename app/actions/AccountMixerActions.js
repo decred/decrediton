@@ -222,7 +222,6 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const { balances, walletService } = getState().grpc;
-
     wallet
       .getCoinjoinOutputspByAcct(walletService)
       .then((response) => {
@@ -230,7 +229,7 @@ export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
           response.wrappers_ && response.wrappers_[1];
         const coinjoinSumByAcct = balances.reduce(
           (allAccts, { accountNumber }) => {
-            // if account number is equals imported account, we ignore it.
+            // if account number is equals imported account we skip it
             if (accountNumber === Math.pow(2, 31) - 1) {
               return allAccts;
             }

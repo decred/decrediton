@@ -17,9 +17,7 @@ export default ({ onSendBack, onSendContinue }) => {
   const [mixedAcctIdx, setMixedAcctIdx] = useState(null);
   const [changeAcctIdx, setChangeAcctIdx] = useState(null);
   const [isValid, setIsValid] = useState(false);
-  useMountEffect(() => {
-    getCoinjoinOutputspByAcct().then((r) => setCjSumByAcct(r)).catch(err => console.log(err));
-  });
+
   const onSetMixedAcct = (acctIdx) => {
     // can't set same mixed and change acct
     if (acctIdx === changeAcctIdx) {
@@ -27,6 +25,7 @@ export default ({ onSendBack, onSendContinue }) => {
     }
     setMixedAcctIdx(acctIdx);
   };
+
   const onSubmitSetChange = (acctIdx) => {
     // can't set same mixed and change acct
     if (acctIdx === mixedAcctIdx) {
@@ -34,12 +33,20 @@ export default ({ onSendBack, onSendContinue }) => {
     }
     setChangeAcctIdx(acctIdx);
   };
+
   const onSubmitContinue = () => {
     onRenameAccount(changeAcctIdx, CHANGE_ACCOUNT);
     onRenameAccount(mixedAcctIdx, MIXED_ACCOUNT);
     setCoinjoinCfg(mixedAcctIdx, changeAcctIdx);
     onSendContinue();
   };
+
+  useMountEffect(() => {
+    getCoinjoinOutputspByAcct()
+      .then((r) => setCjSumByAcct(r))
+      .catch((err) => console.log(err));
+  });
+
   useEffect(() => {
     const isValid =
       mixedAcctIdx !== null &&
@@ -98,79 +105,72 @@ export default ({ onSendBack, onSendContinue }) => {
       {coinjoinSumByAcct && (
         <>
           <div className={classNames("is-row", styles.cardsWrapper)}>
-            {coinjoinSumByAcct.map(({ acctIdx, coinjoinSum }) => {
-              return (
-                <div
-                  key={acctIdx}
-                  className={classNames("is-row", styles.card)}>
-                  <div className={classNames("is-column", styles.labelWrapper)}>
-                    <div className={"is-row"}>
-                      <div className={styles.accountIcon} />
-                      <div className={styles.accountLabel}>
-                        <T
-                          id="getstarted.setAccount.acctIdxRow"
-                          m="Account {acctIdx}"
-                          values={{ acctIdx: <span>{acctIdx}</span> }}
-                        />
-                      </div>
-                    </div>
-                    <div className={styles.coinjoinLabel}>
+            {coinjoinSumByAcct.map(({ acctIdx, coinjoinSum }) => (
+              <div key={acctIdx} className={classNames("is-row", styles.card)}>
+                <div className={classNames("is-column", styles.labelWrapper)}>
+                  <div className="is-row">
+                    <div className={styles.accountIcon} />
+                    <div className={styles.accountLabel}>
                       <T
-                        id="getstarted.setAccount.sumCoinjoin"
-                        m="Coinjoin Sum outputs: {coinjoinSum}"
-                        values={{
-                          coinjoinSum: (
-                            <span className={styles.coinjoinSum}>
-                              {coinjoinSum}
-                            </span>
-                          )
-                        }}
+                        id="getstarted.setAccount.acctIdxRow"
+                        m="Account {acctIdx}"
+                        values={{ acctIdx: <span>{acctIdx}</span> }}
                       />
                     </div>
                   </div>
-                  <div className={classNames("is-column", styles.buttons)}>
-                    <div className={classNames("is-row", styles.checkboxRow)}>
-                      <input
-                        id={"mixed" + acctIdx}
-                        name={acctIdx}
-                        type="checkbox"
-                        checked={mixedAcctIdx === acctIdx}
-                        onChange={() => onSetMixedAcct(acctIdx)}
-                        value={acctIdx}
-                      />
-                      <label
-                        htmlFor={"mixed" + acctIdx}
-                        className={styles.checkboxLabel}></label>
-                      <div className={styles.label}>
-                        <T
-                          id="getstarted.setAccount.mix"
-                          m="Set Mixed Account"
-                        />
-                      </div>
-                    </div>
-                    <div className={classNames("is-row", styles.checkboxRow)}>
-                      <input
-                        id={"change" + acctIdx}
-                        name={"a" + acctIdx}
-                        type="checkbox"
-                        checked={changeAcctIdx === acctIdx}
-                        onChange={() => onSubmitSetChange(acctIdx)}
-                        value={acctIdx}
-                      />
-                      <label
-                        htmlFor={"change" + acctIdx}
-                        className={styles.checkboxLabel}></label>
-                      <div className={styles.label}>
-                        <T
-                          id="getstarted.setAccount.change"
-                          m="Set Unmixed Account"
-                        />
-                      </div>
-                    </div>
+                  <div className={styles.coinjoinLabel}>
+                    <T
+                      id="getstarted.setAccount.sumCoinjoin"
+                      m="Coinjoin Sum outputs: {coinjoinSum}"
+                      values={{
+                        coinjoinSum: (
+                          <span className={styles.coinjoinSum}>
+                            {coinjoinSum}
+                          </span>
+                        )
+                      }}
+                    />
                   </div>
                 </div>
-              );
-            })}
+                {acctIdx !== 0 && (<div className={classNames("is-column", styles.buttons)}>
+                  <div className={classNames("is-row", styles.checkboxRow)}>
+                    <input
+                      id={`mixed${acctIdx}`}
+                      name={acctIdx}
+                      type="checkbox"
+                      checked={mixedAcctIdx === acctIdx}
+                      onChange={() => onSetMixedAcct(acctIdx)}
+                      value={acctIdx}
+                    />
+                    <label
+                      htmlFor={`mixed${acctIdx}`}
+                      className={styles.checkboxLabel}></label>
+                    <div className={styles.label}>
+                      <T id="getstarted.setAccount.mix" m="Set Mixed Account" />
+                    </div>
+                  </div>
+                  <div className={classNames("is-row", styles.checkboxRow)}>
+                    <input
+                      id={`change${acctIdx}`}
+                      name={`a${acctIdx}`}
+                      type="checkbox"
+                      checked={changeAcctIdx === acctIdx}
+                      onChange={() => onSubmitSetChange(acctIdx)}
+                      value={acctIdx}
+                    />
+                    <label
+                      htmlFor={`change${acctIdx}`}
+                      className={styles.checkboxLabel}></label>
+                    <div className={styles.label}>
+                      <T
+                        id="getstarted.setAccount.change"
+                        m="Set Unmixed Account"
+                      />
+                    </div>
+                  </div>
+                </div>)} 
+              </div>
+            ))}
           </div>
           {!isValid && (
             <div className="error">
