@@ -33,7 +33,7 @@ const subtitleMenu = ({
 const TicketListPage = ({
   tickets,
   noMoreTickets,
-  getTickets,
+  getLiveTickets,
   onChangeSortType,
   onChangeSelectedType,
   selectedSortOrderKey,
@@ -46,7 +46,8 @@ const TicketListPage = ({
   setVSP,
   setAccount,
   onSyncVspTicketsRequest,
-  isValid
+  isValid,
+  noMoreLiveTickets
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
@@ -54,7 +55,7 @@ const TicketListPage = ({
   return (
     <InfiniteScroll
       hasMore={!noMoreTickets}
-      loadMore={() => getTickets(true)}
+      loadMore={() => getLiveTickets(true)}
       initialLoad={!noMoreTickets}
       useWindow={false}
       threshold={loadMoreThreshold}>
@@ -121,8 +122,8 @@ const TicketListPage = ({
           />
         </>
       )}
-      {!noMoreTickets ? (
-        <LoadingMoreTicketsIndicator />
+      {!noMoreLiveTickets ? (
+        <LoadingMoreTicketsIndicator  />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (

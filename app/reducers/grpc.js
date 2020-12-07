@@ -402,6 +402,7 @@ export default function grpc(state = {}, action) {
         getRegularTxsAux: action.getRegularTxsAux || state.getStakeTxsAux,
         getStakeTxsAux: action.getStakeTxsAux || state.getStakeTxsAux,
         getTransactionsRequestAttempt: false,
+        noMoreLiveTickets: action.noMoreLiveTickets,
         startRequestHeight:
           action.startRequestHeight || state.startRequestHeight
       };

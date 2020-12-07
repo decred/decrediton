@@ -14,11 +14,17 @@ export const useVSPTicketsList = () => {
   const window = useSelector(sel.mainWindow);
   const hasVSPTicketsError = useSelector(sel.getHasVSPTicketsError);
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
+  const noMoreLiveTickets = useSelector(sel.getNoMoreLiveTickets);
 
   // actions
   const dispatch = useDispatch();
   const goBackHistory = () => dispatch(ca.goBackHistory());
-  const getTickets = (isStake) => dispatch(ta.getTransactions(isStake));
+  const getLiveTickets = (isStake) => {
+    if (noMoreLiveTickets) {
+      return;
+    }
+    dispatch(ta.getTransactions(isStake));
+  };
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));
   const getVSPTicketsByFeeStatus = (feeStatus) => dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
@@ -30,12 +36,13 @@ export const useVSPTicketsList = () => {
     ticketsFilter,
     window,
     goBackHistory,
-    getTickets,
+    getLiveTickets,
     changeTicketsFilter,
     getVSPTicketsByFeeStatus,
     vspTickets,
     hasVSPTicketsError,
     defaultSpendingAccount,
-    syncVSPTicketsRequest
+    syncVSPTicketsRequest,
+    noMoreLiveTickets
   };
 };

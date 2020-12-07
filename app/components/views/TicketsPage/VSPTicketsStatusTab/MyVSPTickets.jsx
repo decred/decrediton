@@ -58,13 +58,14 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     ticketsFilter,
     window,
     goBackHistory,
-    getTickets,
+    getLiveTickets,
     changeTicketsFilter,
     vspTickets,
     getVSPTicketsByFeeStatus,
     hasVSPTicketsError,
     defaultSpendingAccount,
-    syncVSPTicketsRequest
+    syncVSPTicketsRequest,
+    noMoreLiveTickets
   } = useVSPTicketsList();
 
   const [tickets, setTickets] = useState([]);
@@ -138,7 +139,7 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
         onChangeSortType,
         onChangeSelectedType,
         tsDate,
-        getTickets,
+        getLiveTickets,
         goBackHistory,
         noMoreTickets,
         hasVSPTicketsError,
@@ -146,7 +147,8 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
         setAccount,
         vsp,
         setVSP,
-        onSyncVspTicketsRequest
+        onSyncVspTicketsRequest,
+        noMoreLiveTickets
       }}
     />
   );
