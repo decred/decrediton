@@ -14,7 +14,11 @@ const messages = defineMessages({
 });
 
 function VSPSelect({ onChange, options, intl, value, isDisabled }) {
-  const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(options, value);
+  const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(
+    options,
+    value,
+    isDisabled
+  );
 
   if (!options) {
     options = availableVSPs;
@@ -46,9 +50,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
     }));
     opts = [
       {
-        label: (
-          <T id="vsp.addNewPromptEmpty" m="Type to add new VSP" />
-        ),
+        label: <T id="vsp.addNewPromptEmpty" m="Type to add new VSP" />,
         host: null
       },
       ...newOptions,
@@ -57,7 +59,6 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
 
     return opts;
   }, [options, newOptions]);
-
 
   useEffect(() => {
     const { host, pubkey } = vspInfo;
@@ -95,24 +96,26 @@ function VSPSelect({ onChange, options, intl, value, isDisabled }) {
   };
 
   const getSelect = (isRetry) => {
-    return <Creatable
-      options={vspList}
-      placeholder={intl.formatMessage(messages.placeholder)}
-      // className={className}
-      onChange={(option) => handleOnChange(option, isRetry)}
-      value={selectedOption}
-      newOptionCreator={() => {
-        return {
-          value: { host: newOption, label: newOption },
-          label: newOption,
-          host: newOption,
-          newOption: true
-        };
-      }}
-      disabled={isDisabled}
-      onInputChange={(input) => onSetNewOption(input)}
-      isValidNewOption={() => !!newOption}
-    />;
+    return (
+      <Creatable
+        options={vspList}
+        placeholder={intl.formatMessage(messages.placeholder)}
+        // className={className}
+        onChange={(option) => handleOnChange(option, isRetry)}
+        value={selectedOption}
+        newOptionCreator={() => {
+          return {
+            value: { host: newOption, label: newOption },
+            label: newOption,
+            host: newOption,
+            newOption: true
+          };
+        }}
+        disabled={isDisabled}
+        onInputChange={(input) => onSetNewOption(input)}
+        isValidNewOption={() => !!newOption}
+      />
+    );
   };
 
   const getComponentState = (state) => {

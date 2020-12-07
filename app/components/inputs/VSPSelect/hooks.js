@@ -5,14 +5,15 @@ import * as vspa from "actions/VSPActions";
 import * as sel from "selectors";
 import { useState, useMemo } from "react";
 
-export const useVSPSelect = (options, vsp) => {
+export const useVSPSelect = (options, vsp, isDisabled) => {
   const dispatch = useDispatch();
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const getVSPInfo = (host) => dispatch(vspa.getVSPInfo(host));
   const [selectedOption, setSelected] = useState(null);
   const [pubkey, setPubkey] = useState(null);
   const [host, setHost] = useState(null);
-  const vspInfo = useMemo(() => ({
+  const vspInfo = useMemo(
+    () => ({
       pubkey,
       host
     }),
@@ -26,6 +27,9 @@ export const useVSPSelect = (options, vsp) => {
   const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
+        if (isDisabled) {
+          return send("RESOLVE");
+        }
         // set vsp if it is already selected. This can happen if the auto buyer
         // is already running.
         if (vsp && vsp.host) {
@@ -39,7 +43,7 @@ export const useVSPSelect = (options, vsp) => {
           } else {
             // Fetch the missing fetch pubkey.
             // Probably the host has read from the config
-           send({ type: "FETCH", value: { host, label: host } });
+            send({ type: "FETCH", value: { host, label: host } });
           }
         }
         if (!options) send({ type: "REJECT", error: "Options not defined." });

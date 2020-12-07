@@ -1,9 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as sa from "actions/SettingsActions";
 import * as ca from "actions/ControlActions";
 import * as wla from "actions/WalletLoaderActions";
+import * as vspa from "actions/VSPActions";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 
 const useSettings = () => {
   const dispatch = useDispatch();
@@ -36,9 +38,22 @@ const useSettings = () => {
     [dispatch]
   );
 
+  const isVSPListingEnabled = useMemo(
+    () =>
+      tempSettings.allowedExternalRequests.includes(
+        EXTERNALREQUEST_STAKEPOOL_LISTING
+      ),
+    [tempSettings.allowedExternalRequests]
+  );
+
   const onSaveSettings = useCallback(
-    (settings) => dispatch(sa.saveSettings(settings)),
-    [dispatch]
+    (settings) => {
+      if (isVSPListingEnabled) {
+        dispatch(vspa.discoverAvailableVSPs());
+      }
+      return dispatch(sa.saveSettings(settings));
+    },
+    [dispatch, isVSPListingEnabled]
   );
 
   const onCloseWallet = useCallback(() => dispatch(wla.closeWalletRequest()), [
@@ -69,7 +84,8 @@ const useSettings = () => {
     onSaveSettings,
     onCloseWallet,
     onAddAllowedRequestType,
-    toggleTheme
+    toggleTheme,
+    isVSPListingEnabled
   };
 };
 

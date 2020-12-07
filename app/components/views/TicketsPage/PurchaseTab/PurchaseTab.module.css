@@ -87,9 +87,16 @@
   justify-self: right;
 }
 
-.isRow {
-  display: flex;
-  flex-direction: row;
+.enableVSPButton {
+  margin-bottom: 40px;
+}
+
+.enableVSPWrapper {
+  margin: 10px;
+}
+
+.enableVSPMessage {
+  padding-bottom: 20px;
 }
 
 @media screen and (max-width: 768px) {
