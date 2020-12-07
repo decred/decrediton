@@ -132,43 +132,48 @@ export default ({ onSendBack, onSendContinue }) => {
                     />
                   </div>
                 </div>
-                {acctIdx !== 0 && (<div className={classNames("is-column", styles.buttons)}>
-                  <div className={classNames("is-row", styles.checkboxRow)}>
-                    <input
-                      id={`mixed${acctIdx}`}
-                      name={acctIdx}
-                      type="checkbox"
-                      checked={mixedAcctIdx === acctIdx}
-                      onChange={() => onSetMixedAcct(acctIdx)}
-                      value={acctIdx}
-                    />
-                    <label
-                      htmlFor={`mixed${acctIdx}`}
-                      className={styles.checkboxLabel}></label>
-                    <div className={styles.label}>
-                      <T id="getstarted.setAccount.mix" m="Set Mixed Account" />
-                    </div>
-                  </div>
-                  <div className={classNames("is-row", styles.checkboxRow)}>
-                    <input
-                      id={`change${acctIdx}`}
-                      name={`a${acctIdx}`}
-                      type="checkbox"
-                      checked={changeAcctIdx === acctIdx}
-                      onChange={() => onSubmitSetChange(acctIdx)}
-                      value={acctIdx}
-                    />
-                    <label
-                      htmlFor={`change${acctIdx}`}
-                      className={styles.checkboxLabel}></label>
-                    <div className={styles.label}>
-                      <T
-                        id="getstarted.setAccount.change"
-                        m="Set Unmixed Account"
+                {acctIdx !== 0 && (
+                  <div className={classNames("is-column", styles.buttons)}>
+                    <div className={classNames("is-row", styles.checkboxRow)}>
+                      <input
+                        id={`mixed${acctIdx}`}
+                        name={acctIdx}
+                        type="checkbox"
+                        checked={mixedAcctIdx === acctIdx}
+                        onChange={() => onSetMixedAcct(acctIdx)}
+                        value={acctIdx}
                       />
+                      <label
+                        htmlFor={`mixed${acctIdx}`}
+                        className={styles.checkboxLabel}></label>
+                      <div className={styles.label}>
+                        <T
+                          id="getstarted.setAccount.mix"
+                          m="Set Mixed Account"
+                        />
+                      </div>
+                    </div>
+                    <div className={classNames("is-row", styles.checkboxRow)}>
+                      <input
+                        id={`change${acctIdx}`}
+                        name={`a${acctIdx}`}
+                        type="checkbox"
+                        checked={changeAcctIdx === acctIdx}
+                        onChange={() => onSubmitSetChange(acctIdx)}
+                        value={acctIdx}
+                      />
+                      <label
+                        htmlFor={`change${acctIdx}`}
+                        className={styles.checkboxLabel}></label>
+                      <div className={styles.label}>
+                        <T
+                          id="getstarted.setAccount.change"
+                          m="Set Unmixed Account"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>)} 
+                )}
               </div>
             ))}
           </div>
