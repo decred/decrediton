@@ -1,7 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
-import { Tooltip, Collapse } from "shared";
+import { Tooltip, Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { classNames, Checkbox } from "pi-ui";
 import styles from "../GetStarted.module.css";
@@ -17,13 +17,14 @@ const messages = defineMessages({
       "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
   },
   messageWalletWatchOnlyDescription: {
-    id: "createwallet.watchonly.tooltip",
+    id: "createwallet.watchonly.description",
     defaultMessage:
-      "You’ll not be able to spend any DCR associated with that wallet. It is used only to view the balance and monitor the wallet's transaction activity"
+      "A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet."
   },
   messageWalletTrezorDescription: {
-    id: "createwallet.trezor.tooltip",
-    defaultMessage: "Trezor is a hardware wallet."
+    id: "createwallet.trezor.description",
+    defaultMessage:
+      "Trezor is a hardware wallet. For more information, visit {link}"
   },
   messageWalletMasterPubKey: {
     id: "createwallet.walletpubkey.placeholder",
@@ -113,9 +114,7 @@ const CreateWalletForm = ({
             <>
               <div className={styles.advancedOption}>
                 <Checkbox
-                  label={
-                    <T id="createwallet.walletOnly.label" m="Watch only" />
-                  }
+                  label={<T id="createwallet.watchOnly.label" m="Watch only" />}
                   id="watchonly"
                   description={intl.formatMessage(
                     messages.messageWalletWatchOnlyDescription
@@ -166,7 +165,16 @@ const CreateWalletForm = ({
                   }
                   id="trezor"
                   description={intl.formatMessage(
-                    messages.messageWalletTrezorDescription
+                    messages.messageWalletTrezorDescription,
+                    {
+                      link: (
+                        <ExternalLink
+                          className={styles.trezorDocs}
+                          href="https://docs.decred.org/wallets/decrediton/trezor/">
+                          docs.decred.org
+                        </ExternalLink>
+                      )
+                    }
                   )}
                   checked={isTrezor}
                   onChange={toggleTrezor}
