@@ -1,1 +1,3 @@
-L'acquisto di un biglietto per il PoS Ë abbastanza semplice, ma cosa succede dopo l'acquisto? Un biglietto passer‡ attraverso alcune fasi nel suo ciclo di vita:
+L'acquisto di un biglietto per il PoS √® abbastanza semplice, ma cosa succede
+dopo l'acquisto? Un biglietto passer√† attraverso alcune fasi nel suo ciclo di
+vita:

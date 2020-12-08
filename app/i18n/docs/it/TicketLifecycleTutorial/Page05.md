@@ -1,5 +1,12 @@
-È necessario essere connessi alla rete per poter votare, ed è per questo che molte persone usano gli stakepool. Se il vostro biglietto viene chiamato e il voto è mancato, riceverete un rimborso sul prezzo del biglietto originale.
+Bisogna essere connessi alla rete per poter votare, ed Ã¨ per questo che molte
+persone usano gli stakepool. Se il vostro biglietto viene chiamato e manca il
+voto, riceverete un rimborso sul prezzo del biglietto originale.
 
-Dopo che un biglietto ha votato, è stato mancato, o è scaduto, i fondi (prezzo del biglietto meno la tassa) entrano in stato immaturo per altri 256 blocchi, dopo di che vengono liberati dal blocco nel portafoglio. Se un biglietto scade o viene mancato, una transazione di revoca del biglietto viene inoltrata dal portafoglio per liberare il prezzo del biglietto bloccato.
+Dopo che un biglietto ha votato, ha mancato o Ã¨ scaduto, i fondi (prezzo del
+biglietto meno la tassa) entrano nello stato immaturo per altri 256 blocchi,
+dopo di che vengono liberati dal blocco nel portafoglio. Se un biglietto scade
+o manca, una transazione di revoca del biglietto viene inoltrata dal
+portafoglio per liberare il prezzo bloccato del biglietto.
 
-NOTA: Le revoche possono essere presentate solo per un biglietto mancante corrispondente. Non è possibile revocare un biglietto finché non viene mancato.
+NOTA: le revoche possono essere presentate solo per un biglietto mancato
+corrispondente. Non Ã¨ possibile revocare un biglietto finchÃ¨ non ha mancato.
