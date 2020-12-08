@@ -320,8 +320,8 @@ const connectToLNWallet = (
   const addrAccount = validResp.getAccountNumber();
   if (addrAccount != account) {
     throw new Error(
-      "Wallet returned that address is not from the ln account; account=" +
-      addrAccount
+      `Wallet returned that address is not from the ln account; account=
+      ${addrAccount}`
     );
   }
 

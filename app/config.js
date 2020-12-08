@@ -89,7 +89,6 @@ export function initWalletCfg(testnet, walletPath) {
 
 function cleanWalletCfg(config) {
   let key;
-
   const walletCfgFields = [
     cfgConstants.ENABLE_TICKET_BUYER,
     cfgConstants.BALANCE_TO_MAINTAIN,

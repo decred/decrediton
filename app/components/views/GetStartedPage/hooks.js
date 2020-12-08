@@ -66,7 +66,6 @@ export const useGetStarted = () => {
     onGetDcrdLogs
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
-
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
       isAtPreStart: () => {

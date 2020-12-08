@@ -1,7 +1,6 @@
 import { MAINNET } from "./Decrediton";
 
 // Global config constants
-
 export const DAEMON_ADVANCED = "daemon_start_advanced";
 export const THEME = "theme";
 export const LOCALE = "locale";
@@ -26,7 +25,6 @@ export const TREZOR_DEBUG = "trezor_debug";
 export const UPGD_ELECTRON8 = "is_electron8";
 
 // Wallet config constants
-
 export const ENABLE_TICKET_BUYER = "enableticketbuyer";
 export const BALANCE_TO_MAINTAIN = "balancetomaintain";
 export const CURRENCY_DISPLAY = "currency_display";
