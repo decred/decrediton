@@ -1,5 +1,17 @@
-Quando si acquista un biglietto, il costo del biglietto viene bloccato nel portafoglio fino a quando il biglietto non viene utilizzato per votare, o viene evocato. I biglietti entrano nel mempool, poi nel ticketpool dove vengono estratti a caso per votare. C'Ë una probabilit‡ del 99,5% che un biglietto voti. Il biglietto medio voter‡ in 28 giorni, ma i biglietti ancora nel pool, non estratti dopo 142 giorni, saranno revocati. Il DCR utilizzato per l'acquisto del biglietto viene rilasciato dal blocco quando vota o quando il biglietto viene revocato.
+Quando si acquista un biglietto, il costo del biglietto viene bloccato nel
+portafoglio fino a quando il biglietto non viene utilizzato per votare, o viene
+revocato. I biglietti entrano nel mempool, poi nel ticketpool dove vengono
+estratti a caso per votare. C'√® una probabilit√† del 99,5% che un biglietto
+voti. Il biglietto medio voter√† in 28 giorni, ma i biglietti ancora nel pool,
+non estratti dopo 142 giorni, saranno revocati. I DCR usati per l'acquisto del
+biglietto vengono rilasciati quando il biglietto vota o quando viene revocato.
 
-Quando una proposta viene sottoposta a voto su Politeia , al momento del voto viene scattata un'istantanea del pool di biglietti. Tutti i biglietti avranno il diritto di voto sulla proposta in un processo off chain.
+Quando una proposta viene sottoposta a voto su Politeia, al momento del voto
+viene scattata un'istantanea del pool di biglietti. Tutti i biglietti avranno
+diritto di voto sulla proposta in un processo off-chain.
 
-PoichÈ la convalida in blocco Ë immutabile, le decisioni prese su tutti i biglietti votati possono essere monitorate pubblicamente. La partecipazione attiva allo staking aiuta a garantire la sicurezza della rete di Decredô, garantire la qualit‡ della Proof-of-Work e a determinare la direzione futura di Decred.
+Poich√® la convalida dei blocchi √® immutabile, le decisioni prese su tutti i
+biglietti votati possono essere monitorate pubblicamente. La partecipazione
+attiva allo staking aiuta a garantire la sicurezza della rete di Decred, a
+garantire la qualit√† della Proof-of-Work e a determinare la direzione futura di
+Decred.

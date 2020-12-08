@@ -1,3 +1,4 @@
-## Biglietto con Acquisto Privato
+## Acquistare biglietti privati
 
-Poiché questo portafoglio è un portafoglio con privacy, i biglietti acquistati saranno acquistati con una transazione mista.
+PoichÃ¨ questo portafoglio Ã¨ un portafoglio con privacy, i biglietti da esso
+comprati saranno acquistati con una transazione miscelata.

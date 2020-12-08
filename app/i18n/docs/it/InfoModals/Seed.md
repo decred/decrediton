@@ -1,5 +1,8 @@
-# Informazioni sul Seed
+# Informazioni sul seed
 
-Questo seed di 33 parole Ë utilizzato per ricavare tutto ciÚ che riguarda il vostro particolare portafoglio.
+Questo seed di 33 parole √® usato per ricavare tutto ci√≤ che riguarda il vostro particolare portafoglio.
 
-Si puÚ rigenerare l'intero portafoglio solamente utilizzando questo seed.  Mentre ciÚ offre flessibilit‡ e facilit‡ di backup, significa anche che il seed deve essere gestito con la massima sicurezza. Si consiglia di avere solo seed scritti a mano, nel luogo pi˘ sicuro possibile.
+Si pu√≤ rigenerare l'intero portafoglio solamente utilizzando questo seed.
+Mentre ci√≤ offre flessibilit√† e facilit√† di backup, significa anche che il seed
+deve essere gestito con la massima sicurezza. Si consiglia di avere solo seed
+scritti a mano, conservati nel luogo pi√π sicuro possibile.

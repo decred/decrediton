@@ -1,15 +1,30 @@
-# Limite del Divario
+# Limite di intervallo
 
-**Attenzione! Questa impostazione del limite di divario dovrebbe in genere essere lasciata intoccata.** Un aumento del limite di divario potrebbe causare un notevole degrado delle prestazioni.
+**Attenzione! Questa impostazione del limite di intervallo non dovrebbe in
+genere essere cambiata.** Un aumento del limite di intervallo potrebbe causare
+un notevole degrado delle prestazioni.
 
-Il limite di divario imposta la quantit‡ di indirizzi che il portafoglio generer‡ e prevede anche di determinare l'utilizzo. Per impostazione predefinita, il limite di divario Ë impostato a 20.  Questo significa 2 cose.
+Il limite di intervallo imposta la quantit√† di indirizzi che il portafoglio
+generer√† e guarder√† avanti per determinare l'utilizzo. Per impostazione
+predefinita, il limite di intervallo √® impostato a 20.  Questo significa 2
+cose:
 
-  1. Quando il portafoglio viene caricato per la prima volta, analizza l'utilizzo dell'indirizzo e si aspetta che il divario pi˘ ampio tra gli indirizzi sia 20;
+1. quando il portafoglio viene caricato per la prima volta, analizza l'utilizzo
+   degli indirizzi e si aspetta che l'intervallo pi√π ampio tra gli indirizzi
+   sia 20;
 
-  2. Quando fornisce all'utente nuovi indirizzi appena generati, fornisce solo 20 indirizzi e poi fa un loop back, il che assicura che gli spazi tra gli indirizzi non siano pi˘ ampi di 20.
+2. quando fornisce all'utente nuovi indirizzi appena generati, fornisce solo 20
+   indirizzi e poi ricomincia da capo, il che assicura che gli spazi tra gli
+   indirizzi non siano pi√π ampi di 20.
 
-Ci sono in realt‡ solo 2 ragioni per cambiare questo valore:
+Ci sono in realt√† solo 2 ragioni per cambiare questo valore:
 
-  1. Se il vostro portafoglio Ë stato creato e usato pesantemente circa prima della v1.0 , potrebbe avere grandi spazi vuoti di indirizzo. Se si ripristina dal seed e si nota che mancano dei fondi, si puÚ aumentare questo valore fino a 100 (poi 1000 se non viene risolto) e poi riavviare decrediton.  Una volta che il vostro saldo Ë stato risolto, potete reimpostare il limite a 20.
+1. Se il vostro portafoglio √® stato creato e usato pesantemente prima
+   della v1.0 pi√π o meno, potrebbe avere grandi intervalli di indirizzo. Se si
+   ripristina dal seed e si nota che mancano dei fondi, si pu√≤ aumentare questo
+   valore fino a 100 (poi 1000 se non viene risolto) e poi riavviare
+   decrediton.  Una volta che il vostro saldo √® stato risolto, potete
+   reimpostare il limite a 20.
 
-  2. 2. Se volete essere in grado di generare pi˘ di 20 indirizzi alla volta senza dovervi preoccupare.
+2. Se volete essere in grado di generare pi√π di 20 indirizzi alla volta senza
+   ricominciare da capo.

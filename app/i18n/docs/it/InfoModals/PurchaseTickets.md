@@ -1,22 +1,38 @@
-# Informazioni sull'acquisto del biglietto
+# Informazioni sull'acquisto di biglietti
 
-**Conto** » il conto che acquister‡ i biglietti e ricever‡ la ricompensa.
+**Conto** Il conto che acquister√† i biglietti e ricever√† la ricompensa.
 
-**Numero di biglietti** Il numero di biglietti per cui tentare l'acquisto.
+**Numero di biglietti** Il numero di biglietti si cui tentare l'acquisto.
 
-**Tassa del biglietto (DCR/kB)** I biglietti vengono inseriti nel pool di voto secondo l'ordine della loro tassa. Nei periodi di richiesta, Ë necessario aumentare questo valore per avete i tuoi biglietti accettati.
+**Tariffa del biglietto (DCR/kB)** I biglietti vengono inseriti nel pool di
+voto in ordine di tariffa. Nei periodi di alta richiesta √® necessario aumentare
+questo valore per far accettare i propri biglietti.
 
-**Prezzo del biglietto** Il prezzo attuale di un biglietto calcolato dalla rete.  Cambia ogni 144 blocchi.
+**Prezzo del biglietto** Il prezzo attuale di un biglietto calcolato dalla
+rete. Cambia ogni 144 blocchi.
 
-**Preferenze VSP** Automatizzare l'impostazione con i Provider di Servizi di Voto(VSP). Vedi sotto per maggiori informazioni.
+**Preferenze VSP** Automatizzare l'impostazione dei Provider di Servizi di Voto
+(VSP). Vedi sotto per maggiori informazioni.
 
-**Scadenza (blocchi)** Le tasse dei biglietti aumentano spesso durante una finestra attiva e si puÚ essere fermati da tariffe pi˘ alte. Impostando una scadenza, i biglietti che non sono estratti durante il numero di blocchi indicato vengono cancellati, in modo da poter riprovare con tariffe pi˘ elevate, se lo si desidera. Se questo Ë lasciato vuoto, non scadranno fino alla fine della finestra.
+**Scadenza (blocchi)** Le tariffe dei biglietti aumentano spesso durante una
+finestra attiva e si pu√≤ essere tenuti fuori da tariffe pi√π alte. Impostando
+una scadenza, i biglietti che non sono estratti durante il numero di blocchi
+indicato vengono annullati, in modo da poter riprovare con tariffe pi√π elevate
+se lo si desidera. Se questo campo √® lasciato vuoto, essi non scadranno fino
+alla fine della finestra attiva.
 
-**Tassa Tx (DCR/kB)** Decrediton utilizza una transazione "split" per evitare di bloccare il tuo saldo, dividendo l'importo necessario esatto per il biglietto dal saldo nel tuo portafoglio. La transazione "split" deve essere confermata almeno una volta prima di poter riutilizzare il saldo. Questo puÚ bloccare l'intero saldo per diversi minuti mentre avviene la conferma. Senza la suddivisione, dovreste attendere la conferma della transazione del biglietto, che potrebbe richiedere diverse ore. 
-PuÚ essere lasciata a 0,01. Questo non influisce sulle vostre possibilit‡ di acquistare biglietti o di votare con loro.
+**Tariffa Tx (DCR/kB)** Decrediton usa una transazione "split" per evitare di
+bloccare il tuo saldo, separando l'importo esatto necessario per il biglietto
+dal saldo nel vostro portafoglio. La transazione "split" deve essere confermata
+almeno una volta prima di poter riutilizzare il saldo. Questo pu√≤ bloccare
+l'intero saldo per diversi minuti mentre avviene la conferma. Senza lo "split",
+dovreste attendere la conferma della transazione del biglietto, che potrebbe
+richiedere diverse ore. Pu√≤ essere lasciata a 0,01. Questo non influisce sulle
+vostre possibilit√† di acquistare biglietti o di votare con loro.
 
-**Indirizzo di voto** L'indirizzo Decred che far‡ la votazione.
+**Indirizzo di voto** L'indirizzo Decred che far√† la votazione.
 
-**Indirizzo della tassa VSP** L'indirizzo a cui sar‡ pagata la tassa VSP.
+**Indirizzo della tariffa VSP** L'indirizzo a cui sar√† pagata la tariffa VSP.
 
-**Tasse VSP (%)** La percentuale della tassa che pagherete per l'utilizzo del servizio VSP.
+**Tariffe VSP (%)** La percentuale della tariffa che pagherete per l'utilizzo
+del servizio VSP.

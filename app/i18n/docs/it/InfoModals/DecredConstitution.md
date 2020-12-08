@@ -1,40 +1,160 @@
-# Costituzione dichiarata
-Decred (/Ààdi:Ààkred/, /d…™ÀÀàkred/, dee-cred) Ë una crittovaluta sicura, adattabile e autofinanziabile con un sistema di governance basato sulla comunit‡ integrata nella sua blockchain. La missione del progetto Ë quella di sviluppare tecnologie a beneficio del pubblico, con un focus primario sulla tecnologia della crittovaluta. Questa costituzione definisce un insieme di principi che guidano il processo decisionale degli stakeholder del progetto e descrive i processi attraverso i quali la blockchain e la Tesoreria sono governati. Questo documento ha lo scopo di gestire le aspettative dei potenziali e attuali utenti di decred, per far si che essi comprendano pi˘ chiaramente il contratto sociale tra loro e il progetto. Questo documento non intende avere la precedenza sulle regole di consenso della rete Decred, nel caso di qualsiasi conflitto.
+# Costituzione di Decred
+
+Decred (/Ààdi:Ààkred/, /d…™Ààkred/, dee-cred) √® una crittovaluta sicura, adattabile
+e autofinanziabile con un sistema di governance basato sulla comunit√† integrato
+nella sua blockchain. La missione del progetto √® quella di sviluppare
+tecnologie a beneficio del pubblico, con un focus primario sulla tecnologia
+della crittovaluta. Questa costituzione definisce un insieme di principi che
+guidano il processo decisionale degli stakeholder del progetto, e descrive i
+processi attraverso i quali la blockchain e la Tesoreria sono governati. Questo
+documento ha lo scopo di gestire le aspettative dei potenziali e attuali utenti
+di decred, per far si che essi comprendano pi√π chiaramente il contratto sociale
+tra loro e il progetto. Questo documento non intende avere la precedenza sulle
+regole di consenso della rete Decred, nel caso di qualsiasi conflitto.
+
 ___
 
 ### Principi
 
-* * Software libero e Open-Source Software* - Tutti i software sviluppati come parte di Decred devono essere liberi e open source.
-*Parlare e riflettere liberamente* - Ognuno ha il diritto di comunicare opinioni e idee senza timore di censura. Si terr‡ conto di tutti i discorsi costruttivi che si basano sui fatti e sulla ragione.
-* Inclusivit‡ Multi-Stakeholder* - L'inclusivit‡ rappresenta un sistema multi-stakeholder e deve essere mantenuto uno sforzo attivo per includere una serie diversificata sia di punti di vista che di utenti.
-*Privacy e sicurezza Incrementale* - La privacy e la sicurezza sono delle priorit‡ e devono essere bilanciate con la complessit‡ delle loro implementazioni. Ulteriori tecnologie per la privacy e la sicurezza saranno implementate su base continuativa e incrementale, sia in modo proattivo che su richiesta, in risposta agli attacchi. 
-* *Emissione Limitata Fissa* - L'emissione Ë limitata e l'emissione totale non deve superare 20.999.999.999.999.99800912 DCR, con una sovvenzione per blocco che si regola ogni 6.144 blocchi (circa 21,33 giorni) con una riduzione di un fattore di 100/101. Il sussidio del blocco di genesi inizia a 31.19582664 DCR.
-*Fungibilit‡ universale* - La fungibilit‡ universale Ë fondamentale per Decred, essendo esso un deposito di valore, e gli attacchi nei suoi confronti devono essere attivamente monitorati adottando le necessarie contromisure in caso di necessit‡.
+* *Software libero e open source* - Tutti i software sviluppati come parte di
+Decred devono essere liberi e open source.
+
+* *Parlare e riflettere liberamente* - Ognuno ha il diritto di comunicare
+opinioni e idee senza timore di censura. Si terr√† conto di tutti i discorsi
+costruttivi che si basano sui fatti e sulla ragione.
+
+* *Inclusivit√† multi-stakeholder* - L'inclusivit√† rappresenta un sistema
+  multi-stakeholder e uno sforzo attivo sar√† mantenuto per includere un insieme
+  diversificato sia di punti di vista che di utenti.
+
+* *Privacy e sicurezza incrementale* - La privacy e la sicurezza sono delle
+  priorit√† e saranno bilanciate con la complessit√† delle loro implementazioni.
+  Ulteriori tecnologie per la privacy e la sicurezza saranno implementate su
+  base continuativa e incrementale, sia in modo proattivo che su richiesta, in
+  risposta agli attacchi.
+
+* *Emissione Limitata Fissa* - L'emissione √® limitata e l'emissione totale non
+deve superare 20.999.999,99800912 DCR, con una sovvenzione per blocco che si
+adatta ogni 6.144 blocchi (circa 21,33 giorni) con una riduzione di un fattore
+di 100/101. Il sussidio del blocco di genesi inizia a 31,19582664 DCR.
+
+* *Fungibilit√† universale* - La fungibilit√† universale √® fondamentale per
+  Decred, essendo esso un deposito di valore, e gli attacchi nei suoi confronti
+  devono essere attivamente monitorati adottando le necessarie contromisure in
+  caso di necessit√†.
+
 ___
 
-### Blockchain Governance
+### Governance della blockchain
 
-* [Governance](https://docs.decred.org/governance/overview/) della rete avviene direttamente attraverso la blockchain tramite l'ibridazione della proof-of-work del blocco (&ldquo;PoW&rdquo;PoS&rdquo;) con la sua proof-of-stake (&ldquo;PoS&rdquo;). I votanti del PoS, noti anche come stakeholder, possono efficacemente scavalcare i contribuenti del PoW, noti come miners (estrattori), se il 50% o pi˘ degli stakeholder votano contro un particolare blocco creato da un miner.
-* Gli stakeholder sono persone che acquistano uno o pi˘ biglietti, il che comporta il blocco di una specifica quantit‡ di DCR. L'importo di DCR che Ë bloccato, noto anche come prezzo del biglietto, fluttua dipendentemente dai 40.960 biglietti puntati dal sistema nel live pool.
-* In ogni blocco, 5 biglietti sono chiamati a votare, determinati da una lotteria [sistem](https://docs.decred.org/proof-of-stake/overview/). Quando un biglietto viene chiamato, il portafoglio nominato deve rispondere attivamente con un voto. AffinchÈ un blocco sia accettato dalla rete, deve contenere i voti di almeno 3 dei 5 biglietti chiamati. Il blocco non puÚ essere esteso senza la partecipazione attiva degli stakeholder.
-* Gli stakeholder devono attendere una media di 28 giorni (8.192 blocchi) per votare i loro biglietti, e durante questo tempo i DCR utilizzati per l'acquisto del biglietto rimangono bloccati. L'attesa puÚ essere molto pi˘ lunga o pi˘ breve della media di 28 giorni perchÈ il processo di selezione dei biglietti Ë pseudorandom. I biglietti scadono dopo 40.960 blocchi (~142 giorni) se non chiamati al voto.
-* I voti degli stakeholder registrati nella blockchain sono ricompensati con il 6% di ogni sussidio di blocco, e ogni blocco puÚ avere fino a 5 voti per un totale del 30% di ogni sussidio di blocco.
-* PoW riceve il 60% di ogni sussidio in blocco, con il vincolo che il loro sussidio scali linearmente con il numero di voti PoS inclusi, per esempio includendo 3 di 5 voti si riduce il sussidio PoW al 60% del massimo.
-* I voti stessi decidono a maggioranza se l'albero di transazione regolare del blocco precedente, incluso il sussidio PoW, Ë valido. Quindi, se gli elettori del PoS votano contro un particolare blocco del PoW, questo invalida la ricompensa del PoW (e la ricompensa della Tesoreria) e invalida qualsiasi transazione regolare all'interno di quel blocco.
-* Il processo Decred per [amending the consensus rules] (https://docs.decred.org/governance/consensus-rule-voting/overview/) Ë anche determinato dal voto degli stakeholder. Il processo inizia quando almeno il 95% dei PoW miners e il 75% degli elettori PoS hanno aggiornato il loro software a una nuova versione con modifiche latenti alle regole. Una volta soddisfatte queste condizioni, inizia un periodo di voto di 8.064 blocchi (~4 settimane) per decidere se le modifiche latenti delle regole debbano essere attivate.
-* Per l'approvazione di una proposta di modifica delle regole, almeno il 75% dei biglietti non impostati su Abstain deve votare SÏ. Se questo requisito Ë soddisfatto e si raggiunge un quorum del 10% dei biglietti che votano SÏ o No, la modifica della regola sar‡ attivata 8.064 blocchi (~4 settimane) dopo.
+* La [governance](https://docs.decred.org/governance/overview/) della rete
+  avviene direttamente attraverso la blockchain tramite l'ibridazione della
+  proof-of-work del blocco ("PoW") con la sua proof-of-stake ("PoS"). I votanti
+  del PoS, noti anche come stakeholder, possono efficacemente scavalcare i
+  contribuenti del PoW, noti come miners, se il 50% o pi√π degli stakeholder
+  votano contro un particolare blocco creato da un miner.
+
+* Gli stakeholder sono persone che acquistano uno o pi√π biglietti, il che
+  comporta il blocco di una specifica quantit√† di DCR. L'importo di DCR che
+  viene bloccato, noto anche come prezzo del biglietto, varia per l'attivit√†
+  del sistema tesa a mantenere 40.960 biglietti nel live pool.
+
+* In ogni blocco, 5 biglietti sono chiamati a votare, determinati da un
+  [sistema](https://docs.decred.org/proof-of-stake/overview/) a lotteria.
+  Quando un biglietto viene chiamato, il portafoglio nominato deve rispondere
+  attivamente con un voto. Affinch√® un blocco sia accettato dalla rete, esso
+  deve contenere i voti di almeno 3 dei 5 biglietti chiamati. La blockchain non
+  pu√≤ essere estesa senza la partecipazione attiva degli stakeholder.
+
+* Gli stakeholder devono attendere una media di 28 giorni (8.192 blocchi) per
+  votare i loro biglietti, e durante questo tempo i DCR utilizzati per
+  l'acquisto del biglietto rimangono bloccati. L'attesa pu√≤ essere molto pi√π
+  lunga o pi√π breve della media di 28 giorni perch√® il processo di selezione
+  dei biglietti √® pseudocasuale. I biglietti scadono dopo 40.960 blocchi (~142
+  giorni) se non chiamati al voto.
+
+* I voti degli stakeholder registrati nella blockchain sono ricompensati con il
+  6% di ogni sussidio di blocco, e ogni blocco pu√≤ avere fino a 5 voti per un
+  totale del 30% di ogni sussidio di blocco.
+
+* Il PoW riceve il 60% di ogni sussidio in blocco, con il vincolo che il loro
+  sussidio scali linearmente con il numero di voti PoS inclusi: per esempio,
+  includendo 3 voti su 5 si riduce il sussidio PoW al 60% del massimo.
+
+* I voti stessi decidono a maggioranza se l'albero di transazione normale del
+  blocco precedente, incluso il sussidio PoW, √® valido. Quindi, se gli elettori
+  del PoS votano contro un particolare blocco del PoW, questo invalida la
+  ricompensa del PoW (e la ricompensa della Tesoreria) e invalida qualsiasi
+  transazione normale all'interno di quel blocco.
+
+* Il processo Decred per [emendare le regole di
+  consenso](https://docs.decred.org/governance/consensus-rule-voting/overview/)
+  √® anche determinato dal voto degli stakeholder. Il processo inizia quando
+  almeno il 95% dei miner PoW e il 75% degli elettori PoS hanno aggiornato il
+  loro software a una nuova versione con modifiche latenti alle regole. Una
+  volta soddisfatte queste condizioni, inizia un periodo di voto di 8.064
+  blocchi (~4 settimane) per decidere se le modifiche latenti delle regole
+  debbano essere attivate.
+
+* Per l'approvazione di una proposta di modifica delle regole, almeno il 75%
+  dei biglietti non impostati su Astensione deve votare S√¨. Se questo requisito
+  √® soddisfatto e si raggiunge un quorum del 10% dei biglietti che votano S√¨ o
+  No, la modifica della regola sar√† attivata 8.064 blocchi (~4 settimane) dopo.
 
 ___
 
+### Governance e finanziamento del progetto
 
-### Governance e Finanziamento del Progetto
+* La sostenibilit√† e la longevit√† richiedono che il 10% di tutti i premi del
+  blocco siano assegnati a un fondo di Tesoreria del progetto, amministrato da
+  un'organizzazione di sviluppo.
 
-* La sostenibilit‡ e la longevit‡ richiedono che il 10% di tutti i premi del blocco siano assegnati a un fondo di Tesoreria del progetto, amministrato da un'organizzazione di sviluppo.
-* L'organizzazione di sviluppo iniziale Ë *Decred Holdings Group* LLC (&ldquo;DHG&rdquo;), una Nevis LLC che Ë responsabile del finanziamento del lavoro relativo allo sviluppo del progetto, come lo sviluppo del software, le infrastrutture e la sensibilizzazione. DHG si conformer‡ a tutti gli organismi di legge pertinenti alle giurisdizioni in cui Ë applicabile, come ad esempio embarghi e altre sanzioni commerciali.
-* Il progetto mira alla transizione verso un'Organizzazione Autonoma Decentralizzata (DAO) che controlla l'erogazione dei fondi della Tesoreria.
-* Fino a quando il DHG avr‡ la responsabilit‡ di gestire la Tesoreria (cioË fino a quando il controllo non sar‡ completamente decentralizzato), avr‡ potere di veto che potr‡ essere esercitato se si ritiene che, in seguito ad una decisione, il progetto, l'entit‡ aziendale del DHG o i manager del DHG possano essere messi in pericolo.
-* Le proposte [Politeia](https://docs.decred.org/governance/politeia/overview/) sono il meccanismo attraverso il quale gli stakeholder prendono decisioni politiche e approvano i programmi di lavoro. Le proposte di Politeia devono essere approvate almeno dal 60% dei biglietti che votano, e almeno il 20% dei biglietti idonei devono partecipare al voto. Il periodo di voto predefinito Ë di 2.016 blocchi (~1 settimana).
-* I Decred [contractors](https://docs.decred.org/contributing/overview/) sono persone fisiche e giuridiche che lavorano al progetto, in base ad un accordo che prevede un compenso per il loro lavoro. I contrattori dichiarati sono autonomi, non possono essere gestiti direttamente dalle parti interessate. Attraverso Politeia, le parti interessate possono approvare o rifiutare programmi di lavoro eseguiti da contrattori specifici, ma non possono imporre ai lavoratori di intraprendere determinate azioni.
-* Il collettivo dei contrattori Decred Ë un'entit‡ autoregolante, in cui le cellule che lavorano su aspetti specifici risolvono le controversie e aggiungono nuovi membri in modo indipendente. Come descritto nella [Decred Contractor Clearance proposal](https://proposals.decred.org/proposals/fa38a3593d9a3f6cb2478a24c25114f5097c572f6dadf24c78bb521ed10992a4) approvata, le controversie che non possono essere risolte in modo soddisfacente all'interno di un team possono essere portate al voto di tutti i contrattori- una volta che il sistema di gestione dei contrattori, che faciliter‡ questo processo, sar‡ operativo. Se necessario, le questioni irrisolte potrebbero essere sottoposte al voto degli stakeholder come autorit‡ decisionale finale.
-* La volont‡ degli stakeholder, espressa attraverso il loro voto di biglietti on-chain e Politeia, Ë la forza decisionale ultima per il progetto.
-* Questa costituzione sar‡ ratificata da un voto Politeia prima che entri in vigore, e puÚ essere ulteriormente modificata con l'approvazione di successive proposte di Politeia.
+* L'organizzazione di sviluppo iniziale √® *Decred Holdings Group* LLC ("DHG"),
+  una LLC di Nevis che √® responsabile del finanziamento del lavoro relativo
+  allo sviluppo del progetto, come lo sviluppo del software, le infrastrutture
+  e la sensibilizzazione. DHG si conformer√† a tutte le leggi vigenti delle
+  giurisdizioni applicabile, come ad esempio embarghi e altre sanzioni
+  commerciali.
+
+* Il progetto mira alla transizione verso un'Organizzazione Autonoma
+  Decentralizzata (DAO) che controlla l'erogazione dei fondi della Tesoreria.
+
+* Fino a quando il DHG avr√† la responsabilit√† di gestire la Tesoreria (cio√®
+  fino a quando il controllo non sar√† completamente decentralizzato), esso avr√†
+  potere di veto che potr√† essere esercitato se si ritiene che, in seguito ad
+  una decisione, il progetto, l'entit√† aziendale del DHG o i manager del DHG
+  possano essere messi in pericolo.
+
+* Le proposte di
+  [Politeia](https://docs.decred.org/governance/politeia/overview/) sono il
+  meccanismo attraverso il quale gli stakeholder prendono decisioni politiche e
+  approvano i programmi di lavoro. Le proposte di Politeia devono essere
+  approvate almeno dal 60% dei biglietti che votano, e almeno il 20% dei
+  biglietti idonei devono partecipare al voto. Il periodo di voto predefinito √®
+  di 2.016 blocchi (~1 settimana).
+
+* I [consulenti](https://docs.decred.org/contributing/overview/) Decred sono
+  persone fisiche e giuridiche che lavorano al progetto, in base ad un accordo
+  che prevede un compenso per il loro lavoro. I consulenti di Decred sono
+  autonomi e non possono essere gestiti direttamente dagli stakeholder.
+  Attraverso Politeia, gli stakeholder possono approvare o rifiutare programmi
+  di lavoro eseguiti da consulenti specifici, ma non possono imporre ai
+  lavoratori di intraprendere determinate azioni.
+
+* Il collettivo dei consulenti Decred √® un'entit√† autoregolante, in cui le
+  cellule che lavorano su aspetti specifici risolvono le controversie e
+  aggiungono nuovi membri in modo indipendente. Come descritto nella proposta
+  approvata [Decred Contractor
+  Clearance](https://proposals.decred.org/proposals/fa38a3593d9a3f6cb2478a24c25114f5097c572f6dadf24c78bb521ed10992a4),
+  le controversie che non possono essere risolte in modo soddisfacente
+  all'interno di un team potranno essere portate al voto di tutti i consulenti,
+  una volta che il sistema di gestione dei consulenti, che faciliter√† questo
+  processo, sar√† operativo. Se necessario, le questioni irrisolte potrebbero
+  essere sottoposte al voto degli stakeholder come autorit√† decisionale finale.
+
+* La volont√† degli stakeholder, espressa attraverso il loro voto di biglietti
+  on-chain e Politeia, √® la forza decisionale definitiva per il progetto.
+
+* Questa costituzione sar√† ratificata da un voto Politeia prima che entri in
+  vigore, e pu√≤ essere ulteriormente modificata con l'approvazione di
+  successive proposte di Politeia.
