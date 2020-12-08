@@ -1,11 +1,9 @@
-# Aviso de copia de semilla en el portapapeles
 
-Tenga en cuenta que copiar la semilla en el portapapeles puede suponer un riesgo de seguridad, ya que otras aplicaciones podrían controlar y copiar el contenido del portapapeles.
+*Note que copiar la frase semilla al portapapeles puede ser un riesgo de seguridad, otras aplicaciones pueden monitorear y leer los contenidos del portapapeles.*
 
-También se desaconseja conservar la semilla en un archivo informático, sobre todo sin encriptar, ya que cualquier persona con acceso al ordenador podría robarle fondos.  
+Es muy poco recomendable mantener la frase semilla en un archivo dentro de una computadora, especialmente sin encriptar. Las personas con acceso a su computadora podrían robar sus fondos.
 
-Además, conservar la semilla en un archivo informático sin tener una copia en un medio físico (escrita en un papel guardado en un lugar seguro) puede ocasionar la pérdida de los fondos si el archivo local de la cartera resulta dañado o inaccesible (debido a un fallo en el hardware u otros problemas).
+Aún más, guardar la semilla en un archivo en una computadora sin una copia de seguridad física (un papel guardado en una ubicación segura) puede causar la perdida de los fondos si la cartera local se corrompe o no puede accederse a ella (por una falla en el hardware u otros problemas). Si quieres aprender más sobre la seguridad de tus semillas,
+consulta nuestra [FAQ sobre Carteras y Semillas](https://docs.decred.org/faq/wallets-and-seeds/).
 
-Consulte más información sobre la seguridad de las semillas en la sección correspondiente de nuestras preguntas frecuentes: https://docs.decred.org/faq/wallets-and-seeds/.
-
-Si es consciente de los riesgos y aun así quiere copiar la semilla en el portapapeles, escriba la frase que aparece a continuación y la semilla se copiará en el portapapeles
+Si está seguro de que entiende los riesgos y aún quiere copiar su semilla al portapapeles, por favor escriba la frase debajo y la semilla será copiada al portapapeles.

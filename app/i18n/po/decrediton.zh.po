@@ -269,7 +269,7 @@ msgstr "帐户"
 #: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account.branch"
 msgid "Account Branch"
-msgstr ""
+msgstr "分支帐户"
 
 #. [securitycenter.validate.owned.accountNumber]
 #. defaultMessage is:
@@ -291,6 +291,9 @@ msgid ""
 "            cancelled and no more Decred will be mixed if Decrediton is\n"
 "            closed now."
 msgstr ""
+"混币工具正在工作。\n"
+"            如果现在关闭Decrediton将会\n"
+"           立即停止混币操作。"
 
 #. [account.mixer.running.title]
 #. defaultMessage is:
@@ -298,7 +301,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.title"
 msgid "Account mixer is running"
-msgstr ""
+msgstr "混币工具正在运行"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -569,7 +572,7 @@ msgstr "全网票数"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.allowSendingFromUnmixedAccount"
 msgid "Allow sending from unmixed accounts"
-msgstr ""
+msgstr "允许从未混币帐户发送"
 
 #. [privacy.options.custom.description]
 #. defaultMessage is:
@@ -1039,7 +1042,7 @@ msgstr "余额"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.latestBlock"
 msgid "Block"
-msgstr ""
+msgstr "块"
 
 #. [txDetails.blockLabel]
 #. defaultMessage is:
@@ -1111,7 +1114,7 @@ msgstr "CSV 文件"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. [tickets.autobuyerRunning.confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1135,7 +1138,7 @@ msgstr "取消"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.confirmModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1327,7 +1330,7 @@ msgstr "更改密码"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.changeLabel.success"
 msgid "Changed label on selected Trezor to {label}"
-msgstr ""
+msgstr "已选择trezor的标签改为{label}"
 
 #. [settings.description]
 #. defaultMessage is:
@@ -1487,7 +1490,7 @@ msgstr "单击“确认”在外部浏览器中打开链接：{link}。"
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json
 msgctxt "trezor.pinModal.description"
 msgid "Click button sequence that corresponds to your pin on Trezor {label}"
-msgstr ""
+msgstr "点击与trezor {label}上的图钉对应的按钮序列"
 
 #. [infoConfirmModal.btnClose]
 #. defaultMessage is:
@@ -1535,7 +1538,7 @@ msgstr "关闭通道"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.btnConfirm"
 msgid "Close Decrediton"
-msgstr ""
+msgstr "关闭Decrediton"
 
 #. [tickets.purchasing.confirmModal.btnConfirm]
 #. defaultMessage is:
@@ -1543,7 +1546,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.confirmModal.btnConfirm"
 msgid "Close Decrediton"
-msgstr ""
+msgstr "关闭Decrediton"
 
 #. [fatal.button]
 #. defaultMessage is:
@@ -1607,7 +1610,7 @@ msgstr "关闭 Tx"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.coinMixer"
 msgid "Coin Mixer"
-msgstr ""
+msgstr "混币工具"
 
 #. [txDetails.type.coinbase]
 #. defaultMessage is:
@@ -1818,7 +1821,7 @@ msgstr "连接到Trezor"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.connectedTo"
 msgid "Connected to"
-msgstr ""
+msgstr "连接到"
 
 #. [ln.startupStage.connect]
 #. defaultMessage is:
@@ -2391,6 +2394,9 @@ msgid ""
 "            be registered with the VSP if Decrediton is closed now, which can\n"
 "            result in missed votes."
 msgstr ""
+"Decrediton仍在确认购票。\n"
+"如果现在关闭Decrediton，这可能会\n"
+"导致购买失败。"
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
@@ -2718,7 +2724,7 @@ msgstr "启用VSP列表"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 msgctxt "purchase.vsp.enableListing.button"
 msgid "Enable VSP Listing"
-msgstr ""
+msgstr "启用VSP列表"
 
 #. [SendFromUnmixed.btnConfirm]
 #. defaultMessage is:
@@ -3195,7 +3201,7 @@ msgstr "未能列出瞭望塔：{originalError}"
 msgctxt "trezor.getWalletCreationMasterPubKey.failed"
 msgid ""
 "Failed to obtain master extended pubkey from Trezor device: {originalError}"
-msgstr ""
+msgstr "无法从trezor设备获取主扩展公钥：{originalError}"
 
 #. [ln.ntf.removeWatchtowerFailed]
 #. defaultMessage is:
@@ -3275,7 +3281,7 @@ msgstr "钱包为本次交易支付的费用"
 #: app/i18n/extracted/app/components/inputs/VSPSelect/VSPSelect.json
 msgctxt "vsp.feeTooltip"
 msgid "Fee: {feePercentage} %"
-msgstr ""
+msgstr "费用: {feePercentage} %"
 
 #. [getStarted.header.fetchingBlockHeaders.meta]
 #. defaultMessage is:
@@ -3379,7 +3385,7 @@ msgstr "固件升级"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.updateFirmware.success"
 msgid "Firmware updated on Trezor device"
-msgstr ""
+msgstr "Trezor设备固件已升级"
 
 #. [ln.pendingChannelDetails.typeForceclose]
 #. defaultMessage is:
@@ -3539,7 +3545,7 @@ msgstr "返回"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
 msgctxt "modal.go.to.tickets.status"
 msgid "Go to ticket status"
-msgstr ""
+msgstr "转到选票状态页面"
 
 #. [infoModal.btnClose]
 #. defaultMessage is:
@@ -3555,7 +3561,7 @@ msgstr "明白"
 #: app/i18n/extracted/app/components/modals/MixerSettingsModal/MixerSettingsModal.json
 msgctxt "mixerSettings.gotIt"
 msgid "Got it"
-msgstr ""
+msgstr "我已知晓"
 
 #. [sidebar.link.governance]
 #. defaultMessage is:
@@ -3816,6 +3822,8 @@ msgid ""
 "Improve the anonymity of your Decred.\n"
 "Funds in the unmixed account are sent to the mixed account once mixed."
 msgstr ""
+"提高你的匿名性。\n"
+"未混币帐户中的资金会在混合后被发送到混币帐户。"
 
 #. [privacy.description]
 #. defaultMessage is:
@@ -3827,6 +3835,8 @@ msgid ""
 "Improve the anonymity of your Decred.\n"
 "Funds in {unmixedAccount} are sent to {mixedAccount} once mixed."
 msgstr ""
+"提高你的匿名性。\n"
+"{unmixedAccount}中的资金在混合后会被发送到{mixedAccount}。"
 
 #. [proposals.statusLinks.preVote]
 #. defaultMessage is:
@@ -3905,7 +3915,7 @@ msgstr "导入公钥"
 #: app/i18n/extracted/app/components/shared/SendTransaction/Form.json
 msgctxt "send.insuficient.funds"
 msgid "Insufficient funds"
-msgstr ""
+msgstr "余额不足"
 
 #. [createwallet.walletWatchOnly.error]
 #. defaultMessage is:
@@ -4160,7 +4170,7 @@ msgstr "闪电网络"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.ln"
 msgid "Lightning Transactions"
-msgstr ""
+msgstr "闪电交易"
 
 #. [ln.pendingForceCloseDetails.limboBalance]
 #. defaultMessage is:
@@ -4368,7 +4378,7 @@ msgstr "日志"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.logs"
 msgid "Logs"
-msgstr ""
+msgstr "日志"
 
 #. [getstarted.setAccount.description]
 #. defaultMessage is:
@@ -4436,7 +4446,7 @@ msgstr "管理瞭望塔的连接。"
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 msgctxt "trezorPage.description"
 msgid "Manage your Trezor device."
-msgstr ""
+msgstr "管理你的Trezor设备。"
 
 #. [purchaseTickets.import]
 #. defaultMessage is:

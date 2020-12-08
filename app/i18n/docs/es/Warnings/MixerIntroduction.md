@@ -9,7 +9,6 @@ Puede tomar varias transacciones mezclar todo el saldo de la cuenta sin mezclar.
 
 **Es importante que Decrediton no se cierre mientras el mezclador está activo.**
 
-Una vez que activa las funciones de privacidad en Decrediton, solo debería
-enviar Decred desde la cuena mezclada.
+Una vez que activa las funciones de privacidad en Decrediton, solo debe enviar Decred desde la cuenta mezclada.
 Enviar de otras cuentas puede comprometer su privacidad al conectar su Decred
 mezclado con su Decred sin mezclar.

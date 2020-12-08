@@ -4,11 +4,12 @@
 # a204faa9a19ccf750d73dcb1cd237589_9bdd284 <9549266ee1472a0b3c3a177132978d56_734853>, 2018
 # e2f_ja r5 <tx_e2f_ja_r5@ate2f.com>, 2018
 # e2f_ja r1 <tx_e2f_ja_r1@ate2f.com>, 2018
+# Joe Gruffins <joegruff777@yahoo.co.jp>, 2020
 # 
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2020-12-07T15:40:30.833Z\n"
-"Last-Translator: e2f_ja r1 <tx_e2f_ja_r1@ate2f.com>, 2018\n"
+"Last-Translator: Joe Gruffins <joegruff777@yahoo.co.jp>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/decred/teams/76223/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,6 +33,8 @@ msgid ""
 "  Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.\n"
 "  "
 msgstr ""
+"\n"
+"先ほど作成したパスフレーズを入力してブロックチェーンをスキャンし、以前にウォレットで作成した可能性のある追加アカウントを確認します。 アカウント名はブロックチェーンに保存されていないため、Decreditonを設定した後に名前を変更する必要があります。"
 
 #. [help.blockchain]
 #. defaultMessage is:
@@ -39,7 +42,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/LinksTab/LinksTab.json
 msgctxt "help.blockchain"
 msgid " Blockchain Explorer"
-msgstr ""
+msgstr "ブロックチェーン・エクスプローラー"
 
 #. [help.stakepools]
 #. defaultMessage is:
@@ -47,7 +50,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/LinksTab/LinksTab.json
 msgctxt "help.stakepools"
 msgid " VSPs"
-msgstr ""
+msgstr "VSP"
 
 #. [appMenu.close]
 #. defaultMessage is:
@@ -79,7 +82,7 @@ msgstr "&表示"
 #: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
 msgctxt "ln.paymentsTab.emptyDescr"
 msgid "(empty description)"
-msgstr ""
+msgstr "(詳細不足)"
 
 #. [createWallet.isTrezor.setupLink]
 #. defaultMessage is:
@@ -128,7 +131,7 @@ msgstr "*シードは、必ず紙などに記載した物理的コピーをお�
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/ReceivePage/ReceivePage.json
 msgctxt "receive.tooltipGenerated"
 msgid "+ New Address Generated"
-msgstr ""
+msgstr "+ 新しいアドレスが生成されました。"
 
 #. [mytickets.statistics.votetime.ninetyfifthpercentile.label]
 #. defaultMessage is:
@@ -161,7 +164,7 @@ msgstr "APIキー"
 #: app/i18n/extracted/app/components/views/TransactionPage/Page.json
 msgctxt "txDetails.abandontTransaction"
 msgid "Abandon Transaction"
-msgstr ""
+msgstr "トランザクションを放棄する"
 
 #. [proposals.statusLinks.abandoned]
 #. defaultMessage is:
@@ -169,7 +172,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
 msgctxt "proposals.statusLinks.abandoned"
 msgid "Abandoned"
-msgstr ""
+msgstr "放棄された"
 
 #. [ln.closeTypeAbandoned]
 #. defaultMessage is:
@@ -177,7 +180,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
 msgctxt "ln.closeTypeAbandoned"
 msgid "Abandoned"
-msgstr ""
+msgstr "放棄された"
 
 #. [appMenu.about]
 #. defaultMessage is:
@@ -225,7 +228,7 @@ msgstr "同意する"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/PrivacySettings.json
 msgctxt "settings.privacy.dcrdata.description"
 msgid "Access chain information from dcrdata.decred.org"
-msgstr ""
+msgstr "dcrdata.decred.orgからブロックチェーン情報にアクセスする"
 
 #. [syncVsp.account]
 #. defaultMessage is:
@@ -233,7 +236,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/SyncVSPFailedTickets.json
 msgctxt "syncVsp.account"
 msgid "Account"
-msgstr ""
+msgstr "アカウント"
 
 #. [proposals.detail.wallet.eligible.headers.account]
 #. defaultMessage is:
@@ -241,7 +244,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/ProposalDetailsPage/helpers/EligibleTickets/EligibleTickets.json
 msgctxt "proposals.detail.wallet.eligible.headers.account"
 msgid "Account"
-msgstr ""
+msgstr "アカウント"
 
 #. [tickets.table.header.account]
 #. defaultMessage is:
@@ -249,7 +252,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/Page.json
 msgctxt "tickets.table.header.account"
 msgid "Account"
-msgstr ""
+msgstr "アカウント"
 
 #. [purchaseTickets.accountFrom]
 #. defaultMessage is:
@@ -257,7 +260,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 msgctxt "purchaseTickets.accountFrom"
 msgid "Account"
-msgstr ""
+msgstr "アカウント"
 
 #. [privacy.mixing.account.branch]
 #. defaultMessage is:
@@ -265,7 +268,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account.branch"
 msgid "Account Branch"
-msgstr ""
+msgstr "アカウントブランチ"
 
 #. [securitycenter.validate.owned.accountNumber]
 #. defaultMessage is:
@@ -273,7 +276,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.owned.accountNumber"
 msgid "Account Number"
-msgstr ""
+msgstr "アカウント番号"
 
 #. [account.mixer.running.message]
 #. defaultMessage is:
@@ -286,7 +289,7 @@ msgid ""
 "Account mixer is currently running. Ongoing mixes will be\n"
 "            cancelled and no more Decred will be mixed if Decrediton is\n"
 "            closed now."
-msgstr ""
+msgstr "アカウントミキサーは現在起動中です。Decreditonを閉めると進行中のミックスはキャンセルされます。"
 
 #. [account.mixer.running.title]
 #. defaultMessage is:
@@ -294,7 +297,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.title"
 msgid "Account mixer is running"
-msgstr ""
+msgstr "アカウントミクサーは起動中"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -310,7 +313,7 @@ msgstr "アカウント番号"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 msgctxt "getstarted.setAccount.acctIdxRow"
 msgid "Account {acctIdx}"
-msgstr ""
+msgstr "アカウント{acctIdx}"
 
 #. [accountsButton.tip]
 #. defaultMessage is:
@@ -334,7 +337,7 @@ msgstr "アカウント"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountsList.json
 msgctxt "accounts.subtitle"
 msgid "Accounts"
-msgstr ""
+msgstr "アカウント"
 
 #. [accounts.title]
 #. defaultMessage is:
@@ -364,7 +367,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "mixer.ntf.createdAcct"
 msgid "Accounts successfully created and mixer configured."
-msgstr ""
+msgstr "アカウントの作成とミキサーの設定に成功しました。"
 
 #. [ln.watchtowersTab.addBtn]
 #. defaultMessage is:
@@ -372,7 +375,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/WatchtowersTab/WatchtowersTab.json
 msgctxt "ln.watchtowersTab.addBtn"
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #. [ln.invoicesTab.addInvoiceHeader]
 #. defaultMessage is:
@@ -380,7 +383,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
 msgctxt "ln.invoicesTab.addInvoiceHeader"
 msgid "Add Invoice"
-msgstr ""
+msgstr "請求書の追加"
 
 #. [accounts.addNewButton]
 #. defaultMessage is:
@@ -396,7 +399,7 @@ msgstr "新規追加"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList.json
 msgctxt "stakepools.list.form.submit"
 msgid "Add VSP"
-msgstr ""
+msgstr "VSP追加"
 
 #. [stakePoolSelect.addNewPrompt]
 #. defaultMessage is:
@@ -404,7 +407,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/inputs/LEGACY_StakePoolSelect.json
 msgctxt "stakePoolSelect.addNewPrompt"
 msgid "Add VSP {host}"
-msgstr ""
+msgstr "VSP追加{host}"
 
 #. [ln.watchtowersTab.addWatchtowerHeader]
 #. defaultMessage is:
@@ -412,7 +415,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/WatchtowersTab/WatchtowersTab.json
 msgctxt "ln.watchtowersTab.addWatchtowerHeader"
 msgid "Add Watchtower"
-msgstr ""
+msgstr "ウオッチタワー追加"
 
 #. [stakepool.addPoolTitle]
 #. defaultMessage is:
@@ -420,7 +423,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 msgctxt "stakepool.addPoolTitle"
 msgid "Add a VSP"
-msgstr ""
+msgstr "VSP追加"
 
 #. [send.destinationAddrPlaceholder]
 #. defaultMessage is:
@@ -468,7 +471,7 @@ msgstr "アドレス有効、非所有"
 #: app/i18n/extracted/app/components/views/LNPage/WatchtowersTab/WatchtowersTab.json
 msgctxt "ln.watchtowersTab.address"
 msgid "Address:"
-msgstr ""
+msgstr "アドレス："
 
 #. [settings.advancedDaemon.label]
 #. defaultMessage is:
@@ -476,7 +479,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/NetworkSettings.json
 msgctxt "settings.advancedDaemon.label"
 msgid "Adv. Daemon Startup"
-msgstr ""
+msgstr "Adv.サービス起動設定"
 
 #. [appMenu.advanced]
 #. defaultMessage is:
@@ -508,7 +511,7 @@ msgstr "アジェンダID"
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.alias"
 msgid "Alias"
-msgstr ""
+msgstr "愛称"
 
 #. [proposals.statusLinks.allFinishedVote]
 #. defaultMessage is:
@@ -516,7 +519,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
 msgctxt "proposals.statusLinks.allFinishedVote"
 msgid "All"
-msgstr ""
+msgstr "すべて"
 
 #. [tickets.type.all]
 #. defaultMessage is:
@@ -532,7 +535,7 @@ msgstr "すべて"
 #: app/i18n/extracted/app/components/views/TicketsPage/VSPTicketsStatusTab/MyVSPTickets.json
 msgctxt "vsptickets.type.all"
 msgid "All"
-msgstr ""
+msgstr "すべて"
 
 #. [txFilter.type.all]
 #. defaultMessage is:
@@ -564,7 +567,7 @@ msgstr "すべてのネットワークチケット"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.allowSendingFromUnmixedAccount"
 msgid "Allow sending from unmixed accounts"
-msgstr ""
+msgstr "ミックスしていないアカウントからの送信を許可する"
 
 #. [privacy.options.custom.description]
 #. defaultMessage is:
@@ -583,7 +586,7 @@ msgstr "アプリによるアクセスが可能なサードパーティサービ
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 msgctxt "purchaseTickets.alwaysUseThisVSP"
 msgid "Always use this VSP"
-msgstr ""
+msgstr "いつもこのVSPを使う"
 
 #. [send.amountPlaceholder]
 #. defaultMessage is:
@@ -607,7 +610,7 @@ msgstr "金額"
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/RoutesInfo.json
 msgctxt "ln.routesInfo.amount"
 msgid "Amount"
-msgstr ""
+msgstr "金額"
 
 #. [purchaseTickets.ticketAmount.legacy]
 #. defaultMessage is:
@@ -615,7 +618,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/Form.json
 msgctxt "purchaseTickets.ticketAmount.legacy"
 msgid "Amount"
-msgstr ""
+msgstr "金額"
 
 #. [purchaseTickets.ticketAmount]
 #. defaultMessage is:
@@ -631,7 +634,7 @@ msgstr "金額"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/ReceivePage/ReceivePage.json
 msgctxt "receive.amountPlaceholder"
 msgid "Amount"
-msgstr ""
+msgstr "金額"
 
 #. [history.amount.range]
 #. defaultMessage is:
@@ -664,7 +667,7 @@ msgstr "チケット取引へウォレットにより送信された金額。"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsFilter/ProposalsFilter.json
 msgctxt "proposals.statusLinks.approvedVote"
 msgid "Approved"
-msgstr ""
+msgstr "承認済み"
 
 #. [stake.addPool.modalContent]
 #. defaultMessage is:
@@ -672,7 +675,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 msgctxt "stake.addPool.modalContent"
 msgid "Are you sure you want to add this new VSP?"
-msgstr ""
+msgstr "本当に新しいVSPを追加しますか？"
 
 #. [settings.closeWalletModalContent]
 #. defaultMessage is:
@@ -695,6 +698,7 @@ msgid ""
 "auto ticket buyer is still running. If you proceed, it will be closed and no"
 " more tickets will be purchased."
 msgstr ""
+"{walletName}を閉じてランチャーに戻るということでよろしいでしょうか？自動チケット購入プロセスはまだ動いています。先に進むと閉じられてしまい、それ以上のチケットは購入されません"
 
 #. [purchase.ticket.modal.desc]
 #. defaultMessage is:
@@ -705,7 +709,7 @@ msgctxt "purchase.ticket.modal.desc"
 msgid ""
 "Are you sure you want to dismiss this message? Make sure your redeem scripts"
 " are backed up."
-msgstr ""
+msgstr "このメッセージを拒否してもよろしいですか？リディームスクリプトがバックアップされていることを確認してください"
 
 #. [stakePoolsList.removeModal.description]
 #. defaultMessage is:
@@ -716,7 +720,7 @@ msgctxt "stakePoolsList.removeModal.description"
 msgid ""
 "Are you sure you want to remove this configured VSP? Make sure your redeem "
 "script is backed up."
-msgstr ""
+msgstr "この設定されたVSPを削除してもよろしいですか？Redeem スクリプトがバックアップされていることを確認してください。"
 
 #. [ln.closeChannelModal.descr]
 #. defaultMessage is:
@@ -724,7 +728,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.closeChannelModal.descr"
 msgid "Attempt cooperative close of channel?"
-msgstr ""
+msgstr "チャンネルの協力的な閉鎖を試みていますか？"
 
 #. [ln.closeChannelModa.descrForce]
 #. defaultMessage is:
@@ -732,7 +736,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.closeChannelModa.descrForce"
 msgid "Attempt forced close of the channel?"
-msgstr ""
+msgstr "チャンネルを強制的に閉じようとしたのか？"
 
 #. [tickets.startAutoBuyerConfirmation.attention]
 #. defaultMessage is:
@@ -748,7 +752,7 @@ msgstr "注意!"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "vsp.tickets.startAutoBuyerConfirmation.attention"
 msgid "Attention!"
-msgstr ""
+msgstr "注意!"
 
 #. [ln.connectPage.useExistingAccountWarning]
 #. defaultMessage is:
@@ -767,6 +771,9 @@ msgid ""
 "          given account. It's recommended to have an account dedicated to LN\n"
 "          operations and only transfer the funds you intend to use in LN to it."
 msgstr ""
+"注意: 実行中の LN "
+"ウォレットは暗号化されていないキーをメモリに保持し、指定されたアカウントのすべての資金を制御することに注意してください。LN操作専用のアカウントを用意し、LN"
+" で使用する予定の資金のみをそこに振り込むことをお勧めします。"
 
 #. [tickets.autobuyerRunning.title]
 #. defaultMessage is:
@@ -774,7 +781,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
 msgctxt "tickets.autobuyerRunning.title"
 msgid "Auto Ticket Buyer Still Running"
-msgstr ""
+msgstr "自動チケット購入起動中"
 
 #. [automatictickets.subtitle]
 #. defaultMessage is:
@@ -790,7 +797,7 @@ msgstr "自動チケット購入"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "vsp.autobuyer.subtitle"
 msgid "Automatic Ticket Purchases"
-msgstr ""
+msgstr "自動チケット購入"
 
 #. [charts.keys.available]
 #. defaultMessage is:
@@ -862,7 +869,7 @@ msgstr "ホームページへ戻る"
 #: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
 msgctxt "ln.walletTab.backup"
 msgid "Backup"
-msgstr ""
+msgstr "バックアップ"
 
 #. [trezorPage.backupDeviceBtn]
 #. defaultMessage is:
@@ -870,7 +877,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TrezorPage/RecoveryButtons.json
 msgctxt "trezorPage.backupDeviceBtn"
 msgid "Backup Device"
-msgstr ""
+msgstr "デバイスバックアップ"
 
 #. [ln.backup.backupBtn]
 #. defaultMessage is:
@@ -878,7 +885,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
 msgctxt "ln.backup.backupBtn"
 msgid "Backup Now"
-msgstr ""
+msgstr "今すぐバックアップ"
 
 #. [backup.redeem.script.modal.title]
 #. defaultMessage is:
@@ -886,7 +893,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/BackupRedeemScriptModal.json
 msgctxt "backup.redeem.script.modal.title"
 msgid "Backup Redeem Script"
-msgstr ""
+msgstr "Redeemスクリプトのバックアップ"
 
 #. [purchase.ticket.warn.button]
 #. defaultMessage is:
@@ -894,7 +901,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/Form.json
 msgctxt "purchase.ticket.warn.button"
 msgid "Backup Redeem Scripts"
-msgstr ""
+msgstr "Redeemスクリプトのバックアップ"
 
 #. [home.tab.balance]
 #. defaultMessage is:
@@ -910,7 +917,7 @@ msgstr "残高"
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
 msgctxt "ln.channelsTab.balance"
 msgid "Balance"
-msgstr ""
+msgstr "残高"
 
 #. [ln.invoicesTab.balanceHeader]
 #. defaultMessage is:
@@ -918,7 +925,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
 msgctxt "ln.invoicesTab.balanceHeader"
 msgid "Balance"
-msgstr ""
+msgstr "残高"
 
 #. [ln.paymentsTab.balanceHeader]
 #. defaultMessage is:
@@ -926,7 +933,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/Page.json
 msgctxt "ln.paymentsTab.balanceHeader"
 msgid "Balance"
-msgstr ""
+msgstr "残高"
 
 #. [autobuyer.modal.balanceToMaintain]
 #. defaultMessage is:
@@ -942,7 +949,7 @@ msgstr "維持に必要な残高"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "vsp.autobuyer.modal.balanceToMaintain"
 msgid "Balance To Maintain"
-msgstr ""
+msgstr "維持に必要な残高"
 
 #. [export.dailyBalances.fields.locked]
 #. defaultMessage is:
@@ -958,7 +965,7 @@ msgstr "未完成およびライブのチケットにロックされた残高。
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.immatureNonWallet"
 msgid "Balance locked in immature tickets not controlled by the wallet."
-msgstr ""
+msgstr "未熟なチケットにロックされた残高は、財布で管理されていません。"
 
 #. [export.dailyBalances.fields.immature]
 #. defaultMessage is:
@@ -966,7 +973,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.immature"
 msgid "Balance locked in immature tickets."
-msgstr ""
+msgstr "残高は未熟なチケットにロックされています。"
 
 #. [export.balances.fields.lockedNonWallet]
 #. defaultMessage is:
@@ -974,7 +981,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.balances.fields.lockedNonWallet"
 msgid "Balance locked in live tickets not controlled by the wallet."
-msgstr ""
+msgstr "ライブチケットにロックされている残高は財布で管理されていません。"
 
 #. [export.balances.fields.locked]
 #. defaultMessage is:
@@ -982,7 +989,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.balances.fields.locked"
 msgid "Balance locked in live tickets."
-msgstr ""
+msgstr "残高はライブチケットにロックされています。"
 
 #. [autobuyer.balanceToMaintain]
 #. defaultMessage is:
@@ -998,7 +1005,7 @@ msgstr "維持に必要な残高"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "vsp.autobuyer.balanceToMaintain"
 msgid "Balance to Maintain"
-msgstr ""
+msgstr "維持に必要な残高"
 
 #. [accounts.balances]
 #. defaultMessage is:
@@ -1014,7 +1021,7 @@ msgstr "残高"
 #: app/i18n/extracted/app/components/views/LNPage/WalletTab/Page.json
 msgctxt "ln.walletTab.balances"
 msgid "Balances"
-msgstr ""
+msgstr "残高"
 
 #. [export.balances.name]
 #. defaultMessage is:
@@ -1030,7 +1037,7 @@ msgstr "残高"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.latestBlock"
 msgid "Block"
-msgstr ""
+msgstr "ブロック"
 
 #. [txDetails.blockLabel]
 #. defaultMessage is:
@@ -1046,7 +1053,7 @@ msgstr "ブロック"
 #: app/i18n/extracted/app/components/indicators/AnimatedLinearProgressFull.json
 msgctxt "getStarted.chainLoading.syncEstimation"
 msgid "Blockchain download estimated complete: "
-msgstr ""
+msgstr "ブロックチェーンのダウンロードが完了した推測："
 
 #. [securitycenter.validate.owned.branch]
 #. defaultMessage is:
