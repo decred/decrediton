@@ -179,12 +179,14 @@ export const purchaseTickets = (
         }
         request.setMixedAccount(mixedAccount);
         request.setMixedSplitAccount(mixedAccount);
+        request.setAccount(accountNum.value);
         request.setChangeAccount(changeAccount);
         request.setCsppServer(csppServer + ":" + csppPort);
         request.setMixedAccountBranch(mixedAcctBranch);
+      } else {
+        request.setAccount(accountNum.value);
+        request.setChangeAccount(accountNum.value);
       }
-      request.setAccount(accountNum.value);
-      request.setChangeAccount(accountNum.value);
       request.setNumTickets(numTickets);
       request.setDontSignTx(!signTx);
       const { pubkey, host } = vsp;
