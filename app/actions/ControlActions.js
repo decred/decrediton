@@ -391,7 +391,14 @@ export const newPurchaseTicketsAttempt = (
       // and another for the splitTx and ticket purchase.
       // Note: at least one of them needs to be big enough for ticket purchase.
       if (unspentOutputs.length < numTickets*2) {
-        // TODO what do we do?
+        // check if amount is indeed insufficient
+        const ticketPrice = sel.ticketPrice(getState());
+        if (accountNum.spendable > ticketPrice * numTickets) {
+          return dispatch({
+            error: `Not enough utxo. Need to break the input so one can be reserved
+            for paying the fee.`,
+            type: PURCHASETICKETS_FAILED });
+        }
       }
     }
     dispatch({ error, type: PURCHASETICKETS_FAILED });
