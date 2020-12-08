@@ -119,7 +119,7 @@ const icons = {
   "release-image-v130": "url('style/icons/release-note-v130.gif')",
   "release-image-v140": "url('style/icons/release-note-v140.gif')",
   "release-image-v150": "url('style/icons/release-note-v150.png')",
-  "release-image-v160": "url('style/icons/release-note-v160.gif')",
+  "release-image-v160": "url('style/icons/release-note-v160.png')",
   "tickets-loading-more-icon":
     "url('style/icons/ticket_live_loop_decrediton_grey.gif')",
   "qr-icon": "url('style/icons/qr-logo.svg')",
