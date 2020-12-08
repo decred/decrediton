@@ -577,59 +577,62 @@ export const constructTransactionAttempt = (
   }
   const chainParams = sel.chainParams(getState());
   const { walletService } = getState().grpc;
-  constructTxRequestAttempt = walletService.constructTransaction(request, function (
-    error,
-    constructTxResponse
-  ) {
-    if (error) {
-      if (String(error).indexOf("insufficient balance") > 0) {
-        dispatch({ error, type: CONSTRUCTTX_FAILED_LOW_BALANCE });
-      } else if (
-        String(error).indexOf("violates the unused address gap limit policy") >
-        0
-      ) {
-        // Work around dcrwallet#1622: generate a new address in the internal
-        // branch using the wrap gap policy so that change addresses can be
-        // regenerated again.
-        // We'll still error out to let the user know wrapping has occurred.
-        wallet.getNextAddress(
-          sel.walletService(getState()),
-          parseInt(account),
-          1
-        );
-        dispatch({ error, type: CONSTRUCTTX_FAILED });
-      } else if (String(error).indexOf("Cancelled") == 0) {
-        dispatch({ error, type: CONSTRUCTTX_FAILED });
-      }
-      return;
-    }
-
-    const changeScriptByAccount =
-      getState().control.changeScriptByAccount || {};
-    if (!all) {
-      // Store the change address we just generated so that future changes to
-      // the tx being constructed will use the same address and prevent gap
-      // limit exhaustion (see above note on issue dcrwallet#1622).
-      const changeIndex = constructTxResponse.getChangeIndex();
-      if (changeIndex > -1) {
-        const rawTx = Buffer.from(constructTxResponse.getUnsignedTransaction());
-        const decoded = wallet.decodeRawTransaction(rawTx, chainParams);
-        changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
+  constructTxRequestAttempt = walletService.constructTransaction(
+    request,
+    function (error, constructTxResponse) {
+      if (error) {
+        if (String(error).indexOf("insufficient balance") > 0) {
+          dispatch({ error, type: CONSTRUCTTX_FAILED_LOW_BALANCE });
+        } else if (
+          String(error).indexOf(
+            "violates the unused address gap limit policy"
+          ) > 0
+        ) {
+          // Work around dcrwallet#1622: generate a new address in the internal
+          // branch using the wrap gap policy so that change addresses can be
+          // regenerated again.
+          // We'll still error out to let the user know wrapping has occurred.
+          wallet.getNextAddress(
+            sel.walletService(getState()),
+            parseInt(account),
+            1
+          );
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+        } else if (String(error).indexOf("Cancelled") == 0) {
+          dispatch({ error, type: CONSTRUCTTX_FAILED });
+        }
+        return;
       }
 
-      constructTxResponse.totalAmount = totalAmount;
-    } else {
-      constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
+      const changeScriptByAccount =
+        getState().control.changeScriptByAccount || {};
+      if (!all) {
+        // Store the change address we just generated so that future changes to
+        // the tx being constructed will use the same address and prevent gap
+        // limit exhaustion (see above note on issue dcrwallet#1622).
+        const changeIndex = constructTxResponse.getChangeIndex();
+        if (changeIndex > -1) {
+          const rawTx = Buffer.from(
+            constructTxResponse.getUnsignedTransaction()
+          );
+          const decoded = wallet.decodeRawTransaction(rawTx, chainParams);
+          changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
+        }
+
+        constructTxResponse.totalAmount = totalAmount;
+      } else {
+        constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
+      }
+      constructTxResponse.rawTx = rawToHex(
+        constructTxResponse.getUnsignedTransaction()
+      );
+      dispatch({
+        constructTxResponse: constructTxResponse,
+        changeScriptByAccount,
+        type: CONSTRUCTTX_SUCCESS
+      });
     }
-    constructTxResponse.rawTx = rawToHex(
-      constructTxResponse.getUnsignedTransaction()
-    );
-    dispatch({
-      constructTxResponse: constructTxResponse,
-      changeScriptByAccount,
-      type: CONSTRUCTTX_SUCCESS
-    });
-  });
+  );
   dispatch({ type: CONSTRUCTTX_ATTEMPT, constructTxRequestAttempt });
 };
 
@@ -769,13 +772,13 @@ export const HIDE_ABOUT_MODAL_MACOS = "HIDE_ABOUT_MODAL_MACOS";
 export const hideAboutModalMacOS = () => (dispatch) =>
   dispatch({ type: HIDE_ABOUT_MODAL_MACOS });
 
-export const SHOW_AUTOBUYER_RUNNING_MODAL = "SHOW_AUTOBUYER_RUNNING_MODAL";
+export const SHOW_CANTCLOSE_MODAL = "SHOW_CANTCLOSE_MODAL";
 export const showCantCloseModal = () => (dispatch) =>
-  dispatch({ type: SHOW_AUTOBUYER_RUNNING_MODAL });
+  dispatch({ type: SHOW_CANTCLOSE_MODAL });
 
-export const HIDE_AUTOBUYER_RUNNING_MODAL = "HIDE_AUTOBUYER_RUNNING_MODAL";
+export const HIDE_CANTCLOSE_MODAL = "HIDE_CANTCLOSE_MODAL";
 export const hideCantCloseModal = () => (dispatch) =>
-  dispatch({ type: HIDE_AUTOBUYER_RUNNING_MODAL });
+  dispatch({ type: HIDE_CANTCLOSE_MODAL });
 
 export const GETACCOUNTEXTENDEDKEY_ATTEMPT = "GETACCOUNTEXTENDEDKEY_ATTEMPT";
 export const GETACCOUNTEXTENDEDKEY_FAILED = "GETACCOUNTEXTENDEDKEY_FAILED";

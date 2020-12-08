@@ -44,10 +44,6 @@ export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
 };
 
-export const goToTicketsStatus = () => (dispatch) => {
-  dispatch(pushHistory("/tickets/vspTicketsStatus"));
-};
-
 export const goToMyTickets = () => (dispatch) => {
   dispatch(pushHistory("/tickets/mytickets"));
 };

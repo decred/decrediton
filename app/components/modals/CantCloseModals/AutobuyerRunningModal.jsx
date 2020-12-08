@@ -20,15 +20,11 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
       />
     </div>
     <div className={style.confirmToolbar}>
-      <KeyBlueButton
-        className={style.confirmConfirmButton}
-        onClick={onSubmit}>
-        {
-          <T
-            id="tickets.autobuyerRunning.confirmModal.btnConfirm"
-            m="Confirm"
-          />
-        }
+      <KeyBlueButton className={style.confirmConfirmButton} onClick={onSubmit}>
+        <T
+          id="tickets.autobuyerRunning.confirmModal.closeAnyway"
+          m="Close Anyway"
+        />
       </KeyBlueButton>
       <InvisibleButton
         className={style.confirmCloseButton}

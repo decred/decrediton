@@ -1,46 +1,40 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton, KeyBlueButton } from "buttons";
-import { useCantCloseModal } from "./hooks";
 import style from "../Modals.module.css";
+import { NavLink as Link } from "react-router-dom";
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => {
-  const { onGoToTicketsStatus } = useCantCloseModal();
-
   return (
     <Modal className={style.confirm} {...{ show, onCancelModal }}>
       <div className={style.confirmHeader}>
         <div className={style.confirmHeaderTitle}>
-          <T
-            id="tickets.fee.error.title"
-            m="VSP Tickets Fee Error"
-          />
+          <T id="tickets.fee.error.title" m="VSP Tickets Fee Error" />
         </div>
       </div>
       <div className={style.confirmContent}>
         <T
           id="tickets.fee.error.message"
-          m="You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will
-          be missed. Click on this button for re-sync fees"
+          m={
+            "You have outstanding tickets that are not properly registered with a VSP. {completeRegistrationProcessLink}, otherwise these tickets will be missed if they are chosen to vote."
+          }
+          values={{
+            completeRegistrationProcessLink: (
+              <Link to="/tickets/vspTicketsStatus" onClick={onCancelModal}>
+                <T
+                  id="modal.complete.registration.process"
+                  m="Complete registration process"
+                />
+              </Link>
+            )
+          }}
         />
-        <KeyBlueButton
-          onClick={onGoToTicketsStatus}
-          className={style.goToTicketStatus}
-        >
-          <T
-            id="modal.go.to.tickets.status"
-            m="Go to ticket status"
-          />
-        </KeyBlueButton>
       </div>
       <div className={style.confirmToolbar}>
         <KeyBlueButton
           className={style.confirmConfirmButton}
           onClick={onSubmit}>
-          <T
-            id="tickets.fee.error.confirmModal.btnConfirm"
-            m="Confirm"
-          />
+          <T id="tickets.fee.error.confirmModal.closeAnyway" m="Close Anyway" />
         </KeyBlueButton>
         <InvisibleButton
           className={style.confirmCloseButton}
