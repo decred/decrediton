@@ -548,10 +548,7 @@ export const useGetStarted = () => {
         });
         getCoinjoinOutputspByAcct()
           .then((outputsByAcctMap) => {
-            if (!outputsByAcctMap) {
-              goToHome();
-            }
-            const hasMixedOutputs = outputsByAcctMap.reduce(
+            const hasMixedOutputs = outputsByAcctMap && outputsByAcctMap.reduce(
               (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
               false
             );
