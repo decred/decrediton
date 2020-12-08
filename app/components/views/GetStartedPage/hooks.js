@@ -547,8 +547,11 @@ export const useGetStarted = () => {
           StateComponent: updatedComponent ? updatedComponent : component
         });
         getCoinjoinOutputspByAcct()
-          .then((r) => {
-            const hasMixedOutputs = r.reduce(
+          .then((outputsByAcctMap) => {
+            if (!outputsByAcctMap) {
+              goToHome();
+            }
+            const hasMixedOutputs = outputsByAcctMap.reduce(
               (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
               false
             );
