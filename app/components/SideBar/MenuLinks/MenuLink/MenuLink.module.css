@@ -10,7 +10,7 @@
   font-size: 15px;
   text-decoration: none;
   transition: color 0.13s ease-in-out;
-  background-position: 22px 50%;
+  background-position: 16px 50%;
   background-size: 22px;
   background-repeat: no-repeat;
   user-select: none;
@@ -134,6 +134,7 @@
     width: 76px;
     padding-left: 0;
     background-position: 50%;
+    margin: 0;
   }
 
   .menuLinkContainer {

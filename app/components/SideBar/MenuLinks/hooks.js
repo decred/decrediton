@@ -35,6 +35,7 @@ export function useMenuLinks() {
   );
 
   const [caretStyle, setCaretStyle] = useState({ top: 0, left: 0 });
+  const [isCaretVisible, setIsCaretVisible] = useState(true);
   const [selectedTab, setSelectedTab] = useState(null);
 
   const prepareLinkList = () => {
@@ -74,6 +75,7 @@ export function useMenuLinks() {
         ? location.pathname.substring(0, tabbedPageCheck)
         : location.pathname;
     const caretPosition = neededCaretPosition(selectedTab);
+    setIsCaretVisible(!!caretPosition);
     if (caretPosition) {
       setCaretStyle(caretPosition);
       setSelectedTab(selectedTab);
@@ -143,6 +145,7 @@ export function useMenuLinks() {
     nodes: nodes.current,
     sidebarOnBottom,
     menuLinks,
-    expandSideBar
+    expandSideBar,
+    isCaretVisible
   };
 }
