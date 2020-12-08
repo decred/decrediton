@@ -611,6 +611,9 @@
 .releaseNotesImage.release-image-v150 {
   background-image: var(--release-image-v150);
 }
+.releaseNotesImage.release-image-v160 {
+  background-image: var(--release-image-v160);
+}
 
 .releaseNotesText {
   font-size: 13px;
