@@ -628,6 +628,10 @@
   margin-bottom: 1em;
 }
 
+.releaseNotesText ul,
+.releaseNotesText ol {
+  padding-left: 2em;
+}
 .releaseNotesText a {
   color: var(--link-color);
 }
