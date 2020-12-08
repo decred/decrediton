@@ -51,21 +51,23 @@ const MenuLinks = () => {
     caretStyle,
     nodes,
     menuLinks,
-    expandSideBar
+    expandSideBar,
+    isCaretVisible
   } = useMenuLinks();
 
   return (
     <>
       <MenuList {...{ sidebarOnBottom, nodes, menuLinks, expandSideBar }} />
-      {uiAnimations ? (
-        <Motion style={caretStyle}>
-          {(caretStyle) => (
-            <div className={style.menuCaret} style={caretStyle} />
-          )}
-        </Motion>
-      ) : (
-        <div className={style.menuCaret} style={caretStyle} />
-      )}
+      {isCaretVisible &&
+        (uiAnimations ? (
+          <Motion style={caretStyle}>
+            {(caretStyle) => (
+              <div className={style.menuCaret} style={caretStyle} />
+            )}
+          </Motion>
+        ) : (
+          <div className={style.menuCaret} style={caretStyle} />
+        ))}
     </>
   );
 };
