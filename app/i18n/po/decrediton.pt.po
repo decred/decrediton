@@ -2668,7 +2668,7 @@ msgid ""
 "Document '{name}' is unavailable in the current language. Please request it "
 "in the community channels."
 msgstr ""
-"Documento '{name}' não traduzido para português. Requisite essa tradução "
+"Documento {name} não traduzido para português. Requisite essa tradução "
 "através dos canais da comundiade."
 
 #. [help.documentation]

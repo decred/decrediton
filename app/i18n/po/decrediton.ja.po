@@ -34,7 +34,7 @@ msgid ""
 "  "
 msgstr ""
 "\n"
-"先ほど作成したパスフレーズを入力してブロックチェーンをスキャンし、以前にウォレットで作成した可能性のある追加アカウントを確認します。 アカウント名はブロックチェーンに保存されていないため、Decreditonを設定した後に名前を変更する必要があります。"
+"先ほど作成したパスフレーズを入力し、ブロックチェーンをスキャンすると以前にウォレットで作成した可能性のある追加アカウントを確認できます。 アカウント名はブロックチェーンに保存されていないため、Decreditonを設定した後に名前を変更する必要があります。"
 
 #. [help.blockchain]
 #. defaultMessage is:
@@ -131,7 +131,7 @@ msgstr "*シードは、必ず紙などに記載した物理的コピーをお�
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/ReceivePage/ReceivePage.json
 msgctxt "receive.tooltipGenerated"
 msgid "+ New Address Generated"
-msgstr "+ 新しいアドレスが生成されました。"
+msgstr "+ 新しいアドレスが作成されました。"
 
 #. [mytickets.statistics.votetime.ninetyfifthpercentile.label]
 #. defaultMessage is:
@@ -289,7 +289,7 @@ msgid ""
 "Account mixer is currently running. Ongoing mixes will be\n"
 "            cancelled and no more Decred will be mixed if Decrediton is\n"
 "            closed now."
-msgstr "アカウントミキサーは現在起動中です。Decreditonを閉めると進行中のミックスはキャンセルされます。"
+msgstr "アカウントミキサーは現在実行中です。Decreditonを閉めると進行中のミックスはキャンセルされます。"
 
 #. [account.mixer.running.title]
 #. defaultMessage is:
@@ -297,7 +297,7 @@ msgstr "アカウントミキサーは現在起動中です。Decreditonを閉�
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.title"
 msgid "Account mixer is running"
-msgstr "アカウントミクサーは起動中"
+msgstr "アカウントミキサーは実行中"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -511,7 +511,7 @@ msgstr "アジェンダID"
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.alias"
 msgid "Alias"
-msgstr "愛称"
+msgstr "別名"
 
 #. [proposals.statusLinks.allFinishedVote]
 #. defaultMessage is:
@@ -965,7 +965,7 @@ msgstr "未完成およびライブのチケットにロックされた残高。
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.immatureNonWallet"
 msgid "Balance locked in immature tickets not controlled by the wallet."
-msgstr "未熟なチケットにロックされた残高は、財布で管理されていません。"
+msgstr "未熟なチケットにロックされた残高は、ウォレットで管理されていません。"
 
 #. [export.dailyBalances.fields.immature]
 #. defaultMessage is:
@@ -981,7 +981,7 @@ msgstr "残高は未熟なチケットにロックされています。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.balances.fields.lockedNonWallet"
 msgid "Balance locked in live tickets not controlled by the wallet."
-msgstr "ライブチケットにロックされている残高は財布で管理されていません。"
+msgstr "ライブチケットにロックされている残高はウォレットで管理されていません。"
 
 #. [export.balances.fields.locked]
 #. defaultMessage is:
@@ -1053,7 +1053,7 @@ msgstr "ブロック"
 #: app/i18n/extracted/app/components/indicators/AnimatedLinearProgressFull.json
 msgctxt "getStarted.chainLoading.syncEstimation"
 msgid "Blockchain download estimated complete: "
-msgstr "ブロックチェーンのダウンロードが完了した推測："
+msgstr "ブロックチェーンのダウンロードが完了するようです"
 
 #. [securitycenter.validate.owned.branch]
 #. defaultMessage is:
@@ -1061,7 +1061,7 @@ msgstr "ブロックチェーンのダウンロードが完了した推測："
 #: app/i18n/extracted/app/components/views/PrivacyPage/SecurityPage/ValidateAddress/ValidateAddressForm.json
 msgctxt "securitycenter.validate.owned.branch"
 msgid "Branch"
-msgstr ""
+msgstr "部門"
 
 #. [ln.closeTypeBreach]
 #. defaultMessage is:
@@ -1069,7 +1069,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
 msgctxt "ln.closeTypeBreach"
 msgid "Breach Force-close"
-msgstr ""
+msgstr "強制終了部門"
 
 #. [appMenu.bringAllFront]
 #. defaultMessage is:
@@ -1093,7 +1093,7 @@ msgstr "取引所でDecredを購入"
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.openChannelDetails.csvDelay"
 msgid "CSV Delay"
-msgstr ""
+msgstr "CSV遅滞"
 
 #. [fileBrowserTypes.csv.name]
 #. defaultMessage is:
@@ -1109,7 +1109,7 @@ msgstr "CSVファイル"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [tickets.autobuyerRunning.confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1117,7 +1117,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
 msgctxt "tickets.autobuyerRunning.confirmModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [tickets.fee.error.confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1125,7 +1125,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
 msgctxt "tickets.fee.error.confirmModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [tickets.purchasing.confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1133,7 +1133,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.confirmModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1149,7 +1149,7 @@ msgstr "キャンセル"
 #: app/i18n/extracted/app/components/modals/ImportScriptModal/ImportScriptModal.json
 msgctxt "importRedeemScriptModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [seedCopyConfirm.btnCancel]
 #. defaultMessage is:
@@ -1165,7 +1165,7 @@ msgstr "キャンセル"
 #: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountContent.json
 msgctxt "SendFromUnmixed.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [passphraseModal.btnCancel]
 #. defaultMessage is:
@@ -1181,7 +1181,7 @@ msgstr "キャンセル"
 #: app/i18n/extracted/app/components/shared/LoadingError.json
 msgctxt "loadingError.cancelBtn"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. [accounts.cancelRenameBtn]
 #. defaultMessage is:
@@ -1237,7 +1237,7 @@ msgstr "キャンセル"
 #: app/i18n/extracted/app/components/indicators/LoadingMoreTickets/LoadingMoreTickets.json
 msgctxt "mytickets.loadingMoreTickets.cancelBtn"
 msgid "Cancel listing tickets"
-msgstr ""
+msgstr "一覧にあるチケットをキャンセル"
 
 #. [sidebar.rescanCancelBtn.tip]
 #. defaultMessage is:
@@ -1261,7 +1261,7 @@ msgstr "すべての資金送信をキャンセル"
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.closeChannelModal.capacity"
 msgid "Capacity"
-msgstr ""
+msgstr "容量"
 
 #. [ln.nodeInfo.channel.capacity]
 #. defaultMessage is:
@@ -1269,7 +1269,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.channel.capacity"
 msgid "Capacity"
-msgstr ""
+msgstr "容量"
 
 #. [proposals.updateVoteChoiceModal.btnLabel]
 #. defaultMessage is:
@@ -1285,7 +1285,7 @@ msgstr "投票する"
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.channel.policy.disabled"
 msgid "Chan Disabled"
-msgstr ""
+msgstr "不具合を変更する"
 
 #. [trezor.changeLabel.changeButton]
 #. defaultMessage is:
@@ -1325,7 +1325,7 @@ msgstr "パスフレーズを変更"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.changeLabel.success"
 msgid "Changed label on selected Trezor to {label}"
-msgstr ""
+msgstr "選択されたトレゾールに｛label｝へラベルを変更する"
 
 #. [settings.description]
 #. defaultMessage is:
@@ -1341,7 +1341,7 @@ msgstr "ネットワーク設定を変更するには再起動する必要があ
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
 msgctxt "ln.closedChannelDetails.chanId"
 msgid "Channel ID"
-msgstr ""
+msgstr "チャンネルID"
 
 #. [ln.openChannelDetails.chanId]
 #. defaultMessage is:
@@ -1349,7 +1349,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.openChannelDetails.chanId"
 msgid "Channel ID"
-msgstr ""
+msgstr "チャンネルID"
 
 #. [ln.closedChannelDetails.channelPoint]
 #. defaultMessage is:
@@ -1357,7 +1357,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/ClosedChannel.json
 msgctxt "ln.closedChannelDetails.channelPoint"
 msgid "Channel Point"
-msgstr ""
+msgstr "チャンネルポイント"
 
 #. [ln.closeChannelModal.channelPoint]
 #. defaultMessage is:
@@ -1365,7 +1365,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.closeChannelModal.channelPoint"
 msgid "Channel Point"
-msgstr ""
+msgstr "チャンネルポイント"
 
 #. [ln.openChannelDetails.channelPoint]
 #. defaultMessage is:
@@ -1373,7 +1373,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/OpenChannel.json
 msgctxt "ln.openChannelDetails.channelPoint"
 msgid "Channel Point"
-msgstr ""
+msgstr "チャンネルポイント"
 
 #. [ln.pendingChannelDetails.channelPoint]
 #. defaultMessage is:
@@ -1381,7 +1381,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/PendingChannel.json
 msgctxt "ln.pendingChannelDetails.channelPoint"
 msgid "Channel Point"
-msgstr ""
+msgstr "チャンネルポイント"
 
 #. [ln.nodeInfo.channel.chanPoint]
 #. defaultMessage is:
@@ -1389,7 +1389,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.channel.chanPoint"
 msgid "Channel Point"
-msgstr ""
+msgstr "チャンネルポイント"
 
 #. [ln.ntf.closechannelClosepending]
 #. defaultMessage is:
@@ -1397,7 +1397,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.closechannelClosepending"
 msgid "Channel close procedures started"
-msgstr ""
+msgstr "チャンネルを閉じて手続きを開始する"
 
 #. [ln.ntf.closechannelChanclose]
 #. defaultMessage is:
@@ -1405,7 +1405,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.closechannelChanclose"
 msgid "Channel closed"
-msgstr ""
+msgstr "チャンネルを閉じる"
 
 #. [ln.tab.channels]
 #. defaultMessage is:

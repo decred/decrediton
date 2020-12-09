@@ -4566,7 +4566,7 @@ msgstr "错过的票"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.mixed"
 msgid "Mix"
-msgstr ""
+msgstr "混合"
 
 #. [txFilter.type.mixed]
 #. defaultMessage is:
@@ -4606,7 +4606,7 @@ msgstr "混币帐户：{value}"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.label.mixed.balance"
 msgid "Mixed Balance"
-msgstr ""
+msgstr "混币余额"
 
 #. [mixerSetting.header]
 #. defaultMessage is:
@@ -4614,7 +4614,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/MixerSettingsModal/MixerSettingsModal.json
 msgctxt "mixerSetting.header"
 msgid "Mixer Settings"
-msgstr ""
+msgstr "混币工具设置"
 
 #. [privacy.mixerIsNotRunning]
 #. defaultMessage is:
@@ -4622,7 +4622,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.mixerIsNotRunning"
 msgid "Mixer is not running"
-msgstr ""
+msgstr "混币工具停止工作"
 
 #. [privacy.mixersIsRunning]
 #. defaultMessage is:
@@ -4630,7 +4630,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.mixersIsRunning"
 msgid "Mixer is running"
-msgstr ""
+msgstr "混币工具正在运行"
 
 #. [mytickets.subtitle]
 #. defaultMessage is:
@@ -4866,7 +4866,7 @@ msgstr "未发现交易"
 msgctxt "trezor.noConnectedDevice"
 msgid ""
 "No Trezor device connected. Check the device connection and Trezor bridge."
-msgstr ""
+msgstr "未连接Trezor设备。请检查设备连接及trezor bridge"
 
 #. [trezor.noDevice.message]
 #. defaultMessage is:
@@ -4877,7 +4877,7 @@ msgctxt "trezor.noDevice.message"
 msgid ""
 "No Trezor device detected. Connect the device and check if Trezor bridge is "
 "installed and running."
-msgstr ""
+msgstr "未检测到Trezor设备。请连接设备及检测已安装及运行trezor bridge。"
 
 #. [trezor.getStartedConfig.noDeviceFound]
 #. defaultMessage is:
@@ -4887,7 +4887,7 @@ msgstr ""
 msgctxt "trezor.getStartedConfig.noDeviceFound"
 msgid ""
 "No Trezor device found. Check the connection and the Trezor bridge software."
-msgstr ""
+msgstr "未发现trezor设备。请检查连接及trezor bridge软件。"
 
 #. [stake.noAvailableStakepools]
 #. defaultMessage is:
@@ -5082,7 +5082,7 @@ msgstr "最初的"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.transactions"
 msgid "On-chain Transactions"
-msgstr ""
+msgstr "链上交易"
 
 #. [ln.description.wallet]
 #. defaultMessage is:
@@ -5118,7 +5118,7 @@ msgctxt "sidebar.mixer.running"
 msgid ""
 "One or more of the following decrediton's features running in the "
 "background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt"
-msgstr ""
+msgstr "在后台运行一个或多个decrediton功能：隐私混币工具、自动购票工具、购票询问"
 
 #. [ln.paymentsTab.outstanding]
 #. defaultMessage is:
@@ -5238,7 +5238,7 @@ msgstr "已付费用"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.passphraseProtectionSuccess.disabled"
 msgid "Passphrase protection has been disabled in Trezor {label}"
-msgstr ""
+msgstr "trezor{label}的密码保护功能已被禁用"
 
 #. [trezor.passphraseProtectionSuccess.enabled]
 #. defaultMessage is:
@@ -5246,7 +5246,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.passphraseProtectionSuccess.enabled"
 msgid "Passphrase protection has been enabled in Trezor {label}"
-msgstr ""
+msgstr "在trezor{label}中启用密码保护功能"
 
 #. [trezor.walletCreationPassphrasesMismatched]
 #. defaultMessage is:
@@ -5350,7 +5350,7 @@ msgstr "待处理通道"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.pinProtectionSuccess.disabled"
 msgid "Pin protection has been disabled in Trezor {label}"
-msgstr ""
+msgstr "在trezor{label}中已禁用Pin保护"
 
 #. [trezor.pinProtectionSuccess.enabled]
 #. defaultMessage is:
@@ -5358,7 +5358,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.pinProtectionSuccess.enabled"
 msgid "Pin protection has been enabled in Trezor {label}"
-msgstr ""
+msgstr "在trezor{label}中启用Pin保护"
 
 #. [createwallet.dupeWalletName.error]
 #. defaultMessage is:
@@ -5536,7 +5536,7 @@ msgstr "隐私"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacy.tab.privacy"
 msgid "Privacy"
-msgstr ""
+msgstr "隐私"
 
 #. [privacy.config.subtitle]
 #. defaultMessage is:
@@ -5560,7 +5560,7 @@ msgstr "隐私选项"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.privacy"
 msgid "Privacy and Security"
-msgstr ""
+msgstr "隐私与安全"
 
 #. [settings.group-title.privacy-and-security]
 #. defaultMessage is:
@@ -5576,7 +5576,7 @@ msgstr "隐私权与安全性"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacypage.title"
 msgid "Privacy and Security"
-msgstr ""
+msgstr "隐私与安全"
 
 #. [settings.getstartpage.group-title.privacy-and-security]
 #. defaultMessage is:
@@ -5870,7 +5870,7 @@ msgstr "购买于"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.title"
 msgid "Purchasing Tickets"
-msgstr ""
+msgstr "购买选票"
 
 #. [purchase.vsp.privacy.enabled.description]
 #. defaultMessage is:
@@ -5883,7 +5883,7 @@ msgid ""
 "Purchasing mixed tickets can take some time because mix transactions are "
 "only created every 20 minutes. The Privacy And Security page contains more "
 "information regarding the mixing process."
-msgstr ""
+msgstr "购买隐私选票可能需要一些时间，因为混币交易每20分钟才创建一次。隐私和安全页面包含有关混币过程的更多信息。"
 
 #. [ln.openChannel.pushAmt]
 #. defaultMessage is:
@@ -6062,7 +6062,7 @@ msgstr "已接收"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.received"
 msgid "Received"
-msgstr ""
+msgstr "已接收"
 
 #. [notifications.type.receive]
 #. defaultMessage is:
@@ -6556,7 +6556,7 @@ msgstr "SPV模式"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/SpvIcon/SpvIcon.json
 msgctxt "sidebar.spvDisabled"
 msgid "SPV disabled"
-msgstr ""
+msgstr "SPV已禁用"
 
 #. [spv.options.enable.description]
 #. defaultMessage is:
@@ -6657,7 +6657,7 @@ msgstr "搜索问题"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacy.tab.security.center"
 msgid "Security Center"
-msgstr ""
+msgstr "安全中心"
 
 #. [notification.seeTransactionDetails]
 #. defaultMessage is:
@@ -6789,7 +6789,7 @@ msgstr "选择允许 Decrediton 进行外部请求的内容。您可以稍后在
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.self"
 msgid "Self transfer"
-msgstr ""
+msgstr "内部转账"
 
 #. [send.sendBtn]
 #. defaultMessage is:
@@ -6869,7 +6869,7 @@ msgstr "将资金发送到另一个账户"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "send.sendToSelfBtn"
 msgid "Send to Self"
-msgstr ""
+msgstr "发送给自己"
 
 #. [privacy.sendToUnmixedAccount.title]
 #. defaultMessage is:
@@ -6877,7 +6877,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.sendToUnmixedAccount.title"
 msgid "Send to Unmixed Account"
-msgstr ""
+msgstr "发送到未混币帐户"
 
 #. [SendFromUnmixed.titleWarning]
 #. defaultMessage is:
@@ -6901,7 +6901,7 @@ msgstr "已发送"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.sent"
 msgid "Sent"
-msgstr ""
+msgstr "已发送"
 
 #. [notifications.type.send]
 #. defaultMessage is:
@@ -6997,7 +6997,7 @@ msgstr "设置未混币帐户"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/SettingsIconLink/SettingsIconLink.json
 msgctxt "sidebar.settings"
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #. [getStarted.btnSettings]
 #. defaultMessage is:
@@ -7029,7 +7029,7 @@ msgstr "设置"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.settings"
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #. [ln.channelsTab.closedChannel.settledBalance]
 #. defaultMessage is:
@@ -7229,7 +7229,7 @@ msgstr "分类"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.sources"
 msgid "Sources"
-msgstr ""
+msgstr "来源"
 
 #. [accounts.details.spendable]
 #. defaultMessage is:
@@ -7293,7 +7293,7 @@ msgstr "投票奖励"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.staking"
 msgid "Staking"
-msgstr ""
+msgstr "选票"
 
 #. [tutorial.staking.title]
 #. defaultMessage is:
@@ -7341,7 +7341,7 @@ msgstr "启动守护进程应用数据"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.title"
 msgid "Start Lightning Wallet"
-msgstr ""
+msgstr "启动闪电网络钱包"
 
 #. [privacy.start.mixer.confirmation]
 #. defaultMessage is:
@@ -7453,7 +7453,7 @@ msgstr "统计数据"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.stop.mixer"
 msgid "Stop Mixer"
-msgstr ""
+msgstr "停止混币工具"
 
 #. [snackbar.defaults.success]
 #. defaultMessage is:
@@ -8472,7 +8472,7 @@ msgstr "瞭望塔ID："
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.transaction"
 msgid "Transaction"
-msgstr ""
+msgstr "交易"
 
 #. [proposals.detail.wallet.eligible.headers.transaction]
 #. defaultMessage is:
@@ -8584,7 +8584,7 @@ msgstr "已转账"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.trezor"
 msgid "Trezor"
-msgstr ""
+msgstr "Trezor"
 
 #. [createwallet.isTrezor.label]
 #. defaultMessage is:
@@ -8608,7 +8608,7 @@ msgstr "Trezor"
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 msgctxt "trezorPage.title"
 msgid "Trezor"
-msgstr ""
+msgstr "Trezor"
 
 #. [settings.trezorConfig]
 #. defaultMessage is:
@@ -8696,7 +8696,7 @@ msgstr "指南"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.tutorials"
 msgid "Tutorials"
-msgstr ""
+msgstr "指南"
 
 #. [tutorials.subtitle]
 #. defaultMessage is:
@@ -8784,7 +8784,7 @@ msgstr "输入被要求的单词"
 #: app/i18n/extracted/app/components/modals/trezor/PassPhraseModal.json
 msgctxt "trezor.passphraseModal.description"
 msgid "Type the secret passphrase for the wallet stored in Trezor {label}"
-msgstr ""
+msgstr "输入在trezor设备{label}保存的钱包密码"
 
 #. [trezor.walletCreationpassphraseModal.description]
 #. defaultMessage is:
@@ -8795,7 +8795,7 @@ msgctxt "trezor.walletCreationpassphraseModal.description"
 msgid ""
 "Type the secret passphrase of the wallet to restore from the Trezor device "
 "{label}"
-msgstr ""
+msgstr "输入要从trezor设备{label}恢复的钱包密码"
 
 #. [trezor.wordModal.description]
 #. defaultMessage is:
@@ -8803,7 +8803,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 msgctxt "trezor.wordModal.description"
 msgid "Type the word requested in the Trezor device."
-msgstr ""
+msgstr "在trezor设备中输入单词。"
 
 #. [stakePoolSelect.addNewPromptEmpty]
 #. defaultMessage is:
@@ -8939,7 +8939,7 @@ msgstr "未混币帐户: {value}"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.label.unmixed.balance"
 msgid "Unmixed Balance"
-msgstr ""
+msgstr "未混币余额"
 
 #. [vsp.ticket.vsp.fee.started]
 #. defaultMessage is:
@@ -9231,7 +9231,7 @@ msgstr "VSP费用"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 msgctxt "purchaseTickets.vspFee"
 msgid "VSP Fee"
-msgstr ""
+msgstr "VSP费用"
 
 #. [purchaseTickets.advanced.poolFees]
 #. defaultMessage is:
@@ -9239,7 +9239,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.advanced.poolFees"
 msgid "VSP Fees"
-msgstr ""
+msgstr "VSP费用"
 
 #. [settings.privacy.stakepoolListing.label]
 #. defaultMessage is:
@@ -9301,7 +9301,7 @@ msgctxt "purchase.vsp.enableListing.description"
 msgid ""
 "VSP listing from external API endpoint is currently disabled. Please enable "
 "the access to this third party service or manually configure the VSP."
-msgstr ""
+msgstr "当前禁用了来自外部API端口的VSP列表。 请启用第三方服务访问或手动配置VSP。"
 
 #. [security.validate.title]
 #. defaultMessage is:
@@ -9796,7 +9796,7 @@ msgstr "从闪电网络钱包提取失败：{originalerror}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "errors.wrongPassphrase"
 msgid "Wrong private passphrase entered."
-msgstr ""
+msgstr "密码输入错误"
 
 #. [getStarted.decrypt.error]
 #. defaultMessage is:
@@ -9812,7 +9812,7 @@ msgstr "键入了错误的公共密码短语。"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 msgctxt "purchase.vsp.privacy.enabled"
 msgid "You are purchasing mixed tickets"
-msgstr ""
+msgstr "你正购买隐私选票"
 
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
@@ -9909,6 +9909,8 @@ msgid ""
 "You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will\n"
 "          be missed. Click on this button for re-sync fees"
 msgstr ""
+"您还有没有支付选票费，如果您继续并选择它们，这会使它们\n"
+"          被丢失。点击此按钮可重新获取同步费用。"
 
 #. [tickets.importScriptHeader]
 #. defaultMessage is:
@@ -10121,7 +10123,7 @@ msgstr "无信息"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.peersCount"
 msgid "peers"
-msgstr ""
+msgstr "节点"
 
 #. [ticket.status.multiple.revoked]
 #. defaultMessage is:
@@ -10145,7 +10147,7 @@ msgstr "riot.im"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/LastBlockTime/LastBlockTime.json
 msgctxt "sidebar.lastBlockIsRecent"
 msgid "seconds ago"
-msgstr ""
+msgstr "几秒钟前"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:

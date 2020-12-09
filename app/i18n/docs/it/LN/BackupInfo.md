@@ -8,5 +8,5 @@ un lighting wallet ripristinato possa essere utilizzato per chiudere i canali ap
 
 Il backup dovrebbe essere aggiornato ogni volta che un canale viene aperto o chiuso sul nodo LN locale (anche quando un nodo _remoto_ apre un canale verso il nodo locale).
 
-Per ulteriori informazioni sui backup LN, consultare la documentazione
-all'indirizzo https://docs.decred.org/lightning-network/backups/
+Per ulteriori informazioni sui backup LN, consultare la documentazione all'indirizzo
+https://docs.decred.org/lightning-network/backups/

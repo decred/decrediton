@@ -6,4 +6,4 @@
 Inoltre, conservare il seed su un file di computer senza aver fatto il backup su un supporto fisico (come un foglio scritto e conservato in un luogo sicuro) può causare la perdita di fondi se il file del portafoglio locale viene corrotto o diviene non disponibile (a causa di un guasto hardware o un altro problema). Se volete sapere di più sulla sicurezza dei seed,
 consultate le nostre [Wallets and Seeds FAQ](https://docs.decred.org/faq/wallets-and-seeds/).
 
-Se si è sicuri di comprendere i rischi e si vuole comunque copiare il seed nella clipboard, digitate la frase indicata qui sotto ed il seed verrà copiato negli appunti.
+Se siete sicuri di comprendere i rischi e volete comunque copiare il seed negli appunti, digitate la frase indicata qui sotto ed il seed verrà copiato negli appunti.

@@ -1,5 +1,5 @@
-**Attenzione**! Si prega di notare che la passphrase dell portafoglio trezor **non può** essere cambiata
+**Attenzione**! Si prega di notare che la frase d'accesso al portafoglio Trezor **non può** essere cambiata
 in quanto serve a ricavare gli indirizzi per il controllo dei fondi. Se si perde o si digita la
-passphrase sbagliata si potrebbero **perdere i fondi**.
+frase d'accesso sbagliata si potrebbero **perdere i fondi**.
 
-Si prega di leggere il [Manuale Trezor](https://doc.satoshilabs.com) per ulteriori informazioni su dispositivi trezor protetti da frase d'accesso.
+Si prega di leggere il [Manuale Trezor](https://doc.satoshilabs.com) per ulteriori informazioni su dispositivi Trezor protetti da frase d'accesso.

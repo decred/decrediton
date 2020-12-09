@@ -3532,7 +3532,7 @@ msgstr "معلومات عامة عن الشبكة (ارتفاع الكتلة، �
 #: app/i18n/extracted/app/components/views/HomePage/RecentTransactions/RecentTransactions.json
 msgctxt "home.noTransactions.receiveLink"
 msgid "Generate a DCR Address for receiving funds"
-msgstr "أنشئ عنوان DCR لتلقي الأموال"
+msgstr "أنشئ عنوان ديكريد لتلقي الأموال"
 
 #. [receive.newAddressBtn]
 #. defaultMessage is:
@@ -3748,7 +3748,7 @@ msgstr "كم عدد التذاكر التي تم التصويت عليها في 
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.createWalletWarning.okBtn"
 msgid "I understand and accept the risks"
-msgstr "أنا أفهم وأقبل المخاطر"
+msgstr "I understand and accept the risks"
 
 #. [seedCopyConfirmModal.copyConfirmationPhrase]
 #. defaultMessage is:
@@ -3756,7 +3756,7 @@ msgstr "أنا أفهم وأقبل المخاطر"
 #: app/i18n/extracted/app/components/modals/SeedCopyConfirmModal/SeedCopyConfirmModal.json
 msgctxt "seedCopyConfirmModal.copyConfirmationPhrase"
 msgid "I understand the risks"
-msgstr "أنا أفهم المخاطر"
+msgstr "I understand the risks"
 
 #. [sendFromUnmixedModal.copyConfirmationPhrase]
 #. defaultMessage is:
@@ -3764,7 +3764,7 @@ msgstr "أنا أفهم المخاطر"
 #: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountModal.json
 msgctxt "sendFromUnmixedModal.copyConfirmationPhrase"
 msgid "I understand the risks"
-msgstr "أنا أفهم المخاطر"
+msgstr "I understand the risks"
 
 #. [txDetails.io.title]
 #. defaultMessage is:
@@ -4438,7 +4438,7 @@ msgid ""
 "                \n"
 "                With this action the chosen accounts will be renamed."
 msgstr ""
-"يبدو أن لديك حسابات بمخرجات coinjoin.\n"
+"يبدو أن لديك حسابات بمخرجات دمج عملة.\n"
 " لا يمكن استعادة أسماء الحسابات السابقة أثناء الاسترداد، لذلك لا\n"
 " يمكن معرفة الحساب الذي كان مَخلُوطاً. يمكنك\n"
 "الآن تعيين حساب مَخلُوط وغير مَخلُوط أو يمكن القيام بذلك لاحقًا\n"
@@ -4522,7 +4522,7 @@ msgstr "دردشة الماتريكس"
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.channel.policy.maxHtlc"
 msgid "Max HTLC"
-msgstr "الحد الأقصى لعقد تجزئة المؤمن بالوقت HTLC"
+msgstr "الحد الأقصى لعقد تجزئة المؤمن بالوقت "
 
 #. [ln.paymentsTab.balance.maxPayable]
 #. defaultMessage is:
@@ -4570,7 +4570,7 @@ msgstr "رسالة"
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.channel.policy.minHtlc"
 msgid "Min HTLC"
-msgstr "الحد الأدنى لعقد تجزئة المؤمن بالوقت HTLC"
+msgstr "الحد الأدنى لعقد تجزئة المؤمن بالوقت "
 
 #. [appMenu.minimize]
 #. defaultMessage is:
@@ -6103,7 +6103,7 @@ msgstr "استلام"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/ReceivePage/ReceivePage.json
 msgctxt "receive.subtitle"
 msgid "Receive DCR"
-msgstr "استلام DCR"
+msgstr "استلام وحدات ديكريد"
 
 #. [charts.keys.received]
 #. defaultMessage is:
@@ -6887,7 +6887,7 @@ msgstr "إرسال"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/SendTab.json
 msgctxt "send.subtitle"
 msgid "Send DCR"
-msgstr "إرسال DCR"
+msgstr "إرسال وحدات ديكريد"
 
 #. [ln.paymentsTab.sendPayment]
 #. defaultMessage is:
@@ -8424,7 +8424,7 @@ msgstr "المبلغ الإجمالي"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.balances.fields.totalStake"
 msgid "Total amount of DCR used on staking."
-msgstr "المبلغ الإجمالي ل DCR المستخدمة في التحصيص."
+msgstr "المبلغ الإجمالي لوحدات ديكريد المستخدمة في التحصيص."
 
 #. [export.dailyBalances.fields.received]
 #. defaultMessage is:
@@ -8456,7 +8456,7 @@ msgstr "المبلغ الإجمالي المرسل إلى العناوين غي�
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.revoked"
 msgid "Total amount, in DCR, of tickets revoked"
-msgstr "المبلغ الإجمالي للتذاكر المُسترجَعة بDCR"
+msgstr "المبلغ الإجمالي للتذاكر المُسترجَعة بوحدات ديكريد"
 
 #. [export.dailyBalances.fields.voted]
 #. defaultMessage is:
@@ -8464,7 +8464,7 @@ msgstr "المبلغ الإجمالي للتذاكر المُسترجَعة بDC
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.voted"
 msgid "Total amount, in DCR, of tickets voted"
-msgstr "المبلغ الإجمالي للتذاكر التي صوتت ب DCR"
+msgstr "المبلغ الإجمالي للتذاكر التي صوتت بوحدات ديكريد"
 
 #. [export.dailyBalances.fields.ticket]
 #. defaultMessage is:
@@ -8472,7 +8472,7 @@ msgstr "المبلغ الإجمالي للتذاكر التي صوتت ب DCR"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.ticket"
 msgid "Total amount, in DCR, spent in tickets"
-msgstr "المبلغ الإجمالي الذي تم إنفاقه في التذاكر ب DCR"
+msgstr "المبلغ الإجمالي الذي تم إنفاقه في التذاكر بوحدات ديكريد"
 
 #. [export.dailyBalances.fields.total]
 #. defaultMessage is:
@@ -9290,7 +9290,7 @@ msgstr "VSP"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.advanced.poolAddress"
 msgid "VSP Address"
-msgstr "عنوان موفر خدمة التصويتVSP"
+msgstr "عنوان موفر خدمة التصويت"
 
 #. [purchaseTickets.poolAddress]
 #. defaultMessage is:
@@ -9298,7 +9298,7 @@ msgstr "عنوان موفر خدمة التصويتVSP"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.poolAddress"
 msgid "VSP Address"
-msgstr "عنوان موفر خدمة التصويتVSP"
+msgstr "عنوان موفر خدمة التصويت"
 
 #. [stake.addPoolConfirmation]
 #. defaultMessage is:
@@ -9306,7 +9306,7 @@ msgstr "عنوان موفر خدمة التصويتVSP"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 msgctxt "stake.addPoolConfirmation"
 msgid "VSP Confirmation"
-msgstr "تأكيد موفر خدمة التصويت VSP"
+msgstr "تأكيد موفر خدمة التصويت "
 
 #. [purchaseTickets.poolFee]
 #. defaultMessage is:
@@ -9314,7 +9314,7 @@ msgstr "تأكيد موفر خدمة التصويت VSP"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsQuickBar.json
 msgctxt "purchaseTickets.poolFee"
 msgid "VSP Fee"
-msgstr "رسم موفر خدمة التصويت VSP"
+msgstr "رسم موفر خدمة التصويت "
 
 #. [purchaseTickets.vspFee]
 #. defaultMessage is:
@@ -9338,7 +9338,7 @@ msgstr "رسوم موفر خدمة التصويت"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/PrivacySettings.json
 msgctxt "settings.privacy.stakepoolListing.label"
 msgid "VSP Listing"
-msgstr "قائمة موفري خدمة التصويت VSP"
+msgstr "قائمة موفري خدمة التصويت "
 
 #. [syncVsp.vsp]
 #. defaultMessage is:
@@ -9346,7 +9346,7 @@ msgstr "قائمة موفري خدمة التصويت VSP"
 #: app/i18n/extracted/app/components/modals/SyncVSPFailedTickets.json
 msgctxt "syncVsp.vsp"
 msgid "VSP Select"
-msgstr "إختيار موفر خدمة التصويت VSP"
+msgstr "إختيار موفر خدمة التصويت "
 
 #. [mytickets.statistics.stakepool.stakepoolTickets]
 #. defaultMessage is:
@@ -9354,7 +9354,7 @@ msgstr "إختيار موفر خدمة التصويت VSP"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.stakepoolTickets"
 msgid "VSP Tickets"
-msgstr "تذاكر موفر خدمة التصويت VSP"
+msgstr "تذاكر موفر خدمة التصويت "
 
 #. [tickets.fee.error.title]
 #. defaultMessage is:
@@ -9362,7 +9362,7 @@ msgstr "تذاكر موفر خدمة التصويت VSP"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
 msgctxt "tickets.fee.error.title"
 msgid "VSP Tickets Fee Error"
-msgstr "خطأ رسم تذاكر موفر خدمة التصويت VSP"
+msgstr "خطأ رسم تذاكر موفر خدمة التصويت "
 
 #. [stakePoolsList.poolFee]
 #. defaultMessage is:
@@ -9370,7 +9370,7 @@ msgstr "خطأ رسم تذاكر موفر خدمة التصويت VSP"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList.json
 msgctxt "stakePoolsList.poolFee"
 msgid "VSP fees: {value}"
-msgstr "رسوم موفر خدمة التصويت VSP: {value}"
+msgstr "رسوم موفر خدمة التصويت: {value}"
 
 #. [stake.enableStakePoolListing.description]
 #. defaultMessage is:
@@ -9461,7 +9461,7 @@ msgstr "الإصدار"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/ReceivePage/ReceivePage.json
 msgctxt "receive.viewQR"
 msgid "View QR"
-msgstr "عرض رمز الاستجابة السريعةQR"
+msgstr "عرض رمز الاستجابة السريعة"
 
 #. [txDetails.type.vote]
 #. defaultMessage is:

@@ -3785,7 +3785,7 @@ msgstr "Número de tickets votados en este grupo diario"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.createWalletWarning.okBtn"
 msgid "I understand and accept the risks"
-msgstr "Entiendo y acepto los riesgos"
+msgstr "I understand and accept the risks"
 
 #. [seedCopyConfirmModal.copyConfirmationPhrase]
 #. defaultMessage is:
@@ -3793,7 +3793,7 @@ msgstr "Entiendo y acepto los riesgos"
 #: app/i18n/extracted/app/components/modals/SeedCopyConfirmModal/SeedCopyConfirmModal.json
 msgctxt "seedCopyConfirmModal.copyConfirmationPhrase"
 msgid "I understand the risks"
-msgstr "Entiendo los riesgos"
+msgstr "I understand the risks"
 
 #. [sendFromUnmixedModal.copyConfirmationPhrase]
 #. defaultMessage is:
@@ -3801,7 +3801,7 @@ msgstr "Entiendo los riesgos"
 #: app/i18n/extracted/app/components/modals/SendFromUnmixedAccountModal/SendFromUnmixedAccountModal.json
 msgctxt "sendFromUnmixedModal.copyConfirmationPhrase"
 msgid "I understand the risks"
-msgstr "Entiendo los riesgos"
+msgstr "I understand the risks"
 
 #. [txDetails.io.title]
 #. defaultMessage is:
