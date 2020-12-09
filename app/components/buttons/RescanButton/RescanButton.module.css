@@ -1,9 +1,10 @@
 .tooltip {
- height: 2.2rem;
+  height: 2.2rem;
 }
 
 .rescan.syncing {
   background-image: var(--menu-animation-syncing);
+  cursor: default;
 }
 
 .rescan {
