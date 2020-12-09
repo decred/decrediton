@@ -182,9 +182,10 @@ export const purchaseTickets = (
         request.setChangeAccount(changeAccount);
         request.setCsppServer(csppServer + ":" + csppPort);
         request.setMixedAccountBranch(mixedAcctBranch);
+      } else {
+        request.setChangeAccount(accountNum.value);
       }
       request.setAccount(accountNum.value);
-      request.setChangeAccount(accountNum.value);
       request.setNumTickets(numTickets);
       request.setDontSignTx(!signTx);
       const { pubkey, host } = vsp;
