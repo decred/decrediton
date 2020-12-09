@@ -623,10 +623,6 @@
   margin-right: 15px;
 }
 
-.releaseNotesText li {
-  list-style-position: inside;
-}
-
 .releaseNotesText p {
   display: inline;
 }
@@ -649,6 +645,10 @@
 .releaseNotesText ol {
   padding-left: 2em;
 }
+.releaseNotesText li {
+  padding: 0 0 5px;
+}
+
 .releaseNotesText a {
   color: var(--link-color);
 }
