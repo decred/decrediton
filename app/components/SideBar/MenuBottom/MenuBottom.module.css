@@ -82,7 +82,7 @@
 }
 
 .bottomBarCollapsed > div {
-    margin: 10px;
+  margin: 10px;
 }
 
 .settingsLinkCollapsed {
@@ -134,10 +134,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  .latestBlock {
-    background-color: var(--sidebar-color);
-  }
-
   .latestBlock .tooltipContainer span {
     visibility: hidden;
   }
