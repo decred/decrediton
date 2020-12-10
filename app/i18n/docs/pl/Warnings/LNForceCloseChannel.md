@@ -1,4 +1,3 @@
 ## Ostrzeżenie
 
-Wymuszenie zamknięcia kanału który jest offline jest _niekooperacyjnym_ zamknięciem. Oznacza to, że twoje środki mogą być zablokowane w czasie przez zaangażowane transakcje i przez wszelkie zaległe (otwarte) HTLC do momentu, gdy sweeper-komponent wykryje, że środki są możliwe do wykupienia.
-
+Wymuszenie zamknięcia kanału który jest offline jest zamknięciem _jednostronnym_ i bez współpracy kontrahenta. Oznacza to, że Twoje środki mogą być czasowo zablokowane przez zobowiązania transakcyjne i przez wszelkie zaległe (otwarte) HTLC do momentu, gdy system wykryje, że środki są możliwe do wykupienia.
