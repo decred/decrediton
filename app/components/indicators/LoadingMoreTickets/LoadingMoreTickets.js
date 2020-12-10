@@ -26,7 +26,8 @@ const AscMessage = ({ startRequestHeight, currentBlockHeight }) => (
 );
 
 const LoadingMoreTicketsIndicator = ({
-  className
+  className,
+  isLiveTickets
 }) => {
   const {
     startRequestHeight,
@@ -75,11 +76,18 @@ const LoadingMoreTicketsIndicator = ({
                     m="Loading more tickets..."
                   />
                   <div className="loading-more-tickets-progress-line">
-                    {ticketsFilter.listDirection === "desc" ? (
-                      <DescMessage {...{ startRequestHeight, currentBlockHeight }} />
-                    ) : (
-                        <AscMessage {...{ startRequestHeight, currentBlockHeight }} />
-                      )}
+                    {
+                      // removing this for now on live tickets, but it should
+                      // have its own proportion between 0-100%
+                      !isLiveTickets && (
+                        ticketsFilter.listDirection === "desc" ? (
+                          <DescMessage {...{ startRequestHeight, currentBlockHeight }} />
+                        ) : (
+                            <AscMessage {...{ startRequestHeight, currentBlockHeight }} />
+                          )
+                      )
+                    }
+                    {}
                   </div>
                 </>
               </div>

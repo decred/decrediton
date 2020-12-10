@@ -123,7 +123,7 @@ const TicketListPage = ({
         </>
       )}
       {!noMoreLiveTickets ? (
-        <LoadingMoreTicketsIndicator  />
+        <LoadingMoreTicketsIndicator isLiveTickets={true}  />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (
