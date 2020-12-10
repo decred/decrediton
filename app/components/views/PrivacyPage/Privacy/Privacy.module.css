@@ -88,7 +88,6 @@
   font-size: 17px;
   line-height: 15px;
   color: var(--privacy-balance-color);
-  min-width: 160px;
   position: relative;
   font-family: var(--font-family-monospace);
 }
@@ -125,13 +124,15 @@
   color: var(--privacy-balance-mixed-label-color);
 }
 .privacyArrows {
-  width: 56px;
-  height: 16px;
+  width: 50px;
+  height: 20px;
+  padding: 0 14px;
 }
 .privacyArrows.running {
   background-image: var(--privacy-running-arrows);
-  background-position: top left;
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: 50px 20px;
 }
 .startButtonContrainer {
   margin-left: auto;

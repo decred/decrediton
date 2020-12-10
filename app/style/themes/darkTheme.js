@@ -241,7 +241,7 @@ const darkTheme = {
     "url('style/icons/daemonWaitingLoaderInitialDark.gif')",
   "mixed-account-icon": "url('style/icons/mixedAccountDark.svg')",
   "unmixed-account-icon": "url('style/icons/unmixedAccountDark.svg')",
-  "privacy-running-arrows": "url('style/icons/privacyRunningArrowsDark.svg')",
+  "privacy-running-arrows": "url('style/icons/mixerArrowsDark.gif')",
   "decentralized-loop-still":
     "url('style/icons/decentralizedLoopStillDark.svg')",
   "decentralized-loop-animation":
