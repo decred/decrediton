@@ -66,10 +66,9 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  const vspFee =
-    availableVSPs &&
+  const [vspFee, setVspFee] = useState(availableVSPs &&
     availableVSPs.find((availableVSP) => availableVSP.host === vsp?.host)
-      ?.vspData.feepercentage;
+      ?.vspData.feepercentage);
 
   return (
     <PurchasePage
@@ -92,6 +91,7 @@ const Tickets = ({ toggleIsLegacy }) => {
         onV3PurchaseTicket,
         vsp,
         vspFee,
+        setVspFee,
         mixedAccount,
         changeAccount,
         isLoading,
