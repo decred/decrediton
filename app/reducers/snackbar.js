@@ -33,7 +33,8 @@ import {
   REMOVESTAKEPOOLCONFIG,
   ADDCUSTOMSTAKEPOOL_SUCCESS,
   ADDCUSTOMSTAKEPOOL_FAILED,
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
+  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
+  SYNCVSPTICKETS_FAILED
 } from "../actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
@@ -514,6 +515,10 @@ const messages = defineMessages({
   RUNACCOUNTMIXER_FAILED: {
     id: "mixer.ntf.startMixerFailed",
     defaultMessage: "{originalError}"
+  },
+  SYNCVSPTICKETS_FAILED: {
+    id: "sync.vsp.failed",
+    defaultMessage: "{originalError}"
   }
 });
 
@@ -702,6 +707,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_REMOVEWATCHTOWER_FAILED:
     case LNWALLET_LISTWATCHTOWERS_FAILED:
     case RUNACCOUNTMIXER_FAILED:
+    case SYNCVSPTICKETS_FAILED:
       type = "Error";
       if (
         action.error &&
