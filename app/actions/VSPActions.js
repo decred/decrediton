@@ -71,8 +71,8 @@ export const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account 
       dispatch({ type: SYNCVSPTICKETS_SUCCESS });
       dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     })
-    .catch(err => {
-      dispatch({ type: SYNCVSPTICKETS_FAILED, err });
+    .catch(error => {
+      dispatch({ type: SYNCVSPTICKETS_FAILED, error });
     });
 };
 
