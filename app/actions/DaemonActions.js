@@ -5,7 +5,7 @@ import {
 } from "./WalletLoaderActions";
 import { getVersionServiceAttempt, semverCompatible } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
-import { saveSettings, updateStateSettingsChanged, RESET_GLOBAL_SETTINGS } from "./SettingsActions";
+import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
 import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
@@ -396,7 +396,6 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
       const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
       const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
-      const allowedExternalRequests = walletCfg.get(cfgConstants.ALLOW_EXTERNAL_REQUESTS);
 
       walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
       dispatch({
@@ -410,8 +409,6 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      if (allowedExternalRequests)
-        dispatch({ type: RESET_GLOBAL_SETTINGS, allowedExternalRequests });
       dispatch({ type: TOGGLE_ISLEGACY, isLegacy });
       dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
       dispatch({

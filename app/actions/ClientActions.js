@@ -119,20 +119,14 @@ export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
 export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
 export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
-export const getStartupWalletInfo = () => (dispatch, getState) => {
+export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
-  const {
-    daemon: { walletName }
-  } = getState();
-
-  const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const globalCfg = getGlobalCfg();
-  const walletHasConfig = walletConfig.has(cfgConstants.ALLOW_EXTERNAL_REQUESTS);
+  const config = getGlobalCfg();
   const dcrdataEnabled =
-    (walletHasConfig ? walletConfig : globalCfg).get(cfgConstants.ALLOW_EXTERNAL_REQUESTS).indexOf(EXTERNALREQUEST_DCRDATA) >
+    config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) >
     -1;
   const politeiaEnabled =
-    (walletHasConfig ? walletConfig : globalCfg).get(cfgConstants.ALLOW_EXTERNAL_REQUESTS).indexOf(EXTERNALREQUEST_POLITEIA) >
+    config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) >
     -1;
 
   return new Promise((resolve, reject) => {

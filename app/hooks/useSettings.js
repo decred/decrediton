@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as sa from "actions/SettingsActions";
@@ -23,11 +23,6 @@ const useSettings = () => {
   const needNetworkReset = useSelector(sel.needNetworkReset);
   const walletName = useSelector(sel.getWalletName);
   const walletReady = useSelector(sel.getWalletReady);
-
-  useEffect(() => {
-    if (!walletName)
-      dispatch(sa.resetGlobalSettings);
-  }, [walletName, dispatch]);
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {

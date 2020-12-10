@@ -34,6 +34,9 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   } = getState();
 
   const config = getGlobalCfg();
+  const oldAllowedExternalRequests = config.get(
+    configConstants.ALLOW_EXTERNAL_REQUESTS
+  );
   const oldTheme = config.get(configConstants.THEME);
   const updatedProxy =
     config.get(configConstants.PROXY_TYPE) !== settings.proxyType ||
@@ -42,6 +45,10 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   config.set(configConstants.LOCALE, settings.locale);
   config.set(configConstants.DAEMON_ADVANCED, settings.daemonStartAdvanced);
   config.set(configConstants.PROXY_TYPE, settings.proxyType);
+  config.set(
+    configConstants.ALLOW_EXTERNAL_REQUESTS,
+    settings.allowedExternalRequests
+  );
   config.set(configConstants.PROXY_LOCATION, settings.proxyLocation);
   config.set(configConstants.TIMEZONE, settings.timezone);
   config.set(configConstants.SPV_MODE, settings.spvMode);
@@ -51,27 +58,14 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
-
-    const oldAllowedExternalRequests = config.get(
-      configConstants.ALLOW_EXTERNAL_REQUESTS
-    );
     walletConfig.set(configConstants.CURRENCY_DISPLAY, settings.currencyDisplay);
     walletConfig.set(configConstants.GAP_LIMIT, settings.gapLimit);
-    walletConfig.set(
-      configConstants.ALLOW_EXTERNAL_REQUESTS,
-      settings.allowedExternalRequests
-    );
+  }
 
-    if (
-      !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
-    ) {
-      wallet.reloadAllowedExternalRequests();
-    }
-  } else {
-    config.set(
-      configConstants.ALLOW_EXTERNAL_REQUESTS,
-      settings.allowedExternalRequests
-    );
+  if (
+    !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
+  ) {
+    wallet.reloadAllowedExternalRequests();
   }
 
   if (oldTheme != settings.theme) {
@@ -118,10 +112,7 @@ export const addAllowedExternalRequest = (requestType) => (
   getState
 ) =>
   new Promise((resolve, reject) => {
-    const {
-      daemon: { walletName }
-    } = getState();
-    const config = getWalletCfg(isTestNet(getState()), walletName);
+    const config = getGlobalCfg();
     const allowed = config.get(configConstants.ALLOW_EXTERNAL_REQUESTS);
 
     if (allowed.indexOf(requestType) > -1) return reject(false);
@@ -210,11 +201,4 @@ export const updateStateVoteSettingsChanged = (settings) => (
   } else {
     dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
   }
-};
-
-export const RESET_GLOBAL_SETTINGS = "RESET_GLOBAL_SETTINGS";
-export const resetGlobalSettings = (dispatch) => {
-  const config = getGlobalCfg();
-  const allowedExternalRequests = config.get(configConstants.ALLOW_EXTERNAL_REQUESTS);
-  dispatch({ type: RESET_GLOBAL_SETTINGS, allowedExternalRequests });
 };

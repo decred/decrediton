@@ -3,8 +3,7 @@ import {
   SETTINGS_CHANGED,
   SETTINGS_UNCHANGED,
   SETTINGS_TOGGLE_THEME,
-  ALLOWEDEXTERNALREQUESTS_ADDED,
-  RESET_GLOBAL_SETTINGS
+  ALLOWEDEXTERNALREQUESTS_ADDED
 } from "../actions/SettingsActions";
 import { WALLET_SETTINGS, SELECT_LANGUAGE } from "actions/DaemonActions";
 export default function settings(state = {}, action) {
@@ -59,16 +58,6 @@ export default function settings(state = {}, action) {
       };
     case SETTINGS_TOGGLE_THEME:
       return { ...state, theme: action.theme };
-    case RESET_GLOBAL_SETTINGS:
-      currentSettings = state.currentSettings;
-      tempSettings = state.tempSettings;
-      currentSettings.allowedExternalRequests = action.allowedExternalRequests;
-      tempSettings.allowedExternalRequests = action.allowedExternalRequests;
-      return {
-        ...state,
-        currentSettings: currentSettings,
-        tempSettings: tempSettings
-      };
     default:
       return state;
   }
