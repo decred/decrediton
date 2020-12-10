@@ -238,7 +238,7 @@ const lightTheme = {
     "url('style/icons/daemon_waiting_loader.gif')",
   "mixed-account-icon": "url('style/icons/mixedAccount.svg')",
   "unmixed-account-icon": "url('style/icons/unmixedAccount.svg')",
-  "privacy-running-arrows": "url('style/icons/privacyRunningArrows.svg')",
+  "privacy-running-arrows": "url('style/icons/mixerArrows.gif')",
   "decentralized-loop-still": "url('style/icons/decentralizedLoopStill.svg')",
   "decentralized-loop-animation":
     "url('style/icons/decentralizedLoopAnimation.gif')",
