@@ -786,3 +786,27 @@ export const getTxFromInputs = (unsignedTx) => (dispatch, getState) => {
   // Resolve all promises.
   return Promise.all(txPromises);
 };
+
+export const LISTUNSPENTOUTPUTS_ATTEMPT = "LISTUNSPENTOUTPUTS_ATTEMPT";
+export const LISTUNSPENTOUTPUTS_FAILED = "LISTUNSPENTOUTPUTS_FAILED";
+export const LISTUNSPENTOUTPUTS_COMPLETE = "LISTUNSPENTOUTPUTS_COMPLETE";
+
+export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    const { walletService } = getState().grpc;
+    dispatch({ type: LISTUNSPENTOUTPUTS_ATTEMPT });
+    const unspentOutputs = [];
+    // aux function for getting values from stream
+    const outputsCB = (response) => {
+      unspentOutputs.push(response);
+    };
+    wallet.listUnspentOutputs(walletService, accountNum, outputsCB)
+      .then(() => {
+        dispatch({ type: LISTUNSPENTOUTPUTS_COMPLETE, outputs: unspentOutputs });
+        resolve(unspentOutputs);
+      })
+      .catch((error) => {
+        dispatch({ type: LISTUNSPENTOUTPUTS_FAILED, error });
+        reject(error);
+      });
+});

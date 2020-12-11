@@ -5,6 +5,7 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
+import { listUnspentOutputs } from "actions/TransactionActions";
 import * as sel from "selectors";
 
 export const usePurchaseTab = () => {
@@ -83,6 +84,8 @@ export const usePurchaseTab = () => {
   const setRememberedVspHost = (vspHost) =>
     dispatch(vspa.setRememberedVspHost(vspHost));
 
+  const onListUnspentOutputs = (accountNum) => dispatch(listUnspentOutputs(accountNum));
+
   // purchase cspp ticket
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
@@ -117,6 +120,7 @@ export const usePurchaseTab = () => {
     onRevokeTickets,
     notMixedAccounts,
     isVSPListingEnabled,
-    onEnableVSPListing
+    onEnableVSPListing,
+    onListUnspentOutputs
   };
 };
