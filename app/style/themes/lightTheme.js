@@ -135,6 +135,12 @@ const lightTheme = {
   "mixer-settings-label": "#0C1E3E",
   "mixer-settings-disabled": "#8997A5",
 
+  // override pi-ui's tab colors
+  "tab-default-color": "transparent", // default border
+  "tab-active-background": "var(--background-back-color)",
+  "tab-text-active-color": "var(--input-color-default)",
+  "tab-text-color": "var(--sidebar-menu-link)",
+
   /* icons */
   "menu-settings": "url('style/icons/menuSettings.svg')",
   "menu-accounts": "url('style/icons/accounts-active.png')",

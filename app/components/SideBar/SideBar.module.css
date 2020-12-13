@@ -37,16 +37,7 @@
   flex-direction: column;
 }
 
-.sidebarScroll {
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar.sidebarReduced .sidebarMain,
-.sidebar.sidebarReduced .sidebarScroll {
+.sidebar.sidebarReduced .sidebarMain {
   overflow: visible;
 }
 
@@ -59,22 +50,10 @@
   margin-bottom: 10px;
 }
 
-.menuCaret {
-  position: absolute;
-  height: 52px;
-  border-left: 5px solid var(--accent-color);
-  background-color: var(--background-back-color);
-}
-
 @media screen and (max-width: 768px) {
   .sidebar {
     display: flex;
     width: 100% !important;
-  }
-
-  .sidebarScroll {
-    overflow: visible;
-    margin: 0 auto;
   }
 
   .sidebarMain {
@@ -83,13 +62,6 @@
 
   .isShowingAccounts {
     overflow: hidden;
-  }
-
-  .menuCaret {
-    width: 76px;
-    height: 65px;
-    border-left: 0;
-    border-bottom: 5px solid var(--accent-color);
   }
 }
 

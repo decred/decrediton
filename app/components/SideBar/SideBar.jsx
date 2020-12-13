@@ -57,9 +57,7 @@ const SideBar = () => {
           style.sidebarMain,
           isShowingAccounts && style.isShowingAccounts
         )}>
-        <div className={style.sidebarScroll}>
-          <MenuLinks />
-        </div>
+        <MenuLinks />
         <AccountsList
           {...{
             isShowingAccounts,
