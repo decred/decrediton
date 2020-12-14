@@ -514,7 +514,7 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     stakeTransactions,
     regularTransactions
   } = getState().grpc;
-  let { noMoreTransactions, lastTransaction } = isStake
+  let { noMoreTransactions, lastTransaction, noMoreLiveTickets } = isStake
     ? getStakeTxsAux
     : getRegularTxsAux;
   const listDirection = isStake
@@ -541,15 +541,20 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   unmined = await normalizeBatchTx(walletService, chainParams, unmined);
   transactions.push(...unmined);
 
-  const reachedGenesis = false;
-
   let startRequestHeight, endRequestHeight;
-  while (!noMoreTransactions && !reachedGenesis) {
+  while (!noMoreTransactions) {
     if (listDirection === DESC) {
       endRequestHeight = 1;
       startRequestHeight = lastTransaction
         ? lastTransaction.height - 1
         : currentBlockHeight;
+      // if already down ticket expiry + coinbase maturity, than no more live tickets
+      // will be find.
+      if (
+        currentBlockHeight - chainParams.TicketExpiry - chainParams.CoinbaseMaturity > startRequestHeight
+      ) {
+        noMoreLiveTickets = true;
+      }
       // Reached genesis.
       if (startRequestHeight < 1) {
         noMoreTransactions = true;
@@ -611,7 +616,8 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     getStakeTxsAux,
     stakeTransactions,
     regularTransactions,
-    startRequestHeight
+    startRequestHeight,
+    noMoreLiveTickets
   });
 };
 

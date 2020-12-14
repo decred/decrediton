@@ -181,6 +181,8 @@ const initialState = {
     // GetTransactions
     // requestHeight of last getTransaction call
     startRequestHeight: null,
+    // noMoreLiveTickets check if no more live tickets can be find.
+    noMoreLiveTickets: null,
     // stakeTransactionsCancel checks if a stake transaction is canceled from
     // getting more transactions.
     stakeTransactionsCancel: false,

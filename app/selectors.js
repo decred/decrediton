@@ -987,6 +987,7 @@ export const getTransactionsRequestAttempt = get([
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
+export const getNoMoreLiveTickets = get(["grpc", "noMoreLiveTickets"]);
 
 export const rescanEndBlock = currentBlockHeight;
 export const rescanStartBlock = compose(
