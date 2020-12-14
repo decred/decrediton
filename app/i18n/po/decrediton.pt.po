@@ -5232,7 +5232,7 @@ msgstr "Abrir Canal"
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
 msgctxt "ln.channelsTab.channelList"
 msgid "Open Channels"
-msgstr "Abrir Canais"
+msgstr "Canais Abertos"
 
 #. [politeia.details.openLinkModal]
 #. defaultMessage is:

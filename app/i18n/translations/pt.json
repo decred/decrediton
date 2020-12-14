@@ -391,7 +391,7 @@
   "ln.channelsTab.balance": "Saldo",
   "ln.channelsTab.balance.channelsCapacity": "Capacidade total dos canais",
   "ln.channelsTab.balance.onChain": "Saldo on-chain confirmado",
-  "ln.channelsTab.channelList": "Abrir Canais",
+  "ln.channelsTab.channelList": "Canais Abertos",
   "ln.channelsTab.closeChannelBtn": "Fechar o canal",
   "ln.channelsTab.closeChannelModalTitle": "Fechar Canal",
   "ln.channelsTab.closedChannel.settledBalance": "Liquidado",
