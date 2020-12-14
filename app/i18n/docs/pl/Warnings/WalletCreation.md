@@ -1,9 +1,9 @@
-Portfele są generowane deterministycznie przez seed z portfela. Seeds są kluczem do Twojego portfela, a cały portfel może być odtworzony w dowolnym momencie za ich pomocą. Jeśli hasło szyfrowania portfela zostanie zapomniane lub portfel zostanie zniszczony, seed może zostać użyte do jego odzyskania.
+Portfele są generowane deterministycznie przez ziarno portfela. Ziarna są głównym kluczem do Twojego portfela i w dowolnym momencie za ich pomocą można odtworzyć cały portfel. Jeśli hasło szyfrowania portfela zostanie zapomniane lub portfel zostanie zniszczony, ziarno może zostać użyte do jego odzyskania.
 
-**Zapisz następujące seeds i trzymaj je w bezpiecznym miejscu.**
+**Zapisz następujące ziarno i trzymaj je w bezpiecznym miejscu.**
 
-Następny komunikat będzie wymagał wprowadzenia seeds, aby potwierdzić, że został on zapisany.
+Następny komunikat będzie wymagał wprowadzenia owego ziarna, aby potwierdzić, że zostało ono zapisane.
 
-Aby uniknąć trwałej utraty portfela, stwórz kopię zapasową seeds przed kontynuacją.
+Aby uniknąć trwałej utraty portfela, stwórz kopię zapasową ziarna zanim przejdziesz dalej.
 
-*Ostrzeżenie*: Niedopilnowanie seed może spowodować kradzież całego portfela. W żadnym wypadku nie należy ujawniać seed komuś innemu.
+*Uwaga*: Ziarno portfela należy traktować jako poufne, a dostęp do niego przez osoby niepowołane może spowodować kradzież całego portfela. W żadnym wypadku nie należy ujawniać ziarna nikomu innemu.

@@ -1,16 +1,16 @@
-Mieszanie wymaga dwóch dedykowanych adresów portfeli - konta "mieszanego" i
-konta "niemieszanego".
+Mieszanie wymaga dwóch przeznaczonych do tego kont portfela - konta „mieszanego” oraz
+„niemieszanego”.
 
-Kiedy mikser zostanie aktywowany, nastąpi Decred transfer z konta niemiksowanego
-na rachunek mieszany.
+Kiedy mikser zostanie aktywowany, nastąpi przeniesienie kredytów z konta niemieszanego
+na konto mieszane.
 
-Transakcje mieszania są tworzone co 20 minut, ale tylko wtedy, gdy wystarczająca liczba uczestników
-bierze udział w mieszaniu.
-Zmiesznie pełnego salda może wymagać wielu transakcji. 
+Transakcje mieszania są tworzone co 20 minut, ale tylko wtedy, gdy w mieszaniu bierze udział
+wystarczająca liczba uczestników.
+Przemieszanie pełnego salda może wymagać wielu transakcji. 
 
-**Ważne jest, aby Decrediton nie został zamknięty, gdy mikser jest aktywny.**
+**Ważne jest, aby Decrediton nie został zamknięty w trakcie działania miksera.**
 
-Gdy tylko portfel Decrediton aktywuje prywatność, Decredy powiny być wysyłane tylko z
-rachunku zmieszanego.
+Gdy funkcja prywatności w portfelu Decrediton zostanie włączona, środki powinny być wysyłane jedynie z
+konta mieszanego.
 Wysyłanie z innych kont może naruszyć Twoją prywatność, łącząc Twoje zmieszane
-Decredy z Twoimi niezmieszanymi Decredami.
+kredyty z niezmieszanymi.

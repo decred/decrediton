@@ -2,8 +2,6 @@
   "rescan.progressPercent",
   "loadingError.errorMessage",
   "loadingError.errorMessageDescription",
-  "txHistory.dayMonthHourDisplay",
-  "txHistory.dayMonthDisplay",
   "sidebar.menuLinkTooltip",
   "ln.invoicesTab.invoice.creationDate",
   "ln.invoicesTab.invoice.settleDate",
