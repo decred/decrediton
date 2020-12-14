@@ -7,10 +7,18 @@ import {
   getBalanceUpdateAttempt,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
+import { getVSPTicketsByFeeStatus } from "./VSPActions";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw } from "helpers";
-import { RECENT_TX_COUNT, BATCH_TX_COUNT, DESC } from "constants";
+import {
+  RECENT_TX_COUNT,
+  BATCH_TX_COUNT,
+  DESC,
+  VSP_FEE_PROCESS_ERRORED,
+  VSP_FEE_PROCESS_STARTED,
+  VSP_FEE_PROCESS_PAID
+} from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
 export const { TRANSACTION_TYPES } = wallet;
 
@@ -117,6 +125,13 @@ export const newTransactionsReceived = (
     m[v.txHash] = v;
     return m;
   }, {});
+
+
+  // get vsp tickets fee status in case there is a stake tx and we show the
+  // proper ticket value.
+  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
 
   // update accounts related to the transaction balance.
   let accountsToUpdate = new Array();
