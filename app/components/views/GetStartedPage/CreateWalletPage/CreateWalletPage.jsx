@@ -11,7 +11,7 @@ import { useService } from "@xstate/react";
 import { sendParent } from "xstate";
 import { useCreateWallet } from "./hooks";
 
-const CreateWalletPage = ({ createWalletRef }) => {
+const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
   // XXX: move redux logic to custom hook
   const {
     decodeSeed,
@@ -39,14 +39,14 @@ const CreateWalletPage = ({ createWalletRef }) => {
     send({ type: "CONTINUE" });
   }, [send]);
 
-  const sendBack = useCallback(() => {
+  const previousStep = useCallback(() => {
     send({ type: "BACK", isTestNet });
   }, [send, isTestNet]);
 
   const cancelWalletCreation = useCallback(async () => {
     await cancelCreateWallet();
-    send({ type: "BACK" });
-  }, [send, cancelCreateWallet]);
+    onSendBack();
+  }, [onSendBack, cancelCreateWallet]);
 
   const setError = useCallback(
     (error) => {
@@ -127,7 +127,7 @@ const CreateWalletPage = ({ createWalletRef }) => {
         if (!mnemonic) return;
         component = h(ConfirmSeed, {
           mnemonic,
-          sendBack,
+          sendBack: previousStep,
           setPassPhrase,
           onCreateWallet,
           isValid,
@@ -164,13 +164,13 @@ const CreateWalletPage = ({ createWalletRef }) => {
 
     return setStateComponent(component);
   }, [
+    previousStep,
     cancelWalletCreation,
     current.context,
     current.value,
     decodeSeed,
     isValid,
     onCreateWallet,
-    sendBack,
     sendContinue,
     setError,
     setPassPhrase,

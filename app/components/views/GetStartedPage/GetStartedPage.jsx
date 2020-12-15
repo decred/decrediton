@@ -8,13 +8,20 @@ const GetStarted = () => {
     onShowSettings,
     updateAvailable,
     isTestNet,
-    PageComponent
+    PageComponent,
+    showNavLinks
   } = useGetStarted();
 
   return (
     <GetStartedWrapper
       PageComponent={PageComponent}
-      {...{ onShowLogs, onShowSettings, updateAvailable, isTestNet }}
+      {...{
+        onShowLogs,
+        onShowSettings,
+        showNavLinks,
+        updateAvailable,
+        isTestNet
+      }}
     />
   );
 };
