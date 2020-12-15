@@ -92,12 +92,13 @@
 
 .info {
   display: grid;
-  grid-template-columns: 0.5fr 3fr 10fr 3fr;
+  grid-template-columns: 0.5fr 3fr 10fr;
   width: 100%;
 }
 
 .overviewInfo {
   display: grid;
+  font-family: var(--font-family-monospace);
 }
 
 .overviewInfo .txDirection {
@@ -109,7 +110,6 @@
   font-size: 11px;
   padding-bottom: 3px;
   color: var(--overview-balance-label) !important;
-  font-family: var(--font-family-monospace);
 }
 
 .overviewInfo .txDirection .accountName {
