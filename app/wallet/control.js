@@ -190,7 +190,7 @@ export const purchaseTickets = (
       request.setDontSignTx(!signTx);
       const { pubkey, host } = vsp;
       request.setVspPubkey(pubkey);
-      request.setVspHost("https://" + host);
+      request.setVspHost("http://" + host);
       walletService.purchaseTickets(request, (error, response) => {
         if (error) {
           reject(error);
@@ -306,17 +306,49 @@ export const syncVSPTickets = (walletService, passphrase, vspHost, vspPubkey, ac
         reject(error);
       }
       const request = new api.SyncVSPTicketsRequest();
-      console.log(vspHost);
-      console.log(vspPubkey);
-      console.log(account);
 
-      console.log(walletService);
       request.setAccount(account);
       request.setVspPubkey(vspPubkey);
       request.setVspHost("https://" + vspHost);
 
       // Call the request
       walletService.syncVSPFailedTickets(request, (error, response) => {
+        if (error) {
+          reject(error);
+        }
+        const lockReq = new api.LockWalletRequest();
+
+        // Lock wallet and return response from the request.
+        walletService.lockWallet(lockReq, (error) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(response);
+        });
+      });
+    });
+  });
+
+export const syncVSPTicketByHash = (walletService, passphrase, vspHost, vspPubkey, account, ticketHash) =>
+  new Promise((resolve, reject) => {
+    // console.log(walletService)
+    const unlockReq = new api.UnlockWalletRequest();
+    // console.log(unlockReq)
+    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+    // Unlock wallet so we can call the request.
+    walletService.unlockWallet(unlockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
+      const request = new api.SyncVSPTicketsRequest();
+
+      request.setAccount(account);
+      request.setVspPubkey(vspPubkey);
+      request.setVspHost("https://" + vspHost);
+      request.setTicketHash(ticketHash);
+
+      // Call the request
+      walletService.syncVSPTicketByHash(request, (error, response) => {
         if (error) {
           reject(error);
         }

@@ -6,8 +6,10 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as ta from "actions/TransactionActions";
 import * as clia from "actions/ClientActions";
+import * as vspa from "actions/VSPActions";
 
 export function useTransactionPage(txHash) {
+  // selectors
   const regularTxs = useSelector(sel.regularTransactions);
   const stakeTxs = useSelector(sel.stakeTransactions);
   const decodedTransactions = useSelector(sel.decodedTransactions);
@@ -16,7 +18,10 @@ export function useTransactionPage(txHash) {
     decodedTransactions[txHash]
   );
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
+  const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
+  const hasVSPTicketsError = useSelector(sel.getHasVSPTicketsError);
 
+  // actions
   const dispatch = useDispatch();
   const abandonTransaction = useCallback((txHash) => {
     dispatch(clia.abandonTransactionAttempt(txHash));
@@ -35,6 +40,11 @@ export function useTransactionPage(txHash) {
     dispatch(ca.publishUnminedTransactionsAttempt()),
     [dispatch]
   );
+
+  const syncVSPTicketByHash = ({ passphrase, vspHost, vspPubkey, account, ticketHash }) =>
+    dispatch(vspa.syncVSPTicketByHash({ passphrase, vspHost, vspPubkey, account, ticketHash }));
+
+  // state machine actions
   const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -78,6 +88,9 @@ export function useTransactionPage(txHash) {
     currentBlockHeight,
     state,
     viewedTransaction,
-    decodedTx
+    decodedTx,
+    syncVSPTicketByHash,
+    defaultSpendingAccount,
+    hasVSPTicketsError
   };
 }

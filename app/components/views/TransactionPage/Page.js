@@ -4,8 +4,11 @@ import { KeyBlueButton } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { DecodedTransaction } from "middleware/walletrpc/api_pb";
+import { PassphraseModalButton } from "buttons";
+import { SyncVSPFailedTickets } from "modals";
 import {
   VOTE,
+  TICKET,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT
 } from "constants/Decrediton";
@@ -37,7 +40,13 @@ const Page = ({
   decodedTransaction,
   abandonTransaction,
   publishUnminedTransactions,
-  currentBlockHeight
+  currentBlockHeight,
+  onSyncVSPTicketByHash,
+  setVSP,
+  account,
+  setAccount,
+  isValid,
+  hasVSPTicketsError
 }) => {
   const {
     txHash,
@@ -158,6 +167,26 @@ const Page = ({
           </div>
         </div>
       )}
+      { txType === TICKET && (
+          <PassphraseModalButton
+            {...{
+              onSubmit: onSyncVSPTicketByHash,
+              setVSP,
+              account,
+              setAccount,
+              isValid
+            }}
+            disabled={!hasVSPTicketsError}
+            modalTitle={
+              <T id="transaction.syncVSP" m="Sync on VSP" />
+            }
+            modalComponent={SyncVSPFailedTickets}
+            buttonLabel={
+              <T id="transaction.syncVSP" m="Sync on VSP" />
+            }
+          />
+        )
+      }
       <div className="txdetails-io">
         <div className="txdetails-title">
           <T id="txDetails.io.title" m="I/O Details" />

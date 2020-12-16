@@ -1621,6 +1621,28 @@ function deserialize_walletrpc_SweepAccountResponse(buffer_arg) {
   return api_pb.SweepAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SyncVSPTicketByHashRequest(arg) {
+  if (!(arg instanceof api_pb.SyncVSPTicketByHashRequest)) {
+    throw new Error('Expected argument of type walletrpc.SyncVSPTicketByHashRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SyncVSPTicketByHashRequest(buffer_arg) {
+  return api_pb.SyncVSPTicketByHashRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SyncVSPTicketByHashResponse(arg) {
+  if (!(arg instanceof api_pb.SyncVSPTicketByHashResponse)) {
+    throw new Error('Expected argument of type walletrpc.SyncVSPTicketByHashResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SyncVSPTicketByHashResponse(buffer_arg) {
+  return api_pb.SyncVSPTicketByHashResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SyncVSPTicketsRequest(arg) {
   if (!(arg instanceof api_pb.SyncVSPTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.SyncVSPTicketsRequest');
@@ -2509,6 +2531,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_GetVSPTicketsByFeeStatusRequest,
     responseSerialize: serialize_walletrpc_GetVSPTicketsByFeeStatusResponse,
     responseDeserialize: deserialize_walletrpc_GetVSPTicketsByFeeStatusResponse,
+  },
+  syncVSPTicketByHash: {
+    path: '/walletrpc.WalletService/SyncVSPTicketByHash',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SyncVSPTicketByHashRequest,
+    responseType: api_pb.SyncVSPTicketByHashResponse,
+    requestSerialize: serialize_walletrpc_SyncVSPTicketByHashRequest,
+    requestDeserialize: deserialize_walletrpc_SyncVSPTicketByHashRequest,
+    responseSerialize: serialize_walletrpc_SyncVSPTicketByHashResponse,
+    responseDeserialize: deserialize_walletrpc_SyncVSPTicketByHashResponse,
   },
 };
 
