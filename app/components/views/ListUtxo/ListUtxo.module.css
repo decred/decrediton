@@ -1,0 +1,14 @@
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 16px 20px;
+  background-color: var(--sidebar-color);
+}
+
+.utxoTable {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr;
+  background-color: var(--background-back-color);
+  border-bottom: 1px solid var(--disabled-background-color);
+  padding: 10px;
+}

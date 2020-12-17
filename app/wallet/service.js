@@ -360,7 +360,6 @@ export const listUnspentOutputs = withLogNoData(
     dataCb
   ) =>
     new Promise((resolve, reject) => {
-      console.log(walletService);
       const request = new api.UnspentOutputsRequest();
       request.setAccount(accountNum);
       // we set the target amount as the MAX_DCR_AMOUNT, as we want to list all

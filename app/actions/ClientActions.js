@@ -685,6 +685,9 @@ export const showTicketList = (status) => (dispatch) =>
 export const showPurchaseTicketsPage = () => (dispatch) =>
   dispatch(pushHistory("/tickets/purchase"));
 
+export const showListUtxo = () => (dispatch) =>
+  dispatch(pushHistory("/listUtxo"));
+
 export const goBackHistory = () => (dispatch) => dispatch(goBack());
 
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
