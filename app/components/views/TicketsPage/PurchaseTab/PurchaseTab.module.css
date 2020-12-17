@@ -107,6 +107,7 @@
   }
   .purchaseForm {
     padding-bottom: 0;
+    flex-direction: column !important;
   }
 
   .purchaseForm.isRow {
