@@ -13,7 +13,7 @@
   "dependencies": {
     "blake-hash": "^2.0.0",
     "bs58check": "^2.1.1",
-    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#ef9b994b9564425724c54bc335c7e284f8790e89",
+    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#2dab18c5b937cd05bed4129655307f723f5fb153",
     "electron-store": "^6.0.0",
     "fs-extra": "^5.0.0",
     "grpc": "1.24.3",
