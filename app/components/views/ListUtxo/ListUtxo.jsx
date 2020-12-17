@@ -30,7 +30,7 @@ export default () => {
 
   return (
     <StandalonePage header={<Header />}>
-      <Subtitle title={<T id="listutxo.title" m="List Unspent Utxo" />} />
+      <Subtitle title={<T id="listutxo.subtitle" m="List Unspent Utxo" />} />
       <AccountsSelect
         className="stakepool-purchase-ticket-input-select"
         {...{ account, onChange: setAccount }}
