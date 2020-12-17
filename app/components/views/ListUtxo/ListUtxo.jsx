@@ -11,7 +11,7 @@ import styles from "./ListUtxo.module.css";
 const Header = () => (
   <StandaloneHeader
     iconClassName="transactions"
-    title={<T id="transactions.title" m="List Utxo" />}
+    title={<T id="listutxo.title" m="List Utxo" />}
   />
 );
 
@@ -38,10 +38,10 @@ export default () => {
       <div>
       <div className={styles.tableHeader}>
         <div>
-          <T id="vsptickets.table.header.status" m="utxo" />
+          <T id="listutxo.utxo" m="utxo" />
         </div>
         <div>
-          <T id="vsptickets.table.header.price" m="value" />
+          <T id="listutxo.value" m="value" />
         </div>
       </div>
       { unspentOutputs && unspentOutputs.map((utxo, index) => (
