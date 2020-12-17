@@ -44,16 +44,15 @@ export default () => {
           <T id="vsptickets.table.header.price" m="value" />
         </div>
       </div>
-      {unspentOutputs && (
-        unspentOutputs.map((utxo, index) => (
+      { unspentOutputs && unspentOutputs.map((utxo, index) => (
           <div key={index} className={classNames("is-row", styles.utxoTable)}>
-            <div className>
+            <div>
               {utxo.txHash}:{utxo.outpointIndex}
             </div>
             <Balance amount={utxo.amount} />
           </div>
         ))
-      )}
+      }
       </div>
     </StandalonePage>
   );
