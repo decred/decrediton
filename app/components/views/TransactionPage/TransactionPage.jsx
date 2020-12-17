@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { DecredLoading } from "indicators";
 import { StandalonePage } from "layout";
 import { useTransactionPage } from "./hooks";
+import { useState } from "react";
 
 function Transaction() {
   const { txHash } = useParams();
@@ -13,8 +14,24 @@ function Transaction() {
     currentBlockHeight,
     state,
     viewedTransaction,
-    decodedTx
+    decodedTx,
+    syncVSPTicketByHash,
+    defaultSpendingAccount,
+    hasVSPTicketsError
   } = useTransactionPage(txHash);
+
+  const [account, setAccount] = useState(defaultSpendingAccount);
+  const [vsp, setVSP] = useState(null);
+
+  const onSyncVSPTicketByHash = (passphrase) => {
+    syncVSPTicketByHash({
+      passphrase,
+      account: account.value,
+      vspHost: vsp.host,
+      vspPubkey: vsp.pubkey,
+      ticketHash: txHash
+    });
+  };
 
   if (!viewedTransaction) return null;
   switch (state.value) {
@@ -39,7 +56,12 @@ function Transaction() {
               decodedTransaction: decodedTx,
               abandonTransaction,
               publishUnminedTransactions,
-              currentBlockHeight
+              currentBlockHeight,
+              onSyncVSPTicketByHash,
+              setVSP,
+              account,
+              setAccount,
+              hasVSPTicketsError
             }}
           />
         </StandalonePage>

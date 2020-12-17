@@ -5,7 +5,7 @@ import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
-import { reverseRawHash } from "../helpers/byteActions";
+import { reverseRawHash, strHashToRaw } from "helpers";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -64,6 +64,7 @@ export const SYNCVSPTICKETS_ATTEMPT = "SYNCVSPTICKETS_ATTEMPT";
 export const SYNCVSPTICKETS_FAILED = "SYNCVSPTICKETS_FAILED";
 export const SYNCVSPTICKETS_SUCCESS = "SYNCVSPTICKETS_SUCCESS";
 
+// syncVSPTicketsRequest syncs vsp tickets which are failed to be processed.
 export const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) => (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   wallet.syncVSPTickets(getState().grpc.walletService, passphrase, vspHost, vspPubkey, account)
@@ -76,6 +77,35 @@ export const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account 
     });
 };
 
+export const SYNCVSPTICKETBYHASH_ATTEMPT = "SYNCVSPTICKETBYHASH_ATTEMPT";
+export const SYNCVSPTICKETBYHASH_FAILED = "SYNCVSPTICKETBYHASH_FAILED";
+export const SYNCVSPTICKETBYHASH_SUCCESS = "SYNCVSPTICKETBYHASH_SUCCESS";
+
+// syncVSPTicketByHash syncs vsp ticket by hash.
+export const syncVSPTicketByHash = ({
+  passphrase,
+  vspHost,
+  vspPubkey,
+  account,
+  ticketHash
+}) => (dispatch, getState) => {
+  dispatch({ type: SYNCVSPTICKETBYHASH_ATTEMPT });
+  wallet.syncVSPTickets(
+    getState().grpc.walletService,
+    passphrase,
+    vspHost,
+    vspPubkey,
+    account,
+    strHashToRaw(ticketHash)
+  )
+    .then(() => {
+      dispatch({ type: SYNCVSPTICKETBYHASH_SUCCESS });
+      dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+    })
+    .catch(error => {
+      dispatch({ type: SYNCVSPTICKETBYHASH_FAILED, error });
+    });
+};
 
 // getTicketSignature receives the tickethash and request and sign it using the
 // ticket sstxcommitment address.
