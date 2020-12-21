@@ -15,8 +15,8 @@ export function getGlobalCfg() {
   return config;
 }
 
-export function getWalletCfg(testnet, walletPath) {
-  const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
+export function getWalletCfg(testnet, walletPath, isSimnet) {
+  const config = new Store({ cwd: getWalletPath(testnet, walletPath, isSimnet) });
   return config;
 }
 
@@ -214,21 +214,24 @@ export function setLastHeight(height) {
   return setConfigData(cfgConstants.LAST_HEIGHT, height);
 }
 
-export function newWalletConfigCreation(testnet, walletPath) {
+export function newWalletConfigCreation(testnet, walletPath, isSimnet) {
   // TODO: set random user/password
+  const walletFullPath = getWalletPath(testnet, walletPath, isSimnet);
   const dcrwConf = {
     "Application Options": {
       tlscurve: "P-256",
       noinitialload: "1",
       onetimetlskey: "1",
       grpclisten: "127.0.0.1:0",
-      appdata: getWalletPath(testnet, walletPath),
-      testnet: testnet ? "1" : "0",
+      appdata: walletFullPath,
       nolegacyrpc: "1"
     }
   };
+  // add network
+  isSimnet ? dcrwConf.simnet = 1 : testnet ? dcrwConf.testnet = 1 : dcrwConf.testnet = 0;
+  console.log(walletFullPath)
   fs.writeFileSync(
-    dcrwalletConf(getWalletPath(testnet, walletPath)),
+    dcrwalletConf(walletFullPath),
     ini.stringify(dcrwConf)
   );
 }

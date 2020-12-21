@@ -18,7 +18,7 @@ import {
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { isTestNet } from "selectors";
+import { isTestNet, isSimnet } from "selectors";
 import {
   SpvSyncRequest,
   SyncNotificationType,
@@ -56,11 +56,13 @@ export const loaderRequest = () => (dispatch, getState) =>
         address,
         port,
         cert: grpcCertAndKey,
-        key: grpcCertAndKey
+        key: grpcCertAndKey,
+        isSimnet: isSimnet(getState())
       };
       dispatch({ request, type: LOADER_ATTEMPT });
       try {
         const loader = await getLoader(request);
+        console.log(loader);
         dispatch({ loader, type: LOADER_SUCCESS });
         return loader;
       } catch (error) {
@@ -88,7 +90,7 @@ export const getWalletSeedService = () => (dispatch, getState) => {
   dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   return wallet
-    .getSeedService(isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
+    .getSeedService(isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey, isSimnet(getState()))
     .then((seedService) => {
       dispatch({ seedService, type: GETWALLETSEEDSVC_SUCCESS });
     })
@@ -288,6 +290,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
   const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
   const request = new RpcSyncRequest();
+  console.log(request)
   const cert = getDcrdCert(rpc_cert);
   request.setNetworkAddress(rpc_host + ":" + rpc_port);
   request.setUsername(rpc_user);
@@ -332,7 +335,8 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
               dispatch({
                 error: `${status}.  You may need to edit ${getWalletPath(
                   isTestNet(getState()),
-                  walletName
+                  walletName,
+                  isSimnet(getState())
                 )} and try again`,
                 type: STARTRPC_FAILED
               });

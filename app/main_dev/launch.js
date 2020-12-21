@@ -5,7 +5,8 @@ import {
   dcrdCfg,
   getAppDataDirectory,
   getDcrdPath,
-  getCertsPath
+  getCertsPath,
+  getSimnetDir
 } from "./paths";
 import { getWalletCfg, getGlobalCfg } from "config";
 import {
@@ -35,6 +36,8 @@ import webSocket from "ws";
 import path from "path";
 import ini from "ini";
 import { makeRandomString, makeFileBackup } from "helpers";
+import { SIMNET, TESTNET } from "../constants/Decrediton";
+import { isTestNet } from "../selectors";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -298,10 +301,18 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       `--rpckey=${rpc_key}`
     ];
 
-    args.push(`--appdata=${dcrdAppdata}`);
+
+    // TODO PROPERLY ADD THOSE SIMNET ARGS
+    args.push(`--appdata=${getSimnetDir()}`);
+    args.push("--connect=127.0.0.1:19555");
+    args.push("--simnet");
+
+
     args.push(`--configfile=${dcrdCfg(configFile)}`);
+    // TODO add network method for adding simnet
     if (testnet) {
-      args.push("--testnet");
+      args.push("--connect=127.0.0.1:19555");
+      args.push("--simnet");
     }
 
     rpcuser = rpc_user;
@@ -518,14 +529,16 @@ export const launchDCRWallet = (
   mainWindow,
   daemonIsAdvanced,
   walletPath,
-  testnet,
+  network,
   reactIPC
 ) => {
-  const cfg = getWalletCfg(testnet, walletPath);
+  const isTestnet = network === TESTNET;
+  const isSimnet = network === SIMNET;
+  const cfg = getWalletCfg(isTestnet, walletPath, isSimnet);
   const confFile = fs.existsSync(
-    dcrwalletConf(getWalletPath(testnet, walletPath))
+    dcrwalletConf(getWalletPath(isTestnet, walletPath, isSimnet))
   )
-    ? `--configfile=${dcrwalletConf(getWalletPath(testnet, walletPath))}`
+    ? `--configfile=${dcrwalletConf(getWalletPath(isTestNet, walletPath, isSimnet))}`
     : "";
   let args = [confFile];
 
@@ -540,8 +553,8 @@ export const launchDCRWallet = (
   // When in mainnet, we always include it, because if we doensn't and a user
   // sets mixing config, we would need to restart dcrwallet.
   const certPath = path.resolve(getCertsPath(), "cspp.decred.org.pem");
-  !testnet && args.push("--csppserver.ca="+certPath);
-  args.push(testnet ? "--csppserver=cspp.decred.org:5760" : "--csppserver=cspp.decred.org:15760");
+  !isTestnet && args.push("--csppserver.ca="+certPath);
+  args.push(isTestnet ? "--csppserver=cspp.decred.org:5760" : "--csppserver=cspp.decred.org:15760");
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {

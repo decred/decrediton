@@ -37,7 +37,8 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
     address,
     port,
     grpcCertAndKey,
-    grpcCertAndKey
+    grpcCertAndKey,
+    sel.isSimnet(getState())
   )
     .then((accountMixerService) =>
       dispatch({ accountMixerService, type: GETACCOUNTMIXERSERVICE_SUCCESS })

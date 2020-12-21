@@ -16,12 +16,11 @@ import {
   closeDcrlnd,
   setDcrdRpcCredentials
 } from "./launch";
-import { MAINNET } from "constants";
+import { MAINNET, SIMNET, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
 import { initTransport } from "actions/TrezorActions.js";
 import * as connect from "connect";
 import { rawToHex } from "helpers";
-
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -31,15 +30,16 @@ let dcrdIsRemote;
 // in the respective network direction in each wallets data dir.
 export const getAvailableWallets = (network) => {
   const availableWallets = [];
-  const isTestNet = network !== MAINNET;
+  const isTestNet = network === TESTNET;
+  const isSimnet = network === SIMNET;
 
-  const walletsBasePath = getWalletPath(isTestNet);
+  const walletsBasePath = getWalletPath(isTestNet, "", isSimnet);
   const walletDirs = fs.readdirSync(walletsBasePath);
   walletDirs.forEach((wallet) => {
     const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
     if (!walletDirStat.isDirectory()) return;
 
-    const cfg = getWalletCfg(isTestNet, wallet);
+    const cfg = getWalletCfg(isTestNet, wallet, isSimnet);
     const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
     const watchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
     const isTrezor = cfg.get(cfgConstants.TREZOR);
@@ -114,15 +114,17 @@ export const startDaemon = async (params, testnet, reactIPC) => {
   }
 };
 
-export const createWallet = (testnet, walletPath) => {
-  const newWalletDirectory = getWalletPath(testnet, walletPath);
+export const createWallet = (network, walletPath) => {
+  const isTestnet = network === TESTNET;
+  const isSimnet = network === SIMNET;
+  const newWalletDirectory = getWalletPath(isTestnet, walletPath, isSimnet);
   try {
     if (!fs.pathExistsSync(newWalletDirectory)) {
       fs.mkdirsSync(newWalletDirectory);
 
       // create new configs for new wallet
-      initWalletCfg(testnet, walletPath);
-      newWalletConfigCreation(testnet, walletPath);
+      initWalletCfg(isTestnet, walletPath, isSimnet);
+      newWalletConfigCreation(isTestnet, walletPath, isSimnet);
     }
     return true;
   } catch (e) {
@@ -131,6 +133,7 @@ export const createWallet = (testnet, walletPath) => {
   }
 };
 
+// TODO add simnet to remove wallet
 export const removeWallet = (testnet, walletPath) => {
   if (!walletPath) return;
   const removeWalletDirectory = getWalletPath(testnet, walletPath);
@@ -198,7 +201,7 @@ export const updateTrezorFirmware = async ( firmwarePath, model ) => {
 export const startWallet = (
   mainWindow,
   daemonIsAdvanced,
-  testnet,
+  network,
   walletPath,
   reactIPC
 ) => {
@@ -207,13 +210,15 @@ export const startWallet = (
     mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
     return GetDcrwPID();
   }
-  initWalletCfg(testnet, walletPath);
+  const isTestnet = network === TESTNET;
+  const isSimnet = network === SIMNET;
+  initWalletCfg(isTestnet, walletPath, isSimnet);
   try {
     return launchDCRWallet(
       mainWindow,
       daemonIsAdvanced,
       walletPath,
-      testnet,
+      network,
       reactIPC
     );
   } catch (e) {

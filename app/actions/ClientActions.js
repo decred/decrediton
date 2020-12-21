@@ -172,7 +172,8 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey
+      grpcCertAndKey,
+      sel.isSimnet(getState())
     )
     .then((walletService) =>
       dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS })
@@ -200,7 +201,8 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey
+      grpcCertAndKey,
+      sel.isSimnet(getState())
     )
     .then((ticketBuyerService) => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
@@ -539,7 +541,8 @@ export const getAgendaServiceAttempt = () => (dispatch, getState) => {
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey
+      grpcCertAndKey,
+      sel.isSimnet(getState())
     )
     .then((agendaService) => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
@@ -570,7 +573,8 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey
+      grpcCertAndKey,
+      sel.isSimnet(getState())
     )
     .then((votingService) =>
       dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS })
@@ -666,7 +670,8 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey
+      grpcCertAndKey,
+      sel.isSimnet(getState())
     )
     .then((messageVerificationService) =>
       dispatch({

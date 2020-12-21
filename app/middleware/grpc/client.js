@@ -13,9 +13,11 @@ const getServiceClient = (clientClass) => (
   port,
   grpcKey,
   grpccert,
+  isSimnet,
   cb
 ) => {
-  const cert = getWalletCert(getWalletPath(isTestNet, walletPath));
+  console.log(isSimnet)
+  const cert = getWalletCert(getWalletPath(isTestNet, walletPath, isSimnet));
   if (cert == "") {
     return cb(
       null,

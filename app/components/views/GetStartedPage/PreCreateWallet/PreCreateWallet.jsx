@@ -24,7 +24,8 @@ const PreCreateWallet = ({
     trezorGetWalletCreationMasterPubKey,
     onCreateWallet,
     trezorEnable,
-    validateMasterPubKey
+    validateMasterPubKey,
+    isSimnet
   } = useDaemonStartup();
   const [newWalletName, setNewWalletName] = useState("");
   const [isWatchingOnly, setIsWatchingOnly] = useState(false);
@@ -87,7 +88,7 @@ const PreCreateWallet = ({
         isWatchingOnly,
         isTrezor,
         isNew,
-        network: isTestNet ? "testnet" : "mainnet"
+        network: isSimnet ? "simnet" : isTestNet ? "testnet" : "mainnet"
       }
     };
 

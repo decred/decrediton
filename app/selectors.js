@@ -15,7 +15,7 @@ import {
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash, reverseRawHash } from "./helpers/byteActions";
-import { MainNetParams, TestNetParams } from "constants";
+import { MainNetParams, TestNetParams, SimnetParams } from "constants";
 import { decodeVoteScript } from "./helpers/tickets";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
@@ -38,6 +38,7 @@ import {
   UNIT_DIVISOR,
   TESTNET,
   MAINNET,
+  SIMNET,
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TICKET_FEE,
@@ -283,10 +284,13 @@ export const lockedBalance = createSelector(
   reduce((atoms, { lockedByTickets }) => atoms + lockedByTickets, 0)
 );
 
-export const networks = () => [{ name: TESTNET }, { name: MAINNET }];
+// network selectors
+export const networks = () => [{ name: TESTNET }, { name: MAINNET }, { name: SIMNET }];
 export const network = get(["settings", "currentSettings", "network"]);
 export const isTestNet = compose(eq(TESTNET), network);
 export const isMainNet = not(isTestNet);
+// if it is not testnet nor mainnet, it is a simnet network.
+export const isSimnet = not(and(isTestNet, isMainNet))
 export const firstBlockTime = compose(
   (isMainNet) =>
     isMainNet
@@ -367,7 +371,7 @@ export const txOutURLBuilder = createSelector(
 export const decodedTransactions = get(["grpc", "decodedTransactions"]);
 
 export const chainParams = compose(
-  (isTestNet) => (isTestNet ? TestNetParams : MainNetParams),
+  (isSimnet, isTestNet) => (isSimnet ? SimnetParams : isTestNet ? TestNetParams : MainNetParams),
   isTestNet
 );
 

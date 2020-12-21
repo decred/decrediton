@@ -58,9 +58,9 @@ export const getIsWatchingOnly = log(
 );
 
 export const createNewWallet = log(
-  (walletPath, testnet) =>
+  (walletPath, network) =>
     Promise.resolve(
-      ipcRenderer.sendSync("create-wallet", walletPath, testnet)
+      ipcRenderer.sendSync("create-wallet", walletPath, network)
     ).then((created) => {
       if (created) return created;
       throw "Error creating wallet";
@@ -96,7 +96,7 @@ export const stopWallet = log(
 );
 
 export const startWallet = log(
-  (walletPath, testnet) =>
+  (walletPath, network) =>
     new Promise((resolve, reject) => {
       let port,
         pid = "";
@@ -109,7 +109,7 @@ export const startWallet = log(
         port = p;
         resolveCheck();
       });
-      pid = ipcRenderer.sendSync("start-wallet", walletPath, testnet);
+      pid = ipcRenderer.sendSync("start-wallet", walletPath, network);
       if (!pid) reject("Error starting wallet");
       resolveCheck();
     }),

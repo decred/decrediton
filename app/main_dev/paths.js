@@ -2,7 +2,7 @@ import path from "path";
 import os from "os";
 import fs from "fs-extra";
 import { initWalletCfg, newWalletConfigCreation } from "config";
-import { TESTNET, MAINNET } from "constants";
+import { TESTNET, MAINNET, SIMNET } from "constants";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
@@ -34,20 +34,27 @@ export function getWalletsDirectoryPath() {
   return path.join(getAppDataDirectory(), "wallets");
 }
 
+export function getSimnetDir() {
+  return path.join(os.homedir(), "dcrdsimnetnodes", "decrediton")
+}
+
 // getWalletsDirectoryPathNetwork gets the wallets directory.
 // Example in unix if testnet equals true: ~/.config/decrediton/wallets/testnet
-export function getWalletsDirectoryPathNetwork(testnet) {
+export function getWalletsDirectoryPathNetwork(testnet, simnet) {
+  const network = simnet ? SIMNET : testnet ? TESTNET : MAINNET;
+  console.log(network)
   return path.join(
     getAppDataDirectory(),
     "wallets",
-    testnet ? TESTNET : MAINNET
+    network
   );
 }
 
-// getWalletPath returns the directory of a selected wallet byt its name.
-// a wallet name represent the directory it is located in.
-export function getWalletPath(testnet, walletName = "") {
-  return path.join(getWalletsDirectoryPathNetwork(testnet), walletName);
+// getWalletPath returns the directory of a selected wallet by its name.
+// A wallet name represent the directory it is located in.
+// network can be equal SIMNET, TESTNET, or MAINNET constants.
+export function getWalletPath(testnet, walletName = "", simnet) {
+  return path.join(getWalletsDirectoryPathNetwork(testnet, simnet), walletName);
 }
 
 // getWalletDb Returns the wallet.db file from a specific wallet.
@@ -114,38 +121,6 @@ export function getExecutablePath(name, custombinpath) {
 // getDirectoryLogs gets the logs directory
 export function getDirectoryLogs(dir) {
   return path.join(dir, "logs");
-}
-
-// checkAndInitWalletCfg checks for existing old wallet.db directories and copy its
-// wallet.db file to the new decrediton wallets path.
-// TODO deprecate this code as most decrediton are updated to 1.4.0 version.
-export function checkAndInitWalletCfg(testnet) {
-  const walletDirectory = getWalletPath(testnet, "default-wallet");
-  const configJson = path.join(walletDirectory, "config.json");
-  const oldWalletDbPath = path.join(
-    getAppDataDirectory(),
-    testnet ? "testnet3" : MAINNET
-  );
-
-  if (
-    !fs.pathExistsSync(walletDirectory) &&
-    fs.pathExistsSync(oldWalletDbPath)
-  ) {
-    fs.mkdirsSync(walletDirectory);
-    fs.copySync(
-      path.join(oldWalletDbPath, "wallet.db"),
-      path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db")
-    );
-
-    // copy over existing config.json if it exists
-    if (fs.pathExistsSync(getGlobalCfgPath())) {
-      fs.copySync(getGlobalCfgPath(), configJson);
-    }
-
-    // create new configs for default mainnet wallet
-    initWalletCfg(testnet, "default-wallet");
-    newWalletConfigCreation(testnet, "default-wallet");
-  }
 }
 
 // getPoliteiaPath gets the politeia path which proposals are cached.

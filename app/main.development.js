@@ -20,7 +20,7 @@ import {
   getWalletsDirectoryPathNetwork,
   getAppDataDirectory
 } from "./main_dev/paths";
-import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
+import { getGlobalCfgPath } from "./main_dev/paths";
 import {
   installSessionHandlers,
   reloadAllowedExternalRequests,
@@ -86,7 +86,8 @@ import {
   RPC_MISSING_OPTIONS,
   SPV_WITH_ADVANCED_MODE,
   TESTNET,
-  MAINNET
+  MAINNET,
+  SIMNET
 } from "constants";
 import { DAEMON_ADVANCED, LOCALE, DISABLE_HARDWARE_ACCEL } from "constants/config";
 
@@ -118,8 +119,9 @@ let previousWallet = null;
 const globalCfg = initGlobalCfg();
 const daemonIsAdvanced = argv.advanced || globalCfg.get(DAEMON_ADVANCED);
 const walletsDirectory = getWalletsDirectoryPath();
-const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
-const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
+const mainnetWalletsPath = getWalletsDirectoryPathNetwork(MAINNET);
+const testnetWalletsPath = getWalletsDirectoryPathNetwork(TESTNET);
+const simnetWalletsPath = getWalletsDirectoryPathNetwork(SIMNET);
 if (globalCfg.get(DISABLE_HARDWARE_ACCEL)) {
   logger.log("info", "Disabling hardware acceleration");
   app.disableHardwareAcceleration();
@@ -214,9 +216,7 @@ if (process.env.NODE_ENV === "development") {
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
 fs.pathExistsSync(mainnetWalletsPath) || fs.mkdirsSync(mainnetWalletsPath);
 fs.pathExistsSync(testnetWalletsPath) || fs.mkdirsSync(testnetWalletsPath);
-
-checkAndInitWalletCfg(true);
-checkAndInitWalletCfg(false);
+fs.pathExistsSync(simnetWalletsPath) || fs.mkdirsSync(simnetWalletsPath);
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log(
@@ -293,8 +293,8 @@ ipcMain.on("delete-daemon", (event, appData, testnet) => {
   event.returnValue = deleteDaemon(appData, testnet);
 });
 
-ipcMain.on("create-wallet", (event, walletPath, testnet) => {
-  event.returnValue = createWallet(testnet, walletPath);
+ipcMain.on("create-wallet", (event, walletPath, network) => {
+  event.returnValue = createWallet(network, walletPath);
 });
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
@@ -319,11 +319,11 @@ ipcMain.on("stop-wallet", (event) => {
   event.returnValue = stopWallet();
 });
 
-ipcMain.on("start-wallet", (event, walletPath, testnet) => {
+ipcMain.on("start-wallet", (event, walletPath, network) => {
   event.returnValue = startWallet(
     mainWindow,
     daemonIsAdvanced,
-    testnet,
+    network,
     walletPath,
     reactIPC
   );

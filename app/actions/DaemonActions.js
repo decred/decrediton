@@ -13,7 +13,7 @@ import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { ipcRenderer } from "electron";
 import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
-import { isTestNet } from "selectors";
+import { isTestNet, isSimnet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
@@ -293,7 +293,7 @@ export const createWallet = (selectedWallet) => (dispatch, getState) =>
       try {
         await wallet.createNewWallet(
           selectedWallet.value.wallet,
-          network == TESTNET
+          network
         );
         await dispatch(startWallet(selectedWallet));
         dispatch({
@@ -351,12 +351,13 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       }
       const walletStarted = await wallet.startWallet(
         selectedWallet.value.wallet,
-        network == "testnet"
+        network
       );
       const { port } = walletStarted;
       const walletCfg = getWalletCfg(
-        network == "testnet",
-        selectedWallet.value.wallet
+        isTestNet(getState()),
+        selectedWallet.value.wallet,
+        isSimnet(getState())
       );
       wallet.setPreviousWallet(selectedWallet);
 

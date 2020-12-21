@@ -8,6 +8,38 @@ export const MIN_MIX_DENOMINATION_ATOMS = 262144;
 
 // Constants copied from dcrd/chaincfg/params.go
 
+export const SimnetParams = {
+  TicketMaturity: 16,
+  TicketExpiry: 384,
+  CoinbaseMaturity: 16,
+  SStxChangeMaturity: 1,
+  // GenesisTimestamp exists on simnet?
+  GenesisTimestamp: 1489550400,
+  TargetTimePerBlock: 1 * 60,
+  WorkDiffWindowSize: 8,
+
+
+  LegacyHDCoinType: 115,
+  HDCoinType: 1,
+
+  TreasuryAddress: "SsXciQNTo3HuV5tX3yy4hXndRWgLMRVC7Ah",
+  trezorCoinName: "Decred Simnet",
+
+  NetworkAddressPrefix: "S",
+  // PubKeyAddrID:         [2]byte{0x27, 0x6f}, // starts with Sk
+  // PubKeyHashAddrID:     [2]byte{0x0e, 0x91}, // starts with Ss
+  // PKHEdwardsAddrID:     [2]byte{0x0e, 0x71}, // starts with Se
+  // PKHSchnorrAddrID:     [2]byte{0x0e, 0x53}, // starts with SS
+  // ScriptHashAddrID:     [2]byte{0x0e, 0x6c}, // starts with Sc
+  // PrivateKeyID:         [2]byte{0x23, 0x07}, // starts with Ps
+  PubKeyAddrID: Buffer.from([0x27, 0x6f]), // starts with Tk
+  PubKeyHashAddrID: Buffer.from([0x0e, 0x91]), // starts with Ts
+  PKHEdwardsAddrID: [0x0e, 0x71], // starts with Te
+  PKHSchnorrAddrID: [0x0e, 0x53], // starts with TS
+  ScriptHashAddrID: [0x0e, 0x6c] // starts with Tc
+
+}
+
 export const TestNetParams = {
   TicketMaturity: 16,
   TicketExpiry: 6144, // 6*TicketPoolSize

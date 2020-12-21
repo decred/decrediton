@@ -19,7 +19,8 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     generateSeed,
     createWatchOnlyWalletRequest,
     createWalletRequest,
-    isTestNet
+    isTestNet,
+    isSimnet
   } = useCreateWallet();
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
@@ -200,7 +201,7 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
         sendContinue();
         generateSeed().then((response) => {
           // Allows verification skip in dev
-          const seed = isTestNet ? response.getSeedBytes() : null;
+          const seed = isTestNet || isSimnet ? response.getSeedBytes() : null;
           const mnemonic = response.getSeedMnemonic();
           sendEvent({ type: "SEED_GENERATED", payload: { mnemonic, seed } });
         });
