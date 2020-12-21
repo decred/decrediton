@@ -10,7 +10,7 @@ export const UI_ANIMATIONS = "ui_animations";
 export const SHOW_SPV_CHOICE = "show_spvchoice";
 export const SHOW_TUTORIAL = "show_tutorial";
 export const SHOW_PRIVACY = "show_privacy";
-export const ALLOW_EXTERNAL_REQUESTS = "allowed_external_requests";
+export const ALLOWED_EXTERNAL_REQUESTS = "allowed_external_requests";
 export const PROXY_TYPE = "proxy_type";
 export const PROXY_LOCATION = "proxy_location";
 export const REMOTE_CREDENTIALS = "remote_credentials";
@@ -86,7 +86,7 @@ export const INITIAL_VALUES = {
   [SHOW_SPV_CHOICE]: true,
   [SHOW_TUTORIAL]: true,
   [SHOW_PRIVACY]: true,
-  [ALLOW_EXTERNAL_REQUESTS]: [],
+  [ALLOWED_EXTERNAL_REQUESTS]: [],
   [PROXY_TYPE]: null,
   [PROXY_LOCATION]: null,
   [REMOTE_CREDENTIALS]: {},

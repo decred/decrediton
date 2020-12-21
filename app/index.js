@@ -52,7 +52,7 @@ const currentSettings = {
   daemonStartAdvanced:
     hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
   daemonStartAdvancedFromCli: !!hasCliOption("daemonStartAdvanced"),
-  allowedExternalRequests: globalCfg.get(cfgConstants.ALLOW_EXTERNAL_REQUESTS),
+  allowedExternalRequests: globalCfg.get(cfgConstants.ALLOWED_EXTERNAL_REQUESTS),
   proxyType: globalCfg.get(cfgConstants.PROXY_TYPE),
   proxyLocation: globalCfg.get(cfgConstants.PROXY_LOCATION),
   spvMode: hasCliOption("spvMode") || getIsSpv(),

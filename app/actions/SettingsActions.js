@@ -35,7 +35,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
 
   const config = getGlobalCfg();
   const oldAllowedExternalRequests = config.get(
-    configConstants.ALLOW_EXTERNAL_REQUESTS
+    configConstants.ALLOWED_EXTERNAL_REQUESTS
   );
   const oldTheme = config.get(configConstants.THEME);
   const updatedProxy =
@@ -46,7 +46,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   config.set(configConstants.DAEMON_ADVANCED, settings.daemonStartAdvanced);
   config.set(configConstants.PROXY_TYPE, settings.proxyType);
   config.set(
-    configConstants.ALLOW_EXTERNAL_REQUESTS,
+    configConstants.ALLOWED_EXTERNAL_REQUESTS,
     settings.allowedExternalRequests
   );
   config.set(configConstants.PROXY_LOCATION, settings.proxyLocation);
@@ -113,12 +113,12 @@ export const addAllowedExternalRequest = (requestType) => (
 ) =>
   new Promise((resolve, reject) => {
     const config = getGlobalCfg();
-    const allowed = config.get(configConstants.ALLOW_EXTERNAL_REQUESTS);
+    const allowed = config.get(configConstants.ALLOWED_EXTERNAL_REQUESTS);
 
     if (allowed.indexOf(requestType) > -1) return reject(false);
 
     allowed.push(requestType);
-    config.set(configConstants.ALLOW_EXTERNAL_REQUESTS, allowed);
+    config.set(configConstants.ALLOWED_EXTERNAL_REQUESTS, allowed);
     wallet.allowExternalRequest(requestType);
 
     const {

@@ -168,6 +168,6 @@ export const reloadAllowedExternalRequests = () => {
   }
 
   const globalCfg = getGlobalCfg();
-  const cfgAllowedRequests = globalCfg.get(cfgConstants.ALLOW_EXTERNAL_REQUESTS, []);
+  const cfgAllowedRequests = globalCfg.get(cfgConstants.ALLOWED_EXTERNAL_REQUESTS, []);
   cfgAllowedRequests.forEach((v) => allowExternalRequest(v));
 };

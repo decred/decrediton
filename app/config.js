@@ -112,8 +112,7 @@ function cleanWalletCfg(config) {
     cfgConstants.CSPP_PORT,
     cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT,
     cfgConstants.VSP_IS_LEGACY,
-    cfgConstants.REMEMBERED_VSP_HOST,
-    cfgConstants.ALLOW_EXTERNAL_REQUESTS
+    cfgConstants.REMEMBERED_VSP_HOST
   ];
   for (key in config.store) {
     let found = false;
