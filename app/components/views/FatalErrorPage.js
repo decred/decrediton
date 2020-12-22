@@ -11,9 +11,16 @@ const resourcesUnavailableError = "resource temporarily unavailable";
 const corruptedError = "corrupted";
 
 const checkSumError = "checksum does not match";
-class FatalErrorPage extends React.Component {
-  getErrorAction() {
-    const { daemonError, deleteDaemonData } = this.props;
+
+function FatalErrorPage({
+  daemonError,
+  walletError,
+  shutdownApp,
+  isAdvancedDaemon,
+  backToCredentials,
+  deleteDaemonData
+}) {
+  const getErrorAction = () => {
     let errorMessage;
 
     switch (true) {
@@ -28,11 +35,11 @@ class FatalErrorPage extends React.Component {
       case daemonError.indexOf(DIFF_CONNECTION_ERROR) !== -1:
         errorMessage = (
           <>
-          <T
-            id="fatal.suggestion.diffConnection"
-            m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1."
-          />
-          <div>config files path:{getAppDataDirectory()}</div>
+            <T
+              id="fatal.suggestion.diffConnection"
+              m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1."
+            />
+            <div>config files path:{getAppDataDirectory()}</div>
           </>
         );
         break;
@@ -86,69 +93,60 @@ class FatalErrorPage extends React.Component {
     return errorMessage;
   }
 
-  render() {
-    const {
-      daemonError,
-      walletError,
-      shutdownApp,
-      isAdvancedDaemon,
-      backToCredentials
-    } = this.props;
-    return (
-      <div className="page-body getstarted">
-        <div className="fatal-error-page">
-          <div className="fatal-error-title">
-            <T id="fatal.header.title" m="Fatal error" />:
-          </div>
-          <div className="log-area">
-            <div className="log-area-logs">
-              {daemonError && (
-                <>
-                  <div className="fatal-error">
-                    <T id="fatal.daemon.title" m="Daemon Error" />
-                  </div>
-                  <textarea rows="10" value={daemonError} disabled />
-                  <CopyToClipboard textToCopy={daemonError} />
-                </>
-              )}
-              {walletError && (
-                <>
-                  <div className="fatal-error">
-                    <T id="fatal.wallet.title" m="Wallet Error" />
-                  </div>
-                  <CopyToClipboard textToCopy={walletError} />
-                  <textarea rows="10" value={walletError} disabled />
-                </>
-              )}
-            </div>
-          </div>
-          <div className="fatal-error-title">
-            <T
-              id="fatal.suggestion.title"
-              m="Suggested action to resolve the error"
-            />
-            :
-          </div>
-          <div className="fatal-error-suggestion">
-            {daemonError && this.getErrorAction()}
-          </div>
-          <div className="fatal-error-toolbar">
-            {isAdvancedDaemon && (
-              <KeyBlueButton onClick={backToCredentials}>
-                <T
-                  id="fatal.retry.connection.button"
-                  m="Return to Daemon Connection"
-                />
-              </KeyBlueButton>
+  return (
+    <div className="page-body getstarted">
+      <div className="fatal-error-page">
+        <div className="fatal-error-title">
+          <T id="fatal.header.title" m="Fatal error" />:
+        </div>
+        <div className="log-area">
+          <div className="log-area-logs">
+            {daemonError && (
+              <>
+                <div className="fatal-error">
+                  <T id="fatal.daemon.title" m="Daemon Error" />
+                </div>
+                <textarea rows="10" value={daemonError} disabled />
+                <CopyToClipboard textToCopy={daemonError} />
+              </>
             )}
-            <KeyBlueButton onClick={shutdownApp}>
-              <T id="fatal.button" m="Close Decrediton" />
-            </KeyBlueButton>
+            {walletError && (
+              <>
+                <div className="fatal-error">
+                  <T id="fatal.wallet.title" m="Wallet Error" />
+                </div>
+                <CopyToClipboard textToCopy={walletError} />
+                <textarea rows="10" value={walletError} disabled />
+              </>
+            )}
           </div>
         </div>
+        <div className="fatal-error-title">
+          <T
+            id="fatal.suggestion.title"
+            m="Suggested action to resolve the error"
+          />
+          :
+        </div>
+        <div className="fatal-error-suggestion">
+          {daemonError && getErrorAction()}
+        </div>
+        <div className="fatal-error-toolbar">
+          {isAdvancedDaemon && (
+            <KeyBlueButton onClick={backToCredentials}>
+              <T
+                id="fatal.retry.connection.button"
+                m="Return to Daemon Connection"
+              />
+            </KeyBlueButton>
+          )}
+          <KeyBlueButton onClick={shutdownApp}>
+            <T id="fatal.button" m="Close Decrediton" />
+          </KeyBlueButton>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default fatalErrorPage(FatalErrorPage);

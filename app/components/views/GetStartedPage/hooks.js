@@ -99,7 +99,9 @@ export const useGetStarted = () => {
         const { isAdvancedDaemon } = context;
         // We send the user to the error page if decrediton is not in advanced mode.
         if (!isAdvancedDaemon) {
-          return goToErrorPage();
+          // race because of react-router Redirect on /getStarted
+          // this timeout solves it.
+          return setTimeout(() => goToErrorPage(), 500);
         }
         send({ type: "START_ADVANCED_DAEMON", payload: { error } });
       },
