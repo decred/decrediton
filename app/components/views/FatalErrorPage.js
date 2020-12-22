@@ -91,7 +91,7 @@ function FatalErrorPage({
     }
 
     return errorMessage;
-  }
+  };
 
   return (
     <div className="page-body getstarted">
