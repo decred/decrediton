@@ -1,25 +1,29 @@
 import { FormattedMessage as T } from "react-intl";
-import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
 import { getAppDataDirectory } from "main_dev/paths.js";
+import { useFatalErrorPage } from "./hooks";
 import "style/Layout.less";
 
+// right now we need to add logs by hand. It would be good having a better way
+// of recognizing errors.
 const resourcesUnavailableError = "resource temporarily unavailable";
 
 const corruptedError = "corrupted";
 
 const checkSumError = "checksum does not match";
 
-function FatalErrorPage({
-  daemonError,
-  walletError,
-  shutdownApp,
-  isAdvancedDaemon,
-  backToCredentials,
-  deleteDaemonData
-}) {
+function FatalErrorPage() {
+  const {
+    daemonError,
+    walletError,
+    isAdvancedDaemon,
+    shutdownApp,
+    backToCredentials,
+    deleteDaemonData
+  } = useFatalErrorPage();
+
   const getErrorAction = () => {
     let errorMessage;
 
@@ -149,4 +153,4 @@ function FatalErrorPage({
   );
 }
 
-export default fatalErrorPage(FatalErrorPage);
+export default FatalErrorPage;
