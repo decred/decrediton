@@ -11,7 +11,7 @@ import styles from "./ListUtxo.module.css";
 const Header = () => (
   <StandaloneHeader
     iconClassName="transactions"
-    title={<T id="listutxo.title" m="List Utxo" />}
+    title={<T id="listutxo.title" m="List UTXOs" />}
   />
 );
 
@@ -30,7 +30,7 @@ export default () => {
 
   return (
     <StandalonePage header={<Header />}>
-      <Subtitle title={<T id="listutxo.subtitle" m="List Unspent Utxo" />} />
+      <Subtitle title={<T id="listutxo.subtitle" m="List Unspent UTXOs" />} />
       <AccountsSelect
         className="stakepool-purchase-ticket-input-select"
         {...{ account, onChange: setAccount }}
@@ -38,10 +38,10 @@ export default () => {
       <div>
       <div className={styles.tableHeader}>
         <div>
-          <T id="listutxo.utxo" m="utxo" />
+          <T id="listutxo.utxo" m="UTXO" />
         </div>
         <div>
-          <T id="listutxo.value" m="value" />
+          <T id="listutxo.value" m="Value" />
         </div>
       </div>
       { unspentOutputs && unspentOutputs.map((utxo, index) => (

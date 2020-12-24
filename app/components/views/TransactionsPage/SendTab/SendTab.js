@@ -38,7 +38,7 @@ const ListUtxo = ({ onShowListUtxo }) => (
     className={styles.listUtxoLink}
     onClick={onShowListUtxo}
   >
-    <T id="transactions.send.listutxo" m="List utxo" />
+    <T id="transactions.send.listutxo" m="List UTXOs" />
   </div>
 );
 
