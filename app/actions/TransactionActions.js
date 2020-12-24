@@ -20,6 +20,7 @@ import {
   VSP_FEE_PROCESS_PAID
 } from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
+import { getNextAddressAttempt } from "./ControlActions";
 export const { TRANSACTION_TYPES } = wallet;
 
 export const GETTRANSACTIONS_CANCEL = "GETTRANSACTIONS_CANCEL";
@@ -45,6 +46,22 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
   });
   return accountsToUpdate;
 }
+
+// getNewAccountAddresses get accounts which received new inputs and get
+// new addresses for avoiding reuse.
+export const getNewAccountAddresses = (txs) => (dispatch) => {
+  const acctAddressUpdated = [];
+  txs.forEach((tx) => {
+    tx.tx.getCreditsList().forEach((credit) => {
+      const acctNumber = credit.getAccount();
+      // if account address not updated yet, update it
+      if (acctAddressUpdated.find(eq(acctNumber)) === undefined) {
+        acctAddressUpdated.push(acctNumber);
+        dispatch(getNextAddressAttempt(acctNumber));
+      }
+    });
+  });
+};
 
 function checkForStakeTransactions(txs) {
   let stakeTxsFound = false;
@@ -145,6 +162,9 @@ export const newTransactionsReceived = (
   );
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
+
+  // get new addresses for accounts which received decred
+  dispatch(getNewAccountAddresses([...newlyUnminedTransactions, ...newlyMinedTransactions]));
 
   // Update mixer accounts balances
   const changeAccount = sel.getChangeAccount(getState());
