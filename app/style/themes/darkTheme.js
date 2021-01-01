@@ -265,6 +265,7 @@ const darkTheme = {
   "contextbutton-eye-default-icon": url(
     require("style/icons/contextbuttonEyeDefaultDark.svg")
   ),
+  qrcode: url('style/icons/decred-qrcode.png'),
   "launcher-logo": url(require("style/icons/launcherLogoDark.svg")),
   "help-getstared": url(require("style/icons/helpGetstaredDark.svg")),
   "no-tx-icon": url(require("style/icons/noTxDark.svg")),

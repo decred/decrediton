@@ -7,8 +7,9 @@ import {
   NoTicketsIndicator
 } from "indicators";
 import { TxHistory, Subtitle } from "shared";
-import { EyeFilterMenu } from "buttons";
+import { EyeFilterMenu, QRModalButton } from "buttons";
 import styles from "./MyTicketsTab.module.css";
+import ReactPaginate from "react-paginate";
 
 const subtitleMenu = ({
   sortTypes,
@@ -16,7 +17,12 @@ const subtitleMenu = ({
   selectedSortOrderKey,
   selectedTicketTypeKey,
   onChangeSelectedType,
-  onChangeSortType
+  onChangeSortType,
+  qrs,
+  loadingQR,
+  qrPage,
+  handlePageClick,
+  getQR
 }) => (
   <div className={styles.ticketsButtons}>
     <Tooltip
@@ -42,6 +48,39 @@ const subtitleMenu = ({
         onChange={onChangeSelectedType}
       />
     </Tooltip>
+    <Tooltip
+      contentClassName={styles.qrTooltip}
+      content={<T id="tickets.qr.tooltip" m="Tickets QR" />}>
+      <div className={styles.menuButton}>
+        <QRModalButton
+          className={styles.qrButton}
+          modalTitle={<T id="tickets.qr.button" m="Active Tickets QR Code" />}
+          pagesRemaining={qrs.length > 1 ? qrPage + 1 + "/" + qrs.length : null}
+          // TODO: Use translated phrase.
+          modalContent={
+            qrs.length != 0 ? (
+              <img src={qrs[qrPage]} />
+            ) : (
+              loadingQR || "No active tickets in the current view."
+            )
+          }
+          onClick={getQR}
+          pages={
+            qrs.length > 1 ? (
+              <ReactPaginate
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                pageCount={qrs.length}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+              />
+            ) : null
+          }
+        />
+      </div>
+    </Tooltip>
   </div>
 );
 
@@ -55,7 +94,12 @@ const TicketListPage = ({
   selectedTicketTypeKey,
   sortTypes,
   ticketTypes,
-  tsDate
+  tsDate,
+  loadingQR,
+  qrPage,
+  handlePageClick,
+  qrs,
+  getQR
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   return (
@@ -74,7 +118,12 @@ const TicketListPage = ({
           selectedSortOrderKey,
           selectedTicketTypeKey,
           onChangeSelectedType,
-          onChangeSortType
+          onChangeSortType,
+          loadingQR,
+          qrPage,
+          handlePageClick,
+          qrs,
+          getQR
         })}
       />
       {tickets.length > 0 && (

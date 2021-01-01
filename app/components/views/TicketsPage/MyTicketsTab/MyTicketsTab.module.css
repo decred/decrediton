@@ -4,6 +4,11 @@
   width: max-content;
 }
 
+.qrTooltip {
+  font-size: 14px;
+  width: 8rem;
+}
+
 .ticketsButtons {
   text-align: right;
   margin-right: 20px;
@@ -48,6 +53,28 @@
 .label {
   font-size: 14pt;
   margin-left: 4px;
+}
+
+.menuButton {
+  margin-left: 0.5em;
+  height: 20px;
+}
+
+.qrButton {
+  background-position: 10px 1px;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  width: 40px;
+  height: 20px;
+  border-radius: 4px;
+  padding: 0px;
+  display: list-item;
+  background-image: var(--qrcode);
+  background-color: var(--text-toggle-button-inactive-text);
+}
+
+.qrButton:hover {
+  background-color: var(--filter-menu-bg-hover);
 }
 
 @media screen and (max-width: 768px) {

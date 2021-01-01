@@ -4,6 +4,8 @@ import TicketListPage from "./Page";
 import { useTicketsList } from "./hooks";
 import * as txTypes from "constants/decrediton";
 
+const QRCode = require("qrcode");
+
 const labels = {
   [txTypes.UNKNOWN]: <T id="ticket.status.multiple.unknown" m="unknown" />,
   [txTypes.UNMINED]: <T id="ticket.status.multiple.unmined" m="unmined" />,
@@ -14,6 +16,13 @@ const labels = {
   [txTypes.EXPIRED]: <T id="ticket.status.multiple.expired" m="expired" />,
   [txTypes.REVOKED]: <T id="ticket.status.multiple.revoked" m="revoked" />
 };
+
+const qrHashes = [];
+const txPerQR = 15;
+// TODO: Use translated phrase or loading gif.
+const defaultLoading = "Loading...";
+let loadingQR = defaultLoading;
+const qrs = [];
 
 const sortTypes = [
   {
@@ -78,6 +87,14 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
+const activeFilter = (t) => {
+  return (
+    t.status === txTypes.UNMINED ||
+    t.status === txTypes.IMMATURE ||
+    t.status === txTypes.LIVE
+  );
+};
+
 const MyTickets = ({ toggleIsLegacy }) => {
   const {
     tickets,
@@ -87,7 +104,9 @@ const MyTickets = ({ toggleIsLegacy }) => {
     window,
     goBackHistory,
     getTickets,
-    changeTicketsFilter
+    changeTicketsFilter,
+    setQRPage,
+    qrPage
   } = useTicketsList();
 
   const [selectedTicketTypeKey, setTicketTypeKey] = useState(
@@ -112,6 +131,59 @@ const MyTickets = ({ toggleIsLegacy }) => {
     setSortOrderKey(type.value);
   };
 
+  const arraysEqual = (a, b) => {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  };
+
+  const handlePageClick = (data) => {
+    setQRPage(data.selected);
+  };
+
+  // getQR asychronously updates the qr codes if current viewed ticket hashes
+  // have changed since last viewing.
+  const getQR = () => {
+    loadingQR = defaultLoading;
+    const filteredTiks = tickets.filter(activeFilter);
+    const newQRHashes = [];
+    for (let i = 0, len = filteredTiks.length; i < len; i++) {
+      newQRHashes.push(filteredTiks[i].txHash);
+    }
+    // Check and stop if ticket hashes have not changed.
+    if (arraysEqual(qrHashes, newQRHashes)) {
+      loadingQR = null;
+      return;
+    }
+    qrHashes.length = 0;
+    qrs.length = 0;
+    setQRPage(0);
+    if (newQRHashes.length == 0) {
+      loadingQR = null;
+      return;
+    }
+    qrs.length = Math.ceil(newQRHashes.length / txPerQR);
+    qrHashes.push.apply(qrHashes, newQRHashes);
+    for (let i = 0; i < qrs.length; i++) {
+      const start = i * txPerQR;
+      const qrdata = JSON.stringify(newQRHashes.slice(start, start + txPerQR));
+      QRCode.toDataURL(qrdata, (err, url) => {
+        // TODO: null after all finished.
+        loadingQR = null;
+        if (err) {
+          // TODO: Display error in snackbar.
+          console.log(err);
+          return;
+        }
+        qrs[i] = url;
+      });
+    }
+  };
+
   const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
 
   return (
@@ -131,6 +203,11 @@ const MyTickets = ({ toggleIsLegacy }) => {
         getTickets,
         goBackHistory,
         noMoreTickets,
+        loadingQR,
+        qrs,
+        qrPage,
+        handlePageClick,
+        getQR,
         toggleIsLegacy
       }}
     />
