@@ -6,6 +6,7 @@ import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
 import { reverseRawHash } from "../helpers/byteActions";
+import shuffle from "lodash/fp/shuffle";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -359,11 +360,11 @@ export const discoverAvailableVSPs = () => async (dispatch, getState) => {
   try {
     let availableVSPs = await wallet.getAllVSPs();
     // add label and value so we can show this values on a select input.
-    availableVSPs = availableVSPs.map(vsp => ({
-        ...vsp,
-        label: vsp.host,
-        value: vsp.host
-      })
+    availableVSPs = shuffle(availableVSPs).map(vsp => ({
+      ...vsp,
+      label: vsp.host,
+      value: vsp.host
+    })
     ).filter(({ vspData }) => {
       if(!vspData) return false;
       const vspTestnet = vspData.network === TESTNET;
