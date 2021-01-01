@@ -371,17 +371,21 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   // called once at the start of the stats calc function
   const startFunction = (opts) => {
     dispatch({ type: EXPORT_STARTED });
-    allSeries = opts.series.map((s) => ({
-      ...s,
-      valueFormatFunc: seriesValueFormatFunc(s)
-    }));
-    seriesOpts = opts;
-    const seriesNames = allSeries.map((s) => s.name);
-    const headerLine = csvLine(["time", ...seriesNames]);
+    try {
+      allSeries = opts.series.map((s) => ({
+        ...s,
+        valueFormatFunc: seriesValueFormatFunc(s)
+      }));
+      seriesOpts = opts;
+      const seriesNames = allSeries.map((s) => s.name);
+      const headerLine = csvLine(["time", ...seriesNames]);
 
-    fd = fs.openSync(csvFilename, "w", 0o600);
-    fs.writeSync(fd, headerLine);
-    fs.writeSync(fd, ln);
+      fd = fs.openSync(csvFilename, "w", 0o600);
+      fs.writeSync(fd, headerLine);
+      fs.writeSync(fd, ln);
+    } catch (err) {
+      errorFunction(err);
+    }
   };
 
   // called once for each data line
