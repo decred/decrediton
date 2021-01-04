@@ -5,7 +5,7 @@ import * as vspa from "actions/VSPActions";
 import * as sel from "selectors";
 import { useState, useMemo } from "react";
 
-export const useVSPSelect = (options, vsp, isDisabled) => {
+export const useVSPSelect = (options, vsp, setVspFee) => {
   const dispatch = useDispatch();
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const getVSPInfo = (host) => dispatch(vspa.getVSPInfo(host));
@@ -27,9 +27,6 @@ export const useVSPSelect = (options, vsp, isDisabled) => {
   const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
-        if (isDisabled) {
-          return send("RESOLVE");
-        }
         // set vsp if it is already selected. This can happen if the auto buyer
         // is already running.
         if (vsp && vsp.host) {
@@ -58,6 +55,9 @@ export const useVSPSelect = (options, vsp, isDisabled) => {
               return send({ type: "REJECT", error });
             }
             onSetVspInfo({ pubkey, host: value.host });
+            if (setVspFee && info.feepercentage) {
+              setVspFee(info.feepercentage);
+            }
             send("RESOLVE");
           })
           .catch((error) => send({ type: "REJECT", error }));

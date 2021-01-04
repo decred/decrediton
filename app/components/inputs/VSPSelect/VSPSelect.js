@@ -13,11 +13,11 @@ const messages = defineMessages({
   }
 });
 
-function VSPSelect({ onChange, options, intl, value, isDisabled }) {
+function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
   const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(
     options,
     value,
-    isDisabled
+    setVspFee
   );
 
   if (!options) {

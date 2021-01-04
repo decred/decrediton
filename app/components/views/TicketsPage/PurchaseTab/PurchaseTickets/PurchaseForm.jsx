@@ -22,6 +22,7 @@ const PurchaseTicketsForm = ({
   setVSP,
   vsp,
   vspFee,
+  setVspFee,
   onV3PurchaseTicket,
   onRevokeTickets,
   availableVSPs,
@@ -57,7 +58,8 @@ const PurchaseTicketsForm = ({
                 account,
                 onChange: setVSP,
                 value: vsp,
-                isDisabled: !!rememberedVspHost
+                isDisabled: !!rememberedVspHost,
+                setVspFee
               }}
             />
             {vsp && (
