@@ -39,6 +39,7 @@ const useDaemonStartup = () => {
   const trezorDevice = useSelector(sel.trezorDevice);
   const isTrezor = useSelector(sel.isTrezor);
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
+  const daemonWarning = useSelector(sel.daemonWarning);
   // end of daemon selectors
 
   // sync dcrwallet spv or rpc selectors
@@ -278,7 +279,8 @@ const useDaemonStartup = () => {
     goToHome,
     setCoinjoinCfg,
     onGetDcrdLogs,
-    syncAttemptRequest
+    syncAttemptRequest,
+    daemonWarning
   };
 };
 

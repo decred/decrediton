@@ -63,9 +63,11 @@ export const useGetStarted = () => {
     onShowTutorial,
     appVersion,
     syncAttemptRequest,
-    onGetDcrdLogs
+    onGetDcrdLogs,
+    daemonWarning
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
+  const [showNavLinks, setShowNavLinks] = useState(true);
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
       isAtPreStart: () => {
@@ -323,9 +325,16 @@ export const useGetStarted = () => {
     });
   }, [send, getDaemonSynced, getSelectedWallet, isAdvancedDaemon, isSPV]);
 
-  const onSendContinue = useCallback(() => send({ type: "CONTINUE" }), [send]);
+  const onSendContinue = useCallback(() => {
+    send({ type: "CONTINUE" });
+    setShowNavLinks(false);
+  }, [send]);
 
-  const onSendBack = useCallback(() => send({ type: "BACK" }), [send]);
+  const onSendBack = useCallback(() => {
+    send({ type: "BACK" });
+    console.log(111111);
+    setShowNavLinks(true);
+  }, [send]);
 
   const onSendError = useCallback((error) => send({ type: "ERROR", error }), [
     send
@@ -509,6 +518,7 @@ export const useGetStarted = () => {
           onShowTutorial,
           appVersion,
           onGetDcrdLogs,
+          daemonWarning,
           // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
           text: updatedText ? updatedText : text,
           animationType: updatedAnimationType
@@ -530,7 +540,11 @@ export const useGetStarted = () => {
         PageComponent = h(ReleaseNotes, { onSendBack });
       }
       if (key === "creatingWallet") {
-        PageComponent = h(CreateWalletMachine, { createWalletRef, isTestNet });
+        PageComponent = h(CreateWalletMachine, {
+          createWalletRef,
+          isTestNet,
+          onSendBack
+        });
       }
       if (key === "settingMixedAccount") {
         PageComponent = h(SettingMixedAccount, { onSendBack, onSendContinue });
@@ -557,7 +571,8 @@ export const useGetStarted = () => {
       onGetDcrdLogs,
       onSendDiscoverAccountsPassInput,
       onSendSetPassphrase,
-      error
+      error,
+      daemonWarning
     ]
   );
 
@@ -628,6 +643,7 @@ export const useGetStarted = () => {
     onShowSettings,
     updateAvailable,
     isTestNet,
-    PageComponent
+    PageComponent,
+    showNavLinks
   };
 };
