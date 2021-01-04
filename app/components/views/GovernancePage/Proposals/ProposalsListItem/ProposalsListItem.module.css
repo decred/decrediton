@@ -32,11 +32,23 @@
   color: var(--input-color);
 }
 
-.name {
+.title {
+  display: flex;
+  flex-direction: row;
   font-size: 13px;
   line-height: 17px;
+}
+
+.name {
   color: var(--input-color-default);
-  width: 440px;
+}
+
+.rfp {
+  border: 1px solid var(--stroke-color-default);
+  border-radius: 3px;
+  padding: 0 5px;
+  margin-left: 15px;
+  color: var(--stroke-color-default);
 }
 
 .token {
@@ -80,10 +92,12 @@
   margin-right: 10px;
 }
 
-.voteChoice.yes, .voteChoice.passed {
+.voteChoice.yes,
+.voteChoice.passed {
   background-color: var(--vote-yes-color);
 }
-.voteChoice.no, .voteChoice.declined {
+.voteChoice.no,
+.voteChoice.declined {
   background-color: var(--vote-no-color);
 }
 

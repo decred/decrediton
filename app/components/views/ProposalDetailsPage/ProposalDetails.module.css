@@ -21,14 +21,19 @@
   color: var(--tutorial-header);
 }
 
+.proposedToRfp,
 .token {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 100px;
   color: var(--overview-balance-label);
 }
 
+.token {
+  width: 100px;
+}
+
+.proposedToRfp a,
 .token a {
   font-size: 13px;
   line-height: 19px;
@@ -37,6 +42,7 @@
   cursor: pointer;
 }
 
+.proposedToRfp a:hover,
 .token a:hover {
   color: var(--stroke-color-default);
 }
