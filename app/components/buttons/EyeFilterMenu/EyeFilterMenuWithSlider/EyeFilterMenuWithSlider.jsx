@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountEffect } from "hooks";
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { Slider, NumberInput } from "pi-ui";
 import { DCR } from "constants";
+import { debounce } from "lodash";
 import styles from "./EyeFilterMenuWithSlider.module.css";
 
 const EyeFilterMenuWithSliderMenu = ({
@@ -38,14 +39,21 @@ const EyeFilterMenuWithSliderMenu = ({
     }
   });
 
+  const onChangeSliderCallback = useCallback(
+    debounce((value, limit) => {
+      onChangeSlider(value, limit);
+    }, 100),
+    [onChangeSlider]
+  );
+
   const setMinAmountCallback = (value) => {
     setMinAmount(value);
-    onChangeSlider(value, "min");
+    onChangeSliderCallback(value, "min");
   };
 
   const setMaxAmountCallback = (value) => {
     setMaxAmount(value);
-    onChangeSlider(value, "max");
+    onChangeSliderCallback(value, "max");
   };
 
   const setExpandedSliderInfoCallback = () =>
