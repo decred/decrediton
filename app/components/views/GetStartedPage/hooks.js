@@ -332,7 +332,6 @@ export const useGetStarted = () => {
 
   const onSendBack = useCallback(() => {
     send({ type: "BACK" });
-    console.log(111111);
     setShowNavLinks(true);
   }, [send]);
 
