@@ -92,12 +92,13 @@
 
 .info {
   display: grid;
-  grid-template-columns: 0.5fr 3fr 10fr;
+  grid-template-columns: 0.5fr 3fr 10fr 2fr;
   width: 100%;
 }
 
 .overviewInfo {
   display: grid;
+  grid-template-columns: 0.5fr 3fr 10fr;
   font-family: var(--font-family-monospace);
 }
 
