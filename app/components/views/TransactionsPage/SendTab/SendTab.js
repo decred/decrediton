@@ -5,6 +5,8 @@ import { DescriptionHeader } from "layout";
 import { useService } from "hooks";
 import styles from "./SendForm.module.css";
 import { Subtitle } from "shared";
+import { useDispatch } from "react-redux";
+import { showListUtxo } from "actions/ClientActions";
 
 export const SendTabHeader = () => {
   const { isTestNet } = useService();
@@ -30,13 +32,30 @@ export const SendTabHeader = () => {
     />
   );
 };
+
+const ListUtxo = ({ onShowListUtxo }) => (
+  <div
+    className={styles.listUtxoLink}
+    onClick={onShowListUtxo}
+  >
+    <T id="transactions.send.listutxo" m="List UTXOs" />
+  </div>
+);
+
 const SendTab = () => {
   const { walletService } = useService();
+  const dispatch = useDispatch();
+  const onShowListUtxo = () => dispatch(showListUtxo());
+
   return !walletService ? (
     <ErrorScreen />
   ) : (
     <>
-      <Subtitle title={<T id="send.subtitle" m="Send DCR" />} />
+      <Subtitle
+        title={<T id="send.subtitle" m="Send DCR" />}
+        className={"is-row"}
+        children={<ListUtxo {...{ onShowListUtxo }} />}
+      />
       <SendTransaction styles={styles} />
     </>
   );
