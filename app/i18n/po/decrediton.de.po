@@ -273,7 +273,7 @@ msgstr "Account"
 #: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account.branch"
 msgid "Account Branch"
-msgstr ""
+msgstr "Account Zweig"
 
 #. [securitycenter.validate.owned.accountNumber]
 #. defaultMessage is:
@@ -295,6 +295,9 @@ msgid ""
 "            cancelled and no more Decred will be mixed if Decrediton is\n"
 "            closed now."
 msgstr ""
+"Der Accountmixer läuft derzeit. Laufende Mischungen werden\n"
+"abgebrochen und es werden keine Decred mehr gemixt wenn Decrediton\n"
+"jetzt geschlossen wird."
 
 #. [account.mixer.running.title]
 #. defaultMessage is:
@@ -302,7 +305,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.title"
 msgid "Account mixer is running"
-msgstr ""
+msgstr "Account Mixer wird ausgeführt"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -572,7 +575,7 @@ msgstr "Alle Netzwerk-Tickets"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.allowSendingFromUnmixedAccount"
 msgid "Allow sending from unmixed accounts"
-msgstr ""
+msgstr "Senden von ungemixten Accounts ermöglichen"
 
 #. [privacy.options.custom.description]
 #. defaultMessage is:
@@ -1058,7 +1061,7 @@ msgstr "Guthaben"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.latestBlock"
 msgid "Block"
-msgstr ""
+msgstr "Block"
 
 #. [txDetails.blockLabel]
 #. defaultMessage is:
@@ -1130,7 +1133,7 @@ msgstr "CSV-Dateien"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. [tickets.autobuyerRunning.confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1154,7 +1157,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.confirmModal.btnCancel"
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -1346,7 +1349,7 @@ msgstr "Ändern Sie Ihre Passphrase"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.changeLabel.success"
 msgid "Changed label on selected Trezor to {label}"
-msgstr ""
+msgstr "Die Beschriftung des ausgewählten Trezor zu {label} geändert"
 
 #. [settings.description]
 #. defaultMessage is:
@@ -1510,6 +1513,8 @@ msgstr ""
 msgctxt "trezor.pinModal.description"
 msgid "Click button sequence that corresponds to your pin on Trezor {label}"
 msgstr ""
+"Klicken Sie auf die Tastenabfolge, die Ihrer Pin in Trezor {label} "
+"entspricht"
 
 #. [infoConfirmModal.btnClose]
 #. defaultMessage is:
@@ -1557,7 +1562,7 @@ msgstr "Kanal schließen"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.btnConfirm"
 msgid "Close Decrediton"
-msgstr ""
+msgstr "Decrediton schließen"
 
 #. [tickets.purchasing.confirmModal.btnConfirm]
 #. defaultMessage is:
@@ -1565,7 +1570,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.confirmModal.btnConfirm"
 msgid "Close Decrediton"
-msgstr ""
+msgstr "Decrediton schließen"
 
 #. [fatal.button]
 #. defaultMessage is:
@@ -1629,7 +1634,7 @@ msgstr "Abschluss Tx"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.coinMixer"
 msgid "Coin Mixer"
-msgstr ""
+msgstr "Coin Mixer"
 
 #. [txDetails.type.coinbase]
 #. defaultMessage is:
@@ -1842,7 +1847,7 @@ msgstr "Mit Trezor verbinden"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.connectedTo"
 msgid "Connected to"
-msgstr ""
+msgstr "Verbunden mit"
 
 #. [ln.startupStage.connect]
 #. defaultMessage is:
@@ -2432,6 +2437,9 @@ msgid ""
 "            be registered with the VSP if Decrediton is closed now, which can\n"
 "            result in missed votes."
 msgstr ""
+"Decrediton ist noch dabei den Ticketkauf abzuschließen. Tickets werden nicht\n"
+"beim VSP registriert sein wenn Decrediton jetzt geschlossen wird was zu\n"
+"zu verpassten Abstimmungen führen kann."
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
@@ -2772,7 +2780,7 @@ msgstr "VSP-Auflistung aktivieren"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 msgctxt "purchase.vsp.enableListing.button"
 msgid "Enable VSP Listing"
-msgstr ""
+msgstr "VSP-Auflistung aktivieren"
 
 #. [SendFromUnmixed.btnConfirm]
 #. defaultMessage is:
@@ -3266,6 +3274,8 @@ msgctxt "trezor.getWalletCreationMasterPubKey.failed"
 msgid ""
 "Failed to obtain master extended pubkey from Trezor device: {originalError}"
 msgstr ""
+"Fehler beim Erhalten eines erweiterten Master Pubkey von Trezor: Gerät: "
+"{originalError}"
 
 #. [ln.ntf.removeWatchtowerFailed]
 #. defaultMessage is:
@@ -3347,7 +3357,7 @@ msgstr "Gebühr für Transaktion vom Wallet bezahlt"
 #: app/i18n/extracted/app/components/inputs/VSPSelect/VSPSelect.json
 msgctxt "vsp.feeTooltip"
 msgid "Fee: {feePercentage} %"
-msgstr ""
+msgstr "Gebühr: {feePercentage} %"
 
 #. [getStarted.header.fetchingBlockHeaders.meta]
 #. defaultMessage is:
@@ -3451,7 +3461,7 @@ msgstr "Firmware-Update"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.updateFirmware.success"
 msgid "Firmware updated on Trezor device"
-msgstr ""
+msgstr "Firmware auf Trezor-Gerät wurde aktualisiert"
 
 #. [ln.pendingChannelDetails.typeForceclose]
 #. defaultMessage is:
@@ -3611,7 +3621,7 @@ msgstr "Zurück"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
 msgctxt "modal.go.to.tickets.status"
 msgid "Go to ticket status"
-msgstr ""
+msgstr "Zum Ticket-Status wechseln"
 
 #. [infoModal.btnClose]
 #. defaultMessage is:
@@ -3627,7 +3637,7 @@ msgstr "Verstanden"
 #: app/i18n/extracted/app/components/modals/MixerSettingsModal/MixerSettingsModal.json
 msgctxt "mixerSettings.gotIt"
 msgid "Got it"
-msgstr ""
+msgstr "Verstanden"
 
 #. [sidebar.link.governance]
 #. defaultMessage is:
@@ -3890,6 +3900,8 @@ msgid ""
 "Improve the anonymity of your Decred.\n"
 "Funds in the unmixed account are sent to the mixed account once mixed."
 msgstr ""
+"Verbessern Sie die Anonymität Ihrer DCR.\n"
+"Gelder von dem ungemixten Konto werden nach dem Mix an das gemixte Konto gesendet."
 
 #. [privacy.description]
 #. defaultMessage is:
@@ -3901,6 +3913,8 @@ msgid ""
 "Improve the anonymity of your Decred.\n"
 "Funds in {unmixedAccount} are sent to {mixedAccount} once mixed."
 msgstr ""
+"Verbessern Sie die Anonymität Ihrer DCR.\n"
+"Gelder in {unmixedAccount} werden nach dem Mischen an {mixedAccount} gesendet."
 
 #. [proposals.statusLinks.preVote]
 #. defaultMessage is:
@@ -3979,7 +3993,7 @@ msgstr "Ihren Pubkey einfügen"
 #: app/i18n/extracted/app/components/shared/SendTransaction/Form.json
 msgctxt "send.insuficient.funds"
 msgid "Insufficient funds"
-msgstr ""
+msgstr "Unzureichende Mittel"
 
 #. [createwallet.walletWatchOnly.error]
 #. defaultMessage is:
@@ -4236,7 +4250,7 @@ msgstr "Lightning Network"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.ln"
 msgid "Lightning Transactions"
-msgstr ""
+msgstr "Lightning Transaktionen"
 
 #. [ln.pendingForceCloseDetails.limboBalance]
 #. defaultMessage is:
@@ -4444,7 +4458,7 @@ msgstr "Protokolle"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.logs"
 msgid "Logs"
-msgstr ""
+msgstr "Protokolle"
 
 #. [getstarted.setAccount.description]
 #. defaultMessage is:
@@ -4512,7 +4526,7 @@ msgstr "Verbindung zu Wachtürmen verwalten."
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 msgctxt "trezorPage.description"
 msgid "Manage your Trezor device."
-msgstr ""
+msgstr "Ihren Trezor administrieren."
 
 #. [purchaseTickets.import]
 #. defaultMessage is:
@@ -4632,7 +4646,7 @@ msgstr "Verpasst"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.mixed"
 msgid "Mix"
-msgstr ""
+msgstr "Mix"
 
 #. [txFilter.type.mixed]
 #. defaultMessage is:
@@ -4672,7 +4686,7 @@ msgstr "Gemixter Account: {value}"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.label.mixed.balance"
 msgid "Mixed Balance"
-msgstr ""
+msgstr "Gemixtes Guthaben"
 
 #. [mixerSetting.header]
 #. defaultMessage is:
@@ -4680,7 +4694,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/MixerSettingsModal/MixerSettingsModal.json
 msgctxt "mixerSetting.header"
 msgid "Mixer Settings"
-msgstr ""
+msgstr "Mixer Einstellungen"
 
 #. [privacy.mixerIsNotRunning]
 #. defaultMessage is:
@@ -4688,7 +4702,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.mixerIsNotRunning"
 msgid "Mixer is not running"
-msgstr ""
+msgstr "Mixer läuft nicht"
 
 #. [privacy.mixersIsRunning]
 #. defaultMessage is:
@@ -4696,7 +4710,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.mixersIsRunning"
 msgid "Mixer is running"
-msgstr ""
+msgstr "Mixer läuft"
 
 #. [mytickets.subtitle]
 #. defaultMessage is:
@@ -4935,6 +4949,8 @@ msgctxt "trezor.noConnectedDevice"
 msgid ""
 "No Trezor device connected. Check the device connection and Trezor bridge."
 msgstr ""
+"Kein Trezor Gerät angeschlossen. Überprüfen Sie den Geräteanschluss und die "
+"Trezor-Bridge."
 
 #. [trezor.noDevice.message]
 #. defaultMessage is:
@@ -4946,6 +4962,8 @@ msgid ""
 "No Trezor device detected. Connect the device and check if Trezor bridge is "
 "installed and running."
 msgstr ""
+"Kein Trezor Gerät erkannt. Schließen Sie das Gerät an und prüfen Sie ob die "
+"Trezor-Bridge installiert ist und läuft."
 
 #. [trezor.getStartedConfig.noDeviceFound]
 #. defaultMessage is:
@@ -4956,6 +4974,8 @@ msgctxt "trezor.getStartedConfig.noDeviceFound"
 msgid ""
 "No Trezor device found. Check the connection and the Trezor bridge software."
 msgstr ""
+"Kein Trezor Gerät gefunden. Überprüfen Sie die Verbindung und die Trezor-"
+"Bridge-Software."
 
 #. [stake.noAvailableStakepools]
 #. defaultMessage is:
@@ -5152,7 +5172,7 @@ msgstr "Älteste"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.transactions"
 msgid "On-chain Transactions"
-msgstr ""
+msgstr "On-Chain-Transaktionen"
 
 #. [ln.description.wallet]
 #. defaultMessage is:
@@ -5191,6 +5211,8 @@ msgid ""
 "One or more of the following decrediton's features running in the "
 "background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt"
 msgstr ""
+"Eine oder mehrere der folgenden Funktionen von Decrediton laufen im "
+"Hintergrund: Privatsphäre-Mixer, Ticket-Autokäufer, Ticket-Kaufversuch"
 
 #. [ln.paymentsTab.outstanding]
 #. defaultMessage is:
@@ -5310,7 +5332,7 @@ msgstr "Bezahlte Gebühr"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.passphraseProtectionSuccess.disabled"
 msgid "Passphrase protection has been disabled in Trezor {label}"
-msgstr ""
+msgstr "Der Passphrasenschutz wurde in Trezor {label} deaktiviert "
 
 #. [trezor.passphraseProtectionSuccess.enabled]
 #. defaultMessage is:
@@ -5318,7 +5340,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.passphraseProtectionSuccess.enabled"
 msgid "Passphrase protection has been enabled in Trezor {label}"
-msgstr ""
+msgstr "Der Passphrasenschutz wurde in Trezor {label} aktiviert"
 
 #. [trezor.walletCreationPassphrasesMismatched]
 #. defaultMessage is:
@@ -5422,7 +5444,7 @@ msgstr "Ausstehende Kanäle"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.pinProtectionSuccess.disabled"
 msgid "Pin protection has been disabled in Trezor {label}"
-msgstr ""
+msgstr "Der Pin-Schutz wurde im Trezor {label} deaktiviert"
 
 #. [trezor.pinProtectionSuccess.enabled]
 #. defaultMessage is:
@@ -5430,7 +5452,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.pinProtectionSuccess.enabled"
 msgid "Pin protection has been enabled in Trezor {label}"
-msgstr ""
+msgstr "Pin-Schutz wurde im Trezor {label} aktiviert"
 
 #. [createwallet.dupeWalletName.error]
 #. defaultMessage is:
@@ -5612,7 +5634,7 @@ msgstr "Privatsphäre"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacy.tab.privacy"
 msgid "Privacy"
-msgstr ""
+msgstr "Privatsphäre"
 
 #. [privacy.config.subtitle]
 #. defaultMessage is:
@@ -5636,7 +5658,7 @@ msgstr "Datenschutzoptionen"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.privacy"
 msgid "Privacy and Security"
-msgstr ""
+msgstr "Privatsphäre und Sicherheit"
 
 #. [settings.group-title.privacy-and-security]
 #. defaultMessage is:
@@ -5652,7 +5674,7 @@ msgstr "Privatsphäre und Sicherheit"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacypage.title"
 msgid "Privacy and Security"
-msgstr ""
+msgstr "Privatsphäre und Sicherheit"
 
 #. [settings.getstartpage.group-title.privacy-and-security]
 #. defaultMessage is:
@@ -5950,7 +5972,7 @@ msgstr "Gekauft am"
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.title"
 msgid "Purchasing Tickets"
-msgstr ""
+msgstr "Tickets kaufen"
 
 #. [purchase.vsp.privacy.enabled.description]
 #. defaultMessage is:
@@ -5964,6 +5986,9 @@ msgid ""
 "only created every 20 minutes. The Privacy And Security page contains more "
 "information regarding the mixing process."
 msgstr ""
+"Der Kauf von gemixten Tickets kann einige Zeit dauern da Mixransaktionen nur"
+" alle 20 Minuten durchgeführt werden. Die Seite Privatsphäre und Sicherheit "
+"enthält weitere Informationen zum Mixvorgang."
 
 #. [ln.openChannel.pushAmt]
 #. defaultMessage is:
@@ -6144,7 +6169,7 @@ msgstr "Erhalten"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.received"
 msgid "Received"
-msgstr ""
+msgstr "Erhalten"
 
 #. [notifications.type.receive]
 #. defaultMessage is:
@@ -6641,7 +6666,7 @@ msgstr "SPV Mode"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/SpvIcon/SpvIcon.json
 msgctxt "sidebar.spvDisabled"
 msgid "SPV disabled"
-msgstr ""
+msgstr "SPV deaktiviert"
 
 #. [spv.options.enable.description]
 #. defaultMessage is:
@@ -6746,7 +6771,7 @@ msgstr "Probleme suchen"
 #: app/i18n/extracted/app/components/views/PrivacyPage/PrivacyPage.json
 msgctxt "privacy.tab.security.center"
 msgid "Security Center"
-msgstr ""
+msgstr "Sicherheits-Center"
 
 #. [notification.seeTransactionDetails]
 #. defaultMessage is:
@@ -6884,7 +6909,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.self"
 msgid "Self transfer"
-msgstr ""
+msgstr "Selbsttransfer"
 
 #. [send.sendBtn]
 #. defaultMessage is:
@@ -6964,7 +6989,7 @@ msgstr "Guthaben an anderes Wallet senden"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "send.sendToSelfBtn"
 msgid "Send to Self"
-msgstr ""
+msgstr "An sich selbst senden"
 
 #. [privacy.sendToUnmixedAccount.title]
 #. defaultMessage is:
@@ -6972,7 +6997,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.sendToUnmixedAccount.title"
 msgid "Send to Unmixed Account"
-msgstr ""
+msgstr "An ungemixten Account senden"
 
 #. [SendFromUnmixed.titleWarning]
 #. defaultMessage is:
@@ -6996,7 +7021,7 @@ msgstr "Gesendet"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.sent"
 msgid "Sent"
-msgstr ""
+msgstr "Senden"
 
 #. [notifications.type.send]
 #. defaultMessage is:
@@ -7092,7 +7117,7 @@ msgstr "Ungemixten Account festlegen"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/SettingsIconLink/SettingsIconLink.json
 msgctxt "sidebar.settings"
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #. [getStarted.btnSettings]
 #. defaultMessage is:
@@ -7124,7 +7149,7 @@ msgstr "Einstellungen"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.settings"
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #. [ln.channelsTab.closedChannel.settledBalance]
 #. defaultMessage is:
@@ -7324,7 +7349,7 @@ msgstr "Sortieren nach"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.sources"
 msgid "Sources"
-msgstr ""
+msgstr "Quellen"
 
 #. [accounts.details.spendable]
 #. defaultMessage is:
@@ -7388,7 +7413,7 @@ msgstr "Stake-Prämien"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.staking"
 msgid "Staking"
-msgstr ""
+msgstr "Staking"
 
 #. [tutorial.staking.title]
 #. defaultMessage is:
@@ -7436,7 +7461,7 @@ msgstr "AppData-Daemon starten"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.title"
 msgid "Start Lightning Wallet"
-msgstr ""
+msgstr "Lightning Wallet starten"
 
 #. [privacy.start.mixer.confirmation]
 #. defaultMessage is:
@@ -7548,7 +7573,7 @@ msgstr "Statistiken"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.stop.mixer"
 msgid "Stop Mixer"
-msgstr ""
+msgstr "Mixer stoppen"
 
 #. [snackbar.defaults.success]
 #. defaultMessage is:
@@ -8601,7 +8626,7 @@ msgstr "Turm ID:"
 #: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
 msgctxt "txhistory.icon.transaction"
 msgid "Transaction"
-msgstr ""
+msgstr "Transaktion"
 
 #. [proposals.detail.wallet.eligible.headers.transaction]
 #. defaultMessage is:
@@ -8713,7 +8738,7 @@ msgstr "Übertragen"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/Links.json
 msgctxt "sidebar.link.trezor"
 msgid "Trezor"
-msgstr ""
+msgstr "Trezor"
 
 #. [createwallet.isTrezor.label]
 #. defaultMessage is:
@@ -8737,7 +8762,7 @@ msgstr "Trezor"
 #: app/i18n/extracted/app/components/views/TrezorPage/Header.json
 msgctxt "trezorPage.title"
 msgid "Trezor"
-msgstr ""
+msgstr "Trezor"
 
 #. [settings.trezorConfig]
 #. defaultMessage is:
@@ -8826,7 +8851,7 @@ msgstr "Tutorial"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.tutorials"
 msgid "Tutorials"
-msgstr ""
+msgstr "Tutorials"
 
 #. [tutorials.subtitle]
 #. defaultMessage is:
@@ -8916,6 +8941,8 @@ msgstr "Geben Sie das angeforderte Wort ein"
 msgctxt "trezor.passphraseModal.description"
 msgid "Type the secret passphrase for the wallet stored in Trezor {label}"
 msgstr ""
+"Geben Sie die geheime Passphrase für das im Trezor {label} gespeicherte "
+"Wallet ein"
 
 #. [trezor.walletCreationpassphraseModal.description]
 #. defaultMessage is:
@@ -8927,6 +8954,8 @@ msgid ""
 "Type the secret passphrase of the wallet to restore from the Trezor device "
 "{label}"
 msgstr ""
+"Geben Sie die geheime Passphrase der Wallet ein die vom Trezor-Gerät {label}"
+" wiederhergestellt werden soll"
 
 #. [trezor.wordModal.description]
 #. defaultMessage is:
@@ -8934,7 +8963,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 msgctxt "trezor.wordModal.description"
 msgid "Type the word requested in the Trezor device."
-msgstr ""
+msgstr "Geben Sie das angeforderte Wort in das Trezor-Gerät ein."
 
 #. [stakePoolSelect.addNewPromptEmpty]
 #. defaultMessage is:
@@ -9070,7 +9099,7 @@ msgstr "Ungemixter Account: {value}"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.label.unmixed.balance"
 msgid "Unmixed Balance"
-msgstr ""
+msgstr "Ungemixtes Guthaben"
 
 #. [vsp.ticket.vsp.fee.started]
 #. defaultMessage is:
@@ -9367,7 +9396,7 @@ msgstr "VSP Gebühr"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseForm.json
 msgctxt "purchaseTickets.vspFee"
 msgid "VSP Fee"
-msgstr ""
+msgstr "VSP Gebühr"
 
 #. [purchaseTickets.advanced.poolFees]
 #. defaultMessage is:
@@ -9375,7 +9404,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/PurchaseTicketsAdvanced.json
 msgctxt "purchaseTickets.advanced.poolFees"
 msgid "VSP Fees"
-msgstr ""
+msgstr "VSP Gebühren"
 
 #. [settings.privacy.stakepoolListing.label]
 #. defaultMessage is:
@@ -9441,6 +9470,9 @@ msgid ""
 "VSP listing from external API endpoint is currently disabled. Please enable "
 "the access to this third party service or manually configure the VSP."
 msgstr ""
+"Die VSP Auflistung von externen API-Endpunkten ist derzeit deaktiviert. "
+"Bitte aktivieren Sie den Zugang zu diesem Drittanbieterdienst oder "
+"konfigurieren Sie den VSP manuell."
 
 #. [security.validate.title]
 #. defaultMessage is:
@@ -9941,7 +9973,7 @@ msgstr "Abhebung aus dem LN Wallet ist fehlgeschlagen: {originalError}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "errors.wrongPassphrase"
 msgid "Wrong private passphrase entered."
-msgstr ""
+msgstr "Falsche private Passphrase eingegeben."
 
 #. [getStarted.decrypt.error]
 #. defaultMessage is:
@@ -9957,7 +9989,7 @@ msgstr "Falsche öffentliche Passphrase eingegeben."
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Page.json
 msgctxt "purchase.vsp.privacy.enabled"
 msgid "You are purchasing mixed tickets"
-msgstr ""
+msgstr "Sie kaufen gemixte Tickets"
 
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
@@ -10061,6 +10093,8 @@ msgid ""
 "You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will\n"
 "          be missed. Click on this button for re-sync fees"
 msgstr ""
+"Sie haben noch unbezahlte Ticketgebühren. Wenn Sie nun fortfahren und Ihre Tickets zur Abstimmung gezogen werden, werden sie\n"
+"Ihre Abstimmung verpassen. Klicken Sie auf diese Schaltfläche um die Gebühren neu zu synchronisieren"
 
 #. [tickets.importScriptHeader]
 #. defaultMessage is:
@@ -10273,7 +10307,7 @@ msgstr "keine informationen"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.peersCount"
 msgid "peers"
-msgstr ""
+msgstr "Peers"
 
 #. [ticket.status.multiple.revoked]
 #. defaultMessage is:
@@ -10297,7 +10331,7 @@ msgstr "riot.im"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/LastBlockTime/LastBlockTime.json
 msgctxt "sidebar.lastBlockIsRecent"
 msgid "seconds ago"
-msgstr ""
+msgstr "vergangene Sekunden"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:
