@@ -5,6 +5,7 @@ import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
+import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
 import { reverseRawHash } from "../helpers/byteActions";
 import shuffle from "lodash/fp/shuffle";
@@ -496,6 +497,21 @@ export const toggleIsLegacy = (isLegacy) => (dispatch, getState) => {
   });
 };
 
+export const UPDATE_USED_VSPS = "UPDATE_USED_VSPS";
+export const updateUsedVSPs = (vsp) => (dispatch, getState) => {
+  const walletName = sel.getWalletName(getState());
+  const isTestNet = sel.isTestNet(getState());
+  const walletCfg = getWalletCfg(isTestNet, walletName);
+  const usedVSPs = walletCfg.get(USED_VSPS);
+  const isUsed = usedVSPs.find(usedVSP => usedVSP.host === vsp.host);
+  // ignore if already added.
+  if (isUsed) return;
+  // update otherwise.
+  usedVSPs.push(vsp);
+  walletCfg.set(USED_VSPS, usedVSPs);
+
+  dispatch({ type: SET_REMEMBERED_VSP_HOST, usedVSPs });
+};
 
 export const SET_REMEMBERED_VSP_HOST = "SET_REMEMBERED_VSP_HOST";
 export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) => {

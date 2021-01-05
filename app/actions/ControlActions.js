@@ -14,6 +14,7 @@ import {
 } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
+import { updateUsedVSPs } from "./VSPActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -382,6 +383,9 @@ export const newPurchaseTicketsAttempt = (
         type: CREATE_UNSIGNEDTICKETS_SUCCESS
       });
     }
+    // save vsp for future checking if the wallet has all tickets synced.
+    dispatch(updateUsedVSPs(vsp));
+
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
@@ -489,6 +493,9 @@ export const startTicketBuyerV3Attempt = (
         dispatch({ type: STOPTICKETBUYER_SUCCESS });
       }
     });
+    // update used vsps
+    dispatch(updateUsedVSPs(vsp));
+
     dispatch({
       ticketBuyerCall: ticketBuyer,
       vsp,
