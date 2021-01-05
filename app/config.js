@@ -8,7 +8,6 @@ import {
   dcrwalletConf,
   getDcrdRpcCert
 } from "./main_dev/paths";
-import { DCR } from "constants";
 import * as cfgConstants from "constants/config";
 
 export function getGlobalCfg() {
@@ -21,64 +20,15 @@ export function getWalletCfg(testnet, walletPath) {
   return config;
 }
 
-// TODO: move this constants to constants directory file.
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
-  if (!config.has(cfgConstants.ENABLE_TICKET_BUYER)) {
-    config.set(cfgConstants.ENABLE_TICKET_BUYER, "0");
-  }
-  if (!config.has(cfgConstants.BALANCE_TO_MAINTAIN)) {
-    config.set(cfgConstants.BALANCE_TO_MAINTAIN, "0");
-  }
-  if (!config.has(cfgConstants.CURRENCY_DISPLAY)) {
-    config.set(cfgConstants.CURRENCY_DISPLAY, DCR);
-  }
-  if (!config.has(cfgConstants.HIDDEN_ACCOUNTS)) {
-    const hiddenAccounts = Array();
-    config.set(cfgConstants.HIDDEN_ACCOUNTS, hiddenAccounts);
-  }
-  if (!config.has(cfgConstants.DISCOVER_ACCOUNTS)) {
-    config.set(cfgConstants.DISCOVER_ACCOUNTS, true);
-  }
-  if (!config.has(cfgConstants.GAP_LIMIT)) {
-    config.set(cfgConstants.GAP_LIMIT, "20");
-  }
-  if (!config.has(cfgConstants.IS_WATCH_ONLY)) {
-    config.set(cfgConstants.IS_WATCH_ONLY, false);
-  }
-  if (!config.has(cfgConstants.POLITEIA_LAST_ACCESS_TIME)) {
-    config.set(cfgConstants.POLITEIA_LAST_ACCESS_TIME, 0);
-  }
-  if (!config.has(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK)) {
-    config.set(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK, 0);
-  }
-  if (!config.has(cfgConstants.TREZOR)) {
-    config.set(cfgConstants.TREZOR, false);
-  }
-  if (!config.has(cfgConstants.VSP_IS_LEGACY)) {
-    config.set(cfgConstants.VSP_IS_LEGACY, false);
-  }
-  if (!config.has(cfgConstants.ENABLE_PRIVACY)) {
-    config.set(cfgConstants.ENABLE_PRIVACY, true);
-  }
-  if (!config.has(cfgConstants.LN_ADDRESS)) {
-    config.set(cfgConstants.LN_ADDRESS, "");
-  }
-  if (!config.has(cfgConstants.LN_PORT)) {
-    config.set(cfgConstants.LN_PORT, 10009);
-  }
-  if (!config.has(cfgConstants.LN_CERTPATH)) {
-    config.set(cfgConstants.LN_CERTPATH, "");
-  }
-  if (!config.has(cfgConstants.LN_MACAROONPATH)) {
-    config.set(cfgConstants.LN_MACAROONPATH, "");
-  }
-  // if privacy if configured, set send_from_unmixed if not set.
-  if (!config.has(cfgConstants.SEND_FROM_UNMIXED) && config.has(cfgConstants.MIXED_ACCOUNT_CFG)) {
-    config.set(cfgConstants.SEND_FROM_UNMIXED, false);
-  }
+  Object.keys(cfgConstants.WALLET_INITIAL_VALUE).map((key) => {
+    if (!config.has(key)) {
+      config.set(key, cfgConstants.WALLET_INITIAL_VALUE[key]);
+    }
+  });
 
-  stakePoolInfo(function (foundStakePoolConfigs) {
+  stakePoolInfo((foundStakePoolConfigs) => {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
     }
@@ -87,37 +37,14 @@ export function initWalletCfg(testnet, walletPath) {
   return config;
 }
 
+// remove unecessary config keys if exists
 function cleanWalletCfg(config) {
-  let key;
-  const walletCfgFields = [
-    cfgConstants.ENABLE_TICKET_BUYER,
-    cfgConstants.BALANCE_TO_MAINTAIN,
-    cfgConstants.CURRENCY_DISPLAY,
-    cfgConstants.LN_WALLET_EXISTS,
-    cfgConstants.LN_ACCOUNT,
-    cfgConstants.ENABLE_PRIVACY,
-    cfgConstants.SEND_FROM_UNMIXED,
-    cfgConstants.MIXED_ACCOUNT_CFG,
-    cfgConstants.MIXED_ACC_BRANCH,
-    cfgConstants.CHANGE_ACCOUNT_CFG,
-    cfgConstants.HIDDEN_ACCOUNTS,
-    cfgConstants.DISCOVER_ACCOUNTS,
-    cfgConstants.GAP_LIMIT,
-    cfgConstants.IS_WATCH_ONLY,
-    cfgConstants.STAKEPOOLS,
-    cfgConstants.LAST_ACCESS,
-    cfgConstants.POLITEIA_LAST_ACCESS_TIME,
-    cfgConstants.POLITEIA_LAST_ACCESS_BLOCK,
-    cfgConstants.CSPP_SERVER,
-    cfgConstants.CSPP_PORT,
-    cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT,
-    cfgConstants.VSP_IS_LEGACY,
-    cfgConstants.REMEMBERED_VSP_HOST
-  ];
-  for (key in config.store) {
+  const walletCfgFields = Object.keys(cfgConstants.WALLET_INITIAL_VALUE);
+
+  for (const key in config.store) {
     let found = false;
     for (let i = 0; i < walletCfgFields.length; i++) {
-      if (key == walletCfgFields[i]) {
+      if (key === walletCfgFields[i]) {
         found = true;
         break;
       }
