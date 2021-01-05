@@ -1,18 +1,30 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import {
-  KeyBlueButton,
-  InvisibleButton,
-  ToggleSwitch
-} from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
+import { Tooltip, Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import { classNames } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
 import styles from "../GetStarted.module.css";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
     id: "createwallet.walletname.placehlder",
     defaultMessage: "Choose a Name"
+  },
+  messageWalletNameTooltip: {
+    id: "createwallet.walletname.tooltip",
+    defaultMessage:
+      "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
+  },
+  messageWalletWatchOnlyDescription: {
+    id: "createwallet.watchonly.description",
+    defaultMessage:
+      "A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet."
+  },
+  messageWalletTrezorDescription: {
+    id: "createwallet.trezor.description",
+    defaultMessage:
+      "Trezor is a hardware wallet. For more information, visit {link}"
   },
   messageWalletMasterPubKey: {
     id: "createwallet.walletpubkey.placeholder",
@@ -59,16 +71,22 @@ const CreateWalletForm = ({
         </div>
       </div>
     ) : (
-        <div className={styles.newWalletTitleArea}>
-          <div className={classNames(styles.walletIconSmall, styles.restore)} />
-          <div className={styles.newWalletTitle}>
-            <RestoreTabMsg />
-          </div>
+      <div className={styles.newWalletTitleArea}>
+        <div className={classNames(styles.walletIconSmall, styles.restore)} />
+        <div className={styles.newWalletTitle}>
+          <RestoreTabMsg />
         </div>
-      )}
+      </div>
+    )}
     <div className={styles.daemonRow}>
       <div className={styles.daemonLabel}>
-        <T id="createwallet.walletname.label" m="Wallet Name" />
+        {!isCreateNewWallet ? (
+          <Tooltip text={intl.formatMessage(messages.messageWalletNameTooltip)}>
+            <T id="createwallet.walletname.label" m="Wallet Name" />
+          </Tooltip>
+        ) : (
+          <T id="createwallet.walletname.label" m="Wallet Name" />
+        )}
       </div>
       <div className={styles.daemonInput}>
         <TextInput
@@ -87,83 +105,93 @@ const CreateWalletForm = ({
       </div>
     </div>
     {!isCreateNewWallet && (
-      <>
-        <div className={styles.daemonRow}>
-          <div className={styles.daemonLabel}>
-            <T id="createwallet.walletOnly.label" m="Watch only" />
-          </div>
-          <div className={styles.daemonInput}>
-            <div className={styles.walletSwitch}>
-              <ToggleSwitch
-                enabled={isWatchingOnly}
-                onClick={toggleWatchOnly}
-                enabledText={<T id="watchOnly.enabled" m="Watch Only" />}
-                notEnabledText={<T id="watchOnly.disabled" m="Normal" />}
-              />
-            </div>
-          </div>
-        </div>
-        <div className={styles.daemonRow}>
-          <div className={styles.daemonLabel}>
-            <T id="createwallet.isTrezor.label" m="Trezor" />
-          </div>
-          <div className={styles.daemonInput}>
-            <div className={styles.walletSwitch}>
-              <ToggleSwitch
-                enabled={isTrezor}
-                onClick={toggleTrezor}
-                enabledText={<T id="createWallet.restore.trezor.enabled" m="Enabled" />}
-                notEnabledText={<T id="createWallet.restore.trezor.disabled" m="Disabled" />}
-              />
-            </div>
-            <span onClick={onShowTrezorConfig} className={styles.whatsnew}>
-              <T id="createWallet.isTrezor.setupLink" m="(setup device)" />
-            </span>
-          </div>
-        </div>
-        <div className={styles.daemonRow}>
-          <div className={styles.daemonLabel}>
-            <T id="privacy.label" m="Privacy" />
-          </div>
-          <div className={styles.daemonInput}>
-            <div className={styles.walletSwitch}>
-              <ToggleSwitch
-                enabled={isPrivacy}
-                onClick={toggleIsPrivacy}
-                enabledText={<T id="privacy.label" m="Privacy" />}
-                notEnabledText={<T id="watchOnly.disabled" m="Normal" />}
-              />
-            </div>
-          </div>
-        </div>
-        {isWatchingOnly && (
-          <div className={styles.daemonRow}>
-            <div className={styles.daemonLabel}>
-              <T
-                id="createwallet.walletmasterpubkey.label"
-                m="Master Pub Key"
-              />
-            </div>
-            <div className={styles.daemonLongInput}>
-              <TextInput
-                required
-                value={walletMasterPubKey}
-                onChange={(e) =>
-                  onChangeCreateWalletMasterPubKey(e.target.value)
-                }
-                placeholder={intl.formatMessage(
-                  messages.messageWalletMasterPubKey
+      <div className={classNames(styles.daemonRow, styles.advancedOptions)}>
+        <Collapse
+          header={
+            <T id="createwallet.advancedOptions.label" m="Advanced Options" />
+          }
+          content={
+            <>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={<T id="createwallet.watchOnly.label" m="Watch only" />}
+                  id="watchonly"
+                  description={intl.formatMessage(
+                    messages.messageWalletWatchOnlyDescription
+                  )}
+                  checked={isWatchingOnly}
+                  onChange={toggleWatchOnly}
+                />
+                {isWatchingOnly && (
+                  <div className={styles.extra}>
+                    <T
+                      id="createwallet.walletmasterpubkey.label"
+                      m="Master Pub Key"
+                    />
+                    <div className={styles.daemonLongInput}>
+                      <TextInput
+                        required
+                        value={walletMasterPubKey}
+                        onChange={(e) =>
+                          onChangeCreateWalletMasterPubKey(e.target.value)
+                        }
+                        placeholder={intl.formatMessage(
+                          messages.messageWalletMasterPubKey
+                        )}
+                        showErrors={hasFailedAttemptPubKey || masterPubKeyError}
+                        invalid={masterPubKeyError}
+                        invalidMessage={intl.formatMessage(
+                          messages.messageWalletMasterPubkeyError
+                        )}
+                      />
+                    </div>
+                  </div>
                 )}
-                showErrors={hasFailedAttemptPubKey || masterPubKeyError}
-                invalid={masterPubKeyError}
-                invalidMessage={intl.formatMessage(
-                  messages.messageWalletMasterPubkeyError
-                )}
-              />
-            </div>
-          </div>
-        )}
-      </>
+              </div>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={
+                    <>
+                      <T id="createwallet.isTrezor.label" m="Trezor" />
+                      <span
+                        className={styles.whatsnew}
+                        onClick={onShowTrezorConfig}>
+                        <T
+                          id="createWallet.isTrezor.setupLink"
+                          m="(setup device)"
+                        />
+                      </span>
+                    </>
+                  }
+                  id="trezor"
+                  description={intl.formatMessage(
+                    messages.messageWalletTrezorDescription,
+                    {
+                      link: (
+                        <ExternalLink
+                          className={styles.trezorDocs}
+                          href="https://docs.decred.org/wallets/decrediton/trezor/">
+                          docs.decred.org
+                        </ExternalLink>
+                      )
+                    }
+                  )}
+                  checked={isTrezor}
+                  onChange={toggleTrezor}
+                />
+              </div>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={<T id="privacy.label" m="Privacy" />}
+                  id="privacy"
+                  checked={isPrivacy}
+                  onChange={toggleIsPrivacy}
+                />
+              </div>
+            </>
+          }
+        />
+      </div>
     )}
     <div className={styles.daemonRow}>
       <KeyBlueButton onClick={createWallet}>

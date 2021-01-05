@@ -103,8 +103,24 @@
 
 .daemonLongInput {
   padding-left: 20px;
-  float: left;
-  width: 450px;
+  width: 350px;
+}
+
+.advancedOption {
+  margin: 10px;
+}
+
+.advancedOption > .extra {
+  margin: 15px 23px 30px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.advancedOptions {
+  height: 100%;
+  margin-bottom: 20px;
+  max-width: 600px;
 }
 
 .pageBody.getstarted {
@@ -834,6 +850,10 @@
 
 .trezorConfigSections {
   margin-top: 14em;
+}
+
+.trezorDocs {
+  color: var(--link-color);
 }
 
 .launchError {
