@@ -1,4 +1,4 @@
-import { MAINNET } from "./Decrediton";
+import { MAINNET, DCR } from "./Decrediton";
 
 // Global config constants
 export const DAEMON_ADVANCED = "daemon_start_advanced";
@@ -23,6 +23,28 @@ export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
 export const TREZOR_DEBUG = "trezor_debug";
 export const UPGD_ELECTRON8 = "is_electron8";
+
+// advanced daemon configs
+export const RPCUSER = "rpc_user";
+export const RPCPASS = "rpc_pass";
+export const RPCCERT = "rpc_cert";
+export const RPCHOST = "rpc_host";
+export const RPCPORT = "rpc_port";
+
+// aux function for setting remote daemon credentials
+export const setDaemonRemoteCredentials = (
+  rpcuser,
+  rpcpass,
+  rpccert,
+  rpchost,
+  rpcport
+) => ({
+    [RPCUSER]: rpcuser,
+    [RPCPASS]: rpcpass,
+    [RPCCERT]: rpccert,
+    [RPCHOST]: rpchost,
+    [RPCPORT]: rpcport
+  });
 
 // Wallet config constants
 export const ENABLE_TICKET_BUYER = "enableticketbuyer";
@@ -53,27 +75,42 @@ export const REMEMBERED_VSP_HOST = "remembered_vsp_host";
 export const LAST_ACCESS = "lastaccess";
 export const STAKEPOOLS = "stakepools";
 export const LN_WALLET_EXISTS = "ln_wallet_exists";
+export const USED_VSPS = "used_vsps";
 
-export const RPCUSER = "rpc_user";
-export const RPCPASS = "rpc_pass";
-export const RPCCERT = "rpc_cert";
-export const RPCHOST = "rpc_host";
-export const RPCPORT = "rpc_port";
-
-export const setDaemonRemoteCredentials = (
-  rpcuser,
-  rpcpass,
-  rpccert,
-  rpchost,
-  rpcport
-) => {
-  return {
-    [RPCUSER]: rpcuser,
-    [RPCPASS]: rpcpass,
-    [RPCCERT]: rpccert,
-    [RPCHOST]: rpchost,
-    [RPCPORT]: rpcport
-  };
+export const WALLET_INITIAL_VALUE = {
+  [ENABLE_TICKET_BUYER]: false,
+  [BALANCE_TO_MAINTAIN]: "0",
+  [CURRENCY_DISPLAY]: DCR,
+  [HIDDEN_ACCOUNTS]: [],
+  [DISCOVER_ACCOUNTS]: true,
+  [GAP_LIMIT]: 20,
+  [IS_WATCH_ONLY]: false,
+  [POLITEIA_LAST_ACCESS_TIME]: 0,
+  [POLITEIA_LAST_ACCESS_BLOCK]: 0,
+  [TREZOR]: false,
+  [VSP_IS_LEGACY]: false,
+  // enable_privacy only shows the privacy menu on the wallet
+  [ENABLE_PRIVACY]: true,
+  [LN_ACCOUNT]: null,
+  [LN_ADDRESS]: "",
+  [LN_PORT]: 10009,
+  [LN_CERTPATH]: "",
+  [LN_MACAROONPATH]: "",
+  [SEND_FROM_UNMIXED]: false,
+  [MIXED_ACCOUNT_CFG]: null,
+  [DISMISS_BACKUP_MSG_REDEEM_SCRIPT]: false,
+  // change_account used when mixing
+  [CHANGE_ACCOUNT_CFG]: null,
+  [CSPP_SERVER]: "",
+  [CSPP_PORT]: "",
+  [MIXED_ACC_BRANCH]: null,
+  [REMEMBERED_VSP_HOST]: null,
+  [LAST_ACCESS]: 0,
+  [USED_VSPS]: [],
+  [LN_WALLET_EXISTS]: false,
+  // STAKEPOOLS is a legacy code which can be deleted after stopping giving
+  // support for old vsp versions.
+  [STAKEPOOLS]: []
 };
 
 export const INITIAL_VALUES = {
