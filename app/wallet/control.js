@@ -296,9 +296,7 @@ export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
 
 export const syncVSPTickets = (walletService, passphrase, vspHost, vspPubkey, account) =>
   new Promise((resolve, reject) => {
-    // console.log(walletService)
     const unlockReq = new api.UnlockWalletRequest();
-    // console.log(unlockReq)
     unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     // Unlock wallet so we can call the request.
     walletService.unlockWallet(unlockReq, (error) => {
@@ -306,11 +304,6 @@ export const syncVSPTickets = (walletService, passphrase, vspHost, vspPubkey, ac
         reject(error);
       }
       const request = new api.SyncVSPTicketsRequest();
-      console.log(vspHost);
-      console.log(vspPubkey);
-      console.log(account);
-
-      console.log(walletService);
       request.setAccount(account);
       request.setVspPubkey(vspPubkey);
       request.setVspHost("https://" + vspHost);
