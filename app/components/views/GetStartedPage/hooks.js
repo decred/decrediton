@@ -74,7 +74,7 @@ export const useGetStarted = () => {
         console.log("is at pre start");
         preStartDaemon();
       },
-      isAtStartAdvancedDaemon: () => {},
+      isAtStartAdvancedDaemon: () => { },
       isAtStartSPV: () => onSendContinue(),
       isAtStartingDaemon: (_, event) => {
         console.log("is at Starting Daemonn");
@@ -449,8 +449,8 @@ export const useGetStarted = () => {
                 m="Choose a wallet to open in SPV mode"
               />
             ) : (
-              <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />
-            );
+                <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />
+              );
             component = h(WalletSelection, {
               onSendCreateWallet,
               submitChosenWallet,
@@ -461,11 +461,11 @@ export const useGetStarted = () => {
             text = isCreateNewWallet ? (
               <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." />
             ) : (
-              <T
-                id="loaderBar.preCreateWalletRestore"
-                m="Restore a Wallet..."
-              />
-            );
+                <T
+                  id="loaderBar.preCreateWalletRestore"
+                  m="Restore a Wallet..."
+                />
+              );
             component = h(PreCreateWalletForm, {
               onShowCreateWallet,
               onSendContinue,

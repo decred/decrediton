@@ -8,8 +8,8 @@ import {
   dcrwalletConf,
   getDcrdRpcCert
 } from "./main_dev/paths";
-import * as cfgConstants from "constants/config";
 import { DCR } from "constants";
+import * as cfgConstants from "constants/config";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -24,58 +24,58 @@ export function getWalletCfg(testnet, walletPath) {
 // TODO: move this constants to constants directory file.
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
-  if (!config.has("enableticketbuyer")) {
-    config.set("enableticketbuyer", "0");
+  if (!config.has(cfgConstants.ENABLE_TICKET_BUYER)) {
+    config.set(cfgConstants.ENABLE_TICKET_BUYER, "0");
   }
-  if (!config.has("balancetomaintain")) {
-    config.set("balancetomaintain", "0");
+  if (!config.has(cfgConstants.BALANCE_TO_MAINTAIN)) {
+    config.set(cfgConstants.BALANCE_TO_MAINTAIN, "0");
   }
-  if (!config.has("currency_display")) {
-    config.set("currency_display", DCR);
+  if (!config.has(cfgConstants.CURRENCY_DISPLAY)) {
+    config.set(cfgConstants.CURRENCY_DISPLAY, DCR);
   }
-  if (!config.has("hiddenaccounts")) {
+  if (!config.has(cfgConstants.HIDDEN_ACCOUNTS)) {
     const hiddenAccounts = Array();
-    config.set("hiddenaccounts", hiddenAccounts);
+    config.set(cfgConstants.HIDDEN_ACCOUNTS, hiddenAccounts);
   }
-  if (!config.has("discoveraccounts")) {
-    config.set("discoveraccounts", true);
+  if (!config.has(cfgConstants.DISCOVER_ACCOUNTS)) {
+    config.set(cfgConstants.DISCOVER_ACCOUNTS, true);
   }
-  if (!config.has("gaplimit")) {
-    config.set("gaplimit", "20");
+  if (!config.has(cfgConstants.GAP_LIMIT)) {
+    config.set(cfgConstants.GAP_LIMIT, "20");
   }
-  if (!config.has("iswatchonly")) {
-    config.set("iswatchonly", false);
+  if (!config.has(cfgConstants.IS_WATCH_ONLY)) {
+    config.set(cfgConstants.IS_WATCH_ONLY, false);
   }
-  if (!config.has("politeia_last_access_time")) {
-    config.set("politeia_last_access_time", 0);
+  if (!config.has(cfgConstants.POLITEIA_LAST_ACCESS_TIME)) {
+    config.set(cfgConstants.POLITEIA_LAST_ACCESS_TIME, 0);
   }
-  if (!config.has("politeia_last_access_block")) {
-    config.set("politeia_last_access_block", 0);
+  if (!config.has(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK)) {
+    config.set(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK, 0);
   }
-  if (!config.has("trezor")) {
-    config.set("trezor", false);
+  if (!config.has(cfgConstants.TREZOR)) {
+    config.set(cfgConstants.TREZOR, false);
   }
-  if (!config.has("vsp_is_legacy")) {
-    config.set("vsp_is_legacy", false);
+  if (!config.has(cfgConstants.VSP_IS_LEGACY)) {
+    config.set(cfgConstants.VSP_IS_LEGACY, false);
   }
-  if (!config.has("enableprivacy")) {
-    config.set("enableprivacy", true);
+  if (!config.has(cfgConstants.ENABLE_PRIVACY)) {
+    config.set(cfgConstants.ENABLE_PRIVACY, true);
   }
-  if (!config.has("ln_address")) {
-    config.set("ln_address", "");
+  if (!config.has(cfgConstants.LN_ADDRESS)) {
+    config.set(cfgConstants.LN_ADDRESS, "");
   }
-  if (!config.has("ln_port")) {
-    config.set("ln_port", 10009);
+  if (!config.has(cfgConstants.LN_PORT)) {
+    config.set(cfgConstants.LN_PORT, 10009);
   }
-  if (!config.has("ln_certpath")) {
-    config.set("ln_certpath", "");
+  if (!config.has(cfgConstants.LN_CERTPATH)) {
+    config.set(cfgConstants.LN_CERTPATH, "");
   }
-  if (!config.has("ln_macaroonpath")) {
-    config.set("ln_macaroonpath", "");
+  if (!config.has(cfgConstants.LN_MACAROONPATH)) {
+    config.set(cfgConstants.LN_MACAROONPATH, "");
   }
   // if privacy if configured, set send_from_unmixed if not set.
-  if (!config.has("send_from_unmixed") && config.has("mixedaccount")) {
-    config.set("send_from_unmixed", false);
+  if (!config.has(cfgConstants.SEND_FROM_UNMIXED) && config.has(cfgConstants.MIXED_ACCOUNT_CFG)) {
+    config.set(cfgConstants.SEND_FROM_UNMIXED, false);
   }
 
   stakePoolInfo(function (foundStakePoolConfigs) {
@@ -90,35 +90,36 @@ export function initWalletCfg(testnet, walletPath) {
 function cleanWalletCfg(config) {
   let key;
   const walletCfgFields = [
-    "enableticketbuyer",
-    "balancetomaintain",
-    "currency_display",
-    "ln_wallet_exists",
-    "ln_account",
-    "enableprivacy",
-    "send_from_unmixed",
-    "mixedaccount",
-    "mixedaccbranch",
-    "changeaccount",
-    "hiddenaccounts",
-    "discoveraccounts",
-    "gaplimit",
-    "iswatchonly",
-    "stakepools",
-    "lastaccess",
-    "politeia_last_access_time",
-    "politeia_last_access_block",
-    "csppserver",
-    "csppport",
-    "dismiss_backup_msg_redeem_script",
-    "vsp_is_legacy",
-    "remembered_vsp_host"
+    cfgConstants.ENABLE_TICKET_BUYER,
+    cfgConstants.BALANCE_TO_MAINTAIN,
+    cfgConstants.CURRENCY_DISPLAY,
+    cfgConstants.LN_WALLET_EXISTS,
+    cfgConstants.LN_ACCOUNT,
+    cfgConstants.ENABLE_PRIVACY,
+    cfgConstants.SEND_FROM_UNMIXED,
+    cfgConstants.MIXED_ACCOUNT_CFG,
+    cfgConstants.MIXED_ACC_BRANCH,
+    cfgConstants.CHANGE_ACCOUNT_CFG,
+    cfgConstants.HIDDEN_ACCOUNTS,
+    cfgConstants.DISCOVER_ACCOUNTS,
+    cfgConstants.GAP_LIMIT,
+    cfgConstants.IS_WATCH_ONLY,
+    cfgConstants.STAKEPOOLS,
+    cfgConstants.LAST_ACCESS,
+    cfgConstants.POLITEIA_LAST_ACCESS_TIME,
+    cfgConstants.POLITEIA_LAST_ACCESS_BLOCK,
+    cfgConstants.CSPP_SERVER,
+    cfgConstants.CSPP_PORT,
+    cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT,
+    cfgConstants.VSP_IS_LEGACY,
+    cfgConstants.REMEMBERED_VSP_HOST
   ];
   for (key in config.store) {
     let found = false;
     for (let i = 0; i < walletCfgFields.length; i++) {
       if (key == walletCfgFields[i]) {
         found = true;
+        break;
       }
     }
     if (!found) {
@@ -204,8 +205,8 @@ export function getDcrdCert(dcrdCertPath) {
 
 export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   const currentStakePoolConfigs =
-    config.has("stakepools") && Array.isArray(config.get("stakepools"))
-      ? config.get("stakepools")
+    config.has(cfgConstants.STAKEPOOLS) && Array.isArray(config.get(cfgConstants.STAKEPOOLS))
+      ? config.get(cfgConstants.STAKEPOOLS)
       : [];
 
   const currentConfigsByHost = currentStakePoolConfigs.reduce((l, s) => {
@@ -222,7 +223,7 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
     Object.keys(currentConfigsByHost).forEach((v) =>
       newStakePoolConfigs.push(currentConfigsByHost[v])
     );
-    config.set("stakepools", newStakePoolConfigs);
+    config.set(cfgConstants.STAKEPOOLS, newStakePoolConfigs);
   }
 }
 

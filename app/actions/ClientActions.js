@@ -39,6 +39,7 @@ import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID
 } from "constants";
+import * as cfgConstants from "constants/config";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -466,7 +467,7 @@ export function hideAccount(accountNumber) {
       updatedHiddenAccounts.push(accountNumber);
     }
     const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-    cfg.set("hiddenaccounts", updatedHiddenAccounts);
+    cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
       type: UPDATEHIDDENACCOUNTS
@@ -487,7 +488,7 @@ export function showAccount(accountNumber) {
       }
     }
     const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-    cfg.set("hiddenaccounts", updatedHiddenAccounts);
+    cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
       type: UPDATEHIDDENACCOUNTS

@@ -1,5 +1,6 @@
 import { getGlobalCfg } from "config";
 import { session } from "electron";
+import * as cfgConstants from "constants/config";
 
 export const PROXYTYPE_PAC = "PROXYTYPE_PAC";
 export const PROXYTYPE_HTTP = "PROXYTYPE_HTTP";
@@ -10,8 +11,8 @@ export const setupProxy = (logger) =>
   new Promise((resolve, reject) => {
     const cfg = getGlobalCfg();
 
-    const proxyType = cfg.get("proxy_type");
-    const proxyLocation = cfg.get("proxy_location");
+    const proxyType = cfg.get(cfgConstants.PROXY_TYPE);
+    const proxyLocation = cfg.get(cfgConstants.PROXY_LOCATION);
 
     const proxyConfig = {
       pacScript: null,

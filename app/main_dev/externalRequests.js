@@ -16,6 +16,7 @@ import {
   DCRDATA_URL_TESTNET,
   DCRDATA_URL_MAINNET
 } from "../middleware/dcrdataapi";
+import * as cfgConstants from "constants/config";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING =
@@ -167,6 +168,6 @@ export const reloadAllowedExternalRequests = () => {
   }
 
   const globalCfg = getGlobalCfg();
-  const cfgAllowedRequests = globalCfg.get("allowed_external_requests", []);
+  const cfgAllowedRequests = globalCfg.get(cfgConstants.ALLOWED_EXTERNAL_REQUESTS, []);
   cfgAllowedRequests.forEach((v) => allowExternalRequest(v));
 };

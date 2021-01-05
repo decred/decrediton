@@ -5,6 +5,7 @@ import * as wallet from "wallet";
 import { getWalletCfg } from "config";
 import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
 import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
+import * as cfgConstants from "constants/config";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
 export const GETACCOUNTMIXERSERVICE_SUCCESS = "GETACCOUNTMIXERSERVICE_SUCCESS";
@@ -38,8 +39,8 @@ export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
 export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const value = !walletCfg.get("send_from_unmixed");
-  walletCfg.set("send_from_unmixed", value);
+  const value = !walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
+  walletCfg.set(cfgConstants.SEND_FROM_UNMIXED, value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
 };
 
@@ -190,13 +191,13 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
   const csppServer = "cspp.decred.org";
   const csppPort = isTestnet ? "15760" : "5760";
 
-  cfg.set("csppserver", csppServer);
-  cfg.set("csppport", csppPort);
-  cfg.set("mixedaccount", mixedNumber);
-  cfg.set("changeaccount", changeNumber);
-  cfg.set("mixedaccbranch", 0);
+  cfg.set(cfgConstants.CSPP_SERVER, csppServer);
+  cfg.set(cfgConstants.CSPP_PORT, csppPort);
+  cfg.set(cfgConstants.MIXED_ACCOUNT_CFG, mixedNumber);
+  cfg.set(cfgConstants.CHANGE_ACCOUNT_CFG, changeNumber);
+  cfg.set(cfgConstants.MIXED_ACCBRANCH, 0);
   // by default it is only allowed to send from mixed account.
-  cfg.set("send_from_unmixed", false);
+  cfg.set(cfgConstants.SEND_FROM_UNMIXED, false);
 
   dispatch({
     type: CREATEMIXERACCOUNTS_SUCCESS,

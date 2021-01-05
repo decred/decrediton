@@ -5,6 +5,7 @@ import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
+import * as cfgConstants from "constants/config";
 import { reverseRawHash } from "../helpers/byteActions";
 import shuffle from "lodash/fp/shuffle";
 
@@ -134,7 +135,7 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) => (
     daemon: { walletName }
   } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  walletCfg.set("stakepools", stakePoolConfigs);
+  walletCfg.set(cfgConstants.STAKEPOOLS, stakePoolConfigs);
   return stakePoolConfigs;
 };
 
@@ -288,7 +289,7 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (
     agendaId: choice.getAgendaId(),
     choiceId: choice.getChoiceId()
   }));
-  const stakePoolConfigs = config.get("stakepools").map((config) =>
+  const stakePoolConfigs = config.get(cfgConstants.STAKEPOOLS).map((config) =>
     config.Host === stakePool.Host
       ? {
           ...config,
@@ -299,7 +300,7 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (
   );
   const selectedStakePool = sel.selectedStakePool(getState());
 
-  config.set("stakepools", stakePoolConfigs);
+  config.set(cfgConstants.STAKEPOOLS, stakePoolConfigs);
   dispatch({
     selectedStakePool,
     currentStakePoolConfig: stakePoolConfigs,
@@ -315,7 +316,7 @@ export const dismissBackupRedeemScript = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  walletCfg.set("dismiss_backup_msg_redeem_script", true);
+  walletCfg.set(cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT, true);
   dispatch({ type: DISMISS_BACKUP_MSG_REDEEM_SCRIPT });
 };
 
@@ -394,7 +395,7 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const existingPools = config.get("stakepools");
+  const existingPools = config.get(cfgConstants.STAKEPOOLS);
   const pool = existingPools.filter((p) => p.Host === host)[0];
   if (!pool) {
     return;
@@ -408,7 +409,7 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   const newPool = {};
   propsToMaintain.forEach((p) => (newPool[p] = pool[p])); // **not** a deep copy
   const newPools = existingPools.map((p) => (p.Host === host ? newPool : p));
-  config.set("stakepools", newPools);
+  config.set(cfgConstants.STAKEPOOLS, newPools);
 
   let selectedStakePool = sel.selectedStakePool(getState());
   if (selectedStakePool && selectedStakePool.Host === host) {
@@ -451,7 +452,7 @@ export const addCustomStakePool = (host) => async (dispatch, getState) => {
     } = getState();
     const config = getWalletCfg(sel.isTestNet(getState()), walletName);
     updateStakePoolConfig(config, [poolInfo]);
-    const currentStakePoolConfig = config.get("stakepools");
+    const currentStakePoolConfig = config.get(cfgConstants.STAKEPOOLS);
 
     dispatch({
       poolInfo,
@@ -476,7 +477,7 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
   updateStakePoolConfig(config, vspInfo);
   dispatch({
     type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
-    currentStakePoolConfig: config.get("stakepools")
+    currentStakePoolConfig: config.get(cfgConstants.STAKEPOOLS)
   });
 
   return vspInfo;
@@ -488,7 +489,7 @@ export const toggleIsLegacy = (isLegacy) => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  walletCfg.set("vsp_is_legacy", isLegacy);
+  walletCfg.set(cfgConstants.VSP_IS_LEGACY, isLegacy);
   dispatch({
     type: TOGGLE_ISLEGACY,
     isLegacy
@@ -502,5 +503,5 @@ export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) 
 
   const { daemon: { walletName } } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  walletCfg.set("remembered_vsp_host", rememberedVspHost);
+  walletCfg.set(cfgConstants.REMEMBERED_VSP_HOST, rememberedVspHost);
 };

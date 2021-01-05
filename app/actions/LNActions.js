@@ -5,6 +5,7 @@ import { ipcRenderer } from "electron";
 import { getWalletCfg } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
+import * as cfgConstants from "constants/config";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -319,8 +320,8 @@ const connectToLNWallet = (
   const addrAccount = validResp.getAccountNumber();
   if (addrAccount != account) {
     throw new Error(
-      "Wallet returned that address is not from the ln account; account=" +
-        addrAccount
+      `Wallet returned that address is not from the ln account; account=
+      ${addrAccount}`
     );
   }
 
@@ -873,8 +874,8 @@ const getLNWalletConfig = () => (dispatch, getState) => {
   } = getState();
   const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   return {
-    walletExists: cfg.get("ln_wallet_exists"),
-    account: cfg.get("ln_account")
+    walletExists: cfg.get(cfgConstants.LN_WALLET_EXISTS),
+    account: cfg.get(cfgConstants.LN_ACCOUNT)
   };
 };
 
@@ -883,8 +884,8 @@ const setLNWalletConfig = (account) => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  cfg.set("ln_wallet_exists", true);
-  cfg.set("ln_account", account);
+  cfg.set(cfgConstants.LN_WALLET_EXISTS, true);
+  cfg.set(cfgConstants.LN_ACCOUNT, account);
 };
 
 export const LNWALLET_SCBINFO_UPDATED = "LNWALLET_SCBINFO_UPDATED";

@@ -28,6 +28,7 @@ import { push as pushHistory } from "connected-react-router";
 import { stopNotifcations } from "./NotificationActions";
 import { stopDcrlnd } from "./LNActions";
 import { TESTNET } from "constants";
+import * as cfgConstants from "constants/config";
 import { ipcRenderer } from "electron";
 import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
@@ -131,8 +132,8 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
           daemon: { walletName }
         } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", isNew);
+        config.delete(cfgConstants.DISCOVER_ACCOUNTS);
+        config.set(cfgConstants.DISCOVER_ACCOUNTS, isNew);
         dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
         dispatch({ type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
@@ -166,8 +167,8 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass = "") => (
           daemon: { walletName }
         } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.set("iswatchonly", true);
-        config.delete("discoveraccounts");
+        config.set(cfgConstants.IS_WATCH_ONLY, true);
+        config.delete(cfgConstants.DISCOVER_ACCOUNTS);
         wallet.setIsWatchingOnly(true);
         dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
         dispatch(getWalletServiceAttempt());
@@ -385,12 +386,12 @@ export function clearStakePoolConfigNewWallet() {
       daemon: { walletName }
     } = getState();
     const config = getWalletCfg(isTestNet(getState()), walletName);
-    config.delete("stakepools");
+    config.delete(cfgConstants.STAKEPOOLS);
 
     getStakePoolInfo().then((foundStakePoolConfigs) => {
       if (foundStakePoolConfigs) {
         const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.set("stakepools", foundStakePoolConfigs);
+        config.set(cfgConstants.STAKEPOOLS, foundStakePoolConfigs);
         dispatch({
           currentStakePoolConfig: foundStakePoolConfigs,
           type: CLEARSTAKEPOOLCONFIG
@@ -609,8 +610,8 @@ const syncConsumer = (response) => async (dispatch, getState) => {
           daemon: { walletName }
         } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", true);
+        config.delete(cfgConstants.DISCOVER_ACCOUNTS);
+        config.set(cfgConstants.DISCOVER_ACCOUNTS, true);
         dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
       }
       break;
@@ -662,8 +663,8 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
   const config = getWalletCfg(isTestNet(getState()), walletName);
   // time in seconds as politeia uses its proposal time in seconds
   const timestamp = new Date().getTime() / 1000;
-  config.set("politeia_last_access_time", timestamp);
-  config.set("politeia_last_access_block", currentBlockHeight);
+  config.set(cfgConstants.POLITEIA_LAST_ACCESS_TIME, timestamp);
+  config.set(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK, currentBlockHeight);
   dispatch({
     type: SET_POLITEIA_LAST_ACCESS_SUCCESS,
     currentBlockHeight,

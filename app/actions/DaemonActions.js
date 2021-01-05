@@ -17,6 +17,7 @@ import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
+import * as cfgConstants from "constants/config";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -105,7 +106,7 @@ export const toggleSpv = (isSPV) => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: isSPV }, true));
   const tempSettings = getState().settings.tempSettings;
   const config = getGlobalCfg();
-  config.set("show_spvchoice", false);
+  config.set(cfgConstants.SHOW_SPV_CHOICE, false);
 
   await dispatch(saveSettings(tempSettings));
   dispatch({ type: FINISH_SPVCHOICE });
@@ -133,21 +134,21 @@ export const setupDisabledPrivacy = () => (dispatch, getState) => {
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
   config.set(LOCALE, selectedLanguage.language);
-  config.set("set_language", false);
+  config.set(cfgConstants.SET_LANGUAGE, false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
 };
 
 export const finishTutorial = () => (dispatch) => {
   const config = getGlobalCfg();
-  config.set("show_tutorial", false);
+  config.set(cfgConstants.SHOW_TUTORIAL, false);
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
 };
 
 export const finishPrivacy = () => (dispatch) => {
   const config = getGlobalCfg();
-  config.set("show_privacy", false);
+  config.set(cfgConstants.SHOW_PRIVACY, false);
   dispatch({ type: FINISH_PRIVACY });
   dispatch(goBack());
 };
@@ -363,7 +364,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       // we will not need to save at the config the current stakepool
       // anymore as now it is not needed to register into one.
       // we can save a favorite vsp, though.
-      const currentStakePoolConfig = walletCfg.get("stakepools");
+      const currentStakePoolConfig = walletCfg.get(cfgConstants.STAKEPOOLS);
       let firstConfiguredStakePool = null;
       if (currentStakePoolConfig !== undefined) {
         for (let i = 0; i < currentStakePoolConfig.length; i++) {
@@ -377,30 +378,26 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         }
       }
       const walletName = selectedWallet.value.wallet;
-      const gapLimit = walletCfg.get("gaplimit");
-      const hiddenAccounts = walletCfg.get("hiddenaccounts");
-      const currencyDisplay = walletCfg.get("currency_display");
-      const balanceToMaintain = walletCfg.get("balancetomaintain");
-      const discoverAccountsComplete = walletCfg.get("discoveraccounts");
+      const gapLimit = walletCfg.get(cfgConstants.GAP_LIMIT);
+      const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
+      const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
+      const balanceToMaintain = walletCfg.get(cfgConstants.BALANCE_TO_MAINTAIN);
+      const discoverAccountsComplete = walletCfg.get(cfgConstants.DISCOVER_ACCOUNTS);
       const selectedStakePool = firstConfiguredStakePool;
-      const lastPoliteiaAccessTime = walletCfg.get("politeia_last_access_time");
-      const lastPoliteiaAccessBlock = walletCfg.get(
-        "politeia_last_access_block"
-      );
-      const dismissBackupRedeemScript = walletCfg.get(
-        "dismiss_backup_msg_redeem_script"
-      );
-      const enablePrivacy = walletCfg.get("enableprivacy");
-      const sendFromUnmixed = walletCfg.get("send_from_unmixed");
-      const mixedAccount = walletCfg.get("mixedaccount");
-      const changeAccount = walletCfg.get("changeaccount");
-      const csppServer = walletCfg.get("csppserver");
-      const csppPort = walletCfg.get("csppport");
-      const mixedAccountBranch = walletCfg.get("mixedaccbranch");
-      const isLegacy = walletCfg.get("vsp_is_legacy");
-      const rememberedVspHost = walletCfg.get("remembered_vsp_host");
+      const lastPoliteiaAccessTime = walletCfg.get(cfgConstants.POLITEIA_LAST_ACCESS_TIME);
+      const lastPoliteiaAccessBlock = walletCfg.get(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK);
+      const dismissBackupRedeemScript = walletCfg.get(cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT);
+      const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
+      const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
+      const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
+      const changeAccount = walletCfg.get(cfgConstants.CHANGE_ACCOUNT_CFG);
+      const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
+      const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
+      const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
+      const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
+      const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
 
-      walletCfg.set("lastaccess", Date.now());
+      walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
       dispatch({
         type: WALLETREADY,
         walletName,

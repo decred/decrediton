@@ -16,6 +16,7 @@ import pkg from "./package.json";
 import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
+import * as cfgConstants from "constants/config";
 import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
 
@@ -51,14 +52,14 @@ const currentSettings = {
   daemonStartAdvanced:
     hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
   daemonStartAdvancedFromCli: !!hasCliOption("daemonStartAdvanced"),
-  allowedExternalRequests: globalCfg.get("allowed_external_requests"),
-  proxyType: globalCfg.get("proxy_type"),
-  proxyLocation: globalCfg.get("proxy_location"),
+  allowedExternalRequests: globalCfg.get(cfgConstants.ALLOWED_EXTERNAL_REQUESTS),
+  proxyType: globalCfg.get(cfgConstants.PROXY_TYPE),
+  proxyLocation: globalCfg.get(cfgConstants.PROXY_LOCATION),
   spvMode: hasCliOption("spvMode") || getIsSpv(),
   spvModeFromCli: !!hasCliOption("spvMode"),
-  spvConnect: hasCliOption("spvConnect") || globalCfg.get("spv_connect"),
+  spvConnect: hasCliOption("spvConnect") || globalCfg.get(cfgConstants.SPV_CONNECT),
   spvConnectFromCli: !!hasCliOption("spvConnect"),
-  timezone: globalCfg.get("timezone"),
+  timezone: globalCfg.get(cfgConstants.TIMEZONE),
   currencyDisplay: DCR,
   network: hasCliOption("network") || globalCfg.get(NETWORK),
   networkFromCli: !!hasCliOption("network"),
@@ -69,7 +70,7 @@ const initialState = {
     currentSettings: currentSettings,
     tempSettings: currentSettings,
     settingsChanged: false,
-    uiAnimations: globalCfg.get("ui_animations"),
+    uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS),
     needNetworkReset: false,
     theme: globalCfg.get(THEME)
   },
@@ -89,10 +90,10 @@ const initialState = {
     appVersion: pkg.version,
     daemonRemote: false,
     locale: locale,
-    tutorial: globalCfg.get("show_tutorial"),
-    showPrivacy: globalCfg.get("show_privacy"),
-    setLanguage: globalCfg.get("set_language"),
-    showSpvChoice: globalCfg.get("show_spvchoice"),
+    tutorial: globalCfg.get(cfgConstants.SHOW_TUTORIAL),
+    showPrivacy: globalCfg.get(cfgConstants.SHOW_PRIVACY),
+    setLanguage: globalCfg.get(cfgConstants.SET_LANGUAGE),
+    showSpvChoice: globalCfg.get(cfgConstants.SHOW_SPV_CHOICE),
     daemonStarted: false,
     daemonSynced: ipcRenderer.sendSync("get-height-synced"),
     daemonStopped: false,
@@ -379,7 +380,7 @@ const initialState = {
   },
   trezor: {
     enabled: false,
-    debug: globalCfg.get("trezor_debug"),
+    debug: globalCfg.get(cfgConstants.TREZOR_DEBUG),
     deviceList: null,
     getDeviceListAttempt: false,
     transportError: false,
@@ -396,7 +397,7 @@ const initialState = {
     walletCreationMasterPubkeyAttempt: false
   },
   ln: {
-    enabled: globalCfg.get("ln_enabled"),
+    enabled: globalCfg.get(cfgConstants.LN_ENABLED),
     active: false,
     exists: false,
     connectAttempt: false,
