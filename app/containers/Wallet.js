@@ -29,9 +29,8 @@ const pageAnimation = {
 
 @autobind
 class Wallet extends React.Component {
-  constructor(props) {
-    super(props);
-    const { compareInventory, politeiaEnabled, getPeerInfo } = props;
+  componentDidMount() {
+    const { compareInventory, politeiaEnabled, getPeerInfo } = this.props;
     // Compare politeias inventory and update proposal list if they are different
     // every 1 minute.
     this.fetchPoliteiaInventory = this.props.setInterval(() => {
@@ -41,11 +40,17 @@ class Wallet extends React.Component {
     }, 60000);
     // Get peer info every 10 seconds, so we can no if there are no available
     // peers.
-    this.props.setInterval(() => {
-      if (politeiaEnabled) {
-        getPeerInfo();
-      }
+    this.peerInfoIntervalRef = this.props.setInterval(() => {
+      getPeerInfo();
     }, 10000);
+  }
+  componentWillUnmount() {
+    if (this.fetchPoliteiaInventory !== null) {
+      this.props.clearInterval(this.fetchPoliteiaInventory);
+    }
+    if (this.peerInfoIntervalRef !== null) {
+      this.props.clearInterval(this.peerInfoIntervalRef);
+    }
   }
 
   render() {

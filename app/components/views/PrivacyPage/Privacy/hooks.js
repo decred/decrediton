@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import * as act from "actions/AccountMixerActions";
 import * as ca from "actions/ClientActions";
 import { getPrivacyLogs } from "actions/DaemonActions";
@@ -40,7 +40,8 @@ export function usePrivacy() {
     [dispatch]
   );
   const defaultSpendingAccountDisregardMixedAccount = useSelector(
-    sel.defaultSpendingAccountDisregardMixedAccount
+    sel.defaultSpendingAccountDisregardMixedAccount,
+    shallowEqual
   );
   useMountEffect(() => {
     getMixerAcctsSpendableBalances();
