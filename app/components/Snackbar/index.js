@@ -1,5 +1,6 @@
 // @flow
 import { keyBy } from "fp";
+// XXX useTheming hook already exists in app/hooks
 import { snackbar, theming } from "connectors";
 import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";

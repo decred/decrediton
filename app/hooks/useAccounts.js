@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-// import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 
 const useAccounts = () => {
