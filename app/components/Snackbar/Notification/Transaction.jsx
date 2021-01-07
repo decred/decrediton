@@ -12,6 +12,7 @@ import {
   REVOCATION
 } from "constants/Decrediton";
 import "style/Header.less";
+import style from "../Snackbar.module.css";
 
 const messages = defineMessages({
   [TICKET]: {
@@ -48,41 +49,44 @@ const Transaction = ({
   topNotification,
   progress
 }) => (
-  <>
+  <div data-testid="transaction-notification">
     {topNotification && (
-      <div className="snackbar-close-button-top" onClick={onDismissMessage}>
+      <button
+        aria-label="Close"
+        className={style.snackbarCloseButtonTop}
+        onClick={onDismissMessage}>
         <ProgressRing radius={13} stroke={2} progress={progress} />
-      </div>
+      </button>
     )}
-    <div className="snackbar-information-row">
-      <div className="snackbar-information-row-type">
+    <div className={style.snackbarInformationRow}>
+      <div className={style.snackbarInformationRowType}>
         <T id="notification.new" m="New Transaction" />,{" "}
-        <span className="snackbar-information-row-type-bold">
+        <span className={style.snackbarInformationRowTypeBold}>
           {intl.formatMessage(messages[type])}
         </span>
       </div>
-      <div className="snackbar-information-row-amount">
+      <div className={style.snackbarInformationRowAmount}>
         <Balance flat amount={message.amount} />
       </div>
     </div>
     {message.fee > 0 && (
-      <div className="snackbar-information-row">
-        <div className="snackbar-information-row-type">
+      <div className={style.snackbarInformationRow}>
+        <div className={style.snackbarInformationRowType}>
           <T id="notification.transfer.fee" m="Transaction Fee" />
         </div>
-        <div className="snackbar-information-row-fee">
+        <div className={style.snackbarInformationRowFee}>
           <Balance flat amount={message.fee} />
         </div>
       </div>
     )}
-    <div className="snackbar-information-row">
-      <div className="snackbar-information-row-type">
+    <div className={style.snackbarInformationRow}>
+      <div className={style.snackbarInformationRowType}>
         <T
           id="notification.seeTransactionDetails"
           m="See Transaction Details"
         />
       </div>
-      <div className="snackbar-information-row-tx">
+      <div className={style.snackbarInformationRowTx}>
         <Tooltip width={300} text={`${message.txHash}`}>
           <Link
             onClick={onDismissMessage}
@@ -92,7 +96,7 @@ const Transaction = ({
         </Tooltip>
       </div>
     </div>
-  </>
+  </div>
 );
 
 export default injectIntl(Transaction);

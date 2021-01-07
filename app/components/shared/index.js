@@ -12,7 +12,7 @@ export { default as Documentation } from "./Documentation";
 export { default as StaticSwitch } from "./StaticSwitch";
 export { default as VerticalAccordion } from "./VerticalAccordion";
 export { default as PoliteiaLink } from "./PoliteiaLink";
-export { default as WatchOnlyWarnNotification } from "./WatchOnlyWarnNotification";
+export { default as WatchOnlyWarnNotification } from "./WatchOnlyWarnNotification/WatchOnlyWarnNotification.jsx";
 export { default as Subtitle } from "./Subtitle/Subtitle";
 export { default as FormattedRelative } from "./FormattedRelative";
 export { default as CreatePassPhrase } from "./CreatePassPhrase/CreatePassPhrase";

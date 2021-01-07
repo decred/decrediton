@@ -53,7 +53,13 @@ function render(ui, renderOptions) {
         currentSettings,
         tempSettings: currentSettings
       },
-      locales: locales
+      locales: locales,
+      snackbar: {
+        messages: Array()
+      },
+      ln: {
+        failedPayments: Array()
+      }
     };
     if (
       renderOptions &&
