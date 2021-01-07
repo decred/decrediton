@@ -4,13 +4,18 @@ import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
 import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
-import * as cfgConstants from "constants/config";
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
   CSPP_URL,
   CSPP_PORT_TESTNET,
-  CSPP_PORT_MAINNET
+  CSPP_PORT_MAINNET,
+  SEND_FROM_UNMIXED,
+  CSPP_SERVER,
+  CSPP_PORT,
+  MIXED_ACCOUNT_CFG,
+  CHANGE_ACCOUNT_CFG,
+  MIXED_ACC_BRANCH
 } from "constants";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
@@ -45,8 +50,8 @@ export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
 export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const value = !walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
-  walletCfg.set(cfgConstants.SEND_FROM_UNMIXED, value);
+  const value = !walletCfg.get(SEND_FROM_UNMIXED);
+  walletCfg.set(SEND_FROM_UNMIXED, value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
 };
 
@@ -193,13 +198,13 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
   const csppServer = CSPP_URL;
   const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;
 
-  cfg.set(cfgConstants.CSPP_SERVER, csppServer);
-  cfg.set(cfgConstants.CSPP_PORT, csppPort);
-  cfg.set(cfgConstants.MIXED_ACCOUNT_CFG, mixedNumber);
-  cfg.set(cfgConstants.CHANGE_ACCOUNT_CFG, changeNumber);
-  cfg.set(cfgConstants.MIXED_ACCBRANCH, 0);
+  cfg.set(CSPP_SERVER, csppServer);
+  cfg.set(CSPP_PORT, csppPort);
+  cfg.set(MIXED_ACCOUNT_CFG, mixedNumber);
+  cfg.set(CHANGE_ACCOUNT_CFG, changeNumber);
+  cfg.set(MIXED_ACC_BRANCH, 0);
   // by default it is only allowed to send from mixed account.
-  cfg.set(cfgConstants.SEND_FROM_UNMIXED, false);
+  cfg.set(SEND_FROM_UNMIXED, false);
 
   dispatch({
     type: CREATEMIXERACCOUNTS_SUCCESS,
