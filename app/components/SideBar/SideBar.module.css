@@ -8,9 +8,12 @@
   flex-direction: column;
   width: var(--sidebar-width);
   z-index: 99;
-  transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
   box-shadow: 5px 0 21px rgba(9, 20, 64, 0.21);
   background-color: var(--sidebar-color);
+}
+
+.sidebar.animated {
+  transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 .sidebar.sidebarReduced {
