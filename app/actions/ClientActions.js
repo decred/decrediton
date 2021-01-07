@@ -3,6 +3,7 @@ import * as wallet from "wallet";
 import { onAppReloadRequested, getDcrwalletGrpcKeyCert } from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
+import isUndefined from "lodash/fp/isUndefined";
 import {
   getNextAddressAttempt,
   getPeerInfo,
@@ -768,12 +769,12 @@ export const getMixerAcctsSpendableBalances = () => async (
   const mixedAccount = sel.getMixedAccount(getState());
   const changeAccount = sel.getChangeAccount(getState());
   const balances = {};
-  if (mixedAccount) {
+  if (!isUndefined(mixedAccount)) {
     balances.mixedAccountSpendableBalance = await dispatch(
       getAcctSpendableBalance(mixedAccount)
     );
   }
-  if (changeAccount) {
+  if (!isUndefined(changeAccount)) {
     balances.changeAccountSpendableBalance = await dispatch(
       getAcctSpendableBalance(changeAccount)
     );

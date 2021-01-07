@@ -17,7 +17,7 @@ import {
   OPENWALLET_INPUTPRIVPASS
 } from "actions/WalletLoaderActions";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useDaemonStartup } from "hooks";
+import { useDaemonStartup, useAccounts } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
@@ -64,8 +64,10 @@ export const useGetStarted = () => {
     appVersion,
     syncAttemptRequest,
     onGetDcrdLogs,
-    daemonWarning
+    daemonWarning,
+    getCoinjoinOutputspByAcct
   } = useDaemonStartup();
+  const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
   const [state, send] = useMachine(getStartedMachine, {
@@ -202,7 +204,7 @@ export const useGetStarted = () => {
           });
       },
       isSyncingRPC: async (context) => {
-        const { passPhrase, isPrivacy, isSPV } = context;
+        const { passPhrase, isSPV } = context;
         if (syncAttemptRequest) {
           return;
         }
@@ -214,16 +216,7 @@ export const useGetStarted = () => {
         }
         if (isSPV) {
           return startSPVSync(passPhrase)
-            .then(() => {
-              if (isPrivacy) {
-                // if recoverying a privacy wallet, we go to settingMixedAccount
-                // state, so the user can set a mixed account based on their
-                // coinjoin outputs.
-                // This state should only be achievable if recoverying wallet.
-                send({ type: "SET_MIXED_ACCOUNT" });
-              }
-              send({ type: "GO_TO_HOME_VIEW" });
-            })
+            .then(() => send({ type: "SET_MIXED_ACCOUNT" }))
             .catch((error) => {
               // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
               // private passphrase to discover accounts and the user typed a wrong
@@ -246,15 +239,7 @@ export const useGetStarted = () => {
             throw error;
           }
 
-          if (isPrivacy) {
-            // if recoverying a privacy wallet, we go to settingMixedAccount
-            // state, so the user can set a mixed account based on their
-            // coinjoin outputs.
-            // This state should only be achievable if recoverying wallet.
-            send({ type: "SET_MIXED_ACCOUNT" });
-          }
-          // if it is not privacy we can simply go to home view.
-          send({ type: "GO_TO_HOME_VIEW" });
+          send({ type: "SET_MIXED_ACCOUNT" });
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
         }
@@ -355,13 +340,12 @@ export const useGetStarted = () => {
   );
 
   const onShowCreateWallet = useCallback(
-    ({ isNew, walletMasterPubKey, isTrezor, isPrivacy }) =>
+    ({ isNew, walletMasterPubKey, isTrezor }) =>
       send({
         type: "SHOW_CREATE_WALLET",
         isNew,
         walletMasterPubKey,
-        isTrezor,
-        isPrivacy
+        isTrezor
       }),
     [send]
   );
@@ -546,12 +530,47 @@ export const useGetStarted = () => {
         });
       }
       if (key === "settingMixedAccount") {
-        PageComponent = h(SettingMixedAccount, { onSendBack, onSendContinue });
+        // Display a message while checking for coinjoin outputs and go to set
+        // mixed account only if coinjoin outputs found & mixed account not set yet
+        animationType = establishingRpc;
+        text = (
+          <T
+            id="loaderBar.checkingMixedAccount"
+            m="Seaching for coinjoin transactions..."
+          />
+        );
+        PageComponent = h(GetStartedMachinePage, {
+          text: updatedText ? updatedText : text,
+          animationType: updatedAnimationType
+            ? updatedAnimationType
+            : animationType,
+          StateComponent: updatedComponent ? updatedComponent : component
+        });
+        getCoinjoinOutputspByAcct()
+          .then((outputsByAcctMap) => {
+            const hasMixedOutputs = outputsByAcctMap && outputsByAcctMap.reduce(
+              (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
+              false
+            );
+            if (!hasMixedOutputs || mixedAccount) {
+              goToHome();
+            } else {
+              PageComponent = h(SettingMixedAccount, {
+                onSendBack,
+                onSendContinue
+              });
+              setPageComponent(PageComponent);
+            }
+          })
+          .catch((err) => console.log(err));
       }
 
       setPageComponent(PageComponent);
     },
     [
+      getCoinjoinOutputspByAcct,
+      mixedAccount,
+      goToHome,
       state,
       isTestNet,
       onSendBack,

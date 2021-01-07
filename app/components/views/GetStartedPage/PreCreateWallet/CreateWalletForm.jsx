@@ -56,8 +56,6 @@ const CreateWalletForm = ({
   masterPubKeyError,
   isTrezor,
   toggleTrezor,
-  isPrivacy,
-  toggleIsPrivacy,
   onShowTrezorConfig,
   isCreateNewWallet,
   creatingWallet
@@ -178,14 +176,6 @@ const CreateWalletForm = ({
                   )}
                   checked={isTrezor}
                   onChange={toggleTrezor}
-                />
-              </div>
-              <div className={styles.advancedOption}>
-                <Checkbox
-                  label={<T id="privacy.label" m="Privacy" />}
-                  id="privacy"
-                  checked={isPrivacy}
-                  onChange={toggleIsPrivacy}
                 />
               </div>
             </>
