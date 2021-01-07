@@ -4,10 +4,7 @@ import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
 import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
-<<<<<<< HEAD
-import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
 import * as cfgConstants from "constants/config";
-=======
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -15,7 +12,6 @@ import {
   CSPP_PORT_TESTNET,
   CSPP_PORT_MAINNET
 } from "constants";
->>>>>>> fix mixedAccount/changeAccount index = 0 bug
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
 export const GETACCOUNTMIXERSERVICE_SUCCESS = "GETACCOUNTMIXERSERVICE_SUCCESS";

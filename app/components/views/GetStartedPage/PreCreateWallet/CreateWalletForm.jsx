@@ -178,14 +178,6 @@ const CreateWalletForm = ({
                   onChange={toggleTrezor}
                 />
               </div>
-              <div className={styles.advancedOption}>
-                <Checkbox
-                  label={<T id="privacy.label" m="Privacy" />}
-                  id="privacy"
-                  checked={isPrivacy}
-                  onChange={toggleIsPrivacy}
-                />
-              </div>
             </>
           }
         />
