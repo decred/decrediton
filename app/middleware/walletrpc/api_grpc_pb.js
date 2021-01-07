@@ -1577,6 +1577,28 @@ function deserialize_walletrpc_StartAutoBuyerResponse(buffer_arg) {
   return api_pb.StartAutoBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_StartVSPClientRequest(arg) {
+  if (!(arg instanceof api_pb.StartVSPClientRequest)) {
+    throw new Error('Expected argument of type walletrpc.StartVSPClientRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_StartVSPClientRequest(buffer_arg) {
+  return api_pb.StartVSPClientRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_StartVSPClientResponse(arg) {
+  if (!(arg instanceof api_pb.StartVSPClientResponse)) {
+    throw new Error('Expected argument of type walletrpc.StartVSPClientResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_StartVSPClientResponse(buffer_arg) {
+  return api_pb.StartVSPClientResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_StopAutoBuyerRequest(arg) {
   if (!(arg instanceof api_pb.StopAutoBuyerRequest)) {
     throw new Error('Expected argument of type walletrpc.StopAutoBuyerRequest');
@@ -2509,6 +2531,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_GetVSPTicketsByFeeStatusRequest,
     responseSerialize: serialize_walletrpc_GetVSPTicketsByFeeStatusResponse,
     responseDeserialize: deserialize_walletrpc_GetVSPTicketsByFeeStatusResponse,
+  },
+  startVSPClient: {
+    path: '/walletrpc.WalletService/StartVSPClient',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.StartVSPClientRequest,
+    responseType: api_pb.StartVSPClientResponse,
+    requestSerialize: serialize_walletrpc_StartVSPClientRequest,
+    requestDeserialize: deserialize_walletrpc_StartVSPClientRequest,
+    responseSerialize: serialize_walletrpc_StartVSPClientResponse,
+    responseDeserialize: deserialize_walletrpc_StartVSPClientResponse,
   },
 };
 
