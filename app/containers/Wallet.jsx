@@ -51,11 +51,7 @@ const Wallet = ({ setInterval }) => {
 
     // Get peer info every 10 seconds, so we can no if there are no available
     // peers.
-    const peerInfoInterval = setInterval(() => {
-      if (politeiaEnabled) {
-        getPeerInfo();
-      }
-    }, 10000);
+    const peerInfoInterval = setInterval(() => getPeerInfo(), 10000);
 
     // Cleanup intervals on unmount
     return () => {
