@@ -556,7 +556,7 @@ export const useGetStarted = () => {
               goToHome();
             } else {
               PageComponent = h(SettingMixedAccount, {
-                onSendBack,
+                cancel: goToHome,
                 onSendContinue
               });
               setPageComponent(PageComponent);

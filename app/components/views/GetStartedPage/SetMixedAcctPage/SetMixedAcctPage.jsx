@@ -10,7 +10,7 @@ import { classNames } from "pi-ui";
 import { useEffect } from "react";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
-export default ({ onSendBack, onSendContinue }) => {
+export default ({ cancel, onSendContinue }) => {
   const { getCoinjoinOutputspByAcct, setCoinjoinCfg } = useDaemonStartup();
   const { onRenameAccount } = useAccounts();
   const [coinjoinSumByAcct, setCjSumByAcct] = useState(null);
@@ -61,7 +61,7 @@ export default ({ onSendBack, onSendContinue }) => {
         <Tooltip text={<GoBackMsg />}>
           <div
             className={GetStartedStyles.goBackScreenButton}
-            onClick={onSendBack}
+            onClick={cancel}
           />
         </Tooltip>
       </div>
