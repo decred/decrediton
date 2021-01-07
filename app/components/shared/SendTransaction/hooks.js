@@ -2,21 +2,27 @@ import { useState } from "react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import { baseOutput } from "./helpers";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { usePrevious } from "hooks";
 
 export function useSendTransaction() {
-  const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
+  const defaultSpendingAccount = useSelector(
+    sel.defaultSpendingAccount,
+    shallowEqual
+  );
   const unsignedTransaction = useSelector(sel.unsignedTransaction);
   const unsignedRawTx = useSelector(sel.unsignedRawTx);
   const estimatedFee = useSelector(sel.estimatedFee);
   const estimatedSignedSize = useSelector(sel.estimatedSignedSize);
   const totalSpent = useSelector(sel.totalSpent);
   const nextAddress = useSelector(sel.nextAddress);
-  const nextAddressAccount = useSelector(sel.nextAddressAccount);
+  const nextAddressAccount = useSelector(sel.nextAddressAccount, shallowEqual);
   const constructTxLowBalance = useSelector(sel.constructTxLowBalance);
   const publishTxResponse = useSelector(sel.publishTxResponse);
-  const notMixedAccounts = useSelector(sel.getNotMixedAcctIfAllowed);
+  const notMixedAccounts = useSelector(
+    sel.getNotMixedAcctIfAllowed,
+    shallowEqual
+  );
   const isTrezor = useSelector(sel.isTrezor);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
   const isConstructingTransaction = useSelector(sel.isConstructingTransaction);
