@@ -65,7 +65,8 @@ export const useGetStarted = () => {
     syncAttemptRequest,
     onGetDcrdLogs,
     daemonWarning,
-    getCoinjoinOutputspByAcct
+    getCoinjoinOutputspByAcct,
+    onStartVSPClient
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -243,6 +244,16 @@ export const useGetStarted = () => {
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
         }
+      },
+      isAtSyncingVSPTickets: async (context) => {
+        const { isCreateNewWallet, passPhrase } = context;
+        // isCreateNewWallet needs to be false for indicating a wallet
+        // restore. Can be other cases if it is null or undefined.
+        if (isCreateNewWallet === false) {
+          await onStartVSPClient(passPhrase);
+          goToHome();
+        }
+        goToHome();
       },
       isAtFinishMachine: () => goToHome()
     }
@@ -553,7 +564,7 @@ export const useGetStarted = () => {
               false
             );
             if (!hasMixedOutputs || mixedAccount) {
-              goToHome();
+              onSendContinue();
             } else {
               PageComponent = h(SettingMixedAccount, {
                 cancel: goToHome,
@@ -564,13 +575,29 @@ export const useGetStarted = () => {
           })
           .catch((err) => console.log(err));
       }
+      if (key === "syncVSPTickets") {
+        // Display a message while checking for tickets to be synced.
+        animationType = establishingRpc;
+        text = (
+          <T
+            id="loaderBar.syncingTickets"
+            m="Seaching for unsynced tickets transactions..."
+          />
+        );
+        PageComponent = h(GetStartedMachinePage, {
+          text: updatedText ? updatedText : text,
+          animationType: updatedAnimationType
+            ? updatedAnimationType
+            : animationType,
+          StateComponent: updatedComponent ? updatedComponent : component
+        });
+      }
 
       setPageComponent(PageComponent);
     },
     [
       getCoinjoinOutputspByAcct,
       mixedAccount,
-      goToHome,
       state,
       isTestNet,
       onSendBack,

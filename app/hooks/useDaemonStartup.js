@@ -7,6 +7,7 @@ import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
+import { startVSPClients } from "actions/VSPActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -210,6 +211,13 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const onStartVSPClient = useCallback(
+    async (passphrase) => await dispatch(startVSPClients(passphrase)),
+    [dispatch]
+  );
+
+  // await dispatch(startVSPClients());
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -280,7 +288,8 @@ const useDaemonStartup = () => {
     setCoinjoinCfg,
     onGetDcrdLogs,
     syncAttemptRequest,
-    daemonWarning
+    daemonWarning,
+    onStartVSPClient
   };
 };
 

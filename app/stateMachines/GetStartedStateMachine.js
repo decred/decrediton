@@ -311,11 +311,24 @@ export const getStartedMachine = Machine({
         }
       }
     },
+    // XXX
+    // make a machine for final configurations, which set mix accounts
+    // sync vsp and any other need which may come.
     settingMixedAccount: {
       onEntry: "isAtSettingAccount",
       initial: "settingMixedAccount",
       states: {
         settingMixedAccount: {}
+      },
+      on: {
+        CONTINUE: "syncVSPTickets"
+      }
+    },
+    syncVSPTickets: {
+      onEntry: "isAtSyncingVSPTickets",
+      initial: "syncingVSPTickets",
+      states: {
+        syncingVSPTickets: {}
       },
       on: {
         CONTINUE: "goToHomeView"

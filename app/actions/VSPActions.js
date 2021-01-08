@@ -521,3 +521,45 @@ export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) 
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set(cfgConstants.REMEMBERED_VSP_HOST, rememberedVspHost);
 };
+
+export const STARTVSPCLIENT_ATTEMPT = "STARTVSPCLIENT_ATTEMPT";
+export const STARTVSPCLIENT_SUCCESS = "STARTVSPCLIENT_SUCCESS";
+export const STARTVSPCLIENT_FAILED = "STARTVSPCLIENT_FAILED";
+
+// startVSPClient starts an already used vsp and checks if it has
+// unsyced tickets registered.
+const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccount) => (dispatch, getState) => {
+  const walletService = sel.walletService(getState());
+  wallet.startVSPClient(
+    walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount
+  )
+    .then(res => console.log(res))
+    .catch(error => console.log(error));
+};
+
+// startVSPClient gets all vsp and check for tickets which still not
+// synced, and sync them.
+export const startVSPClients = (passphrase) => async (dispatch, getState) => {
+  dispatch({ type: STARTVSPCLIENT_ATTEMPT });
+  try {
+    const availableVSPs = await dispatch(discoverAvailableVSPs());
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState());
+      changeAccount = sel.defaultSpendingAccount(getState());
+    }
+
+    availableVSPs.forEach(async (vsp) => {
+      const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+      await dispatch(startVSPClient(passphrase, vsp.host, pubkey, feeAccount, changeAccount));
+    });
+    dispatch({ type: STARTVSPCLIENT_SUCCESS });
+    return true;
+  } catch(error) {
+    dispatch({ type: STARTVSPCLIENT_FAILED, error });
+  }
+};

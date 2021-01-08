@@ -85,9 +85,6 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
 
-      // TODO
-      // dispatch action for checking all used vsp for tickets missing sync.
-
       // get vsp tickets fee status errored so we can resync them
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
