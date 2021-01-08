@@ -1,6 +1,7 @@
 export { default as SignMessageInfo } from "./InfoModals/SignMessage.md";
 export { default as VerifyMessageInfo } from "./InfoModals/VerifyMessage.md";
 export { default as GapLimitInfo } from "./InfoModals/GapLimit.md";
+export { default as UIAnimationsInfo } from "./InfoModals/UIAnimations.md";
 export { default as PassphraseInfo } from "./InfoModals/Passphrase.md";
 export { default as SeedInfo } from "./InfoModals/Seed.md";
 export { default as SendFromUnmixedInfo } from "./InfoModals/SendFromUnmixed.md";

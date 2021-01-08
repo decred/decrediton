@@ -42,10 +42,21 @@
   justify-content: flex-start;
 }
 
+.uiAnimations {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .rowChecklist .label {
   text-align: left;
   margin-left: 8px;
   margin-right: 0;
+}
+
+.uiAnimations div.label {
+  width: auto;
+  margin-left: 0;
+  margin-right: 5px;
 }
 
 .label {

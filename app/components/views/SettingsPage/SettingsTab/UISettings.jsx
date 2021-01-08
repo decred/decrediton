@@ -1,5 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelectInput } from "inputs";
+import { InfoDocFieldModalButton } from "buttons";
+import { classNames, Checkbox } from "pi-ui";
 import styles from "./Settings.module.css";
 
 const propTypes = {
@@ -43,6 +45,7 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
           <T id="settings.locale" m="Locale" />
         </div>
         <LanguageSelectInput
+          className={styles.input}
           value={tempSettings.locale}
           onChange={(newLocale) =>
             onChangeTempSettings({ locale: newLocale.key })
@@ -50,6 +53,28 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
           valueKey="key"
           labelKey="description"
           options={locales}
+        />
+      </div>
+
+      <div className={classNames(styles.row, styles.uiAnimations)}>
+        <Checkbox
+          label={
+            <div className={styles.label}>
+              <div className={styles.infoLabel}>
+                <T id="settings.uiAnimations.label" m="UI Animations" />
+              </div>
+            </div>
+          }
+          id="animations"
+          checked={tempSettings.uiAnimations}
+          onChange={() =>
+            onChangeTempSettings({ uiAnimations: !tempSettings.uiAnimations })
+          }
+        />
+        <InfoDocFieldModalButton
+          document="UIAnimationsInfo"
+          modalClassName={classNames(styles.hasWarning, styles.uiAnimations)}
+          draggable
         />
       </div>
     </div>

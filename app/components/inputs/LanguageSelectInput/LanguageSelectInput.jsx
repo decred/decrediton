@@ -27,10 +27,10 @@ class LanguageSelectInput extends React.Component {
   }
 
   render() {
-    const { valueKey, labelKey, options } = this.props;
+    const { valueKey, labelKey, options, className } = this.props;
 
     return (
-      <div className={styles.input}>
+      <div className={classNames(styles.input, className)}>
         <Select
           clearable={false}
           multi={false}

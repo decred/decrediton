@@ -63,16 +63,15 @@ const currentSettings = {
   currencyDisplay: DCR,
   network: hasCliOption("network") || globalCfg.get(NETWORK),
   networkFromCli: !!hasCliOption("network"),
-  theme: globalCfg.get(THEME)
+  theme: globalCfg.get(THEME),
+  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS)
 };
 const initialState = {
   settings: {
     currentSettings: currentSettings,
     tempSettings: currentSettings,
     settingsChanged: false,
-    uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS),
-    needNetworkReset: false,
-    theme: globalCfg.get(THEME)
+    needNetworkReset: false
   },
   stakepool: {
     currentStakePoolConfig: null,
