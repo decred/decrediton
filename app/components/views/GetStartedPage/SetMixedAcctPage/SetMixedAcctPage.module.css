@@ -61,7 +61,7 @@
 }
 
 .buttons {
-  margin-left: 10px
+  margin-left: 10px;
 }
 
 .buttonWrapper {
@@ -69,12 +69,6 @@
   margin-top: 10px;
   margin-right: 15px;
   width: 700px;
-}
-
-.checkboxLabel {
-  margin-right: 5px;
-  margin-top: 2px;
-  cursor: pointer;
 }
 
 .checkboxRow {
