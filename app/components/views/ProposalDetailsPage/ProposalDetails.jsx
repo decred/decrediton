@@ -61,6 +61,7 @@ const ProposalDetails = ({
   const { themeName } = useTheme();
   const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
   const shortToken = token.substring(0, 7);
+  const shortRFPToken = linkedProposal?.token.substring(0, 7);
   const proposalPath = `/proposals/${shortToken}`;
   const votingActiveOrFinished =
     voteStatus === VOTESTATUS_ACTIVEVOTE ||
@@ -80,8 +81,8 @@ const ProposalDetails = ({
                     linkedProposal: (
                       <PoliteiaLink
                         isTestnet={isTestnet}
-                        path={`/proposals/${linkedProposal.token.substring(0, 7)}`}>
-                        {linkedProposal.name}
+                        path={`/proposals/${shortRFPToken}`}>
+                        {`${linkedProposal.name} (${shortRFPToken})`}
                       </PoliteiaLink>
                     )
                   }}
