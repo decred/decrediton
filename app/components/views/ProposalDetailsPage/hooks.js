@@ -17,6 +17,7 @@ export const useProposalDetails = () => {
 export const useProposalDetailsPage = () => {
   const dispatch = useDispatch();
   const { token } = useParams();
+  const proposals = useSelector(sel.proposals);
   const proposalsDetails = useSelector(sel.proposalsDetails);
   const getProposalError = useSelector(sel.getProposalError);
 
@@ -24,6 +25,14 @@ export const useProposalDetailsPage = () => {
     token,
     proposalsDetails
   ]);
+
+  const linkedProposal = useMemo(() => viewedProposalDetails?.linkto &&
+    proposals.finishedVote.find(proposal => viewedProposalDetails.linkto === proposal.token)
+    , [
+      proposals,
+      viewedProposalDetails
+    ]);
+
   const eligibleTicketCount =
     viewedProposalDetails && viewedProposalDetails.walletEligibleTickets
       ? proposalsDetails[token].walletEligibleTickets.length
@@ -69,6 +78,7 @@ export const useProposalDetailsPage = () => {
     dispatch,
     goBackHistory,
     showPurchaseTicketsPage,
-    send
+    send,
+    linkedProposal
   };
 };

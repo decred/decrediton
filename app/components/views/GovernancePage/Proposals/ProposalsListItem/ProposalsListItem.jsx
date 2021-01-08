@@ -86,7 +86,7 @@ const ProposalsListItem = ({
           <div className={styles.voteResult}>
             {quorumPass ? (
               linkto && !approved && voteResult !== "declined" ? (
-                <T id="proposals.rfpRejected" m="Request not chosen" />
+                <T id="proposals.rfpRejected" m="Proposal not chosen" />
               ) : (
                 voteResult
               )
