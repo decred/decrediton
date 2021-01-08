@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelectInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
-import { classNames, Checkbox } from "pi-ui";
+import { classNames } from "pi-ui";
 import styles from "./Settings.module.css";
 
 const propTypes = {
@@ -56,25 +56,37 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
         />
       </div>
 
-      <div className={classNames(styles.row, styles.uiAnimations)}>
-        <Checkbox
-          label={
-            <div className={styles.label}>
-              <div className={styles.infoLabel}>
-                <T id="settings.uiAnimations.label" m="UI Animations" />
-              </div>
-            </div>
+      <div className={styles.row}>
+        <div className={styles.label}>
+          <T id="settings.uiAnimations.label" m="UI Animations" />
+          <InfoDocFieldModalButton
+            document="UIAnimationsInfo"
+            modalClassName={classNames(styles.hasWarning, styles.uiAnimations)}
+            draggable
+          />
+        </div>
+        <SettingsInput
+          className={styles.input}
+          value={tempSettings.uiAnimations ? "true" : "false"}
+          onChange={(newUIAnimations) =>
+            onChangeTempSettings({ uiAnimations: newUIAnimations.value })
           }
-          id="animations"
-          checked={tempSettings.uiAnimations}
-          onChange={() =>
-            onChangeTempSettings({ uiAnimations: !tempSettings.uiAnimations })
-          }
-        />
-        <InfoDocFieldModalButton
-          document="UIAnimationsInfo"
-          modalClassName={classNames(styles.hasWarning, styles.uiAnimations)}
-          draggable
+          valueKey="value"
+          labelKey="description"
+          options={[
+            {
+              key: "true",
+              value: true,
+              description: <T id="settings.uiAnimations.enabled" m="Enabled" />
+            },
+            {
+              key: "false",
+              value: false,
+              description: (
+                <T id="settings.uiAnimations.disabled" m="Disabled" />
+              )
+            }
+          ]}
         />
       </div>
     </div>
