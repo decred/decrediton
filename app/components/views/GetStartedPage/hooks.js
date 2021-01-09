@@ -224,7 +224,6 @@ export const useGetStarted = () => {
               if (error == OPENWALLET_INPUTPRIVPASS) {
                 send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
               }
-
               send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
             });
         }
@@ -238,7 +237,6 @@ export const useGetStarted = () => {
             }
             throw error;
           }
-
           send({ type: "SET_MIXED_ACCOUNT" });
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
