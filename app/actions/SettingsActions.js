@@ -19,6 +19,7 @@ import {
 } from "actions/GovernanceActions";
 import { cleanupPoliteiaCSRF } from "./GovernanceActions";
 import * as configConstants from "constants/config";
+import { ipcRenderer } from "electron";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -26,7 +27,7 @@ export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
 export const saveSettings = (settings) => async (dispatch, getState) => {
   const {
-    settings: { needNetworkReset }
+    settings: { needNetworkReset, currentSettings: { locale } }
   } = getState();
   const {
     daemon: { walletName }
@@ -65,6 +66,14 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
   ) {
     wallet.reloadAllowedExternalRequests();
+  }
+
+  if (oldTheme != settings.theme) {
+    dispatch({ theme: settings.theme, type: SETTINGS_TOGGLE_THEME });
+  }
+
+  if (locale != settings.locale) {
+    ipcRenderer.sendSync("change-menu-locale", settings.locale);
   }
 
   const newDcrdataEnabled =

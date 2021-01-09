@@ -518,6 +518,53 @@ ipcMain.on("get-cli-options", (event) => {
   event.returnValue = cliOptions;
 });
 
+function setMenuLocale(locale) {
+  //Removes previous listeners of "context-menu" event.
+  mainWindow.webContents._events["context-menu"] = [];
+
+  mainWindow.webContents.on("context-menu", (e, props) => {
+    const { selectionText, isEditable, x, y } = props;
+    const inptMenu = inputMenu(
+      process.env.NODE_ENV === "development",
+      mainWindow,
+      x,
+      y,
+      locale
+    );
+    const slctionMenu = selectionMenu(
+      process.env.NODE_ENV === "development",
+      mainWindow,
+      x,
+      y,
+      locale
+    );
+
+    if (isEditable) {
+      Menu.buildFromTemplate(inptMenu).popup(mainWindow);
+    } else if (selectionText && selectionText.trim() !== "") {
+      Menu.buildFromTemplate(slctionMenu).popup(mainWindow);
+    } else if (process.env.NODE_ENV === "development") {
+      Menu.buildFromTemplate([
+        {
+          label: "Inspect element",
+          click: () => mainWindow.inspectElement(x, y)
+        }
+      ]).popup(mainWindow);
+    }
+  });
+
+  const template = initTemplate(mainWindow, locale);
+
+  menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
+ipcMain.on("change-menu-locale", (event, newLocaleKey) => {
+  const locale = locales.find((value) => value.key === newLocaleKey);
+  setMenuLocale(locale);
+  event.returnValue = true;
+});
+
 const primaryInstance = app.requestSingleInstanceLock();
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
 if (stopSecondInstance) {
@@ -610,39 +657,7 @@ app.on("ready", async () => {
 
   if (stopSecondInstance) return;
 
-  mainWindow.webContents.on("context-menu", (e, props) => {
-    const { selectionText, isEditable, x, y } = props;
-    const inptMenu = inputMenu(
-      process.env.NODE_ENV === "development",
-      mainWindow,
-      x,
-      y
-    );
-    const slctionMenu = selectionMenu(
-      process.env.NODE_ENV === "development",
-      mainWindow,
-      x,
-      y
-    );
-
-    if (isEditable) {
-      Menu.buildFromTemplate(inptMenu).popup(mainWindow);
-    } else if (selectionText && selectionText.trim() !== "") {
-      Menu.buildFromTemplate(slctionMenu).popup(mainWindow);
-    } else if (process.env.NODE_ENV === "development") {
-      Menu.buildFromTemplate([
-        {
-          label: "Inspect element",
-          click: () => mainWindow.inspectElement(x, y)
-        }
-      ]).popup(mainWindow);
-    }
-  });
-
-  const template = initTemplate(mainWindow, locale);
-
-  menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+  setMenuLocale(locale);
 });
 
 app.on("before-quit", (event) => {
