@@ -19,14 +19,14 @@ export default ({ cancel, onSendContinue }) => {
 
   const onSetMixedAcct = (acctIdx) => {
     // If chosen index already set as change account
-    // unset to null.
+    // unset it to null.
     if (acctIdx === changeAcctIdx) {
       setChangeAcctIdx(null);
     }
     setMixedAcctIdx(acctIdx);
   };
 
-  const onSetChange = (acctIdx) => {
+  const onSetChangeAcct = (acctIdx) => {
     // If chosen index already set as mixed account
     // unset it to null.
     if (acctIdx === mixedAcctIdx) {
@@ -148,7 +148,7 @@ export default ({ cancel, onSendContinue }) => {
                         id={`change${acctIdx}`}
                         label={<T id="getstarted.setAccount.change" m="Set Unmixed Account" />}
                         checked={changeAcctIdx === acctIdx}
-                        onChange={() => onSetChange(acctIdx)}
+                        onChange={() => onSetChangeAcct(acctIdx)}
                       />
                     </div>
                   </div>
