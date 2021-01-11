@@ -129,6 +129,10 @@ goog.exportSymbol('proto.walletrpc.OpenWalletResponse', null, global);
 goog.exportSymbol('proto.walletrpc.PeerNotification', null, global);
 goog.exportSymbol('proto.walletrpc.PingRequest', null, global);
 goog.exportSymbol('proto.walletrpc.PingResponse', null, global);
+goog.exportSymbol('proto.walletrpc.ProcessManagedTicketsRequest', null, global);
+goog.exportSymbol('proto.walletrpc.ProcessManagedTicketsResponse', null, global);
+goog.exportSymbol('proto.walletrpc.ProcessUnmanagedTicketsRequest', null, global);
+goog.exportSymbol('proto.walletrpc.ProcessUnmanagedTicketsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.PublishTransactionRequest', null, global);
 goog.exportSymbol('proto.walletrpc.PublishTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.PublishUnminedTransactionsRequest', null, global);
@@ -199,8 +203,6 @@ goog.exportSymbol('proto.walletrpc.StartAutoBuyerRequest', null, global);
 goog.exportSymbol('proto.walletrpc.StartAutoBuyerResponse', null, global);
 goog.exportSymbol('proto.walletrpc.StartConsensusRpcRequest', null, global);
 goog.exportSymbol('proto.walletrpc.StartConsensusRpcResponse', null, global);
-goog.exportSymbol('proto.walletrpc.StartVSPClientRequest', null, global);
-goog.exportSymbol('proto.walletrpc.StartVSPClientResponse', null, global);
 goog.exportSymbol('proto.walletrpc.StopAutoBuyerRequest', null, global);
 goog.exportSymbol('proto.walletrpc.StopAutoBuyerResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SubscribeToBlockNotificationsRequest', null, global);
@@ -42852,12 +42854,12 @@ proto.walletrpc.GetVSPTicketsByFeeStatusResponse.prototype.clearTicketsHashesLis
  * @extends {jspb.Message}
  * @constructor
  */
-proto.walletrpc.StartVSPClientRequest = function(opt_data) {
+proto.walletrpc.ProcessManagedTicketsRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.walletrpc.StartVSPClientRequest, jspb.Message);
+goog.inherits(proto.walletrpc.ProcessManagedTicketsRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.walletrpc.StartVSPClientRequest.displayName = 'proto.walletrpc.StartVSPClientRequest';
+  proto.walletrpc.ProcessManagedTicketsRequest.displayName = 'proto.walletrpc.ProcessManagedTicketsRequest';
 }
 
 
@@ -42872,8 +42874,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.walletrpc.StartVSPClientRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.StartVSPClientRequest.toObject(opt_includeInstance, this);
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ProcessManagedTicketsRequest.toObject(opt_includeInstance, this);
 };
 
 
@@ -42882,11 +42884,11 @@ proto.walletrpc.StartVSPClientRequest.prototype.toObject = function(opt_includeI
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.StartVSPClientRequest} msg The msg instance to transform.
+ * @param {!proto.walletrpc.ProcessManagedTicketsRequest} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.StartVSPClientRequest.toObject = function(includeInstance, msg) {
+proto.walletrpc.ProcessManagedTicketsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     vspHost: jspb.Message.getFieldWithDefault(msg, 1, ""),
     vspPubkey: jspb.Message.getFieldWithDefault(msg, 2, ""),
@@ -42905,23 +42907,23 @@ proto.walletrpc.StartVSPClientRequest.toObject = function(includeInstance, msg) 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.StartVSPClientRequest}
+ * @return {!proto.walletrpc.ProcessManagedTicketsRequest}
  */
-proto.walletrpc.StartVSPClientRequest.deserializeBinary = function(bytes) {
+proto.walletrpc.ProcessManagedTicketsRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.StartVSPClientRequest;
-  return proto.walletrpc.StartVSPClientRequest.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.walletrpc.ProcessManagedTicketsRequest;
+  return proto.walletrpc.ProcessManagedTicketsRequest.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.walletrpc.StartVSPClientRequest} msg The message object to deserialize into.
+ * @param {!proto.walletrpc.ProcessManagedTicketsRequest} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.StartVSPClientRequest}
+ * @return {!proto.walletrpc.ProcessManagedTicketsRequest}
  */
-proto.walletrpc.StartVSPClientRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.walletrpc.ProcessManagedTicketsRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -42957,9 +42959,9 @@ proto.walletrpc.StartVSPClientRequest.deserializeBinaryFromReader = function(msg
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.walletrpc.StartVSPClientRequest.prototype.serializeBinary = function() {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.walletrpc.StartVSPClientRequest.serializeBinaryToWriter(this, writer);
+  proto.walletrpc.ProcessManagedTicketsRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -42967,11 +42969,11 @@ proto.walletrpc.StartVSPClientRequest.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.StartVSPClientRequest} message
+ * @param {!proto.walletrpc.ProcessManagedTicketsRequest} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.StartVSPClientRequest.serializeBinaryToWriter = function(message, writer) {
+proto.walletrpc.ProcessManagedTicketsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getVspHost();
   if (f.length > 0) {
@@ -43008,13 +43010,13 @@ proto.walletrpc.StartVSPClientRequest.serializeBinaryToWriter = function(message
  * optional string vsp_host = 1;
  * @return {string}
  */
-proto.walletrpc.StartVSPClientRequest.prototype.getVspHost = function() {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.getVspHost = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.walletrpc.StartVSPClientRequest.prototype.setVspHost = function(value) {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.setVspHost = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -43023,13 +43025,13 @@ proto.walletrpc.StartVSPClientRequest.prototype.setVspHost = function(value) {
  * optional string vsp_pubkey = 2;
  * @return {string}
  */
-proto.walletrpc.StartVSPClientRequest.prototype.getVspPubkey = function() {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.getVspPubkey = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.walletrpc.StartVSPClientRequest.prototype.setVspPubkey = function(value) {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.setVspPubkey = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
 };
 
@@ -43038,13 +43040,13 @@ proto.walletrpc.StartVSPClientRequest.prototype.setVspPubkey = function(value) {
  * optional uint32 fee_account = 3;
  * @return {number}
  */
-proto.walletrpc.StartVSPClientRequest.prototype.getFeeAccount = function() {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.getFeeAccount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.StartVSPClientRequest.prototype.setFeeAccount = function(value) {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.setFeeAccount = function(value) {
   jspb.Message.setProto3IntField(this, 3, value);
 };
 
@@ -43053,13 +43055,13 @@ proto.walletrpc.StartVSPClientRequest.prototype.setFeeAccount = function(value) 
  * optional uint32 change_account = 4;
  * @return {number}
  */
-proto.walletrpc.StartVSPClientRequest.prototype.getChangeAccount = function() {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.getChangeAccount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.StartVSPClientRequest.prototype.setChangeAccount = function(value) {
+proto.walletrpc.ProcessManagedTicketsRequest.prototype.setChangeAccount = function(value) {
   jspb.Message.setProto3IntField(this, 4, value);
 };
 
@@ -43075,12 +43077,12 @@ proto.walletrpc.StartVSPClientRequest.prototype.setChangeAccount = function(valu
  * @extends {jspb.Message}
  * @constructor
  */
-proto.walletrpc.StartVSPClientResponse = function(opt_data) {
+proto.walletrpc.ProcessManagedTicketsResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.walletrpc.StartVSPClientResponse, jspb.Message);
+goog.inherits(proto.walletrpc.ProcessManagedTicketsResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.walletrpc.StartVSPClientResponse.displayName = 'proto.walletrpc.StartVSPClientResponse';
+  proto.walletrpc.ProcessManagedTicketsResponse.displayName = 'proto.walletrpc.ProcessManagedTicketsResponse';
 }
 
 
@@ -43095,8 +43097,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.walletrpc.StartVSPClientResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.StartVSPClientResponse.toObject(opt_includeInstance, this);
+proto.walletrpc.ProcessManagedTicketsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ProcessManagedTicketsResponse.toObject(opt_includeInstance, this);
 };
 
 
@@ -43105,11 +43107,11 @@ proto.walletrpc.StartVSPClientResponse.prototype.toObject = function(opt_include
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.StartVSPClientResponse} msg The msg instance to transform.
+ * @param {!proto.walletrpc.ProcessManagedTicketsResponse} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.StartVSPClientResponse.toObject = function(includeInstance, msg) {
+proto.walletrpc.ProcessManagedTicketsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
 
   };
@@ -43125,23 +43127,23 @@ proto.walletrpc.StartVSPClientResponse.toObject = function(includeInstance, msg)
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.StartVSPClientResponse}
+ * @return {!proto.walletrpc.ProcessManagedTicketsResponse}
  */
-proto.walletrpc.StartVSPClientResponse.deserializeBinary = function(bytes) {
+proto.walletrpc.ProcessManagedTicketsResponse.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.StartVSPClientResponse;
-  return proto.walletrpc.StartVSPClientResponse.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.walletrpc.ProcessManagedTicketsResponse;
+  return proto.walletrpc.ProcessManagedTicketsResponse.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.walletrpc.StartVSPClientResponse} msg The message object to deserialize into.
+ * @param {!proto.walletrpc.ProcessManagedTicketsResponse} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.StartVSPClientResponse}
+ * @return {!proto.walletrpc.ProcessManagedTicketsResponse}
  */
-proto.walletrpc.StartVSPClientResponse.deserializeBinaryFromReader = function(msg, reader) {
+proto.walletrpc.ProcessManagedTicketsResponse.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -43161,9 +43163,9 @@ proto.walletrpc.StartVSPClientResponse.deserializeBinaryFromReader = function(ms
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.walletrpc.StartVSPClientResponse.prototype.serializeBinary = function() {
+proto.walletrpc.ProcessManagedTicketsResponse.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.walletrpc.StartVSPClientResponse.serializeBinaryToWriter(this, writer);
+  proto.walletrpc.ProcessManagedTicketsResponse.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -43171,11 +43173,350 @@ proto.walletrpc.StartVSPClientResponse.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.StartVSPClientResponse} message
+ * @param {!proto.walletrpc.ProcessManagedTicketsResponse} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.walletrpc.StartVSPClientResponse.serializeBinaryToWriter = function(message, writer) {
+proto.walletrpc.ProcessManagedTicketsResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.ProcessUnmanagedTicketsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.ProcessUnmanagedTicketsRequest.displayName = 'proto.walletrpc.ProcessUnmanagedTicketsRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ProcessUnmanagedTicketsRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.ProcessUnmanagedTicketsRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    vspHost: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    vspPubkey: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    feeAccount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 4, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.ProcessUnmanagedTicketsRequest}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.ProcessUnmanagedTicketsRequest;
+  return proto.walletrpc.ProcessUnmanagedTicketsRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.ProcessUnmanagedTicketsRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.ProcessUnmanagedTicketsRequest}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspHost(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspPubkey(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setFeeAccount(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setChangeAccount(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.ProcessUnmanagedTicketsRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.ProcessUnmanagedTicketsRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getVspHost();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getVspPubkey();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getFeeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
+  f = message.getChangeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string vsp_host = 1;
+ * @return {string}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.getVspHost = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.setVspHost = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string vsp_pubkey = 2;
+ * @return {string}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.getVspPubkey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.setVspPubkey = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 fee_account = 3;
+ * @return {number}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.getFeeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.setFeeAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 change_account = 4;
+ * @return {number}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.getChangeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.ProcessUnmanagedTicketsRequest.prototype.setChangeAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.ProcessUnmanagedTicketsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.ProcessUnmanagedTicketsResponse.displayName = 'proto.walletrpc.ProcessUnmanagedTicketsResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ProcessUnmanagedTicketsResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.ProcessUnmanagedTicketsResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.ProcessUnmanagedTicketsResponse}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.ProcessUnmanagedTicketsResponse;
+  return proto.walletrpc.ProcessUnmanagedTicketsResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.ProcessUnmanagedTicketsResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.ProcessUnmanagedTicketsResponse}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.ProcessUnmanagedTicketsResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.ProcessUnmanagedTicketsResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.ProcessUnmanagedTicketsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
 };
 
