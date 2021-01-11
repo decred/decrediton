@@ -7,7 +7,8 @@ import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
-import { startVSPClients } from "actions/VSPActions";
+import { startVSPClients, processUnmanagedTickets } from "actions/VSPActions";
+import { getAllSoloLiveTickets } from "actions/TransactionActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -216,6 +217,12 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const onProcessUnmanagedTickets = useCallback(
+    async (passphrase, vspHost, vspPubkey) => await dispatch(
+      processUnmanagedTickets(passphrase, vspHost, vspPubkey)
+    ),
+    [dispatch]
+  );
   // await dispatch(startVSPClients());
 
   return {
@@ -289,7 +296,8 @@ const useDaemonStartup = () => {
     onGetDcrdLogs,
     syncAttemptRequest,
     daemonWarning,
-    onStartVSPClient
+    onStartVSPClient,
+    onProcessUnmanagedTickets
   };
 };
 

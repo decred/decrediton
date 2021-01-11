@@ -312,8 +312,9 @@ export const getStartedMachine = Machine({
       }
     },
     // XXX
-    // make a machine for final configurations, which set mix accounts
-    // sync vsp and any other need which may come.
+    // make a machine for final configurations, similar to how we create
+    // the create wallet machine, so we can set mix accounts sync vsp and
+    // any other config which may come.
     settingMixedAccount: {
       onEntry: "isAtSettingAccount",
       initial: "settingMixedAccount",
@@ -329,6 +330,16 @@ export const getStartedMachine = Machine({
       initial: "syncingVSPTickets",
       states: {
         syncingVSPTickets: {}
+      },
+      on: {
+        CONTINUE: "processingUnmanagedTickets"
+      }
+    },
+    processingUnmanagedTickets: {
+      onEntry: "isAtProcessingUnmanagedTickets",
+      initial: "processingUnmanagedTickets",
+      states: {
+        processingUnmanagedTickets: {}
       },
       on: {
         CONTINUE: "goToHomeView"

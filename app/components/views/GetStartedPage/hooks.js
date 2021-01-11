@@ -22,6 +22,7 @@ import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
+import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 
 // XXX these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -66,7 +67,8 @@ export const useGetStarted = () => {
     onGetDcrdLogs,
     daemonWarning,
     getCoinjoinOutputspByAcct,
-    onStartVSPClient
+    onStartVSPClient,
+    onProcessUnmanagedTickets
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -251,7 +253,7 @@ export const useGetStarted = () => {
         // restore. Can be other cases if it is null or undefined.
         if (isCreateNewWallet === false) {
           await onStartVSPClient(passPhrase);
-          goToHome();
+          onSendContinue()
         } else {
           goToHome();
         }
@@ -592,6 +594,10 @@ export const useGetStarted = () => {
             : animationType,
           StateComponent: updatedComponent ? updatedComponent : component
         });
+      }
+
+      if (key === "processingUnmanagedTickets") {
+        PageComponent = h(ProcessUnmanagedTickets, { onSendContinue, onProcessUnmanagedTickets });      
       }
 
       setPageComponent(PageComponent);

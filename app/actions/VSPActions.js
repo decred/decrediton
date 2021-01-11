@@ -568,3 +568,39 @@ export const startVSPClients = (passphrase) => async (dispatch, getState) => {
     dispatch({ type: STARTVSPCLIENT_FAILED, error });
   }
 };
+
+export const PROCESSUNMANAGEDTICKETS_ATTEMPT = "PROCESSUNMANAGEDTICKETS_ATTEMPT";
+export const PROCESSUNMANAGEDTICKETS_SUCCESS = "PROCESSUNMANAGEDTICKETS_SUCCESS";
+export const PROCESSUNMANAGEDTICKETS_FAILED = "PROCESSUNMANAGEDTICKETS_FAILED";
+
+// processUnmanagedTickets process vsp tickets which are still unprocessed.
+// It is called on wallet restore.
+export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => async (dispatch, getState) => {
+  dispatch({ type: PROCESSUNMANAGEDTICKETS_ATTEMPT });
+  try {
+    const walletService = sel.walletService(getState());
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState());
+      changeAccount = sel.defaultSpendingAccount(getState());
+    }
+
+    console.log(feeAccount)
+    console.log(changeAccount)
+
+    await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
+
+    // get vsp tickets fee status errored so we can resync them
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+    dispatch({ type: PROCESSUNMANAGEDTICKETS_SUCCESS });
+    return true;
+  } catch(error) {
+    dispatch({ type: PROCESSUNMANAGEDTICKETS_FAILED, error });
+  }
+}
