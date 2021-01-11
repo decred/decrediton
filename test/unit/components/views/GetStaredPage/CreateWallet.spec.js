@@ -18,7 +18,6 @@ const testSelectedWallet = {
   label: testWalletName,
   value: {
     isNew: true,
-    isPrivacy: false,
     isTrezor: false,
     isWatchingOnly: false,
     network: "mainnet",
@@ -77,7 +76,7 @@ const goToCopySeedView = async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
   user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  await wait(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   user.click(screen.getByText(/continue/i));
@@ -94,7 +93,7 @@ const goToRestoreView = async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
   user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  await wait(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 };
 

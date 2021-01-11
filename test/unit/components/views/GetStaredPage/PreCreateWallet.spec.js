@@ -19,7 +19,6 @@ const testSelectedWallet = {
   label: testWalletName,
   value: {
     isNew: true,
-    isPrivacy: false,
     isTrezor: false,
     isWatchingOnly: false,
     network: "mainnet",
@@ -89,13 +88,13 @@ const goToGetStartedView = async () => {
 const goToCreateNewWalletView = async () => {
   await goToGetStartedView();
   user.click(screen.getByText(/create a new wallet/i));
-  return await wait(() => screen.getByText(/wallet name/i));
+  return await wait(() => screen.getByText("Wallet Name"));
 };
 
 const goToRestoreWalletView = async () => {
   await goToGetStartedView();
   user.click(screen.getByText(/restore existing wallet/i));
-  return await wait(() => screen.getByText(/wallet name/i));
+  return await wait(() => screen.getByText("Wallet Name"));
 };
 
 test("test when createWallet has been rejected", async () => {
@@ -188,12 +187,12 @@ test("test watch only control on restore wallet", async () => {
 
   const continueButton = screen.getByText(/continue/i);
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
+  user.click(screen.getByText("Advanced Options"));
 
   // toggle Watch only switch
-  const watchOnlySwitch = screen.getByText(/watch only/i).nextSibling.firstChild
-    .firstChild.firstChild.firstChild;
+  const watchOnlySwitch = screen.getByLabelText(/watch only/i);
   user.click(watchOnlySwitch);
-  expect(watchOnlySwitch.className).toMatch(/enabled/i);
+  expect(watchOnlySwitch.checked).toBe(true);
   const masterPubKeyInput = screen.getByPlaceholderText(/master pub key/i);
   expect(masterPubKeyInput).toBeInTheDocument();
   // master pub key is required
@@ -260,18 +259,18 @@ test("test trezor switch toggling and setup device page", async () => {
 
   const continueButton = screen.getByText(/continue/i);
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
+  user.click(screen.getByText("Advanced Options"));
 
   // toggle Trezor switch
-  const trezorSwitch = screen.getByText(/trezor/i).nextSibling.firstChild
-    .firstChild.firstChild.firstChild;
-  const watchOnlySwitch = screen.getByText(/watch only/i).nextSibling.firstChild
-    .firstChild.firstChild.firstChild;
+  const trezorSwitch = screen.getByLabelText(/trezor/i);
+  const watchOnlySwitch = screen.getByLabelText(/watch only/i);
   user.click(trezorSwitch);
   expect(mockEnableTrezor).toHaveBeenCalled();
-  expect(trezorSwitch.className).toMatch(/enabled/i);
+  expect(trezorSwitch.checked).toBe(true);
+
   // it has to disable Watch only switch and hide master pub key option
   expect(screen.queryByText(/master pub key/i)).not.toBeInTheDocument();
-  expect(watchOnlySwitch.className).toMatch(/disabled/i);
+  expect(watchOnlySwitch.checked).toBe(false);
 
   mockCreateWallet.mockClear();
   user.click(continueButton);
@@ -281,7 +280,7 @@ test("test trezor switch toggling and setup device page", async () => {
   // switch off Trezor switch
   user.click(trezorSwitch);
   expect(mockDisableTrezor).toHaveBeenCalled();
-  expect(trezorSwitch.className).toMatch(/disable/i);
+  expect(trezorSwitch.checked).toBe(false);
 
   // go to trezor config view when device is not connected
   user.click(screen.queryByText(/setup device/i));
@@ -296,7 +295,7 @@ test("test trezor switch toggling and setup device page", async () => {
 
   // go back
   user.click(screen.getByText(/go back/i).previousSibling);
-  await wait(() => screen.getByText(/wallet name/i));
+  await wait(() => screen.getByText("Wallet Name"));
 });
 
 test("trezor device is connected", async () => {
@@ -319,7 +318,8 @@ test("trezor device is connected", async () => {
   });
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
   user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText(/wallet name/i));
+  await wait(() => screen.getByText("Wallet Name"));
+  user.click(screen.getByText("Advanced Options"));
 
   expect(mockTrezorDevice).toHaveBeenCalled();
 
@@ -328,14 +328,13 @@ test("trezor device is connected", async () => {
   await wait(() => screen.getByText(/config trezor/i));
   // go back
   user.click(screen.getByText(/go back/i).previousSibling);
-  await wait(() => screen.getByText(/wallet name/i));
+  await wait(() => screen.getByText("Wallet Name"));
 
   const continueButton = screen.getByText(/continue/i);
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
-
+  user.click(screen.getByText("Advanced Options"));
   // toggle Trezor switch
-  const trezorSwitch = screen.getByText(/trezor/i).nextSibling.firstChild
-    .firstChild.firstChild.firstChild;
+  const trezorSwitch = screen.getByLabelText(/trezor/i);
   user.click(trezorSwitch);
   expect(mockEnableTrezor).toHaveBeenCalled();
 
@@ -353,53 +352,15 @@ test("trezor has to auto-disable when step back from restore view", async () => 
     return { connected: true };
   });
   await goToRestoreWalletView();
+  user.click(screen.getByText("Advanced Options"));
   // toggle Trezor switch
-  const trezorSwitch = screen.getByText(/trezor/i).nextSibling.firstChild
-    .firstChild.firstChild.firstChild;
+  const trezorSwitch = screen.getByLabelText(/trezor/i);
   user.click(trezorSwitch);
   expect(mockEnableTrezor).toHaveBeenCalled();
 
   user.click(screen.getByText(/cancel/i));
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
   expect(mockDisableTrezor).toHaveBeenCalled();
-});
-
-test("test privacy switch on restore wallet view", async () => {
-  const testRestoreSelectedWallet = {
-    ...testSelectedWallet,
-    value: { ...testSelectedWallet.value, isNew: false, isPrivacy: true }
-  };
-
-  mockCreateWallet = da.createWallet = jest.fn(() => () =>
-    Promise.resolve(testRestoreSelectedWallet)
-  );
-  await goToRestoreWalletView();
-
-  const continueButton = screen.getByText(/continue/i);
-  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
-
-  const privacySwitch = screen.getByText(/privacy/i).nextSibling.firstChild
-    .firstChild.firstChild.firstChild;
-  // toggle switch on
-  user.click(privacySwitch);
-  expect(privacySwitch.className).toMatch(/enabled/i);
-
-  // toggle switch off
-  user.click(privacySwitch);
-  expect(privacySwitch.className).toMatch(/disabled/i);
-
-  // toggle switch on again
-  user.click(privacySwitch);
-  expect(privacySwitch.className).toMatch(/enabled/i);
-
-  mockCreateWallet.mockClear();
-  user.click(continueButton);
-  expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet);
-
-  await wait(() =>
-    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
-  );
-  expect(screen.getByText(/confirm seed key/i)).toBeInTheDocument();
 });
 
 test("test testnet logo on creating new wallet view", async () => {
