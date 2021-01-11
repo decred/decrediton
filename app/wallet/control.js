@@ -190,7 +190,7 @@ export const purchaseTicketsV3 = (
     request.setDontSignTx(!signTx);
     const { pubkey, host } = vsp;
     request.setVspPubkey(pubkey);
-    request.setVspHost("http://" + host);
+    request.setVspHost("https://" + host);
     walletService.purchaseTickets(request, (error, response) => {
       if (error) {
         reject(error);
@@ -343,14 +343,14 @@ export const startVSPClient = (walletService, passphrase, vspHost, vspPubkey, fe
         reject(error);
       }
 
-      const request = new api.StartVSPClientRequest();
+      const request = new api.ProcessManagedTicketsRequest();
       request.setVspHost("https://" + vspHost);
       request.setVspPubkey(vspPubkey);
       request.setFeeAccount(feeAccount);
       request.setChangeAccount(changeAccount);
 
       console.log(walletService);
-      walletService.startVSPClient(request, (err, response) => {
+      walletService.processManagedTickets(request, (err, response) => {
         // err ? fail(err) : ok(res);
 
         const lockReq = new api.LockWalletRequest();

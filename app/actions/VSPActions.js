@@ -4,7 +4,7 @@ import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
-import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED } from "constants";
+import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED, VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID } from "constants";
 import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
 import { reverseRawHash } from "../helpers/byteActions";
@@ -38,6 +38,7 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
   wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
     .then(response => {
+      console.log(response);
       const hashesBytes = response.getTicketsHashesList();
       const ticketsHashes = hashesBytes.map(
         (bytesHash) => reverseRawHash(bytesHash)
@@ -528,13 +529,12 @@ export const STARTVSPCLIENT_FAILED = "STARTVSPCLIENT_FAILED";
 
 // startVSPClient starts an already used vsp and checks if it has
 // unsyced tickets registered.
-const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccount) => (dispatch, getState) => {
+const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccount) => async (dispatch, getState) => {
   const walletService = sel.walletService(getState());
-  wallet.startVSPClient(
+  const response = await wallet.startVSPClient(
     walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount
-  )
-    .then(res => console.log(res))
-    .catch(error => console.log(error));
+  );
+  return response;
 };
 
 // startVSPClient gets all vsp and check for tickets which still not
@@ -553,10 +553,15 @@ export const startVSPClients = (passphrase) => async (dispatch, getState) => {
       changeAccount = sel.defaultSpendingAccount(getState());
     }
 
-    availableVSPs.forEach(async (vsp) => {
+    const finished = await Promise.all(availableVSPs.map(async (vsp) => {
       const { pubkey } = await dispatch(getVSPInfo(vsp.host));
       await dispatch(startVSPClient(passphrase, vsp.host, pubkey, feeAccount, changeAccount));
-    });
+      return;
+    }));
+    // get vsp tickets fee status errored so we can resync them
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
     dispatch({ type: STARTVSPCLIENT_SUCCESS });
     return true;
   } catch(error) {

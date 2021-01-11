@@ -252,8 +252,9 @@ export const useGetStarted = () => {
         if (isCreateNewWallet === false) {
           await onStartVSPClient(passPhrase);
           goToHome();
+        } else {
+          goToHome();
         }
-        goToHome();
       },
       isAtFinishMachine: () => goToHome()
     }
@@ -567,7 +568,7 @@ export const useGetStarted = () => {
               onSendContinue();
             } else {
               PageComponent = h(SettingMixedAccount, {
-                cancel: goToHome,
+                cancel: onSendContinue,
                 onSendContinue
               });
               setPageComponent(PageComponent);
