@@ -253,7 +253,7 @@ export const useGetStarted = () => {
         // restore. Can be other cases if it is null or undefined.
         if (isCreateNewWallet === false) {
           await onStartVSPClient(passPhrase);
-          onSendContinue()
+          onSendContinue();
         } else {
           goToHome();
         }
@@ -597,7 +597,7 @@ export const useGetStarted = () => {
       }
 
       if (key === "processingUnmanagedTickets") {
-        PageComponent = h(ProcessUnmanagedTickets, { onSendContinue, onProcessUnmanagedTickets });      
+        PageComponent = h(ProcessUnmanagedTickets, { onSendContinue, onProcessUnmanagedTickets });
       }
 
       setPageComponent(PageComponent);
@@ -624,7 +624,8 @@ export const useGetStarted = () => {
       onSendDiscoverAccountsPassInput,
       onSendSetPassphrase,
       error,
-      daemonWarning
+      daemonWarning,
+      onProcessUnmanagedTickets
     ]
   );
 

@@ -1,23 +1,20 @@
 import { Tooltip, Subtitle } from "shared";
 import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
-import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
 import GetStartedStyles from "../GetStarted.module.css";
 import { useState } from "react";
 import { PassphraseModalButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
-import { classNames, Checkbox } from "pi-ui";
 import { useEffect } from "react";
-import { VSPSelect, AccountsSelect } from "inputs";
+import { VSPSelect } from "inputs";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 
 export default ({ cancel, onSendContinue, onProcessUnmanagedTickets }) => {
   const [isValid, setIsValid] = useState(false);
-  const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = async (passphrase) => {
-    await onProcessUnmanagedTickets(passphrase, vsp.host, vsp.pubkey)
+    await onProcessUnmanagedTickets(passphrase, vsp.host, vsp.pubkey);
     onSendContinue();
   };
 
@@ -25,7 +22,7 @@ export default ({ cancel, onSendContinue, onProcessUnmanagedTickets }) => {
     if(vsp) {
       setIsValid(true);
     }
-  }, [vsp])
+  }, [vsp]);
 
   return (
     <div className={styles.content}>
@@ -62,9 +59,9 @@ export default ({ cancel, onSendContinue, onProcessUnmanagedTickets }) => {
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="purchaseTickets.revokeBtn.legacy" m="Continue" />}
           disabled={!isValid}>
-          
+
         </PassphraseModalButton>
       </div>
     </div>
   );
-}
+};

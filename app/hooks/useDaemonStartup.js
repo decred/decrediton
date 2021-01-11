@@ -8,7 +8,6 @@ import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
 import { startVSPClients, processUnmanagedTickets } from "actions/VSPActions";
-import { getAllSoloLiveTickets } from "actions/TransactionActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();

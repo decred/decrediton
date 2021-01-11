@@ -553,7 +553,7 @@ export const startVSPClients = (passphrase) => async (dispatch, getState) => {
       changeAccount = sel.defaultSpendingAccount(getState());
     }
 
-    const finished = await Promise.all(availableVSPs.map(async (vsp) => {
+    await Promise.all(availableVSPs.map(async (vsp) => {
       const { pubkey } = await dispatch(getVSPInfo(vsp.host));
       await dispatch(startVSPClient(passphrase, vsp.host, pubkey, feeAccount, changeAccount));
       return;
@@ -589,9 +589,6 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => async
       changeAccount = sel.defaultSpendingAccount(getState());
     }
 
-    console.log(feeAccount)
-    console.log(changeAccount)
-
     await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
 
     // get vsp tickets fee status errored so we can resync them
@@ -603,4 +600,4 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => async
   } catch(error) {
     dispatch({ type: PROCESSUNMANAGEDTICKETS_FAILED, error });
   }
-}
+};
