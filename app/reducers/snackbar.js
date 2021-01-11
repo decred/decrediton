@@ -315,8 +315,7 @@ const messages = defineMessages({
   },
   WRONG_PASSPHRASE_MSG: {
     id: "errors.wrongPassphrase",
-    defaultMessage:
-      "Wrong private passphrase entered."
+    defaultMessage: "Wrong private passphrase entered."
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",
@@ -548,12 +547,18 @@ export default function snackbar(state = {}, action) {
           ];
 
       // check if this transaction is already in the message stack and don't add it
-      // if it is to prevent double notifications (eg: published tx and it got mined
+      // if yes to prevent double notifications (eg: published tx and it got mined
       // very fast)
       if (oldMessages.some((m) => m.txHash === tx.txHash)) {
         break;
       }
 
+      // XXX
+      // snackbar gets the raw tx object not the normalized one used in the
+      // transactions history & details views which include
+      // some more information like `selfTx` & `mixedTx` boolean coming from
+      // `regularTransactions` selector in app/selectors.js
+      // XXX
       type = tx.direction || TRANSACTION_TYPES[tx.type];
       message = { ...tx, type };
       values = { message };

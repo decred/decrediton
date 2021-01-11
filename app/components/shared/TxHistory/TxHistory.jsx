@@ -51,9 +51,10 @@ const TxHistory = ({
         let rowType = tx.status || tx.txType;
         rowType = rowType.toLowerCase();
         // If it is a regular tx we use its direction to show a proper icon.
+        // txDirection will be one of the following: SELFTRANSFER,
+        // TRANSACTION_DIR_SENT or TRANSACTION_DIR_RECEIVED
         if (rowType === txTypes.REGULAR) rowType = tx.txDirection;
         if (tx.mixedTx) rowType = txTypes.MIXED;
-        if (tx.selfTx) rowType = txTypes.SELFTRANSFER;
 
         // gets the proper component to show, based on it rowType
         const Component =

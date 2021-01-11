@@ -236,9 +236,6 @@ export const newTransactionsReceived = (
     type: MATURINGHEIGHTS_CHANGED
   });
 
-  const transactions = [];
-  transactions.push(...newlyUnminedTransactions);
-  transactions.push(...newlyMinedTransactions);
   dispatch({
     recentRegularTransactions,
     recentStakeTransactions,

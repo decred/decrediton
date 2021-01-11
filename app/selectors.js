@@ -40,6 +40,7 @@ import {
   MAINNET,
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
+  SELFTRANSFER,
   TICKET_FEE,
   MIXED,
   VOTED,
@@ -672,7 +673,7 @@ export const transactionNormalizer = createSelector(
           : totalFundsReceived + totalChange + fee === totalDebit
           ? {
               txAmount: fee,
-              txDirection: TICKET_FEE,
+            txDirection: selfTx ? SELFTRANSFER : TICKET_FEE,
               txAccountNameCredited: creditedAccountName,
               txAccountNameDebited: debitedAccountName
             }
