@@ -27,6 +27,7 @@ export function useSideBar() {
   const rescanRequest = useSelector(sel.rescanRequest);
   const isSPV = useSelector(sel.isSPV);
   const peersCount = useSelector(sel.getPeersCount);
+  const uiAnimations = useSelector(sel.uiAnimations);
 
   const dispatch = useDispatch();
 
@@ -56,6 +57,7 @@ export function useSideBar() {
     isSPV,
     peersCount,
     accountsListRef,
-    onAccountsListWheel
+    onAccountsListWheel,
+    uiAnimations
   };
 }

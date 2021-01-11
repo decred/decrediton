@@ -1,6 +1,5 @@
 import { classNames } from "pi-ui";
 import { Switch, Route, matchPath } from "react-router-dom";
-import { isArray } from "util";
 import { RoutedTabsHeader, RoutedTab } from "shared";
 import { TransitionMotion, spring } from "react-motion";
 import theme from "theme";
@@ -22,7 +21,7 @@ TabbedPageTab.propTypes = {
 };
 
 function getTabs(children) {
-  if (!isArray(children)) children = [children];
+  if (!Array.isArray(children)) children = [children];
   return children
     .filter((c) => c.type === TabbedPageTab)
     .map((c, i) => ({ index: i, tab: c }));
@@ -120,7 +119,7 @@ function animatedStyles(styles, dir) {
 
 function TabbedPage({ children, header, className, onChange, caret }) {
   const location = useSelector(sel.location);
-  const uiAnimations = useSelector(sel.location);
+  const uiAnimations = useSelector(sel.uiAnimations);
   const [matchedTab, setMatchedTab] = useReducer(() =>
     getMatchedTab(location, children)
   );
@@ -146,7 +145,7 @@ function TabbedPage({ children, header, className, onChange, caret }) {
     setDir(dir);
     setMatchedTab(matchedTab);
   }, [location, previous, children, onChange]);
-  if (!isArray(children)) children = [children];
+  if (!Array.isArray(children)) children = [children];
 
   const tabs = children.filter(
     (c) => c.type === TabbedPageTab && !c.props.disabled
@@ -163,7 +162,7 @@ function TabbedPage({ children, header, className, onChange, caret }) {
 
   const tabContents = uiAnimations
     ? animatedStyles(styles, dir)
-    : staticStyles();
+    : staticStyles(styles);
 
   return (
     <div className="tabbed-page">

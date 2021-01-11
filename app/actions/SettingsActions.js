@@ -23,7 +23,6 @@ import * as configConstants from "constants/config";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
-export const SETTINGS_TOGGLE_THEME = "SETTINGS_TOGGLE_THEME";
 
 export const saveSettings = (settings) => async (dispatch, getState) => {
   const {
@@ -37,7 +36,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   const oldAllowedExternalRequests = config.get(
     configConstants.ALLOWED_EXTERNAL_REQUESTS
   );
-  const oldTheme = config.get(configConstants.THEME);
   const updatedProxy =
     config.get(configConstants.PROXY_TYPE) !== settings.proxyType ||
     config.get(configConstants.PROXY_LOCATION) !== settings.proxyLocation;
@@ -55,6 +53,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   config.set(configConstants.SPV_CONNECT, settings.spvConnect);
   config.set(configConstants.NETWORK, settings.network);
   config.set(configConstants.THEME, settings.theme);
+  config.set(configConstants.UI_ANIMATIONS, settings.uiAnimations);
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
@@ -66,10 +65,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
   ) {
     wallet.reloadAllowedExternalRequests();
-  }
-
-  if (oldTheme != settings.theme) {
-    dispatch({ theme: settings.theme, type: SETTINGS_TOGGLE_THEME });
   }
 
   const newDcrdataEnabled =
