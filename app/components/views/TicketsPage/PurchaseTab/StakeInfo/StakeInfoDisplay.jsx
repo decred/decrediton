@@ -138,7 +138,9 @@ const StakeInfoDisplay = ({
         }
         show={isShowingDetails}
         onToggleAccordion={onToggleStakeinfo}
-        className={"detailsAccordion"}>
+        className="detailsAccordion"
+        arrowClassName="vertical-accordion-arrow"
+      >
         <StakeInfoDetails
           {...{
             ticketPoolSize,

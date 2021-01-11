@@ -263,6 +263,7 @@ export default ({
         {payments.map((p) => (
           <VerticalAccordion
             key={`accordion-${p.paymentHash}`}
+            arrowClassName="vertical-accordion-arrow"
             className={styles.paymentAccordion}
             header={
               <Payment

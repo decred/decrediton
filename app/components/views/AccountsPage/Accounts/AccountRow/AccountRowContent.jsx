@@ -63,6 +63,7 @@ const Row = ({
     onToggleAccordion={onToggleShowDetails}
     show={isShowingDetails}
     //TODO: encapsulate end provide .active CSS class in shared/VerticalAccordion.jsx
+    arrowClassName="vertical-accordion-arrow"
     className={classNames(style.detailsBottom, "account-row-details-bottom")}>
     {isShowingDetails ? (
       isShowingRenameAccount ? (

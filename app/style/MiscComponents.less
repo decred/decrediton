@@ -639,38 +639,6 @@
     bottom: 18px;
   }
 }
-.vertical-accordion-header {
-  cursor: pointer;
-  position: relative;
-}
-
-.vertical-accordion-arrow {
-  content: "";
-  background-image: var(--arrow-right-gray-icon);
-  background-repeat: no-repeat;
-  background-position: center right;
-  background-size: contain;
-  width: 10px;
-  height: 14px;
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transition: transform 0.25s ease-in-out;
-  transform: rotate(-90deg);
-}
-
-.vertical-accordion-header:hover .vertical-accordion-arrow {
-  background-image: var(--arrow-right-blue-icon);
-
-  &.disabled {
-    background-image: var(--arrow-right-gray-icon);
-  }
-}
-
-.vertical-accordion.active .vertical-accordion-arrow {
-  transform: rotate(90deg);
-}
 
 .go-back-icon-button {
   height: 12px;

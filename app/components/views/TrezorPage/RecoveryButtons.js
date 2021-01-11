@@ -22,13 +22,20 @@ class RecoveryButtons extends React.Component {
       </>
     );
 
-    const { loading, onWipeDevice, onRecoverDevice, onInitDevice, onBackupDevice } = this.props;
+    const {
+      loading,
+      onWipeDevice,
+      onRecoverDevice,
+      onInitDevice,
+      onBackupDevice
+    } = this.props;
 
     return (
       <VerticalAccordion
         header={header}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
+        headerClassName="vertical-accordion-header"
         className="trezor-config-accordion trezor-config-regular-buttons">
         <div className="trezor-wipe-warning">
           <Documentation name="TrezorWipeWarning" />
