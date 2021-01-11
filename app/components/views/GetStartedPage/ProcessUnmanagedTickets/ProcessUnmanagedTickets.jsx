@@ -58,7 +58,7 @@ export default ({ cancel, onSendContinue, onProcessUnmanagedTickets }) => {
           modalTitle={
             <T id="tickets.revokeConfirmations.legacy" m="Passphrase" />
           }
-          className={styles.passphraseModal}
+          modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="purchaseTickets.revokeBtn.legacy" m="Continue" />}
           disabled={!isValid}>
