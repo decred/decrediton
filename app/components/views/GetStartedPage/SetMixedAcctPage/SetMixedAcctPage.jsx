@@ -1,14 +1,13 @@
+import { useState, useEffect } from "react";
+import { classNames, Checkbox } from "pi-ui";
 import { Tooltip, Subtitle } from "shared";
+import { KeyBlueButton } from "buttons";
+import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
 import GetStartedStyles from "../GetStarted.module.css";
-import { useState } from "react";
-import { KeyBlueButton } from "buttons";
 import styles from "./SetMixedAcctPage.module.css";
-import { classNames, Checkbox } from "pi-ui";
-import { useEffect } from "react";
-import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
 export default ({ cancel, onSendContinue }) => {
   const { getCoinjoinOutputspByAcct, setCoinjoinCfg } = useDaemonStartup();
@@ -19,22 +18,24 @@ export default ({ cancel, onSendContinue }) => {
   const [isValid, setIsValid] = useState(false);
 
   const onSetMixedAcct = (acctIdx) => {
-    // can't set same mixed and change acct
+    // If chosen index already set as change account
+    // unset it to null.
     if (acctIdx === changeAcctIdx) {
-      return;
+      setChangeAcctIdx(null);
     }
     setMixedAcctIdx(acctIdx);
   };
 
-  const onSubmitSetChange = (acctIdx) => {
-    // can't set same mixed and change acct
+  const onSetChangeAcct = (acctIdx) => {
+    // If chosen index already set as mixed account
+    // unset it to null.
     if (acctIdx === mixedAcctIdx) {
-      return;
+      setMixedAcctIdx(null);
     }
     setChangeAcctIdx(acctIdx);
   };
 
-  const onSubmitContinue = () => {
+  const onContinue = () => {
     onRenameAccount(changeAcctIdx, CHANGE_ACCOUNT);
     onRenameAccount(mixedAcctIdx, MIXED_ACCOUNT);
     setCoinjoinCfg(mixedAcctIdx, changeAcctIdx);
@@ -147,7 +148,7 @@ export default ({ cancel, onSendContinue }) => {
                         id={`change${acctIdx}`}
                         label={<T id="getstarted.setAccount.change" m="Set Unmixed Account" />}
                         checked={changeAcctIdx === acctIdx}
-                        onChange={() => onSubmitSetChange(acctIdx)}
+                        onChange={() => onSetChangeAcct(acctIdx)}
                       />
                     </div>
                   </div>
@@ -164,7 +165,7 @@ export default ({ cancel, onSendContinue }) => {
             </div>
           )}
           <div className={styles.buttonWrapper}>
-            <KeyBlueButton onClick={onSubmitContinue} disabled={!isValid}>
+            <KeyBlueButton onClick={onContinue} disabled={!isValid}>
               <T id="getstarted.setAccount.continue" m="Continue" />
             </KeyBlueButton>
           </div>
