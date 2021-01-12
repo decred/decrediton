@@ -627,6 +627,7 @@ export const useGetStarted = () => {
       if (key === "processingManagedTickets") {
         PageComponent = h(ProcessManagedTickets, {
           onSendContinue,
+          send,
           onProcessTickets: onProcessManagedTickets,
           title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
           noVspSelection: true,

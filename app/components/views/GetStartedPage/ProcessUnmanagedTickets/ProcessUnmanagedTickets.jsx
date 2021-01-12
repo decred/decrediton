@@ -12,6 +12,8 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = async (passphrase) => {
+    // send a continue to go to the loading state
+    onSendContinue()
     await onProcessTickets(passphrase, vsp.host, vsp.pubkey);
     onSendContinue();
   };
