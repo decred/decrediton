@@ -1,0 +1,20 @@
+.content {
+  margin-left: 90px;
+  margin-top: 48px;
+  width: 500px;
+}
+
+.subtitle {
+  font-size: 27px !important;
+}
+
+.passphraseModal {
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 150px;
+  padding: 20px;
+}
+
+.buttonWrapper {
+  margin-top: 10px;
+}

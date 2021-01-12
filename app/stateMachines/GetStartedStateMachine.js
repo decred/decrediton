@@ -352,7 +352,8 @@ export const getStartedMachine = Machine({
         processingManagedTickets: {}
       },
       on: {
-        CONTINUE: "isLoadingConfig"
+        CONTINUE: "isLoadingConfig",
+        GO_TO_HOME_VIEW: "goToHomeView"
       }
     },
     isLoadingConfig: {

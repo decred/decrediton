@@ -23,6 +23,7 @@ import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
+import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 
 // XXX these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -263,22 +264,14 @@ export const useGetStarted = () => {
         }
       },
       isAtProcessingUnmanagedTickets: async () => {
-        if (!rememberedVspHost) {
-          onSendContinue();
-          return;
-        }
-        const error = await onProcessUnmanagedTickets(null, rememberedVspHost.host, rememberedVspHost.pubkey);
-        // if no errors we can simply continue.
-        if (!error) {
-          onSendContinue();
-        }
+        console.log("is at processingUnmanagedTickets");
       },
       isAtProcessingManagedTickets: () => {
         console.log("is at isAtProcessingManagedTickets");
         console.log(hasTicketFeeError);
         // if no tickets with error, we can continue
         if (!hasTicketFeeError) {
-          onSendContinue();
+          send({ type: "GO_TO_HOME_VIEW" });
         }
       },
       isAtFinishMachine: () => goToHome()
@@ -632,7 +625,7 @@ export const useGetStarted = () => {
         });
       }
       if (key === "processingManagedTickets") {
-        PageComponent = h(ProcessUnmanagedTickets, {
+        PageComponent = h(ProcessManagedTickets, {
           onSendContinue,
           onProcessTickets: onProcessManagedTickets,
           title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
