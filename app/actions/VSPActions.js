@@ -533,7 +533,7 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 // unsyced tickets registered.
 const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccount) => async (dispatch, getState) => {
   const walletService = sel.walletService(getState());
-  const response = await wallet.startVSPClient(
+  const response = await wallet.processManagedTickets(
     walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount
   );
   return response;
