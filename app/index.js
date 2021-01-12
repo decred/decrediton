@@ -113,7 +113,7 @@ const initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "7.6.0",
+    requiredVersion: "7.7.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService

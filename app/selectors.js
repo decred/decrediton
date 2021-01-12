@@ -1676,13 +1676,13 @@ export const getRunningIndicator = or(
   isTicketAutoBuyerEnabled
 );
 
-export const getHasUnpaidFee = createSelector([getVSPTickets], (vspTickets) => {
+export const getHasTicketFeeError = createSelector([getVSPTickets], (vspTickets) => {
   if (!vspTickets) return;
   return vspTickets[VSP_FEE_PROCESS_ERRORED]
     ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
     : false;
 });
-export const getCanClose = not(or(getRunningIndicator, getHasUnpaidFee));
+export const getCanClose = not(or(getRunningIndicator, getHasTicketFeeError));
 
 // end of selectors for closing decrediton.
 

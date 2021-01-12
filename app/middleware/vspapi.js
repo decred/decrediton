@@ -169,7 +169,6 @@ export function getVSPInfo(host, cb) {
 }
 
 export function getTicketStatus({ host, vspClientSig, request }, cb) {
-  console.log(request);
   POST(host + "/api/ticketstatus", vspClientSig, request)
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));

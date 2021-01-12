@@ -22,6 +22,8 @@ import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
+import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
+import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 
 // XXX these animations classes are passed down to AnimatedLinearProgressFull
 // and styling defined in Loading.less and need to handled when loading.less
@@ -65,7 +67,11 @@ export const useGetStarted = () => {
     syncAttemptRequest,
     onGetDcrdLogs,
     daemonWarning,
-    getCoinjoinOutputspByAcct
+    getCoinjoinOutputspByAcct,
+
+    onProcessUnmanagedTickets,
+    onProcessManagedTickets,
+    hasTicketFeeError
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -240,6 +246,28 @@ export const useGetStarted = () => {
           send({ type: "SET_MIXED_ACCOUNT" });
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
+        }
+      },
+      isAtSyncingVSPTickets: async (context) => {
+        const { isCreateNewWallet, passPhrase } = context;
+        // isCreateNewWallet needs to be false for indicating a wallet
+        // restore. Can be other cases if it is null or undefined.
+        if (isCreateNewWallet === false) {
+          await onProcessManagedTickets(passPhrase);
+          onSendContinue();
+        } else {
+          onSendContinue();
+          // goToHome();
+        }
+      },
+      isAtProcessingUnmanagedTickets: () => {
+        console.log("is at processingUnmanagedTickets");
+      },
+      isAtProcessingManagedTickets: () => {
+        console.log("is at isAtProcessingManagedTickets");
+        // if no tickets with error, we can continue
+        if (!hasTicketFeeError) {
+          send({ type: "GO_TO_HOME_VIEW" });
         }
       },
       isAtFinishMachine: () => goToHome()
@@ -551,10 +579,10 @@ export const useGetStarted = () => {
               false
             );
             if (!hasMixedOutputs || mixedAccount) {
-              goToHome();
+              onSendContinue();
             } else {
               PageComponent = h(SettingMixedAccount, {
-                cancel: goToHome,
+                cancel: onSendContinue,
                 onSendContinue
               });
               setPageComponent(PageComponent);
@@ -562,13 +590,75 @@ export const useGetStarted = () => {
           })
           .catch((err) => console.log(err));
       }
+      if (key === "syncVSPTickets") {
+        // Display a message while checking for tickets to be synced.
+        animationType = establishingRpc;
+        text = (
+          <T
+            id="loaderBar.syncingTickets"
+            m="Seaching for unsynced tickets transactions..."
+          />
+        );
+        PageComponent = h(GetStartedMachinePage, {
+          text: updatedText ? updatedText : text,
+          animationType: updatedAnimationType
+            ? updatedAnimationType
+            : animationType,
+          StateComponent: updatedComponent ? updatedComponent : component
+        });
+      }
+      if (key === "processingUnmanagedTickets") {
+        PageComponent = h(ProcessUnmanagedTickets, {
+          onSendContinue,
+          onProcessTickets: onProcessUnmanagedTickets,
+          title: <T id="getstarted.processUnmangedTickets.title" m="Process Unmanaged Tickets" />,
+          description: <T
+          id="getstarted.processUnmangedTickets.description"
+          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
+              to vote and they are not linked with a vsp, they may miss, if you are not
+              properly dealing with solo vote.`}
+        />
+        });
+      }
+      if (key === "processingManagedTickets") {
+        PageComponent = h(ProcessManagedTickets, {
+          onSendContinue,
+          send,
+          onProcessTickets: onProcessManagedTickets,
+          title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
+          noVspSelection: true,
+          description: <T
+          id="getstarted.processManagedTickets.description"
+          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
+              to vote and they are not linked with a vsp, they may miss, if you are not
+              properly dealing with solo vote.`}
+        />
+        });
+      }
+      // XXX
+      // use this loading state on settingMixedAccount as well.
+      if (key === "isLoadingConfig") {
+        animationType = establishingRpc;
+        text = (
+          <T
+            id="loaderBar.checkingMixedAccount"
+            m="Seaching for coinjoin transactions..."
+          />
+        );
+        PageComponent = h(GetStartedMachinePage, {
+          text: updatedText ? updatedText : text,
+          animationType: updatedAnimationType
+            ? updatedAnimationType
+            : animationType,
+          StateComponent: updatedComponent ? updatedComponent : component
+        });
+      }
 
       setPageComponent(PageComponent);
     },
     [
       getCoinjoinOutputspByAcct,
       mixedAccount,
-      goToHome,
       state,
       isTestNet,
       onSendBack,
@@ -588,7 +678,10 @@ export const useGetStarted = () => {
       onSendDiscoverAccountsPassInput,
       onSendSetPassphrase,
       error,
-      daemonWarning
+      daemonWarning,
+      onProcessUnmanagedTickets,
+      onProcessManagedTickets,
+      send
     ]
   );
 

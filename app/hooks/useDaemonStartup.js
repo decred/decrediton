@@ -7,6 +7,7 @@ import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
+import { processManagedTickets, processUnmanagedTickets } from "actions/VSPActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,12 @@ const useDaemonStartup = () => {
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
   const daemonWarning = useSelector(sel.daemonWarning);
   // end of daemon selectors
+
+  // vsp selectors
+  const rememberedVspHost = useSelector(sel.getRememberedVspHost);
+  const hasTicketFeeError = useSelector(sel.getHasTicketFeeError);
+
+  // end of vsp selectors
 
   // sync dcrwallet spv or rpc selectors
   const peerCount = useSelector(sel.peerCount);
@@ -210,6 +217,18 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const onProcessUnmanagedTickets = useCallback(
+    async (passphrase, vspHost, vspPubkey) => await dispatch(
+      processUnmanagedTickets(passphrase, vspHost, vspPubkey)
+    ),
+    [dispatch]
+  );
+
+  const onProcessManagedTickets = useCallback(
+    async (passphrase) => await dispatch(processManagedTickets(passphrase)),
+    [dispatch]
+  );
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -280,7 +299,11 @@ const useDaemonStartup = () => {
     setCoinjoinCfg,
     onGetDcrdLogs,
     syncAttemptRequest,
-    daemonWarning
+    daemonWarning,
+    onProcessUnmanagedTickets,
+    onProcessManagedTickets,
+    hasTicketFeeError,
+    rememberedVspHost
   };
 };
 
