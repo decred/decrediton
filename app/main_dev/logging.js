@@ -44,7 +44,6 @@ const logLevelsPrintable = {
 };
 
 const logFormatter = (opts) => {
-  //console.log(opts);
   const lvl = logLevelsPrintable[opts.level] || "UNK";
   const time = opts.timestamp();
   const msg = opts.message;
