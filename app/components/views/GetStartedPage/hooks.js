@@ -275,6 +275,10 @@ export const useGetStarted = () => {
       isAtProcessingManagedTickets: () => {
         console.log("is at isAtProcessingManagedTickets");
         console.log(hasTicketFeeError);
+        // if no tickets with error, we can continue
+        if (!hasTicketFeeError) {
+          onSendContinue();
+        }
       },
       isAtFinishMachine: () => goToHome()
     }
