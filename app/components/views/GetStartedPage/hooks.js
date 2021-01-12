@@ -265,6 +265,7 @@ export const useGetStarted = () => {
       isAtProcessingUnmanagedTickets: async () => {
         if (!rememberedVspHost) {
           onSendContinue();
+          return;
         }
         const error = await onProcessUnmanagedTickets(null, rememberedVspHost.host, rememberedVspHost.pubkey);
         // if no errors we can simply continue.
