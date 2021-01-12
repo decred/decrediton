@@ -51,11 +51,11 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
           modalTitle={
-            <T id="tickets.revokeConfirmations.legacy" m="Passphrase" />
+            <T id="process.unmangedTickets.title" m="Passphrase" />
           }
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
-          buttonLabel={<T id="purchaseTickets.revokeBtn.legacy" m="Continue" />}
+          buttonLabel={<T id="process.unmangedTickets.button" m="Continue" />}
           disabled={!isValid}>
 
         </PassphraseModalButton>
