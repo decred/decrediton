@@ -644,6 +644,24 @@ export const useGetStarted = () => {
         />
         });
       }
+      // XXX
+      // use this loading state on settingMixedAccount as well.
+      if (key === "isLoadingConfig") {
+        animationType = establishingRpc;
+        text = (
+          <T
+            id="loaderBar.checkingMixedAccount"
+            m="Seaching for coinjoin transactions..."
+          />
+        );
+        PageComponent = h(GetStartedMachinePage, {
+          text: updatedText ? updatedText : text,
+          animationType: updatedAnimationType
+            ? updatedAnimationType
+            : animationType,
+          StateComponent: updatedComponent ? updatedComponent : component
+        });
+      }
 
       setPageComponent(PageComponent);
     },
