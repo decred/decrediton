@@ -52,17 +52,24 @@ test("test SetMixedAcctPage", async () => {
     /set unmixed account/i
   );
 
-  expect(mixedAccountCheckboxes.length).toBe(testCoinjoinSumByAcct.length);
-  expect(unmixedAccountCheckboxes.length).toBe(testCoinjoinSumByAcct.length);
+  expect(mixedAccountCheckboxes.length).toBe(testCoinjoinSumByAcct.length - 1);
+  expect(unmixedAccountCheckboxes.length).toBe(
+    testCoinjoinSumByAcct.length - 1
+  );
   const continueButton = screen.getByText(/continue/i);
   expect(continueButton.className).toMatch(/disabled/i);
 
-  fireEvent.click(mixedAccountCheckboxes[0]);
-  await wait(() => expect(mixedAccountCheckboxes[0].checked).toEqual(true));
+  const firstMixedCheckbox = mixedAccountCheckboxes[0];
+  const firstUnMixedCheckbox = unmixedAccountCheckboxes[0];
+  const secondMixedCheckbox = mixedAccountCheckboxes[1];
+  const secondUnMixedCheckbox = unmixedAccountCheckboxes[1];
 
-  // can not check the same account for change as for mixed
-  fireEvent.click(unmixedAccountCheckboxes[0]);
-  await wait(() => expect(unmixedAccountCheckboxes[0].checked).toEqual(false));
+  fireEvent.click(firstMixedCheckbox);
+  await wait(() => expect(firstMixedCheckbox.checked).toEqual(true));
+
+  // clicking on unmixed checkbox should uncheck the same account's mixed checkbox
+  fireEvent.click(firstUnMixedCheckbox);
+  await wait(() => expect(firstMixedCheckbox.checked).toEqual(false));
   expect(
     screen.getByText(/you need to set/i).textContent
   ).toMatchInlineSnapshot(
@@ -70,18 +77,20 @@ test("test SetMixedAcctPage", async () => {
   );
 
   // Click on another account for change account
-  fireEvent.click(unmixedAccountCheckboxes[1]);
-  await wait(() => expect(unmixedAccountCheckboxes[1].checked).toEqual(true));
+  fireEvent.click(secondUnMixedCheckbox);
+  await wait(() => expect(secondUnMixedCheckbox.checked).toEqual(true));
+  await wait(() => expect(firstUnMixedCheckbox.checked).toEqual(false));
 
-  // can not check the same account for mixed as for change
-  fireEvent.click(mixedAccountCheckboxes[1]);
-  await wait(() => expect(mixedAccountCheckboxes[0].checked).toEqual(true));
-  await wait(() => expect(mixedAccountCheckboxes[1].checked).toEqual(false));
-
-  // Click on another account for mixed account
-  fireEvent.click(mixedAccountCheckboxes[2]);
-  await wait(() => expect(mixedAccountCheckboxes[0].checked).toEqual(false));
-  await wait(() => expect(mixedAccountCheckboxes[2].checked).toEqual(true));
+  // clicking on mixed checkbox should uncheck the same account's unmixed checkbox
+  fireEvent.click(secondMixedCheckbox);
+  await wait(() => expect(secondMixedCheckbox.checked).toEqual(true));
+  await wait(() => expect(secondUnMixedCheckbox.checked).toEqual(false));
+  //
+  // Click on the first account for unmixed account
+  fireEvent.click(firstUnMixedCheckbox);
+  await wait(() => expect(firstUnMixedCheckbox.checked).toEqual(true));
+  await wait(() => expect(secondUnMixedCheckbox.checked).toEqual(false));
+  await wait(() => expect(secondMixedCheckbox.checked).toEqual(true));
   expect(screen.queryByText(/you need to set/i)).not.toBeInTheDocument();
 
   expect(continueButton.className).not.toMatch(/disabled/i);
