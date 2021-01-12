@@ -85,6 +85,10 @@ let mockGetGlobalCfg;
 let mockChangePassphrase;
 let mockIsChangePassPhraseDisabled;
 let mockIsTicketAutoBuyerEnabled;
+let mockGetHasUnpaidFee;
+let mockGetAccountMixerRunning;
+let mockPurchaseTicketsRequestAttempt;
+let mockGetTicketAutoBuyerRunning;
 
 beforeEach(() => {
   mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
@@ -95,9 +99,6 @@ beforeEach(() => {
   });
   mockIsTestNet = sel.isTestNet = jest.fn(() => true);
   mockIsMainNet = sel.isMainNet = jest.fn(() => false);
-  mockIsTicketAutoBuyerEnabled = sel.mockIsTicketAutoBuyerEnabled = jest.fn(
-    () => false
-  );
   mockIsChangePassPhraseDisabled = sel.isChangePassPhraseDisabled = jest.fn(
     () => false
   );
@@ -116,6 +117,20 @@ beforeEach(() => {
   sa.addAllowedExternalRequest = jest.fn(() => true);
   sa.toggleTheme = jest.fn(() => true);
   mockChangePassphrase = ca.changePassphraseAttempt = jest.fn(() => () => {});
+
+  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+    () => false
+  );
+  mockGetTicketAutoBuyerRunning = sel.getTicketAutoBuyerRunning = jest.fn(
+    () => false
+  );
+  mockGetHasUnpaidFee = sel.getHasUnpaidFee = jest.fn(() => false);
+  mockGetAccountMixerRunning = sel.getAccountMixerRunning = jest.fn(
+    () => false
+  );
+  mockPurchaseTicketsRequestAttempt = sel.purchaseTicketsRequestAttempt = jest.fn(
+    () => false
+  );
 });
 
 test("show error when there is no walletService", () => {
@@ -137,7 +152,7 @@ test("show error when there is no walletService", () => {
   expect(mockTicketBuyerService).toHaveBeenCalled();
 });
 
-test("test close wallet button (ticket autobuyer is NOT running) ", () => {
+test("test close wallet button (there is no ongoing process) ", () => {
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -158,8 +173,77 @@ test("test close wallet button (ticket autobuyer is running) ", () => {
   expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
   testConfirmModal(
     "Close Wallet",
-    "Confirmation Required",
-    "Are you sure you want to close test-wallet-name and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
+    "Auto Ticket Buyer Still Running",
+    "If you proceed, it will be closed and no more tickets will be purchased.",
+    "Close Anyway"
+  );
+});
+
+test("test close wallet button (has unpaid fee) ", () => {
+  mockGetHasUnpaidFee = sel.getHasUnpaidFee = jest.fn(() => true);
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  expect(mockGetHasUnpaidFee).toHaveBeenCalled();
+  testConfirmModal(
+    "Close Wallet",
+    "VSP Tickets Fee Error",
+    /You have outstanding tickets that are not properly registered with a VSP/i,
+    "Close Anyway"
+  );
+});
+
+test("test close wallet button (account mixer is running) ", () => {
+  mockGetAccountMixerRunning = sel.getAccountMixerRunning = jest.fn(() => true);
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  expect(mockGetAccountMixerRunning).toHaveBeenCalled();
+  testConfirmModal(
+    "Close Wallet",
+    "Account mixer is running",
+    "Account mixer is currently running. Ongoing mixes will be cancelled and no more Decred will be mixed if you proceed.",
+    "Close Anyway"
+  );
+});
+
+test("test close wallet button (still finalizing ticket purchases) ", () => {
+  mockPurchaseTicketsRequestAttempt = sel.purchaseTicketsRequestAttempt = jest.fn(
+    () => true
+  );
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  expect(mockPurchaseTicketsRequestAttempt).toHaveBeenCalled();
+  testConfirmModal(
+    "Close Wallet",
+    "Purchasing Tickets",
+    "Decrediton is still finalizing ticket purchases. Tickets may not be registered with the VSP if you proceed now, which can result in missed votes.",
+    "Close Anyway"
+  );
+});
+
+test("test close wallet button (legacy auto ticket buyer still running) ", () => {
+  mockGetTicketAutoBuyerRunning = sel.getTicketAutoBuyerRunning = jest.fn(
+    () => true
+  );
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  expect(mockPurchaseTicketsRequestAttempt).toHaveBeenCalled();
+  testConfirmModal(
+    "Close Wallet",
+    "Auto Ticket Buyer Still Running",
+    "If you proceed, it will be closed and no more tickets will be purchased.",
+    "Close Anyway"
   );
 });
 
@@ -195,7 +279,8 @@ const getOptionByNameAndType = (name, type) => {
 const testConfirmModal = (
   submitButtonText,
   confirmHeaderText,
-  confirmContent
+  confirmContent,
+  confirmButtonLabel = "Confirm"
 ) => {
   const submitButton = screen.getByText(submitButtonText);
   // submit and cancel
@@ -209,7 +294,7 @@ const testConfirmModal = (
   // submit and confirm
   user.click(submitButton);
   expect(screen.getByText(confirmHeaderText)).toBeInTheDocument();
-  user.click(screen.getByText("Confirm"));
+  user.click(screen.getByText(confirmButtonLabel));
 };
 
 const testComboxBoxInput = (
