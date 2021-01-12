@@ -333,7 +333,7 @@ export const getPeerInfo = (walletService) => new Promise((ok, fail) => {
   );
 });
 
-export const startVSPClient = (walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount) =>
+export const processManagedTickets = (walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount) =>
   new Promise((resolve, reject) => {
     const unlockReq = new api.UnlockWalletRequest();
     unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
@@ -343,6 +343,10 @@ export const startVSPClient = (walletService, passphrase, vspHost, vspPubkey, fe
         reject(error);
       }
 
+      console.log(vspHost);
+      console.log(vspPubkey);
+      console.log(feeAccount);
+      console.log(changeAccount);
       const request = new api.ProcessManagedTicketsRequest();
       request.setVspHost("https://" + vspHost);
       request.setVspPubkey(vspPubkey);
@@ -396,6 +400,10 @@ new Promise((resolve, reject) => {
     request.setFeeAccount(feeAccount);
     request.setChangeAccount(changeAccount);
 
+    console.log(vspHost);
+    console.log(vspPubkey);
+    console.log(feeAccount);
+    console.log(changeAccount);
     walletService.processUnmanagedTickets(request, (err, response) => {
       // err ? fail(err) : ok(res);
 

@@ -217,11 +217,6 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
-  const onStartVSPClient = useCallback(
-    async (passphrase) => await dispatch(processManagedTickets(passphrase)),
-    [dispatch]
-  );
-
   const onProcessUnmanagedTickets = useCallback(
     async (passphrase, vspHost, vspPubkey) => await dispatch(
       processUnmanagedTickets(passphrase, vspHost, vspPubkey)
@@ -230,13 +225,9 @@ const useDaemonStartup = () => {
   );
 
   const onProcessManagedTickets = useCallback(
-    async (passphrase, vspHost, vspPubkey) => await dispatch(
-      processManagedTickets(passphrase, vspHost, vspPubkey)
-    ),
+    async (passphrase) => await dispatch(processManagedTickets(passphrase)),
     [dispatch]
   );
-
-  // await dispatch(startVSPClients());
 
   return {
     onShowTutorial,
@@ -309,7 +300,6 @@ const useDaemonStartup = () => {
     onGetDcrdLogs,
     syncAttemptRequest,
     daemonWarning,
-    onStartVSPClient,
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
     hasTicketFeeError,

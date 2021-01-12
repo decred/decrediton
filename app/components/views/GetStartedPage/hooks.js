@@ -67,7 +67,7 @@ export const useGetStarted = () => {
     onGetDcrdLogs,
     daemonWarning,
     getCoinjoinOutputspByAcct,
-    onStartVSPClient,
+
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
     hasTicketFeeError,
@@ -255,7 +255,7 @@ export const useGetStarted = () => {
         // isCreateNewWallet needs to be false for indicating a wallet
         // restore. Can be other cases if it is null or undefined.
         if (isCreateNewWallet === false) {
-          await onStartVSPClient(passPhrase);
+          await onProcessManagedTickets(passPhrase);
           onSendContinue();
         } else {
           onSendContinue();
@@ -631,6 +631,7 @@ export const useGetStarted = () => {
           onSendContinue,
           onProcessTickets: onProcessManagedTickets,
           title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
+          noVspSelection: true,
           description: <T
           id="getstarted.processManagedTickets.description"
           m={`Looks like you have vsp ticket with unprocessed fee. If they are picked

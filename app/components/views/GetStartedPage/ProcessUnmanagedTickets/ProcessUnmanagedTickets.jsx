@@ -8,7 +8,7 @@ import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
 
-export default ({ cancel, onSendContinue, onProcessTickets, title, description }) => {
+export default ({ cancel, onSendContinue, onProcessTickets, title, description, noVspSelection }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = async (passphrase) => {
@@ -17,10 +17,14 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description }
   };
 
   useEffect(() => {
+    if (noVspSelection) {
+      setIsValid(true);
+      return;
+    }
     if(vsp) {
       setIsValid(true);
     }
-  }, [vsp]);
+  }, [vsp, noVspSelection]);
 
   return (
     <div className={styles.content}>
@@ -39,10 +43,11 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description }
       <div className={styles.description}>
         {description}
       </div>
-      <VSPSelect
-        className={styles.vspSelect}
-        {...{ onChange: setVSP }}
-      />
+      { !noVspSelection && <VSPSelect
+          className={styles.vspSelect}
+          {...{ onChange: setVSP }}
+        />
+      }
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
           modalTitle={

@@ -525,9 +525,9 @@ export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) 
   walletCfg.set(cfgConstants.REMEMBERED_VSP_HOST, rememberedVspHost);
 };
 
-export const STARTVSPCLIENT_ATTEMPT = "STARTVSPCLIENT_ATTEMPT";
-export const STARTVSPCLIENT_SUCCESS = "STARTVSPCLIENT_SUCCESS";
-export const STARTVSPCLIENT_FAILED = "STARTVSPCLIENT_FAILED";
+export const PROCESSMANAGEDTICKETS_ATTEMPT = "PROCESSMANAGEDTICKETS_ATTEMPT";
+export const PROCESSMANAGEDTICKETS_SUCCESS = "PROCESSMANAGEDTICKETS_SUCCESS";
+export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 
 // startVSPClient starts an already used vsp and checks if it has
 // unsyced tickets registered.
@@ -539,35 +539,10 @@ const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccoun
   return response;
 };
 
-export const processManagedTickets = (passphrase, vspHost, vspPubkey) => async (dispatch, getState) => {
-  dispatch({ type: STARTVSPCLIENT_ATTEMPT });
-  try {
-    let feeAccount, changeAccount;
-    const mixedAccount = sel.getMixedAccount(getState());
-    if (mixedAccount) {
-      feeAccount = mixedAccount;
-      changeAccount = sel.getChangeAccount(getState());
-    } else {
-      feeAccount = sel.defaultSpendingAccount(getState()).value;
-      changeAccount = sel.defaultSpendingAccount(getState()).value;
-    }
-
-    await dispatch(startVSPClient(passphrase, vspHost, vspPubkey, feeAccount, changeAccount));
-    // get vsp tickets fee status errored so we can resync them
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
-    dispatch({ type: STARTVSPCLIENT_SUCCESS });
-    return true;
-  } catch(error) {
-    dispatch({ type: STARTVSPCLIENT_FAILED, error });
-  }
-};
-
-// startVSPClient gets all vsp and check for tickets which still not
+// processManagedTickets gets all vsp and check for tickets which still not
 // synced, and sync them.
-export const startVSPClients = (passphrase) => async (dispatch, getState) => {
-  dispatch({ type: STARTVSPCLIENT_ATTEMPT });
+export const processManagedTickets = (passphrase) => async (dispatch, getState) => {
+  dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
   try {
     const availableVSPs = await dispatch(discoverAvailableVSPs());
     let feeAccount, changeAccount;
@@ -589,10 +564,10 @@ export const startVSPClients = (passphrase) => async (dispatch, getState) => {
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
-    dispatch({ type: STARTVSPCLIENT_SUCCESS });
+    dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
     return true;
   } catch(error) {
-    dispatch({ type: STARTVSPCLIENT_FAILED, error });
+    dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
   }
 };
 

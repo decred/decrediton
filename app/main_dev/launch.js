@@ -533,6 +533,9 @@ export const launchDCRWallet = (
   args.push("--gaplimit=" + cfg.get(cfgConstants.GAP_LIMIT));
   args.push("--issueclientcert");
 
+  // example of debug level case needed
+  // args.push("--debuglevel=VSPC=debug")
+
   // add cspp cert path.
   // When in mainnet, we always include it, because if we doensn't and a user
   // sets mixing config, we would need to restart dcrwallet.
