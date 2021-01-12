@@ -71,8 +71,7 @@ export const useGetStarted = () => {
 
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
-    hasTicketFeeError,
-    rememberedVspHost
+    hasTicketFeeError
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -263,7 +262,7 @@ export const useGetStarted = () => {
           // goToHome();
         }
       },
-      isAtProcessingUnmanagedTickets: async () => {
+      isAtProcessingUnmanagedTickets: () => {
         console.log("is at processingUnmanagedTickets");
       },
       isAtProcessingManagedTickets: () => {
@@ -684,7 +683,8 @@ export const useGetStarted = () => {
       error,
       daemonWarning,
       onProcessUnmanagedTickets,
-      onProcessManagedTickets
+      onProcessManagedTickets,
+      send
     ]
   );
 
