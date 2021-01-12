@@ -34,11 +34,10 @@ export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
 export const HASVSPTICKETSERRORED = "HASVSPTICKETSERRORED";
 
-export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
+export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => new Promise((resolve, reject) => {
   dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
   wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
     .then(response => {
-      console.log(response);
       const hashesBytes = response.getTicketsHashesList();
       const ticketsHashes = hashesBytes.map(
         (bytesHash) => reverseRawHash(bytesHash)
@@ -58,11 +57,14 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => {
       }
 
       dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: { [feeStatus]: ticketsHashes }, feeStatus, stakeTransactions });
+
+      resolve(ticketsHashes);
     })
     .catch(err => {
       dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });
+      reject(err);
     });
-};
+});
 
 export const SYNCVSPTICKETS_ATTEMPT = "SYNCVSPTICKETS_ATTEMPT";
 export const SYNCVSPTICKETS_FAILED = "SYNCVSPTICKETS_FAILED";
@@ -537,6 +539,31 @@ const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccoun
   return response;
 };
 
+export const processManagedTickets = (passphrase, vspHost, vspPubkey) => async (dispatch, getState) => {
+  dispatch({ type: STARTVSPCLIENT_ATTEMPT });
+  try {
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
+    }
+
+    await dispatch(startVSPClient(passphrase, vspHost, vspPubkey, feeAccount, changeAccount));
+    // get vsp tickets fee status errored so we can resync them
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+    dispatch({ type: STARTVSPCLIENT_SUCCESS });
+    return true;
+  } catch(error) {
+    dispatch({ type: STARTVSPCLIENT_FAILED, error });
+  }
+};
+
 // startVSPClient gets all vsp and check for tickets which still not
 // synced, and sync them.
 export const startVSPClients = (passphrase) => async (dispatch, getState) => {
@@ -549,8 +576,8 @@ export const startVSPClients = (passphrase) => async (dispatch, getState) => {
       feeAccount = mixedAccount;
       changeAccount = sel.getChangeAccount(getState());
     } else {
-      feeAccount = sel.defaultSpendingAccount(getState());
-      changeAccount = sel.defaultSpendingAccount(getState());
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
     }
 
     await Promise.all(availableVSPs.map(async (vsp) => {
@@ -585,19 +612,24 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => async
       feeAccount = mixedAccount;
       changeAccount = sel.getChangeAccount(getState());
     } else {
-      feeAccount = sel.defaultSpendingAccount(getState());
-      changeAccount = sel.defaultSpendingAccount(getState());
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
     }
 
-    await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
+    if (passphrase) {
+      await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
+    } else {
+      await wallet.processUnmanagedTicketsStartup(walletService, vspHost, vspPubkey, feeAccount, changeAccount);
+    }
 
     // get vsp tickets fee status errored so we can resync them
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
     dispatch({ type: PROCESSUNMANAGEDTICKETS_SUCCESS });
-    return true;
+    return null;
   } catch(error) {
     dispatch({ type: PROCESSUNMANAGEDTICKETS_FAILED, error });
+    return error;
   }
 };

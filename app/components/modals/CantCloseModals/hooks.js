@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 export function useCantCloseModal() {
   const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
-  const hasUnpaidFee = useSelector(sel.getHasUnpaidFee);
+  const hasUnpaidFee = useSelector(sel.getHasTicketFeeError);
   const cantCloseModalVisible = useSelector(sel.cantCloseModalVisible);
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const purchasingTickets = useSelector(sel.purchaseTicketsRequestAttempt);

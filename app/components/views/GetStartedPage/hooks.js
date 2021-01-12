@@ -68,7 +68,10 @@ export const useGetStarted = () => {
     daemonWarning,
     getCoinjoinOutputspByAcct,
     onStartVSPClient,
-    onProcessUnmanagedTickets
+    onProcessUnmanagedTickets,
+    onProcessManagedTickets,
+    hasTicketFeeError,
+    rememberedVspHost
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -255,8 +258,23 @@ export const useGetStarted = () => {
           await onStartVSPClient(passPhrase);
           onSendContinue();
         } else {
-          goToHome();
+          onSendContinue();
+          // goToHome();
         }
+      },
+      isAtProcessingUnmanagedTickets: async () => {
+        if (!rememberedVspHost) {
+          onSendContinue();
+        }
+        const error = await onProcessUnmanagedTickets(null, rememberedVspHost.host, rememberedVspHost.pubkey);
+        // if no errors we can simply continue.
+        if (!error) {
+          onSendContinue();
+        }
+      },
+      isAtProcessingManagedTickets: () => {
+        console.log("is at isAtProcessingManagedTickets");
+        console.log(hasTicketFeeError);
       },
       isAtFinishMachine: () => goToHome()
     }
@@ -595,9 +613,31 @@ export const useGetStarted = () => {
           StateComponent: updatedComponent ? updatedComponent : component
         });
       }
-
       if (key === "processingUnmanagedTickets") {
-        PageComponent = h(ProcessUnmanagedTickets, { onSendContinue, onProcessUnmanagedTickets });
+        PageComponent = h(ProcessUnmanagedTickets, {
+          onSendContinue,
+          onProcessTickets: onProcessUnmanagedTickets,
+          title: <T id="getstarted.processUnmangedTickets.title" m="Process Unmanaged Tickets" />,
+          description: <T
+          id="getstarted.processUnmangedTickets.description"
+          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
+              to vote and they are not linked with a vsp, they may miss, if you are not
+              properly dealing with solo vote.`}
+        />
+        });
+      }
+      if (key === "processingManagedTickets") {
+        PageComponent = h(ProcessUnmanagedTickets, {
+          onSendContinue,
+          onProcessTickets: onProcessManagedTickets,
+          title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
+          description: <T
+          id="getstarted.processManagedTickets.description"
+          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
+              to vote and they are not linked with a vsp, they may miss, if you are not
+              properly dealing with solo vote.`}
+        />
+        });
       }
 
       setPageComponent(PageComponent);
@@ -625,7 +665,8 @@ export const useGetStarted = () => {
       onSendSetPassphrase,
       error,
       daemonWarning,
-      onProcessUnmanagedTickets
+      onProcessUnmanagedTickets,
+      onProcessManagedTickets
     ]
   );
 

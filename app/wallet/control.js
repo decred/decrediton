@@ -366,6 +366,20 @@ export const startVSPClient = (walletService, passphrase, vspHost, vspPubkey, fe
     });
   });
 
+// processUnmanagedTicketsStartup
+export const processUnmanagedTicketsStartup = (walletService, vspHost, vspPubkey, feeAccount, changeAccount) =>
+new Promise((resolve, reject) => {
+  const request = new api.ProcessUnmanagedTicketsRequest();
+  request.setVspHost("https://" + vspHost);
+  request.setVspPubkey(vspPubkey);
+  request.setFeeAccount(feeAccount);
+  request.setChangeAccount(changeAccount);
+
+  walletService.processUnmanagedTickets(request, (err, response) =>
+    err ? reject(err) : resolve(response)
+  );
+});
+
 export const processUnmanagedTickets = (walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount) =>
 new Promise((resolve, reject) => {
   const unlockReq = new api.UnlockWalletRequest();
@@ -382,7 +396,6 @@ new Promise((resolve, reject) => {
     request.setFeeAccount(feeAccount);
     request.setChangeAccount(changeAccount);
 
-    console.log(walletService);
     walletService.processUnmanagedTickets(request, (err, response) => {
       // err ? fail(err) : ok(res);
 

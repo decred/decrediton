@@ -7,14 +7,12 @@ import { PassphraseModalButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
-import { useSelector } from "react-redux";
-import * as sel from "selectors";
 
-export default ({ cancel, onSendContinue, onProcessUnmanagedTickets }) => {
+export default ({ cancel, onSendContinue, onProcessTickets, title, description }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = async (passphrase) => {
-    await onProcessUnmanagedTickets(passphrase, vsp.host, vsp.pubkey);
+    await onProcessTickets(passphrase, vsp.host, vsp.pubkey);
     onSendContinue();
   };
 
@@ -36,15 +34,10 @@ export default ({ cancel, onSendContinue, onProcessUnmanagedTickets }) => {
       </div>
       <Subtitle
         className={styles.subtitle}
-        title={<T id="getstarted.setAccount.title" m="Process Unmanaged Tickets" />}
+        title={title}
       />
       <div className={styles.description}>
-        <T
-          id="getstarted.processTickets.description"
-          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
-              to vote and they are not linked with a vsp, they may miss, if you are not
-              properly dealing with solo vote.`}
-        />
+        {description}
       </div>
       <VSPSelect
         className={styles.vspSelect}

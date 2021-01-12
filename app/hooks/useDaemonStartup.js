@@ -7,7 +7,7 @@ import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
-import { startVSPClients, processUnmanagedTickets } from "actions/VSPActions";
+import { processManagedTickets, processUnmanagedTickets } from "actions/VSPActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -42,6 +42,12 @@ const useDaemonStartup = () => {
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
   const daemonWarning = useSelector(sel.daemonWarning);
   // end of daemon selectors
+
+  // vsp selectors
+  const rememberedVspHost = useSelector(sel.getRememberedVspHost);
+  const hasTicketFeeError = useSelector(sel.getHasTicketFeeError);
+
+  // end of vsp selectors
 
   // sync dcrwallet spv or rpc selectors
   const peerCount = useSelector(sel.peerCount);
@@ -212,7 +218,7 @@ const useDaemonStartup = () => {
   );
 
   const onStartVSPClient = useCallback(
-    async (passphrase) => await dispatch(startVSPClients(passphrase)),
+    async (passphrase) => await dispatch(processManagedTickets(passphrase)),
     [dispatch]
   );
 
@@ -222,6 +228,14 @@ const useDaemonStartup = () => {
     ),
     [dispatch]
   );
+
+  const onProcessManagedTickets = useCallback(
+    async (passphrase, vspHost, vspPubkey) => await dispatch(
+      processManagedTickets(passphrase, vspHost, vspPubkey)
+    ),
+    [dispatch]
+  );
+
   // await dispatch(startVSPClients());
 
   return {
@@ -296,7 +310,10 @@ const useDaemonStartup = () => {
     syncAttemptRequest,
     daemonWarning,
     onStartVSPClient,
-    onProcessUnmanagedTickets
+    onProcessUnmanagedTickets,
+    onProcessManagedTickets,
+    hasTicketFeeError,
+    rememberedVspHost
   };
 };
 

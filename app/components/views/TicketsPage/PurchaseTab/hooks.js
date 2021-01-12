@@ -81,8 +81,8 @@ export const usePurchaseTab = () => {
   const onRevokeTickets = (passphrase) =>
     dispatch(ca.revokeTicketsAttempt(passphrase));
 
-  const setRememberedVspHost = (vspHost) =>
-    dispatch(vspa.setRememberedVspHost(vspHost));
+  const setRememberedVspHost = (vsp) =>
+    dispatch(vspa.setRememberedVspHost(vsp));
 
   const onListUnspentOutputs = (accountNum) => dispatch(listUnspentOutputs(accountNum));
 

@@ -342,6 +342,16 @@ export const getStartedMachine = Machine({
         processingUnmanagedTickets: {}
       },
       on: {
+        CONTINUE: "processingManagedTickets"
+      }
+    },
+    processingManagedTickets: {
+      onEntry: "isAtProcessingManagedTickets",
+      initial: "processingManagedTickets",
+      states: {
+        processingManagedTickets: {}
+      },
+      on: {
         CONTINUE: "goToHomeView"
       }
     },
