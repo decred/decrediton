@@ -1,8 +1,8 @@
-.clipboardBox {
+.box {
   position: relative;
   display: inline-block;
 }
-.copyToClipboardIcon {
+.icon {
   display: inline-block;
   width: 20px;
   height: 18px;
@@ -15,10 +15,10 @@
   border: none;
   outline: 0;
 }
-.copyToClipboardIcon:hover {
+.icon:hover {
   opacity: 0.8;
 }
-.copyToClipboardSuccess {
+.success {
   font-size: 12px;
   color: var(--background-back-color);
   background-color: var(--accent-color);
@@ -32,6 +32,6 @@
   min-width: 4em;
   text-align: center;
 }
-.copyToClipboardSuccess.hidden {
+.success.hidden {
   display: none;
 }

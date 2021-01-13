@@ -10,22 +10,22 @@ const CreatePassPhrase = ({ onChange, onSubmit, ...props }) => {
     return !!passPhrase && passPhrase === passPhraseVerification;
   }, [passPhrase, passPhraseVerification]);
 
-  function onKeyDown(e) {
+  useEffect(() => {
+    onChange?.(isValid() ? passPhrase : "");
+  }, [passPhrase, passPhraseVerification, isValid, onChange]);
+
+  const onKeyDown = (e) => {
     // Enter key
     if (e.keyCode == 13) {
       e.preventDefault();
       onSubmit?.();
     }
-  }
+  };
 
-  function setPassPhraseAndHasFailedAttempt(passPhrase) {
+  const setPassPhraseAndHasFailedAttempt = (passPhrase) => {
     setHasFailedAttempt(true);
     setPassPhrase(passPhrase);
-  }
-
-  useEffect(() => {
-    onChange?.(isValid() ? passPhrase : "");
-  }, [passPhrase, passPhraseVerification, isValid, onChange]);
+  };
 
   return (
     <PassPhraseInputs

@@ -8,25 +8,25 @@ import { useState } from "react";
 const CopyToClipboard = ({ textToCopy, className }) => {
   const [isSuccessHidden, setIsSuccessHidden] = useState(true);
 
-  function onClick() {
+  const onClick = () => {
     if (copy(textToCopy)) setIsSuccessHidden(false);
-  }
+  };
 
-  function onMouseLeave() {
+  const onMouseLeave = () => {
     if (!isSuccessHidden) setIsSuccessHidden(true);
-  }
+  };
 
   return (
-    <div className={classNames(styles.clipboardBox, className && className)}>
+    <div className={classNames(styles.box, className && className)}>
       <div
         className={classNames(
-          styles.copyToClipboardSuccess,
+          styles.success,
           isSuccessHidden && styles.hidden
         )}>
         <T id="clipboard.copied" m="Copied" />
       </div>
       <button
-        className={styles.copyToClipboardIcon}
+        className={styles.icon}
         onClick={onClick}
         onMouseLeave={onMouseLeave}
         aria-label="Copy"
