@@ -16,6 +16,7 @@ import {
   OPENWALLET_INPUT,
   OPENWALLET_INPUTPRIVPASS
 } from "actions/WalletLoaderActions";
+import { IMMATURE, LIVE, UNMINED } from "constants/Decrediton";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useDaemonStartup, useAccounts } from "hooks";
 import { useMachine } from "@xstate/react";
@@ -68,10 +69,10 @@ export const useGetStarted = () => {
     onGetDcrdLogs,
     daemonWarning,
     getCoinjoinOutputspByAcct,
-
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
-    hasTicketFeeError
+    hasTicketFeeError,
+    stakeTransactions
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -261,7 +262,7 @@ export const useGetStarted = () => {
           if (!isWatchingOnly) isWatchingOnly = val.isWatchingOnly;
           if (!isTrezor) isTrezor = val.isTrezor;
         }
-        // Watching only wallets should not have tickets yet.
+        // Watching only wallets can not sync tickets as they need signing.
         if (isWatchingOnly || isTrezor) {
           send({ type: "FINISH" });
           return;
@@ -276,6 +277,25 @@ export const useGetStarted = () => {
       },
       isAtProcessingUnmanagedTickets: () => {
         console.log("is at processingUnmanagedTickets");
+        let hasSoloTickets = false;
+        Object.keys(stakeTransactions).forEach((hash) => {
+          const tx = stakeTransactions[hash];
+          // check if it is a spendable ticket.
+          if (
+            tx.status === IMMATURE ||
+            tx.status === LIVE ||
+            tx.status === UNMINED
+          ) {
+            // feeStatus can be 0.
+            if (!tx.feeStatus && tx.feeStatus !== 0) {
+              hasSoloTickets = true;
+            }
+          }
+        });
+        if (!hasSoloTickets) {
+          // sending back goes to home page.
+          send({ type: "BACK" });
+        }
       },
       isAtProcessingManagedTickets: () => {
         console.log("is at isAtProcessingManagedTickets");
