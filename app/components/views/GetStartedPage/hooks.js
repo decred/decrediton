@@ -254,7 +254,13 @@ export const useGetStarted = () => {
         const { isCreateNewWallet, passPhrase } = context;
         // isCreateNewWallet needs to be false for indicating a wallet
         // restore. Can be other cases if it is null or undefined.
-        const { isWatchingOnly, isTrezor } = context.selectedWallet;
+        const { selectedWallet } = context;
+        let { isWatchingOnly, isTrezor } = selectedWallet;
+        const val = selectedWallet.value;
+        if (val) {
+          if (!isWatchingOnly) isWatchingOnly = val.isWatchingOnly;
+          if (!isTrezor) isTrezor = val.isTrezor;
+        }
         // Watching only wallets should not have tickets yet.
         if (isWatchingOnly || isTrezor) {
           send({ type: "FINISH" });
