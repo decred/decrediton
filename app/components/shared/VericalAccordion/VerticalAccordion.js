@@ -25,7 +25,7 @@ const VerticalAccordion = ({
   );
 
   // "default" style when initializing the component
-  function getDefaultStyles() {
+  const getDefaultStyles = () => {
     return [
       {
         key: "body",
@@ -35,10 +35,10 @@ const VerticalAccordion = ({
         }
       }
     ];
-  }
+  };
 
   // this returns the chosen style based on the passed props
-  function chosenStyles() {
+  const chosenStyles = () => {
     if (show) {
       return [
         {
@@ -65,7 +65,7 @@ const VerticalAccordion = ({
         }
       }
     ];
-  }
+  };
 
   const childrenClassNames = show ? styles.active : "";
   const defaultStyles = getDefaultStyles();
@@ -88,24 +88,18 @@ const VerticalAccordion = ({
   return (
     <div
       className={classNames(
-        styles.verticalAccordion,
+        styles.container,
         show && styles.active,
         className
       )}>
       <div
-        className={classNames(styles.verticalAccordionHeader, headerClassName)}
-        onClick={
-          !disabled
-            ? () => {
-              onToggleAccordion && onToggleAccordion();
-            }
-            : null
-        }>
+        className={classNames(styles.header, headerClassName)}
+        onClick={!disabled ? () => onToggleAccordion?.() : null}>
         {header}
         <div
           className={classNames(
             disabled && "disabled",
-            styles.verticalAccordionArrow,
+            styles.arrow,
             arrowClassName
           )}
         />

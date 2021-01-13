@@ -112,7 +112,7 @@
   grid-template-columns: 1fr 3fr;
 }
 
-.paymentAccordion .vertical-accordion-arrow {
+.verticalAccordionArrow {
   transform: rotate(180deg);
   top: 30px;
   right: 30px;

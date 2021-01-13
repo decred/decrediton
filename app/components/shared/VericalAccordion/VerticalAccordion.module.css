@@ -1,8 +1,8 @@
-.verticalAccordionHeader {
+.header {
   cursor: pointer;
   position: relative;
 }
-.verticalAccordionArrow {
+.arrow {
   content: "";
   background-image: var(--arrow-right-gray-icon);
   background-repeat: no-repeat;
@@ -17,12 +17,12 @@
   transition: transform 0.25s ease-in-out;
   transform: rotate(-90deg);
 }
-.verticalAccordionHeader:hover .verticalAccordionArrow {
+.header:hover .arrow {
   background-image: var(--arrow-right-blue-icon);
 }
-.verticalAccordionHeader:hover .verticalAccordionArrow .disabled {
+.header:hover .arrow .disabled {
   background-image: var(--arrow-right-gray-icon);
 }
-.verticalAccordion.active .verticalAccordionArrow {
+.container.active .arrow {
   transform: rotate(90deg);
 }
