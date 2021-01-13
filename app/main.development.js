@@ -301,8 +301,8 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
   event.returnValue = removeWallet(testnet, walletPath);
 });
 
-ipcMain.handle("upload-firmware", async (event, firmware) => {
-  const res = await updateTrezorFirmware(firmware);
+ipcMain.handle("upload-firmware", async (event, firmware, model) => {
+  const res = await updateTrezorFirmware(firmware, model);
   return res;
 });
 

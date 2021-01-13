@@ -149,11 +149,18 @@ export const removeWallet = (testnet, walletPath) => {
 // updateTrezorFirmware attempts to make a temporary connection to a trezor
 // device and update it with the firmware at path. It returns an error string
 // in case of error and whether the update process was started at all.
-export const updateTrezorFirmware = async ( firmwarePath ) => {
+export const updateTrezorFirmware = async ( firmwarePath, model ) => {
   let started = false;
   let completed = false;
   const rawFirmware = fs.readFileSync(firmwarePath);
-  const hexFirmware = rawToHex(rawFirmware);
+  let firmwareData;
+  // Different models want data in different formats. Current models are either
+  // 1 or "T".
+  if (model === 1) {
+    firmwareData = rawToHex(rawFirmware);
+  } else {
+    firmwareData = rawFirmware.buffer;
+  }
   let session = connect.default;
   try {
     await initTransport(session, false);
@@ -168,7 +175,7 @@ export const updateTrezorFirmware = async ( firmwarePath ) => {
     });
     started = true;
     const res = await session.firmwareUpdate({
-       binary: hexFirmware
+       binary: firmwareData
     });
     if (res.payload) {
       if (res.payload.error) {
