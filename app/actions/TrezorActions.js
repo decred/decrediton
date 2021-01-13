@@ -792,18 +792,16 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
 
   dispatch({ type: TRZ_UPDATEFIRMWARE_ATTEMPT });
 
-  if (noDevice(getState)) {
-    dispatch({
-      error: "Device not connected",
-      type: TRZ_UPDATEFIRMWARE_FAILED
+  const features = await getFeatures(dispatch, getState)
+    .catch(error => {
+      dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });
+      return;
     });
-    return;
-  }
 
   try {
     if (device != BOOTLOADER_MODE) throw "device must be in bootloader mode";
     // Ask main.development.js to send the firmware for us.
-    const { error, started } = await ipcRenderer.invoke("upload-firmware", path);
+    const { error, started } = await ipcRenderer.invoke("upload-firmware", path, features.model);
     // If the updated started, the device must be disconnected before further
     // use.
     if (started) alertNoConnectedDevice()(dispatch);
