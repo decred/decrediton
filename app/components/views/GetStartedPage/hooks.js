@@ -83,6 +83,8 @@ export const useGetStarted = () => {
         preStartDaemon();
       },
       isAtStartAdvancedDaemon: () => { },
+      isAtLoadingConfig: () => { },
+      isAtSettingAccount: () => { },
       isAtStartSPV: () => onSendContinue(),
       isAtStartingDaemon: (_, event) => {
         console.log("is at Starting Daemonn");
@@ -252,6 +254,12 @@ export const useGetStarted = () => {
         const { isCreateNewWallet, passPhrase } = context;
         // isCreateNewWallet needs to be false for indicating a wallet
         // restore. Can be other cases if it is null or undefined.
+        const { isWatchingOnly, isTrezor } = context.selectedWallet;
+        // Watching only wallets should not have tickets yet.
+        if (isWatchingOnly || isTrezor) {
+          send({ type: "FINISH" });
+          return;
+        }
         if (isCreateNewWallet === false) {
           await onProcessManagedTickets(passPhrase);
           onSendContinue();
@@ -611,6 +619,7 @@ export const useGetStarted = () => {
         PageComponent = h(ProcessUnmanagedTickets, {
           onSendContinue,
           onProcessTickets: onProcessUnmanagedTickets,
+          cancel: onSendBack,
           title: <T id="getstarted.processUnmangedTickets.title" m="Process Unmanaged Tickets" />,
           description: <T
           id="getstarted.processUnmangedTickets.description"
