@@ -332,6 +332,7 @@ export const getStartedMachine = Machine({
         syncingVSPTickets: {}
       },
       on: {
+        FINISH: "goToHomeView",
         CONTINUE: "processingUnmanagedTickets"
       }
     },
@@ -342,6 +343,7 @@ export const getStartedMachine = Machine({
         processingUnmanagedTickets: {}
       },
       on: {
+        BACK: "goToHomeView",
         CONTINUE: "isLoadingConfig"
       }
     },
@@ -357,7 +359,7 @@ export const getStartedMachine = Machine({
       }
     },
     isLoadingConfig: {
-      onEntry: "isAtLoadingconfig",
+      onEntry: "isAtLoadingConfig",
       initial: "isLoadingConfig",
       states: {
         isLoadingConfig: {}
