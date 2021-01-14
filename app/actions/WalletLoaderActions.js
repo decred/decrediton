@@ -18,7 +18,7 @@ import {
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { isTestNet } from "selectors";
+import { isTestNet, trezorDevice } from "selectors";
 import {
   SpvSyncRequest,
   SyncNotificationType,
@@ -32,6 +32,7 @@ import * as cfgConstants from "constants/config";
 import { ipcRenderer } from "electron";
 import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
+import { TRZ_WALLET_CLOSED } from "actions/TrezorActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -259,6 +260,7 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
     }
     await wallet.stopWallet();
     dispatch({ type: CLOSEWALLET_SUCCESS });
+    if (trezorDevice(getState())) dispatch({ type: TRZ_WALLET_CLOSED });
     dispatch(pushHistory("/getstarted/initial"));
   } catch (error) {
     dispatch({ error, type: CLOSEWALLET_FAILED });
