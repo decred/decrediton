@@ -285,18 +285,46 @@ const connectToLNWallet = (
     return { client };
   }
 
-  const lnClient = await ln.getLightningClient(
-    address,
-    port,
-    certPath,
-    macaroonPath
-  );
-  const wtClient = await ln.getWatchtowerClient(
-    address,
-    port,
-    certPath,
-    macaroonPath
-  );
+  const sleepMs = 3000;
+  const sleepCount = 60 / (sleepMs / 1000);
+  const sleep = () => new Promise((resolve) => setTimeout(resolve, sleepMs));
+
+  // Attempt to connect to the lnrpc service of the wallet. Since the underlying
+  // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
+  // need to try a few times until we get a proper connection.
+  let lnClient, wtClient;
+  let lastError;
+  for (let i = 0; i < sleepCount; i++) {
+    try {
+      lnClient = await ln.getLightningClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
+      wtClient = await ln.getWatchtowerClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
+
+      // Force a getInfo call to ensure we're connected and the server provides
+      // the Lightning service.
+      await ln.getInfo(lnClient);
+      lastError = null;
+      break;
+    } catch (error) {
+        // An unimplemented error here probably means dcrlnd was just unlocked
+        // and is currently starting up the services. Wait a bit and try again.
+        if (error.code !== 12) { // 12 === UNIMPLEMENTED.
+          throw error;
+        }
+        lastError = error;
+        await sleep();
+    }
+  }
+  if (lastError) throw lastError;
 
   // Ensure the dcrlnd instance and decrediton are connected to the same(ish)
   // wallet. For this test to fail the user would have had to manually change a

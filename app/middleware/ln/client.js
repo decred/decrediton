@@ -61,9 +61,8 @@ const getServiceClient = (clientClass) => async (
 
   const client = new clientClass(address + ":" + port, creds);
 
-  const deadline = new Date();
   const deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds() + deadlineInSeconds);
+  const deadline = new Date().getTime() + deadlineInSeconds*1000;
   return await new Promise((resolve, reject) => {
     grpc.waitForClientReady(client, deadline, function (err) {
       if (err) {
