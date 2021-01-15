@@ -74,15 +74,14 @@ export const walletTxToBtcjsTx = async (
   });
 
   const outputs = tx.outputs.map(async (outp, i) => {
-    if (!outp.decodedScript.address) {
+    const addr = outp.decodedScript.address;
+    if (!addr) {
       // TODO: this will be true on OP_RETURNs. Support those.
       throw new Error("Output has different number of addresses than expected");
     }
-    let addr = outp.decodedScript.address;
     const addrValidResp = await wallet.validateAddress(walletService, addr);
     if (!addrValidResp.getIsValid()) throw "Not a valid address: " + addr;
     let address_n = null;
-
     if (i === changeIndex && addrValidResp.getIsMine()) {
       const addrIndex = addrValidResp.getIndex();
       const addrBranch = addrValidResp.getIsInternal() ? 1 : 0;
@@ -92,7 +91,6 @@ export const walletTxToBtcjsTx = async (
         WALLET_ACCOUNT,
         chainParams.HDCoinType
       );
-      addr = null;
     }
     const out = {
       amount: outp.value.toString(),

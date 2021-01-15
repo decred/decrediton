@@ -65,6 +65,7 @@ export const initTransport = async (session, debug) => {
     env: "web",
     lazyLoad: false,
     popup: false,
+    transportReconnect: false,
     manifest: {
       email: "joegruffins@gmail.com",
       appUrl: "https://github.com/decred/decrediton"

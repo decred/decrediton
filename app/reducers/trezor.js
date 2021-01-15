@@ -99,7 +99,8 @@ export default function trezor(state = {}, action) {
       return {
         ...state,
         device: null,
-        deviceLabel: null
+        deviceLabel: null,
+        connected: false
       };
     case TRZ_WALLET_CLOSED:
       return {
