@@ -102,14 +102,14 @@ export const newTransactionsReceived = (
     return;
   let {
     unminedTransactions,
+    stakeTransactions,
+    regularTransactions,
     recentRegularTransactions,
     recentStakeTransactions
   } = getState().grpc;
   const {
     walletService,
-    maturingBlockHeights,
-    stakeTransactions,
-    regularTransactions
+    maturingBlockHeights
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   // Normalize transactions with missing data.
@@ -134,15 +134,15 @@ export const newTransactionsReceived = (
       : (regularTransactions[v.txHash] = v);
     return m;
   }, {});
-  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {
-    // update our txs selector value.
-    v.isStake
-      ? (stakeTransactions[v.txHash] = v)
-      : (regularTransactions[v.txHash] = v);
-    m[v.txHash] = v;
-    return m;
-  }, {});
-
+  let newlyUnminedMap = divideTransactions(newlyUnminedTransactions);
+  // update our txs selector value.
+  stakeTransactions = { ...newlyUnminedMap.stakeTransactions, ...stakeTransactions };
+  regularTransactions = { ...newlyUnminedMap.regularTransactions, ...regularTransactions };
+  // flat stake and regular unmined transactions.
+  newlyUnminedMap = {
+    ...newlyUnminedMap.stakeTransactions,
+    ...newlyUnminedMap.regularTransactions
+  };
 
   // get vsp tickets fee status in case there is a stake tx and we show the
   // proper ticket value.
@@ -236,9 +236,6 @@ export const newTransactionsReceived = (
     type: MATURINGHEIGHTS_CHANGED
   });
 
-  const transactions = [];
-  transactions.push(...newlyUnminedTransactions);
-  transactions.push(...newlyMinedTransactions);
   dispatch({
     recentRegularTransactions,
     recentStakeTransactions,
@@ -850,4 +847,4 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
         dispatch({ type: LISTUNSPENTOUTPUTS_FAILED, error });
         reject(error);
       });
-});
+  });
