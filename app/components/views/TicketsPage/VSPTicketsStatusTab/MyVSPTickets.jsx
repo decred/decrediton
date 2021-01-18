@@ -19,7 +19,7 @@ const labels = {
 const ticketTypes = [
   {
     key: txTypes.ALL,
-    value: { status: null },
+    value: { vspFeeStatus: null },
     label: <T id="vsptickets.type.all" m="All" />
   },
   // VSPFeeProcessStarted FeeStatus = iota
@@ -46,7 +46,7 @@ const ticketTypes = [
 
 const selectTicketTypeFromFilter = (filter) => {
   const ticketType = ticketTypes.find(
-    (ticket) => filter.status === ticket.value.status
+    (ticket) => filter.vspFeeStatus === ticket.value.vspFeeStatus
   );
   return ticketType && ticketType.key;
 };
