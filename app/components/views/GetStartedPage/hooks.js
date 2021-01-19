@@ -71,7 +71,6 @@ export const useGetStarted = () => {
     getCoinjoinOutputspByAcct,
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
-    hasTicketFeeError,
     stakeTransactions
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
@@ -275,6 +274,8 @@ export const useGetStarted = () => {
           // goToHome();
         }
       },
+      // processingUnmanagedTickets process solo tickets and must be called
+      // after processingManagedTickets.
       isAtProcessingUnmanagedTickets: () => {
         console.log("is at processingUnmanagedTickets");
         let hasSoloTickets = false;
@@ -303,11 +304,29 @@ export const useGetStarted = () => {
           send({ type: "BACK" });
         }
       },
+      // processingManagedTickets process vsp tickets updating its status.
       isAtProcessingManagedTickets: () => {
         console.log("is at isAtProcessingManagedTickets");
-        // if no tickets with error, we can continue
-        if (!hasTicketFeeError) {
-          send({ type: "GO_TO_HOME_VIEW" });
+        const hasLive = Object.keys(stakeTransactions).some((hash) => {
+          const tx = stakeTransactions[hash];
+          // check if the wallet has at least one vsp live ticket.
+          if (
+            tx.status === IMMATURE ||
+            tx.status === LIVE ||
+            tx.status === UNMINED
+          ) {
+            // On old vsp the fee is an input. So if the tx has more than one
+            // input, it means it is an old vsp ticket and have no feeStatus.
+            // So we can skip it.
+            if (tx.txInputs.length !== 1) {
+              return false;
+            }
+            return true;
+          }
+        });
+        // if no live tickets, we can skip it.
+        if (!hasLive) {
+          onSendBack();
         }
       },
       isAtFinishMachine: () => goToHome()
@@ -665,14 +684,16 @@ export const useGetStarted = () => {
         PageComponent = h(ProcessManagedTickets, {
           onSendContinue,
           send,
+          cancel: onSendBack,
           onProcessTickets: onProcessManagedTickets,
           title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
           noVspSelection: true,
           description: <T
           id="getstarted.processManagedTickets.description"
-          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
-              to vote and they are not linked with a vsp, they may miss, if you are not
-              properly dealing with solo vote.`}
+          m={ `Your wallet appears to have live tickets. Processing managed
+            tickets confirms with the VSPs that all of your submitted tickets
+            are currently known and paid for by the VSPs.`
+          }
         />
         });
       }

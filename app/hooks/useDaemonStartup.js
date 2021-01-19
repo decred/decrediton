@@ -45,10 +45,7 @@ const useDaemonStartup = () => {
 
   // vsp selectors
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
-  const hasTicketFeeError = useSelector(sel.getHasTicketFeeError);
-  // needed for checking if still have solo tickets.
   const stakeTransactions = useSelector(sel.stakeTransactions);
-
   // end of vsp selectors
 
   // sync dcrwallet spv or rpc selectors
@@ -304,7 +301,6 @@ const useDaemonStartup = () => {
     daemonWarning,
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
-    hasTicketFeeError,
     stakeTransactions,
     rememberedVspHost
   };
