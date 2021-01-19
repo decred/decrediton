@@ -315,6 +315,12 @@ export const useGetStarted = () => {
             tx.status === LIVE ||
             tx.status === UNMINED
           ) {
+            // On old vsp the fee is an input. So if the tx has more than one
+            // input, it means it is an old vsp ticket and have no feeStatus.
+            // So we can skip it.
+            if (tx.txInputs.length !== 1) {
+              return false;
+            }
             return true;
           }
         });
