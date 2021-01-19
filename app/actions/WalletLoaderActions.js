@@ -18,7 +18,7 @@ import {
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { isTestNet, isSimnet } from "selectors";
+import { network, isSimnet } from "selectors";
 import {
   SpvSyncRequest,
   SyncNotificationType,
@@ -51,13 +51,12 @@ export const loaderRequest = () => (dispatch, getState) =>
       } = getState();
       const grpcCertAndKey = getDcrwalletGrpcKeyCert();
       const request = {
-        isTestNet: isTestNet(getState()),
+        network: network(getState()),
         walletName,
         address,
         port,
         cert: grpcCertAndKey,
-        key: grpcCertAndKey,
-        isSimnet: isSimnet(getState())
+        key: grpcCertAndKey
       };
       dispatch({ request, type: LOADER_ATTEMPT });
       try {
@@ -90,7 +89,7 @@ export const getWalletSeedService = () => (dispatch, getState) => {
   dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   return wallet
-    .getSeedService(isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey, isSimnet(getState()))
+    .getSeedService(network(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
     .then((seedService) => {
       dispatch({ seedService, type: GETWALLETSEEDSVC_SUCCESS });
     })
@@ -133,7 +132,7 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
         const {
           daemon: { walletName }
         } = getState();
-        const config = getWalletCfg(isTestNet(getState()), walletName);
+        const config = getWalletCfg(network(getState()), walletName);
         config.delete(cfgConstants.DISCOVER_ACCOUNTS);
         config.set(cfgConstants.DISCOVER_ACCOUNTS, isNew);
         dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
@@ -168,7 +167,7 @@ export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass = "") => (
         const {
           daemon: { walletName }
         } = getState();
-        const config = getWalletCfg(isTestNet(getState()), walletName);
+        const config = getWalletCfg(network(getState()), walletName);
         config.set(cfgConstants.IS_WATCH_ONLY, true);
         config.delete(cfgConstants.DISCOVER_ACCOUNTS);
         wallet.setIsWatchingOnly(true);
@@ -290,7 +289,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
   const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
   const request = new RpcSyncRequest();
-  console.log(request)
+  console.log(request);
   const cert = getDcrdCert(rpc_cert);
   request.setNetworkAddress(rpc_host + ":" + rpc_port);
   request.setUsername(rpc_user);
@@ -334,9 +333,8 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
             } else {
               dispatch({
                 error: `${status}.  You may need to edit ${getWalletPath(
-                  isTestNet(getState()),
-                  walletName,
-                  isSimnet(getState())
+                  network(getState()),
+                  walletName
                 )} and try again`,
                 type: STARTRPC_FAILED
               });
@@ -389,12 +387,12 @@ export function clearStakePoolConfigNewWallet() {
     const {
       daemon: { walletName }
     } = getState();
-    const config = getWalletCfg(isTestNet(getState()), walletName);
+    const config = getWalletCfg(network(getState()), walletName);
     config.delete(cfgConstants.STAKEPOOLS);
 
     getStakePoolInfo().then((foundStakePoolConfigs) => {
       if (foundStakePoolConfigs) {
-        const config = getWalletCfg(isTestNet(getState()), walletName);
+        const config = getWalletCfg(network(getState()), walletName);
         config.set(cfgConstants.STAKEPOOLS, foundStakePoolConfigs);
         dispatch({
           currentStakePoolConfig: foundStakePoolConfigs,
@@ -613,7 +611,7 @@ const syncConsumer = (response) => async (dispatch, getState) => {
         const {
           daemon: { walletName }
         } = getState();
-        const config = getWalletCfg(isTestNet(getState()), walletName);
+        const config = getWalletCfg(network(getState()), walletName);
         config.delete(cfgConstants.DISCOVER_ACCOUNTS);
         config.set(cfgConstants.DISCOVER_ACCOUNTS, true);
         dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
@@ -664,7 +662,7 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
   const {
     grpc: { currentBlockHeight }
   } = getState();
-  const config = getWalletCfg(isTestNet(getState()), walletName);
+  const config = getWalletCfg(network(getState()), walletName);
   // time in seconds as politeia uses its proposal time in seconds
   const timestamp = new Date().getTime() / 1000;
   config.set(cfgConstants.POLITEIA_LAST_ACCESS_TIME, timestamp);

@@ -9,19 +9,20 @@ import {
   getDcrdRpcCert
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
+import { SIMNET, MAINNET, TESTNET } from "constants";
 
 export function getGlobalCfg() {
   const config = new Store();
   return config;
 }
 
-export function getWalletCfg(testnet, walletPath, isSimnet) {
-  const config = new Store({ cwd: getWalletPath(testnet, walletPath, isSimnet) });
+export function getWalletCfg(network, walletPath) {
+  const config = new Store({ cwd: getWalletPath(network, walletPath) });
   return config;
 }
 
-export function initWalletCfg(testnet, walletPath, isSimnet) {
-  const config = new Store({ cwd: getWalletPath(testnet, walletPath, isSimnet) });
+export function initWalletCfg(network, walletPath) {
+  const config = new Store({ cwd: getWalletPath(network, walletPath) });
   Object.keys(cfgConstants.WALLET_INITIAL_VALUE).map((key) => {
     if (!config.has(key)) {
       config.set(key, cfgConstants.WALLET_INITIAL_VALUE[key]);
@@ -214,9 +215,9 @@ export function setLastHeight(height) {
   return setConfigData(cfgConstants.LAST_HEIGHT, height);
 }
 
-export function newWalletConfigCreation(testnet, walletPath, isSimnet) {
+export function newWalletConfigCreation(network, walletPath) {
   // TODO: set random user/password
-  const walletFullPath = getWalletPath(testnet, walletPath, isSimnet);
+  const walletFullPath = getWalletPath(network, walletPath);
   const dcrwConf = {
     "Application Options": {
       tlscurve: "P-256",
@@ -228,8 +229,10 @@ export function newWalletConfigCreation(testnet, walletPath, isSimnet) {
     }
   };
   // add network
+  const isSimnet = network === SIMNET;
+  const testnet = network === TESTNET;
   isSimnet ? dcrwConf.simnet = 1 : testnet ? dcrwConf.testnet = 1 : dcrwConf.testnet = 0;
-  console.log(walletFullPath)
+  console.log(walletFullPath);
   fs.writeFileSync(
     dcrwalletConf(walletFullPath),
     ini.stringify(dcrwConf)

@@ -290,7 +290,7 @@ export const network = get(["settings", "currentSettings", "network"]);
 export const isTestNet = compose(eq(TESTNET), network);
 export const isMainNet = not(isTestNet);
 // if it is not testnet nor mainnet, it is a simnet network.
-export const isSimnet = not(and(isTestNet, isMainNet))
+export const isSimnet = not(and(isTestNet, isMainNet));
 export const firstBlockTime = compose(
   (isMainNet) =>
     isMainNet

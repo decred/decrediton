@@ -32,13 +32,12 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   dispatch({ type: GETACCOUNTMIXERSERVICE_ATTEMPT });
   return getAccountMixerService(
-    sel.isTestNet(getState()),
+    sel.network(getState()),
     walletName,
     address,
     port,
     grpcCertAndKey,
-    grpcCertAndKey,
-    sel.isSimnet(getState())
+    grpcCertAndKey
   )
     .then((accountMixerService) =>
       dispatch({ accountMixerService, type: GETACCOUNTMIXERSERVICE_SUCCESS })
@@ -50,7 +49,7 @@ export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
 
 export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = getWalletCfg(sel.network(getState()), walletName);
   const value = !walletCfg.get(SEND_FROM_UNMIXED);
   walletCfg.set(SEND_FROM_UNMIXED, value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
@@ -194,7 +193,7 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 ) => {
   const isTestnet = sel.isTestNet(getState());
   const walletName = sel.getWalletName(getState());
-  const cfg = getWalletCfg(isTestnet, walletName);
+  const cfg = getWalletCfg(sel.network(getState()), walletName);
 
   const csppServer = CSPP_URL;
   const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;

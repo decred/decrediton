@@ -36,7 +36,7 @@ import webSocket from "ws";
 import path from "path";
 import ini from "ini";
 import { makeRandomString, makeFileBackup } from "helpers";
-import { SIMNET, TESTNET } from "../constants/Decrediton";
+import { MAINNET, SIMNET, TESTNET } from "../constants/Decrediton";
 import { isTestNet } from "../selectors";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -532,13 +532,11 @@ export const launchDCRWallet = (
   network,
   reactIPC
 ) => {
-  const isTestnet = network === TESTNET;
-  const isSimnet = network === SIMNET;
-  const cfg = getWalletCfg(isTestnet, walletPath, isSimnet);
+  const cfg = getWalletCfg(network, walletPath);
   const confFile = fs.existsSync(
-    dcrwalletConf(getWalletPath(isTestnet, walletPath, isSimnet))
+    dcrwalletConf(getWalletPath(network, walletPath))
   )
-    ? `--configfile=${dcrwalletConf(getWalletPath(isTestNet, walletPath, isSimnet))}`
+    ? `--configfile=${dcrwalletConf(getWalletPath(network, walletPath))}`
     : "";
   let args = [confFile];
 
@@ -553,8 +551,11 @@ export const launchDCRWallet = (
   // When in mainnet, we always include it, because if we doensn't and a user
   // sets mixing config, we would need to restart dcrwallet.
   const certPath = path.resolve(getCertsPath(), "cspp.decred.org.pem");
-  !isTestnet && args.push("--csppserver.ca="+certPath);
-  args.push(isTestnet ? "--csppserver=cspp.decred.org:5760" : "--csppserver=cspp.decred.org:15760");
+  // push cspp cert path if in mainnet.
+  network === MAINNET && args.push("--csppserver.ca="+certPath);
+  if (network !== SIMNET) {
+    args.push(network === TESTNET ? "--csppserver=cspp.decred.org:5760" : "--csppserver=cspp.decred.org:15760");
+  }
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {

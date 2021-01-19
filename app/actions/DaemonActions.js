@@ -261,7 +261,7 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
   wallet
     .removeWallet(
       selectedWallet.value.wallet,
-      selectedWallet.network == TESTNET
+      selectedWallet.network
     )
     .then(() => {
       dispatch({ type: WALLETREMOVED });
@@ -355,9 +355,8 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       );
       const { port } = walletStarted;
       const walletCfg = getWalletCfg(
-        isTestNet(getState()),
-        selectedWallet.value.wallet,
-        isSimnet(getState())
+        network,
+        selectedWallet.value.wallet
       );
       wallet.setPreviousWallet(selectedWallet);
 

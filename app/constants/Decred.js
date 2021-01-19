@@ -38,7 +38,7 @@ export const SimnetParams = {
   PKHSchnorrAddrID: [0x0e, 0x53], // starts with TS
   ScriptHashAddrID: [0x0e, 0x6c] // starts with Tc
 
-}
+};
 
 export const TestNetParams = {
   TicketMaturity: 16,

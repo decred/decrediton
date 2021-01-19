@@ -383,9 +383,9 @@ ipcMain.on("ln-scb-info", (event, walletPath, testnet) => {
   }
 });
 
-ipcMain.on("ln-remove-dir", (event, walletName, testnet) => {
+ipcMain.on("ln-remove-dir", (event, walletName, network) => {
   try {
-    event.returnValue = removeDcrlnd(walletName, testnet);
+    event.returnValue = removeDcrlnd(walletName, network);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);

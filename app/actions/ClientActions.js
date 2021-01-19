@@ -167,13 +167,12 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
     .getWalletService(
-      sel.isTestNet(getState()),
+      sel.network(getState()),
       walletName,
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey,
-      sel.isSimnet(getState())
+      grpcCertAndKey
     )
     .then((walletService) =>
       dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS })
@@ -196,13 +195,12 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
     .getTicketBuyerService(
-      sel.isTestNet(getState()),
+      sel.network(getState()),
       walletName,
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey,
-      sel.isSimnet(getState())
+      grpcCertAndKey
     )
     .then((ticketBuyerService) => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
@@ -469,7 +467,7 @@ export function hideAccount(accountNumber) {
     if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
       updatedHiddenAccounts.push(accountNumber);
     }
-    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = getWalletCfg(sel.network(getState()), walletName);
     cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
@@ -490,7 +488,7 @@ export function showAccount(accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = getWalletCfg(sel.network(getState()), walletName);
     cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
@@ -536,13 +534,12 @@ export const getAgendaServiceAttempt = () => (dispatch, getState) => {
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
     .getAgendaService(
-      sel.isTestNet(getState()),
+      sel.network(getState()),
       walletName,
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey,
-      sel.isSimnet(getState())
+      grpcCertAndKey
     )
     .then((agendaService) => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
@@ -568,13 +565,12 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   wallet
     .getVotingService(
-      sel.isTestNet(getState()),
+      sel.network(getState()),
       walletName,
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey,
-      sel.isSimnet(getState())
+      grpcCertAndKey
     )
     .then((votingService) =>
       dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS })
@@ -665,13 +661,12 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet
     .getMessageVerificationService(
-      sel.isTestNet(getState()),
+      sel.network(getState()),
       walletName,
       address,
       port,
       grpcCertAndKey,
-      grpcCertAndKey,
-      sel.isSimnet(getState())
+      grpcCertAndKey
     )
     .then((messageVerificationService) =>
       dispatch({

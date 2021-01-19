@@ -1,6 +1,6 @@
 // @flow
 import { getWalletCfg, getGlobalCfg } from "config";
-import { isTestNet } from "selectors";
+import { network } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
@@ -56,7 +56,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   config.set(configConstants.UI_ANIMATIONS, settings.uiAnimations);
 
   if (walletName) {
-    const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+    const walletConfig = getWalletCfg(network(getState()), walletName);
     walletConfig.set(configConstants.CURRENCY_DISPLAY, settings.currencyDisplay);
     walletConfig.set(configConstants.GAP_LIMIT, settings.gapLimit);
   }
@@ -190,7 +190,7 @@ export const updateStateVoteSettingsChanged = (settings) => (
     daemon: { walletName }
   } = getState();
   if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
-    const config = getWalletCfg(isTestNet(getState()), walletName);
+    const config = getWalletCfg(network(getState()), walletName);
     config.set(configConstants.ENABLE_TICKET_BUYER, settings.enableTicketBuyer);
     dispatch({ tempSettings: settings, type: SETTINGS_CHANGED });
   } else {

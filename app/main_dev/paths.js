@@ -1,8 +1,8 @@
 import path from "path";
 import os from "os";
 import fs from "fs-extra";
-import { initWalletCfg, newWalletConfigCreation } from "config";
 import { TESTNET, MAINNET, SIMNET } from "constants";
+import { isSimnet } from "../selectors";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
@@ -35,14 +35,13 @@ export function getWalletsDirectoryPath() {
 }
 
 export function getSimnetDir() {
-  return path.join(os.homedir(), "dcrdsimnetnodes", "decrediton")
+  return path.join(os.homedir(), "dcrdsimnetnodes", "decrediton");
 }
 
 // getWalletsDirectoryPathNetwork gets the wallets directory.
 // Example in unix if testnet equals true: ~/.config/decrediton/wallets/testnet
-export function getWalletsDirectoryPathNetwork(testnet, simnet) {
-  const network = simnet ? SIMNET : testnet ? TESTNET : MAINNET;
-  console.log(network)
+export function getWalletsDirectoryPathNetwork(network) {
+  console.log("network:", network);
   return path.join(
     getAppDataDirectory(),
     "wallets",
@@ -53,18 +52,20 @@ export function getWalletsDirectoryPathNetwork(testnet, simnet) {
 // getWalletPath returns the directory of a selected wallet by its name.
 // A wallet name represent the directory it is located in.
 // network can be equal SIMNET, TESTNET, or MAINNET constants.
-export function getWalletPath(testnet, walletName = "", simnet) {
-  return path.join(getWalletsDirectoryPathNetwork(testnet, simnet), walletName);
+export function getWalletPath(network, walletName = "") {
+  return path.join(getWalletsDirectoryPathNetwork(network), walletName);
 }
 
 // getWalletDb Returns the wallet.db file from a specific wallet.
 // walletPath represents the wallet name decrediton has loaded.
-export function getWalletDb(testnet, walletPath) {
+export function getWalletDb(network, walletPath) {
+  const testnet = network === TESTNET;
+  const isSimnet = network === SIMNET;
   return path.join(
     getWalletsDirectoryPath(),
-    testnet ? TESTNET : MAINNET,
+    isSimnet ? SIMNET : testnet ? TESTNET : MAINNET,
     walletPath,
-    testnet ? "testnet3" : MAINNET,
+    isSimnet ? SIMNET : testnet ? "testnet3" : MAINNET,
     "wallet.db"
   );
 }
@@ -187,9 +188,9 @@ export function getEligibleTickets(token) {
 
 // getWalletPiPath gets the wallet politeia path if it exists, otherwise
 // it creates its path and returns it.
-function getWalletPiPath(testnet, walletName) {
+function getWalletPiPath(network, walletName) {
   const walletPiPath = path.join(
-    getWalletPath(testnet, walletName),
+    getWalletPath(network, walletName),
     "politeia"
   );
   if (fs.pathExistsSync(walletPiPath)) {
@@ -203,8 +204,8 @@ function getWalletPiPath(testnet, walletName) {
 // creates the vote.json file with the vote information.
 // we do not delete this directory after, as we use it to check for finished
 // votings with the wallet.
-export function savePiVote(vote, token, testnet, walletName) {
-  const walletPath = getWalletPiPath(testnet, walletName);
+export function savePiVote(vote, token, network, walletName) {
+  const walletPath = getWalletPiPath(network, walletName);
   const proposalPath = path.join(walletPath, token);
   if (!fs.pathExistsSync(proposalPath)) {
     fs.mkdirSync(proposalPath, { mode: 0o700 });
@@ -216,8 +217,8 @@ export function savePiVote(vote, token, testnet, walletName) {
 }
 
 // getProposalWalletVote returns vote.json file if found or return null
-export function getProposalWalletVote(token, testnet, walletName) {
-  const walletPath = getWalletPiPath(testnet, walletName);
+export function getProposalWalletVote(token, network, walletName) {
+  const walletPath = getWalletPiPath(network, walletName);
   const proposalPath = path.join(walletPath, token);
   if (!fs.pathExistsSync(proposalPath)) {
     return null;

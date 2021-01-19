@@ -30,8 +30,8 @@ import { hexToBytes } from "../helpers/byteActions";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) => {
-    console.log(args)
-    return fn(...args, (res, err) => (err ? fail(err) : ok(res)))
+    console.log(args);
+    return fn(...args, (res, err) => (err ? fail(err) : ok(res)));
   }
   );
 

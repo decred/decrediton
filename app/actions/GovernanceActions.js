@@ -279,11 +279,11 @@ const getVoteOption = (
   proposal,
   castVotes,
   walletEligibleTickets,
-  testnet,
+  network,
   walletName
 ) => {
   // We assume all tickets have vote the same bit
-  const vote = getProposalWalletVote(token, testnet, walletName);
+  const vote = getProposalWalletVote(token, network, walletName);
   if (vote) {
     return vote.voteChoice;
   }
@@ -416,7 +416,6 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
       : sel.proposals(getState());
   const lastPoliteiaAccessTime = sel.lastPoliteiaAccessTime(getState());
   const walletName = sel.getWalletName(getState());
-  const testnet = sel.isTestNet(getState());
   const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
 
   try {
@@ -436,7 +435,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
         prop,
         null,
         null,
-        testnet,
+        sel.network(getState()),
         walletName
       );
 
@@ -516,7 +515,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
-  const testnet = sel.isTestNet(getState());
   const txURLBuilder = sel.txURLBuilder(getState());
   let walletEligibleTickets;
   let hasEligibleTickets = false;
@@ -553,7 +551,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
 
     const voteAndEligibleTickets = getProposalWalletVote(
       token,
-      testnet,
+      sel.network(getState()),
       walletName
     );
     // if voteAndEligibleTickets are already cached we just get them.
@@ -578,7 +576,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
           proposal,
           castvotes,
           walletEligibleTickets,
-          testnet,
+          sel.network(getState()),
           walletName
         ) || "abstain";
       hasEligibleTickets =
@@ -589,7 +587,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
           walletEligibleTickets,
           voteChoice: currentVoteChoice
         };
-        savePiVote(votesToCache, token, testnet, walletName);
+        savePiVote(votesToCache, token, sel.network(getState()), walletName);
       }
     }
     if (hasEligibleTickets) {
@@ -741,7 +739,7 @@ export const updateVoteChoice = (
     await pi.castVotes({ piURL, votes });
     // cache information locally so we can show them without querying from
     // pi server.
-    savePiVote(votesToCache, token, testnet, walletName);
+    savePiVote(votesToCache, token, sel.network(getState()), walletName);
 
     // update proposal vote status, so we can see our vote counting towards
     // the totals.

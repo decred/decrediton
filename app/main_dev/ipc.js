@@ -30,21 +30,19 @@ let dcrdIsRemote;
 // in the respective network direction in each wallets data dir.
 export const getAvailableWallets = (network) => {
   const availableWallets = [];
-  const isTestNet = network === TESTNET;
-  const isSimnet = network === SIMNET;
 
-  const walletsBasePath = getWalletPath(isTestNet, "", isSimnet);
+  const walletsBasePath = getWalletPath(network, "");
   const walletDirs = fs.readdirSync(walletsBasePath);
   walletDirs.forEach((wallet) => {
     const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
     if (!walletDirStat.isDirectory()) return;
 
-    const cfg = getWalletCfg(isTestNet, wallet, isSimnet);
+    const cfg = getWalletCfg(network, wallet);
     const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
     const watchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
     const isTrezor = cfg.get(cfgConstants.TREZOR);
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
-    const walletDbFilePath = getWalletDb(isTestNet, wallet);
+    const walletDbFilePath = getWalletDb(network, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
     availableWallets.push({
       network,
@@ -115,16 +113,14 @@ export const startDaemon = async (params, testnet, reactIPC) => {
 };
 
 export const createWallet = (network, walletPath) => {
-  const isTestnet = network === TESTNET;
-  const isSimnet = network === SIMNET;
-  const newWalletDirectory = getWalletPath(isTestnet, walletPath, isSimnet);
+  const newWalletDirectory = getWalletPath(network, walletPath);
   try {
     if (!fs.pathExistsSync(newWalletDirectory)) {
       fs.mkdirsSync(newWalletDirectory);
 
       // create new configs for new wallet
-      initWalletCfg(isTestnet, walletPath, isSimnet);
-      newWalletConfigCreation(isTestnet, walletPath, isSimnet);
+      initWalletCfg(network, walletPath);
+      newWalletConfigCreation(network, walletPath);
     }
     return true;
   } catch (e) {
@@ -134,9 +130,9 @@ export const createWallet = (network, walletPath) => {
 };
 
 // TODO add simnet to remove wallet
-export const removeWallet = (testnet, walletPath) => {
+export const removeWallet = (network, walletPath) => {
   if (!walletPath) return;
-  const removeWalletDirectory = getWalletPath(testnet, walletPath);
+  const removeWalletDirectory = getWalletPath(network, walletPath);
   try {
     if (fs.pathExistsSync(removeWalletDirectory)) {
       fs.removeSync(removeWalletDirectory);
@@ -210,9 +206,7 @@ export const startWallet = (
     mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
     return GetDcrwPID();
   }
-  const isTestnet = network === TESTNET;
-  const isSimnet = network === SIMNET;
-  initWalletCfg(isTestnet, walletPath, isSimnet);
+  initWalletCfg(network, walletPath);
   try {
     return launchDCRWallet(
       mainWindow,
@@ -271,8 +265,8 @@ export const stopDcrlnd = () => {
   return closeDcrlnd();
 };
 
-export const removeDcrlnd = (walletName, testnet) => {
-  const walletPath = getWalletPath(testnet, walletName);
+export const removeDcrlnd = (walletName, network) => {
+  const walletPath = getWalletPath(network, walletName);
   const dcrlndRoot = path.join(walletPath, "dcrlnd");
   try {
     if (fs.pathExistsSync(dcrlndRoot)) {

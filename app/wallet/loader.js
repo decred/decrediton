@@ -16,11 +16,11 @@ import {
 } from "middleware/walletrpc/api_pb";
 
 export const getLoader = withLogNoData(
-  ({ isTestNet, walletName, address, port, cert, key, isSimnet }) =>
+  ({ network, walletName, address, port, cert, key }) =>
     new Promise((resolve, reject) =>
-      rpcLoader(isTestNet, walletName, address, port, cert, key, isSimnet, (loader, error) => {
-        console.log(loader)
-        return error ? reject(error) : resolve(loader)
+      rpcLoader(network, walletName, address, port, cert, key, (loader, error) => {
+        console.log(loader);
+        return error ? reject(error) : resolve(loader);
       }
       )
     ),
@@ -47,7 +47,7 @@ export const createWallet = log(
   (loader, pubPass, privPass, seed) =>
     new Promise((resolve, reject) => {
       const request = new CreateWalletRequest();
-      console.log(request)
+      console.log(request);
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
       request.setSeed(seed);
       loader.createWallet(request, (error) =>

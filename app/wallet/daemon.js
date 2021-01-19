@@ -69,9 +69,9 @@ export const createNewWallet = log(
 );
 
 export const removeWallet = log(
-  (walletPath, testnet) =>
+  (walletPath, network) =>
     Promise.resolve(
-      ipcRenderer.sendSync("remove-wallet", walletPath, testnet)
+      ipcRenderer.sendSync("remove-wallet", walletPath, network)
     ).then((pid) => {
       if (pid) return pid;
       throw "Error removing wallet";

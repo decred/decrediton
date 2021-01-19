@@ -7,17 +7,17 @@ import { getWalletPath } from "main_dev/paths.js";
 const services = require("../walletrpc/api_grpc_pb.js");
 
 const getServiceClient = (clientClass) => (
-  isTestNet,
+  network,
   walletPath,
   address,
   port,
   grpcKey,
   grpccert,
-  isSimnet,
   cb
 ) => {
-  console.log(isSimnet)
-  const cert = getWalletCert(getWalletPath(isTestNet, walletPath, isSimnet));
+  console.log(network);
+  console.log(cb)
+  const cert = getWalletCert(getWalletPath(network, walletPath));
   if (cert == "") {
     return cb(
       null,

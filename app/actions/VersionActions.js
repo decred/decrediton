@@ -3,7 +3,7 @@ import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
 import { getVersionService, getVersionResponse, getDcrwalletGrpcKeyCert } from "wallet";
 import { push as pushHistory } from "connected-react-router";
 import { ipcRenderer } from "electron";
-import { isTestNet, isSimnet } from "selectors";
+import { isTestNet, isSimnet, network } from "selectors";
 
 export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";
@@ -22,13 +22,12 @@ export const getVersionServiceAttempt = () => (dispatch, getState) =>
       const grpcCertAndKey = getDcrwalletGrpcKeyCert();
       try {
         const versionService = await getVersionService(
-          isTestNet(getState()),
+          network(getState()),
           walletName,
           address,
           port,
           grpcCertAndKey,
-          grpcCertAndKey,
-          isSimnet(getState())
+          grpcCertAndKey
         );
         dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
         await dispatch(getWalletRPCVersionAttempt(versionService));
