@@ -690,9 +690,10 @@ export const useGetStarted = () => {
           noVspSelection: true,
           description: <T
           id="getstarted.processManagedTickets.description"
-          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
-              to vote and they are not linked with a vsp, they may miss, if you are not
-              properly dealing with solo vote.`}
+          m={ `Your wallet appears to have live tickets. Processing managed
+            tickets confirms with the VSPs that all of your submitted tickets
+            are currently known and paid for by the VSPs.`
+          }
         />
         });
       }

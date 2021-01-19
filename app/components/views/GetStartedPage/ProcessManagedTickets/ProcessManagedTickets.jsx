@@ -3,7 +3,7 @@ import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
 import GetStartedStyles from "../GetStarted.module.css";
 import { useState } from "react";
-import { PassphraseModalButton } from "buttons";
+import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
@@ -61,6 +61,12 @@ export default ({ cancel, send, onSendContinue, onProcessTickets, title, descrip
           disabled={!isValid}>
 
         </PassphraseModalButton>
+        <InvisibleButton className={styles.skipButton} onClick={cancel}>
+          <T
+            id="process.mangedTickets.button.skip"
+            m="Skip"
+          />
+        </InvisibleButton>
       </div>
     </div>
   );
