@@ -20,8 +20,8 @@ export function getWalletCfg(testnet, walletPath, isSimnet) {
   return config;
 }
 
-export function initWalletCfg(testnet, walletPath) {
-  const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
+export function initWalletCfg(testnet, walletPath, isSimnet) {
+  const config = new Store({ cwd: getWalletPath(testnet, walletPath, isSimnet) });
   Object.keys(cfgConstants.WALLET_INITIAL_VALUE).map((key) => {
     if (!config.has(key)) {
       config.set(key, cfgConstants.WALLET_INITIAL_VALUE[key]);
