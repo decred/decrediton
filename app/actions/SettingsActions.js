@@ -68,10 +68,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     wallet.reloadAllowedExternalRequests();
   }
 
-  if (oldTheme != settings.theme) {
-    dispatch({ theme: settings.theme, type: SETTINGS_TOGGLE_THEME });
-  }
-
   if (locale != settings.locale) {
     ipcRenderer.sendSync("change-menu-locale", settings.locale);
   }
