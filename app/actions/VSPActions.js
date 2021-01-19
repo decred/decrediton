@@ -529,21 +529,13 @@ export const PROCESSMANAGEDTICKETS_ATTEMPT = "PROCESSMANAGEDTICKETS_ATTEMPT";
 export const PROCESSMANAGEDTICKETS_SUCCESS = "PROCESSMANAGEDTICKETS_SUCCESS";
 export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 
-// startVSPClient starts an already used vsp and checks if it has
-// unsyced tickets registered.
-const startVSPClient = (passphrase, vspHost, vspPubkey, feeAccount, changeAccount) => async (dispatch, getState) => {
-  const walletService = sel.walletService(getState());
-  const response = await wallet.processManagedTickets(
-    walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount
-  );
-  return response;
-};
 
 // processManagedTickets gets all vsp and check for tickets which still not
 // synced, and sync them.
 export const processManagedTickets = (passphrase) => async (dispatch, getState) => {
   dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
   try {
+    const walletService = sel.walletService(getState());
     const availableVSPs = await dispatch(discoverAvailableVSPs());
     let feeAccount, changeAccount;
     const mixedAccount = sel.getMixedAccount(getState());
@@ -555,11 +547,17 @@ export const processManagedTickets = (passphrase) => async (dispatch, getState) 
       changeAccount = sel.defaultSpendingAccount(getState()).value;
     }
 
+    await wallet.unlockWallet(walletService, passphrase);
+
     await Promise.all(availableVSPs.map(async (vsp) => {
       const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-      await dispatch(startVSPClient(passphrase, vsp.host, pubkey, feeAccount, changeAccount));
-      return;
+      await wallet.processManagedTickets(
+        walletService, vsp.host, pubkey, feeAccount, changeAccount
+      );
     }));
+
+    await wallet.lockWallet(walletService);
+
     // get vsp tickets fee status errored so we can resync them
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
