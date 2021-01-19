@@ -333,36 +333,17 @@ export const getPeerInfo = (walletService) => new Promise((ok, fail) => {
   );
 });
 
-export const processManagedTickets = (walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount) =>
+export const processManagedTickets = (walletService, vspHost, vspPubkey, feeAccount, changeAccount) =>
   new Promise((resolve, reject) => {
-    const unlockReq = new api.UnlockWalletRequest();
-    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-    // Unlock wallet so we can call the request.
-    walletService.unlockWallet(unlockReq, (error) => {
-      if (error) {
-        reject(error);
-      }
+    const request = new api.ProcessManagedTicketsRequest();
+    request.setVspHost("https://" + vspHost);
+    request.setVspPubkey(vspPubkey);
+    request.setFeeAccount(feeAccount);
+    request.setChangeAccount(changeAccount);
 
-      const request = new api.ProcessManagedTicketsRequest();
-      request.setVspHost("https://" + vspHost);
-      request.setVspPubkey(vspPubkey);
-      request.setFeeAccount(feeAccount);
-      request.setChangeAccount(changeAccount);
-
-      walletService.processManagedTickets(request, (err, response) => {
-        // err ? fail(err) : ok(res);
-
-        const lockReq = new api.LockWalletRequest();
-
-        // Lock wallet and return response from the request.
-        walletService.lockWallet(lockReq, (error) => {
-          if (error) {
-            reject(error);
-          }
-          resolve(response);
-        });
-      });
-    });
+    walletService.processManagedTickets(request, (err, res) =>
+      err ? reject(err) : resolve(res)
+    );
   });
 
 // processUnmanagedTicketsStartup
@@ -408,5 +389,28 @@ new Promise((resolve, reject) => {
         resolve(response);
       });
     });
+  });
+});
+
+export const unlockWallet = (walletService, passphrase) => new Promise((resolve, reject) => {
+  const unlockReq = new api.UnlockWalletRequest();
+  unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  // Unlock wallet so we can call the request.
+  walletService.unlockWallet(unlockReq, (error) => {
+    if (error) {
+      reject(error);
+    }
+    resolve(true);
+  });
+});
+
+export const lockWallet = (walletService) => new Promise((resolve, reject) => {
+  const lockReq = new api.LockWalletRequest();
+
+  walletService.lockWallet(lockReq, (error) => {
+    if (error) {
+      reject(error);
+    }
+    resolve(true);
   });
 });

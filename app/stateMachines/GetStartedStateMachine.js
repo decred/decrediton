@@ -333,18 +333,7 @@ export const getStartedMachine = Machine({
       },
       on: {
         FINISH: "goToHomeView",
-        CONTINUE: "processingUnmanagedTickets"
-      }
-    },
-    processingUnmanagedTickets: {
-      onEntry: "isAtProcessingUnmanagedTickets",
-      initial: "processingUnmanagedTickets",
-      states: {
-        processingUnmanagedTickets: {}
-      },
-      on: {
-        BACK: "goToHomeView",
-        CONTINUE: "isLoadingConfig"
+        CONTINUE: "processingManagedTickets"
       }
     },
     processingManagedTickets: {
@@ -354,8 +343,19 @@ export const getStartedMachine = Machine({
         processingManagedTickets: {}
       },
       on: {
+        BACK: "processingUnmanagedTickets",
+        CONTINUE: "isLoadingConfig"
+      }
+    },
+    processingUnmanagedTickets: {
+      onEntry: "isAtProcessingUnmanagedTickets",
+      initial: "processingUnmanagedTickets",
+      states: {
+        processingUnmanagedTickets: {}
+      },
+      on: {
         CONTINUE: "isLoadingConfig",
-        GO_TO_HOME_VIEW: "goToHomeView"
+        BACK: "goToHomeView"
       }
     },
     isLoadingConfig: {
@@ -366,7 +366,7 @@ export const getStartedMachine = Machine({
       },
       on: {
         FINISH: "goToHomeView",
-        CONTINUE: "processingManagedTickets"
+        CONTINUE: "processingUnmanagedTickets"
       }
     },
     releaseNotes: {

@@ -14,7 +14,7 @@ export default ({ cancel, send, onSendContinue, onProcessTickets, title, descrip
   const onSubmitContinue = async (passphrase) => {
     // send a continue so we can go to the loading state
     onSendContinue();
-    await onProcessTickets(passphrase).then(() => send({ type: "FINISH" }));
+    await onProcessTickets(passphrase).then(() => send({ type: "CONTINUE" }));
     return;
   };
 
