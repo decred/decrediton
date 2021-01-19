@@ -5,6 +5,7 @@
   margin-bottom: 17px;
   margin-left: 0;
   width: 740px;
+  clear: both;
 }
 
 .tabbedPageSubtitle.export {

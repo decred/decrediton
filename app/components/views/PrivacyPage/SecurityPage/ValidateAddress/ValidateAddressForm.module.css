@@ -13,7 +13,7 @@
   font-size: 19px;
   line-height: 15px;
 }
-  
+
 .validateAddressFormInput {
   float: left;
   width: 300px;
@@ -50,9 +50,9 @@
 .validateAddressOwnedForm {
   padding: 10px 0 26px 58px;
   background-color: var(--background-back-color);
-  float:left;
-  width: 682px; 
-  
+  float: left;
+  width: 682px;
+  clear: both;
 }
 
 .validateAddressOwnedData {
@@ -71,16 +71,15 @@
   }
 }
 
-
 @media screen and (max-width: 768px) {
   .validateAddressForm {
     width: 355px;
   }
-  
+
   .validateAddressFormInput {
     width: 224px;
   }
-   
+
   .validateAddressFormResponse {
     margin-right: 95px;
     margin-top: 7px;
