@@ -96,6 +96,7 @@ export default function trezor(state = {}, action) {
         connected: false
       };
     case TRZ_NOCONNECTEDDEVICE:
+      // Losing the device also means that it is no longer connected.
       return {
         ...state,
         device: null,
