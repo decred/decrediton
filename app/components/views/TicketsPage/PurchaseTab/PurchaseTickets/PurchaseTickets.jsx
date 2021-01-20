@@ -42,7 +42,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
-    increment ? setNumTickets(numTickets + 1) : setNumTickets(numTickets - 1);
+    increment ? setNumTickets(parseInt(numTickets) + 1) : setNumTickets(parseInt(numTickets) - 1);
   };
 
   const onV3PurchaseTicket = (passphrase) => {
