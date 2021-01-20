@@ -26,7 +26,7 @@ const PrivacyInfo = () => {
       />
       <div
         className={classNames(
-          styles.privacyInfoReadMoreIcon,
+          styles.readMoreIcon,
           show && styles.active
         )}
       />

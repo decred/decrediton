@@ -16,7 +16,7 @@ import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTicke
 const PageHeader = () => (
   <TitleHeader
     iconClassName="tickets"
-    title={<T id="tickets.title" m="Tickets" />}
+    title={<T id="tickets.title" m="Staking" />}
   />
 );
 

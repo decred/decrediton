@@ -52,20 +52,22 @@
   grid-row-gap: 10px;
   padding: 10px 10px 10px 40px;
 }
-.privacyInfoReadMoreIcon {
+
+.readMoreIcon {
   background-image: var(--arrow-down-mid-blue-icon);
   background-position-x: right;
-  background-position-y: 8px;
   background-repeat: no-repeat;
   background-size: 12px;
   height: 15px;
   width: 12px;
   margin-left: auto;
+  transform: rotate(180deg);
+  background-position-y: 0;
 }
 
-.privacyInfoReadMoreIcon.active {
-  transform: rotate(180deg);
-  background-position-y: 0px;
+.readMoreIcon.active {
+  background-position-y: 8px;
+  transform: rotate(0);
 }
 
 .privacyInfo:hover {
