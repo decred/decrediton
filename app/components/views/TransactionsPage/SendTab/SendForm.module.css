@@ -93,6 +93,15 @@
   margin-left: auto;
 }
 
+@media screen and (max-width: 1179px) {
+  .sendArea {
+    width: 667px;
+  }
+  .sendButtonArea {
+    width: 667px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .isRow.sendArea {
     flex-direction: column;
