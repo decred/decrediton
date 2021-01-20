@@ -117,14 +117,15 @@
 
 @media screen and (max-width: 768px) {
   .securityPageTab {
+    margin-top: 30px;
     width: 355px;
   }
-  
+
   .securityPageFormRowField,
   .securityPageFormRowFieldMessage {
     width: 224px;
   }
-   
+
   .securityPage {
     margin-left: 37px;
   }
