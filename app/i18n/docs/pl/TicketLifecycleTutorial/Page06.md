@@ -1,1 +1,1 @@
-Powinieneś teraz nieco lepiej zrozumieć cykl życia biletu, więc zacznij staking swoimi Dekretami i weź udział w życiu społeczności!
+Zagadnienie cyklu życia biletu powinno już teraz być Ci bardziej zrozumiałe, więc zacznij staking Decred i dołącz do naszej społeczności!
