@@ -61,7 +61,6 @@ export const loaderRequest = () => (dispatch, getState) =>
       dispatch({ request, type: LOADER_ATTEMPT });
       try {
         const loader = await getLoader(request);
-        console.log(loader);
         dispatch({ loader, type: LOADER_SUCCESS });
         return loader;
       } catch (error) {
@@ -289,7 +288,6 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
   const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
   const request = new RpcSyncRequest();
-  console.log(request);
   const cert = getDcrdCert(rpc_cert);
   request.setNetworkAddress(rpc_host + ":" + rpc_port);
   request.setUsername(rpc_user);

@@ -18,10 +18,8 @@ import {
 export const getLoader = withLogNoData(
   ({ network, walletName, address, port, cert, key }) =>
     new Promise((resolve, reject) =>
-      rpcLoader(network, walletName, address, port, cert, key, (loader, error) => {
-        console.log(loader);
-        return error ? reject(error) : resolve(loader);
-      }
+      rpcLoader(network, walletName, address, port, cert, key, (loader, error) =>
+        error ? reject(error) : resolve(loader)
       )
     ),
   "Get Loader"
@@ -47,7 +45,6 @@ export const createWallet = log(
   (loader, pubPass, privPass, seed) =>
     new Promise((resolve, reject) => {
       const request = new CreateWalletRequest();
-      console.log(request);
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
       request.setSeed(seed);
       loader.createWallet(request, (error) =>
