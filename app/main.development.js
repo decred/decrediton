@@ -280,8 +280,8 @@ ipcMain.on("get-available-wallets", (event, network) => {
   event.returnValue = getAvailableWallets(network);
 });
 
-ipcMain.on("start-daemon", async (event, params, testnet) => {
-  const startedValues = await startDaemon(params, testnet, reactIPC);
+ipcMain.on("start-daemon", async (event, params, network) => {
+  const startedValues = await startDaemon(params, network, reactIPC);
   event.sender.send("start-daemon-response", startedValues);
 });
 

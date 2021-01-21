@@ -37,7 +37,6 @@ import path from "path";
 import ini from "ini";
 import { makeRandomString, makeFileBackup } from "helpers";
 import { MAINNET, SIMNET, TESTNET } from "../constants/Decrediton";
-import { isTestNet } from "../selectors";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -270,7 +269,7 @@ const upgradeToElectron8 = (rpcCert, rpcKey) => {
 // launchDCRD launches dcrd with args passed to it. Store used data into the
 // node server memory, so it can be reused when refreshing decrediton.
 // decrediton consider dcrd as launched after dcrd finds a valid peer.
-export const launchDCRD = (reactIPC, testnet, appdata) =>
+export const launchDCRD = (reactIPC, network, appdata) =>
   new Promise((resolve, reject) => {
     const dcrdExe = getExecutablePath("dcrd", argv.custombinpath);
     if (!fs.existsSync(dcrdExe)) {
@@ -290,7 +289,7 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       rpc_port,
       dcrdAppdata,
       configFile
-    } = readDcrdConfig(testnet, appdata);
+    } = readDcrdConfig(network, appdata);
 
     upgradeToElectron8(rpc_cert, rpc_key);
 
@@ -298,21 +297,20 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       "--nolisten",
       "--tlscurve=P-256",
       `--rpccert=${rpc_cert}`,
-      `--rpckey=${rpc_key}`
+      `--rpckey=${rpc_key}`,
+      `--rpclisten=${rpc_host}:${rpc_port}`
     ];
-
-
-    // TODO PROPERLY ADD THOSE SIMNET ARGS
-    args.push(`--appdata=${getSimnetDir()}`);
-    args.push("--connect=127.0.0.1:19555");
-    args.push("--simnet");
-
-
     args.push(`--configfile=${dcrdCfg(configFile)}`);
-    // TODO add network method for adding simnet
-    if (testnet) {
+
+    if (network === SIMNET) {
+      args.push(`--appdata=${getSimnetDir()}`);
       args.push("--connect=127.0.0.1:19555");
       args.push("--simnet");
+    }
+
+    // TODO add network method for adding simnet
+    if (network === TESTNET) {
+      args.push("--testnet");
     }
 
     rpcuser = rpc_user;
@@ -389,19 +387,17 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
 // readDcrdConfig reads top level entries from dcrd.conf file. If appdata is
 // not defined, we read dcrd.conf file from our app directory. If it does not
 // exist, a new conf file is created with random rpc_user and rpc_pass.
-function readDcrdConfig(testnet, appdata) {
+function readDcrdConfig(network, appdata) {
   // createTempDcrdConf creates a temp dcrd conf file and writes it
   // to decreditons config directory: getAppDataDirectory()
-  const createTempDcrdConf = (testnet) => {
+  const createTempDcrdConf = () => {
     let dcrdConf = {};
     if (!fs.existsSync(dcrdCfg(getAppDataDirectory()))) {
-      const port = testnet ? "19109" : "9109";
 
       dcrdConf = {
         "Application Options": {
           rpcuser: makeRandomString(10),
-          rpcpass: makeRandomString(10),
-          rpclisten: `127.0.0.1:${port}`
+          rpcpass: makeRandomString(10)
         }
       };
       fs.writeFileSync(dcrdCfg(getAppDataDirectory()), ini.stringify(dcrdConf));
@@ -410,8 +406,8 @@ function readDcrdConfig(testnet, appdata) {
   };
 
   try {
-    let rpc_host = "127.0.0.1";
-    let rpc_port = testnet ? "19109" : "9109";
+    const rpc_host = "127.0.0.1";
+    const rpc_port = network === SIMNET ? "19570" : network === TESTNET ? "19109" : "9109";
     let dcrdAppdata = appdata;
     let rpc_cert, rpc_key, configFile, rpc_user, rpc_pass;
 
@@ -442,7 +438,7 @@ function readDcrdConfig(testnet, appdata) {
       configFile === getAppDataDirectory() &&
       !fs.existsSync(dcrdCfg(configFile))
     ) {
-      createTempDcrdConf(testnet);
+      createTempDcrdConf();
     }
     const readCfg = ini.parse(
       Buffer.from(fs.readFileSync(dcrdCfg(configFile))).toString()
@@ -460,13 +456,6 @@ function readDcrdConfig(testnet, appdata) {
         rpc_pass = value;
         passFound = true;
       }
-      if (key === "rpclisten") {
-        const splitListen = value.split(":");
-        if (splitListen.length >= 2) {
-          rpc_host = splitListen[0];
-          rpc_port = splitListen[1];
-        }
-      }
       if (!userFound && !passFound) {
         // If user and pass aren't found on the top level, look through all
         // next level config entries
@@ -478,13 +467,6 @@ function readDcrdConfig(testnet, appdata) {
           if (key2 === "rpcpass") {
             rpc_pass = value2;
             passFound = true;
-          }
-          if (key2 === "rpclisten") {
-            const splitListen = value2.split(":");
-            if (splitListen.length >= 2) {
-              rpc_host = splitListen[0];
-              rpc_port = splitListen[1];
-            }
           }
         }
       }

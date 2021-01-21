@@ -13,7 +13,7 @@ import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { ipcRenderer } from "electron";
 import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
-import { isTestNet, isSimnet } from "selectors";
+import { isTestNet, network } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
@@ -168,7 +168,7 @@ export const startDaemon = (params) => (dispatch, getState) =>
     }
 
     return wallet
-      .startDaemon(params, isTestNet(getState()))
+      .startDaemon(params, network(getState()))
       .then((started) => {
         const rpcCreds = {
           rpc_user: started.rpc_user,

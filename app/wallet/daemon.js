@@ -9,9 +9,9 @@ export const checkDecreditonVersion = log(
 );
 
 export const startDaemon = log(
-  (params, testnet) =>
+  (params, network) =>
     new Promise((resolve, reject) => {
-      ipcRenderer.send("start-daemon", params, testnet);
+      ipcRenderer.send("start-daemon", params, network);
       ipcRenderer.on("start-daemon-response", (event, started) => {
         if (started && started.err) reject(started.err);
         resolve(started);

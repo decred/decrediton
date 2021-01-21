@@ -85,7 +85,7 @@ export const deleteDaemon = (appData, testnet) => {
 // value if it is valid.
 // startDaemon returns an object of format:
 // { appdata, rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }
-export const startDaemon = async (params, testnet, reactIPC) => {
+export const startDaemon = async (params, network, reactIPC) => {
   if (dcrdIsRemote) {
     logger.log(
       "info",
@@ -104,7 +104,7 @@ export const startDaemon = async (params, testnet, reactIPC) => {
     }
 
     const appdata = params && params.appdata;
-    const started = await launchDCRD(reactIPC, testnet, appdata);
+    const started = await launchDCRD(reactIPC, network, appdata);
     return started;
   } catch (err) {
     logger.log("error", "error launching dcrd: " + err);
