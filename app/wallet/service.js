@@ -29,7 +29,7 @@ import { addrFromSStxPkScrCommitment } from "helpers/tickets";
 import { hexToBytes } from "../helpers/byteActions";
 
 const promisify = (fn) => (...args) =>
-  new Promise((ok, fail) => 
+  new Promise((ok, fail) =>
     fn(...args, (res, err) => (err ? fail(err) : ok(res)))
   );
 
