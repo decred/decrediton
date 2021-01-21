@@ -229,10 +229,8 @@ export function newWalletConfigCreation(network, walletPath) {
     }
   };
   // add network
-  const isSimnet = network === SIMNET;
-  const testnet = network === TESTNET;
-  isSimnet ? dcrwConf.simnet = 1 : testnet ? dcrwConf.testnet = 1 : dcrwConf.testnet = 0;
-  console.log(walletFullPath);
+  network === SIMNET ? dcrwConf.simnet = 1 :
+    network === TESTNET ? dcrwConf.testnet = 1 : dcrwConf.testnet = 0;
   fs.writeFileSync(
     dcrwalletConf(walletFullPath),
     ini.stringify(dcrwConf)

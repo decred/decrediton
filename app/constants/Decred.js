@@ -8,6 +8,7 @@ export const MIN_MIX_DENOMINATION_ATOMS = 262144;
 
 // Constants copied from dcrd/chaincfg/params.go
 
+// SimnetParams based on dcrd simnet script: https://github.com/decred/dcrd/tree/master/contrib
 export const SimnetParams = {
   TicketMaturity: 16,
   TicketExpiry: 384,
@@ -17,7 +18,6 @@ export const SimnetParams = {
   GenesisTimestamp: 1489550400,
   TargetTimePerBlock: 1 * 60,
   WorkDiffWindowSize: 8,
-
 
   LegacyHDCoinType: 115,
   HDCoinType: 1,
