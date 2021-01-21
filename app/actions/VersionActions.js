@@ -3,7 +3,7 @@ import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
 import { getVersionService, getVersionResponse, getDcrwalletGrpcKeyCert } from "wallet";
 import { push as pushHistory } from "connected-react-router";
 import { ipcRenderer } from "electron";
-import { isTestNet, isSimnet, network } from "selectors";
+import { network } from "selectors";
 
 export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";

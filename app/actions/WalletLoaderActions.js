@@ -18,7 +18,7 @@ import {
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
-import { network, isSimnet } from "selectors";
+import { network } from "selectors";
 import {
   SpvSyncRequest,
   SyncNotificationType,

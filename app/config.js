@@ -9,7 +9,7 @@ import {
   getDcrdRpcCert
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
-import { SIMNET, MAINNET, TESTNET } from "constants";
+import { SIMNET, TESTNET } from "constants";
 
 export function getGlobalCfg() {
   const config = new Store();

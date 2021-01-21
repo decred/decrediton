@@ -684,7 +684,6 @@ export const updateVoteChoice = (
   const blockTimestampFromNow = sel.blockTimestampFromNow(getState());
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
-  const testnet = sel.isTestNet(getState());
   const { walletEligibleTickets, token } = proposal;
 
   const voteChoice = proposal.voteOptions.find((o) => o.id === newVoteChoiceID);

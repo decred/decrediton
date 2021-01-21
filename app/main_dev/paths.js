@@ -2,7 +2,6 @@ import path from "path";
 import os from "os";
 import fs from "fs-extra";
 import { TESTNET, MAINNET, SIMNET } from "constants";
-import { isSimnet } from "../selectors";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests

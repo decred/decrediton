@@ -15,8 +15,6 @@ const getServiceClient = (clientClass) => (
   grpccert,
   cb
 ) => {
-  console.log(network);
-  console.log(cb)
   const cert = getWalletCert(getWalletPath(network, walletPath));
   if (cert == "") {
     return cb(

@@ -16,7 +16,7 @@ import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet, network } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
-import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
+import { DIFF_CONNECTION_ERROR, LOCALE } from "constants";
 import * as cfgConstants from "constants/config";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";

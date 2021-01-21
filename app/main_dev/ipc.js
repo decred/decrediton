@@ -16,7 +16,7 @@ import {
   closeDcrlnd,
   setDcrdRpcCredentials
 } from "./launch";
-import { MAINNET, SIMNET, TESTNET } from "constants";
+import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
 import { initTransport } from "actions/TrezorActions.js";
 import * as connect from "connect";

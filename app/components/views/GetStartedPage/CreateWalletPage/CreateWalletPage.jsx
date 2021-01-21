@@ -222,6 +222,7 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     }
     getStateComponent();
   }, [
+    isSimnet,
     current,
     isValid,
     checkIsValid,
