@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2020-12-07T16:12:25.710Z\n"
+"POT-Creation-Date: 2021-01-21T16:48:51.576Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -129,6 +129,14 @@ msgstr ""
 #. A cross platform GUI Wallet for Decred written in node.js using Electron
 msgctxt "aboutModal.paragraph1"
 msgid "A cross platform GUI Wallet for Decred written in node.js using Electron"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
+#. [createwallet.watchonly.description]
+#. defaultMessage is:
+#. A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet.
+msgctxt "createwallet.watchonly.description"
+msgid "A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
@@ -263,10 +271,9 @@ msgstr ""
 #. [account.mixer.running.message]
 #. defaultMessage is:
 #. Account mixer is currently running. Ongoing mixes will be
-#.             cancelled and no more Decred will be mixed if Decrediton is
-#.             closed now.
+#.             cancelled and no more Decred will be mixed if you proceed.
 msgctxt "account.mixer.running.message"
-msgid "Account mixer is currently running. Ongoing mixes will be\n            cancelled and no more Decred will be mixed if Decrediton is\n            closed now."
+msgid "Account mixer is currently running. Ongoing mixes will be\n            cancelled and no more Decred will be mixed if you proceed."
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
@@ -462,6 +469,14 @@ msgctxt "appMenu.advanced"
 msgid "Advanced"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
+#. [createwallet.advancedOptions.label]
+#. defaultMessage is:
+#. Advanced Options
+msgctxt "createwallet.advancedOptions.label"
+msgid "Advanced Options"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/AgendaCard.json
 #. [agenda.overview.idLabel]
 #. defaultMessage is:
@@ -652,14 +667,6 @@ msgstr ""
 #. Are you sure you want to close {walletName} and return to the launcher?
 msgctxt "settings.closeWalletModalContent"
 msgid "Are you sure you want to close {walletName} and return to the launcher?"
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
-#. [settings.closeWalletModalWithAutobuyerModal]
-#. defaultMessage is:
-#. Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased.
-msgctxt "settings.closeWalletModalWithAutobuyerModal"
-msgid "Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/Form.json
@@ -1465,6 +1472,38 @@ msgctxt "receive.modalClose"
 msgid "Close"
 msgstr ""
 
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
+#. [tickets.mixer.running.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+msgctxt "tickets.mixer.running.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
+#. [tickets.autobuyerRunning.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+msgctxt "tickets.autobuyerRunning.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+#. [tickets.fee.error.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+msgctxt "tickets.fee.error.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
+#. [tickets.purchasing.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+msgctxt "tickets.purchasing.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/Page.json
 #. [ln.channelsTab.closeChannelModalTitle]
 #. defaultMessage is:
@@ -1473,23 +1512,7 @@ msgctxt "ln.channelsTab.closeChannelModalTitle"
 msgid "Close Channel"
 msgstr ""
 
-#: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
-#. [account.mixer.running.btnConfirm]
-#. defaultMessage is:
-#. Close Decrediton
-msgctxt "account.mixer.running.btnConfirm"
-msgid "Close Decrediton"
-msgstr ""
-
-#: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
-#. [tickets.purchasing.confirmModal.btnConfirm]
-#. defaultMessage is:
-#. Close Decrediton
-msgctxt "tickets.purchasing.confirmModal.btnConfirm"
-msgid "Close Decrediton"
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.button]
 #. defaultMessage is:
 #. Close Decrediton
@@ -1609,28 +1632,20 @@ msgctxt "login.form.advanced.desc"
 msgid "Complete one of the following forms to start Decrediton according to your local setup."
 msgstr ""
 
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+#. [modal.complete.registration.process]
+#. defaultMessage is:
+#. Complete registration process
+msgctxt "modal.complete.registration.process"
+msgid "Complete registration process"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 #. [trezor.configButtons.header]
 #. defaultMessage is:
 #. Config Trezor
 msgctxt "trezor.configButtons.header"
 msgid "Config Trezor"
-msgstr ""
-
-#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
-#. [tickets.autobuyerRunning.confirmModal.btnConfirm]
-#. defaultMessage is:
-#. Confirm
-msgctxt "tickets.autobuyerRunning.confirmModal.btnConfirm"
-msgid "Confirm"
-msgstr ""
-
-#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
-#. [tickets.fee.error.confirmModal.btnConfirm]
-#. defaultMessage is:
-#. Confirm
-msgctxt "tickets.fee.error.confirmModal.btnConfirm"
-msgid "Confirm"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/ChangePassphraseModal/ChangePassphraseModalContent.json
@@ -1870,6 +1885,22 @@ msgstr ""
 #. defaultMessage is:
 #. Continue
 msgctxt "wallet.create.button"
+msgid "Continue"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/ProcessManagedTickets/ProcessManagedTickets.json
+#. [process.mangedTickets.button]
+#. defaultMessage is:
+#. Continue
+msgctxt "process.mangedTickets.button"
+msgid "Continue"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/ProcessUnmanagedTickets/ProcessUnmanagedTickets.json
+#. [process.unmangedTickets.button]
+#. defaultMessage is:
+#. Continue
+msgctxt "process.unmangedTickets.button"
 msgid "Continue"
 msgstr ""
 
@@ -2145,7 +2176,7 @@ msgctxt "login.form.appdata.label"
 msgid "Daemon Data Directory"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.daemon.title]
 #. defaultMessage is:
 #. Daemon Error
@@ -2294,10 +2325,10 @@ msgstr ""
 #. [tickets.purchasing.message]
 #. defaultMessage is:
 #. Decrediton is still finalizing ticket purchases. Tickets may not
-#.             be registered with the VSP if Decrediton is closed now, which can
+#.             be registered with the VSP if you proceed now, which can
 #.             result in missed votes.
 msgctxt "tickets.purchasing.message"
-msgid "Decrediton is still finalizing ticket purchases. Tickets may not\n            be registered with the VSP if Decrediton is closed now, which can\n            result in missed votes."
+msgid "Decrediton is still finalizing ticket purchases. Tickets may not\n            be registered with the VSP if you proceed now, which can\n            result in missed votes."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer/Form.json
@@ -2332,7 +2363,7 @@ msgctxt "getStarted.decrypt.label"
 msgid "Decrypt Wallet"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.button.delete]
 #. defaultMessage is:
 #. Delete and Shutdown
@@ -2420,14 +2451,6 @@ msgctxt "spv.options.disable.title"
 msgid "Disable SPV"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
-#. [createWallet.restore.trezor.disabled]
-#. defaultMessage is:
-#. Disabled
-msgctxt "createWallet.restore.trezor.disabled"
-msgid "Disabled"
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/NetworkSettings.json
 #. [settings.spv.false]
 #. defaultMessage is:
@@ -2441,6 +2464,14 @@ msgstr ""
 #. defaultMessage is:
 #. Disabled
 msgctxt "settings.advancedDaemon.false"
+msgid "Disabled"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/UISettings.json
+#. [settings.uiAnimations.disabled]
+#. defaultMessage is:
+#. Disabled
+msgctxt "settings.uiAnimations.disabled"
 msgid "Disabled"
 msgstr ""
 
@@ -2613,14 +2644,6 @@ msgctxt "SendFromUnmixed.btnConfirm"
 msgid "Enable sending from unmixed accounts"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
-#. [createWallet.restore.trezor.enabled]
-#. defaultMessage is:
-#. Enabled
-msgctxt "createWallet.restore.trezor.enabled"
-msgid "Enabled"
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/NetworkSettings.json
 #. [settings.spv.true]
 #. defaultMessage is:
@@ -2634,6 +2657,14 @@ msgstr ""
 #. defaultMessage is:
 #. Enabled
 msgctxt "settings.advancedDaemon.true"
+msgid "Enabled"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/UISettings.json
+#. [settings.uiAnimations.enabled]
+#. defaultMessage is:
+#. Enabled
+msgctxt "settings.uiAnimations.enabled"
 msgid "Enabled"
 msgstr ""
 
@@ -3093,7 +3124,7 @@ msgctxt "ln.ntf.unlockFailed"
 msgid "Failed to unlock LN wallet: {originalError}"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.header.title]
 #. defaultMessage is:
 #. Fatal error
@@ -3403,14 +3434,6 @@ msgstr ""
 #. Go back
 msgctxt "releaseNotes.goBack"
 msgid "Go back"
-msgstr ""
-
-#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
-#. [modal.go.to.tickets.status]
-#. defaultMessage is:
-#. Go to ticket status
-msgctxt "modal.go.to.tickets.status"
-msgid "Go to ticket status"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/InfoModal.json
@@ -4029,6 +4052,30 @@ msgctxt "ln.waitCloseDetails.limboBalance"
 msgid "Limbo Balance"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/ListUtxo/ListUtxo.json
+#. [listutxo.title]
+#. defaultMessage is:
+#. List UTXOs
+msgctxt "listutxo.title"
+msgid "List UTXOs"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/SendTab.json
+#. [transactions.send.listutxo]
+#. defaultMessage is:
+#. List UTXOs
+msgctxt "transactions.send.listutxo"
+msgid "List UTXOs"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/ListUtxo/ListUtxo.json
+#. [listutxo.subtitle]
+#. defaultMessage is:
+#. List Unspent UTXOs
+msgctxt "listutxo.subtitle"
+msgid "List Unspent UTXOs"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/PrivacySettings.json
 #. [settings.privacy.politeia.description]
 #. defaultMessage is:
@@ -4233,6 +4280,16 @@ msgstr ""
 #.                 With this action the chosen accounts will be renamed.
 msgctxt "getstarted.setAccount.description"
 msgid "Looks like you have accounts with coinjoin outputs. Past\n                account names cannot be restored during Recovery, so it is not\n                possible to know which account was the mixed account. You can\n                set a mixed and unmixed account now or this can be done later on\n                the privacy page.\n                \n                With this action the chosen accounts will be renamed."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+#. [getstarted.processUnmangedTickets.description]
+#. defaultMessage is:
+#. Looks like you have vsp ticket with unprocessed fee. If they are picked
+#.               to vote and they are not linked with a vsp, they may miss, if you are not
+#.               properly dealing with solo vote.
+msgctxt "getstarted.processUnmangedTickets.description"
+msgid "Looks like you have vsp ticket with unprocessed fee. If they are picked\n              to vote and they are not linked with a vsp, they may miss, if you are not\n              properly dealing with solo vote."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/NetworkSettings.json
@@ -4820,14 +4877,6 @@ msgctxt "stake.lastVotedTicket.none"
 msgid "None"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
-#. [watchOnly.disabled]
-#. defaultMessage is:
-#. Normal
-msgctxt "watchOnly.disabled"
-msgid "Normal"
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_PurchaseTickets/Form.json
 #. [purchaseTickets.errors.insufficientBalance.legacy]
 #. defaultMessage is:
@@ -5028,6 +5077,22 @@ msgctxt "vsp.ticket.vsp.fee.paid"
 msgid "Paid Fee"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/ProcessManagedTickets/ProcessManagedTickets.json
+#. [process.mangedTickets.title]
+#. defaultMessage is:
+#. Passphrase
+msgctxt "process.mangedTickets.title"
+msgid "Passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/ProcessUnmanagedTickets/ProcessUnmanagedTickets.json
+#. [process.unmangedTickets.title]
+#. defaultMessage is:
+#. Passphrase
+msgctxt "process.unmangedTickets.title"
+msgid "Passphrase"
+msgstr ""
+
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [trezor.passphraseProtectionSuccess.disabled]
 #. defaultMessage is:
@@ -5204,7 +5269,7 @@ msgctxt "receive.errors.negativeAmount"
 msgid "Please enter a valid amount (> 0)"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.suggestion.fallthrough]
 #. defaultMessage is:
 #. Please note the error above and go to the support channel on matrix or some other preferred
@@ -5299,14 +5364,6 @@ msgstr ""
 #. Primary Account
 msgctxt "accounts.name.default"
 msgid "Primary Account"
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
-#. [privacy.label]
-#. defaultMessage is:
-#. Privacy
-msgctxt "privacy.label"
-msgid "Privacy"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/Form.json
@@ -5427,6 +5484,22 @@ msgstr ""
 #. Probability of success
 msgctxt "ln.routesInfo.probability"
 msgid "Probability of success"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+#. [getstarted.processManagedTickets.title]
+#. defaultMessage is:
+#. Process Managed Tickets
+msgctxt "getstarted.processManagedTickets.title"
+msgid "Process Managed Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+#. [getstarted.processUnmangedTickets.title]
+#. defaultMessage is:
+#. Process Unmanaged Tickets
+msgctxt "getstarted.processUnmangedTickets.title"
+msgid "Process Unmanaged Tickets"
 msgstr ""
 
 #: app/i18n/extracted/app/components/shared/TxHistory/LiveStakeTxRow.json
@@ -5989,7 +6062,7 @@ msgctxt "walletselection.removeWalletButton"
 msgid "Remove Wallet"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.removeConfirmModal.title]
 #. defaultMessage is:
 #. Remove daemon data
@@ -6133,7 +6206,7 @@ msgctxt "mytickets.loadingMoreTickets.returnBtn"
 msgid "Return listing tickets"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.retry.connection.button]
 #. defaultMessage is:
 #. Return to Daemon Connection
@@ -6404,6 +6477,22 @@ msgstr ""
 #. Script: {value}
 msgctxt "stakePoolsList.script"
 msgid "Script: {value}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+#. [loaderBar.checkingMixedAccount]
+#. defaultMessage is:
+#. Seaching for coinjoin transactions...
+msgctxt "loaderBar.checkingMixedAccount"
+msgid "Seaching for coinjoin transactions..."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+#. [loaderBar.syncingTickets]
+#. defaultMessage is:
+#. Seaching for unsynced tickets transactions...
+msgctxt "loaderBar.syncingTickets"
+msgid "Seaching for unsynced tickets transactions..."
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
@@ -6910,6 +6999,14 @@ msgctxt "advancedStartup.skip"
 msgid "Skip"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/ProcessManagedTickets/ProcessManagedTickets.json
+#. [process.mangedTickets.button.skip]
+#. defaultMessage is:
+#. Skip
+msgctxt "process.mangedTickets.button.skip"
+msgid "Skip"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GetStartedPage/TutorialPage/Page.json
 #. [tutorial.skipBtn]
 #. defaultMessage is:
@@ -7043,6 +7140,14 @@ msgstr ""
 #. defaultMessage is:
 #. Staking
 msgctxt "sidebar.link.staking"
+msgid "Staking"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
+#. [tickets.title]
+#. defaultMessage is:
+#. Staking
+msgctxt "tickets.title"
 msgid "Staking"
 msgstr ""
 
@@ -7262,7 +7367,7 @@ msgctxt "accounts.renameAccount"
 msgid "Successfully renamed account."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.suggestion.title]
 #. defaultMessage is:
 #. Suggested action to resolve the error
@@ -7377,6 +7482,14 @@ msgctxt "snackbar.errorObject"
 msgid "The following error happened: {error}"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
+#. [createwallet.walletname.tooltip]
+#. defaultMessage is:
+#. The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name.
+msgctxt "createwallet.walletname.tooltip"
+msgid "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/Settings.json
 #. [settings.resetNetworkContent]
 #. defaultMessage is:
@@ -7433,7 +7546,7 @@ msgctxt "ln.connectPage.enableAutopilotDescr"
 msgid "This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.suggestion.corrupted]
 #. defaultMessage is:
 #. This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord to get advice about running disk utilities. 
@@ -7441,7 +7554,7 @@ msgctxt "fatal.suggestion.corrupted"
 msgid "This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord to get advice about running disk utilities. "
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.suggestion.resources]
 #. defaultMessage is:
 #. This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again.
@@ -7449,7 +7562,7 @@ msgctxt "fatal.suggestion.resources"
 msgid "This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.suggestion.diffConnection]
 #. defaultMessage is:
 #. This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1.
@@ -7737,6 +7850,22 @@ msgctxt "tickets.stopAutoBuyerHeader"
 msgid "Ticket buyer is now stopped."
 msgstr ""
 
+#: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
+#. [txhistory.icon.ticketfee]
+#. defaultMessage is:
+#. Ticket fee
+msgctxt "txhistory.icon.ticketfee"
+msgid "Ticket fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/helpers.json
+#. [txFilter.type.ticketfee]
+#. defaultMessage is:
+#. Ticket fee
+msgctxt "txFilter.type.ticketfee"
+msgid "Ticket fee"
+msgstr ""
+
 #: app/i18n/extracted/app/components/charts/messages.json
 #. [charts.keys.ticketCountByDay]
 #. defaultMessage is:
@@ -7758,14 +7887,6 @@ msgstr ""
 #. defaultMessage is:
 #. Tickets
 msgctxt "home.tab.tickets"
-msgid "Tickets"
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
-#. [tickets.title]
-#. defaultMessage is:
-#. Tickets
-msgctxt "tickets.title"
 msgid "Tickets"
 msgstr ""
 
@@ -8249,19 +8370,11 @@ msgctxt "transactions.title"
 msgid "Transactions"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/helpers.json
-#. [txFilter.type.transfered]
-#. defaultMessage is:
-#. Transfered
-msgctxt "txFilter.type.transfered"
-msgid "Transfered"
-msgstr ""
-
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-#. [notifications.type.transfer]
+#. [notifications.type.ticketfee]
 #. defaultMessage is:
 #. Transferred
-msgctxt "notifications.type.transfer"
+msgctxt "notifications.type.ticketfee"
 msgid "Transferred"
 msgstr ""
 
@@ -8343,6 +8456,14 @@ msgstr ""
 #. Trezor home screen successfully changed
 msgctxt "trezor.changeHomeScreen.success"
 msgid "Trezor home screen successfully changed"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
+#. [createwallet.trezor.description]
+#. defaultMessage is:
+#. Trezor is a hardware wallet. For more information, visit {link}
+msgctxt "createwallet.trezor.description"
+msgid "Trezor is a hardware wallet. For more information, visit {link}"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -8519,6 +8640,22 @@ msgstr ""
 #. UI
 msgctxt "settings.ui.title"
 msgid "UI"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/UISettings.json
+#. [settings.uiAnimations.label]
+#. defaultMessage is:
+#. UI Animations
+msgctxt "settings.uiAnimations.label"
+msgid "UI Animations"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/ListUtxo/ListUtxo.json
+#. [listutxo.utxo]
+#. defaultMessage is:
+#. UTXO
+msgctxt "listutxo.utxo"
+msgid "UTXO"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -8985,6 +9122,14 @@ msgctxt "security.validate.title"
 msgid "Validate Address"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/ListUtxo/ListUtxo.json
+#. [listutxo.value]
+#. defaultMessage is:
+#. Value
+msgctxt "listutxo.value"
+msgid "Value"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/Page.json
 #. [ln.invoicesTab.addInvoice.value]
 #. defaultMessage is:
@@ -9250,7 +9395,7 @@ msgctxt "ln.tab.wallet"
 msgid "Wallet"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.wallet.title]
 #. defaultMessage is:
 #. Wallet Error
@@ -9314,20 +9459,12 @@ msgctxt "walletselection.removeConfirmModal.content"
 msgid "Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/FatalErrorPage.json
+#: app/i18n/extracted/app/components/views/FatalErrorPage/FatalErrorPage.json
 #. [fatal.removeConfirmModal.content]
 #. defaultMessage is:
 #. Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards.
 msgctxt "fatal.removeConfirmModal.content"
 msgid "Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards."
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
-#. [watchOnly.enabled]
-#. defaultMessage is:
-#. Watch Only
-msgctxt "watchOnly.enabled"
-msgid "Watch Only"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/Form.json
@@ -9339,10 +9476,10 @@ msgid "Watch Only"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/PreCreateWallet/CreateWalletForm.json
-#. [createwallet.walletOnly.label]
+#. [createwallet.watchOnly.label]
 #. defaultMessage is:
 #. Watch only
-msgctxt "createwallet.walletOnly.label"
+msgctxt "createwallet.watchOnly.label"
 msgid "Watch only"
 msgstr ""
 
@@ -9498,6 +9635,14 @@ msgctxt "stakePoolsList.noVSPs"
 msgid "You have no configured VSPs"
 msgstr ""
 
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+#. [tickets.fee.error.message]
+#. defaultMessage is:
+#. You have outstanding tickets that are not properly registered with a VSP. {completeRegistrationProcessLink}, otherwise these tickets will be missed if they are chosen to vote.
+msgctxt "tickets.fee.error.message"
+msgid "You have outstanding tickets that are not properly registered with a VSP. {completeRegistrationProcessLink}, otherwise these tickets will be missed if they are chosen to vote."
+msgstr ""
+
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [tickets.updateStakePoolConfigHeader]
 #. defaultMessage is:
@@ -9534,19 +9679,10 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage.json
 #. [getstarted.setAccount.isValidMessage]
 #. defaultMessage is:
-#. You need to set a mixed and unimxed account, and they can not
+#. You need to set a mixed and unmixed account, and they can not
 #.                   be the same
 msgctxt "getstarted.setAccount.isValidMessage"
-msgid "You need to set a mixed and unimxed account, and they can not\n                  be the same"
-msgstr ""
-
-#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
-#. [tickets.fee.error.message]
-#. defaultMessage is:
-#. You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will
-#.           be missed. Click on this button for re-sync fees
-msgctxt "tickets.fee.error.message"
-msgid "You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will\n          be missed. Click on this button for re-sync fees"
+msgid "You need to set a mixed and unmixed account, and they can not\n                  be the same"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -9596,6 +9732,16 @@ msgstr ""
 #. Your voting power: {votingPower}
 msgctxt "proposal.details.description"
 msgid "Your voting power: {votingPower}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/hooks.json
+#. [getstarted.processManagedTickets.description]
+#. defaultMessage is:
+#. Your wallet appears to have live tickets. Processing managed
+#.             tickets confirms with the VSPs that all of your submitted tickets
+#.             are currently known and paid for by the VSPs.
+msgctxt "getstarted.processManagedTickets.description"
+msgid "Your wallet appears to have live tickets. Processing managed\n            tickets confirms with the VSPs that all of your submitted tickets\n            are currently known and paid for by the VSPs."
 msgstr ""
 
 #: app/i18n/extracted/app/components/inputs/BlocksInput.json
@@ -10147,6 +10293,14 @@ msgstr ""
 #. defaultMessage is:
 #. {originalError}
 msgctxt "mixer.ntf.startMixerFailed"
+msgid "{originalError}"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [sync.vsp.failed]
+#. defaultMessage is:
+#. {originalError}
+msgctxt "sync.vsp.failed"
 msgid "{originalError}"
 msgstr ""
 

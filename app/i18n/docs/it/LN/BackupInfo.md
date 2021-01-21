@@ -1,4 +1,4 @@
-# Informazioni sul backup del portafoglio LN
+# Informazioni sul backup del portafoglio LN 
 
 A causa della sua natura di rete di secondo livello, i dati del portafoglio relativi al LN **non** sono immagazzinati nella blockchain stessa. Ciò significa che il seed del portafoglio standard
 **non è sufficiente** per ripristinare il saldo LN di un portafoglio in caso di re-seed.
