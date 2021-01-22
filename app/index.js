@@ -212,7 +212,8 @@ const initialState = {
     getTransactionsResponse: null,
     ticketsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      status: null // desired ticket status (code). All if blank.
+      status: null, // desired ticket status (code). All if blank.
+      vspFeeStatus: null // All if blank.
     },
 
     // Agenda/VoteChoices
