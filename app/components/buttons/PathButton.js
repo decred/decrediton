@@ -3,7 +3,11 @@ import { Tooltip } from "shared";
 
 const PathButton = ({ disabled, onClick }) => (
   <Tooltip text={<T id="startup.dataDir.tip" m={"Select a path"} />}>
-    <div className={"path-button"} {...{ disabled, onClick }} />
+    <button
+      aria-label="Select a path"
+      className={"path-button"}
+      {...{ disabled, onClick }}
+    />
   </Tooltip>
 );
 

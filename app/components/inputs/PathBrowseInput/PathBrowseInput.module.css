@@ -1,0 +1,12 @@
+.pathInputAndButton {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px var(--stroke-color-default) solid;
+}
+.pathInputAndButton:hover {
+  border-bottom: 1px var(--stroke-color-hovered) solid;
+}
+.pathInputArea {
+  width: 100%;
+  margin-right: 15px;
+}

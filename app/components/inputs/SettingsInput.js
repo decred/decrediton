@@ -1,6 +1,5 @@
 import Select from "react-select";
 import { injectIntl } from "react-intl";
-import "style/Input.less";
 
 @autobind
 class SettingsInput extends React.Component {

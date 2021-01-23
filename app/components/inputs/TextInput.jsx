@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Input from "./Input/Input";
 
 const TextInput = ({ ...props }) => <Input {...{ ...props }} />;
 

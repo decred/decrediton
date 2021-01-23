@@ -1,9 +1,8 @@
-import NumericInput from "./NumericInput";
-import balanceConnector from "connectors/balance";
+import NumericInput from "./NumericInput/NumericInput";
 
-// FeeInput is an input that restricts values to a fee (DCR/KB or similar)
+// PercentInput is an input that shows a percent value (e.g. 50%)
 const PercentInput = ({ ...props }) => (
   <NumericInput {...{ ...props, unit: "%" }} />
 );
 
-export default balanceConnector(PercentInput);
+export default PercentInput;

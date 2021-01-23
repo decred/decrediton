@@ -1,6 +1,4 @@
-@import (reference) "./main.less";
-
-.input-and-unit {
+.inputAndUnit {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -10,56 +8,39 @@
   color: var(--input-color-default);
   padding-left: 5px;
 }
-
-.input-and-unit.error {
+.inputAndUnit.error {
   border-bottom: 1px var(--error-text-color) solid;
   background-size: 16px 16px;
   background-position: 100% 50%;
   background-repeat: no-repeat;
   background-image: var(--warning-input-icon);
-
-  &:hover {
-    border-bottom: 1px var(--error-text-color) solid;
-  }
 }
-
-.input-and-unit.success {
+.inputAndUnit.error:hover {
+  border-bottom: 1px var(--error-text-color) solid;
+}
+.inputAndUnit.success {
   border-bottom: 1px var(--success-text-color) solid;
   background-size: 16px 16px;
   background-position: 100% 50%;
   background-repeat: no-repeat;
   background-image: var(--notification-success-icon);
-
-  &:hover {
-    border-bottom: 1px var(--success-text-color) solid;
-  }
 }
-
-.input-and-unit.numeric-input {
-  font-family: var(--font-family-regular);
-
-  .unit-area {
-    color:var(--select-placeholder);
-    line-height: 13px;
-  }
+.inputAndUnit.success:hover {
+  border-bottom: 1px var(--success-text-color) solid;
 }
-
-.input-and-unit:hover:not(.disabled):not(.active):not(.error) {
+.inputAndUnit:hover:not(.disabled):not(.active):not(.error) {
   color: var(--input-color-hovered);
   border-bottom: 1px var(--stroke-color-hovered) solid;
   opacity: 1;
 }
-
-.input-and-unit.active:not(.disabled) {
+.inputAndUnit.active:not(.disabled) {
   color: var(--input-color-focused);
   outline: none;
 }
-
-.input-and-unit.disabled {
+.inputAndUnit.disabled {
   background-color: var(--disabled-background-color);
 }
-
-.input {
+.inputAndUnit input {
   font-family: var(--font-family-regular);
   border-style: none;
   cursor: text;
@@ -70,14 +51,12 @@
   font-size: 13px;
   line-height: 13px;
 }
-
-.input::placeholder {
+.inputAndUnit input::placeholder {
   color: var(--disabled-color);
   font-size: 13px;
   line-height: 17px;
 }
-
-.input-errors-area {
+.inputErrorsArea {
   text-align: left;
   color: var(--error-text-color);
   font-size: 9px;
@@ -85,8 +64,7 @@
   padding-top: 3px;
   margin-left: 10px;
 }
-
-.input-success-area {
+.inputSuccessArea {
   text-align: left;
   color: var(--success-text-color);
   font-size: 9px;
@@ -94,12 +72,10 @@
   padding-top: 3px;
   margin-left: 10px;
 }
-
-.unit-area {
+.unitArea {
   margin-left: auto;
-
-  &.error {
-    color: var(--error-text-color) !important;
-    margin-right: 20px;
-  }
+}
+.unitArea.error {
+  color: var(--error-text-color) !important;
+  margin-right: 20px;
 }

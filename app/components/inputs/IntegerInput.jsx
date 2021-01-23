@@ -1,4 +1,4 @@
-import NumericInput from "./NumericInput";
+import NumericInput from "./NumericInput/NumericInput";
 
 const IntegerInput = ({ ...props }) => {
   let value = props.value;

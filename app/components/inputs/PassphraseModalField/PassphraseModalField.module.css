@@ -1,0 +1,15 @@
+.passphraseModalField label {
+  display: flex;
+  height: 36px;
+  margin-bottom: 5px;
+}
+.passphraseModalField span {
+  font-size: 13px;
+  text-align: right;
+  width: 12em;
+  margin-right: 0.5em;
+  padding-top: 4px;
+}
+.field {
+  width: 300px;
+}
