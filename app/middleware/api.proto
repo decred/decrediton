@@ -5,725 +5,725 @@ package walletrpc;
 option go_package = "decred.org/dcrwallet/rpc/walletrpc";
 
 service VersionService {
-	rpc Version (VersionRequest) returns (VersionResponse);
+  rpc Version(VersionRequest) returns (VersionResponse);
 }
 
 message VersionRequest {}
 message VersionResponse {
-	string version_string = 1;
-	uint32 major = 2;
-	uint32 minor = 3;
-	uint32 patch = 4;
-	string prerelease = 5;
-	string build_metadata = 6;
+  string version_string = 1;
+  uint32 major = 2;
+  uint32 minor = 3;
+  uint32 patch = 4;
+  string prerelease = 5;
+  string build_metadata = 6;
 }
 
 service WalletService {
-	// Queries
-	rpc Ping (PingRequest) returns (PingResponse);
-	rpc Network (NetworkRequest) returns (NetworkResponse);
-	rpc CoinType (CoinTypeRequest) returns (CoinTypeResponse);
-	rpc AccountNumber (AccountNumberRequest) returns (AccountNumberResponse);
-	rpc Accounts (AccountsRequest) returns (AccountsResponse);
-	rpc Balance (BalanceRequest) returns (BalanceResponse);
-	rpc GetAccountExtendedPubKey (GetAccountExtendedPubKeyRequest) returns (GetAccountExtendedPubKeyResponse);	
-	rpc GetAccountExtendedPrivKey (GetAccountExtendedPrivKeyRequest) returns (GetAccountExtendedPrivKeyResponse);
-	rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse);
-	rpc GetTransactions (GetTransactionsRequest) returns (stream GetTransactionsResponse);
-	rpc GetTicket (GetTicketRequest) returns (GetTicketsResponse);
-	rpc GetTickets (GetTicketsRequest) returns (stream GetTicketsResponse);
-	rpc TicketPrice (TicketPriceRequest) returns (TicketPriceResponse);
-	rpc StakeInfo (StakeInfoRequest) returns (StakeInfoResponse);
-	rpc BlockInfo (BlockInfoRequest) returns (BlockInfoResponse);
-	rpc BestBlock (BestBlockRequest) returns (BestBlockResponse);
-	rpc Spender (SpenderRequest) returns (SpenderResponse);
-	rpc GetCFilters (GetCFiltersRequest) returns (stream GetCFiltersResponse);
-	rpc GetPeerInfo(GetPeerInfoRequest) returns (GetPeerInfoResponse);
+  // Queries
+  rpc Ping(PingRequest) returns (PingResponse);
+  rpc Network(NetworkRequest) returns (NetworkResponse);
+  rpc CoinType(CoinTypeRequest) returns (CoinTypeResponse);
+  rpc AccountNumber(AccountNumberRequest) returns (AccountNumberResponse);
+  rpc Accounts(AccountsRequest) returns (AccountsResponse);
+  rpc Balance(BalanceRequest) returns (BalanceResponse);
+  rpc GetAccountExtendedPubKey(GetAccountExtendedPubKeyRequest)
+      returns (GetAccountExtendedPubKeyResponse);
+  rpc GetAccountExtendedPrivKey(GetAccountExtendedPrivKeyRequest)
+      returns (GetAccountExtendedPrivKeyResponse);
+  rpc GetTransaction(GetTransactionRequest) returns (GetTransactionResponse);
+  rpc GetTransactions(GetTransactionsRequest)
+      returns (stream GetTransactionsResponse);
+  rpc GetTicket(GetTicketRequest) returns (GetTicketsResponse);
+  rpc GetTickets(GetTicketsRequest) returns (stream GetTicketsResponse);
+  rpc TicketPrice(TicketPriceRequest) returns (TicketPriceResponse);
+  rpc StakeInfo(StakeInfoRequest) returns (StakeInfoResponse);
+  rpc BlockInfo(BlockInfoRequest) returns (BlockInfoResponse);
+  rpc BestBlock(BestBlockRequest) returns (BestBlockResponse);
+  rpc Spender(SpenderRequest) returns (SpenderResponse);
+  rpc GetCFilters(GetCFiltersRequest) returns (stream GetCFiltersResponse);
+  rpc GetPeerInfo(GetPeerInfoRequest) returns (GetPeerInfoResponse);
 
-	// Notifications
-	rpc TransactionNotifications (TransactionNotificationsRequest) returns (stream TransactionNotificationsResponse);
-	rpc AccountNotifications (AccountNotificationsRequest) returns (stream AccountNotificationsResponse);
-	rpc ConfirmationNotifications (stream ConfirmationNotificationsRequest) returns (stream ConfirmationNotificationsResponse);
+  // Notifications
+  rpc TransactionNotifications(TransactionNotificationsRequest)
+      returns (stream TransactionNotificationsResponse);
+  rpc AccountNotifications(AccountNotificationsRequest)
+      returns (stream AccountNotificationsResponse);
+  rpc ConfirmationNotifications(stream ConfirmationNotificationsRequest)
+      returns (stream ConfirmationNotificationsResponse);
 
-	// Control
-	rpc ChangePassphrase (ChangePassphraseRequest) returns (ChangePassphraseResponse);
-	rpc RenameAccount (RenameAccountRequest) returns (RenameAccountResponse);
-	rpc Rescan (RescanRequest) returns (stream RescanResponse);
-	rpc NextAccount (NextAccountRequest) returns (NextAccountResponse);
-	rpc NextAddress (NextAddressRequest) returns (NextAddressResponse);
-	rpc ImportPrivateKey (ImportPrivateKeyRequest) returns (ImportPrivateKeyResponse);
-	rpc ImportScript(ImportScriptRequest) returns (ImportScriptResponse);
-	rpc FundTransaction (FundTransactionRequest) returns (FundTransactionResponse);
-	rpc UnspentOutputs (UnspentOutputsRequest) returns (stream UnspentOutputResponse);
-	rpc ConstructTransaction (ConstructTransactionRequest) returns (ConstructTransactionResponse);
-	rpc SignTransaction (SignTransactionRequest) returns (SignTransactionResponse);
-	rpc SignTransactions (SignTransactionsRequest) returns (SignTransactionsResponse);
-	rpc CreateSignature (CreateSignatureRequest) returns (CreateSignatureResponse);
-	rpc PublishTransaction (PublishTransactionRequest) returns (PublishTransactionResponse);
-	rpc PublishUnminedTransactions (PublishUnminedTransactionsRequest) returns (PublishUnminedTransactionsResponse);
-	rpc PurchaseTickets(PurchaseTicketsRequest) returns (PurchaseTicketsResponse);
-	rpc RevokeTickets(RevokeTicketsRequest) returns (RevokeTicketsResponse);
-	rpc LoadActiveDataFilters(LoadActiveDataFiltersRequest) returns (LoadActiveDataFiltersResponse);
-	rpc SignMessage (SignMessageRequest) returns (SignMessageResponse);
-	rpc SignMessages (SignMessagesRequest) returns (SignMessagesResponse);
-	rpc ValidateAddress (ValidateAddressRequest) returns (ValidateAddressResponse);
-	rpc CommittedTickets (CommittedTicketsRequest) returns (CommittedTicketsResponse);
-	rpc SweepAccount (SweepAccountRequest) returns (SweepAccountResponse);
-	rpc AbandonTransaction (AbandonTransactionRequest) returns (AbandonTransactionResponse);
-	rpc SignHashes (SignHashesRequest) returns (SignHashesResponse);
-	rpc GetCoinjoinOutputspByAcct (GetCoinjoinOutputspByAcctRequest) returns (GetCoinjoinOutputspByAcctResponse);
-	rpc SetAccountPassphrase (SetAccountPassphraseRequest) returns (SetAccountPassphraseResponse);
-	rpc UnlockAccount (UnlockAccountRequest) returns (UnlockAccountResponse);
-	rpc LockAccount (LockAccountRequest) returns (LockAccountResponse);
-	rpc UnlockWallet (UnlockWalletRequest) returns (UnlockWalletResponse);
-	rpc LockWallet (LockWalletRequest) returns (LockWalletResponse);
-	rpc AccountUnlocked (AccountUnlockedRequest) returns (AccountUnlockedResponse);
-	rpc SyncVSPFailedTickets(SyncVSPTicketsRequest) returns (SyncVSPTicketsResponse);
-	rpc GetVSPTicketsByFeeStatus (GetVSPTicketsByFeeStatusRequest) returns (GetVSPTicketsByFeeStatusResponse);
-	rpc ProcessManagedTickets (ProcessManagedTicketsRequest) returns (ProcessManagedTicketsResponse);
-	rpc ProcessUnmanagedTickets (ProcessUnmanagedTicketsRequest) returns (ProcessUnmanagedTicketsResponse);
-	rpc SetVspdVoteChoices (SetVspdVoteChoicesRequest) returns (SetVspdVoteChoicesResponse);
+  // Control
+  rpc ChangePassphrase(ChangePassphraseRequest)
+      returns (ChangePassphraseResponse);
+  rpc RenameAccount(RenameAccountRequest) returns (RenameAccountResponse);
+  rpc Rescan(RescanRequest) returns (stream RescanResponse);
+  rpc NextAccount(NextAccountRequest) returns (NextAccountResponse);
+  rpc NextAddress(NextAddressRequest) returns (NextAddressResponse);
+  rpc GetReceivedByAddress(GetReceivedByAddressRequest)
+      returns (GetReceivedByAddressResponse);
+  rpc ImportPrivateKey(ImportPrivateKeyRequest)
+      returns (ImportPrivateKeyResponse);
+  rpc ImportScript(ImportScriptRequest) returns (ImportScriptResponse);
+  rpc FundTransaction(FundTransactionRequest) returns (FundTransactionResponse);
+  rpc UnspentOutputs(UnspentOutputsRequest)
+      returns (stream UnspentOutputResponse);
+  rpc ConstructTransaction(ConstructTransactionRequest)
+      returns (ConstructTransactionResponse);
+  rpc SignTransaction(SignTransactionRequest) returns (SignTransactionResponse);
+  rpc SignTransactions(SignTransactionsRequest)
+      returns (SignTransactionsResponse);
+  rpc CreateSignature(CreateSignatureRequest) returns (CreateSignatureResponse);
+  rpc PublishTransaction(PublishTransactionRequest)
+      returns (PublishTransactionResponse);
+  rpc PublishUnminedTransactions(PublishUnminedTransactionsRequest)
+      returns (PublishUnminedTransactionsResponse);
+  rpc PurchaseTickets(PurchaseTicketsRequest) returns (PurchaseTicketsResponse);
+  rpc RevokeTickets(RevokeTicketsRequest) returns (RevokeTicketsResponse);
+  rpc LoadActiveDataFilters(LoadActiveDataFiltersRequest)
+      returns (LoadActiveDataFiltersResponse);
+  rpc SignMessage(SignMessageRequest) returns (SignMessageResponse);
+  rpc SignMessages(SignMessagesRequest) returns (SignMessagesResponse);
+  rpc ValidateAddress(ValidateAddressRequest) returns (ValidateAddressResponse);
+  rpc CommittedTickets(CommittedTicketsRequest)
+      returns (CommittedTicketsResponse);
+  rpc SweepAccount(SweepAccountRequest) returns (SweepAccountResponse);
+  rpc AbandonTransaction(AbandonTransactionRequest)
+      returns (AbandonTransactionResponse);
+  rpc SignHashes(SignHashesRequest) returns (SignHashesResponse);
+  rpc GetCoinjoinOutputspByAcct(GetCoinjoinOutputspByAcctRequest)
+      returns (GetCoinjoinOutputspByAcctResponse);
+  rpc SetAccountPassphrase(SetAccountPassphraseRequest)
+      returns (SetAccountPassphraseResponse);
+  rpc UnlockAccount(UnlockAccountRequest) returns (UnlockAccountResponse);
+  rpc LockAccount(LockAccountRequest) returns (LockAccountResponse);
+  rpc UnlockWallet(UnlockWalletRequest) returns (UnlockWalletResponse);
+  rpc LockWallet(LockWalletRequest) returns (LockWalletResponse);
+  rpc AccountUnlocked(AccountUnlockedRequest) returns (AccountUnlockedResponse);
+  rpc SyncVSPFailedTickets(SyncVSPTicketsRequest)
+      returns (SyncVSPTicketsResponse);
+  rpc GetVSPTicketsByFeeStatus(GetVSPTicketsByFeeStatusRequest)
+      returns (GetVSPTicketsByFeeStatusResponse);
+  rpc ProcessManagedTickets(ProcessManagedTicketsRequest)
+      returns (ProcessManagedTicketsResponse);
+  rpc ProcessUnmanagedTickets(ProcessUnmanagedTicketsRequest)
+      returns (ProcessUnmanagedTicketsResponse);
+  rpc SetVspdVoteChoices(SetVspdVoteChoicesRequest)
+      returns (SetVspdVoteChoicesResponse);
 }
 
 service WalletLoaderService {
-	rpc WalletExists (WalletExistsRequest) returns (WalletExistsResponse);
-	rpc CreateWallet (CreateWalletRequest) returns (CreateWalletResponse);
-	rpc CreateWatchingOnlyWallet (CreateWatchingOnlyWalletRequest) returns (CreateWatchingOnlyWalletResponse);
-	rpc OpenWallet (OpenWalletRequest) returns (OpenWalletResponse);
-	rpc CloseWallet (CloseWalletRequest) returns (CloseWalletResponse);
-	rpc SpvSync(SpvSyncRequest) returns (stream SpvSyncResponse);
-	rpc RpcSync(RpcSyncRequest) returns (stream RpcSyncResponse);
-	rpc RescanPoint(RescanPointRequest) returns (RescanPointResponse);
+  rpc WalletExists(WalletExistsRequest) returns (WalletExistsResponse);
+  rpc CreateWallet(CreateWalletRequest) returns (CreateWalletResponse);
+  rpc CreateWatchingOnlyWallet(CreateWatchingOnlyWalletRequest)
+      returns (CreateWatchingOnlyWalletResponse);
+  rpc OpenWallet(OpenWalletRequest) returns (OpenWalletResponse);
+  rpc CloseWallet(CloseWalletRequest) returns (CloseWalletResponse);
+  rpc SpvSync(SpvSyncRequest) returns (stream SpvSyncResponse);
+  rpc RpcSync(RpcSyncRequest) returns (stream RpcSyncResponse);
+  rpc RescanPoint(RescanPointRequest) returns (RescanPointResponse);
 }
 service AccountMixerService {
-	rpc RunAccountMixer (RunAccountMixerRequest) returns (stream RunAccountMixerResponse);
+  rpc RunAccountMixer(RunAccountMixerRequest)
+      returns (stream RunAccountMixerResponse);
 }
 service TicketBuyerV2Service {
-	rpc RunTicketBuyer (RunTicketBuyerRequest) returns (stream RunTicketBuyerResponse);
+  rpc RunTicketBuyer(RunTicketBuyerRequest)
+      returns (stream RunTicketBuyerResponse);
 }
 
 service TicketBuyerService {
-    rpc StartAutoBuyer (StartAutoBuyerRequest) returns (StartAutoBuyerResponse);
-    rpc StopAutoBuyer (StopAutoBuyerRequest) returns (StopAutoBuyerResponse);
-    rpc TicketBuyerConfig (TicketBuyerConfigRequest) returns (TicketBuyerConfigResponse);
-    rpc SetAccount (SetAccountRequest) returns (SetAccountResponse);
-    rpc SetBalanceToMaintain (SetBalanceToMaintainRequest) returns (SetBalanceToMaintainResponse);
-    rpc SetMaxFee (SetMaxFeeRequest) returns (SetMaxFeeResponse);
-    rpc SetMaxPriceRelative (SetMaxPriceRelativeRequest) returns (SetMaxPriceRelativeResponse);
-    rpc SetMaxPriceAbsolute (SetMaxPriceAbsoluteRequest) returns (SetMaxPriceAbsoluteResponse);
-    rpc SetVotingAddress (SetVotingAddressRequest) returns (SetVotingAddressResponse);
-    rpc SetPoolAddress (SetPoolAddressRequest) returns (SetPoolAddressResponse);
-    rpc SetPoolFees (SetPoolFeesRequest) returns (SetPoolFeesResponse);
-    rpc SetMaxPerBlock (SetMaxPerBlockRequest) returns (SetMaxPerBlockResponse);
+  rpc StartAutoBuyer(StartAutoBuyerRequest) returns (StartAutoBuyerResponse);
+  rpc StopAutoBuyer(StopAutoBuyerRequest) returns (StopAutoBuyerResponse);
+  rpc TicketBuyerConfig(TicketBuyerConfigRequest)
+      returns (TicketBuyerConfigResponse);
+  rpc SetAccount(SetAccountRequest) returns (SetAccountResponse);
+  rpc SetBalanceToMaintain(SetBalanceToMaintainRequest)
+      returns (SetBalanceToMaintainResponse);
+  rpc SetMaxFee(SetMaxFeeRequest) returns (SetMaxFeeResponse);
+  rpc SetMaxPriceRelative(SetMaxPriceRelativeRequest)
+      returns (SetMaxPriceRelativeResponse);
+  rpc SetMaxPriceAbsolute(SetMaxPriceAbsoluteRequest)
+      returns (SetMaxPriceAbsoluteResponse);
+  rpc SetVotingAddress(SetVotingAddressRequest)
+      returns (SetVotingAddressResponse);
+  rpc SetPoolAddress(SetPoolAddressRequest) returns (SetPoolAddressResponse);
+  rpc SetPoolFees(SetPoolFeesRequest) returns (SetPoolFeesResponse);
+  rpc SetMaxPerBlock(SetMaxPerBlockRequest) returns (SetMaxPerBlockResponse);
 }
 
 service SeedService {
-	rpc GenerateRandomSeed (GenerateRandomSeedRequest) returns (GenerateRandomSeedResponse);
-	rpc DecodeSeed (DecodeSeedRequest) returns (DecodeSeedResponse);
+  rpc GenerateRandomSeed(GenerateRandomSeedRequest)
+      returns (GenerateRandomSeedResponse);
+  rpc DecodeSeed(DecodeSeedRequest) returns (DecodeSeedResponse);
 }
 
-service AgendaService {
-	rpc Agendas (AgendasRequest) returns (AgendasResponse);
-}
+service AgendaService { rpc Agendas(AgendasRequest) returns (AgendasResponse); }
 
 service VotingService {
-	rpc VoteChoices (VoteChoicesRequest) returns (VoteChoicesResponse);
-	rpc SetVoteChoices (SetVoteChoicesRequest) returns (SetVoteChoicesResponse);
+  rpc VoteChoices(VoteChoicesRequest) returns (VoteChoicesResponse);
+  rpc SetVoteChoices(SetVoteChoicesRequest) returns (SetVoteChoicesResponse);
 }
 
 service MessageVerificationService {
-	rpc VerifyMessage (VerifyMessageRequest) returns (VerifyMessageResponse);
+  rpc VerifyMessage(VerifyMessageRequest) returns (VerifyMessageResponse);
 }
 
 service NetworkService {
-	rpc GetRawBlock (GetRawBlockRequest) returns (GetRawBlockResponse);
+  rpc GetRawBlock(GetRawBlockRequest) returns (GetRawBlockResponse);
 }
 
 message TransactionDetails {
-	message Input {
-		uint32 index = 1;
-		uint32 previous_account = 2;
-		int64 previous_amount = 3;
-	}
-	message Output {
-		uint32 index = 1;
-		uint32 account = 2;
-		bool internal = 3;
-		int64 amount = 4;
-		string address = 5;
-		bytes output_script = 6;
-	}
-	bytes hash = 1;
-	bytes transaction = 2;
-	repeated Input debits = 3;
-	repeated Output credits = 4;
-	int64 fee = 5;
-	int64 timestamp = 6; // May be earlier than a block timestamp, but never later.
-	enum TransactionType {
-		REGULAR = 0;
-		COINBASE = 4;
-		TICKET_PURCHASE = 1;
-		VOTE = 2;
-		REVOCATION = 3;
-	}
-	TransactionType transaction_type = 7;
+  message Input {
+    uint32 index = 1;
+    uint32 previous_account = 2;
+    int64 previous_amount = 3;
+  }
+  message Output {
+    uint32 index = 1;
+    uint32 account = 2;
+    bool internal = 3;
+    int64 amount = 4;
+    string address = 5;
+    bytes output_script = 6;
+  }
+  bytes hash = 1;
+  bytes transaction = 2;
+  repeated Input debits = 3;
+  repeated Output credits = 4;
+  int64 fee = 5;
+  int64 timestamp =
+      6; // May be earlier than a block timestamp, but never later.
+  enum TransactionType {
+    REGULAR = 0;
+    COINBASE = 4;
+    TICKET_PURCHASE = 1;
+    VOTE = 2;
+    REVOCATION = 3;
+  }
+  TransactionType transaction_type = 7;
 }
 
 message BlockDetails {
-	bytes hash = 1;
-	int32 height = 2;
-	int64 timestamp = 3;
-	bool approves_parent = 5;
-	repeated TransactionDetails transactions = 4;
-	bytes prev_block = 6;
+  bytes hash = 1;
+  int32 height = 2;
+  int64 timestamp = 3;
+  bool approves_parent = 5;
+  repeated TransactionDetails transactions = 4;
+  bytes prev_block = 6;
 }
 
 message DetachedBlockDetails {
-	bytes hash = 1;
-	int32 height = 2;
-	bytes prev_block = 3;
-	int64 timestamp = 4;
+  bytes hash = 1;
+  int32 height = 2;
+  bytes prev_block = 3;
+  int64 timestamp = 4;
 }
 
 message AccountBalance {
-	uint32 account = 1;
-	int64 total_balance = 2;
+  uint32 account = 1;
+  int64 total_balance = 2;
 }
 
 message PingRequest {}
 message PingResponse {}
 
 message NetworkRequest {}
-message NetworkResponse {
-	uint32 active_network = 1;
-}
+message NetworkResponse { uint32 active_network = 1; }
 
 message CoinTypeRequest {}
-message CoinTypeResponse {
-	uint32 coin_type = 1;
-}
+message CoinTypeResponse { uint32 coin_type = 1; }
 
-message AccountNumberRequest {
-	string account_name = 1;
-}
-message AccountNumberResponse {
-	uint32 account_number = 1;
-}
+message AccountNumberRequest { string account_name = 1; }
+message AccountNumberResponse { uint32 account_number = 1; }
 
 message AccountsRequest {}
 message AccountsResponse {
-	message Account {
-		uint32 account_number = 1;
-		string account_name = 2;
-		int64 total_balance = 3;
-		uint32 external_key_count = 4;
-		uint32 internal_key_count = 5;
-		uint32 imported_key_count = 6;
-		bool account_encrypted = 7;
-		bool account_unlocked = 8;
-	}
-	repeated Account accounts = 1;
-	bytes current_block_hash = 2;
-	int32 current_block_height = 3;
+  message Account {
+    uint32 account_number = 1;
+    string account_name = 2;
+    int64 total_balance = 3;
+    uint32 external_key_count = 4;
+    uint32 internal_key_count = 5;
+    uint32 imported_key_count = 6;
+    bool account_encrypted = 7;
+    bool account_unlocked = 8;
+  }
+  repeated Account accounts = 1;
+  bytes current_block_hash = 2;
+  int32 current_block_height = 3;
 }
 
 message RenameAccountRequest {
-	uint32 account_number = 1;
-	string new_name = 2;
+  uint32 account_number = 1;
+  string new_name = 2;
 }
 message RenameAccountResponse {}
 
 message RescanRequest {
-	int32 begin_height = 1;
-	bytes begin_hash = 2;
+  int32 begin_height = 1;
+  bytes begin_hash = 2;
 }
-message RescanResponse {
-	int32 rescanned_through = 1;
-}
+message RescanResponse { int32 rescanned_through = 1; }
 
 message NextAccountRequest {
-	bytes passphrase = 1;
-	string account_name = 2;
+  bytes passphrase = 1;
+  string account_name = 2;
 }
-message NextAccountResponse {
-	uint32 account_number = 1;
-}
+message NextAccountResponse { uint32 account_number = 1; }
 
 message NextAddressRequest {
-	uint32 account = 1;
-	enum Kind {
-	     BIP0044_EXTERNAL = 0;
-	     BIP0044_INTERNAL = 1;
-	}
-	Kind kind = 2;
-	enum GapPolicy {
-		GAP_POLICY_UNSPECIFIED = 0;
-		GAP_POLICY_ERROR = 1;
-		GAP_POLICY_IGNORE = 2;
-		GAP_POLICY_WRAP = 3;
-	}
-	GapPolicy gap_policy = 3;
+  uint32 account = 1;
+  enum Kind {
+    BIP0044_EXTERNAL = 0;
+    BIP0044_INTERNAL = 1;
+  }
+  Kind kind = 2;
+  enum GapPolicy {
+    GAP_POLICY_UNSPECIFIED = 0;
+    GAP_POLICY_ERROR = 1;
+    GAP_POLICY_IGNORE = 2;
+    GAP_POLICY_WRAP = 3;
+  }
+  GapPolicy gap_policy = 3;
 }
 message NextAddressResponse {
-	string address = 1;
-	string public_key = 2;
+  string address = 1;
+  string public_key = 2;
 }
 
 message ImportPrivateKeyRequest {
-	bytes passphrase = 1;
-	uint32 account = 2;
-	string private_key_wif = 3;
-	bool rescan = 4;
-	int32 scan_from = 5;
+  bytes passphrase = 1;
+  uint32 account = 2;
+  string private_key_wif = 3;
+  bool rescan = 4;
+  int32 scan_from = 5;
 }
-message ImportPrivateKeyResponse {
-}
+message ImportPrivateKeyResponse {}
 
 message ImportScriptRequest {
-	bytes passphrase = 1;
-	bytes script = 2;
-	bool rescan = 3;
-	int32 scan_from = 4;
-	bool require_redeemable = 5;
+  bytes passphrase = 1;
+  bytes script = 2;
+  bool rescan = 3;
+  int32 scan_from = 4;
+  bool require_redeemable = 5;
 }
 message ImportScriptResponse {
-	string p2sh_address = 1;
-	bool redeemable = 2;
+  string p2sh_address = 1;
+  bool redeemable = 2;
 }
 
 message BalanceRequest {
-	uint32 account_number = 1;
-	int32 required_confirmations = 2;
+  uint32 account_number = 1;
+  int32 required_confirmations = 2;
 }
 message BalanceResponse {
-	int64 total = 1;
-	int64 spendable = 2;
-	int64 immature_reward = 3;
-	int64 immature_stake_generation = 4;
-	int64 locked_by_tickets = 5;
-	int64 voting_authority = 6;
-	int64 unconfirmed = 7;
+  int64 total = 1;
+  int64 spendable = 2;
+  int64 immature_reward = 3;
+  int64 immature_stake_generation = 4;
+  int64 locked_by_tickets = 5;
+  int64 voting_authority = 6;
+  int64 unconfirmed = 7;
 }
 
-message GetTransactionRequest {
-	bytes transaction_hash = 1;
-}
+message GetTransactionRequest { bytes transaction_hash = 1; }
 message GetTransactionResponse {
-	TransactionDetails transaction = 1;
-	int32 confirmations = 2;
-	bytes block_hash = 3;
+  TransactionDetails transaction = 1;
+  int32 confirmations = 2;
+  bytes block_hash = 3;
 }
 
 message GetTransactionsRequest {
-	// Optionally specify the starting block from which to begin including all transactions.
-	// Either the starting block hash or height may be specified, but not both.
-	// If a block height is specified and is negative, the absolute value becomes the number of
-	// last blocks to include.  That is, given a current chain height of 1000 and a starting block
-	// height of -3, transaction notifications will be created for blocks 998, 999, and 1000.
-	// If both options are excluded, transaction results are created for transactions since the
-	// genesis block.
-	bytes starting_block_hash = 1;
-	sint32 starting_block_height = 2;
+  // Optionally specify the starting block from which to begin including all
+  // transactions. Either the starting block hash or height may be specified,
+  // but not both. If a block height is specified and is negative, the absolute
+  // value becomes the number of last blocks to include.  That is, given a
+  // current chain height of 1000 and a starting block height of -3, transaction
+  // notifications will be created for blocks 998, 999, and 1000. If both
+  // options are excluded, transaction results are created for transactions
+  // since the genesis block.
+  bytes starting_block_hash = 1;
+  sint32 starting_block_height = 2;
 
-	// Optionally specify the last block that transaction results may appear in.
-	// Either the ending block hash or height may be specified, but not both.
-	// If both are excluded, transaction results are created for all transactions
-	// through the best block, and include all unmined transactions.
-	bytes ending_block_hash = 3;
-	int32 ending_block_height = 4;
+  // Optionally specify the last block that transaction results may appear in.
+  // Either the ending block hash or height may be specified, but not both.
+  // If both are excluded, transaction results are created for all transactions
+  // through the best block, and include all unmined transactions.
+  bytes ending_block_hash = 3;
+  int32 ending_block_height = 4;
 
-	// Include at least this many of the newest transactions if they exist.
-	// Cannot be used when the ending block hash is specified.
-	//
-	// TODO: remove until spec adds it back in some way.
-	int32 minimum_recent_transactions = 5;
+  // Include at least this many of the newest transactions if they exist.
+  // Cannot be used when the ending block hash is specified.
+  //
+  // TODO: remove until spec adds it back in some way.
+  int32 minimum_recent_transactions = 5;
 
-	// Try to include at most this many transactions in the reply
-	int32 target_transaction_count = 6;
+  // Try to include at most this many transactions in the reply
+  int32 target_transaction_count = 6;
 }
 message GetTransactionsResponse {
-	BlockDetails mined_transactions = 1;
-	repeated TransactionDetails unmined_transactions = 2;
+  BlockDetails mined_transactions = 1;
+  repeated TransactionDetails unmined_transactions = 2;
 }
 
-message GetTicketRequest {
-	bytes ticket_hash = 1;
-}
+message GetTicketRequest { bytes ticket_hash = 1; }
 message GetTicketsRequest {
-	bytes starting_block_hash = 1;
-	sint32 starting_block_height = 2;
-	bytes ending_block_hash = 3;
-	int32 ending_block_height = 4;
-	int32 target_ticket_count = 5;
+  bytes starting_block_hash = 1;
+  sint32 starting_block_height = 2;
+  bytes ending_block_hash = 3;
+  int32 ending_block_height = 4;
+  int32 target_ticket_count = 5;
 }
 message GetTicketsResponse {
-	message TicketDetails {
-		TransactionDetails ticket = 1;
-		TransactionDetails spender = 2;
-		enum TicketStatus {
-			UNKNOWN = 0;
-			UNMINED = 1;
-			IMMATURE = 2;
-			LIVE = 3;
-			VOTED = 4;
-			MISSED = 5;
-			EXPIRED = 6;
-			REVOKED = 7;
-		}
-		TicketStatus ticket_status = 3;
-	}
-	message BlockDetails {
-		bytes hash = 1;
-		int32 height = 2;
-		int64 timestamp = 3;
-	}
-	TicketDetails ticket = 1;
-	BlockDetails block = 2;
+  message TicketDetails {
+    TransactionDetails ticket = 1;
+    TransactionDetails spender = 2;
+    enum TicketStatus {
+      UNKNOWN = 0;
+      UNMINED = 1;
+      IMMATURE = 2;
+      LIVE = 3;
+      VOTED = 4;
+      MISSED = 5;
+      EXPIRED = 6;
+      REVOKED = 7;
+    }
+    TicketStatus ticket_status = 3;
+  }
+  message BlockDetails {
+    bytes hash = 1;
+    int32 height = 2;
+    int64 timestamp = 3;
+  }
+  TicketDetails ticket = 1;
+  BlockDetails block = 2;
 }
 
-message TicketPriceRequest {
-}
+message TicketPriceRequest {}
 message TicketPriceResponse {
-	int64 ticket_price = 1;
-	int32 height = 2;
+  int64 ticket_price = 1;
+  int32 height = 2;
 }
 
-message StakeInfoRequest {
-}
+message StakeInfoRequest {}
 message StakeInfoResponse {
-	uint32 pool_size = 1;
-	uint32 all_mempool_tix = 2;
-	uint32 own_mempool_tix = 3;
-	uint32 immature = 4;
-	uint32 live = 5;
-	uint32 voted = 6;
-	uint32 missed = 7;
-	uint32 revoked = 8;
-	uint32 expired = 9;
-	int64 total_subsidy = 10;
-	uint32 unspent = 11;
+  uint32 pool_size = 1;
+  uint32 all_mempool_tix = 2;
+  uint32 own_mempool_tix = 3;
+  uint32 immature = 4;
+  uint32 live = 5;
+  uint32 voted = 6;
+  uint32 missed = 7;
+  uint32 revoked = 8;
+  uint32 expired = 9;
+  int64 total_subsidy = 10;
+  uint32 unspent = 11;
 }
 
 message BlockInfoRequest {
-	bytes block_hash = 1;
-	int32 block_height = 2;
+  bytes block_hash = 1;
+  int32 block_height = 2;
 }
 message BlockInfoResponse {
-	bytes block_hash = 1;
-	int32 block_height = 2;
-	int32 confirmations = 3;
-	int64 timestamp = 4;
-	bytes block_header = 5;
-	bool stake_invalidated = 6;
-	bool approves_parent = 7;
+  bytes block_hash = 1;
+  int32 block_height = 2;
+  int32 confirmations = 3;
+  int64 timestamp = 4;
+  bytes block_header = 5;
+  bool stake_invalidated = 6;
+  bool approves_parent = 7;
 }
 
 message ChangePassphraseRequest {
-	enum Key {
-	     PRIVATE = 0;
-	     PUBLIC = 1;
-	}
-	Key key = 1;
-	bytes old_passphrase = 2;
-	bytes new_passphrase = 3;
+  enum Key {
+    PRIVATE = 0;
+    PUBLIC = 1;
+  }
+  Key key = 1;
+  bytes old_passphrase = 2;
+  bytes new_passphrase = 3;
 }
 message ChangePassphraseResponse {}
 
 message FundTransactionRequest {
-	uint32 account = 1;
-	int64 target_amount = 2;
-	int32 required_confirmations = 3;
-	bool include_immature_coinbases = 4;
-	bool include_change_script = 5;
+  uint32 account = 1;
+  int64 target_amount = 2;
+  int32 required_confirmations = 3;
+  bool include_immature_coinbases = 4;
+  bool include_change_script = 5;
 }
 message FundTransactionResponse {
-	message PreviousOutput {
-		bytes transaction_hash = 1;
-		uint32 output_index = 2;
-		int64 amount = 3;
-		bytes pk_script = 4;
-		int64 receive_time = 5;
-		bool from_coinbase = 6;
-		int32 tree = 7;
-	}
-	repeated PreviousOutput selected_outputs = 1;
-	int64 total_amount = 2;
-	bytes change_pk_script = 3;
+  message PreviousOutput {
+    bytes transaction_hash = 1;
+    uint32 output_index = 2;
+    int64 amount = 3;
+    bytes pk_script = 4;
+    int64 receive_time = 5;
+    bool from_coinbase = 6;
+    int32 tree = 7;
+  }
+  repeated PreviousOutput selected_outputs = 1;
+  int64 total_amount = 2;
+  bytes change_pk_script = 3;
 }
 
 message UnspentOutputsRequest {
-	uint32 account = 1;
-	int64 target_amount = 2;
-	int32 required_confirmations = 3;
-	bool include_immature_coinbases = 4;
+  uint32 account = 1;
+  int64 target_amount = 2;
+  int32 required_confirmations = 3;
+  bool include_immature_coinbases = 4;
 }
 message UnspentOutputResponse {
-	bytes transaction_hash = 1;
-	uint32 output_index = 2;
-	int64 amount = 3;
-	bytes pk_script = 4;
-	int64 receive_time = 5;
-	bool from_coinbase = 6;
-	int32 tree = 7;
-	int64 amount_sum = 8;
+  bytes transaction_hash = 1;
+  uint32 output_index = 2;
+  int64 amount = 3;
+  bytes pk_script = 4;
+  int64 receive_time = 5;
+  bool from_coinbase = 6;
+  int32 tree = 7;
+  int64 amount_sum = 8;
 }
 
 message ConstructTransactionRequest {
-	message OutputDestination {
-		string address = 1;
+  message OutputDestination {
+    string address = 1;
 
-		bytes script = 2;
-		uint32 script_version = 3;
-	}
-	message Output {
-		OutputDestination destination = 1;
-		int64 amount = 2;
-	}
-	enum OutputSelectionAlgorithm {
-		UNSPECIFIED = 0;
-		ALL = 1;
-	}
-	uint32 source_account = 1;
-	int32 required_confirmations = 2;
-	int32 fee_per_kb = 3;
-	OutputSelectionAlgorithm output_selection_algorithm = 4;
-	repeated Output non_change_outputs = 5;
-	OutputDestination change_destination = 6;
+    bytes script = 2;
+    uint32 script_version = 3;
+  }
+  message Output {
+    OutputDestination destination = 1;
+    int64 amount = 2;
+  }
+  enum OutputSelectionAlgorithm {
+    UNSPECIFIED = 0;
+    ALL = 1;
+  }
+  uint32 source_account = 1;
+  int32 required_confirmations = 2;
+  int32 fee_per_kb = 3;
+  OutputSelectionAlgorithm output_selection_algorithm = 4;
+  repeated Output non_change_outputs = 5;
+  OutputDestination change_destination = 6;
 }
 message ConstructTransactionResponse {
-	bytes unsigned_transaction = 1;
-	int64 total_previous_output_amount = 2;
-	int64 total_output_amount = 3;
-	uint32 estimated_signed_size = 4;
-	int32 change_index = 5;
+  bytes unsigned_transaction = 1;
+  int64 total_previous_output_amount = 2;
+  int64 total_output_amount = 3;
+  uint32 estimated_signed_size = 4;
+  int32 change_index = 5;
 }
 
 message SignTransactionRequest {
-	reserved 3;
-	reserved "input_indexes";
-	message AdditionalScript {
-		bytes transaction_hash = 1;
-		uint32 output_index = 2;
-		int32 tree = 3;
-		bytes pk_script = 4;
-	}
-	bytes passphrase = 1;
-	bytes serialized_transaction = 2;
-	// If no indexes are specified, signatures scripts will be added for
-	// every input. If any input indexes are specified, only those inputs
-	// will be signed.  Rather than returning an incompletely signed
-	// transaction if any of the inputs to be signed can not be, the RPC
-	// immediately errors.
-	// repeated uint32 input_indexes = 3;
-	repeated AdditionalScript additional_scripts = 4;
+  reserved 3;
+  reserved "input_indexes";
+  message AdditionalScript {
+    bytes transaction_hash = 1;
+    uint32 output_index = 2;
+    int32 tree = 3;
+    bytes pk_script = 4;
+  }
+  bytes passphrase = 1;
+  bytes serialized_transaction = 2;
+  // If no indexes are specified, signatures scripts will be added for
+  // every input. If any input indexes are specified, only those inputs
+  // will be signed.  Rather than returning an incompletely signed
+  // transaction if any of the inputs to be signed can not be, the RPC
+  // immediately errors.
+  // repeated uint32 input_indexes = 3;
+  repeated AdditionalScript additional_scripts = 4;
 }
 message SignTransactionResponse {
-	bytes transaction = 1;
-	repeated uint32 unsigned_input_indexes = 2;
+  bytes transaction = 1;
+  repeated uint32 unsigned_input_indexes = 2;
 }
 
 message SignTransactionsRequest {
-	message AdditionalScript {
-		bytes transaction_hash = 1;
-		uint32 output_index = 2;
-		int32 tree = 3;
-		bytes pk_script = 4;
-	}
-	message UnsignedTransaction {
-		bytes serialized_transaction = 1;
-	}
+  message AdditionalScript {
+    bytes transaction_hash = 1;
+    uint32 output_index = 2;
+    int32 tree = 3;
+    bytes pk_script = 4;
+  }
+  message UnsignedTransaction { bytes serialized_transaction = 1; }
 
-	bytes passphrase = 1;
-	repeated UnsignedTransaction transactions = 2;
-	repeated AdditionalScript additional_scripts = 3;
+  bytes passphrase = 1;
+  repeated UnsignedTransaction transactions = 2;
+  repeated AdditionalScript additional_scripts = 3;
 }
 message SignTransactionsResponse {
-	message SignedTransaction {
-		bytes transaction = 1;
-		repeated uint32 unsigned_input_indexes = 2;
-	}
-	repeated SignedTransaction transactions = 1;
+  message SignedTransaction {
+    bytes transaction = 1;
+    repeated uint32 unsigned_input_indexes = 2;
+  }
+  repeated SignedTransaction transactions = 1;
 }
 
 message CreateSignatureRequest {
-	bytes passphrase = 1;
-	string address = 2;
-	bytes serialized_transaction = 3;
-	uint32 input_index = 4;
-	enum SigHashType {
-		SIGHASH_OLD = 0;
-		SIGHASH_ALL = 1;
-		SIGHASH_NONE = 2;
-		SIGHASH_SINGLE = 3;
-		SIGHASH_ALLVALUE = 4;
-		SIGHASH_ANYONECANPAY = 0x80;
-	}
-	SigHashType hash_type = 5;
-	bytes previous_pk_script = 6;
+  bytes passphrase = 1;
+  string address = 2;
+  bytes serialized_transaction = 3;
+  uint32 input_index = 4;
+  enum SigHashType {
+    SIGHASH_OLD = 0;
+    SIGHASH_ALL = 1;
+    SIGHASH_NONE = 2;
+    SIGHASH_SINGLE = 3;
+    SIGHASH_ALLVALUE = 4;
+    SIGHASH_ANYONECANPAY = 0x80;
+  }
+  SigHashType hash_type = 5;
+  bytes previous_pk_script = 6;
 }
 message CreateSignatureResponse {
-	bytes signature = 1;
-	bytes public_key = 2;
+  bytes signature = 1;
+  bytes public_key = 2;
 }
 
-message PublishTransactionRequest {
-	bytes signed_transaction = 1;
-}
-message PublishTransactionResponse {
-	bytes transaction_hash = 1;
-}
+message PublishTransactionRequest { bytes signed_transaction = 1; }
+message PublishTransactionResponse { bytes transaction_hash = 1; }
 
 message PublishUnminedTransactionsRequest {}
 message PublishUnminedTransactionsResponse {}
 
 message PurchaseTicketsRequest {
-	bytes passphrase = 1;
-	uint32 account = 2;
-	int64 spend_limit = 3;
-	uint32 required_confirmations = 4;
-	string ticket_address = 5;
-	uint32 num_tickets = 6;
-	string pool_address = 7;
-	double pool_fees = 8;
-	uint32 expiry = 9;
-	int64 tx_fee = 10;
-	int64 ticket_fee = 11;
-	bool dont_sign_tx = 12;
-	string cspp_server = 13;
-	uint32 mixed_account = 14;
-	uint32 mixed_account_branch = 15;
-	uint32 mixed_split_account = 16;
-	uint32 change_account = 17;
-	string vsp_host = 18;
-	string vsp_pubkey = 19;
+  bytes passphrase = 1;
+  uint32 account = 2;
+  int64 spend_limit = 3;
+  uint32 required_confirmations = 4;
+  string ticket_address = 5;
+  uint32 num_tickets = 6;
+  string pool_address = 7;
+  double pool_fees = 8;
+  uint32 expiry = 9;
+  int64 tx_fee = 10;
+  int64 ticket_fee = 11;
+  bool dont_sign_tx = 12;
+  string cspp_server = 13;
+  uint32 mixed_account = 14;
+  uint32 mixed_account_branch = 15;
+  uint32 mixed_split_account = 16;
+  uint32 change_account = 17;
+  string vsp_host = 18;
+  string vsp_pubkey = 19;
 }
 message PurchaseTicketsResponse {
-	repeated bytes ticket_hashes = 1;
-	repeated bytes tickets = 2;
-	bytes split_tx = 3;
+  repeated bytes ticket_hashes = 1;
+  repeated bytes tickets = 2;
+  bytes split_tx = 3;
 }
 
-message RevokeTicketsRequest {
-	bytes passphrase = 1;
-}
+message RevokeTicketsRequest { bytes passphrase = 1; }
 message RevokeTicketsResponse {}
 
 message LoadActiveDataFiltersRequest {}
 message LoadActiveDataFiltersResponse {}
 
-message SignMessageRequest{
-	string address = 1;
-	string message = 2;
-	bytes passphrase = 3;
+message SignMessageRequest {
+  string address = 1;
+  string message = 2;
+  bytes passphrase = 3;
 }
-message SignMessageResponse{
-	bytes signature = 1;
-}
+message SignMessageResponse { bytes signature = 1; }
 
-message SignMessagesRequest{
-	message Message {
-		string address = 1;
-		string message = 2;
-	}
-	bytes passphrase = 1;
-	repeated Message messages = 2;
+message SignMessagesRequest {
+  message Message {
+    string address = 1;
+    string message = 2;
+  }
+  bytes passphrase = 1;
+  repeated Message messages = 2;
 }
-message SignMessagesResponse{
-	message SignReply {
-		bytes signature = 1;
-		string error = 2;
-	}
-	repeated SignReply replies = 1;
+message SignMessagesResponse {
+  message SignReply {
+    bytes signature = 1;
+    string error = 2;
+  }
+  repeated SignReply replies = 1;
 }
 
 message TransactionNotificationsRequest {}
 message TransactionNotificationsResponse {
-	// Sorted by increasing height.  This is a repeated field so many new blocks
-	// in a new best chain can be notified at once during a reorganize.
-	repeated BlockDetails attached_blocks = 1;
+  // Sorted by increasing height.  This is a repeated field so many new blocks
+  // in a new best chain can be notified at once during a reorganize.
+  repeated BlockDetails attached_blocks = 1;
 
-	// If there was a chain reorganize, there may have been blocks with wallet
-	// transactions that are no longer in the best chain.  These are those
-	// block's hashes.
-	repeated bytes detached_blocks = 2;
+  // If there was a chain reorganize, there may have been blocks with wallet
+  // transactions that are no longer in the best chain.  These are those
+  // block's hashes.
+  repeated bytes detached_blocks = 2;
 
-	// Any new unmined transactions are included here.  These unmined transactions
-	// refer to the current best chain, so transactions from detached blocks may
-	// be moved to mempool and included here if they are not mined or double spent
-	// in the new chain.  Additionally, if no new blocks were attached but a relevant
-	// unmined transaction is seen by the wallet, it will be reported here.
-	repeated TransactionDetails unmined_transactions = 3;
+  // Any new unmined transactions are included here.  These unmined transactions
+  // refer to the current best chain, so transactions from detached blocks may
+  // be moved to mempool and included here if they are not mined or double spent
+  // in the new chain.  Additionally, if no new blocks were attached but a
+  // relevant unmined transaction is seen by the wallet, it will be reported
+  // here.
+  repeated TransactionDetails unmined_transactions = 3;
 
-	// Instead of notifying all of the removed unmined transactions,
-	// just send all of the current hashes.
-	repeated bytes unmined_transaction_hashes = 4;
+  // Instead of notifying all of the removed unmined transactions,
+  // just send all of the current hashes.
+  repeated bytes unmined_transaction_hashes = 4;
 
-	repeated DetachedBlockDetails detached_block_headers = 5;
+  repeated DetachedBlockDetails detached_block_headers = 5;
 }
 
 message AccountNotificationsRequest {}
 message AccountNotificationsResponse {
-	uint32 account_number = 1;
-	string account_name = 2;
-	uint32 external_key_count = 3;
-	uint32 internal_key_count = 4;
-	uint32 imported_key_count = 5;
+  uint32 account_number = 1;
+  string account_name = 2;
+  uint32 external_key_count = 3;
+  uint32 internal_key_count = 4;
+  uint32 imported_key_count = 5;
 }
 
 message ConfirmationNotificationsRequest {
-    repeated bytes tx_hashes = 1;
-    int32 stop_after = 2;
+  repeated bytes tx_hashes = 1;
+  int32 stop_after = 2;
 }
 message ConfirmationNotificationsResponse {
-    message TransactionConfirmations {
-        bytes tx_hash = 1;
-        int32 confirmations = 2;
-        bytes block_hash = 3;
-        int32 block_height = 4;
-    }
-    repeated TransactionConfirmations confirmations = 1;
+  message TransactionConfirmations {
+    bytes tx_hash = 1;
+    int32 confirmations = 2;
+    bytes block_hash = 3;
+    int32 block_height = 4;
+  }
+  repeated TransactionConfirmations confirmations = 1;
 }
 
 message CreateWalletRequest {
-	bytes public_passphrase = 1;
-	bytes private_passphrase = 2;
-	bytes seed = 3;
+  bytes public_passphrase = 1;
+  bytes private_passphrase = 2;
+  bytes seed = 3;
 }
 message CreateWalletResponse {}
 
 message CreateWatchingOnlyWalletRequest {
-	string extended_pub_key = 1;
-	bytes public_passphrase = 2;
+  string extended_pub_key = 1;
+  bytes public_passphrase = 2;
 }
 message CreateWatchingOnlyWalletResponse {}
 
-message OpenWalletRequest {
-	bytes public_passphrase = 1;
-}
-message OpenWalletResponse {
-	bool watching_only = 1;
-}
+message OpenWalletRequest { bytes public_passphrase = 1; }
+message OpenWalletResponse { bool watching_only = 1; }
 
 message CloseWalletRequest {}
 message CloseWalletResponse {}
 
 message WalletExistsRequest {}
-message WalletExistsResponse {
-	bool exists = 1;
-}
+message WalletExistsResponse { bool exists = 1; }
 
 message StartConsensusRpcRequest {
-	string network_address = 1;
-	string username = 2;
-	bytes password = 3;
-	bytes certificate = 4;
+  string network_address = 1;
+  string username = 2;
+  bytes password = 3;
+  bytes certificate = 4;
 }
 message StartConsensusRpcResponse {}
 
 message DiscoverAddressesRequest {
-	bool discover_accounts = 1;
-	bytes private_passphrase = 2;
-	bytes starting_block_hash = 3;
+  bool discover_accounts = 1;
+  bytes private_passphrase = 2;
+  bytes starting_block_hash = 3;
 }
 message DiscoverAddressesResponse {}
 
@@ -735,497 +735,441 @@ message SubscribeToBlockNotificationsResponse {}
 
 message FetchHeadersRequest {}
 message FetchHeadersResponse {
-	uint32 fetched_headers_count = 1;
-	bytes first_new_block_hash = 2;
-	int32 first_new_block_height = 3;
-	bytes main_chain_tip_block_hash = 4;
-	int32 main_chain_tip_block_height = 5;
+  uint32 fetched_headers_count = 1;
+  bytes first_new_block_hash = 2;
+  int32 first_new_block_height = 3;
+  bytes main_chain_tip_block_hash = 4;
+  int32 main_chain_tip_block_height = 5;
 }
 
 enum SyncNotificationType {
-	SYNCED = 0;
-	UNSYNCED = 1;
-	PEER_CONNECTED = 2;
-	PEER_DISCONNECTED = 3;
-	FETCHED_MISSING_CFILTERS_STARTED = 4;
-	FETCHED_MISSING_CFILTERS_PROGRESS = 5;
-	FETCHED_MISSING_CFILTERS_FINISHED = 6;
-	FETCHED_HEADERS_STARTED  = 7;
-	FETCHED_HEADERS_PROGRESS  = 8;
-	FETCHED_HEADERS_FINISHED  = 9;
-	DISCOVER_ADDRESSES_STARTED = 10;
-	DISCOVER_ADDRESSES_FINISHED = 11;
-	RESCAN_STARTED = 12;
-	RESCAN_PROGRESS = 13;
-	RESCAN_FINISHED = 14;
+  SYNCED = 0;
+  UNSYNCED = 1;
+  PEER_CONNECTED = 2;
+  PEER_DISCONNECTED = 3;
+  FETCHED_MISSING_CFILTERS_STARTED = 4;
+  FETCHED_MISSING_CFILTERS_PROGRESS = 5;
+  FETCHED_MISSING_CFILTERS_FINISHED = 6;
+  FETCHED_HEADERS_STARTED = 7;
+  FETCHED_HEADERS_PROGRESS = 8;
+  FETCHED_HEADERS_FINISHED = 9;
+  DISCOVER_ADDRESSES_STARTED = 10;
+  DISCOVER_ADDRESSES_FINISHED = 11;
+  RESCAN_STARTED = 12;
+  RESCAN_PROGRESS = 13;
+  RESCAN_FINISHED = 14;
 }
 
 message FetchHeadersNotification {
-	int32 fetched_headers_count = 1;
-	int64 last_header_time = 2;
+  int32 fetched_headers_count = 1;
+  int64 last_header_time = 2;
 }
 
 message FetchMissingCFiltersNotification {
-	int32 fetched_cfilters_start_height = 1;
-	int32 fetched_cfilters_end_height = 2;
+  int32 fetched_cfilters_start_height = 1;
+  int32 fetched_cfilters_end_height = 2;
 }
 
-message RescanProgressNotification {
-	int32 rescanned_through = 1;
-}
+message RescanProgressNotification { int32 rescanned_through = 1; }
 
 message PeerNotification {
-	int32 peer_count = 1;
-	string address = 2;
+  int32 peer_count = 1;
+  string address = 2;
 }
 
 message RpcSyncRequest {
-	string network_address = 1;
-	string username = 2;
-	bytes password = 3;
-	bytes certificate = 4;
-	bool discover_accounts = 5;
-	bytes private_passphrase = 6;
+  string network_address = 1;
+  string username = 2;
+  bytes password = 3;
+  bytes certificate = 4;
+  bool discover_accounts = 5;
+  bytes private_passphrase = 6;
 }
 message RpcSyncResponse {
-	bool synced = 1;
-	SyncNotificationType notification_type = 2;
-	FetchHeadersNotification fetch_headers = 3;
-	FetchMissingCFiltersNotification fetch_missing_cfilters = 4;
-	RescanProgressNotification rescan_progress = 5;
-	PeerNotification peer_information = 6;
+  bool synced = 1;
+  SyncNotificationType notification_type = 2;
+  FetchHeadersNotification fetch_headers = 3;
+  FetchMissingCFiltersNotification fetch_missing_cfilters = 4;
+  RescanProgressNotification rescan_progress = 5;
+  PeerNotification peer_information = 6;
 }
 
 message SpvSyncRequest {
-	bool discover_accounts = 1;
-	bytes private_passphrase = 2;
-	repeated string spv_connect = 3;
+  bool discover_accounts = 1;
+  bytes private_passphrase = 2;
+  repeated string spv_connect = 3;
 }
 message SpvSyncResponse {
-	bool synced = 1;
-	SyncNotificationType notification_type = 2;
-	FetchHeadersNotification fetch_headers = 3;
-	FetchMissingCFiltersNotification fetch_missing_cfilters = 4;
-	RescanProgressNotification rescan_progress = 5;
-	PeerNotification peer_information = 6;
+  bool synced = 1;
+  SyncNotificationType notification_type = 2;
+  FetchHeadersNotification fetch_headers = 3;
+  FetchMissingCFiltersNotification fetch_missing_cfilters = 4;
+  RescanProgressNotification rescan_progress = 5;
+  PeerNotification peer_information = 6;
 }
 
 message RescanPointRequest {}
-message RescanPointResponse {
-	bytes rescan_point_hash = 1;
-}
+message RescanPointResponse { bytes rescan_point_hash = 1; }
 
-message GenerateRandomSeedRequest {
-	uint32 seed_length = 1;
-}
+message GenerateRandomSeedRequest { uint32 seed_length = 1; }
 message GenerateRandomSeedResponse {
-	bytes seed_bytes = 1;
-	string seed_hex = 2;
-	string seed_mnemonic = 3;
+  bytes seed_bytes = 1;
+  string seed_hex = 2;
+  string seed_mnemonic = 3;
 }
 
-message DecodeSeedRequest {
-	string user_input = 1;
-}
-message DecodeSeedResponse {
-	bytes decoded_seed = 1;
-}
+message DecodeSeedRequest { string user_input = 1; }
+message DecodeSeedResponse { bytes decoded_seed = 1; }
 
 message RunTicketBuyerRequest {
-	bytes passphrase = 1;
-	uint32 account = 2;
-	uint32 voting_account = 3;
-	int64 balance_to_maintain = 4;
-	string voting_address = 5;
-	string pool_address = 6;
-	double pool_fees = 7;
-	string vsp_host = 8;
-	string vsp_pubkey = 9;
-	int32 limit = 10;
-	string cspp_server = 11;
-	uint32 mixed_account = 12;
-	uint32 mixed_account_branch = 13;
-	uint32 mixed_split_account = 14;
-	uint32 change_account = 15;
+  bytes passphrase = 1;
+  uint32 account = 2;
+  uint32 voting_account = 3;
+  int64 balance_to_maintain = 4;
+  string voting_address = 5;
+  string pool_address = 6;
+  double pool_fees = 7;
+  string vsp_host = 8;
+  string vsp_pubkey = 9;
+  int32 limit = 10;
+  string cspp_server = 11;
+  uint32 mixed_account = 12;
+  uint32 mixed_account_branch = 13;
+  uint32 mixed_split_account = 14;
+  uint32 change_account = 15;
 }
 
 message RunTicketBuyerResponse {}
 
 message RunAccountMixerRequest {
-	bytes passphrase = 1;
-	uint32 mixed_account = 2;
-	uint32 mixed_account_branch = 3;
-	uint32 change_account = 4;
-	string cspp_server = 5;
+  bytes passphrase = 1;
+  uint32 mixed_account = 2;
+  uint32 mixed_account_branch = 3;
+  uint32 change_account = 4;
+  string cspp_server = 5;
 }
 
 message RunAccountMixerResponse {}
 
 message StartAutoBuyerRequest {
-	bytes passphrase = 1;
-	uint32 account = 2;
-	int64 balance_to_maintain = 3;
-	int64 max_fee_per_kb = 4;
-	double max_price_relative = 5;
-	int64 max_price_absolute = 6;
-	string voting_address = 7;
-	string pool_address = 8;
-	double pool_fees = 9;
-	int64 max_per_block = 10;
+  bytes passphrase = 1;
+  uint32 account = 2;
+  int64 balance_to_maintain = 3;
+  int64 max_fee_per_kb = 4;
+  double max_price_relative = 5;
+  int64 max_price_absolute = 6;
+  string voting_address = 7;
+  string pool_address = 8;
+  double pool_fees = 9;
+  int64 max_per_block = 10;
 }
 message StartAutoBuyerResponse {}
 
 message StopAutoBuyerRequest {}
 message StopAutoBuyerResponse {}
-message TicketBuyerConfigRequest{
+message TicketBuyerConfigRequest {}
+
+message TicketBuyerConfigResponse {
+  uint32 account = 1;
+  string avg_price_mode = 2;
+  int64 avg_priceVWAP_delta = 3;
+  int64 balance_to_maintain = 4;
+  int64 blocks_to_avg = 5;
+  bool dont_wait_for_tickets = 6;
+  int64 expiry_delta = 7;
+  string fee_source = 8;
+  double fee_target_scaling = 9;
+  int64 min_fee = 10;
+  int64 max_fee = 12;
+  int64 max_per_block = 13;
+  int64 max_price_absolute = 14;
+  double max_price_relative = 15;
+  int64 max_in_mempool = 17;
+  string pool_address = 18;
+  double pool_fees = 19;
+  bool spread_ticket_purchases = 20;
+  string voting_address = 21;
+  int64 tx_fee = 22;
 }
 
-message TicketBuyerConfigResponse{
-    uint32 account = 1;
-    string avg_price_mode = 2;
-    int64 avg_priceVWAP_delta = 3;
-    int64 balance_to_maintain = 4;
-    int64 blocks_to_avg = 5;
-    bool dont_wait_for_tickets = 6;
-    int64 expiry_delta = 7;
-    string fee_source = 8;
-    double fee_target_scaling = 9;
-    int64 min_fee = 10;
-    int64 max_fee = 12;
-    int64 max_per_block = 13;
-    int64 max_price_absolute = 14;
-    double max_price_relative = 15;
-    int64 max_in_mempool = 17;
-    string pool_address = 18;
-    double pool_fees = 19;
-    bool spread_ticket_purchases = 20;
-    string voting_address = 21;
-    int64 tx_fee = 22;
-}
+message SetAccountRequest { uint32 account = 1; }
+message SetAccountResponse {}
 
-message SetAccountRequest{
-    uint32 account = 1;
-}
-message SetAccountResponse{}
+message SetBalanceToMaintainRequest { int64 balance_to_maintain = 1; }
+message SetBalanceToMaintainResponse {}
 
-message SetBalanceToMaintainRequest{
-    int64 balance_to_maintain = 1;
-}
-message SetBalanceToMaintainResponse{}
+message SetMaxFeeRequest { int64 max_fee_per_kb = 1; }
+message SetMaxFeeResponse {}
 
-message SetMaxFeeRequest{
-    int64 max_fee_per_kb = 1;
-}
-message SetMaxFeeResponse{}
+message SetMaxPriceRelativeRequest { double max_price_relative = 1; }
+message SetMaxPriceRelativeResponse {}
 
-message SetMaxPriceRelativeRequest{
-    double max_price_relative = 1;
-}
-message SetMaxPriceRelativeResponse{}
+message SetMaxPriceAbsoluteRequest { int64 max_price_absolute = 1; }
+message SetMaxPriceAbsoluteResponse {}
 
-message SetMaxPriceAbsoluteRequest{
-    int64 max_price_absolute = 1;
-}
-message SetMaxPriceAbsoluteResponse{}
+message SetVotingAddressRequest { string voting_address = 1; }
+message SetVotingAddressResponse {}
 
-message SetVotingAddressRequest{
-    string voting_address = 1;
-}
-message SetVotingAddressResponse{}
+message SetPoolAddressRequest { string pool_address = 1; }
+message SetPoolAddressResponse {}
 
-message SetPoolAddressRequest{
-    string pool_address = 1;
-}
-message SetPoolAddressResponse{}
+message SetPoolFeesRequest { double pool_fees = 1; }
+message SetPoolFeesResponse {}
 
-message SetPoolFeesRequest{
-    double pool_fees = 1;
-}
-message SetPoolFeesResponse{}
-
-message SetMaxPerBlockRequest{
-    int64 max_per_block = 1;
-}
-message SetMaxPerBlockResponse{}
+message SetMaxPerBlockRequest { int64 max_per_block = 1; }
+message SetMaxPerBlockResponse {}
 
 message AgendasRequest {}
 message AgendasResponse {
-	message Agenda {
-		string id = 1;
-		string description = 2;
-		uint32 mask = 3;
-		repeated Choice choices = 4;
-		int64 start_time = 5;
-		int64 expire_time = 6;
-	}
-	message Choice {
-		string id = 1;
-		string description = 2;
-		uint32 bits = 3;
-		bool is_abstain = 4;
-		bool is_no = 5;
-	}
-	uint32 version = 1;
-	repeated Agenda agendas = 2;
+  message Agenda {
+    string id = 1;
+    string description = 2;
+    uint32 mask = 3;
+    repeated Choice choices = 4;
+    int64 start_time = 5;
+    int64 expire_time = 6;
+  }
+  message Choice {
+    string id = 1;
+    string description = 2;
+    uint32 bits = 3;
+    bool is_abstain = 4;
+    bool is_no = 5;
+  }
+  uint32 version = 1;
+  repeated Agenda agendas = 2;
 }
 
-message VoteChoicesRequest {
-	bytes ticket_hash = 1;
-}
+message VoteChoicesRequest { bytes ticket_hash = 1; }
 message VoteChoicesResponse {
-	message Choice {
-		string agenda_id = 1;
-		string agenda_description = 2;
-		string choice_id = 3;
-		string choice_description = 4;
-	}
-	uint32 version = 1;
-	repeated Choice choices = 2;
-	uint32 votebits = 3;
+  message Choice {
+    string agenda_id = 1;
+    string agenda_description = 2;
+    string choice_id = 3;
+    string choice_description = 4;
+  }
+  uint32 version = 1;
+  repeated Choice choices = 2;
+  uint32 votebits = 3;
 }
 
 message SetVoteChoicesRequest {
-	message Choice {
-		string agenda_id = 1;
-		string choice_id = 2;
-	}
-	repeated Choice choices = 1;
-	bytes ticket_hash = 2;
+  message Choice {
+    string agenda_id = 1;
+    string choice_id = 2;
+  }
+  repeated Choice choices = 1;
+  bytes ticket_hash = 2;
 }
-message SetVoteChoicesResponse {
-	uint32 votebits = 1;
-}
+message SetVoteChoicesResponse { uint32 votebits = 1; }
 
 message VerifyMessageRequest {
-	string address = 1;
-	string message = 2;
-	bytes signature = 3;
+  string address = 1;
+  string message = 2;
+  bytes signature = 3;
 }
-message VerifyMessageResponse {
-	bool valid = 1;
-}
+message VerifyMessageResponse { bool valid = 1; }
 
 service DecodeMessageService {
-	rpc DecodeRawTransaction (DecodeRawTransactionRequest) returns (DecodeRawTransactionResponse);
+  rpc DecodeRawTransaction(DecodeRawTransactionRequest)
+      returns (DecodeRawTransactionResponse);
 }
 
 message DecodedTransaction {
-	message Input {
-		bytes previous_transaction_hash = 1;
-		uint32 previous_transaction_index = 2;
-		enum TreeType {
-			REGULAR = 0;
-			UNKNOWN = -1;
-			STAKE = 1;
-		}
-		TreeType tree = 3;
-		uint32 sequence = 4;
-		int64 amount_in = 5;
-		uint32 block_height = 6;
-		uint32 block_index = 7;
-		bytes signature_script = 8;
-		string signature_script_asm = 9;
-	}
-	message Output {
-		int64 value = 1;
-		uint32 index = 2;
-		int32 version = 3;
-		bytes script = 4;
-		string script_asm = 5;
-		int32 required_signatures = 6;
-		enum ScriptClass {
-			NON_STANDARD = 0;
-			PUB_KEY = 1;
-			PUB_KEY_HASH = 2;
-			SCRIPT_HASH = 3;
-			MULTI_SIG = 4;
-			NULL_DATA = 5;
-			STAKE_SUBMISSION = 6;
-			STAKE_GEN = 7;
-			STAKE_REVOCATION = 8;
-			STAKE_SUB_CHANGE = 9;
-			PUB_KEY_ALT = 10;
-			PUB_KEY_HASH_ALT = 11;
-		}
-		ScriptClass script_class = 7;
-		repeated string addresses = 8;
-		int64 commitment_amount = 9;
-	}
-	bytes transaction_hash = 1;
-	int32 version = 2;
-	uint32 lock_time = 3;
-	uint32 expiry = 4;
-	TransactionDetails.TransactionType transaction_type = 5;
-	repeated Input inputs = 6;
-	repeated Output outputs = 7;
+  message Input {
+    bytes previous_transaction_hash = 1;
+    uint32 previous_transaction_index = 2;
+    enum TreeType {
+      REGULAR = 0;
+      UNKNOWN = -1;
+      STAKE = 1;
+    }
+    TreeType tree = 3;
+    uint32 sequence = 4;
+    int64 amount_in = 5;
+    uint32 block_height = 6;
+    uint32 block_index = 7;
+    bytes signature_script = 8;
+    string signature_script_asm = 9;
+  }
+  message Output {
+    int64 value = 1;
+    uint32 index = 2;
+    int32 version = 3;
+    bytes script = 4;
+    string script_asm = 5;
+    int32 required_signatures = 6;
+    enum ScriptClass {
+      NON_STANDARD = 0;
+      PUB_KEY = 1;
+      PUB_KEY_HASH = 2;
+      SCRIPT_HASH = 3;
+      MULTI_SIG = 4;
+      NULL_DATA = 5;
+      STAKE_SUBMISSION = 6;
+      STAKE_GEN = 7;
+      STAKE_REVOCATION = 8;
+      STAKE_SUB_CHANGE = 9;
+      PUB_KEY_ALT = 10;
+      PUB_KEY_HASH_ALT = 11;
+    }
+    ScriptClass script_class = 7;
+    repeated string addresses = 8;
+    int64 commitment_amount = 9;
+  }
+  bytes transaction_hash = 1;
+  int32 version = 2;
+  uint32 lock_time = 3;
+  uint32 expiry = 4;
+  TransactionDetails.TransactionType transaction_type = 5;
+  repeated Input inputs = 6;
+  repeated Output outputs = 7;
 }
 
-message DecodeRawTransactionRequest {
-	bytes serialized_transaction = 1;
-}
-message DecodeRawTransactionResponse {
-	DecodedTransaction transaction = 1;
-}
+message DecodeRawTransactionRequest { bytes serialized_transaction = 1; }
+message DecodeRawTransactionResponse { DecodedTransaction transaction = 1; }
 
-message ValidateAddressRequest {
-	string address = 1;
-}
+message ValidateAddressRequest { string address = 1; }
 
 message ValidateAddressResponse {
-	bool is_valid = 1;
-	bool is_mine = 2;
-	uint32 account_number = 3;
-	string pub_key_addr = 4;
-	bytes pub_key = 5;
-	bool is_script = 6;
-	repeated string pk_script_addrs = 7;
-	enum ScriptType {
-		NonStandardTy = 0;
-		PubKeyTy  = 1;
-		PubKeyHashTy = 2;
-		ScriptHashTy = 3;
-		MultiSigTy = 4;
-		NullDataTy = 5;
-		StakeSubmissionTy = 6;
-		StakeGenTy = 7;
-		StakeRevocationTy = 8;
-		StakeSubChangeTy = 9;
-		PubkeyAltTy = 10;
-		PubkeyHashAltTy = 11;
-	}
-	ScriptType script_type = 8;
-	bytes pay_to_addr_script = 9;
-	uint32 sigs_required = 10;
-	bool is_internal = 11;
-	uint32 index = 12;
+  bool is_valid = 1;
+  bool is_mine = 2;
+  uint32 account_number = 3;
+  string pub_key_addr = 4;
+  bytes pub_key = 5;
+  bool is_script = 6;
+  repeated string pk_script_addrs = 7;
+  enum ScriptType {
+    NonStandardTy = 0;
+    PubKeyTy = 1;
+    PubKeyHashTy = 2;
+    ScriptHashTy = 3;
+    MultiSigTy = 4;
+    NullDataTy = 5;
+    StakeSubmissionTy = 6;
+    StakeGenTy = 7;
+    StakeRevocationTy = 8;
+    StakeSubChangeTy = 9;
+    PubkeyAltTy = 10;
+    PubkeyHashAltTy = 11;
+  }
+  ScriptType script_type = 8;
+  bytes pay_to_addr_script = 9;
+  uint32 sigs_required = 10;
+  bool is_internal = 11;
+  uint32 index = 12;
 }
 
-message CommittedTicketsRequest {
-	repeated bytes tickets = 1;
-}
+message CommittedTicketsRequest { repeated bytes tickets = 1; }
 
-message GetAccountExtendedPubKeyRequest {
-	uint32 account_number = 1;
-}
+message GetAccountExtendedPubKeyRequest { uint32 account_number = 1; }
 
-message GetAccountExtendedPubKeyResponse {
-	string acc_extended_pub_key = 1;
-}
+message GetAccountExtendedPubKeyResponse { string acc_extended_pub_key = 1; }
 
 message GetAccountExtendedPrivKeyRequest {
-	uint32 account_number = 1;
-	bytes passphrase = 2;
+  uint32 account_number = 1;
+  bytes passphrase = 2;
 }
 
-message GetAccountExtendedPrivKeyResponse {
-	string acc_extended_priv_key = 1;
-}
+message GetAccountExtendedPrivKeyResponse { string acc_extended_priv_key = 1; }
 
 message CommittedTicketsResponse {
-	message TicketAddress {
-		bytes ticket = 1;
-		string address = 2;
-	}
-	repeated TicketAddress ticketAddresses = 1;
+  message TicketAddress {
+    bytes ticket = 1;
+    string address = 2;
+  }
+  repeated TicketAddress ticketAddresses = 1;
 }
 
-message BestBlockRequest {
-}
+message BestBlockRequest {}
 
 message BestBlockResponse {
-	uint32 height = 1;
-	bytes hash = 2;
+  uint32 height = 1;
+  bytes hash = 2;
 }
 
 message SweepAccountRequest {
-	string source_account = 1;
-	string destination_address = 2;
-	uint32 required_confirmations = 3;
-	double fee_per_kb = 4;
+  string source_account = 1;
+  string destination_address = 2;
+  uint32 required_confirmations = 3;
+  double fee_per_kb = 4;
 }
 
 message SweepAccountResponse {
-	bytes unsigned_transaction = 1;
-	int64 total_previous_output_amount = 2;
-	int64 total_output_amount = 3;
-	uint32 estimated_signed_size = 4;
+  bytes unsigned_transaction = 1;
+  int64 total_previous_output_amount = 2;
+  int64 total_output_amount = 3;
+  uint32 estimated_signed_size = 4;
 }
 
-message AbandonTransactionRequest{
-	bytes transaction_hash = 1;
-}
-message AbandonTransactionResponse {
-}
+message AbandonTransactionRequest { bytes transaction_hash = 1; }
+message AbandonTransactionResponse {}
 
 message SignHashesRequest {
-	bytes passphrase = 1;
-	string address = 2;
-	repeated bytes hashes = 3;
+  bytes passphrase = 1;
+  string address = 2;
+  repeated bytes hashes = 3;
 }
 
 message SignHashesResponse {
-	bytes public_key = 1;
-	repeated bytes signatures = 2;
+  bytes public_key = 1;
+  repeated bytes signatures = 2;
 }
 
 message SpenderRequest {
-	bytes transaction_hash = 1;
-	uint32 index = 2;
+  bytes transaction_hash = 1;
+  uint32 index = 2;
 }
 message SpenderResponse {
-	bytes spender_transaction = 1;
-	uint32 input_index = 2;
+  bytes spender_transaction = 1;
+  uint32 input_index = 2;
 }
 
 message GetCFiltersRequest {
-	bytes starting_block_hash = 1;
-	sint32 starting_block_height = 2;
-	bytes ending_block_hash = 3;
-	sint32 ending_block_height = 4;
+  bytes starting_block_hash = 1;
+  sint32 starting_block_height = 2;
+  bytes ending_block_hash = 3;
+  sint32 ending_block_height = 4;
 }
 
 message GetCFiltersResponse {
-	bytes key = 1;
-	bytes filter = 2;
-	bytes block_hash = 3;
+  bytes key = 1;
+  bytes filter = 2;
+  bytes block_hash = 3;
 }
 
 message GetRawBlockRequest {
-	bytes block_hash = 1;
-	sint32 block_height = 2;
+  bytes block_hash = 1;
+  sint32 block_height = 2;
 }
 
-message GetRawBlockResponse {
-	bytes block = 1;
-}
+message GetRawBlockResponse { bytes block = 1; }
 
 message GetCoinjoinOutputspByAcctRequest {}
 
 message coinjoinTxsSumByAcct {
-	uint32 account_number = 1;
-	int32 coinjoin_txs_sum = 2;
+  uint32 account_number = 1;
+  int32 coinjoin_txs_sum = 2;
 }
 
 message GetCoinjoinOutputspByAcctResponse {
-	repeated coinjoinTxsSumByAcct data = 1;
+  repeated coinjoinTxsSumByAcct data = 1;
 }
 
 message SetAccountPassphraseRequest {
-	bytes account_passphrase = 1;
-	bytes new_account_passphrase = 2;
-	uint32 account_number = 3;
-	// used only in case account pass not yet set.
-	bytes wallet_passphrase = 4;
+  bytes account_passphrase = 1;
+  bytes new_account_passphrase = 2;
+  uint32 account_number = 3;
+  // used only in case account pass not yet set.
+  bytes wallet_passphrase = 4;
 }
 
 message UnlockAccountRequest {
-	bytes passphrase = 1;
-	uint32 account_number = 2;
+  bytes passphrase = 1;
+  uint32 account_number = 2;
 }
 
-message LockAccountRequest {
-	uint32 account_number = 1;
-}
+message LockAccountRequest { uint32 account_number = 1; }
 
 message SetAccountPassphraseResponse {}
 
@@ -1233,17 +1177,11 @@ message UnlockAccountResponse {}
 
 message LockAccountResponse {}
 
-message AccountUnlockedRequest {
-	uint32 account_number = 1;
-}
+message AccountUnlockedRequest { uint32 account_number = 1; }
 
-message AccountUnlockedResponse {
-	bool unlocked = 1;
-}
+message AccountUnlockedResponse { bool unlocked = 1; }
 
-message UnlockWalletRequest {
-	bytes passphrase = 1;
-}
+message UnlockWalletRequest { bytes passphrase = 1; }
 message UnlockWalletResponse {}
 
 message LockWalletRequest {}
@@ -1251,63 +1189,65 @@ message LockWalletResponse {}
 
 message GetPeerInfoRequest {}
 message GetPeerInfoResponse {
-	message PeerInfo {
-		int32 id = 1;
-		string addr = 2;
-		string addr_local = 3;
-		string services = 4;
-		uint32 version = 5;
-		string sub_ver = 6;
-		int64 starting_height = 7;
-		int32 ban_score = 8;
-	}
-	repeated PeerInfo peer_info = 1;
+  message PeerInfo {
+    int32 id = 1;
+    string addr = 2;
+    string addr_local = 3;
+    string services = 4;
+    uint32 version = 5;
+    string sub_ver = 6;
+    int64 starting_height = 7;
+    int32 ban_score = 8;
+  }
+  repeated PeerInfo peer_info = 1;
 }
 
 message SyncVSPTicketsRequest {
-	string vsp_host = 1;
-	string vsp_pubkey = 2;
-	uint32 account = 3;
+  string vsp_host = 1;
+  string vsp_pubkey = 2;
+  uint32 account = 3;
 }
 
 message SyncVSPTicketsResponse {}
 
 message GetVSPTicketsByFeeStatusRequest {
-	enum FeeStatus {
-		VSP_FEE_PROCESS_STARTED = 0;
-		VSP_FEE_PROCESS_PAID = 1;
-		VSP_FEE_PROCESS_ERRORED = 2;
-	}
-	FeeStatus fee_status = 3;
+  enum FeeStatus {
+    VSP_FEE_PROCESS_STARTED = 0;
+    VSP_FEE_PROCESS_PAID = 1;
+    VSP_FEE_PROCESS_ERRORED = 2;
+  }
+  FeeStatus fee_status = 3;
 }
 
-message GetVSPTicketsByFeeStatusResponse {
-	repeated bytes tickets_hashes = 1;
-}
+message GetVSPTicketsByFeeStatusResponse { repeated bytes tickets_hashes = 1; }
 
 message ProcessManagedTicketsRequest {
-	string vsp_host = 1;
-	string vsp_pubkey = 2;
-	uint32 fee_account = 3;
-	uint32 change_account = 4;
+  string vsp_host = 1;
+  string vsp_pubkey = 2;
+  uint32 fee_account = 3;
+  uint32 change_account = 4;
 }
 
 message ProcessManagedTicketsResponse {}
 
 message ProcessUnmanagedTicketsRequest {
-	string vsp_host = 1;
-	string vsp_pubkey = 2;
-	uint32 fee_account = 3;
-	uint32 change_account = 4;
+  string vsp_host = 1;
+  string vsp_pubkey = 2;
+  uint32 fee_account = 3;
+  uint32 change_account = 4;
 }
 
 message ProcessUnmanagedTicketsResponse {}
 
 message SetVspdVoteChoicesRequest {
-	string vsp_host = 1;
-	string vsp_pubkey = 2;
-	uint32 fee_account = 3;
-	uint32 change_account = 4;
+  string vsp_host = 1;
+  string vsp_pubkey = 2;
+  uint32 fee_account = 3;
+  uint32 change_account = 4;
 }
 
 message SetVspdVoteChoicesResponse {}
+
+message GetReceivedByAddressRequest { string address = 1; }
+
+message GetReceivedByAddressResponse { int64 amount = 1; }

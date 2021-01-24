@@ -20,7 +20,7 @@ import {
   VSP_FEE_PROCESS_PAID
 } from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
-import { getNextAddressAttempt } from "./ControlActions";
+import { getNextAddressAttempt, getReceivedByAddress } from "./ControlActions";
 export const { TRANSACTION_TYPES } = wallet;
 
 export const GETTRANSACTIONS_CANCEL = "GETTRANSACTIONS_CANCEL";
@@ -49,18 +49,12 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
 
 // getNewAccountAddresses get accounts which received new inputs and get
 // new addresses for avoiding reuse.
-export const getNewAccountAddresses = (txs) => (dispatch) => {
-  const acctAddressUpdated = [];
-  txs.forEach((tx) => {
-    tx.tx.getCreditsList().forEach((credit) => {
-      const acctNumber = credit.getAccount();
-      // if account address not updated yet, update it
-      if (acctAddressUpdated.find(eq(acctNumber)) === undefined) {
-        acctAddressUpdated.push(acctNumber);
-        dispatch(getNextAddressAttempt(acctNumber));
-      }
-    });
-  });
+export const getNewAccountAddresses = () => async (dispatch, getState) => {
+  const nextAddress = sel.nextAddress(getState());
+  const nextAddressAccountNumber = sel.nextAddressAccountNumber(getState());
+
+  if (await dispatch(getReceivedByAddress(nextAddress > 0)))
+    dispatch(getNextAddressAttempt(nextAddressAccountNumber));
 };
 
 function checkForStakeTransactions(txs) {

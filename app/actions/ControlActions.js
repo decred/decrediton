@@ -915,3 +915,20 @@ export const getPeerInfo = () => (dispatch, getState) => {
     })
     .catch((error) => dispatch({ type: GETPEERINFO_FAILED, error }));
 };
+
+export const GETRECEIVEDBYADDRESS_ATTEMPT = "GETRECEIVEDBYADDRESS_ATTEMPT";
+export const GETRECEIVEDBYADDRESS_FAILED = "GETRECEIVEDBYADDRESS_FAILED";
+export const GETRECEIVEDBYADDRESS_SUCCESS = "GETRECEIVEDBYADDRESS_SUCCESS";
+
+export const getReceivedByAddress = (address) => async (dispatch, getState) => {
+  dispatch({ type: GETRECEIVEDBYADDRESS_ATTEMPT });
+  const walletService = sel.walletService(getState());
+  try {
+    const { amount } = await wallet.getReceivedByAddress(walletService, address);
+    dispatch({ type: GETRECEIVEDBYADDRESS_SUCCESS });
+    return amount;
+  } catch (error) {
+    dispatch({ type: GETRECEIVEDBYADDRESS_FAILED });
+    return { };
+  }
+};

@@ -361,13 +361,16 @@ export const getPeerInfo = (walletService) =>
     );
   });
 
-export const processManagedTickets = (
-  walletService,
-  vspHost,
-  vspPubkey,
-  feeAccount,
-  changeAccount
-) =>
+export const getReceivedByAddress = (walletService, address) => new Promise((ok, fail) => {
+  const request = new api.GetReceivedByAddressRequest();
+  request.setAddress(address);
+  walletService.getReceivedByAddress(request, (err, res) =>
+    err ? fail(err) : ok({ ...res, amount: res.getAmount() })
+  );
+});
+
+
+export const processManagedTickets = (walletService, vspHost, vspPubkey, feeAccount, changeAccount) =>
   new Promise((resolve, reject) => {
     const request = new api.ProcessManagedTicketsRequest();
     request.setVspHost("https://" + vspHost);
@@ -381,13 +384,7 @@ export const processManagedTickets = (
   });
 
 // processUnmanagedTicketsStartup
-export const processUnmanagedTicketsStartup = (
-  walletService,
-  vspHost,
-  vspPubkey,
-  feeAccount,
-  changeAccount
-) =>
+export const processUnmanagedTicketsStartup = (walletService, vspHost, vspPubkey, feeAccount, changeAccount) =>
   new Promise((resolve, reject) => {
     const request = new api.ProcessUnmanagedTicketsRequest();
     request.setVspHost("https://" + vspHost);
@@ -400,14 +397,7 @@ export const processUnmanagedTicketsStartup = (
     );
   });
 
-export const processUnmanagedTickets = (
-  walletService,
-  passphrase,
-  vspHost,
-  vspPubkey,
-  feeAccount,
-  changeAccount
-) =>
+export const processUnmanagedTickets = (walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount) =>
   new Promise((resolve, reject) => {
     const unlockReq = new api.UnlockWalletRequest();
     unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
@@ -470,6 +460,7 @@ export const unlockWallet = (walletService, passphrase) =>
       resolve(true);
     });
   });
+
 
 export const lockWallet = (walletService) =>
   new Promise((resolve, reject) => {
