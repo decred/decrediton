@@ -1,7 +1,8 @@
 import Select from "react-select";
 import { accountsSelect } from "connectors";
-import { injectIntl, defineMessages } from "react-intl";
+import { injectIntl, defineMessages, FormattedMessage as T } from "react-intl";
 import { Balance, LinkToAccounts } from "shared";
+import { Tooltip } from "pi-ui";
 
 const messages = defineMessages({
   placeholder: {
@@ -76,10 +77,22 @@ class AccountsSelect extends React.Component {
     return filteredAccounts;
   }
 
+  showNoAccountsTooltip(component) {
+    return !this.state.accounts?.length ?
+      (<Tooltip content={
+        <T
+          id="accountsSelect.noAccountsTooltip"
+          m="Make sure you have at least one visible account"
+        />
+      }>
+        {component}
+      </Tooltip>) : component;
+  }
+
   render() {
     const { formatMessage } = this.props.intl;
     const { className, showAccountsButton, disabled } = this.props;
-    return (
+    return this.showNoAccountsTooltip(
       <div className={"is-row " + className}>
         <Select
           disabled={disabled}

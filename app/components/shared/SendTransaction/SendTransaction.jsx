@@ -248,13 +248,18 @@ const SendTransaction = ({
     }));
   };
 
+  const accountSpendableAmount = account?.spendable;
+  const accountValue = account?.value;
+
   const onAttemptConstructTransaction = useCallback(() => {
+    if (accountSpendableAmount === undefined || accountValue === undefined)
+      return;
     const confirmations = 0;
-    setSendAllAmount(account.spendable);
+    setSendAllAmount(accountSpendableAmount);
     if (hasError()) return;
     if (!isSendAll) {
       return attemptConstructTransaction(
-        account.value,
+        accountValue,
         confirmations,
         outputs.map(({ data }) => ({
           amount: data.amount,
@@ -263,7 +268,7 @@ const SendTransaction = ({
       );
     } else {
       return attemptConstructTransaction(
-        account.value,
+        accountValue,
         confirmations,
         outputs,
         true
@@ -274,8 +279,8 @@ const SendTransaction = ({
     hasError,
     isSendAll,
     attemptConstructTransaction,
-    account.spendable,
-    account.value,
+    accountSpendableAmount,
+    accountValue,
     outputs
   ]);
 

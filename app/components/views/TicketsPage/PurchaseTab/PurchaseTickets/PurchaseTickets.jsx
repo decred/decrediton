@@ -53,8 +53,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   };
 
   useEffect(() => {
-    const { spendable } = account;
-    const canAfford = numTickets * ticketPrice <= spendable;
+    const canAfford = account && account.spendable >= numTickets * ticketPrice;
     const hasTickets = numTickets > 0;
     setIsValid(canAfford && hasTickets && !!vsp);
   }, [ticketPrice, numTickets, account, vsp]);
