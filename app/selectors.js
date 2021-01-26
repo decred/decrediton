@@ -1072,7 +1072,7 @@ export const spendingAccounts = createSelector(
 );
 
 const getNextAddressResponse = get(["control", "getNextAddressResponse"]);
-const nextAddressAccountNumber = compose(
+export const nextAddressAccountNumber = compose(
   (res) => (res ? res.accountNumber : null),
   getNextAddressResponse
 );
