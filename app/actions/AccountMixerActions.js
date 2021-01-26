@@ -3,11 +3,15 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
+<<<<<<< HEAD
 import {
   getAccountsAttempt,updateAccount,
   getAcctSpendableBalance,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
+=======
+import { getAcctSpendableBalance, getAccountsAttempt, showAccount } from "./ClientActions";
+>>>>>>> 3b6059ee (Replace updateAccount with showAccount action call)
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -63,7 +67,7 @@ export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
       const { accountName, accountNumber, hidden } = account;
       const changeAccountToVisible = hidden && (accountName === MIXED_ACCOUNT || accountName === CHANGE_ACCOUNT);
       if (changeAccountToVisible)
-        dispatch(updateAccount({ accountNumber, hidden: false }));
+        dispatch(showAccount(accountNumber));
     });
   }
   walletCfg.set(SEND_FROM_UNMIXED, value);
