@@ -82,7 +82,7 @@ class AccountsSelect extends React.Component {
       (<Tooltip content={
         <T
           id="accountsSelect.noAccountsTooltip"
-          m="Make sure you have at least one visible account"
+          m="Make sure your mixed account is visible"
         />
       }>
         {component}

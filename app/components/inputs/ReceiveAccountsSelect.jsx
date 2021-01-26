@@ -19,6 +19,7 @@ function ReceiveAccountsSelect({
     (value) => dispatch(ca.getNextAddressAttempt(value)),
     [dispatch]
   );
+
   const onChangeAccount = useCallback(
     (account) => {
       onChange && onChange(account);
@@ -27,11 +28,12 @@ function ReceiveAccountsSelect({
     [getNextAddressAttempt, onChange]
   );
 
+  const nextAddressAccountValue =
+    account && account !== nextAddressAccount?.value;
+
   useEffect(() => {
-    if (account && account != nextAddressAccount.value) {
-      getNextAddressAttempt(account);
-    }
-  }, [account, getNextAddressAttempt, nextAddressAccount.value]);
+    if (nextAddressAccountValue) getNextAddressAttempt(account);
+  }, [account, getNextAddressAttempt, nextAddressAccountValue]);
 
   return (
     <AccountsSelect
@@ -45,10 +47,7 @@ function ReceiveAccountsSelect({
         // needs to be called with it, which updates nextAddressAccount
         // eventually. Until it happens, it's better to show no account
         // than a previously chosen one.
-        account:
-          account && account != nextAddressAccount.value
-            ? null
-            : nextAddressAccount,
+        account: nextAddressAccountValue ? null : nextAddressAccount,
         disabled
       }}
     />

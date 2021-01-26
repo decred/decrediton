@@ -73,7 +73,7 @@ const TicketListPage = ({
           onChangeSortType
         })}
       />
-      {hasVSPTicketsError && (
+      {hasVSPTicketsError && account !== null && (
         <PassphraseModalButton
           {...{
             onSubmit: onSyncVspTicketsRequest,
