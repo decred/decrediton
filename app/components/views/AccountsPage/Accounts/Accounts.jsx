@@ -12,6 +12,7 @@ const Accounts = () => {
     accountExtendedKey,
     walletName,
     hasTickets,
+    allowSendFromUnmixed,
     onRenameAccount,
     onHideAccount,
     onShowAccount,
@@ -21,22 +22,21 @@ const Accounts = () => {
   return !walletService ? (
     <ErrorScreen />
   ) : (
-    <AccountsList
-      {...{
-        onGetAccountExtendedKey,
-        onHideAccount,
-        onShowAccount,
-        onRenameAccount,
-        accounts,
-        mixedAccount,
-        changeAccount,
-        isLoading,
-        accountExtendedKey,
-        walletName,
-        hasTickets
-      }}
-    />
-  );
+      <AccountsList
+        {...{
+          onGetAccountExtendedKey,
+          onHideAccount,
+          onShowAccount,
+          onRenameAccount,
+          accounts,
+          isLoading,
+          accountExtendedKey,
+          walletName,
+          hasTickets,
+          allowSendFromUnmixed
+        }}
+      />
+    );
 };
 
 export default Accounts;

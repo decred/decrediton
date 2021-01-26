@@ -13,7 +13,8 @@ const AccountRow = ({
   hideAccount,
   onGetAccountExtendedKey,
   accountExtendedKey,
-  hasTickets
+  hasTickets,
+  allowSendFromUnmixed
 }) => {
   const {
     isShowingRenameAccount,
@@ -64,7 +65,8 @@ const AccountRow = ({
         showAccount: showAccountCallback,
         onTogglePubkey,
         showPubKey,
-        accountExtendedKey
+        accountExtendedKey,
+        allowSendFromUnmixed
       }}
     />
   );

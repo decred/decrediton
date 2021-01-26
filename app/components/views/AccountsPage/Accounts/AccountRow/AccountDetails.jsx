@@ -3,12 +3,26 @@ import { Tooltip, classNames } from "pi-ui";
 import { Balance, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
 import style from "../Accounts.module.css";
-import { IMPORTED_ACCOUNT, DEFAULT_ACCOUNT } from "constants";
+import { classNames } from "pi-ui";
+import {
+  IMPORTED_ACCOUNT,
+  DEFAULT_ACCOUNT,
+  MIXED_ACCOUNT,
+  CHANGE_ACCOUNT
+} from "constants";
 
-const isHidable = (account) =>
-  account.accountName !== IMPORTED_ACCOUNT &&
-  account.accountName !== DEFAULT_ACCOUNT &&
-  !account.total;
+function isHidable(account, allowSendFromUnmixed) {
+  return (
+    account.accountName !== IMPORTED_ACCOUNT &&
+    account.accountName !== DEFAULT_ACCOUNT &&
+    !account.total &&
+    !(
+      !allowSendFromUnmixed &&
+      (account.accountName === MIXED_ACCOUNT ||
+        account.accountName === CHANGE_ACCOUNT)
+    )
+  );
+}
 
 const DataLine = ({ children }) => (
   <div className={style.detailsBottomSpec}>
@@ -25,7 +39,8 @@ const AccountsDetails = ({
   showAccount,
   showPubKey,
   onTogglePubkey,
-  accountExtendedKey
+  accountExtendedKey,
+  allowSendFromUnmixed
 }) => (
   <div key={`details${account.accountNumber}`}>
     <div className={style.detailsBottomColumns}>
@@ -137,8 +152,8 @@ const AccountsDetails = ({
             />
           </Tooltip>
         )}
-        {isHidable(account) && !hidden && (
-          <Tooltip content={<T id="accounts.hide.tip" m="Hide" />}>
+        {isHidable(account, allowSendFromUnmixed) && !hidden && (
+          <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
             <div className={style.hideButton} onClick={hideAccount} />
           </Tooltip>
         )}

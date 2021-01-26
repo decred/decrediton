@@ -4,8 +4,8 @@ import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
 import {
+  getAccountsAttempt,updateAccount,
   getAcctSpendableBalance,
-  getAccountsAttempt,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
 import {
@@ -19,7 +19,9 @@ import {
   CSPP_PORT,
   MIXED_ACCOUNT_CFG,
   CHANGE_ACCOUNT_CFG,
-  MIXED_ACC_BRANCH
+  MIXED_ACC_BRANCH,
+  MIXED_ACCOUNT,
+  CHANGE_ACCOUNT
 } from "constants";
 
 export const GETACCOUNTMIXERSERVICE_ATTEMPT = "GETACCOUNTMIXERSERVICE_ATTEMPT";
@@ -55,6 +57,15 @@ export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   const value = !walletCfg.get(SEND_FROM_UNMIXED);
+  if (!value) {
+    const accounts = sel.balances(getState());
+    accounts.forEach((account) => {
+      const { accountName, accountNumber, hidden } = account;
+      const changeAccountToVisible = hidden && (accountName === MIXED_ACCOUNT || accountName === CHANGE_ACCOUNT);
+      if (changeAccountToVisible)
+        dispatch(updateAccount({ accountNumber, hidden: false }));
+    });
+  }
   walletCfg.set(SEND_FROM_UNMIXED, value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
 };
@@ -89,49 +100,49 @@ export const runAccountMixer = ({
   changeAccount,
   csppServer
 }) => (dispatch, getState) =>
-  new Promise((resolve) => {
-    dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
-    const runMixerAsync = async () => {
-      const mixerStreamer = await wallet.runAccountMixerRequest(
-        sel.accountMixerService(getState()),
-        {
-          passphrase,
-          mixedAccount,
-          mixedAccountBranch,
-          changeAccount,
-          csppServer
-        }
-      );
-      return { mixerStreamer };
-    };
-
-    runMixerAsync()
-      .then((resp) => {
-        const { mixerStreamer, error } = resp;
-        // we can throw errors, like when the account has a small balance,
-        // so this check is necessary.
-        if (error) {
-          dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
-          return;
-        }
-        mixerStreamer.on("data", () => resolve());
-        mixerStreamer.on("error", (error) => {
-          // if context was cancelled we can ignore it, as it probably means
-          // mixer was stopped.
-          if (!String(error).includes("Cancelled")) {
-            dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+    new Promise((resolve) => {
+      dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
+      const runMixerAsync = async () => {
+        const mixerStreamer = await wallet.runAccountMixerRequest(
+          sel.accountMixerService(getState()),
+          {
+            passphrase,
+            mixedAccount,
+            mixedAccountBranch,
+            changeAccount,
+            csppServer
           }
-        });
-        mixerStreamer.on("end", (data) => {
-          // not supposed to get here, but if it does, we log to see.
-          console.log(data);
-        });
-        dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
-      })
-      .catch((error) =>
-        dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED })
-      );
-  });
+        );
+        return { mixerStreamer };
+      };
+
+      runMixerAsync()
+        .then((resp) => {
+          const { mixerStreamer, error } = resp;
+          // we can throw errors, like when the account has a small balance,
+          // so this check is necessary.
+          if (error) {
+            dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+            return;
+          }
+          mixerStreamer.on("data", () => resolve());
+          mixerStreamer.on("error", (error) => {
+            // if context was cancelled we can ignore it, as it probably means
+            // mixer was stopped.
+            if (!String(error).includes("Cancelled")) {
+              dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+            }
+          });
+          mixerStreamer.on("end", (data) => {
+            // not supposed to get here, but if it does, we log to see.
+            console.log(data);
+          });
+          dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
+        })
+        .catch((error) =>
+          dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED })
+        );
+    });
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
 export const STOPMIXER_FAILED = "STOPMIXER_FAILED";
