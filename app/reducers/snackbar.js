@@ -8,8 +8,10 @@ import {
   PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_FAILED,
   STARTTICKETBUYERV2_SUCCESS,
+  STARTTICKETBUYERV3_SUCCESS,
   STARTTICKETBUYERV2_FAILED,
   STOPTICKETBUYERV2_SUCCESS,
+  STOPTICKETBUYER_SUCCESS,
   REVOKETICKETS_SUCCESS,
   REVOKETICKETS_FAILED,
   IMPORTSCRIPT_MANUAL_SUCCESS,
@@ -305,6 +307,10 @@ const messages = defineMessages({
     id: "runTicketBuyer.Success",
     defaultMessage: "Ticket Buyer successfully started."
   },
+  STARTTICKETBUYERV3_SUCCESS: {
+    id: "runTicketBuyerNew.Success",
+    defaultMessage: "Ticket Buyer successfully started."
+  },
   STARTTICKETBUYERV2_FAILED: {
     id: "runTicketBuyer.Failed",
     defaultMessage: "Invalid private password. Please try again."
@@ -313,10 +319,13 @@ const messages = defineMessages({
     id: "stopTicketBuyer.Success",
     defaultMessage: "Ticket Buyer successfully stopped."
   },
+  STOPTICKETBUYER_SUCCESS: {
+    id: "stopTicketBuyerNew.Success",
+    defaultMessage: "Ticket Buyer successfully stopped."
+  },
   WRONG_PASSPHRASE_MSG: {
     id: "errors.wrongPassphrase",
-    defaultMessage:
-      "Wrong private passphrase entered."
+    defaultMessage: "Wrong private passphrase entered."
   },
   TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
     id: "trezor.pinProtectionSuccess.enabled",
@@ -568,7 +577,9 @@ export default function snackbar(state = {}, action) {
     case REVOKETICKETS_SUCCESS:
     case IMPORTSCRIPT_MANUAL_SUCCESS:
     case STARTTICKETBUYERV2_SUCCESS:
+    case STARTTICKETBUYERV3_SUCCESS:
     case STOPTICKETBUYERV2_SUCCESS:
+    case STOPTICKETBUYER_SUCCESS:
     case UPDATESTAKEPOOLCONFIG_SUCCESS:
     case REMOVESTAKEPOOLCONFIG:
     case SEEDCOPIEDTOCLIPBOARD:
