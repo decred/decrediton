@@ -47,13 +47,13 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
   return accountsToUpdate;
 }
 
-// getNewAccountAddresses get accounts which received new inputs and get
-// new addresses for avoiding reuse.
-export const getNewAccountAddresses = () => async (dispatch, getState) => {
+// getNewAccountAddress generates a new address for the current account if
+// its current address was already used.
+export const getNewAccountAddress = () => async (dispatch, getState) => {
   const nextAddress = sel.nextAddress(getState());
   const nextAddressAccountNumber = sel.nextAddressAccountNumber(getState());
-
-  if (await dispatch(getReceivedByAddress(nextAddress > 0)))
+  const { isValid, amount } = await dispatch(getReceivedByAddress(nextAddress));
+  if (isValid && amount > 0)
     dispatch(getNextAddressAttempt(nextAddressAccountNumber));
 };
 
@@ -173,13 +173,8 @@ export const newTransactionsReceived = (
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
-  // get new addresses for accounts which received decred
-  dispatch(
-    getNewAccountAddresses([
-      ...newlyUnminedTransactions,
-      ...newlyMinedTransactions
-    ])
-  );
+  // get new address for the current account, if it already received decred
+  dispatch(getNewAccountAddress());
 
   // Update mixer accounts balances
   const changeAccount = sel.getChangeAccount(getState());

@@ -926,9 +926,9 @@ export const getReceivedByAddress = (address) => async (dispatch, getState) => {
   try {
     const { amount } = await wallet.getReceivedByAddress(walletService, address);
     dispatch({ type: GETRECEIVEDBYADDRESS_SUCCESS });
-    return amount;
+    return { isValid: true, amount };
   } catch (error) {
-    dispatch({ type: GETRECEIVEDBYADDRESS_FAILED });
-    return { };
+    dispatch({ error, type: GETRECEIVEDBYADDRESS_FAILED });
+    return { isValid: false, error };
   }
 };

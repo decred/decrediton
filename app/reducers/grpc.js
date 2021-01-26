@@ -63,10 +63,7 @@ import {
   SIGNMESSAGE_ATTEMPT,
   SIGNMESSAGE_SUCCESS,
   SIGNMESSAGE_FAILED,
-  SIGNMESSAGE_CLEANSTORE,
-  GETRECEIVEDBYADDRESS_ATTEMPT,
-  GETRECEIVEDBYADDRESS_FAILED,
-  GETRECEIVEDBYADDRESS_SUCCESS
+  SIGNMESSAGE_CLEANSTORE
 } from "../actions/ControlActions";
 import {
   VERIFYMESSAGE_ATTEMPT,
@@ -702,12 +699,6 @@ export default function grpc(state = {}, action) {
         ...state,
         getPeerInfoError: action.error
       };
-    case GETRECEIVEDBYADDRESS_ATTEMPT:
-      return { ...state };
-    case GETRECEIVEDBYADDRESS_FAILED:
-      return { ...state };
-    case GETRECEIVEDBYADDRESS_SUCCESS:
-      return { ...state };
     default:
       return state;
   }
