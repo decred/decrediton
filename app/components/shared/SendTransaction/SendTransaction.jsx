@@ -185,15 +185,16 @@ const SendTransaction = ({
     return outputs.some(outputHasError);
   }, [outputs]);
 
-  console.log(receiveAccount, visibleAccounts);
+  const isReceiveAccountVisible =
+    receiveAccount === undefined ||
+    visibleAccounts.find(
+      (visibleAccount) => visibleAccount.value === receiveAccount
+    );
 
   const isValid = () =>
     !!(
       receiveAccount !== null &&
-      (receiveAccount === undefined ||
-        visibleAccounts.find(
-          (visibleAccount) => visibleAccount.value === receiveAccount
-        )) &&
+      isReceiveAccountVisible &&
       !hasError() &&
       unsignedTransaction &&
       !isConstructingTransaction &&
