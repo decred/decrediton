@@ -1,4 +1,5 @@
 import { classNames } from "pi-ui";
+import styles from "./indicators.module.css";
 
 export default ({ voteCounts, quorumMinimumVotes, className }) => {
   if (!voteCounts) return <></>;
@@ -18,9 +19,17 @@ export default ({ voteCounts, quorumMinimumVotes, className }) => {
   // const abstainPerc = (abstainCount / quorumMinimumVotes) * 100;
 
   return (
-    <div className={classNames("voting-progress-indicator", className)}>
-      <div className="voting-progress-yes" style={{ width: yesPerc + "%" }} />
-      <div className="voting-progress-no" style={{ width: noPerc + "%" }} />
+    <div
+      className={classNames(styles.votingProgressIndicator, className)}
+      data-testid="voting-progress">
+      <div
+        className={styles.votingProgressYes}
+        style={{ width: yesPerc + "%" }}
+      />
+      <div
+        className={styles.votingProgressNo}
+        style={{ width: noPerc + "%" }}
+      />
       {/* <div className="voting-progress-abstain" style={{ width: abstainPerc + "%" }} /> */}
     </div>
   );

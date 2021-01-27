@@ -45,12 +45,12 @@
   left: 0;
 }
 
-.rescanProgressIndicator .linear-progress.small {
+.rescanProgressIndicator .linearProgress.small {
   border-radius: 0px;
   background-color: var(--input-color-hover);
 }
 
-.rescanProgressIndicator .linear-progress.small .linear-progress-bar {
+.rescanProgressIndicator .linearProgress.small .linearProgressBar {
   background: var(--accent-color);
   border-radius: 0px;
 }
@@ -68,8 +68,306 @@
   color: var(--input-color-default);
 }
 
+/* DecredLoading */
+.decredLoading {
+  margin-top: 120px;
+  margin-left: 45%;
+  margin-bottom: 40px;
+  display: inline-block;
+  height: 120px;
+  width: 120px;
+  background-image: var(--new-loader);
+  background-position: 0px 0px;
+  background-size: 120px;
+  background-repeat: no-repeat;
+}
+.decredLoading.hidden {
+  display: none;
+}
+
+/* LinearProgress */
+.linearProgress {
+  height: 55px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--loader-bg);
+  position: relative;
+}
+
+.linearProgress.small {
+  float: left;
+  height: 4px;
+  width: 100%;
+}
+.linearProgressBar {
+  background: linear-gradient(
+    270deg,
+    var(--display-wallet-gradient-selected-right),
+    var(--input-color)
+  );
+  border-radius: 8px;
+  height: 100%;
+  box-shadow: 0px 5px 13px var(--input-color-blue-shadow);
+  transition: width 0.3s linear 0ms;
+  position: absolute;
+  width: 100%;
+}
+.linearProgressBar.error {
+  background-color: var(--error-text-color);
+}
+@keyframes slide {
+  0% {
+    opacity: 0.01;
+  }
+
+  25% {
+    opacity: 0.08;
+  }
+
+  75% {
+    opacity: 0.08;
+  }
+
+  100% {
+    left: 59px;
+  }
+}
+.linearProgressBox {
+  position: absolute;
+  margin-top: 7px;
+  height: 41px;
+  width: 41px;
+  border-radius: 3px;
+  opacity: 0;
+  background-color: var(--background-back-color);
+  animation: slide 3s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+}
+.linearProgressBox.one {
+  animation-delay: 0s;
+}
+.linearProgressBox.two {
+  animation-delay: 0.5s;
+}
+.linearProgressBox.three {
+  animation-delay: 1s;
+}
+.linearProgressBox.four {
+  animation-delay: 1.5s;
+}
+.linearProgressBox.five {
+  animation-delay: 2s;
+}
+.linearProgressBox.six {
+  animation-delay: 2.5s;
+}
+
+.linearProgressText {
+  height: 100%;
+  text-align: left;
+  color: var(--linear-progress-text-default);
+  font-size: 11px;
+  font-weight: 600;
+  padding-left: 46px;
+  padding-top: 19px;
+  font-family: var(--font-family-regular);
+  background-image: var(--blockchain-default);
+  background-repeat: no-repeat;
+  background-position: 20px 20px;
+  background-size: 16px;
+  position: absolute;
+  width: 100%;
+}
+.linearProgressText.initial {
+  color: var(--linear-progress-text-initial);
+  background-image: var(--blockchain-initial);
+}
+
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+/* StakeyBounce */
+.stakeyBounce {
+  width: 256px;
+  height: 256px;
+  background: var(--stakey-sprites-icon) left center;
+  animation: stakeyBouncePlay 0.8s steps(24) infinite;
+  position: absolute;
+}
+.stakeyBounce.center {
+  margin: 2% auto;
+  position: initial;
+}
+@keyframes stakeyBouncePlay {
+  100% {
+    background-position: -6144px;
+  }
+}
+.stakeyBounceXs {
+  transform: scale(0.125);
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: -32px;
+  margin-top: -32px;
+}
+
+/* StepIndicator */
+
+.stepIndicator {
+  display: inline-flex;
+}
+.stepIndicator button {
+  background: none;
+  outline: 0;
+  border: none;
+}
+.stepIndicator button.current {
+  cursor: initial;
+  margin: 12px;
+  height: 14px;
+  width: 14px;
+  border: 2px solid var(--step-indicator);
+  border-radius: 10px;
+}
+.stepIndicator button.checked {
+  cursor: pointer;
+  margin: 16px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--onboarding-checkcircle);
+  background-position: 50% 0px;
+  background-repeat: no-repeat;
+}
+.stepIndicator button.unchecked {
+  cursor: pointer;
+  margin: 16px;
+  height: 10px;
+  width: 10px;
+  background-color: var(--step-indicator);
+  border-radius: 10px;
+}
+
+/* LoadingMoreTransactions */
+
+.loadingMoreTransactionsIndicator {
+  padding: 17px 18px 18px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin-top: 2em;
+  background-color: var(--background-back-color);
+}
+
+/* LoadingMoreTickets */
+.loadingMoreTickets {
+  height: 50px;
+  color: var(--title-text-and-button-background);
+}
+.loadingMoreTicketsIcon {
+  background-image: var(--tickets-loading-more-icon);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 32px;
+  width: 50px;
+  height: 50px;
+}
+.loadingMoreTicketsInfo {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.loadingMoreTicketsProgressLine {
+  color: var(--disabled-color);
+}
+.getticketsCancelButton {
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--menu-cancel-rescan-icon);
+  background-size: 16px 16px;
+  cursor: pointer;
+  margin: 10px;
+  background-repeat: no-repeat;
+  /**/
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-top: -2px;
+}
+.getticketsCancelButton:hover {
+  opacity: 0.7;
+}
+
+/* NoStats, NoTransactions, ... */
+.noTransactionsIndicator,
+.noTicketsIndicator,
+.noMoreTicketsIndicator,
+.noStatsIndicator {
+  text-align: center;
+  color: var(--title-text-and-button-background);
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: center 30px;
+}
+.noStatsIndicator {
+  background-image: var(--stats-disabled-icon);
+}
+.noTransactionsIndicator {
+  color: var(--title-text-and-button-background);
+}
+.noTicketsIndicator {
+  background-image: var(--no-tickets-icon);
+}
+.noMoreTicketsIndicator {
+  height: 35px;
+  background-color: var(--no-more-tickets-indicator-bg);
+  line-height: 35px;
+}
+.noTransactionsIndicatorImg {
+  background-image: var(--no-tx-icon);
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: center 30px;
+}
+
+/* VotingProgress */
+.votingProgressIndicator {
+  width: 150px;
+  height: 5px;
+  position: relative;
+  display: flex;
+  margin-top: 2px;
+  border: 1px solid var(--white-border);
+  margin-right: 20px;
+  border-radius: 10rem;
+}
+.votingProgressIndicator .votingProgressYes {
+  background-color: var(--vote-yes-color);
+}
+.votingProgressIndicator .votingProgressNo {
+  background-color: var(--vote-no-color);
+}
+
+@media screen and (max-width: 1179px) {
+  .votingProgressIndicator {
+    width: 120px;
+  }
+}
 @media screen and (max-width: 768px) {
   .loaderBarEstimation {
     display: none;
+  }
+  .noMoreTicketsIndicator {
+    width: 315px;
+  }
+  .votingProgressIndicator {
+    width: 120px;
   }
 }

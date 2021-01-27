@@ -69,7 +69,7 @@ const TicketsStatsPage = ({
       />
       <div className="my-tickets-charts">
         {getMyTicketsStatsRequest ? (
-          <DecredLoading />
+          <DecredLoading className="new-logo-animation"/>
         ) : (
           <Switch>
             <Route
