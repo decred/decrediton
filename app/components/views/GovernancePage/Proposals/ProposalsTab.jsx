@@ -4,11 +4,11 @@ import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { createElement as h } from "react";
-import { Button, classNames } from "pi-ui";
+import { Button, Tooltip, classNames } from "pi-ui";
 import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
 
-const PageHeader = ({ isTestnet }) => (
+const PageHeader = ({ isTestnet, onRefreshProposals }) => (
   <div className={classNames(styles.header, "is-row")}>
     {/* TODO: wrapp this 'header' in a component same header is used in VotingPrefs.jsx */}
     <div>
@@ -38,6 +38,13 @@ const PageHeader = ({ isTestnet }) => (
         isTestnet={isTestnet}>
         <T id="proposals.community.createLink" m="Create a Proposal" />
       </PiLink>
+      <Tooltip
+        content={
+          <T id="proposals.community.refreshProposals" m="Refresh Proposals" />
+        }
+        placement="left">
+        <div className={styles.refreshProposals} onClick={onRefreshProposals} />
+      </Tooltip>
     </div>
   </div>
 );
@@ -56,14 +63,19 @@ const ProposalsTab = () => {
     politeiaEnabled,
     isTestnet,
     tab,
-    getTokenAndInitialBatch
+    getTokenAndInitialBatch,
+    compareInventory
   } = useProposalsTab();
 
   if (!politeiaEnabled) {
     return <PoliteiaDisabled {...{ getTokenAndInitialBatch }} />;
   }
   return (
-    <TabbedPage caret={<div />} header={<PageHeader isTestnet={isTestnet} />}>
+    <TabbedPage
+      caret={<div />}
+      header={
+        <PageHeader {...{ isTestnet, onRefreshProposals: compareInventory }} />
+      }>
       <Tab
         path="/governance/proposals/prevote"
         component={h(ProposalsList, { tab })}
