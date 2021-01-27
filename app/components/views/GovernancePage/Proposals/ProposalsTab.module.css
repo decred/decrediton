@@ -56,6 +56,20 @@
   background-color: var(--title-text-and-button-background-hovered) !important;
 }
 
+.refreshProposals {
+  width: 24px;
+  height: 24px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: var(--proposals-refresh-icon);
+  background-size: 24px 24px;
+  cursor: pointer;
+  position: relative;
+  top: 6px;
+  left: 6px;
+}
+
 .politeiaDisabled {
   padding: 38px 60px 30px 63px;
 }

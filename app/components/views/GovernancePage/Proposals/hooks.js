@@ -14,6 +14,7 @@ export function useProposalsTab() {
   const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
   const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
   const politeiaEnabled = useSelector(sel.politeiaEnabled);
+  const compareInventory = () => dispatch(gov.compareInventory());
   const location = useSelector(sel.location);
   const isTestnet = useSelector(sel.isTestNet);
   const dispatch = useDispatch();
@@ -35,7 +36,8 @@ export function useProposalsTab() {
     preVoteCount,
     politeiaEnabled,
     tab,
-    window
+    window,
+    compareInventory
   };
 }
 
