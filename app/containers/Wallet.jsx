@@ -32,31 +32,20 @@ const pageAnimation = {
 const Wallet = ({ setInterval }) => {
   const {
     getPeerInfo,
-    expandSideBar,
-    politeiaEnabled,
-    compareInventory
+    expandSideBar
   } = useWallet();
 
   const { uiAnimations } = useTheming();
 
-  // Notice that we return a cleanup logic as a function in useEffect/useMountEffect
+  // Notice that we return a cleanup logic function in useEffect/useMountEffect
   // which will run on unmount.
   useMountEffect(() => {
-    // Compare politeias inventory and update proposal list if they are different
-    // every 10 minute.
-    const piInvInterval = setInterval(() => {
-      if (politeiaEnabled) {
-        compareInventory();
-      }
-    }, 600000);
-
     // Get peer info every 10 seconds, so we can no if there are no available
     // peers.
     const peerInfoInterval = setInterval(() => getPeerInfo(), 10000);
 
-    // Cleanup intervals on unmount
+    // Cleanup interval on unmount
     return () => {
-      clearInterval(piInvInterval);
       clearInterval(peerInfoInterval);
     };
   });
