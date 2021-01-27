@@ -43,12 +43,12 @@ const Wallet = ({ setInterval }) => {
   // which will run on unmount.
   useMountEffect(() => {
     // Compare politeias inventory and update proposal list if they are different
-    // every 1 minute.
+    // every 10 minute.
     const piInvInterval = setInterval(() => {
       if (politeiaEnabled) {
         compareInventory();
       }
-    }, 60000);
+    }, 600000);
 
     // Get peer info every 10 seconds, so we can no if there are no available
     // peers.
