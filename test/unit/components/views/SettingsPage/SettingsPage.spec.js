@@ -18,6 +18,7 @@ import {
   EXTERNALREQUEST_DCRDATA
 } from "main_dev/externalRequests";
 import { en as enLocale, de as deLocale } from "i18n/locales";
+import * as vspa from "actions/VSPActions";
 
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
@@ -131,6 +132,7 @@ beforeEach(() => {
   mockPurchaseTicketsRequestAttempt = sel.purchaseTicketsRequestAttempt = jest.fn(
     () => false
   );
+  vspa.discoverAvailableVSPs = jest.fn(() => () => {});
 });
 
 test("show error when there is no walletService", () => {
