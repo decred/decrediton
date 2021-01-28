@@ -55,7 +55,8 @@ const Modal = ({
       </DangerButton>
       <InvisibleButton
         className={style.confirmCloseButton}
-        onClick={onCancelModal}>
+        onClick={onCancelModal}
+        ariaLabel="Cancel seed copy">
         <T id="seedCopyConfirm.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>

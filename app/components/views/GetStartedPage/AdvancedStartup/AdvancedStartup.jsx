@@ -1,19 +1,11 @@
 import { useState } from "react";
-import { AdvancedHeader, AdvancedBody } from "./Form";
+import { AdvancedBody } from "./Form";
 import {
   setAppdataPath,
   getAppdataPath,
   getRemoteCredentials,
   setRemoteCredentials
 } from "config.js";
-
-export const AdvancedStartupHeader = ({ ...props }) => (
-  <AdvancedHeader
-    {...{
-      ...props
-    }}
-  />
-);
 
 export const AdvancedStartupBody = ({
   submitRemoteCredentials,
@@ -93,14 +85,6 @@ export const AdvancedStartupBody = ({
   };
 
   const onSubmitRemoteForm = () => {
-    if (!isRemoteValid()) {
-      setUserHasFailedAttempt(true);
-      setPasswordHasFailedAttempt(true);
-      setHostHasFailedAttempt(true);
-      setPortHasFailedAttempt(true);
-      setCertHasFailedAttempt(true);
-      return;
-    }
     setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
     submitRemoteCredentials({
       rpc_user,
@@ -112,10 +96,6 @@ export const AdvancedStartupBody = ({
   };
 
   const onSubmitAppDataForm = () => {
-    if (!isAppDataValid()) {
-      setAppDataHasFailedAttempt(true);
-      return;
-    }
     setAppdataPath(appdata);
     submitAppdata(appdata);
   };

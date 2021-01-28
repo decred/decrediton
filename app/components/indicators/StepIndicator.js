@@ -4,6 +4,8 @@ export default ({ pageCount, currentPageIndex, onGotoPage }) => (
       .fill()
       .map((v, index) => (
         <a
+          aria-label={`step-${index}`}
+          role="link"
           className={[
             "step",
             index === currentPageIndex

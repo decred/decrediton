@@ -7,10 +7,13 @@ const InvisibleButton = ({
   type,
   disabled,
   onClick,
-  children
+  children,
+  ariaLabel
 }) => (
   <div
     className={classNames("invisible-button", className)}
+    role="button"
+    aria-label={ariaLabel}
     style={{ ...style, display: block ? "block" : undefined }}
     onClick={() => (!disabled && onClick ? onClick() : undefined)}
     {...{ type, disabled }}>
