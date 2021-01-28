@@ -17,7 +17,6 @@ import {
   getTokenAndInitialBatch,
   resetInventoryAndProposals
 } from "actions/GovernanceActions";
-import { cleanupPoliteiaCSRF } from "./GovernanceActions";
 import * as configConstants from "constants/config";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
@@ -83,8 +82,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   }
 
   if (needNetworkReset) {
-    // we need to cleanup politeia's csrf as this info is network specific.
-    dispatch(cleanupPoliteiaCSRF());
     dispatch(closeWalletRequest());
     await dispatch(closeDaemonRequest());
     dispatch(backToCredentials());
