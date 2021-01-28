@@ -124,7 +124,7 @@ beforeEach(() => {
   mockGetTicketAutoBuyerRunning = sel.getTicketAutoBuyerRunning = jest.fn(
     () => false
   );
-  mockGetHasUnpaidFee = sel.getHasUnpaidFee = jest.fn(() => false);
+  mockGetHasUnpaidFee = sel.getHasTicketFeeError = jest.fn(() => false);
   mockGetAccountMixerRunning = sel.getAccountMixerRunning = jest.fn(
     () => false
   );
@@ -180,7 +180,7 @@ test("test close wallet button (ticket autobuyer is running) ", () => {
 });
 
 test("test close wallet button (has unpaid fee) ", () => {
-  mockGetHasUnpaidFee = sel.getHasUnpaidFee = jest.fn(() => true);
+  mockGetHasUnpaidFee = sel.getHasTicketFeeError = jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
