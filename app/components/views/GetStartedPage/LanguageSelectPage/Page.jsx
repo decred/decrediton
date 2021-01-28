@@ -12,6 +12,7 @@ const LanguageSelectPage = ({
   isTestNet
 }) => (
   <div
+    data-testid="getstarted-pagebody"
     className={classNames(
       styles.pageBody,
       styles.getstarted,
