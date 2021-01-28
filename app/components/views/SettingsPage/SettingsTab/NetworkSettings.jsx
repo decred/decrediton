@@ -25,9 +25,9 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
     </div>
     <div className={styles.columnContent}>
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="network-input" className={styles.label}>
           <T id="settings.network" m="Network" />
-        </div>
+        </label>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.networkFromCli}>
@@ -38,6 +38,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             valueKey="value"
             labelKey="description"
             disabled={tempSettings.networkFromCli}
+            ariaLabelledBy="network-input"
             options={[
               {
                 key: "true",
@@ -55,9 +56,9 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </div>
 
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="spv-input" className={styles.label}>
           <T id="settings.SPV" m="SPV" />
-        </div>
+        </label>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.spvModeFromCli}>
@@ -68,6 +69,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             valueKey="key"
             labelKey="description"
             disabled={tempSettings.spvModeFromCli}
+            ariaLabelledBy="spv-input"
             options={[
               {
                 key: "true",
@@ -85,15 +87,16 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </div>
 
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="spv-connect-input" className={styles.label}>
           <T id="settings.SPVConnect" m="SPV Connect" />
-        </div>
+        </label>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.spvConnectFromCli}>
           <SettingsTextInput
             value={tempSettings.spvConnect}
             disabled={tempSettings.spvConnectFromCli}
+            ariaLabelledBy="spv-connect-input"
             onChange={(e) =>
               onChangeTempSettings({ spvConnect: e.target.value.split(",") })
             }
@@ -102,9 +105,9 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </div>
 
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="adv-damon-startup-input" className={styles.label}>
           <T id="settings.advancedDaemon.label" m="Adv. Daemon Startup" />
-        </div>
+        </label>
         <Tooltip
           text={<AlreadySetMessage />}
           disabled={!tempSettings.daemonStartAdvancedFromCli}>
@@ -117,6 +120,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             valueKey="key"
             labelKey="description"
             disabled={tempSettings.daemonStartAdvancedFromCli}
+            ariaLabelledBy="adv-damon-startup-input"
             options={[
               {
                 key: "true",

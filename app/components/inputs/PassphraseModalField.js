@@ -1,6 +1,8 @@
-export default ({ label, children }) => (
+export default ({ label, children, id }) => (
   <div className="passphrase-modal-field">
-    <div className="passphrase-modal-field-label">{label}:</div>
+    <label id={id} className="passphrase-modal-field-label">
+      {label}:
+    </label>
     <div className="passphrase-modal-field-value">{children}</div>
   </div>
 );

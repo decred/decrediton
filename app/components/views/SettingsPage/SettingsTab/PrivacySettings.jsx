@@ -47,13 +47,16 @@ const PrivacySettings = ({
               <div
                 disabled={isChangePassPhraseDisabled}
                 className={styles.updatePassphraseButton}>
-                <T
-                  id="settings.updatePrivatePassphrase"
-                  m="Update Private Passphrase"
-                />
+                <label id="update-private-passphrase-button" >
+                 <T
+                    id="settings.updatePrivatePassphrase"
+                   m="Update Private Passphrase"
+                  />
+                </label>
                 <WatchOnlyWarnNotification
                   isActive={isChangePassPhraseDisabled}>
                   <ChangePassphraseButton
+                    ariaLabelledBy="update-private-passphrase-button"
                     className={classNames(
                       styles.changePasswordDefaultIcon,
                       isChangePassPhraseDisabled &&
