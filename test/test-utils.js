@@ -43,7 +43,7 @@ const themes = {
 function render(ui, renderOptions) {
   const history = createMemoryHistory();
   const currentSettings = {
-    locale: locale,
+    locale: locale.key,
     theme: DEFAULT_LIGHT_THEME_NAME,
     allowedExternalRequests: []
   };
