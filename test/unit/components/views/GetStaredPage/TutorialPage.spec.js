@@ -15,7 +15,7 @@ beforeEach(() => {
 
 const checkIndicator = (currentIndex) => {
   for (let i = 0; i <= 3; i++) {
-    const currentIndicator = screen.getByRole("link", { name: `step-${i}` });
+    const currentIndicator = screen.getByRole("button", { name: `step-${i}` });
     if (i == currentIndex) {
       expect(currentIndicator.className).toMatch(/current/);
     } else if (i < currentIndex) {
@@ -52,16 +52,16 @@ test("clicking through the tutorial page using the indicators", () => {
   // check first page
   checkIndicator(0);
   // check second page
-  user.click(screen.getByRole("link", { name: "step-1" }));
+  user.click(screen.getByRole("button", { name: "step-1" }));
   checkIndicator(1);
   // check third page
-  user.click(screen.getByRole("link", { name: "step-2" }));
+  user.click(screen.getByRole("button", { name: "step-2" }));
   checkIndicator(2);
   // check fourth page
-  user.click(screen.getByRole("link", { name: "step-3" }));
+  user.click(screen.getByRole("button", { name: "step-3" }));
   checkIndicator(3);
   // check first page again
-  user.click(screen.getByRole("link", { name: "step-0" }));
+  user.click(screen.getByRole("button", { name: "step-0" }));
   checkIndicator(0);
 });
 

@@ -7,6 +7,7 @@ export default ({ pageCount, currentPageIndex, onGotoPage }) => (
       .fill()
       .map((_, index) => (
         <button
+          aria-label={`step-${index}`}
           className={classNames(
             index === currentPageIndex
               ? styles.current

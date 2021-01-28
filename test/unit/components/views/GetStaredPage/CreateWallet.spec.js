@@ -321,7 +321,7 @@ test("pasting valid seed words on existing seed view and receive decode error an
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockCreateWalletRequest).toHaveBeenCalled();
   await wait(() =>
-    expect(screen.getByTestId("decred-loading").style.display).toMatch(/block/i)
+    expect(screen.getByTestId("decred-loading")).not.toHaveClass("hidden")
   );
 });
 
