@@ -580,35 +580,35 @@ test("test update private passphrase", () => {
   const testPassphrase = "test-passphrase";
   const testNewPassphrase = "test-new-passphrase";
   const testConfirmPassphrase = "test-confirm-passphrase";
-  user.type(screen.getByLabelText("Private Passphrase:"), testPassphrase);
+  user.type(screen.getByLabelText(/^private passphrase/i), testPassphrase);
   user.type(
-    screen.getByLabelText("New Private Passphrase:"),
+    screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
   expect(continueButton.className).toMatch("disabled");
-  user.type(screen.getByLabelText("Confirm:"), testConfirmPassphrase);
+  user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
   expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
 
   // fix confirm passphrase
-  user.clear(screen.getByLabelText("Confirm:"));
-  user.type(screen.getByLabelText("Confirm:"), testNewPassphrase);
+  user.clear(screen.getByLabelText(/^confirm/i));
+  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(
     screen.queryByText("Passwords does not match.")
   ).not.toBeInTheDocument();
   expect(continueButton.className).not.toMatch("disabled");
 
   // clear confirm and new passphrases. should get an error message
-  user.clear(screen.getByLabelText("Confirm:"));
-  user.clear(screen.getByLabelText("New Private Passphrase:"));
+  user.clear(screen.getByLabelText(/^confirm/i));
+  user.clear(screen.getByLabelText(/^new private passphrase/i));
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
   expect(continueButton.className).toMatch("disabled");
 
   //refill inputs
   user.type(
-    screen.getByLabelText("New Private Passphrase:"),
+    screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
-  user.type(screen.getByLabelText("Confirm:"), testNewPassphrase);
+  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
   expect(continueButton.className).not.toMatch("disabled");
 

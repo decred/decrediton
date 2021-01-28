@@ -30,7 +30,8 @@ const Input = ({
   inputErrorsAreaClassName,
   unitAreaClassName,
   autoFocus,
-  dataTestId
+  dataTestId,
+  ariaLabelledBy
 }) => {
   const inputUnitDiv = useRef(null);
   const input = useRef(null);
@@ -81,6 +82,7 @@ const Input = ({
           onFocus={onInputFocus}
           onBlur={onInputBlur}
           onKeyDown={onInputKeyDown}
+          aria-labelledby={ariaLabelledBy}
         />
         {unit && (
           <span
