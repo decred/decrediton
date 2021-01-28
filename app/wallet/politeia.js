@@ -12,28 +12,31 @@ const promisifyReqLogNoData = (fnName, Req) => {
   );
 };
 
-export const cleanupCSRF = () => api.cleanupCSRF();
-
 export const getProposal = promisifyReqLogNoData(
   "getProposal",
   api.getProposal
 );
+
 export const getProposalVotes = promisifyReqLogNoData(
   "getProposalVotes",
   api.getProposalVotes
 );
+
 export const getTokenInventory = promisifyReqLogNoData(
   "getTokenInventory",
   api.getTokenInventory
 );
+
 export const castVotes = promisifyReqLogNoData(
   "castVotes",
   api.castVotes
 );
+
 export const getProposalsBatch = promisifyReqLogNoData(
   "getProposalsBatch",
   api.getProposalsBatch
 );
+
 export const getProposalsVoteStatusBatch = promisifyReqLogNoData(
   "getProposalsVoteStatusBatch",
   api.getProposalsVoteStatusBatch
