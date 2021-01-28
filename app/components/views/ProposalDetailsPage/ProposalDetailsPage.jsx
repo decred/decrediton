@@ -16,7 +16,8 @@ const ProposalDetailsPage = () => {
     getProposalError,
     goBackHistory,
     showPurchaseTicketsPage,
-    send
+    send,
+    linkedProposal
   } = useProposalDetailsPage();
 
   const stateComponent = useMemo(() => {
@@ -43,7 +44,8 @@ const ProposalDetailsPage = () => {
               viewedProposalDetails,
               goBackHistory,
               eligibleTicketCount,
-              showPurchaseTicketsPage
+              showPurchaseTicketsPage,
+              linkedProposal
             }}
           />
         );
@@ -67,7 +69,8 @@ const ProposalDetailsPage = () => {
     getProposalError,
     votingStatus,
     showPurchaseTicketsPage,
-    send
+    send,
+    linkedProposal
   ]);
 
   return (

@@ -21,7 +21,10 @@ const ProposalsListItem = ({
   modifiedSinceLastAccess,
   votingSinceLastAccess,
   quorumMinimumVotes,
-  finishedVote
+  finishedVote,
+  linkto,
+  linkedfrom,
+  approved
 }) => {
   const { viewProposalDetailsHandler, tsDate } = useProposalsListItem(token);
   const isVoting = voteStatus === VOTESTATUS_ACTIVEVOTE;
@@ -36,11 +39,24 @@ const ProposalsListItem = ({
         "is-row",
         styles.listiTtem,
         styles[voteResult],
+        !approved && styles.declined,
         finishedVote && styles.ended,
         isModified && styles.modified
       )}>
       <div>
-        <div className={styles.name}>{name}</div>
+        <div className={styles.title}>
+          <div className={styles.name}>{name}</div>
+          {linkedfrom && (
+            <div className={styles.rfp}>
+              <T id="proposalItem.rfp" m="RFP" />
+            </div>
+          )}
+          {linkto && (
+            <div className={styles.rfp}>
+              <T id="proposalItem.proposedForRfp" m="Proposed for RFP" />
+            </div>
+          )}
+        </div>
         <div className={styles.token}>{token.substring(0, 7)}</div>
       </div>
       <div className={styles.resultsArea}>
@@ -69,7 +85,11 @@ const ProposalsListItem = ({
         ) : (
           <div className={styles.voteResult}>
             {quorumPass ? (
-              voteResult
+              linkto && !approved && voteResult !== "declined" ? (
+                <T id="proposals.rfpRejected" m="Proposal not chosen" />
+              ) : (
+                voteResult
+              )
             ) : (
               <T id="proposals.quorumNotMet" m="Quorum not met" />
             )}

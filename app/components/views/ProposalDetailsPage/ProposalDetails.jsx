@@ -49,7 +49,8 @@ const ProposalDetails = ({
   newVoteChoice,
   text,
   goBackHistory,
-  eligibleTicketCount
+  eligibleTicketCount,
+  linkedProposal
 }) => {
   walletEligibleTickets = walletEligibleTickets.map((et, i) => {
     walletEligibleTickets[i].txHash = et.ticket;
@@ -60,6 +61,7 @@ const ProposalDetails = ({
   const { themeName } = useTheme();
   const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
   const shortToken = token.substring(0, 7);
+  const shortRFPToken = linkedProposal?.token.substring(0, 7);
   const proposalPath = `/proposals/${shortToken}`;
   const votingActiveOrFinished =
     voteStatus === VOTESTATUS_ACTIVEVOTE ||
@@ -70,6 +72,23 @@ const ProposalDetails = ({
         <div className={styles.overviewInfoWrapper}>
           <div className={styles.overviewInfo}>
             <div className={styles.title}>{name}</div>
+            {linkedProposal && (
+              <div className={styles.proposedToRfp}>
+                <T
+                  id="proposal.overview.proposedToRfp.label"
+                  m="Proposed for {linkedProposal}"
+                  values={{
+                    linkedProposal: (
+                      <PoliteiaLink
+                        isTestnet={isTestnet}
+                        path={`/proposals/${shortRFPToken}`}>
+                        {`${linkedProposal.name} (${shortRFPToken})`}
+                      </PoliteiaLink>
+                    )
+                  }}
+                />
+              </div>
+            )}
             <div className={styles.token}>
               <PoliteiaLink isTestnet={isTestnet} path={proposalPath}>
                 {shortToken}

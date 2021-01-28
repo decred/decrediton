@@ -72,6 +72,7 @@ const fillVoteSummary = (proposal, voteSummary, blockTimestampFromNow) => {
     : 60;
   proposal.quorumMinimumVotes = Math.round(eligibleVotes * (quorum / 100));
   proposal.voteStatus = voteSummary.status;
+  proposal.approved = voteSummary.approved;
 
   if (totalVotes > proposal.quorumMinimumVotes) {
     proposal.quorumPass = true;
