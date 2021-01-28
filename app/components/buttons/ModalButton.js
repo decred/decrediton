@@ -1,5 +1,14 @@
-const defaultButton = ({ onClick, isDisabled, buttonLabel, className }) => (
-  <button onClick={onClick} className={className}>
+const defaultButton = ({
+  onClick,
+  isDisabled,
+  buttonLabel,
+  className,
+  ariaLabelledBy
+}) => (
+  <button
+    onClick={onClick}
+    className={className}
+    aria-labelledby={ariaLabelledBy}>
     {buttonLabel}
     {isDisabled}
   </button>
@@ -42,7 +51,7 @@ class ModalButton extends React.Component {
     const { isValid, onClick } = this.props;
     onClick && onClick();
     // isValid can be not passed, so we ignore it.
-    if(isValid !== undefined && !isValid) {
+    if (isValid !== undefined && !isValid) {
       return;
     }
     this.showModal();

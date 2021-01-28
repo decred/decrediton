@@ -20,6 +20,7 @@ const Modal = ({
       parentIsValid: isValid
     }}>
     <PassphraseModalField
+      id="new-passphrase-input"
       label={
         <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
       }>
@@ -31,9 +32,11 @@ const Modal = ({
         value={newPassphrase}
         onChange={(e) => setNewPassphrase(e.target.value)}
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+        ariaLabelledBy="new-passphrase-input"
       />
     </PassphraseModalField>
     <PassphraseModalField
+      id="confirm-passphrase-input"
       label={<T id="changePassModal.confirm" m="Confirm" />}>
       <PasswordInput
         required
@@ -43,6 +46,7 @@ const Modal = ({
         value={confirmPrivPass}
         onChange={(e) => setConfirmPrivPass(e.target.value)}
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+        ariaLabelledBy="confirm-passphrase-input"
       />
     </PassphraseModalField>
     {

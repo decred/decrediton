@@ -3,6 +3,10 @@ import { SettingsInput, LanguageSelectInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
 import { classNames } from "pi-ui";
 import styles from "./Settings.module.css";
+import {
+  DEFAULT_DARK_THEME_NAME,
+  DEFAULT_LIGHT_THEME_NAME
+} from "pi-ui";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -13,9 +17,9 @@ const propTypes = {
 const availableUIThemeTypes = [
   {
     name: <T id="settings.uitheme.type.light" m="Light" />,
-    value: "theme-light"
+    value: DEFAULT_LIGHT_THEME_NAME
   },
-  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: "theme-dark" }
+  { name: <T id="settings.uitheme.type.dark" m="Dark" />, value: DEFAULT_DARK_THEME_NAME }
 ];
 
 const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
@@ -25,12 +29,13 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
     </div>
     <div className={styles.columnContent}>
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="theme-input" className={styles.label}>
           <T id="settings.uitheme.type" m="Tonality" />
-        </div>
+        </label>
         <SettingsInput
           className={styles.input}
           value={tempSettings.theme}
+          ariaLabelledBy="theme-input"
           onChange={(newTheme) =>
             onChangeTempSettings({ theme: newTheme.value })
           }
@@ -41,15 +46,16 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
       </div>
 
       <div className={styles.row}>
-        <div className={styles.label}>
+        <label id="locale-input" className={styles.label}>
           <T id="settings.locale" m="Locale" />
-        </div>
+        </label>
         <LanguageSelectInput
           className={styles.input}
           value={tempSettings.locale}
           onChange={(newLocale) =>
             onChangeTempSettings({ locale: newLocale.key })
           }
+          ariaLabelledBy="locale-input"
           valueKey="key"
           labelKey="description"
           options={locales}

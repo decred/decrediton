@@ -72,7 +72,8 @@ class Input extends React.Component {
       readOnly,
       unit,
       hidden,
-      type
+      type,
+      ariaLabelledBy
     } = this.props;
     const hasErrorToShow =
       showErrors && ((invalid && value) || (required && !value));
@@ -103,6 +104,7 @@ class Input extends React.Component {
             onFocus={this.onInputFocus}
             onBlur={this.onInputBlur}
             onKeyDown={this.onKeyDown}
+            aria-labelledby={ariaLabelledBy}
           />
           {unit && (
             <span className={"unit-area " + (hasErrorToShow && "error")}>

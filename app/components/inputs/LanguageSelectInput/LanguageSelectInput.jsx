@@ -27,7 +27,7 @@ class LanguageSelectInput extends React.Component {
   }
 
   render() {
-    const { valueKey, labelKey, options, className } = this.props;
+    const { valueKey, labelKey, options, className, ariaLabelledBy } = this.props;
 
     return (
       <div className={classNames(styles.input, className)}>
@@ -42,6 +42,7 @@ class LanguageSelectInput extends React.Component {
           optionRenderer={this.valueRenderer}
           onChange={this.onChangeSelect}
           onInputKeyDown={this.selectKeyDown}
+          aria-labelledby={ariaLabelledBy}
         />
       </div>
     );
