@@ -101,6 +101,7 @@ beforeEach(() => {
   );
   mockIsSPV = sel.isSPV = jest.fn(() => false);
   mockGoToHomePage = ca.goToHomePage = jest.fn(() => {});
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("render wallet chooser view", async () => {

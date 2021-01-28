@@ -2,6 +2,7 @@ import TutorialPage from "components/views/GetStartedPage/TutorialPage/TutorialP
 import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import * as sel from "selectors";
 
 import * as da from "actions/DaemonActions";
 
@@ -9,6 +10,7 @@ let mockFinishTutorial;
 
 beforeEach(() => {
   mockFinishTutorial = da.finishTutorial = jest.fn(() => () => {});
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 const checkIndicator = (currentIndex) => {

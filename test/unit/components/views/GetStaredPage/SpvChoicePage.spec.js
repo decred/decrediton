@@ -11,6 +11,7 @@ let mockToggleSpv;
 beforeEach(() => {
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
   mockToggleSpv = da.toggleSpv = jest.fn(() => () => {});
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("render SPV choice page", () => {

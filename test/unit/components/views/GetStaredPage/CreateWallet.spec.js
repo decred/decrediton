@@ -70,6 +70,7 @@ beforeEach(() => {
     () => testSeedMnemonic
   );
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 const goToCopySeedView = async () => {

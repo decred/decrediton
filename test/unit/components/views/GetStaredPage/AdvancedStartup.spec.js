@@ -48,6 +48,7 @@ beforeEach(() => {
   mockStartDaemon = da.startDaemon = jest.fn(() => () =>
     Promise.reject(testStartDaemonErrorMsg)
   );
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("test remote daemon form", async () => {

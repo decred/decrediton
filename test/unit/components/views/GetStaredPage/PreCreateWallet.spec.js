@@ -78,6 +78,7 @@ beforeEach(() => {
   mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
     () => () => Promise.reject()
   );
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 const goToGetStartedView = async () => {

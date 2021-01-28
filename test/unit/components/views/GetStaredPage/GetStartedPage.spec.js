@@ -63,6 +63,7 @@ beforeEach(() => {
   mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () =>
     Promise.resolve()
   );
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("render empty wallet chooser view", async () => {

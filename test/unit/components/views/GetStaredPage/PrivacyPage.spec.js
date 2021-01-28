@@ -29,6 +29,7 @@ beforeEach(() => {
   mockSaveSettings = sa.saveSettings = jest.fn(() => () => {});
   mockFinishPrivacy = da.finishPrivacy = jest.fn(() => () => {});
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("render privacy page", () => {

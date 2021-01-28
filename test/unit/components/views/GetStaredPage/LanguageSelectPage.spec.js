@@ -21,6 +21,7 @@ beforeEach(() => {
   });
   mockSelectLanguage = da.selectLanguage = jest.fn(() => () => {});
   mockIsTestNet = sel.isTestNet = jest.fn(() => false);
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("render language select page", () => {

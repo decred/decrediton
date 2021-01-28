@@ -6,6 +6,7 @@ import user from "@testing-library/user-event";
 
 import * as ama from "actions/AccountMixerActions";
 import * as ca from "actions/ControlActions";
+import * as sel from "selectors";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 
 const testCoinjoinSumByAcct = [
@@ -30,6 +31,7 @@ beforeEach(() => {
     true
   );
   mockOnSendContinue = jest.fn(() => true);
+  sel.stakeTransactions = jest.fn(() => []);
 });
 
 test("test SetMixedAcctPage", async () => {
