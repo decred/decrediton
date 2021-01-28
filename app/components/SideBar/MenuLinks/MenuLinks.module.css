@@ -1,0 +1,100 @@
+.tabs {
+  overflow: visible !important;
+}
+.tabs.expanded {
+  overflow: auto !important;
+}
+.tabs.onBottom.expanded {
+  overflow: visible !important;
+}
+.tab {
+  background-position: 13px 50%;
+  background-size: 22px;
+  background-repeat: no-repeat;
+  height: 56px;
+  min-height: 56px !important;
+  margin-top: 0 !important;
+  border-width: 5px !important;
+  padding-left: 0 !important;
+  font-size: 15px !important;
+}
+.tabs.expanded .tab span {
+  padding-left: 55px !important;
+}
+.tabs.onBottom.expanded .tab span {
+  padding-left: 0 !important;
+}
+.tab.ticketsIcon {
+  background-image: var(--menu-tickets);
+}
+.tab.transactionsIcon {
+  background-image: var(--menu-transactions);
+}
+.tab.trezorIcon {
+  background-image: var(--menu-trezor);
+}
+.tab.accountsIcon {
+  background-image: var(--menu-accounts);
+}
+.tab.securitycntrIcon {
+  background-image: var(--menu-privacy);
+}
+.tab.overviewIcon {
+  background-image: var(--menu-overview);
+}
+.tab.governanceIcon {
+  background-image: var(--menu-governance);
+}
+.tab.lnIcon {
+  background-image: var(--menu-ln);
+}
+.tab.notificationIcon::before {
+  content: "";
+  background-repeat: no-repeat;
+  background-image: var(--bell-notification-icon);
+  background-position: center;
+  background-size: 10px;
+  width: 14px;
+  height: 14px;
+  margin-left: 26px;
+  margin-top: -10px;
+  position: absolute;
+  display: inline-block;
+  z-index: 10;
+  border-radius: 50%;
+  background-color: var(--stroke-color-focused);
+}
+.menuLinkLabel {
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+}
+@media screen and (max-width: 768px) {
+  .tabs {
+    margin: 0 auto;
+  }
+  .tab {
+    height: 64px;
+    width: 64px;
+    background-position: 50%;
+    margin-right: 0 !important;
+    padding: 0 !important;
+  }
+  .tab.notificationIcon::before {
+    margin-left: 33px;
+    margin-top: -14px;
+  }
+  .tabs.expanded {
+    width: 270px;
+    height: 148px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tabs.expanded .tab {
+    padding-left: 0 !important;
+  }
+  .menuLinkLabel {
+    width: 64px;
+    height: 64px;
+  }
+}

@@ -1,73 +1,65 @@
-import { Motion } from "react-motion";
-import MenuLink from "./MenuLink/MenuLink";
-import style from "../SideBar.module.css";
+import { classNames, Tabs, Tab, Tooltip } from "pi-ui";
 import { useMenuLinks } from "./hooks";
-
-const MenuListLinks = ({ menuLinks, nodes, sidebarOnBottom, expandSideBar }) =>
-  menuLinks.map((menuLink) => {
-    const { path, link, icon, notifProp, ariaLabel } = menuLink;
-    return (
-      <MenuLink
-        path={path}
-        link={link}
-        icon={icon}
-        notifProp={notifProp}
-        ariaLabel={ariaLabel}
-        ref={(ref) => nodes.set(path, ref)}
-        sidebarOnBottom={sidebarOnBottom}
-        key={path}
-        expandSideBar={expandSideBar}
-      />
-    );
-  });
-
-const MenuList = React.memo(
-  ({ sidebarOnBottom, nodes, menuLinks, expandSideBar }) =>
-    sidebarOnBottom ? (
-      menuLinks.map((menuLinkRow, index) => (
-        <div className={style.isRow} key={index}>
-          <MenuListLinks
-            menuLinks={menuLinkRow}
-            nodes={nodes}
-            sidebarOnBottom={sidebarOnBottom}
-            expandSideBar={expandSideBar}
-          />
-        </div>
-      ))
-    ) : (
-      <MenuListLinks
-        menuLinks={menuLinks}
-        nodes={nodes}
-        sidebarOnBottom={sidebarOnBottom}
-        expandSideBar={expandSideBar}
-      />
-    )
-);
+import styles from "./MenuLinks.module.css";
+import { MENU_LINKS_PER_ROW } from "constants/Decrediton";
 
 const MenuLinks = () => {
   const {
     sidebarOnBottom,
-    uiAnimations,
-    caretStyle,
-    nodes,
     menuLinks,
     expandSideBar,
-    isCaretVisible
+    activeTabIndex,
+    onSelectTab
   } = useMenuLinks();
 
   return (
     <>
-      <MenuList {...{ sidebarOnBottom, nodes, menuLinks, expandSideBar }} />
-      {isCaretVisible &&
-        (uiAnimations ? (
-          <Motion style={caretStyle}>
-            {(caretStyle) => (
-              <div className={style.menuCaret} style={caretStyle} />
-            )}
-          </Motion>
-        ) : (
-          <div className={style.menuCaret} style={caretStyle} />
-        ))}
+      <Tabs
+        onSelectTab={onSelectTab}
+        activeTabIndex={activeTabIndex}
+        mode={sidebarOnBottom ? "horizontal" : "vertical"}
+        className={classNames(
+          styles.tabs,
+          expandSideBar && styles.expanded,
+          sidebarOnBottom && styles.onBottom
+        )}>
+        {menuLinks.map((menuLink, index) => {
+          const menuLinkLabel = (text) => (
+            <div
+              className={styles.menuLinkLabel}
+              data-testid={`menuLinkLabel-${menuLink.icon}`}>
+              {text}
+            </div>
+          );
+          const label =
+            expandSideBar && !sidebarOnBottom ? (
+              menuLinkLabel(menuLink.link)
+            ) : (
+              <Tooltip
+                content={menuLink.link}
+                placement={sidebarOnBottom ? "top" : "right"}>
+                {menuLinkLabel()}
+              </Tooltip>
+            );
+          return (
+            (index < MENU_LINKS_PER_ROW ||
+              expandSideBar ||
+              !sidebarOnBottom) && (
+              <Tab
+                label={label}
+                key={menuLink.path}
+                className={classNames(
+                  styles.tab,
+                  styles[`${menuLink.icon}Icon`],
+                  expandSideBar && styles.expanded,
+                  sidebarOnBottom && styles.onBottom,
+                  menuLink.notifProp && styles.notificationIcon
+                )}
+              />
+            )
+          );
+        })}
+      </Tabs>
     </>
   );
 };

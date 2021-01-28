@@ -1,17 +1,13 @@
-import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import { usePrevious } from "hooks";
-import { spring } from "react-motion";
-import theme from "theme";
 import * as sel from "selectors";
 import { linkList, TREZOR_KEY, LN_KEY } from "./Links";
-import { MENU_LINKS_PER_ROW } from "constants/Decrediton";
+import { useHistory } from "react-router-dom";
 
 export function useMenuLinks() {
   const location = useSelector(sel.location);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
   const expandSideBar = useSelector(sel.expandSideBar);
-  const uiAnimations = useSelector(sel.uiAnimations);
   const isTrezor = useSelector(sel.isTrezor);
   const lnEnabled = useSelector(sel.lnEnabled);
 
@@ -34,10 +30,6 @@ export function useMenuLinks() {
     ]
   );
 
-  const [caretStyle, setCaretStyle] = useState({ top: 0, left: 0 });
-  const [isCaretVisible, setIsCaretVisible] = useState(true);
-  const [selectedTab, setSelectedTab] = useState(null);
-
   const prepareLinkList = () => {
     let links = linkList;
     if (!isTrezor) {
@@ -50,39 +42,19 @@ export function useMenuLinks() {
     return links;
   };
 
-  const nodes = useRef(new Map());
   const links = useRef(prepareLinkList());
+  const menuLinks = useMemo(() => {
+    return links.current.map((link) => {
+      return { ...link, notifProp: notifProps[link.notifProp] };
+    });
+  }, [notifProps]);
 
-  const neededCaretPosition = useCallback(
-    (path) => {
-      const tabForRoute = nodes.current.get(path);
-      if (!tabForRoute) return null;
-      if (sidebarOnBottom) {
-        const newLeft = tabForRoute.offsetLeft;
-        const newTop = tabForRoute.offsetTop;
-        return { left: spring(newLeft, theme("springs.sideBar")), top: newTop };
-      }
-      const newTop = tabForRoute.offsetTop;
-      return { top: spring(newTop, theme("springs.sideBar")), left: 0 };
-    },
-    [sidebarOnBottom]
-  );
-
-  const updateCaretPosition = useCallback(() => {
-    const tabbedPageCheck = location.pathname.indexOf("/", 1);
-    const selectedTab =
-      tabbedPageCheck > 0
-        ? location.pathname.substring(0, tabbedPageCheck)
-        : location.pathname;
-    const caretPosition = neededCaretPosition(selectedTab);
-    setIsCaretVisible(!!caretPosition);
-    if (caretPosition) {
-      setCaretStyle(caretPosition);
-      setSelectedTab(selectedTab);
-    }
-  }, [location, neededCaretPosition]);
-
-  const previousSidebarOnBottom = usePrevious(sidebarOnBottom);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const history = useHistory();
+  const onSelectTab = (index) => {
+    setActiveTabIndex(index);
+    history.push(menuLinks[index].path);
+  };
 
   useEffect(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
@@ -90,62 +62,19 @@ export function useMenuLinks() {
       tabbedPageCheck > 0
         ? location.pathname.substring(0, tabbedPageCheck)
         : location.pathname;
-    if (
-      selectedTabAux !== selectedTab ||
-      sidebarOnBottom !== previousSidebarOnBottom
-    ) {
-      updateCaretPosition();
+    const tabIndex = menuLinks.findIndex(
+      (menuLink) => menuLink.path === selectedTabAux
+    );
+    if (tabIndex !== activeTabIndex) {
+      setActiveTabIndex(tabIndex);
     }
-  }, [
-    updateCaretPosition,
-    sidebarOnBottom,
-    previousSidebarOnBottom,
-    selectedTab,
-    location
-  ]);
-
-  const caretStyleMemo = useMemo(() => {
-    if (uiAnimations) {
-      return sidebarOnBottom ? { ...caretStyle } : { top: caretStyle.top };
-    } else {
-      const { top, left } = caretStyle;
-      return sidebarOnBottom
-        ? { left: left.val, top: top.val }
-        : { top: top.val };
-    }
-  }, [uiAnimations, sidebarOnBottom, caretStyle]);
-
-  const menuLinks = useMemo(() => {
-    if (sidebarOnBottom) {
-      const linksComponent = [];
-      let n = 0;
-      const totalLinks = links.current.length;
-      const numberOfRows = totalLinks / MENU_LINKS_PER_ROW;
-      for (let i = 0; i < numberOfRows && n < totalLinks; i++) {
-        linksComponent[i] = [];
-        for (let j = 0; j < MENU_LINKS_PER_ROW && n < totalLinks; j++) {
-          linksComponent[i].push({
-            ...links.current[n],
-            notifProp: notifProps[links.current[n].notifProp]
-          });
-          n++;
-        }
-      }
-      return linksComponent;
-    }
-
-    return links.current.map((link) => {
-      return { ...link, notifProp: notifProps[link.notifProp] };
-    });
-  }, [sidebarOnBottom, notifProps]);
+  }, [location, activeTabIndex, menuLinks]);
 
   return {
-    uiAnimations,
-    caretStyle: caretStyleMemo,
-    nodes: nodes.current,
     sidebarOnBottom,
     menuLinks,
     expandSideBar,
-    isCaretVisible
+    onSelectTab,
+    activeTabIndex
   };
 }
