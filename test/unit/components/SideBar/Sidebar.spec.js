@@ -30,6 +30,17 @@ jest.mock("actions/ControlActions", () => {
   };
 });
 
+const mockHistoryPush = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useHistory: () => ({
+    push: mockHistoryPush
+  })
+}));
+
+const defaultMenuLinkBorderColor = "border-color: transparent";
+const activeMenuLinkBorderColor = "border-color: rgba(46, 216, 163, 1)";
 const testCurrentBlockHeight = 12;
 const testBalances = [
   {
@@ -60,7 +71,17 @@ const testBalances = [
   }
 ];
 const mockBalances = (sel.balances = jest.fn(() => testBalances));
-
+const getMenuLinkByTestId = (testId, sidebarOnBottom, expandSideBar) => {
+  const menuLinkLabel = screen.getByTestId(testId);
+  let menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+  if (!sidebarOnBottom && expandSideBar) {
+    menuLink = menuLinkLabel.parentNode.parentNode;
+  }
+  return {
+    menuLink,
+    menuLinkLabel
+  };
+};
 const expectToHaveDefaultMenuLinks = (params) => {
   const {
     sidebarOnBottom,
@@ -69,70 +90,97 @@ const expectToHaveDefaultMenuLinks = (params) => {
     expandSideBar
   } = params || {};
 
-  const expectToHaveMenuLink = (name, className, href, icon) => {
-    const menulink = screen.queryByRole("link", { name: name });
+  const expectToHaveMenuLink = (testId, name, className, path) => {
+    const { menuLinkLabel, menuLink } = getMenuLinkByTestId(
+      testId,
+      sidebarOnBottom,
+      expandSideBar
+    );
     if (!sidebarOnBottom && expandSideBar) {
-      expect(menulink).toHaveTextContent(name);
+      expect(menuLinkLabel).toHaveTextContent(name);
     }
-    expect(menulink).toHaveClass(className);
-    expect(menulink).toHaveAttribute("href", href);
-    expect(menulink).toHaveAttribute("icon", icon);
+    // check tooltip
+    if (!expandSideBar) {
+      expect(menuLinkLabel.previousSibling).toHaveTextContent(name);
+    }
+    expect(menuLink).toHaveClass(className);
+    // test clicking
+    expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+    user.click(menuLink);
+    expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+    expect(mockHistoryPush).toHaveBeenCalledWith(path);
   };
 
-  expectToHaveMenuLink(/overview/i, "overviewIcon", "/home", "overview");
   expectToHaveMenuLink(
-    /on-chain transactions/i,
+    "menuLinkLabel-overview",
+    "Overview",
+    "overviewIcon",
+    "/home"
+  );
+  expectToHaveMenuLink(
+    "menuLinkLabel-transactions",
+    "On-chain Transactions",
     "transactionsIcon",
-    "/transactions",
-    "transactions"
+    "/transactions"
   );
-  expectToHaveMenuLink(/staking/i, "ticketsIcon", "/tickets", "tickets");
-  expectToHaveMenuLink(/accounts/i, "accountsIcon", "/accounts", "accounts");
   expectToHaveMenuLink(
-    /privacy/i,
-    "securitycntrIcon",
-    "/privacy",
-    "securitycntr"
+    "menuLinkLabel-governance",
+    "Governance",
+    "governanceIcon",
+    "/governance"
   );
-
-  if (isTrezorEnabled) {
-    expectToHaveMenuLink(/trezor/i, "trezorIcon", "/trezor", "trezor");
-  } else {
-    expect(
-      screen.queryByRole("link", { name: /trezor/i })
-    ).not.toBeInTheDocument();
+  if (!sidebarOnBottom || expandSideBar) {
+    expectToHaveMenuLink(
+      "menuLinkLabel-tickets",
+      "Staking",
+      "ticketsIcon",
+      "/tickets"
+    );
+    expectToHaveMenuLink(
+      "menuLinkLabel-accounts",
+      "Accounts",
+      "accountsIcon",
+      "/accounts"
+    );
+    expectToHaveMenuLink(
+      "menuLinkLabel-securitycntr",
+      "Privacy and Security",
+      "securitycntrIcon",
+      "/privacy"
+    );
+    if (isTrezorEnabled) {
+      expectToHaveMenuLink(
+        "menuLinkLabel-trezor",
+        "Trezor",
+        "trezorIcon",
+        "/trezor"
+      );
+    } else {
+      expect(
+        screen.queryByTestId("menuLinkLabel-trezor")
+      ).not.toBeInTheDocument();
+    }
   }
 
   if (isLnEnabled) {
-    expectToHaveMenuLink(/lightning transactions/i, "lnIcon", "/ln", "ln");
+    expectToHaveMenuLink(
+      "menuLinkLabel-ln",
+      "Lightning Transactions",
+      "lnIcon",
+      "/ln"
+    );
   } else {
-    expect(
-      screen.queryByRole("link", { name: /lightning transactions/i })
-    ).not.toBeInTheDocument();
+    expect(screen.queryByTestId("menuLinkLabel-ln")).not.toBeInTheDocument();
   }
 };
 
-const clickOnMenuLink = (name) => {
-  const menuLink = screen.queryByRole("link", { name: name });
-  expect(menuLink).not.toHaveClass("menuLinkActive");
-  user.click(menuLink);
-  expect(menuLink).toHaveClass("menuLinkActive");
-};
-
 test("renders default sidebar", () => {
-  const mockUiAnimations = (sel.uiAnimations = jest.fn(() => true));
   render(<SideBar />);
-
   expectToHaveDefaultMenuLinks({
     sidebarOnBottom: false,
     expandSideBar: false
   });
 
-  expect(
-    screen.queryByRole("link", {
-      name: "ln"
-    })
-  ).not.toBeInTheDocument();
   expect(
     screen.getByRole("button", {
       name: /^rescan$/i
@@ -141,7 +189,9 @@ test("renders default sidebar", () => {
 
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/watch-only/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/running in the background/i)).not.toBeInTheDocument();
+  expect(
+    screen.queryByText(/running in the background/i)
+  ).not.toBeInTheDocument();
   expect(
     screen.queryByTestId("menu-link-notification-icon")
   ).not.toBeInTheDocument();
@@ -189,12 +239,7 @@ test("renders default sidebar", () => {
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
-  //clicks tickets menu link on the sidebar
-  clickOnMenuLink("Staking");
-
-  expect(mockUiAnimations).toHaveBeenCalled();
   expect(mockBalances).toHaveBeenCalled();
-  mockUiAnimations.mockRestore();
 });
 
 test("renders sidebar on the bottom", () => {
@@ -210,9 +255,6 @@ test("renders sidebar on the bottom", () => {
     })
   ).not.toBeInTheDocument();
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
-
-  //clicks tickets menu link on the sidebar
-  clickOnMenuLink("Staking");
 
   // expands the sidebar
   user.click(screen.queryByRole("button", { name: /logo/i }));
@@ -246,20 +288,6 @@ test("renders sidebar with trezor enabled", () => {
 
   expect(mockIsTrezor).toHaveBeenCalled();
   mockIsTrezor.mockRestore();
-});
-
-test("renders sidebar on the bottom with animation enabled", () => {
-  const mockSidebarOnBottom = (sel.sidebarOnBottom = jest.fn(() => true));
-  const mockUiAnimations = (sel.uiAnimations = jest.fn(() => true));
-
-  render(<SideBar />);
-  //clicks tickets menu link on the sidebar
-  clickOnMenuLink("Staking");
-
-  expect(mockSidebarOnBottom).toHaveBeenCalled();
-  expect(mockUiAnimations).toHaveBeenCalled();
-  mockSidebarOnBottom.mockRestore();
-  mockUiAnimations.mockRestore();
 });
 
 test("renders sidebar with lightning network not enabled", () => {
@@ -444,18 +472,46 @@ test("tests notification icon on the menu link", () => {
     () => true
   ));
   render(<SideBar />);
-  expect(screen.getByTestId("menu-link-notification-icon")).toBeInTheDocument();
+  const { menuLink } = getMenuLinkByTestId("menuLinkLabel-governance");
+  expect(menuLink).toHaveClass("notificationIcon");
   expect(mockNewProposalsStartedVoting).toHaveBeenCalled();
   mockNewProposalsStartedVoting.mockRestore();
 });
 
 test("tests tabbedPage location", () => {
   const { history } = render(<SideBar />);
-  expect(screen.queryByRole("link", { name: /on-chain transactions/i })).not.toHaveClass(
-    "menuLinkActive"
-  );
+  const { menuLink } = getMenuLinkByTestId("menuLinkLabel-transactions");
+  expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
   history.push("transactions/send");
-  expect(screen.queryByRole("link", { name: /on-chain transactions/i })).toHaveClass(
-    "menuLinkActive"
-  );
+  expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+});
+
+test("none of the menu links should be selected when clicking on the settings button", () => {
+  render(<SideBar />);
+  let menuLinkLabels = screen.getAllByTestId(/menuLinkLabel-/i);
+  menuLinkLabels.map((menuLinkLabel) => {
+    const menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+    expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+  });
+  const { menuLink } = getMenuLinkByTestId("menuLinkLabel-tickets");
+  user.click(menuLink);
+
+  // click on Staking
+  menuLinkLabels = screen.getAllByTestId(/menuLinkLabel-/i);
+  menuLinkLabels.map((menuLinkLabel) => {
+    const menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+    if (menuLink.textContent == "Staking") {
+      expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+    } else {
+      expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+    }
+  });
+
+  // click on settings
+  user.click(screen.getByRole("link", { name: "settings" }));
+  menuLinkLabels = screen.getAllByTestId(/menuLinkLabel-/i);
+  menuLinkLabels.map((menuLinkLabel) => {
+    const menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+    expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+  });
 });
