@@ -92,6 +92,7 @@ import { DAEMON_ADVANCED, LOCALE, DISABLE_HARDWARE_ACCEL } from "constants/confi
 
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
+app.allowRendererProcessReuse = false;
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
