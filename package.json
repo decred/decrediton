@@ -286,7 +286,7 @@
     "mv": "^2.1.1",
     "node-abi": "^2.15.0",
     "node-addon-loader": "decred/node-addon-loader#master",
-    "pi-ui": "https://github.com/guilhermemntt/pi-ui#slider",
+    "pi-ui": "https://github.com/guilhermemntt/pi-ui#50b040d1ea0a5e83f6d2fd9d9f3a970282f23320",
     "prop-types": "^15.7.2",
     "qr-image": "^3.2.0",
     "raw-loader": "^0.5.1",

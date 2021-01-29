@@ -9405,13 +9405,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"pi-ui@https://github.com/guilhermemntt/pi-ui#slider":
+"pi-ui@https://github.com/guilhermemntt/pi-ui#50b040d1ea0a5e83f6d2fd9d9f3a970282f23320":
   version "1.0.0"
-<<<<<<< HEAD
-  resolved "https://github.com/decred/pi-ui#11c6a58569c1cfe6eae446d88681d35e9c631932"
-=======
-  resolved "https://github.com/guilhermemntt/pi-ui#0c6303d70aad4c59401251bef41e586a7f184f4b"
->>>>>>> 0aa0c1bc (Remove noUiSlider dependence)
+  resolved "https://github.com/guilhermemntt/pi-ui#50b040d1ea0a5e83f6d2fd9d9f3a970282f23320"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"
