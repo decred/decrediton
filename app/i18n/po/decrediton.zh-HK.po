@@ -31,10 +31,9 @@ msgid ""
 "  "
 msgstr ""
 "\n"
-"  請再輸入剛才設定的密碼以掃瞄更多以前可能使用過的帳號。\n"
+"  輸入你剛才創建的密碼以掃描區塊鏈，查找你以前用錢包創建的其他賬戶。\n"
 "\n"
-"  由於帳戶名稱並不會儲存在區塊鏈上面，所以在完成設定Decrediton後你會需要為它"
-"們重新命名。\n"
+"  你的賬戶名稱沒有存儲在區塊鏈上，所以你必須在設置 Decrediton 後重新命名它們。\n"
 "  "
 
 #. [help.blockchain]
@@ -124,7 +123,7 @@ msgstr "*請輸入你的錢包密碼"
 msgctxt "confirmSeed.warnings.pasteExistingSeed"
 msgid ""
 "*Please make sure you also have a physical, written down copy of your seed."
-msgstr "*請亦確保你有一份實體手寫的種子抄本。"
+msgstr "*請確保你有一份實體手寫的種子抄本。"
 
 #. [receive.tooltipGenerated]
 #. defaultMessage is:
@@ -140,7 +139,7 @@ msgstr "+ 已經產生新地址"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.ninetyfifthpercentile.label"
 msgid "95% of tickets voted:"
-msgstr "投票第95百分位數："
+msgstr "95%的投票："
 
 #. [aboutModal.paragraph1]
 #. defaultMessage is:
@@ -149,7 +148,7 @@ msgstr "投票第95百分位數："
 msgctxt "aboutModal.paragraph1"
 msgid ""
 "A cross platform GUI Wallet for Decred written in node.js using Electron"
-msgstr "使用 Electron 以 node.js 編寫的跨平台圖形使用者介面錢包"
+msgstr "使用 Electron 在 node.js 上編寫的跨平台 GUI 介面錢包"
 
 #. [stakepool.apikey]
 #. defaultMessage is:
@@ -269,7 +268,7 @@ msgstr "帳戶"
 #: app/i18n/extracted/app/components/shared/PrivacyForm/PrivacyForm.json
 msgctxt "privacy.mixing.account.branch"
 msgid "Account Branch"
-msgstr "帳戶"
+msgstr "分支帳戶"
 
 #. [securitycenter.validate.owned.accountNumber]
 #. defaultMessage is:
@@ -417,7 +416,7 @@ msgstr "新增VSP {host}"
 #: app/i18n/extracted/app/components/views/LNPage/WatchtowersTab/WatchtowersTab.json
 msgctxt "ln.watchtowersTab.addWatchtowerHeader"
 msgid "Add Watchtower"
-msgstr "加入監視塔"
+msgstr "新增監視塔"
 
 #. [stakepool.addPoolTitle]
 #. defaultMessage is:
@@ -425,7 +424,7 @@ msgstr "加入監視塔"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_AddForm.json
 msgctxt "stakepool.addPoolTitle"
 msgid "Add a VSP"
-msgstr "加入VSP"
+msgstr "新增VSP"
 
 #. [send.destinationAddrPlaceholder]
 #. defaultMessage is:
@@ -1050,7 +1049,7 @@ msgstr "區塊"
 #: app/i18n/extracted/app/components/indicators/AnimatedLinearProgressFull.json
 msgctxt "getStarted.chainLoading.syncEstimation"
 msgid "Blockchain download estimated complete: "
-msgstr "區塊鏈的下載預計需時： "
+msgstr "區塊鏈下載預計需時： "
 
 #. [securitycenter.validate.owned.branch]
 #. defaultMessage is:
@@ -2108,7 +2107,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
 msgctxt "accounts.createDefaultAcc"
 msgid "Create default Accounts"
-msgstr "新增預設的帳戶"
+msgstr "新增預設帳戶"
 
 #. [accounts.defaultAccountConfirmations]
 #. defaultMessage is:
@@ -2116,7 +2115,7 @@ msgstr "新增預設的帳戶"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/ConfigMixer/CreateDefaultAccounts.json
 msgctxt "accounts.defaultAccountConfirmations"
 msgid "Create default accounts"
-msgstr "新增預設的帳戶"
+msgstr "新增預設帳戶"
 
 #. [ln.connectPage.createAccount]
 #. defaultMessage is:
@@ -2259,7 +2258,7 @@ msgctxt "export.dailyBalances.fields.time"
 msgid ""
 "Date of the balance. The time part is always fixed as the last second of the "
 "day (to represent the balance at the end of that day)."
-msgstr "餘額日子。時候部份固定是該日的最後一秒（以表達當天的結餘）。"
+msgstr "餘額日子。時間總是固定為該日的最後一秒（表示當天的結餘）。"
 
 #. [export.tickets.fields.time]
 #. defaultMessage is:
@@ -2365,7 +2364,7 @@ msgctxt "aboutModal.paragraph2a"
 msgid ""
 "Decrediton is free and open source software, developed and designed by the "
 "global team of"
-msgstr "Decrediton 是自由及開放源碼軟件，由分佈世界各地的貢獻者團隊設計和開發"
+msgstr "Decrediton 是免費的開源軟件，由分佈世界各地的貢獻者團隊設計和開發"
 
 #. [tickets.purchasing.message]
 #. defaultMessage is:
@@ -2541,7 +2540,7 @@ msgid ""
 "This may prevent you from using certain features of the app. Recommended for "
 "advanced users."
 msgstr ""
-"停用所有到第三方（非dcrd／非dcrwallet）服務的連線。程式的部份功能可能因而無法"
+"停止連線所有第三方（非dcrd／非dcrwallet）服務。程式的部份功能可能因而無法"
 "使用。只建議進階使用者選取此項。"
 
 #. [getStarted.header.discoveringAddresses.meta]
@@ -3597,7 +3596,7 @@ msgstr "交易的雜湊值（txid）"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
 msgctxt "mytickets.statistics.heatmap.link"
 msgid "Heatmap"
-msgstr "熱圖"
+msgstr "實時圖表"
 
 #. [txDetails.blockHeightLabel]
 #. defaultMessage is:
@@ -8077,7 +8076,7 @@ msgstr "符合投票資格的選票： "
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.chainLoading.headerTime"
 msgid "Time from last fetched header:"
-msgstr "最近下載的區塊頭時間："
+msgstr "最近下載的區塊頭時間為："
 
 #. [ln.nodeInfo.channel.policy.timelock]
 #. defaultMessage is:
@@ -8085,7 +8084,7 @@ msgstr "最近下載的區塊頭時間："
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/NodeInfo.json
 msgctxt "ln.nodeInfo.channel.policy.timelock"
 msgid "Timelock Delta"
-msgstr "Timelock Delta"
+msgstr "時間鎖 Delta"
 
 #. [ln.channelsTab.closedChannel.timeLockedBalance]
 #. defaultMessage is:
@@ -8333,7 +8332,7 @@ msgstr "目標非本錢包地址的總發款。"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.revoked"
 msgid "Total amount, in DCR, of tickets revoked"
-msgstr "撤銷的選票的DCR總數"
+msgstr "已撤銷選票的DCR總數"
 
 #. [export.dailyBalances.fields.voted]
 #. defaultMessage is:
@@ -8341,7 +8340,7 @@ msgstr "撤銷的選票的DCR總數"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/helpers.json
 msgctxt "export.dailyBalances.fields.voted"
 msgid "Total amount, in DCR, of tickets voted"
-msgstr "已投票的選票的DCR總數"
+msgstr "已投票選票的DCR總數"
 
 #. [export.dailyBalances.fields.ticket]
 #. defaultMessage is:
@@ -8759,7 +8758,7 @@ msgctxt "trezor.walletCreationpassphraseModal.description"
 msgid ""
 "Type the secret passphrase of the wallet to restore from the Trezor device "
 "{label}"
-msgstr "輸入錢包的秘密密碼以從 Trezor {label} 裝置恢復錢包"
+msgstr "輸入錢包密碼以從 Trezor {label} 裝置恢復錢包"
 
 #. [trezor.wordModal.description]
 #. defaultMessage is:
@@ -8767,7 +8766,7 @@ msgstr "輸入錢包的秘密密碼以從 Trezor {label} 裝置恢復錢包"
 #: app/i18n/extracted/app/components/modals/trezor/WordModal.json
 msgctxt "trezor.wordModal.description"
 msgid "Type the word requested in the Trezor device."
-msgstr "輸入Trezor裝置上所要求的字詞。"
+msgstr "在Trezor輸入字詞。"
 
 #. [stakePoolSelect.addNewPromptEmpty]
 #. defaultMessage is:
@@ -8855,7 +8854,7 @@ msgstr "復原"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.unlockWalletModal"
 msgid "Unlock LN Wallet"
-msgstr "解鎖閃電錢包"
+msgstr "解鎖閃電網路錢包"
 
 #. [ln.startupStage.unlock]
 #. defaultMessage is:
@@ -8863,7 +8862,7 @@ msgstr "解鎖閃電錢包"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.startupStage.unlock"
 msgid "Unlocking LN wallet"
-msgstr "正在解鎖閃電錢包"
+msgstr "正在解鎖閃電網路錢包"
 
 #. [transaction.type.unmined]
 #. defaultMessage is:
@@ -9560,7 +9559,7 @@ msgstr "錢包錯誤"
 #: app/i18n/extracted/app/components/views/TransactionPage/Page.json
 msgctxt "txDetails.walletInputs"
 msgid "Wallet Inputs"
-msgstr "錢包的輸入"
+msgstr "錢包輸入"
 
 #. [createwallet.walletname.label]
 #. defaultMessage is:
@@ -9576,7 +9575,7 @@ msgstr "錢包名稱"
 #: app/i18n/extracted/app/components/views/TransactionPage/Page.json
 msgctxt "txDetails.walletOutputs"
 msgid "Wallet Outputs"
-msgstr "錢包的輸出"
+msgstr "錢包輸出"
 
 #. [trezor.walltCreationPrivatePassphrase]
 #. defaultMessage is:
@@ -9592,7 +9591,7 @@ msgstr "錢包密碼"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.account"
 msgid "Wallet account to use"
-msgstr "使用的錢包帳戶"
+msgstr "要使用的錢包帳戶"
 
 #. [aboutModal.paragraph3]
 #. defaultMessage is:
@@ -9600,7 +9599,7 @@ msgstr "使用的錢包帳戶"
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph3"
 msgid "Want to help or get involved, check out"
-msgstr "如欲協助改善或加入參與，歡迎查閱"
+msgstr "如欲協助改善或參與，歡迎查閱"
 
 #. [walletselection.removeConfirmModal.content]
 #. defaultMessage is:
@@ -9801,7 +9800,7 @@ msgstr "你沒有選票可用於此提案的投票。若要為未來的提案投
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList.json
 msgctxt "stakePoolsList.noVSPs"
 msgid "You have no configured VSPs"
-msgstr "你沒有設定任何的VSP"
+msgstr "你沒有設定任何VSP"
 
 #. [tickets.updateStakePoolConfigHeader]
 #. defaultMessage is:
@@ -9868,8 +9867,8 @@ msgid ""
 "vote, they will\n"
 "          be missed. Click on this button for re-sync fees"
 msgstr ""
-"你仍有選票未繳付手續費。如果你繼續關閉，而該等選票又被選中，它們將會錯過投"
-"票。\n"
+"你仍有選票未繳付手續費。如果你繼續關閉，而該等選票又被選中，它們將會錯過投票。"
+"\n"
 "          點擊這個按鈕以重新同步手續費"
 
 #. [tickets.importScriptHeader]
@@ -9915,7 +9914,7 @@ msgid ""
 "Thanks for participating in Decred's governance"
 msgstr ""
 "你的投票已提交！\n"
-"多謝參與Decred的治理"
+"多謝參與Decred治理"
 
 #. [proposal.details.description]
 #. defaultMessage is:
