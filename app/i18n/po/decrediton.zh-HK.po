@@ -31,7 +31,7 @@ msgid ""
 "  "
 msgstr ""
 "\n"
-"  輸入你剛才創建的密碼以掃描區塊鏈，查找你以前用錢包創建的其他賬戶。\n"
+"  輸入你剛才創建的密碼以掃描區塊鏈，查找你以前用錢包建立的其他賬戶。\n"
 "\n"
 "  你的賬戶名稱沒有存儲在區塊鏈上，所以你必須在設置 Decrediton 後重新命名它們。\n"
 "  "
@@ -2364,7 +2364,7 @@ msgctxt "aboutModal.paragraph2a"
 msgid ""
 "Decrediton is free and open source software, developed and designed by the "
 "global team of"
-msgstr "Decrediton 是免費的開源軟件，由分佈世界各地的貢獻者團隊設計和開發"
+msgstr "Decrediton 是自由及開放源碼軟件，由分佈世界各地的貢獻者團隊設計和開發"
 
 #. [tickets.purchasing.message]
 #. defaultMessage is:
@@ -3050,7 +3050,7 @@ msgctxt "export.votetime.descr"
 msgid ""
 "Export a time-to-vote histogram in days (how many days from ticket purchase "
 "until the ticket was selected for voting)."
-msgstr "匯出以天數計算的時間對投票直方圖（從買票到選票被選中投票的天數）。"
+msgstr "以天數為單位匯出投票時間柱狀圖（從買票開始到票被選中投出為止的天數）。"
 
 #. [transactions.description.export]
 #. defaultMessage is:
