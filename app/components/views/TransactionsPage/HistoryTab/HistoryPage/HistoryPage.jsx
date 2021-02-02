@@ -22,7 +22,7 @@ const subtitleMenu = ({
   sortTypes,
   txTypes,
   selectedSortOrderKey,
-  selectedTxTypeKey,
+  selectedTxTypeKeys,
   searchText,
   intl,
   onChangeSelectedType,
@@ -63,7 +63,7 @@ const subtitleMenu = ({
       text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
       <EyeFilterMenu
         options={txTypes}
-        selected={selectedTxTypeKey}
+        selected={selectedTxTypeKeys}
         onChange={onChangeSelectedType}
       />
     </Tooltip>
@@ -77,7 +77,7 @@ const Page = ({
   transactionsFilter,
   noMoreTransactions,
   selectedSortOrderKey,
-  selectedTxTypeKey,
+  selectedTxTypeKeys,
   searchText,
   currencyDisplay,
   unitDivisor,
@@ -98,7 +98,7 @@ const Page = ({
         sortTypes,
         txTypes,
         selectedSortOrderKey,
-        selectedTxTypeKey,
+        selectedTxTypeKeys,
         searchText,
         intl,
         onChangeSelectedType,
