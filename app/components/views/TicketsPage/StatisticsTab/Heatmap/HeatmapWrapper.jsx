@@ -1,6 +1,7 @@
+import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import { themes } from "./themes";
 import TooltipInfo from "./TooltipInfo";
-import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import styles from "../Statistics.module.css";
 import { useStatistics } from "../hooks";
@@ -73,7 +74,7 @@ function drawInfo(opts = {}) {
       const color = theme[`grade${day.intensity}`];
       const divEl = (
         <Tooltip
-          text={<TooltipInfo {...{ dayDate, ...day }} />}
+          content={<TooltipInfo {...{ dayDate, ...day }} />}
           key={"index" + dayIndex}>
           <div
             style={{

@@ -4,6 +4,10 @@
   margin: 0 0 10px 1em;
 }
 
+.tooltip {
+  width: 11.5rem;
+}
+
 .enabled,
 .disabled {
   display: block;

@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip, CopyToClipboard } from "shared";
+import { Tooltip } from "pi-ui";
+import { Balance, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
 import style from "../Accounts.module.css";
 import { classNames } from "pi-ui";

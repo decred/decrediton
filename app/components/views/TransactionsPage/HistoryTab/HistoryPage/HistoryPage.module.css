@@ -16,6 +16,16 @@
   height: 100%;
 }
 
+.sortByTooltip {
+  font-size: 14px;
+  width: 4.5rem;
+}
+
+.typeTooltip {
+  font-size: 14px;
+  width: 10.5rem;
+}
+
 @media screen and (max-width: 1179px) {
   .historyPageContent {
     width: 667px;

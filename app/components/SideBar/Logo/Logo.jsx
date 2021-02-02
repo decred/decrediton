@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import { TESTNET, MAINNET } from "constants";
 import styles from "./Logo.module.css";
 
@@ -15,7 +15,7 @@ const Logo = React.memo(
     <div className={expandSideBar ? styles.logo : styles.reducedLogo}>
       {isWatchingOnly && (
         <Tooltip
-          text={
+          content={
             <T
               id="sidebar.isWatchingOnlyTooltip"
               m="This is a watch-only wallet with limited functionality."
@@ -33,7 +33,7 @@ const Logo = React.memo(
       />
       {getRunningIndicator && (
         <Tooltip
-          text={
+          content={
             <T
               id="sidebar.mixer.running"
               m="One or more of the following decrediton's features running in the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt"

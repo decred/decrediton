@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import styles from "./Overview.module.css";
 
 // TODO: we should improve this component and use the StatusTag component
@@ -9,7 +9,7 @@ import styles from "./Overview.module.css";
 const ProgressIndicator = ({ passed, inProgress }) =>
   !inProgress ? (
     <Tooltip
-      text={
+      content={
         <T
           id="agenda.card.finishedTooltip"
           m="This agenda has finished voting and {passed}.  You may still toggle your vote choices, but they will no longer be tallied."
@@ -22,7 +22,7 @@ const ProgressIndicator = ({ passed, inProgress }) =>
     </Tooltip>
   ) : (
     <Tooltip
-      text={
+      content={
         <T
           id="agenda.card.inProgressTooltip"
           m="Voting is still in progress."

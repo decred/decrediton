@@ -1,11 +1,11 @@
-import { useWatchtowersTab } from "./hooks";
-import { FormattedMessage as T } from "react-intl";
 import { useState } from "react";
+import { FormattedMessage as T } from "react-intl";
+import { CopyableText, Tooltip } from "pi-ui";
+import { useWatchtowersTab } from "./hooks";
 import styles from "./WatchtowersTab.module.css";
 import { TextInput } from "inputs";
-import { Subtitle, Tooltip } from "shared";
+import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
-import { CopyableText } from "pi-ui";
 
 const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
   const [pubkey, setPubkey] = useState("");
@@ -87,7 +87,9 @@ const WatchtowersTab = () => {
           key={tower.pubkey}>
           <Tooltip
             className={styles.removeTowerBtn}
-            text={<T id="ln.watchtowersTab.removeTowerBtn" m="Remove tower" />}>
+            content={
+              <T id="ln.watchtowersTab.removeTowerBtn" m="Remove tower" />
+            }>
             <a
               className={styles.removeIcon}
               onClick={() => {

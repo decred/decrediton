@@ -1,16 +1,16 @@
 import { useState } from "react";
+import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
 import ErrorScreen from "ErrorScreen";
 import { useService } from "hooks";
 import { useHomePage } from "./hooks";
-import { FormattedMessage as T } from "react-intl";
-import { Balance, TabsHeader, Tooltip } from "shared";
+import { Balance, TabsHeader } from "shared";
 import { StandalonePage } from "layout";
 import RecentTransactions from "./RecentTransactions/RecentTransactions";
 import RecentTickets from "./RecentTickets/RecentTickets";
 import BalanceTab from "./Tabs/BalanceTab/BalanceTab";
 import TicketsTab from "./Tabs/TicketsTab/TicketsTab";
 import TransactionsTab from "./Tabs/TransactionsTab/TransactionsTab";
-import { classNames } from "pi-ui";
 import styles from "./HomePage.module.css";
 
 const ROWS_NUMBER_ON_TABLE = 5;
@@ -22,7 +22,7 @@ const tabMessages = {
 };
 
 const withTooltip = (Component) => (
-  <Tooltip text={Component}>{Component}</Tooltip>
+  <Tooltip content={Component}>{Component}</Tooltip>
 );
 
 const tabs = [

@@ -1,5 +1,6 @@
 .tooltip {
-  height: 2.2rem;
+  width: 20rem;
+  top: -10% !important;
 }
 
 .rescan.syncing {

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Balance, Tooltip } from "shared";
+import { Balance } from "shared";
+import { Tooltip } from "pi-ui";
 import { ProgressRing } from "indicators";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import {
@@ -85,7 +86,7 @@ const Transaction = ({
         />
       </div>
       <div className={style.snackbarInformationRowTx}>
-        <Tooltip width={300} text={`${message.txHash}`}>
+        <Tooltip content={`${message.txHash}`}>
           <Link
             onClick={onDismissMessage}
             to={`/transaction/history/${message.txHash}`}>

@@ -1,4 +1,4 @@
-import { Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { TabsHeader } from "shared";
 import styles from "./ProposalsFilter.module.css";
@@ -6,7 +6,8 @@ import styles from "./ProposalsFilter.module.css";
 const tabs = [
   {
     label: (
-      <Tooltip text={<T id="proposals.statusLinks.allFinishedVote" m="All" />}>
+      <Tooltip
+        content={<T id="proposals.statusLinks.allFinishedVote" m="All" />}>
         <T id="proposals.statusLinks.allFinishedVote" m="All" />
       </Tooltip>
     ),
@@ -16,7 +17,7 @@ const tabs = [
   {
     label: (
       <Tooltip
-        text={<T id="proposals.statusLinks.approvedVote" m="Approved" />}>
+        content={<T id="proposals.statusLinks.approvedVote" m="Approved" />}>
         <T id="proposals.statusLinks.approvedVote" m="Approved" />
       </Tooltip>
     ),
@@ -26,7 +27,7 @@ const tabs = [
   {
     label: (
       <Tooltip
-        text={<T id="proposals.statusLinks.rejectedVote" m="Rejected" />}>
+        content={<T id="proposals.statusLinks.rejectedVote" m="Rejected" />}>
         <T id="proposals.statusLinks.rejectedVote" m="Rejected" />
       </Tooltip>
     ),
