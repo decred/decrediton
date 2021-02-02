@@ -29,7 +29,7 @@
   }
 
   .historyContainer {
-    margin-left: 0;
+    margin: 15px 0 0 0;
   }
 
   .historyContentTitle {
@@ -42,6 +42,6 @@
   }
 
   .historySearchTx {
-    width: 250px;
+    width: 255px;
   }
 }
