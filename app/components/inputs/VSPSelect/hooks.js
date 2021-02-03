@@ -6,6 +6,7 @@ import * as sel from "selectors";
 import { useState, useMemo } from "react";
 
 export const useVSPSelect = (options, vsp, setVspFee) => {
+  const TIMEOUT_TIME = 5000;
   const dispatch = useDispatch();
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const getVSPInfo = (host) => dispatch(vspa.getVSPInfo(host));
@@ -48,7 +49,10 @@ export const useVSPSelect = (options, vsp, setVspFee) => {
       load: (c, event) => {
         const { value } = event;
         setSelected(value);
-        getVSPInfo(value.host)
+        const timeout = setTimeout(() => {
+          send({ type: "REJECT", error: "Timeout" });
+        }, TIMEOUT_TIME);
+        const vspInfoFunc = getVSPInfo(value.host)
           .then((info) => {
             const { pubkey, error } = info;
             if (error) {
@@ -61,6 +65,7 @@ export const useVSPSelect = (options, vsp, setVspFee) => {
             send("RESOLVE");
           })
           .catch((error) => send({ type: "REJECT", error }));
+        Promise.race([timeout, vspInfoFunc]);
       }
     }
   });
