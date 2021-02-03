@@ -31,7 +31,7 @@ msgid ""
 "  "
 msgstr ""
 "\n"
-"  輸入你剛才創建的密碼以掃描區塊鏈，查找你以前用錢包建立的其他賬戶。\n"
+"  輸入你剛才建立的密碼以掃描區塊鏈，查找你以前用錢包建立的其他賬戶。\n"
 "\n"
 "  你的賬戶名稱沒有存儲在區塊鏈上，所以你必須在設置 Decrediton 後重新命名它"
 "們。\n"
@@ -684,7 +684,7 @@ msgstr "你確定要新增這個VSP嗎？"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.closeWalletModalContent"
 msgid "Are you sure you want to close {walletName} and return to the launcher?"
-msgstr "你確定要關閉{walletName}並回到開始嗎？"
+msgstr "你確定要關閉{walletName}並回到開始畫面嗎？"
 
 #. [settings.closeWalletModalWithAutobuyerModal]
 #. defaultMessage is:
