@@ -33,7 +33,8 @@ msgstr ""
 "\n"
 "  輸入你剛才創建的密碼以掃描區塊鏈，查找你以前用錢包建立的其他賬戶。\n"
 "\n"
-"  你的賬戶名稱沒有存儲在區塊鏈上，所以你必須在設置 Decrediton 後重新命名它們。\n"
+"  你的賬戶名稱沒有存儲在區塊鏈上，所以你必須在設置 Decrediton 後重新命名它"
+"們。\n"
 "  "
 
 #. [help.blockchain]
@@ -148,7 +149,7 @@ msgstr "95%的投票："
 msgctxt "aboutModal.paragraph1"
 msgid ""
 "A cross platform GUI Wallet for Decred written in node.js using Electron"
-msgstr "使用 Electron 在 node.js 上編寫的跨平台 GUI 介面錢包"
+msgstr "使用 Electron 在 node.js 上編寫的跨平台GUI錢包"
 
 #. [stakepool.apikey]
 #. defaultMessage is:
@@ -767,9 +768,9 @@ msgid ""
 "          operations and only transfer the funds you intend to use in LN to "
 "it."
 msgstr ""
-"注意：閃電錢包執行時以非加密方式儲存鑰匙到記憶體中且控制著所選\n"
-"          帳戶中的所有資金。建議的做法是為閃電錢包使用獨立的帳戶並\n"
-"          只轉帳你想要在閃電網絡上使用的資金數量。"
+"注意：閃電網路錢包執行時以非加密方式儲存鑰匙到記憶體中且控制著\n"
+"          所選帳戶中的所有資金。建議的做法是為閃電網路錢包使用獨立\n"
+"          的帳戶並只轉帳你想要在閃電網絡上使用的資金數量。"
 
 #. [tickets.autobuyerRunning.title]
 #. defaultMessage is:
@@ -2030,7 +2031,7 @@ msgstr "交易對方 (node@ip:port)"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.createLNWalletPage.title"
 msgid "Create Lightning Wallet"
-msgstr "新增閃電錢包"
+msgstr "新增閃電網路錢包"
 
 #. [accounts.createNeededAcc]
 #. defaultMessage is:
@@ -2322,7 +2323,7 @@ msgstr "Decred區塊鏈瀏覽器"
 #: app/i18n/extracted/app/components/views/SettingsPage/LinksTab/LinksTab.json
 msgctxt "help.constitution.subtitle"
 msgid "Decred Project Constitution"
-msgstr "Decred 項目憲法"
+msgstr "Decred 憲法"
 
 #. [aboutModal.paragraph2b]
 #. defaultMessage is:
@@ -2540,8 +2541,8 @@ msgid ""
 "This may prevent you from using certain features of the app. Recommended for "
 "advanced users."
 msgstr ""
-"停止連線所有第三方（非dcrd／非dcrwallet）服務。程式的部份功能可能因而無法"
-"使用。只建議進階使用者選取此項。"
+"停止連線所有第三方（非dcrd／非dcrwallet）服務。程式的部份功能可能因而無法使"
+"用。只建議進階使用者選取此項。"
 
 #. [getStarted.header.discoveringAddresses.meta]
 #. defaultMessage is:
@@ -3147,7 +3148,7 @@ msgstr "無法加入監視塔：{originalError}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.connectFailed"
 msgid "Failed to connect to LN wallet: {originalError}"
-msgstr "無法連接閃電錢包：{originalError}"
+msgstr "無法連接閃電網路錢包：{originalError}"
 
 #. [ln.ntf.createAccountFailed]
 #. defaultMessage is:
@@ -3204,7 +3205,7 @@ msgstr "啟動時無法與dcrlnd同步：{originalError}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.unlockFailed"
 msgid "Failed to unlock LN wallet: {originalError}"
-msgstr "無法解除鎖定閃電錢包：{originalError}"
+msgstr "無法解除鎖定閃電網路錢包：{originalError}"
 
 #. [fatal.header.title]
 #. defaultMessage is:
@@ -3428,7 +3429,7 @@ msgstr "已取消充值"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.fundWalletFailed"
 msgid "Funding LN Wallet failed: {originalError}"
-msgstr "無法為閃電錢包充值：{originalError}"
+msgstr "無法為閃電網路錢包充值：{originalError}"
 
 #. [settings.gapLimit.label]
 #. defaultMessage is:
@@ -3968,7 +3969,7 @@ msgstr "發票"
 #: app/i18n/extracted/app/components/views/LNPage/InvoicesTab/index.json
 msgctxt "ln.description.invoices"
 msgid "Invoices (payment requests) created by this LN wallet."
-msgstr "於閃電錢包建立發票（付款要求）"
+msgstr "於閃電網路錢包建立發票（付款要求）"
 
 #. [privacy.create.needed.description]
 #. defaultMessage is:
@@ -5070,7 +5071,7 @@ msgstr "鏈上交易"
 #: app/i18n/extracted/app/components/views/LNPage/WalletTab/index.json
 msgctxt "ln.description.wallet"
 msgid "On-chain balance and actions of the LN Wallet"
-msgstr "閃電錢包的鏈上餘額及相關動作"
+msgstr "閃電網路錢包的鏈上餘額及相關動作"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
@@ -5094,8 +5095,7 @@ msgctxt "sidebar.mixer.running"
 msgid ""
 "One or more of the following decrediton's features running in the "
 "background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt"
-msgstr ""
-"Decrediton以下的一個或多個功能正在背景執行：混幣器、自動買票機、購買選票"
+msgstr "Decrediton的一個或多個功能正在背景執行：混幣器、自動買票機、購買選票"
 
 #. [ln.paymentsTab.outstanding]
 #. defaultMessage is:
@@ -5159,7 +5159,7 @@ msgstr "開啟錢包"
 #: app/i18n/extracted/app/components/views/LNPage/ChannelsTab/index.json
 msgctxt "ln.description.channels"
 msgid "Open and pending channels of this LN Wallet"
-msgstr "於閃電錢包開啟通道"
+msgstr "於閃電網路錢包開啟通道"
 
 #. [sidebar.link.home]
 #. defaultMessage is:
@@ -5295,7 +5295,7 @@ msgstr "付款"
 #: app/i18n/extracted/app/components/views/LNPage/PaymentsTab/index.json
 msgctxt "ln.description.payments"
 msgid "Payments sent from this LN wallet."
-msgstr "於閃電錢包發送付款。"
+msgstr "於閃電網路錢包發送付款。"
 
 #. [txHistory.Pending]
 #. defaultMessage is:
@@ -5406,7 +5406,7 @@ msgstr ""
 msgctxt "SendFromUnmixed.confirmPhraseInstruction"
 msgid ""
 "Please type {confirmationPhrase} to allow sending from unmixed accounts."
-msgstr "請輸入 {confirmationPhrase} 以允許從未混幣帳戶的發送。"
+msgstr "請輸入 {confirmationPhrase} 以允許從未混幣帳戶發送。"
 
 #. [seedCopyConfirmModal.confirmPhraseInstruction]
 #. defaultMessage is:
@@ -6915,7 +6915,7 @@ msgstr "發送自"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.fundWalletSucces"
 msgid "Sent LN Wallet fund transaction"
-msgstr "已發送閃電錢包充值交易"
+msgstr "已發送閃電網路錢包充值交易"
 
 #. [ln.ntf.withdrawWalletSuccess]
 #. defaultMessage is:
@@ -6923,7 +6923,7 @@ msgstr "已發送閃電錢包充值交易"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.withdrawWalletSuccess"
 msgid "Sent withdraw transaction for LN Wallet"
-msgstr "已發送閃電錢包提款交易"
+msgstr "已發送閃電網路錢包提款交易"
 
 #. [appMenu.services]
 #. defaultMessage is:
@@ -7211,7 +7211,7 @@ msgstr "資源"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.details.spendable"
 msgid "Spendable"
-msgstr "可用的餘額"
+msgstr "可用餘額"
 
 #. [accounts.row.spendable]
 #. defaultMessage is:
@@ -7315,7 +7315,7 @@ msgstr "啟動AppData後台服務"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.title"
 msgid "Start Lightning Wallet"
-msgstr "啟動閃電錢包"
+msgstr "啟動閃電網路錢包"
 
 #. [privacy.start.mixer.confirmation]
 #. defaultMessage is:
@@ -7363,7 +7363,7 @@ msgstr "確認啟動自動買票機"
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.launchBtn"
 msgid "Start and Unlock LN Wallet"
-msgstr "啟動並解鎖閃電錢包"
+msgstr "啟動並解鎖閃電網路錢包"
 
 #. [trezor.wordModal.selectPlaceholder]
 #. defaultMessage is:
@@ -7379,7 +7379,7 @@ msgstr "在此輸入字詞..."
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.connectPage.description"
 msgid "Start, unlock and connect to the dcrlnd wallet."
-msgstr "啟動、解鎖及連接到 dcrlnd 閃電錢包。"
+msgstr "啟動、解鎖及連接到 dcrlnd 閃電網路錢包。"
 
 #. [loaderBar.StartingDaemon]
 #. defaultMessage is:
@@ -7535,7 +7535,7 @@ msgstr "正在與後台服務進行同步..."
 #: app/i18n/extracted/app/components/views/LNPage/ConnectPage.json
 msgctxt "ln.startupStage.startupSync"
 msgid "Syncing LN wallet to network"
-msgstr "正在同步閃電錢包"
+msgstr "正在同步閃電網路錢包"
 
 #. [loaderBar.syncingRPC]
 #. defaultMessage is:
@@ -9750,7 +9750,7 @@ msgstr "總價值 {value}"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "ln.ntf.withdrawWalletFailed"
 msgid "Withdrawing from LN Wallet failed: {originalError}"
-msgstr "無法從閃電錢包提款：{originalError}"
+msgstr "無法從閃電網路錢包提款：{originalError}"
 
 #. [errors.wrongPassphrase]
 #. defaultMessage is:
@@ -9842,8 +9842,7 @@ msgid ""
 "your redeem script {warnMessage}"
 msgstr ""
 "你必須備份兌換指令碼。\n"
-"          如果VSP未有通知的情況下突然關閉，而你又沒有你的兌換指令碼 "
-"{warnMessage}"
+"          如果VSP未有通知的情況下突然關閉，而你又沒有兌換指令碼 {warnMessage}"
 
 #. [getstarted.setAccount.isValidMessage]
 #. defaultMessage is:
@@ -9867,8 +9866,8 @@ msgid ""
 "vote, they will\n"
 "          be missed. Click on this button for re-sync fees"
 msgstr ""
-"你仍有選票未繳付手續費。如果你繼續關閉，而該等選票又被選中，它們將會錯過投票。"
-"\n"
+"你仍有選票未繳付手續費。如果你繼續關閉，而該等選票又被選中，它們將會錯過投"
+"票。\n"
 "          點擊這個按鈕以重新同步手續費"
 
 #. [tickets.importScriptHeader]
