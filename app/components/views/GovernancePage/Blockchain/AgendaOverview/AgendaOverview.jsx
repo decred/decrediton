@@ -18,8 +18,8 @@ const AgendaOverview = ({
     }
   }, [selectedChoice, selectedChoiceId]);
 
-  const updatePreferences = () => {
-    onUpdateVotePreference(agenda.name, selectedChoiceId);
+  const updatePreferences =  async (passphrase) => {
+    await onUpdateVotePreference(agenda.name, selectedChoiceId, passphrase);
   };
 
   const agendaChoices = agenda.choices;

@@ -17,7 +17,8 @@ import {
   refreshStakepoolPurchaseInformation,
   setStakePoolVoteChoices,
   getStakepoolStats,
-  getVSPTicketsByFeeStatus
+  getVSPTicketsByFeeStatus,
+  setVSPDVoteChoices
 } from "./VSPActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -626,7 +627,7 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (agendaId, choiceId) => (
+export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
   dispatch,
   getState
 ) => {
@@ -639,6 +640,7 @@ export const setVoteChoicesAttempt = (agendaId, choiceId) => (
       for (let i = 0; i < stakePools.length; i++) {
         dispatch(getVoteChoicesAttempt(stakePools[i]));
       }
+      dispatch(setVSPDVoteChoices(passphrase));
     })
     .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
 };

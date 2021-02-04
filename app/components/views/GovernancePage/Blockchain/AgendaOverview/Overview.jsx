@@ -1,5 +1,5 @@
 import { RadioButtonGroup, classNames } from "pi-ui";
-import { KeyBlueButton } from "buttons";
+import { PassphraseModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import ProgressIndicator from "./ProgressIndicator";
 import styles from "./Overview.module.css";
@@ -93,12 +93,15 @@ const Overview = ({
     <div className={styles.bottom}>
       {!isFinished && (
         <div className={styles.bottomOptions}>
-          <KeyBlueButton
-            disabled={disabled}
-            className={styles.updatePreferencesButton}
-            onClick={updatePreferences}>
-            <T id="agenda.updatePreference" m="Update Preference" />
-          </KeyBlueButton>
+        <PassphraseModalButton
+          modalTitle={
+            <T id="process.mangedTickets.title" m="Passphrase" />
+          }
+          modalClassName={styles.passphraseModal}
+          onSubmit={updatePreferences}
+          className={styles.updatePreferencesButton}
+          buttonLabel={<T id="agenda.updatePreference" m="Update Preference" />}
+        />
         </div>
       )}
       <div className={styles.bottomOverview}>

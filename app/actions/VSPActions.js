@@ -643,3 +643,44 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (disp
     };
     asyncProcess().then(r => resolve(r)).catch(error => reject(error));
   });
+
+export const SETVSPDVOTECHOICE_ATTEMPT = "SETVSPDVOTECHOICE_ATTEMPT";
+export const SETVSPDVOTECHOICE_SUCCESS = "SETVSPDVOTECHOICE_SUCCESS";
+export const SETVSPDVOTECHOICE_FAILED = "SETVSPDVOTECHOICE_FAILED";
+
+
+// setVSPDVoteChoices gets all vsps and updates the set vote choices to
+// whatever the wallet has.
+export const setVSPDVoteChoices = (passphrase) => async (dispatch, getState) => {
+  dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
+  try {
+    const walletService = sel.walletService(getState());
+    const availableVSPs = await dispatch(discoverAvailableVSPs());
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
+    }
+
+    await wallet.unlockWallet(walletService, passphrase);
+    await Promise.all(availableVSPs.map(async (vsp) => {
+      if (!vsp.host.includes("stakey")) {
+        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+        await wallet.setVspdAgendaChoices(
+          walletService, vsp.host, pubkey, feeAccount, changeAccount
+        );
+      }
+    }));
+
+    await wallet.lockWallet(walletService);
+
+    dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
+    return true;
+  } catch(error) {
+    dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
+  }
+};
