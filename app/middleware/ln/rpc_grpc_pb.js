@@ -1,7 +1,6 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var grpc = require('grpc');
 var rpc_pb = require('./rpc_pb.js');
 
 function serialize_lnrpc_AbandonChannelRequest(arg) {
@@ -1200,7 +1199,7 @@ function deserialize_lnrpc_WalletBalanceResponse(buffer_arg) {
 // https://github.com/lightninglabs/lightning-api
 //
 // Lightning is the main RPC server of the daemon.
-var LightningService = exports.LightningService = {
+var LightningService = exports['lnrpc.Lightning'] = {
   // lncli: `walletbalance`
 // WalletBalance returns total unspent outputs(confirmed and unconfirmed), all
 // confirmed unspent outputs and all unconfirmed unspent outputs under control
@@ -2145,4 +2144,3 @@ listPermissions: {
   },
 };
 
-exports.LightningClient = grpc.makeGenericClientConstructor(LightningService);

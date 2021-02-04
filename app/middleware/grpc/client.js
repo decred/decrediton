@@ -1,10 +1,12 @@
 process.env["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA";
 
-import grpc from "grpc";
+const grpc = require("@grpc/grpc-js");
 
 import { getWalletCert } from "config.js";
 import { getWalletPath } from "main_dev/paths.js";
-const services = require("../walletrpc/api_grpc_pb.js");
+
+const proto = require("../walletrpc/api_grpc_pb.js");
+const services = grpc.loadPackageDefinition(proto).walletrpc;
 
 const getServiceClient = (clientClass) => (
   isTestNet,
@@ -12,7 +14,7 @@ const getServiceClient = (clientClass) => (
   address,
   port,
   grpcKey,
-  grpccert,
+  grpcCert,
   cb
 ) => {
   const cert = getWalletCert(getWalletPath(isTestNet, walletPath));
@@ -26,9 +28,12 @@ const getServiceClient = (clientClass) => (
   try {
     // dcrwallet sends the key and cert on the same payload after starting.
     // So we can use the same value for both of them.
-    const creds = grpc.credentials.createSsl(cert, grpcKey, grpccert);
+    const creds = grpc.credentials.createSsl(
+      cert,
+      Buffer.from(grpcKey),
+      Buffer.from(grpcCert)
+    );
     const client = new clientClass(address + ":" + port, creds);
-
     const deadline = new Date();
     const deadlineInSeconds = 30;
     deadline.setSeconds(deadline.getSeconds() + deadlineInSeconds);
@@ -44,20 +49,30 @@ const getServiceClient = (clientClass) => (
   }
 };
 
-export const getWalletService = getServiceClient(services.WalletServiceClient);
+export const getWalletService = getServiceClient(
+  services.WalletService
+);
 export const getTicketBuyerV2Service = getServiceClient(
-  services.TicketBuyerV2ServiceClient
+  services.TicketBuyerV2Service
 );
-export const loader = getServiceClient(services.WalletLoaderServiceClient);
-export const getSeedService = getServiceClient(services.SeedServiceClient);
+export const loader = getServiceClient(
+  services.WalletLoaderService
+);
+export const getSeedService = getServiceClient(
+  services.SeedService
+);
 export const getVersionService = getServiceClient(
-  services.VersionServiceClient
+  services.VersionService
 );
-export const getVotingService = getServiceClient(services.VotingServiceClient);
-export const getAgendaService = getServiceClient(services.AgendaServiceClient);
+export const getVotingService = getServiceClient(
+  services.VotingService
+);
+export const getAgendaService = getServiceClient(
+  services.AgendaService
+);
 export const getMessageVerificationService = getServiceClient(
-  services.MessageVerificationServiceClient
+  services.MessageVerificationService
 );
 export const getAccountMixerService = getServiceClient(
-  services.AccountMixerServiceClient
+  services.AccountMixerService
 );

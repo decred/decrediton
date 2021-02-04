@@ -1,7 +1,6 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var grpc = require('grpc');
 var walletunlocker_pb = require('./walletunlocker_pb.js');
 var rpc_pb = require('./rpc_pb.js');
 
@@ -113,7 +112,7 @@ function deserialize_lnrpc_UnlockWalletResponse(buffer_arg) {
 //
 // WalletUnlocker is a service that is used to set up a wallet password for
 // lnd at first startup, and unlock a previously set up wallet.
-var WalletUnlockerService = exports.WalletUnlockerService = {
+var WalletUnlockerService = exports['lnrpc.WalletUnlocker'] = {
   //
 // GenSeed is the first method that should be used to instantiate a new lnd
 // instance. This method allows a caller to generate a new aezeed cipher seed
@@ -188,4 +187,3 @@ changePassword: {
   },
 };
 
-exports.WalletUnlockerClient = grpc.makeGenericClientConstructor(WalletUnlockerService);
