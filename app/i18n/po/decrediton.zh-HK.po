@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-07T16:12:25.710Z\n"
+"POT-Creation-Date: 2021-02-05T00:58:55.482Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -282,14 +282,12 @@ msgstr "帳戶編號"
 #. [account.mixer.running.message]
 #. defaultMessage is:
 #. Account mixer is currently running. Ongoing mixes will be
-#. cancelled and no more Decred will be mixed if Decrediton is
-#. closed now.
+#. cancelled and no more Decred will be mixed if you proceed.
 #: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
 msgctxt "account.mixer.running.message"
 msgid ""
 "Account mixer is currently running. Ongoing mixes will be\n"
-"            cancelled and no more Decred will be mixed if Decrediton is\n"
-"            closed now."
+"            cancelled and no more Decred will be mixed if you proceed."
 msgstr ""
 "混幣器正在執行中。如果現在關閉Decrediton，現正進行的\n"
 "            混幣會被取消。"
@@ -685,19 +683,6 @@ msgstr "你確定要新增這個VSP嗎？"
 msgctxt "settings.closeWalletModalContent"
 msgid "Are you sure you want to close {walletName} and return to the launcher?"
 msgstr "你確定要關閉{walletName}並回到開始畫面嗎？"
-
-#. [settings.closeWalletModalWithAutobuyerModal]
-#. defaultMessage is:
-#. Are you sure you want to close {walletName} and return to the launcher? The auto ticket buyer is still running. If you proceed, it will be closed and no more tickets will be purchased.
-#: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
-msgctxt "settings.closeWalletModalWithAutobuyerModal"
-msgid ""
-"Are you sure you want to close {walletName} and return to the launcher? The "
-"auto ticket buyer is still running. If you proceed, it will be closed and no "
-"more tickets will be purchased."
-msgstr ""
-"你確定要關閉{walletName}並回到開始嗎？由於自動買票機仍在運作，繼續關閉的話，"
-"自動買票機亦會一同關閉且不會再購買新選票。"
 
 #. [purchase.ticket.modal.desc]
 #. defaultMessage is:
@@ -1516,6 +1501,38 @@ msgctxt "receive.modalClose"
 msgid "Close"
 msgstr "關閉"
 
+#. [tickets.mixer.running.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
+msgctxt "tickets.mixer.running.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr "仍然關閉"
+
+#. [tickets.autobuyerRunning.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
+msgctxt "tickets.autobuyerRunning.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr "仍然關閉"
+
+#. [tickets.fee.error.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "tickets.fee.error.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr "仍然關閉"
+
+#. [tickets.purchasing.confirmModal.closeAnyway]
+#. defaultMessage is:
+#. Close Anyway
+#: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
+msgctxt "tickets.purchasing.confirmModal.closeAnyway"
+msgid "Close Anyway"
+msgstr "仍然關閉"
+
 #. [ln.channelsTab.closeChannelModalTitle]
 #. defaultMessage is:
 #. Close Channel
@@ -1523,22 +1540,6 @@ msgstr "關閉"
 msgctxt "ln.channelsTab.closeChannelModalTitle"
 msgid "Close Channel"
 msgstr "關閉通道"
-
-#. [account.mixer.running.btnConfirm]
-#. defaultMessage is:
-#. Close Decrediton
-#: app/i18n/extracted/app/components/modals/CantCloseModals/AccountMixerRunningModal.json
-msgctxt "account.mixer.running.btnConfirm"
-msgid "Close Decrediton"
-msgstr "關閉Decrediton"
-
-#. [tickets.purchasing.confirmModal.btnConfirm]
-#. defaultMessage is:
-#. Close Decrediton
-#: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
-msgctxt "tickets.purchasing.confirmModal.btnConfirm"
-msgid "Close Decrediton"
-msgstr "關閉Decrediton"
 
 #. [fatal.button]
 #. defaultMessage is:
@@ -1662,6 +1663,14 @@ msgid ""
 "local setup."
 msgstr "請根據你的設定，完成以下的表格以啟動Decrediton。"
 
+#. [modal.complete.registration.process]
+#. defaultMessage is:
+#. Complete registration process
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "modal.complete.registration.process"
+msgid "Complete registration process"
+msgstr "完成註冊程序"
+
 #. [trezor.configButtons.header]
 #. defaultMessage is:
 #. Config Trezor
@@ -1669,22 +1678,6 @@ msgstr "請根據你的設定，完成以下的表格以啟動Decrediton。"
 msgctxt "trezor.configButtons.header"
 msgid "Config Trezor"
 msgstr "設定Trezor"
-
-#. [tickets.autobuyerRunning.confirmModal.btnConfirm]
-#. defaultMessage is:
-#. Confirm
-#: app/i18n/extracted/app/components/modals/CantCloseModals/AutobuyerRunningModal.json
-msgctxt "tickets.autobuyerRunning.confirmModal.btnConfirm"
-msgid "Confirm"
-msgstr "確認"
-
-#. [tickets.fee.error.confirmModal.btnConfirm]
-#. defaultMessage is:
-#. Confirm
-#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
-msgctxt "tickets.fee.error.confirmModal.btnConfirm"
-msgid "Confirm"
-msgstr "確認"
 
 #. [changePassModal.confirm]
 #. defaultMessage is:
@@ -2370,18 +2363,17 @@ msgstr "Decrediton 是自由及開放源碼軟件，由分佈世界各地的貢�
 #. [tickets.purchasing.message]
 #. defaultMessage is:
 #. Decrediton is still finalizing ticket purchases. Tickets may not
-#. be registered with the VSP if Decrediton is closed now, which can
+#. be registered with the VSP if you proceed now, which can
 #. result in missed votes.
 #: app/i18n/extracted/app/components/modals/CantCloseModals/PurchasingTicketsModal.json
 msgctxt "tickets.purchasing.message"
 msgid ""
 "Decrediton is still finalizing ticket purchases. Tickets may not\n"
-"            be registered with the VSP if Decrediton is closed now, which "
-"can\n"
+"            be registered with the VSP if you proceed now, which can\n"
 "            result in missed votes."
 msgstr ""
 "Decrediton仍在完成買票程序。如果現在關閉Decrediton，\n"
-"            或無法向VSP登記選票，引致錯過投票。"
+"            或無法與VSP登記選票，導致錯過投票。"
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
@@ -3518,14 +3510,6 @@ msgstr "返回"
 msgctxt "releaseNotes.goBack"
 msgid "Go back"
 msgstr "返回"
-
-#. [modal.go.to.tickets.status]
-#. defaultMessage is:
-#. Go to ticket status
-#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
-msgctxt "modal.go.to.tickets.status"
-msgid "Go to ticket status"
-msgstr "前往選票狀態"
 
 #. [infoModal.btnClose]
 #. defaultMessage is:
@@ -8014,6 +7998,22 @@ msgctxt "tickets.stopAutoBuyerHeader"
 msgid "Ticket buyer is now stopped."
 msgstr "自動買票機現已停止。"
 
+#. [txhistory.icon.ticketfee]
+#. defaultMessage is:
+#. Ticket fee
+#: app/i18n/extracted/app/components/shared/TxHistory/RegularTxRow.json
+msgctxt "txhistory.icon.ticketfee"
+msgid "Ticket fee"
+msgstr "選票手續費"
+
+#. [txFilter.type.ticketfee]
+#. defaultMessage is:
+#. Ticket fee
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/helpers.json
+msgctxt "txFilter.type.ticketfee"
+msgid "Ticket fee"
+msgstr "選票手續費"
+
 #. [charts.keys.ticketCountByDay]
 #. defaultMessage is:
 #. Tickets
@@ -8526,19 +8526,11 @@ msgctxt "transactions.title"
 msgid "Transactions"
 msgstr "交易"
 
-#. [txFilter.type.transfered]
-#. defaultMessage is:
-#. Transfered
-#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/helpers.json
-msgctxt "txFilter.type.transfered"
-msgid "Transfered"
-msgstr "轉帳"
-
-#. [notifications.type.transfer]
+#. [notifications.type.ticketfee]
 #. defaultMessage is:
 #. Transferred
 #: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
-msgctxt "notifications.type.transfer"
+msgctxt "notifications.type.ticketfee"
 msgid "Transferred"
 msgstr "轉帳"
 
@@ -9802,6 +9794,19 @@ msgctxt "stakePoolsList.noVSPs"
 msgid "You have no configured VSPs"
 msgstr "你沒有設定任何VSP"
 
+#. [tickets.fee.error.message]
+#. defaultMessage is:
+#. You have outstanding tickets that are not properly registered with a VSP. {completeRegistrationProcessLink}, otherwise these tickets will be missed if they are chosen to vote.
+#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
+msgctxt "tickets.fee.error.message"
+msgid ""
+"You have outstanding tickets that are not properly registered with a VSP. "
+"{completeRegistrationProcessLink}, otherwise these tickets will be missed if "
+"they are chosen to vote."
+msgstr ""
+"你仍有選票未與VSP註冊。 {completeRegistrationProcessLink} ，否則這些選票被抽"
+"中時將錯過投票。"
+
 #. [tickets.updateStakePoolConfigHeader]
 #. defaultMessage is:
 #. You have successfully updated your stakepool settings.
@@ -9854,21 +9859,6 @@ msgid ""
 "You need to set a mixed and unimxed account, and they can not\n"
 "                  be the same"
 msgstr "你需要設定混幣和非混幣帳戶，而且它們不可以是一樣的"
-
-#. [tickets.fee.error.message]
-#. defaultMessage is:
-#. You still have unpaid tickets fee. If you proceed and they are chosen to vote, they will
-#. be missed. Click on this button for re-sync fees
-#: app/i18n/extracted/app/components/modals/CantCloseModals/HasTicketFeeError.json
-msgctxt "tickets.fee.error.message"
-msgid ""
-"You still have unpaid tickets fee. If you proceed and they are chosen to "
-"vote, they will\n"
-"          be missed. Click on this button for re-sync fees"
-msgstr ""
-"你仍有選票未繳付手續費。如果你繼續關閉，而該等選票又被選中，它們將會錯過投"
-"票。\n"
-"          點擊這個按鈕以重新同步手續費"
 
 #. [tickets.importScriptHeader]
 #. defaultMessage is:
@@ -10497,6 +10487,14 @@ msgctxt "mixer.ntf.startMixerFailed"
 msgid "{originalError}"
 msgstr "{originalError}"
 
+#. [sync.vsp.failed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "sync.vsp.failed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
 #. [mytickets.statistics.stakepool.votedTip]
 #. defaultMessage is:
 #. {percentage}% of tickets missed
@@ -10677,6 +10675,49 @@ msgstr ""
 msgctxt "receive.tooltipCopied"
 msgid "✓  Copied to Clipboard"
 msgstr "✓  已經複製到剪貼簿"
+
+#~ msgctxt "settings.closeWalletModalWithAutobuyerModal"
+#~ msgid ""
+#~ "Are you sure you want to close {walletName} and return to the launcher? "
+#~ "The auto ticket buyer is still running. If you proceed, it will be closed "
+#~ "and no more tickets will be purchased."
+#~ msgstr ""
+#~ "你確定要關閉{walletName}並回到開始嗎？由於自動買票機仍在運作，繼續關閉的"
+#~ "話，自動買票機亦會一同關閉且不會再購買新選票。"
+
+#~ msgctxt "account.mixer.running.btnConfirm"
+#~ msgid "Close Decrediton"
+#~ msgstr "關閉Decrediton"
+
+#~ msgctxt "tickets.purchasing.confirmModal.btnConfirm"
+#~ msgid "Close Decrediton"
+#~ msgstr "關閉Decrediton"
+
+#~ msgctxt "tickets.autobuyerRunning.confirmModal.btnConfirm"
+#~ msgid "Confirm"
+#~ msgstr "確認"
+
+#~ msgctxt "tickets.fee.error.confirmModal.btnConfirm"
+#~ msgid "Confirm"
+#~ msgstr "確認"
+
+#~ msgctxt "modal.go.to.tickets.status"
+#~ msgid "Go to ticket status"
+#~ msgstr "前往選票狀態"
+
+#~ msgctxt "txFilter.type.transfered"
+#~ msgid "Transfered"
+#~ msgstr "轉帳"
+
+#~ msgctxt "tickets.fee.error.message"
+#~ msgid ""
+#~ "You still have unpaid tickets fee. If you proceed and they are chosen to "
+#~ "vote, they will\n"
+#~ "          be missed. Click on this button for re-sync fees"
+#~ msgstr ""
+#~ "你仍有選票未繳付手續費。如果你繼續關閉，而該等選票又被選中，它們將會錯過投"
+#~ "票。\n"
+#~ "          點擊這個按鈕以重新同步手續費"
 
 #~ msgctxt "sidebar.lastBlockIsRecent"
 #~ msgid "< 1 minute ago"
