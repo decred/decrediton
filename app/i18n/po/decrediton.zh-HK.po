@@ -1034,7 +1034,7 @@ msgstr "餘額"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.latestBlock"
 msgid "Block"
-msgstr "區塊"
+msgstr "區塊高度"
 
 #. [txDetails.blockLabel]
 #. defaultMessage is:
@@ -1692,7 +1692,7 @@ msgstr "確認"
 #: app/i18n/extracted/app/components/modals/ChangePassphraseModal/ChangePassphraseModalContent.json
 msgctxt "changePassModal.confirm"
 msgid "Confirm"
-msgstr "確認"
+msgstr "確認新密碼"
 
 #. [infoModal.btnConfirm]
 #. defaultMessage is:
@@ -6517,7 +6517,7 @@ msgstr "SPV"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/NetworkSettings.json
 msgctxt "settings.SPVConnect"
 msgid "SPV Connect"
-msgstr "指定SPV主機"
+msgstr "自訂SPV主機"
 
 #. [sidebar.spvMode]
 #. defaultMessage is:
@@ -6533,7 +6533,7 @@ msgstr "SPV模式"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/SpvIcon/SpvIcon.json
 msgctxt "sidebar.spvDisabled"
 msgid "SPV disabled"
-msgstr "已停用SPV"
+msgstr "SPV已停用"
 
 #. [spv.options.enable.description]
 #. defaultMessage is:
@@ -8990,7 +8990,7 @@ msgstr "更新選項"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsTab/PrivacySettings.json
 msgctxt "settings.updatePrivatePassphrase"
 msgid "Update Private Passphrase"
-msgstr "更新錢包密碼"
+msgstr "更改錢包密碼"
 
 #. [settings.errors.changePassphraseFailed]
 #. defaultMessage is:
@@ -8999,7 +8999,7 @@ msgstr "更新錢包密碼"
 msgctxt "settings.errors.changePassphraseFailed"
 msgid ""
 "Update passphrase failed. Incorrect private passphrase, please try again."
-msgstr "更新密碼失敗。錢包密碼錯誤，請重試。"
+msgstr "更改密碼失敗。錢包密碼錯誤，請重試。"
 
 #. [proposalDetails.votingInfo.updatingVoteChoice]
 #. defaultMessage is:
@@ -10081,7 +10081,7 @@ msgstr "沒有資訊"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/MenuBottomExpanded.json
 msgctxt "sidebar.peersCount"
 msgid "peers"
-msgstr "節點數"
+msgstr "個節點"
 
 #. [ticket.status.multiple.revoked]
 #. defaultMessage is:
@@ -10105,7 +10105,7 @@ msgstr "riot.im"
 #: app/i18n/extracted/app/components/SideBar/MenuBottom/LastBlockTime/LastBlockTime.json
 msgctxt "sidebar.lastBlockIsRecent"
 msgid "seconds ago"
-msgstr "秒前"
+msgstr "1 分鐘內"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:
