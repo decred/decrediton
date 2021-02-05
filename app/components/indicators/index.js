@@ -1,6 +1,6 @@
 export { default as StakeyBounce } from "./StakeyBounce/StakeyBounce";
 export { default as StakeyBounceXs } from "./StakeyBounce/StakeyBounceExtraSmall";
-export { default as LoadingMoreTransactionsIndicator } from "./LoadingMoreTransactions";
+export { default as LoadingMoreTransactionsIndicator } from "./LoadingMoreTransactions/LoadingMoreTransactions";
 export { default as NoMoreTransactionsIndicator } from "./NoMoreTransactions";
 export { default as LoadingMoreTicketsIndicator } from "./LoadingMoreTickets/LoadingMoreTickets";
 export { default as NoMoreTicketsIndicator } from "./NoMoreTickets";
