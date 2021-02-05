@@ -1,0 +1,155 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.myTicketsCharts {
+  -webkit-user-select: text;
+}
+.myTicketsCharts {
+  background: var(--background-back-color);
+  padding: 30px 0px 30px 0px;
+  min-height: 230px;
+  width: 740px;
+  display: flex;
+}
+.newLogoAnimation {
+  margin-left: 42%;
+  margin-top: 40px;
+}
+.myTicketsStatsLinks {
+  margin-left: auto;
+}
+.myTicketsStatsLinks a {
+  float: left;
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  background-color: var(--background-container);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 5px 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.16);
+  margin-left: 10px;
+  cursor: pointer;
+}
+.myTicketsStatsLinks a.voteTime {
+  background-image: var(--vote-time-stats-icon);
+}
+.myTicketsStatsLinks a.myTicketsActiveChartLink.voteTime {
+  background-image: var(--vote-time-stats-active-icon);
+}
+.myTicketsStatsLinks a.stakepool {
+  background-image: var(--stakepool-stats-icon);
+}
+.myTicketsStatsLinks a.myTicketsActiveChartLink.stakepool {
+  background-image: var(--stakepool-stats-active-icon);
+}
+.myTicketsStatsLinks a.stakerewards {
+  background-image: var(--stakerewards-stats-icon);
+}
+.myTicketsStatsLinks a.myTicketsActiveChartLink.stakerewards {
+  background-image: var(--stakerewards-stats-active-icon);
+}
+.myTicketsStatsLinks a.myTicketsActiveChartLink {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
+  background-color: var(--disabled-background-color);
+  cursor: default;
+}
+.myTicketsStatsLinks a:hover {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
+  background-color: var(--disabled-background-color);
+}
+.myTicketsStatsLinks a.heatmapIcon {
+  background-image: var(--tab-icon-tickets);
+}
+.myTicketsStatsLinks a.myTicketsActiveChartLink.heatmapIcon {
+  background-image: var(--menu-tickets);
+}
+
+/*myTicketStatIndicators*/
+.myTicketsStatsIndicators {
+  width: 250px;
+  margin: 0px 40px 0px 42px;
+  color: var(--input-color-default);
+}
+.myTicketsStatsIndicatorsRow {
+  float: left;
+  width: 100%;
+  margin-bottom: 14px;
+}
+.myTicketsStatsIndicatorsLabel {
+  text-align: left;
+  float: left;
+  font-size: 13px;
+  line-height: 19px;
+}
+.myTicketsStatsIndicatorsTitle {
+  font-size: 19px;
+  line-height: 24px;
+}
+.myTicketsStatsIndicatorsValue {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 19px;
+  float: right;
+  text-align: right;
+}
+.myTicketsStakepoolStatsSelectorRow {
+  float: left;
+  margin-bottom: 33px;
+}
+.stakepoolUnconfiguredSelect {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+
+  width: 220px;
+  font-size: 16px;
+  float: right;
+}
+.myTicketsStakepoolStatsRow {
+  width: 600px;
+  float: left;
+  margin-bottom: 40px;
+}
+/* Heatmap */
+.heatmapWrapper {
+  position: absolute;
+}
+.ticketActivityWrapper {
+  height: 100%;
+  margin-left: 42px;
+}
+.myTicketsStatsIndicatorsTitle {
+  font-size: 19px;
+  line-height: 24px;
+}
+
+@media screen and (max-width: 1179px) {
+  .myTicketsCharts {
+    width: 667px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .myTicketsCharts {
+    padding-top: 20px;
+    width: 355px;
+    flex-direction: column;
+  }
+  .myTicketsStatsIndicators {
+    margin-left: 20px;
+  }
+  .myTicketsStakepoolStatsRow {
+    width: 315px;
+  }
+  .myTicketsStatsChart {
+    padding: 20px 20px 0 20px;
+  }
+  .ticketActivityWrapper {
+    margin-left: 10px;
+  }
+  .newLogoAnimation {
+    margin-top: 52px;
+    margin-left: 117px;
+  }
+}

@@ -10,7 +10,6 @@ export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
 export { default as walletError } from "./walletError";
 export { default as routing } from "./routing";
-export { default as myTicketsCharts } from "./myTicketsCharts";
 export { default as modalVisible } from "./modalVisible";
 export { default as locale } from "./locale";
 // XXX useTheming hook already exists in app/hooks, the 'theming' connector

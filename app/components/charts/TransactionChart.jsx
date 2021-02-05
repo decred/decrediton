@@ -6,13 +6,17 @@ import {
   yAxisStyle,
   xAxisStyle,
   homeChartSize,
+  homeChartSizeSmall,
   radiusFull,
   padding,
   hoverFill
 } from "./Styles";
-import "style/Chart.less";
+import styles from "./Charts.module.css";
+import { useChart } from "./hooks";
 
-const BalanceChart = ({ data, intl }) => {
+const TransactionChart = ({ data, intl }) => {
+  const { sidebarOnBottom } = useChart();
+  const chartSize = sidebarOnBottom ? homeChartSizeSmall : homeChartSize;
   const sentKey = intl.formatMessage(messages.sentKey);
   const receivedKey = intl.formatMessage(messages.receivedKey);
 
@@ -26,21 +30,21 @@ const BalanceChart = ({ data, intl }) => {
   return (
     <BarChart
       stackOffset="sign"
-      width={homeChartSize.width}
-      height={homeChartSize.height}
+      width={chartSize.width}
+      height={chartSize.height}
       data={displayData}>
       <XAxis
         tickLine={false}
         dataKey="name"
         style={xAxisStyle}
-        className="xAxis"
+        className={styles.xAxis}
       />
       <YAxis
         tickLine={false}
         orientation="right"
         style={yAxisStyle}
         padding={padding}
-        className="yAxis"
+        className={styles.yAxis}
       />
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <ReferenceLine y={0} stroke="#f3f6f6" />
@@ -62,4 +66,4 @@ const BalanceChart = ({ data, intl }) => {
   );
 };
 
-export default injectIntl(BalanceChart);
+export default injectIntl(TransactionChart);

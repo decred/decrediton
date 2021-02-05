@@ -5,17 +5,20 @@ import {
   yAxisStyle,
   xAxisStyle,
   myTicketsChartSize,
+  myTicketsChartSizeSmall,
   padding,
   radiusFull,
   hoverFill
 } from "./Styles";
 import { isArray } from "util";
 import { FormattedMessage as T } from "react-intl";
+import styles from "./Charts.module.css";
+import { useChart } from "./hooks";
 
 const ChartTooltip = ({ payload }) => {
   if (!payload || !isArray(payload) || !payload.length) {
     return (
-      <div className="chart-tooltip">
+      <div className={styles.chartTooltip}>
         <T id="charts.voteTime.noVotesDay" m="No tickets voted in this range" />
       </div>
     );
@@ -25,7 +28,7 @@ const ChartTooltip = ({ payload }) => {
   const days = payload[0].payload.name;
 
   return (
-    <div className="chart-tooltip">
+    <div className={styles.chartTooltip}>
       <T
         id="charts.voteTime.daysToVoteCount"
         m="{count, plural, =0 {zero tickets} one {# ticket} other {# tickets} } voted {days, plural, =0 {in the same day} one {within one day} other {within # days} } of purchase"
@@ -36,6 +39,10 @@ const ChartTooltip = ({ payload }) => {
 };
 
 const VoteTimeChart = ({ data, intl }) => {
+  const { sidebarOnBottom } = useChart();
+  const chartSize = sidebarOnBottom
+    ? myTicketsChartSizeSmall
+    : myTicketsChartSize;
   const countKey = intl.formatMessage(messages.ticketCountByDay);
 
   const displayData = data.data.map((s) => ({
@@ -47,21 +54,21 @@ const VoteTimeChart = ({ data, intl }) => {
   return (
     <BarChart
       stackOffset="sign"
-      width={myTicketsChartSize.width}
-      height={myTicketsChartSize.height}
+      width={chartSize.width}
+      height={chartSize.height}
       data={displayData}>
       <XAxis
         tickLine={false}
         dataKey="name"
         style={yAxisStyle}
-        className="xAxis"
+        className={styles.xAxis}
       />
       <YAxis
         tickLine={false}
         orientation="right"
         style={xAxisStyle}
         padding={padding}
-        className="yAxis"
+        className={styles.yAxis}
       />
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <Bar
