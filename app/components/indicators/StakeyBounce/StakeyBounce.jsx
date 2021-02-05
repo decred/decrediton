@@ -1,4 +1,4 @@
-import styles from "./indicators.module.css";
+import styles from "./StakeyBounce.module.css";
 import { classNames } from "pi-ui";
 
 const StakeyBounce = ({ center }) => (

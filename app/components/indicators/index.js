@@ -1,5 +1,5 @@
-export { default as StakeyBounce } from "./StakeyBounce";
-export { default as StakeyBounceXs } from "./StakeyBounceExtraSmall";
+export { default as StakeyBounce } from "./StakeyBounce/StakeyBounce";
+export { default as StakeyBounceXs } from "./StakeyBounce/StakeyBounceExtraSmall";
 export { default as LoadingMoreTransactionsIndicator } from "./LoadingMoreTransactions";
 export { default as NoMoreTransactionsIndicator } from "./NoMoreTransactions";
 export { default as LoadingMoreTicketsIndicator } from "./LoadingMoreTickets/LoadingMoreTickets";

@@ -1,5 +1,5 @@
 import StakeyBounce from "./StakeyBounce";
-import styles from "./indicators.module.css";
+import styles from "./StakeyBounce.module.css";
 
 const StakeyBounceXs = () => (
   <div className={styles.stakeyBounceXs} data-testid="stakey-bounce-xs">

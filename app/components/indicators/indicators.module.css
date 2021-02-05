@@ -29,33 +29,6 @@
   font-weight: 700;
 }
 
-/* StakeyBounce */
-.stakeyBounce {
-  width: 256px;
-  height: 256px;
-  background: var(--stakey-sprites-icon) left center;
-  animation: stakeyBouncePlay 0.8s steps(24) infinite;
-  position: absolute;
-}
-.stakeyBounce.center {
-  margin: 2% auto;
-  position: initial;
-}
-@keyframes stakeyBouncePlay {
-  100% {
-    background-position: -6144px;
-  }
-}
-.stakeyBounceXs {
-  transform: scale(0.125);
-  width: 64px;
-  height: 64px;
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: -32px;
-  margin-top: -32px;
-}
-
 /* StepIndicator */
 
 .stepIndicator {
