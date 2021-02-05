@@ -261,7 +261,6 @@
   padding: 10px;
   flex-basis: 100%;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -347,7 +346,7 @@
     max-width: 150px;
   }
   .overviewRow {
-    width: 315px;
+    width: 100%;
   }
 }
 

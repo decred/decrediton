@@ -18,7 +18,7 @@ const RecentTransactions = ({
   return getTransactionsRequestAttempt ? (
     <DecredLoading />
   ) : (
-    <div>
+    <div className={styles.wrapper}>
       <div className={classNames(sharedStyles.isRow, styles.homeContentTitle)}>
         {hasTxs ? (
           <T id="home.recentTransactionsTitle" m="Recent Transactions" />

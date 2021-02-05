@@ -1,6 +1,6 @@
 .ticketTxWrapper {
   margin-left: 20px;
-  margin-right: auto;
+  width: 368px;
 }
 
 .homeContentTitle {
@@ -52,5 +52,6 @@
   .ticketTxWrapper {
     margin-top: 20px;
     margin-left: 0;
+    width: 100%
   }
 }

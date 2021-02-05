@@ -21,23 +21,19 @@ const tabMessages = {
   transactions: <T id="home.tab.transactions" m="Transactions" />
 };
 
-const withTooltip = (Component) => (
-  <Tooltip content={Component}>{Component}</Tooltip>
-);
-
 const tabs = [
   {
-    label: withTooltip(tabMessages.balance),
+    label: tabMessages.balance,
     component: <BalanceTab />,
     icon: styles.balanceIcon
   },
   {
-    label: withTooltip(tabMessages.tickets),
+    label: tabMessages.tickets,
     component: <TicketsTab />,
     icon: styles.ticketsIcon
   },
   {
-    label: withTooltip(tabMessages.transactions),
+    label: tabMessages.transactions,
     component: <TransactionsTab />,
     icon: styles.txIcon
   }
