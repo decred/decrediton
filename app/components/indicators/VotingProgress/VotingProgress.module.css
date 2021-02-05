@@ -21,12 +21,6 @@
   }
 }
 @media screen and (max-width: 768px) {
-  .loaderBarEstimation {
-    display: none;
-  }
-  .noMoreTicketsIndicator {
-    width: 315px;
-  }
   .votingProgressIndicator {
     width: 120px;
   }

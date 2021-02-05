@@ -10,13 +10,13 @@
   top: 0;
   left: 0;
 }
-.rescanProgressIndicator .linearProgress.small {
-  border-radius: 0px;
-  background-color: var(--input-color-hover);
+.linearProgressSmall {
+  border-radius: 0px !important;
+  background-color: var(--input-color-hover) !important;
 }
-.rescanProgressIndicator .linearProgress.small .linearProgressBar {
-  background: var(--accent-color);
-  border-radius: 0px;
+.linearProgressSmallBar {
+  background: var(--accent-color) !important;
+  border-radius: 0px !important;
 }
 .rescanCancelButtonArea {
   margin: 0 -12px 0 auto;

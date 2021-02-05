@@ -20,6 +20,8 @@ const RescanProgress = () => {
           min={0}
           max={1}
           value={rescanCurrentBlock / rescanEndBlock}
+          className={styles.linearProgressSmall}
+          barClassName={styles.linearProgressSmallBar}
         />
       </div>
       <RescanButton {...{ rescanRequest }} />

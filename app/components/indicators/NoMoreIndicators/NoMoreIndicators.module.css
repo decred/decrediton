@@ -36,3 +36,16 @@
   font-size: 120%;
   padding: 1em;
 }
+.noMoreTransactionsIndicator {
+  padding: 17px 18px 18px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin-top: 2em;
+  background-color: var(--background-back-color);
+}
+@media screen and (max-width: 768px) {
+  .noMoreTicketsIndicator {
+    width: 315px;
+  }
+}

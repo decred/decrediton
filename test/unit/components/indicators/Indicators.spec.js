@@ -36,9 +36,21 @@ test("render hidden DecredLoading without className prop", () => {
 });
 
 test("render LinearProgressSmall", () => {
-  lightRender(<LinearProgressSmall value="30" min="10" max="50" />);
+  lightRender(
+    <LinearProgressSmall
+      value="30"
+      min="10"
+      max="50"
+      className={testClassName}
+      barClassName={testClassName}
+    />
+  );
   const linearProgressSmall = screen.getByTestId("linear-prgress-small");
+  expect(linearProgressSmall.className).toMatch(testClassName);
   expect(linearProgressSmall.firstElementChild.style.width).toBe("50%");
+  expect(linearProgressSmall.firstElementChild.className).toMatch(
+    testClassName
+  );
 });
 
 test("render StakeyBounce", () => {
