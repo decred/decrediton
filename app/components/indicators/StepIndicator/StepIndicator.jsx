@@ -1,4 +1,4 @@
-import styles from "./indicators.module.css";
+import styles from "./StepIndicator.module.css";
 import { classNames } from "pi-ui";
 
 export default ({ pageCount, currentPageIndex, onGotoPage }) => (
