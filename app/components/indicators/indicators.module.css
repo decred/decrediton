@@ -40,48 +40,6 @@
   background-color: var(--background-back-color);
 }
 
-/* LoadingMoreTickets */
-.loadingMoreTickets {
-  height: 50px;
-  color: var(--title-text-and-button-background);
-}
-.loadingMoreTicketsIcon {
-  background-image: var(--tickets-loading-more-icon);
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: 32px;
-  width: 50px;
-  height: 50px;
-}
-.loadingMoreTicketsInfo {
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-}
-.loadingMoreTicketsProgressLine {
-  color: var(--disabled-color);
-}
-.getticketsCancelButton {
-  width: 16px;
-  height: 16px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: var(--menu-cancel-rescan-icon);
-  background-size: 16px 16px;
-  cursor: pointer;
-  margin: 10px;
-  background-repeat: no-repeat;
-  /**/
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 10px;
-  margin-top: -2px;
-}
-.getticketsCancelButton:hover {
-  opacity: 0.7;
-}
-
 /* NoStats, NoTransactions, ... */
 .noTransactionsIndicator,
 .noTicketsIndicator,

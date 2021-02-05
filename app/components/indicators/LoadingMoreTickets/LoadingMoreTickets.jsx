@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import { useLoadingMoreTickets } from "./hooks";
-import styles from "../indicators.module.css";
+import styles from "./LoadingMoreTickets.module.css";
 import { classNames } from "pi-ui";
 
 const DescMessage = ({ startRequestHeight, currentBlockHeight }) => (
