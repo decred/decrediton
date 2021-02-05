@@ -6,7 +6,7 @@ import { FormattedRelative } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
 import { classNames } from "pi-ui";
-import styles from "./LinearProgressSmall.module.css";
+import styles from "./LinearProgress.module.css";
 
 const AnimatedLinearProgressFull = ({
   setInterval,

@@ -6,7 +6,7 @@ export { default as LoadingMoreTicketsIndicator } from "./LoadingMoreTickets/Loa
 export { default as NoMoreTicketsIndicator } from "./NoMoreIndicators/NoMoreTickets";
 export { default as NoTicketsIndicator } from "./NoMoreIndicators/NoTickets";
 export { default as DecredLoading } from "./DecredLoading/DecredLoading";
-export { default as SimpleLoading } from "./SimpleLoading";
+export { default as SimpleLoading } from "./SimpleLoading/SimpleLoading";
 export { default as RescanProgress } from "./RescanProgress/RescanProgress";
 export { default as AnimatedLinearProgressFull } from "./LinearProgress/AnimatedLinearProgressFull";
 export { default as LinearProgressSmall } from "./LinearProgress/LinearProgressSmall";
