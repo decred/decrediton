@@ -8,13 +8,6 @@
   height: 256px;
 }
 
-.noProposals {
-  margin-top: 20px;
-  margin-left: 38px;
-  font-size: 120%;
-  padding: 1em;
-}
-
 .lastLogLines {
   font-size: 9px;
 }
@@ -27,38 +20,4 @@
 .loaderBarEstimation .bold {
   opacity: 1;
   font-weight: 700;
-}
-
-/* NoStats, NoTransactions, ... */
-.noTransactionsIndicator,
-.noTicketsIndicator,
-.noMoreTicketsIndicator,
-.noStatsIndicator {
-  text-align: center;
-  color: var(--title-text-and-button-background);
-  height: 150px;
-  background-repeat: no-repeat;
-  background-size: 80px;
-  background-position: center 30px;
-}
-.noStatsIndicator {
-  background-image: var(--stats-disabled-icon);
-}
-.noTransactionsIndicator {
-  color: var(--title-text-and-button-background);
-}
-.noTicketsIndicator {
-  background-image: var(--no-tickets-icon);
-}
-.noMoreTicketsIndicator {
-  height: 35px;
-  background-color: var(--no-more-tickets-indicator-bg);
-  line-height: 35px;
-}
-.noTransactionsIndicatorImg {
-  background-image: var(--no-tx-icon);
-  height: 100px;
-  background-repeat: no-repeat;
-  background-size: 80px;
-  background-position: center 30px;
 }
