@@ -1,3 +1,3 @@
-import styles from "./indicators.module.css";
+import styles from "./PoliteiaLoading.module.css";
 
 export default () => <div className={styles.politeiaLoading} />;

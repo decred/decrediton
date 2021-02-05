@@ -16,5 +16,5 @@ export { default as NoTransactions } from "./NoMoreIndicators/NoTransactions";
 export { default as StepIndicator } from "./StepIndicator/StepIndicator";
 export { default as VotingProgress } from "./VotingProgress/VotingProgress";
 export { default as NoProposals } from "./NoMoreIndicators/NoProposals";
-export { default as PoliteiaLoading } from "./PoliteiaLoading";
+export { default as PoliteiaLoading } from "./PoliteiaLoading/PoliteiaLoading";
 export { default as ProgressRing } from "./ProgressRing";

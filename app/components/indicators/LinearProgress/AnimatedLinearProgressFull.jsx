@@ -116,7 +116,7 @@ const AnimatedLinearProgressFull = ({
               )}
               {perComplete > 0.75 && perComplete < 1 && (
                 <div
-                  className={classNames(styles.linearProgressBox, styles.fives)}
+                  className={classNames(styles.linearProgressBox, styles.five)}
                   style={{ left: leftStartingPoint + 200 }}
                 />
               )}

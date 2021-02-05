@@ -95,3 +95,14 @@
   display: flex;
   flex-direction: row;
 }
+.loaderBarEstimation {
+  text-align: left;
+  font-size: 9px;
+}
+.loaderBarEstimation .bold {
+  opacity: 1;
+  font-weight: 700;
+}
+.lastLogLines {
+  font-size: 9px;
+}
