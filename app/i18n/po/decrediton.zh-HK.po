@@ -3605,7 +3605,7 @@ msgstr "說明"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "account.Hidden"
 msgid "Hidden"
-msgstr "已隱藏"
+msgstr "隱藏"
 
 #. [accounts.hide.tip]
 #. defaultMessage is:
