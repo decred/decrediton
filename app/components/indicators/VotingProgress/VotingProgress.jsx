@@ -1,5 +1,5 @@
 import { classNames } from "pi-ui";
-import styles from "./indicators.module.css";
+import styles from "./VotingProgress.module.css";
 
 export default ({ voteCounts, quorumMinimumVotes, className }) => {
   if (!voteCounts) return <></>;
