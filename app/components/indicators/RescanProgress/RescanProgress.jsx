@@ -2,7 +2,7 @@ import { LinearProgressSmall } from "indicators";
 import { useRescan } from "hooks";
 import { FormattedMessage as T } from "react-intl";
 import { RescanButton, RescanCancelButton } from "buttons";
-import styles from "./indicators.module.css";
+import styles from "./RescanProgress.module.css";
 
 const RescanProgress = () => {
   const {
