@@ -1,5 +1,5 @@
 import "style/Loading.less";
-import style from "./indicators.module.css";
+import style from "./DecredLoading.module.css";
 import { classNames } from "pi-ui";
 
 const DecredLoading = ({ hidden, className }) => (
