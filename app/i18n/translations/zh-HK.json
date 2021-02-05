@@ -12,7 +12,7 @@
   "aboutModal.upgradeAvailable": "有可用的軟件升級",
   "aboutModal.version": "版本",
   "aboutModal.whatsNew": "有甚麼新功能？",
-  "account.Hidden": "已隱藏",
+  "account.Hidden": "隱藏",
   "account.mixer.running.btnCancel": "取消",
   "account.mixer.running.message": "混幣器正在執行中。如果現在關閉Decrediton，現正進行的\n            混幣會被取消。",
   "account.mixer.running.title": "混幣器現正運作",
