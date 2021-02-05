@@ -4328,7 +4328,7 @@ msgstr "選票凍結"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.btnLogs"
 msgid "Logs"
-msgstr "紀錄檔"
+msgstr "記錄檔"
 
 #. [privacy.logs]
 #. defaultMessage is:
@@ -4336,7 +4336,7 @@ msgstr "紀錄檔"
 #: app/i18n/extracted/app/components/views/PrivacyPage/Privacy/PrivacyContent.json
 msgctxt "privacy.logs"
 msgid "Logs"
-msgstr "紀錄檔"
+msgstr "記錄檔"
 
 #. [settings.tab.logs]
 #. defaultMessage is:
@@ -4344,7 +4344,7 @@ msgstr "紀錄檔"
 #: app/i18n/extracted/app/components/views/SettingsPage/SettingsPage.json
 msgctxt "settings.tab.logs"
 msgid "Logs"
-msgstr "紀錄檔"
+msgstr "記錄檔"
 
 #. [getstarted.setAccount.description]
 #. defaultMessage is:
@@ -7027,7 +7027,7 @@ msgstr "顯示全部"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.showDaemonLog"
 msgid "Show Daemon Log Files"
-msgstr "顯示後台服務紀錄檔"
+msgstr "顯示後台服務記錄檔"
 
 #. [appMenu.showWalletLog]
 #. defaultMessage is:
@@ -7035,7 +7035,7 @@ msgstr "顯示後台服務紀錄檔"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.showWalletLog"
 msgid "Show Wallet Log Files"
-msgstr "顯示錢包紀錄檔"
+msgstr "顯示錢包記錄檔"
 
 #. [privacy.mixing.server.port]
 #. defaultMessage is:
@@ -7535,7 +7535,7 @@ msgstr "正在與RPC進行同步..."
 #: app/i18n/extracted/app/components/views/SettingsPage/LogsTab/Page.json
 msgctxt "logs.subtitle"
 msgid "System Logs"
-msgstr "系統紀錄檔"
+msgstr "系統記錄檔"
 
 #. [help.telegram]
 #. defaultMessage is:
