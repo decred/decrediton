@@ -1,4 +1,4 @@
-import AnimatedLinearProgressFull from "components/indicators/AnimatedLinearProgressFull";
+import AnimatedLinearProgressFull from "components/indicators/LinearProgress/AnimatedLinearProgressFull";
 import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import * as sel from "selectors";

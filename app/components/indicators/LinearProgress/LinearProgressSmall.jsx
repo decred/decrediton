@@ -1,5 +1,5 @@
 import "style/Loading.less";
-import style from "./indicators.module.css";
+import style from "./LinearProgress.module.css";
 import { classNames } from "pi-ui";
 
 const LinearProgressSmall = ({ value, min, max }) => (
