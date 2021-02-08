@@ -612,13 +612,12 @@ export const GETVOTECHOICES_ATTEMPT = "GETVOTECHOICES_ATTEMPT";
 export const GETVOTECHOICES_FAILED = "GETVOTECHOICES_FAILED";
 export const GETVOTECHOICES_SUCCESS = "GETVOTECHOICES_SUCCESS";
 
-export const getVoteChoicesAttempt = (stakePool) => (dispatch, getState) => {
+export const getVoteChoicesAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVOTECHOICES_ATTEMPT });
   wallet
     .getVoteChoices(sel.votingService(getState()))
     .then((voteChoices) => {
       dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
-      dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
     })
     .catch((error) => dispatch({ error, type: GETVOTECHOICES_FAILED }));
 };
@@ -638,8 +637,9 @@ export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
     .then((response) => {
       dispatch({ response, type: SETVOTECHOICES_SUCCESS });
       for (let i = 0; i < stakePools.length; i++) {
-        dispatch(getVoteChoicesAttempt(stakePools[i]));
+        dispatch(setStakePoolVoteChoices(stakePools[i], voteChoices));
       }
+      dispatch(getVoteChoicesAttempt());
       dispatch(setVSPDVoteChoices(passphrase));
     })
     .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
