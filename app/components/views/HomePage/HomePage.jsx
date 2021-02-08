@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames } from "pi-ui";
 import ErrorScreen from "ErrorScreen";
 import { useService } from "hooks";
 import { useHomePage } from "./hooks";
