@@ -95,7 +95,7 @@ const Overview = ({
         <div className={styles.bottomOptions}>
         <PassphraseModalButton
           modalTitle={
-            <T id="process.mangedTickets.title" m="Passphrase" />
+            <T id="updateprefs.passphrase.title" m="Passphrase" />
           }
           modalClassName={styles.passphraseModal}
           onSubmit={updatePreferences}
