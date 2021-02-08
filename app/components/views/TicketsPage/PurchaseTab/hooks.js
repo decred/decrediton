@@ -18,6 +18,7 @@ export const usePurchaseTab = () => {
   const ticketPrice = useSelector(sel.ticketPrice);
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
+  const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const isLegacy = useSelector(sel.getIsLegacy);
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
@@ -75,6 +76,14 @@ export const usePurchaseTab = () => {
   };
 
   const toggleIsLegacy = (isLegacy) => {
+    if (autoBuyerRunning) {
+      // stop runnig legacy autobuyer
+      dispatch(ca.ticketBuyerV2Cancel());
+    }
+    if (ticketAutoBuyerRunning) {
+      // stop running new autobuyer
+      dispatch(ca.ticketBuyerCancel());
+    }
     dispatch(vspa.toggleIsLegacy(isLegacy));
   };
 
@@ -84,7 +93,8 @@ export const usePurchaseTab = () => {
   const setRememberedVspHost = (vsp) =>
     dispatch(vspa.setRememberedVspHost(vsp));
 
-  const onListUnspentOutputs = (accountNum) => dispatch(listUnspentOutputs(accountNum));
+  const onListUnspentOutputs = (accountNum) =>
+    dispatch(listUnspentOutputs(accountNum));
 
   // purchase cspp ticket
   const mixedAccount = useSelector(sel.getMixedAccount);
