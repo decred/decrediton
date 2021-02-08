@@ -9,7 +9,8 @@ const AgendaOverview = ({
   onCloseAgenda,
   showVoteChoice,
   onClick,
-  onUpdateVotePreference
+  onUpdateVotePreference,
+  isLoading
 }) => {
   const [selectedChoiceId, setSelectedChoiceId] = useState(selectedChoice);
   useEffect(() => {
@@ -43,7 +44,8 @@ const AgendaOverview = ({
         setSelectedChoiceId,
         updatePreferences,
         closeCurrentAgenda: onCloseAgenda,
-        disabled
+        disabled,
+        isLoading
       }}
     />
   ) : (

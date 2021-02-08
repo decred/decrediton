@@ -589,7 +589,7 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         getVoteChoicesRequestAttempt: false,
-        getVoteChoicesResponse: action.voteChoices
+        getVoteChoicesResponse: action.voteChoicesConfig
       };
     case SETVOTECHOICES_ATTEMPT:
       return {

@@ -38,13 +38,17 @@ import {
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
-  PROCESSMANAGEDTICKETS_FAILED
+  PROCESSMANAGEDTICKETS_FAILED,
+  SETVSPDVOTECHOICE_FAILED,
+  SETVSPDVOTECHOICES_SUCCESS
 } from "../actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
   GETSTARTUPWALLETINFO_FAILED,
-  SEEDCOPIEDTOCLIPBOARD
+  SEEDCOPIEDTOCLIPBOARD,
+  SETVOTECHOICES_FAILED,
+  SETVOTECHOICES_SUCCESS
 } from "../actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
@@ -529,7 +533,7 @@ const messages = defineMessages({
   },
   SYNCVSPTICKETS_SUCCESS: {
     id: "sync.vsp.success",
-    defaultMessage: "You have successfully sync all failed tickets with the selected VSP."
+    defaultMessage: "All tickets in error have been successfully attempted to be paid. Please make sure all tickets now show paid.  Otherwise, try again or use a different VSP."
   },
   SYNCVSPTICKETS_FAILED: {
     id: "sync.vsp.failed",
@@ -538,6 +542,22 @@ const messages = defineMessages({
   PROCESSMANAGEDTICKETS_FAILED: {
     id: "processmanaged.failed",
     defaultMessage: "{originalError}"
+  },
+  SETVOTECHOICES_FAILED: {
+    id: "set.vote.failed",
+    defaultMessage: "Set wallet vote choices failed: {originalError}"
+  },
+  SETVOTECHOICES_SUCCESS: {
+    id: "set.vote.success",
+    defaultMessage: "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
+  },
+  SETVSPDVOTECHOICES_SUCCESS: {
+    id: "set.vspdvote.success",
+    defaultMessage: "You have successfully updated your vspd vote choices."
+  },
+  SETVSPDVOTECHOICE_FAILED: {
+    id: "set.vspdvote.failed",
+    defaultMessage: "Set vspd vote choices failed: {originalError}"
   }
 });
 
@@ -621,6 +641,8 @@ export default function snackbar(state = {}, action) {
     case UPDATEVOTECHOICE_SUCCESS:
     case CREATEMIXERACCOUNTS_SUCCESS:
     case SYNCVSPTICKETS_SUCCESS:
+    case SETVOTECHOICES_SUCCESS:
+    case SETVSPDVOTECHOICES_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -733,6 +755,8 @@ export default function snackbar(state = {}, action) {
     case RUNACCOUNTMIXER_FAILED:
     case SYNCVSPTICKETS_FAILED:
     case PROCESSMANAGEDTICKETS_FAILED:
+    case SETVOTECHOICES_FAILED:
+    case SETVSPDVOTECHOICE_FAILED:
       type = "Error";
       if (
         action.error &&

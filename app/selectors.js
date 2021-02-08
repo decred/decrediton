@@ -1655,6 +1655,18 @@ export const lastPoliteiaAccessTime = get([
   "governance",
   "lastPoliteiaAccessTime"
 ]);
+export const setVoteChoicesAttempt = get([
+  "grpc",
+  "setVoteChoicesRequestAttempt"
+]);
+export const setVspdVoteChoicesAttempt = get([
+  "vsp",
+  "setVspdVoteChoicesRequestAttempt"
+]);
+export const voteChoices = get([
+  "grpc",
+  "getVoteChoicesResponse"
+]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([
