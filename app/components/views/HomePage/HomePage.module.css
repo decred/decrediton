@@ -101,6 +101,13 @@
   margin-bottom: 8px;
 }
 
+.tabsContent {
+  width: 100%;
+}
+.tabsWrapperClassName {
+  height: 250px;
+}
+
 @media screen and (max-width: 1179px) {
   .overviewTransactionsTicket {
     padding: 30px 20px;

@@ -9410,9 +9410,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"pi-ui@https://github.com/decred/pi-ui":
+"pi-ui@https://github.com/bgptr/pi-ui#fix-tabs-animation":
   version "1.0.0"
-  resolved "https://github.com/decred/pi-ui#5a391d0375aa99910e864ecd207af5289b4421c5"
+  resolved "https://github.com/bgptr/pi-ui#cc5f757cbee34b6b9b72d49e0b828761885e3ee1"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"
