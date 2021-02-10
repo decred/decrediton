@@ -55,10 +55,6 @@ div.radioButtonsWrapper > * {
   box-sizing: border-box;
 }
 
-.disabled {
-  color: var(--btn-disabled-text-color);
-}
-
 .bottom {
   padding-top: 15px;
   display: flex;
@@ -78,9 +74,6 @@ div.radioButtonsWrapper > * {
 }
 
 .overviewTitleClose {
-  position: absolute;
-  top: 7px;
-  right: 0px;
   width: 11px;
   height: 11px;
   float: right;
@@ -98,14 +91,11 @@ div.radioButtonsWrapper > * {
 }
 
 .agendaCard {
-  position: relative;
-  overflow: hidden;
   width: 180px;
   height: 190px;
   margin-bottom: 20px;
   margin-right: 20px;
   padding: 20px;
-  float: left;
   background-color: var(--background-back-color);
   background-image: var(--agenda-card-kebab);
   background-position: 93% 27px;
@@ -138,14 +128,6 @@ div.radioButtonsWrapper > * {
   cursor: default;
 }
 
-.cardBottom {
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  padding: 20px;
-}
-
 .indicatorPending {
   float: right;
   padding: 5px 8px 5px 20px;
@@ -162,16 +144,24 @@ div.radioButtonsWrapper > * {
   background-size: 10px;
   background-repeat: no-repeat;
   color: var(--input-color);
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
   margin-right: 20px;
   margin-bottom: 20px;
 }
 
+.tooltip {
+  float: right;
+}
+
+.tooltipContent {
+  width: 22rem;
+}
+
+.progressTooltipContent {
+  width: 15rem;
+}
+
 .bottomCfg {
-  height: 80px;
-  margin-bottom: 55px;
+  margin: 10px 0;
   float: left;
   color: var(--agenda-card-bottom-cfg);
 }
@@ -182,8 +172,6 @@ div.radioButtonsWrapper > * {
 }
 
 .bottomCfgDisabled {
-  height: 80px;
-  margin-bottom: 20px;
   float: left;
   color: var(--disabled-color);
 }
@@ -194,16 +182,6 @@ div.radioButtonsWrapper > * {
 
 .bottomCfgLastBold {
   font-weight: 600;
-}
-
-.top {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  padding-top: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
 }
 
 .name {
@@ -234,9 +212,6 @@ div.radioButtonsWrapper > * {
 }
 
 .finishedIndicator {
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
   margin-right: 20px;
   margin-bottom: 20px;
   border-color: var(--disabled-color);
@@ -257,9 +232,6 @@ div.radioButtonsWrapper > * {
 }
 
 .inProgressIndicator {
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
   margin-right: 20px;
   margin-bottom: 20px;
   border-color: var(--color-blue-alt);
