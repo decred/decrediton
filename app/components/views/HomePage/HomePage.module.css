@@ -104,7 +104,7 @@
 .tabsContent {
   width: 100%;
 }
-.tabsWrapperClassName {
+.tabsWrapper {
   height: 250px;
 }
 
@@ -219,7 +219,7 @@
     padding-left: 9px;
   }
 
-  .tabsWrapperClassName {
+  .tabsWrapper {
     height: 300px;
   }
 }
