@@ -218,4 +218,8 @@
     width: 315px;
     padding-left: 9px;
   }
+
+  .tabsWrapperClassName {
+    height: 300px;
+  }
 }
