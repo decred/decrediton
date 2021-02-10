@@ -363,7 +363,7 @@ test("tests rescan on the expanded sidebar", () => {
     screen.getByRole("button", { name: /cancel rescan/i })
   ).toBeInTheDocument();
   expect(screen.queryByText(/seconds ago/i)).not.toBeInTheDocument();
-  expect(screen.getByText(/rescanning/i)).toBeInTheDocument();
+  expect(screen.getByText(/^Rescanning/)).toBeInTheDocument();
   expect(screen.getByText(`0/${testCurrentBlockHeight}`)).toBeInTheDocument();
   expect(screen.getByText(/(0%)/i)).toBeInTheDocument();
 
@@ -437,13 +437,9 @@ test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
   const mockIsWatchingOnly = (sel.isWatchingOnly = jest.fn(() => true));
 
   render(<SideBar />);
-  expect(screen.getByText(/watch-only/i)).toMatchInlineSnapshot(`
-    <span
-      class="tip "
-    >
-      This is a watch-only wallet with limited functionality.
-    </span>
-  `);
+  expect(screen.getByText(/watch-only/i).textContent).toMatchInlineSnapshot(
+    `"This is a watch-only wallet with limited functionality."`
+  );
 
   expect(mockIsWatchingOnly).toHaveBeenCalled();
   mockIsWatchingOnly.mockRestore();
@@ -455,13 +451,12 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
   ));
 
   render(<SideBar />);
-  expect(screen.getByText(/in the background/i)).toMatchInlineSnapshot(`
-<span
-  class="tip "
->
-  One or more of the following decrediton's features running in the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket Attempt
-</span>
-`);
+  expect(screen.getByText(/in the background/i).textContent)
+    .toMatchInlineSnapshot(`
+    "One or more of the following decrediton's features running in 
+                  the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket 
+                  Attempt"
+  `);
 
   expect(mockGetAccountMixerRunning).toHaveBeenCalled();
   mockGetAccountMixerRunning.mockRestore();

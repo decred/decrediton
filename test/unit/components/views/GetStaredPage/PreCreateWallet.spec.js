@@ -289,13 +289,13 @@ test("test trezor switch toggling and setup device page", async () => {
   expect(
     screen.getByText(/no trezor device found/i).textContent
   ).toMatchInlineSnapshot(
-    `"No Trezor device found. Check the connection and the Trezor bridge software."`
+    "\"No Trezor device found. Check the connection and the Trezor bridge software.\""
   );
   user.click(screen.getByText(/connect to trezor/i));
   expect(mockTrezorConnect).toHaveBeenCalled();
 
   // go back
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText("Wallet Name"));
 });
 
@@ -328,7 +328,7 @@ test("trezor device is connected", async () => {
   user.click(screen.queryByText(/setup device/i));
   await wait(() => screen.getByText(/config trezor/i));
   // go back
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText("Wallet Name"));
 
   const continueButton = screen.getByText(/continue/i);
