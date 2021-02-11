@@ -1105,7 +1105,7 @@ export const changePassphraseRequestAttempt = get([
 
 export const constructTxLowBalance = get(["control", "constructTxLowBalance"]);
 export const constructTxResponse = get(["control", "constructTxResponse"]);
-const constructTxRequestAttempt = get(["control", "constructTxRequestAttempt"]);
+export const constructTxRequestAttempt = get(["control", "constructTxRequestAttempt"]);
 const signTransactionRequestAttempt = get([
   "control",
   "signTransactionRequestAttempt"

@@ -37,7 +37,8 @@ const SendTransaction = ({
     validateAddress,
     onClearTransaction,
     onGetNextAddressAttempt,
-    getRunningIndicator
+    getRunningIndicator,
+    constructTxRequestAttempt
   } = useSendTransaction();
 
   const {
@@ -282,12 +283,12 @@ const SendTransaction = ({
   // Executes on component updates
   useEffect(() => {
     let newOutputs;
-    if (publishTxResponse && publishTxResponse != prevPublishTxResponse) {
+    if (publishTxResponse && publishTxResponse !== prevPublishTxResponse) {
       if (isSendSelf) {
         onGetNextAddressAttempt(nextAddressAccount.value);
       }
       setIsSendAll(false);
-      onSetOutputs([baseOutput()]);
+      newOutputs = [baseOutput()];
     }
     if (
       isSendSelf &&
@@ -325,10 +326,10 @@ const SendTransaction = ({
     prevOutputs,
     onSetOutputs,
     onAttemptConstructTransaction,
-    onClearTransaction,
     onGetNextAddressAttempt,
     account,
-    prevAccount
+    prevAccount,
+    constructTxRequestAttempt
   ]);
 
   // Clear transaction info on unmount
