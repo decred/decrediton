@@ -46,6 +46,7 @@ const useDaemonStartup = () => {
   // vsp selectors
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const stakeTransactions = useSelector(sel.stakeTransactions);
+  const isProcessingManaged = useSelector(sel.isProcessingManaged);
   // end of vsp selectors
 
   // sync dcrwallet spv or rpc selectors
@@ -224,7 +225,7 @@ const useDaemonStartup = () => {
   );
 
   const onProcessManagedTickets = useCallback(
-    async (passphrase) => await dispatch(processManagedTickets(passphrase)),
+    async (passphrase) => dispatch(processManagedTickets(passphrase)),
     [dispatch]
   );
 
@@ -302,7 +303,8 @@ const useDaemonStartup = () => {
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
     stakeTransactions,
-    rememberedVspHost
+    rememberedVspHost,
+    isProcessingManaged
   };
 };
 

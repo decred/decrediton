@@ -60,7 +60,8 @@ export const useGetStarted = () => {
     getCoinjoinOutputspByAcct,
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
-    stakeTransactions
+    stakeTransactions,
+    isProcessingManaged
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -684,6 +685,7 @@ export const useGetStarted = () => {
         PageComponent = h(ProcessManagedTickets, {
           error,
           onSendContinue,
+          onSendError,
           send,
           cancel: onSendBack,
           onProcessTickets: onProcessManagedTickets,
@@ -693,6 +695,7 @@ export const useGetStarted = () => {
               m="Process Managed Tickets"
             />
           ),
+          isProcessingManaged: isProcessingManaged,
           noVspSelection: true,
           description: (
             <T
@@ -750,7 +753,8 @@ export const useGetStarted = () => {
       daemonWarning,
       onProcessUnmanagedTickets,
       onProcessManagedTickets,
-      send
+      send,
+      isProcessingManaged
     ]
   );
 

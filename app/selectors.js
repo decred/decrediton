@@ -913,6 +913,7 @@ export const getVSPTickets = createSelector(
   }
 );
 
+export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
 // ****************** end of vsp selectors ******************
 
 export const dailyBalancesStats = get(["statistics", "dailyBalances"]);

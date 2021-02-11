@@ -547,8 +547,9 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const asyncProcess = async () => {
       dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
+      let unlocked = false;
+      const walletService = sel.walletService(getState());
       try {
-        const walletService = sel.walletService(getState());
         const availableVSPs = await dispatch(discoverAvailableVSPs());
         let feeAccount, changeAccount;
         const mixedAccount = sel.getMixedAccount(getState());
@@ -561,7 +562,7 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         }
 
         await wallet.unlockWallet(walletService, passphrase);
-
+        unlocked = true;
         await Promise.all(availableVSPs.map(async (vsp) => {
           const { pubkey } = await dispatch(getVSPInfo(vsp.host));
           await wallet.processManagedTickets(
@@ -578,6 +579,7 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
         resolve(true);
       } catch(error) {
+        if (unlocked) await wallet.lockWallet(walletService);
         dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
         reject(error);
       }

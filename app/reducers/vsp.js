@@ -7,7 +7,10 @@ import {
   SET_REMEMBERED_VSP_HOST,
   SYNCVSPTICKETS_ATTEMPT,
   SYNCVSPTICKETS_FAILED,
-  SYNCVSPTICKETS_SUCCESS
+  SYNCVSPTICKETS_SUCCESS,
+  PROCESSMANAGEDTICKETS_ATTEMPT,
+  PROCESSMANAGEDTICKETS_SUCCES,
+  PROCESSMANAGEDTICKETS_FAILED
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -83,6 +86,21 @@ export default function vsp(state = {}, action) {
         syncVSPRequestAttempt: false,
         syncVSPRequestError: null
       };
+    case PROCESSMANAGEDTICKETS_ATTEMPT:
+      return { ...state,
+        processManagedTicketsAttempt: true,
+        processManagedTicketsError: null
+      };
+    case PROCESSMANAGEDTICKETS_SUCCES:
+    return { ...state,
+      processManagedTicketsAttempt: false,
+      processManagedTicketsError: null
+    };
+    case PROCESSMANAGEDTICKETS_FAILED:
+    return { ...state,
+      processManagedTicketsAttempt: false,
+      processManagedTicketsError: action.error
+    };
     default:
       return state;
   }

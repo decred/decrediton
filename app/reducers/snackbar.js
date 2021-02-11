@@ -37,7 +37,8 @@ import {
   ADDCUSTOMSTAKEPOOL_FAILED,
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
   SYNCVSPTICKETS_SUCCESS,
-  SYNCVSPTICKETS_FAILED
+  SYNCVSPTICKETS_FAILED,
+  PROCESSMANAGEDTICKETS_FAILED
 } from "../actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
@@ -533,6 +534,10 @@ const messages = defineMessages({
   SYNCVSPTICKETS_FAILED: {
     id: "sync.vsp.failed",
     defaultMessage: "{originalError}"
+  },
+  PROCESSMANAGEDTICKETS_FAILED: {
+    id: "processmanaged.failed",
+    defaultMessage: "{originalError}"
   }
 });
 
@@ -727,6 +732,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_LISTWATCHTOWERS_FAILED:
     case RUNACCOUNTMIXER_FAILED:
     case SYNCVSPTICKETS_FAILED:
+    case PROCESSMANAGEDTICKETS_FAILED:
       type = "Error";
       if (
         action.error &&

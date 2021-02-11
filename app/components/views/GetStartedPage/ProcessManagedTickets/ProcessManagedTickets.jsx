@@ -11,18 +11,17 @@ import { VSPSelect } from "inputs";
 export default ({
   cancel,
   send,
-  onSendContinue,
   onProcessTickets,
   title,
   description,
   noVspSelection,
-  error
+  error,
+  isProcessingManaged
 }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = (passphrase) => {
     // send a continue so we can go to the loading state
-    onSendContinue();
     onProcessTickets(passphrase)
       .then(() => send({ type: "CONTINUE" }))
       .catch(error => {
@@ -40,7 +39,6 @@ export default ({
       });
     return;
   };
-
   useEffect(() => {
     if (noVspSelection) {
       setIsValid(true);
@@ -84,7 +82,8 @@ export default ({
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.mangedTickets.button" m="Continue" />}
-          disabled={!isValid}>
+          disabled={!isValid || isProcessingManaged}
+          loading={isProcessingManaged}>
 
         </PassphraseModalButton>
         <InvisibleButton className={styles.skipButton} onClick={cancel}>
