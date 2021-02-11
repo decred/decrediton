@@ -70,7 +70,15 @@ export default () => {
           <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
         </div>
       </div>
-      <TabsHeader {...{ tabs, setActiveTabIndex, activeTabIndex }} />
+      <TabsHeader
+        {...{
+          tabs,
+          setActiveTabIndex,
+          activeTabIndex,
+          contentClassName: styles.tabsContent,
+          tabsWrapperClassName: styles.tabsWrapper
+        }}
+      />
       <div
         className={classNames(styles.overviewTransactionsTicket, styles.isRow)}>
         <RecentTransactions
