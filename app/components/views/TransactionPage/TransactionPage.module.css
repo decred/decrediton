@@ -2,7 +2,7 @@
   user-select: text;
   -webkit-user-select: text;
 }
-.standalonePage .standalonePageBody {
+.standalonePage > div:last-child {
   padding: 0;
   top: 157px;
 }

@@ -77,7 +77,9 @@ const TransactionPageContent = ({
             <T id="txDetails.transactionLabel" m="Transaction" />:
           </div>
           <div className={styles.value}>
-            <ExternalLink href={txUrl}>{txHash}</ExternalLink>
+            <ExternalLink className={styles.value} href={txUrl}>
+              {txHash}
+            </ExternalLink>
           </div>
         </div>
         <div className={styles.topRow}>
@@ -258,7 +260,9 @@ const TransactionPageContent = ({
                 <T id="txDetails.blockLabel" m="Block" />
               </div>
               <div className={styles.value}>
-                <ExternalLink href={txBlockUrl}>{txBlockHash}</ExternalLink>
+                <ExternalLink className={styles.value} href={txBlockUrl}>
+                  {txBlockHash}
+                </ExternalLink>
               </div>
             </div>
             <div className={styles.topRow}>
