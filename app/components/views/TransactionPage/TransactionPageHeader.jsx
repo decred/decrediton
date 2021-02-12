@@ -17,6 +17,7 @@ import { StandaloneHeader } from "layout";
 import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ClientActions";
 import * as sel from "selectors";
+import styles from "./TransactionPage.module.css";
 
 const messages = defineMessages({
   [TICKET]: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
@@ -46,14 +47,14 @@ const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
   txType !== REGULAR
     ? (titleComp = intl.formatMessage(messages[txType]))
     : (titleComp = (
-        <Balance
-          title
-          bold
-          amount={
-            txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
-          }
-        />
-      ));
+      <Balance
+        title
+        bold
+        amount={
+          txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
+        }
+      />
+    ));
   if (txType === TICKET && ticketReward) {
     titleComp = `${titleComp}, Voted`;
   }
@@ -88,13 +89,13 @@ const subtitle = ({
     case TICKET:
     case VOTE:
       return (
-        <div className="tx-details-subtitle">
+        <div className={styles.subtitle}>
           {!isPending ? (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.purchasedOn" m="Purchased On" />
               </div>
-              <div className="tx-details-subtitle-date">
+              <div className={styles.subtitleDate}>
                 <T
                   id="txDetails.timestamp"
                   m="{timestamp, date, medium} {timestamp, time, medium}"
@@ -107,16 +108,16 @@ const subtitle = ({
               </div>
             </div>
           ) : (
-            <div className="tx-details-subtitle-date">
-              <T id="txDetails.unConfirmed" m="Unconfirmed" />
-            </div>
-          )}
+              <div className={styles.subtitleDate}>
+                <T id="txDetails.unConfirmed" m="Unconfirmed" />
+              </div>
+            )}
           {leaveTimestamp && (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.votedOn" m="Voted On" />
               </div>
-              <div className="tx-details-subtitle-date">
+              <div className={styles.subtitleDate}>
                 <T
                   id="txDetails.timestamp"
                   m="{timestamp, date, medium} {timestamp, time, medium}"
@@ -126,21 +127,21 @@ const subtitle = ({
             </div>
           )}
           {ticketPrice && (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.ticketCost" m="Ticket Cost" />
               </div>
-              <div className="tx-details-subtitle-account">
+              <div className={styles.subtitleAccount}>
                 <Balance amount={ticketPrice} />
               </div>
             </div>
           )}
           {ticketReward && (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.reward" m="Reward" />
               </div>
-              <div className="tx-details-subtitle-account">
+              <div className={styles.subtitleAccount}>
                 <Balance amount={ticketReward} />
               </div>
             </div>
@@ -149,20 +150,20 @@ const subtitle = ({
       );
     default:
       return (
-        <div className="tx-details-subtitle">
+        <div className={styles.subtitle}>
           {txDirection === TRANSACTION_DIR_SENT ? (
             <>
-              <div className="tx-details-subtitle-sentfrom">
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.sentFrom" m="Sent From" />
               </div>
-              <div className="tx-details-subtitle-account">
+              <div className={styles.subtitleAccount}>
                 {sentFromAccount}
               </div>
             </>
           ) : (
-            <div />
-          )}
-          <div className="tx-details-subtitle-date">
+              <div />
+            )}
+          <div className={styles.subtitleDate}>
             {!isPending ? (
               <T
                 id="txDetails.timestamp"
@@ -170,15 +171,15 @@ const subtitle = ({
                 values={{ timestamp: tsDate(timestamp) }}
               />
             ) : (
-              <T id="txDetails.unConfirmed" m="Unconfirmed" />
-            )}
+                <T id="txDetails.unConfirmed" m="Unconfirmed" />
+              )}
           </div>
         </div>
       );
   }
 };
 
-const Header = ({
+const TransactionPageHeader = ({
   txType,
   txAmount,
   isPending,
@@ -218,4 +219,4 @@ const Header = ({
   );
 };
 
-export default injectIntl(Header);
+export default injectIntl(TransactionPageHeader);
