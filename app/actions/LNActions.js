@@ -2,7 +2,7 @@ import * as ln from "wallet/ln";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { ipcRenderer } from "electron";
-import { getWalletCfg } from "../config";
+import { getWalletCfg } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
@@ -55,7 +55,7 @@ export const startDcrlnd = (
     daemon: { walletName }
   } = getState();
   const isTestnet = sel.isTestNet(getState());
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = getWalletPath(sel.network(getState()), walletName);
   const walletPort = port;
   const lnCfg = dispatch(getLNWalletConfig());
 
@@ -126,7 +126,7 @@ export const startDcrlnd = (
       // When the error happens during ln wallet creation, remove the dir so
       // that the next attempt can try to create the wallet again. We do it
       // after a timeout to ensure the previous shutdown has completed.
-      setTimeout(() => ln.removeDcrlnd(walletName, isTestnet), 2000);
+      setTimeout(() => ln.removeDcrlnd(walletName, sel.network(getState())), 2000);
     }
   };
 
@@ -900,7 +900,7 @@ const getLNWalletConfig = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const cfg = getWalletCfg(sel.network(getState()), walletName);
   return {
     walletExists: cfg.get(cfgConstants.LN_WALLET_EXISTS),
     account: cfg.get(cfgConstants.LN_ACCOUNT)
@@ -911,7 +911,7 @@ const setLNWalletConfig = (account) => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const cfg = getWalletCfg(sel.network(getState()), walletName);
   cfg.set(cfgConstants.LN_WALLET_EXISTS, true);
   cfg.set(cfgConstants.LN_ACCOUNT, account);
 };
@@ -922,7 +922,7 @@ const getScbInfo = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = getWalletPath(sel.network(getState()), walletName);
   const scbInfo = await ln.scbInfo(walletPath, isTestnet);
   dispatch({
     scbPath: scbInfo.channelBackupPath,

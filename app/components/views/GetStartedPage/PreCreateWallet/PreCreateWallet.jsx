@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import CreateWalletForm from "./CreateWalletForm";
 import { useDaemonStartup } from "hooks";
 import { injectIntl } from "react-intl";
+import { SIMNET, MAINNET, TESTNET } from "constants";
 
 const PreCreateWallet = ({
   intl,
@@ -24,7 +25,8 @@ const PreCreateWallet = ({
     trezorGetWalletCreationMasterPubKey,
     onCreateWallet,
     trezorEnable,
-    validateMasterPubKey
+    validateMasterPubKey,
+    isSimnet
   } = useDaemonStartup();
   const [newWalletName, setNewWalletName] = useState("");
   const [isWatchingOnly, setIsWatchingOnly] = useState(false);
@@ -87,7 +89,7 @@ const PreCreateWallet = ({
         isWatchingOnly,
         isTrezor,
         isNew,
-        network: isTestNet ? "testnet" : "mainnet"
+        network: isSimnet ? SIMNET : isTestNet ? TESTNET : MAINNET
       }
     };
 
@@ -125,6 +127,7 @@ const PreCreateWallet = ({
   }, [
     isCreateNewWallet,
     isTestNet,
+    isSimnet,
     isTrezor,
     isWatchingOnly,
     masterPubKeyError,

@@ -22,7 +22,6 @@ import { initTransport } from "actions/TrezorActions.js";
 import * as connect from "connect";
 import { rawToHex } from "helpers";
 
-
 const logger = createLogger();
 let watchingOnlyWallet;
 let dcrdIsRemote;
@@ -31,20 +30,19 @@ let dcrdIsRemote;
 // in the respective network direction in each wallets data dir.
 export const getAvailableWallets = (network) => {
   const availableWallets = [];
-  const isTestNet = network !== MAINNET;
 
-  const walletsBasePath = getWalletPath(isTestNet);
+  const walletsBasePath = getWalletPath(network, "");
   const walletDirs = fs.readdirSync(walletsBasePath);
   walletDirs.forEach((wallet) => {
     const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
     if (!walletDirStat.isDirectory()) return;
 
-    const cfg = getWalletCfg(isTestNet, wallet);
+    const cfg = getWalletCfg(network, wallet);
     const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
     const watchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
     const isTrezor = cfg.get(cfgConstants.TREZOR);
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
-    const walletDbFilePath = getWalletDb(isTestNet, wallet);
+    const walletDbFilePath = getWalletDb(network, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
     availableWallets.push({
       network,
@@ -87,7 +85,7 @@ export const deleteDaemon = (appData, testnet) => {
 // value if it is valid.
 // startDaemon returns an object of format:
 // { appdata, rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port }
-export const startDaemon = async (params, testnet, reactIPC) => {
+export const startDaemon = async (params, network, reactIPC) => {
   if (dcrdIsRemote) {
     logger.log(
       "info",
@@ -106,7 +104,7 @@ export const startDaemon = async (params, testnet, reactIPC) => {
     }
 
     const appdata = params && params.appdata;
-    const started = await launchDCRD(reactIPC, testnet, appdata);
+    const started = await launchDCRD(reactIPC, network, appdata);
     return started;
   } catch (err) {
     logger.log("error", "error launching dcrd: " + err);
@@ -114,15 +112,15 @@ export const startDaemon = async (params, testnet, reactIPC) => {
   }
 };
 
-export const createWallet = (testnet, walletPath) => {
-  const newWalletDirectory = getWalletPath(testnet, walletPath);
+export const createWallet = (network, walletPath) => {
+  const newWalletDirectory = getWalletPath(network, walletPath);
   try {
     if (!fs.pathExistsSync(newWalletDirectory)) {
       fs.mkdirsSync(newWalletDirectory);
 
       // create new configs for new wallet
-      initWalletCfg(testnet, walletPath);
-      newWalletConfigCreation(testnet, walletPath);
+      initWalletCfg(network, walletPath);
+      newWalletConfigCreation(network, walletPath);
     }
     return true;
   } catch (e) {
@@ -131,9 +129,10 @@ export const createWallet = (testnet, walletPath) => {
   }
 };
 
-export const removeWallet = (testnet, walletPath) => {
+// TODO add simnet to remove wallet
+export const removeWallet = (network, walletPath) => {
   if (!walletPath) return;
-  const removeWalletDirectory = getWalletPath(testnet, walletPath);
+  const removeWalletDirectory = getWalletPath(network, walletPath);
   try {
     if (fs.pathExistsSync(removeWalletDirectory)) {
       fs.removeSync(removeWalletDirectory);
@@ -198,7 +197,7 @@ export const updateTrezorFirmware = async ( firmwarePath, model ) => {
 export const startWallet = (
   mainWindow,
   daemonIsAdvanced,
-  testnet,
+  network,
   walletPath,
   reactIPC
 ) => {
@@ -207,13 +206,13 @@ export const startWallet = (
     mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
     return GetDcrwPID();
   }
-  initWalletCfg(testnet, walletPath);
+  initWalletCfg(network, walletPath);
   try {
     return launchDCRWallet(
       mainWindow,
       daemonIsAdvanced,
       walletPath,
-      testnet,
+      network,
       reactIPC
     );
   } catch (e) {
@@ -266,8 +265,8 @@ export const stopDcrlnd = () => {
   return closeDcrlnd();
 };
 
-export const removeDcrlnd = (walletName, testnet) => {
-  const walletPath = getWalletPath(testnet, walletName);
+export const removeDcrlnd = (walletName, network) => {
+  const walletPath = getWalletPath(network, walletName);
   const dcrlndRoot = path.join(walletPath, "dcrlnd");
   try {
     if (fs.pathExistsSync(dcrlndRoot)) {

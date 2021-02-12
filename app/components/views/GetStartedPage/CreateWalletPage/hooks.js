@@ -27,6 +27,7 @@ export const useCreateWallet = () => {
     [dispatch]
   );
   const isTestNet = useSelector(sel.isTestNet);
+  const isSimnet = useSelector(sel.isSimnet);
 
   return {
     decodeSeed,
@@ -34,6 +35,7 @@ export const useCreateWallet = () => {
     generateSeed,
     createWatchOnlyWalletRequest,
     createWalletRequest,
-    isTestNet
+    isTestNet,
+    isSimnet
   };
 };

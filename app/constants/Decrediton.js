@@ -45,6 +45,7 @@ export const HEX = "hex";
 
 export const TESTNET = "testnet";
 export const MAINNET = "mainnet";
+export const SIMNET = "simnet";
 
 // BATCH_TX_COUNT represents a batch of transaction wich will be fetched
 // on a getTransactions request.

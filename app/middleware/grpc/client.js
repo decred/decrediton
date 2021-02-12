@@ -9,7 +9,7 @@ const proto = require("../walletrpc/api_grpc_pb.js");
 const services = grpc.loadPackageDefinition(proto).walletrpc;
 
 const getServiceClient = (clientClass) => (
-  isTestNet,
+  network,
   walletPath,
   address,
   port,
@@ -17,7 +17,7 @@ const getServiceClient = (clientClass) => (
   grpcCert,
   cb
 ) => {
-  const cert = getWalletCert(getWalletPath(isTestNet, walletPath));
+  const cert = getWalletCert(getWalletPath(network, walletPath));
   if (cert == "") {
     return cb(
       null,

@@ -41,6 +41,7 @@ const useDaemonStartup = () => {
   const isTrezor = useSelector(sel.isTrezor);
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
   const daemonWarning = useSelector(sel.daemonWarning);
+  const isSimnet = useSelector(sel.isSimnet);
   // end of daemon selectors
 
   // vsp selectors
@@ -273,6 +274,7 @@ const useDaemonStartup = () => {
     isAdvancedDaemon,
     isSPV,
     isTestNet,
+    isSimnet,
     availableWallets,
     getDaemonSynced,
     getCurrentBlockCount,

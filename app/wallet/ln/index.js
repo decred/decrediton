@@ -303,9 +303,9 @@ export const stopDaemon = (client) => {
   );
 };
 
-export const removeDcrlnd = (walletName, testnet) =>
+export const removeDcrlnd = (walletName, network) =>
   new Promise((resolve, reject) => {
-    const res = ipcRenderer.sendSync("ln-remove-dir", walletName, testnet);
+    const res = ipcRenderer.sendSync("ln-remove-dir", walletName, network);
     res instanceof Error ? reject(res) : resolve(res);
   });
 
