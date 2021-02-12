@@ -64,6 +64,10 @@
   word-wrap: break-word;
   display: flex;
 }
+.value > a {
+  color: var(--input-color-default);
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+}
 .value.nonFlex {
   display: block;
 }
