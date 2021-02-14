@@ -4,6 +4,7 @@ import Message from "./Message";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
+  SELFTRANSFER,
   TICKET_FEE,
   TICKET,
   VOTE,
@@ -13,6 +14,7 @@ import {
 const transactionTypes = [
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
+  SELFTRANSFER,
   TICKET_FEE,
   TICKET,
   VOTE,

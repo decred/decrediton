@@ -84,7 +84,8 @@ const RegularTxRow = ({
           }
         />
       </span>
-      {txDirection === TICKET_FEE ? (
+      {txDirection === SELFTRANSFER ||
+       txDirection === TICKET_FEE ? (
         <div className={classNames("is-row", styles.txDirection)}>
           <TxDirection account={txAccountNameDebited} />
           <TxDirection account={txAccountNameCredited} isCred />

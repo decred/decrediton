@@ -16,7 +16,9 @@ import {
   TICKET_FEE,
   TICKET,
   VOTE,
-  REVOCATION
+  REVOCATION,
+  MIXED,
+  SELFTRANSFER
 } from "constants/Decrediton";
 import "style/Snackbar.less";
 
@@ -32,6 +34,8 @@ const snackbarClasses = ({ type }) =>
     [REVOCATION]: "snackbar snackbar-stake",
     [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
     [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
+    [SELFTRANSFER]: "snackbar snackbar-self",
+    [MIXED]: "snackbar snackbar-mixed",
     [TICKET_FEE]: "snackbar snackbar-ticketfee",
     Warning: "snackbar snackbar-warning",
     Error: "snackbar snackbar-error",
@@ -101,17 +105,20 @@ class Snackbar extends React.Component {
 
   getStaticNotification() {
     const { messages, progress } = this.state;
+    console.log({ messages });
     const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
     const notifications = new Array();
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
+      console.log({ message });
+      console.log(snackbarClasses(message || ""));
       const notification = (
         <div
-          key={"ntf" + i}
+          key={`ntf${i}`}
           className={snackbarClasses(message || "")}
           onMouseEnter={clearHideTimer}
           onMouseLeave={enableHideTimer}
-          style={{ bottom: "0px" }}>
+          style={{ bottom: "0" }}>
           <Notification
             {...{
               topNotification: i === 0,
@@ -147,6 +154,7 @@ class Snackbar extends React.Component {
 
   getAnimatedNotification() {
     const { messages, progress } = this.state;
+    console.log({ messages });
     const {
       onDismissMessage,
       clearHideTimer,
@@ -171,13 +179,14 @@ class Snackbar extends React.Component {
       });
       totalHeight += messages[i].height || 64;
     }
-
     return (
       <TransitionMotion styles={styles} willEnter={notifWillEnter}>
         {(is) => (
           <>
             {" "}
             {is.map((s, i) => {
+              console.log(s.data);
+              console.log(snackbarClasses(s.data || ""));
               return (
                 <div
                   key={s.key}
