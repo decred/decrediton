@@ -20,7 +20,7 @@
   overflow-y: auto;
 }
 
-.extendedBottomAccount {
+.account {
   height: 44px;
   display: flex;
   padding-left: 52px;
@@ -31,11 +31,19 @@
   background-position: 19px 0;
 }
 
-.extendedBottomAccount.imported {
+.account.imported {
   background-image: var(--accounts-imported);
 }
 
-.extendedBottomAccountName {
+.account.mixed {
+  background-image: var(--mixed-account-icon);
+}
+
+.account.unmixed {
+  background-image: var(--unmixed-account-icon);
+}
+
+.accountName {
   color: var(--stroke-color-hovered);
   font-size: 13px;
   overflow: hidden;
@@ -43,13 +51,13 @@
   text-overflow: ellipsis;
 }
 
-.extendedBottomAccountNumber {
+.accountNumber {
   font-family: var(--font-family-regular);
   color: var(--input-color-default);
   font-size: 11pt;
   font-weight: 600;
 }
 
-.extendedBottomAccountNumber .balanceSmall {
+.accountNumber .balanceSmall {
   font-size: 11pt;
 }

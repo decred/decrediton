@@ -15,6 +15,8 @@ const SideBar = () => {
     onHideAccounts,
     isTestNet,
     balances,
+    mixedAccount,
+    changeAccount,
     currentBlockHeight,
     lastBlockTimestamp,
     totalBalance,
@@ -62,6 +64,8 @@ const SideBar = () => {
           {...{
             isShowingAccounts,
             balances,
+            mixedAccount,
+            changeAccount,
             accountsListRef
           }}
         />
