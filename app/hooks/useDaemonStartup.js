@@ -48,7 +48,7 @@ const useDaemonStartup = () => {
   const stakeTransactions = useSelector(sel.stakeTransactions);
   const isProcessingManaged = useSelector(sel.isProcessingManaged);
   // end of vsp selectors
-
+  console.log("daemon startup", isProcessingManaged);
   // sync dcrwallet spv or rpc selectors
   const peerCount = useSelector(sel.peerCount);
   const synced = useSelector(sel.synced);
@@ -225,7 +225,7 @@ const useDaemonStartup = () => {
   );
 
   const onProcessManagedTickets = useCallback(
-    async (passphrase) => dispatch(processManagedTickets(passphrase)),
+    (passphrase) => dispatch(processManagedTickets(passphrase)),
     [dispatch]
   );
 

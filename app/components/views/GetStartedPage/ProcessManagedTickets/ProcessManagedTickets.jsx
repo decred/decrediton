@@ -48,16 +48,17 @@ export default ({
       setIsValid(true);
     }
   }, [vsp, noVspSelection]);
-
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        <Tooltip text={<GoBackMsg />}>
-          <div
-            className={GetStartedStyles.goBackScreenButton}
-            onClick={cancel}
-          />
-        </Tooltip>
+        { !isProcessingManaged &&
+          <Tooltip text={<GoBackMsg />}>
+            <div
+              className={GetStartedStyles.goBackScreenButton}
+              onClick={cancel}
+            />
+          </Tooltip>
+        }
       </div>
       <Subtitle
         className={styles.subtitle}
@@ -83,15 +84,15 @@ export default ({
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.mangedTickets.button" m="Continue" />}
           disabled={!isValid || isProcessingManaged}
-          loading={isProcessingManaged}>
-
-        </PassphraseModalButton>
-        <InvisibleButton className={styles.skipButton} onClick={cancel}>
-          <T
-            id="process.mangedTickets.button.skip"
-            m="Skip"
-          />
-        </InvisibleButton>
+          loading={isProcessingManaged}/>
+        { !isProcessingManaged &&
+          <InvisibleButton className={styles.skipButton} onClick={cancel}>
+            <T
+              id="process.mangedTickets.button.skip"
+              m="Skip"
+            />
+          </InvisibleButton>
+        }
       </div>
     </div>
   );
