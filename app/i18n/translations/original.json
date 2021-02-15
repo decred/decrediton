@@ -1094,7 +1094,7 @@
   "tickets.startAutoBuyerConfirmation.description": "Decrediton must remain running for tickets to be automatically purchased.",
   "tickets.startAutoBuyerHeader": "Ticket buyer is now running.",
   "tickets.stopAutoBuyerHeader": "Ticket buyer is now stopped.",
-  "tickets.tab.mytickets": "Tickets History",
+  "tickets.tab.mytickets": "Ticket History",
   "tickets.tab.purchase": "Purchase Tickets",
   "tickets.tab.statistics": "Statistics",
   "tickets.tab.vsptickets": "Ticket Status",
