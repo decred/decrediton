@@ -36,6 +36,7 @@ const Tickets = ({
   isWatchingOnly,
   toggleIsLegacy,
   notMixedAccounts,
+  getRunningIndicator,
   ...props
 }) => {
   return (
@@ -56,7 +57,7 @@ const Tickets = ({
           }
         />
       ) : (
-        <PurchaseTickets {...{ ...props, notMixedAccounts }} />
+        <PurchaseTickets {...{ ...props, notMixedAccounts, getRunningIndicator }} />
       )}
       {isWatchingOnly ? (
         <UnsignedTickets {...{ ...props }} />
@@ -68,7 +69,7 @@ const Tickets = ({
           />
         </div>
       ) : (
-        <TicketAutoBuyer {...{ ...props, notMixedAccounts }} />
+        <TicketAutoBuyer {...{ ...props, notMixedAccounts, getRunningIndicator }} />
       )}
     </div>
   );

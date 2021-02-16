@@ -1,7 +1,7 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, LEGACY_StakePoolSelect } from "inputs";
-import { Balance, Subtitle } from "shared";
+import { Balance, Subtitle, Tooltip } from "shared";
 
 const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
@@ -18,7 +18,8 @@ const TicketAutoBuyerForm = ({
   isFormValid,
   clicked,
   onClick,
-  notMixedAccounts
+  notMixedAccounts,
+  getRunningIndicator
 }) => (
   <>
     <Subtitle
@@ -31,6 +32,19 @@ const TicketAutoBuyerForm = ({
         {isTicketAutoBuyerEnabled ? (
           <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
         ) : (
+          getRunningIndicator ?
+
+          <Tooltip
+            text={
+              <T
+                id="tickets.autobuyer-legacy.running"
+                m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before purchasing tickets."
+              />
+            }>
+            <AutoBuyerPassphraseModalSwitch
+              disabled={true}
+            />
+          </Tooltip> :
           <AutoBuyerPassphraseModalSwitch
             modalTitle={
               <T
