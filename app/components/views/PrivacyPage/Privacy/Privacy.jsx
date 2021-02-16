@@ -21,7 +21,8 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     showInsufficientBalanceWarning,
     defaultSpendingAccountDisregardMixedAccount,
     mixedAccountSpendableBalance,
-    changeAccountSpendableBalance
+    changeAccountSpendableBalance,
+    getRunningIndicator
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");
@@ -83,7 +84,8 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
         defaultSpendingAccountDisregardMixedAccount,
         mixedAccountSpendableBalance,
         changeAccountSpendableBalance,
-        accounts
+        accounts,
+        getRunningIndicator
       }}
     />
   );

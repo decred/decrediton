@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Subtitle, Log, Balance } from "shared";
+import { Subtitle, Log, Balance, Tooltip } from "shared";
 import {
   InfoDocModalButton,
   MixerPassphraseModalSwitch,
@@ -29,7 +29,8 @@ const PrivacyContent = ({
   changeAccount,
   defaultSpendingAccountDisregardMixedAccount,
   mixedAccountSpendableBalance,
-  changeAccountSpendableBalance
+  changeAccountSpendableBalance,
+  getRunningIndicator
 }) => {
   const [expandedLogs, setExpandedLogs] = useState(false);
   const onHideLog = () => setExpandedLogs(false);
@@ -92,6 +93,20 @@ const PrivacyContent = ({
                 <T id="privacy.stop.mixer" m="Stop Mixer" />
               </DangerButton>
             ) : (
+              getRunningIndicator ?
+              <Tooltip
+                text={
+                  <T
+                    id="tickets.purchase.running"
+                    m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
+                  />
+                }>
+              <MixerPassphraseModalSwitchKeyBlueButton
+                className={style.startMixerButton}
+                disabled={true}
+                buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}/>
+              </Tooltip>
+              :
               <MixerPassphraseModalSwitch
                 modalTitle={
                   <T id="privacy.start.mixer.confirmation" m="Start Mixer" />

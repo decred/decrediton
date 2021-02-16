@@ -29,7 +29,8 @@ const PurchaseTicketsForm = ({
   isLoading,
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
-  notMixedAccounts
+  notMixedAccounts,
+  getRunningIndicator
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, "is-row")}>
@@ -145,10 +146,20 @@ const PurchaseTicketsForm = ({
           {purchaseLabel()}
         </KeyBlueButton>
       ) : isLoading ? (
-        <KeyBlueButton disabled={true}>
-          <T id="tickets.purchase.loading" m="Loading" />
-        </KeyBlueButton>
+        <KeyBlueButton disabled={true} loading={true}/>
       ) : (
+        getRunningIndicator ?
+        <Tooltip
+          text={
+            <T
+              id="tickets.purchase.running"
+              m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
+            />
+          }>
+          <KeyBlueButton disabled={true}>
+            {purchaseLabel()}
+          </KeyBlueButton>
+        </Tooltip> :
         <PassphraseModalButton
           modalTitle={
             <T
