@@ -2,9 +2,9 @@ import { themes } from "./themes";
 import TooltipInfo from "./TooltipInfo";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import "style/Heatmap.less";
+import styles from "../Statistics.module.css";
+import { useStatistics } from "../hooks";
 
-const boxWidth = 10;
 const boxMargin = 3;
 const canvasMargin = 20;
 const rowNumber = 7;
@@ -52,7 +52,7 @@ const addIntensityInfo = (graphEntries) => {
 };
 
 function drawInfo(opts = {}) {
-  const { offsetX = 0, offsetY = 0, graphEntries, columnNumber } = opts;
+  const { offsetX = 0, offsetY = 0, graphEntries, columnNumber, boxWidth } = opts;
   const theme = getTheme();
   const squares = [];
   for (let row = 0; row < rowNumber; row++) {
@@ -112,7 +112,7 @@ function drawInfo(opts = {}) {
 }
 
 function drawLegend(opts) {
-  const { offsetY, offsetX } = opts;
+  const { offsetY, offsetX, boxWidth } = opts;
   const legendFontSize = 10;
   const theme = getTheme();
   const legend = [];
@@ -168,6 +168,8 @@ function drawLegend(opts) {
 }
 
 const Heatmap = ({ data, ...opts }) => {
+  const { sidebarOnBottom } = useStatistics();
+  const boxWidth = sidebarOnBottom ? 9 : 10;
   const columnNumber = Math.ceil(data.length / rowNumber);
   const offsetY = canvasMargin + headerHeight;
   const offsetX = 0;
@@ -180,17 +182,18 @@ const Heatmap = ({ data, ...opts }) => {
 
   addIntensityInfo(data);
   return (
-    <div className="ticket-activity-wrapper">
-      <span className="my-tickets-stats-indicators-title">Ticket Activity</span>
-      <div className="heatmap-wrapper">
+    <div className={styles.ticketActivityWrapper}>
+      <span className={styles.myTicketsStatsIndicatorsTitle}>Ticket Activity</span>
+      <div className={styles.heatmapWrapper}>
         {drawInfo({
           graphEntries: data,
+          boxWidth,
           offsetX,
           offsetY,
           columnNumber,
           ...opts
         })}
-        {drawLegend({ offsetY: totalOffsetY, offsetX: totalOffsetX })}
+        {drawLegend({ boxWidth, offsetY: totalOffsetY, offsetX: totalOffsetX })}
       </div>
     </div>
   );

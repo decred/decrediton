@@ -5,12 +5,15 @@ import {
   yAxisStyle,
   xAxisStyle,
   myTicketsChartSize,
+  myTicketsChartSizeSmall,
   padding,
   radiusBottom,
   radiusTop,
   hoverFill
 } from "./Styles";
 import { FormattedMessage as T } from "react-intl";
+import styles from "./Charts.module.css";
+import { useChart } from "./hooks";
 
 const ChartTooltip = (props) => {
   const { payload } = props;
@@ -27,12 +30,12 @@ const ChartTooltip = (props) => {
   const rowLegend = payload[0].payload.legendName;
 
   return (
-    <div className="chart-tooltip">
-      <div className="row-legend">{rowLegend}</div>
+    <div className={styles.chartTooltip}>
+      <div className={styles.rowLegend}>{rowLegend}</div>
       {payload.map((entry, index) => (
-        <div key={`item-${index}`} className="tooltip-line">
+        <div key={`item-${index}`} className={styles.tooltipLine}>
           <div
-            className="circle-tooltip"
+            className={styles.circleTooltip}
             style={{ background: entry.fill }}></div>
           <T
             id="charts.tooltip.value"
@@ -49,6 +52,10 @@ const ChartTooltip = (props) => {
 };
 
 const VoteTimeChart = ({ data, intl }) => {
+  const { sidebarOnBottom } = useChart();
+  const chartSize = sidebarOnBottom
+    ? myTicketsChartSizeSmall
+    : myTicketsChartSize;
   const stakeRewardsKey = intl.formatMessage(messages.stakeRewards);
   const stakeFeesKey = intl.formatMessage(messages.stakeFees);
 
@@ -62,21 +69,21 @@ const VoteTimeChart = ({ data, intl }) => {
   return (
     <LineChart
       stackOffset="sign"
-      width={myTicketsChartSize.width}
-      height={myTicketsChartSize.height}
+      width={chartSize.width}
+      height={chartSize.height}
       data={displayData}>
       <XAxis
         tickLine={false}
         dataKey="name"
         style={yAxisStyle}
-        className="xAxis"
+        className={styles.xAxis}
       />
       <YAxis
         tickLine={false}
         orientation="right"
         style={xAxisStyle}
         padding={padding}
-        className="yAxis"
+        className={styles.yAxis}
       />
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <Line

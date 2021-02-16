@@ -1,27 +1,20 @@
 import Page from "./HeatmapWrapper";
-import { myTicketsCharts } from "connectors";
 import { DecredLoading } from "indicators";
+import { useStatistics } from "../hooks.js";
+import { useMountEffect } from "hooks";
+import styles from "../Statistics.module.css";
 
-// xxxx: functional me!!
+const Heatmap = () => {
+  const { ticketDataHeatmap, getTicketsHeatmapStats } = useStatistics();
+  useMountEffect(() => {
+    getTicketsHeatmapStats();
+  });
 
-@autobind
-class Heatmap extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  return ticketDataHeatmap.length > 0 ? (
+    <Page {...{ data: ticketDataHeatmap }} />
+  ) : (
+    <DecredLoading className={styles.newLogoAnimation}/>
+  );
+};
 
-  componentDidMount() {
-    this.props.getTicketsHeatmapStats();
-  }
-
-  render() {
-    const { ticketDataHeatmap } = this.props;
-    return ticketDataHeatmap.length > 0 ? (
-      <Page {...{ data: this.props.ticketDataHeatmap }} />
-    ) : (
-      <DecredLoading />
-    );
-  }
-}
-
-export default myTicketsCharts(Heatmap);
+export default Heatmap;
