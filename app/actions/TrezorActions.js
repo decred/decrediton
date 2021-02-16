@@ -37,6 +37,7 @@ const BOOTLOADER_MODE = "bootloader";
 
 let setListeners = false;
 
+export const TRZ_WALLET_CLOSED = "TRZ_WALLET_CLOSED";
 export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
 
 // enableTrezor attepts to start a connection with connect if none exist and
@@ -64,6 +65,7 @@ export const initTransport = async (session, debug) => {
     env: "web",
     lazyLoad: false,
     popup: false,
+    transportReconnect: false,
     manifest: {
       email: "joegruffins@gmail.com",
       appUrl: "https://github.com/decred/decrediton"

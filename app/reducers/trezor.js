@@ -1,4 +1,5 @@
 import {
+  TRZ_WALLET_CLOSED,
   TRZ_TREZOR_ENABLED,
   TRZ_TREZOR_DISABLED,
   TRZ_CONNECT_ATTEMPT,
@@ -95,10 +96,20 @@ export default function trezor(state = {}, action) {
         connected: false
       };
     case TRZ_NOCONNECTEDDEVICE:
+      // Losing the device also means that it is no longer connected.
       return {
         ...state,
         device: null,
-        deviceLabel: null
+        deviceLabel: null,
+        connected: false
+      };
+    case TRZ_WALLET_CLOSED:
+      return {
+        ...state,
+        device: null,
+        deviceLabel: null,
+        performingOperation: false,
+        connected: false
       };
     case TRZ_SELECTEDDEVICE_CHANGED:
     case TRZ_LOADDEVICE:
