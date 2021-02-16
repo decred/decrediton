@@ -36,6 +36,7 @@ class ChangeLabel extends React.Component {
         header={changeLabelHeader}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
+        headerClassName="vertical-accordion-header"
         className="trezor-config-accordion">
         <div>
           <T id="trezor.changeLabel.description" m="New Label" />
