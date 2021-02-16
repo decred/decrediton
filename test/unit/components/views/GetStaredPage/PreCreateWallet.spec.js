@@ -345,7 +345,7 @@ test("trezor device is connected", async () => {
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
   expect(mockAlertNoConnectedDevice).not.toHaveBeenCalled();
-  expect(screen.getByTestId("decred-loading").style.display).toMatch(/block/i);
+  expect(screen.getByTestId("decred-loading")).not.toHaveClass("hidden");
 });
 
 test("trezor has to auto-disable when step back from restore view", async () => {

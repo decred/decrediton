@@ -6,14 +6,15 @@ import { FormattedRelative } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import ReactTimeout from "react-timeout";
 import { classNames } from "pi-ui";
-import styles from "./indicators.module.css";
+import styles from "./LinearProgress.module.css";
 
 const AnimatedLinearProgressFull = ({
   setInterval,
   min,
   error,
   text,
-  animationType
+  animationType,
+  initialAnimationType
 }) => {
   const {
     isSPV,
@@ -59,15 +60,14 @@ const AnimatedLinearProgressFull = ({
   }
   return (
     <>
-      <div
-        className={classNames(
-          "linear-progress",
-          animationType && animationType
-        )}>
+      <div className={classNames(styles.linearProgress)}>
         {getDaemonSynced || isSPV ? (
           <>
             <div
-              className={classNames("linear-progress-bar", error && "error")}
+              className={classNames(
+                styles.linearProgressBar,
+                error && styles.error
+              )}
               style={
                 error || getDaemonSynced || !perComplete
                   ? {}
@@ -75,7 +75,7 @@ const AnimatedLinearProgressFull = ({
               }></div>
             <div
               className={classNames(
-                "linear-progress-text",
+                styles.linearProgressText,
                 animationType && animationType
               )}>
               {text}
@@ -84,51 +84,55 @@ const AnimatedLinearProgressFull = ({
         ) : (
           <>
             <div
-              className={classNames("linear-progress-bar", error && "error")}
+              className={classNames(
+                styles.linearProgressBar,
+                error && styles.error
+              )}
               style={{ width: `${leftStartingPoint}%` }}></div>
-            <div className="is-row">
+            <div className={styles.isRow}>
               {perComplete > 0.1 && perComplete < 1 && (
                 <div
-                  className="linear-progress-box one"
+                  className={classNames(styles.linearProgressBox, styles.one)}
                   style={{ left: leftStartingPoint }}
                 />
               )}
               {perComplete > 0.25 && perComplete < 1 && (
                 <div
-                  className="linear-progress-box two"
+                  className={classNames(styles.linearProgressBox, styles.two)}
                   style={{ left: leftStartingPoint + 200 }}
                 />
               )}
               {perComplete > 0.4 && perComplete < 1 && (
                 <div
-                  className="linear-progress-box three"
+                  className={classNames(styles.linearProgressBox, styles.three)}
                   style={{ left: leftStartingPoint + 200 }}
                 />
               )}
               {perComplete > 0.6 && perComplete < 1 && (
                 <div
-                  className="linear-progress-box four"
+                  className={classNames(styles.linearProgressBox, styles.four)}
                   style={{ left: leftStartingPoint + 200 }}
                 />
               )}
               {perComplete > 0.75 && perComplete < 1 && (
                 <div
-                  className="linear-progress-box five"
+                  className={classNames(styles.linearProgressBox, styles.five)}
                   style={{ left: leftStartingPoint + 200 }}
                 />
               )}
               {perComplete > 0.9 && perComplete < 1 && (
                 <div
-                  className="linear-progress-box six"
+                  className={classNames(styles.linearProgressBox, styles.six)}
                   style={{ left: leftStartingPoint + 200 }}
                 />
               )}
             </div>
             <div
               className={classNames(
-                "linear-progress-text",
+                styles.linearProgressText,
                 animationType ?? animationType,
-                leftStartingPoint == 0 && "initial"
+                leftStartingPoint == 0 && initialAnimationType,
+                leftStartingPoint == 0 && styles.initial
               )}>
               {text}
             </div>
@@ -158,13 +162,11 @@ const AnimatedLinearProgressFull = ({
             </span>
           </div>
         )}
-        {!getDaemonSynced &&
-          lastDcrdLogLine &&
-          !selectedWalletSelector && (
-            <div className={styles.lastLogLines}>
-              <div>{lastDcrdLogLine}</div>
-            </div>
-          )}
+        {!getDaemonSynced && lastDcrdLogLine && !selectedWalletSelector && (
+          <div className={styles.lastLogLines}>
+            <div>{lastDcrdLogLine}</div>
+          </div>
+        )}
         {selectedWalletSelector && lastDcrwalletLogLine && (
           <div className={styles.lastLogLines}>
             <div>{lastDcrwalletLogLine}</div>

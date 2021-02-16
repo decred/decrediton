@@ -1,0 +1,27 @@
+.votingProgressIndicator {
+  width: 150px;
+  height: 5px;
+  position: relative;
+  display: flex;
+  margin-top: 2px;
+  border: 1px solid var(--white-border);
+  margin-right: 20px;
+  border-radius: 10rem;
+}
+.votingProgressIndicator .votingProgressYes {
+  background-color: var(--vote-yes-color);
+}
+.votingProgressIndicator .votingProgressNo {
+  background-color: var(--vote-no-color);
+}
+
+@media screen and (max-width: 1179px) {
+  .votingProgressIndicator {
+    width: 120px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .votingProgressIndicator {
+    width: 120px;
+  }
+}

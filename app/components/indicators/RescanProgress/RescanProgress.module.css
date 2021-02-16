@@ -1,0 +1,30 @@
+.rescanProgressArea {
+  color: var(--disabled-color);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+.rescanProgressIndicator {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.linearProgressSmall {
+  border-radius: 0px !important;
+  background-color: var(--input-color-hover) !important;
+}
+.linearProgressSmallBar {
+  background: var(--accent-color) !important;
+  border-radius: 0px !important;
+}
+.rescanCancelButtonArea {
+  margin: 0 -12px 0 auto;
+}
+.rescanProgressFraction {
+  color: var(--input-color-default);
+  margin: 0px 4px 0px 4px;
+}
+.rescanProgressPercent {
+  color: var(--input-color-default);
+}
