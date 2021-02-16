@@ -17,6 +17,8 @@ export function useSideBar() {
 
   const isTestNet = useSelector(sel.isTestNet);
   const balances = useSelector(sel.balances);
+  const mixedAccount = useSelector(sel.getMixedAccount);
+  const changeAccount = useSelector(sel.getChangeAccount);
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
   const lastBlockTimestamp = useSelector(sel.lastBlockTimestamp);
   const totalBalance = useSelector(sel.totalBalance);
@@ -30,7 +32,6 @@ export function useSideBar() {
   const uiAnimations = useSelector(sel.uiAnimations);
 
   const dispatch = useDispatch();
-
   const onExpandSideBar = useCallback(() => dispatch(sba.expandSideBar()), [
     dispatch
   ]);
@@ -44,6 +45,8 @@ export function useSideBar() {
     onHideAccounts: () => setIsShowingAccounts(false),
     isTestNet,
     balances,
+    mixedAccount,
+    changeAccount,
     currentBlockHeight,
     lastBlockTimestamp,
     totalBalance,

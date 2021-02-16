@@ -6,6 +6,8 @@ const Accounts = () => {
   const {
     walletService,
     accounts,
+    mixedAccount,
+    changeAccount,
     isLoading,
     accountExtendedKey,
     walletName,
@@ -26,6 +28,8 @@ const Accounts = () => {
           onShowAccount,
           onRenameAccount,
           accounts,
+          mixedAccount,
+          changeAccount,
           isLoading,
           accountExtendedKey,
           walletName,

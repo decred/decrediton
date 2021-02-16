@@ -3,6 +3,7 @@ import AccountRow from "./AccountRow/AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
 import { classNames } from "pi-ui";
+// XXX this should go away!
 import "style/AccountsPage.less";
 import { Subtitle } from "shared";
 import style from "./Accounts.module.css";
@@ -27,6 +28,8 @@ const SubtitleWalletName = React.memo(({ walletName }) => (
 
 const AccountsList = ({
   accounts,
+  mixedAccount,
+  changeAccount,
   isLoading,
   onGetAccountExtendedKey,
   accountExtendedKey,
@@ -54,6 +57,8 @@ const AccountsList = ({
               {...{
                 hasTickets,
                 account,
+                mixedAccount,
+                changeAccount,
                 accountNumDetailsShown,
                 onGetAccountExtendedKey,
                 accountExtendedKey

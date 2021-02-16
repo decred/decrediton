@@ -59,6 +59,12 @@
 .detailsTop.imported {
   background-image: var(--accounts-imported);
 }
+.detailsTop.mixed {
+  background-image: var(--mixed-account-icon);
+}
+.detailsTop.unmixed {
+  background-image: var(--unmixed-account-icon);
+}
 .detailsTop:hover {
   background-color: var(--background-container-hover);
 }
