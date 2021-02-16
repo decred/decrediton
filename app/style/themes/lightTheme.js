@@ -249,7 +249,7 @@ const lightTheme = {
   "decentralized-loop-animation":
     "url('style/icons/decentralizedLoopAnimation.gif')",
   "self-transaction-icon": "url('style/icons/sentToSelfTx.svg')",
-  "proposals-refresh-icon": "url('style/icons/MixerDark.svg')"
+  "proposals-refresh-icon": "url('style/icons/menuMixer.svg')"
 };
 
 export default lightTheme;
