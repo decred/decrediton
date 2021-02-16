@@ -13,6 +13,21 @@ const messages = defineMessages({
   }
 });
 
+const getError = (error) => {
+  if (error.isTimeout) {
+    const { vspHost } = error;
+    return <T
+      id="process.mangedTickets.error"
+      m="Timeout with vsp: {vsp}"
+      values={{
+        vsp: vspHost
+      }}
+    />;
+  }
+
+  return String(error);
+};
+
 function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
   const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(
     options,
@@ -136,7 +151,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
         return (
           <div>
             {getSelect(true)}
-            <div className={styles.error}>{String(error)}</div>
+            <div className={styles.error}>{getError(error)}</div>
           </div>
         );
       default:
