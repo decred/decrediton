@@ -1,7 +1,7 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
-import { Balance, Subtitle } from "shared";
+import { Balance, Subtitle, Tooltip } from "shared";
 import styles from "../PurchaseTab.module.css";
 
 const TicketAutoBuyerForm = ({
@@ -19,7 +19,8 @@ const TicketAutoBuyerForm = ({
   isValid,
   onClick,
   clicked,
-  notMixedAccounts
+  notMixedAccounts,
+  getRunningIndicator
 }) => (
   <>
     <Subtitle
@@ -30,6 +31,18 @@ const TicketAutoBuyerForm = ({
         {isRunning ? (
           <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
         ) : (
+          (getRunningIndicator ? (
+            <Tooltip
+              text={
+                <T
+                  id="tickets.autobuyer.running"
+                  m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before starting autobuyer."
+                />
+              }>
+              <AutoBuyerPassphraseModalSwitch
+                isValid={false}/>
+            </Tooltip>
+          ) :
           <AutoBuyerPassphraseModalSwitch
             modalTitle={
               <T
@@ -77,7 +90,7 @@ const TicketAutoBuyerForm = ({
             onClick={onClick}
             isValid={isValid}
           />
-        )}
+        ))}
         <div className="stakepool-auto-buyer-row-portion-half">
           <div className="stakepool-autobuyer-label">
             <T id="vsp.autobuyer.accountFrom" m="From" />:
