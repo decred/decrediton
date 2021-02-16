@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: row;
 }
-.myTicketsCharts {
+.charts {
   -webkit-user-select: text;
 }
-.myTicketsCharts {
+.charts {
   background: var(--background-back-color);
   padding: 30px 0px 30px 0px;
   min-height: 230px;
@@ -126,12 +126,12 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .myTicketsCharts {
+  .charts {
     width: 667px;
   }
 }
 @media screen and (max-width: 768px) {
-  .myTicketsCharts {
+  .charts {
     padding-top: 20px;
     width: 355px;
     flex-direction: column;

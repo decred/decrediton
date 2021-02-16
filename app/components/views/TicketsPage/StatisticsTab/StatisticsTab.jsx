@@ -71,7 +71,7 @@ const StatisticsTab = () => {
         className={styles.isRow}
         children={subtitleMenu({ allStakePoolStats, hasStats })}
       />
-      <div className={styles.myTicketsCharts}>
+      <div className={styles.charts}>
         {getMyTicketsStatsRequest ? (
           <DecredLoading className={styles.newLogoAnimation}/>
         ) : (
