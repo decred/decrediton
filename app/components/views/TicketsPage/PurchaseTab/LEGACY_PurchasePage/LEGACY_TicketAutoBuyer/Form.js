@@ -33,7 +33,6 @@ const TicketAutoBuyerForm = ({
           <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
         ) : (
           getRunningIndicator ?
-
           <Tooltip
             text={
               <T
