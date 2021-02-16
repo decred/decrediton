@@ -1,7 +1,6 @@
 .area {
   background-color: var(--background-back-color);
   padding: 16px 19px 16px 19px;
-  border-radius: 5px;
   position: relative;
   display: grid;
   grid-template-areas: "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle";
