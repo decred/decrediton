@@ -97,7 +97,7 @@ const PrivacyContent = ({
               <Tooltip
                 text={
                   <T
-                    id="tickets.purchase.running"
+                    id="mixer.start.running"
                     m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
                   />
                 }>
