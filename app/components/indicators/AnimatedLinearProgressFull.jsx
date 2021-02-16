@@ -69,7 +69,7 @@ const AnimatedLinearProgressFull = ({
             <div
               className={classNames("linear-progress-bar", error && "error")}
               style={
-                error || getDaemonSynced
+                error || getDaemonSynced || !perComplete
                   ? {}
                   : { width: `${perComplete * 100}` + "%" }
               }></div>
