@@ -37,6 +37,7 @@ class FirmwareUpdate extends React.Component {
         header={header}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
+        headerClassName="vertical-accordion-header"
         className="trezor-config-accordion trezor-config-regular-buttons">
         <div className="trezor-wipe-warning">
           <Documentation name="TrezorFirmwareUpdateWarning" />

@@ -10,7 +10,7 @@ export { default as ShowWarning } from "./ShowWarning";
 export { default as ShowError } from "./ShowError";
 export { default as Documentation } from "./Documentation";
 export { default as StaticSwitch } from "./StaticSwitch";
-export { default as VerticalAccordion } from "./VerticalAccordion";
+export { default as VerticalAccordion } from "./VericalAccordion/VerticalAccordion";
 export { default as PoliteiaLink } from "./PoliteiaLink";
 export { default as WatchOnlyWarnNotification } from "./WatchOnlyWarnNotification";
 export { default as Subtitle } from "./Subtitle/Subtitle";

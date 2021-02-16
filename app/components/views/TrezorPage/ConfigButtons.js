@@ -32,6 +32,7 @@ class ConfigButtons extends React.Component {
         header={ConfigButtonsHeader}
         show={this.state.show}
         onToggleAccordion={this.onToggleAccordion}
+        headerClassName="vertical-accordion-header"
         className="trezor-config-accordion trezor-config-regular-buttons">
         <KeyBlueButton
           onClick={onTogglePinProtection}
@@ -56,7 +57,6 @@ class ConfigButtons extends React.Component {
           disabled={loading}>
           <T id="trezorPage.changeHomeScreen" m="Change Home Screen" />
         </KeyBlueButton>
-
       </VerticalAccordion>
     );
   }
