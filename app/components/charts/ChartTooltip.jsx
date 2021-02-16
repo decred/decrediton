@@ -1,9 +1,9 @@
 import { Balance } from "shared";
-import { balance } from "connectors";
-import "style/Chart.less";
+import styles from "./Charts.module.css";
+import { useChart } from "./hooks";
 
-const ChartLegend = (props) => {
-  const { payload, unitDivisor } = props;
+const ChartLegend = () => {
+  const { payload, unitDivisor } = useChart();
   if (
     !payload ||
     payload.length === 0 ||
@@ -17,17 +17,17 @@ const ChartLegend = (props) => {
   const rowLegend = payload[0].payload.legendName;
 
   return (
-    <div className="chart-tooltip">
-      <div className="row-legend">{rowLegend}</div>
+    <div className={styles.chartTooltip}>
+      <div className={styles.rowLegend}>{rowLegend}</div>
       {payload.map((entry, index) => (
-        <div key={`item-${index}`} className="tooltip-line">
+        <div key={`item-${index}`} className={styles.tooltipLine}>
           <div
-            className="circle-tooltip"
+            className={styles.circleTooltip}
             style={{ background: entry.fill }}></div>
           {entry.dataKey}:
           <Balance
             amount={entry.value * unitDivisor}
-            classNameWrapper="chart-tooltip-value"
+            classNameWrapper={styles.chartTooltipValue}
           />
         </div>
       ))}
@@ -35,4 +35,4 @@ const ChartLegend = (props) => {
   );
 };
 
-export default balance(ChartLegend);
+export default ChartLegend;

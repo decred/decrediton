@@ -352,6 +352,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .overviewRow {
+    width: 355px;
+  }
   .historyRow {
     width: 100%;
   }

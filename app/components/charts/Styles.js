@@ -12,9 +12,17 @@ export const homeChartSize = {
   width: 450,
   height: 250
 };
+export const homeChartSizeSmall = {
+  width: 390,
+  height: 250
+};
 
 export const myTicketsChartSize = {
   width: 400,
+  height: 250
+};
+export const myTicketsChartSizeSmall = {
+  width: 350,
   height: 250
 };
 

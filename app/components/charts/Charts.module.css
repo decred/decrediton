@@ -1,0 +1,111 @@
+.meteredTicksArea {
+  margin-left: 96px;
+  margin-bottom: 6px;
+  width: 100%;
+  float: left;
+}
+.meteredTicks {
+  float: left;
+  height: 13px;
+  width: 3px;
+  margin-right: 2px;
+  border-radius: 5px;
+}
+.meteredTicks.blueTick {
+  background-color: var(--input-color);
+}
+.meteredTicks.blackTick {
+  background-color: var(--input-color-default);
+}
+.meteredChartLegend {
+  margin-left: 109px;
+  margin-right: 13px;
+}
+.legendLabel {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--stroke-color-hovered);
+}
+.legendValue {
+  font-size: 13px;
+  line-height: 19px;
+  font-weight: 600;
+  color: var(--input-color-default);
+}
+.blueLegend {
+  float: left;
+}
+.blueLegend .legendLabel {
+  margin-right: 10px;
+  text-align: right;
+  width: 104px;
+  float: left;
+}
+.blueLegend .legendValue {
+  float: right;
+}
+.blackLegend {
+  float: right;
+}
+.blackLegend .legendLabel {
+  text-align: left;
+  float: right;
+  width: 96px;
+}
+.blackLegend .legendValue {
+  margin-right: 10px;
+  float: left;
+}
+
+.circleTooltip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin: 6px;
+}
+.rowLegend {
+  padding-bottom: 10px;
+}
+.chartTooltip {
+  background-color: var(--background-container);
+  padding: 10px;
+  border-radius: 10px;
+}
+.chartTooltipValue {
+  display: inline-block;
+  margin-left: 0.2em;
+}
+.tooltipLine {
+  display: flex;
+  flex-direction: row;
+}
+.xAxis,
+.yAxis text {
+  fill: var(--chart-axis-text);
+}
+.xAxis,
+.yAxis line {
+  stroke: var(--chart-axis-stroke);
+}
+.recharts-tooltip-cursor {
+  fill: var(--chart-cursor-color);
+}
+@media screen and (max-width: 1179px) {
+  .meteredTicksArea {
+    margin-left: 60px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .meteredChartLegend {
+    margin: 0;
+  }
+  .meteredTicksArea {
+    margin-left: 0;
+  }
+  .blueLegend .legendLabel {
+    width: initial;
+  }
+  .blackLegend .legendLabel {
+    width: initial;
+  }
+}

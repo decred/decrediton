@@ -16,114 +16,24 @@
   margin-right: 0.5em;
 }
 
-.my-tickets-charts {
-  background: var(--background-back-color);
-  padding: 30px 0px 30px 0px;
-  min-height: 230px;
-  width: 740px;
-  display: flex;
-
-  .new-logo-animation {
-    margin-left: 42%;
-    margin-top: 40px;
-  }
+.loading-more-tickets {
+  height: 50px;
+  color: var(--title-text-and-button-background);
 }
 
-.heatmap-icon {
-  background-image: var(--tab-icon-tickets);
-}
-
-.my-tickets-stats-links {
-  margin-left: auto;
-}
-
-.my-tickets-stats-links a {
-  float: left;
-  border-radius: 5px;
-  height: 30px;
-  width: 30px;
-  background-color: var(--background-container);
-  background-size: 20px 20px;
+.loading-more-tickets-icon {
+  background-image: var(--tickets-loading-more-icon);
   background-repeat: no-repeat;
-  background-position: 5px 5px;
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.16);
-  margin-left: 10px;
-  cursor: pointer;
+  background-position: 50% 50%;
+  background-size: 32px;
+  width: 50px;
+  height: 50px;
 }
 
-.my-tickets-stats-links a.vote-time {
-  background-image: var(--vote-time-stats-icon);
-}
-
-.my-tickets-stats-links a.my-tickets-active-chart-link.vote-time {
-  background-image: var(--vote-time-stats-active-icon);
-}
-
-.my-tickets-stats-links a.stakepool {
-  background-image: var(--stakepool-stats-icon);
-}
-
-.my-tickets-stats-links a.my-tickets-active-chart-link.stakepool {
-  background-image: var(--stakepool-stats-active-icon);
-}
-
-.my-tickets-stats-links a.stakerewards {
-  background-image: var(--stakerewards-stats-icon);
-}
-
-.my-tickets-stats-links a.my-tickets-active-chart-link.stakerewards {
-  background-image: var(--stakerewards-stats-active-icon);
-}
-
-.my-tickets-stats-links a.my-tickets-active-chart-link {
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
-  background-color: var(--disabled-background-color);
-  cursor: default;
-}
-
-.my-tickets-stats-links a:hover {
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
-  background-color: var(--disabled-background-color);
-}
-.my-tickets-stats-links a.my-tickets-active-chart-link.heatmap-icon {
-  background-image: var(--menu-tickets);
-}
-
-.my-tickets-stats-chart {
-  float: left;
-}
-
-.my-tickets-stats-indicators {
-  float: left;
-  width: 250px;
-  margin: 0px 40px 0px 42px;
-  color: var(--input-color-default);
-}
-
-.my-tickets-stats-indicators-row {
-  float: left;
-  width: 100%;
-  margin-bottom: 14px;
-}
-
-.my-tickets-stats-indicators-label {
-  text-align: left;
-  float: left;
-  font-size: 13px;
-  line-height: 19px;
-}
-
-.my-tickets-stats-indicators-title {
-  font-size: 19px;
-  line-height: 24px;
-}
-
-.my-tickets-stats-indicators-value {
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 19px;
-  float: right;
-  text-align: right;
+.loading-more-tickets-info {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .my-tickets-table-header {
@@ -131,13 +41,4 @@
   grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
   padding: 16px 20px;
   background-color: var(--sidebar-color);
-}
-
-@media screen and (max-width: 1179px) {
-  .my-tickets-charts {
-    width: 667px;
-    .metered-ticks-area {
-      margin-left: 60px;
-    }
-  }
 }

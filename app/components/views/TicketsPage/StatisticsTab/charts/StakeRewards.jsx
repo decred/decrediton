@@ -1,9 +1,11 @@
 import { StakeRewardsChart } from "charts";
-import { myTicketsCharts } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
+import { useStatistics } from "../hooks.js";
+import styles from "../Statistics.module.css";
 
-const StakeRewardsChartPage = ({ stakeRewardsStats, dailyBalancesStats }) => {
+const StakeRewardsChartPage = () => {
+  const { stakeRewardsStats, dailyBalancesStats } = useStatistics();
   const lastBalance = dailyBalancesStats[dailyBalancesStats.length - 1];
   if (!lastBalance) {
     return <span>No data</span>;
@@ -15,51 +17,51 @@ const StakeRewardsChartPage = ({ stakeRewardsStats, dailyBalancesStats }) => {
 
   return (
     <>
-      <div className="my-tickets-stats-indicators">
-        <div className="my-tickets-stats-indicators-row">
-          <span className="my-tickets-stats-indicators-title">
+      <div className={styles.myTicketsStatsIndicators}>
+        <div className={styles.myTicketsStatsIndicatorsRow}>
+          <span className={styles.myTicketsStatsIndicatorsTitle}>
             <T id="mytickets.statistics.stakerewards.title" m="Stake Rewards" />
           </span>
         </div>
-        <div className="my-tickets-stats-indicators-row">
-          <div className="my-tickets-stats-indicators-label">
+        <div className={styles.myTicketsStatsIndicatorsRow}>
+          <div className={styles.myTicketsStatsIndicatorsLabel}>
             <T
               id="mytickets.statistics.stakerewards.totalStake"
               m="Total Stake:"
             />
           </div>
-          <div className="my-tickets-stats-indicators-value">
+          <div className={styles.myTicketsStatsIndicatorsValue}>
             <Balance amount={totalStake} flat={true} bold={false} />
           </div>
         </div>
-        <div className="my-tickets-stats-indicators-row">
-          <div className="my-tickets-stats-indicators-label">
+        <div className={styles.myTicketsStatsIndicatorsRow}>
+          <div className={styles.myTicketsStatsIndicatorsLabel}>
             <T
               id="mytickets.statistics.stakerewards.totalReward"
               m="Total Reward:"
             />
           </div>
-          <div className="my-tickets-stats-indicators-value">
+          <div className={styles.myTicketsStatsIndicatorsValue}>
             <Balance amount={totalReward} flat={true} bold={false} />
           </div>
         </div>
-        <div className="my-tickets-stats-indicators-row">
-          <div className="my-tickets-stats-indicators-label">
+        <div className={styles.myTicketsStatsIndicatorsRow}>
+          <div className={styles.myTicketsStatsIndicatorsLabel}>
             <T
               id="mytickets.statistics.stakerewards.totalFees"
               m="Total Fees"
             />
           </div>
-          <div className="my-tickets-stats-indicators-value">
+          <div className={styles.myTicketsStatsIndicatorsValue}>
             <Balance amount={totalFees} flat={true} bold={false} />
           </div>
         </div>
       </div>
-      <div className="my-tickets-stats-chart">
+      <div className={styles.myTicketsStatsChart}>
         <StakeRewardsChart data={stakeRewardsStats} />
       </div>
     </>
   );
 };
 
-export default myTicketsCharts(StakeRewardsChartPage);
+export default StakeRewardsChartPage;

@@ -196,6 +196,9 @@
   .overviewBalance {
     font-size: 27px;
   }
+  .overviewBalanceUnit {
+    font-size: 13px;
+  }
 
   .overviewContentWrapper {
     padding-left: 11px;
@@ -203,12 +206,15 @@
     flex-direction: column-reverse;
   }
 
+  .overviewTransactionsTicket {
+    padding: 20px 10px;
+  }
   .overviewTransactionsTicket.isRow {
     flex-flow: column wrap;
   }
 
   .homeContentTitle {
-    width: 315px;
+    width: 355px;
   }
 
   .overviewSpendableLockedWrapper {

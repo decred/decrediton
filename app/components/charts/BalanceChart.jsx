@@ -5,14 +5,19 @@ import {
   yAxisStyle,
   xAxisStyle,
   homeChartSize,
+  homeChartSizeSmall,
   padding,
   radiusTop,
   radiusBottom,
   hoverFill
 } from "./Styles";
 import ChartTooltip from "./ChartTooltip";
+import styles from "./Charts.module.css";
+import { useChart } from "./hooks";
 
 const BalanceChart = ({ data, intl }) => {
+  const { sidebarOnBottom } = useChart();
+  const chartSize = sidebarOnBottom ? homeChartSizeSmall : homeChartSize;
   const availableKey = intl.formatMessage(messages.availableKey);
   const lockedKey = intl.formatMessage(messages.lockedKey);
 
@@ -26,21 +31,21 @@ const BalanceChart = ({ data, intl }) => {
   return (
     <BarChart
       stackOffset="sign"
-      width={homeChartSize.width}
-      height={homeChartSize.height}
+      width={chartSize.width}
+      height={chartSize.height}
       data={displayData}>
       <XAxis
         tickLine={false}
         dataKey="name"
         style={yAxisStyle}
-        className="xAxis"
+        className={styles.xAxis}
       />
       <YAxis
         tickLine={false}
         orientation="right"
         style={xAxisStyle}
         padding={padding}
-        className="yAxis"
+        className={styles.yAxis}
       />
       <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <Bar

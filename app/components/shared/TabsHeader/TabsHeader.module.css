@@ -1,13 +1,17 @@
-.tabsWrapper {
-  padding-top: 20px;
+.tabsContainer {
   background-color: var(--background-back-color);
   width: 100%;
+}
+.tabsWrapper {
+  padding-top: 20px;
+  width: 883px;
+  position: relative;
 }
 
 .tabs {
   position: absolute;
-  right: 45px;
-  top: 60px;
+  right: 43px;
+  top: -40px;
   overflow: hidden !important;
 }
 .active {
@@ -25,11 +29,18 @@
   border-color: transparent !important;
 }
 
+@media screen and (max-width: 1179px) {
+  .tabsWrapper {
+    width: 735px;
+  }
+}
 @media screen and (max-width: 768px) {
+  .tabsWrapper {
+    width: 375px;
+  }
   .tabs {
-    width: 200px;
-    left: 275px;
-    top: 40px;
+    right: -10px;
+    top: -40px;
   }
   .tabs > li > span {
     color: transparent;
