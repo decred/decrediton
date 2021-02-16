@@ -19,11 +19,13 @@ export const getVSPInfo = (host) => (dispatch) => new Promise((resolve, reject) 
   // 5 seconds for timeout.
   const TIMEOUT_TIME = 5000;
   // add https into vsp host, so we can fetch its information.
-  host = "https://" + host;
+  host = `https://${host}`;
   wallet.allowVSPHost(host);
-  const timeout = new Promise((resolve, reject) => setTimeout(() => {
-    reject({ isTimeout: true, vspHost: host });
-  }, TIMEOUT_TIME));
+  const timeout = new Promise((resolve, reject) => setTimeout(
+      () => reject({ isTimeout: true, vspHost: host }),
+      TIMEOUT_TIME
+    )
+  );
   const getInfo = wallet.getVSPInfo(host);
 
   Promise.race([timeout, getInfo])
