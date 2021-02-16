@@ -1,6 +1,6 @@
 // @flow
-import Transaction from "./Transaction";
-import Message from "./Message";
+import Transaction from "./Transaction.jsx";
+import Message from "./Message.jsx";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,

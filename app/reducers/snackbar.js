@@ -421,7 +421,7 @@ const messages = defineMessages({
   },
   LNWALLET_INVOICE_SETTLED: {
     id: "ln.ntf.invoiceSettled",
-    defaultMessage: "Invoice '{memo}' settled!"
+    defaultMessage: "Invoice ‘{memo}’ settled!"
   },
   LNWALLET_SENDPAYMENT_FAILED: {
     id: "ln.ntf.sendPaymentFailed",
@@ -559,7 +559,7 @@ export default function snackbar(state = {}, action) {
       // check if this transaction is already in the message stack and don't add it
       // if it is to prevent double notifications (eg: published tx and it got mined
       // very fast)
-      if (oldMessages.some((m) => m.txHash === tx.txHash)) {
+      if (oldMessages.some((m) => m.message.txHash === tx.txHash)) {
         break;
       }
 
@@ -648,8 +648,10 @@ export default function snackbar(state = {}, action) {
           break;
         case LNWALLET_INVOICE_SETTLED:
           values = { memo: action.invoice.memo };
+          break;
         case LNWALLET_EXPORTBACKUP_SUCCESS:
           values = { destPath: action.destPath };
+          break;
       }
 
       break;

@@ -1,14 +1,8 @@
 // @flow
-import { keyBy } from "fp";
-// XXX useTheming hook already exists in app/hooks
-import { snackbar, theming } from "connectors";
-import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
+import { useSnackbar } from "./hooks";
 import Notification from "./Notification";
 import theme from "theme";
-// XXX replace this helper function with useClickOutside hooks, located in
-// hooks/ dir
-import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import {
   TRANSACTION_DIR_SENT,
@@ -18,90 +12,58 @@ import {
   VOTE,
   REVOCATION
 } from "constants/Decrediton";
-import "style/Snackbar.less";
-
-const propTypes = {
-  messages: PropTypes.array.isRequired,
-  onDismissAllMessages: PropTypes.func.isRequired
-};
+import { classNames } from "pi-ui";
+import style from "./Snackbar.module.css";
 
 const snackbarClasses = ({ type }) =>
   ({
-    [TICKET]: "snackbar snackbar-stake",
-    [VOTE]: "snackbar snackbar-stake",
-    [REVOCATION]: "snackbar snackbar-stake",
-    [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
-    [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
-    [TICKET_FEE]: "snackbar snackbar-ticketfee",
-    Warning: "snackbar snackbar-warning",
-    Error: "snackbar snackbar-error",
-    Success: "snackbar snackbar-success"
+    [TICKET]: classNames(
+      style.snackbar,
+      style.snackbarTxMixin,
+      style.snackbarStake
+    ),
+    [VOTE]: classNames(
+      style.snackbar,
+      style.snackbarTxMixin,
+      style.snackbarStake
+    ),
+    [REVOCATION]: classNames(
+      style.snackbar,
+      style.snackbarTxMixin,
+      style.snackbarStake
+    ),
+    [TRANSACTION_DIR_RECEIVED]: classNames(
+      style.snackbar,
+      style.snackbarTxMixin,
+      style.snackbarReceive
+    ),
+    [TRANSACTION_DIR_SENT]: classNames(
+      style.snackbar,
+      style.snackbarTxMixin,
+      style.snackbarSend
+    ),
+    [TICKET_FEE]: classNames(
+      style.snackbar,
+      style.snackbarTxMixin,
+      style.snackbarTicketfee
+    ),
+    Warning: classNames(style.snackbar, style.snackbarWarning),
+    Error: classNames(style.snackbar, style.snackbarError),
+    Success: classNames(style.snackbar, style.snackbarSuccess)
   }[type] || "snackbar");
 
-@autobind
-class Snackbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.hideTimer = null;
-    this.state = {
-      messages: new Array(),
-      progress: 0
-    };
-  }
+const Snackbar = () => {
+  const {
+    uiAnimations,
+    messages,
+    setMessages,
+    progress,
+    clearHideTimer,
+    enableHideTimer,
+    onDismissMessage
+  } = useSnackbar();
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.messages === this.props.messages) {
-      return;
-    }
-    if (this.props.messages.length > 0) {
-      this.enableHideTimer();
-    }
-
-    const messagesByKey = keyBy(this.state.messages, "key");
-    const messages = this.props.messages.map((m) =>
-      messagesByKey[m.key] ? messagesByKey[m.key] : m
-    );
-    this.setState({ messages });
-  }
-
-  enableHideTimer() {
-    this.clearHideTimer();
-    // emulating progress
-    this.hideTimer = this.props.setInterval(() => {
-      this.setState({ progress: this.state.progress + 10 });
-      if (this.state.progress >= 100) {
-        this.onDismissMessage();
-        if (this.props.messages.length === 0) this.clearHideTimer();
-      }
-    }, 500);
-  }
-
-  clearHideTimer() {
-    if (this.hideTimer) {
-      this.props.clearInterval(this.hideTimer);
-      this.hideTimer = null;
-    }
-  }
-
-  windowClicked(event) {
-    if (!this.state.message) return;
-    if (eventOutsideComponent(this, event.target)) {
-      this.onDismissMessage();
-    }
-  }
-
-  onDismissMessage() {
-    const messages = [...this.props.messages];
-    messages.shift();
-    this.setState({ progress: 0 });
-    // dismiss single message of the one popped
-    this.props.onDismissAllMessages(messages);
-    if (messages.length > 0) this.enableHideTimer();
-  }
-
-  getStaticNotification() {
-    const { messages, progress } = this.state;
-    const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
+  function getStaticNotification() {
     const notifications = new Array();
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
@@ -127,34 +89,25 @@ class Snackbar extends React.Component {
     return notifications;
   }
 
-  notifWillEnter() {
+  function notifWillEnter() {
     return { bottom: -10 };
   }
 
-  animatedNotifRef(key, ref) {
+  function animatedNotifRef(key, ref) {
     if (!ref) return;
     const height = ref.clientHeight;
     let changedHeight = false;
-    const newMessages = this.state.messages.map((m) => {
+    const newMessages = messages.map((m) => {
       if (m.key !== key) return m;
       if (m.height === height) return m;
       changedHeight = true;
       return { ...m, height };
     });
     if (!changedHeight) return;
-    this.setState({ messages: newMessages });
+    setMessages(newMessages);
   }
 
-  getAnimatedNotification() {
-    const { messages, progress } = this.state;
-    const {
-      onDismissMessage,
-      clearHideTimer,
-      enableHideTimer,
-      notifWillEnter,
-      animatedNotifRef
-    } = this;
-
+  function getAnimatedNotification() {
     const styles = [];
 
     let totalHeight = 0;
@@ -203,19 +156,15 @@ class Snackbar extends React.Component {
     );
   }
 
-  render() {
-    const notification = this.props.uiAnimations
-      ? this.getAnimatedNotification()
-      : this.getStaticNotification();
+  const notification = uiAnimations
+    ? getAnimatedNotification()
+    : getStaticNotification();
 
-    return (
-      <EventListener target="document">
-        <div className="snackbar-panel">{notification}</div>
-      </EventListener>
-    );
-  }
-}
+  return (
+    <EventListener target="document">
+      <div className={style.snackbarPanel}>{notification}</div>
+    </EventListener>
+  );
+};
 
-Snackbar.propTypes = propTypes;
-
-export default ReactTimeout(snackbar(theming(Snackbar)));
+export default Snackbar;
