@@ -2443,7 +2443,7 @@ msgctxt "tickets.startAutoBuyerConfirmation.description"
 msgid ""
 "Decrediton must remain running for tickets to be automatically purchased."
 msgstr ""
-"Decredition debe estar en funcionamiento para proceder a la compra "
+"Decrediton debe estar en funcionamiento para proceder a la compra "
 "automática de tickets."
 
 #. [vsp.tickets.startAutoBuyerConfirmation.description]
@@ -9814,7 +9814,7 @@ msgid ""
 "after deleting the folder. Please manually restart it afterwards."
 msgstr ""
 "¡Advertencia! Esta acción es irreversible. Asegúrese de que quiere eliminar "
-"sus datos de la cadena de bloques antes de continuar. Decredition se cerrará"
+"sus datos de la cadena de bloques antes de continuar. Decrediton se cerrará"
 " automáticamente después de eliminar la carpeta. A continuación, reinícielo "
 "manualmente."
 
@@ -10236,7 +10236,7 @@ msgstr "falso"
 #: app/i18n/extracted/app/components/views/SettingsPage/LinksTab/LinksTab.json
 msgctxt "help.github.subtitle"
 msgid "github.com/decred/decrediton"
-msgstr "github.com/decred/decredition"
+msgstr "github.com/decred/decrediton"
 
 #. [spv.titleSub.here]
 #. defaultMessage is:

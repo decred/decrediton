@@ -2354,7 +2354,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.decrediton"
 msgid "Decrediton"
-msgstr "Decredition"
+msgstr "Decrediton"
 
 #. [appMenu.decrediton]
 #. defaultMessage is:
@@ -2373,7 +2373,7 @@ msgctxt "aboutModal.paragraph2a"
 msgid ""
 "Decrediton is free and open source software, developed and designed by the "
 "global team of"
-msgstr "Decreditionは無料のオープンソースソフトウェアで、次のグローバルチームにより開発、デザインされました。"
+msgstr "Decreditonは無料のオープンソースソフトウェアで、次のグローバルチームにより開発、デザインされました。"
 
 #. [tickets.purchasing.message]
 #. defaultMessage is:
@@ -7627,7 +7627,7 @@ msgctxt "settings.resetNetworkContent"
 msgid ""
 "The setting you have chosen to change requires Decrediton to be restarted.  "
 "Please confirm this action before proceeding."
-msgstr "選択した設定に変更するには、Decreditionを再起動する必要があります。続行する前にこのアクションを確認してください。"
+msgstr "選択した設定に変更するには、Decreditonを再起動する必要があります。続行する前にこのアクションを確認してください。"
 
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
@@ -9628,7 +9628,7 @@ msgid ""
 "after deleting the folder. Please manually restart it afterwards."
 msgstr ""
 "警告: "
-"この操作は元に戻せません！続行する前に、ブロックチェーンの日付を削除することを必ず確認してください。Decreditionは、フォルダを削除した後に自動的にシャットダウンします。その後、手動で再起動してください。"
+"この操作は元に戻せません！続行する前に、ブロックチェーンの日付を削除することを必ず確認してください。Decreditonは、フォルダを削除した後に自動的にシャットダウンします。その後、手動で再起動してください。"
 
 #. [watchOnly.enabled]
 #. defaultMessage is:

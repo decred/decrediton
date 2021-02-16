@@ -201,7 +201,7 @@ msgstr "Über"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "help.about"
 msgid "About Decrediton"
-msgstr "Über Decredition"
+msgstr "Über Decrediton"
 
 #. [help.about.decrediton]
 #. defaultMessage is:
@@ -209,7 +209,7 @@ msgstr "Über Decredition"
 #: app/i18n/extracted/app/components/views/SettingsPage/LinksTab/LinksTab.json
 msgctxt "help.about.decrediton"
 msgid "About Decrediton"
-msgstr "Über Decredition"
+msgstr "Über Decrediton"
 
 #. [appMenu.aboutDecrediton]
 #. defaultMessage is:
@@ -217,7 +217,7 @@ msgstr "Über Decredition"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.aboutDecrediton"
 msgid "About Decrediton"
-msgstr "Über Decredition"
+msgstr "Über Decrediton"
 
 #. [privacy.custom.accept]
 #. defaultMessage is:
@@ -2421,7 +2421,7 @@ msgid ""
 "Decrediton is free and open source software, developed and designed by the "
 "global team of"
 msgstr ""
-"Decredition ist eine kostenlose und Open Source-Software, und wurde "
+"Decrediton ist eine kostenlose und Open Source-Software, und wurde "
 "entwickelt und gestaltet vom globalen Team von "
 
 #. [tickets.purchasing.message]
@@ -6871,7 +6871,7 @@ msgid ""
 "Select how Decrediton should connect to external services. You can change "
 "this in the application settings later."
 msgstr ""
-"Wählen Sie, wie Decredition sich mit externen Services verbindet. Sie können"
+"Wählen Sie, wie Decrediton sich mit externen Services verbindet. Sie können"
 " dies in den Anwendungseinstellungen später noch ändern."
 
 #. [spv.titleSub]
@@ -6900,7 +6900,7 @@ msgid ""
 "Select which external requests Decrediton is allowed to make. You can change"
 " this later on the app settings page."
 msgstr ""
-"Legen Sie fest, welche externen Anfragen Decredition machen darf. Sie können"
+"Legen Sie fest, welche externen Anfragen Decrediton machen darf. Sie können"
 " dies später noch auf der Einstellungsseite der App ändern."
 
 #. [txhistory.icon.self]
@@ -7783,7 +7783,7 @@ msgid ""
 "The setting you have chosen to change requires Decrediton to be restarted.  "
 "Please confirm this action before proceeding."
 msgstr ""
-"Damit Sie die ausgewählte Einstellung ändern können, muss Decredition neu "
+"Damit Sie die ausgewählte Einstellung ändern können, muss Decrediton neu "
 "gestartet werden. Bitte bestätigen Sie diesen Vorgang, bevor Sie fortfahren."
 
 #. [votingPreferences.noAgenda]
@@ -9835,7 +9835,7 @@ msgid ""
 "after deleting the folder. Please manually restart it afterwards."
 msgstr ""
 "Achtung! Diese Aktion ist endgültig! Bitte überprüfen Sie, ob Sie Ihre "
-"Blockchain-Daten wirklich löschen möchten, bevor Sie fortfahren. Decredition"
+"Blockchain-Daten wirklich löschen möchten, bevor Sie fortfahren. Decrediton"
 " wird nach dem Löschen des Ordners automatisch geschlossen. Bitte starten "
 "Sie es anschließend manuell neu."
 
@@ -9901,7 +9901,7 @@ msgstr "Willkommen zum Decrediton-Wallet"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "loader.title"
 msgid "Welcome to Decrediton Wallet"
-msgstr "Willkommen beim Decredition-Wallet"
+msgstr "Willkommen beim Decrediton-Wallet"
 
 #. [home.noTickets.staking]
 #. defaultMessage is:
