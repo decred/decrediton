@@ -14,20 +14,31 @@ export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
 export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
 
-export const getVSPInfo = (host) => async (dispatch) => {
+export const getVSPInfo = (host) => (dispatch) => new Promise((resolve, reject) => {
   dispatch({ type: GETVSP_ATTEMPT });
-  try {
-    // add https into vsp host, so we can fetch its information.
-    host = "https://" + host;
-    wallet.allowVSPHost(host);
-    const info = await wallet.getVSPInfo(host);
-    dispatch({ type: GETVSP_SUCCESS, info });
-    return info.data;
-  } catch (error) {
-    dispatch({ type: GETVSP_FAILED, error });
-    return { error };
-  }
-};
+  // 5 seconds for timeout.
+  const TIMEOUT_TIME = 5000;
+  // add https into vsp host, so we can fetch its information.
+  host = `https://${host}`;
+  wallet.allowVSPHost(host);
+  const timeout = new Promise((resolve, reject) => setTimeout(
+      () => reject({ isTimeout: true, vspHost: host }),
+      TIMEOUT_TIME
+    )
+  );
+  const getInfo = wallet.getVSPInfo(host);
+
+  Promise.race([timeout, getInfo])
+    .then(info => {
+      clearTimeout(timeout);
+      dispatch({ type: GETVSP_SUCCESS, info });
+      resolve(info.data);
+    })
+    .catch(error => {
+      dispatch({ type: GETVSP_FAILED, error });
+      reject(error);
+    });
+});
 
 export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
 export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
@@ -532,42 +543,48 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 
 // processManagedTickets gets all vsp and check for tickets which still not
 // synced, and sync them.
-export const processManagedTickets = (passphrase) => async (dispatch, getState) => {
-  dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
-  try {
-    const walletService = sel.walletService(getState());
-    const availableVSPs = await dispatch(discoverAvailableVSPs());
-    let feeAccount, changeAccount;
-    const mixedAccount = sel.getMixedAccount(getState());
-    if (mixedAccount) {
-      feeAccount = mixedAccount;
-      changeAccount = sel.getChangeAccount(getState());
-    } else {
-      feeAccount = sel.defaultSpendingAccount(getState()).value;
-      changeAccount = sel.defaultSpendingAccount(getState()).value;
-    }
+export const processManagedTickets = (passphrase) => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    const asyncProcess = async () => {
+      dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
+      try {
+        const walletService = sel.walletService(getState());
+        const availableVSPs = await dispatch(discoverAvailableVSPs());
+        let feeAccount, changeAccount;
+        const mixedAccount = sel.getMixedAccount(getState());
+        if (mixedAccount) {
+          feeAccount = mixedAccount;
+          changeAccount = sel.getChangeAccount(getState());
+        } else {
+          feeAccount = sel.defaultSpendingAccount(getState()).value;
+          changeAccount = sel.defaultSpendingAccount(getState()).value;
+        }
 
-    await wallet.unlockWallet(walletService, passphrase);
+        await wallet.unlockWallet(walletService, passphrase);
 
-    await Promise.all(availableVSPs.map(async (vsp) => {
-      const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-      await wallet.processManagedTickets(
-        walletService, vsp.host, pubkey, feeAccount, changeAccount
-      );
-    }));
+        await Promise.all(availableVSPs.map(async (vsp) => {
+          const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+          await wallet.processManagedTickets(
+            walletService, vsp.host, pubkey, feeAccount, changeAccount
+          );
+        }));
 
-    await wallet.lockWallet(walletService);
+        await wallet.lockWallet(walletService);
 
-    // get vsp tickets fee status errored so we can resync them
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
-    dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
-    return true;
-  } catch(error) {
-    dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
-  }
-};
+        // get vsp tickets fee status errored so we can resync them
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+        dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
+        resolve(true);
+      } catch(error) {
+        dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
+        reject(error);
+      }
+    };
+
+    asyncProcess().then(r => resolve(r)).catch(error => reject(error));
+});
 
 export const PROCESSUNMANAGEDTICKETS_ATTEMPT = "PROCESSUNMANAGEDTICKETS_ATTEMPT";
 export const PROCESSUNMANAGEDTICKETS_SUCCESS = "PROCESSUNMANAGEDTICKETS_SUCCESS";
