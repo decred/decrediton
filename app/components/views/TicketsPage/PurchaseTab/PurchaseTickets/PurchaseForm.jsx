@@ -1,8 +1,8 @@
 import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
-import { classNames, Checkbox, Tooltip } from "pi-ui";
+import { Balance, Tooltip } from "shared";
+import { classNames, Checkbox } from "pi-ui";
 import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
@@ -156,9 +156,9 @@ const PurchaseTicketsForm = ({
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
             />
           }>
-          <KeyBlueButton disabled={true}>
-            {purchaseLabel()}
-          </KeyBlueButton>
+          <PassphraseModalButton
+            disabled={true}
+            buttonLabel={purchaseLabel()}/>
         </Tooltip> :
         <PassphraseModalButton
           modalTitle={

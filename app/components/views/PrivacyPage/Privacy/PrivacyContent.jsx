@@ -101,10 +101,10 @@ const PrivacyContent = ({
                     m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
                   />
                 }>
-              <MixerPassphraseModalSwitchKeyBlueButton
-                className={style.startMixerButton}
-                disabled={true}
-                buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}/>
+                <MixerPassphraseModalSwitch
+                  className={style.startMixerButton}
+                  disabled={true}
+                  buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}/>
               </Tooltip>
               :
               <MixerPassphraseModalSwitch

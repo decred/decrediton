@@ -36,7 +36,8 @@ const SendTransaction = ({
     attemptConstructTransaction,
     validateAddress,
     onClearTransaction,
-    onGetNextAddressAttempt
+    onGetNextAddressAttempt,
+    getRunningIndicator
   } = useSendTransaction();
 
   const {
@@ -356,7 +357,8 @@ const SendTransaction = ({
         insuficientFunds,
         styles,
         hideDetails,
-        sendButtonLabel
+        sendButtonLabel,
+        getRunningIndicator
       }}
     />
   );
