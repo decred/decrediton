@@ -8,19 +8,15 @@ import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
 
-export default ({ cancel, onSendContinue, onSendError, send, onProcessTickets, title, description, noVspSelection, isProcessingUnmanaged }) => {
+export default ({ cancel, send, onProcessTickets, title, description, noVspSelection, isProcessingUnmanaged, error }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = async (passphrase) => {
     await onProcessTickets(passphrase, vsp.host, vsp.pubkey)
-      .then(() => {
-        onSendContinue();
-        send({ type: "CONTINUE" });
-      })
-      .catch((error) => {
-        onSendError(error);
-        send({ type: "ERROR", error });
-      });
+    .then(() => send({ type: "CONTINUE" }))
+    .catch(error => {
+      send({ type: "ERROR", error });
+    });
     return;
   };
 
@@ -57,6 +53,9 @@ export default ({ cancel, onSendContinue, onSendError, send, onProcessTickets, t
           className={styles.vspSelect}
           {...{ onChange: setVSP }}
         />
+      }
+      {
+        error && <div className="error">{error}</div>
       }
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton

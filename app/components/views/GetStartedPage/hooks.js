@@ -663,6 +663,7 @@ export const useGetStarted = () => {
       }
       if (key === "processingUnmanagedTickets") {
         PageComponent = h(ProcessUnmanagedTickets, {
+          error,
           send,
           onSendContinue,
           onSendError,
@@ -706,7 +707,8 @@ export const useGetStarted = () => {
               id="getstarted.processManagedTickets.description"
               m={`Your wallet appears to have live tickets. Processing managed
             tickets confirms with the VSPs that all of your submitted tickets
-            are currently known and paid for by the VSPs.`}
+            are currently known and paid for by the VSPs. If you've already 
+            confirmed your tickets then you may skip this step.`}
             />
           )
         });

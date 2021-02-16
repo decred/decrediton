@@ -602,7 +602,7 @@ export const PROCESSUNMANAGEDTICKETS_FAILED = "PROCESSUNMANAGEDTICKETS_FAILED";
 // It is called on wallet restore.
 export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
-    const process = async () => {
+    const asyncProcess = async () => {
       dispatch({ type: PROCESSUNMANAGEDTICKETS_ATTEMPT });
       try {
         const walletService = sel.walletService(getState());
@@ -633,7 +633,5 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (disp
         return error;
       }
     };
-  process()
-    .then(() => resolve())
-    .catch((err) => reject(err));
+    asyncProcess().then(r => resolve(r)).catch(error => reject(error));
   });
