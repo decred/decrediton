@@ -61,7 +61,8 @@ export const useGetStarted = () => {
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
     stakeTransactions,
-    isProcessingManaged
+    isProcessingManaged,
+    isProcessingUnmanaged
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -662,8 +663,11 @@ export const useGetStarted = () => {
       }
       if (key === "processingUnmanagedTickets") {
         PageComponent = h(ProcessUnmanagedTickets, {
+          send,
           onSendContinue,
+          onSendError,
           onProcessTickets: onProcessUnmanagedTickets,
+          isProcessingUnmanaged: isProcessingUnmanaged,
           cancel: onSendBack,
           title: (
             <T
@@ -754,7 +758,8 @@ export const useGetStarted = () => {
       onProcessUnmanagedTickets,
       onProcessManagedTickets,
       send,
-      isProcessingManaged
+      isProcessingManaged,
+      isProcessingUnmanaged
     ]
   );
 

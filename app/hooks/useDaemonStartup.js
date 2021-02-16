@@ -47,8 +47,9 @@ const useDaemonStartup = () => {
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const stakeTransactions = useSelector(sel.stakeTransactions);
   const isProcessingManaged = useSelector(sel.isProcessingManaged);
+  const isProcessingUnmanaged = useSelector(sel.isProcessingUnmanaged);
   // end of vsp selectors
-  console.log("daemon startup", isProcessingManaged);
+
   // sync dcrwallet spv or rpc selectors
   const peerCount = useSelector(sel.peerCount);
   const synced = useSelector(sel.synced);
@@ -218,7 +219,7 @@ const useDaemonStartup = () => {
   );
 
   const onProcessUnmanagedTickets = useCallback(
-    async (passphrase, vspHost, vspPubkey) => await dispatch(
+    (passphrase, vspHost, vspPubkey) => dispatch(
       processUnmanagedTickets(passphrase, vspHost, vspPubkey)
     ),
     [dispatch]
@@ -304,7 +305,8 @@ const useDaemonStartup = () => {
     onProcessManagedTickets,
     stakeTransactions,
     rememberedVspHost,
-    isProcessingManaged
+    isProcessingManaged,
+    isProcessingUnmanaged
   };
 };
 

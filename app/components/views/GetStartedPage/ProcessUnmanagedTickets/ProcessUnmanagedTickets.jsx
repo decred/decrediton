@@ -8,14 +8,20 @@ import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
 
-export default ({ cancel, onSendContinue, onProcessTickets, title, description, noVspSelection }) => {
+export default ({ cancel, onSendContinue, onSendError, send, onProcessTickets, title, description, noVspSelection, isProcessingUnmanaged }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = async (passphrase) => {
-    // send a continue to go to the loading state
-    onSendContinue();
-    await onProcessTickets(passphrase, vsp.host, vsp.pubkey);
-    onSendContinue();
+    await onProcessTickets(passphrase, vsp.host, vsp.pubkey)
+      .then(() => {
+        onSendContinue();
+        send({ type: "CONTINUE" });
+      })
+      .catch((error) => {
+        onSendError(error);
+        send({ type: "ERROR", error });
+      });
+    return;
   };
 
   useEffect(() => {
@@ -31,12 +37,14 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        <Tooltip text={<GoBackMsg />}>
-          <div
-            className={GetStartedStyles.goBackScreenButton}
-            onClick={cancel}
-          />
-        </Tooltip>
+        { isProcessingUnmanaged &&
+          <Tooltip text={<GoBackMsg />}>
+            <div
+              className={GetStartedStyles.goBackScreenButton}
+              onClick={cancel}
+            />
+          </Tooltip>
+        }
       </div>
       <Subtitle
         className={styles.subtitle}
@@ -58,9 +66,16 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.unmangedTickets.button" m="Continue" />}
-          disabled={!isValid}>
-
-        </PassphraseModalButton>
+          disabled={!isValid || isProcessingUnmanaged}
+          loading={isProcessingUnmanaged}/>
+          { !isProcessingUnmanaged &&
+            <InvisibleButton className={styles.skipButton} onClick={cancel}>
+              <T
+                id="process.unmanagedTickets.button.skip"
+                m="Skip"
+              />
+            </InvisibleButton>
+          }
       </div>
     </div>
   );

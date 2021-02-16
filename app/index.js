@@ -85,7 +85,11 @@ const initialState = {
     availableVSPsError: null,
     ticketAutoBuyerRunning: null,
     isLegacy: null,
-    rememberedVspHost: null
+    rememberedVspHost: null,
+    processUnmanagedTicketsAttempt: false,
+    processUnmanagedTicketsError: null,
+    processManagedTicketsAttempt: false,
+    processManagedTicketsError: null
   },
   daemon: {
     networkMatch: false,

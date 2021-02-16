@@ -361,7 +361,13 @@ export const getStartedMachine = Machine({
       },
       on: {
         CONTINUE: "isLoadingConfig",
-        BACK: "goToHomeView"
+        BACK: "goToHomeView",
+        ERROR: {
+          target: "processingUnmanagedTickets",
+          actions: assign({
+            error: (context, event) => event.error && event.error
+          })
+        }
       }
     },
     isLoadingConfig: {
