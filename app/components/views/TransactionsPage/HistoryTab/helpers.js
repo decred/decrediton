@@ -6,19 +6,21 @@ import {
   MIXED
 } from "constants";
 
-export const selectedTxTypeFromFilter = (filter) => {
-  const types = getTxTypes();
-  let key;
-  types.forEach((type) => {
-    if (filter.direction === type.value.direction) {
-      key = type.key;
-      return;
-    }
-  });
-  return key;
+export const selectedTxTypesFromFilter = (filter) => {
+  const txTypes = getTxTypes();
+  const keys = txTypes
+    .filter(
+      (txType) =>
+        filter.directions.includes(txType.value.direction) ||
+        filter.types.includes(txType.value.type)
+    )
+    .map((type) => type.key);
+
+  // return 'all' key if there is no direction or type was set
+  return keys.length == 0 ? [txTypes[0].key] : keys;
 };
 
-export const getSortTypes = () => ([
+export const getSortTypes = () => [
   {
     value: "desc",
     key: "desc",
@@ -29,31 +31,28 @@ export const getSortTypes = () => ([
     key: "asc",
     label: <T id="transaction.sortby.oldest" m="Oldest" />
   }
-]);
+];
 
-export const getTxTypes = () => ([
+// -1 cleans the filter types
+export const getTxTypes = () => [
   {
     key: "all",
     value: { direction: null, type: -1 },
     label: <T id="txFilter.type.all" m="All" />
   },
-  // -1 cleans the filter types, and right now we are cleaning transaction
-  // types if a direction is set, instead of acumullating them, because we
-  // need to apply changes on EyeFilterMenu Component, for having multiple
-  // options marked.
   {
     key: "sent",
-    value: { direction: TRANSACTION_DIR_SENT, type: -1 },
+    value: { direction: TRANSACTION_DIR_SENT },
     label: <T id="txFilter.type.sent" m="Sent" />
   },
   {
     key: "receiv",
-    value: { direction: TRANSACTION_DIR_RECEIVED, type: -1 },
+    value: { direction: TRANSACTION_DIR_RECEIVED },
     label: <T id="txFilter.type.received" m="Received" />
   },
   {
     key: "ticketf",
-    value: { direction: TICKET_FEE, type: -1 },
+    value: { direction: TICKET_FEE },
     label: <T id="txFilter.type.ticketfee" m="Ticket fee" />
   },
   {
@@ -61,4 +60,4 @@ export const getTxTypes = () => ([
     value: { type: MIXED },
     label: <T id="txFilter.type.mixed" m="Mixed" />
   }
-]);
+];

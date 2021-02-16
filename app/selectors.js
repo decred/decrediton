@@ -242,8 +242,8 @@ export const getMixedAccountName = createSelector(
     !mixedAcc
       ? null
       : balances
-        .filter(({ accountNumber }) => accountNumber === mixedAcc)
-        .map(({ accountName }) => accountName)[0]
+          .filter(({ accountNumber }) => accountNumber === mixedAcc)
+          .map(({ accountName }) => accountName)[0]
 );
 
 export const getChangeAccountName = createSelector(
@@ -252,8 +252,8 @@ export const getChangeAccountName = createSelector(
     !changeAcc
       ? null
       : balances
-        .filter(({ accountNumber }) => accountNumber === changeAcc)
-        .map(({ accountName }) => accountName)[0]
+          .filter(({ accountNumber }) => accountNumber === changeAcc)
+          .map(({ accountName }) => accountName)[0]
 );
 
 // getNotMixedAccounts Is an array of all accountNumbers which is not the mixedaccount.
@@ -265,8 +265,8 @@ export const getNotMixedAccounts = createSelector(
     !mixedAcc
       ? []
       : balances
-        .filter(({ accountNumber }) => accountNumber !== mixedAcc)
-        .map(({ accountNumber }) => accountNumber)
+          .filter(({ accountNumber }) => accountNumber !== mixedAcc)
+          .map(({ accountNumber }) => accountNumber)
 );
 
 // getNotMixedAcctIfAllowed checks if it is allowed to send from unmixed
@@ -346,21 +346,24 @@ export const locale = createSelector(
 );
 
 export const txURLBuilder = createSelector([network], (network) => (txHash) =>
-  `https://${network !== TESTNET ? "dcrdata" : "testnet"
+  `https://${
+    network !== TESTNET ? "dcrdata" : "testnet"
   }.decred.org/tx/${txHash}`
 );
 
 export const blockURLBuilder = createSelector(
   [network],
   (network) => (txHash) =>
-    `https://${network !== TESTNET ? "dcrdata" : "testnet"
+    `https://${
+      network !== TESTNET ? "dcrdata" : "testnet"
     }.decred.org/block/${txHash}`
 );
 
 export const txOutURLBuilder = createSelector(
   [network],
   (network) => (txHash, outputIdx) =>
-    `https://${network !== "testnet" ? "explorer" : network
+    `https://${
+      network !== "testnet" ? "explorer" : network
     }.dcrdata.org/tx/${txHash}/out/${outputIdx}`
 );
 
@@ -662,18 +665,18 @@ export const transactionNormalizer = createSelector(
       const txDetails =
         totalFundsReceived + totalChange + fee < totalDebit
           ? {
-            txAmount: totalDebit - fee - totalChange - totalFundsReceived,
-            txDirection: TRANSACTION_DIR_SENT,
-            txAccountName: debitedAccountName
-          }
+              txAmount: totalDebit - fee - totalChange - totalFundsReceived,
+              txDirection: TRANSACTION_DIR_SENT,
+              txAccountName: debitedAccountName
+            }
           : totalFundsReceived + totalChange + fee === totalDebit
-            ? {
+          ? {
               txAmount: fee,
               txDirection: TICKET_FEE,
               txAccountNameCredited: creditedAccountName,
               txAccountNameDebited: debitedAccountName
             }
-            : {
+          : {
               txAmount: totalFundsReceived,
               txDirection: TRANSACTION_DIR_RECEIVED,
               txAccountName: creditedAccountName
@@ -766,8 +769,9 @@ export const getStakeTransactionsCancel = get([
 //
 // Currently supported filters in the filter object:
 // - type (array): Array of types a transaction must belong to, to be accepted.
-// - direction (string): A string of one of the allowed directions for regular
-//   transactions (sent/received/transferred)
+//   Currently, just the MIXED type is supported
+// - directions (array): Array of allowed directions for regular
+//   transactions (sent/received/transferred/ticketfee)
 //
 // If empty, all transactions are accepted.
 export const filteredRegularTxs = createSelector(
@@ -775,17 +779,19 @@ export const filteredRegularTxs = createSelector(
   (transactions, filter) => {
     const filteredTxs = Object.keys(transactions)
       .map((hash) => transactions[hash])
-      .filter((v) =>
-        filter.direction ? filter.direction === v.txDirection : true
+      .filter(
+        (v) =>
+          filter.directions.length == 0 || // All directions
+          filter.directions.includes(v.txDirection)
       )
       .filter((v) =>
         filter.search
           ? v.creditAddresses.find(
-            (address) =>
-              address.length > 1 &&
-              address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
-              -1
-          ) != undefined
+              (address) =>
+                address.length > 1 &&
+                address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
+                  -1
+            ) != undefined
           : true
       )
       .filter((v) =>
@@ -794,18 +800,7 @@ export const filteredRegularTxs = createSelector(
       .filter((v) =>
         filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
       )
-      .filter((v) => {
-        let isSameType = true;
-        if (filter.types.length > 0) {
-          isSameType = false;
-          filter.types.forEach((type) =>
-            type === v.txType || (type === MIXED && v.mixedTx)
-              ? (isSameType = true)
-              : null
-          );
-        }
-        return isSameType;
-      });
+      .filter((v) => v.mixedTx == filter.types.includes(MIXED));
 
     return filteredTxs;
   }
@@ -1009,19 +1004,21 @@ export const visibleAccounts = createSelector(
         accountName === "imported" || hidden
           ? accounts
           : [
-            ...accounts,
-            {
-              value: accountNumber,
-              label: `${accountName}: ${spendable / unitDivisor
+              ...accounts,
+              {
+                value: accountNumber,
+                label: `${accountName}: ${
+                  spendable / unitDivisor
                 } ${currencyDisplay}`,
-              name: accountName,
-              spendableAndUnit: `${spendable / unitDivisor
+                name: accountName,
+                spendableAndUnit: `${
+                  spendable / unitDivisor
                 } ${currencyDisplay}`,
-              spendable,
-              hidden,
-              ...data
-            }
-          ],
+                spendable,
+                hidden,
+                ...data
+              }
+            ],
       [],
       balances
     )
@@ -1035,18 +1032,20 @@ export const spendingAccounts = createSelector(
         accountNumber !== 0 && (accountName === "imported" || spendable <= 0)
           ? accounts
           : [
-            ...accounts,
-            {
-              value: accountNumber,
-              label: `${accountName}: ${spendable / unitDivisor
+              ...accounts,
+              {
+                value: accountNumber,
+                label: `${accountName}: ${
+                  spendable / unitDivisor
                 } ${currencyDisplay}`,
-              name: accountName,
-              spendableAndUnit: `${spendable / unitDivisor
+                name: accountName,
+                spendableAndUnit: `${
+                  spendable / unitDivisor
                 } ${currencyDisplay}`,
-              spendable,
-              ...data
-            }
-          ],
+                spendable,
+                ...data
+              }
+            ],
       [],
       balances
     )
@@ -1147,7 +1146,11 @@ export const isConstructingTransaction = bool(constructTxRequestAttempt);
 
 export const tempSettings = get(["settings", "tempSettings"]);
 export const settingsChanged = get(["settings", "settingsChanged"]);
-export const uiAnimations = get(["settings", "currentSettings", "uiAnimations"]);
+export const uiAnimations = get([
+  "settings",
+  "currentSettings",
+  "uiAnimations"
+]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
 export const changePassphraseSuccess = get([
   "control",
@@ -1435,7 +1438,7 @@ export const blockTimestampFromNow = createSelector(
     return (block) => {
       return Math.trunc(
         currentTimestamp +
-        (block - currentHeight) * chainParams.TargetTimePerBlock
+          (block - currentHeight) * chainParams.TargetTimePerBlock
       );
     };
   }
@@ -1676,12 +1679,15 @@ export const getRunningIndicator = or(
   isTicketAutoBuyerEnabled
 );
 
-export const getHasTicketFeeError = createSelector([getVSPTickets], (vspTickets) => {
-  if (!vspTickets) return;
-  return vspTickets[VSP_FEE_PROCESS_ERRORED]
-    ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
-    : false;
-});
+export const getHasTicketFeeError = createSelector(
+  [getVSPTickets],
+  (vspTickets) => {
+    if (!vspTickets) return;
+    return vspTickets[VSP_FEE_PROCESS_ERRORED]
+      ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
+      : false;
+  }
+);
 export const getCanClose = not(or(getRunningIndicator, getHasTicketFeeError));
 
 // end of selectors for closing decrediton.
