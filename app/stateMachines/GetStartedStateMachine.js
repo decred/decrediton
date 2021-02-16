@@ -366,7 +366,13 @@ export const getStartedMachine = Machine({
       },
       on: {
         FINISH: "goToHomeView",
-        CONTINUE: "processingUnmanagedTickets"
+        CONTINUE: "processingUnmanagedTickets",
+        ERROR: {
+          target: "processingManagedTickets",
+          actions: assign({
+            error: (context, event) => event.error && event.error
+          })
+        }
       }
     },
     releaseNotes: {

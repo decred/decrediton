@@ -24,7 +24,13 @@ export const fetchMachine = Machine({
     loading: {
       entry: ["load"],
       on: {
-        RESOLVE: "success",
+        RESOLVE: {
+          target: "success",
+          actions: assign({
+            // clean error.
+            error: () => ""
+          })
+        },
         REJECT: {
           target: "failure",
           actions: assign({

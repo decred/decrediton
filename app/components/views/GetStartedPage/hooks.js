@@ -680,6 +680,7 @@ export const useGetStarted = () => {
       }
       if (key === "processingManagedTickets") {
         PageComponent = h(ProcessManagedTickets, {
+          error,
           onSendContinue,
           send,
           cancel: onSendBack,

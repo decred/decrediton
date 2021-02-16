@@ -8,13 +8,36 @@ import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
 
-export default ({ cancel, send, onSendContinue, onProcessTickets, title, description, noVspSelection }) => {
+export default ({
+  cancel,
+  send,
+  onSendContinue,
+  onProcessTickets,
+  title,
+  description,
+  noVspSelection,
+  error
+}) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
-  const onSubmitContinue = async (passphrase) => {
+  const onSubmitContinue = (passphrase) => {
     // send a continue so we can go to the loading state
     onSendContinue();
-    await onProcessTickets(passphrase).then(() => send({ type: "CONTINUE" }));
+    onProcessTickets(passphrase)
+      .then(() => send({ type: "CONTINUE" }))
+      .catch(error => {
+        if (error.isTimeout) {
+          const { vspHost } = error;
+          error = <T
+            id="process.mangedTickets.error"
+            m="A timeout happened when verifying the following vsp: {vsp}"
+            values={{
+              vsp: vspHost
+            }}
+          />;
+        }
+        send({ type: "ERROR", error });
+      });
     return;
   };
 
@@ -49,6 +72,9 @@ export default ({ cancel, send, onSendContinue, onProcessTickets, title, descrip
           className={styles.vspSelect}
           {...{ onChange: setVSP }}
         />
+      }
+      {
+        error && <div className="error">{error}</div>
       }
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
