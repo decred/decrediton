@@ -1,0 +1,15 @@
+.decredLoading {
+  margin-top: 120px;
+  margin-left: 45%;
+  margin-bottom: 40px;
+  display: inline-block;
+  height: 120px;
+  width: 120px;
+  background-image: var(--new-loader);
+  background-position: 0px 0px;
+  background-size: 120px;
+  background-repeat: no-repeat;
+}
+.decredLoading.hidden {
+  display: none;
+}

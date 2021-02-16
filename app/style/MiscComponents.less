@@ -325,23 +325,6 @@
   opacity: 0.7;
 }
 
-.gettickets-cancel-button {
-  width: 16px;
-  height: 16px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: var(--menu-cancel-rescan-icon);
-  background-size: 16px 16px;
-  cursor: pointer;
-  margin: 10px;
-  background-repeat: no-repeat;
-}
-
-.gettickets-cancel-button:hover {
-  opacity: 0.7;
-}
-
 [data-pseudo-content]::before,
 [data-pseudo-content--before]::before,
 [data-pseudo-content--after]::after {
@@ -374,44 +357,6 @@
   color: var(--tab-text-active-hover);
 }
 
-.no-transactions-indicator,
-.no-tickets-indicator,
-.no-more-tickets-indicator,
-.no-stats-indicator {
-  text-align: center;
-  color: var(--title-text-and-button-background);
-  height: 150px;
-  background-repeat: no-repeat;
-  background-size: 80px;
-  background-position: center 30px;
-}
-
-.no-transactions-indicator {
-  color: var(--title-text-and-button-background);
-}
-
-.no-transactions-indicator-img {
-  background-image: var(--no-tx-icon);
-  height: 100px;
-  background-repeat: no-repeat;
-  background-size: 80px;
-  background-position: center 30px;
-}
-
-.no-more-tickets-indicator {
-  height: 35px;
-  background-color: var(--no-more-tickets-indicator-bg);
-  line-height: 35px;
-}
-
-.no-tickets-indicator {
-  background-image: var(--no-tickets-icon);
-}
-
-.no-stats-indicator {
-  background-image: var(--stats-disabled-icon);
-}
-
 .vertical-expand {
   background-image: var(--arrow-right-gray-icon);
   background-repeat: no-repeat;
@@ -428,49 +373,6 @@
 
 .vertical-expand.expanded {
   transform: rotate(270deg);
-}
-
-.step-indicator {
-  display: inline-flex;
-
-  .step.current {
-    margin: 12px;
-    height: 14px;
-    width: 14px;
-    border: 2px solid var(--step-indicator);
-    border-radius: 10px;
-  }
-
-  .step.checked {
-    cursor: pointer;
-    margin: 16px;
-    height: 10px;
-    width: 10px;
-    background-image: var(--onboarding-checkcircle);
-    background-position: 50% 0px;
-    background-repeat: no-repeat;
-  }
-
-  .step.unchecked {
-    cursor: pointer;
-    margin: 16px;
-    height: 10px;
-    width: 10px;
-    background-color: var(--step-indicator);
-    border-radius: 10px;
-  }
-}
-
-.tutorial-page-indicator .step-indicator {
-  .step.current {
-    border: 2px solid var(--wallet-tutorial-step-indicator);
-  }
-  .step.checked {
-    background-image: var(--wallet-tutorial-check-circle);
-  }
-  .step.unchecked {
-    background-color: var(--wallet-tutorial-step-indicator);
-  }
 }
 
 .doc-unavailable-alert {
@@ -610,25 +512,6 @@
   padding: 0px;
 }
 
-.voting-progress-indicator {
-  width: 150px;
-  height: 5px;
-  position: relative;
-  display: flex;
-  margin-top: 2px;
-  border: 1px solid var(--white-border);
-  margin-right: 20px;
-  border-radius: 10rem;
-
-  .voting-progress-yes {
-    background-color: var(--vote-yes-color);
-  }
-
-  .voting-progress-no {
-    background-color: var(--vote-no-color);
-  }
-}
-
 .rebroadcast-button-container,
 .abandon-button-container {
   width: 815px;
@@ -654,10 +537,6 @@
   .rebroadcast-button-container,
   .abandon-button-container {
     width: 770px;
-  }
-
-  .voting-progress-indicator {
-    width: 120px;
   }
 }
 
@@ -686,12 +565,5 @@
       padding: 12px 30px 14px 48px;
       margin-top: 0;
     }
-  }
-
-  .no-more-tickets-indicator {
-    width: 315px;
-  }
-  .voting-progress-indicator {
-    width: 120px;
   }
 }

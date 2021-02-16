@@ -1,19 +1,20 @@
+import styles from "./StepIndicator.module.css";
+import { classNames } from "pi-ui";
+
 export default ({ pageCount, currentPageIndex, onGotoPage }) => (
-  <div className="step-indicator">
+  <div className={styles.stepIndicator}>
     {Array(pageCount)
       .fill()
-      .map((v, index) => (
-        <a
+      .map((_, index) => (
+        <button
           aria-label={`step-${index}`}
-          role="link"
-          className={[
-            "step",
+          className={classNames(
             index === currentPageIndex
-              ? "current"
+              ? styles.current
               : index < currentPageIndex
-              ? "checked"
-              : "unchecked"
-          ].join(" ")}
+              ? styles.checked
+              : styles.unchecked
+          )}
           onClick={() => onGotoPage(index)}
           key={index}
         />

@@ -1,0 +1,33 @@
+.stepIndicator {
+  display: inline-flex;
+}
+.stepIndicator button {
+  background: none;
+  outline: 0;
+  border: none;
+}
+.stepIndicator button.current {
+  cursor: initial;
+  margin: 12px;
+  height: 14px;
+  width: 14px;
+  border: 2px solid var(--step-indicator);
+  border-radius: 10px;
+}
+.stepIndicator button.checked {
+  cursor: pointer;
+  margin: 16px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--onboarding-checkcircle);
+  background-position: 50% 0px;
+  background-repeat: no-repeat;
+}
+.stepIndicator button.unchecked {
+  cursor: pointer;
+  margin: 16px;
+  height: 10px;
+  width: 10px;
+  background-color: var(--step-indicator);
+  border-radius: 10px;
+}

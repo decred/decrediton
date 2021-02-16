@@ -43,6 +43,7 @@ export default ({
           text,
           getCurrentBlockCount,
           animationType,
+          initialAnimationType: styles.initial,
           min: 0,
           max: getNeededBlocks,
           getEstimatedTimeLeft,

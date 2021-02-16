@@ -25,18 +25,7 @@ import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
-
-// XXX these animations classes are passed down to AnimatedLinearProgressFull
-// and styling defined in Loading.less and need to handled when loading.less
-// is migrated, and classes should be defined then in ./GetStarted.module.css
-// css animation classes
-const blockChainLoading = "blockchain-syncing";
-const daemonWaiting = "daemon-waiting";
-const discoveringAddresses = "discovering-addresses";
-const scanningBlocks = "scanning-blocks";
-const finalizingSetup = "finalizing-setup";
-const fetchingHeaders = "fetching-headers";
-const establishingRpc = "establishing-rpc";
+import styles from "./GetStarted.module.css";
 
 export const useGetStarted = () => {
   const {
@@ -82,9 +71,9 @@ export const useGetStarted = () => {
         console.log("is at pre start");
         preStartDaemon();
       },
-      isAtStartAdvancedDaemon: () => { },
-      isAtLoadingConfig: () => { },
-      isAtSettingAccount: () => { },
+      isAtStartAdvancedDaemon: () => {},
+      isAtLoadingConfig: () => {},
+      isAtSettingAccount: () => {},
       isAtStartSPV: () => onSendContinue(),
       isAtStartingDaemon: (_, event) => {
         console.log("is at Starting Daemonn");
@@ -504,11 +493,11 @@ export const useGetStarted = () => {
             );
             break;
           case "startingDaemon":
-            animationType = daemonWaiting;
+            animationType = styles.daemonWaiting;
             text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
             break;
           case "syncingDaemon":
-            animationType = blockChainLoading;
+            animationType = styles.blockchainSyncing;
             text = <T id="loaderBar.syncingDaemon" m="Syncing Daemon..." />;
             break;
           case "choosingWallet":
@@ -518,8 +507,8 @@ export const useGetStarted = () => {
                 m="Choose a wallet to open in SPV mode"
               />
             ) : (
-                <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />
-              );
+              <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />
+            );
             component = h(WalletSelection, {
               onSendCreateWallet,
               submitChosenWallet,
@@ -530,11 +519,11 @@ export const useGetStarted = () => {
             text = isCreateNewWallet ? (
               <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." />
             ) : (
-                <T
-                  id="loaderBar.preCreateWalletRestore"
-                  m="Restore a Wallet..."
-                />
-              );
+              <T
+                id="loaderBar.preCreateWalletRestore"
+                m="Restore a Wallet..."
+              />
+            );
             component = h(PreCreateWalletForm, {
               onShowCreateWallet,
               onSendContinue,
@@ -571,7 +560,7 @@ export const useGetStarted = () => {
             text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
             break;
           case "syncingRPC":
-            animationType = establishingRpc;
+            animationType = styles.establishingRpc;
             text = (
               <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />
             );
@@ -617,7 +606,7 @@ export const useGetStarted = () => {
       if (key === "settingMixedAccount") {
         // Display a message while checking for coinjoin outputs and go to set
         // mixed account only if coinjoin outputs found & mixed account not set yet
-        animationType = establishingRpc;
+        animationType = styles.establishingRpc;
         text = (
           <T
             id="loaderBar.checkingMixedAccount"
@@ -633,10 +622,12 @@ export const useGetStarted = () => {
         });
         getCoinjoinOutputspByAcct()
           .then((outputsByAcctMap) => {
-            const hasMixedOutputs = outputsByAcctMap && outputsByAcctMap.reduce(
-              (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
-              false
-            );
+            const hasMixedOutputs =
+              outputsByAcctMap &&
+              outputsByAcctMap.reduce(
+                (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
+                false
+              );
             if (!hasMixedOutputs || mixedAccount) {
               onSendContinue();
             } else {
@@ -651,7 +642,7 @@ export const useGetStarted = () => {
       }
       if (key === "syncVSPTickets") {
         // Display a message while checking for tickets to be synced.
-        animationType = establishingRpc;
+        animationType = styles.establishingRpc;
         text = (
           <T
             id="loaderBar.syncingTickets"
@@ -671,13 +662,20 @@ export const useGetStarted = () => {
           onSendContinue,
           onProcessTickets: onProcessUnmanagedTickets,
           cancel: onSendBack,
-          title: <T id="getstarted.processUnmangedTickets.title" m="Process Unmanaged Tickets" />,
-          description: <T
-          id="getstarted.processUnmangedTickets.description"
-          m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
+          title: (
+            <T
+              id="getstarted.processUnmangedTickets.title"
+              m="Process Unmanaged Tickets"
+            />
+          ),
+          description: (
+            <T
+              id="getstarted.processUnmangedTickets.description"
+              m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
               to vote and they are not linked with a vsp, they may miss, if you are not
               properly dealing with solo vote.`}
-        />
+            />
+          )
         });
       }
       if (key === "processingManagedTickets") {
@@ -686,21 +684,27 @@ export const useGetStarted = () => {
           send,
           cancel: onSendBack,
           onProcessTickets: onProcessManagedTickets,
-          title: <T id="getstarted.processManagedTickets.title" m="Process Managed Tickets" />,
+          title: (
+            <T
+              id="getstarted.processManagedTickets.title"
+              m="Process Managed Tickets"
+            />
+          ),
           noVspSelection: true,
-          description: <T
-          id="getstarted.processManagedTickets.description"
-          m={ `Your wallet appears to have live tickets. Processing managed
+          description: (
+            <T
+              id="getstarted.processManagedTickets.description"
+              m={`Your wallet appears to have live tickets. Processing managed
             tickets confirms with the VSPs that all of your submitted tickets
-            are currently known and paid for by the VSPs.`
-          }
-        />
+            are currently known and paid for by the VSPs.`}
+            />
+          )
         });
       }
       // XXX
       // use this loading state on settingMixedAccount as well.
       if (key === "isLoadingConfig") {
-        animationType = establishingRpc;
+        animationType = styles.establishingRpc;
         text = (
           <T
             id="loaderBar.checkingMixedAccount"
@@ -751,7 +755,7 @@ export const useGetStarted = () => {
   useEffect(() => {
     let text, animationType, component;
     if (syncFetchMissingCfiltersAttempt) {
-      animationType = daemonWaiting;
+      animationType = styles.daemonWaiting;
       text = (
         <T
           id="getStarted.header.fetchingMissing.meta"
@@ -759,7 +763,7 @@ export const useGetStarted = () => {
         />
       );
     } else if (syncFetchHeadersAttempt) {
-      animationType = fetchingHeaders;
+      animationType = styles.fetchingHeaders;
       text = (
         <T
           id="getStarted.header.fetchingBlockHeaders.meta"
@@ -767,7 +771,7 @@ export const useGetStarted = () => {
         />
       );
     } else if (syncDiscoverAddressesAttempt) {
-      animationType = discoveringAddresses;
+      animationType = styles.discoveringAddresses;
       text = (
         <T
           id="getStarted.header.discoveringAddresses.meta"
@@ -775,7 +779,7 @@ export const useGetStarted = () => {
         />
       );
     } else if (syncRescanAttempt) {
-      animationType = scanningBlocks;
+      animationType = styles.scanningBlocks;
       text = (
         <T
           id="getStarted.header.rescanWallet.meta"
@@ -784,7 +788,7 @@ export const useGetStarted = () => {
       );
       component = RescanWalletBody;
     } else if (synced) {
-      animationType = finalizingSetup;
+      animationType = styles.finalizingSetup;
       text = (
         <T
           id="getStarted.header.finishingStart.meta"
