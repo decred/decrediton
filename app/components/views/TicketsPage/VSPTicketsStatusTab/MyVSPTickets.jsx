@@ -65,7 +65,8 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     hasVSPTicketsError,
     defaultSpendingAccount,
     syncVSPTicketsRequest,
-    noMoreLiveTickets
+    noMoreLiveTickets,
+    isSyncingTickets
   } = useVSPTicketsList();
 
   const [tickets, setTickets] = useState([]);
@@ -148,7 +149,8 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
         vsp,
         setVSP,
         onSyncVspTicketsRequest,
-        noMoreLiveTickets
+        noMoreLiveTickets,
+        isSyncingTickets
       }}
     />
   );

@@ -15,6 +15,7 @@ export const useVSPTicketsList = () => {
   const hasVSPTicketsError = useSelector(sel.getHasVSPTicketsError);
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
   const noMoreLiveTickets = useSelector(sel.getNoMoreLiveTickets);
+  const isSyncingTickets = useSelector(sel.isSyncingTickets);
 
   // actions
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export const useVSPTicketsList = () => {
     hasVSPTicketsError,
     defaultSpendingAccount,
     syncVSPTicketsRequest,
-    noMoreLiveTickets
+    noMoreLiveTickets,
+    isSyncingTickets
   };
 };

@@ -4,7 +4,10 @@ import {
   GETVSPTICKETSTATUS_SUCCESS,
   HASVSPTICKETSERRORED,
   TOGGLE_ISLEGACY,
-  SET_REMEMBERED_VSP_HOST
+  SET_REMEMBERED_VSP_HOST,
+  SYNCVSPTICKETS_ATTEMPT,
+  SYNCVSPTICKETS_FAILED,
+  SYNCVSPTICKETS_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -64,6 +67,21 @@ export default function vsp(state = {}, action) {
     case SET_REMEMBERED_VSP_HOST:
       return { ...state,
         rememberedVspHost: action.rememberedVspHost
+      };
+    case SYNCVSPTICKETS_ATTEMPT:
+      return { ...state,
+        syncVSPRequestAttempt: true,
+        syncVSPRequestError: null
+      };
+    case SYNCVSPTICKETS_FAILED:
+      return { ...state,
+        syncVSPRequestAttempt: false,
+        syncVSPRequestError: action.error
+      };
+    case SYNCVSPTICKETS_SUCCESS:
+      return { ...state,
+        syncVSPRequestAttempt: false,
+        syncVSPRequestError: null
       };
     default:
       return state;

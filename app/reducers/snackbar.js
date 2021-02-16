@@ -36,6 +36,7 @@ import {
   ADDCUSTOMSTAKEPOOL_SUCCESS,
   ADDCUSTOMSTAKEPOOL_FAILED,
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
+  SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED
 } from "../actions/VSPActions";
 import {
@@ -525,6 +526,10 @@ const messages = defineMessages({
     id: "mixer.ntf.startMixerFailed",
     defaultMessage: "{originalError}"
   },
+  SYNCVSPTICKETS_SUCCESS: {
+    id: "sync.vsp.success",
+    defaultMessage: "You have successfully sync all failed tickets with the selected VSP."
+  },
   SYNCVSPTICKETS_FAILED: {
     id: "sync.vsp.failed",
     defaultMessage: "{originalError}"
@@ -610,6 +615,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_REMOVEWATCHTOWER_SUCCESS:
     case UPDATEVOTECHOICE_SUCCESS:
     case CREATEMIXERACCOUNTS_SUCCESS:
+    case SYNCVSPTICKETS_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
