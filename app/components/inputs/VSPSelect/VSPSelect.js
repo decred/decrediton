@@ -17,7 +17,7 @@ const getError = (error) => {
   if (error.isTimeout) {
     const { vspHost } = error;
     return <T
-      id="process.mangedTickets.error"
+      id="vsp.select.error"
       m="Timeout with vsp: {vsp}"
       values={{
         vsp: vspHost
