@@ -42,7 +42,9 @@ const EyeFilterMenu = ({
             key={i}
             className={classNames(
               styles.contextMenuItem,
-              selected === option.key && styles.selected
+              (Array.isArray(selected)
+                ? selected.includes(option.key)
+                : selected === option.key) && styles.selected
             )}
             onClick={(e) =>
               onMenuChanged(e, { value: option.value, key: option.key })

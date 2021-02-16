@@ -7,7 +7,7 @@ import { Balance } from "shared";
 import { DCR } from "constants";
 import { useService } from "hooks";
 import { useHistoryTab } from "./hooks";
-import { selectedTxTypeFromFilter, getSortTypes, getTxTypes } from "./helpers";
+import { selectedTxTypesFromFilter, getSortTypes, getTxTypes } from "./helpers";
 
 export const HistoryTabHeader = () => {
   const { totalBalance } = useHistoryTab();
@@ -47,18 +47,21 @@ const HistoryTab = () => {
   } = useHistoryTab();
 
   const { search, listDirection } = transactionsFilter;
-  const selTxTypeKey = selectedTxTypeFromFilter(transactionsFilter);
+  const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
 
   const [searchText, setSearchText] = useState(search);
-  const [selectedTxTypeKey, setSelectedTxTypeKey] = useState(selTxTypeKey);
-  const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(listDirection);
+  const [selectedTxTypeKeys, setSelectedTxTypeKeys] = useState(selTxTypeKeys);
+  const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(
+    listDirection
+  );
   const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
 
   const loadMoreThreshold = 250 + Math.max(0, window.innerHeight - 765);
 
   const onChangeSelectedType = (type) => {
-    onChangeFilter(type.value);
-    setSelectedTxTypeKey(type.key);
+    onChangeFilter(type.value).then((newFilter) => {
+      setSelectedTxTypeKeys(selectedTxTypesFromFilter(newFilter));
+    });
   };
 
   const onChangeSortType = (type) => {
@@ -84,32 +87,50 @@ const HistoryTab = () => {
   };
 
   const onChangeFilter = (value) => {
-    if (isChangingFilterTimer) {
-      clearTimeout(isChangingFilterTimer);
-    }
-    const changeFilter = (newFilterOpt) => {
-      if (newFilterOpt.type) {
-        // if -1 it is all options, so we clean the filter.
-        if (newFilterOpt.type === -1) {
-          // TODO enable filtering more than one type each time.
-          transactionsFilter.types = [];
-        } else {
-          // otherwise we push it to the array option.
-          transactionsFilter.types.push(newFilterOpt.type);
-        }
-        delete(newFilterOpt.type);
+    return new Promise((resolve) => {
+      if (isChangingFilterTimer) {
+        clearTimeout(isChangingFilterTimer);
       }
-      const newFilter = {
-        ...transactionsFilter,
-        ...newFilterOpt
+      const changeFilter = (newFilterOpt) => {
+        const newFilter = { ...transactionsFilter };
+        const { type, direction } = newFilterOpt;
+        // if type is -1 it is all options, so we clean the filter.
+        if (type === -1) {
+          newFilter.types = [];
+          newFilter.directions = [];
+        } else if (direction) {
+          // if the direction was already set, we remove it from
+          // the directions array. otherwise, we push into it.
+          if (newFilter.directions.includes(direction)) {
+            newFilter.directions.splice(
+              newFilter.directions.indexOf(direction),
+              1
+            );
+          } else {
+            newFilter.directions.push(direction);
+          }
+        } else if (type) {
+          // if the type was already set, we remove it from
+          // the typess array. otherwise, we push into it.
+          if (newFilter.types.includes(type)) {
+            newFilter.types.splice(newFilter.types.indexOf(type), 1);
+          } else {
+            newFilter.types.push(type);
+          }
+        }
+        clearTimeout(isChangingFilterTimer);
+        onChangeTransactionsFilter(newFilter);
+        return newFilter;
       };
-      clearTimeout(isChangingFilterTimer);
-      onChangeTransactionsFilter(newFilter);
-    };
-    setIsChangingFilterTimer(setTimeout(() => changeFilter(value), 100));
+      setIsChangingFilterTimer(
+        setTimeout(() => resolve(changeFilter(value)), 100)
+      );
+    });
   };
 
-  return !walletService ? <ErrorScreen /> : (
+  return !walletService ? (
+    <ErrorScreen />
+  ) : (
     <HistoryPage
       {...{
         tsDate,
@@ -118,7 +139,7 @@ const HistoryTab = () => {
         transactionsFilter,
         noMoreTransactions,
         selectedSortOrderKey,
-        selectedTxTypeKey,
+        selectedTxTypeKeys,
         searchText,
         currencyDisplay,
         unitDivisor,

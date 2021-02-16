@@ -649,7 +649,7 @@ export default function grpc(state = {}, action) {
           search: null,
           listDirection: "desc",
           types: [],
-          direction: null
+          directions: []
         },
         recentRegularTransactions: [],
         recentStakeTransactions: [],

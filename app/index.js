@@ -52,12 +52,15 @@ const currentSettings = {
   daemonStartAdvanced:
     hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
   daemonStartAdvancedFromCli: !!hasCliOption("daemonStartAdvanced"),
-  allowedExternalRequests: globalCfg.get(cfgConstants.ALLOWED_EXTERNAL_REQUESTS),
+  allowedExternalRequests: globalCfg.get(
+    cfgConstants.ALLOWED_EXTERNAL_REQUESTS
+  ),
   proxyType: globalCfg.get(cfgConstants.PROXY_TYPE),
   proxyLocation: globalCfg.get(cfgConstants.PROXY_LOCATION),
   spvMode: hasCliOption("spvMode") || getIsSpv(),
   spvModeFromCli: !!hasCliOption("spvMode"),
-  spvConnect: hasCliOption("spvConnect") || globalCfg.get(cfgConstants.SPV_CONNECT),
+  spvConnect:
+    hasCliOption("spvConnect") || globalCfg.get(cfgConstants.SPV_CONNECT),
   spvConnectFromCli: !!hasCliOption("spvConnect"),
   timezone: globalCfg.get(cfgConstants.TIMEZONE),
   currencyDisplay: DCR,
@@ -203,8 +206,8 @@ const initialState = {
     transactionsFilter: {
       search: null, // The freeform text in the Search box
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      types: [], // desired transaction types (code). All if blank.
-      direction: null, // direction of desired transactions (sent/received/transfer)
+      types: [], // desired transaction types (code). All if blank. (mixed)
+      directions: [], // directions of desired transactions (sent/received/transfer/ticketfee)
       maxAmount: null,
       minAmount: null
     },
