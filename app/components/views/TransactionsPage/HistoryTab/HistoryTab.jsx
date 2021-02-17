@@ -92,8 +92,10 @@ const HistoryTab = () => {
         clearTimeout(isChangingFilterTimer);
       }
       const changeFilter = (newFilterOpt) => {
-        const newFilter = { ...transactionsFilter };
         const { type, direction } = newFilterOpt;
+        delete(newFilterOpt.type);
+        delete(newFilterOpt.direction);
+        const newFilter = { ...transactionsFilter, ...newFilterOpt };
         // if type is -1 it is all options, so we clean the filter.
         if (type === -1) {
           newFilter.types = [];
