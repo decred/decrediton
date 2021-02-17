@@ -256,7 +256,9 @@ export const useGetStarted = () => {
           return;
         }
         if (isCreateNewWallet === false) {
-          await onProcessManagedTickets(passPhrase);
+          await onProcessManagedTickets(passPhrase).catch((error) => {
+            console.log("onProcessManagedTickets failed:", error);
+          });
           onSendContinue();
         } else {
           onSendContinue();
