@@ -3575,9 +3575,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
 #. [tickets.tab.mytickets]
 #. defaultMessage is:
-#. History Tickets
+#. Ticket History
 msgctxt "tickets.tab.mytickets"
-msgid "History Tickets"
+msgid "Ticket History"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/LNPage/NetworkTab/RoutesInfo.json
@@ -7901,9 +7901,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
 #. [tickets.tab.vsptickets]
 #. defaultMessage is:
-#. Tickets Status
+#. Ticket Status
 msgctxt "tickets.tab.vsptickets"
-msgid "Tickets Status"
+msgid "Ticket Status"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/ProposalDetailsPage/helpers/EligibleTickets/EligibleTickets.json

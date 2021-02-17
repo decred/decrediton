@@ -55,13 +55,13 @@ export default () => (
       path="/tickets/vspTicketsStatus"
       component={VSPTicketsStatusTab}
       header={TabHeader}
-      link={<T id="tickets.tab.vsptickets" m="Tickets Status" />}
+      link={<T id="tickets.tab.vsptickets" m="Ticket Status" />}
     />
     <Tab
       path="/tickets/mytickets"
       component={MyTicketsTab}
       header={TabHeader}
-      link={<T id="tickets.tab.mytickets" m="History Tickets" />}
+      link={<T id="tickets.tab.mytickets" m="Ticket History" />}
     />
     <Tab
       path="/tickets/statistics"

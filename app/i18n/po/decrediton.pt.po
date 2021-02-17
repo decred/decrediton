@@ -3758,10 +3758,10 @@ msgstr "Histórico"
 
 #. [tickets.tab.mytickets]
 #. defaultMessage is:
-#. History Tickets
+#. Ticket History
 #: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
 msgctxt "tickets.tab.mytickets"
-msgid "History Tickets"
+msgid "Ticket History"
 msgstr "Histórico de Tickets"
 
 #. [ln.routesInfo.hop]
@@ -8351,10 +8351,10 @@ msgstr "Tickets"
 
 #. [tickets.tab.vsptickets]
 #. defaultMessage is:
-#. Tickets Status
+#. Ticket Status
 #: app/i18n/extracted/app/components/views/TicketsPage/TicketsPage.json
 msgctxt "tickets.tab.vsptickets"
-msgid "Tickets Status"
+msgid "Ticket Status"
 msgstr "Situação do Ticket"
 
 #. [proposals.detail.wallet.eligible.header]
