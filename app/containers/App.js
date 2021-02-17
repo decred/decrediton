@@ -113,10 +113,10 @@ class App extends React.Component {
     return false;
   }
 
-  onReloadRequested(event) {
+  onReloadRequested() {
     log("info", "Main app received reload UI request");
     this.refreshing = true;
-    event.sender.send("app-reload-ui");
+    ipcRenderer.send("app-reload-ui");
   }
 
   render() {
