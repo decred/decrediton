@@ -800,7 +800,11 @@ export const filteredRegularTxs = createSelector(
       .filter((v) =>
         filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
       )
-      .filter((v) => v.mixedTx == filter.types.includes(MIXED));
+      .filter(
+        (v) =>
+          (filter.directions.length == 0 && filter.types.length == 0) || // All directions
+          v.mixedTx == filter.types.includes(MIXED)
+      );
 
     return filteredTxs;
   }
