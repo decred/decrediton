@@ -90,15 +90,15 @@ const subtitle = ({
     case TICKET:
     case VOTE:
       return (
-        <div className={styles.txDetailsSubtitle}>
+        <div className={styles.subtitle}>
           {!isPending ? (
-            <div className={styles.txDetailsSubtitlePair}>
-              <div className={styles.txDetailsSubtitleSentfrom}>
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.purchasedOn" m="Purchased On" />
               </div>
               <div
                 className={classNames(
-                  styles.txDetailsSubtitleDate,
+                  styles.subtitleDate,
                   styles.blueValueHighlightMixin
                 )}>
                 <T
@@ -115,20 +115,20 @@ const subtitle = ({
           ) : (
             <div
               className={classNames(
-                styles.txDetailsSubtitleDate,
+                styles.subtitleDate,
                 styles.blueValueHighlightMixin
               )}>
               <T id="txDetails.unConfirmed" m="Unconfirmed" />
             </div>
           )}
           {leaveTimestamp && (
-            <div className={styles.txDetailsSubtitlePair}>
-              <div className={styles.txDetailsSubtitleSentfrom}>
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.votedOn" m="Voted On" />
               </div>
               <div
                 className={classNames(
-                  styles.txDetailsSubtitleDate,
+                  styles.subtitleDate,
                   styles.blueValueHighlightMixin
                 )}>
                 <T
@@ -140,13 +140,13 @@ const subtitle = ({
             </div>
           )}
           {ticketPrice && (
-            <div className={styles.txDetailsSubtitlePair}>
-              <div className={styles.txDetailsSubtitleSentfrom}>
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.ticketCost" m="Ticket Cost" />
               </div>
               <div
                 className={classNames(
-                  styles.txDetailsSubtitleAccount,
+                  styles.subtitleAccount,
                   styles.blueValueHighlightMixin
                 )}>
                 <Balance amount={ticketPrice} />
@@ -154,13 +154,13 @@ const subtitle = ({
             </div>
           )}
           {ticketReward && (
-            <div className={styles.txDetailsSubtitlePair}>
-              <div className={styles.txDetailsSubtitleSentfrom}>
+            <div className={styles.subtitlePair}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.reward" m="Reward" />
               </div>
               <div
                 className={classNames(
-                  styles.txDetailsSubtitleAccount,
+                  styles.subtitleAccount,
                   styles.blueValueHighlightMixin
                 )}>
                 <Balance amount={ticketReward} />
@@ -171,15 +171,15 @@ const subtitle = ({
       );
     default:
       return (
-        <div className={styles.txDetailsSubtitle}>
+        <div className={styles.subtitle}>
           {txDirection === TRANSACTION_DIR_SENT ? (
             <>
-              <div className={styles.txDetailsSubtitleSentfrom}>
+              <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.sentFrom" m="Sent From" />
               </div>
               <div
                 className={classNames(
-                  styles.txDetailsSubtitleAccount,
+                  styles.subtitleAccount,
                   styles.blueValueHighlightMixin
                 )}>
                 {sentFromAccount}
@@ -190,7 +190,7 @@ const subtitle = ({
           )}
           <div
             className={classNames(
-              styles.txDetailsSubtitleDate,
+              styles.subtitleDate,
               styles.blueValueHighlightMixin
             )}>
             {!isPending ? (

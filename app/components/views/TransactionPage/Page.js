@@ -74,40 +74,40 @@ const Page = ({
   }
   return (
     <>
-      <div className={styles.txdetailsTop}>
-        <div className={styles.txdetailsTopRow}>
-          <div className={styles.txdetailsName}>
+      <div className={styles.top}>
+        <div className={styles.topRow}>
+          <div className={styles.name}>
             <T id="txDetails.transactionLabel" m="Transaction" />:
           </div>
-          <div className={styles.txdetailsValue}>
+          <div className={styles.value}>
             <a onClick={openTxUrl} style={{ cursor: "pointer" }}>
               {txHash}
             </a>
           </div>
         </div>
-        <div className={styles.txdetailsTopRow}>
-          <div className={styles.txdetailsName}>
+        <div className={styles.topRow}>
+          <div className={styles.name}>
             {!isPending ? (
               <div
                 className={classNames(
-                  styles.txdetailsIndicatorConfirmed,
-                  styles.txdetailsIndicatorMixin
+                  styles.indicatorConfirmed,
+                  styles.indicatorMixin
                 )}>
                 <T id="txDetails.indicatorConfirmed" m="Confirmed" />
               </div>
             ) : (
               <div
                 className={classNames(
-                  styles.txdetailsIndicatorPending,
-                  styles.txdetailsIndicatorMixin
+                  styles.indicatorPending,
+                  styles.indicatorMixin
                 )}>
                 <T id="txDetails.indicatorPending" m="Pending" />
               </div>
             )}
           </div>
-          <div className={styles.txdetailsValue}>
+          <div className={styles.value}>
             {!isPending && (
-              <span className={styles.txdetailsValueText}>
+              <span className={styles.valueText}>
                 <T
                   id="transaction.confirmationHeight"
                   m="{confirmations, plural, =0 {Mined, block awaiting approval} one {# confirmation} other {# confirmations}}"
@@ -122,11 +122,11 @@ const Page = ({
           </div>
         </div>
         {txType !== VOTE && (
-          <div className={styles.txdetailsTopRow}>
-            <div className={styles.txdetailsName}>
+          <div className={styles.topRow}>
+            <div className={styles.name}>
               <T id="txDetails.toAddress" m="To address" />:
             </div>
-            <div className={classNames(styles.txdetailsValue, styles.nonFlex)}>
+            <div className={classNames(styles.value, styles.nonFlex)}>
               {txOutputs.map(({ address }, i) => (
                 <div key={i}>{addSpacingAroundText(address)}</div>
               ))}
@@ -137,11 +137,11 @@ const Page = ({
           </div>
         )}
         {txDirection !== TRANSACTION_DIR_RECEIVED && txType !== VOTE && (
-          <div className={styles.txdetailsTopRow}>
-            <div className={styles.txdetailsName}>
+          <div className={styles.topRow}>
+            <div className={styles.name}>
               <T id="txDetails.transactionFeeLabel" m="Transaction fee" />:
             </div>
-            <div className={styles.txdetailsValue}>
+            <div className={styles.value}>
               <Balance amount={txFee} />
             </div>
           </div>
@@ -168,81 +168,81 @@ const Page = ({
           </div>
         </div>
       )}
-      <div className={styles.txdetailsIo}>
-        <div className={styles.txdetailsTitle}>
+      <div className={styles.io}>
+        <div className={styles.title}>
           <T id="txDetails.io.title" m="I/O Details" />
         </div>
-        <div className={styles.txdetailsOverview}>
-          <div className={styles.txdetailsInputs}>
-            <div className={styles.txDetailsAreaMixin}>
+        <div className={styles.overview}>
+          <div className={styles.inputs}>
+            <div className={styles.areaMixin}>
               <div
                 className={
                   txInputs.length > 0
-                    ? styles.txdetailsOverviewTitleConsumed
-                    : styles.txdetailsOverviewTitleEmpty
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.walletInputs" m="Wallet Inputs" />
               </div>
               {txInputs.map(({ accountName, amount }, idx) => (
-                <div key={idx} className={styles.txdetailsRow}>
+                <div key={idx} className={styles.row}>
                   <div
                     className={classNames(
-                      styles.txdetailsAddress,
+                      styles.address,
                       styles.blueValueHighlightMixin
                     )}>
                     {accountName}
                   </div>
-                  <div className={styles.txdetailsAmount}>
+                  <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className={styles.txDetailsAreaMixin}>
+            <div className={styles.areaMixin}>
               <div
                 className={
                   nonWalletInputs.length > 0
-                    ? styles.txdetailsOverviewTitleConsumed
-                    : styles.txdetailsOverviewTitleEmpty
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
               </div>
               {nonWalletInputs.map(({ address, amount }, idx) => (
-                <div key={idx} className={styles.txdetailsRow}>
+                <div key={idx} className={styles.row}>
                   <div
                     className={classNames(
-                      styles.txdetailsAddress,
+                      styles.address,
                       styles.blueValueHighlightMixin
                     )}>
                     {addSpacingAroundText(address)}
                   </div>
-                  <div className={styles.txdetailsAmount}>
+                  <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className={styles.txdetailsInputArrow}></div>
-          <div className={styles.txdetailsOutputs}>
+          <div className={styles.inputArrow}></div>
+          <div className={styles.outputs}>
             <div
               className={classNames(
-                styles.txdetailsOutputArea,
-                styles.txDetailsAreaMixin
+                styles.outputArea,
+                styles.areaMixin
               )}>
               <div
                 className={
                   txOutputs.length > 0
-                    ? styles.txdetailsOverviewTitleConsumed
-                    : styles.txdetailsOverviewTitleEmpty
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.walletOutputs" m="Wallet Outputs" />
               </div>
               {txOutputs.map(({ accountName, decodedScript, amount }, idx) => (
-                <div key={idx} className={styles.txdetailsRow}>
+                <div key={idx} className={styles.row}>
                   <div
                     className={classNames(
-                      styles.txdetailsAddress,
+                      styles.address,
                       styles.blueValueHighlightMixin
                     )}>
                     {txDirection === TRANSACTION_DIR_SENT
@@ -251,7 +251,7 @@ const Page = ({
                       ? addSpacingAroundText(accountName)
                       : addSpacingAroundText(decodedScript.address)}
                   </div>
-                  <div className={styles.txdetailsAmount}>
+                  <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
                 </div>
@@ -259,65 +259,65 @@ const Page = ({
             </div>
             <div
               className={classNames(
-                styles.txdetailsOutputArea,
-                styles.txDetailsAreaMixin
+                styles.outputArea,
+                styles.areaMixin
               )}>
               <div
                 className={
                   nonWalletOutputs.length > 0
-                    ? styles.txdetailsOverviewTitleConsumed
-                    : styles.txdetailsOverviewTitleEmpty
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
               </div>
               {nonWalletOutputs.map(({ address, amount }, idx) => (
-                <div key={idx} className={styles.txdetailsRow}>
+                <div key={idx} className={styles.row}>
                   <div
                     className={classNames(
-                      styles.txdetailsAddress,
+                      styles.address,
                       styles.nonWallet,
                       styles.blueValueHighlightMixin
                     )}>
                     {addSpacingAroundText(address)}
                   </div>
-                  <div className={styles.txdetailsAmount}>{amount}</div>
+                  <div className={styles.amount}>{amount}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-      <div className={styles.txdetailsDetails}>
-        <div className={styles.txdetailsTitle}>
+      <div className={styles.details}>
+        <div className={styles.title}>
           <T id="txDetails.properties" m="Properties" />
         </div>
         {!isPending && (
           <>
-            <div className={styles.txdetailsTopRow}>
-              <div className={styles.txdetailsName}>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
                 <T id="txDetails.blockLabel" m="Block" />
               </div>
-              <div className={styles.txdetailsValue}>
+              <div className={styles.value}>
                 <a onClick={openBlockUrl} style={{ cursor: "pointer" }}>
                   {txBlockHash}
                 </a>
               </div>
             </div>
-            <div className={styles.txdetailsTopRow}>
-              <div className={styles.txdetailsName}>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
                 <T id="txDetails.blockHeightLabel" m="Height" />
               </div>
-              <div className={styles.txdetailsValue}>{txHeight}</div>
+              <div className={styles.value}>{txHeight}</div>
             </div>
           </>
         )}
         <div
-          className={classNames(styles.txdetailsTopRow, styles.rowTransaction)}>
-          <div className={styles.txdetailsName}>
+          className={classNames(styles.topRow, styles.rowTransaction)}>
+          <div className={styles.name}>
             <T id="txDetails.rawTransactionLabel" m="Raw Transaction" />
           </div>
-          <div className={styles.txdetailsValue}>
-            <div className={styles.txdetailsValueRawtx}>{rawTx}</div>
+          <div className={styles.value}>
+            <div className={styles.valueRawtx}>{rawTx}</div>
             <CopyToClipboard
               textToCopy={rawTx}
               className={styles.receiveContentNestCopyToClipboardIcon}

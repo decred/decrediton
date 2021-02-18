@@ -1,4 +1,4 @@
-.txdetailsIndicatorMixin {
+.indicatorMixin {
   display: inline-block;
   padding: 5px 8px 5px 20px;
   border-style: solid;
@@ -12,44 +12,37 @@
   background-size: 10px;
   background-repeat: no-repeat;
 }
-
-.txdetailsIndicatorPending {
+.indicatorPending {
   border-color: var(--input-color);
   background-image: var(--indicator-pending-icon);
   color: var(--input-color);
 }
-
-.txdetailsIndicatorConfirmed {
+.indicatorConfirmed {
   border-color: var(--accent-color);
   background-image: var(--indicator-confirmed-icon);
   color: var(--accent-color);
 }
-
-.txdetailsDetails {
+.details {
   padding-left: 80px;
   font-size: 13px;
   margin-bottom: 50px;
 }
-
-.txdetailsTop {
+.top {
   padding-left: 80px;
   padding-top: 25px;
   padding-bottom: 28px;
   font-size: 13px;
   background-color: var(--txdetails-top-bg);
 }
-
-.txdetailsIo {
+.io {
   padding-left: 80px;
   padding-top: 28px;
 }
-
-.txdetailsTopRow {
+.topRow {
   margin-bottom: 9px;
   display: flex;
 }
-
-.txdetailsName {
+.name {
   color: var(--tx-detail-text);
   margin-right: 11px;
   min-width: 90px;
@@ -57,17 +50,14 @@
   font-size: 13px;
   line-height: 17px;
 }
-
-.txdetailsValue {
+.value {
   word-wrap: break-word;
   display: flex;
 }
-
-.txdetailsValue.nonFlex {
+.value.nonFlex {
   display: block;
 }
-
-.txdetailsValueRawtx {
+.valueRawtx {
   font-size: 13px;
   line-height: 15px;
   width: 540px;
@@ -77,29 +67,25 @@
   padding: 10px;
   color: var(--stroke-color-hovered);
 }
-
-.txdetailsOverview {
+.overview {
   margin-bottom: 3em;
   display: flex;
   justify-content: space-between;
   width: 659px;
 }
-
-.txdetailsOverviewTitleConsumed {
+.overviewTitleConsumed {
   color: var(--input-color-default);
   font-size: 19px;
   line-height: 24px;
   margin-bottom: 13px;
 }
-
-.txdetailsOverviewTitleEmpty {
+.overviewTitleEmpty {
   color: var(--disabled-color);
   font-size: 19px;
   line-height: 24px;
   margin-bottom: 13px;
 }
-
-.txdetailsInputArrow {
+.inputArrow {
   background-image: var(--tx-details-arrow-left);
   background-position: 100% 50%;
   background-size: 37px;
@@ -109,30 +95,24 @@
   width: 43px;
   margin-top: 3em;
 }
-
-.txdetailsInputs {
+.inputs {
   width: 220px;
 }
-
-.txdetailsOutputs {
+.outputs {
   width: 220px;
 }
-
-.txDetailsAreaMixin {
+.areaMixin {
   width: 180px;
   background-color: var(--background-back-color);
   padding: 15px 20px 1px 20px;
   margin-bottom: 10px;
 }
-
-.txdetailsOutputArea {
+.outputArea {
   margin-right: 180px;
 }
-
-.txdetailsRow {
+.row {
   margin-bottom: 15px;
 }
-
 .blueValueHighlightMixin {
   font-size: 13px;
   line-height: 17px;
@@ -146,52 +126,42 @@
   text-align: center;
   margin-right: 5px;
 }
-
-.txDetailsSubtitle {
+.subtitle {
   display: flex;
   margin-top: 22px;
   flex-wrap: wrap;
 }
-
-.txDetailsSubtitlePair {
+.subtitlePair {
   display: flex;
   margin-top: 3px;
 }
-
-.txDetailsSubtitleSentfrom {
+.subtitleSentfrom {
   margin-right: 5px;
 }
-
-.txDetailsSubtitleDate {
+.subtitleDate {
   max-height: 22px;
 }
-
-.txDetailsSubtitleAccount {
+.subtitleAccount {
   width: 80px;
   max-height: 22px;
 }
-
-.txdetailsAddress.nonWallet {
+.address.nonWallet {
   width: 155px;
   margin-bottom: 5px;
 }
-
-.txdetailsAddress {
+.address {
   width: 80px;
   margin-bottom: 5px;
 }
-
-.txdetailsAmount {
+.amount {
   font-size: 17px;
   line-height: 27px;
   width: 100%;
 }
-
-.txdetailsValueText {
+.valueText {
   font-weight: 400;
 }
-
-.txdetailsTitle {
+.title {
   color: var(--stroke-color-hovered);
   font-size: 20px;
   line-height: 25px;
@@ -199,92 +169,87 @@
 }
 
 @media screen and (max-width: 1106px) {
-  .txdetailsOverview {
+  .overview {
     width: 633px;
   }
-  .txdetailsIo,
-  .txdetailsDetails,
-  .txdetailsTop {
+  .io,
+  .details,
+  .top {
     padding-left: 36px;
   }
-  .txdetailsValueRawtx {
+  .valueRawtx {
     width: 511px;
   }
 }
 
 @media screen and (max-width: 1106px) {
-  .txdetailsOverview {
+  .overview {
     width: 633px;
   }
-  .txdetailsIo,
-  .txdetailsDetails,
-  .txdetailsTop {
+  .io,
+  .details,
+  .top {
     padding-left: 36px;
   }
-  .txdetailsValueRawtx {
+  .valueRawtx {
     width: 511px;
   }
 }
 @media screen and (max-width: 768px) {
-  .txdetailsOverview {
+  .overview {
     flex-direction: column;
     padding-left: 42px;
   }
-
-  .txdetailsDetails,
-  .txdetailsTop {
+  .details,
+  .top {
     padding-left: 30px;
   }
-
-  .txdetailsInputArrow {
+  .inputArrow {
     transform: rotate(90deg);
     margin: 20px 0 25px 88px;
   }
-
-  .txdetailsTop .txdetailsValue > a {
+  .top .value > a {
     text-overflow: ellipsis;
     width: 220px;
     white-space: nowrap;
     overflow: hidden;
   }
-
-  .txdetailsDetails .txdetailsTopRow {
+  .details .topRow {
     width: 335px;
   }
-  .txdetailsDetails .txdetailsTopRow .txdetailsValue > a {
+  .details .topRow .value > a {
     word-wrap: break-word;
     display: inline-block;
     width: 223px;
   }
-
-  .txdetailsDetails .txdetailsTopRow.rowTransaction {
+  .details .topRow.rowTransaction {
     flex-direction: column;
   }
-  .txdetailsDetails .txdetailsTopRow.rowTransaction .txdetailsName {
+  .details .topRow.rowTransaction .name {
     text-align: left;
   }
-  .txdetailsDetails .txdetailsTopRow.rowTransaction .txdetailsValue {
+  .details .topRow.rowTransaction .value {
     margin-top: 10px;
     margin-left: -20px;
     width: 354px;
     position: relative;
   }
-  .txdetailsDetails
-    .txdetailsTopRow.rowTransaction
-    .txdetailsValue
-    .txdetailsValueRawtx {
+  .details
+    .topRow.rowTransaction
+    .value
+    .valueRawtx {
     width: 335px;
   }
-  .txdetailsDetails
-    .txdetailsTopRow.rowTransaction
-    .txdetailsValue
+  .details
+    .topRow.rowTransaction
+    .value
     .receiveContentNestCopyToClipboardIcon {
     position: absolute;
     top: -28px;
     right: 5px;
     margin: 0;
   }
-  .txDetailsSubtitle {
+  .subtitle {
     margin-top: 10px;
     width: 355px;
   }
