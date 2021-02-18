@@ -127,6 +127,10 @@ export const purchaseTickets = (
   signTx
 ) =>
   new Promise((ok, fail) => {
+    if ((!stakepool.PoolAddress && stakepool.PoolAddress == "") ||
+    (!stakepool.PoolFees && stakepool.PoolFees == 0)) {
+      return fail("Purchase ticket failed: Pool Address or Pool Fees can't be empty");
+    }
     const request = new api.PurchaseTicketsRequest();
     signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccount(accountNum);
