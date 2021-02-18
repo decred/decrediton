@@ -512,6 +512,7 @@ export function ticketBuyerCancel() {
     if (!ticketBuyerCall) return;
     if (ticketBuyerCall) {
       dispatch({ type: STOPTICKETBUYER_ATTEMPT });
+      wallet.lockWallet(sel.walletService(getState()));
       ticketBuyerCall.cancel();
     }
   };
