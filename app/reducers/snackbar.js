@@ -39,8 +39,7 @@ import {
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
-  SETVSPDVOTECHOICE_FAILED,
-  SETVSPDVOTECHOICE_SUCCESS
+  SETVSPDVOTECHOICE_FAILED
 } from "../actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
@@ -551,10 +550,6 @@ const messages = defineMessages({
     id: "set.vote.success",
     defaultMessage: "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
   },
-  SETVSPDVOTECHOICE_SUCCESS: {
-    id: "set.vspdvote.success",
-    defaultMessage: "You have successfully updated your vspd vote choices."
-  },
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
@@ -642,7 +637,6 @@ export default function snackbar(state = {}, action) {
     case CREATEMIXERACCOUNTS_SUCCESS:
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
-    case SETVSPDVOTECHOICE_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 

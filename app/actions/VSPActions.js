@@ -2,6 +2,7 @@
 import Promise from "promise";
 import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
+import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED, VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID } from "constants";
@@ -685,6 +686,7 @@ export const setVSPDVoteChoices = (passphrase) => async (dispatch, getState) => 
 
     await wallet.lockWallet(walletService);
 
+    dispatch({ type: SETVOTECHOICES_SUCCESS });
     dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
     return true;
   } catch(error) {

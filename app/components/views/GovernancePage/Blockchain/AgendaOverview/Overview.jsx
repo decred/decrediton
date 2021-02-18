@@ -100,7 +100,7 @@ const Overview = ({
           modalClassName={styles.passphraseModal}
           onSubmit={updatePreferences}
           className={styles.updatePreferencesButton}
-          disabled={isLoading}
+          disabled={disabled || isLoading}
           buttonLabel={isLoading ? <T id="agenda.settingVoteChoices" m="Updating" /> : <T id="agenda.updatePreference" m="Update Preference" />}
         />
         </div>

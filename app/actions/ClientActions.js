@@ -639,15 +639,14 @@ export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
   dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
   wallet
     .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
-    .then((response) => {
-      dispatch({ response, type: SETVOTECHOICES_SUCCESS });
+    .then(() => {
       dispatch(getVoteChoicesAttempt());
-      dispatch(setVSPDVoteChoices(passphrase));
       const stakePools = sel.configuredStakePools(getState());
       const { grpc: voteChoices } = getState();
-          for (let i = 0; i < stakePools.length; i++) {
-            dispatch(setStakePoolVoteChoices(stakePools[i], voteChoices));
-          }
+      for (let i = 0; i < stakePools.length; i++) {
+          dispatch(setStakePoolVoteChoices(stakePools[i], voteChoices));
+      }
+      dispatch(setVSPDVoteChoices(passphrase));
     })
     .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
 };
