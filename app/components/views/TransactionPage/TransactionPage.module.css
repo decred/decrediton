@@ -1,11 +1,4 @@
-@import (reference) "./main.less";
-
-.txdetails-standalone-page .standalone-page-body {
-  padding: 0;
-  top: 157px;
-}
-
-.txdetails-indicator-mixin {
+.txdetailsIndicatorMixin {
   display: inline-block;
   padding: 5px 8px 5px 20px;
   border-style: solid;
@@ -20,29 +13,25 @@
   background-repeat: no-repeat;
 }
 
-.txdetails-indicator-pending {
-  .txdetails-indicator-mixin;
-
+.txdetailsIndicatorPending {
   border-color: var(--input-color);
   background-image: var(--indicator-pending-icon);
   color: var(--input-color);
 }
 
-.txdetails-indicator-confirmed {
-  .txdetails-indicator-mixin;
-
+.txdetailsIndicatorConfirmed {
   border-color: var(--accent-color);
   background-image: var(--indicator-confirmed-icon);
   color: var(--accent-color);
 }
 
-.txdetails-details {
+.txdetailsDetails {
   padding-left: 80px;
   font-size: 13px;
   margin-bottom: 50px;
 }
 
-.txdetails-top {
+.txdetailsTop {
   padding-left: 80px;
   padding-top: 25px;
   padding-bottom: 28px;
@@ -50,17 +39,17 @@
   background-color: var(--txdetails-top-bg);
 }
 
-.txdetails-io {
+.txdetailsIo {
   padding-left: 80px;
   padding-top: 28px;
 }
 
-.txdetails-top-row {
+.txdetailsTopRow {
   margin-bottom: 9px;
   display: flex;
 }
 
-.txdetails-name {
+.txdetailsName {
   color: var(--tx-detail-text);
   margin-right: 11px;
   min-width: 90px;
@@ -69,16 +58,16 @@
   line-height: 17px;
 }
 
-.txdetails-value {
+.txdetailsValue {
   word-wrap: break-word;
   display: flex;
-
-  &.non-flex {
-    display: block;
-  }
 }
 
-.txdetails-value-rawtx {
+.txdetailsValue.nonFlex {
+  display: block;
+}
+
+.txdetailsValueRawtx {
   font-size: 13px;
   line-height: 15px;
   width: 540px;
@@ -89,36 +78,28 @@
   color: var(--stroke-color-hovered);
 }
 
-.txdetails-overview {
+.txdetailsOverview {
   margin-bottom: 3em;
   display: flex;
   justify-content: space-between;
   width: 659px;
 }
 
-.txdetails-overview-title-mixin {
+.txdetailsOverviewTitleConsumed {
   color: var(--input-color-default);
   font-size: 19px;
   line-height: 24px;
   margin-bottom: 13px;
 }
 
-.txdetails-overview-title-created {
-  .inline-block-mixin;
-  .txdetails-overview-title-mixin;
-}
-
-.txdetails-overview-title-consumed {
-  .txdetails-overview-title-mixin;
-}
-
-.txdetails-overview-title-empty {
-  .txdetails-overview-title-mixin;
-
+.txdetailsOverviewTitleEmpty {
   color: var(--disabled-color);
+  font-size: 19px;
+  line-height: 24px;
+  margin-bottom: 13px;
 }
 
-.txdetails-input-arrow {
+.txdetailsInputArrow {
   background-image: var(--tx-details-arrow-left);
   background-position: 100% 50%;
   background-size: 37px;
@@ -129,49 +110,30 @@
   margin-top: 3em;
 }
 
-.txdetails-inputs {
+.txdetailsInputs {
   width: 220px;
 }
 
-.txdetails-outputs {
+.txdetailsOutputs {
   width: 220px;
 }
 
-.tx-details-area-mixin {
+.txDetailsAreaMixin {
   width: 180px;
   background-color: var(--background-back-color);
   padding: 15px 20px 1px 20px;
   margin-bottom: 10px;
 }
 
-.txdetails-input-area {
-  .tx-details-area-mixin;
-}
-
-.txdetails-output-area {
-  .tx-details-area-mixin;
-
+.txdetailsOutputArea {
   margin-right: 180px;
 }
 
-.txdetails-direction {
-  display: block;
-  width: 100%;
-  height: 28px;
-  padding-top: 4px;
-  padding-left: 80px;
-  float: left;
-  clear: left;
-  font-size: 20px;
-  line-height: 19px;
-  text-align: left;
-}
-
-.txdetails-row {
+.txdetailsRow {
   margin-bottom: 15px;
 }
 
-.blue-value-highlight-mixin {
+.blueValueHighlightMixin {
   font-size: 13px;
   line-height: 17px;
   padding: 2px 10px 2px 10px;
@@ -185,152 +147,145 @@
   margin-right: 5px;
 }
 
-.tx-details-subtitle {
+.txDetailsSubtitle {
   display: flex;
   margin-top: 22px;
   flex-wrap: wrap;
 }
 
-.tx-details-subtitle-pair {
+.txDetailsSubtitlePair {
   display: flex;
   margin-top: 3px;
 }
 
-.tx-details-subtitle-sentfrom {
+.txDetailsSubtitleSentfrom {
   margin-right: 5px;
 }
 
-.tx-details-subtitle-date {
-  .blue-value-highlight-mixin;
-
+.txDetailsSubtitleDate {
   max-height: 22px;
 }
 
-.tx-details-subtitle-account {
-  .blue-value-highlight-mixin;
-
+.txDetailsSubtitleAccount {
   width: 80px;
   max-height: 22px;
 }
 
-.txdetails-address.non-wallet {
-  .blue-value-highlight-mixin;
-
+.txdetailsAddress.nonWallet {
   width: 155px;
   margin-bottom: 5px;
 }
 
-.txdetails-address {
-  .blue-value-highlight-mixin;
-
+.txdetailsAddress {
   width: 80px;
   margin-bottom: 5px;
 }
 
-.txdetails-amount {
+.txdetailsAmount {
   font-size: 17px;
   line-height: 27px;
   width: 100%;
 }
 
-.txdetails-value-text {
+.txdetailsValueText {
   font-weight: 400;
 }
 
-.txdetails-title {
+.txdetailsTitle {
   color: var(--stroke-color-hovered);
   font-size: 20px;
   line-height: 25px;
   margin-bottom: 7px;
 }
 
-.txdetails-last {
-  border-bottom: 0px none transparent;
-}
-
 @media screen and (max-width: 1106px) {
-  .txdetails-overview {
+  .txdetailsOverview {
     width: 633px;
   }
-  .txdetails-io,
-  .txdetails-details,
-  .txdetails-top {
+  .txdetailsIo,
+  .txdetailsDetails,
+  .txdetailsTop {
     padding-left: 36px;
   }
-  .txdetails-value-rawtx {
+  .txdetailsValueRawtx {
     width: 511px;
   }
 }
 
 @media screen and (max-width: 1106px) {
-  .txdetails-overview {
+  .txdetailsOverview {
     width: 633px;
   }
-  .txdetails-io,
-  .txdetails-details,
-  .txdetails-top {
+  .txdetailsIo,
+  .txdetailsDetails,
+  .txdetailsTop {
     padding-left: 36px;
   }
-  .txdetails-value-rawtx {
+  .txdetailsValueRawtx {
     width: 511px;
   }
 }
 @media screen and (max-width: 768px) {
-  .txdetails-standalone-page .standalone-page-body {
-    top: 113px;
-  }
-
-  .txdetails-overview {
+  .txdetailsOverview {
     flex-direction: column;
     padding-left: 42px;
   }
 
-  .txdetails-details,
-  .txdetails-top {
+  .txdetailsDetails,
+  .txdetailsTop {
     padding-left: 30px;
   }
 
-  .txdetails-input-arrow {
+  .txdetailsInputArrow {
     transform: rotate(90deg);
     margin: 20px 0 25px 88px;
   }
 
-  .txdetails-top .txdetails-value > a {
+  .txdetailsTop .txdetailsValue > a {
     text-overflow: ellipsis;
     width: 220px;
     white-space: nowrap;
     overflow: hidden;
   }
 
-  .txdetails-details .txdetails-top-row {
+  .txdetailsDetails .txdetailsTopRow {
     width: 335px;
+  }
+  .txdetailsDetails .txdetailsTopRow .txdetailsValue > a {
+    word-wrap: break-word;
+    display: inline-block;
+    width: 223px;
+  }
 
-    .txdetails-value > a {
-      word-wrap: break-word;
-      display: inline-block;
-      width: 223px;
-    }
-
-    &.row-transaction {
-      flex-direction: column;
-      .txdetails-name {
-        text-align: left;
-      }
-      .txdetails-value {
-        margin-top: 10px;
-        margin-left: -20px;
-        width: 354px;
-        position: relative;
-        .txdetails-value-rawtx {
-          width: 335px;
-        }
-        .clipboard-box.receive-content-nest-copy-to-clipboard-icon {
-          position: absolute;
-          top: -28px;
-          right: 5px;
-          margin: 0;
-        }
-      }
-    }
+  .txdetailsDetails .txdetailsTopRow.rowTransaction {
+    flex-direction: column;
+  }
+  .txdetailsDetails .txdetailsTopRow.rowTransaction .txdetailsName {
+    text-align: left;
+  }
+  .txdetailsDetails .txdetailsTopRow.rowTransaction .txdetailsValue {
+    margin-top: 10px;
+    margin-left: -20px;
+    width: 354px;
+    position: relative;
+  }
+  .txdetailsDetails
+    .txdetailsTopRow.rowTransaction
+    .txdetailsValue
+    .txdetailsValueRawtx {
+    width: 335px;
+  }
+  .txdetailsDetails
+    .txdetailsTopRow.rowTransaction
+    .txdetailsValue
+    .receiveContentNestCopyToClipboardIcon {
+    position: absolute;
+    top: -28px;
+    right: 5px;
+    margin: 0;
+  }
+  .txDetailsSubtitle {
+    margin-top: 10px;
+    width: 355px;
   }
 }

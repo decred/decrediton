@@ -17,6 +17,8 @@ import { StandaloneHeader } from "layout";
 import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ClientActions";
 import * as sel from "selectors";
+import styles from "./TransactionPage.module.css";
+import { classNames } from "pi-ui";
 
 const messages = defineMessages({
   [TICKET]: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
@@ -88,13 +90,17 @@ const subtitle = ({
     case TICKET:
     case VOTE:
       return (
-        <div className="tx-details-subtitle">
+        <div className={styles.txDetailsSubtitle}>
           {!isPending ? (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.txDetailsSubtitlePair}>
+              <div className={styles.txDetailsSubtitleSentfrom}>
                 <T id="txDetails.purchasedOn" m="Purchased On" />
               </div>
-              <div className="tx-details-subtitle-date">
+              <div
+                className={classNames(
+                  styles.txDetailsSubtitleDate,
+                  styles.blueValueHighlightMixin
+                )}>
                 <T
                   id="txDetails.timestamp"
                   m="{timestamp, date, medium} {timestamp, time, medium}"
@@ -107,16 +113,24 @@ const subtitle = ({
               </div>
             </div>
           ) : (
-            <div className="tx-details-subtitle-date">
+            <div
+              className={classNames(
+                styles.txDetailsSubtitleDate,
+                styles.blueValueHighlightMixin
+              )}>
               <T id="txDetails.unConfirmed" m="Unconfirmed" />
             </div>
           )}
           {leaveTimestamp && (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.txDetailsSubtitlePair}>
+              <div className={styles.txDetailsSubtitleSentfrom}>
                 <T id="txDetails.votedOn" m="Voted On" />
               </div>
-              <div className="tx-details-subtitle-date">
+              <div
+                className={classNames(
+                  styles.txDetailsSubtitleDate,
+                  styles.blueValueHighlightMixin
+                )}>
                 <T
                   id="txDetails.timestamp"
                   m="{timestamp, date, medium} {timestamp, time, medium}"
@@ -126,21 +140,29 @@ const subtitle = ({
             </div>
           )}
           {ticketPrice && (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.txDetailsSubtitlePair}>
+              <div className={styles.txDetailsSubtitleSentfrom}>
                 <T id="txDetails.ticketCost" m="Ticket Cost" />
               </div>
-              <div className="tx-details-subtitle-account">
+              <div
+                className={classNames(
+                  styles.txDetailsSubtitleAccount,
+                  styles.blueValueHighlightMixin
+                )}>
                 <Balance amount={ticketPrice} />
               </div>
             </div>
           )}
           {ticketReward && (
-            <div className="tx-details-subtitle-pair">
-              <div className="tx-details-subtitle-sentfrom">
+            <div className={styles.txDetailsSubtitlePair}>
+              <div className={styles.txDetailsSubtitleSentfrom}>
                 <T id="txDetails.reward" m="Reward" />
               </div>
-              <div className="tx-details-subtitle-account">
+              <div
+                className={classNames(
+                  styles.txDetailsSubtitleAccount,
+                  styles.blueValueHighlightMixin
+                )}>
                 <Balance amount={ticketReward} />
               </div>
             </div>
@@ -149,20 +171,28 @@ const subtitle = ({
       );
     default:
       return (
-        <div className="tx-details-subtitle">
+        <div className={styles.txDetailsSubtitle}>
           {txDirection === TRANSACTION_DIR_SENT ? (
             <>
-              <div className="tx-details-subtitle-sentfrom">
+              <div className={styles.txDetailsSubtitleSentfrom}>
                 <T id="txDetails.sentFrom" m="Sent From" />
               </div>
-              <div className="tx-details-subtitle-account">
+              <div
+                className={classNames(
+                  styles.txDetailsSubtitleAccount,
+                  styles.blueValueHighlightMixin
+                )}>
                 {sentFromAccount}
               </div>
             </>
           ) : (
             <div />
           )}
-          <div className="tx-details-subtitle-date">
+          <div
+            className={classNames(
+              styles.txDetailsSubtitleDate,
+              styles.blueValueHighlightMixin
+            )}>
             {!isPending ? (
               <T
                 id="txDetails.timestamp"
