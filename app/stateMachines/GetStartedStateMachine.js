@@ -344,7 +344,7 @@ export const getStartedMachine = Machine({
       },
       on: {
         BACK: "processingUnmanagedTickets",
-        CONTINUE: "isLoadingConfig",
+        CONTINUE: "processingUnmanagedTickets",
         ERROR: {
           target: "processingManagedTickets",
           actions: assign({
@@ -360,7 +360,7 @@ export const getStartedMachine = Machine({
         processingUnmanagedTickets: {}
       },
       on: {
-        CONTINUE: "isLoadingConfig",
+        CONTINUE: "goToHomeView",
         BACK: "goToHomeView",
         ERROR: {
           target: "processingUnmanagedTickets",
