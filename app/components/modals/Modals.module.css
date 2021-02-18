@@ -45,7 +45,7 @@
 }
 
 .reducedBar {
-  width: 540px !important;
+  width: 540px;
 }
 
 .modal.info,
@@ -73,19 +73,11 @@
   flex-direction: column;
 }
 
-.reducedBar.info {
-  margin-left: 390px;
-}
-
 .mixerSettings.info {
   background-image: none;
   padding: 30px;
-  width: 620px !important;
-  margin: 268px 0 0 116px;
-}
-
-.standalone.info {
-  margin-left: 420px;
+  min-width: 620px;
+  overflow-x: hidden;
 }
 
 .modal.info.double,
@@ -141,7 +133,7 @@
   background-image: var(--decred-macos-1024-logo);
   background-size: 231px;
   background-repeat: no-repeat;
-  border-radius: 40px;
+  border-radius: 48px;
 }
 
 .aboutContent {
@@ -564,8 +556,6 @@
 }
 
 .confirmSendFromUnmixed {
-  top: 50px;
-  margin: 20px;
   padding: 20px;
   width: 700px;
 }
@@ -584,13 +574,9 @@
 .mixerSettingsTitle {
   font-size: 20px;
 }
-@media screen and (max-width: 1179px) {
-  .confirmSendFromUnmixed {
-    margin-left: 150px;
-  }
+ @media screen and (max-width: 1179px) {
   .mixerSettings.info {
     width: 594px !important;
-    margin: 100px 0 0 71px;
   }
 }
 
@@ -608,13 +594,9 @@
     width: 300px !important;
   }
 
-  .standalone.confirmSeedCopy {
-    left: 20%;
-    right: 20%;
-  }
   .mixerSettings.info {
-    width: 304px !important;
-    margin: 26px 0 0 6px;
+    width: 305px;
+    min-width: unset;
   }
 }
 
@@ -657,6 +639,7 @@
     height: 66px;
     width: 66px;
     background-size: 59px;
+    border-radius: 23px;
   }
 
   .reducedBar.about .aboutBottomArea {
