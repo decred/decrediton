@@ -546,10 +546,19 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 export const processManagedTickets = (passphrase) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const asyncProcess = async () => {
-      dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
+      const availableVSPs = await dispatch(discoverAvailableVSPs());
+      availableVSPs.map(async (vsp) => {
+        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+        if (pubkey) {
+          vsp.pubkey = pubkey;
+          return vsp;
+        }
+        return false;
+      });
+      let unlocked = false;
+      const walletService = sel.walletService(getState());
       try {
-        const walletService = sel.walletService(getState());
-        const availableVSPs = await dispatch(discoverAvailableVSPs());
+        dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
         let feeAccount, changeAccount;
         const mixedAccount = sel.getMixedAccount(getState());
         if (mixedAccount) {
@@ -561,12 +570,13 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         }
 
         await wallet.unlockWallet(walletService, passphrase);
-
+        unlocked = true;
         await Promise.all(availableVSPs.map(async (vsp) => {
-          const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-          await wallet.processManagedTickets(
-            walletService, vsp.host, pubkey, feeAccount, changeAccount
-          );
+          if (vsp.pubkey) {
+            await wallet.processManagedTickets(
+              walletService, vsp.host, vsp.pubkey, feeAccount, changeAccount
+            );
+          }
         }));
 
         await wallet.lockWallet(walletService);
@@ -578,8 +588,14 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
         resolve(true);
       } catch(error) {
+        if (unlocked) await wallet.lockWallet(walletService);
         dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
+        if (String(error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > 0) {
+           reject("Invalid private passphrase, please try again.");
+           return;
+        }
         reject(error);
+        return;
       }
     };
 
@@ -592,34 +608,38 @@ export const PROCESSUNMANAGEDTICKETS_FAILED = "PROCESSUNMANAGEDTICKETS_FAILED";
 
 // processUnmanagedTickets process vsp tickets which are still unprocessed.
 // It is called on wallet restore.
-export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => async (dispatch, getState) => {
-  dispatch({ type: PROCESSUNMANAGEDTICKETS_ATTEMPT });
-  try {
-    const walletService = sel.walletService(getState());
-    let feeAccount, changeAccount;
-    const mixedAccount = sel.getMixedAccount(getState());
-    if (mixedAccount) {
-      feeAccount = mixedAccount;
-      changeAccount = sel.getChangeAccount(getState());
-    } else {
-      feeAccount = sel.defaultSpendingAccount(getState()).value;
-      changeAccount = sel.defaultSpendingAccount(getState()).value;
-    }
+export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    const asyncProcess = async () => {
+      dispatch({ type: PROCESSUNMANAGEDTICKETS_ATTEMPT });
+      try {
+        const walletService = sel.walletService(getState());
+        let feeAccount, changeAccount;
+        const mixedAccount = sel.getMixedAccount(getState());
+        if (mixedAccount) {
+          feeAccount = mixedAccount;
+          changeAccount = sel.getChangeAccount(getState());
+        } else {
+          feeAccount = sel.defaultSpendingAccount(getState()).value;
+          changeAccount = sel.defaultSpendingAccount(getState()).value;
+        }
 
-    if (passphrase) {
-      await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
-    } else {
-      await wallet.processUnmanagedTicketsStartup(walletService, vspHost, vspPubkey, feeAccount, changeAccount);
-    }
+        if (passphrase) {
+          await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
+        } else {
+          await wallet.processUnmanagedTicketsStartup(walletService, vspHost, vspPubkey, feeAccount, changeAccount);
+        }
 
-    // get vsp tickets fee status errored so we can resync them
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
-    dispatch({ type: PROCESSUNMANAGEDTICKETS_SUCCESS });
-    return null;
-  } catch(error) {
-    dispatch({ type: PROCESSUNMANAGEDTICKETS_FAILED, error });
-    return error;
-  }
-};
+        // get vsp tickets fee status errored so we can resync them
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+        dispatch({ type: PROCESSUNMANAGEDTICKETS_SUCCESS });
+        return null;
+      } catch(error) {
+        dispatch({ type: PROCESSUNMANAGEDTICKETS_FAILED, error });
+        return error;
+      }
+    };
+    asyncProcess().then(r => resolve(r)).catch(error => reject(error));
+  });

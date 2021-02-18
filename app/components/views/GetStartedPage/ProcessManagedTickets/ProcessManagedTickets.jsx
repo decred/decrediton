@@ -11,36 +11,24 @@ import { VSPSelect } from "inputs";
 export default ({
   cancel,
   send,
-  onSendContinue,
   onProcessTickets,
   title,
   description,
   noVspSelection,
-  error
+  error,
+  isProcessingManaged
 }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
   const onSubmitContinue = (passphrase) => {
     // send a continue so we can go to the loading state
-    onSendContinue();
     onProcessTickets(passphrase)
       .then(() => send({ type: "CONTINUE" }))
       .catch(error => {
-        if (error.isTimeout) {
-          const { vspHost } = error;
-          error = <T
-            id="process.mangedTickets.error"
-            m="A timeout happened when verifying the following vsp: {vsp}"
-            values={{
-              vsp: vspHost
-            }}
-          />;
-        }
         send({ type: "ERROR", error });
       });
     return;
   };
-
   useEffect(() => {
     if (noVspSelection) {
       setIsValid(true);
@@ -50,16 +38,17 @@ export default ({
       setIsValid(true);
     }
   }, [vsp, noVspSelection]);
-
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        <Tooltip text={<GoBackMsg />}>
-          <div
-            className={GetStartedStyles.goBackScreenButton}
-            onClick={cancel}
-          />
-        </Tooltip>
+        { !isProcessingManaged &&
+          <Tooltip text={<GoBackMsg />}>
+            <div
+              className={GetStartedStyles.goBackScreenButton}
+              onClick={cancel}
+            />
+          </Tooltip>
+        }
       </div>
       <Subtitle
         className={styles.subtitle}
@@ -84,15 +73,16 @@ export default ({
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.mangedTickets.button" m="Continue" />}
-          disabled={!isValid}>
-
-        </PassphraseModalButton>
-        <InvisibleButton className={styles.skipButton} onClick={cancel}>
-          <T
-            id="process.mangedTickets.button.skip"
-            m="Skip"
-          />
-        </InvisibleButton>
+          disabled={!isValid || isProcessingManaged}
+          loading={isProcessingManaged}/>
+        { !isProcessingManaged &&
+          <InvisibleButton className={styles.skipButton} onClick={cancel}>
+            <T
+              id="process.mangedTickets.button.skip"
+              m="Skip"
+            />
+          </InvisibleButton>
+        }
       </div>
     </div>
   );
