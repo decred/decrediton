@@ -219,7 +219,7 @@ const messages = defineMessages({
   },
   UPDATESTAKEPOOLCONFIG_SUCCESS: {
     id: "tickets.updateStakePoolConfigHeader",
-    defaultMessage: "You have successfully updated your stakepool settings."
+    defaultMessage: "You have successfully updated your legacy stakepool settings."
   },
   UPDATESTAKEPOOLCONFIG_FAILED: {
     id: "tickets.errors.updateStakePoolConfigFailed",

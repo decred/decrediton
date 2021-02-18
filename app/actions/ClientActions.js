@@ -614,11 +614,14 @@ export const GETVOTECHOICES_ATTEMPT = "GETVOTECHOICES_ATTEMPT";
 export const GETVOTECHOICES_FAILED = "GETVOTECHOICES_FAILED";
 export const GETVOTECHOICES_SUCCESS = "GETVOTECHOICES_SUCCESS";
 
-export const getVoteChoicesAttempt = () => (dispatch, getState) => {
+export const getVoteChoicesAttempt = (stakePool) => (dispatch, getState) => {
   dispatch({ type: GETVOTECHOICES_ATTEMPT });
   wallet
     .getVoteChoices(sel.votingService(getState()))
     .then((voteChoices) => {
+      if (stakePool) {
+        dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
+      }
       const voteChoicesConfig = voteChoices.getChoicesList().map((choice) => ({
         agendaId: choice.getAgendaId(),
         choiceId: choice.getChoiceId()
@@ -632,24 +635,20 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
-  dispatch,
-  getState
-) => {
+export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (dispatch, getState) => {
   dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
-  wallet
-    .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
+    wallet.setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then(() => {
-      dispatch(getVoteChoicesAttempt());
-      const stakePools = sel.configuredStakePools(getState());
-      const { grpc: voteChoices } = getState();
-      for (let i = 0; i < stakePools.length; i++) {
-          dispatch(setStakePoolVoteChoices(stakePools[i], voteChoices));
-      }
       dispatch(setVSPDVoteChoices(passphrase));
+      const stakePools = sel.configuredStakePools(getState());
+      for (let i = 0; i < stakePools.length; i++) {
+          dispatch(getVoteChoicesAttempt(stakePools[i]));
+      }
     })
-    .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
-};
+    .catch((error) =>
+      dispatch({ error, type: SETVOTECHOICES_FAILED })
+    );
+  };
 
 export const GETMESSAGEVERIFICATIONSERVICE_ATTEMPT =
   "GETMESSAGEVERIFICATIONSERVICE_ATTEMPT";
