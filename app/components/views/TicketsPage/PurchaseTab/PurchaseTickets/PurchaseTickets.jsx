@@ -24,7 +24,8 @@ const Tickets = ({ toggleIsLegacy }) => {
     onRevokeTickets,
     notMixedAccounts,
     isVSPListingEnabled,
-    onEnableVSPListing
+    onEnableVSPListing,
+    getRunningIndicator
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
@@ -100,7 +101,8 @@ const Tickets = ({ toggleIsLegacy }) => {
         onRevokeTickets,
         notMixedAccounts,
         isVSPListingEnabled,
-        onEnableVSPListing
+        onEnableVSPListing,
+        getRunningIndicator
       }}
     />
   );

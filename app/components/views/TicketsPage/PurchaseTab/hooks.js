@@ -100,6 +100,8 @@ export const usePurchaseTab = () => {
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
 
+  const getRunningIndicator = useSelector(sel.getRunningIndicator);
+
   return {
     spvMode,
     blocksNumberToNextTicket,
@@ -131,6 +133,7 @@ export const usePurchaseTab = () => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
-    onListUnspentOutputs
+    onListUnspentOutputs,
+    getRunningIndicator
   };
 };
