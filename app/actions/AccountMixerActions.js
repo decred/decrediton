@@ -144,6 +144,7 @@ export const stopAccountMixer = (cleanLogs) => {
     dispatch({ type: STOPMIXER_ATTEMPT });
     try {
       mixerStreamer.cancel();
+      wallet.lockWallet(sel.walletService(getState()));
       dispatch({ type: STOPMIXER_SUCCESS });
     } catch (error) {
       dispatch({ type: STOPMIXER_FAILED, error });
