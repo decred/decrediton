@@ -25,16 +25,6 @@ export default ({
     onProcessTickets(passphrase)
       .then(() => send({ type: "CONTINUE" }))
       .catch(error => {
-        if (error.isTimeout) {
-          const { vspHost } = error;
-          error = <T
-            id="process.mangedTickets.error"
-            m="A timeout happened when verifying the following vsp: {vsp}"
-            values={{
-              vsp: vspHost
-            }}
-          />;
-        }
         send({ type: "ERROR", error });
       });
     return;

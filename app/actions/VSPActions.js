@@ -546,11 +546,19 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 export const processManagedTickets = (passphrase) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const asyncProcess = async () => {
-      dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
+      const availableVSPs = await dispatch(discoverAvailableVSPs());
+      availableVSPs.map(async (vsp) => {
+        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+        if (pubkey) {
+          vsp.pubkey = pubkey;
+          return vsp;
+        }
+        return false;
+      });
       let unlocked = false;
       const walletService = sel.walletService(getState());
       try {
-        const availableVSPs = await dispatch(discoverAvailableVSPs());
+        dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
         let feeAccount, changeAccount;
         const mixedAccount = sel.getMixedAccount(getState());
         if (mixedAccount) {
@@ -564,10 +572,11 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         await wallet.unlockWallet(walletService, passphrase);
         unlocked = true;
         await Promise.all(availableVSPs.map(async (vsp) => {
-          const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-          await wallet.processManagedTickets(
-            walletService, vsp.host, pubkey, feeAccount, changeAccount
-          );
+          if (vsp.pubkey) {
+            await wallet.processManagedTickets(
+              walletService, vsp.host, vsp.pubkey, feeAccount, changeAccount
+            );
+          }
         }));
 
         await wallet.lockWallet(walletService);
@@ -581,9 +590,7 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
       } catch(error) {
         if (unlocked) await wallet.lockWallet(walletService);
         dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
-        if (error.indexOf(
-          "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
-        )) {
+        if (String(error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > 0) {
            reject("Invalid private passphrase, please try again.");
            return;
         }
