@@ -3,19 +3,20 @@ import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
 import GetStartedStyles from "../GetStarted.module.css";
 import { useState } from "react";
-import { PassphraseModalButton } from "buttons";
+import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
 
-export default ({ cancel, onSendContinue, onProcessTickets, title, description, noVspSelection }) => {
+export default ({ cancel, send, onProcessTickets, title, description, noVspSelection, isProcessingUnmanaged, error }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
-  const onSubmitContinue = async (passphrase) => {
-    // send a continue to go to the loading state
-    onSendContinue();
-    await onProcessTickets(passphrase, vsp.host, vsp.pubkey);
-    onSendContinue();
+  const onSubmitContinue = (passphrase) => {
+    onProcessTickets(passphrase, vsp.host, vsp.pubkey)
+    .then(() => send({ type: "CONTINUE" }))
+    .catch(error => {
+      send({ type: "ERROR", error });
+    });
   };
 
   useEffect(() => {
@@ -31,12 +32,14 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        <Tooltip text={<GoBackMsg />}>
-          <div
-            className={GetStartedStyles.goBackScreenButton}
-            onClick={cancel}
-          />
-        </Tooltip>
+        { isProcessingUnmanaged &&
+          <Tooltip text={<GoBackMsg />}>
+            <div
+              className={GetStartedStyles.goBackScreenButton}
+              onClick={cancel}
+            />
+          </Tooltip>
+        }
       </div>
       <Subtitle
         className={styles.subtitle}
@@ -50,6 +53,9 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
           {...{ onChange: setVSP }}
         />
       }
+      {
+        error && <div className="error">{error}</div>
+      }
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
           modalTitle={
@@ -58,9 +64,16 @@ export default ({ cancel, onSendContinue, onProcessTickets, title, description, 
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.unmangedTickets.button" m="Continue" />}
-          disabled={!isValid}>
-
-        </PassphraseModalButton>
+          disabled={!isValid || isProcessingUnmanaged}
+          loading={isProcessingUnmanaged}/>
+          { !isProcessingUnmanaged &&
+            <InvisibleButton className={styles.skipButton} onClick={cancel}>
+              <T
+                id="process.unmanagedTickets.button.skip"
+                m="Skip"
+              />
+            </InvisibleButton>
+          }
       </div>
     </div>
   );

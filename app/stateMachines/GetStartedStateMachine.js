@@ -344,7 +344,13 @@ export const getStartedMachine = Machine({
       },
       on: {
         BACK: "processingUnmanagedTickets",
-        CONTINUE: "isLoadingConfig"
+        CONTINUE: "processingUnmanagedTickets",
+        ERROR: {
+          target: "processingManagedTickets",
+          actions: assign({
+            error: (context, event) => event.error && event.error
+          })
+        }
       }
     },
     processingUnmanagedTickets: {
@@ -354,8 +360,14 @@ export const getStartedMachine = Machine({
         processingUnmanagedTickets: {}
       },
       on: {
-        CONTINUE: "isLoadingConfig",
-        BACK: "goToHomeView"
+        CONTINUE: "goToHomeView",
+        BACK: "goToHomeView",
+        ERROR: {
+          target: "processingUnmanagedTickets",
+          actions: assign({
+            error: (context, event) => event.error && event.error
+          })
+        }
       }
     },
     isLoadingConfig: {

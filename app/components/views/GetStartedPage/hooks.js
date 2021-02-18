@@ -60,7 +60,9 @@ export const useGetStarted = () => {
     getCoinjoinOutputspByAcct,
     onProcessUnmanagedTickets,
     onProcessManagedTickets,
-    stakeTransactions
+    stakeTransactions,
+    isProcessingManaged,
+    isProcessingUnmanaged
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
@@ -661,8 +663,12 @@ export const useGetStarted = () => {
       }
       if (key === "processingUnmanagedTickets") {
         PageComponent = h(ProcessUnmanagedTickets, {
+          error,
+          send,
           onSendContinue,
+          onSendError,
           onProcessTickets: onProcessUnmanagedTickets,
+          isProcessingUnmanaged: isProcessingUnmanaged,
           cancel: onSendBack,
           title: (
             <T
@@ -684,6 +690,7 @@ export const useGetStarted = () => {
         PageComponent = h(ProcessManagedTickets, {
           error,
           onSendContinue,
+          onSendError,
           send,
           cancel: onSendBack,
           onProcessTickets: onProcessManagedTickets,
@@ -693,13 +700,15 @@ export const useGetStarted = () => {
               m="Process Managed Tickets"
             />
           ),
+          isProcessingManaged: isProcessingManaged,
           noVspSelection: true,
           description: (
             <T
               id="getstarted.processManagedTickets.description"
               m={`Your wallet appears to have live tickets. Processing managed
             tickets confirms with the VSPs that all of your submitted tickets
-            are currently known and paid for by the VSPs.`}
+            are currently known and paid for by the VSPs. If you've already 
+            confirmed your tickets then you may skip this step.`}
             />
           )
         });
@@ -750,7 +759,9 @@ export const useGetStarted = () => {
       daemonWarning,
       onProcessUnmanagedTickets,
       onProcessManagedTickets,
-      send
+      send,
+      isProcessingManaged,
+      isProcessingUnmanaged
     ]
   );
 
