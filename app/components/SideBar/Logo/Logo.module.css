@@ -36,7 +36,9 @@
   background-image: var(--menu-mixer-icon);
   background-size: 16px 16px;
   cursor: pointer;
-  animation: spin 1s linear infinite;
+  /* XXX Need a different animation method due to performance of this
+   animation: spin 1s linear infinite; 
+  */
 }
 
 @keyframes spin {

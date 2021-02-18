@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
 import { Balance, TransitionMotionWrapper } from "shared";
 import { SendTransactionButton } from "buttons";
-import { UnsignedTx } from "shared";
+import { UnsignedTx, Tooltip } from "shared";
 
 const wrapperComponent = (props) => <div {...props} />;
 
@@ -25,7 +25,8 @@ const Form = ({
   insuficientFunds,
   styles,
   hideDetails,
-  sendButtonLabel
+  sendButtonLabel,
+  getRunningIndicator
 }) => (
   <>
     <div className={classNames(styles.sendArea, styles.isRow)}>
@@ -66,6 +67,19 @@ const Form = ({
         </div>
       )}
       {((isTrezor && isWatchingOnly) || !isWatchingOnly) && (
+        getRunningIndicator ?
+        <Tooltip
+          text={
+            <T
+              id="send.indicator.running"
+              m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before sending a transaction."
+            />
+          }>
+          <SendTransactionButton
+            disabled={true}
+            buttonLabel={sendButtonLabel}/>
+        </Tooltip>
+        :
         <SendTransactionButton
           disabled={!isValid()}
           showModal={showPassphraseModal}

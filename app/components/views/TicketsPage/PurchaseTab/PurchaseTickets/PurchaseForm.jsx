@@ -1,8 +1,8 @@
 import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
-import { classNames, Checkbox, Tooltip } from "pi-ui";
+import { Balance, Tooltip } from "shared";
+import { classNames, Checkbox } from "pi-ui";
 import styles from "../PurchaseTab.module.css";
 
 import "style/StakePool.less";
@@ -29,7 +29,8 @@ const PurchaseTicketsForm = ({
   isLoading,
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
-  notMixedAccounts
+  notMixedAccounts,
+  getRunningIndicator
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, "is-row")}>
@@ -145,10 +146,20 @@ const PurchaseTicketsForm = ({
           {purchaseLabel()}
         </KeyBlueButton>
       ) : isLoading ? (
-        <KeyBlueButton disabled={true}>
-          <T id="tickets.purchase.loading" m="Loading" />
-        </KeyBlueButton>
+        <KeyBlueButton disabled={true} loading={true}/>
       ) : (
+        getRunningIndicator ?
+        <Tooltip
+          text={
+            <T
+              id="tickets.purchase.running"
+              m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
+            />
+          }>
+          <PassphraseModalButton
+            disabled={true}
+            buttonLabel={purchaseLabel()}/>
+        </Tooltip> :
         <PassphraseModalButton
           modalTitle={
             <T

@@ -109,6 +109,7 @@ export function PurchasePage({
   notMixedAccounts,
   isVSPListingEnabled,
   onEnableVSPListing,
+  getRunningIndicator,
   ...props
 }) {
   return (
@@ -151,7 +152,8 @@ export function PurchasePage({
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            onRevokeTickets
+            onRevokeTickets,
+            getRunningIndicator
           }}
         />
       )}

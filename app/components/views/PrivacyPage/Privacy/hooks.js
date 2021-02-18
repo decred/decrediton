@@ -76,6 +76,8 @@ export function usePrivacy() {
       .catch((err) => err);
   };
 
+  const getRunningIndicator = useSelector(sel.getRunningIndicator);
+
   return {
     stopAccountMixer,
     accountMixerRunning,
@@ -92,6 +94,7 @@ export function usePrivacy() {
     toggleAllowSendFromUnmixed,
     mixedAccountSpendableBalance,
     changeAccountSpendableBalance,
-    defaultSpendingAccountDisregardMixedAccount
+    defaultSpendingAccountDisregardMixedAccount,
+    getRunningIndicator
   };
 }

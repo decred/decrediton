@@ -41,6 +41,7 @@ export function useSendTransaction() {
   const onGetNextAddressAttempt = (account) =>
     dispatch(ca.getNextAddressAttempt(account));
 
+  const getRunningIndicator = useSelector(sel.getRunningIndicator);
   return {
     defaultSpendingAccount,
     unsignedTransaction,
@@ -59,7 +60,8 @@ export function useSendTransaction() {
     attemptConstructTransaction,
     validateAddress,
     onClearTransaction,
-    onGetNextAddressAttempt
+    onGetNextAddressAttempt,
+    getRunningIndicator
   };
 }
 

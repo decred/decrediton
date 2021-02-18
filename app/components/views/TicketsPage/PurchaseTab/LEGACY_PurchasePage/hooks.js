@@ -16,6 +16,7 @@ export function useLegacyPurchasePage(toggleShowVsp) {
   const isSavingStakePoolConfig = useSelector(sel.isSavingStakePoolConfig);
   const isImportingScript = useSelector(sel.isImportingScript);
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
+  const getRunningIndicator = useSelector(sel.getRunningIndicator);
 
   const dispatch = useDispatch();
 
@@ -204,6 +205,7 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     onEnableTicketAutoBuyer,
     onDisableTicketAutoBuyer,
     isTicketAutoBuyerEnabled,
-    notMixedAccounts
+    notMixedAccounts,
+    getRunningIndicator
   };
 }

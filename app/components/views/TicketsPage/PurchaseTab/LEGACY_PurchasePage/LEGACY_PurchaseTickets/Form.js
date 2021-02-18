@@ -11,7 +11,8 @@ import {
   TransitionMotionWrapper,
   ShowWarning,
   ExternalLink,
-  Balance
+  Balance,
+  Tooltip
 } from "shared";
 
 import "style/StakePool.less";
@@ -40,7 +41,8 @@ const PurchaseTicketsForm = ({
   dismissBackupRedeemScript,
   onDismissBackupRedeemScript,
   isWatchingOnly,
-  notMixedAccounts
+  notMixedAccounts,
+  getRunningIndicator
 }) => (
   <>
     <div className="purchase-ticket-area-row is-row">
@@ -174,17 +176,29 @@ const PurchaseTicketsForm = ({
           {purchaseLabel()}
         </KeyBlueButton>
       ) : (
-        <PassphraseModalButton
-          modalTitle={
-            <T
-              id="tickets.purchaseConfirmation.legacy"
-              m="Ticket Purchase Confirmation"
-            />
-          }
-          disabled={getIsValid && !getIsValid()}
-          onSubmit={onPurchaseTickets}
-          buttonLabel={purchaseLabel()}
-        />
+        getRunningIndicator ?
+          <Tooltip
+            text={
+              <T
+                id="tickets.purchase-legacy.running"
+                m="Privacy Mixer or Autobuyer running, please shut them off before purchasing tickets."
+              />
+            }>
+            <PassphraseModalButton
+            disabled={true}
+            buttonLabel={purchaseLabel()}/>
+          </Tooltip> :
+          <KeyBlueButton
+            modalTitle={
+              <T
+                id="tickets.purchaseConfirmation.legacy"
+                m="Ticket Purchase Confirmation"
+              />
+            }
+            disabled={getIsValid && !getIsValid()}
+            onSubmit={onPurchaseTickets}
+            buttonLabel={purchaseLabel()}
+          />
       )}
     </div>
   </>
