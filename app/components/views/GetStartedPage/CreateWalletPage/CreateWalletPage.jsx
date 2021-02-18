@@ -76,7 +76,7 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     if (!seed || !passPhrase) return setIsValid(false);
     if (seed.length === 0) return setIsValid(false);
     if (passPhrase.length === 0) return setIsValid(false);
-    if (error !== "") return setIsValid(false);
+    if (error) return setIsValid(false);
 
     return setIsValid(true);
   }, [setIsValid, current.context]);
