@@ -584,9 +584,11 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         if (error.indexOf(
           "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
         )) {
-          return reject("Invalid private passphrase, please try again.");
+           reject("Invalid private passphrase, please try again.");
+           return;
         }
-        return reject(error);
+        reject(error);
+        return;
       }
     };
 

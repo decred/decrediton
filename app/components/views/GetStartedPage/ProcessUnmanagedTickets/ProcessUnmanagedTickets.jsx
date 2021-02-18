@@ -3,7 +3,7 @@ import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
 import GetStartedStyles from "../GetStarted.module.css";
 import { useState } from "react";
-import { PassphraseModalButton } from "buttons";
+import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
 import { useEffect } from "react";
 import { VSPSelect } from "inputs";
@@ -11,8 +11,8 @@ import { VSPSelect } from "inputs";
 export default ({ cancel, send, onProcessTickets, title, description, noVspSelection, isProcessingUnmanaged, error }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
-  const onSubmitContinue = (passphrase) => {
-    return onProcessTickets(passphrase, vsp.host, vsp.pubkey)
+  const onSubmitContinue = async (passphrase) => {
+    await onProcessTickets(passphrase, vsp.host, vsp.pubkey)
     .then(() => send({ type: "CONTINUE" }))
     .catch(error => {
       send({ type: "ERROR", error });
