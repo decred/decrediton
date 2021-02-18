@@ -8,7 +8,7 @@ import {
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT
 } from "constants/Decrediton";
-import styles from "./TransactionPage.module.css";
+import styles from "./TransactionContent.module.css";
 import { classNames } from "pi-ui";
 
 function mapNonWalletOutput(output) {
@@ -33,7 +33,7 @@ function mapNonWalletInput(input) {
   return { address, amount };
 }
 
-const TransactionPageContent = ({
+const TransactionContent = ({
   transactionDetails,
   decodedTransaction,
   abandonTransaction,
@@ -290,4 +290,4 @@ const TransactionPageContent = ({
   );
 };
 
-export default TransactionPageContent;
+export default TransactionContent;

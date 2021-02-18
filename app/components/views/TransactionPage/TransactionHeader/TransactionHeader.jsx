@@ -17,7 +17,7 @@ import { StandaloneHeader } from "layout";
 import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ClientActions";
 import * as sel from "selectors";
-import styles from "./TransactionPage.module.css";
+import styles from "./TransactionHeader.module.css";
 
 const messages = defineMessages({
   [TICKET]: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
@@ -179,7 +179,7 @@ const subtitle = ({
   }
 };
 
-const TransactionPageHeader = ({
+const TransactionHeader = ({
   txType,
   txAmount,
   isPending,
@@ -219,4 +219,4 @@ const TransactionPageHeader = ({
   );
 };
 
-export default injectIntl(TransactionPageHeader);
+export default injectIntl(TransactionHeader);

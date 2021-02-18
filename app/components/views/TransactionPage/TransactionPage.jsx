@@ -1,5 +1,5 @@
-import TransactionContent from "./TransactionPageContent";
-import TransactionHeader from "./TransactionPageHeader";
+import TransactionContent from "./TransactionContent/TransactionContent";
+import TransactionHeader from "./TransactionHeader/TransactionHeader";
 import { useParams } from "react-router-dom";
 import { DecredLoading } from "indicators";
 import { StandalonePage } from "layout";
