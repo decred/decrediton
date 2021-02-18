@@ -652,10 +652,18 @@ export const SETVSPDVOTECHOICE_FAILED = "SETVSPDVOTECHOICE_FAILED";
 // setVSPDVoteChoices gets all vsps and updates the set vote choices to
 // whatever the wallet has.
 export const setVSPDVoteChoices = (passphrase) => async (dispatch, getState) => {
-  dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
+  const availableVSPs = await dispatch(discoverAvailableVSPs());
+  availableVSPs.map(async (vsp) => {
+    const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+    if (pubkey) {
+      vsp.pubkey = pubkey;
+      return vsp;
+    }
+    return false;
+  });
   try {
+    dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
     const walletService = sel.walletService(getState());
-    const availableVSPs = await dispatch(discoverAvailableVSPs());
     let feeAccount, changeAccount;
     const mixedAccount = sel.getMixedAccount(getState());
     if (mixedAccount) {
@@ -668,10 +676,9 @@ export const setVSPDVoteChoices = (passphrase) => async (dispatch, getState) => 
 
     await wallet.unlockWallet(walletService, passphrase);
     await Promise.all(availableVSPs.map(async (vsp) => {
-      if (!vsp.host.includes("stakey")) {
-        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+      if (vsp.pubkey) {
         await wallet.setVspdAgendaChoices(
-          walletService, vsp.host, pubkey, feeAccount, changeAccount
+          walletService, vsp.host, vsp.pubkey, feeAccount, changeAccount
         );
       }
     }));
