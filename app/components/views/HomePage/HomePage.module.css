@@ -104,8 +104,10 @@
 .tabsContent {
   width: 100%;
 }
-.tabsWrapper {
-  height: 250px;
+
+.tabs {
+  top: -55px;
+  right: 50px;
 }
 
 @media screen and (max-width: 1179px) {

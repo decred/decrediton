@@ -1,36 +1,33 @@
 import styles from "./TabsHeader.module.css";
 import { Tabs, Tab, classNames } from "pi-ui";
 
-const TabsHeader = ({ tabs, setActiveTabIndex, activeTabIndex, tabsWrapperClassName, contentClassName }) => {
+const TabsHeader = ({
+  tabs,
+  setActiveTabIndex,
+  activeTabIndex,
+  className,
+  contentClassName
+}) => {
   return (
     <div className={styles.tabsContainer}>
-      <div
-        className={classNames(
-          styles.tabsWrapper,
-          tabsWrapperClassName && tabsWrapperClassName
-        )}>
+      <div className={styles.tabsWrapper}>
         <Tabs
           activeTabIndex={activeTabIndex}
           onSelectTab={setActiveTabIndex}
-          contentClassName={classNames(
-            styles.tabsContent,
-            contentClassName && contentClassName
-          )}
-          className={styles.tabs}>
-          {tabs.map((tab, index) => {
-            return (
-              <Tab
-                label={tab.label}
-                key={index}
-                className={classNames(
-                  styles.tab,
-                  tab.icon,
-                  activeTabIndex === index ? styles.active : styles.inactive
-                )}>
-                {tab.component}
-              </Tab>
-            );
-          })}
+          contentClassName={classNames(styles.tabsContent, contentClassName)}
+          className={classNames(styles.tabs, className)}>
+          {tabs.map((tab, index) => (
+            <Tab
+              label={tab.label}
+              key={index}
+              className={classNames(
+                styles.tab,
+                tab.icon,
+                activeTabIndex === index ? styles.active : styles.inactive
+              )}>
+              {tab.component}
+            </Tab>
+          ))}
         </Tabs>
       </div>
     </div>
