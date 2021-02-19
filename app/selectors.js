@@ -864,6 +864,8 @@ export const homeHistoryTransactions = createSelector(
 export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
 export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
 
+export const isSyncingTickets =  get(["vsp", "syncVSPRequestAttempt"]);
+
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
 export const buyerVSP = get(["vsp", "vsp"]);
