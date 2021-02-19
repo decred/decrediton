@@ -7,12 +7,12 @@ import {
 } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import {
   TransitionMotionWrapper,
   ShowWarning,
   ExternalLink,
-  Balance,
-  Tooltip
+  Balance
 } from "shared";
 
 import "style/StakePool.less";
@@ -180,7 +180,7 @@ const PurchaseTicketsForm = ({
         </KeyBlueButton>
       ) : getRunningIndicator ? (
         <Tooltip
-          text={
+          content={
             <T
               id="tickets.purchase-legacy.running"
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing tickets."

@@ -149,7 +149,7 @@ const PurchaseTicketsForm = ({
         <KeyBlueButton disabled={true} loading={true} />
       ) : getRunningIndicator ? (
         <Tooltip
-          text={
+          content={
             <T
               id="tickets.purchase.running"
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."

@@ -69,7 +69,7 @@ const Form = ({
       {((isTrezor && isWatchingOnly) || !isWatchingOnly) &&
         (getRunningIndicator ? (
           <Tooltip
-            text={
+            content={
               <T
                 id="send.indicator.running"
                 m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before sending a transaction."

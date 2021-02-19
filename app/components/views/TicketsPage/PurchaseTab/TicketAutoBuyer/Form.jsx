@@ -1,7 +1,8 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
-import { Balance, Subtitle, Tooltip } from "shared";
+import { Balance, Subtitle } from "shared";
 import styles from "../PurchaseTab.module.css";
 
 const TicketAutoBuyerForm = ({
@@ -32,7 +33,7 @@ const TicketAutoBuyerForm = ({
           <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
         ) : getRunningIndicator ? (
           <Tooltip
-            text={
+            content={
               <T
                 id="tickets.autobuyer.running"
                 m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before starting autobuyer."

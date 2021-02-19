@@ -36,7 +36,7 @@ const StakePoolStats = () => {
         </div>
         <div className={styles.myTicketsStakepoolStatsRow}>
           <Tooltip
-            text={
+            content={
               <T
                 id="mytickets.statistics.stakepool.ticketsTip"
                 m="{percentage}% proportion of network tickets"
@@ -64,7 +64,7 @@ const StakePoolStats = () => {
         </div>
         <div className={styles.myTicketsStakepoolStatsRow}>
           <Tooltip
-            text={
+            content={
               <T
                 id="mytickets.statistics.stakepool.votedTip"
                 m="{percentage}% of tickets missed"
