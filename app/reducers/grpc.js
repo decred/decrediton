@@ -98,6 +98,7 @@ import {
   CHANGE_TRANSACTIONS_FILTER
 } from "actions/TransactionActions";
 import { GETVSPTICKETSTATUS_SUCCESS } from "actions/VSPActions";
+import { SETVSPDVOTECHOICE_FAILED } from "../actions/VSPActions";
 
 export default function grpc(state = {}, action) {
   let newMaturingBlockHeights;
@@ -596,6 +597,11 @@ export default function grpc(state = {}, action) {
         ...state,
         setVoteChoicesError: null,
         setVoteChoicesRequestAttempt: true
+      };
+    case SETVSPDVOTECHOICE_FAILED:
+      return {
+        ...state,
+        setVoteChoicesRequestAttempt: false
       };
     case SETVOTECHOICES_FAILED:
       return {
