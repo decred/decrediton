@@ -6,11 +6,12 @@ const TabsHeader = ({
   setActiveTabIndex,
   activeTabIndex,
   className,
-  contentClassName
+  contentClassName,
+  wrapperClassName
 }) => {
   return (
     <div className={styles.tabsContainer}>
-      <div className={styles.tabsWrapper}>
+      <div className={classNames(styles.tabsWrapper, wrapperClassName)}>
         <Tabs
           activeTabIndex={activeTabIndex}
           onSelectTab={setActiveTabIndex}
