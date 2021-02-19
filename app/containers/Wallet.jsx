@@ -30,10 +30,7 @@ const pageAnimation = {
 };
 
 const Wallet = ({ setInterval }) => {
-  const {
-    getPeerInfo,
-    expandSideBar
-  } = useWallet();
+  const { getPeerInfo, expandSideBar } = useWallet();
 
   const { uiAnimations } = useTheming();
 

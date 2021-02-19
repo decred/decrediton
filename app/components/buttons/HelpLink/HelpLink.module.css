@@ -95,13 +95,13 @@
 
 @media screen and (max-width: 1179px) {
   .icon {
-    margin-right:10px;
-    margin-bottom:10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .icon{
+  .icon {
     margin-right: 0;
     width: 355px;
   }

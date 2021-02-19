@@ -33,7 +33,7 @@
   box-shadow: 0 3px 8px rgba(12, 30, 62, 0.21);
   transition: all 200ms ease-in-out;
 }
-  
+
 .knobEnabled {
   background-color: var(--input-color);
 }

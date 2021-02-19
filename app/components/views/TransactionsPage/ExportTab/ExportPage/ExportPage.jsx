@@ -57,12 +57,15 @@ const ExportPage = ({
         )}
         onClick={expandFields}>
         <div
-          className={expanded ?
-            classNames(styles.verticalExpand, styles.expanded) :
-            styles.verticalExpand
+          className={
+            expanded
+              ? classNames(styles.verticalExpand, styles.expanded)
+              : styles.verticalExpand
           }
         />
-        <p className={styles.exportInfoDescription}>{selectedExport.description}</p>
+        <p className={styles.exportInfoDescription}>
+          {selectedExport.description}
+        </p>
         <T id="export.infoFieldsHeader" m="Exported Fields" />
         :&nbsp;
         {expanded ? (

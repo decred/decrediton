@@ -49,7 +49,7 @@ const AccountsPage = () => {
           {...{ isCreateAccountDisabled, onGetNextAccountAttempt }}
         />
       }>
-      <AccountsList/>
+      <AccountsList />
     </StandalonePage>
   );
 };

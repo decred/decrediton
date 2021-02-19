@@ -9,23 +9,36 @@ export function useAccounts() {
   const accounts = useSelector(sel.sortedAccounts);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
-  const nextAccountRequestAttempt = useSelector(sel.getNextAccountRequestAttempt);
-  const renameAccountRequestAttempt = useSelector(sel.renameAccountRequestAttempt);
-  const isLoading = nextAccountRequestAttempt ||  renameAccountRequestAttempt;
+  const nextAccountRequestAttempt = useSelector(
+    sel.getNextAccountRequestAttempt
+  );
+  const renameAccountRequestAttempt = useSelector(
+    sel.renameAccountRequestAttempt
+  );
+  const isLoading = nextAccountRequestAttempt || renameAccountRequestAttempt;
   const accountExtendedKey = useSelector(sel.accountExtendedKey);
   const walletName = useSelector(sel.getWalletName);
   const hasTickets = useSelector(sel.hasTickets);
 
   const dispatch = useDispatch();
 
-  const onRenameAccount = useCallback((accountNumber, accountName) =>
-    dispatch(ca.renameAccountAttempt(accountNumber, accountName)), [dispatch]);
-  const onHideAccount = useCallback((accountNumber) =>
-    dispatch(cla.hideAccount(accountNumber)), [dispatch]);
-  const onShowAccount = useCallback((accountNumber) =>
-    dispatch(cla.showAccount(accountNumber)), [dispatch]);
-  const onGetAccountExtendedKey = useCallback((accountNumber) =>
-    dispatch(ca.getAccountExtendedKeyAttempt(accountNumber)), [dispatch]);
+  const onRenameAccount = useCallback(
+    (accountNumber, accountName) =>
+      dispatch(ca.renameAccountAttempt(accountNumber, accountName)),
+    [dispatch]
+  );
+  const onHideAccount = useCallback(
+    (accountNumber) => dispatch(cla.hideAccount(accountNumber)),
+    [dispatch]
+  );
+  const onShowAccount = useCallback(
+    (accountNumber) => dispatch(cla.showAccount(accountNumber)),
+    [dispatch]
+  );
+  const onGetAccountExtendedKey = useCallback(
+    (accountNumber) => dispatch(ca.getAccountExtendedKeyAttempt(accountNumber)),
+    [dispatch]
+  );
 
   return {
     walletService,

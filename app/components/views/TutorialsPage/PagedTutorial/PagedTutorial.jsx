@@ -28,7 +28,10 @@ const PagedTutorial = ({ title, pages }) => {
 
   return (
     <>
-      <InvisibleButton className={styles.closeButton} onClick={onGoBackHistory} />
+      <InvisibleButton
+        className={styles.closeButton}
+        onClick={onGoBackHistory}
+      />
       <div className={styles.title}>{title}</div>
       <div className={styles.subtitle}>
         <T id="tutorial.subtitle" m="Tutorial" />
@@ -45,7 +48,6 @@ const PagedTutorial = ({ title, pages }) => {
       </div>
     </>
   );
-
 };
 
 export default PagedTutorial;

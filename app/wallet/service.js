@@ -304,8 +304,11 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
     let decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
     // if scriptClass equals NullDataTy (which is 0) && i&1 == 1
     // extract address from SStxPkScrCommitment script.
-    if (decodedScript.scriptClass === 0 && i&1 === 1) {
-      const { error, address } = addrFromSStxPkScrCommitment(o.script, chainParams);
+    if (decodedScript.scriptClass === 0 && i & (1 === 1)) {
+      const { error, address } = addrFromSStxPkScrCommitment(
+        o.script,
+        chainParams
+      );
       if (!error && address) {
         decodedScript = {
           address,
@@ -324,27 +327,34 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
 };
 
 // getSstxCommitmentAddress gets a sstx commitiment address from a ticket.
-export const getSstxCommitmentAddress = (walletService, chainParams, ticketHash) => new Promise((resolve, reject) => {
-  if (!chainParams) {
-    throw new Error("chainParams can not be undefined");
-  }
-  let address;
-  getTransaction(walletService, ticketHash).then(tx => {
-    const { rawTx } = tx;
-    const bufferRawTx = Buffer.from(hexToBytes(rawTx));
-    const decodedTx = decodeHelper(bufferRawTx);
-    decodedTx.outputs = decodedTx.outputs.map((o, i) => {
-      const decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
-      // if scriptClass equals NullDataTy (which is 0) && i&1 == 1
-      // extract address from SStxPkScrCommitment script.
-      if (decodedScript.scriptClass === 0 && i&1 === 1) {
-        address = addrFromSStxPkScrCommitment(o.script, chainParams);
-        resolve(address);
-      }
-      return;
-    });
-  }).catch(error => reject(error));
-});
+export const getSstxCommitmentAddress = (
+  walletService,
+  chainParams,
+  ticketHash
+) =>
+  new Promise((resolve, reject) => {
+    if (!chainParams) {
+      throw new Error("chainParams can not be undefined");
+    }
+    let address;
+    getTransaction(walletService, ticketHash)
+      .then((tx) => {
+        const { rawTx } = tx;
+        const bufferRawTx = Buffer.from(hexToBytes(rawTx));
+        const decodedTx = decodeHelper(bufferRawTx);
+        decodedTx.outputs = decodedTx.outputs.map((o, i) => {
+          const decodedScript = extractPkScriptAddrs(0, o.script, chainParams);
+          // if scriptClass equals NullDataTy (which is 0) && i&1 == 1
+          // extract address from SStxPkScrCommitment script.
+          if (decodedScript.scriptClass === 0 && i & (1 === 1)) {
+            address = addrFromSStxPkScrCommitment(o.script, chainParams);
+            resolve(address);
+          }
+          return;
+        });
+      })
+      .catch((error) => reject(error));
+  });
 
 // calculateHashFromEncodedTx calculates a hash from a decoded tx prefix.
 export const calculateHashFromDecodedTx = (decodedTx) => {
@@ -354,11 +364,7 @@ export const calculateHashFromDecodedTx = (decodedTx) => {
 };
 
 export const listUnspentOutputs = withLogNoData(
-  (
-    walletService,
-    accountNum,
-    dataCb
-  ) =>
+  (walletService, accountNum, dataCb) =>
     new Promise((resolve, reject) => {
       const request = new api.UnspentOutputsRequest();
       request.setAccount(accountNum);

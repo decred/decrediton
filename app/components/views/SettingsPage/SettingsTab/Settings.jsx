@@ -6,10 +6,7 @@ import {
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import {
-  KeyBlueButton,
-  ResetNetworkButton
-} from "buttons";
+import { KeyBlueButton, ResetNetworkButton } from "buttons";
 import { getGlobalCfg } from "config";
 import NetworkSettings from "./NetworkSettings";
 import ProxySettings from "./ProxySettings";

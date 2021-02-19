@@ -45,13 +45,13 @@ const ChannelStatus = ({ localBalance, remoteBalance }) => {
   const localStyle = {
     border: "3px solid var(--cyan-bold)",
     borderRadius: "5px 0 0 5px",
-    width: `${localBalance*100/totalBalance}%`
+    width: `${(localBalance * 100) / totalBalance}%`
   };
 
   const remoteStyle = {
     border: "3px solid var(--link-color)",
     borderRadius: "0 5px 5px 0",
-    width: `${remoteBalance*100/totalBalance}%`,
+    width: `${(remoteBalance * 100) / totalBalance}%`,
     right: "2em",
     posisiton: "absolute"
   };
@@ -64,24 +64,21 @@ const ChannelStatus = ({ localBalance, remoteBalance }) => {
     separator.display = "none";
     localStyle.display = "none";
     remoteStyle.borderRadius = "5px";
-  };
+  }
   if (remoteBalance === 0) {
     separator.display = "none";
     remoteStyle.display = "none";
     localStyle.borderRadius = "5px";
-  };
+  }
 
-  return (<div className={styles.channelStatusWrapper}>
-    <div style={localStyle}>
+  return (
+    <div className={styles.channelStatusWrapper}>
+      <div style={localStyle}></div>
+      <div style={separator}></div>
+      <div style={remoteStyle}></div>
     </div>
-    <div style={separator}>
-    </div>
-    <div style={remoteStyle}>
-    </div>
-  </div>
   );
 };
-
 
 export const OpenChannelDetails = ({ channel }) => (
   <div className={styles.channelDetails}>
@@ -106,7 +103,11 @@ export const OpenChannelDetails = ({ channel }) => (
     <span>
       <T id="ln.openChannelDetails.remotePubKey" m="Remote PubKey" />
     </span>
-    <span><CopyableText id="copyable" className={styles.copyableText}>{channel.remotePubkey}</CopyableText></span>
+    <span>
+      <CopyableText id="copyable" className={styles.copyableText}>
+        {channel.remotePubkey}
+      </CopyableText>
+    </span>
     <T id="ln.openChannelDetails.numUpdates" m="Number of Updates" />
     <span>{channel.numUpdates}</span>
     <T id="ln.openChannelDetails.localChannelReserve" m="Local Reserve" />
@@ -146,6 +147,7 @@ export default ({ channel }) => (
     <div className={styles.remotePubkey}>{channel.channelPoint}</div>
     <ChannelStatus
       localBalance={channel.localBalance}
-      remoteBalance={channel.remoteBalance} />
+      remoteBalance={channel.remoteBalance}
+    />
   </div>
 );

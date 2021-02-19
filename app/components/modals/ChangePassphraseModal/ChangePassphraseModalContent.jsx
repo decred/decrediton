@@ -49,9 +49,7 @@ const Modal = ({
         ariaLabelledBy="confirm-passphrase-input"
       />
     </PassphraseModalField>
-    {
-      error && <div className="error">{error}</div>
-    }
+    {error && <div className="error">{error}</div>}
   </PassphraseModal>
 );
 

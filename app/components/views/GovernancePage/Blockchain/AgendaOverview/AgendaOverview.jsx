@@ -19,7 +19,7 @@ const AgendaOverview = ({
     }
   }, [selectedChoice, selectedChoiceId]);
 
-  const updatePreferences =  async (passphrase) => {
+  const updatePreferences = async (passphrase) => {
     await onUpdateVotePreference(agenda.name, selectedChoiceId, passphrase);
   };
 

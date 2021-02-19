@@ -12,7 +12,6 @@ const DiscoverAccounts = ({ onSendSetPassphrase }) => {
     onSendSetPassphrase(passPhrase);
   }, [onSendSetPassphrase, passPhrase]);
 
-
   const onKeyDown = useCallback(
     (e) => {
       if (e.keyCode == 13) {

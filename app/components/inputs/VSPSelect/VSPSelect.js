@@ -16,13 +16,15 @@ const messages = defineMessages({
 const getError = (error) => {
   if (error.isTimeout) {
     const { vspHost } = error;
-    return <T
-      id="vsp.select.error"
-      m="Timeout with vsp: {vsp}"
-      values={{
-        vsp: vspHost
-      }}
-    />;
+    return (
+      <T
+        id="vsp.select.error"
+        m="Timeout with vsp: {vsp}"
+        values={{
+          vsp: vspHost
+        }}
+      />
+    );
   }
 
   return String(error);

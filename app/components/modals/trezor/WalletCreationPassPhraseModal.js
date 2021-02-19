@@ -60,16 +60,15 @@ class TrezorWalletCreationPassphraseModal extends React.Component {
       passphraseConfirmValue
     } = this.state;
 
-    const trezorLabel = this.props.device
-      ? this.props.deviceLabel
-      : "";
+    const trezorLabel = this.props.device ? this.props.deviceLabel : "";
 
     const className = [
       "trezor-passphrase-modal",
       this.props.isGetStarted ? "get-started" : ""
     ].join(" ");
 
-    const isValid = passphraseValue === passphraseConfirmValue && !!passphraseValue;
+    const isValid =
+      passphraseValue === passphraseConfirmValue && !!passphraseValue;
 
     return (
       <Modal className={className} onCancelModal={onCancelModal}>

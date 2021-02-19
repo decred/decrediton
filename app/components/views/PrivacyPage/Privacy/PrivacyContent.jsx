@@ -92,8 +92,7 @@ const PrivacyContent = ({
               <DangerButton onClick={stopAccountMixer}>
                 <T id="privacy.stop.mixer" m="Stop Mixer" />
               </DangerButton>
-            ) : (
-              getRunningIndicator ?
+            ) : getRunningIndicator ? (
               <Tooltip
                 text={
                   <T
@@ -104,9 +103,10 @@ const PrivacyContent = ({
                 <MixerPassphraseModalSwitch
                   className={style.startMixerButton}
                   disabled={true}
-                  buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}/>
+                  buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
+                />
               </Tooltip>
-              :
+            ) : (
               <MixerPassphraseModalSwitch
                 modalTitle={
                   <T id="privacy.start.mixer.confirmation" m="Start Mixer" />

@@ -77,7 +77,6 @@ const PreCreateWallet = ({
     setIsWatchingOnly(false);
   }, [isTrezor, trezorEnable, trezorDisable]);
 
-
   const createWallet = useCallback(() => {
     const isNew = isCreateNewWallet;
     const walletSelected = {
@@ -139,7 +138,6 @@ const PreCreateWallet = ({
     walletMasterPubKey,
     walletNameError
   ]);
-
 
   const onChangeCreateWalletMasterPubKey = useCallback(
     async (walletMasterPubKey) => {

@@ -11,6 +11,5 @@ export default function configureStore(initialState: Object, history: Object) {
   rootReducer.router = routing;
   const routingReducer = combineReducers(rootReducer);
 
-
   return createStore(routingReducer, initialState, enhancer);
 }

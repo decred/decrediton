@@ -22,7 +22,6 @@ import { initTransport } from "actions/TrezorActions.js";
 import * as connect from "connect";
 import { rawToHex } from "helpers";
 
-
 const logger = createLogger();
 let watchingOnlyWallet;
 let dcrdIsRemote;
@@ -149,7 +148,7 @@ export const removeWallet = (testnet, walletPath) => {
 // updateTrezorFirmware attempts to make a temporary connection to a trezor
 // device and update it with the firmware at path. It returns an error string
 // in case of error and whether the update process was started at all.
-export const updateTrezorFirmware = async ( firmwarePath, model ) => {
+export const updateTrezorFirmware = async (firmwarePath, model) => {
   let started = false;
   let completed = false;
   const rawFirmware = fs.readFileSync(firmwarePath);
@@ -166,7 +165,10 @@ export const updateTrezorFirmware = async ( firmwarePath, model ) => {
     await initTransport(session, false);
     session.on(connect.UI_EVENT, (event) => {
       if (event.type == connect.UI.FIRMWARE_PROGRESS) {
-        logger.log("info", "Trezor update progress: " + event.payload.progress+"%");
+        logger.log(
+          "info",
+          "Trezor update progress: " + event.payload.progress + "%"
+        );
         // Ignore disconnect errors if completed.
         if (event.payload.progress == 100) {
           completed = true;
@@ -175,7 +177,7 @@ export const updateTrezorFirmware = async ( firmwarePath, model ) => {
     });
     started = true;
     const res = await session.firmwareUpdate({
-       binary: firmwareData
+      binary: firmwareData
     });
     if (res.payload) {
       if (res.payload.error) {

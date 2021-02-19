@@ -82,7 +82,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.detailsBottomColumnLeft, .detailsBottomColumnRight {
+.detailsBottomColumnLeft,
+.detailsBottomColumnRight {
   margin-top: 15px;
 }
 .detailsBottomTitle {
@@ -129,7 +130,10 @@
 .contentConfirmNewAccount {
   margin-right: 2em;
 }
-.renameButton, .showButton, .hideButton, .revealPubkeyButton {
+.renameButton,
+.showButton,
+.hideButton,
+.revealPubkeyButton {
   display: inline-block;
   vertical-align: middle;
   margin-right: 0.5em;
@@ -137,7 +141,7 @@
   background-position: 50% 50%;
   background-size: 16px;
   background-repeat: no-repeat;
-  box-shadow: 0px 3px 5px rgba(9,20,64,0.16);
+  box-shadow: 0px 3px 5px rgba(9, 20, 64, 0.16);
   outline: 0;
   position: relative;
   width: 20px;
@@ -166,7 +170,10 @@
 .hideButton {
   background-image: var(--hide-account-icon);
 }
-.renameButton:hover, .showButton:hover, .hideButton:hover, .revealPubkeyButton:hover {
+.renameButton:hover,
+.showButton:hover,
+.hideButton:hover,
+.revealPubkeyButton:hover {
   opacity: 0.7;
 }
 .actions {
@@ -205,7 +212,7 @@
   color: var(--input-color);
   font-size: 13px;
   line-height: 17px;
-  font-weight:N00;
+  font-weight: N00;
   padding: 2px 20px 3px 20px;
   border-radius: 3px;
   background-color: var(--background-copy-color);
@@ -224,10 +231,10 @@
   .actions.isRow {
     display: flex;
     flex-direction: column;
- }
+  }
   .actionsButtons {
     margin: 0 auto;
- }
+  }
 }
 @media screen and (max-width: 1179px) {
   .contentNest {

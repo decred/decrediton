@@ -146,9 +146,8 @@ const PurchaseTicketsForm = ({
           {purchaseLabel()}
         </KeyBlueButton>
       ) : isLoading ? (
-        <KeyBlueButton disabled={true} loading={true}/>
-      ) : (
-        getRunningIndicator ?
+        <KeyBlueButton disabled={true} loading={true} />
+      ) : getRunningIndicator ? (
         <Tooltip
           text={
             <T
@@ -158,8 +157,10 @@ const PurchaseTicketsForm = ({
           }>
           <PassphraseModalButton
             disabled={true}
-            buttonLabel={purchaseLabel()}/>
-        </Tooltip> :
+            buttonLabel={purchaseLabel()}
+          />
+        </Tooltip>
+      ) : (
         <PassphraseModalButton
           modalTitle={
             <T

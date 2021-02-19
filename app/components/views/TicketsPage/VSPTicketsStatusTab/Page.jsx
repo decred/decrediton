@@ -15,20 +15,20 @@ const subtitleMenu = ({
   selectedTicketTypeKey,
   onChangeSelectedType
 }) => (
-    <div className={style.ticketsButtons}>
-      <Tooltip
-        tipWidth={300}
-        text={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
-        <EyeFilterMenu
-          labelKey="label"
-          keyField="key"
-          options={ticketTypes}
-          selected={selectedTicketTypeKey}
-          onChange={onChangeSelectedType}
-        />
-      </Tooltip>
-    </div>
-  );
+  <div className={style.ticketsButtons}>
+    <Tooltip
+      tipWidth={300}
+      text={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
+      <EyeFilterMenu
+        labelKey="label"
+        keyField="key"
+        options={ticketTypes}
+        selected={selectedTicketTypeKey}
+        onChange={onChangeSelectedType}
+      />
+    </Tooltip>
+  </div>
+);
 
 const TicketListPage = ({
   tickets,
@@ -72,28 +72,22 @@ const TicketListPage = ({
           onChangeSortType
         })}
       />
-      {
-        hasVSPTicketsError && (
-          <PassphraseModalButton
-            {...{
-              onSubmit: onSyncVspTicketsRequest,
-              setVSP,
-              account,
-              setAccount,
-              isValid
-            }}
-            loading={isSyncingTickets}
-            disabled={!hasVSPTicketsError || isSyncingTickets}
-            modalTitle={
-              <T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />
-            }
-            modalComponent={SyncVSPFailedTickets}
-            buttonLabel={
-              <T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />
-            }
-          />
-        )
-      }
+      {hasVSPTicketsError && (
+        <PassphraseModalButton
+          {...{
+            onSubmit: onSyncVspTicketsRequest,
+            setVSP,
+            account,
+            setAccount,
+            isValid
+          }}
+          loading={isSyncingTickets}
+          disabled={!hasVSPTicketsError || isSyncingTickets}
+          modalTitle={<T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />}
+          modalComponent={SyncVSPFailedTickets}
+          buttonLabel={<T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />}
+        />
+      )}
       {tickets.length > 0 && (
         <>
           <div className={style.tableHeader}>
@@ -103,10 +97,8 @@ const TicketListPage = ({
             <div>
               <T id="vsptickets.table.header.price" m="Price" />
             </div>
-            <div>
-            </div>
-            <div>
-            </div>
+            <div></div>
+            <div></div>
             <div>
               <T id="vsptickets.table.header.account" m="Fee Status" />
             </div>
@@ -125,12 +117,12 @@ const TicketListPage = ({
         </>
       )}
       {!noMoreLiveTickets ? (
-        <LoadingMoreTicketsIndicator isLiveTickets={true}  />
+        <LoadingMoreTicketsIndicator isLiveTickets={true} />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (
-            <NoTicketsIndicator />
-          )}
+        <NoTicketsIndicator />
+      )}
     </InfiniteScroll>
   );
 };

@@ -8,19 +8,25 @@ export function useModal(onCancelModal) {
   const showingSidebarMenu = useSelector(sel.showingSidebarMenu);
   const modalRef = useRef(null);
 
-  const mouseUp = useCallback((event) => {
-    const el = modalRef.current;
-    if (eventOutsideElement(el, event.target)) {
-      onCancelModal && onCancelModal();
-    }
-  }, [onCancelModal]);
+  const mouseUp = useCallback(
+    (event) => {
+      const el = modalRef.current;
+      if (eventOutsideElement(el, event.target)) {
+        onCancelModal && onCancelModal();
+      }
+    },
+    [onCancelModal]
+  );
 
-  const onKeyDown = useCallback((event) => {
-    // 27: ESC key
-    if (event.keyCode === 27) {
-      onCancelModal && onCancelModal();
-    }
-  }, [onCancelModal]);
+  const onKeyDown = useCallback(
+    (event) => {
+      // 27: ESC key
+      if (event.keyCode === 27) {
+        onCancelModal && onCancelModal();
+      }
+    },
+    [onCancelModal]
+  );
 
   return {
     showingSidebarMenu,

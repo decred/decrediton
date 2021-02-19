@@ -40,7 +40,6 @@ const mapStateToProps = selectorMap({
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
   isAddingCustomStakePool: sel.isAddingCustomStakePool,
 
-
   // legacy ticket auto buyer selectors
   balanceToMaintain: sel.balanceToMaintain,
   isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,

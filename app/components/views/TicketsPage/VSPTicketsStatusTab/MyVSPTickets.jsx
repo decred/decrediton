@@ -11,9 +11,9 @@ import {
 import { useMountEffect } from "hooks";
 
 const labels = {
-  "vspFeeStarted": <T id="vsp.ticket.vsp.fee.started" m="Unpaid Fee" />,
-  "vspFeePaid": <T id="vsp.ticket.vsp.fee.paid" m="Paid Fee" />,
-  "vspFeeErrored": <T id="vsp.ticket.vsp.fee.errored" m="Fee Error" />
+  vspFeeStarted: <T id="vsp.ticket.vsp.fee.started" m="Unpaid Fee" />,
+  vspFeePaid: <T id="vsp.ticket.vsp.fee.paid" m="Paid Fee" />,
+  vspFeeErrored: <T id="vsp.ticket.vsp.fee.errored" m="Fee Error" />
 };
 
 const ticketTypes = [
@@ -23,10 +23,10 @@ const ticketTypes = [
     label: <T id="vsptickets.type.all" m="All" />
   },
   // VSPFeeProcessStarted FeeStatus = iota
-	// // VSPFeeProcessPaid represents the state where the process has being
-	// // paid, but not published.
-	// VSPFeeProcessPaid
-	// VSPFeeProcessErrored
+  // // VSPFeeProcessPaid represents the state where the process has being
+  // // paid, but not published.
+  // VSPFeeProcessPaid
+  // VSPFeeProcessErrored
   {
     key: VSP_FEE_PROCESS_STARTED,
     value: { vspFeeStatus: VSP_FEE_PROCESS_STARTED },
@@ -92,10 +92,10 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
       // if the ticket type is all, always add it to ticket. Otherwise
       // add only  the selected type key.
       if (selectedTicketTypeKey === "all") {
-        tickets = [ ...tickets, ...vspTickets[feeStatus] ];
+        tickets = [...tickets, ...vspTickets[feeStatus]];
       } else if (selectedTicketTypeKey == feeStatus) {
-          tickets = [ ...tickets, ...vspTickets[feeStatus] ];
-        }
+        tickets = [...tickets, ...vspTickets[feeStatus]];
+      }
     });
     setTickets(tickets);
   }, [selectedTicketTypeKey, vspTickets]);

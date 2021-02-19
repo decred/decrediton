@@ -17,7 +17,10 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
         text={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
         <Link
           to="/tickets/statistics/stakepool"
-          activeClassName={classNames(styles.myTicketsActiveChartLink, styles.stakepool)}
+          activeClassName={classNames(
+            styles.myTicketsActiveChartLink,
+            styles.stakepool
+          )}
           className={styles.stakepool}
         />
       </Tooltip>
@@ -30,7 +33,10 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           }>
           <Link
             to="/tickets/statistics/stakerewards"
-            activeClassName={classNames(styles.myTicketsActiveChartLink, styles.stakerewards)}
+            activeClassName={classNames(
+              styles.myTicketsActiveChartLink,
+              styles.stakerewards
+            )}
             className={styles.stakerewards}
           />
         </Tooltip>
@@ -38,7 +44,10 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           text={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
           <Link
             to="/tickets/statistics/voteTime"
-            activeClassName={classNames(styles.myTicketsActiveChartLink, styles.voteTime)}
+            activeClassName={classNames(
+              styles.myTicketsActiveChartLink,
+              styles.voteTime
+            )}
             className={styles.voteTime}
           />
         </Tooltip>
@@ -46,7 +55,10 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           text={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
           <Link
             to="/tickets/statistics/heatmap"
-            activeClassName={classNames(styles.myTicketsActiveChartLink, styles.heatmapIcon)}
+            activeClassName={classNames(
+              styles.myTicketsActiveChartLink,
+              styles.heatmapIcon
+            )}
             className={styles.heatmapIcon}
           />
         </Tooltip>
@@ -73,7 +85,7 @@ const StatisticsTab = () => {
       />
       <div className={styles.charts}>
         {getMyTicketsStatsRequest ? (
-          <DecredLoading className={styles.newLogoAnimation}/>
+          <DecredLoading className={styles.newLogoAnimation} />
         ) : (
           <Switch>
             <Route

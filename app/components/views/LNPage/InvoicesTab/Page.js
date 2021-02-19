@@ -6,10 +6,13 @@ import { TextInput, DcrInput } from "inputs";
 import styles from "./InvoicesTab.module.css";
 
 const InvoiceRow = ({ invoice, tsDate }) => (
-  <div className={`${styles.lnInvoice} ${
-      invoice.status === "expired" ? styles.statusExpired
-      : invoice.status === "settled" ? styles.statusSettled
-      : styles.statusOpen
+  <div
+    className={`${styles.lnInvoice} ${
+      invoice.status === "expired"
+        ? styles.statusExpired
+        : invoice.status === "settled"
+        ? styles.statusSettled
+        : styles.statusOpen
     }`}>
     <div className="values-wrapper">
       <div className={styles.value}>
@@ -48,20 +51,19 @@ const InvoiceRow = ({ invoice, tsDate }) => (
 
 const BalanceHeader = () => {
   const { channelBalances } = useChannelBalances();
-  return(
+  return (
     <div className={styles.balanceHeader}>
-      <div className={`${styles.balanceTile} ${
-        channelBalances.maxInboundAmount === 0 ?
-          styles.zeroFunds
-          :styles.hasInbound}
+      <div
+        className={`${styles.balanceTile} ${
+          channelBalances.maxInboundAmount === 0
+            ? styles.zeroFunds
+            : styles.hasInbound
+        }
         `}>
         <div className={styles.balanceValue}>
           <Balance amount={channelBalances.maxInboundAmount} />
         </div>
-        <T
-          id="ln.invoicesTab.balance.maxReceivable"
-          m="Max. Receivable"
-        />
+        <T id="ln.invoicesTab.balance.maxReceivable" m="Max. Receivable" />
       </div>
     </div>
   );
@@ -80,14 +82,11 @@ export default ({
   onAddInvoice
 }) => (
   <>
-    <Subtitle title={
-      <T id="ln.invoicesTab.balanceHeader" m="Balance" />
-    } />
+    <Subtitle title={<T id="ln.invoicesTab.balanceHeader" m="Balance" />} />
     <BalanceHeader />
     <Subtitle
-      title={
-        <T id="ln.invoicesTab.addInvoiceHeader" m="Add Invoice" />
-      } />
+      title={<T id="ln.invoicesTab.addInvoiceHeader" m="Add Invoice" />}
+    />
     <div className={styles.lnAddInvoice}>
       <div className="memo">
         <T id="ln.invoicesTab.addInvoice.memo" m="Description" />
@@ -108,7 +107,8 @@ export default ({
           <div className={styles.lastPayRequest}>{lastPayRequest}</div>
           <CopyToClipboard
             className={styles.clipboardBox}
-            textToCopy={lastPayRequest} />
+            textToCopy={lastPayRequest}
+          />
         </>
       )}
       {!lastError ? null : (
@@ -119,10 +119,10 @@ export default ({
     </div>
 
     {invoices > 0 ? (
-    <Subtitle
-      title={
-        <T id="ln.invoicesTab.invoicesHeader" m="Latest Invoices" />
-      } />) : null }
+      <Subtitle
+        title={<T id="ln.invoicesTab.invoicesHeader" m="Latest Invoices" />}
+      />
+    ) : null}
     <div className="ln-invoice-list">
       {invoices.map((inv) => (
         <InvoiceRow key={inv.addIndex} invoice={inv} tsDate={tsDate} />

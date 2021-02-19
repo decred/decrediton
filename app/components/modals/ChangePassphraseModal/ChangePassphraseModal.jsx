@@ -18,14 +18,16 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
     onCancelModal && onCancelModal();
   }, [resetState, onCancelModal]);
 
-  const onSubmitCallback = useCallback((passPhrase) => {
-    onSubmit(passPhrase, { newPassphrase, priv: true });
-    resetState();
-  }, [newPassphrase, onSubmit, resetState]);
+  const onSubmitCallback = useCallback(
+    (passPhrase) => {
+      onSubmit(passPhrase, { newPassphrase, priv: true });
+      resetState();
+    },
+    [newPassphrase, onSubmit, resetState]
+  );
 
   useEffect(() => {
-    setIsValid(!!newPassphrase &&
-      newPassphrase === confirmPrivPass);
+    setIsValid(!!newPassphrase && newPassphrase === confirmPrivPass);
   }, [newPassphrase, confirmPrivPass]);
 
   useEffect(() => {
@@ -42,7 +44,9 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
       return;
     }
     if (newPassphrase !== confirmPrivPass) {
-      const error = <T id="error.not.same.pass" m="Passwords does not match." />;
+      const error = (
+        <T id="error.not.same.pass" m="Passwords does not match." />
+      );
       setIsError(error);
       return;
     }

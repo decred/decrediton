@@ -107,10 +107,7 @@ export const newTransactionsReceived = (
     recentRegularTransactions,
     recentStakeTransactions
   } = getState().grpc;
-  const {
-    walletService,
-    maturingBlockHeights
-  } = getState().grpc;
+  const { walletService, maturingBlockHeights } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   // Normalize transactions with missing data.
   // All transactions must being normalized before being dispatched to the
@@ -136,8 +133,14 @@ export const newTransactionsReceived = (
   }, {});
   let newlyUnminedMap = divideTransactions(newlyUnminedTransactions);
   // update our txs selector value.
-  stakeTransactions = { ...newlyUnminedMap.stakeTransactions, ...stakeTransactions };
-  regularTransactions = { ...newlyUnminedMap.regularTransactions, ...regularTransactions };
+  stakeTransactions = {
+    ...newlyUnminedMap.stakeTransactions,
+    ...stakeTransactions
+  };
+  regularTransactions = {
+    ...newlyUnminedMap.regularTransactions,
+    ...regularTransactions
+  };
   // flat stake and regular unmined transactions.
   newlyUnminedMap = {
     ...newlyUnminedMap.stakeTransactions,
@@ -164,7 +167,12 @@ export const newTransactionsReceived = (
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   // get new addresses for accounts which received decred
-  dispatch(getNewAccountAddresses([...newlyUnminedTransactions, ...newlyMinedTransactions]));
+  dispatch(
+    getNewAccountAddresses([
+      ...newlyUnminedTransactions,
+      ...newlyMinedTransactions
+    ])
+  );
 
   // Update mixer accounts balances
   const changeAccount = sel.getChangeAccount(getState());
@@ -583,7 +591,10 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
       // if already down ticket expiry + coinbase maturity, than no more live tickets
       // will be find.
       if (
-        currentBlockHeight - chainParams.TicketExpiry - chainParams.CoinbaseMaturity > startRequestHeight
+        currentBlockHeight -
+          chainParams.TicketExpiry -
+          chainParams.CoinbaseMaturity >
+        startRequestHeight
       ) {
         noMoreLiveTickets = true;
       }
@@ -838,9 +849,13 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
     const outputsCB = (response) => {
       unspentOutputs.push(response);
     };
-    wallet.listUnspentOutputs(walletService, accountNum, outputsCB)
+    wallet
+      .listUnspentOutputs(walletService, accountNum, outputsCB)
       .then(() => {
-        dispatch({ type: LISTUNSPENTOUTPUTS_COMPLETE, outputs: unspentOutputs });
+        dispatch({
+          type: LISTUNSPENTOUTPUTS_COMPLETE,
+          outputs: unspentOutputs
+        });
         resolve(unspentOutputs);
       })
       .catch((error) => {

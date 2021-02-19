@@ -29,10 +29,14 @@ const PassphraseModal = ({
     resetState();
   }, [passPhrase, onSubmit, resetState, isValid]);
 
-  useEffect(() => setIsValid(
-    // if parentIsValid is not passed as props, we consider it as true.
-    (parentIsValid === undefined ? true : parentIsValid) && !!passPhrase
-  ), [passPhrase, parentIsValid]);
+  useEffect(
+    () =>
+      setIsValid(
+        // if parentIsValid is not passed as props, we consider it as true.
+        (parentIsValid === undefined ? true : parentIsValid) && !!passPhrase
+      ),
+    [passPhrase, parentIsValid]
+  );
 
   return (
     <Modal

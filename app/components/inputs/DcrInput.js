@@ -56,7 +56,7 @@ function DcrInput({ onChangeAmount, amount, ...props }) {
   const Comp = currencyDisplay === ATOMS ? IntegerInput : FloatInput;
   return (
     <Comp
-      { ...props }
+      {...props}
       unit={currencyDisplay}
       value={value}
       onChange={onChange}
@@ -83,6 +83,5 @@ function DcrInput({ onChangeAmount, amount, ...props }) {
 function strToDcrAtoms(s, unitDivisor) {
   return Math.trunc(parseFloat(s) * unitDivisor + 0.5);
 }
-
 
 export default DcrInput;

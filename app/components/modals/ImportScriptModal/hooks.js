@@ -24,9 +24,7 @@ function useImportScriptModal(onCancelModal, onSubmit) {
     resetState();
   }, [resetState, script, onSubmit]);
 
-  const isValid = useMemo(() =>
-    !!script
-    , [script]);
+  const isValid = useMemo(() => !!script, [script]);
 
   return {
     script,

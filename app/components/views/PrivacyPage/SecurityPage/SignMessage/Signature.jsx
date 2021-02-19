@@ -6,9 +6,7 @@ import styles from "./Signature.module.css";
 const Signature = ({ signature }) => (
   <div>
     <div className={styles.subtitle}>
-      <Subtitle
-        title={<T id="security.signature" m="Signature" />}
-      />
+      <Subtitle title={<T id="security.signature" m="Signature" />} />
     </div>
     <div className={styles.copyableTextContainer}>
       <CopyableText

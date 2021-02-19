@@ -138,7 +138,12 @@ export default ({ cancel, onSendContinue }) => {
                     <div className={classNames("is-row", styles.checkboxRow)}>
                       <Checkbox
                         id={`mixed${acctIdx}`}
-                        label={<T id="getstarted.setAccount.mix" m="Set Mixed Account" />}
+                        label={
+                          <T
+                            id="getstarted.setAccount.mix"
+                            m="Set Mixed Account"
+                          />
+                        }
                         checked={mixedAcctIdx === acctIdx}
                         onChange={() => onSetMixedAcct(acctIdx)}
                       />
@@ -146,7 +151,12 @@ export default ({ cancel, onSendContinue }) => {
                     <div className={classNames("is-row", styles.checkboxRow)}>
                       <Checkbox
                         id={`change${acctIdx}`}
-                        label={<T id="getstarted.setAccount.change" m="Set Unmixed Account" />}
+                        label={
+                          <T
+                            id="getstarted.setAccount.change"
+                            m="Set Unmixed Account"
+                          />
+                        }
                         checked={changeAcctIdx === acctIdx}
                         onChange={() => onSetChangeAcct(acctIdx)}
                       />
@@ -158,7 +168,8 @@ export default ({ cancel, onSendContinue }) => {
           </div>
           {!isValid && (
             <div className="error">
-              <T id="getstarted.setAccount.isValidMessage"
+              <T
+                id="getstarted.setAccount.isValidMessage"
                 m="You need to set a mixed and unmixed account, and they can not
                   be the same"
               />

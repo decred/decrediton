@@ -56,7 +56,10 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
-    walletConfig.set(configConstants.CURRENCY_DISPLAY, settings.currencyDisplay);
+    walletConfig.set(
+      configConstants.CURRENCY_DISPLAY,
+      settings.currencyDisplay
+    );
     walletConfig.set(configConstants.GAP_LIMIT, settings.gapLimit);
   }
 
@@ -167,10 +170,10 @@ export function updateStateSettingsChanged(settings, norestart) {
         );
       newDiffersFromCurrent
         ? dispatch({
-          tempSettings: newSettings,
-          needNetworkReset,
-          type: SETTINGS_CHANGED
-        })
+            tempSettings: newSettings,
+            needNetworkReset,
+            type: SETTINGS_CHANGED
+          })
         : dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
     }
   };

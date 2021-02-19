@@ -30,19 +30,17 @@ const TicketAutoBuyerForm = ({
       <div className="stakepool-auto-buyer-row">
         {isRunning ? (
           <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
+        ) : getRunningIndicator ? (
+          <Tooltip
+            text={
+              <T
+                id="tickets.autobuyer.running"
+                m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before starting autobuyer."
+              />
+            }>
+            <AutoBuyerPassphraseModalSwitch isValid={false} />
+          </Tooltip>
         ) : (
-          (getRunningIndicator ? (
-            <Tooltip
-              text={
-                <T
-                  id="tickets.autobuyer.running"
-                  m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before starting autobuyer."
-                />
-              }>
-              <AutoBuyerPassphraseModalSwitch
-                isValid={false}/>
-            </Tooltip>
-          ) :
           <AutoBuyerPassphraseModalSwitch
             modalTitle={
               <T
@@ -90,7 +88,7 @@ const TicketAutoBuyerForm = ({
             onClick={onClick}
             isValid={isValid}
           />
-        ))}
+        )}
         <div className="stakepool-auto-buyer-row-portion-half">
           <div className="stakepool-autobuyer-label">
             <T id="vsp.autobuyer.accountFrom" m="From" />:

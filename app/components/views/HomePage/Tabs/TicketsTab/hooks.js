@@ -15,4 +15,4 @@ export function useTickets() {
     votedTicketsCount,
     ticketDataChart
   };
-};
+}

@@ -315,13 +315,14 @@ const connectToLNWallet = (
       lastError = null;
       break;
     } catch (error) {
-        // An unimplemented error here probably means dcrlnd was just unlocked
-        // and is currently starting up the services. Wait a bit and try again.
-        if (error.code !== 12) { // 12 === UNIMPLEMENTED.
-          throw error;
-        }
-        lastError = error;
-        await sleep();
+      // An unimplemented error here probably means dcrlnd was just unlocked
+      // and is currently starting up the services. Wait a bit and try again.
+      if (error.code !== 12) {
+        // 12 === UNIMPLEMENTED.
+        throw error;
+      }
+      lastError = error;
+      await sleep();
     }
   }
   if (lastError) throw lastError;
@@ -1018,10 +1019,7 @@ export const LNWALLET_ADDWATCHTOWER_ATTEMPT = "LNWALLET_ADDWATCHTOWER_ATTEMPT";
 export const LNWALLET_ADDWATCHTOWER_SUCCESS = "LNWALLET_ADDWATCHTOWER_SUCCESS";
 export const LNWALLET_ADDWATCHTOWER_FAILED = "LNWALLET_ADDWATCHTOWER_FAILED";
 
-export const addWatchtower = (wtPubKey, addr) => async (
-  dispatch,
-  getState
-) => {
+export const addWatchtower = (wtPubKey, addr) => async (dispatch, getState) => {
   const { wtClient } = getState().ln;
   if (!wtClient) throw new Error("unconnected to ln wallet");
 
@@ -1034,14 +1032,14 @@ export const addWatchtower = (wtPubKey, addr) => async (
   }
 };
 
-export const LNWALLET_LISTWATCHTOWERS_ATTEMPT = "LNWALLET_LISTWATCHTOWERS_ATTEMPT";
-export const LNWALLET_LISTWATCHTOWERS_SUCCESS = "LNWALLET_LISTWATCHTOWERS_SUCCESS";
-export const LNWALLET_LISTWATCHTOWERS_FAILED = "LNWALLET_LISTWATCHTOWERS_FAILED";
+export const LNWALLET_LISTWATCHTOWERS_ATTEMPT =
+  "LNWALLET_LISTWATCHTOWERS_ATTEMPT";
+export const LNWALLET_LISTWATCHTOWERS_SUCCESS =
+  "LNWALLET_LISTWATCHTOWERS_SUCCESS";
+export const LNWALLET_LISTWATCHTOWERS_FAILED =
+  "LNWALLET_LISTWATCHTOWERS_FAILED";
 
-export const listWatchtowers = () => async (
-  dispatch,
-  getState
-) => {
+export const listWatchtowers = () => async (dispatch, getState) => {
   const { wtClient } = getState().ln;
   if (!wtClient) throw new Error("unconnected to ln wallet");
 
@@ -1054,14 +1052,14 @@ export const listWatchtowers = () => async (
   }
 };
 
-export const LNWALLET_REMOVEWATCHTOWER_ATTEMPT = "LNWALLET_REMOVEWATCHTOWER_ATTEMPT";
-export const LNWALLET_REMOVEWATCHTOWER_SUCCESS = "LNWALLET_REMOVEWATCHTOWER_SUCCESS";
-export const LNWALLET_REMOVEWATCHTOWER_FAILED = "LNWALLET_REMOVEWATCHTOWER_FAILED";
+export const LNWALLET_REMOVEWATCHTOWER_ATTEMPT =
+  "LNWALLET_REMOVEWATCHTOWER_ATTEMPT";
+export const LNWALLET_REMOVEWATCHTOWER_SUCCESS =
+  "LNWALLET_REMOVEWATCHTOWER_SUCCESS";
+export const LNWALLET_REMOVEWATCHTOWER_FAILED =
+  "LNWALLET_REMOVEWATCHTOWER_FAILED";
 
-export const removeWatchtower = wtPubKey => async (
-  dispatch,
-  getState
-) => {
+export const removeWatchtower = (wtPubKey) => async (dispatch, getState) => {
   const { wtClient } = getState().ln;
   if (!wtClient) throw new Error("unconnected to ln wallet");
 

@@ -28,8 +28,12 @@ export const useVSPTicketsList = () => {
   };
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));
-  const getVSPTicketsByFeeStatus = (feeStatus) => dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
-  const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) => dispatch(vspa.syncVSPTicketsRequest({ passphrase, vspHost, vspPubkey, account }));
+  const getVSPTicketsByFeeStatus = (feeStatus) =>
+    dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
+  const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) =>
+    dispatch(
+      vspa.syncVSPTicketsRequest({ passphrase, vspHost, vspPubkey, account })
+    );
 
   return {
     tsDate,

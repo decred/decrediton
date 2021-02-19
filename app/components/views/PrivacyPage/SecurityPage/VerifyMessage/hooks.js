@@ -6,7 +6,9 @@ import { getMessageVerificationServiceAttempt } from "actions/ClientActions";
 
 export function useVerifyMessage() {
   const dispatch = useDispatch();
-  const messageVerificationService = useSelector(sel.messageVerificationService);
+  const messageVerificationService = useSelector(
+    sel.messageVerificationService
+  );
   const verifyMessageError = useSelector(sel.verifyMessageError);
   const verifyMessageSuccess = useSelector(sel.verifyMessageSuccess);
   const isVerifyingMessage = useSelector(sel.isVerifyingMessage);

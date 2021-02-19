@@ -43,7 +43,9 @@ const Tickets = ({ toggleIsLegacy }) => {
   // onChangeNumTickets deals with ticket increment or decrement.
   const onChangeNumTickets = (increment) => {
     if (numTickets === 0 && !increment) return;
-    increment ? setNumTickets(parseInt(numTickets) + 1) : setNumTickets(parseInt(numTickets) - 1);
+    increment
+      ? setNumTickets(parseInt(numTickets) + 1)
+      : setNumTickets(parseInt(numTickets) - 1);
   };
 
   const onV3PurchaseTicket = (passphrase) => {
@@ -67,9 +69,11 @@ const Tickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  const [vspFee, setVspFee] = useState(availableVSPs &&
-    availableVSPs.find((availableVSP) => availableVSP.host === vsp?.host)
-      ?.vspData.feepercentage);
+  const [vspFee, setVspFee] = useState(
+    availableVSPs &&
+      availableVSPs.find((availableVSP) => availableVSP.host === vsp?.host)
+        ?.vspData.feepercentage
+  );
 
   return (
     <PurchasePage

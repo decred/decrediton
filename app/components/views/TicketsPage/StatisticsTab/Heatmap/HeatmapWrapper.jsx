@@ -52,7 +52,13 @@ const addIntensityInfo = (graphEntries) => {
 };
 
 function drawInfo(opts = {}) {
-  const { offsetX = 0, offsetY = 0, graphEntries, columnNumber, boxWidth } = opts;
+  const {
+    offsetX = 0,
+    offsetY = 0,
+    graphEntries,
+    columnNumber,
+    boxWidth
+  } = opts;
   const theme = getTheme();
   const squares = [];
   for (let row = 0; row < rowNumber; row++) {
@@ -183,7 +189,9 @@ const Heatmap = ({ data, ...opts }) => {
   addIntensityInfo(data);
   return (
     <div className={styles.ticketActivityWrapper}>
-      <span className={styles.myTicketsStatsIndicatorsTitle}>Ticket Activity</span>
+      <span className={styles.myTicketsStatsIndicatorsTitle}>
+        Ticket Activity
+      </span>
       <div className={styles.heatmapWrapper}>
         {drawInfo({
           graphEntries: data,

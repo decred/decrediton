@@ -16,8 +16,9 @@ export function useNetworkTab() {
     !network && dispatch(lna.getNetworkInfo());
   }, [network, dispatch]);
 
-  const getNodeInfo = nodeId => dispatch(lna.getNodeInfo(nodeId));
-  const getRoutesInfo = (nodeId, amt) => dispatch(lna.getRoutesInfo(nodeId, amt));
+  const getNodeInfo = (nodeId) => dispatch(lna.getNodeInfo(nodeId));
+  const getRoutesInfo = (nodeId, amt) =>
+    dispatch(lna.getRoutesInfo(nodeId, amt));
 
   const txOutURLBuilder = useSelector(sel.txOutURLBuilder);
   const chanpointURL = (chanPoint) => {
@@ -39,4 +40,4 @@ export function useNetworkTab() {
     getRoutesInfo,
     chanpointURL
   };
-};
+}

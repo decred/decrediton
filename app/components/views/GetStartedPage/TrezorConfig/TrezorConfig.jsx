@@ -26,10 +26,7 @@ const TrezorConfig = ({
       </div>
       <div>
         <InvisibleButton onClick={connect}>
-          <T
-            id="trezor.getStartedConfig.btnConnect"
-            m="Connect to Trezor"
-          />
+          <T id="trezor.getStartedConfig.btnConnect" m="Connect to Trezor" />
         </InvisibleButton>
       </div>
     </>

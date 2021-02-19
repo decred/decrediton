@@ -430,14 +430,9 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
       prop.proposalStatus = prop.status;
 
       fillVoteSummary(prop, proposalSummary, blockTimestampFromNow);
-      prop.currentVoteChoice = walletName && getVoteOption(
-        token,
-        prop,
-        null,
-        null,
-        testnet,
-        walletName
-      );
+      prop.currentVoteChoice =
+        walletName &&
+        getVoteOption(token, prop, null, null, testnet, walletName);
 
       if (prop.timestamp > lastPoliteiaAccessTime) {
         prop.modifiedSinceLastAccess = true;

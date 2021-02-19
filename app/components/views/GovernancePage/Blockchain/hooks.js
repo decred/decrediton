@@ -13,7 +13,8 @@ export function useVotingPrefs() {
   const settingVoteChoices = useSelector(sel.setVoteChoicesAttempt);
   const settingVspdVoteChoices = useSelector(sel.setVspdVoteChoicesAttempt);
   const voteChoices = useSelector(sel.voteChoices);
-  const onUpdateVotePreference = (agendaId, choiceId, passphrase) => dispatch(ca.setVoteChoicesAttempt(agendaId, choiceId, passphrase));
+  const onUpdateVotePreference = (agendaId, choiceId, passphrase) =>
+    dispatch(ca.setVoteChoicesAttempt(agendaId, choiceId, passphrase));
   const onChangeStakePool = useCallback(
     () => dispatch(spa.changeSelectedStakePool),
     [dispatch]

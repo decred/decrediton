@@ -1,4 +1,9 @@
-import { VerticalAccordion, Balance, FormattedRelative, Subtitle } from "shared";
+import {
+  VerticalAccordion,
+  Balance,
+  FormattedRelative,
+  Subtitle
+} from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
 import StakeInfoDetails from "./StakeInfoDetails";
 import { Link } from "react-router-dom";
@@ -90,9 +95,13 @@ const StakeInfoDisplay = ({
             <StakeInfoDisplayItem
               label={<T id="stake.lastVotedTicket" m="Last Ticked Voted" />}
               value={
-                lastVotedTicket
-                  ? <FormattedRelative value={tsDate(lastVotedTicket.leaveTimestamp)} />
-                  : <T id="stake.lastVotedTicket.none" m="None" />
+                lastVotedTicket ? (
+                  <FormattedRelative
+                    value={tsDate(lastVotedTicket.leaveTimestamp)}
+                  />
+                ) : (
+                  <T id="stake.lastVotedTicket.none" m="None" />
+                )
               }
               foot={
                 lastVotedTicket && (
@@ -103,7 +112,9 @@ const StakeInfoDisplay = ({
                       <T
                         id="stake.lastTicketLink"
                         m="{shortHash}... View &rarr;"
-                        values={{ shortHash: lastVotedTicket.txHash.substr(0, 6) }}
+                        values={{
+                          shortHash: lastVotedTicket.txHash.substr(0, 6)
+                        }}
                       />
                     </span>
                   </Link>
@@ -139,8 +150,7 @@ const StakeInfoDisplay = ({
         show={isShowingDetails}
         onToggleAccordion={onToggleStakeinfo}
         className="detailsAccordion"
-        arrowClassName="vertical-accordion-arrow"
-      >
+        arrowClassName="vertical-accordion-arrow">
         <StakeInfoDetails
           {...{
             ticketPoolSize,

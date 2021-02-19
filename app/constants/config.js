@@ -39,12 +39,12 @@ export const setDaemonRemoteCredentials = (
   rpchost,
   rpcport
 ) => ({
-    [RPCUSER]: rpcuser,
-    [RPCPASS]: rpcpass,
-    [RPCCERT]: rpccert,
-    [RPCHOST]: rpchost,
-    [RPCPORT]: rpcport
-  });
+  [RPCUSER]: rpcuser,
+  [RPCPASS]: rpcpass,
+  [RPCCERT]: rpccert,
+  [RPCHOST]: rpchost,
+  [RPCPORT]: rpcport
+});
 
 // Wallet config constants
 export const ENABLE_TICKET_BUYER = "enableticketbuyer";
@@ -66,7 +66,8 @@ export const LN_CERTPATH = "ln_certpath";
 export const LN_MACAROONPATH = "ln_macaroonpath";
 export const SEND_FROM_UNMIXED = "send_from_unmixed";
 export const MIXED_ACCOUNT_CFG = "mixedaccount";
-export const DISMISS_BACKUP_MSG_REDEEM_SCRIPT = "dismiss_backup_msg_redeem_script";
+export const DISMISS_BACKUP_MSG_REDEEM_SCRIPT =
+  "dismiss_backup_msg_redeem_script";
 export const CHANGE_ACCOUNT_CFG = "changeaccount";
 export const CSPP_SERVER = "csppserver";
 export const CSPP_PORT = "csppport";

@@ -389,18 +389,21 @@ export const newPurchaseTicketsAttempt = (
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
-      const unspentOutputs = await dispatch(listUnspentOutputs(accountNum.value));
+      const unspentOutputs = await dispatch(
+        listUnspentOutputs(accountNum.value)
+      );
       // we need at least one 2 utxo for each ticket, one for paying the fee
       // and another for the splitTx and ticket purchase.
       // Note: at least one of them needs to be big enough for ticket purchase.
-      if (unspentOutputs.length < numTickets*2) {
+      if (unspentOutputs.length < numTickets * 2) {
         // check if amount is indeed insufficient
         const ticketPrice = sel.ticketPrice(getState());
         if (accountNum.spendable > ticketPrice * numTickets) {
           return dispatch({
             error: `Not enough utxo. Need to break the input so one can be reserved
             for paying the fee.`,
-            type: PURCHASETICKETS_FAILED });
+            type: PURCHASETICKETS_FAILED
+          });
         }
       }
     }

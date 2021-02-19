@@ -1,9 +1,17 @@
 import { useState, useCallback } from "react";
 import OpenWalletDecryptFormBody from "./DecryptForm";
 import { FormattedMessage as T } from "react-intl";
-import { OPENWALLET_FAILED_INPUT, OPENWALLET_INPUTPRIVPASS } from "actions/WalletLoaderActions";
+import {
+  OPENWALLET_FAILED_INPUT,
+  OPENWALLET_INPUTPRIVPASS
+} from "actions/WalletLoaderActions";
 
-const OpenWallet = ({ onOpenWallet, onSendContinue, onSendError, onSendDiscoverAccountsPassInput }) => {
+const OpenWallet = ({
+  onOpenWallet,
+  onSendContinue,
+  onSendError,
+  onSendDiscoverAccountsPassInput
+}) => {
   const [publicPassPhrase, setPublicPassPhrase] = useState("");
 
   const onOpenWalletHandler = useCallback(() => {
@@ -32,7 +40,13 @@ const OpenWallet = ({ onOpenWallet, onSendContinue, onSendError, onSendDiscoverA
         }
         onSendError(error);
       });
-  }, [onOpenWallet, onSendContinue, onSendError, publicPassPhrase, onSendDiscoverAccountsPassInput]);
+  }, [
+    onOpenWallet,
+    onSendContinue,
+    onSendError,
+    publicPassPhrase,
+    onSendDiscoverAccountsPassInput
+  ]);
 
   const onKeyDown = useCallback(
     (e) => {

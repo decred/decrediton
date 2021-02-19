@@ -49,10 +49,7 @@ const ConfigMixer = ({ isCreateAccountDisabled, accounts }) => {
       <Subtitle
         title={<T id="privacy.config.subtitle" m="Privacy Configuration" />}
       />
-      <Documentation
-        name="MixerIntroduction"
-        className="documentation"
-      />
+      <Documentation name="MixerIntroduction" className="documentation" />
       <div className={classNames(style.pageWrapper, style.isColumn)}>
         {areAccountsAvailable ? (
           <CreateDefaultAccounts

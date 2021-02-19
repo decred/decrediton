@@ -117,8 +117,7 @@ const Tabs = ({ active, set }) => {
               ? styles.tabBackgroundSelected
               : styles.tabBackgroundUnselected
           )}
-          onClick={() => set(QUERY_NODE)}
-        >
+          onClick={() => set(QUERY_NODE)}>
           <T id="ln.networkTab.tabQueryNode" m="Query Node" />
         </div>
         <div
@@ -128,8 +127,7 @@ const Tabs = ({ active, set }) => {
               ? styles.tabBackgroundSelected
               : styles.tabBackgroundUnselected
           )}
-          onClick={() => set(QUERY_ROUTE)}
-        >
+          onClick={() => set(QUERY_ROUTE)}>
           <T id="ln.networkTab.tabQueryRoute" m="Query Route" />
         </div>
       </div>

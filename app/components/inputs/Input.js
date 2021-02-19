@@ -83,7 +83,7 @@ class Input extends React.Component {
           className={
             hasErrorToShow
               ? this.state.divClassName + " error"
-            : showSuccess
+              : showSuccess
               ? this.state.divClassName + " success"
               : this.state.divClassName
           }
@@ -136,9 +136,7 @@ class Input extends React.Component {
         ) : null}
         {showSuccess ? (
           <div className="input-success-area">
-            {successMessage ? (
-              successMessage
-            ) : null}
+            {successMessage ? successMessage : null}
           </div>
         ) : null}
       </>

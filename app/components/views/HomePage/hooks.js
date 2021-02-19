@@ -5,7 +5,9 @@ import * as cla from "actions/ClientActions";
 
 export function useHomePage() {
   const dispatch = useDispatch();
-  const getTransactionsRequestAttempt = useSelector(sel.getTransactionsRequestAttempt);
+  const getTransactionsRequestAttempt = useSelector(
+    sel.getTransactionsRequestAttempt
+  );
   const getAccountsResponse = useSelector(sel.getAccountsResponse);
   const spendableTotalBalance = useSelector(sel.spendableTotalBalance);
   const transactions = useSelector(sel.homeHistoryTransactions);
@@ -36,4 +38,4 @@ export function useHomePage() {
     goToMyTickets,
     goToTransactionHistory
   };
-};
+}

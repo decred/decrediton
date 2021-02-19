@@ -6,10 +6,7 @@ export default () => (
     iconClassName="trezor"
     title={<T id="trezorPage.title" m="Trezor" />}
     description={
-      <T
-        id="trezorPage.description"
-        m="Manage your Trezor device."
-      />
+      <T id="trezorPage.description" m="Manage your Trezor device." />
     }
   />
 );
