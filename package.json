@@ -35,14 +35,9 @@
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
     "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}'",
-    "precommit": "lint-staged"
+    "postinstall": "husky install"
   },
-  "lint-staged": {
-    "*.{jsx,jsx,css,json}": [
-      "yarn prettify",
-      "yarn lint-fix"
-    ]
-  },
+  "private": true,
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
@@ -240,6 +235,7 @@
     "file-loader": "^2.0.0",
     "google-protobuf": "^3.11.2",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^5.0.9",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.0",
     "jest-date-mock": "^1.0.8",
