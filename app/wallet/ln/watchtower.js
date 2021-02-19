@@ -20,7 +20,7 @@ export const listWatchtowers = (wtClient) => {
         reject(err);
         return;
       }
-      const towers = resp.getTowersList().map(towerData => {
+      const towers = resp.getTowersList().map((towerData) => {
         const tower = towerData.toObject();
         const pubkeyHex = Buffer.from(tower.pubkey, "base64").toString("hex");
 

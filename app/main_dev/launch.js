@@ -103,8 +103,12 @@ export const getDcrwalletGrpcKeyCert = () => dcrwalletGrpcKeyCert;
 
 export const setDcrwalletGrpcKeyCert = (grpcKeyCert) => {
   if (!Buffer.isBuffer(grpcKeyCert)) {
-    logger.log("error", "Error getting grpc key and cert from dcrwallet, " +
-     "grpc key and cert value: " + grpcKeyCert);
+    logger.log(
+      "error",
+      "Error getting grpc key and cert from dcrwallet, " +
+        "grpc key and cert value: " +
+        grpcKeyCert
+    );
   }
   dcrwalletGrpcKeyCert = grpcKeyCert;
 };
@@ -540,15 +544,19 @@ export const launchDCRWallet = (
   // When in mainnet, we always include it, because if we doensn't and a user
   // sets mixing config, we would need to restart dcrwallet.
   const certPath = path.resolve(getCertsPath(), "cspp.decred.org.pem");
-  !testnet && args.push("--csppserver.ca="+certPath);
-  args.push(testnet ? "--csppserver=cspp.decred.org:5760" : "--csppserver=cspp.decred.org:15760");
+  !testnet && args.push("--csppserver.ca=" + certPath);
+  args.push(
+    testnet
+      ? "--csppserver=cspp.decred.org:5760"
+      : "--csppserver=cspp.decred.org:15760"
+  );
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log(
       "error",
       "The dcrwallet executable does not exist. Expected to find it at " +
-      dcrwExe
+        dcrwExe
     );
     return;
   }
@@ -722,7 +730,7 @@ export const launchDCRLnd = (
       logger.log(
         "error",
         "The dcrlnd executable does not exist. Expected to find it at " +
-        dcrlndExe
+          dcrlndExe
       );
       reject("The dcrlnd executable does not exist at " + dcrlndExe);
     }

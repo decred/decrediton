@@ -11,4 +11,4 @@ export function useBalance() {
     spendableTotalBalance,
     spendableAndLockedBalance
   };
-};
+}

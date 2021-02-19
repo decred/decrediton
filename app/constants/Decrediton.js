@@ -98,6 +98,6 @@ export const CSPP_PORT_MAINNET = "5760";
 export const MENU_LINKS_PER_ROW = 4;
 
 // VSP_FEE_PROCESS_STARTED represents the state which process has being
-export const VSP_FEE_PROCESS_STARTED   = 0;
+export const VSP_FEE_PROCESS_STARTED = 0;
 export const VSP_FEE_PROCESS_PAID = 1;
-export const VSP_FEE_PROCESS_ERRORED   = 2;
+export const VSP_FEE_PROCESS_ERRORED = 2;

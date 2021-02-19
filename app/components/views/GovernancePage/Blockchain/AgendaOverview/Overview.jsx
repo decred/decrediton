@@ -92,18 +92,22 @@ const Overview = ({
       disabled={disabled}
     />
     <div className={styles.bottom}>
-        <div className={styles.bottomOptions}>
+      <div className={styles.bottomOptions}>
         <PassphraseModalButton
-          modalTitle={
-            <T id="updateprefs.passphrase.title" m="Passphrase" />
-          }
+          modalTitle={<T id="updateprefs.passphrase.title" m="Passphrase" />}
           modalClassName={styles.passphraseModal}
           onSubmit={updatePreferences}
           className={styles.updatePreferencesButton}
           disabled={disabled || isLoading}
-          buttonLabel={isLoading ? <T id="agenda.settingVoteChoices" m="Updating" /> : <T id="agenda.updatePreference" m="Update Preference" />}
+          buttonLabel={
+            isLoading ? (
+              <T id="agenda.settingVoteChoices" m="Updating" />
+            ) : (
+              <T id="agenda.updatePreference" m="Update Preference" />
+            )
+          }
         />
-        </div>
+      </div>
       <div className={styles.bottomOverview}>
         <ProgressIndicator passed={passed} inProgress={!isFinished} />
       </div>

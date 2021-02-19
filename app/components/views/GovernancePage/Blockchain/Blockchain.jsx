@@ -27,10 +27,7 @@ const VotingPrefsTab = () => {
   const getAgendaSelectedChoice = (agenda) =>
     get(
       ["choiceId"],
-      find(
-        compose(eq(agenda.name), get(["agendaId"])),
-        voteChoices
-      )
+      find(compose(eq(agenda.name), get(["agendaId"])), voteChoices)
     ) || "abstain";
 
   const onShowAgenda = (index) => setSelectedAgenda(index);

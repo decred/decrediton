@@ -5,16 +5,16 @@ function useSeedCopyConfirmModal(onSubmit, onCancelModal, message) {
   const intl = useIntl();
 
   const [copyConfirmationPhrase] = useState(
-    intl.formatMessage(
-      message.copyConfirmationPhrase
-    )
+    intl.formatMessage(message.copyConfirmationPhrase)
   );
 
   const [typedConfirmationPhrase, setTypedConfirmationPhrase] = useState("");
 
-  const onTypedConfirmationPhraseChanged = useCallback((typedConfirmationPhrase) =>
-    setTypedConfirmationPhrase(typedConfirmationPhrase)
-    , []);
+  const onTypedConfirmationPhraseChanged = useCallback(
+    (typedConfirmationPhrase) =>
+      setTypedConfirmationPhrase(typedConfirmationPhrase),
+    []
+  );
 
   const onSubmitCallback = useCallback(() => {
     onSubmit();

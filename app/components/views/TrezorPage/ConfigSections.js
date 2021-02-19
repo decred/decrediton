@@ -47,7 +47,7 @@ class TrezorConfigSections extends React.Component {
   }
 
   isUpdating() {
-   return this.props.isPerformingUpdate;
+    return this.props.isPerformingUpdate;
   }
 
   render() {
@@ -79,7 +79,13 @@ class TrezorConfigSections extends React.Component {
         <ChangeLabel {...{ onChangeLabel, loading }} />
 
         <RecoveryButtons
-          {...{ onWipeDevice, onRecoverDevice, onInitDevice, onBackupDevice, loading }}
+          {...{
+            onWipeDevice,
+            onRecoverDevice,
+            onInitDevice,
+            onBackupDevice,
+            loading
+          }}
         />
 
         <FirmwareUpdate {...{ onUpdateFirmware, loading, isUpdating }} />

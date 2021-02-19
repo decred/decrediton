@@ -88,7 +88,11 @@ import {
   TESTNET,
   MAINNET
 } from "constants";
-import { DAEMON_ADVANCED, LOCALE, DISABLE_HARDWARE_ACCEL } from "constants/config";
+import {
+  DAEMON_ADVANCED,
+  LOCALE,
+  DISABLE_HARDWARE_ACCEL
+} from "constants/config";
 
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());

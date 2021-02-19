@@ -10,12 +10,12 @@ const ButtonsToolbar = ({
   className
 }) => (
   <div className={className}>
-    <KeyBlueButton disabled={
+    <KeyBlueButton
+      disabled={
         // if isValid is not passed as props, we never validate it.
         isValid === undefined ? false : !isValid
       }
-      onClick={onSubmit}
-    >
+      onClick={onSubmit}>
       {submitLabel ? (
         submitLabel
       ) : (

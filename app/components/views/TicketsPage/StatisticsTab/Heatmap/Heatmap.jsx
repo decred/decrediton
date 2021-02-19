@@ -13,7 +13,7 @@ const Heatmap = () => {
   return ticketDataHeatmap.length > 0 ? (
     <Page {...{ data: ticketDataHeatmap }} />
   ) : (
-    <DecredLoading className={styles.newLogoAnimation}/>
+    <DecredLoading className={styles.newLogoAnimation} />
   );
 };
 

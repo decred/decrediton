@@ -23,14 +23,15 @@ function useAddAccountModal(onCancelModal, onSubmit) {
     setName(name);
   }, []);
 
-  const onSubmitCallback = useCallback((passPhrase) => {
-    onSubmit(passPhrase, name);
-    resetState();
-  }, [resetState, name, onSubmit]);
+  const onSubmitCallback = useCallback(
+    (passPhrase) => {
+      onSubmit(passPhrase, name);
+      resetState();
+    },
+    [resetState, name, onSubmit]
+  );
 
-  const isValid = useMemo(() =>
-    !!name
-    , [name]);
+  const isValid = useMemo(() => !!name, [name]);
 
   return {
     name,

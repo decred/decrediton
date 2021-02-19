@@ -2,7 +2,12 @@ import { spring } from "react-motion";
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { ReceiveAccountsSelect, PathBrowseInput } from "inputs";
-import { PassphraseModalButton, TextToggle, InfoDocModalButton, KeyBlueButton } from "buttons";
+import {
+  PassphraseModalButton,
+  TextToggle,
+  InfoDocModalButton,
+  KeyBlueButton
+} from "buttons";
 import { TransitionMotionWrapper, Documentation } from "shared";
 import { lnPage } from "connectors";
 import { Checkbox } from "pi-ui";
@@ -35,7 +40,9 @@ const CreateLNWalletPageHeader = () => (
     description={
       <T
         id="ln.createLNWalletPage.description"
-        m={"Create a new Lightning Network wallet backed by the Decrediton wallet."}
+        m={
+          "Create a new Lightning Network wallet backed by the Decrediton wallet."
+        }
       />
     }
     iconClassName="ln"
@@ -70,7 +77,10 @@ const LNCreationWarning = ({ onAcceptCreationWarning }) => (
   <div className="documentation">
     <Documentation name="LNWalletCreationWarning" />
     <KeyBlueButton onClick={onAcceptCreationWarning}>
-      <T id="ln.createWalletWarning.okBtn" m="I understand and accept the risks"/>
+      <T
+        id="ln.createWalletWarning.okBtn"
+        m="I understand and accept the risks"
+      />
     </KeyBlueButton>
   </div>
 );
@@ -251,14 +261,18 @@ class ConnectPage extends React.Component {
     if (displayCreationWarning) {
       return (
         <StandalonePage header={<CreateLNWalletPageHeader />}>
-          <LNCreationWarning onAcceptCreationWarning={onAcceptCreationWarning}/>
+          <LNCreationWarning
+            onAcceptCreationWarning={onAcceptCreationWarning}
+          />
         </StandalonePage>
       );
     }
 
-    const header = lightningWalletExists
-      ? <ConnectPageHeader />
-      : <CreateLNWalletPageHeader />;
+    const header = lightningWalletExists ? (
+      <ConnectPageHeader />
+    ) : (
+      <CreateLNWalletPageHeader />
+    );
 
     return (
       <StandalonePage header={header}>
@@ -269,21 +283,20 @@ class ConnectPage extends React.Component {
               <Checkbox
                 label={
                   <T
-                  id="ln.connectPage.enableAutopilot"
-                  m="Enable Automatic Channel Creation"
-                />
+                    id="ln.connectPage.enableAutopilot"
+                    m="Enable Automatic Channel Creation"
+                  />
                 }
                 description={
-                <T
-                  id="ln.connectPage.enableAutopilotDescr"
-                  m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
-                />
+                  <T
+                    id="ln.connectPage.enableAutopilotDescr"
+                    m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
+                  />
                 }
                 checked={autopilotEnabled}
                 onChange={onChangeEnableAutopilot}
               />
             </div>
-
           </div>
 
           <PassphraseModalButton

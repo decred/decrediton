@@ -26,8 +26,7 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
         <label id="proxy-type-input" className={styles.label}>
           <T id="settings.proxy.type" m="Proxy Type" />
         </label>
-        <div className={styles.label}>
-        </div>
+        <div className={styles.label}></div>
         <SettingsInput
           className={styles.input}
           value={tempSettings.proxyType}

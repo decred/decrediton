@@ -8,12 +8,14 @@ export function useSideBar() {
 
   const accountsListRef = useRef(null);
 
-  const onAccountsListWheel = useCallback((e) =>
-    accountsListRef.current.scrollBy({
-      top: e.deltaY * 2,
-      behavior: "smooth"
-    })
-    , []);
+  const onAccountsListWheel = useCallback(
+    (e) =>
+      accountsListRef.current.scrollBy({
+        top: e.deltaY * 2,
+        behavior: "smooth"
+      }),
+    []
+  );
 
   const isTestNet = useSelector(sel.isTestNet);
   const balances = useSelector(sel.balances);

@@ -14,11 +14,13 @@ const LEGACY_GET = (path, apiToken) => {
 };
 
 const GET = (path, vspClientSig) => {
-  const config = vspClientSig ? {
-    headers: {
-      "VSP-CLIENT-SIGNATURE": vspClientSig
-    }
-  } : {};
+  const config = vspClientSig
+    ? {
+        headers: {
+          "VSP-CLIENT-SIGNATURE": vspClientSig
+        }
+      }
+    : {};
   return axios.get(path, config);
 };
 
@@ -50,10 +52,15 @@ export function stakePoolInfo(cb) {
     const stakePoolNames = Object.keys(response.data);
     return stakePoolNames
       .map((name) => {
-        const { APIEnabled, URL, Network, APIVersionsSupported } = response.data[
-          name
-        ];
-        return !APIEnabled ? null : { Host: URL, Network, APIVersionsSupported };
+        const {
+          APIEnabled,
+          URL,
+          Network,
+          APIVersionsSupported
+        } = response.data[name];
+        return !APIEnabled
+          ? null
+          : { Host: URL, Network, APIVersionsSupported };
       })
       .filter((v) => v);
   };

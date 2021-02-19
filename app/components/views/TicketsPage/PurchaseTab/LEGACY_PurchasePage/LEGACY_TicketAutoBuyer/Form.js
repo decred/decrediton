@@ -31,8 +31,7 @@ const TicketAutoBuyerForm = ({
       <div className="stakepool-auto-buyer-row">
         {isTicketAutoBuyerEnabled ? (
           <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} />
-        ) : (
-          getRunningIndicator ?
+        ) : getRunningIndicator ? (
           <Tooltip
             text={
               <T
@@ -40,10 +39,9 @@ const TicketAutoBuyerForm = ({
                 m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before purchasing tickets."
               />
             }>
-            <AutoBuyerPassphraseModalSwitch
-              disabled={true}
-            />
-          </Tooltip> :
+            <AutoBuyerPassphraseModalSwitch disabled={true} />
+          </Tooltip>
+        ) : (
           <AutoBuyerPassphraseModalSwitch
             modalTitle={
               <T

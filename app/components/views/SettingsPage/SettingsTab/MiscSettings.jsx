@@ -23,7 +23,7 @@ const MiscSettings = ({
       {walletReady && (
         <div className={styles.row}>
           <label id="displayed-units-input" className={styles.label}>
-              <T id="settings.displayedUnits" m="Displayed Units" />
+            <T id="settings.displayedUnits" m="Displayed Units" />
           </label>
           <SettingsInput
             className={styles.input}

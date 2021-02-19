@@ -19,23 +19,20 @@ import {
 
 const BalanceHeader = ({ walletBalance, totalBandwidth }) => (
   <div className={styles.balanceHeader}>
-    <div className={`${styles.balanceTile} ${
-        walletBalance === 0 ?
-        styles.zeroFunds
-        :styles.hasFunds}
+    <div
+      className={`${styles.balanceTile} ${
+        walletBalance === 0 ? styles.zeroFunds : styles.hasFunds
+      }
         `}>
       <div className={styles.balanceValue}>
         <Balance amount={walletBalance} />
       </div>
-      <T
-        id="ln.channelsTab.balance.onChain"
-        m="Confirmed on-chain balance"
-      />
+      <T id="ln.channelsTab.balance.onChain" m="Confirmed on-chain balance" />
     </div>
-    <div className={`${styles.balanceTile} ${
-        totalBandwidth === 0 ?
-        styles.zeroFunds
-        :styles.hasFunds}
+    <div
+      className={`${styles.balanceTile} ${
+        totalBandwidth === 0 ? styles.zeroFunds : styles.hasFunds
+      }
         `}>
       <div className={styles.balanceValue}>
         <Balance amount={totalBandwidth} />
@@ -69,20 +66,15 @@ export default ({
   onToggleChannelDetails
 }) => (
   <>
-    <Subtitle title={
-      <T id="ln.channelsTab.balance" m="Balance" />
-    } />
+    <Subtitle title={<T id="ln.channelsTab.balance" m="Balance" />} />
     <BalanceHeader
       walletBalance={walletBalances.confirmedBalance}
       totalBandwidth={
-        channelBalances.maxInboundAmount
-        + channelBalances.maxOutboundAmount
+        channelBalances.maxInboundAmount + channelBalances.maxOutboundAmount
       }
     />
 
-    <Subtitle title={
-      <T id="ln.channelsTab.openChannel" m="Open Channel" />
-    } />
+    <Subtitle title={<T id="ln.channelsTab.openChannel" m="Open Channel" />} />
 
     <div className={styles.openNewChannel}>
       <div className={styles.node}>
@@ -110,9 +102,9 @@ export default ({
 
     <div className={styles.channelsContent}>
       {pendingChannels.length > 0 ? (
-        <Subtitle title={
-          <T id="ln.channelsTab.pendingList" m="Pending Channels" />
-          } />
+        <Subtitle
+          title={<T id="ln.channelsTab.pendingList" m="Pending Channels" />}
+        />
       ) : null}
       {pendingChannels.map((c) => (
         <VerticalAccordion
@@ -128,9 +120,9 @@ export default ({
 
     <div className={styles.channelsContent}>
       {channels.length > 0 ? (
-        <Subtitle title={
-          <T id="ln.channelsTab.channelList" m="Open Channels" />
-          } />
+        <Subtitle
+          title={<T id="ln.channelsTab.channelList" m="Open Channels" />}
+        />
       ) : null}
       {channels.map((c) => (
         <div className={styles.headerWrapper} key={c.channelPoint}>
@@ -142,9 +134,9 @@ export default ({
             <CloseChannelModalButton
               modalTitle={
                 <T
-                id="ln.channelsTab.closeChannelModalTitle"
-                m="Close Channel"
-                  />
+                  id="ln.channelsTab.closeChannelModalTitle"
+                  m="Close Channel"
+                />
               }
               modalContent={<CloseChannelModalContent channel={c} />}
               onSubmit={() => onCloseChannel(c)}
@@ -165,9 +157,9 @@ export default ({
 
     <div className={styles.channelsContent}>
       {closedChannels.length > 0 ? (
-        <Subtitle title={
-          <T id="ln.channelsTab.closedList" m="Closed Channels" />
-          } />
+        <Subtitle
+          title={<T id="ln.channelsTab.closedList" m="Closed Channels" />}
+        />
       ) : null}
       {closedChannels.map((c) => (
         <VerticalAccordion

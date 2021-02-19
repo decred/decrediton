@@ -11,4 +11,4 @@ export function useRoutedTabsHeader() {
     sidebarOnBottom,
     uiAnimations
   };
-};
+}

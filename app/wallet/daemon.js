@@ -167,7 +167,6 @@ export const getDaemonInfo = log(
   "Get Daemon network info"
 );
 
-
 export const getAvailableWallets = log(
   (network) =>
     Promise.resolve(
@@ -180,7 +179,8 @@ export const getAvailableWallets = log(
   logOptionNoResponseData()
 );
 
-export const getDcrwalletGrpcKeyCert = () => ipcRenderer.sendSync("get-dcrwallet-grpc-cert-key");
+export const getDcrwalletGrpcKeyCert = () =>
+  ipcRenderer.sendSync("get-dcrwallet-grpc-cert-key");
 
 export const reloadAllowedExternalRequests = log(
   () =>
@@ -233,10 +233,10 @@ export const getPrivacyLogs = () =>
   Promise.resolve(ipcRenderer.sendSync("get-privacy-logs"));
 
 export const getDcrdLogs = () =>
-Promise.resolve(ipcRenderer.sendSync("get-dcrd-logs")).then((logs) => {
-  if (logs) return logs;
-  throw "Error getting dcrd logs";
-});
+  Promise.resolve(ipcRenderer.sendSync("get-dcrd-logs")).then((logs) => {
+    if (logs) return logs;
+    throw "Error getting dcrd logs";
+  });
 
 export const getDcrwalletLogs = () =>
   Promise.resolve(ipcRenderer.sendSync("get-dcrwallet-logs")).then((logs) => {

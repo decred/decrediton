@@ -229,8 +229,7 @@ export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
       .then((response) => {
         const coinjoinSumByAcctResp =
           response.wrappers_ && response.wrappers_[1];
-        if (!coinjoinSumByAcctResp)
-          resolve();
+        if (!coinjoinSumByAcctResp) resolve();
         const coinjoinSumByAcct = balances.reduce(
           (allAccts, { accountNumber }) => {
             // if account number equals imported account we skip it

@@ -18,8 +18,14 @@ import {
 export const getLoader = withLogNoData(
   ({ isTestNet, walletName, address, port, cert, key }) =>
     new Promise((resolve, reject) =>
-      rpcLoader(isTestNet, walletName, address, port, cert, key, (loader, error) =>
-        error ? reject(error) : resolve(loader)
+      rpcLoader(
+        isTestNet,
+        walletName,
+        address,
+        port,
+        cert,
+        key,
+        (loader, error) => (error ? reject(error) : resolve(loader))
       )
     ),
   "Get Loader"

@@ -6,8 +6,10 @@ import * as ca from "actions/ControlActions";
 export function useAccountsPage() {
   const dispatch = useDispatch();
   const isCreateAccountDisabled = useSelector(sel.isWatchingOnly);
-  const onGetNextAccountAttempt = useCallback((passphrase, name) =>
-    dispatch(ca.getNextAccountAttempt(passphrase, name)), [dispatch]);
+  const onGetNextAccountAttempt = useCallback(
+    (passphrase, name) => dispatch(ca.getNextAccountAttempt(passphrase, name)),
+    [dispatch]
+  );
 
   return {
     isCreateAccountDisabled,

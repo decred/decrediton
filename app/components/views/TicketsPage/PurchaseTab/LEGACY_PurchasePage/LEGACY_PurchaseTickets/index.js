@@ -159,7 +159,6 @@ class PurchaseTickets extends React.Component {
       : null;
   }
 
-
   getCanAffordTickets() {
     return (
       this.state.account &&

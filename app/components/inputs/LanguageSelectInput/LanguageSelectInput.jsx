@@ -27,7 +27,13 @@ class LanguageSelectInput extends React.Component {
   }
 
   render() {
-    const { valueKey, labelKey, options, className, ariaLabelledBy } = this.props;
+    const {
+      valueKey,
+      labelKey,
+      options,
+      className,
+      ariaLabelledBy
+    } = this.props;
 
     return (
       <div className={classNames(styles.input, className)}>

@@ -251,7 +251,7 @@ const darkTheme = {
   "decentralized-loop-still":
     "url('style/icons/decentralizedLoopStillDark.svg')",
   "decentralized-loop-animation":
-  "url('style/icons/decentralizedLoopAnimationDark.gif')",
+    "url('style/icons/decentralizedLoopAnimationDark.gif')",
   "self-transaction-icon": "url('style/icons/sentToSelfTxDark.svg')",
   "proposals-refresh-icon": "url('style/icons/menuMixerDark.svg')"
 };

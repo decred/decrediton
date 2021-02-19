@@ -16,9 +16,7 @@ const ImportScriptModal = ({ onCancelModal, onSubmit, show }) => {
   } = useImportScriptModal(onCancelModal, onSubmit);
 
   return (
-    <Modal
-      className={style.importRedeemScript}
-      {...{ show, onCancelModal }}>
+    <Modal className={style.importRedeemScript} {...{ show, onCancelModal }}>
       <div className={style.importRedeemScriptTitle}>
         <T id="importRedeemScriptModal.title" m="Import Redeem Script" />
       </div>
@@ -39,8 +37,7 @@ const ImportScriptModal = ({ onCancelModal, onSubmit, show }) => {
         />
       </div>
       <div className={style.importRedeemScriptButtons}>
-        <InvisibleButton
-          onClick={onCancelModalCallback}>
+        <InvisibleButton onClick={onCancelModalCallback}>
           <T id="importRedeemScriptModal.btnCancel" m="Cancel" />
         </InvisibleButton>
         <KeyBlueButton disabled={!isValid} onClick={onSubmitCallback}>

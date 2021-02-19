@@ -51,7 +51,8 @@ const AccountRow = ({
         intl,
         hasFailedAttempt
       }}
-    />);
+    />
+  );
 
   const getAccountDetailsStyles = () => (
     <AccountDetails
@@ -65,7 +66,8 @@ const AccountRow = ({
         showPubKey,
         accountExtendedKey
       }}
-    />);
+    />
+  );
 
   return (
     <Row

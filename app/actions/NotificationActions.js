@@ -53,10 +53,7 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
     newlyUnminedMap = {};
 
     if (currentBlockHeight) {
-      const {
-        maturingBlockHeights,
-        accountMixerRunning
-      } = getState().grpc;
+      const { maturingBlockHeights, accountMixerRunning } = getState().grpc;
       dispatch({
         currentBlockHeight,
         currentBlockTimestamp,
@@ -82,7 +79,9 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
 
       if (accountMixerRunning) {
         const changeAccount = sel.getChangeAccount(getState());
-        const { spendable } = await dispatch(getBalanceUpdateAttempt(changeAccount, 0));
+        const { spendable } = await dispatch(
+          getBalanceUpdateAttempt(changeAccount, 0)
+        );
 
         if (spendable < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
           dispatch(stopAccountMixer());

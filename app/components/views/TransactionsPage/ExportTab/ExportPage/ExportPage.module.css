@@ -3,7 +3,7 @@
   margin-right: 0.5em;
   margin-left: -0.5em;
 }
-  
+
 .exportArea {
   display: flex;
   width: 740px;
@@ -91,7 +91,7 @@ ul.exportInfoFields {
   }
 
   .exportAreaLeft {
-      width: 307px;
+    width: 307px;
   }
 
   .exportAreaRight {

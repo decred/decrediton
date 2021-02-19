@@ -382,11 +382,19 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
       const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
       const balanceToMaintain = walletCfg.get(cfgConstants.BALANCE_TO_MAINTAIN);
-      const discoverAccountsComplete = walletCfg.get(cfgConstants.DISCOVER_ACCOUNTS);
+      const discoverAccountsComplete = walletCfg.get(
+        cfgConstants.DISCOVER_ACCOUNTS
+      );
       const selectedStakePool = firstConfiguredStakePool;
-      const lastPoliteiaAccessTime = walletCfg.get(cfgConstants.POLITEIA_LAST_ACCESS_TIME);
-      const lastPoliteiaAccessBlock = walletCfg.get(cfgConstants.POLITEIA_LAST_ACCESS_BLOCK);
-      const dismissBackupRedeemScript = walletCfg.get(cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT);
+      const lastPoliteiaAccessTime = walletCfg.get(
+        cfgConstants.POLITEIA_LAST_ACCESS_TIME
+      );
+      const lastPoliteiaAccessBlock = walletCfg.get(
+        cfgConstants.POLITEIA_LAST_ACCESS_BLOCK
+      );
+      const dismissBackupRedeemScript = walletCfg.get(
+        cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT
+      );
       const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
       const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
       const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);

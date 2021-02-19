@@ -12,28 +12,31 @@ const messages = defineMessages({
 });
 
 const InvalidAddress = () => (
-  <div className={classNames(
-    styles.validateAddressFormResponse,
-    styles.responseInvalid
-  )}>
+  <div
+    className={classNames(
+      styles.validateAddressFormResponse,
+      styles.responseInvalid
+    )}>
     <T id="securitycenter.validate.result.invalid" m="Invalid address" />
   </div>
 );
 
 const OwnedAddress = () => (
-  <div className={classNames(
-    styles.validateAddressFormResponse,
-    styles.responseOwned
-  )}>
+  <div
+    className={classNames(
+      styles.validateAddressFormResponse,
+      styles.responseOwned
+    )}>
     <T id="securitycenter.validate.result.owned" m="Owned address" />
   </div>
 );
 
 const NotOwnedAddress = () => (
-  <div className={classNames(
-    styles.validateAddressFormResponse,
-    styles.responseNotOwned
-  )}>
+  <div
+    className={classNames(
+      styles.validateAddressFormResponse,
+      styles.responseNotOwned
+    )}>
     <T
       id="securitycenter.validate.result.notOwned"
       m="Address Valid, Not Owned"
@@ -69,17 +72,16 @@ const ValidateAddressForm = ({
   onChangeAddress
 }) => (
   <>
-    <Subtitle
-      title={<T id="security.validate.title" m="Validate Address" />}
-    />
+    <Subtitle title={<T id="security.validate.title" m="Validate Address" />} />
     <div className={styles.validateAddressForm}>
       <div className={styles.validateAddressFormLabel}>
         <T id="securitycenter.validate.field.address.label" m="Address" />
       </div>
-      <div className={classNames(
-        styles.validateAddressFormInput,
-        address && validateAddressSuccess && styles.validAddress
-      )}>
+      <div
+        className={classNames(
+          styles.validateAddressFormInput,
+          address && validateAddressSuccess && styles.validAddress
+        )}>
         <TextInput
           value={address}
           placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
@@ -90,9 +92,11 @@ const ValidateAddressForm = ({
         <Result validateAddressSuccess={validateAddressSuccess} error={error} />
       )}
     </div>
-    {validateAddressSuccess && validateAddressSuccess.isMine && address !== "" && (
-      <OwnedData validateAddressSuccess={validateAddressSuccess} />
-    )}
+    {validateAddressSuccess &&
+      validateAddressSuccess.isMine &&
+      address !== "" && (
+        <OwnedData validateAddressSuccess={validateAddressSuccess} />
+      )}
   </>
 );
 

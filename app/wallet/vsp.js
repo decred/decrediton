@@ -45,10 +45,7 @@ export const getStakePoolInfo = promisifyReqLogNoData(
   "getStakePoolInfo",
   api.stakePoolInfo
 );
-export const getVSPInfo = promisifyReqLogNoData(
-  "getVSPInfo",
-  api.getVSPInfo
-);
+export const getVSPInfo = promisifyReqLogNoData("getVSPInfo", api.getVSPInfo);
 export const getVSPTicketStatus = promisifyReqLogNoData(
   "getVSPTicketStatusInfo",
   api.getTicketStatus

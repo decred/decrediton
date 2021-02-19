@@ -3,14 +3,13 @@ process.env["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA";
 const grpc = require("@grpc/grpc-js");
 import fs from "fs";
 
-
 const proto = require("./rpc_grpc_pb.js");
 const services = grpc.loadPackageDefinition(proto).lnrpc;
 
-const wuProto =  require("./walletunlocker_grpc_pb.js");
+const wuProto = require("./walletunlocker_grpc_pb.js");
 const wuServices = grpc.loadPackageDefinition(wuProto).lnrpc;
 
-const wtProto =  require("./wtclient_grpc_pb.js");
+const wtProto = require("./wtclient_grpc_pb.js");
 const wtServices = grpc.loadPackageDefinition(wtProto).wtclientrpc;
 
 const getServiceClient = (clientClass) => async (
@@ -68,7 +67,7 @@ const getServiceClient = (clientClass) => async (
   const client = new clientClass(address + ":" + port, creds);
 
   const deadlineInSeconds = 30;
-  const deadline = new Date().getTime() + deadlineInSeconds*1000;
+  const deadline = new Date().getTime() + deadlineInSeconds * 1000;
   return await new Promise((resolve, reject) => {
     grpc.waitForClientReady(client, deadline, function (err) {
       if (err) {
@@ -80,9 +79,7 @@ const getServiceClient = (clientClass) => async (
   });
 };
 
-export const getLightningClient = getServiceClient(
-  services.Lightning
-);
+export const getLightningClient = getServiceClient(services.Lightning);
 export const getWatchtowerClient = getServiceClient(
   wtServices.WatchtowerClient
 );

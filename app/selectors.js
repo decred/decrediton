@@ -864,7 +864,7 @@ export const homeHistoryTransactions = createSelector(
 export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
 export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
 
-export const isSyncingTickets =  get(["vsp", "syncVSPRequestAttempt"]);
+export const isSyncingTickets = get(["vsp", "syncVSPRequestAttempt"]);
 
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
@@ -916,7 +916,10 @@ export const getVSPTickets = createSelector(
 );
 
 export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
-export const isProcessingUnmanaged = get(["vsp", "processUnmanagedTicketsAttempt"]);
+export const isProcessingUnmanaged = get([
+  "vsp",
+  "processUnmanagedTicketsAttempt"
+]);
 // ****************** end of vsp selectors ******************
 
 export const dailyBalancesStats = get(["statistics", "dailyBalances"]);
@@ -1665,10 +1668,7 @@ export const setVspdVoteChoicesAttempt = get([
   "vsp",
   "setVspdVoteChoicesRequestAttempt"
 ]);
-export const voteChoices = get([
-  "grpc",
-  "getVoteChoicesResponse"
-]);
+export const voteChoices = get(["grpc", "getVoteChoicesResponse"]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([

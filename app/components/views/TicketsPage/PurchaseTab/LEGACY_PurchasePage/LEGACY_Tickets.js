@@ -57,7 +57,9 @@ const Tickets = ({
           }
         />
       ) : (
-        <PurchaseTickets {...{ ...props, notMixedAccounts, getRunningIndicator }} />
+        <PurchaseTickets
+          {...{ ...props, notMixedAccounts, getRunningIndicator }}
+        />
       )}
       {isWatchingOnly ? (
         <UnsignedTickets {...{ ...props }} />
@@ -69,7 +71,9 @@ const Tickets = ({
           />
         </div>
       ) : (
-        <TicketAutoBuyer {...{ ...props, notMixedAccounts, getRunningIndicator }} />
+        <TicketAutoBuyer
+          {...{ ...props, notMixedAccounts, getRunningIndicator }}
+        />
       )}
     </div>
   );

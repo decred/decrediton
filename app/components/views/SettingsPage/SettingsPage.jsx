@@ -46,11 +46,7 @@ const SettingsPage = () => {
 
   return (
     <TabbedPage
-      header={
-        <SettingsPageHeader
-          {...{ onCloseWallet, walletName }}
-        />
-      }>
+      header={<SettingsPageHeader {...{ onCloseWallet, walletName }} />}>
       <Switch>
         <Redirect from="/settings" exact to="/settings/settings" />
       </Switch>

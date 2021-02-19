@@ -25,8 +25,8 @@ const CantCloseModals = (props) => {
     Component = AccountMixerRunningModal;
   } else if (purchasingTickets) {
     Component = PurchasingTicketsModal;
-  } else if(modalContent){
-    return (<ConfirmModal {...props}/>);
+  } else if (modalContent) {
+    return <ConfirmModal {...props} />;
   }
 
   return (

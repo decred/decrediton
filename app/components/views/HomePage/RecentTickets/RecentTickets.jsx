@@ -41,10 +41,20 @@ const RecentTickets = ({
       ) : (
         <div className={styles.overviewNoTickets}>
           <Link to="/tutorial/staking" className={styles.whatIsStaking}>
-            <T id="home.noTickets.staking" m="What is Staking (Proof-of-Stake)?" /> →
+            <T
+              id="home.noTickets.staking"
+              m="What is Staking (Proof-of-Stake)?"
+            />{" "}
+            →
           </Link>
-          <Link to="/tutorial/ticketLifecycle" className={styles.ticketLifeCycle}>
-            <T id="home.noTickets.lifecycle" m="Learn About the Ticket Lifecycle" /> →
+          <Link
+            to="/tutorial/ticketLifecycle"
+            className={styles.ticketLifeCycle}>
+            <T
+              id="home.noTickets.lifecycle"
+              m="Learn About the Ticket Lifecycle"
+            />{" "}
+            →
           </Link>
         </div>
       )}

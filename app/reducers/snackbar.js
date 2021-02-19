@@ -219,7 +219,8 @@ const messages = defineMessages({
   },
   UPDATESTAKEPOOLCONFIG_SUCCESS: {
     id: "tickets.updateStakePoolConfigHeader",
-    defaultMessage: "You have successfully updated your legacy stakepool settings."
+    defaultMessage:
+      "You have successfully updated your legacy stakepool settings."
   },
   UPDATESTAKEPOOLCONFIG_FAILED: {
     id: "tickets.errors.updateStakePoolConfigFailed",
@@ -532,7 +533,8 @@ const messages = defineMessages({
   },
   SYNCVSPTICKETS_SUCCESS: {
     id: "sync.vsp.success",
-    defaultMessage: "All tickets in error have been successfully attempted to be paid. Please make sure all tickets now show paid.  Otherwise, try again or use a different VSP."
+    defaultMessage:
+      "All tickets in error have been successfully attempted to be paid. Please make sure all tickets now show paid.  Otherwise, try again or use a different VSP."
   },
   SYNCVSPTICKETS_FAILED: {
     id: "sync.vsp.failed",
@@ -548,7 +550,8 @@ const messages = defineMessages({
   },
   SETVOTECHOICES_SUCCESS: {
     id: "set.vote.success",
-    defaultMessage: "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
+    defaultMessage:
+      "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
   },
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",

@@ -7,10 +7,7 @@ import { Subtitle, Tooltip } from "shared";
 import { KeyBlueButton } from "buttons";
 import { CopyableText } from "pi-ui";
 
-const AddWatchtower = ({
-  addWatchtower,
-  listWatchtowers
-}) => {
+const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
   const [pubkey, setPubkey] = useState("");
   const [addr, setAddr] = useState("");
 
@@ -38,12 +35,11 @@ const AddWatchtower = ({
       </div>
       <KeyBlueButton
         className={styles.addWatchtowerButton}
-        onClick={() => addWatchtower(pubkey, addr).then(() =>
-          listWatchtowers())
+        onClick={() =>
+          addWatchtower(pubkey, addr).then(() => listWatchtowers())
         }>
         <T id="ln.watchtowersTab.addBtn" m="Add" />
       </KeyBlueButton>
-
     </div>
   );
 };
@@ -58,28 +54,41 @@ const WatchtowersTab = () => {
 
   return (
     <>
-      <Subtitle title={<T id="ln.watchtowersTab.addWatchtowerHeader" m="Add Watchtower" />} />
+      <Subtitle
+        title={
+          <T id="ln.watchtowersTab.addWatchtowerHeader" m="Add Watchtower" />
+        }
+      />
       <AddWatchtower
         addWatchtower={addWatchtower}
         listWatchtowers={listWatchtowers}
         towersList={towersList}
       />
       {towersList.length > 0 ? (
-        <Subtitle title={<T id="ln.watchtowersTab.listWatchtowers" m="Watchtowers connected" />} />
-      ) : null }
+        <Subtitle
+          title={
+            <T
+              id="ln.watchtowersTab.listWatchtowers"
+              m="Watchtowers connected"
+            />
+          }
+        />
+      ) : null}
 
-      {towersList.map((tower) =>
+      {towersList.map((tower) => (
         <div
           className={`
-            ${styles.tower} ${tower.activeSessionCandidate ? styles.statusTrue : styles.statusFalse}
+            ${styles.tower} ${
+            tower.activeSessionCandidate
+              ? styles.statusTrue
+              : styles.statusFalse
+          }
           `}
-          key={tower.pubkey}
-        >
+          key={tower.pubkey}>
           <Tooltip
             className={styles.removeTowerBtn}
-            text={
-              <T id="ln.watchtowersTab.removeTowerBtn" m="Remove tower" />
-            }><a
+            text={<T id="ln.watchtowersTab.removeTowerBtn" m="Remove tower" />}>
+            <a
               className={styles.removeIcon}
               onClick={() => {
                 removeWatchtower(tower.pubkeyHex);
@@ -87,19 +96,25 @@ const WatchtowersTab = () => {
               }}
               href="#">
               &times;
-            </a></Tooltip>
-          <p><T
-            id="ln.watchtowersTab.sessions"
-            m="Sessions: {sessions}"
-            values={{ sessions: tower.numSessions }}/></p>
-          <CopyableText id="copyable" className={styles.copyableText}>{tower.pubkeyHex}</CopyableText>
+            </a>
+          </Tooltip>
+          <p>
+            <T
+              id="ln.watchtowersTab.sessions"
+              m="Sessions: {sessions}"
+              values={{ sessions: tower.numSessions }}
+            />
+          </p>
+          <CopyableText id="copyable" className={styles.copyableText}>
+            {tower.pubkeyHex}
+          </CopyableText>
           <div className={styles.addrsWrapper}>
             {tower.addressesList.map((addrs) => (
               <p key={`ips-${addrs}`}>{addrs}</p>
-            ))}</div>
+            ))}
+          </div>
         </div>
-      )}
-
+      ))}
     </>
   );
 };

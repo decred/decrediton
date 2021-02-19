@@ -73,7 +73,9 @@
   background-color: var(--checkbox-stroke-color);
 }
 
-.value { font-size: 32px; }
+.value {
+  font-size: 32px;
+}
 
 .rhash {
   text-overflow: ellipsis;
@@ -97,9 +99,15 @@
   flex: 0 1 28em;
 }
 
-.balanceValue { font-size: 32px; }
-.hasOutbound { border-bottom: 10px solid var(--link-color); }
-.zeroFunds { border-bottom: 10px solid var(--error-red); }
+.balanceValue {
+  font-size: 32px;
+}
+.hasOutbound {
+  border-bottom: 10px solid var(--link-color);
+}
+.zeroFunds {
+  border-bottom: 10px solid var(--error-red);
+}
 
 .paymentDetails {
   word-break: break-all;

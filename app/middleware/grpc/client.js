@@ -49,27 +49,15 @@ const getServiceClient = (clientClass) => (
   }
 };
 
-export const getWalletService = getServiceClient(
-  services.WalletService
-);
+export const getWalletService = getServiceClient(services.WalletService);
 export const getTicketBuyerV2Service = getServiceClient(
   services.TicketBuyerV2Service
 );
-export const loader = getServiceClient(
-  services.WalletLoaderService
-);
-export const getSeedService = getServiceClient(
-  services.SeedService
-);
-export const getVersionService = getServiceClient(
-  services.VersionService
-);
-export const getVotingService = getServiceClient(
-  services.VotingService
-);
-export const getAgendaService = getServiceClient(
-  services.AgendaService
-);
+export const loader = getServiceClient(services.WalletLoaderService);
+export const getSeedService = getServiceClient(services.SeedService);
+export const getVersionService = getServiceClient(services.VersionService);
+export const getVotingService = getServiceClient(services.VotingService);
+export const getAgendaService = getServiceClient(services.AgendaService);
 export const getMessageVerificationService = getServiceClient(
   services.MessageVerificationService
 );

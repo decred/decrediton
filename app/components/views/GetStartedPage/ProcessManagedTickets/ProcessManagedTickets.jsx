@@ -24,7 +24,7 @@ export default ({
     // send a continue so we can go to the loading state
     onProcessTickets(passphrase)
       .then(() => send({ type: "CONTINUE" }))
-      .catch(error => {
+      .catch((error) => {
         send({ type: "ERROR", error });
       });
     return;
@@ -34,55 +34,42 @@ export default ({
       setIsValid(true);
       return;
     }
-    if(vsp) {
+    if (vsp) {
       setIsValid(true);
     }
   }, [vsp, noVspSelection]);
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        { !isProcessingManaged &&
+        {!isProcessingManaged && (
           <Tooltip text={<GoBackMsg />}>
             <div
               className={GetStartedStyles.goBackScreenButton}
               onClick={cancel}
             />
           </Tooltip>
-        }
+        )}
       </div>
-      <Subtitle
-        className={styles.subtitle}
-        title={title}
-      />
-      <div className={styles.description}>
-        {description}
-      </div>
-      { !noVspSelection && <VSPSelect
-          className={styles.vspSelect}
-          {...{ onChange: setVSP }}
-        />
-      }
-      {
-        error && <div className="error">{error}</div>
-      }
+      <Subtitle className={styles.subtitle} title={title} />
+      <div className={styles.description}>{description}</div>
+      {!noVspSelection && (
+        <VSPSelect className={styles.vspSelect} {...{ onChange: setVSP }} />
+      )}
+      {error && <div className="error">{error}</div>}
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
-          modalTitle={
-            <T id="process.mangedTickets.title" m="Passphrase" />
-          }
+          modalTitle={<T id="process.mangedTickets.title" m="Passphrase" />}
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.mangedTickets.button" m="Continue" />}
           disabled={!isValid || isProcessingManaged}
-          loading={isProcessingManaged}/>
-        { !isProcessingManaged &&
+          loading={isProcessingManaged}
+        />
+        {!isProcessingManaged && (
           <InvisibleButton className={styles.skipButton} onClick={cancel}>
-            <T
-              id="process.mangedTickets.button.skip"
-              m="Skip"
-            />
+            <T id="process.mangedTickets.button.skip" m="Skip" />
           </InvisibleButton>
-        }
+        )}
       </div>
     </div>
   );

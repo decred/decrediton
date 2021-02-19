@@ -24,12 +24,7 @@ const PrivacyInfo = () => {
         id="purchase.vsp.privacy.enabled"
         m="You are purchasing mixed tickets"
       />
-      <div
-        className={classNames(
-          styles.readMoreIcon,
-          show && styles.active
-        )}
-      />
+      <div className={classNames(styles.readMoreIcon, show && styles.active)} />
       {show && (
         <T
           id="purchase.vsp.privacy.enabled.description"

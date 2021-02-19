@@ -89,7 +89,14 @@ export const getWalletSeedService = () => (dispatch, getState) => {
   dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
   const grpcCertAndKey = getDcrwalletGrpcKeyCert();
   return wallet
-    .getSeedService(isTestNet(getState()), walletName, address, port, grpcCertAndKey, grpcCertAndKey)
+    .getSeedService(
+      isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((seedService) => {
       dispatch({ seedService, type: GETWALLETSEEDSVC_SUCCESS });
     })

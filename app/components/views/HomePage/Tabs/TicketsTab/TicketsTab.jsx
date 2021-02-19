@@ -18,14 +18,16 @@ const TicketsTab = () => {
   return (
     <div className={sharedStyles.overviewContentWrapper}>
       <div className={sharedStyles.overviewSpendableLockedWrapper}>
-        <div className={classNames(
-          sharedStyles.overviewSpendableLockedWrapperArea,
-          sharedStyles.tickets
-        )}>
-          <div className={classNames(
-            sharedStyles.overviewBalanceSpendableLocked,
-            sharedStyles.active
+        <div
+          className={classNames(
+            sharedStyles.overviewSpendableLockedWrapperArea,
+            sharedStyles.tickets
           )}>
+          <div
+            className={classNames(
+              sharedStyles.overviewBalanceSpendableLocked,
+              sharedStyles.active
+            )}>
             <T
               id="home.activeTicketsCount"
               m="{count, plural, one {{fmtCount} active ticket} other {{fmtCount} active tickets}}"
@@ -55,10 +57,11 @@ const TicketsTab = () => {
           </div>
         </div>
         <div className={sharedStyles.overviewSpendableLockedWrapperArea}>
-          <div className={classNames(
-            sharedStyles.overviewBalanceSpendableLocked,
-            sharedStyles.voted
-          )}>
+          <div
+            className={classNames(
+              sharedStyles.overviewBalanceSpendableLocked,
+              sharedStyles.voted
+            )}>
             <T
               id="home.votedTicketsCount"
               m="{count, plural, one {{fmtCount} voted ticket} other {{fmtCount} voted tickets}}"

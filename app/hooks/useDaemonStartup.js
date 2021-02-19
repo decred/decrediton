@@ -7,7 +7,10 @@ import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
-import { processManagedTickets, processUnmanagedTickets } from "actions/VSPActions";
+import {
+  processManagedTickets,
+  processUnmanagedTickets
+} from "actions/VSPActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -121,9 +124,8 @@ const useDaemonStartup = () => {
   ]);
   // start daemon and wallet methods
   const onRetryStartRPC = useCallback(
-    async (privPass, isRetry) => await dispatch(
-      wla.startRpcRequestFunc(privPass, isRetry)
-    ),
+    async (privPass, isRetry) =>
+      await dispatch(wla.startRpcRequestFunc(privPass, isRetry)),
     [dispatch]
   );
   const startSPVSync = useCallback(
@@ -152,7 +154,8 @@ const useDaemonStartup = () => {
     [dispatch]
   );
   const onConnectDaemon = useCallback(
-    (rpcCreds, daemonRemote) => dispatch(da.connectDaemon(rpcCreds, daemonRemote)),
+    (rpcCreds, daemonRemote) =>
+      dispatch(da.connectDaemon(rpcCreds, daemonRemote)),
     [dispatch]
   );
   const checkNetworkMatch = useCallback(
@@ -208,20 +211,17 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
-  const goToHome = useCallback(
-    () => dispatch(ca.goToHomePage()),
-    [dispatch]
-  );
+  const goToHome = useCallback(() => dispatch(ca.goToHomePage()), [dispatch]);
 
   const setCoinjoinCfg = useCallback(
-    (mixedNumber, changeNumber) => dispatch(ama.setCoinjoinCfg({ mixedNumber, changeNumber })),
+    (mixedNumber, changeNumber) =>
+      dispatch(ama.setCoinjoinCfg({ mixedNumber, changeNumber })),
     [dispatch]
   );
 
   const onProcessUnmanagedTickets = useCallback(
-    (passphrase, vspHost, vspPubkey) => dispatch(
-      processUnmanagedTickets(passphrase, vspHost, vspPubkey)
-    ),
+    (passphrase, vspHost, vspPubkey) =>
+      dispatch(processUnmanagedTickets(passphrase, vspHost, vspPubkey)),
     [dispatch]
   );
 

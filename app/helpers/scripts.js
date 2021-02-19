@@ -691,12 +691,12 @@ const parseScript = (script, opcodes = opcodeArray) => {
 // print returns a human-readable string representation of the opcode for use
 // in script disassembly.
 const printPop = (pop) => {
- 	// The reference implementation one-line disassembly replaces opcodes
-	// which represent values (e.g. OP_0 through OP_16 and OP_1NEGATE)
-	// with the raw value.  However, when not doing a one-line dissassembly,
-	// we prefer to show the actual opcode names.  Thus, only replace the
-	// opcodes in question when the oneline flag is set.
-	let dataString = pop.opcode.name;
+  // The reference implementation one-line disassembly replaces opcodes
+  // which represent values (e.g. OP_0 through OP_16 and OP_1NEGATE)
+  // with the raw value.  However, when not doing a one-line dissassembly,
+  // we prefer to show the actual opcode names.  Thus, only replace the
+  // opcodes in question when the oneline flag is set.
+  let dataString = pop.opcode.name;
 
   // Nothing more to do for non-data push opcodes.
   if (pop.opcode.length === 1) {
@@ -704,8 +704,7 @@ const printPop = (pop) => {
   }
   dataString += " ";
 
-
-  pop.data.map(buff => {
+  pop.data.map((buff) => {
     dataString += ("00" + buff.toString(16)).slice(-2);
   });
 

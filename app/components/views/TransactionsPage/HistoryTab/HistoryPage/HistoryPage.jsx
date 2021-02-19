@@ -115,8 +115,7 @@ const Page = ({
       loadMore={onLoadMoreTransactions}
       initialLoad={loadMoreThreshold > 90}
       useWindow={false}
-      threshold={loadMoreThreshold}
-    >
+      threshold={loadMoreThreshold}>
       <div className={styles.historyPageContent}>
         {transactions.length > 0 ? (
           <TxHistory {...{ transactions, tsDate, mode: "regular" }} />
