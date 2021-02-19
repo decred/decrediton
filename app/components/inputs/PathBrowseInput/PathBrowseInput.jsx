@@ -3,7 +3,7 @@ const dialog = electron.remote.dialog;
 
 import PathInput from "../PathInput/PathInput";
 import style from "./PathBrowseInput.module.css";
-import { PathButton } from "../../buttons";
+import { PathButton } from "buttons";
 import { defineMessages, injectIntl } from "react-intl";
 
 // Import this and pass one of the objects as a member of the filter prop
