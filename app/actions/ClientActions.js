@@ -17,7 +17,8 @@ import {
   refreshStakepoolPurchaseInformation,
   setStakePoolVoteChoices,
   getStakepoolStats,
-  getVSPTicketsByFeeStatus
+  getVSPTicketsByFeeStatus,
+  setVSPDVoteChoices
 } from "./VSPActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -89,6 +90,8 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+
+      await dispatch(getVoteChoicesAttempt());
     };
 
     startServicesAsync()
@@ -616,8 +619,14 @@ export const getVoteChoicesAttempt = (stakePool) => (dispatch, getState) => {
   wallet
     .getVoteChoices(sel.votingService(getState()))
     .then((voteChoices) => {
-      dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
-      dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
+      if (stakePool) {
+        dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
+      }
+      const voteChoicesConfig = voteChoices.getChoicesList().map((choice) => ({
+        agendaId: choice.getAgendaId(),
+        choiceId: choice.getChoiceId()
+      }));
+      dispatch({ voteChoicesConfig, type: GETVOTECHOICES_SUCCESS });
     })
     .catch((error) => dispatch({ error, type: GETVOTECHOICES_FAILED }));
 };
@@ -626,22 +635,20 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (agendaId, choiceId) => (
-  dispatch,
-  getState
-) => {
+export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (dispatch, getState) => {
   dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
-  const stakePools = sel.configuredStakePools(getState());
-  wallet
-    .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
-    .then((response) => {
-      dispatch({ response, type: SETVOTECHOICES_SUCCESS });
+    wallet.setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
+    .then(() => {
+      dispatch(setVSPDVoteChoices(passphrase));
+      const stakePools = sel.configuredStakePools(getState());
       for (let i = 0; i < stakePools.length; i++) {
-        dispatch(getVoteChoicesAttempt(stakePools[i]));
+          dispatch(getVoteChoicesAttempt(stakePools[i]));
       }
     })
-    .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
-};
+    .catch((error) =>
+      dispatch({ error, type: SETVOTECHOICES_FAILED })
+    );
+  };
 
 export const GETMESSAGEVERIFICATIONSERVICE_ATTEMPT =
   "GETMESSAGEVERIFICATIONSERVICE_ATTEMPT";

@@ -9,7 +9,8 @@ const AgendaOverview = ({
   onCloseAgenda,
   showVoteChoice,
   onClick,
-  onUpdateVotePreference
+  onUpdateVotePreference,
+  isLoading
 }) => {
   const [selectedChoiceId, setSelectedChoiceId] = useState(selectedChoice);
   useEffect(() => {
@@ -18,8 +19,8 @@ const AgendaOverview = ({
     }
   }, [selectedChoice, selectedChoiceId]);
 
-  const updatePreferences = () => {
-    onUpdateVotePreference(agenda.name, selectedChoiceId);
+  const updatePreferences =  async (passphrase) => {
+    await onUpdateVotePreference(agenda.name, selectedChoiceId, passphrase);
   };
 
   const agendaChoices = agenda.choices;
@@ -43,7 +44,8 @@ const AgendaOverview = ({
         setSelectedChoiceId,
         updatePreferences,
         closeCurrentAgenda: onCloseAgenda,
-        disabled
+        disabled,
+        isLoading
       }}
     />
   ) : (

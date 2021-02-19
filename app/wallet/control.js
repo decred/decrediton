@@ -396,6 +396,19 @@ new Promise((resolve, reject) => {
   });
 });
 
+export const setVspdAgendaChoices = (walletService, vspHost, vspPubkey, feeAccount, changeAccount) =>
+  new Promise((resolve, reject) => {
+    const request = new api.SetVspdVoteChoicesRequest();
+    request.setVspHost("https://" + vspHost);
+    request.setVspPubkey(vspPubkey);
+    request.setFeeAccount(feeAccount);
+    request.setChangeAccount(changeAccount);
+
+    walletService.setVspdVoteChoices(request, (err, res) =>
+      err ? reject(err) : resolve(res)
+    );
+  });
+
 export const unlockWallet = (walletService, passphrase) => new Promise((resolve, reject) => {
   const unlockReq = new api.UnlockWalletRequest();
   unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));

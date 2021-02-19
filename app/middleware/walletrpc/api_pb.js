@@ -18,6 +18,8 @@ goog.exportSymbol('proto.walletrpc.AccountNotificationsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.AccountNotificationsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.AccountNumberRequest', null, global);
 goog.exportSymbol('proto.walletrpc.AccountNumberResponse', null, global);
+goog.exportSymbol('proto.walletrpc.AccountUnlockedRequest', null, global);
+goog.exportSymbol('proto.walletrpc.AccountUnlockedResponse', null, global);
 goog.exportSymbol('proto.walletrpc.AccountsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.AccountsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.AccountsResponse.Account', null, global);
@@ -177,6 +179,8 @@ goog.exportSymbol('proto.walletrpc.SetVoteChoicesRequest.Choice', null, global);
 goog.exportSymbol('proto.walletrpc.SetVoteChoicesResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SetVotingAddressRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SetVotingAddressResponse', null, global);
+goog.exportSymbol('proto.walletrpc.SetVspdVoteChoicesRequest', null, global);
+goog.exportSymbol('proto.walletrpc.SetVspdVoteChoicesResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignHashesRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SignHashesResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignMessageRequest', null, global);
@@ -41075,6 +41079,292 @@ proto.walletrpc.LockAccountResponse.serializeBinaryToWriter = function(message, 
  * @extends {jspb.Message}
  * @constructor
  */
+proto.walletrpc.AccountUnlockedRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.AccountUnlockedRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.AccountUnlockedRequest.displayName = 'proto.walletrpc.AccountUnlockedRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.AccountUnlockedRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountUnlockedRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.AccountUnlockedRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AccountUnlockedRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.AccountUnlockedRequest}
+ */
+proto.walletrpc.AccountUnlockedRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.AccountUnlockedRequest;
+  return proto.walletrpc.AccountUnlockedRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.AccountUnlockedRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.AccountUnlockedRequest}
+ */
+proto.walletrpc.AccountUnlockedRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAccountNumber(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AccountUnlockedRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.AccountUnlockedRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.AccountUnlockedRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AccountUnlockedRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getAccountNumber();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 account_number = 1;
+ * @return {number}
+ */
+proto.walletrpc.AccountUnlockedRequest.prototype.getAccountNumber = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.AccountUnlockedRequest.prototype.setAccountNumber = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.AccountUnlockedResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.AccountUnlockedResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.AccountUnlockedResponse.displayName = 'proto.walletrpc.AccountUnlockedResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.AccountUnlockedResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountUnlockedResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.AccountUnlockedResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AccountUnlockedResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    unlocked: jspb.Message.getFieldWithDefault(msg, 1, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.AccountUnlockedResponse}
+ */
+proto.walletrpc.AccountUnlockedResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.AccountUnlockedResponse;
+  return proto.walletrpc.AccountUnlockedResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.AccountUnlockedResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.AccountUnlockedResponse}
+ */
+proto.walletrpc.AccountUnlockedResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setUnlocked(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AccountUnlockedResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.AccountUnlockedResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.AccountUnlockedResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AccountUnlockedResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUnlocked();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool unlocked = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.walletrpc.AccountUnlockedResponse.prototype.getUnlocked = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.walletrpc.AccountUnlockedResponse.prototype.setUnlocked = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.walletrpc.UnlockWalletRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -43517,6 +43807,345 @@ proto.walletrpc.ProcessUnmanagedTicketsResponse.prototype.serializeBinary = func
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ProcessUnmanagedTicketsResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.SetVspdVoteChoicesRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SetVspdVoteChoicesRequest.displayName = 'proto.walletrpc.SetVspdVoteChoicesRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SetVspdVoteChoicesRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SetVspdVoteChoicesRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    vspHost: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    vspPubkey: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    feeAccount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 4, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SetVspdVoteChoicesRequest}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SetVspdVoteChoicesRequest;
+  return proto.walletrpc.SetVspdVoteChoicesRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SetVspdVoteChoicesRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SetVspdVoteChoicesRequest}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspHost(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspPubkey(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setFeeAccount(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setChangeAccount(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SetVspdVoteChoicesRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SetVspdVoteChoicesRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getVspHost();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getVspPubkey();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getFeeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
+  f = message.getChangeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string vsp_host = 1;
+ * @return {string}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.getVspHost = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.setVspHost = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string vsp_pubkey = 2;
+ * @return {string}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.getVspPubkey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.setVspPubkey = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 fee_account = 3;
+ * @return {number}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.getFeeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.setFeeAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 change_account = 4;
+ * @return {number}
+ */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.getChangeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SetVspdVoteChoicesRequest.prototype.setChangeAccount = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.SetVspdVoteChoicesResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SetVspdVoteChoicesResponse.displayName = 'proto.walletrpc.SetVspdVoteChoicesResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SetVspdVoteChoicesResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SetVspdVoteChoicesResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SetVspdVoteChoicesResponse}
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SetVspdVoteChoicesResponse;
+  return proto.walletrpc.SetVspdVoteChoicesResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SetVspdVoteChoicesResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SetVspdVoteChoicesResponse}
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SetVspdVoteChoicesResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SetVspdVoteChoicesResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SetVspdVoteChoicesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
 };
 
