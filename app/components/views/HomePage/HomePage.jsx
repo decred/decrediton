@@ -76,7 +76,8 @@ export default () => {
           setActiveTabIndex,
           activeTabIndex,
           contentClassName: styles.tabsContent,
-          className: styles.tabs
+          className: styles.tabs,
+          wrapperClassName: styles.tabsWrapper
         }}
       />
       <div
