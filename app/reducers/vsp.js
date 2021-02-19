@@ -13,7 +13,10 @@ import {
   PROCESSMANAGEDTICKETS_FAILED,
   PROCESSUNMANAGEDTICKETS_ATTEMPT,
   PROCESSUNMANAGEDTICKETS_SUCCESS,
-  PROCESSUNMANAGEDTICKETS_FAILED
+  PROCESSUNMANAGEDTICKETS_FAILED,
+  SETVSPDVOTECHOICE_ATTEMPT,
+  SETVSPDVOTECHOICE_FAILED,
+  SETVSPDVOTECHOICE_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -118,6 +121,23 @@ export default function vsp(state = {}, action) {
       return { ...state,
         processUnmanagedTicketsAttempt: false,
         processUnmanagedTicketsError: action.error
+      };
+    case SETVSPDVOTECHOICE_ATTEMPT:
+      return {
+        ...state,
+        setVspdVoteChoicesError: null,
+        setVspdVoteChoicesRequestAttempt: true
+      };
+    case SETVSPDVOTECHOICE_FAILED:
+      return {
+        ...state,
+        setVspdVoteChoicesError: String(action.error),
+        setVspdVoteChoicesRequestAttempt: false
+      };
+    case SETVSPDVOTECHOICE_SUCCESS:
+      return {
+        ...state,
+        setVspdVoteChoicesRequestAttempt: false
       };
     default:
       return state;

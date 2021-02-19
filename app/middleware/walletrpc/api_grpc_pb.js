@@ -70,6 +70,28 @@ function deserialize_walletrpc_AccountNumberResponse(buffer_arg) {
   return api_pb.AccountNumberResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_AccountUnlockedRequest(arg) {
+  if (!(arg instanceof api_pb.AccountUnlockedRequest)) {
+    throw new Error('Expected argument of type walletrpc.AccountUnlockedRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AccountUnlockedRequest(buffer_arg) {
+  return api_pb.AccountUnlockedRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_AccountUnlockedResponse(arg) {
+  if (!(arg instanceof api_pb.AccountUnlockedResponse)) {
+    throw new Error('Expected argument of type walletrpc.AccountUnlockedResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AccountUnlockedResponse(buffer_arg) {
+  return api_pb.AccountUnlockedResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_AccountsRequest(arg) {
   if (!(arg instanceof api_pb.AccountsRequest)) {
     throw new Error('Expected argument of type walletrpc.AccountsRequest');
@@ -1423,6 +1445,28 @@ function deserialize_walletrpc_SetVotingAddressResponse(buffer_arg) {
   return api_pb.SetVotingAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SetVspdVoteChoicesRequest(arg) {
+  if (!(arg instanceof api_pb.SetVspdVoteChoicesRequest)) {
+    throw new Error('Expected argument of type walletrpc.SetVspdVoteChoicesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetVspdVoteChoicesRequest(buffer_arg) {
+  return api_pb.SetVspdVoteChoicesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SetVspdVoteChoicesResponse(arg) {
+  if (!(arg instanceof api_pb.SetVspdVoteChoicesResponse)) {
+    throw new Error('Expected argument of type walletrpc.SetVspdVoteChoicesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetVspdVoteChoicesResponse(buffer_arg) {
+  return api_pb.SetVspdVoteChoicesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SignHashesRequest(arg) {
   if (!(arg instanceof api_pb.SignHashesRequest)) {
     throw new Error('Expected argument of type walletrpc.SignHashesRequest');
@@ -2532,6 +2576,17 @@ changePassphrase: {
     responseSerialize: serialize_walletrpc_LockWalletResponse,
     responseDeserialize: deserialize_walletrpc_LockWalletResponse,
   },
+  accountUnlocked: {
+    path: '/walletrpc.WalletService/AccountUnlocked',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.AccountUnlockedRequest,
+    responseType: api_pb.AccountUnlockedResponse,
+    requestSerialize: serialize_walletrpc_AccountUnlockedRequest,
+    requestDeserialize: deserialize_walletrpc_AccountUnlockedRequest,
+    responseSerialize: serialize_walletrpc_AccountUnlockedResponse,
+    responseDeserialize: deserialize_walletrpc_AccountUnlockedResponse,
+  },
   syncVSPFailedTickets: {
     path: '/walletrpc.WalletService/SyncVSPFailedTickets',
     requestStream: false,
@@ -2575,6 +2630,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_ProcessUnmanagedTicketsRequest,
     responseSerialize: serialize_walletrpc_ProcessUnmanagedTicketsResponse,
     responseDeserialize: deserialize_walletrpc_ProcessUnmanagedTicketsResponse,
+  },
+  setVspdVoteChoices: {
+    path: '/walletrpc.WalletService/SetVspdVoteChoices',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SetVspdVoteChoicesRequest,
+    responseType: api_pb.SetVspdVoteChoicesResponse,
+    requestSerialize: serialize_walletrpc_SetVspdVoteChoicesRequest,
+    requestDeserialize: deserialize_walletrpc_SetVspdVoteChoicesRequest,
+    responseSerialize: serialize_walletrpc_SetVspdVoteChoicesResponse,
+    responseDeserialize: deserialize_walletrpc_SetVspdVoteChoicesResponse,
   },
 };
 

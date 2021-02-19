@@ -2,6 +2,7 @@
 import Promise from "promise";
 import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
+import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
 import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED, VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID } from "constants";
@@ -643,3 +644,52 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (disp
     };
     asyncProcess().then(r => resolve(r)).catch(error => reject(error));
   });
+
+export const SETVSPDVOTECHOICE_ATTEMPT = "SETVSPDVOTECHOICE_ATTEMPT";
+export const SETVSPDVOTECHOICE_SUCCESS = "SETVSPDVOTECHOICE_SUCCESS";
+export const SETVSPDVOTECHOICE_FAILED = "SETVSPDVOTECHOICE_FAILED";
+
+
+// setVSPDVoteChoices gets all vsps and updates the set vote choices to
+// whatever the wallet has.
+export const setVSPDVoteChoices = (passphrase) => async (dispatch, getState) => {
+  const availableVSPs = await dispatch(discoverAvailableVSPs());
+  availableVSPs.map(async (vsp) => {
+    const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+    if (pubkey) {
+      vsp.pubkey = pubkey;
+      return vsp;
+    }
+    return false;
+  });
+  try {
+    dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
+    const walletService = sel.walletService(getState());
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
+    }
+
+    await wallet.unlockWallet(walletService, passphrase);
+    await Promise.all(availableVSPs.map(async (vsp) => {
+      if (vsp.pubkey) {
+        await wallet.setVspdAgendaChoices(
+          walletService, vsp.host, vsp.pubkey, feeAccount, changeAccount
+        );
+      }
+    }));
+
+    await wallet.lockWallet(walletService);
+
+    dispatch({ type: SETVOTECHOICES_SUCCESS });
+    dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
+    return true;
+  } catch(error) {
+    dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
+  }
+};

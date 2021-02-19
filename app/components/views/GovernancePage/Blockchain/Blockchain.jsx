@@ -12,7 +12,9 @@ const VotingPrefsTab = () => {
     stakePool,
     allAgendas,
     onUpdateVotePreference,
-    onChangeStakePool
+    onChangeStakePool,
+    isLoading,
+    voteChoices
   } = useVotingPrefs();
 
   const getStakePool = () => {
@@ -27,7 +29,7 @@ const VotingPrefsTab = () => {
       ["choiceId"],
       find(
         compose(eq(agenda.name), get(["agendaId"])),
-        get("VoteChoices", getStakePool()) || []
+        voteChoices
       )
     ) || "abstain";
 
@@ -45,7 +47,8 @@ const VotingPrefsTab = () => {
         getAgendaSelectedChoice,
         onShowAgenda,
         onCloseAgenda,
-        stakePool: getStakePool()
+        stakePool: getStakePool(),
+        isLoading
       }}
     />
   );

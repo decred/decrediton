@@ -77,10 +77,12 @@ service WalletService {
 	rpc LockAccount (LockAccountRequest) returns (LockAccountResponse);
 	rpc UnlockWallet (UnlockWalletRequest) returns (UnlockWalletResponse);
 	rpc LockWallet (LockWalletRequest) returns (LockWalletResponse);
+	rpc AccountUnlocked (AccountUnlockedRequest) returns (AccountUnlockedResponse);
 	rpc SyncVSPFailedTickets(SyncVSPTicketsRequest) returns (SyncVSPTicketsResponse);
 	rpc GetVSPTicketsByFeeStatus (GetVSPTicketsByFeeStatusRequest) returns (GetVSPTicketsByFeeStatusResponse);
 	rpc ProcessManagedTickets (ProcessManagedTicketsRequest) returns (ProcessManagedTicketsResponse);
 	rpc ProcessUnmanagedTickets (ProcessUnmanagedTicketsRequest) returns (ProcessUnmanagedTicketsResponse);
+	rpc SetVspdVoteChoices (SetVspdVoteChoicesRequest) returns (SetVspdVoteChoicesResponse);
 }
 
 service WalletLoaderService {
@@ -1231,6 +1233,14 @@ message UnlockAccountResponse {}
 
 message LockAccountResponse {}
 
+message AccountUnlockedRequest {
+	uint32 account_number = 1;
+}
+
+message AccountUnlockedResponse {
+	bool unlocked = 1;
+}
+
 message UnlockWalletRequest {
 	bytes passphrase = 1;
 }
@@ -1292,3 +1302,12 @@ message ProcessUnmanagedTicketsRequest {
 }
 
 message ProcessUnmanagedTicketsResponse {}
+
+message SetVspdVoteChoicesRequest {
+	string vsp_host = 1;
+	string vsp_pubkey = 2;
+	uint32 fee_account = 3;
+	uint32 change_account = 4;
+}
+
+message SetVspdVoteChoicesResponse {}
