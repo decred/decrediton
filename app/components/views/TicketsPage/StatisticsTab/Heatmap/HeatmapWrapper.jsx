@@ -2,7 +2,6 @@ import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "pi-ui";
 import { themes } from "./themes";
 import TooltipInfo from "./TooltipInfo";
-import { FormattedMessage as T } from "react-intl";
 import styles from "../Statistics.module.css";
 import { useStatistics } from "../hooks";
 

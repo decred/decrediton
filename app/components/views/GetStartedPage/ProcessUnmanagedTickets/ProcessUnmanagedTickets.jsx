@@ -4,7 +4,6 @@ import { Subtitle } from "shared";
 import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
 import GetStartedStyles from "../GetStarted.module.css";
-import { useState } from "react";
 import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
 import { VSPSelect } from "inputs";
