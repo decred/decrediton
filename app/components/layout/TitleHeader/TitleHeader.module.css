@@ -49,28 +49,28 @@
 .ln {
   background-image: var(--header-lightning);
 }
-.tx-detail-icon-ticket {
+.ticket {
   background-image: var(--ticket-live-icon);
 }
-.tx-detail-icon-vote {
+.vote {
   background-image: var(--ticket-voted-icon);
 }
-.tx-detail-icon-revocation {
+.revocation {
   background-image: var(--ticket-revoked-icon);
 }
-.tx-detail-icon-ticketfee {
+.ticketfee {
   background-image: var(--ticketfee-transaction-icon);
 }
-.tx-detail-icon-mixed {
+.mixed {
   background-image: var(--mixed-transaction-icon);
 }
-.tx-detail-icon-self {
+.self {
   background-image: var(--self-transaction-icon);
 }
-.tx-detail-icon-out {
+.out {
   background-image: var(--minus-big-icon);
 }
-.tx-detail-icon-in {
+.in {
   background-image: var(--plus-big-icon);
 }
 
