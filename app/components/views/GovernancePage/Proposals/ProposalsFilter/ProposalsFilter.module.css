@@ -1,8 +1,7 @@
 .tabs {
-  text-align: right;
   max-width: 738px;
   margin-left: 85px;
-  margin-top: 15px;
+  height: 40px;
 }
 
 .tabs > div > ul {
