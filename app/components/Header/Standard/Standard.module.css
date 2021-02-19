@@ -1,0 +1,15 @@
+.top {
+  text-align: center;
+}
+
+.titleOverview {
+  padding-top: 14px;
+  color: var(--stroke-color-hovered);
+  font-size: 27px;
+}
+
+.metaOverview {
+  height: 54px;
+  padding-top: 5px;
+  font-size: 53px;
+}

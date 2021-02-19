@@ -12,6 +12,7 @@ import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
 import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
+import styles from "./TicketsPage.module.css";
 
 const PageHeader = () => (
   <TitleHeader
@@ -31,7 +32,7 @@ const TabHeader = purchaseTickets(({ ticketPrice }) => (
             <Balance
               flat
               amount={ticketPrice}
-              classNameWrapper="header-small-balance"
+              classNameWrapper={styles.smallBalance}
             />
           )
         }}

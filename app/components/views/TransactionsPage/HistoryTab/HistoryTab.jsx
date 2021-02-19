@@ -8,6 +8,7 @@ import { DCR } from "constants";
 import { useService } from "hooks";
 import { useHistoryTab } from "./hooks";
 import { selectedTxTypesFromFilter, getSortTypes, getTxTypes } from "./helpers";
+import styles from "./HistoryTab.module.css";
 
 export const HistoryTabHeader = () => {
   const { totalBalance } = useHistoryTab();
@@ -22,7 +23,7 @@ export const HistoryTabHeader = () => {
               <Balance
                 flat
                 amount={totalBalance}
-                classNameWrapper="header-small-balance"
+                classNameWrapper={styles.smallBalance}
               />
             )
           }}
