@@ -815,8 +815,9 @@ export const hideAboutModalMacOS = () => (dispatch) =>
   dispatch({ type: HIDE_ABOUT_MODAL_MACOS });
 
 export const SHOW_CANTCLOSE_MODAL = "SHOW_CANTCLOSE_MODAL";
-export const showCantCloseModal = () => (dispatch) =>
+export const showCantCloseModal = () => (dispatch) => {
   dispatch({ type: SHOW_CANTCLOSE_MODAL });
+};
 
 export const HIDE_CANTCLOSE_MODAL = "HIDE_CANTCLOSE_MODAL";
 export const hideCantCloseModal = () => (dispatch) =>

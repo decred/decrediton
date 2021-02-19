@@ -1,7 +1,12 @@
 import fs from "fs-extra";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
-import { initGlobalCfg, validateGlobalCfgFile } from "./config";
+import {
+  getDefaultBitcoinConfig,
+  updateDefaultBitcoinConfig,
+  initGlobalCfg,
+  validateGlobalCfgFile
+} from "./config";
 import {
   appLocaleFromElectronLocale,
   default as locales
@@ -26,7 +31,8 @@ import {
   reloadAllowedExternalRequests,
   LEGACY_allowStakepoolRequests,
   allowVSPRequests,
-  allowExternalRequest
+  allowExternalRequest,
+  DEX_LOCALPAGE
 } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import {
@@ -60,7 +66,17 @@ import {
   startDcrlnd,
   stopDcrlnd,
   removeDcrlnd,
-  lnScbInfo
+  lnScbInfo,
+  startDexc,
+  stopDexc,
+  checkInitDexc,
+  initDexc,
+  createWalletDexc,
+  userDexc,
+  loginDexc,
+  logoutDexc,
+  getFeeDexc,
+  registerDexc
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -320,13 +336,18 @@ ipcMain.on("stop-wallet", (event) => {
   event.returnValue = stopWallet();
 });
 
-ipcMain.on("start-wallet", (event, walletPath, testnet) => {
+ipcMain.on("start-wallet", (event, walletPath, testnet, rpcCreds) => {
+  const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
   event.returnValue = startWallet(
     mainWindow,
     daemonIsAdvanced,
     testnet,
     walletPath,
-    reactIPC
+    reactIPC,
+    rpcUser,
+    rpcPass,
+    rpcListen,
+    rpcCert
   );
 });
 
@@ -363,6 +384,190 @@ ipcMain.on(
 ipcMain.on("stop-dcrlnd", async (event) => {
   event.returnValue = await stopDcrlnd();
 });
+
+ipcMain.on("check-init-dexc", async (event) => {
+  try {
+    event.returnValue = await checkInitDexc();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("init-dexc", async (event, passphrase) => {
+  try {
+    event.returnValue = await initDexc(passphrase);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("login-dexc", async (event, passphrase) => {
+  try {
+    event.returnValue = await loginDexc(passphrase);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("logout-dexc", async (event) => {
+  try {
+    event.returnValue = await logoutDexc();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on(
+  "create-wallet-dexc",
+  async (
+    event,
+    assetID,
+    passphrase,
+    appPassphrase,
+    account,
+    rpcuser,
+    rpcpass,
+    rpclisten,
+    rpccert
+  ) => {
+    try {
+      event.returnValue = await createWalletDexc(
+        assetID,
+        passphrase,
+        appPassphrase,
+        account,
+        rpcuser,
+        rpcpass,
+        rpclisten,
+        rpccert
+      );
+    } catch (error) {
+      if (!(error instanceof Error)) {
+        event.returnValue = new Error(error);
+      } else {
+        event.returnValue = error;
+      }
+    }
+  }
+);
+
+ipcMain.on("get-fee-dexc", async (event, addr) => {
+  try {
+    event.returnValue = await getFeeDexc(addr);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("register-dexc", async (event, appPass, addr, fee) => {
+  try {
+    event.returnValue = await registerDexc(appPass, addr, fee);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("user-dexc", async (event) => {
+  try {
+    event.returnValue = await userDexc();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("start-dexc", async (event, walletPath, testnet) => {
+  try {
+    event.returnValue = await startDexc(walletPath, testnet);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("stop-dexc", async (event) => {
+  event.returnValue = await stopDexc();
+});
+
+ipcMain.on("launch-dex-window", async (event) => {
+  event.returnValue = await createDexWindow();
+});
+
+function createDexWindow() {
+  const child = new BrowserWindow({
+    parent: mainWindow,
+    modal: true,
+    show: false,
+    autoHideMenuBar: true
+  });
+  child.loadURL("http://" + DEX_LOCALPAGE);
+  child.once("ready-to-show", () => {
+    child.show();
+  });
+}
+
+ipcMain.on("check-btc-config", async (event) => {
+  try {
+    event.returnValue = await getDefaultBitcoinConfig();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on(
+  "update-btc-config",
+  async (event, rpcuser, rpcpassword, rpcbind, rpcport, testnet) => {
+    try {
+      event.returnValue = await updateDefaultBitcoinConfig(
+        rpcuser,
+        rpcpassword,
+        rpcbind,
+        rpcport,
+        testnet
+      );
+    } catch (error) {
+      if (!(error instanceof Error)) {
+        event.returnValue = new Error(error);
+      } else {
+        event.returnValue = error;
+      }
+    }
+  }
+);
 
 ipcMain.on("dcrlnd-creds", (event) => {
   if (GetDcrlndPID() && GetDcrlndPID() !== -1) {

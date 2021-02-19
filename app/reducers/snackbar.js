@@ -2,6 +2,16 @@
 // we disable no-fallthrough rule in this file to simplify the select/case below.
 import { defineMessages } from "react-intl";
 import {
+  DEXC_STARTUP_FAILED,
+  DEXC_LOGIN_FAILED,
+  DEXC_ENABLE_FAILED,
+  DEXC_INIT_FAILED,
+  DEXC_CREATEWALLET_FAILED,
+  DEXC_REGISTER_FAILED,
+  DEXC_GETFEE_FAILED,
+  BTC_CREATEWALLET_FAILED
+} from "../actions/DexActions";
+import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED,
   CONSTRUCTTX_FAILED,
@@ -562,6 +572,38 @@ const messages = defineMessages({
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
+  },
+  DEXC_STARTUP_FAILED: {
+    id: "dex.startup.failed",
+    defaultMessage: "DEX Server Failed to Start: {originalError}"
+  },
+  DEXC_LOGIN_FAILED: {
+    id: "dex.login.failed",
+    defaultMessage: "DEX Login Failed: {originalError}"
+  },
+  DEXC_ENABLE_FAILED: {
+    id: "dex.enable.failed",
+    defaultMessage: "Enabling DEX Failed: {originalError}"
+  },
+  DEXC_INIT_FAILED: {
+    id: "dex.init.failed",
+    defaultMessage: "Setting DEX Passphrase Failed: {originalError}"
+  },
+  DEXC_CREATEWALLET_FAILED: {
+    id: "dex.connectWallet.failed",
+    defaultMessage: "Connecting to DCR wallet Failed: {originalError}"
+  },
+  DEXC_REGISTER_FAILED: {
+    id: "dex.register.failed",
+    defaultMessage: "Paying DEX Fee Failed: {originalError}"
+  },
+  DEXC_GETFEE_FAILED: {
+    id: "dex.getFee.failed",
+    defaultMessage: "Getting DEX Fee and Address Failed: {originalError}"
+  },
+  BTC_CREATEWALLET_FAILED: {
+    id: "dex.connectBTCWallet.failed",
+    defaultMessage: "Connect to BTC wallet Failed: {originalError}"
   }
 });
 
@@ -768,6 +810,14 @@ export default function snackbar(state = {}, action) {
     case PROCESSMANAGEDTICKETS_FAILED:
     case SETVOTECHOICES_FAILED:
     case SETVSPDVOTECHOICE_FAILED:
+    case DEXC_STARTUP_FAILED:
+    case DEXC_LOGIN_FAILED:
+    case DEXC_ENABLE_FAILED:
+    case DEXC_INIT_FAILED:
+    case DEXC_CREATEWALLET_FAILED:
+    case DEXC_REGISTER_FAILED:
+    case DEXC_GETFEE_FAILED:
+    case BTC_CREATEWALLET_FAILED:
       type = "Error";
       if (
         action.error &&

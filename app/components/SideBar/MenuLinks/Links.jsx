@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 
 export const LN_KEY = "ln";
+export const DEX_KEY = "dex";
 export const TREZOR_KEY = "trezor";
 
 export const linkList = [
@@ -54,5 +55,12 @@ export const linkList = [
     icon: TREZOR_KEY,
     key: TREZOR_KEY,
     ariaLabel: "Trezor"
+  },
+  {
+    path: "/dex",
+    link: <T id="sidebar.link.dex" m="DEX" />,
+    icon: LN_KEY, // XXX NEED DEX ICON
+    key: DEX_KEY,
+    ariaLabel: "DEX"
   }
 ];

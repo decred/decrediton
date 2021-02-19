@@ -16,6 +16,7 @@ import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
 import TrezorPage from "components/views/TrezorPage";
 import LNPage from "components/views/LNPage";
+import DexPage from "components/views/DexPage";
 import SideBar from "components/SideBar/SideBar";
 import { BlurableContainer } from "layout";
 import { useWallet } from "../hooks";
@@ -56,6 +57,7 @@ const Wallet = ({ setInterval }) => {
           <Route path="/governance" component={GovernancePage} />
           <Route path="/trezor" component={TrezorPage} />
           <Route path="/ln" component={LNPage} />
+          <Route path="/dex" component={DexPage} />
         </StaticSwitch>
         <Route
           path="/transaction/history/:txHash"

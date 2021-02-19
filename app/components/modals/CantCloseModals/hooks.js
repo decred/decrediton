@@ -10,6 +10,7 @@ export function useCantCloseModal() {
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const purchasingTickets = useSelector(sel.purchaseTicketsRequestAttempt);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
+  const dexOrdersOpen = useSelector(sel.dexOrdersOpen);
 
   const dispatch = useDispatch();
   const onHideCantCloseModal = () => dispatch(hideCantCloseModal());
@@ -22,6 +23,7 @@ export function useCantCloseModal() {
     onHideCantCloseModal,
     shutdownApp,
     accountMixerRunning,
-    purchasingTickets
+    purchasingTickets,
+    dexOrdersOpen
   };
 }

@@ -34,6 +34,7 @@ import {
   WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
+import { CREATEDEXACCOUNT_SUCCESS } from "actions/DexActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
   TOGGLE_ALLOW_SEND_FROM_UNMIXED
@@ -110,7 +111,11 @@ export default function walletLoader(state = {}, action) {
         changeAccount: action.changeAccount,
         csppServer: action.csppServer,
         csppPort: action.csppPort,
-        mixedAccountBranch: action.mixedAccountBranch
+        mixedAccountBranch: action.mixedAccountBranch,
+        dexEnabled: action.enableDex,
+        dexAccount: action.dexAccount,
+        dexRpcSettings: action.rpcCreds,
+        btcWalletName: action.btcWalletName
       };
     case GETWALLETSEEDSVC_ATTEMPT:
       return { ...state, seedService: null };
@@ -226,6 +231,11 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         allowSendFromUnmixed: action.allow
+      };
+    case CREATEDEXACCOUNT_SUCCESS:
+      return {
+        ...state,
+        dexAccount: action.dexAccount
       };
     default:
       return state;

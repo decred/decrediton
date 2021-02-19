@@ -9,7 +9,12 @@ import {
   getDcrwalletGrpcKeyCert
 } from "wallet";
 import * as wallet from "wallet";
-import { rescanCancel, ticketBuyerCancel } from "./ControlActions";
+import { DEXC_LOGOUT_FAILED, logoutDexc, stopDexc } from "./DexActions";
+import {
+  rescanCancel,
+  ticketBuyerCancel,
+  showCantCloseModal
+} from "./ControlActions";
 import {
   getWalletServiceAttempt,
   startWalletServices,
@@ -251,7 +256,7 @@ export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
 export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
 export const CLOSEWALLET_SUCCESS = "CLOSEWALLET_SUCCESS";
 
-export const closeWalletRequest = () => async (dispatch, getState) => {
+const finalCloseWallet = () => async (dispatch, getState) => {
   const { walletReady } = getState().daemon;
   dispatch({ type: CLOSEWALLET_ATTEMPT });
   try {
@@ -259,9 +264,11 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(stopDcrlnd());
+    await dispatch(stopDexc());
     await dispatch(ticketBuyerCancel());
     await dispatch(stopAccountMixer(true));
     await dispatch(setSelectedWallet(null));
+    await dispatch(stopDexc());
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }
@@ -272,6 +279,26 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ error, type: CLOSEWALLET_FAILED });
     dispatch(pushHistory("/error"));
+  }
+};
+
+export const closeWalletRequest = () => (dispatch, getState) => {
+  const { loggedIn } = getState().dex;
+  if (loggedIn) {
+    logoutDexc()
+      .then(() => {
+        dispatch(finalCloseWallet());
+      })
+      .catch((error) => {
+        let openOrder = false;
+        if (error.indexOf("cannot log out with active orders", 0) > -1) {
+          openOrder = true;
+        }
+        dispatch({ type: DEXC_LOGOUT_FAILED, error, openOrder });
+        dispatch(showCantCloseModal());
+      });
+  } else {
+    dispatch(finalCloseWallet());
   }
 };
 

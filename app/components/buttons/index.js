@@ -49,7 +49,9 @@ import {
   ConfirmModal,
   DocumentationInfoModal,
   AboutModal,
-  CantCloseModals
+  CantCloseModals,
+  SetNewPassphraseModal,
+  AppPassAndPassphraseModal
 } from "modals";
 
 import styles from "./Buttons.module.css";
@@ -109,8 +111,21 @@ export const InvisiblePassphraseModalButton = mbb(
   InvisibleButton
 );
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
+export const SetNewPassphraseModalButton = mbb(
+  null,
+  SetNewPassphraseModal,
+  KeyBlueButton
+);
+export const AppPassAndPassphraseModalButton = mbb(
+  null,
+  AppPassAndPassphraseModal,
+  KeyBlueButton
+);
+
 export const RevokeModalButton = mbb(null, PassphraseModal, PiUiButton);
 export const TicketPurchaseModalButton = mbb(null, PassphraseModal, PiUiButton);
+
+
 export const AutoBuyerPassphraseModalSwitch = mbb(
   null,
   PassphraseModal,

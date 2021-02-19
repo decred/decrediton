@@ -1,3 +1,5 @@
+import path from "path";
+import { getWalletPath } from "main_dev/paths";
 import {
   syncCancel,
   setSelectedWallet,
@@ -6,8 +8,9 @@ import {
 import { getVersionServiceAttempt, semverCompatible } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
-import { rescanCancel } from "./ControlActions";
+import { rescanCancel, showCantCloseModal } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
+import { DEXC_LOGOUT_FAILED, logoutDexc } from "./DexActions";
 import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
@@ -222,7 +225,7 @@ export const deleteDaemonData = () => (dispatch, getState) => {
     .catch((err) => dispatch({ err, type: DELETE_DCRD_FAILED }));
 };
 
-export const shutdownApp = () => (dispatch, getState) => {
+export const finalShutdown = () => (dispatch, getState) => {
   const { currentBlockHeight } = getState().grpc;
   if (currentBlockHeight) {
     setLastHeight(currentBlockHeight);
@@ -235,6 +238,26 @@ export const shutdownApp = () => (dispatch, getState) => {
   dispatch(rescanCancel());
   dispatch(syncCancel());
   dispatch(pushHistory("/shutdown"));
+};
+
+export const shutdownApp = () => (dispatch, getState) => {
+  const { loggedIn } = getState().dex;
+  if (loggedIn) {
+    logoutDexc()
+      .then(() => {
+        dispatch(finalShutdown());
+      })
+      .catch((error) => {
+        let openOrder = false;
+        if (error.indexOf("cannot log out with active orders", 0) > -1) {
+          openOrder = true;
+        }
+        dispatch({ type: DEXC_LOGOUT_FAILED, error, openOrder });
+        dispatch(showCantCloseModal());
+      });
+  } else {
+    dispatch(finalShutdown());
+  }
 };
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
@@ -349,15 +372,32 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       if (!selectedWallet) {
         selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
       }
+      const isTestnet = network == "testnet";
+      const walletCfg = getWalletCfg(isTestnet, selectedWallet.value.wallet);
+
+      const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
+      const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
+      const btcWalletName = walletCfg.get(cfgConstants.BTCWALLET_NAME);
+      let rpcCreds = null;
+      if (enableDex) {
+        rpcCreds = {
+          rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
+          rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
+          rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
+          rpcCert: path.join(
+            getWalletPath(isTestnet, selectedWallet.value.wallet),
+            "rpc.cert"
+          )
+        };
+      } else {
+        rpcCreds = {};
+      }
       const walletStarted = await wallet.startWallet(
         selectedWallet.value.wallet,
-        network == "testnet"
+        isTestnet,
+        rpcCreds
       );
       const { port } = walletStarted;
-      const walletCfg = getWalletCfg(
-        network == "testnet",
-        selectedWallet.value.wallet
-      );
       wallet.setPreviousWallet(selectedWallet);
 
       // TODO clean up this found stakepool
@@ -436,7 +476,11 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         changeAccount,
         csppServer,
         csppPort,
-        mixedAccountBranch
+        mixedAccountBranch,
+        enableDex,
+        dexAccount,
+        rpcCreds,
+        btcWalletName
       });
       selectedWallet.value.isTrezor && dispatch(enableTrezor());
       await dispatch(getVersionServiceAttempt());

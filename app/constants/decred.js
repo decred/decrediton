@@ -124,3 +124,7 @@ export const ripemd160Size = 20;
 // for an SStx tx.
 // 20 bytes P2SH/P2PKH + 8 byte amount + 4 byte fee range limits
 export const SStxPKHMinOutSize = 32;
+
+// DefaultWalletRPCListener is the default host and port that will be used
+// if the rpc server is started (currently only used when DEX is enabled).
+export const DefaultWalletRPCListener = "127.0.0.1:19110";

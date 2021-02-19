@@ -1,0 +1,69 @@
+.dexContent {
+  width: 740px;
+}
+.error {
+  color: var(--error-text-color);
+  margin-top: 8px;
+}
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+.bold {
+  font-weight: 700;
+}
+.select {
+  width: 300px;
+}
+.item {
+  padding: 10px;
+}
+.item.error {
+  color: red;
+}
+.area {
+  margin-left: auto;
+}
+.row {
+  margin-bottom: 10px;
+}
+.balanceRow {
+  width: 100%;
+  align-items: center;
+}
+.highlighted {
+  background-color: var(--blue-highlight-background);
+  padding: 2px;
+}
+
+.contentTitleButtonsArea {
+  margin-left: auto;
+}
+
+.formArea {
+  background-color: var(--background-back-color);
+  padding: 20px 20px 24px 20px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.balances {
+  display: flex;
+  flex-direction: row;
+}
+@media screen and (max-width: 1179px) {
+  .dexContent {
+    width: 634px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dexContent {
+    width: 355px;
+    margin-left: 0;
+  }
+}

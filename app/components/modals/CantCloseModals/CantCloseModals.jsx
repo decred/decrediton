@@ -1,6 +1,7 @@
 import PurchasingTicketsModal from "./PurchasingTicketsModal";
 import AccountMixerRunningModal from "./AccountMixerRunningModal";
 import AutobuyerRunning from "./AutobuyerRunningModal";
+import DexOpenOrdersModal from "./DexOpenOrdersModal";
 import HasTicketFeeErro from "./HasTicketFeeError";
 import { useCantCloseModal } from "./hooks";
 import { ConfirmModal } from "modals";
@@ -14,8 +15,10 @@ const CantCloseModals = (props) => {
     onHideCantCloseModal,
     shutdownApp,
     accountMixerRunning,
-    purchasingTickets
+    purchasingTickets,
+    dexOrdersOpen
   } = useCantCloseModal();
+
   let Component = () => <></>;
   if (autoBuyerRunning) {
     Component = AutobuyerRunning;
@@ -25,6 +28,8 @@ const CantCloseModals = (props) => {
     Component = AccountMixerRunningModal;
   } else if (purchasingTickets) {
     Component = PurchasingTicketsModal;
+  } else if (dexOrdersOpen) {
+    Component = DexOpenOrdersModal;
   } else if (modalContent) {
     return <ConfirmModal {...props} />;
   }
@@ -33,11 +38,6 @@ const CantCloseModals = (props) => {
     <Component
       show={show ?? cantCloseModalVisible}
       onSubmit={() => {
-        if (onCancelModal) {
-          onCancelModal();
-        } else {
-          onHideCantCloseModal();
-        }
         if (onSubmit) {
           onSubmit();
         } else {

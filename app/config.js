@@ -1,12 +1,14 @@
-import fs from "fs";
+import fs from "fs-extra";
 import Store from "electron-store";
 import ini from "ini";
+import path from "path";
 import { stakePoolInfo } from "./middleware/vspapi";
 import {
   getGlobalCfgPath,
   getWalletPath,
   dcrwalletConf,
-  getDcrdRpcCert
+  getDcrdRpcCert,
+  getDefaultBitcoinDirectory
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
 
@@ -233,3 +235,174 @@ export function newWalletConfigCreation(testnet, walletPath) {
     ini.stringify(dcrwConf)
   );
 }
+
+export function checkNoLegacyWalletConfig(testnet, walletPath, noLegacyRpc) {
+  let fileContents;
+  try {
+    fileContents = ini.parse(
+      fs.readFileSync(dcrwalletConf(getWalletPath(testnet, walletPath)), "utf8")
+    );
+    fileContents = Object.fromEntries(
+      Object.entries(fileContents).map(([key, value]) => {
+        if (key == "Application Options") {
+          if (value.nolegacyrpc && noLegacyRpc) {
+            delete value.nolegacyrpc;
+          } else if (!noLegacyRpc) {
+            value.nolegacyrpc = "1";
+          }
+        }
+        return [key, value];
+      })
+    );
+    fs.writeFileSync(
+      dcrwalletConf(getWalletPath(testnet, walletPath)),
+      ini.stringify(fileContents)
+    );
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const getDefaultBitcoinConfig = () =>
+  new Promise((resolve, reject) => {
+    try {
+      const config = ini.parse(
+        fs.readFileSync(
+          path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
+          "utf8"
+        )
+      );
+      resolve(config);
+    } catch (e) {
+      reject(e);
+    }
+  });
+
+export function newDefaultBitcoinConfig(
+  rpcuser,
+  rpcpassword,
+  rpcbind,
+  rpcport,
+  testnet
+) {
+  if (!fs.existsSync(path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"))) {
+    let bitcoinConf = {};
+    if (testnet) {
+      bitcoinConf = {
+        rpcuser,
+        rpcpassword,
+        server: 1,
+        test: {
+          rpcbind,
+          rpcport
+        }
+      };
+    } else {
+      bitcoinConf = {
+        rpcuser,
+        rpcpassword,
+        rpcbind,
+        rpcport,
+        server: 1
+      };
+    }
+    fs.writeFileSync(
+      path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
+      ini.stringify(bitcoinConf)
+    );
+  }
+}
+
+export const updateDefaultBitcoinConfig = (
+  rpcuser,
+  rpcpassword,
+  rpcbind,
+  rpcport,
+  testnet
+) =>
+  new Promise((resolve, reject) => {
+    try {
+      // Check if default file exists, if not create a new one with args given.
+      if (
+        !fs.existsSync(path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"))
+      ) {
+        // check to see if directory exists, if not make it
+        fs.pathExistsSync(getDefaultBitcoinDirectory()) ||
+          fs.mkdirsSync(getDefaultBitcoinDirectory());
+        newDefaultBitcoinConfig(
+          rpcuser,
+          rpcpassword,
+          rpcbind,
+          rpcport,
+          testnet
+        );
+      } else {
+        let fileContents;
+        let needUser = true;
+        let needPassword = true;
+        let needBind = true;
+        let needPort = true;
+        fileContents = ini.parse(
+          fs.readFileSync(
+            path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
+            "utf8"
+          )
+        );
+        fileContents = Object.fromEntries(
+          Object.entries(fileContents).map(([key, value]) => {
+            // Check if any fields that are needed are currently used, if so keep those values
+            if (key == "rpcuser") {
+              needUser = false;
+              if (value !== "") rpcuser = value;
+            }
+            if (key == "rpcpassword") {
+              needPassword = false;
+              if (value !== "") rpcpassword = value;
+            }
+            if (key == "rpcbind") {
+              needBind = false;
+              if (value !== "") rpcbind = value;
+            }
+            if (key == "rpcport") {
+              needPort = false;
+              if (value !== "") rpcport = value;
+            }
+            if (key == "test") {
+              if (!testnet) {
+                return null;
+              }
+            }
+            return [key, value];
+          })
+        );
+        // Set Fields in Config if they weren't found.
+        if (needUser) fileContents.rpcuser = rpcuser;
+
+        if (needPassword) fileContents.rpcpassword = rpcpassword;
+
+        fileContents.server = 1;
+
+        if (testnet) {
+          if (needBind) fileContents["test"].rpcbind = rpcbind;
+
+          if (needPort) fileContents["test"].rpcport = rpcport;
+        } else {
+          if (needBind) fileContents.rpcbind = rpcbind;
+
+          if (needPort) fileContents.rpcport = rpcport;
+        }
+
+        fs.writeFileSync(
+          path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
+          ini.stringify(fileContents)
+        );
+      }
+      if (testnet) {
+        resolve({ rpcuser, rpcpassword, test: { rpcbind, rpcport } });
+      } else {
+        resolve({ rpcuser, rpcpassword, rpcbind, rpcport });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });

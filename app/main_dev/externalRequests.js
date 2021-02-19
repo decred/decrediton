@@ -18,6 +18,7 @@ import {
 } from "../middleware/dcrdataapi";
 import * as cfgConstants from "constants/config";
 
+export const EXTERNALREQUEST_DEXC = "EXTERNALREQUEST_DEXC";
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING =
   "EXTERNALREQUEST_STAKEPOOL_LISTING";
@@ -25,6 +26,8 @@ export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
 export const EXTERNALREQUEST_DCRDATA = "EXTERNALREQUEST_DCRDATA";
 export const EXTERNALREQUEST_TREZOR_BRIDGE = "EXTERNALREQUEST_TREZOR_BRIDGE";
+
+export const DEX_LOCALPAGE = "localhost:5758";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
@@ -125,6 +128,10 @@ export const allowExternalRequest = (externalReqType) => {
   if (allowedExternalRequests[externalReqType]) return;
 
   switch (externalReqType) {
+    case EXTERNALREQUEST_DEXC:
+      addAllowedURL("http://" + DEX_LOCALPAGE);
+      addAllowedURL("ws://" + DEX_LOCALPAGE);
+      break;
     case EXTERNALREQUEST_NETWORK_STATUS:
       addAllowedURL("https://testnet.decred.org/api/status");
       addAllowedURL("https://mainnet.decred.org/api/status");
