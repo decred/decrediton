@@ -1,6 +1,5 @@
 import ReactTimeout from "react-timeout";
 import { Route } from "react-router-dom";
-import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
 import HomePage from "components/views/HomePage/HomePage";
 import SettingsPage from "components/views/SettingsPage/SettingsPage";
@@ -21,18 +20,10 @@ import SideBar from "components/SideBar/SideBar";
 import ListUtxo from "components/views/ListUtxo/ListUtxo";
 import { BlurableContainer } from "layout";
 import { useWallet } from "./hooks";
-import { useTheming, useMountEffect } from "hooks";
-
-const pageAnimation = {
-  atEnter: { opacity: 0 },
-  atLeave: { opacity: 0 },
-  atActive: { opacity: 1 }
-};
+import { useMountEffect } from "hooks";
 
 const Wallet = ({ setInterval }) => {
   const { getPeerInfo, expandSideBar } = useWallet();
-
-  const { uiAnimations } = useTheming();
 
   // Notice that we return a cleanup logic function in useEffect/useMountEffect
   // which will run on unmount.
@@ -47,14 +38,12 @@ const Wallet = ({ setInterval }) => {
     };
   });
 
-  const MainSwitch = uiAnimations ? AnimatedSwitch : StaticSwitch;
-
   return (
     <div className={"page-body"}>
       <SideBar />
       <BlurableContainer
         className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
-        <MainSwitch {...pageAnimation}>
+        <StaticSwitch>
           <Route path="/home" component={HomePage} />
           <Route path="/accounts" component={AccountsPage} />
           <Route path="/settings" component={SettingsPage} />
@@ -69,7 +58,7 @@ const Wallet = ({ setInterval }) => {
           <Route path="/trezor" component={TrezorPage} />
           <Route path="/ln" component={LNPage} />
           <Route path="/listUtxo" component={ListUtxo} />
-        </MainSwitch>
+        </StaticSwitch>
         <Route
           path="/transaction/history/:txHash"
           component={TransactionPage}
