@@ -19,7 +19,7 @@
     "start": "cross-env NODE_ENV=production electron ./app/ --debug --custombinpath=./bin",
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development",
     "start-hot-nosandbox": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development -r --no-sandbox",
-    "postinstall": "concurrently \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
+    "postinstall": "husky install",
     "dev": "npm run hot-server -- --start-hot",
     "dev-nosandbox": "npm run hot-server -- --start-hot-nosandbox",
     "package": "npm run build && ./node_modules/.bin/electron-builder build --publish never",
@@ -34,8 +34,7 @@
     "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
-    "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}'",
-    "postinstall": "husky install"
+    "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}'"
   },
   "private": true,
   "jest": {
@@ -247,6 +246,7 @@
     "node-gyp": "6.1.0",
     "node-loader": "^0.6.0",
     "prettier": "^2.0.5",
+    "pretty-quick": "^3.1.0",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
     "sinon": "^7.4.2",
