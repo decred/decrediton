@@ -1,6 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-pretty-quick --staged
+yarn pretty-quick --staged
 yarn lint-fix
 git add .
