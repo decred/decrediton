@@ -285,12 +285,37 @@ const connectToLNWallet = (
     return { client };
   }
 
-  const lnClient = await ln.getLightningClient(
-    address,
-    port,
-    certPath,
-    macaroonPath
-  );
+  // dcrlnd might be shutting down the WalletUnlockerService and starting up the
+  // LightingService, so try a few times before failing if we're getting the
+  // unimplemented error.
+  const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+  let i = 0;
+  let lnClient;
+  let lnWalletAddr;
+  while (i < 10) {
+    try {
+      lnClient = await ln.getLightningClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
+
+      lnWalletAddr = await ln.newAddress(lnClient);
+      break;
+    } catch (error) {
+      if (error.code === 12) {
+        // 12 === UNIMPLEMENTED.
+        // This means the Lightning service is still starting up.
+        i++;
+        await sleep();
+      } else {
+        throw error;
+      }
+    }
+  }
+
   const wtClient = await ln.getWatchtowerClient(
     address,
     port,
@@ -306,7 +331,6 @@ const connectToLNWallet = (
   // wallet. This can still not completely ensure they are the same wallet
   // (since this would also pass in the case of different running wallets using
   // the same seed) but is good enough for our purposes.
-  const lnWalletAddr = await ln.newAddress(lnClient);
   const validResp = await wallet.validateAddress(
     sel.walletService(getState()),
     lnWalletAddr
