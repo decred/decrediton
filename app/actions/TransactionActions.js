@@ -100,7 +100,6 @@ export const newTransactionsReceived = (
 ) => async (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length)
     return;
-
   let {
     unminedTransactions,
     stakeTransactions,
