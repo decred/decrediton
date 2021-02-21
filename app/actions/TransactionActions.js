@@ -101,11 +101,6 @@ export const newTransactionsReceived = (
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length)
     return;
 
-  // get vsp tickets fee status in case there is a stake tx and we show the
-  // proper ticket value.
-  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
   let {
     unminedTransactions,
     stakeTransactions,
