@@ -185,6 +185,11 @@ const messages = defineMessages({
     defaultMessage:
       "You bought {numTickets, plural, one { # ticket } other { # tickets }}"
   },
+  PURCHASETICKETS_SUCCESS_LESS: {
+    id: "tickets.purchaseTicketsHeaderLess",
+    defaultMessage:
+      "You bought {numTickets, plural, one { # ticket } other { # tickets }}.  This was less than your requested amount of {numAttempted}.  While your balance was sufficient, you lacked enough spendable outputs.  You may try and purchase more now."
+  },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
     defaultMessage: "{originalError}"
@@ -654,8 +659,14 @@ export default function snackbar(state = {}, action) {
         case PURCHASETICKETS_SUCCESS:
           values = {
             numTickets: action.purchaseTicketsResponse.getTicketHashesList()
-              .length
+              .length,
+            numAttempted: action.numAttempted
           };
+          if (values.numAttempted && values.numTickets < values.numAttempted)  {
+            message = messages[
+              "PURCHASETICKETS_SUCCESS_LESS"
+            ];
+          }
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:
           message =

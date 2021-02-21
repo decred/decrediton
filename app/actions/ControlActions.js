@@ -385,8 +385,12 @@ export const newPurchaseTicketsAttempt = (
     }
     // save vsp for future checking if the wallet has all tickets synced.
     dispatch(updateUsedVSPs(vsp));
-
-    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    const numBought = purchaseTicketsResponse.getTicketHashesList().length;
+    if (numBought < numTickets) {
+      dispatch({ purchaseTicketsResponse, numAttempted: numTickets, type: PURCHASETICKETS_SUCCESS });
+    } else {
+      dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    }
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
       const unspentOutputs = await dispatch(
