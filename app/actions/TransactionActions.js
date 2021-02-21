@@ -100,10 +100,12 @@ export const newTransactionsReceived = (
 ) => async (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length)
     return;
-    // get vsp tickets fee status in case there is a stake tx and we show the
-    // proper ticket value.
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+
+  // get vsp tickets fee status in case there is a stake tx and we show the
+  // proper ticket value.
+  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
   let {
     unminedTransactions,
     stakeTransactions,
@@ -181,7 +183,7 @@ export const newTransactionsReceived = (
     accountsToUpdate
   );
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
-  accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
+  accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 1)));
 
   // get new addresses for accounts which received decred
   dispatch(

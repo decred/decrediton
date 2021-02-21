@@ -80,7 +80,7 @@ const transactionNtfnsDataHandler = (dispatch, getState) => {
       if (accountMixerRunning) {
         const changeAccount = sel.getChangeAccount(getState());
         const { spendable } = await dispatch(
-          getBalanceUpdateAttempt(changeAccount, 0)
+          getBalanceUpdateAttempt(changeAccount, 1)
         );
 
         if (spendable < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {

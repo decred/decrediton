@@ -212,7 +212,7 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
 };
 
 export const getAccountNumbersBalances = (accountNumbers) => (dispatch) => {
-  accountNumbers.forEach((a) => dispatch(getBalanceUpdateAttempt(a, 0)));
+  accountNumbers.forEach((a) => dispatch(getBalanceUpdateAttempt(a, 1)));
 };
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
@@ -244,7 +244,8 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
       immatureReward: resp.getImmatureReward(),
       immatureStakeGeneration: resp.getImmatureStakeGeneration(),
       lockedByTickets: resp.getLockedByTickets(),
-      votingAuthority: resp.getVotingAuthority()
+      votingAuthority: resp.getVotingAuthority(),
+      unconfirmed: resp.getUnconfirmed()
     };
   });
 
@@ -267,7 +268,8 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (
     immatureReward: getBalanceResponse.getImmatureReward(),
     immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
     lockedByTickets: getBalanceResponse.getLockedByTickets(),
-    votingAuthority: getBalanceResponse.getVotingAuthority()
+    votingAuthority: getBalanceResponse.getVotingAuthority(),
+    unconfirmed: getBalanceResponse.getUnconfirmed()
   };
 
   dispatch(updateAccount(updatedBalance));
@@ -441,6 +443,7 @@ export function updateAccount(account) {
         spendable: 0,
         total: 0,
         votingAuthority: 0,
+        unconfirmed: 0,
         HDPath:
           "m / 44' / " +
           chainParams.HDCoinType +
