@@ -177,7 +177,7 @@ export const newTransactionsReceived = (
     accountsToUpdate
   );
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
-  accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 1)));
+  accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   // get new addresses for accounts which received decred
   dispatch(

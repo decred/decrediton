@@ -212,7 +212,7 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
 };
 
 export const getAccountNumbersBalances = (accountNumbers) => (dispatch) => {
-  accountNumbers.forEach((a) => dispatch(getBalanceUpdateAttempt(a, 1)));
+  accountNumbers.forEach((a) => dispatch(getBalanceUpdateAttempt(a, 0)));
 };
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
