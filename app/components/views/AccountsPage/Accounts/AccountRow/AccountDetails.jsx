@@ -57,6 +57,10 @@ const AccountsDetails = ({
           <T id="accounts.immatureStake" m="Immature Stake Gen" />
           <Balance flat amount={account.immatureStakeGeneration} />
         </DataLine>
+        <DataLine>
+          <T id="accounts.unconfirmed" m="Unconfirmed" />
+          <Balance flat amount={account.unconfirmed} />
+        </DataLine>
       </div>
       <div className={style.detailsBottomColumnRight}>
         <div className={style.detailsBottomTitle}>
