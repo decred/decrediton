@@ -280,6 +280,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
 export const PURCHASETICKETS_ATTEMPT = "PURCHASETICKETS_ATTEMPT";
 export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
+export const PURCHASETICKETS_SUCCESS_LESS = "PURCHASETICKETS_SUCCESS_LESS";
 export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 // TODO move purchaseTicketsAttempt to TransactionActions
@@ -385,8 +386,12 @@ export const newPurchaseTicketsAttempt = (
     }
     // save vsp for future checking if the wallet has all tickets synced.
     dispatch(updateUsedVSPs(vsp));
-
-    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    const numBought = purchaseTicketsResponse.getTicketHashesList().length;
+    if (numBought < numTickets) {
+      dispatch({ purchaseTicketsResponse, numAttempted: numTickets, type: PURCHASETICKETS_SUCCESS_LESS });
+    } else {
+      dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    }
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
       const unspentOutputs = await dispatch(listUnspentOutputs(accountNum.value));
