@@ -668,7 +668,7 @@ export default function snackbar(state = {}, action) {
         case PURCHASETICKETS_SUCCESS:
           values = {
             numTickets: action.purchaseTicketsResponse.getTicketHashesList()
-              .length,
+              .length
           };
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:
