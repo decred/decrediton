@@ -37,6 +37,7 @@ import {
   PURCHASETICKETS_ATTEMPT,
   PURCHASETICKETS_FAILED,
   PURCHASETICKETS_SUCCESS,
+  PURCHASETICKETS_SUCCESS_LESS,
   REVOKETICKETS_ATTEMPT,
   REVOKETICKETS_FAILED,
   REVOKETICKETS_SUCCESS,
@@ -312,6 +313,7 @@ export default function control(state = {}, action) {
         purchaseTicketsRequestAttempt: false,
         importScriptRequestAttempt: false
       };
+    case PURCHASETICKETS_SUCCESS_LESS:
     case PURCHASETICKETS_SUCCESS:
       return {
         ...state,

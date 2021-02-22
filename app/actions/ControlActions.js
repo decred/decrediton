@@ -280,6 +280,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
 export const PURCHASETICKETS_ATTEMPT = "PURCHASETICKETS_ATTEMPT";
 export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
+export const PURCHASETICKETS_SUCCESS_LESS = "PURCHASETICKETS_SUCCESS_LESS";
 export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 // TODO move purchaseTicketsAttempt to TransactionActions
@@ -387,7 +388,7 @@ export const newPurchaseTicketsAttempt = (
     dispatch(updateUsedVSPs(vsp));
     const numBought = purchaseTicketsResponse.getTicketHashesList().length;
     if (numBought < numTickets) {
-      dispatch({ purchaseTicketsResponse, numAttempted: numTickets, type: PURCHASETICKETS_SUCCESS });
+      dispatch({ purchaseTicketsResponse, numAttempted: numTickets, type: PURCHASETICKETS_SUCCESS_LESS });
     } else {
       dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
     }

@@ -6,6 +6,7 @@ import {
   SIGNTX_FAILED,
   CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS,
+  PURCHASETICKETS_SUCCESS_LESS,
   PURCHASETICKETS_FAILED,
   STARTTICKETBUYERV2_SUCCESS,
   STARTTICKETBUYERV3_SUCCESS,
@@ -619,6 +620,7 @@ export default function snackbar(state = {}, action) {
     case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     case ABANDONTRANSACTION_SUCCESS:
     case PURCHASETICKETS_SUCCESS:
+    case PURCHASETICKETS_SUCCESS_LESS:
     case ADDCUSTOMSTAKEPOOL_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_WIPEDEVICE_SUCCESS:
@@ -656,17 +658,18 @@ export default function snackbar(state = {}, action) {
         case EXPORT_COMPLETED:
           values = { filename: action.filename };
           break;
-        case PURCHASETICKETS_SUCCESS:
+        case PURCHASETICKETS_SUCCESS_LESS:
           values = {
             numTickets: action.purchaseTicketsResponse.getTicketHashesList()
               .length,
             numAttempted: action.numAttempted
           };
-          if (values.numAttempted && values.numTickets < values.numAttempted)  {
-            message = messages[
-              "PURCHASETICKETS_SUCCESS_LESS"
-            ];
-          }
+          break;
+        case PURCHASETICKETS_SUCCESS:
+          values = {
+            numTickets: action.purchaseTicketsResponse.getTicketHashesList()
+              .length,
+          };
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:
           message =
