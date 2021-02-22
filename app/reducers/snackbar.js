@@ -6,6 +6,7 @@ import {
   SIGNTX_FAILED,
   CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS,
+  PURCHASETICKETS_SUCCESS_LESS,
   PURCHASETICKETS_FAILED,
   STARTTICKETBUYERV2_SUCCESS,
   STARTTICKETBUYERV3_SUCCESS,
@@ -184,6 +185,11 @@ const messages = defineMessages({
     id: "tickets.purchaseTicketsHeader",
     defaultMessage:
       "You bought {numTickets, plural, one { # ticket } other { # tickets }}"
+  },
+  PURCHASETICKETS_SUCCESS_LESS: {
+    id: "tickets.purchaseTicketsHeaderLess",
+    defaultMessage:
+      "You bought {numTickets, plural, one { # ticket } other { # tickets }}.  This was less than your requested amount of {numAttempted}.  While your balance was sufficient, you lacked enough spendable outputs.  You may try and purchase more now."
   },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
@@ -614,6 +620,7 @@ export default function snackbar(state = {}, action) {
     case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     case ABANDONTRANSACTION_SUCCESS:
     case PURCHASETICKETS_SUCCESS:
+    case PURCHASETICKETS_SUCCESS_LESS:
     case ADDCUSTOMSTAKEPOOL_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_WIPEDEVICE_SUCCESS:
@@ -650,6 +657,13 @@ export default function snackbar(state = {}, action) {
           break;
         case EXPORT_COMPLETED:
           values = { filename: action.filename };
+          break;
+        case PURCHASETICKETS_SUCCESS_LESS:
+          values = {
+            numTickets: action.purchaseTicketsResponse.getTicketHashesList()
+              .length,
+            numAttempted: action.numAttempted
+          };
           break;
         case PURCHASETICKETS_SUCCESS:
           values = {
