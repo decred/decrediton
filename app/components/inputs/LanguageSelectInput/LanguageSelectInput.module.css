@@ -69,6 +69,10 @@
   background-image: var(--flag-zh);
 }
 
+.flag.zh-HK {
+  background-image: var(--flag-hk);
+}
+
 .name {
   flex-grow: 4;
   width: 100px;

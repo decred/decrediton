@@ -141,6 +141,14 @@ const zh = {
   formats: defaultFormats
 };
 
+const zh_HK = {
+  key: "zh-HK",
+  language: "zh-HK",
+  description: "中文（繁體）",
+  messages: require("../translations/zh-HK.json"),
+  formats: defaultFormats
+};
+
 // pseudo-locale for i18n testing during development. Can be freely
 // modified.
 const dev = {
@@ -151,7 +159,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [ar, de, en, en_GB, en_AU, es, it, fr, ja, pl, pt_BR, zh];
+const locales = [ar, de, en, en_GB, en_AU, es, it, fr, ja, pl, pt_BR, zh, zh_HK];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -207,8 +215,11 @@ export function appLocaleFromElectronLocale(electronLocale) {
 
     case "zh":
     case "zh-CN":
-    case "zh-TW":
       return "zh";
+
+    case "zh-HK":
+    case "zh-TW":
+      return "zh-HK";
 
     default:
       return "en";

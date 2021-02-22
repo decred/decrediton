@@ -27,10 +27,11 @@ const DocUnavailableMsg = ({ name }) => (
 const Documentation = ({ currentLocaleName, name, className }) => {
   const split = (currentLocaleName || "").split("-");
   const baseLang = split[0];
+  const currentLang = currentLocaleName.replace("-", "_"); // dash is not allowed for module object name
   let content;
   let unavailable;
-  if (Docs[currentLocaleName] && Docs[currentLocaleName][name])
-    content = Docs[currentLocaleName][name];
+  if (Docs[currentLang] && Docs[currentLang][name])
+    content = Docs[currentLang][name];
   else if (Docs[baseLang] && Docs[baseLang][name])
     content = Docs[baseLang][name];
   else {
