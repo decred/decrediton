@@ -236,6 +236,15 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
+export const unconfirmedTotalBalance = createSelector(
+  [balances],
+  reduce(
+    (total, { accountName, unconfirmed }) =>
+      accountName === "imported" ? total : total + unconfirmed,
+    0
+  )
+);
+
 export const getMixedAccountName = createSelector(
   [getMixedAccount, balances],
   (mixedAcc, balances) =>
