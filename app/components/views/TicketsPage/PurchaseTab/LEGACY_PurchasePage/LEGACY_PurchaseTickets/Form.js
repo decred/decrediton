@@ -200,9 +200,9 @@ const PurchaseTicketsForm = ({
             />
           }
           disabled={getIsValid && !getIsValid()}
-          onSubmit={onPurchaseTickets}
-          buttonLabel={purchaseLabel()}
-        />
+          onSubmit={onPurchaseTickets}>
+          {purchaseLabel()}
+        </KeyBlueButton>
       )}
     </div>
   </>
