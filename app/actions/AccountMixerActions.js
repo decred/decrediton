@@ -3,7 +3,11 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
-import { getAcctSpendableBalance, getAccountsAttempt } from "./ClientActions";
+import {
+  getAcctSpendableBalance,
+  getAccountsAttempt,
+  getMixerAcctsSpendableBalances
+} from "./ClientActions";
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -183,6 +187,7 @@ export const createNeededAccounts = (
         changeNumber
       })
     );
+    dispatch(getMixerAcctsSpendableBalances());
   } catch (error) {
     dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
   }
