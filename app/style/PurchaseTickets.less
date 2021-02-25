@@ -42,36 +42,6 @@
   justify-content: flex-end;
 }
 
-.num-tickets-icon {
-  width: 20px;
-  height: 20px;
-  background-size: 6px;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-color: var(--account-text);
-  box-shadow: 0px 3px 8px var(--icons-shadow);
-  margin-left: 3px;
-  border-radius: 5px;
-  position: absolute;
-  top: 0;
-
-  &.more {
-    background-image: var(--tickets-plus-icon);
-    right: 0;
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-
-  &.less {
-    background-image: var(--tickets-minus-icon);
-    right: 22px;
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-}
-
 .stakepool-purchase-ticket-quick-bar {
   padding: 14px 0 14px 18px;
   height: 56px;
@@ -125,48 +95,6 @@
 .stakepool-purchase-ticket-input-select-container {
   display: flex;
   align-self: center;
-}
-
-.stakepool-purchase-ticket-num-select {
-  height: 24px;
-  margin-left: 6px;
-  border-bottom: 1px var(--stroke-color-default) solid;
-  width: 125px;
-  position: relative;
-
-  .input-errors-area {
-    width: 100%;
-    position: absolute;
-    bottom: -13px;
-    left: 6px;
-    margin: 0;
-  }
-
-  .input-and-unit:hover:not(.disabled):not(.active):not(.error) {
-    border: none;
-  }
-
-  &.error {
-    border-bottom: 1px var(--error-text-color) solid;
-
-    .ticket-numeric-input .input {
-      max-width: initial;
-    }
-
-    &::before {
-      position: absolute;
-      content: "";
-      width: 18px;
-      height: 22px;
-      top: 0;
-      right: 43px;
-      display: block;
-      background-repeat: no-repeat;
-      background-image: var(--warning-input-icon);
-      background-size: 16px 16px;
-      background-position: 0 center;
-    }
-  }
 }
 
 .stakepool-purchase-ticket-input-select {
@@ -329,38 +257,11 @@
   background-color: var(--transfer-details-bg);
 }
 
-.ticket-numeric-input {
-  border: 0;
-
-  .input {
-    max-width: 30px;
-    height: 22px;
-  }
-
-  .unit-area {
-    color: var(--tx-detail-text) !important;
-  }
-
-  &.input-and-unit.error {
-    border-bottom: 0;
-    background-image: none;
-    &:hover {
-      border-bottom: 0;
-    }
-    .unit-area {
-      color: var(--error-text-color) !important;
-    }
-  }
-}
-
 .purchase-ticket-advanced-info-grid {
   padding: 10px 0 0 20px;
   display: grid;
   grid-template-columns: repeat(6, max-content);
   align-items: center;
-  .input-errors-area {
-    margin-left: 0;
-  }
 
   .purchase-ticket-advanced-info-label {
     white-space: nowrap;

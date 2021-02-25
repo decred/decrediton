@@ -37,6 +37,7 @@ const Modal = ({
         autoFocus
         value={typedConfirmationPhrase}
         onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}
+        className={style.confirmSeedCopyContentInput}
         onKeyDownSubmit={() =>
           typedConfirmationPhrase.toLowerCase() ===
             copyConfirmationPhrase.toLowerCase() && onSubmit()

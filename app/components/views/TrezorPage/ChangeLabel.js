@@ -45,6 +45,7 @@ class ChangeLabel extends React.Component {
           <TextInput
             value={this.state.newLabel}
             onChange={this.onNewLabelChanged}
+            className="input-and-unit"
           />
         </div>
         <div>

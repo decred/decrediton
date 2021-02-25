@@ -1,0 +1,7 @@
+.numericInput {
+  font-family: var(--font-family-regular);
+}
+.numericInputUnitArea {
+  color: var(--select-placeholder);
+  line-height: 13px;
+}

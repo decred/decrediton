@@ -1,5 +1,5 @@
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import SeedHexEntry from "inputs/SeedHexEntry";
+import { SeedHexEntry } from "inputs";
 import { TextToggle, KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import {

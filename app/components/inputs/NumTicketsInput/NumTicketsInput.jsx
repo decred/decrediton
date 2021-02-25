@@ -1,5 +1,7 @@
-import IntegerInput from "./IntegerInput";
+import IntegerInput from "../IntegerInput";
 import { FormattedMessage as T } from "react-intl";
+import style from "./NumTicketsInput.module.css";
+import { classNames } from "pi-ui";
 
 const NumTicketsInput = ({
   numTickets,
@@ -10,19 +12,21 @@ const NumTicketsInput = ({
   invalid,
   invalidMessage,
   showErrors,
-  onKeyDown
+  onKeyDown,
+  ...props
 }) => {
   const ticketUnitLabel =
-    numTickets === 1 ? (
+    parseInt(numTickets) === 1 ? (
       <T id="numTicketInput.unit" m="Ticket" />
     ) : (
       <T id="numTicketsInput.unit" m="Tickets" />
     );
   return (
     <div
-      className={
-        "is-row stakepool-purchase-ticket-num-select " + (invalid && "error")
-      }>
+      className={classNames(
+        style.container,
+        invalid && style.error
+      )}>
       <IntegerInput
         {...{
           required,
@@ -32,21 +36,26 @@ const NumTicketsInput = ({
           invalidMessage,
           value: numTickets
         }}
-        className="ticket-numeric-input"
+        className={style.integerInput}
+        errorClassName={style.inputError}
+        inputErrorsAreaClassName={style.inputErrorsArea}
         onChange={(e) =>
           onChangeNumTickets && onChangeNumTickets(e.target.value)
         }
         data-max-width="70"
         unit={!invalid && ticketUnitLabel}
+        {...props}
       />
-      <div
+      <button
         key="less"
-        className="num-tickets-icon less"
+        aria-label="less"
+        className={classNames(style.icon, style.less)}
         onClick={decrementNumTickets}
       />
-      <div
+      <button
         key="more"
-        className="num-tickets-icon more"
+        aria-label="more"
+        className={classNames(style.icon, style.more)}
         onClick={incrementNumTickets}
       />
     </div>

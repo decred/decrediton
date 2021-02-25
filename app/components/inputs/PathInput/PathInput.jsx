@@ -1,10 +1,11 @@
-import Input from "./Input";
+import Input from "../Input/Input";
+import style from "./PathInput.module.css";
 
 const PathInput = ({ onChange, ...props }) => (
   <Input
     {...{
       ...props,
-      className: "path-input",
+      className: style.pathInput,
       onChange: (e) => onChange(e.target.value)
     }}
   />

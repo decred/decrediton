@@ -1,0 +1,9 @@
+.inlineField label {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.field {
+  flex-grow: 1;
+  padding-left: 0.5em;
+}

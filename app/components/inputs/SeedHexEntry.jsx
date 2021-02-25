@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Input from "./Input/Input";
 import { defineMessages, injectIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -18,6 +18,7 @@ const SeedHexEntry = ({ onChange, seed, ...props }) => (
     value={seed}
     name="hexInput"
     placeholder={props.intl.formatMessage(messages.enterHexSeedPlaceholder)}
+    {...props}
   />
 );
 
