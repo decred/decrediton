@@ -176,7 +176,7 @@ const PurchaseTicketsForm = ({
           {purchaseLabel()}
         </KeyBlueButton>
       ) : (
-        getRunningIndicator ?
+        getRunningIndicator ? (
           <Tooltip
             text={
               <T
@@ -187,19 +187,20 @@ const PurchaseTicketsForm = ({
             <PassphraseModalButton
             disabled={true}
             buttonLabel={purchaseLabel()}/>
-          </Tooltip> :
-          <KeyBlueButton
-            modalTitle={
-              <T
-                id="tickets.purchaseConfirmation.legacy"
-                m="Ticket Purchase Confirmation"
-              />
-            }
-            disabled={getIsValid && !getIsValid()}
-            onSubmit={onPurchaseTickets}
-            buttonLabel={purchaseLabel()}
-          />
-      )}
+        </Tooltip>
+      ) : (
+        <KeyBlueButton
+          modalTitle={
+            <T
+              id="tickets.purchaseConfirmation.legacy"
+              m="Ticket Purchase Confirmation"
+            />
+          }
+          disabled={getIsValid && !getIsValid()}
+          onSubmit={onPurchaseTickets}>
+          {purchaseLabel()}
+        </KeyBlueButton>
+      ))}
     </div>
   </>
 );
