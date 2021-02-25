@@ -5178,19 +5178,19 @@ msgstr "الرصيد على السلسلة وإجراءَات محفظة الش�
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (95% of the 100 most
+#. Once the majority of the PoW miners have upgraded (95% of the 1000 most
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (95% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 1000 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
-"بمجرد تحديث غالبية معدني إثبات العمل (95٪ من أحدث 100 كتلة في أحدث إصدار) و "
+"بمجرد تحديث غالبية معدني إثبات العمل (95٪ من أحدث 1000 كتلة في أحدث إصدار) و "
 "تحديث أغلبية معدني إثبات الحصة (75٪ من الأصوات في فاصل 2016 كتلة)، تبدأ "
 "عملية التصويت."
 
