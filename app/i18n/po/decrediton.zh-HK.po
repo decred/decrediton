@@ -5059,16 +5059,16 @@ msgstr "閃電網路錢包的鏈上餘額及相關動作"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins.
+#. Once the majority of the PoW miners have upgraded (95% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (75% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 100 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
-"一旦多數的PoW礦工已經升級（最近的100個區塊有75%是最新版本）及多數的PoS礦工已"
+"一旦多數的PoW礦工已經升級（最近的100個區塊有95%是最新版本）及多數的PoS礦工已"
 "經升級（在2016個區塊間隔有75%的投票），表決程序即開始。"
 
 #. [sidebar.mixer.running]
