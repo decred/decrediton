@@ -12,3 +12,7 @@
 .pathButton:hover {
   opacity: 0.7;
 }
+
+.tooltip {
+  width: 7rem;
+}
