@@ -66,9 +66,9 @@ const MenuBarExpanded = ({
                   &nbsp;{peersCount}
                   &nbsp;
                   {peersCount === 1 ? (
-                    <T id="sidebar.peersCount" m="peer" />
+                    <T id="sidebar.peerCount" m="peer" />
                   ) : (
-                    <T id="sidebar.peerCount" m="peers" />
+                    <T id="sidebar.peersCount" m="peers" />
                   )}
                 </span>
               </div>
