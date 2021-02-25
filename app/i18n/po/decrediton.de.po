@@ -5184,20 +5184,20 @@ msgstr "On-Chain Balance und Aktionen des LN Wallet"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (75% of the 100 most
+#. Once the majority of the PoW miners have upgraded (95% of the 100 most
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (75% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 100 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
 "Der Voting-prozess beginnt sobald die Mehrheit der PoW-Miner ein Upgrade "
-"durchgeführt (75 % der 100 letzten Blöcke sind in der neuesten Version) und "
+"durchgeführt (95 % der 100 letzten Blöcke sind in der neuesten Version) und "
 "die Mehrheit der PoS-Miner ein Upgrade durchgeführt hat (75 % der Stimmen in"
 " einem Blockintervall 2016)."
 
