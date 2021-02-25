@@ -1,0 +1,26 @@
+.header {
+  padding-right: 42px;
+  padding-left: 80px;
+  background-color: var(--disabled-background-color)
+}
+
+.top {
+  height: 34px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.titleOverview {
+  height: 54px;
+  padding-top: 13px;
+  color: var(--background-back-color);
+  font-size: 27px;
+}
+
+.metaOverview {
+  height: 54px;
+  padding-top: 5px;
+  font-size: 18px;
+  color: var(--stroke-color-hovered);
+  font-family: var(--font-family-monospace);
+}

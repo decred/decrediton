@@ -41,14 +41,27 @@
   */
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
+.mainnet {
+  border: none;
+  outline: none;
+  float: left;
+  height: 20px;
+  width: 150px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-image: var(--mainnet-logo);
+  background-color: transparent;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+.testnet {
+  border: none;
+  outline: none;
+  height: 20px;
+  width: 150px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-image: var(--testnet-logo);
+  background-color: transparent;
 }
 
 .reducedArrow {

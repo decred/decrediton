@@ -1,4 +1,3 @@
-// @flow
 import { Link } from "react-router-dom";
 import { Balance, Tooltip } from "shared";
 import { ProgressRing } from "indicators";
@@ -11,7 +10,6 @@ import {
   VOTE,
   REVOCATION
 } from "constants/Decrediton";
-import "style/Header.less";
 import style from "../Snackbar.module.css";
 
 const messages = defineMessages({
