@@ -181,17 +181,17 @@ export const getGrpcVersions = () => grpcVersions;
 
 export const setGrpcVersions = (versions) => (grpcVersions = versions);
 
-const inputMenuRoles = [
-  { role: "cut" },
-  { role: "copy" },
-  { role: "paste" },
+const inputMenuRoles = (locale) => [
+  { label: locale.messages["appMenu.cut"], role: "cut" },
+  { label: locale.messages["appMenu.copy"], role: "copy" },
+  { label: locale.messages["appMenu.paste"], role: "paste" },
   { type: "separator" },
-  { role: "selectall" }
+  { label: locale.messages["appMenu.selectAll"], role: "selectall" }
 ];
-const selectionMenuRoles = [
-  { role: "copy" },
+const selectionMenuRoles = (locale) => [
+  { label: locale.messages["appMenu.copy"], role: "copy" },
   { type: "separator" },
-  { role: "selectall" }
+  { label: locale.messages["appMenu.selectAll"], role: "selectall" }
 ];
 
 const inspectElement = (mainWindow, x, y) => {
@@ -201,12 +201,12 @@ const inspectElement = (mainWindow, x, y) => {
   };
 };
 
-export const inputMenu = (isDevelopment, mainWindow, x, y) =>
+export const inputMenu = (isDevelopment, mainWindow, x, y, locale) =>
   isDevelopment
-    ? [...inputMenuRoles, inspectElement(mainWindow, x, y)]
-    : inputMenuRoles;
+    ? [...inputMenuRoles(locale), inspectElement(mainWindow, x, y)]
+    : inputMenuRoles(locale);
 
-export const selectionMenu = (isDevelopment, mainWindow, x, y) =>
+export const selectionMenu = (isDevelopment, mainWindow, x, y, locale) =>
   isDevelopment
-    ? [...selectionMenuRoles, inspectElement(mainWindow, x, y)]
-    : selectionMenuRoles;
+    ? [...selectionMenuRoles(locale), inspectElement(mainWindow, x, y)]
+    : selectionMenuRoles(locale);
