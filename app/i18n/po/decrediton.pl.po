@@ -5162,19 +5162,19 @@ msgstr "Działania i bilans on-chain portfela LN"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (95% of the 100 most
+#. Once the majority of the PoW miners have upgraded (95% of the 1000 most
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (95% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 1000 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
-"Po zaktualizowaniu większości górników PoW (95% ze 100 ostatnich bloków to "
+"Po zaktualizowaniu większości górników PoW (95% ze 1000 ostatnich bloków to "
 "najnowsza wersja) i zaktualizowaniu większości górników PoS (75% głosów w "
 "odstępie blokowym 2016) rozpoczyna się proces głosowania."
 
