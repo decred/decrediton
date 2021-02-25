@@ -303,7 +303,6 @@
     "react-motion": "^0.5.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "react-router-transition": "^2.0.0",
     "react-select": "1.0.0",
     "react-timeout": "^1.2.0",
     "react-visibility-sensor": "^4.1.3",
