@@ -70,12 +70,13 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
   );
 
   const checkIsValid = useCallback(() => {
-    const { seed, passPhrase } = current.context;
+    const { seed, passPhrase, error } = current.context;
     // We validate our seed and passphrase at their specific components
     // So if they are set at the machine it means they have passed validation.
     if (!seed || !passPhrase) return setIsValid(false);
     if (seed.length === 0) return setIsValid(false);
     if (passPhrase.length === 0) return setIsValid(false);
+    if (error) return setIsValid(false);
 
     return setIsValid(true);
   }, [setIsValid, current.context]);

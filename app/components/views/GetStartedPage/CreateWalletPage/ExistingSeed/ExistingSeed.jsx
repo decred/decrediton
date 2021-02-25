@@ -151,7 +151,10 @@ const ExistingSeed = ({
     } else if (prevHexSeed === hexSeed) {
       return;
     }
-    validateSeed(seedWords).catch((err) => onError(err));
+    validateSeed(seedWords).catch((err) => {
+      setSeed([]);
+      return onError(err);
+    });
   }, [
     seedWords,
     seedType,
