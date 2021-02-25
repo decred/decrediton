@@ -1,11 +1,11 @@
-import { Tooltip, Subtitle } from "shared";
+import { useState, useEffect } from "react";
+import { Tooltip } from "pi-ui";
+import { Subtitle } from "shared";
 import { GoBackMsg } from "../messages";
 import { FormattedMessage as T } from "react-intl";
 import GetStartedStyles from "../GetStarted.module.css";
-import { useState } from "react";
 import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
-import { useEffect } from "react";
 import { VSPSelect } from "inputs";
 
 export default ({
@@ -42,7 +42,7 @@ export default ({
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
         {isProcessingUnmanaged && (
-          <Tooltip text={<GoBackMsg />}>
+          <Tooltip content={<GoBackMsg />}>
             <div
               className={GetStartedStyles.goBackScreenButton}
               onClick={cancel}

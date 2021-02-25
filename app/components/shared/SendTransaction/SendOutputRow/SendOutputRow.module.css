@@ -76,3 +76,15 @@
   text-align: right;
   background-color: var(--disabled-background-color);
 }
+
+.tooltipSendAll {
+  width: 22rem;
+}
+
+.tooltipSendAllDisabled {
+  width: 28rem;
+}
+
+.tooltipSendToSelf {
+  width: 18rem;
+}

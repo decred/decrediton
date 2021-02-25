@@ -1,9 +1,9 @@
+import { FormattedMessage as T } from "react-intl";
+import { Tooltip, classNames } from "pi-ui";
 import { ImportScriptModal } from "modals";
 import { importScript } from "connectors";
-import { Tooltip } from "shared";
 import ModalButton from "./ModalButton";
 import InvisibleButton from "./InvisibleButton";
-import { FormattedMessage as T } from "react-intl";
 import { SimpleLoading } from "indicators";
 
 const ImportScriptIconButton = ({
@@ -13,7 +13,7 @@ const ImportScriptIconButton = ({
 }) => (
   <Tooltip
     warning={!!rescanRequest}
-    text={
+    content={
       !rescanRequest ? (
         <T
           id="purchaseTickets.import"
@@ -29,10 +29,10 @@ const ImportScriptIconButton = ({
     <ModalButton
       buttonComponent={InvisibleButton}
       buttonLabel={isImportingScript ? <SimpleLoading /> : null}
-      className={
-        "stakepool-content-import-script-button " +
-        (isImportingScript ? "loading" : "")
-      }
+      className={classNames(
+        "stakepool-content-import-script-button",
+        isImportingScript && "loading"
+      )}
       modalTitle={
         <T
           id="tickets.importScriptConfirmation"

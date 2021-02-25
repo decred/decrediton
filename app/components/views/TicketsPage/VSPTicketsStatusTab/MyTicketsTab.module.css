@@ -1,3 +1,8 @@
+.ticketStatusTooltip {
+  font-size: 14px;
+  width: 8rem;
+}
+
 .ticketsButtons {
   text-align: right;
   margin-right: 20px;

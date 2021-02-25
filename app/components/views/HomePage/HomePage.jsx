@@ -1,16 +1,16 @@
 import { useState } from "react";
+import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
 import ErrorScreen from "ErrorScreen";
 import { useService } from "hooks";
 import { useHomePage } from "./hooks";
-import { FormattedMessage as T } from "react-intl";
-import { Balance, TabsHeader, Tooltip } from "shared";
+import { Balance, TabsHeader } from "shared";
 import { StandalonePage } from "layout";
 import RecentTransactions from "./RecentTransactions/RecentTransactions";
 import RecentTickets from "./RecentTickets/RecentTickets";
 import BalanceTab from "./Tabs/BalanceTab/BalanceTab";
 import TicketsTab from "./Tabs/TicketsTab/TicketsTab";
 import TransactionsTab from "./Tabs/TransactionsTab/TransactionsTab";
-import { classNames } from "pi-ui";
 import styles from "./HomePage.module.css";
 
 const ROWS_NUMBER_ON_TABLE = 5;
@@ -21,23 +21,19 @@ const tabMessages = {
   transactions: <T id="home.tab.transactions" m="Transactions" />
 };
 
-const withTooltip = (Component) => (
-  <Tooltip text={Component}>{Component}</Tooltip>
-);
-
 const tabs = [
   {
-    label: withTooltip(tabMessages.balance),
+    label: tabMessages.balance,
     component: <BalanceTab />,
     icon: styles.balanceIcon
   },
   {
-    label: withTooltip(tabMessages.tickets),
+    label: tabMessages.tickets,
     component: <TicketsTab />,
     icon: styles.ticketsIcon
   },
   {
-    label: withTooltip(tabMessages.transactions),
+    label: tabMessages.transactions,
     component: <TransactionsTab />,
     icon: styles.txIcon
   }

@@ -1,14 +1,14 @@
-import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
+import InfiniteScroll from "react-infinite-scroller";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { Tooltip, Subtitle } from "shared";
+import { Tooltip } from "pi-ui";
+import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
 import { TextInput } from "inputs";
-import { TxHistory } from "shared";
+import { TxHistory, Subtitle } from "shared";
 import {
   LoadingMoreTransactionsIndicator,
   NoMoreTransactionsIndicator,
   NoTransactions
 } from "indicators";
-import InfiniteScroll from "react-infinite-scroller";
 import styles from "./HistoryPage.module.css";
 
 const messages = defineMessages({
@@ -43,8 +43,8 @@ const subtitleMenu = ({
       />
     </div>
     <Tooltip
-      tipWidth={300}
-      text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+      contentClassName={styles.sortByTooltip}
+      content={<T id="transactions.sortby.tooltip" m="Sort By" />}>
       <EyeFilterMenuWithSlider
         {...{ unitDivisor, currencyDisplay }}
         labelKey="label"
@@ -59,8 +59,8 @@ const subtitleMenu = ({
       />
     </Tooltip>
     <Tooltip
-      tipWidth={300}
-      text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+      contentClassName={styles.typeTooltip}
+      content={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
       <EyeFilterMenu
         options={txTypes}
         selected={selectedTxTypeKeys}

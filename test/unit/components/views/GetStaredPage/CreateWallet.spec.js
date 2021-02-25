@@ -613,7 +613,7 @@ test("test cancel button on confirm view", async () => {
 test("test go back button on existing seed view", async () => {
   await goToExistingSeedView();
 
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() =>
     expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
   );
@@ -622,7 +622,7 @@ test("test go back button on existing seed view", async () => {
 test("test go back button on copy seed view", async () => {
   await goToCopySeedView();
 
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() =>
     expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
   );
@@ -631,6 +631,6 @@ test("test go back button on copy seed view", async () => {
 test("test go back button on confirm seed view", async () => {
   await goToConfirmView();
 
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText(/copy seed words to clipboard/i));
 });

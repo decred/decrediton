@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
+import { classNames, Tooltip } from "pi-ui";
+import Row from "./Row";
+import { Balance } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
-import { classNames } from "pi-ui";
 import { messageByType } from "./helpers";
 import TicketPriceMessage from "./TicketPriceMessage";
 import styles from "./TxHistory.module.css";
@@ -77,7 +77,7 @@ const StakeTxRow = ({
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+        <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance
             bold
             classNameAmount={styles.myTicketsPrice}
@@ -85,7 +85,7 @@ const StakeTxRow = ({
             amount={ticketPrice}
           />
         </Tooltip>
-        <Tooltip text={ticketRewardMessage}>
+        <Tooltip content={ticketRewardMessage}>
           <Balance
             classNameWrapper={styles.ticketReward}
             noSmallAmount
@@ -93,7 +93,7 @@ const StakeTxRow = ({
           />
         </Tooltip>
         {showDaysToVote ? (
-          <Tooltip text={daysToVoteMessage}>
+          <Tooltip content={daysToVoteMessage}>
             <div className={styles.daysToVote}>
               <T
                 id="statusSmall.daysToVotePlural"

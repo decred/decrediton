@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import { classNames } from "pi-ui";
+import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
 import NetworkSettings from "views/SettingsPage/SettingsTab/NetworkSettings";
 import ProxySettings from "views/SettingsPage/SettingsTab/ProxySettings";
 import PrivacySettings from "views/SettingsPage/SettingsTab/PrivacySettings";
 import UISettings from "views/SettingsPage/SettingsTab/UISettings";
 import TimezoneSettings from "views/SettingsPage/SettingsTab/TimezoneSettings";
-import { Tooltip, Subtitle } from "shared";
-import { FormattedMessage as T } from "react-intl";
+import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { GoBackMsg } from "../messages";
 import { getGlobalCfg } from "config";
@@ -56,7 +56,7 @@ const SetttingsForm = ({ onSendBack }) => {
     <>
       <div className={classNames(styles.logs, styles.settings)}>
         <div className={styles.goBackScreenButtonArea}>
-          <Tooltip text={<GoBackMsg />}>
+          <Tooltip content={<GoBackMsg />}>
             <div className={styles.goBackScreenButton} onClick={onSendBack} />
           </Tooltip>
         </div>

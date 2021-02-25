@@ -1,9 +1,9 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
+import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
-import { Tooltip, Collapse, ExternalLink } from "shared";
+import { Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import { classNames, Checkbox } from "pi-ui";
 import styles from "../GetStarted.module.css";
 
 const messages = defineMessages({
@@ -79,7 +79,8 @@ const CreateWalletForm = ({
     <div className={styles.daemonRow}>
       <div className={styles.daemonLabel}>
         {!isCreateNewWallet ? (
-          <Tooltip text={intl.formatMessage(messages.messageWalletNameTooltip)}>
+          <Tooltip
+            content={intl.formatMessage(messages.messageWalletNameTooltip)}>
             <T id="createwallet.walletname.label" m="Wallet Name" />
           </Tooltip>
         ) : (

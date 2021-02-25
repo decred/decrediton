@@ -1,5 +1,5 @@
-import style from "./ToggleSwitch.module.css";
-import { Tooltip } from "shared";
+import styles from "./ToggleSwitch.module.css";
+import { Tooltip } from "pi-ui";
 
 // enabled shows the switch as on or off.
 // disabled unable to trigger the onClick method.
@@ -11,12 +11,15 @@ const ToggleSwitch = ({
   enabledText,
   notEnabledText
 }) => (
-  <Tooltip text={enabled ? enabledText : notEnabledText}>
-    <div className={style.toggleSwitch}>
+  <Tooltip
+    contentClassName={styles.tooltip}
+    content={enabled ? enabledText : notEnabledText}>
+    <div className={styles.toggleSwitch}>
       <div
-        className={enabled ? style.enabled : style.disabled}
+        className={enabled ? styles.enabled : styles.disabled}
         onClick={!disabled ? onClick : undefined}>
-        <div className={enabled ? style.knobEnabled : style.knobDisabled}></div>
+        <div
+          className={enabled ? styles.knobEnabled : styles.knobDisabled}></div>
       </div>
     </div>
   </Tooltip>

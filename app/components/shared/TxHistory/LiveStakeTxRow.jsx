@@ -1,7 +1,7 @@
-import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
+import Row from "./Row";
+import { Balance } from "shared";
 import { messageByType } from "./helpers";
 import TicketPriceMessage from "./TicketPriceMessage";
 import styles from "./TxHistory.module.css";
@@ -67,7 +67,7 @@ const StakeTxRow = ({
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+        <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance
             bold
             classNameAmount={styles.myTicketsPrice}
@@ -76,7 +76,8 @@ const StakeTxRow = ({
           />
         </Tooltip>
         <div></div>
-        <Tooltip text={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />}>
+        <Tooltip
+          content={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />}>
           <div className={classNames(styles.feeStatus)}>{feeStatusString}</div>
         </Tooltip>
         {!pending && (

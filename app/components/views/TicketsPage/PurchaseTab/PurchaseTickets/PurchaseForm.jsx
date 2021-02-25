@@ -1,10 +1,10 @@
+import { FormattedMessage as T } from "react-intl";
+import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
-import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
-import { classNames, Checkbox } from "pi-ui";
+import { Balance } from "shared";
 import styles from "../PurchaseTab.module.css";
-
+// XXX this should go away!
 import "style/StakePool.less";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
@@ -149,7 +149,7 @@ const PurchaseTicketsForm = ({
         <KeyBlueButton disabled={true} loading={true} />
       ) : getRunningIndicator ? (
         <Tooltip
-          text={
+          content={
             <T
               id="tickets.purchase.running"
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."

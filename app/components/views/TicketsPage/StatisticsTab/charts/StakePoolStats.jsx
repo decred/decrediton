@@ -1,9 +1,9 @@
-import { MeteredChart } from "charts";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
+import { MeteredChart } from "charts";
 import { LEGACY_StakePoolSelect } from "inputs";
-import { Tooltip } from "shared";
-import { useStatistics } from "../hooks.js";
 import styles from "../Statistics.module.css";
+import { useStatistics } from "../hooks.js";
 
 const StakePoolStats = () => {
   const {
@@ -36,7 +36,7 @@ const StakePoolStats = () => {
         </div>
         <div className={styles.myTicketsStakepoolStatsRow}>
           <Tooltip
-            text={
+            content={
               <T
                 id="mytickets.statistics.stakepool.ticketsTip"
                 m="{percentage}% proportion of network tickets"
@@ -64,7 +64,7 @@ const StakePoolStats = () => {
         </div>
         <div className={styles.myTicketsStakepoolStatsRow}>
           <Tooltip
-            text={
+            content={
               <T
                 id="mytickets.statistics.stakepool.votedTip"
                 m="{percentage}% of tickets missed"

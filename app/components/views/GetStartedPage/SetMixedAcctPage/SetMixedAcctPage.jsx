@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { classNames, Checkbox } from "pi-ui";
-import { Tooltip, Subtitle } from "shared";
+import { FormattedMessage as T } from "react-intl";
+import { classNames, Checkbox, Tooltip } from "pi-ui";
+import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 import { GoBackMsg } from "../messages";
-import { FormattedMessage as T } from "react-intl";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
 import GetStartedStyles from "../GetStarted.module.css";
 import styles from "./SetMixedAcctPage.module.css";
@@ -59,7 +59,7 @@ export default ({ cancel, onSendContinue }) => {
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div
             className={GetStartedStyles.goBackScreenButton}
             onClick={cancel}

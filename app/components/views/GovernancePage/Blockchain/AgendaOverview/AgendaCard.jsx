@@ -10,26 +10,22 @@ const AgendaCard = ({ agenda, onClick, selectedChoice }) => (
       onClick && styles.agendaCard
     )}
     onClick={onClick}>
-    <div className={styles.cardBottom}>
-      <AgendaProgressIndicator
-        passed={agenda.passed}
-        inProgress={!agenda.finished}
-      />
-      <div className={styles.bottomCfg}>
-        {agenda.description}{" "}
-        <span className={styles.bottomCfgLast}>
-          <T id="agenda.overview.idLabel" m="Agenda ID" />:
-          <span className={styles.bottomCfgLastBold}>{agenda.name}</span>
-        </span>
-      </div>
+    <div className={styles.name}>{agenda.name}</div>
+    <div className={styles.topPreference}>
+      Preference:{" "}
+      <span className={styles.textHighlightSmall}>{selectedChoice}</span>
     </div>
-    <div className={styles.top}>
-      <div className={styles.name}>{agenda.name}</div>
-      <div className={styles.topPreference}>
-        Preference:{" "}
-        <span className={styles.textHighlightSmall}>{selectedChoice}</span>
-      </div>
+    <div className={styles.bottomCfg}>
+      {`${agenda.description} `}
+      <span className={styles.bottomCfgLast}>
+        <T id="agenda.overview.idLabel" m="Agenda ID" />:
+        <span className={styles.bottomCfgLastBold}>{agenda.name}</span>
+      </span>
     </div>
+    <AgendaProgressIndicator
+      passed={agenda.passed}
+      inProgress={!agenda.finished}
+    />
   </div>
 );
 

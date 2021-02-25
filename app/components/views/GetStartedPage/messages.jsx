@@ -1,5 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { ExternalLink, Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
+import { ExternalLink } from "shared";
 import { AboutModalButtonInvisible } from "buttons";
 import styles from "./GetStarted.module.css";
 
@@ -62,7 +63,7 @@ export const messages = defineMessages({
 
 export const UpdateAvailableLink = ({ updateAvailable }) => (
   <Tooltip
-    text={
+    content={
       <T
         id="getStarted.updateAvailableTooltip"
         m="New version {version} available"

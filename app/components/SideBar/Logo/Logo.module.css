@@ -41,6 +41,10 @@
   */
 }
 
+.backgroundJobTooltip {
+  width: 20rem;
+}
+
 .mainnet {
   border: none;
   outline: none;

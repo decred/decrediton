@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
 import { RemoveWalletButton } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import { Tooltip, FormattedRelative } from "shared";
-import { classNames } from "pi-ui";
+import { FormattedRelative } from "shared";
 import styles from "../GetStarted.module.css";
 
 const CreateRestoreButtons = ({ showCreateWalletForm }) => (
@@ -68,7 +68,7 @@ const WalletSelectionForm = ({
               {editWallets && (
                 <div className={styles.displayWalletButtons}>
                   <Tooltip
-                    text={
+                    content={
                       <T
                         id="walletselection.removeWalletButton"
                         m="Remove Wallet"
@@ -165,7 +165,8 @@ const WalletSelectionForm = ({
         })}
         <CreateRestoreButtons {...{ showCreateWalletForm }} />
         {editWallets ? (
-          <Tooltip text={<T id="walletselection.closeEditWallets" m="Close" />}>
+          <Tooltip
+            content={<T id="walletselection.closeEditWallets" m="Close" />}>
             <div
               className={classNames(styles.editWalletsButton, styles.close)}
               onClick={onToggleEditWallet}
@@ -173,7 +174,7 @@ const WalletSelectionForm = ({
           </Tooltip>
         ) : (
           <Tooltip
-            text={<T id="walletselection.editWallets" m="Edit Wallets" />}>
+            content={<T id="walletselection.editWallets" m="Edit Wallets" />}>
             <div
               className={styles.editWalletsButton}
               onClick={onToggleEditWallet}

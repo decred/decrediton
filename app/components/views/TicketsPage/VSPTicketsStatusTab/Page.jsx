@@ -1,13 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
 import InfiniteScroll from "react-infinite-scroller";
+import { Tooltip } from "pi-ui";
 import {
   LoadingMoreTicketsIndicator,
   NoMoreTicketsIndicator,
   NoTicketsIndicator
 } from "indicators";
-import { TxHistory, Subtitle, Tooltip } from "shared";
+import { TxHistory, Subtitle } from "shared";
 import { EyeFilterMenu, PassphraseModalButton } from "buttons";
-import style from "./MyTicketsTab.module.css";
+import styles from "./MyTicketsTab.module.css";
 import { SyncVSPFailedTickets } from "modals";
 
 const subtitleMenu = ({
@@ -15,10 +16,10 @@ const subtitleMenu = ({
   selectedTicketTypeKey,
   onChangeSelectedType
 }) => (
-  <div className={style.ticketsButtons}>
+  <div className={styles.ticketsButtons}>
     <Tooltip
-      tipWidth={300}
-      text={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
+      contentClassName={styles.ticketStatusTooltip}
+      content={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
       <EyeFilterMenu
         labelKey="label"
         keyField="key"
@@ -62,7 +63,7 @@ const TicketListPage = ({
       threshold={loadMoreThreshold}>
       <Subtitle
         title={<T id="vsp.mytickets.subtitle" m="Live Tickets" />}
-        className={style.subtitle}
+        className={styles.subtitle}
         children={subtitleMenu({
           sortTypes,
           ticketTypes,
@@ -90,7 +91,7 @@ const TicketListPage = ({
       )}
       {tickets.length > 0 && (
         <>
-          <div className={style.tableHeader}>
+          <div className={styles.tableHeader}>
             <div>
               <T id="vsptickets.table.header.status" m="Ticket Status" />
             </div>

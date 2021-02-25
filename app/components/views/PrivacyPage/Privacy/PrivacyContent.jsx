@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Subtitle, Log, Balance, Tooltip } from "shared";
+import { Tooltip } from "pi-ui";
+import { Subtitle, Log, Balance, SendTransaction } from "shared";
 import {
   InfoDocModalButton,
   MixerPassphraseModalSwitch,
@@ -10,7 +11,6 @@ import {
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
-import { SendTransaction } from "shared";
 import styles from "./SendForm.module.css";
 import { useService } from "hooks";
 
@@ -94,7 +94,7 @@ const PrivacyContent = ({
               </DangerButton>
             ) : getRunningIndicator ? (
               <Tooltip
-                text={
+                content={
                   <T
                     id="mixer.start.running"
                     m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."

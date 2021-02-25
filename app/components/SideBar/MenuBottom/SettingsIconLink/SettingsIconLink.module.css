@@ -8,3 +8,8 @@
 .settingsIcon:hover {
   opacity: 0.7;
 }
+
+.tooltipContent {
+  padding: 1rem !important;
+  color: var(--input-color-default);
+}
