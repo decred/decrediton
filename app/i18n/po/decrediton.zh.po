@@ -5094,19 +5094,19 @@ msgstr "链上余额及闪电网络钱包详情"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (95% of the 100 most
+#. Once the majority of the PoW miners have upgraded (95% of the 1000 most
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (95% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 1000 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
-"如果大多数 PoW 矿工已升级（最近100个区块中的95%是最新版本），大多数 PoS "
+"如果大多数 PoW 矿工已升级（最近1000个区块中的95%是最新版本），大多数 PoS "
 "选民也已经升级（在2016个区块间隔中，75%的选民已更新），则投票程序开始。"
 
 #. [sidebar.mixer.running]
