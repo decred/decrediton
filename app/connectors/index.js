@@ -1,6 +1,5 @@
 export { default as accountsPage } from "./accountsPage";
 export { default as accountsSelect } from "./accountsSelect";
-export { default as balance } from "./balance";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as send } from "./send";
