@@ -1,1 +1,2 @@
-export { default as ErrorScreen } from "./ErrorScreen";
+import ErrorScreen from "./ErrorScreen";
+export default ErrorScreen;
