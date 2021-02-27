@@ -32,7 +32,7 @@ const Wallet = ({ setInterval }) => {
     // peers.
     const peerInfoInterval = setInterval(() => getPeerInfo(), 10000);
 
-    // Cleanup interval on unmount
+    // Cleanup interval on unmount.
     return () => {
       clearInterval(peerInfoInterval);
     };
