@@ -148,10 +148,4 @@ const App = () => {
   );
 };
 
-App.propTypes = {
-  locale: PropTypes.object.isRequired,
-  window: PropTypes.object.isRequired,
-  shutdownApp: PropTypes.func.isRequired
-};
-
 export default hot(App);
