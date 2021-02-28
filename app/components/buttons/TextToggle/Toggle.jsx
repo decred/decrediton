@@ -6,7 +6,7 @@ const Toggle = ({ leftText, rightText, activeButton, onClick }) => (
     <div
       className={classNames(
         styles.textToggleButtonLeft,
-        activeButton === "left" ? styles.textToggleButtonActive : ""
+        activeButton === "left" && styles.textToggleButtonActive
       )}
       onClick={activeButton == "right" ? () => onClick("left") : null}>
       {leftText}
@@ -14,7 +14,7 @@ const Toggle = ({ leftText, rightText, activeButton, onClick }) => (
     <div
       className={classNames(
         styles.textToggleButtonRight,
-        activeButton === "right" ? styles.textToggleButtonActive : ""
+        activeButton === "right" && styles.textToggleButtonActive
       )}
       onClick={activeButton == "left" ? () => onClick("right") : null}>
       {rightText}

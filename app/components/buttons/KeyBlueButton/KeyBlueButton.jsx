@@ -5,10 +5,7 @@ import styles from "./KeyBlueButton.module.css";
 const KeyBlueButton = (props) => (
   <Button
     {...props}
-    className={classNames(
-      styles.keyBlueButton,
-      props.className && props.className
-    )}
+    className={classNames(styles.keyBlueButton, props.className)}
   />
 );
 
