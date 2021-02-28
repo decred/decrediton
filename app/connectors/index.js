@@ -5,7 +5,6 @@ export { default as balance } from "./balance";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as send } from "./send";
-export { default as stakeInfo } from "./stakeInfo";
 export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";
 export { default as walletError } from "./walletError";
