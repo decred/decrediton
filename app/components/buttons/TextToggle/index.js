@@ -1,26 +1,15 @@
+import { useState } from "react";
 import Toggle from "./Toggle";
 
-@autobind
-class TextToggle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeButton: this.props.activeButton
-    };
-  }
+const TextToggle = ({ activeButton, leftText, rightText, toggleAction }) => {
+  const [active, setActive] = useState(activeButton);
 
-  onClick(activeButton) {
-    this.setState({ activeButton });
-    this.props.toggleAction(activeButton);
-  }
+  const onClick = (active) => {
+    setActive(active);
+    toggleAction(active);
+  };
 
-  render() {
-    const { leftText, rightText } = this.props;
-    const { activeButton } = this.state;
-    const { onClick } = this;
-
-    return <Toggle {...{ leftText, rightText, activeButton, onClick }} />;
-  }
-}
+  return <Toggle {...{ leftText, rightText, activeButton: active, onClick }} />;
+};
 
 export default TextToggle;

@@ -20,103 +20,8 @@
   background-color: var(--account-button-hover);
 }
 
-.key-blue-button {
-  cursor: pointer;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  border-radius: 5px;
-  background-color: var(--input-color);
-  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--white-button-text);
-  font-size: 13px;
-  line-height: 17px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  user-select: none;
-}
-
-.key-blue-button:hover {
-  background-color: var(--input-color-hover);
-}
-
-.key-blue-button:active {
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
-  background-color: var(--input-color-hover);
-}
-
-.key-blue-button-disabled,
-.key-blue-button[disabled],
-.danger-button-disabled,
-.danger-button[disabled] {
-  cursor: default;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  border-radius: 5px;
-  background-color: var(--disabled-background-color);
-  box-shadow: none;
-  color: var(--disabled-color);
-  font-size: 13px;
-  line-height: 17px;
-  font-weight: 400;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-  user-select: none;
-}
-
-.slate-gray-button {
-  cursor: pointer;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  border-radius: 5px;
-  background-color: var(--back-button-bg);
-  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--back-button-text);
-  font-size: 13px;
-  line-height: 17px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  user-select: none;
-}
-
-.slate-gray-button:hover {
-  background-color: var(--stroke-color-hovered);
-}
-
 .thin-button {
-  padding: 5px 20px 5px 20px;
-}
-
-.invisible-button {
-  cursor: pointer;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  border-radius: 5px;
-  color: var(--disabled-color);
-  background-color: inherit;
-  font-size: 13px;
-  line-height: 17px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  user-select: none;
-}
-
-.invisible-button:hover {
-  color: var(--stroke-color-hovered);
-}
-
-.loader-settings-logs .invisible-button {
-  color: var(--getstarted-menu-color);
-}
-.loader-settings-logs .invisible-button:hover {
-  color: var(--menutab-hover);
+  padding: 5px 20px 5px 20px !important;
 }
 
 .update-available-button {
@@ -131,50 +36,6 @@
 
 .update-available-button:hover {
   color: var(--input-color-hover);
-}
-
-.danger-button {
-  cursor: pointer;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  border-radius: 5px;
-  background-color: var(--error-red);
-  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--background-back-color);
-  font-size: 13px;
-  line-height: 17px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  user-select: none;
-}
-
-.danger-button:hover {
-  background-color: var(--error-red-hover);
-}
-
-.close-button {
-  cursor: pointer;
-  display: inline-block;
-  padding: 12px 30px 14px 30px;
-  border-radius: 5px;
-  background-color: var(--title-text-and-button-background);
-  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--stroke-color-default);
-  font-size: 13px;
-  line-height: 17px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  user-select: none;
-}
-
-.close-button:hover {
-  background-color: var(--title-text-and-button-background-hovered);
 }
 
 .manage-pools-button {
@@ -198,80 +59,6 @@
   }
 }
 
-.info-field-modal-button {
-  float: right;
-  border-radius: 0px;
-  background-image: var(--help-getstared);
-  background-position: 50% 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
-  box-shadow: none;
-  width: 20px;
-  height: 20px;
-  background-color: transparent;
-  border: 0;
-  line-height: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  margin-right: 4px;
-  margin-left: 4px;
-}
-
-.info-modal-button {
-  border-radius: 0px;
-  background-image: var(--tickets-info-icon);
-  background-position: 50% 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
-  box-shadow: none;
-  outline: 0;
-  display: inline-block;
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  padding: 3px;
-  background-color: transparent;
-  border: 0;
-  line-height: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  margin: 4px 0;
-}
-
-.info-modal-button:hover {
-  opacity: 0.7;
-}
-
-.ticket-cogs-opened,
-.ticket-cogs-closed {
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 0px;
-  background-position: 50% 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
-  box-shadow: none;
-  width: 20px;
-  height: 20px;
-  background-color: transparent;
-  color: var(--background-back-color);
-  border: 0;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.ticket-cogs-opened {
-  background-image: var(--tickets-cogs-opened-icon);
-}
-
-.ticket-cogs-closed {
-  background-image: var(--tickets-cogs-closed-icon);
-}
-
-.ticket-cogs-opened:hover,
-.ticket-cogs-closed:hover {
-  opacity: 0.7;
-}
 
 [data-pseudo-content]::before,
 [data-pseudo-content--before]::before,
@@ -398,51 +185,6 @@
   float: right;
   margin-left: 20px;
   margin-top: 10px;
-}
-
-// end of UnsignedTx component style
-@media screen and (max-width: 511px) {
-  .settings-save-button .key-blue-button {
-    margin-top: 0;
-    padding: 12px 30px 14px 30px;
-  }
-  .confirm-modal-toolbar .key-blue-button {
-    margin-top: 0;
-    padding: 12px 30px 14px 30px;
-  }
-
-  .danger-button {
-    margin-left: 145px;
-    margin-top: 18px;
-  }
-}
-
-@media screen and (max-width: 409px) {
-  .danger-button {
-    margin-left: 55px;
-    width: 122px;
-  }
-}
-
-@media screen and (max-width: 299px) {
-  .danger-button {
-    margin-left: 55px;
-    width: 122px;
-  }
-
-  .key-blue-button {
-    position: absolute;
-    bottom: 18px;
-  }
-}
-
-.go-back-icon-button {
-  height: 12px;
-  width: 12px;
-  background-repeat: no-repeat;
-  background-size: 12px;
-  background-image: var(--x-grey);
-  padding: 0px;
 }
 
 .rebroadcast-button-container,

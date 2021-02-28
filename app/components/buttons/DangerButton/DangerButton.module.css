@@ -1,0 +1,29 @@
+.dangerButton {
+  background-color: var(--error-red);
+  color: var(--background-back-color);
+}
+
+.dangerButton:hover {
+  background-color: var(--error-red-hover);
+}
+
+@media screen and (max-width: 511px) {
+  .dangerButton {
+    margin-left: 145px;
+    margin-top: 18px;
+  }
+}
+
+@media screen and (max-width: 409px) {
+  .dangerButton {
+    margin-left: 55px;
+    width: 122px;
+  }
+}
+
+@media screen and (max-width: 299px) {
+  .dangerButton {
+    margin-left: 55px;
+    width: 122px;
+  }
+}

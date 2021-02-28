@@ -1,0 +1,10 @@
+.invisibleButton {
+  color: var(--disabled-color);
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.invisibleButton[disabled]:hover,
+.invisibleButton:hover {
+  color: var(--stroke-color-hovered);
+}

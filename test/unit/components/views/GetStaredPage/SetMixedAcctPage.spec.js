@@ -59,7 +59,7 @@ test("test SetMixedAcctPage", async () => {
     testCoinjoinSumByAcct.length - 1
   );
   const continueButton = screen.getByText(/continue/i);
-  expect(continueButton.className).toMatch(/disabled/i);
+  expect(continueButton.disabled).toBe(true);
 
   const firstMixedCheckbox = mixedAccountCheckboxes[0];
   const firstUnMixedCheckbox = unmixedAccountCheckboxes[0];
@@ -95,7 +95,7 @@ test("test SetMixedAcctPage", async () => {
   await wait(() => expect(secondMixedCheckbox.checked).toEqual(true));
   expect(screen.queryByText(/you need to set/i)).not.toBeInTheDocument();
 
-  expect(continueButton.className).not.toMatch(/disabled/i);
+  expect(continueButton.disabled).toBe(false);
   user.click(continueButton);
   expect(mockRenameAccountAttempt).toHaveBeenCalledWith(
     testCoinjoinSumByAcct[1].acctIdx,

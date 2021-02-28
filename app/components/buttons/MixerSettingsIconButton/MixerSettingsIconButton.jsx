@@ -1,6 +1,6 @@
 import { MixerSettingsModal } from "modals";
 import ModalButton from "../ModalButton";
-import InvisibleButton from "../InvisibleButton";
+import InvisibleButton from "../InvisibleButton/InvisibleButton";
 import { classNames } from "pi-ui";
 import style from "./MixerSettingsIconButton.module.css";
 

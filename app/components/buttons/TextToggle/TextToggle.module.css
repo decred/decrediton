@@ -1,0 +1,43 @@
+.textToggle {
+  display: block;
+  height: 40px;
+  float: right;
+  text-align: left;
+}
+.textToggle::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.textToggleButtonLeft,
+.textToggleButtonRight {
+  min-width: 104px;
+  float: left;
+  border: 1px var(--disabled-background-color) solid;
+  background-color: var(--background-container);
+  box-shadow: none;
+  color: var(--disabled-color);
+  padding: 12px 18px;
+  font-size: 13px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+.textToggleButtonActive {
+  background-color: var(--background-back-color);
+  color: var(--input-color-default);
+  cursor: default;
+}
+.textToggleButtonLeft {
+  border-radius: 5px 0px 0px 5px;
+}
+.textToggleButtonRight {
+  border-radius: 0px 5px 5px 0px;
+  border-left: none;
+}

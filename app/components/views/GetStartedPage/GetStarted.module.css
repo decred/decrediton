@@ -348,24 +348,22 @@
   height: 20px;
   width: 20px;
   border-radius: 3px;
-  padding: 0;
   background-repeat: no-repeat;
   background-size: 14px;
   background-position: 50% 50%;
-  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
-}
-
-.displayWalletButton:hover {
-  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
 }
 
 .displayWalletButton.remove {
   background-color: var(--button-text);
   background-image: var(--launcher-wallet-delete);
+  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
+  padding: 0;
 }
 
 .displayWalletButton.remove:hover {
+  background-color: var(--button-text);
   background-image: var(--launcher-wallet-delete-hover);
+  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
 }
 
 .displayWallet:hover:not(.selected) {
