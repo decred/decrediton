@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
 import { Balance, TransitionMotionWrapper } from "shared";
 import { SendTransactionButton } from "buttons";
-import { UnsignedTx, Tooltip } from "shared";
+import { UnsignedTx } from "shared";
 
 const wrapperComponent = (props) => <div {...props} />;
 
