@@ -1,0 +1,17 @@
+.header {
+  white-space: pre-wrap;
+  color: var(--header-desc-lighter-color);
+  font-size: 13px;
+  float: left;
+  width: 100%;
+  margin-left: 40px;
+}
+
+.actionButton {
+  position: absolute;
+  right: 80px;
+}
+
+.actionButton > .button {
+  min-width: 76px;
+}
