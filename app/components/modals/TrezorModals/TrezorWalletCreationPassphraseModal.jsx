@@ -8,7 +8,6 @@ import styles from "./TrezorModals.module.css";
 
 const TrezorWalletCreationPassphraseModal = ({
   isGetStarted,
-  device,
   deviceLabel,
   onCancelModal,
   onSubmitPassPhrase
@@ -53,27 +52,15 @@ const TrezorWalletCreationPassphraseModal = ({
     []
   );
 
-  const trezorLabel = device ? deviceLabel : "";
-
   const className = classNames(
     styles.passphraseModal,
     isGetStarted && styles.getStarted
   );
 
-<<<<<<< HEAD:app/components/modals/trezor/WalletCreationPassPhraseModal.jsx
-<<<<<<< HEAD
-    const isValid =
-      passphraseValue === passphraseConfirmValue && !!passphraseValue;
-=======
-  const isValid =
-    passphraseValue === passphraseConfirmValue && !!passphraseValue;
->>>>>>> 1544365d (Create trezor.module.css)
-=======
   const isValid = useMemo(
     () => passphraseValue === passphraseConfirmValue && !!passphraseValue,
     [passphraseValue, passphraseConfirmValue]
   );
->>>>>>> 517dc3e7 (Test all modals and align them to center):app/components/modals/TrezorModals/TrezorWalletCreationPassphraseModal.jsx
 
   return (
     <Modal className={className} onCancelModal={onCancelModal}>
@@ -90,12 +77,11 @@ const TrezorWalletCreationPassphraseModal = ({
             "Type the secret passphrase of the wallet to restore from the trezor device {label}"
           }
           values={{
-            label: <span className={styles.label}>'{trezorLabel}'</span>
+            label: <span className={styles.label}>'{deviceLabel}'</span>
           }}
         />
       </p>
       <Documentation name="TrezorWalletCreationPassPhraseWarning" />
-
       <PassphraseModalField
         label={
           <T id="trezor.walltCreationPrivatePassphrase" m="Wallet PassPhrase" />
@@ -109,7 +95,6 @@ const TrezorWalletCreationPassphraseModal = ({
           showErrors={submitAttempted}
         />
       </PassphraseModalField>
-
       <PassphraseModalField
         label={
           <T
@@ -132,7 +117,6 @@ const TrezorWalletCreationPassphraseModal = ({
           }
         />
       </PassphraseModalField>
-
       <ButtonsToolbar
         {...{ isValid, onCancelModal, onSubmit }}
         className={styles.buttons}

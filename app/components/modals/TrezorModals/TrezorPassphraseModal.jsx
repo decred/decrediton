@@ -6,7 +6,6 @@ import styles from "./TrezorModals.module.css";
 
 const TrezorPassphraseModal = ({
   isGetStarted,
-  device,
   deviceLabel,
   onSubmitPassPhrase,
   onCancelModal
@@ -14,8 +13,6 @@ const TrezorPassphraseModal = ({
   const onSubmit = useCallback((passPhrase) => {
     onSubmitPassPhrase(passPhrase);
   }, [onSubmitPassPhrase]);
-
-  const trezorLabel = device ? deviceLabel : "";
 
   const className = classNames(
     styles.passphraseModal,
@@ -35,7 +32,7 @@ const TrezorPassphraseModal = ({
             id="trezor.passphraseModal.description"
             m="Type the secret passphrase for the wallet stored in trezor {label}"
             values={{
-              label: <span className={styles.label}>'{trezorLabel}'</span>
+              label: <span className={styles.label}>'{deviceLabel}'</span>
             }}
           />
         </p>

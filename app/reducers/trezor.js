@@ -91,7 +91,7 @@ export default function trezor(state = {}, action) {
         ...state,
         transportError: action.error,
         device: null,
-        deviceLabel: null,
+        deviceLabel: "",
         performingOperation: false,
         connected: false
       };
@@ -100,14 +100,14 @@ export default function trezor(state = {}, action) {
       return {
         ...state,
         device: null,
-        deviceLabel: null,
+        deviceLabel: "",
         connected: false
       };
     case TRZ_WALLET_CLOSED:
       return {
         ...state,
         device: null,
-        deviceLabel: null,
+        deviceLabel: "",
         performingOperation: false,
         connected: false
       };

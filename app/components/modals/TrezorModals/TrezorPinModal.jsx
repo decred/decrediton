@@ -9,7 +9,6 @@ import styles from "./TrezorModals.module.css";
 
 const TrezorPinModal = ({
   isGetStarted,
-  device,
   deviceLabel,
   onSubmitPin,
   onCancelModal
@@ -29,8 +28,6 @@ const TrezorPinModal = ({
     setCurrentPin("");
   }, []);
 
-  const trezorLabel = device ? deviceLabel : "";
-
   const className = classNames(
     styles.pinModal,
     isGetStarted && styles.getStarted
@@ -46,7 +43,7 @@ const TrezorPinModal = ({
           id="trezor.pinModal.description"
           m="Click button sequence that corresponds to your pin on trezor {label}"
           values={{
-            label: <span className={styles.label}>'{trezorLabel}'</span>
+            label: <span className={styles.label}>'{deviceLabel}'</span>
           }}
         />
       </p>

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTrezor } from "hooks";
 import PinModal from "./TrezorPinModal";
 import PassPhraseModal from "./TrezorPassphraseModal";
@@ -15,19 +16,25 @@ const TrezorModals = () => {
     ...props
   } = useTrezor();
 
-  let Component = null;
-
-  if (waitingForPin) {
-    Component = PinModal;
-  } else if (waitingForPassPhrase) {
-    if (walletCreationMasterPubkeyAttempt) {
-      Component = WalletCreationPassPhraseModal;
-    } else {
-      Component = PassPhraseModal;
+  const Component = useMemo(() => {
+    switch (true) {
+      case waitingForPin:
+        return PinModal;
+      case waitingForPassPhrase:
+        return walletCreationMasterPubkeyAttempt
+          ? WalletCreationPassPhraseModal
+          : PassPhraseModal;
+      case waitingForWord:
+        return WordModal;
+      default:
+        return null;
     }
-  } else if (waitingForWord) {
-    Component = WordModal;
-  }
+  }, [
+    waitingForPin,
+    waitingForPassPhrase,
+    walletCreationMasterPubkeyAttempt,
+    waitingForWord
+  ]);
 
   return Component && isTrezor ? (
     <Component
