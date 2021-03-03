@@ -52,18 +52,18 @@ const TrezorWalletCreationPassphraseModal = ({
     []
   );
 
-  const className = classNames(
-    styles.passphraseModal,
-    isGetStarted && styles.getStarted
-  );
-
   const isValid = useMemo(
     () => passphraseValue === passphraseConfirmValue && !!passphraseValue,
     [passphraseValue, passphraseConfirmValue]
   );
 
   return (
-    <Modal className={className} onCancelModal={onCancelModal}>
+    <Modal
+      className={classNames(
+        styles.passphraseModal,
+        isGetStarted && styles.getStarted
+      )}
+      onCancelModal={onCancelModal}>
       <h1>
         <T
           id="trezor.walletCreationPassPhraseModal.title"

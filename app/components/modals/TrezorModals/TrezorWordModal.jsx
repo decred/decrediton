@@ -50,13 +50,13 @@ const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
     [word, onSubmit]
   );
 
-  const className = classNames(
-    styles.wordModal,
-    isGetStarted && styles.getStarted
-  );
-
   return (
-    <Modal {...{ className, onCancelModal: onCancelWordModal }}>
+    <Modal
+      className={classNames(
+        styles.wordModal,
+        isGetStarted && styles.getStarted
+      )}
+      onCancelModal={onCancelWordModal}>
       <h1>
         <T id="trezor.wordModal.title" m="Type the requested word" />
       </h1>

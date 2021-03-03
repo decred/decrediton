@@ -28,13 +28,10 @@ const TrezorPinModal = ({
     setCurrentPin("");
   }, []);
 
-  const className = classNames(
-    styles.pinModal,
-    isGetStarted && styles.getStarted
-  );
-
   return (
-    <Modal {...{ className, onCancelModal: onCancelPinModal }}>
+    <Modal
+      className={classNames(styles.pinModal, isGetStarted && styles.getStarted)}
+      onCancelModal={onCancelPinModal}>
       <h1>
         <T id="trezor.pinModal.title" m="Enter Pin" />
       </h1>

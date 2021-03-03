@@ -10,13 +10,11 @@ const TrezorPassphraseModal = ({
   onSubmitPassPhrase,
   onCancelModal
 }) => {
-  const onSubmit = useCallback((passPhrase) => {
-    onSubmitPassPhrase(passPhrase);
-  }, [onSubmitPassPhrase]);
-
-  const className = classNames(
-    styles.passphraseModal,
-    isGetStarted && styles.getStarted
+  const onSubmit = useCallback(
+    (passPhrase) => {
+      onSubmitPassPhrase(passPhrase);
+    },
+    [onSubmitPassPhrase]
   );
 
   return (
@@ -25,7 +23,10 @@ const TrezorPassphraseModal = ({
       modalTitle={
         <T id="trezor.passphraseModal.title" m="Enter Trezor Passphrase" />
       }
-      modalClassName={className}
+      modalClassName={classNames(
+        styles.passphraseModal,
+        isGetStarted && styles.getStarted
+      )}
       modalDescription={
         <p>
           <T
