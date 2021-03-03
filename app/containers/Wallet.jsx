@@ -14,7 +14,7 @@ import TicketsPage from "components/views/TicketsPage/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
-import TrezorPage from "components/views/TrezorPage";
+import TrezorPage from "components/views/TrezorPage/TrezorPage";
 import LNPage from "components/views/LNPage";
 import SideBar from "components/SideBar/SideBar";
 import ListUtxo from "components/views/ListUtxo/ListUtxo";
