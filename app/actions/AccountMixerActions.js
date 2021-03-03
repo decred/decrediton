@@ -3,15 +3,12 @@ import Promise from "promise";
 import * as sel from "selectors";
 import * as wallet from "wallet";
 import { getWalletCfg } from "config";
-<<<<<<< HEAD
 import {
-  getAccountsAttempt,updateAccount,
+  getAccountsAttempt,
+  getMixerAcctsSpendableBalances,
   getAcctSpendableBalance,
-  getMixerAcctsSpendableBalances
+  showAccount
 } from "./ClientActions";
-=======
-import { getAcctSpendableBalance, getAccountsAttempt, showAccount } from "./ClientActions";
->>>>>>> 3b6059ee (Replace updateAccount with showAccount action call)
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,

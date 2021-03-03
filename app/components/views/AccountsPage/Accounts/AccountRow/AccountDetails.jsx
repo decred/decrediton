@@ -3,7 +3,6 @@ import { Tooltip, classNames } from "pi-ui";
 import { Balance, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
 import style from "../Accounts.module.css";
-import { classNames } from "pi-ui";
 import {
   IMPORTED_ACCOUNT,
   DEFAULT_ACCOUNT,
