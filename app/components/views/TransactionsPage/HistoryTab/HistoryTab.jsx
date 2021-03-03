@@ -47,11 +47,12 @@ const HistoryTab = () => {
     onChangeTransactionsFilter
   } = useHistoryTab();
 
+
   const { search, listDirection } = transactionsFilter;
   const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
 
   const [searchText, setSearchText] = useState(search);
-  const [selectedTxTypeKey, setSelectedTxTypeKey] = useState(selTxTypeKey);
+  const [selectedTxTypeKeys, setSelectedTxTypeKeys] = useState(selTxTypeKeys);
   const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(
     listDirection
   );
