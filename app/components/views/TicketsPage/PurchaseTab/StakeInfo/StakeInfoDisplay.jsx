@@ -93,7 +93,7 @@ const StakeInfoDisplay = ({
               value={<StakeInfoDisplayTicketCount value={votedTicketsCount} />}
             />
             <StakeInfoDisplayItem
-              label={<T id="stake.lastVotedTicket" m="Last Ticked Voted" />}
+              label={<T id="stake.lastVotedTicket" m="Last Ticket Voted" />}
               value={
                 lastVotedTicket ? (
                   <FormattedRelative
