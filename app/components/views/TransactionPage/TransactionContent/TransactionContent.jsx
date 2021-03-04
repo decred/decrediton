@@ -1,5 +1,4 @@
-import { Balance, CopyToClipboard } from "shared";
-import { shell } from "electron";
+import { Balance, CopyToClipboard, ExternalLink } from "shared";
 import { KeyBlueButton } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
@@ -9,7 +8,8 @@ import {
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT
 } from "constants/Decrediton";
-import "style/TxDetails.less";
+import styles from "./TransactionContent.module.css";
+import { classNames } from "pi-ui";
 
 function mapNonWalletOutput(output) {
   const address =
@@ -33,7 +33,7 @@ function mapNonWalletInput(input) {
   return { address, amount };
 }
 
-const Page = ({
+const TransactionContent = ({
   transactionDetails,
   decodedTransaction,
   abandonTransaction,
@@ -55,8 +55,6 @@ const Page = ({
     isPending
   } = transactionDetails;
 
-  const openTxUrl = () => shell.openExternal(txUrl);
-  const openBlockUrl = () => shell.openExternal(txBlockUrl);
   let nonWalletInputs = [];
   let nonWalletOutputs = [];
 
@@ -73,32 +71,32 @@ const Page = ({
   }
   return (
     <>
-      <div className="txdetails-top">
-        <div className="txdetails-top-row">
-          <div className="txdetails-name">
+      <div className={styles.top}>
+        <div className={styles.topRow}>
+          <div className={styles.name}>
             <T id="txDetails.transactionLabel" m="Transaction" />:
           </div>
-          <div className="txdetails-value">
-            <a onClick={openTxUrl} style={{ cursor: "pointer" }}>
+          <div className={styles.value}>
+            <ExternalLink className={styles.value} href={txUrl}>
               {txHash}
-            </a>
+            </ExternalLink>
           </div>
         </div>
-        <div className="txdetails-top-row">
-          <div className="txdetails-name">
+        <div className={styles.topRow}>
+          <div className={styles.name}>
             {!isPending ? (
-              <div className="txdetails-indicator-confirmed">
+              <div className={styles.indicatorConfirmed}>
                 <T id="txDetails.indicatorConfirmed" m="Confirmed" />
               </div>
             ) : (
-              <div className="txdetails-indicator-pending">
+              <div className={styles.indicatorPending}>
                 <T id="txDetails.indicatorPending" m="Pending" />
               </div>
             )}
           </div>
-          <div className="txdetails-value">
+          <div className={styles.value}>
             {!isPending && (
-              <span className="txdetails-value-text">
+              <span className={styles.valueText}>
                 <T
                   id="transaction.confirmationHeight"
                   m="{confirmations, plural, =0 {Mined, block awaiting approval} one {# confirmation} other {# confirmations}}"
@@ -113,11 +111,11 @@ const Page = ({
           </div>
         </div>
         {txType !== VOTE && (
-          <div className="txdetails-top-row">
-            <div className="txdetails-name">
+          <div className={styles.topRow}>
+            <div className={styles.name}>
               <T id="txDetails.toAddress" m="To address" />:
             </div>
-            <div className="txdetails-value non-flex">
+            <div className={classNames(styles.value, styles.nonFlex)}>
               {txOutputs.map(({ address }, i) => (
                 <div key={i}>{addSpacingAroundText(address)}</div>
               ))}
@@ -128,21 +126,21 @@ const Page = ({
           </div>
         )}
         {txDirection !== TRANSACTION_DIR_RECEIVED && txType !== VOTE && (
-          <div className="txdetails-top-row">
-            <div className="txdetails-name">
+          <div className={styles.topRow}>
+            <div className={styles.name}>
               <T id="txDetails.transactionFeeLabel" m="Transaction fee" />:
             </div>
-            <div className="txdetails-value">
+            <div className={styles.value}>
               <Balance amount={txFee} />
             </div>
           </div>
         )}
       </div>
       {isPending && (
-        <div className="txdetails-abandon-rebroadcast-area">
-          <div className="rebroadcast-button-container">
+        <div className={styles.abandonRebroadcastArea}>
+          <div className={styles.rebroadcastButtonContainer}>
             <KeyBlueButton
-              className="rebroadcast-button"
+              className={styles.rebroadcastButton}
               onClick={publishUnminedTransactions}>
               <T
                 id="txDetails.rebroadcastTransactions"
@@ -150,140 +148,140 @@ const Page = ({
               />
             </KeyBlueButton>
           </div>
-          <div className="abandon-button-container">
+          <div className={styles.abandonButtonContainer}>
             <KeyBlueButton
-              className="abandon-button"
+              className={styles.abandonButton}
               onClick={() => abandonTransaction(txHash)}>
               <T id="txDetails.abandontTransaction" m="Abandon Transaction" />
             </KeyBlueButton>
           </div>
         </div>
       )}
-      <div className="txdetails-io">
-        <div className="txdetails-title">
+      <div className={styles.io}>
+        <div className={styles.title}>
           <T id="txDetails.io.title" m="I/O Details" />
         </div>
-        <div className="txdetails-overview">
-          <div className="txdetails-inputs">
-            <div className="txdetails-input-area">
+        <div className={styles.overview}>
+          <div className={styles.inputs}>
+            <div className={styles.inputArea}>
               <div
                 className={
                   txInputs.length > 0
-                    ? "txdetails-overview-title-consumed"
-                    : "txdetails-overview-title-empty"
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.walletInputs" m="Wallet Inputs" />
               </div>
               {txInputs.map(({ accountName, amount }, idx) => (
-                <div key={idx} className="txdetails-row">
-                  <div className="txdetails-address">{accountName}</div>
-                  <div className="txdetails-amount">
+                <div key={idx} className={styles.row}>
+                  <div className={styles.address}>{accountName}</div>
+                  <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="txdetails-input-area">
+            <div className={styles.inputArea}>
               <div
                 className={
                   nonWalletInputs.length > 0
-                    ? "txdetails-overview-title-consumed"
-                    : "txdetails-overview-title-empty"
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
               </div>
               {nonWalletInputs.map(({ address, amount }, idx) => (
-                <div key={idx} className="txdetails-row">
-                  <div className="txdetails-address">
+                <div key={idx} className={styles.row}>
+                  <div className={styles.address}>
                     {addSpacingAroundText(address)}
                   </div>
-                  <div className="txdetails-amount">
+                  <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="txdetails-input-arrow"></div>
-          <div className="txdetails-outputs">
-            <div className="txdetails-output-area">
+          <div className={styles.inputArrow}></div>
+          <div className={styles.outputs}>
+            <div className={styles.outputArea}>
               <div
                 className={
                   txOutputs.length > 0
-                    ? "txdetails-overview-title-consumed"
-                    : "txdetails-overview-title-empty"
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.walletOutputs" m="Wallet Outputs" />
               </div>
               {txOutputs.map(({ accountName, decodedScript, amount }, idx) => (
-                <div key={idx} className="txdetails-row">
-                  <div className="txdetails-address">
+                <div key={idx} className={styles.row}>
+                  <div className={styles.address}>
                     {txDirection === TRANSACTION_DIR_SENT
                       ? "change"
                       : accountName
                       ? addSpacingAroundText(accountName)
                       : addSpacingAroundText(decodedScript.address)}
                   </div>
-                  <div className="txdetails-amount">
+                  <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="txdetails-output-area">
+            <div className={styles.outputArea}>
               <div
                 className={
                   nonWalletOutputs.length > 0
-                    ? "txdetails-overview-title-consumed"
-                    : "txdetails-overview-title-empty"
+                    ? styles.overviewTitleConsumed
+                    : styles.overviewTitleEmpty
                 }>
                 <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
               </div>
               {nonWalletOutputs.map(({ address, amount }, idx) => (
-                <div key={idx} className="txdetails-row">
-                  <div className="txdetails-address non-wallet">
+                <div key={idx} className={styles.row}>
+                  <div className={classNames(styles.address, styles.nonWallet)}>
                     {addSpacingAroundText(address)}
                   </div>
-                  <div className="txdetails-amount">{amount}</div>
+                  <div className={styles.amount}>{amount}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-      <div className="txdetails-details">
-        <div className="txdetails-title">
+      <div className={styles.details}>
+        <div className={styles.title}>
           <T id="txDetails.properties" m="Properties" />
         </div>
         {!isPending && (
           <>
-            <div className="txdetails-top-row">
-              <div className="txdetails-name">
+            <div className={styles.topRow}>
+              <div className={styles.name}>
                 <T id="txDetails.blockLabel" m="Block" />
               </div>
-              <div className="txdetails-value">
-                <a onClick={openBlockUrl} style={{ cursor: "pointer" }}>
+              <div className={styles.value}>
+                <ExternalLink className={styles.value} href={txBlockUrl}>
                   {txBlockHash}
-                </a>
+                </ExternalLink>
               </div>
             </div>
-            <div className="txdetails-top-row">
-              <div className="txdetails-name">
+            <div className={styles.topRow}>
+              <div className={styles.name}>
                 <T id="txDetails.blockHeightLabel" m="Height" />
               </div>
-              <div className="txdetails-value">{txHeight}</div>
+              <div className={styles.value}>{txHeight}</div>
             </div>
           </>
         )}
-        <div className="txdetails-top-row row-transaction">
-          <div className="txdetails-name">
+        <div className={classNames(styles.topRow, styles.rowTransaction)}>
+          <div className={styles.name}>
             <T id="txDetails.rawTransactionLabel" m="Raw Transaction" />
           </div>
-          <div className="txdetails-value">
-            <div className="txdetails-value-rawtx">{rawTx}</div>
+          <div className={styles.value}>
+            <div className={styles.valueRawTx}>{rawTx}</div>
             <CopyToClipboard
               textToCopy={rawTx}
-              className="receive-content-nest-copy-to-clipboard-icon"
+              className={styles.receiveContentNestCopyToClipboardIcon}
             />
           </div>
         </div>
@@ -292,4 +290,4 @@ const Page = ({
   );
 };
 
-export default Page;
+export default TransactionContent;

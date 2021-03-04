@@ -1,0 +1,39 @@
+.subtitle {
+  display: flex;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+.subtitlePair {
+  display: flex;
+  margin-top: 3px;
+}
+.subtitleSentfrom {
+  margin-right: 5px;
+}
+.subtitleDate,
+.subtitleAccount {
+  font-size: 13px;
+  line-height: 17px;
+  padding: 2px 10px 2px 10px;
+  border-radius: 3px;
+  background-color: var(--blue-highlight-background);
+  color: var(--input-color-default);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  margin-right: 5px;
+}
+.subtitleDate {
+  max-height: 22px;
+}
+.subtitleAccount {
+  width: 80px;
+  max-height: 22px;
+}
+@media screen and (max-width: 768px) {
+  .standalonePage .subtitle {
+    margin-top: 10px;
+    width: 355px;
+  }
+}

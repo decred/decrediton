@@ -1,0 +1,23 @@
+.standalonePage {
+  user-select: text;
+  -webkit-user-select: text;
+}
+.standalonePage > div:last-child {
+  padding: 0;
+  top: 157px;
+}
+@media screen and (max-width: 768px) {
+  .standalonePage > div:first-child {
+    padding-bottom: 10px;
+  }
+  .standalonePage > div:first-child > div:last-child {
+    display: block;
+    margin-left: 30px;
+  }
+  .standalonePage > div:last-child {
+    padding: 0 0 40px 0;
+    position: relative;
+    top: initial;
+    overflow-y: initial;
+  }
+}

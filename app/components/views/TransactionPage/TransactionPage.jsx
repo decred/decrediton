@@ -1,11 +1,12 @@
-import TransactionPage from "./Page";
-import Header from "./Header";
+import TransactionContent from "./TransactionContent/TransactionContent";
+import TransactionHeader from "./TransactionHeader/TransactionHeader";
 import { useParams } from "react-router-dom";
 import { DecredLoading } from "indicators";
 import { StandalonePage } from "layout";
 import { useTransactionPage } from "./hooks";
+import styles from "./TransactionPage.module.css";
 
-function Transaction() {
+const Transaction = () => {
   const { txHash } = useParams();
   const {
     abandonTransaction,
@@ -23,17 +24,17 @@ function Transaction() {
     case "loading":
       return (
         <StandalonePage
-          header={Header({ ...viewedTransaction })}
-          className="txdetails-standalone-page">
+          header={TransactionHeader({ ...viewedTransaction })}
+          className={styles.standalonePage}>
           <DecredLoading center />
         </StandalonePage>
       );
     case "success":
       return (
         <StandalonePage
-          header={Header({ ...viewedTransaction })}
-          className="txdetails-standalone-page">
-          <TransactionPage
+          header={TransactionHeader({ ...viewedTransaction })}
+          className={styles.standalonePage}>
+          <TransactionContent
             {...{
               transactionDetails: viewedTransaction,
               decodedTransaction: decodedTx,
@@ -47,14 +48,14 @@ function Transaction() {
     case "failure":
       return (
         <StandalonePage
-          header={Header({ ...viewedTransaction })}
-          className="txdetails-standalone-page">
+          header={TransactionHeader({ ...viewedTransaction })}
+          className={styles.standalonePage}>
           <p>Transaction not found</p>
         </StandalonePage>
       );
     default:
       return null;
   }
-}
+};
 
 export default Transaction;
