@@ -33,7 +33,7 @@ export const Balance = ({
     return (
       <div className={classNameWrapper}>
         <span {...{ onClick }}>
-          <span className={classNames(styles[classNameAmount], bold && "bold")}>
+          <span className={classNames(classNameAmount, bold && "bold")}>
             <FormattedNumber
               value={head}
               maximumFractionDigits={2}
