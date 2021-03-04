@@ -1,12 +1,12 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
 import {
   AccountsSelect,
   AddressInput,
   DcrInput,
   ReceiveAccountsSelect
 } from "inputs";
-import { Tooltip, Balance } from "shared";
-import { classNames } from "pi-ui";
+import { Balance } from "shared";
 import styles from "./SendOutputRow.module.css";
 
 const messages = defineMessages({
@@ -27,10 +27,11 @@ const getSendAllFundsIcon = ({
   outputs,
   extStyle
 }) => (
-  <div className={classNames(extStyle.sendAllFundsIcon)}>
+  <div className={extStyle.sendAllFundsIcon}>
     {outputs.length > 1 ? (
       <Tooltip
-        text={
+        contentClassName={styles.tooltipSendAllDisabled}
+        content={
           <T
             id="send.sendAllTitle.disabled"
             m="Send all funds from selected account - Disabled"
@@ -46,7 +47,8 @@ const getSendAllFundsIcon = ({
       </Tooltip>
     ) : !isSendAll ? (
       <Tooltip
-        text={
+        contentClassName={styles.tooltipSendAll}
+        content={
           <T id="send.sendAllTitle" m="Send all funds from selected account" />
         }>
         <a
@@ -56,7 +58,10 @@ const getSendAllFundsIcon = ({
       </Tooltip>
     ) : (
       <Tooltip
-        text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds" />}>
+        contentClassName={styles.tooltipSendAllDisabled}
+        content={
+          <T id="send.cancelSendAllTitle" m="Cancel sending all funds" />
+        }>
         <a
           className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
           onClick={onHideSendAll}
@@ -96,7 +101,8 @@ const getAddInputIcon = ({
 const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
   !isSendSelf ? (
     <Tooltip
-      text={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
+      contentClassName={styles.tooltipSendToSelf}
+      content={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
       <a
         className={classNames(styles.sendIconWrapper, styles.selfAccountIcon)}
         onClick={onShowSendSelf}
@@ -104,7 +110,10 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
     </Tooltip>
   ) : (
     <Tooltip
-      text={<T id="send.sendOthersTitle" m="Send funds to another wallet" />}>
+      contentClassName={styles.tooltipSendAllDisabled}
+      content={
+        <T id="send.sendOthersTitle" m="Send funds to another wallet" />
+      }>
       <a
         className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
         onClick={onShowSendOthers}

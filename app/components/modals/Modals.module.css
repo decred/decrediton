@@ -516,12 +516,12 @@
   text-transform: lowercase;
 }
 
-.confirmSeedCopyContent .input-and-unit {
+.confirmSeedCopyContentInput {
   margin-left: 32px;
   padding-left: 0;
 }
 
-.confirmSeedCopyContent .input-and-unit > input {
+.confirmSeedCopyContentInput > input {
   width: 100%;
 }
 

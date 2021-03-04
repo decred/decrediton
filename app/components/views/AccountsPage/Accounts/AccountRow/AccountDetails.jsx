@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip, CopyToClipboard } from "shared";
+import { Tooltip, classNames } from "pi-ui";
+import { Balance, CopyToClipboard } from "shared";
 import { SlateGrayButton } from "buttons";
 import style from "../Accounts.module.css";
-import { classNames } from "pi-ui";
 import { IMPORTED_ACCOUNT, DEFAULT_ACCOUNT } from "constants";
 
 const isHidable = (account) =>
@@ -57,6 +57,10 @@ const AccountsDetails = ({
           <T id="accounts.immatureStake" m="Immature Stake Gen" />
           <Balance flat amount={account.immatureStakeGeneration} />
         </DataLine>
+        <DataLine>
+          <T id="accounts.unconfirmed" m="Unconfirmed" />
+          <Balance flat amount={account.unconfirmed} />
+        </DataLine>
       </div>
       <div className={style.detailsBottomColumnRight}>
         <div className={style.detailsBottomTitle}>
@@ -109,13 +113,13 @@ const AccountsDetails = ({
       )}
       <div className={classNames(style.actionsButtons, style.isRow)}>
         {account.accountName !== IMPORTED_ACCOUNT && (
-          <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
+          <Tooltip content={<T id="accounts.rename.tip" m="Rename Account" />}>
             <div className={style.renameButton} onClick={showRenameAccount} />
           </Tooltip>
         )}
         {account.accountName !== IMPORTED_ACCOUNT && (
           <Tooltip
-            text={
+            content={
               showPubKey ? (
                 <T id="accounts.hide.pubkey" m="Hide Pubkey" />
               ) : (
@@ -134,12 +138,12 @@ const AccountsDetails = ({
           </Tooltip>
         )}
         {isHidable(account) && !hidden && (
-          <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
+          <Tooltip content={<T id="accounts.hide.tip" m="Hide" />}>
             <div className={style.hideButton} onClick={hideAccount} />
           </Tooltip>
         )}
         {hidden && (
-          <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
+          <Tooltip content={<T id="accounts.show.tip" m="Show" />}>
             <div className={style.showButton} onClick={showAccount} />
           </Tooltip>
         )}

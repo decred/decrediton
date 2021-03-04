@@ -1,8 +1,7 @@
+import { classNames, Tooltip } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
 import { useLoadingMoreTickets } from "./hooks";
 import styles from "./LoadingMoreTickets.module.css";
-import { classNames } from "pi-ui";
 
 const DescMessage = ({ startRequestHeight, currentBlockHeight }) => (
   <T
@@ -53,7 +52,7 @@ const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
             />
           </div>
           <Tooltip
-            text={
+            content={
               <T
                 id="mytickets.loadingMoreTickets.returnBtn"
                 m={"Return listing tickets"}
@@ -106,7 +105,7 @@ const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
             </div>
           </div>
           <Tooltip
-            text={
+            content={
               <T
                 id="mytickets.loadingMoreTickets.cancelBtn"
                 m={"Cancel listing tickets"}

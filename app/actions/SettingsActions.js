@@ -18,6 +18,7 @@ import {
   resetInventoryAndProposals
 } from "actions/GovernanceActions";
 import * as configConstants from "constants/config";
+import { ipcRenderer } from "electron";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -25,7 +26,7 @@ export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
 export const saveSettings = (settings) => async (dispatch, getState) => {
   const {
-    settings: { needNetworkReset }
+    settings: { needNetworkReset, currentSettings: { locale } }
   } = getState();
   const {
     daemon: { walletName }
@@ -56,7 +57,10 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
 
   if (walletName) {
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
-    walletConfig.set(configConstants.CURRENCY_DISPLAY, settings.currencyDisplay);
+    walletConfig.set(
+      configConstants.CURRENCY_DISPLAY,
+      settings.currencyDisplay
+    );
     walletConfig.set(configConstants.GAP_LIMIT, settings.gapLimit);
   }
 
@@ -64,6 +68,10 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
   ) {
     wallet.reloadAllowedExternalRequests();
+  }
+
+  if (locale != settings.locale) {
+    ipcRenderer.sendSync("change-menu-locale", settings.locale);
   }
 
   const newDcrdataEnabled =
@@ -167,10 +175,10 @@ export function updateStateSettingsChanged(settings, norestart) {
         );
       newDiffersFromCurrent
         ? dispatch({
-          tempSettings: newSettings,
-          needNetworkReset,
-          type: SETTINGS_CHANGED
-        })
+            tempSettings: newSettings,
+            needNetworkReset,
+            type: SETTINGS_CHANGED
+          })
         : dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
     }
   };

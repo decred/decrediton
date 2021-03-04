@@ -1,3 +1,4 @@
+import { classNames, Tooltip } from "pi-ui";
 import {
   InfoDocFieldModalButton,
   KeyBlueButton,
@@ -11,8 +12,7 @@ import {
   GoBackMsg,
   CreateNewWalletTitle
 } from "../../messages";
-import { Tooltip, CreatePassPhrase } from "shared";
-import { classNames } from "pi-ui";
+import { CreatePassPhrase } from "shared";
 import styles from "../CreateWallet.module.css";
 
 export const ConfirmSeedForm = ({
@@ -30,7 +30,7 @@ export const ConfirmSeedForm = ({
         <CreateNewWalletTitle />
       </div>
       {sendBack && (
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}

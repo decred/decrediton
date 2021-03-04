@@ -5171,20 +5171,20 @@ msgstr "Saldo on-chain e azioni del portafoglio LN"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (75% of the 100 most
+#. Once the majority of the PoW miners have upgraded (95% of the 1000 most
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (75% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 1000 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
 "Una volta che la maggioranza dei minatori PoW ha effettuato l'aggiornamento "
-"(il 75% dei 100 blocchi più recenti sono all'ultima versione) e la "
+"(il 95% dei 1000 blocchi più recenti sono all'ultima versione) e la "
 "maggioranza dei minatori PoS ha effettuato l'upgrade (75% dei voti in un "
 "intervallo di blocco di 2016), inizia il processo di votazione."
 

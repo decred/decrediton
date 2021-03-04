@@ -3,7 +3,7 @@ export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
 export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenu/EyeFilterMenuWithSlider/EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink/HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
-export { default as PathButton } from "./PathButton";
+export { default as PathButton } from "./PathButton/PathButton";
 export { default as RescanButton } from "./RescanButton/RescanButton";
 export { default as RescanCancelButton } from "./RescanButton/RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";

@@ -8,7 +8,8 @@ import * as ja from "./ja";
 import * as pl from "./pl";
 import * as pt from "./pt";
 import * as zh from "./zh";
+import * as zh_HK from "./zh-HK";
 
-const Docs = { ar, de, en, es, fr, it, ja, pl, pt, zh };
+const Docs = { ar, de, en, es, fr, it, ja, pl, pt, zh, zh_HK };
 
 export default Docs;

@@ -34,10 +34,7 @@ export const SendTabHeader = () => {
 };
 
 const ListUtxo = ({ onShowListUtxo }) => (
-  <div
-    className={styles.listUtxoLink}
-    onClick={onShowListUtxo}
-  >
+  <div className={styles.listUtxoLink} onClick={onShowListUtxo}>
     <T id="transactions.send.listutxo" m="List UTXOs" />
   </div>
 );

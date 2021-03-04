@@ -34,7 +34,10 @@ import {
   WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
-import { CREATEMIXERACCOUNTS_SUCCESS, TOGGLE_ALLOW_SEND_FROM_UNMIXED } from "actions/AccountMixerActions";
+import {
+  CREATEMIXERACCOUNTS_SUCCESS,
+  TOGGLE_ALLOW_SEND_FROM_UNMIXED
+} from "actions/AccountMixerActions";
 
 import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 

@@ -42,6 +42,7 @@ const icons = {
   "flag-pl": "url('style/icons/pl-flag.svg')",
   "flag-ptbr": "url('style/icons/ptbr-flag.svg')",
   "flag-zh": "url('style/icons/zh-flag.svg')",
+  "flag-hk": "url('style/icons/hk-flag.svg')",
   "generate-addr-icon": "url('style/icons/generate-address.svg')",
   "hide-account-icon": "url('style/icons/account-eye-hide.svg')",
   "info-warning-icon": "url('style/icons/info-warning.svg')",

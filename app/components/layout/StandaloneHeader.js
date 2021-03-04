@@ -1,4 +1,4 @@
-import TitleHeader from "./TitleHeader";
+import { TitleHeader } from "./TitleHeader";
 import DescriptionHeader from "./DescriptionHeader";
 
 const StandaloneHeader = ({

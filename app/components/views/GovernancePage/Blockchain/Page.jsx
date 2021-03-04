@@ -11,7 +11,9 @@ const VotingPrefs = ({
   onShowAgenda,
   onCloseAgenda,
   onUpdateVotePreference,
-  allAgendas
+  allAgendas,
+  settingVoteChoices,
+  isLoading
 }) => (
   <>
     <div className={classNames(styles.header, "is-row")}>
@@ -49,7 +51,9 @@ const VotingPrefs = ({
               onUpdateVotePreference,
               stakePool,
               selectedChoice: getAgendaSelectedChoice(agenda),
-              showVoteChoice: index === selectedAgenda
+              showVoteChoice: index === selectedAgenda,
+              settingVoteChoices,
+              isLoading
             }}
             disabled={agenda.finished}
             onClick={() => onShowAgenda(index)}

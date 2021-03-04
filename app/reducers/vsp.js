@@ -13,7 +13,10 @@ import {
   PROCESSMANAGEDTICKETS_FAILED,
   PROCESSUNMANAGEDTICKETS_ATTEMPT,
   PROCESSUNMANAGEDTICKETS_SUCCESS,
-  PROCESSUNMANAGEDTICKETS_FAILED
+  PROCESSUNMANAGEDTICKETS_FAILED,
+  SETVSPDVOTECHOICE_ATTEMPT,
+  SETVSPDVOTECHOICE_FAILED,
+  SETVSPDVOTECHOICE_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -36,11 +39,10 @@ export default function vsp(state = {}, action) {
         availableVSPsError: action.error
       };
     case STARTTICKETBUYERV3_ATTEMPT:
-      return { ...state,
-        ticketAutoBuyerRunning: false
-      };
+      return { ...state, ticketAutoBuyerRunning: false };
     case STARTTICKETBUYERV3_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         ticketAutoBuyerRunning: true,
         ticketBuyerCall: action.ticketBuyerCall,
         vsp: action.vsp,
@@ -48,76 +50,93 @@ export default function vsp(state = {}, action) {
         account: action.account
       };
     case STARTTICKETBUYERV3_FAILED:
-      return { ...state,
-        ticketAutoBuyerRunning: false
-      };
+      return { ...state, ticketAutoBuyerRunning: false };
     case STOPTICKETBUYER_SUCCESS:
-      return { ...state,
-        ticketAutoBuyerRunning: false
-      };
+      return { ...state, ticketAutoBuyerRunning: false };
     case GETVSPTICKETSTATUS_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         vspTickets: {
           ...state.vspTickets,
           ...action.vspTickets
         }
       };
     case HASVSPTICKETSERRORED:
-      return { ...state,
-        hasVSPTicketsError: action.hasVSPTicketsError
-      };
+      return { ...state, hasVSPTicketsError: action.hasVSPTicketsError };
     case TOGGLE_ISLEGACY:
-      return { ...state,
-        isLegacy: action.isLegacy
-      };
+      return { ...state, isLegacy: action.isLegacy };
     case SET_REMEMBERED_VSP_HOST:
-      return { ...state,
-        rememberedVspHost: action.rememberedVspHost
-      };
+      return { ...state, rememberedVspHost: action.rememberedVspHost };
     case SYNCVSPTICKETS_ATTEMPT:
-      return { ...state,
+      return {
+        ...state,
         syncVSPRequestAttempt: true,
         syncVSPRequestError: null
       };
     case SYNCVSPTICKETS_FAILED:
-      return { ...state,
+      return {
+        ...state,
         syncVSPRequestAttempt: false,
         syncVSPRequestError: action.error
       };
     case SYNCVSPTICKETS_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         syncVSPRequestAttempt: false,
         syncVSPRequestError: null
       };
     case PROCESSMANAGEDTICKETS_ATTEMPT:
-      return { ...state,
+      return {
+        ...state,
         processManagedTicketsAttempt: true,
         processManagedTicketsError: null
       };
     case PROCESSMANAGEDTICKETS_SUCCESS:
-    return { ...state,
-      processManagedTicketsAttempt: false,
-      processManagedTicketsError: null
-    };
+      return {
+        ...state,
+        processManagedTicketsAttempt: false,
+        processManagedTicketsError: null
+      };
     case PROCESSMANAGEDTICKETS_FAILED:
-    return { ...state,
-      processManagedTicketsAttempt: false,
-      processManagedTicketsError: action.error
-    };
+      return {
+        ...state,
+        processManagedTicketsAttempt: false,
+        processManagedTicketsError: action.error
+      };
     case PROCESSUNMANAGEDTICKETS_ATTEMPT:
-      return { ...state,
+      return {
+        ...state,
         processUnmanagedTicketsAttempt: true,
         processUnmanagedTicketsError: null
       };
     case PROCESSUNMANAGEDTICKETS_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         processUnmanagedTicketsAttempt: false,
         processUnmanagedTicketsError: null
       };
     case PROCESSUNMANAGEDTICKETS_FAILED:
-      return { ...state,
+      return {
+        ...state,
         processUnmanagedTicketsAttempt: false,
         processUnmanagedTicketsError: action.error
+      };
+    case SETVSPDVOTECHOICE_ATTEMPT:
+      return {
+        ...state,
+        setVspdVoteChoicesError: null,
+        setVspdVoteChoicesRequestAttempt: true
+      };
+    case SETVSPDVOTECHOICE_FAILED:
+      return {
+        ...state,
+        setVspdVoteChoicesError: String(action.error),
+        setVspdVoteChoicesRequestAttempt: false
+      };
+    case SETVSPDVOTECHOICE_SUCCESS:
+      return {
+        ...state,
+        setVspdVoteChoicesRequestAttempt: false
       };
     default:
       return state;

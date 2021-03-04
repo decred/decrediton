@@ -1,6 +1,6 @@
-// @flow
 import { Link } from "react-router-dom";
-import { Balance, Tooltip } from "shared";
+import { Balance } from "shared";
+import { Tooltip } from "pi-ui";
 import { ProgressRing } from "indicators";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import {
@@ -11,7 +11,6 @@ import {
   VOTE,
   REVOCATION
 } from "constants/Decrediton";
-import "style/Header.less";
 import style from "../Snackbar.module.css";
 
 const messages = defineMessages({
@@ -87,7 +86,7 @@ const Transaction = ({
         />
       </div>
       <div className={style.snackbarInformationRowTx}>
-        <Tooltip width={300} text={`${message.txHash}`}>
+        <Tooltip content={`${message.txHash}`}>
           <Link
             onClick={onDismissMessage}
             to={`/transaction/history/${message.txHash}`}>

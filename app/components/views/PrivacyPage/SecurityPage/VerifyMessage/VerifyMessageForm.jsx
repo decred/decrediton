@@ -35,12 +35,13 @@ const VerifyMessageForm = ({
   formatMessage,
   verifyMessageSuccess
 }) => {
-  const disabled = isVerifyingMessage
-    || address === ""
-    || message === ""
-    || signature === ""
-    || addressError
-    || messageError;
+  const disabled =
+    isVerifyingMessage ||
+    address === "" ||
+    message === "" ||
+    signature === "" ||
+    addressError ||
+    messageError;
   const isValid = verifyMessageSuccess && verifyMessageSuccess.valid;
   return (
     <>

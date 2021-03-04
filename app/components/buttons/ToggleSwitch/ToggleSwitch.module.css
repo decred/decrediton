@@ -4,6 +4,10 @@
   margin: 0 0 10px 1em;
 }
 
+.tooltip {
+  width: 11.5rem;
+}
+
 .enabled,
 .disabled {
   display: block;
@@ -33,7 +37,7 @@
   box-shadow: 0 3px 8px rgba(12, 30, 62, 0.21);
   transition: all 200ms ease-in-out;
 }
-  
+
 .knobEnabled {
   background-color: var(--input-color);
 }

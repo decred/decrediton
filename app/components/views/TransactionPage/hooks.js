@@ -11,28 +11,29 @@ export function useTransactionPage(txHash) {
   const regularTxs = useSelector(sel.regularTransactions);
   const stakeTxs = useSelector(sel.stakeTransactions);
   const decodedTransactions = useSelector(sel.decodedTransactions);
-  const viewedTransaction = regularTxs[txHash] ? regularTxs[txHash] : stakeTxs[txHash];
-  const [decodedTx, setViewedDecodedTx] = useState(
-    decodedTransactions[txHash]
-  );
+  const viewedTransaction = regularTxs[txHash]
+    ? regularTxs[txHash]
+    : stakeTxs[txHash];
+  const [decodedTx, setViewedDecodedTx] = useState(decodedTransactions[txHash]);
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
 
   const dispatch = useDispatch();
-  const abandonTransaction = useCallback((txHash) => {
-    dispatch(clia.abandonTransactionAttempt(txHash));
-},
+  const abandonTransaction = useCallback(
+    (txHash) => {
+      dispatch(clia.abandonTransactionAttempt(txHash));
+    },
     [dispatch]
   );
-  const decodeRawTransactions = useCallback((hexTx, txHash) =>
-    dispatch(ta.decodeRawTransaction(hexTx, txHash)),
+  const decodeRawTransactions = useCallback(
+    (hexTx, txHash) => dispatch(ta.decodeRawTransaction(hexTx, txHash)),
     [dispatch]
   );
-  const getAmountFromTxInputs = useCallback((decodedTx) =>
-    dispatch(ta.getAmountFromTxInputs(decodedTx)),
+  const getAmountFromTxInputs = useCallback(
+    (decodedTx) => dispatch(ta.getAmountFromTxInputs(decodedTx)),
     [dispatch]
   );
-  const publishUnminedTransactions = useCallback(() =>
-    dispatch(ca.publishUnminedTransactionsAttempt()),
+  const publishUnminedTransactions = useCallback(
+    () => dispatch(ca.publishUnminedTransactionsAttempt()),
     [dispatch]
   );
   const [state, send] = useMachine(fetchMachine, {
@@ -44,7 +45,10 @@ export function useTransactionPage(txHash) {
       },
       load: async () => {
         if (!decodedTx) {
-          const decodedTx = decodeRawTransactions(viewedTransaction.rawTx, viewedTransaction.txHash);
+          const decodedTx = decodeRawTransactions(
+            viewedTransaction.rawTx,
+            viewedTransaction.txHash
+          );
           let decodedTxWithInputs = decodedTx;
           // if it is a regular transaction and transaction is not received,
           // we need to get the input amount from older txs. If it is not

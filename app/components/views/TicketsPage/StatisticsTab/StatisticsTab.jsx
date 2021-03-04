@@ -1,23 +1,27 @@
 import { NavLink as Link, Switch, Route, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip, classNames } from "pi-ui";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
 import HeatmapStats from "./Heatmap/Heatmap";
 import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
-import { Tooltip, Subtitle } from "shared";
+import { Subtitle } from "shared";
 import { useStatistics } from "./hooks.js";
 import styles from "./Statistics.module.css";
-import { classNames } from "pi-ui";
 
 const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
   <div className={styles.myTicketsStatsLinks}>
     {allStakePoolStats.length > 0 && (
       <Tooltip
-        text={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
+        contentClassName="my-tickets-tooltip"
+        content={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
         <Link
           to="/tickets/statistics/stakepool"
-          activeClassName={classNames(styles.myTicketsActiveChartLink, styles.stakepool)}
+          activeClassName={classNames(
+            styles.myTicketsActiveChartLink,
+            styles.stakepool
+          )}
           className={styles.stakepool}
         />
       </Tooltip>
@@ -25,28 +29,40 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
     {hasStats && (
       <>
         <Tooltip
-          text={
+          contentClassName="my-tickets-stake-tooltip"
+          content={
             <T id="mytickets.statistics.stakerewards.link" m="Stake Rewards" />
           }>
           <Link
             to="/tickets/statistics/stakerewards"
-            activeClassName={classNames(styles.myTicketsActiveChartLink, styles.stakerewards)}
+            activeClassName={classNames(
+              styles.myTicketsActiveChartLink,
+              styles.stakerewards
+            )}
             className={styles.stakerewards}
           />
         </Tooltip>
         <Tooltip
-          text={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
+          contentClassName="my-tickets-vote-tooltip"
+          content={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
           <Link
             to="/tickets/statistics/voteTime"
-            activeClassName={classNames(styles.myTicketsActiveChartLink, styles.voteTime)}
+            activeClassName={classNames(
+              styles.myTicketsActiveChartLink,
+              styles.voteTime
+            )}
             className={styles.voteTime}
           />
         </Tooltip>
         <Tooltip
-          text={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
+          contentClassName="my-tickets-tooltip"
+          content={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
           <Link
             to="/tickets/statistics/heatmap"
-            activeClassName={classNames(styles.myTicketsActiveChartLink, styles.heatmapIcon)}
+            activeClassName={classNames(
+              styles.myTicketsActiveChartLink,
+              styles.heatmapIcon
+            )}
             className={styles.heatmapIcon}
           />
         </Tooltip>
@@ -73,7 +89,7 @@ const StatisticsTab = () => {
       />
       <div className={styles.charts}>
         {getMyTicketsStatsRequest ? (
-          <DecredLoading className={styles.newLogoAnimation}/>
+          <DecredLoading className={styles.newLogoAnimation} />
         ) : (
           <Switch>
             <Route

@@ -46,7 +46,11 @@ export const ClosedChannelDetails = ({ channel }) => (
     <span>
       <T id="ln.closedChannelDetails.remotePubKey" m="Remote PubKey" />
     </span>
-    <span><CopyableText id="copyable" className={styles.copyableText}>{channel.remotePubkey}</CopyableText></span>
+    <span>
+      <CopyableText id="copyable" className={styles.copyableText}>
+        {channel.remotePubkey}
+      </CopyableText>
+    </span>
   </div>
 );
 

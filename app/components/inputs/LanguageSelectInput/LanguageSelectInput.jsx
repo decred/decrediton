@@ -1,6 +1,5 @@
 import Select from "react-select";
 import { injectIntl } from "react-intl";
-import "style/Input.less"; // XXXXXX: consider ditching this dep isit still working with the new css module ? :thinking:
 import { classNames } from "pi-ui";
 import styles from "./LanguageSelectInput.module.css";
 
@@ -27,7 +26,13 @@ class LanguageSelectInput extends React.Component {
   }
 
   render() {
-    const { valueKey, labelKey, options, className, ariaLabelledBy } = this.props;
+    const {
+      valueKey,
+      labelKey,
+      options,
+      className,
+      ariaLabelledBy
+    } = this.props;
 
     return (
       <div className={classNames(styles.input, className)}>

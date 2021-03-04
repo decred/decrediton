@@ -122,7 +122,7 @@ export const AddToPrivacyLog = (destIO, data, debug) => {
   });
 };
 
-export const cleanPrivacyLogs = () => privacyLogs = Buffer.from("");
+export const cleanPrivacyLogs = () => (privacyLogs = Buffer.from(""));
 
 export const GetDcrdLogs = () => dcrdLogs;
 
@@ -173,12 +173,7 @@ const upgradeDB7 = "Upgrading database to version 7";
 // to the user.
 export function CheckDaemonLogs(data) {
   let hasWarning = false;
-  const warningArray = [
-    reindexCheck,
-    upgradeDatabase,
-    reindexing,
-    upgradeDB7
-  ];
+  const warningArray = [reindexCheck, upgradeDatabase, reindexing, upgradeDB7];
   warningArray.forEach((warnMsg) => {
     if (data.indexOf(warnMsg) > 0) {
       hasWarning = true;

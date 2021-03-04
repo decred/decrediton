@@ -1,13 +1,13 @@
+import { useState } from "react";
+import { FormattedMessage as T } from "react-intl";
+import { Checkbox, classNames, Tooltip } from "pi-ui";
 import UnsignedTickets from "../UnsignedTickets";
 import StakeInfo from "../StakeInfo/StakeInfo";
 import PurchaseForm from "./PurchaseForm";
-import { ShowWarning, Subtitle, Tooltip } from "shared";
-import { FormattedMessage as T } from "react-intl";
+import { ShowWarning, Subtitle } from "shared";
 import styles from "../PurchaseTab.module.css";
-import { Checkbox, classNames } from "pi-ui";
 import { KeyBlueButton } from "buttons";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
-import { useState } from "react";
 
 export const LegacyVSPWarning = () => (
   <T
@@ -24,12 +24,7 @@ const PrivacyInfo = () => {
         id="purchase.vsp.privacy.enabled"
         m="You are purchasing mixed tickets"
       />
-      <div
-        className={classNames(
-          styles.readMoreIcon,
-          show && styles.active
-        )}
-      />
+      <div className={classNames(styles.readMoreIcon, show && styles.active)} />
       {show && (
         <T
           id="purchase.vsp.privacy.enabled.description"
@@ -54,7 +49,9 @@ const TitleIcon = ({ toggleIsLegacy }) => (
         margin: "4px 0 4px 0"
       }}
     />
-    <Tooltip md={true} text={<LegacyVSPWarning />}>
+    <Tooltip
+      contentClassName={styles.useLegacyTooltip}
+      content={<LegacyVSPWarning />}>
       <Checkbox
         label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
         className={styles.useLegacyLabel}

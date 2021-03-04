@@ -77,7 +77,7 @@
   "agenda.card.inProgressIndicator": "In Progress",
   "agenda.card.inProgressTooltip": "Voting is still in progress.",
   "agenda.overview.idLabel": "Agenda ID",
-  "agenda.overviewDescription": "Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins.",
+  "agenda.overviewDescription": "Once the majority of the PoW miners have upgraded (95% of the 1000 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins.",
   "agenda.updatePreference": "Update Preference",
   "agenda.votedFor": "Voted for",
   "agenda.votingFor": "Voting for",

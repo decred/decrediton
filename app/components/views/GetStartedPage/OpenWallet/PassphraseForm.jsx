@@ -32,7 +32,9 @@ const PassphraseFormBase = ({
         <PasswordInput
           autoFocus
           className={styles.inputPrivatePassword}
-          placeholder={intl.formatMessage(messages.privatePassphrasePlaceholder)}
+          placeholder={intl.formatMessage(
+            messages.privatePassphrasePlaceholder
+          )}
           value={passPhrase}
           onChange={(e) => onSetPassPhrase(e.target.value)}
           onKeyDown={onKeyDown}

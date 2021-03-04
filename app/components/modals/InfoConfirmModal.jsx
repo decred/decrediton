@@ -19,9 +19,7 @@ const ConfirmModal = ({
     </div>
     <div className={style.confirmContent}>{modalContent}</div>
     <div className={style.confirmToolbar}>
-      <CloseButton
-        className={style.confirmCloseButton}
-        onClick={onCancelModal}>
+      <CloseButton className={style.confirmCloseButton} onClick={onCancelModal}>
         <T id="infoConfirmModal.btnClose" m="Close" />
       </CloseButton>
     </div>

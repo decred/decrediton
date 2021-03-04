@@ -1,7 +1,6 @@
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-
 import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
@@ -164,29 +163,29 @@ test("test editing wallets", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-  user.click(screen.getByText(/edit wallets/i).previousSibling);
+user.click(screen.getByText(/edit wallets/i).nextElementSibling);
   expect(screen.getByText("Close")).toBeInTheDocument();
   expect(screen.getAllByText(/remove wallet/i).length).toBe(
     testAvailableWallets.length
   );
 
   // test the cancel flow
-  user.click(screen.getAllByText(/remove wallet/i)[0].previousSibling);
+  user.click(screen.getAllByText(/remove wallet/i)[0].nextElementSibling);
   expect(
     screen.getByText(/warning this action/i).textContent
   ).toMatchInlineSnapshot(
-    `"Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."`
+    "\"Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding.\""
   );
   user.click(screen.getByText(/cancel/i));
   expect(screen.queryByText(/warning this action/i)).not.toBeInTheDocument();
 
   // test the confirm flow
-  user.click(screen.getAllByText(/remove wallet/i)[0].previousSibling);
+  user.click(screen.getAllByText(/remove wallet/i)[0].nextElementSibling);
   user.click(screen.getByText(/confirm/i));
   expect(mockRemoveWallet).toHaveBeenCalledWith(testAvailableWallets[0]);
 
   expect(screen.queryByText(/warning this action/i)).not.toBeInTheDocument();
-  user.click(screen.getByText("Close").previousSibling);
+  user.click(screen.getByText("Close").nextElementSibling);
   expect(screen.queryByText("Close")).not.toBeInTheDocument();
   expect(screen.getByText(/edit wallets/i)).toBeInTheDocument();
 });
@@ -219,7 +218,7 @@ test("launch an encrypted wallet", async () => {
   expect(
     screen.getByText(/this wallet is encrypted/i).textContent
   ).toMatchInlineSnapshot(
-    `"This wallet is encrypted, please enter the public passphrase to decrypt it."`
+    "\"This wallet is encrypted, please enter the public passphrase to decrypt it.\""
   );
   const publicPassphraseInput = screen.getByPlaceholderText(
     /public passphrase/i
@@ -239,7 +238,7 @@ test("launch an encrypted wallet", async () => {
   );
   expect(
     screen.getByText(/wrong public passphrase/i).textContent
-  ).toMatchInlineSnapshot(`"Wrong public passphrase inserted."`);
+  ).toMatchInlineSnapshot("\"Wrong public passphrase inserted.\"");
 
   // invalid passphrase & unknown error
   const UNKNOWN_ERROR = "UNKNOWN_ERROR";
@@ -303,7 +302,7 @@ test("ask for passphrase if account discovery is needed", async () => {
   expect(
     screen.getByText(/the accounts for this wallet/i).textContent
   ).toMatchInlineSnapshot(
-    `"The accounts for this wallet haven't been discovered yet. Please enter the wallet's private passphrase to perform account discovery."`
+    "\"The accounts for this wallet haven't been discovered yet. Please enter the wallet's private passphrase to perform account discovery.\""
   );
 
   // type invalid private key

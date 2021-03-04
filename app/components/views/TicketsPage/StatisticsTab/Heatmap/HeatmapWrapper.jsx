@@ -1,7 +1,7 @@
+import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import { themes } from "./themes";
 import TooltipInfo from "./TooltipInfo";
-import { Tooltip } from "shared";
-import { FormattedMessage as T } from "react-intl";
 import styles from "../Statistics.module.css";
 import { useStatistics } from "../hooks";
 
@@ -52,7 +52,13 @@ const addIntensityInfo = (graphEntries) => {
 };
 
 function drawInfo(opts = {}) {
-  const { offsetX = 0, offsetY = 0, graphEntries, columnNumber, boxWidth } = opts;
+  const {
+    offsetX = 0,
+    offsetY = 0,
+    graphEntries,
+    columnNumber,
+    boxWidth
+  } = opts;
   const theme = getTheme();
   const squares = [];
   for (let row = 0; row < rowNumber; row++) {
@@ -67,7 +73,7 @@ function drawInfo(opts = {}) {
       const color = theme[`grade${day.intensity}`];
       const divEl = (
         <Tooltip
-          text={<TooltipInfo {...{ dayDate, ...day }} />}
+          content={<TooltipInfo {...{ dayDate, ...day }} />}
           key={"index" + dayIndex}>
           <div
             style={{
@@ -183,7 +189,9 @@ const Heatmap = ({ data, ...opts }) => {
   addIntensityInfo(data);
   return (
     <div className={styles.ticketActivityWrapper}>
-      <span className={styles.myTicketsStatsIndicatorsTitle}>Ticket Activity</span>
+      <span className={styles.myTicketsStatsIndicatorsTitle}>
+        Ticket Activity
+      </span>
       <div className={styles.heatmapWrapper}>
         {drawInfo({
           graphEntries: data,

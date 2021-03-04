@@ -7,17 +7,19 @@ import {
 } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import {
   TransitionMotionWrapper,
   ShowWarning,
   ExternalLink,
-  Balance,
-  Tooltip
+  Balance
 } from "shared";
 
 import "style/StakePool.less";
 
-const purchaseLabel = () => <T id="purchas.legacypurchaseTickets.purchaseBtn" m="Purchase" />;
+const purchaseLabel = () => (
+  <T id="purchas.legacypurchaseTickets.purchaseBtn" m="Purchase" />
+);
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
@@ -137,9 +139,7 @@ const PurchaseTicketsForm = ({
         />
         <div className="is-row backup-buttons-row-area">
           <InvisibleConfirmModalButton
-            modalTitle={
-              <T id="purchase.ticket.modal.title" m="Dismiss" />
-            }
+            modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss" />}
             modalContent={
               <T
                 id="purchase.ticket.modal.desc"
@@ -163,7 +163,10 @@ const PurchaseTicketsForm = ({
     <div className="stakepool-purchase-ticket-buttons-area">
       <PassphraseModalButton
         modalTitle={
-          <T id="tickets.revokeConfirmations.legacy" m="Revoke Tickets Confirmation" />
+          <T
+            id="tickets.revokeConfirmations.legacy"
+            m="Revoke Tickets Confirmation"
+          />
         }
         className="stakepool-content-revoke-button"
         onSubmit={onRevokeTickets}
@@ -175,30 +178,31 @@ const PurchaseTicketsForm = ({
           onClick={onPurchaseTickets}>
           {purchaseLabel()}
         </KeyBlueButton>
-      ) : (
-        getRunningIndicator ?
-          <Tooltip
-            text={
-              <T
-                id="tickets.purchase-legacy.running"
-                m="Privacy Mixer or Autobuyer running, please shut them off before purchasing tickets."
-              />
-            }>
-            <PassphraseModalButton
+      ) : getRunningIndicator ? (
+        <Tooltip
+          content={
+            <T
+              id="tickets.purchase-legacy.running"
+              m="Privacy Mixer or Autobuyer running, please shut them off before purchasing tickets."
+            />
+          }>
+          <PassphraseModalButton
             disabled={true}
-            buttonLabel={purchaseLabel()}/>
-          </Tooltip> :
-          <KeyBlueButton
-            modalTitle={
-              <T
-                id="tickets.purchaseConfirmation.legacy"
-                m="Ticket Purchase Confirmation"
-              />
-            }
-            disabled={getIsValid && !getIsValid()}
-            onSubmit={onPurchaseTickets}
             buttonLabel={purchaseLabel()}
           />
+        </Tooltip>
+      ) : (
+        <KeyBlueButton
+          modalTitle={
+            <T
+              id="tickets.purchaseConfirmation.legacy"
+              m="Ticket Purchase Confirmation"
+            />
+          }
+          disabled={getIsValid && !getIsValid()}
+          onSubmit={onPurchaseTickets}>
+          {purchaseLabel()}
+        </KeyBlueButton>
       )}
     </div>
   </>

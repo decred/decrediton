@@ -1,7 +1,8 @@
-import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import SeedHexEntry from "inputs/SeedHexEntry";
-import { TextToggle, KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
+import SingleSeedWordEntry from "../SingleSeedWordEntry";
+import { SeedHexEntry } from "inputs";
+import { TextToggle, KeyBlueButton, InvisibleButton } from "buttons";
 import {
   ConfirmSeedMsg,
   BackBtnMsg,
@@ -9,8 +10,7 @@ import {
   CreateWalletMsg
 } from "../../messages";
 import { WORDS, HEX } from "constants";
-import { Tooltip, CreatePassPhrase } from "shared";
-import { classNames } from "pi-ui";
+import { CreatePassPhrase } from "shared";
 import styles from "../CreateWallet.module.css";
 
 const ExistingSeedForm = ({
@@ -43,7 +43,7 @@ const ExistingSeedForm = ({
         toggleAction={handleToggle}
       />
       {sendBack && (
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}

@@ -99,7 +99,11 @@ export const PendingChannelDetails = ({ channel }) => {
       <span>
         <T id="ln.pendingChannelDetails.remotePubKey" m="Remote Pubkey" />
       </span>
-      <span><CopyableText id="copyable" className={styles.copyableText}>{channel.remotePubkey}</CopyableText></span>
+      <span>
+        <CopyableText id="copyable" className={styles.copyableText}>
+          {channel.remotePubkey}
+        </CopyableText>
+      </span>
       <DetailsCompo channel={channel} />
     </div>
   );
@@ -110,11 +114,15 @@ export default ({ channel }) => (
     className={`
       ${styles.openChannel}
       ${
-        channel.pendingStatus === "open" ? styles.pendingOpen
-        : channel.pendingStatus === "close" ? styles.pendingClose
-        : channel.pendingStatus === "forceclose" ? styles.pendingForceclose
-        : channel.pendingStatus === "waitclose" ? styles.pendingWaitclose
-        : ""
+        channel.pendingStatus === "open"
+          ? styles.pendingOpen
+          : channel.pendingStatus === "close"
+          ? styles.pendingClose
+          : channel.pendingStatus === "forceclose"
+          ? styles.pendingForceclose
+          : channel.pendingStatus === "waitclose"
+          ? styles.pendingWaitclose
+          : ""
       }
     `}>
     <div className={styles.dataWrapper}>

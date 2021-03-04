@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import { SettingsInput, SettingsTextInput } from "inputs";
-import { Tooltip } from "shared";
 import { TESTNET, MAINNET } from "constants";
 import styles from "./Settings.module.css";
 
@@ -29,7 +29,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
           <T id="settings.network" m="Network" />
         </label>
         <Tooltip
-          text={<AlreadySetMessage />}
+          content={<AlreadySetMessage />}
           disabled={!tempSettings.networkFromCli}>
           <SettingsInput
             className={styles.input}
@@ -60,7 +60,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
           <T id="settings.SPV" m="SPV" />
         </label>
         <Tooltip
-          text={<AlreadySetMessage />}
+          content={<AlreadySetMessage />}
           disabled={!tempSettings.spvModeFromCli}>
           <SettingsInput
             className={styles.input}
@@ -91,7 +91,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
           <T id="settings.SPVConnect" m="SPV Connect" />
         </label>
         <Tooltip
-          text={<AlreadySetMessage />}
+          content={<AlreadySetMessage />}
           disabled={!tempSettings.spvConnectFromCli}>
           <SettingsTextInput
             value={tempSettings.spvConnect}
@@ -109,7 +109,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
           <T id="settings.advancedDaemon.label" m="Adv. Daemon Startup" />
         </label>
         <Tooltip
-          text={<AlreadySetMessage />}
+          content={<AlreadySetMessage />}
           disabled={!tempSettings.daemonStartAdvancedFromCli}>
           <SettingsInput
             className={styles.input}

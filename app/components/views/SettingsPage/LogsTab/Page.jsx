@@ -51,14 +51,14 @@ const Logs = ({
       onHideLog={onHideDecreditonLogs}
     />
     {(lnActive || lnStartAttempt) && (
-        <Log
-          title={<T id="help.logs.dcrlnd" m="dcrlnd" />}
-          expanded={showDcrlndLogs}
-          onShowLog={onShowDcrlndLogs}
-          onHideLog={onHideDcrlndLogs}
-          log={dcrlndLogs}
-        />
-      )}
+      <Log
+        title={<T id="help.logs.dcrlnd" m="dcrlnd" />}
+        expanded={showDcrlndLogs}
+        onShowLog={onShowDcrlndLogs}
+        onHideLog={onHideDcrlndLogs}
+        log={dcrlndLogs}
+      />
+    )}
   </>
 );
 

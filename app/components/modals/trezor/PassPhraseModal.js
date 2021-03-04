@@ -15,9 +15,7 @@ class TrezorPassphraseModal extends React.Component {
     const { onCancelModal } = this.props;
     const { onSubmit } = this;
 
-    const trezorLabel = this.props.device
-      ? this.props.deviceLabel
-      : "";
+    const trezorLabel = this.props.device ? this.props.deviceLabel : "";
 
     const className = [
       "trezor-passphrase-modal",

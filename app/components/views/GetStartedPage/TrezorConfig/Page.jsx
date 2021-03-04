@@ -1,12 +1,13 @@
-import { Tooltip, Subtitle } from "shared";
+import { Tooltip } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
+import { Subtitle } from "shared";
 import { GoBackMsg } from "../messages";
 import styles from "../GetStarted.module.css";
 
 export default ({ children, onSendBack }) => (
   <>
     <div className={styles.goBackScreenButtonArea}>
-      <Tooltip text={<GoBackMsg />}>
+      <Tooltip content={<GoBackMsg />}>
         <div className={styles.goBackScreenButton} onClick={onSendBack} />
       </Tooltip>
     </div>

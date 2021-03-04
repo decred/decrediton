@@ -13,9 +13,15 @@
   flex: 0 1 28em;
 }
 
-.balanceValue { font-size: 32px; }
-.hasInbound { border-bottom: 10px solid var(--cyan-bold); }
-.zeroFunds { border-bottom: 10px solid var(--error-red); }
+.balanceValue {
+  font-size: 32px;
+}
+.hasInbound {
+  border-bottom: 10px solid var(--cyan-bold);
+}
+.zeroFunds {
+  border-bottom: 10px solid var(--error-red);
+}
 
 .lnAddInvoice {
   display: grid;
@@ -58,11 +64,19 @@
   min-height: 40px;
 }
 
-.statusExpired { border-left: 10px solid var(--vote-no-color); }
-.statusSettled { border-left: 10px solid var(--accent-color); }
-.statusOpen { border-left: 10px solid var(--blue-highlight-background); }
+.statusExpired {
+  border-left: 10px solid var(--vote-no-color);
+}
+.statusSettled {
+  border-left: 10px solid var(--accent-color);
+}
+.statusOpen {
+  border-left: 10px solid var(--blue-highlight-background);
+}
 
-.value { font-size: 32px; }
+.value {
+  font-size: 32px;
+}
 
 .memo {
   text-overflow: ellipsis;

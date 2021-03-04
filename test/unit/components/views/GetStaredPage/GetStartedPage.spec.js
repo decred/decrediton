@@ -163,7 +163,7 @@ test("render empty wallet chooser view and click-on&test release notes", async (
   );
 
   // go back to the wallet chooser view
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
 
@@ -178,7 +178,7 @@ test("click on settings link", async () => {
   expect(mockGetGlobalCfg).toHaveBeenCalled();
 
   // go back
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
 
@@ -207,7 +207,7 @@ test("click on logs view", async () => {
   await wait(() => screen.queryByText(/system logs/i));
 
   // go back
-  user.click(screen.getByText(/go back/i).previousSibling);
+  user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
 

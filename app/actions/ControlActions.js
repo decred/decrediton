@@ -280,6 +280,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
 export const PURCHASETICKETS_ATTEMPT = "PURCHASETICKETS_ATTEMPT";
 export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
+export const PURCHASETICKETS_SUCCESS_LESS = "PURCHASETICKETS_SUCCESS_LESS";
 export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
 // TODO move purchaseTicketsAttempt to TransactionActions
@@ -385,22 +386,29 @@ export const newPurchaseTicketsAttempt = (
     }
     // save vsp for future checking if the wallet has all tickets synced.
     dispatch(updateUsedVSPs(vsp));
-
-    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    const numBought = purchaseTicketsResponse.getTicketHashesList().length;
+    if (numBought < numTickets) {
+      dispatch({ purchaseTicketsResponse, numAttempted: numTickets, type: PURCHASETICKETS_SUCCESS_LESS });
+    } else {
+      dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+    }
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
-      const unspentOutputs = await dispatch(listUnspentOutputs(accountNum.value));
+      const unspentOutputs = await dispatch(
+        listUnspentOutputs(accountNum.value)
+      );
       // we need at least one 2 utxo for each ticket, one for paying the fee
       // and another for the splitTx and ticket purchase.
       // Note: at least one of them needs to be big enough for ticket purchase.
-      if (unspentOutputs.length < numTickets*2) {
+      if (unspentOutputs.length < numTickets * 2) {
         // check if amount is indeed insufficient
         const ticketPrice = sel.ticketPrice(getState());
         if (accountNum.spendable > ticketPrice * numTickets) {
           return dispatch({
             error: `Not enough utxo. Need to break the input so one can be reserved
             for paying the fee.`,
-            type: PURCHASETICKETS_FAILED });
+            type: PURCHASETICKETS_FAILED
+          });
         }
       }
     }

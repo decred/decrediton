@@ -3,7 +3,6 @@ import { defaultFormats } from "i18n/locales";
 // XXX useTheming already exists in app/hooks
 import { app, theming } from "connectors";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
 import GetStartedContainer from "./GetStarted";
 import WalletContainer from "./Wallet";
@@ -17,12 +16,6 @@ import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { hot } from "react-hot-loader/root";
 import { CantCloseModals } from "modals";
-
-const topLevelAnimation = {
-  atEnter: { opacity: 0 },
-  atLeave: { opacity: 0 },
-  atActive: { opacity: 1 }
-};
 
 // minimum size to reduce the sidebar in px.
 const MINIMUM_SIZE_TO_REDUCE_SIDEBAR = 1179;
@@ -126,7 +119,6 @@ class App extends React.Component {
       aboutModalMacOSVisible,
       hideAboutModalMacOS
     } = this.props;
-    const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
       <IntlProvider
@@ -140,12 +132,12 @@ class App extends React.Component {
             <Redirect from="/" exact to="/getstarted" />
           </Switch>
           <Snackbar />
-          <MainSwitch {...topLevelAnimation} className="top-level-container">
+          <StaticSwitch className="top-level-container">
             <Route path="/getstarted" component={GetStartedContainer} />
             <Route path="/shutdown" component={ShutdownPage} />
             <Route path="/error" component={FatalErrorPage} />
             <Route path="/" component={WalletContainer} />
-          </MainSwitch>
+          </StaticSwitch>
 
           <div id="modal-portal" />
           <div id="modal-portal-macos">

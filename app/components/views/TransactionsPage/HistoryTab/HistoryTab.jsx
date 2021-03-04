@@ -8,6 +8,7 @@ import { DCR } from "constants";
 import { useService } from "hooks";
 import { useHistoryTab } from "./hooks";
 import { selectedTxTypesFromFilter, getSortTypes, getTxTypes } from "./helpers";
+import styles from "./HistoryTab.module.css";
 
 export const HistoryTabHeader = () => {
   const { totalBalance } = useHistoryTab();
@@ -22,7 +23,7 @@ export const HistoryTabHeader = () => {
               <Balance
                 flat
                 amount={totalBalance}
-                classNameWrapper="header-small-balance"
+                classNameWrapper={styles.smallBalance}
               />
             )
           }}
@@ -93,8 +94,8 @@ const HistoryTab = () => {
       }
       const changeFilter = (newFilterOpt) => {
         const { type, direction } = newFilterOpt;
-        delete(newFilterOpt.type);
-        delete(newFilterOpt.direction);
+        delete newFilterOpt.type;
+        delete newFilterOpt.direction;
         const newFilter = { ...transactionsFilter, ...newFilterOpt };
         // if type is -1 it is all options, so we clean the filter.
         if (type === -1) {

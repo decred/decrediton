@@ -2,8 +2,14 @@ import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import { default as SendTab, SendTabHeader } from "./SendTab/SendTab";
-import { default as ReceiveTab, ReceiveTabHeader } from "./ReceiveTab/ReceiveTab";
-import { default as HistoryTab, HistoryTabHeader } from "./HistoryTab/HistoryTab";
+import {
+  default as ReceiveTab,
+  ReceiveTabHeader
+} from "./ReceiveTab/ReceiveTab";
+import {
+  default as HistoryTab,
+  HistoryTabHeader
+} from "./HistoryTab/HistoryTab";
 import { default as ExportTab, ExportTabHeader } from "./ExportTab/ExportTab";
 
 const PageHeader = () => (

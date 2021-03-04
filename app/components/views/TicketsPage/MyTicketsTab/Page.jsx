@@ -1,13 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "pi-ui";
 import InfiniteScroll from "react-infinite-scroller";
 import {
   LoadingMoreTicketsIndicator,
   NoMoreTicketsIndicator,
   NoTicketsIndicator
 } from "indicators";
-import { TxHistory, Subtitle, Tooltip } from "shared";
+import { TxHistory, Subtitle } from "shared";
 import { EyeFilterMenu } from "buttons";
-import style from "./MyTicketsTab.module.css";
+import styles from "./MyTicketsTab.module.css";
 
 const subtitleMenu = ({
   sortTypes,
@@ -17,10 +18,10 @@ const subtitleMenu = ({
   onChangeSelectedType,
   onChangeSortType
 }) => (
-  <div className={style.ticketsButtons}>
+  <div className={styles.ticketsButtons}>
     <Tooltip
-      tipWidth={300}
-      text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
+      contentClassName={styles.sortByTooltip}
+      content={<T id="tickets.sortby.tooltip" m="Sort By" />}>
       <EyeFilterMenu
         labelKey="label"
         keyField="value"
@@ -31,8 +32,8 @@ const subtitleMenu = ({
       />
     </Tooltip>
     <Tooltip
-      tipWidth={300}
-      text={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
+      contentClassName={styles.ticketStatusTooltip}
+      content={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
       <EyeFilterMenu
         labelKey="label"
         keyField="key"
@@ -66,7 +67,7 @@ const TicketListPage = ({
       threshold={90}>
       <Subtitle
         title={<T id="mytickets.subtitle" m="My Tickets" />}
-        className={style.subtitle}
+        className={styles.subtitle}
         children={subtitleMenu({
           sortTypes,
           ticketTypes,
@@ -78,7 +79,7 @@ const TicketListPage = ({
       />
       {tickets.length > 0 && (
         <>
-          <div className={style.tableHeader}>
+          <div className={styles.tableHeader}>
             <div>
               <T id="tickets.table.header.status" m="Ticket Status" />
             </div>

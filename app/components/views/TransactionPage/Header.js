@@ -26,15 +26,15 @@ const messages = defineMessages({
 });
 
 const headerIcons = {
-  [TRANSACTION_DIR_RECEIVED]: "tx-detail-icon-in",
-  [TRANSACTION_DIR_SENT]: "tx-detail-icon-out",
-  [TICKET_FEE]: "tx-detail-icon-ticketfee",
-  [COINBASE]: "tx-detail-icon-in",
-  [TICKET]: "tx-detail-icon-ticket",
-  [VOTE]: "tx-detail-icon-vote",
-  [REVOCATION]: "tx-detail-icon-revocation",
-  [MIXED]: "tx-detail-icon-mixed",
-  [SELFTRANSFER]: "tx-detail-icon-self"
+  [TRANSACTION_DIR_RECEIVED]: "in",
+  [TRANSACTION_DIR_SENT]: "out",
+  [TICKET_FEE]: "ticketfee",
+  [COINBASE]: "in",
+  [TICKET]: "ticket",
+  [VOTE]: "vote",
+  [REVOCATION]: "revocation",
+  [MIXED]: "mixed",
+  [SELFTRANSFER]: "self"
 };
 
 // If it is a regular tx we use txDirection instead
@@ -55,7 +55,7 @@ const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
         />
       ));
   if (txType === TICKET && ticketReward) {
-    titleComp = titleComp + ", Voted";
+    titleComp = `${titleComp}, Voted`;
   }
   return titleComp;
 };

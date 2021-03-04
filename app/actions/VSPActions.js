@@ -2,9 +2,16 @@
 import Promise from "promise";
 import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt, rescanAttempt } from "./ControlActions";
+import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
-import { TESTNET, MAINNET, VSP_FEE_PROCESS_ERRORED, VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID } from "constants";
+import {
+  TESTNET,
+  MAINNET,
+  VSP_FEE_PROCESS_ERRORED,
+  VSP_FEE_PROCESS_STARTED,
+  VSP_FEE_PROCESS_PAID
+} from "constants";
 import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
 import { reverseRawHash } from "../helpers/byteActions";
@@ -14,94 +21,123 @@ export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
 export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
 
-export const getVSPInfo = (host) => (dispatch) => new Promise((resolve, reject) => {
-  dispatch({ type: GETVSP_ATTEMPT });
-  // 5 seconds for timeout.
-  const TIMEOUT_TIME = 5000;
-  // add https into vsp host, so we can fetch its information.
-  host = `https://${host}`;
-  wallet.allowVSPHost(host);
-  const timeout = new Promise((resolve, reject) => setTimeout(
-      () => reject({ isTimeout: true, vspHost: host }),
-      TIMEOUT_TIME
-    )
-  );
-  const getInfo = wallet.getVSPInfo(host);
+export const getVSPInfo = (host) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: GETVSP_ATTEMPT });
+    // 5 seconds for timeout.
+    const TIMEOUT_TIME = 5000;
+    // add https into vsp host, so we can fetch its information.
+    host = `https://${host}`;
+    wallet.allowVSPHost(host);
+    const timeout = new Promise((resolve, reject) =>
+      setTimeout(() => reject({ isTimeout: true, vspHost: host }), TIMEOUT_TIME)
+    );
+    const getInfo = wallet.getVSPInfo(host);
 
-  Promise.race([timeout, getInfo])
-    .then(info => {
-      clearTimeout(timeout);
-      dispatch({ type: GETVSP_SUCCESS, info });
-      resolve(info.data);
-    })
-    .catch(error => {
-      dispatch({ type: GETVSP_FAILED, error });
-      reject(error);
-    });
-});
+    Promise.race([timeout, getInfo])
+      .then((info) => {
+        clearTimeout(timeout);
+        dispatch({ type: GETVSP_SUCCESS, info });
+        resolve(info.data);
+      })
+      .catch((error) => {
+        dispatch({ type: GETVSP_FAILED, error });
+        reject(error);
+      });
+  });
 
 export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
 export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
 export const GETVSPTICKETSTATUS_SUCCESS = "GETVSPTICKETSTATUS_SUCCESS";
 export const HASVSPTICKETSERRORED = "HASVSPTICKETSERRORED";
 
-export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) => new Promise((resolve, reject) => {
-  dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
-  wallet.getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
-    .then(response => {
-      const hashesBytes = response.getTicketsHashesList();
-      const ticketsHashes = hashesBytes.map(
-        (bytesHash) => reverseRawHash(bytesHash)
-      );
+export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: GETVSPTICKETSTATUS_ATTEMPT });
+    wallet
+      .getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
+      .then((response) => {
+        const hashesBytes = response.getTicketsHashesList();
+        const ticketsHashes = hashesBytes.map((bytesHash) =>
+          reverseRawHash(bytesHash)
+        );
 
-      // add fee status into our stake transactions map.
-      const { stakeTransactions } = getState().grpc;
-      ticketsHashes.forEach(ticketHash => {
-        const tx = stakeTransactions[ticketHash];
-        if (tx) {
-          tx.feeStatus = feeStatus;
+        // add fee status into our stake transactions map.
+        const { stakeTransactions } = getState().grpc;
+        ticketsHashes.forEach((ticketHash) => {
+          const tx = stakeTransactions[ticketHash];
+          if (tx) {
+            tx.feeStatus = feeStatus;
+          }
+        });
+        // dispatch if we have tickets with error to register.
+        if (feeStatus == VSP_FEE_PROCESS_ERRORED && ticketsHashes.length > 0) {
+          dispatch({ type: HASVSPTICKETSERRORED, hasVSPTicketsError: true });
         }
+
+        dispatch({
+          type: GETVSPTICKETSTATUS_SUCCESS,
+          vspTickets: { [feeStatus]: ticketsHashes },
+          feeStatus,
+          stakeTransactions
+        });
+
+        resolve(ticketsHashes);
+      })
+      .catch((err) => {
+        dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });
+        reject(err);
       });
-      // dispatch if we have tickets with error to register.
-      if (feeStatus == VSP_FEE_PROCESS_ERRORED && ticketsHashes.length > 0) {
-        dispatch({ type: HASVSPTICKETSERRORED, hasVSPTicketsError: true });
-      }
-
-      dispatch({ type: GETVSPTICKETSTATUS_SUCCESS, vspTickets: { [feeStatus]: ticketsHashes }, feeStatus, stakeTransactions });
-
-      resolve(ticketsHashes);
-    })
-    .catch(err => {
-      dispatch({ type: GETVSPTICKETSTATUS_FAILED, err });
-      reject(err);
-    });
-});
+  });
 
 export const SYNCVSPTICKETS_ATTEMPT = "SYNCVSPTICKETS_ATTEMPT";
 export const SYNCVSPTICKETS_FAILED = "SYNCVSPTICKETS_FAILED";
 export const SYNCVSPTICKETS_SUCCESS = "SYNCVSPTICKETS_SUCCESS";
 
-export const syncVSPTicketsRequest = ({ passphrase, vspHost, vspPubkey, account }) => (dispatch, getState) => {
+export const syncVSPTicketsRequest = ({
+  passphrase,
+  vspHost,
+  vspPubkey,
+  account
+}) => (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
-  wallet.syncVSPTickets(getState().grpc.walletService, passphrase, vspHost, vspPubkey, account)
+  wallet
+    .syncVSPTickets(
+      getState().grpc.walletService,
+      passphrase,
+      vspHost,
+      vspPubkey,
+      account
+    )
     .then(() => {
       dispatch({ type: SYNCVSPTICKETS_SUCCESS });
       dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch({ type: SYNCVSPTICKETS_FAILED, error });
     });
 };
 
-
 // getTicketSignature receives the tickethash and request and sign it using the
 // ticket sstxcommitment address.
-export const getTicketSignature = (tickethash, message, passphrase) => async (dispatch, getState) => {
+export const getTicketSignature = (tickethash, message, passphrase) => async (
+  dispatch,
+  getState
+) => {
   const walletService = sel.walletService(getState());
   const chainParams = sel.chainParams(getState());
 
-  const sstxAddr = await wallet.getSstxCommitmentAddress(walletService, chainParams, tickethash);
-  const resp = await wallet.signMessage(walletService, sstxAddr, message, passphrase);
+  const sstxAddr = await wallet.getSstxCommitmentAddress(
+    walletService,
+    chainParams,
+    tickethash
+  );
+  const resp = await wallet.signMessage(
+    walletService,
+    sstxAddr,
+    message,
+    passphrase
+  );
   return resp.toObject().signature;
 };
 
@@ -208,11 +244,9 @@ export const refreshStakepoolPurchaseInformation = () => (dispatch, getState) =>
 // rescan the wallet for old transactions.
 //
 // This is meant to be used when setting up a new stakepool.
-export const setStakePoolInformation = (
-  poolHost,
-  apiKey,
-  rescan
-) => async (dispatch) => {
+export const setStakePoolInformation = (poolHost, apiKey, rescan) => async (
+  dispatch
+) => {
   let extraErrorData;
 
   // we currently only support linking to new stakepools from the default
@@ -376,16 +410,17 @@ export const discoverAvailableVSPs = () => async (dispatch, getState) => {
   try {
     let availableVSPs = await wallet.getAllVSPs();
     // add label and value so we can show this values on a select input.
-    availableVSPs = shuffle(availableVSPs).map(vsp => ({
-      ...vsp,
-      label: vsp.host,
-      value: vsp.host
-    })
-    ).filter(({ vspData }) => {
-      if(!vspData) return false;
-      const vspTestnet = vspData.network === TESTNET;
-      return vspTestnet === isTestnet;
-    });
+    availableVSPs = shuffle(availableVSPs)
+      .map((vsp) => ({
+        ...vsp,
+        label: vsp.host,
+        value: vsp.host
+      }))
+      .filter(({ vspData }) => {
+        if (!vspData) return false;
+        const vspTestnet = vspData.network === TESTNET;
+        return vspTestnet === isTestnet;
+      });
 
     dispatch({
       type: DISCOVERAVAILABLEVSPS_SUCCESS,
@@ -487,7 +522,9 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
   const vspInfo = await wallet.getStakePoolInfo();
   // TODO treat error and return config values in that case
   if (!vspInfo) return null;
-  const { daemon: { walletName } } = getState();
+  const {
+    daemon: { walletName }
+  } = getState();
   const config = getWalletCfg(sel.isTestNet(getState()), walletName);
   updateStakePoolConfig(config, vspInfo);
   dispatch({
@@ -517,7 +554,7 @@ export const updateUsedVSPs = (vsp) => (dispatch, getState) => {
   const isTestNet = sel.isTestNet(getState());
   const walletCfg = getWalletCfg(isTestNet, walletName);
   const usedVSPs = walletCfg.get(USED_VSPS);
-  const isUsed = usedVSPs.find(usedVSP => usedVSP.host === vsp.host);
+  const isUsed = usedVSPs.find((usedVSP) => usedVSP.host === vsp.host);
   // ignore if already added.
   if (isUsed) return;
   // update otherwise.
@@ -528,10 +565,15 @@ export const updateUsedVSPs = (vsp) => (dispatch, getState) => {
 };
 
 export const SET_REMEMBERED_VSP_HOST = "SET_REMEMBERED_VSP_HOST";
-export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) => {
+export const setRememberedVspHost = (rememberedVspHost) => (
+  dispatch,
+  getState
+) => {
   dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
 
-  const { daemon: { walletName } } = getState();
+  const {
+    daemon: { walletName }
+  } = getState();
   const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set(cfgConstants.REMEMBERED_VSP_HOST, rememberedVspHost);
 };
@@ -539,7 +581,6 @@ export const setRememberedVspHost = (rememberedVspHost) => (dispatch, getState) 
 export const PROCESSMANAGEDTICKETS_ATTEMPT = "PROCESSMANAGEDTICKETS_ATTEMPT";
 export const PROCESSMANAGEDTICKETS_SUCCESS = "PROCESSMANAGEDTICKETS_SUCCESS";
 export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
-
 
 // processManagedTickets gets all vsp and check for tickets which still not
 // synced, and sync them.
@@ -571,13 +612,19 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
 
         await wallet.unlockWallet(walletService, passphrase);
         unlocked = true;
-        await Promise.all(availableVSPs.map(async (vsp) => {
-          if (vsp.pubkey) {
-            await wallet.processManagedTickets(
-              walletService, vsp.host, vsp.pubkey, feeAccount, changeAccount
-            );
-          }
-        }));
+        await Promise.all(
+          availableVSPs.map(async (vsp) => {
+            if (vsp.pubkey) {
+              await wallet.processManagedTickets(
+                walletService,
+                vsp.host,
+                vsp.pubkey,
+                feeAccount,
+                changeAccount
+              );
+            }
+          })
+        );
 
         await wallet.lockWallet(walletService);
 
@@ -587,28 +634,39 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
         dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
         resolve(true);
-      } catch(error) {
+      } catch (error) {
         if (unlocked) await wallet.lockWallet(walletService);
         dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
-        if (String(error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > 0) {
-           reject("Invalid private passphrase, please try again.");
-           return;
+        if (
+          String(error).indexOf(
+            "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
+          ) > 0
+        ) {
+          reject("Invalid private passphrase, please try again.");
+          return;
         }
         reject(error);
         return;
       }
     };
 
-    asyncProcess().then(r => resolve(r)).catch(error => reject(error));
-});
+    asyncProcess()
+      .then((r) => resolve(r))
+      .catch((error) => reject(error));
+  });
 
-export const PROCESSUNMANAGEDTICKETS_ATTEMPT = "PROCESSUNMANAGEDTICKETS_ATTEMPT";
-export const PROCESSUNMANAGEDTICKETS_SUCCESS = "PROCESSUNMANAGEDTICKETS_SUCCESS";
+export const PROCESSUNMANAGEDTICKETS_ATTEMPT =
+  "PROCESSUNMANAGEDTICKETS_ATTEMPT";
+export const PROCESSUNMANAGEDTICKETS_SUCCESS =
+  "PROCESSUNMANAGEDTICKETS_SUCCESS";
 export const PROCESSUNMANAGEDTICKETS_FAILED = "PROCESSUNMANAGEDTICKETS_FAILED";
 
 // processUnmanagedTickets process vsp tickets which are still unprocessed.
 // It is called on wallet restore.
-export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (dispatch, getState) =>
+export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
+  dispatch,
+  getState
+) =>
   new Promise((resolve, reject) => {
     const asyncProcess = async () => {
       dispatch({ type: PROCESSUNMANAGEDTICKETS_ATTEMPT });
@@ -625,9 +683,22 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (disp
         }
 
         if (passphrase) {
-          await wallet.processUnmanagedTickets(walletService, passphrase, vspHost, vspPubkey, feeAccount, changeAccount);
+          await wallet.processUnmanagedTickets(
+            walletService,
+            passphrase,
+            vspHost,
+            vspPubkey,
+            feeAccount,
+            changeAccount
+          );
         } else {
-          await wallet.processUnmanagedTicketsStartup(walletService, vspHost, vspPubkey, feeAccount, changeAccount);
+          await wallet.processUnmanagedTicketsStartup(
+            walletService,
+            vspHost,
+            vspPubkey,
+            feeAccount,
+            changeAccount
+          );
         }
 
         // get vsp tickets fee status errored so we can resync them
@@ -636,10 +707,69 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (disp
         await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
         dispatch({ type: PROCESSUNMANAGEDTICKETS_SUCCESS });
         return null;
-      } catch(error) {
+      } catch (error) {
         dispatch({ type: PROCESSUNMANAGEDTICKETS_FAILED, error });
         return error;
       }
     };
-    asyncProcess().then(r => resolve(r)).catch(error => reject(error));
+    asyncProcess()
+      .then((r) => resolve(r))
+      .catch((error) => reject(error));
   });
+
+export const SETVSPDVOTECHOICE_ATTEMPT = "SETVSPDVOTECHOICE_ATTEMPT";
+export const SETVSPDVOTECHOICE_SUCCESS = "SETVSPDVOTECHOICE_SUCCESS";
+export const SETVSPDVOTECHOICE_FAILED = "SETVSPDVOTECHOICE_FAILED";
+
+// setVSPDVoteChoices gets all vsps and updates the set vote choices to
+// whatever the wallet has.
+export const setVSPDVoteChoices = (passphrase) => async (
+  dispatch,
+  getState
+) => {
+  const availableVSPs = await dispatch(discoverAvailableVSPs());
+  availableVSPs.map(async (vsp) => {
+    const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+    if (pubkey) {
+      vsp.pubkey = pubkey;
+      return vsp;
+    }
+    return false;
+  });
+  try {
+    dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
+    const walletService = sel.walletService(getState());
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
+    }
+
+    await wallet.unlockWallet(walletService, passphrase);
+    await Promise.all(
+      availableVSPs.map(async (vsp) => {
+        if (vsp.pubkey) {
+          await wallet.setVspdAgendaChoices(
+            walletService,
+            vsp.host,
+            vsp.pubkey,
+            feeAccount,
+            changeAccount
+          );
+        }
+      })
+    );
+
+    await wallet.lockWallet(walletService);
+
+    dispatch({ type: SETVOTECHOICES_SUCCESS });
+    dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
+    return true;
+  } catch (error) {
+    dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
+  }
+};

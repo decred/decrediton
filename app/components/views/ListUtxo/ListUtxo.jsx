@@ -23,10 +23,10 @@ export default () => {
     if (!account) {
       return;
     }
-    onListUnspentOutputs(account.value)
-      .then(outputs => setUnspentOutputs(outputs));
-    }, [onListUnspentOutputs, account]
-  );
+    onListUnspentOutputs(account.value).then((outputs) =>
+      setUnspentOutputs(outputs)
+    );
+  }, [onListUnspentOutputs, account]);
 
   return (
     <StandalonePage header={<Header />}>
@@ -36,23 +36,23 @@ export default () => {
         {...{ account, onChange: setAccount }}
       />
       <div>
-      <div className={styles.tableHeader}>
-        <div>
-          <T id="listutxo.utxo" m="UTXO" />
-        </div>
-        <div>
-          <T id="listutxo.value" m="Value" />
-        </div>
-      </div>
-      { unspentOutputs && unspentOutputs.map((utxo, index) => (
-          <div key={index} className={classNames("is-row", styles.utxoTable)}>
-            <div>
-              {utxo.txHash}:{utxo.outpointIndex}
-            </div>
-            <Balance amount={utxo.amount} />
+        <div className={styles.tableHeader}>
+          <div>
+            <T id="listutxo.utxo" m="UTXO" />
           </div>
-        ))
-      }
+          <div>
+            <T id="listutxo.value" m="Value" />
+          </div>
+        </div>
+        {unspentOutputs &&
+          unspentOutputs.map((utxo, index) => (
+            <div key={index} className={classNames("is-row", styles.utxoTable)}>
+              <div>
+                {utxo.txHash}:{utxo.outpointIndex}
+              </div>
+              <Balance amount={utxo.amount} />
+            </div>
+          ))}
       </div>
     </StandalonePage>
   );

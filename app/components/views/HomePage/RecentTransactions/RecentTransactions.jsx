@@ -18,7 +18,7 @@ const RecentTransactions = ({
   return getTransactionsRequestAttempt ? (
     <DecredLoading />
   ) : (
-    <div>
+    <div className={styles.wrapper}>
       <div className={classNames(sharedStyles.isRow, styles.homeContentTitle)}>
         {hasTxs ? (
           <T id="home.recentTransactionsTitle" m="Recent Transactions" />
@@ -47,7 +47,9 @@ const RecentTransactions = ({
               />{" "}
               →
             </Link>
-            <ExternalLink href="https://decred.org/exchanges" className={styles.buy}>
+            <ExternalLink
+              href="https://decred.org/exchanges"
+              className={styles.buy}>
               <T
                 id="home.noTransactions.buyFromExchanges"
                 m="Buy Decred from Exchanges"

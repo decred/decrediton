@@ -1,13 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
 import InfiniteScroll from "react-infinite-scroller";
+import { Tooltip } from "pi-ui";
 import {
   LoadingMoreTicketsIndicator,
   NoMoreTicketsIndicator,
   NoTicketsIndicator
 } from "indicators";
-import { TxHistory, Subtitle, Tooltip } from "shared";
+import { TxHistory, Subtitle } from "shared";
 import { EyeFilterMenu, PassphraseModalButton } from "buttons";
-import style from "./MyTicketsTab.module.css";
+import styles from "./MyTicketsTab.module.css";
 import { SyncVSPFailedTickets } from "modals";
 
 const subtitleMenu = ({
@@ -15,20 +16,20 @@ const subtitleMenu = ({
   selectedTicketTypeKey,
   onChangeSelectedType
 }) => (
-    <div className={style.ticketsButtons}>
-      <Tooltip
-        tipWidth={300}
-        text={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
-        <EyeFilterMenu
-          labelKey="label"
-          keyField="key"
-          options={ticketTypes}
-          selected={selectedTicketTypeKey}
-          onChange={onChangeSelectedType}
-        />
-      </Tooltip>
-    </div>
-  );
+  <div className={styles.ticketsButtons}>
+    <Tooltip
+      contentClassName={styles.ticketStatusTooltip}
+      content={<T id="vsptickets.tickettypes.tooltip" m="Ticket Status" />}>
+      <EyeFilterMenu
+        labelKey="label"
+        keyField="key"
+        options={ticketTypes}
+        selected={selectedTicketTypeKey}
+        onChange={onChangeSelectedType}
+      />
+    </Tooltip>
+  </div>
+);
 
 const TicketListPage = ({
   tickets,
@@ -62,7 +63,7 @@ const TicketListPage = ({
       threshold={loadMoreThreshold}>
       <Subtitle
         title={<T id="vsp.mytickets.subtitle" m="Live Tickets" />}
-        className={style.subtitle}
+        className={styles.subtitle}
         children={subtitleMenu({
           sortTypes,
           ticketTypes,
@@ -72,41 +73,33 @@ const TicketListPage = ({
           onChangeSortType
         })}
       />
-      {
-        hasVSPTicketsError && (
-          <PassphraseModalButton
-            {...{
-              onSubmit: onSyncVspTicketsRequest,
-              setVSP,
-              account,
-              setAccount,
-              isValid
-            }}
-            loading={isSyncingTickets}
-            disabled={!hasVSPTicketsError || isSyncingTickets}
-            modalTitle={
-              <T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />
-            }
-            modalComponent={SyncVSPFailedTickets}
-            buttonLabel={
-              <T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />
-            }
-          />
-        )
-      }
+      {hasVSPTicketsError && (
+        <PassphraseModalButton
+          {...{
+            onSubmit: onSyncVspTicketsRequest,
+            setVSP,
+            account,
+            setAccount,
+            isValid
+          }}
+          loading={isSyncingTickets}
+          disabled={!hasVSPTicketsError || isSyncingTickets}
+          modalTitle={<T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />}
+          modalComponent={SyncVSPFailedTickets}
+          buttonLabel={<T id="myTicket.syncVSP" m="Sync Failed VSP Tickets" />}
+        />
+      )}
       {tickets.length > 0 && (
         <>
-          <div className={style.tableHeader}>
+          <div className={styles.tableHeader}>
             <div>
               <T id="vsptickets.table.header.status" m="Ticket Status" />
             </div>
             <div>
               <T id="vsptickets.table.header.price" m="Price" />
             </div>
-            <div>
-            </div>
-            <div>
-            </div>
+            <div></div>
+            <div></div>
             <div>
               <T id="vsptickets.table.header.account" m="Fee Status" />
             </div>
@@ -125,12 +118,12 @@ const TicketListPage = ({
         </>
       )}
       {!noMoreLiveTickets ? (
-        <LoadingMoreTicketsIndicator isLiveTickets={true}  />
+        <LoadingMoreTicketsIndicator isLiveTickets={true} />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (
-            <NoTicketsIndicator />
-          )}
+        <NoTicketsIndicator />
+      )}
     </InfiniteScroll>
   );
 };

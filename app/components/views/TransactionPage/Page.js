@@ -12,7 +12,8 @@ import {
 import "style/TxDetails.less";
 
 function mapNonWalletOutput(output) {
-  const address = output.decodedScript.address || `[script] - ${output.decodedScript.asm}`;
+  const address =
+    output.decodedScript.address || `[script] - ${output.decodedScript.asm}`;
 
   const amount =
     output.decodedScript.scriptClass ===

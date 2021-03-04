@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
 import { Balance, TransitionMotionWrapper } from "shared";
 import { SendTransactionButton } from "buttons";
-import { UnsignedTx, Tooltip } from "shared";
+import { UnsignedTx } from "shared";
 
 const wrapperComponent = (props) => <div {...props} />;
 
@@ -66,66 +66,71 @@ const Form = ({
           <T id="send.insuficient.funds" m="Insufficient funds" />
         </div>
       )}
-      {((isTrezor && isWatchingOnly) || !isWatchingOnly) && (
-        getRunningIndicator ?
-        <Tooltip
-          text={
-            <T
-              id="send.indicator.running"
-              m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before sending a transaction."
+      {((isTrezor && isWatchingOnly) || !isWatchingOnly) &&
+        (getRunningIndicator ? (
+          <Tooltip
+            content={
+              <T
+                id="send.indicator.running"
+                m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before sending a transaction."
+              />
+            }>
+            <SendTransactionButton
+              disabled={true}
+              buttonLabel={sendButtonLabel}
             />
-          }>
+          </Tooltip>
+        ) : (
           <SendTransactionButton
-            disabled={true}
-            buttonLabel={sendButtonLabel}/>
-        </Tooltip>
-        :
-        <SendTransactionButton
-          disabled={!isValid()}
-          showModal={showPassphraseModal}
-          onShow={resetShowPassphraseModal}
-          buttonLabel={sendButtonLabel}>
-          <div className={styles.passphraseModal}>
-            {!isSendSelf ? (
-              <>
-                <div className={styles.passphraseModalLabel}>
-                  {outputs.length > 1 ? (
-                    <T
-                      id="send.confirmAmountAddresses"
-                      m="Destination addresses"
-                    />
-                  ) : (
-                    <T id="send.confirmAmountAddress" m="Destination address" />
-                  )}
-                  :
-                </div>
-                {outputs.map((output, index) => (
-                  <div
-                    className={styles.passphraseModalAddress}
-                    key={"confirm-" + index}>
-                    {output.data.destination}
+            disabled={!isValid()}
+            showModal={showPassphraseModal}
+            onShow={resetShowPassphraseModal}
+            buttonLabel={sendButtonLabel}>
+            <div className={styles.passphraseModal}>
+              {!isSendSelf ? (
+                <>
+                  <div className={styles.passphraseModalLabel}>
+                    {outputs.length > 1 ? (
+                      <T
+                        id="send.confirmAmountAddresses"
+                        m="Destination addresses"
+                      />
+                    ) : (
+                      <T
+                        id="send.confirmAmountAddress"
+                        m="Destination address"
+                      />
+                    )}
+                    :
                   </div>
-                ))}
-              </>
-            ) : (
-              <>
-                <div className={styles.passphraseModalLabel}>
-                  <T id="send.confirmAmountAccount" m="Destination account" />:
-                </div>
-                <div className={styles.passphraseModalAddress}>
-                  {nextAddressAccount.name}
-                </div>
-              </>
-            )}
-            <div className={styles.passphraseModalLabel}>
-              <T id="send.confirmAmountLabelFor" m="Total Spent" />:
+                  {outputs.map((output, index) => (
+                    <div
+                      className={styles.passphraseModalAddress}
+                      key={"confirm-" + index}>
+                      {output.data.destination}
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <>
+                  <div className={styles.passphraseModalLabel}>
+                    <T id="send.confirmAmountAccount" m="Destination account" />
+                    :
+                  </div>
+                  <div className={styles.passphraseModalAddress}>
+                    {nextAddressAccount.name}
+                  </div>
+                </>
+              )}
+              <div className={styles.passphraseModalLabel}>
+                <T id="send.confirmAmountLabelFor" m="Total Spent" />:
+              </div>
+              <div className={styles.passphraseModalBalance}>
+                <Balance amount={totalSpent} />
+              </div>
             </div>
-            <div className={styles.passphraseModalBalance}>
-              <Balance amount={totalSpent} />
-            </div>
-          </div>
-        </SendTransactionButton>
-      )}
+          </SendTransactionButton>
+        ))}
     </div>
     {unsignedRawTx && isWatchingOnly && !isTrezor && (
       <UnsignedTx

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { classNames, Checkbox } from "pi-ui";
-import { Tooltip, Subtitle } from "shared";
+import { FormattedMessage as T } from "react-intl";
+import { classNames, Checkbox, Tooltip } from "pi-ui";
+import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 import { GoBackMsg } from "../messages";
-import { FormattedMessage as T } from "react-intl";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
 import GetStartedStyles from "../GetStarted.module.css";
 import styles from "./SetMixedAcctPage.module.css";
@@ -59,7 +59,7 @@ export default ({ cancel, onSendContinue }) => {
   return (
     <div className={styles.content}>
       <div className={GetStartedStyles.goBackScreenButtonArea}>
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div
             className={GetStartedStyles.goBackScreenButton}
             onClick={cancel}
@@ -138,7 +138,12 @@ export default ({ cancel, onSendContinue }) => {
                     <div className={classNames("is-row", styles.checkboxRow)}>
                       <Checkbox
                         id={`mixed${acctIdx}`}
-                        label={<T id="getstarted.setAccount.mix" m="Set Mixed Account" />}
+                        label={
+                          <T
+                            id="getstarted.setAccount.mix"
+                            m="Set Mixed Account"
+                          />
+                        }
                         checked={mixedAcctIdx === acctIdx}
                         onChange={() => onSetMixedAcct(acctIdx)}
                       />
@@ -146,7 +151,12 @@ export default ({ cancel, onSendContinue }) => {
                     <div className={classNames("is-row", styles.checkboxRow)}>
                       <Checkbox
                         id={`change${acctIdx}`}
-                        label={<T id="getstarted.setAccount.change" m="Set Unmixed Account" />}
+                        label={
+                          <T
+                            id="getstarted.setAccount.change"
+                            m="Set Unmixed Account"
+                          />
+                        }
                         checked={changeAcctIdx === acctIdx}
                         onChange={() => onSetChangeAcct(acctIdx)}
                       />
@@ -158,7 +168,8 @@ export default ({ cancel, onSendContinue }) => {
           </div>
           {!isValid && (
             <div className="error">
-              <T id="getstarted.setAccount.isValidMessage"
+              <T
+                id="getstarted.setAccount.isValidMessage"
                 m="You need to set a mixed and unmixed account, and they can not
                   be the same"
               />

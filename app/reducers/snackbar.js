@@ -6,6 +6,7 @@ import {
   SIGNTX_FAILED,
   CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS,
+  PURCHASETICKETS_SUCCESS_LESS,
   PURCHASETICKETS_FAILED,
   STARTTICKETBUYERV2_SUCCESS,
   STARTTICKETBUYERV3_SUCCESS,
@@ -38,13 +39,16 @@ import {
   REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
-  PROCESSMANAGEDTICKETS_FAILED
+  PROCESSMANAGEDTICKETS_FAILED,
+  SETVSPDVOTECHOICE_FAILED
 } from "../actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
   GETSTARTUPWALLETINFO_FAILED,
-  SEEDCOPIEDTOCLIPBOARD
+  SEEDCOPIEDTOCLIPBOARD,
+  SETVOTECHOICES_FAILED,
+  SETVOTECHOICES_SUCCESS
 } from "../actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
@@ -182,6 +186,11 @@ const messages = defineMessages({
     defaultMessage:
       "You bought {numTickets, plural, one { # ticket } other { # tickets }}"
   },
+  PURCHASETICKETS_SUCCESS_LESS: {
+    id: "tickets.purchaseTicketsHeaderLess",
+    defaultMessage:
+      "You bought {numTickets, plural, one { # ticket } other { # tickets }}.  This was less than your requested amount of {numAttempted}.  While your balance was sufficient, you lacked enough spendable outputs.  You may try and purchase more now."
+  },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
     defaultMessage: "{originalError}"
@@ -216,7 +225,8 @@ const messages = defineMessages({
   },
   UPDATESTAKEPOOLCONFIG_SUCCESS: {
     id: "tickets.updateStakePoolConfigHeader",
-    defaultMessage: "You have successfully updated your stakepool settings."
+    defaultMessage:
+      "You have successfully updated your legacy stakepool settings."
   },
   UPDATESTAKEPOOLCONFIG_FAILED: {
     id: "tickets.errors.updateStakePoolConfigFailed",
@@ -529,7 +539,8 @@ const messages = defineMessages({
   },
   SYNCVSPTICKETS_SUCCESS: {
     id: "sync.vsp.success",
-    defaultMessage: "You have successfully sync all failed tickets with the selected VSP."
+    defaultMessage:
+      "All tickets in error have been successfully attempted to be paid. Please make sure all tickets now show paid.  Otherwise, try again or use a different VSP."
   },
   SYNCVSPTICKETS_FAILED: {
     id: "sync.vsp.failed",
@@ -538,6 +549,19 @@ const messages = defineMessages({
   PROCESSMANAGEDTICKETS_FAILED: {
     id: "processmanaged.failed",
     defaultMessage: "{originalError}"
+  },
+  SETVOTECHOICES_FAILED: {
+    id: "set.vote.failed",
+    defaultMessage: "Set wallet vote choices failed: {originalError}"
+  },
+  SETVOTECHOICES_SUCCESS: {
+    id: "set.vote.success",
+    defaultMessage:
+      "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
+  },
+  SETVSPDVOTECHOICE_FAILED: {
+    id: "set.vspdvote.failed",
+    defaultMessage: "Set vspd vote choices failed: {originalError}"
   }
 });
 
@@ -596,6 +620,7 @@ export default function snackbar(state = {}, action) {
     case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     case ABANDONTRANSACTION_SUCCESS:
     case PURCHASETICKETS_SUCCESS:
+    case PURCHASETICKETS_SUCCESS_LESS:
     case ADDCUSTOMSTAKEPOOL_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_WIPEDEVICE_SUCCESS:
@@ -621,6 +646,7 @@ export default function snackbar(state = {}, action) {
     case UPDATEVOTECHOICE_SUCCESS:
     case CREATEMIXERACCOUNTS_SUCCESS:
     case SYNCVSPTICKETS_SUCCESS:
+    case SETVOTECHOICES_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -631,6 +657,13 @@ export default function snackbar(state = {}, action) {
           break;
         case EXPORT_COMPLETED:
           values = { filename: action.filename };
+          break;
+        case PURCHASETICKETS_SUCCESS_LESS:
+          values = {
+            numTickets: action.purchaseTicketsResponse.getTicketHashesList()
+              .length,
+            numAttempted: action.numAttempted
+          };
           break;
         case PURCHASETICKETS_SUCCESS:
           values = {
@@ -733,6 +766,8 @@ export default function snackbar(state = {}, action) {
     case RUNACCOUNTMIXER_FAILED:
     case SYNCVSPTICKETS_FAILED:
     case PROCESSMANAGEDTICKETS_FAILED:
+    case SETVOTECHOICES_FAILED:
+    case SETVSPDVOTECHOICE_FAILED:
       type = "Error";
       if (
         action.error &&

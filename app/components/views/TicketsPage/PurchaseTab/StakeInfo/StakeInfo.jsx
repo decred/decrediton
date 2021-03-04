@@ -1,51 +1,34 @@
-import { substruct } from "fp";
+import { useState } from "react";
 import StakeInfoDisplay from "./StakeInfoDisplay";
-import stakeInfo from "connectors/stakeInfo";
+import { useStakeInfo } from "./hooks";
 
-@autobind
-class StakeInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isShowingDetails: false
-    };
-  }
-
-  render() {
-    const {
-      ownMempoolTicketsCount,
+const StakeInfo = () => {
+  const { ownMempoolTicketsCount,
       immatureTicketsCount,
       liveTicketsCount,
       unspentTicketsCount,
       isSPV,
-      lastVotedTicket
-    } = this.props;
-    return (
-      <StakeInfoDisplay
-        {...{
-          ownMempoolTicketsCount,
-          immatureTicketsCount,
-          liveTicketsCount,
-          unspentTicketsCount,
-          isSPV,
-          lastVotedTicket,
-          ...this.props,
-          ...this.state,
-          ...substruct(
-            {
-              getStakeInfoDetailsComponent: null,
-              onToggleStakeinfo: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
+      lastVotedTicket,
+      ...props } = useStakeInfo();
 
-  onToggleStakeinfo() {
-    this.setState({ isShowingDetails: !this.state.isShowingDetails });
-  }
-}
+  const [isShowingDetails, setIsShowingDetails] = useState(false);
+  const onToggleStakeinfo = () => setIsShowingDetails((p) => !p);
 
-export default stakeInfo(StakeInfo);
+  return (
+    <StakeInfoDisplay
+      {...{
+        ownMempoolTicketsCount,
+        immatureTicketsCount,
+        liveTicketsCount,
+        unspentTicketsCount,
+        isSPV,
+        lastVotedTicket,
+        isShowingDetails,
+        onToggleStakeinfo,
+        ...props
+      }}
+    />
+  );
+};
+
+export default StakeInfo;

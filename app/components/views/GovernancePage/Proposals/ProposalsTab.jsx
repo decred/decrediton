@@ -1,10 +1,10 @@
-import ProposalsList from "./ProposalsList/ProposalsList";
-import PoliteiaDisabled from "./PoliteiaDisabled";
 import { FormattedMessage as T } from "react-intl";
-import { PoliteiaLink as PiLink } from "shared";
-import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { createElement as h } from "react";
 import { Button, Tooltip, classNames } from "pi-ui";
+import ProposalsList from "./ProposalsList/ProposalsList";
+import PoliteiaDisabled from "./PoliteiaDisabled";
+import { PoliteiaLink as PiLink } from "shared";
+import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
 

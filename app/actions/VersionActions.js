@@ -1,6 +1,10 @@
 // @flow
 import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
-import { getVersionService, getVersionResponse, getDcrwalletGrpcKeyCert } from "wallet";
+import {
+  getVersionService,
+  getVersionResponse,
+  getDcrwalletGrpcKeyCert
+} from "wallet";
 import { push as pushHistory } from "connected-react-router";
 import { ipcRenderer } from "electron";
 import { isTestNet } from "selectors";

@@ -3,7 +3,7 @@ import SettingsPage from "./Settings";
 import { useSettings, useService } from "hooks";
 
 export const SettingsTab = () => {
- const {
+  const {
     tempSettings,
     onSaveSettings,
     onChangeTempSettings,

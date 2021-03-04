@@ -1,5 +1,5 @@
 import { RadioButtonGroup, classNames } from "pi-ui";
-import { KeyBlueButton } from "buttons";
+import { PassphraseModalButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import ProgressIndicator from "./ProgressIndicator";
 import styles from "./Overview.module.css";
@@ -19,7 +19,7 @@ const AgendaDetails = ({ name, onClose, description }) => (
       <div>
         <T
           id="agenda.overviewDescription"
-          m="Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins."
+          m="Once the majority of the PoW miners have upgraded (95% of the 1000 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins."
         />
       </div>
     </div>
@@ -75,7 +75,8 @@ const Overview = ({
   setSelectedChoiceId,
   updatePreferences,
   disabled,
-  passed
+  passed,
+  isLoading
 }) => (
   <div className={styles.agenda}>
     <AgendaDetails
@@ -91,16 +92,22 @@ const Overview = ({
       disabled={disabled}
     />
     <div className={styles.bottom}>
-      {!isFinished && (
-        <div className={styles.bottomOptions}>
-          <KeyBlueButton
-            disabled={disabled}
-            className={styles.updatePreferencesButton}
-            onClick={updatePreferences}>
-            <T id="agenda.updatePreference" m="Update Preference" />
-          </KeyBlueButton>
-        </div>
-      )}
+      <div className={styles.bottomOptions}>
+        <PassphraseModalButton
+          modalTitle={<T id="updateprefs.passphrase.title" m="Passphrase" />}
+          modalClassName={styles.passphraseModal}
+          onSubmit={updatePreferences}
+          className={styles.updatePreferencesButton}
+          disabled={disabled || isLoading}
+          buttonLabel={
+            isLoading ? (
+              <T id="agenda.settingVoteChoices" m="Updating" />
+            ) : (
+              <T id="agenda.updatePreference" m="Update Preference" />
+            )
+          }
+        />
+      </div>
       <div className={styles.bottomOverview}>
         <ProgressIndicator passed={passed} inProgress={!isFinished} />
       </div>

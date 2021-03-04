@@ -1,7 +1,6 @@
-import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
 import { Documentation } from "shared";
-import { classNames } from "pi-ui";
 import styles from "../GetStarted.module.css";
 
 export default ({
@@ -15,7 +14,7 @@ export default ({
   <>
     <div className={styles.contentTitle}>
       <div className={styles.goBackScreenButtonArea}>
-        <Tooltip text={<T id="releaseNotes.goBack" m="Go back" />}>
+        <Tooltip content={<T id="releaseNotes.goBack" m="Go back" />}>
           <div className={styles.goBackScreenButton} onClick={onSendBack} />
         </Tooltip>
       </div>

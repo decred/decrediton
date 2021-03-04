@@ -236,6 +236,15 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
+export const unconfirmedTotalBalance = createSelector(
+  [balances],
+  reduce(
+    (total, { accountName, unconfirmed }) =>
+      accountName === "imported" ? total : total + unconfirmed,
+    0
+  )
+);
+
 export const getMixedAccountName = createSelector(
   [getMixedAccount, balances],
   (mixedAcc, balances) =>
@@ -864,6 +873,8 @@ export const homeHistoryTransactions = createSelector(
 export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
 export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
 
+export const isSyncingTickets = get(["vsp", "syncVSPRequestAttempt"]);
+
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
 export const buyerVSP = get(["vsp", "vsp"]);
@@ -914,7 +925,10 @@ export const getVSPTickets = createSelector(
 );
 
 export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
-export const isProcessingUnmanaged = get(["vsp", "processUnmanagedTicketsAttempt"]);
+export const isProcessingUnmanaged = get([
+  "vsp",
+  "processUnmanagedTicketsAttempt"
+]);
 // ****************** end of vsp selectors ******************
 
 export const dailyBalancesStats = get(["statistics", "dailyBalances"]);
@@ -1655,6 +1669,15 @@ export const lastPoliteiaAccessTime = get([
   "governance",
   "lastPoliteiaAccessTime"
 ]);
+export const setVoteChoicesAttempt = get([
+  "grpc",
+  "setVoteChoicesRequestAttempt"
+]);
+export const setVspdVoteChoicesAttempt = get([
+  "vsp",
+  "setVspdVoteChoicesRequestAttempt"
+]);
+export const voteChoices = get(["grpc", "getVoteChoicesResponse"]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([

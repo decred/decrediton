@@ -47,10 +47,10 @@ const PrivacySettings = ({
               <div
                 disabled={isChangePassPhraseDisabled}
                 className={styles.updatePassphraseButton}>
-                <label id="update-private-passphrase-button" >
-                 <T
+                <label id="update-private-passphrase-button">
+                  <T
                     id="settings.updatePrivatePassphrase"
-                   m="Update Private Passphrase"
+                    m="Update Private Passphrase"
                   />
                 </label>
                 <WatchOnlyWarnNotification

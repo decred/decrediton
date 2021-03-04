@@ -1,10 +1,9 @@
-import { SeedCopyConfirmModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
+import { SeedCopyConfirmModal } from "modals";
 import { Documentation } from "shared";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
-import { Tooltip } from "shared";
-import { classNames } from "pi-ui";
 import styles from "../CreateWallet.module.css";
 
 const CopySeedPage = ({
@@ -21,7 +20,7 @@ const CopySeedPage = ({
         <CreateNewWalletTitle />
       </div>
       {sendBack && (
-        <Tooltip text={<GoBackMsg />}>
+        <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}

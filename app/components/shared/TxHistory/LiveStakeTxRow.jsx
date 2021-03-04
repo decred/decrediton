@@ -1,25 +1,29 @@
-import Row from "./Row";
 import { FormattedMessage as T } from "react-intl";
-import { Balance, Tooltip } from "shared";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
+import Row from "./Row";
+import { Balance } from "shared";
 import { messageByType } from "./helpers";
 import TicketPriceMessage from "./TicketPriceMessage";
 import styles from "./TxHistory.module.css";
-import { VSP_FEE_PROCESS_STARTED, VSP_FEE_PROCESS_PAID, VSP_FEE_PROCESS_ERRORED } from "constants";
+import {
+  VSP_FEE_PROCESS_STARTED,
+  VSP_FEE_PROCESS_PAID,
+  VSP_FEE_PROCESS_ERRORED
+} from "constants";
 
-const feeStatusToStringMap = ({
+const feeStatusToStringMap = {
   [VSP_FEE_PROCESS_STARTED]: <T id="vsp.ticket.started" m="Processing" />,
   [VSP_FEE_PROCESS_PAID]: <T id="vsp.ticket.paid" m="Paid" />,
   [VSP_FEE_PROCESS_ERRORED]: <T id="vsp.ticket.error" m="Error" />
-});
+};
 
 const OLD_VSP = "OLD_VSP";
 const SOLO_PURCHASE = "SOLO_PURCHASE";
 
-const ticketMap = ({
+const ticketMap = {
   [OLD_VSP]: <T id="privacy.ticket.old" m="Old VSP" />,
   [SOLO_PURCHASE]: <T id="privacy.ticket.solo" m="Solo" />
-});
+};
 
 const StakeTxRow = ({
   className,
@@ -48,17 +52,22 @@ const StakeTxRow = ({
     // an old vsp ticket has two inputs, the vsp fee input and the ticket price.
     // if it has only one input and no fee status, then it is probably a
     // solo ticket purchase.
-    feeStatusString = txInputs.length > 1 ? ticketMap[OLD_VSP] : ticketMap[SOLO_PURCHASE];
+    feeStatusString =
+      txInputs.length > 1 ? ticketMap[OLD_VSP] : ticketMap[SOLO_PURCHASE];
   }
   return (
     <Row {...{ className, pending, ...props, overview }}>
       <div
-        className={classNames(styles.myTickets, overview && styles.overview, styles.live)}>
+        className={classNames(
+          styles.myTickets,
+          overview && styles.overview,
+          styles.live
+        )}>
         <div className={styles.ticketStatus}>
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Tooltip text={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+        <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance
             bold
             classNameAmount={styles.myTicketsPrice}
@@ -67,10 +76,9 @@ const StakeTxRow = ({
           />
         </Tooltip>
         <div></div>
-        <Tooltip text={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />} >
-          <div className={classNames(styles.feeStatus)}>
-            {feeStatusString}
-          </div>
+        <Tooltip
+          content={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />}>
+          <div className={classNames(styles.feeStatus)}>{feeStatusString}</div>
         </Tooltip>
         {!pending && (
           <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>

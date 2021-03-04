@@ -1,3 +1,7 @@
+.wrapper {
+  width: 368px;
+}
+
 .homeContentTitle {
   color: var(--stroke-color-hovered);
   font-size: 13px;
@@ -38,8 +42,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .homeContentTitle {
-    width: 315px;
+  .wrapper {
+    width: 100%;
   }
-
 }

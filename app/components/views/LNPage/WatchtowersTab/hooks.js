@@ -7,10 +7,9 @@ export function useWatchtowersTab() {
   const dispatch = useDispatch();
   const addWatchtower = (wtPubKey, addr) =>
     dispatch(lna.addWatchtower(wtPubKey, addr));
-  const removeWatchtower = wtPubKey =>
+  const removeWatchtower = (wtPubKey) =>
     dispatch(lna.removeWatchtower(wtPubKey));
-  const listWatchtowers = () =>
-    dispatch(lna.listWatchtowers());
+  const listWatchtowers = () => dispatch(lna.listWatchtowers());
   const towersList = useSelector(sel.lnTowersList);
 
   useEffect(() => {

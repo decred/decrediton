@@ -32,11 +32,13 @@ const PrivacyPageHeader = React.memo(
           }
         />
       );
-    return (<StandaloneHeader
-      iconClassName="security"
-      title={<T id="privacypage.title" m="Privacy and Security" />}
-      description={description}
-    />);
+    return (
+      <StandaloneHeader
+        iconClassName="security"
+        title={<T id="privacypage.title" m="Privacy and Security" />}
+        description={description}
+      />
+    );
   }
 );
 

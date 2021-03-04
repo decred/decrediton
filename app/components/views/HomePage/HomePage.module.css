@@ -19,7 +19,7 @@
 }
 
 .overviewSpendableLockedWrapper {
-  padding-top: 132px;
+  padding-top: 96px;
 }
 
 .overviewTransactionsTicket {
@@ -104,6 +104,12 @@
 .tabsContent {
   width: 100%;
 }
+
+.tabs {
+  top: -55px;
+  right: 50px;
+}
+
 .tabsWrapper {
   height: 250px;
 }
@@ -123,7 +129,7 @@
   }
 
   .overviewSpendableLockedWrapper {
-    padding-top: 114px;
+    padding-top: 96px;
   }
 }
 

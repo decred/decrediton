@@ -78,19 +78,10 @@ export const CreateWalletMachine = Machine({
           actions: [
             assign({
               passPhrase: (context, event) =>
-                event.passPhrase
-                  ? event.passPhrase
-                  : context.passPhrase
-                  ? context.passPhrase
-                  : "",
+                event.passPhrase ?? context.passPhrase ?? "",
               seed: (context, event) =>
                 event.seed ? event.seed : context.seed ? context.seed : [],
-              error: (context, event) =>
-                event.error !== undefined
-                  ? event.error
-                  : context.error
-                  ? context.error
-                  : ""
+              error: (context, event) => event.error ?? context.error ?? ""
             })
           ]
         }
@@ -119,19 +110,10 @@ export const CreateWalletMachine = Machine({
           actions: [
             assign({
               passPhrase: (context, event) =>
-                event.passPhrase
-                  ? event.passPhrase
-                  : context.passPhrase
-                  ? context.passPhrase
-                  : "",
+                event.passPhrase ?? context.passPhrase ?? "",
               seed: (context, event) =>
                 event.seed ? event.seed : context.seed ? context.seed : [],
-              error: (context, event) =>
-                event.error !== undefined
-                  ? event.error
-                  : context.error
-                  ? context.error
-                  : ""
+              error: (context, event) => event.error ?? context.error ?? ""
             })
           ]
         }

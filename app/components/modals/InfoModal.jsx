@@ -14,18 +14,12 @@ const InfoModal = ({
   draggable
 }) => (
   <Modal
-    className={classNames(
-      style.info,
-      double && style.double,
-      modalClassName
-    )}
+    className={classNames(style.info, double && style.double, modalClassName)}
     {...{ show, onCancelModal, draggable }}>
     {modalTitle ? <>{modalTitle}</> : null}
     <div className={style.infoCloseButtonTop} onClick={onCancelModal} />
     <div className={style.infoContent}>{modalContent}</div>
-    <KeyBlueButton
-      className={style.infoCloseButton}
-      onClick={onCancelModal}>
+    <KeyBlueButton className={style.infoCloseButton} onClick={onCancelModal}>
       <T id="infoModal.btnClose" m="Got it" />
     </KeyBlueButton>
   </Modal>

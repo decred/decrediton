@@ -26,12 +26,14 @@ export const useProposalDetailsPage = () => {
     proposalsDetails
   ]);
 
-  const linkedProposal = useMemo(() => viewedProposalDetails?.linkto &&
-    proposals.finishedVote.find(proposal => viewedProposalDetails.linkto === proposal.token)
-    , [
-      proposals,
-      viewedProposalDetails
-    ]);
+  const linkedProposal = useMemo(
+    () =>
+      viewedProposalDetails?.linkto &&
+      proposals.finishedVote.find(
+        (proposal) => viewedProposalDetails.linkto === proposal.token
+      ),
+    [proposals, viewedProposalDetails]
+  );
 
   const eligibleTicketCount =
     viewedProposalDetails && viewedProposalDetails.walletEligibleTickets

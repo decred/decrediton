@@ -5110,19 +5110,19 @@ msgstr ""
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
-#. Once the majority of the PoW miners have upgraded (75% of the 100 most
+#. Once the majority of the PoW miners have upgraded (95% of the 1000 most
 #. recent blocks are at the latest version) and the majority of the PoS miners
 #. have upgraded (75% of the votes in a 2016 block interval), the voting
 #. process begins.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/Overview.json
 msgctxt "agenda.overviewDescription"
 msgid ""
-"Once the majority of the PoW miners have upgraded (75% of the 100 most "
+"Once the majority of the PoW miners have upgraded (95% of the 1000 most "
 "recent blocks are at the latest version) and the majority of the PoS miners "
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
-"Une fois que la majorité des mineurs PdT ont été mis à jour (75 % des 100 "
+"Une fois que la majorité des mineurs PdT ont été mis à jour (95 % des 1000 "
 "blocs les plus récents mis à la version la plus récente) et que la majorité "
 "des mineurs PdE ont été mis à jour (75 % des votes dans un intervalle de "
 "bloc 2016), le processus de vote commence."

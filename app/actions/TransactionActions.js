@@ -107,10 +107,7 @@ export const newTransactionsReceived = (
     recentRegularTransactions,
     recentStakeTransactions
   } = getState().grpc;
-  const {
-    walletService,
-    maturingBlockHeights
-  } = getState().grpc;
+  const { walletService, maturingBlockHeights } = getState().grpc;
   const chainParams = sel.chainParams(getState());
   // Normalize transactions with missing data.
   // All transactions must being normalized before being dispatched to the
@@ -135,20 +132,39 @@ export const newTransactionsReceived = (
     return m;
   }, {});
   let newlyUnminedMap = divideTransactions(newlyUnminedTransactions);
+
+  // get vsp tickets fee status in case there is a stake tx and we show the
+  // proper ticket value.
+  const vspHashes = {};
+  vspHashes[VSP_FEE_PROCESS_ERRORED] = await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+  vspHashes[VSP_FEE_PROCESS_STARTED] = await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+  vspHashes[VSP_FEE_PROCESS_PAID] = await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+
+  // add feeStatus into unmined txs. With that there is no need to add into
+  // mined txs.
+  Object.keys(vspHashes).forEach(feeStatus => {
+    vspHashes[feeStatus].forEach((ticketHash) => {
+      if (!newlyUnminedMap.stakeTransactions[ticketHash]) {
+        return;
+      }
+      newlyUnminedMap.stakeTransactions[ticketHash].feeStatus = feeStatus;
+    });
+  });
+
   // update our txs selector value.
-  stakeTransactions = { ...newlyUnminedMap.stakeTransactions, ...stakeTransactions };
-  regularTransactions = { ...newlyUnminedMap.regularTransactions, ...regularTransactions };
+  stakeTransactions = {
+    ...newlyUnminedMap.stakeTransactions,
+    ...stakeTransactions
+  };
+  regularTransactions = {
+    ...newlyUnminedMap.regularTransactions,
+    ...regularTransactions
+  };
   // flat stake and regular unmined transactions.
   newlyUnminedMap = {
     ...newlyUnminedMap.stakeTransactions,
     ...newlyUnminedMap.regularTransactions
   };
-
-  // get vsp tickets fee status in case there is a stake tx and we show the
-  // proper ticket value.
-  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-  await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
 
   // update accounts related to the transaction balance.
   let accountsToUpdate = new Array();
@@ -164,7 +180,12 @@ export const newTransactionsReceived = (
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   // get new addresses for accounts which received decred
-  dispatch(getNewAccountAddresses([...newlyUnminedTransactions, ...newlyMinedTransactions]));
+  dispatch(
+    getNewAccountAddresses([
+      ...newlyUnminedTransactions,
+      ...newlyMinedTransactions
+    ])
+  );
 
   // Update mixer accounts balances
   const changeAccount = sel.getChangeAccount(getState());
@@ -583,7 +604,10 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
       // if already down ticket expiry + coinbase maturity, than no more live tickets
       // will be find.
       if (
-        currentBlockHeight - chainParams.TicketExpiry - chainParams.CoinbaseMaturity > startRequestHeight
+        currentBlockHeight -
+          chainParams.TicketExpiry -
+          chainParams.CoinbaseMaturity >
+        startRequestHeight
       ) {
         noMoreLiveTickets = true;
       }
@@ -838,9 +862,13 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
     const outputsCB = (response) => {
       unspentOutputs.push(response);
     };
-    wallet.listUnspentOutputs(walletService, accountNum, outputsCB)
+    wallet
+      .listUnspentOutputs(walletService, accountNum, outputsCB)
       .then(() => {
-        dispatch({ type: LISTUNSPENTOUTPUTS_COMPLETE, outputs: unspentOutputs });
+        dispatch({
+          type: LISTUNSPENTOUTPUTS_COMPLETE,
+          outputs: unspentOutputs
+        });
         resolve(unspentOutputs);
       })
       .catch((error) => {

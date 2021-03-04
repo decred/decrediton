@@ -9,7 +9,8 @@ const BalanceTab = () => {
   const {
     spendableTotalBalance,
     lockedTotalBalance,
-    spendableAndLockedBalance
+    spendableAndLockedBalance,
+    unconfirmedTotalBalance
   } = useBalance();
   return (
     <div className={styles.overviewContentWrapper}>
@@ -38,6 +39,19 @@ const BalanceTab = () => {
           />
           <div className={styles.overviewBalanceSpendableLockedLabel}>
             <T id="home.currentTotalLockedBalanceLabel" m="Locked" />
+          </div>
+        </div>
+        <div className={styles.overviewSpendableLockedWrapperArea}>
+          <Balance
+            classNameWrapper={classNames(
+              styles.overviewBalanceSpendableLocked,
+              styles.available,
+              styles.amount
+            )}
+            amount={unconfirmedTotalBalance}
+          />
+          <div className={styles.overviewBalanceSpendableLockedLabel}>
+            <T id="home.currentTotalUnconfirmedBalanceLabel" m="Unconfirmed" />
           </div>
         </div>
       </div>

@@ -96,15 +96,30 @@
 }
 
 .has-value.Select--single > .Select-control .Select-value a.Select-value-label,
-.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label {
+.has-value.is-pseudo-focused.Select--single
+  > .Select-control
+  .Select-value
+  a.Select-value-label {
   cursor: pointer;
   text-decoration: none;
 }
 
-.has-value.Select--single > .Select-control .Select-value a.Select-value-label:hover,
-.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:hover,
-.has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
-.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
+.has-value.Select--single
+  > .Select-control
+  .Select-value
+  a.Select-value-label:hover,
+.has-value.is-pseudo-focused.Select--single
+  > .Select-control
+  .Select-value
+  a.Select-value-label:hover,
+.has-value.Select--single
+  > .Select-control
+  .Select-value
+  a.Select-value-label:focus,
+.has-value.is-pseudo-focused.Select--single
+  > .Select-control
+  .Select-value
+  a.Select-value-label:focus {
   outline: none;
   text-decoration: underline;
 }
@@ -128,7 +143,7 @@
 
   /* For IE 8 compatibility */
   -webkit-appearance: none;
-  color:var(--input-color-default);
+  color: var(--input-color-default);
 }
 
 .is-focused .Select-input > input {
@@ -287,8 +302,8 @@
   margin-top: 8px;
   border-radius: 5px;
 
-  &::before{
-    content: '';
+  &::before {
+    content: "";
     position: absolute;
     background-image: var(--select-arrow-up);
     background-repeat: no-repeat;
@@ -440,7 +455,7 @@
 }
 
 .accounts-select {
-    width: 300px;
+  width: 300px;
 }
 
 .accounts-select-value {

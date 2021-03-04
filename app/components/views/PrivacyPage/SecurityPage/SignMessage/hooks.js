@@ -19,11 +19,12 @@ export function useSignMessage() {
   );
   const onSignMessageAttempt = useCallback(
     (address, message, passphrase) =>
-        dispatch(ca.signMessageAttempt(address, message, passphrase)),
+      dispatch(ca.signMessageAttempt(address, message, passphrase)),
     [dispatch]
   );
   const onSignMessageAttemptTrezor = useCallback(
-    (address, message) => dispatch(trza.signMessageAttemptTrezor(address, message)),
+    (address, message) =>
+      dispatch(trza.signMessageAttemptTrezor(address, message)),
     [dispatch]
   );
 

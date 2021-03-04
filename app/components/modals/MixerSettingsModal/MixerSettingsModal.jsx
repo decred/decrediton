@@ -22,6 +22,4 @@ const MixerSettingsModal = ({ onCancelModal, show }) => (
   </Modal>
 );
 
-
-
 export default MixerSettingsModal;

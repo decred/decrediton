@@ -1,0 +1,91 @@
+.container {
+  width: 750px;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin-bottom: 3px;
+  color: var(--stroke-color-hovered);
+  font-size: 27px;
+  line-height: 30px;
+}
+
+.icon {
+  margin-right: 10px;
+  margin-top: 1px;
+}
+
+.icon > div {
+  height: 30px;
+  width: 30px;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+.accounts {
+  background-image: var(--header-accounts);
+}
+.security {
+  background-image: var(--header-security);
+}
+.settings {
+  background-image: var(--menu-settings);
+}
+.tickets {
+  background-image: var(--header-tickets);
+}
+.transactions {
+  background-image: var(--header-transactions);
+}
+.governance {
+  background-image: var(--header-governance);
+}
+.trezor {
+  background-image: var(--header-trezor);
+}
+.ln {
+  background-image: var(--header-lightning);
+}
+.ticket {
+  background-image: var(--ticket-live-icon);
+}
+.vote {
+  background-image: var(--ticket-voted-icon);
+}
+.revocation {
+  background-image: var(--ticket-revoked-icon);
+}
+.ticketfee {
+  background-image: var(--ticketfee-transaction-icon);
+}
+.mixed {
+  background-image: var(--mixed-transaction-icon);
+}
+.self {
+  background-image: var(--self-transaction-icon);
+}
+.out {
+  background-image: var(--minus-big-icon);
+}
+.in {
+  background-image: var(--plus-big-icon);
+}
+
+.button {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 1106px) {
+  .container {
+    width: 649px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 345px;
+  }
+}

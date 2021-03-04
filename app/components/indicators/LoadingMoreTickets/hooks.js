@@ -18,4 +18,4 @@ export function useLoadingMoreTickets() {
     stakeTransactionsCancel,
     onToggleGetTransactions
   };
-};
+}

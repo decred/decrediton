@@ -38,7 +38,6 @@ const Modal = ({
     </div>
     <div className={style.passphraseContent}>
       <PassphraseModalField
-        id="passphrase-input"
         label={
           <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
         }>
@@ -50,7 +49,6 @@ const Modal = ({
           value={passPhrase}
           onChange={(e) => setPassPhrase(e.target.value)}
           onKeyDownSubmit={onSubmit}
-          ariaLabelledBy="passphrase-input"
           showErrors={passPhrase !== null && !passPhrase}
         />
       </PassphraseModalField>
