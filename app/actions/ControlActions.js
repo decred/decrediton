@@ -536,7 +536,7 @@ export const constructTransactionAttempt = (
   confirmations,
   outputs,
   all
-) => async (dispatch, getState) => {
+) => (dispatch, getState) => {
   const request = new ConstructTransactionRequest();
   let totalAmount;
   request.setSourceAccount(parseInt(account));
@@ -576,11 +576,9 @@ export const constructTransactionAttempt = (
             dispatch({ error, type: CONSTRUCTTX_FAILED });
           };
         }
-        const newChangeAddr = await dispatch(
-          getNextAddressAttempt(unmixedAcct)
-        );
+        const newChangeAddress = sel.nextAddress(getState());
         const outputDest = new ConstructTransactionRequest.OutputDestination();
-        outputDest.setAddress(newChangeAddr.address);
+        outputDest.setAddress(newChangeAddress);
         request.setChangeDestination(outputDest);
       }
     }
