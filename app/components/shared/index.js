@@ -1,4 +1,4 @@
-export { default as Balance } from "./Balance";
+export * from "./Balance";
 export { default as CopyToClipboard } from "./CopyToClipboard/CopyToClipboard";
 export { default as LinkToAccounts } from "./LinkToAccounts";
 export { default as TransitionMotionWrapper } from "./TransitionMotionWrapper";

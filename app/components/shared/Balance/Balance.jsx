@@ -1,11 +1,10 @@
-import "style/Balance.less";
 import { FormattedNumber } from "react-intl";
-import { balance } from "connectors";
+import { useBalance } from "./hooks";
 import { DCR, UNIT_DIVISOR } from "constants";
 import { classNames } from "pi-ui";
+import styles from "./Balance.module.css";
 
 export const Balance = ({
-  currencyDisplay,
   amount,
   onClick,
   bold,
@@ -19,13 +18,8 @@ export const Balance = ({
   hideCurrency,
   classNameAmount
 }) => {
-  const secondary = large
-    ? "balance-tiny"
-    : flat
-    ? "balance-base"
-    : title
-    ? "balance-title"
-    : "balance-small";
+  const { currencyDisplay } = useBalance();
+  const secondary = large ? "tiny" : flat ? "base" : title ? "title" : "small";
   if (currencyDisplay === DCR) {
     let totalDcr = 0;
     if (amount && !isNaN(amount)) {
@@ -48,14 +42,19 @@ export const Balance = ({
           </span>
           {!noSmallAmount && (
             <span
-              className={[secondary, classNameUnit, bold ? "bold" : null].join(
-                " "
+              className={classNames(
+                styles[secondary],
+                classNameUnit,
+                bold && "bold"
               )}>
-              {tail + " "}
+              {`${tail} `}
             </span>
           )}
           {!hideCurrency && (
-            <span className={[secondary, classNameUnit].join(" ")}>DCR</span>
+            <span
+              className={classNames(styles[secondary], classNameUnit)}>
+              DCR
+            </span>
           )}
         </span>
       </div>
@@ -65,7 +64,7 @@ export const Balance = ({
   return (
     <div className={classNameWrapper}>
       <span className="mono" {...{ onClick }}>
-        <span className={[secondary, bold ? "bold" : null].join(" ")}>
+        <span className={classNames(styles[secondary], bold && "bold")}>
           <FormattedNumber
             value={amount && !isNaN(amount) ? amount : 0}
             maximumFractionDigits={0}
@@ -73,11 +72,15 @@ export const Balance = ({
           />
         </span>
         {!hideCurrency && (
-          <span className={[secondary, classNameUnit].join(" ")}> atoms</span>
+          <span
+            className={classNames(styles[secondary], classNameUnit)}>
+            {" "}
+            atoms
+          </span>
         )}
       </span>
     </div>
   );
 };
 
-export default balance(Balance);
+export default Balance;

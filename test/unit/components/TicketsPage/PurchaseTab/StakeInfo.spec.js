@@ -1,9 +1,9 @@
 import StakeInfo from "../../../../../app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfo";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import * as sel from "selectors";
-import { DCR } from "constants";
+import { DCR, UNIT_DIVISOR } from "constants";
 
 const mockVotedTicketsCount = 3;
 const mockOwnMempoolTicketsCount = 5;
@@ -11,7 +11,7 @@ const mockRevokedTicketsCount = 7;
 const mockImmatureTicketsCount = 6;
 const mockLiveTicketsCount = 7;
 const mockUnspentTicketsCount = 2;
-const mockTotalSubsidy = 4;
+const mockTotalSubsidy = 400000000;
 let mockIsSPV = true;
 let mockLastVotedTicket = null;
 const mockCurrencyDisplay = DCR;
@@ -45,7 +45,7 @@ test("test StakeInfo (SPV enabled)", () => {
 
   const totalRewardEarned = screen.getByText(/total rewards earned/i);
   expect(totalRewardEarned.nextElementSibling.textContent).toBe(
-    `${mockTotalSubsidy} ${mockCurrencyDisplay}`
+    `${(mockTotalSubsidy / UNIT_DIVISOR).toFixed(2)} ${mockCurrencyDisplay}`
   );
 
   user.click(totalRewardEarned);

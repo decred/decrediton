@@ -1,22 +1,20 @@
-@import (reference) "./main.less";
-
-.balance-small {
+.small {
   font-size: 0.7em;
   font-weight: 400;
 }
 
-.balance-tiny {
+.tiny {
   font-size: 0.43em;
 }
 
-.balance-block {
+.block {
   display: block;
 }
 
-.balance-title {
+.title {
   font-size: 0.4815em;
 }
 
-.balance-base {
+.base {
   color: var(--account-text);
 }

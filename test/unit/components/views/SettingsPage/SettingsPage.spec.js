@@ -17,8 +17,9 @@ import {
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
 } from "main_dev/externalRequests";
-import { en as enLocale, de as deLocale } from "i18n/locales";
+import { en as enLocale } from "i18n/locales";
 import * as vspa from "actions/VSPActions";
+import { DCR, ATOMS } from "constants";
 
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
@@ -46,8 +47,8 @@ const testDefaultTheme = DEFAULT_LIGHT_THEME_NAME;
 const testTheme = DEFAULT_DARK_THEME_NAME;
 const testDefaultThemeLabel = "Light";
 const testThemeLabel = "Dark";
-const testDefaultCurrencyDisplay = "DCR";
-const testCurrencyDisplay = "atoms";
+const testDefaultCurrencyDisplay = DCR;
+const testCurrencyDisplay = ATOMS;
 const testDefaultGapLimit = "20";
 const testGapLimit = "30";
 const testDefaultTimezone = "utc";
@@ -367,7 +368,7 @@ test.each([
     { theme: testTheme },
     false
   ]
-])(`change '%s' ComboBox from '%s' to '%s' expeced %s`, testComboxBoxInput);
+])("change '%s' ComboBox from '%s' to '%s' expeced %s", testComboxBoxInput);
 
 const testTextFieldInput = (
   labelName,
@@ -422,7 +423,7 @@ test.each([
     { gapLimit: testGapLimit },
     false
   ]
-])(`change '%s' TextInput from '%s' to '%s' expeced %s`, testTextFieldInput);
+])("change '%s' TextInput from '%s' to '%s' expeced %s", testTextFieldInput);
 
 const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
   render(<SettingsPage />, {
@@ -480,7 +481,7 @@ test.each([
     ],
     testDefaultTimezone
   ]
-])(`test '%s' RadioButtonGroup`, testRadioButtonGroupInput);
+])("test '%s' RadioButtonGroup", testRadioButtonGroupInput);
 
 const testCheckBoxInput = (label, configKey) => {
   render(<SettingsPage />, {
@@ -522,7 +523,7 @@ test.each([
   ["Update Check", EXTERNALREQUEST_UPDATE_CHECK],
   ["Politeia", EXTERNALREQUEST_POLITEIA],
   ["Decred Block Explorer", EXTERNALREQUEST_DCRDATA]
-])(`test '%s' Checkbox`, testCheckBoxInput);
+])("test '%s' Checkbox", testCheckBoxInput);
 
 const getFieldRequiredErrorCount = () => {
   const inputErrorString = "This field is required";
