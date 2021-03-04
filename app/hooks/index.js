@@ -7,3 +7,4 @@ export { default as useAccounts } from "./useAccounts";
 export { default as useRescan } from "./useRescan";
 export { default as useClickOutside } from "./useClickOutside";
 export { default as useTheming } from "./useTheming";
+export { default as useTrezor } from "./useTrezor";

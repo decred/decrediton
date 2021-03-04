@@ -1,0 +1,77 @@
+h1 {
+  margin-bottom: 20px;
+}
+
+.pinModal,
+.passphraseModal,
+.wordModal {
+  width: 500px;
+  padding: 20px;
+}
+
+.pinModal.getStarted,
+.wordModal.getStarted,
+.passphraseModal.getStarted {
+  padding: 2em;
+}
+
+.pinModal > p,
+.wordModal > p {
+  margin-bottom: 10px;
+}
+
+.passphraseModal p:last-child {
+  margin-bottom: 10px;
+}
+
+.pinPadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pinPad {
+  display: grid;
+  grid-template-columns: 2em 2em 2em;
+  text-align: center;
+  font-size: 150%;
+}
+
+.pinPadButton {
+  padding: 0.5em 0em 0.7em 0;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.pinPadButton:hover {
+  border: 1px solid #6397ff;
+}
+
+.passphraseModal strong {
+  color: var(--error-red);
+}
+
+.passwordField {
+  margin-bottom: 20px;
+}
+
+.wordSelect {
+  min-height: 10em;
+}
+
+.label {
+  font-family: var(--font-family-regular);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+@media screen and (max-width: 375px) {
+  .pinModal,
+  .passphraseModal,
+  .wordModal {
+    width: 250px;
+  }
+}

@@ -10,7 +10,7 @@ import FatalErrorPage from "components/views/FatalErrorPage/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "components/modals/AboutModal/AboutModal";
 import { log } from "wallet";
-import { TrezorModals } from "components/modals/trezor";
+import TrezorModals from "components/modals/TrezorModals/TrezorModals";
 import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { hot } from "react-hot-loader/root";
