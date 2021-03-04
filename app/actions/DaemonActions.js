@@ -438,7 +438,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         csppPort,
         mixedAccountBranch
       });
-      // selectedWallet.value.isTrezor && dispatch(enableTrezor());
+      selectedWallet.value.isTrezor && dispatch(enableTrezor());
       await dispatch(getVersionServiceAttempt());
       await dispatch(openWalletAttempt("", false));
       return discoverAccountsComplete;
