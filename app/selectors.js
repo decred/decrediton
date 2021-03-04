@@ -1083,19 +1083,19 @@ export const getNextAddressRequestAttempt = get([
 ]);
 export const nextAddressAccount = createSelector(
   [visibleAccounts, nextAddressAccountNumber],
-  (accounts, number) => accounts.find(compose(eq(number), get("value")))
+  (accounts, number) => accounts.find(compose(eq(number), get("value"))) || null
 );
 export const nextAddress = compose(get("address"), getNextAddressResponse);
 
 export const defaultSpendingAccount = createSelector(
   [visibleAccounts, getMixedAccount],
   (accounts, mixedAccount) =>
-    accounts.find(compose(eq(mixedAccount || 0), get("value")))
+    accounts.find(compose(eq(mixedAccount || 0), get("value"))) || null
 );
 
 export const defaultSpendingAccountDisregardMixedAccount = createSelector(
   [visibleAccounts],
-  (accounts) => accounts.find(compose(eq(0), get("value")))
+  (accounts) => accounts.find(compose(eq(0), get("value"))) || null
 );
 
 export const changePassphraseRequestAttempt = get([

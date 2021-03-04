@@ -95,7 +95,7 @@ const PurchaseTicketsForm = ({
         </div>
         <NumTicketsInput
           required
-          invalid={account.spendable < numTickets * ticketPrice}
+          invalid={!account || account.spendable < numTickets * ticketPrice}
           invalidMessage={
             <T
               id="purchaseTickets.errors.insufficientBalance"
@@ -109,7 +109,7 @@ const PurchaseTicketsForm = ({
           onKeyDown={handleOnKeyDown}
           showErrors={true}
         />
-        {account.spendable >= numTickets * ticketPrice && (
+        {account && account.spendable >= numTickets * ticketPrice && (
           <div className="input-purchase-ticket-valid-message-area">
             <T
               id="purchaseTickets.validMsg"

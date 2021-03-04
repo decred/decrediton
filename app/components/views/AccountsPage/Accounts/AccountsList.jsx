@@ -38,7 +38,8 @@ const AccountsList = ({
   onRenameAccount,
   accountNumDetailsShown,
   walletName,
-  hasTickets
+  hasTickets,
+  allowSendFromUnmixed
 }) => (
   <>
     {isLoading ? (
@@ -67,6 +68,7 @@ const AccountsList = ({
               renameAccount={onRenameAccount}
               hideAccount={onHideAccount}
               showAccount={onShowAccount}
+              allowSendFromUnmixed={allowSendFromUnmixed}
             />
           ))}
         </div>

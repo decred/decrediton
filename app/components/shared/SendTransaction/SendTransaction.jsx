@@ -33,6 +33,7 @@ const SendTransaction = ({
     isTrezor,
     isWatchingOnly,
     isConstructingTransaction,
+    visibleAccounts,
     attemptConstructTransaction,
     validateAddress,
     onClearTransaction,
@@ -137,6 +138,7 @@ const SendTransaction = ({
   };
 
   const onShowSendAll = () => {
+    if (account === null) return;
     const newOutputs = [
       {
         ...outputs[0],
@@ -183,8 +185,16 @@ const SendTransaction = ({
     return outputs.some(outputHasError);
   }, [outputs]);
 
+  const isReceiveAccountVisible =
+    receiveAccount === undefined ||
+    visibleAccounts.find(
+      (visibleAccount) => visibleAccount.value === receiveAccount
+    );
+
   const isValid = () =>
     !!(
+      receiveAccount !== null &&
+      isReceiveAccountVisible &&
       !hasError() &&
       unsignedTransaction &&
       !isConstructingTransaction &&
@@ -248,43 +258,43 @@ const SendTransaction = ({
     }));
   };
 
+  const accountSpendableAmount = account?.spendable;
+  const accountValue = account?.value;
+
   const onAttemptConstructTransaction = useCallback(() => {
-    const confirmations = 0;
-    setSendAllAmount(account.spendable);
+    if (accountSpendableAmount === undefined || accountValue === undefined)
+      return;
+    setSendAllAmount(accountSpendableAmount);
     if (hasError()) return;
-    if (!isSendAll) {
-      return attemptConstructTransaction(
-        account.value,
-        confirmations,
-        outputs.map(({ data }) => ({
-          amount: data.amount,
-          destination: data.destination
-        }))
-      );
-    } else {
-      return attemptConstructTransaction(
-        account.value,
-        confirmations,
-        outputs,
-        true
-      );
-    }
+    return attemptConstructTransaction(
+      accountValue,
+      0,
+      !isSendAll
+        ? outputs.map(({ data }) => ({
+            amount: data.amount,
+            destination: data.destination
+          }))
+        : outputs,
+      isSendAll
+    );
   }, [
     setSendAllAmount,
     hasError,
     isSendAll,
     attemptConstructTransaction,
-    account.spendable,
-    account.value,
+    accountSpendableAmount,
+    accountValue,
     outputs
   ]);
+
+  const nextAddressAccountValue = nextAddressAccount?.value;
 
   // Executes on component updates
   useEffect(() => {
     let newOutputs;
     if (publishTxResponse && publishTxResponse != prevPublishTxResponse) {
-      if (isSendSelf) {
-        onGetNextAddressAttempt(nextAddressAccount.value);
+      if (isSendSelf && nextAddressAccountValue) {
+        onGetNextAddressAttempt(nextAddressAccountValue);
       }
       setIsSendAll(false);
       onSetOutputs([baseOutput()]);
@@ -320,7 +330,7 @@ const SendTransaction = ({
     nextAddress,
     prevIsSendSelf,
     constructTxLowBalance,
-    nextAddressAccount.value,
+    nextAddressAccountValue,
     outputs,
     prevOutputs,
     onSetOutputs,
@@ -332,9 +342,7 @@ const SendTransaction = ({
   ]);
 
   // Clear transaction info on unmount
-  useMountEffect(() => {
-    return () => onClearTransaction();
-  });
+  useMountEffect(() => () => onClearTransaction());
 
   return (
     <Form

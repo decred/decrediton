@@ -19,6 +19,7 @@ export function useAccounts() {
   const accountExtendedKey = useSelector(sel.accountExtendedKey);
   const walletName = useSelector(sel.getWalletName);
   const hasTickets = useSelector(sel.hasTickets);
+  const allowSendFromUnmixed = useSelector(sel.getAllowSendFromUnmixed);
 
   const dispatch = useDispatch();
 
@@ -49,6 +50,7 @@ export function useAccounts() {
     accountExtendedKey,
     walletName,
     hasTickets,
+    allowSendFromUnmixed,
     onRenameAccount,
     onHideAccount,
     onShowAccount,

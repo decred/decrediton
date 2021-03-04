@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import { baseOutput } from "./helpers";
@@ -26,20 +26,21 @@ export function useSendTransaction() {
   const isTrezor = useSelector(sel.isTrezor);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
   const isConstructingTransaction = useSelector(sel.isConstructingTransaction);
+  const visibleAccounts = useSelector(sel.visibleAccounts);
 
   const dispatch = useDispatch();
 
-  const attemptConstructTransaction = (account, confirmations, outputs, all) =>
+  const attemptConstructTransaction = useCallback((account, confirmations, outputs, all) =>
     dispatch(
       ca.constructTransactionAttempt(account, confirmations, outputs, all)
-    );
+    ), [dispatch]);
 
   const validateAddress = (address) => dispatch(ca.validateAddress(address));
 
-  const onClearTransaction = () => dispatch(ca.clearTransaction());
+  const onClearTransaction = useCallback(() => dispatch(ca.clearTransaction()), [dispatch]);
 
-  const onGetNextAddressAttempt = (account) =>
-    dispatch(ca.getNextAddressAttempt(account));
+  const onGetNextAddressAttempt = useCallback((account) =>
+    dispatch(ca.getNextAddressAttempt(account)), [dispatch]);
 
   const getRunningIndicator = useSelector(sel.getRunningIndicator);
   return {
@@ -57,6 +58,7 @@ export function useSendTransaction() {
     isTrezor,
     isWatchingOnly,
     isConstructingTransaction,
+    visibleAccounts,
     attemptConstructTransaction,
     validateAddress,
     onClearTransaction,

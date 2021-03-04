@@ -12,6 +12,7 @@ const Accounts = () => {
     accountExtendedKey,
     walletName,
     hasTickets,
+    allowSendFromUnmixed,
     onRenameAccount,
     onHideAccount,
     onShowAccount,
@@ -33,7 +34,8 @@ const Accounts = () => {
         isLoading,
         accountExtendedKey,
         walletName,
-        hasTickets
+        hasTickets,
+        allowSendFromUnmixed
       }}
     />
   );
