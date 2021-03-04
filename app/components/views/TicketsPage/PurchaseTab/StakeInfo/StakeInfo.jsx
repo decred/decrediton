@@ -9,8 +9,7 @@ const StakeInfo = () => {
       unspentTicketsCount,
       isSPV,
       lastVotedTicket,
-      ...props } = useStakeInfo();
-
+      ...other } = useStakeInfo();
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const onToggleStakeinfo = () => setIsShowingDetails((p) => !p);
 
@@ -25,7 +24,7 @@ const StakeInfo = () => {
         lastVotedTicket,
         isShowingDetails,
         onToggleStakeinfo,
-        ...props
+        ...other
       }}
     />
   );
