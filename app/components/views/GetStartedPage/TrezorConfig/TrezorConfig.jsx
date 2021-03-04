@@ -1,44 +1,20 @@
-import { trezor } from "connectors";
-import { FormattedMessage as T } from "react-intl";
-import ConfigSections from "views/TrezorPage/ConfigSections";
-import Page from "./Page";
-import { InvisibleButton } from "buttons";
 import { useEffect } from "react";
+import Page from "./Page";
+import { useTrezorPage } from "views/TrezorPage/hooks";
+import TrezorPageContent from "views/TrezorPage/TrezorPageContent";
 
-const TrezorConfig = ({
-  enableTrezor,
-  device,
-  performingOperation,
-  connect,
-  ...props
-}) => {
+const TrezorConfig = ({ onSendBack }) => {
+  const { enableTrezor } = useTrezorPage();
+
   useEffect(() => {
     enableTrezor();
   }, [enableTrezor]);
 
-  const renderNoDevice = (
-    <>
-      <div>
-        <T
-          id="trezor.getStartedConfig.noDeviceFound"
-          m="No Trezor device found. Check the connection and the Trezor bridge software."
-        />
-      </div>
-      <div>
-        <InvisibleButton onClick={connect}>
-          <T id="trezor.getStartedConfig.btnConnect" m="Connect to Trezor" />
-        </InvisibleButton>
-      </div>
-    </>
+  return (
+    <Page onSendBack={onSendBack}>
+      <TrezorPageContent />
+    </Page>
   );
-
-  const children = !device ? (
-    renderNoDevice
-  ) : (
-    <ConfigSections device={device} loading={performingOperation} {...props} />
-  );
-
-  return <Page {...props}>{children}</Page>;
 };
 
-export default trezor(TrezorConfig);
+export default TrezorConfig;

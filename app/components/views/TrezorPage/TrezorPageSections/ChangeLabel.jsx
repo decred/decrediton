@@ -1,35 +1,23 @@
 import { useState } from "react";
-import { VerticalAccordion } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton } from "buttons";
+import TrezorPageAccordion from "../TrezorPageAccordion/TrezorPageAccordion";
 
-const ChangeLabel = ({
-  loading,
-  onChangeLabel
-}) => {
+const ChangeLabel = ({ performingOperation, changeLabel }) => {
   const [newLabel, setNewLabel] = useState("");
-  const [show, setShow] = useState(false);
 
-  const onChangeLabelClicked = () => {
-    onChangeLabel(newLabel);
+  const changeLabelClicked = () => {
+    changeLabel(newLabel);
   };
 
   const onNewLabelChanged = (e) => {
     setNewLabel(e.target.value);
   };
 
-  const onToggleAccordion = () => {
-    setShow(!show);
-  };
-
   return (
-    <VerticalAccordion
-      header={<T id="trezor.changeLabel.header" m="Change Label" />}
-      show={show}
-      onToggleAccordion={onToggleAccordion}
-      headerClassName="vertical-accordion-header"
-      className="trezor-config-accordion">
+    <TrezorPageAccordion
+      label={<T id="trezor.changeLabel.header" m="Change Label" />}>
       <div>
         <T id="trezor.changeLabel.description" m="New Label" />
       </div>
@@ -37,18 +25,17 @@ const ChangeLabel = ({
         <TextInput
           value={newLabel}
           onChange={onNewLabelChanged}
-          className="input-and-unit"
         />
       </div>
       <div>
         <KeyBlueButton
-          onClick={onChangeLabelClicked}
-          disabled={loading}
-          loading={loading}>
+          onClick={changeLabelClicked}
+          disabled={performingOperation}
+          loading={performingOperation}>
           <T id="trezor.changeLabel.changeButton" m="Change" />
         </KeyBlueButton>
       </div>
-    </VerticalAccordion>
+    </TrezorPageAccordion>
   );
 };
 
