@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { DangerButton, KeyBlueButton } from "buttons";
 import { Documentation } from "shared";
-import TrezorPageAccordion from "../TrezorPageAccordion/TrezorPageAccordion";
+import TrezorPageAccordion from "../TrezorPageAccordion";
 
 const RecoveryButtons = ({
   performingOperation,

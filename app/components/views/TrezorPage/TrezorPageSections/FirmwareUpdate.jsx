@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TrezorPageAccordion from "../TrezorPageAccordion/TrezorPageAccordion";
+import TrezorPageAccordion from "../TrezorPageAccordion";
 import { FormattedMessage as T } from "react-intl";
 import { DangerButton } from "buttons";
 import { Documentation } from "shared";

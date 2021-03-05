@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, DangerButton } from "buttons";
-import TrezorPageAccordion from "../TrezorPageAccordion/TrezorPageAccordion";
+import TrezorPageAccordion from "../TrezorPageAccordion";
 
 const ConfigButtons = ({
   performingOperation,

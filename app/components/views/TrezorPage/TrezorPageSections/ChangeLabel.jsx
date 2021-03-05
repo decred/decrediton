@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton } from "buttons";
-import TrezorPageAccordion from "../TrezorPageAccordion/TrezorPageAccordion";
+import TrezorPageAccordion from "../TrezorPageAccordion";
 
 const ChangeLabel = ({ performingOperation, changeLabel }) => {
   const [newLabel, setNewLabel] = useState("");
