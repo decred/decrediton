@@ -47,6 +47,7 @@ const HistoryTab = () => {
     onChangeTransactionsFilter
   } = useHistoryTab();
 
+
   const { search, listDirection } = transactionsFilter;
   const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
 
@@ -55,7 +56,6 @@ const HistoryTab = () => {
   const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(
     listDirection
   );
-  const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
 
   const loadMoreThreshold = 250 + Math.max(0, window.innerHeight - 765);
 
@@ -88,47 +88,22 @@ const HistoryTab = () => {
   };
 
   const onChangeFilter = (value) => {
-    return new Promise((resolve) => {
-      if (isChangingFilterTimer) {
-        clearTimeout(isChangingFilterTimer);
+    if (value.type) {
+      // if -1 it is all options, so we clean the filter.
+      if (value.type === -1) {
+        // TODO enable filtering more than one type each time.
+        transactionsFilter.types = [];
+      } else {
+        // otherwise we push it to the array option.
+        transactionsFilter.types.push(value.type);
       }
-      const changeFilter = (newFilterOpt) => {
-        const { type, direction } = newFilterOpt;
-        delete newFilterOpt.type;
-        delete newFilterOpt.direction;
-        const newFilter = { ...transactionsFilter, ...newFilterOpt };
-        // if type is -1 it is all options, so we clean the filter.
-        if (type === -1) {
-          newFilter.types = [];
-          newFilter.directions = [];
-        } else if (direction) {
-          // if the direction was already set, we remove it from
-          // the directions array. otherwise, we push into it.
-          if (newFilter.directions.includes(direction)) {
-            newFilter.directions.splice(
-              newFilter.directions.indexOf(direction),
-              1
-            );
-          } else {
-            newFilter.directions.push(direction);
-          }
-        } else if (type) {
-          // if the type was already set, we remove it from
-          // the typess array. otherwise, we push into it.
-          if (newFilter.types.includes(type)) {
-            newFilter.types.splice(newFilter.types.indexOf(type), 1);
-          } else {
-            newFilter.types.push(type);
-          }
-        }
-        clearTimeout(isChangingFilterTimer);
-        onChangeTransactionsFilter(newFilter);
-        return newFilter;
-      };
-      setIsChangingFilterTimer(
-        setTimeout(() => resolve(changeFilter(value)), 100)
-      );
-    });
+      delete value.type;
+    }
+    const newFilter = {
+      ...transactionsFilter,
+      ...value
+    };
+    onChangeTransactionsFilter(newFilter);
   };
 
   return !walletService ? (

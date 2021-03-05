@@ -9,7 +9,7 @@ const EyeFilterMenu = ({
   unmountMenu,
   options,
   selected,
-  getOpenedMenu,
+  children,
   type
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,7 +33,6 @@ const EyeFilterMenu = ({
   };
 
   const openedMenu = (type) => {
-    const belowMenu = getOpenedMenu && getOpenedMenu();
     return (
       <div className={classNames(styles.menuItems, styles[type])}>
         <div className={styles.arrowUp} />
@@ -52,7 +51,7 @@ const EyeFilterMenu = ({
             {option.label}
           </div>
         ))}
-        {belowMenu}
+        {children}
       </div>
     );
   };

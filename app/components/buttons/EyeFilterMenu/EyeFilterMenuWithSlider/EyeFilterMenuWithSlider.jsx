@@ -1,26 +1,24 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useMountEffect } from "hooks";
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import noUiSlider from "nouislider";
-import { NumericInput } from "inputs";
+import { Slider, NumberInput } from "pi-ui";
 import { DCR } from "constants";
+import { debounce } from "lodash";
 import styles from "./EyeFilterMenuWithSlider.module.css";
 
-const EyeFilterMenuWithSlider = ({
+const EyeFilterMenuWithSliderMenu = ({
   maxFilterValue,
   minFilterValue,
   unitDivisor,
   currencyDisplay,
-  onChangeSlider,
-  ...props
+  onChangeSlider
 }) => {
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(100);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(100);
   const [expandedSliderInfo, setExpandedSliderInfo] = useState(false);
-  const [rangeSlider, setRangeSlider] = useState(null);
 
   useMountEffect(() => {
     if (maxFilterValue) {
@@ -41,163 +39,108 @@ const EyeFilterMenuWithSlider = ({
     }
   });
 
-  const mountSliderRangeInElement = useCallback(
-    (range) => {
-      setTimeout(() => {
-        if (!range) {
-          return;
-        }
-
-        const toolTipFormatter = {
-          to: (value) => {
-            return value;
-          }
-        };
-
-        if (!rangeSlider) {
-          noUiSlider.create(range, {
-            start: [minAmount, maxAmount],
-            range: {
-              min: [parseInt(min)],
-              max: [parseInt(max)]
-            },
-            step: 1,
-            connect: true,
-            tooltips: [true, toolTipFormatter]
-          });
-          setRangeSlider(range);
-
-          range.noUiSlider.on("set", (values, handle) => {
-            const value = parseInt(values[handle]);
-            if (handle) {
-              onChangeSlider(value, "max");
-              setMaxAmount(value);
-            } else {
-              setMinAmount(value);
-              onChangeSlider(value, "min");
-            }
-          });
-
-          range.noUiSlider.on("update", (values, handle) => {
-            const value = parseInt(values[handle]);
-            if (handle) {
-              setMaxAmount(value);
-            } else {
-              setMinAmount(value);
-            }
-          });
-        }
-      }, 25);
-    },
-    [max, min, maxAmount, minAmount, onChangeSlider, rangeSlider]
+  const onChangeSliderCallback = useCallback(
+    debounce((value, limit) => {
+      onChangeSlider(value, limit);
+    }, 100),
+    [onChangeSlider]
   );
 
-  const unmountSliderRangeInElement = () => {
-    setRangeSlider(null);
+  const setMinAmountCallback = (value) => {
+    setMinAmount(value);
+    onChangeSliderCallback(value, "min");
   };
 
-  const onToggleSliderInfo = useCallback(
-    () => setExpandedSliderInfo(!expandedSliderInfo),
-    [expandedSliderInfo, setExpandedSliderInfo]
-  );
+  const setMaxAmountCallback = (value) => {
+    setMaxAmount(value);
+    onChangeSliderCallback(value, "max");
+  };
 
-  const slider = rangeSlider && rangeSlider.noUiSlider;
-
-  const onChangeMinValue = useCallback(
-    (min) => {
-      setMin(min);
-      const intMin = isNaN(parseInt(min)) ? 0 : parseInt(min);
-      slider.updateOptions({
-        range: {
-          min: [intMin],
-          max: [parseInt(max)]
-        }
-      });
-    },
-    [max, slider]
-  );
-
-  const onChangeMaxValue = useCallback(
-    (max) => {
-      setMax(max);
-      const intMax = isNaN(parseInt(max)) ? 0 : parseInt(max);
-      slider.updateOptions({
-        range: {
-          min: [parseInt(min)],
-          max: [intMax]
-        }
-      });
-    },
-    [min, slider]
-  );
-
-  const getSliderWhenOpenedMenu = useCallback(
-    () => (
-      <div>
-        <div className={styles.rangeLabel}>
-          <T id="history.amount.range" m="Amount Range" />
-        </div>
-        <div
-          ref={(r) => mountSliderRangeInElement(r)}
-          className={styles.minMaxSlider}></div>
-        <div className={styles.amountsArea}>
-          <div>
-            <span
-              onClick={() => onToggleSliderInfo()}
-              className={styles.kebab}></span>
-          </div>
-          {expandedSliderInfo && (
-            <div>
-              <div>
-                <T id="history.min.value" m="Slider min" />:
-                <NumericInput
-                  value={min}
-                  onChange={(e) => onChangeMinValue(e.target.value)}
-                />
-              </div>
-              <div>
-                <T id="history.max.value" m="Slider max" />:
-                <NumericInput
-                  value={max}
-                  onChange={(e) => onChangeMaxValue(e.target.value)}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-        <div className={styles.valueShower}>
-          {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
-        </div>
-      </div>
-    ),
-    [
-      currencyDisplay,
-      expandedSliderInfo,
-      max,
-      maxAmount,
-      min,
-      minAmount,
-      mountSliderRangeInElement,
-      onChangeMaxValue,
-      onChangeMinValue,
-      onToggleSliderInfo
-    ]
-  );
+  const setExpandedSliderInfoCallback = () =>
+    setExpandedSliderInfo(!expandedSliderInfo);
 
   return (
-    <EyeFilterMenu
-      {...{
-        expandedSliderInfo,
-        min,
-        max,
-        maxAmount,
-        minAmount,
-        ...props
-      }}
-      getOpenedMenu={getSliderWhenOpenedMenu}
-      unmountMenu={unmountSliderRangeInElement}
-    />
+    <div className={styles.rangeContainer}>
+      <div className={styles.rangeLabel}>
+        <T id="history.amount.range" m="Amount Range" />
+        <span
+          onClick={setExpandedSliderInfoCallback}
+          className={styles.kebab}></span>
+      </div>
+      <Slider
+        double={true}
+        axis={"x"}
+        max={max}
+        min={min}
+        className={styles.slider}
+        handles={[
+          {
+            value: minAmount,
+            onChange: setMinAmountCallback,
+            className: styles.handle
+          },
+          {
+            value: maxAmount,
+            onChange: setMaxAmountCallback,
+            className: styles.handle
+          }
+        ]}
+      />
+      <div className={styles.amountsArea}>
+        {expandedSliderInfo && (
+          <div>
+            <div>
+              <T id="history.min.value" m="Slider min" />:
+              <NumberInput
+                value={min}
+                min={0}
+                inputClassNames={styles.numberInput}
+                onChange={(e) => {
+                  const newLimit = parseInt(e.target.value);
+                  if (newLimit < max) setMin(newLimit);
+                }}
+              />
+            </div>
+            <div>
+              <T id="history.max.value" m="Slider max" />:
+              <NumberInput
+                value={max}
+                inputClassNames={styles.numberInput}
+                onChange={(e) => {
+                  const newLimit = parseInt(e.target.value);
+                  if (newLimit > min) setMax(newLimit);
+                }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+      <div className={styles.valueShower}>
+        {minAmount} {currencyDisplay} - {maxAmount} {currencyDisplay}
+      </div>
+    </div>
   );
 };
+
+const EyeFilterMenuWithSlider = ({
+  maxFilterValue,
+  minFilterValue,
+  unitDivisor,
+  currencyDisplay,
+  onChangeSlider,
+  ...props
+}) => (
+  <EyeFilterMenu {...{ ...props }}>
+    <EyeFilterMenuWithSliderMenu
+      {...{
+        maxFilterValue,
+        minFilterValue,
+        unitDivisor,
+        currencyDisplay,
+        onChangeSlider
+      }}
+    />
+  </EyeFilterMenu>
+);
 
 export default EyeFilterMenuWithSlider;
