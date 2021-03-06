@@ -39,12 +39,7 @@
   background-color: var(--blue-highlight-background);
   padding: 2px;
 }
-.pageWrapper {
-  padding: 20px 40px;
-  background-color: var(--background-back-color);
-  border-radius: 10px;
-  margin-bottom: 50px;
-}
+
 .contentTitleButtonsArea {
   margin-left: auto;
 }

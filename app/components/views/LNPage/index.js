@@ -11,7 +11,6 @@ import NetworkTabHeader from "./NetworkTab/NetworkTabHeader";
 import NetworkTab from "./NetworkTab/NetworkTab";
 import WatchtowersTab from "./WatchtowersTab/WatchtowersTab";
 import WatchtowersTabHeader from "./WatchtowersTab/WatchtowersTabHeader";
-import "style/Documentation.less";
 
 const LNPageHeader = () => (
   <TitleHeader

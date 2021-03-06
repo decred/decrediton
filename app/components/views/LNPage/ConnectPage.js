@@ -74,7 +74,7 @@ const LNStartupStage = ({ stage }) => (
 );
 
 const LNCreationWarning = ({ onAcceptCreationWarning }) => (
-  <div className="documentation">
+  <>
     <Documentation name="LNWalletCreationWarning" />
     <KeyBlueButton onClick={onAcceptCreationWarning}>
       <T
@@ -82,7 +82,7 @@ const LNCreationWarning = ({ onAcceptCreationWarning }) => (
         m="I understand and accept the risks"
       />
     </KeyBlueButton>
-  </div>
+  </>
 );
 
 const wrapperComponent = (props) => <div className="accountList" {...props} />;
