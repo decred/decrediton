@@ -1,10 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
-import AccountRow from "./AccountRow/AccountRow";
+import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoDocModalButton } from "buttons";
-import { classNames } from "pi-ui";
-// XXX this should go away!
-import "style/AccountsPage.less";
 import { Subtitle } from "shared";
 import style from "./Accounts.module.css";
 
@@ -50,8 +47,7 @@ const AccountsList = ({
           className={style.isRow}
           children={<SubtitleInfoIcon />}
         />
-        {/* TODO: encapsulate end provide .vertical-accordion-arrow CSS class in shared/VerticalAccordion.jsx */}
-        <div className={classNames(style.contentNest, "account-content-nest")}>
+        <div className={style.contentNest}>
           {accounts.map((account) => (
             <AccountRow
               {...{

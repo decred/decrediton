@@ -19,7 +19,7 @@ const RenameAccount = ({
   intl,
   hasFailedAttempt
 }) => (
-  <div className={style.renameBottom} key={"details" + account.accountNumber}>
+  <div className={style.renameBottom} key={`details${account.accountNumber}`}>
     <div className={style.renameBottomTitle}>
       <T id="accounts.rename" m="Rename Account" />
     </div>
@@ -30,8 +30,8 @@ const RenameAccount = ({
       <div className={style.renameBottomValue}>
         <TextInput
           required
-          autoFocus={true}
-          key={"rename" + account.accountNumber}
+          autoFocus
+          key={`rename${account.accountNumber}`}
           placeholder={intl.formatMessage(messages.newNamePlaceholder)}
           maxLength="50"
           value={renameAccountName}

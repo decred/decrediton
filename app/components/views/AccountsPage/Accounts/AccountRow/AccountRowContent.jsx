@@ -1,7 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, VerticalAccordion } from "shared";
-import "style/AccountRow.less";
-import style from "../Accounts.module.css";
+import styles from "../Accounts.module.css";
 import { classNames } from "pi-ui";
 import { DEFAULT_ACCOUNT } from "constants";
 
@@ -18,14 +17,14 @@ const Header = React.memo(
     return (
       <div
         className={classNames(
-          style.detailsTop,
-          hidden && style.hidden,
-          isImported(account) && style.imported,
-          isImported(account) && !hasTickets && style.disabled,
-          isMixed && style.mixed,
-          isChange && style.unmixed
+          styles.detailsTop,
+          hidden && styles.hidden,
+          isImported(account) && styles.imported,
+          isImported(account) && !hasTickets && styles.disabled,
+          isMixed && styles.mixed,
+          isChange && styles.unmixed
         )}>
-        <div className={style.topName}>
+        <div className={styles.topName}>
           {account.accountName === DEFAULT_ACCOUNT ? (
             <T id="accounts.name.default" m="Primary Account" />
           ) : (
@@ -33,18 +32,18 @@ const Header = React.memo(
           )}
           {hidden ? <span>(hidden)</span> : null}
         </div>
-        <div className={style.topFunds}>
-          <div className={style.topTotalValue}>
+        <div className={styles.topFunds}>
+          <div className={styles.topTotalValue}>
             {isImported(account) ? (
               <Balance amount={account.votingAuthority} />
             ) : (
               <Balance amount={account.total} />
             )}
           </div>
-          <div className={classNames(style.topSpendable, style.isRow)}>
+          <div className={classNames(styles.topSpendable, styles.isRow)}>
             <T id="accounts.row.spendable" m="Spendable:" />
             <Balance
-              classNameWrapper={style.topSpendableValue}
+              classNameWrapper={styles.topSpendableValue}
               flat
               amount={account.spendable}
             />
@@ -76,9 +75,9 @@ const Row = ({
     disabled={isImported(account) && !hasTickets}
     onToggleAccordion={onToggleShowDetails}
     show={isShowingDetails}
-    //TODO: encapsulate end provide .active CSS class in shared/VerticalAccordion.jsx
-    arrowClassName="vertical-accordion-arrow"
-    className={classNames(style.detailsBottom, "account-row-details-bottom")}>
+    arrowClassName={styles.accordionArrow}
+    activeArrowClassName={styles.activeAccordionArrow}
+    className={styles.detailsBottom}>
     {isShowingDetails ? (
       isShowingRenameAccount ? (
         getRenameAccountStyles()

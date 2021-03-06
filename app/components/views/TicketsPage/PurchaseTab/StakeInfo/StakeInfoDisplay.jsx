@@ -52,123 +52,120 @@ const StakeInfoDisplay = ({
   lastVotedTicket,
   currencyDisplay,
   tsDate
-}) => {
-  return (
-    <>
-      <Subtitle
-        title={<T id="stake.stackingOverview" m="Staking Overview" />}
-      />
-      <VerticalAccordion
-        header={
-          <div className={styles.area}>
-            {isSPV ? (
-              <StakeInfoDisplayItem
-                label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
-                value={
-                  <StakeInfoDisplayTicketCount value={unspentTicketsCount} />
-                }
-              />
-            ) : (
-              <StakeInfoDisplayItem
-                label={<T id="stake.liveTickets" m="Live" />}
-                value={<StakeInfoDisplayTicketCount value={liveTicketsCount} />}
-                foot={
-                  <T
-                    id="stake.liveTicketsFoot"
-                    m="Own Mempool: {ownMempoolTickets}       Immature: {immatureTickets }"
-                    values={{
-                      ownMempoolTickets: (
-                        <FormattedNumber value={ownMempoolTicketsCount} />
-                      ),
-                      immatureTickets: (
-                        <FormattedNumber value={immatureTicketsCount} />
-                      )
-                    }}
-                  />
-                }
-              />
-            )}
+}) => (
+  <>
+    <Subtitle title={<T id="stake.stackingOverview" m="Staking Overview" />} />
+    <VerticalAccordion
+      header={
+        <div className={styles.area}>
+          {isSPV ? (
             <StakeInfoDisplayItem
-              label={<T id="stakeSPV.totalVotedTickets" m="Total Voted" />}
-              value={<StakeInfoDisplayTicketCount value={votedTicketsCount} />}
-            />
-            <StakeInfoDisplayItem
-              label={<T id="stake.lastVotedTicket" m="Last Ticket Voted" />}
+              label={<T id="stake.unspentTickets" m="Unspent Tickets" />}
               value={
-                lastVotedTicket ? (
-                  <FormattedRelative
-                    value={tsDate(lastVotedTicket.leaveTimestamp)}
-                  />
-                ) : (
-                  <T id="stake.lastVotedTicket.none" m="None" />
-                )
+                <StakeInfoDisplayTicketCount value={unspentTicketsCount} />
               }
+            />
+          ) : (
+            <StakeInfoDisplayItem
+              label={<T id="stake.liveTickets" m="Live" />}
+              value={<StakeInfoDisplayTicketCount value={liveTicketsCount} />}
               foot={
-                lastVotedTicket && (
-                  <Link
-                    to={`/transaction/history/${lastVotedTicket.txHash}`}
-                    className={styles.foot}>
-                    <span className={styles.purchaseTicketFoot}>
-                      <T
-                        id="stake.lastTicketLink"
-                        m="{shortHash}... View &rarr;"
-                        values={{
-                          shortHash: lastVotedTicket.txHash.substr(0, 6)
-                        }}
-                      />
-                    </span>
-                  </Link>
-                )
-              }
-            />
-            <StakeInfoDisplayItem
-              label={<T id="stake.totalRewards" m="Total Rewards Earned" />}
-              value={
                 <T
-                  id="stake.totalRewardsValue"
-                  m="{value} {currency}"
+                  id="stake.liveTicketsFoot"
+                  m="Own Mempool: {ownMempoolTickets}       Immature: {immatureTickets }"
                   values={{
-                    value: (
-                      <Balance
-                        hideCurrency
-                        noSmallAmount
-                        classNameWrapper={styles.balance}
-                        amount={totalSubsidy}
-                      />
+                    ownMempoolTickets: (
+                      <FormattedNumber value={ownMempoolTicketsCount} />
                     ),
-                    currency: (
-                      <span className={styles.purchaseTicketLabel}>
-                        {currencyDisplay}
-                      </span>
+                    immatureTickets: (
+                      <FormattedNumber value={immatureTicketsCount} />
                     )
                   }}
                 />
               }
             />
-          </div>
-        }
-        show={isShowingDetails}
-        onToggleAccordion={onToggleStakeinfo}
-        className="detailsAccordion"
-        arrowClassName="vertical-accordion-arrow">
-        <StakeInfoDetails
-          {...{
-            ticketPoolSize,
-            votedTicketsCount,
-            allMempoolTicketsCount,
-            missedTicketsCount,
-            revokedTicketsCount,
-            expiredTicketsCount,
-            immatureTicketsCount,
-            ownMempoolTicketsCount,
-            liveTicketsCount,
-            totalSubsidy,
-            isSPV
-          }}
-        />
-      </VerticalAccordion>
-    </>
-  );
-};
+          )}
+          <StakeInfoDisplayItem
+            label={<T id="stakeSPV.totalVotedTickets" m="Total Voted" />}
+            value={<StakeInfoDisplayTicketCount value={votedTicketsCount} />}
+          />
+          <StakeInfoDisplayItem
+            label={<T id="stake.lastVotedTicket" m="Last Ticket Voted" />}
+            value={
+              lastVotedTicket ? (
+                <FormattedRelative
+                  value={tsDate(lastVotedTicket.leaveTimestamp)}
+                />
+              ) : (
+                <T id="stake.lastVotedTicket.none" m="None" />
+              )
+            }
+            foot={
+              lastVotedTicket && (
+                <Link
+                  to={`/transaction/history/${lastVotedTicket.txHash}`}
+                  className={styles.foot}>
+                  <span className={styles.purchaseTicketFoot}>
+                    <T
+                      id="stake.lastTicketLink"
+                      m="{shortHash}... View &rarr;"
+                      values={{
+                        shortHash: lastVotedTicket.txHash.substr(0, 6)
+                      }}
+                    />
+                  </span>
+                </Link>
+              )
+            }
+          />
+          <StakeInfoDisplayItem
+            label={<T id="stake.totalRewards" m="Total Rewards Earned" />}
+            value={
+              <T
+                id="stake.totalRewardsValue"
+                m="{value} {currency}"
+                values={{
+                  value: (
+                    <Balance
+                      hideCurrency
+                      noSmallAmount
+                      classNameWrapper={styles.balance}
+                      amount={totalSubsidy}
+                    />
+                  ),
+                  currency: (
+                    <span className={styles.purchaseTicketLabel}>
+                      {currencyDisplay}
+                    </span>
+                  )
+                }}
+              />
+            }
+          />
+        </div>
+      }
+      show={isShowingDetails}
+      onToggleAccordion={onToggleStakeinfo}
+      className={styles.accordion}
+      arrowClassName={styles.accordionArrow}
+      >
+      <StakeInfoDetails
+        {...{
+          ticketPoolSize,
+          votedTicketsCount,
+          allMempoolTicketsCount,
+          missedTicketsCount,
+          revokedTicketsCount,
+          expiredTicketsCount,
+          immatureTicketsCount,
+          ownMempoolTicketsCount,
+          liveTicketsCount,
+          totalSubsidy,
+          isSPV
+        }}
+      />
+    </VerticalAccordion>
+  </>
+);
 
 export default StakeInfoDisplay;
