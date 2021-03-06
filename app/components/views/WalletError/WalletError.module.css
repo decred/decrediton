@@ -1,0 +1,12 @@
+.view {
+  width: 880px;
+  height: 100%;
+  float: right;
+  background-color: "#f3f6f6";
+}
+
+.content {
+  overflow: auto;
+  height: 556px;
+  padding: 54px 60px 54px 80px;
+}
