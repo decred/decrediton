@@ -1,10 +1,13 @@
+import { shell } from "electron";
+import { classNames } from "pi-ui";
+import Docs from "i18n/docs";
 import { default as ReactMarkdown, uriTransformer } from "react-markdown";
 import { FormattedMessage as T } from "react-intl";
-import { locale } from "connectors";
-import Docs from "i18n/docs";
-import { shell } from "electron";
+import { useLocale } from "hooks";
+import styles from "./Documentation.module.css";
 
-// This changes absolute links (http://, https://, etc) to open as external links.
+// This changes absolute links (http://, https://, etc) to open as
+// external links.
 const renderDocLink = ({ href, children }) => {
   const uri = uriTransformer(href);
   return (
@@ -15,7 +18,7 @@ const renderDocLink = ({ href, children }) => {
 };
 
 const DocUnavailableMsg = ({ name }) => (
-  <div className="doc-unavailable-alert">
+  <div className={styles.unavailableAlert}>
     <T
       id="docs.unavailable"
       m="Document '{name}' is unavailable in the current language. Please request it in the community channels."
@@ -24,10 +27,12 @@ const DocUnavailableMsg = ({ name }) => (
   </div>
 );
 
-const Documentation = ({ currentLocaleName, name, className }) => {
+const Documentation = ({ name, className }) => {
+  const { currentLocaleName } = useLocale();
   const split = (currentLocaleName || "").split("-");
   const baseLang = split[0];
-  const currentLang = currentLocaleName.replace("-", "_"); // dash is not allowed for module object name
+  // dash is not allowed for module object name
+  const currentLang = currentLocaleName.replace("-", "_");
   let content;
   let unavailable;
   if (Docs[currentLang] && Docs[currentLang][name])
@@ -43,7 +48,7 @@ const Documentation = ({ currentLocaleName, name, className }) => {
     <>
       <ReactMarkdown
         source={content}
-        className={className}
+        className={classNames(styles.documentation, className)}
         renderers={{ link: renderDocLink }}
       />
       {unavailable}
@@ -51,4 +56,4 @@ const Documentation = ({ currentLocaleName, name, className }) => {
   );
 };
 
-export default locale(Documentation);
+export default Documentation;

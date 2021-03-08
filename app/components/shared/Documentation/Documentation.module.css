@@ -1,0 +1,42 @@
+.unavailableAlert {
+  opacity: 0.3;
+  font-size: 75%;
+}
+
+.documentation {
+  max-width: 36em;
+  color: var(--modal-text);
+}
+
+.documentation h1 {
+  font-size: 27px;
+  line-height: 34px;
+  font-weight: 400;
+  margin-top: 0;
+  column-span: all;
+  margin-bottom: 1em;
+}
+
+.documentation ul {
+  margin-bottom: 2em;
+}
+
+.documentation li {
+  list-style-position: inside;
+  margin-bottom: 0.5em;
+}
+
+.documentation p {
+  break-inside: avoid-page;
+  margin-bottom: 1em;
+}
+
+.documentation li p {
+  display: inline;
+}
+
+.documentation a {
+  color: var(--input-color);
+  cursor: pointer;
+  text-decoration: none;
+}
