@@ -12,7 +12,8 @@ const VerticalAccordion = ({
   className,
   header,
   headerClassName,
-  arrowClassName
+  arrowClassName,
+  activeArrowClassName
 }) => {
   const [childHeight, setChildHeight] = useState(0);
   const childRef = useCallback(
@@ -99,6 +100,7 @@ const VerticalAccordion = ({
         <div
           className={classNames(
             disabled && "disabled",
+            show && activeArrowClassName,
             styles.arrow,
             arrowClassName
           )}

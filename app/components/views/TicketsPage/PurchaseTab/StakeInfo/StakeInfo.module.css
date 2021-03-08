@@ -1,3 +1,13 @@
+.accordion {
+  margin-bottom: 40px;
+}
+
+.accordionArrow {
+  top: 15px;
+  right: 20px;
+  height: 13px;
+}
+
 .area {
   background-color: var(--background-back-color);
   padding: 16px 19px 16px 19px;
@@ -137,6 +147,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .accordion {
+    margin-bottom: 30px;
+  }
+
   .area {
     grid-template-areas:
       "purchaseTicketsTitle purchaseTicketsTitle"
