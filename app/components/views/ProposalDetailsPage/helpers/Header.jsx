@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader } from "layout";
+import { GOVERNANCE_ICON } from "constants";
 
 const Header = React.memo(function Header({ eligibleTicketCount }) {
   return (
@@ -12,7 +13,7 @@ const Header = React.memo(function Header({ eligibleTicketCount }) {
           values={{ votingPower: eligibleTicketCount }}
         />
       }
-      iconClassName="governance"
+      iconType={GOVERNANCE_ICON}
     />
   );
 });

@@ -20,6 +20,7 @@ import {
   LNWALLET_STARTUPSTAGE_SCBRESTORE
 } from "actions/LNActions";
 import "style/ConnectPage.css";
+import { LN_ICON } from "constants";
 
 const ConnectPageHeader = () => (
   <StandaloneHeader
@@ -30,7 +31,7 @@ const ConnectPageHeader = () => (
         m={"Start, unlock and connect to the dcrlnd wallet."}
       />
     }
-    iconClassName="ln"
+    iconType={LN_ICON}
   />
 );
 
@@ -45,7 +46,7 @@ const CreateLNWalletPageHeader = () => (
         }
       />
     }
-    iconClassName="ln"
+    iconType={LN_ICON}
   />
 );
 

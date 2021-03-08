@@ -101,3 +101,21 @@ export const MENU_LINKS_PER_ROW = 4;
 export const VSP_FEE_PROCESS_STARTED = 0;
 export const VSP_FEE_PROCESS_PAID = 1;
 export const VSP_FEE_PROCESS_ERRORED = 2;
+
+// TitleHeader icon types
+export const ACCOUNTS_ICON = "accounts";
+export const SECURITY_ICON = "security";
+export const SETTINGS_ICON = "settings";
+export const TICKETS_ICON = "tickets";
+export const TRANSACTIONS_ICON = "transactions";
+export const GOVERNANCE_ICON = "governance";
+export const TREZOR_ICON = "trezor";
+export const LN_ICON = "ln";
+export const TICKET_ICON = "ticket";
+export const VOTE_ICON = "vote";
+export const REVOCATION_ICON = "revocation";
+export const TICKETFEE_ICON = "ticketfee";
+export const MIXED_ICON = "mixed";
+export const SELF_ICON = "self";
+export const OUT_ICON = "out";
+export const IN_ICON = "in";

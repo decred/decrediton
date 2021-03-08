@@ -8,6 +8,7 @@ import { TutorialsTab } from "./TutorialsTab/TutorialsTab";
 import { SettingsTab } from "./SettingsTab/SettingsTab";
 import { useSettings } from "hooks";
 import styles from "./SettingsPage.module.css";
+import { SETTINGS_ICON } from "constants";
 
 const closeWalletModalContent = (walletName) => (
   <T
@@ -20,7 +21,7 @@ const closeWalletModalContent = (walletName) => (
 const SettingsPageHeader = ({ onCloseWallet, walletName }) => (
   <StandaloneHeader
     title={<T id="settings.title" m="Settings" />}
-    iconClassName="settings"
+    iconType={SETTINGS_ICON}
     description={
       <T
         id="settings.description"

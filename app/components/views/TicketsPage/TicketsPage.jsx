@@ -13,10 +13,11 @@ import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
 import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
 import styles from "./TicketsPage.module.css";
+import { TICKET_ICON } from "constants";
 
 const PageHeader = () => (
   <TitleHeader
-    iconClassName="tickets"
+    iconType={TICKET_ICON}
     title={<T id="tickets.title" m="Staking" />}
   />
 );

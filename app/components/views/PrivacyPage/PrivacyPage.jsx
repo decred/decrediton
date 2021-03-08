@@ -5,6 +5,7 @@ import SecurityTab from "./SecurityPage/SecurityPage";
 import PrivacyTab from "./Privacy/Privacy";
 import { usePrivacyPage } from "./hooks";
 import style from "./Privacy/Privacy.module.css";
+import { SECURITY_ICON } from "constants";
 
 const PrivacyPageHeader = React.memo(
   ({ mixedAccountName, changeAccountName }) => {
@@ -34,7 +35,7 @@ const PrivacyPageHeader = React.memo(
       );
     return (
       <StandaloneHeader
-        iconClassName="security"
+        iconType={SECURITY_ICON}
         title={<T id="privacypage.title" m="Privacy and Security" />}
         description={description}
       />

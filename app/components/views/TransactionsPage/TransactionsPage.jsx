@@ -11,10 +11,11 @@ import {
   HistoryTabHeader
 } from "./HistoryTab/HistoryTab";
 import { default as ExportTab, ExportTabHeader } from "./ExportTab/ExportTab";
+import { TRANSACTIONS_ICON } from "constants";
 
 const PageHeader = () => (
   <TitleHeader
-    iconClassName="transactions"
+    iconType={TRANSACTIONS_ICON}
     title={<T id="transactions.title" m="Transactions" />}
   />
 );
