@@ -7,6 +7,5 @@ export { default as ticketsOverview } from "./ticketsOverview";
 export { default as routing } from "./routing";
 export { default as modalVisible } from "./modalVisible";
 export { default as network } from "./network";
-export { default as trezor } from "./trezor";
 export { default as importScript } from "./importScript";
 export { default as lnPage } from "./lnPage";

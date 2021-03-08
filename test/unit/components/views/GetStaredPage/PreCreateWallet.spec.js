@@ -285,11 +285,11 @@ test("test trezor switch toggling and setup device page", async () => {
 
   // go to trezor config view when device is not connected
   user.click(screen.queryByText(/setup device/i));
-  await wait(() => screen.getByText(/no trezor device found/i));
+  await wait(() => screen.getByText(/no trezor device detected/i));
   expect(
-    screen.getByText(/no trezor device found/i).textContent
+    screen.getByText(/no trezor device detected/i).textContent
   ).toMatchInlineSnapshot(
-    "\"No Trezor device found. Check the connection and the Trezor bridge software.\""
+    "\"No Trezor device detected. Connect the device and check if Trezor bridge is installed and running.\""
   );
   user.click(screen.getByText(/connect to trezor/i));
   expect(mockTrezorConnect).toHaveBeenCalled();

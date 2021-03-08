@@ -13,7 +13,8 @@ const VerticalAccordion = ({
   header,
   headerClassName,
   arrowClassName,
-  activeArrowClassName
+  activeArrowClassName,
+  childrenClassName
 }) => {
   const [childHeight, setChildHeight] = useState(0);
   const childRef = useCallback(
@@ -81,7 +82,7 @@ const VerticalAccordion = ({
         return h(
           "div",
           childProps,
-          h("div", { ref: (el) => el && childRef(el) }, data)
+          h("div", { ref: (el) => el && childRef(el), className: childrenClassName }, data)
         );
       })
     );
