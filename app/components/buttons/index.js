@@ -2,25 +2,25 @@ import { classNames } from "pi-ui";
 export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
 export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenu/EyeFilterMenuWithSlider/EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink/HelpLink";
-export { default as SlateGrayButton } from "./SlateGrayButton/SlateGrayButton";
+export { default as SlateGrayButton } from "./SlateGrayButton";
 export { default as PathButton } from "./PathButton/PathButton";
 export { default as RescanButton } from "./RescanButton/RescanButton";
 export { default as RescanCancelButton } from "./RescanButton/RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
 export { default as TicketsCogs } from "./TicketsCogs/TicketsCogs";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
-export { default as SendTransactionButton } from "./SendTransactionButton/SendTransactionButton";
-export { default as ImportScriptIconButton } from "./ImportScriptIconButton/ImportScriptIconButton";
-export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton/MixerSettingsIconButton";
+export { default as SendTransactionButton } from "./SendTransactionButton";
+export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
+export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
 
 import ModalButton from "./ModalButton";
-import KeyBlueButton from "./KeyBlueButton/KeyBlueButton";
+import KeyBlueButton from "./KeyBlueButton";
 import ToggleSwitch from "./ToggleSwitch/ToggleSwitch";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
-import DangerButton from "./DangerButton/DangerButton";
-import CloseButton from "./CloseButton/CloseButton";
+import DangerButton from "./DangerButton";
+import CloseButton from "./CloseButton";
 import HelpLink from "./HelpLink/HelpLink";
-import InvisibleButton from "./InvisibleButton/InvisibleButton";
+import InvisibleButton from "./InvisibleButton";
 import Button from "./Button/Button";
 export {
   ModalButton,

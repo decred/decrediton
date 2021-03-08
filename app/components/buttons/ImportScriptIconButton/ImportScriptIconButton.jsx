@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Tooltip, classNames } from "pi-ui";
 import { ImportScriptModal } from "modals";
 import ModalButton from "../ModalButton";
-import InvisibleButton from "../InvisibleButton/InvisibleButton";
+import InvisibleButton from "../InvisibleButton";
 import { SimpleLoading } from "indicators";
 import { useImportScriptIconButton } from "./hooks";
 import styles from "./ImportScriptIconButton.module.css";

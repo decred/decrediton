@@ -1,5 +1,5 @@
 import { useSettings } from "hooks";
-import KeyBlueButton from "./KeyBlueButton/KeyBlueButton";
+import KeyBlueButton from "./KeyBlueButton";
 
 const EnableExternalRequestButton = ({ children, requestType, onClick }) => {
   const { onAddAllowedRequestType } = useSettings();

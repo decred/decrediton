@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { classNames } from "pi-ui";
-import InvisibleButton from "../InvisibleButton/InvisibleButton";
+import InvisibleButton from "../InvisibleButton";
 import { useClickOutside } from "hooks";
 import styles from "./EyeFilterMenu.module.css";
 

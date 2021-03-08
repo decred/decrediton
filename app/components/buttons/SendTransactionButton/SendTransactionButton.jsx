@@ -1,5 +1,5 @@
 import { PassphraseModalButton } from "../index";
-import KeyBlueButton from "../KeyBlueButton/KeyBlueButton";
+import KeyBlueButton from "../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { useSendTransactionButton } from "./hooks";
 

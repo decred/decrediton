@@ -16,18 +16,18 @@ const defaultButton = ({
   </button>
 );
 
-const ModalButton = (props) => {
-  const {
-    showModal,
-    isValid,
-    buttonLabel,
-    modalComponent,
-    isDisabled,
-    buttonComponent,
-    onSubmit,
-    onShow,
-    onClick
-  } = props;
+const ModalButton = ({
+  showModal,
+  isValid,
+  buttonLabel,
+  modalComponent,
+  isDisabled,
+  buttonComponent,
+  onSubmit,
+  onShow,
+  onClick,
+  ...props
+}) => {
   const [show, setShow] = useState(!!showModal);
 
   const onShowModal = () => {
