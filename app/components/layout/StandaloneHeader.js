@@ -4,14 +4,14 @@ import DescriptionHeader from "./DescriptionHeader";
 const StandaloneHeader = ({
   title,
   description,
-  iconClassName,
+  iconType,
   actionButton
 }) => {
   return (
     <div className="standalone-page-header">
       <TitleHeader
         title={title}
-        iconClassName={iconClassName}
+        iconType={iconType}
         optionalButton={actionButton}
       />
       <DescriptionHeader description={description} />

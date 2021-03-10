@@ -10,7 +10,15 @@ import {
   REVOCATION,
   COINBASE,
   MIXED,
-  SELFTRANSFER
+  SELFTRANSFER,
+  OUT_ICON,
+  TICKETFEE_ICON,
+  IN_ICON,
+  TICKET_ICON,
+  VOTE_ICON,
+  REVOCATION_ICON,
+  MIXED_ICON,
+  SELF_ICON
 } from "constants/Decrediton";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader } from "layout";
@@ -27,15 +35,15 @@ const messages = defineMessages({
 });
 
 const headerIcons = {
-  [TRANSACTION_DIR_RECEIVED]: "in",
-  [TRANSACTION_DIR_SENT]: "out",
-  [TICKET_FEE]: "ticketfee",
-  [COINBASE]: "in",
-  [TICKET]: "ticket",
-  [VOTE]: "vote",
-  [REVOCATION]: "revocation",
-  [MIXED]: "mixed",
-  [SELFTRANSFER]: "self"
+  [TRANSACTION_DIR_RECEIVED]: IN_ICON,
+  [TRANSACTION_DIR_SENT]: OUT_ICON,
+  [TICKET_FEE]: TICKETFEE_ICON,
+  [COINBASE]: IN_ICON,
+  [TICKET]: TICKET_ICON,
+  [VOTE]: VOTE_ICON,
+  [REVOCATION]: REVOCATION_ICON,
+  [MIXED]: MIXED_ICON,
+  [SELFTRANSFER]: SELF_ICON
 };
 
 // If it is a regular tx we use txDirection instead
@@ -47,14 +55,14 @@ const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
   txType !== REGULAR
     ? (titleComp = intl.formatMessage(messages[txType]))
     : (titleComp = (
-      <Balance
-        title
-        bold
-        amount={
-          txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
-        }
-      />
-    ));
+        <Balance
+          title
+          bold
+          amount={
+            txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
+          }
+        />
+      ));
   if (txType === TICKET && ticketReward) {
     titleComp = `${titleComp}, Voted`;
   }
@@ -108,10 +116,10 @@ const subtitle = ({
               </div>
             </div>
           ) : (
-              <div className={styles.subtitleDate}>
-                <T id="txDetails.unConfirmed" m="Unconfirmed" />
-              </div>
-            )}
+            <div className={styles.subtitleDate}>
+              <T id="txDetails.unConfirmed" m="Unconfirmed" />
+            </div>
+          )}
           {leaveTimestamp && (
             <div className={styles.subtitlePair}>
               <div className={styles.subtitleSentfrom}>
@@ -156,13 +164,11 @@ const subtitle = ({
               <div className={styles.subtitleSentfrom}>
                 <T id="txDetails.sentFrom" m="Sent From" />
               </div>
-              <div className={styles.subtitleAccount}>
-                {sentFromAccount}
-              </div>
+              <div className={styles.subtitleAccount}>{sentFromAccount}</div>
             </>
           ) : (
-              <div />
-            )}
+            <div />
+          )}
           <div className={styles.subtitleDate}>
             {!isPending ? (
               <T
@@ -171,8 +177,8 @@ const subtitle = ({
                 values={{ timestamp: tsDate(timestamp) }}
               />
             ) : (
-                <T id="txDetails.unConfirmed" m="Unconfirmed" />
-              )}
+              <T id="txDetails.unConfirmed" m="Unconfirmed" />
+            )}
           </div>
         </div>
       );
@@ -201,7 +207,7 @@ const TransactionHeader = ({
   return (
     <StandaloneHeader
       title={title({ txType, txAmount, txDirection, ticketReward, intl })}
-      iconClassName={icon({ txType: iconTxType, txDirection })}
+      iconType={icon({ txType: iconTxType, txDirection })}
       description={subtitle({
         txType,
         isPending,

@@ -11,10 +11,11 @@ import NetworkTabHeader from "./NetworkTab/NetworkTabHeader";
 import NetworkTab from "./NetworkTab/NetworkTab";
 import WatchtowersTab from "./WatchtowersTab/WatchtowersTab";
 import WatchtowersTabHeader from "./WatchtowersTab/WatchtowersTabHeader";
+import { LN_ICON } from "constants";
 
 const LNPageHeader = () => (
   <TitleHeader
-    iconClassName="ln"
+    iconType={LN_ICON}
     title={<T id="ln.title" m="Lightning Network" />}
   />
 );

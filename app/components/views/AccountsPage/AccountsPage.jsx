@@ -5,6 +5,7 @@ import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
 import { useAccountsPage } from "./hooks";
+import { ACCOUNTS_ICON } from "constants";
 
 const AccountsPageHeader = React.memo(
   ({ isCreateAccountDisabled, onGetNextAccountAttempt }) => (
@@ -18,7 +19,7 @@ const AccountsPageHeader = React.memo(
           }
         />
       }
-      iconClassName={"accounts"}
+      iconType={ACCOUNTS_ICON}
       actionButton={
         <WatchOnlyWarnNotification isActive={isCreateAccountDisabled}>
           <PassphraseModalButton

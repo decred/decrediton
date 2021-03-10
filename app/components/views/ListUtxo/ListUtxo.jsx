@@ -7,10 +7,11 @@ import { AccountsSelect } from "inputs";
 import { Balance } from "shared";
 import { useListUtxo } from "./hooks";
 import styles from "./ListUtxo.module.css";
+import { TRANSACTIONS_ICON } from "constants";
 
 const Header = () => (
   <StandaloneHeader
-    iconClassName="transactions"
+    iconType={TRANSACTIONS_ICON}
     title={<T id="listutxo.title" m="List UTXOs" />}
   />
 );

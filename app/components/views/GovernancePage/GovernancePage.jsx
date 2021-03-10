@@ -4,10 +4,11 @@ import { Switch, Redirect } from "react-router-dom";
 import ProposalsTab from "./Proposals/ProposalsTab";
 import VotingPrefsTab from "./Blockchain/Blockchain";
 import TabHeader from "./TabHeader/TabHeader";
+import { GOVERNANCE_ICON } from "constants";
 
 const PageHeader = () => (
   <TitleHeader
-    iconClassName="governance"
+    iconType={GOVERNANCE_ICON}
     title={<T id="governance.title" m="Governance" />}
   />
 );
