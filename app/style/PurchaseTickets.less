@@ -52,26 +52,27 @@
 
   .tooltipContainer {
     height: 25px;
-    &.ticket_fee {
-      grid-column-start: 2;
-      grid-row-start: 1;
-    }
-    &.ticket_tx_fee {
-      grid-column-start: 3;
-      grid-row-start: 1;
-    }
-    &.ticket_expiry {
-      grid-column-start: 4;
-      grid-row-start: 1;
-    }
-    &.ticket_pool_address {
-      grid-column-start: 2;
-      grid-column-end: span 2;
-    }
-    &.ticket_pool_fee {
-      grid-row-start: 2;
-      grid-column-start: 4;
-    }
+  }
+
+  .ticket_fee {
+    grid-column-start: 2;
+    grid-row-start: 1;
+  }
+  .ticket_tx_fee {
+    grid-column-start: 3;
+    grid-row-start: 1;
+  }
+  .ticket_expiry {
+    grid-column-start: 4;
+    grid-row-start: 1;
+  }
+  .ticket_pool_address {
+    grid-column-start: 2;
+    grid-column-end: span 2;
+  }
+  .ticket_pool_fee {
+    grid-row-start: 2;
+    grid-column-start: 4;
   }
 }
 
@@ -402,27 +403,26 @@
     grid-template-columns: 103px 106px auto;
     grid-column-gap: 0;
     height: initial;
-    .tooltipContainer {
-      &.ticket_expiry,
-      &.ticket_tx_fee,
-      &.ticket_fee {
-        grid-column-start: initial;
-        grid-row-start: initial;
-      }
-      &.current_vsp {
-        grid-column-start: 1;
-      }
-      &.ticket_expiry {
-        grid-column-start: 3;
-      }
-      &.ticket_address,
-      &.ticket_pool_address {
-        grid-column-start: 1;
-      }
-      &.ticket_pool_fee {
-        grid-column-start: 3;
-        grid-row-start: 2;
-      }
+
+    .ticket_expiry,
+    .ticket_tx_fee,
+    .ticket_fee {
+      grid-column-start: initial;
+      grid-row-start: initial;
+    }
+    .current_vsp {
+      grid-column-start: 1;
+    }
+    .ticket_expiry {
+      grid-column-start: 3;
+    }
+    .ticket_address,
+    .ticket_pool_address {
+      grid-column-start: 1;
+    }
+    .ticket_pool_fee {
+      grid-column-start: 3;
+      grid-row-start: 2;
     }
   }
 
