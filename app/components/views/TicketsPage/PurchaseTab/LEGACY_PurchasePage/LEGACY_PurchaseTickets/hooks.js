@@ -11,7 +11,7 @@ export const usePurchaseTickets = () => {
   const configuredStakePools = useSelector(sel.configuredStakePools);
   const numTicketsToBuyValue = useSelector(sel.numTicketsToBuy);
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
-  const stakePoolValue = useSelector(sel.selectedStakePool);
+  const stakePool = useSelector(sel.selectedStakePool);
   const intl = useIntl();
   const dismissBackupRedeemScript = useSelector(sel.dismissBackupRedeemScript);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
@@ -28,7 +28,6 @@ export const usePurchaseTickets = () => {
   const [conf] = useState(0);
   const [expiry, setExpiry] = useState(16);
   const [account, setAccount] = useState(defaultSpendingAccount);
-  const [stakePool] = useState(stakePoolValue);
 
   // legacy ticket auto buyer selectors
   const dispatch = useDispatch();

@@ -41,7 +41,6 @@ const NoAvailableStakepools = React.memo(() => (
 ));
 
 const LEGACY_PurchasePage = ({
-  isPurchasingTickets,
   isShowingVsp,
   toggleShowVsp,
   toggleIsLegacy,
@@ -71,9 +70,9 @@ const LEGACY_PurchasePage = ({
     onDisableTicketAutoBuyer,
     isTicketAutoBuyerEnabled,
     notMixedAccounts,
-    getRunningIndicator
+    getRunningIndicator,
+    isPurchasingTickets
   } = useLegacyPurchasePage(toggleShowVsp);
-
   return getNoAvailableStakepools && !getStakepoolListingEnabled() ? (
     <StakepoolListingDisabled />
   ) : getNoAvailableStakepools ? (

@@ -60,9 +60,11 @@ const PurchaseTicketsForm = ({
         <div className="stakepool-info-icon account-select-icon"></div>
       </div>
       <div className="is-row purchase-ticket-input-amount">
-        <div className="purchase-ticket-area-row-label">
+        <label
+          className="purchase-ticket-area-row-label"
+          htmlFor="numTicketsToBuy">
           <T id="purchaseTickets.ticketAmount.legacy" m="Amount" />:
-        </div>
+        </label>
         <NumTicketsInput
           required
           invalid={!getIsValid()}
@@ -77,6 +79,7 @@ const PurchaseTicketsForm = ({
           decrementNumTickets={onDecrementNumTickets}
           onChangeNumTickets={onChangeNumTickets}
           onKeyDown={handleOnKeyDown}
+          id="numTicketsToBuy"
           showErrors={true}></NumTicketsInput>
         {getIsValid() && (
           <div className="input-purchase-ticket-valid-message-area">
@@ -102,6 +105,7 @@ const PurchaseTicketsForm = ({
         <TicketsCogs
           opened={!isShowingAdvanced}
           onClick={onToggleShowAdvanced}
+          ariaLabel="Show advanced settings"
         />
         <ImportScriptIconButton />
       </div>
@@ -192,7 +196,7 @@ const PurchaseTicketsForm = ({
           />
         </Tooltip>
       ) : (
-        <KeyBlueButton
+        <PassphraseModalButton
           modalTitle={
             <T
               id="tickets.purchaseConfirmation.legacy"
@@ -200,9 +204,9 @@ const PurchaseTicketsForm = ({
             />
           }
           disabled={getIsValid && !getIsValid()}
-          onSubmit={onPurchaseTickets}>
-          {purchaseLabel()}
-        </KeyBlueButton>
+          onSubmit={onPurchaseTickets}
+          buttonLabel={purchaseLabel()}
+        />
       )}
     </div>
   </>

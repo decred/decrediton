@@ -56,7 +56,9 @@ class TicketAutoBuyer extends React.Component {
 
   scrollToBottom() {
     const content = document.querySelector(".tab-content");
-    this.scrollTo(content, content.scrollHeight, 150);
+    if (content) {
+      this.scrollTo(content, content.scrollHeight, 150);
+    }
   }
 
   render() {

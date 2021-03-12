@@ -1,8 +1,6 @@
 import PurchasePage from "./PurchaseTickets/PurchaseTickets";
 import LEGACY_PurchasePage from "./LEGACY_PurchasePage";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import * as sel from "selectors";
 import "style/StakePool.less";
 import { usePurchaseTab } from "./hooks";
 
@@ -12,12 +10,10 @@ function Purchase() {
   const [isShowingVsp, toggleShowVsp] = useState(false);
   // const [isShowingImportScript, setShowImportScript] = useState(false);
   const { isLegacy, toggleIsLegacy } = usePurchaseTab();
-  const isPurchasingTickets = useSelector(sel.isPurchasingTickets);
-  // end of legacy hooks
 
   return isLegacy ? (
     <LEGACY_PurchasePage
-      {...{ isPurchasingTickets, isShowingVsp, toggleShowVsp, toggleIsLegacy }}
+      {...{isShowingVsp, toggleShowVsp, toggleIsLegacy }}
     />
   ) : (
     <PurchasePage {...{ toggleIsLegacy }} />

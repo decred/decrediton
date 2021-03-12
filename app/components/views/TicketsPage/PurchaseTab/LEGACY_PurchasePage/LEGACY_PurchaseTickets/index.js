@@ -121,9 +121,8 @@ const PurchaseTickets = ({
   };
 
   const getStakePool = () => {
-    const pool = stakePool;
-    return pool
-      ? configuredStakePools.find(compose(eq(pool.Host), get("Host")))
+    return stakePool
+      ? configuredStakePools.find(compose(eq(stakePool.Host), get("Host")))
       : null;
   };
 
@@ -157,7 +156,7 @@ const PurchaseTickets = ({
   const onChangeNumTickets = (numTicketsToBuy) => {
     if (parseInt(numTicketsToBuy)) {
       setNumTicketsToBuy(parseInt(numTicketsToBuy));
-    } else if (numTicketsToBuy == ")") {
+    } else if (numTicketsToBuy == "") {
       setNumTicketsToBuy(numTicketsToBuy);
     }
   };

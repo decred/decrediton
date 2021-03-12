@@ -27,13 +27,15 @@ const PurchaseTicketAdvancedInfo = ({
   label,
   className,
   onIconClick,
+  id,
   children
 }) => (
   <>
-    <div
+    <label
+      htmlFor={id}
       className={classNames("purchase-ticket-advanced-info-label", className)}>
       {label}:
-    </div>
+    </label>
     <div
       className={classNames("purchase-ticket-advanced-info-value", className)}>
       {children}
@@ -75,6 +77,7 @@ const PurchaseTicketsAdvanced = ({
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
+      id="advanced-ticket-fee"
       label={<T id="purchaseTickets.ticketFee" m="Ticket Fee" />}
       className="ticket-fee">
       <FeeInput
@@ -93,9 +96,11 @@ const PurchaseTicketsAdvanced = ({
         onChange={onChangeTicketFee}
         showErrors={true}
         className="stakepool-purchase-ticket-input advanced-small-input"
+        id="advanced-ticket-fee"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
+      id="advanced-tx-fee"
       label={<T id="purchaseTickets.txFee" m="Tx Fee" />}
       className="tx-fee">
       <FeeInput
@@ -109,9 +114,11 @@ const PurchaseTicketsAdvanced = ({
         onChange={onChangeTxFee}
         showErrors={true}
         className="stakepool-purchase-ticket-input advanced-small-input"
+        id="advanced-tx-fee"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
+      id="advanced-expiry"
       label={<T id="purchaseTickets.advanced.expiry" m="Expiry" />}
       className="expiry">
       <BlocksInput
@@ -125,9 +132,11 @@ const PurchaseTicketsAdvanced = ({
         onChange={onChangeExpiry}
         showErrors={true}
         className="stakepool-purchase-ticket-input advanced-small-input"
+        id="advanced-expiry"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
+      id="advanced-ticket-address"
       label={
         <T id="purchaseTickets.advanced.ticketAddress" m="Ticket Address" />
       }
@@ -137,9 +146,11 @@ const PurchaseTicketsAdvanced = ({
         readOnly
         className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
         value={stakePool ? stakePool.value.TicketAddress : null}
+        id="advanced-ticket-address"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
+      id="advanced-vsp-address"
       label={<T id="purchaseTickets.advanced.poolAddress" m="VSP Address" />}
       className="pool-address">
       <AddressInput
@@ -147,9 +158,11 @@ const PurchaseTicketsAdvanced = ({
         readOnly
         className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
         value={stakePool ? stakePool.value.PoolAddress : null}
+        id="advanced-vsp-address"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
+      id="advanced-vsp-fees"
       label={<T id="purchaseTickets.advanced.poolFees" m="VSP Fees" />}
       className="pool-fees">
       <PercentInput
@@ -157,6 +170,7 @@ const PurchaseTicketsAdvanced = ({
         readOnly
         className="stakepool-purchase-ticket-input advanced-small-input"
         value={stakePool ? stakePool.value.PoolFees : null}
+        id="advanced-vsp-fees"
       />
     </PurchaseTicketAdvancedInfo>
   </div>
