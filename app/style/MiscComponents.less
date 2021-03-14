@@ -18,29 +18,7 @@
   color: var(--input-color-hover);
 }
 
-.manage-pools-button {
-  background-color: var(--input-color);
-  background-image: var(--manage-pools-icon);
-  background-position: 50% 50%;
-  background-size: 12px;
-  background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
-  border-radius: 5px;
-  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--input-color-hover);
-  }
-
-  &:active {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
-  }
-}
-
-
-[data-pseudo-content]::before,
+.[data-pseudo-content]::before,
 [data-pseudo-content--before]::before,
 [data-pseudo-content--after]::after {
   content: attr(data-pseudo-content);

@@ -7,6 +7,7 @@ import {
 } from "inputs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames } from "pi-ui";
+import styles from "./PurchaseTicketsAdvanced.module.css";
 
 const messages = defineMessages({
   txFeePlaceholder: {
@@ -31,16 +32,13 @@ const PurchaseTicketAdvancedInfo = ({
   children
 }) => (
   <>
-    <label
-      htmlFor={id}
-      className={classNames("purchase-ticket-advanced-info-label", className)}>
+    <label htmlFor={id} className={className}>
       {label}:
     </label>
-    <div
-      className={classNames("purchase-ticket-advanced-info-value", className)}>
+    <div className={classNames(styles.infoValue, className)}>
       {children}
       <div
-        className={classNames("stakepool-info-icon", className)}
+        className={classNames(styles.icon, className)}
         onClick={onIconClick}
       />
     </div>
@@ -64,22 +62,22 @@ const PurchaseTicketsAdvanced = ({
   formatMessage,
   ...props
 }) => (
-  <div className="purchase-ticket-advanced-info-grid">
+  <div className={styles.infoGrid}>
     <PurchaseTicketAdvancedInfo
       label={<T id="purchaseTickets.stakePoolLabel" m="VSP" />}
-      className="stake-pools"
+      className={styles.stakePools}
       onIconClick={() => toggleShowVsp(true)}>
       <LEGACY_StakePoolSelect
         options={configuredStakePools}
         value={stakePool}
         onChange={onChangeStakePool}
-        className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
+        className={classNames(styles.input, styles.bigInput)}
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
       id="advanced-ticket-fee"
       label={<T id="purchaseTickets.ticketFee" m="Ticket Fee" />}
-      className="ticket-fee">
+      className={styles.ticketFee}>
       <FeeInput
         {...{ ...props }}
         name={"ticketFee"}
@@ -95,14 +93,14 @@ const PurchaseTicketsAdvanced = ({
         value={ticketFee}
         onChange={onChangeTicketFee}
         showErrors={true}
-        className="stakepool-purchase-ticket-input advanced-small-input"
+        className={classNames(styles.input, styles.smallInput)}
         id="advanced-ticket-fee"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
       id="advanced-tx-fee"
       label={<T id="purchaseTickets.txFee" m="Tx Fee" />}
-      className="tx-fee">
+      className={styles.txFee}>
       <FeeInput
         required
         invalid={txFeeError}
@@ -113,14 +111,14 @@ const PurchaseTicketsAdvanced = ({
         value={txFee}
         onChange={onChangeTxFee}
         showErrors={true}
-        className="stakepool-purchase-ticket-input advanced-small-input"
+        className={classNames(styles.input, styles.smallInput)}
         id="advanced-tx-fee"
       />
     </PurchaseTicketAdvancedInfo>
     <PurchaseTicketAdvancedInfo
       id="advanced-expiry"
       label={<T id="purchaseTickets.advanced.expiry" m="Expiry" />}
-      className="expiry">
+      className={styles.expiry}>
       <BlocksInput
         required
         invalid={expiryError}
@@ -131,7 +129,7 @@ const PurchaseTicketsAdvanced = ({
         value={expiry}
         onChange={onChangeExpiry}
         showErrors={true}
-        className="stakepool-purchase-ticket-input advanced-small-input"
+        className={classNames(styles.input, styles.smallInput)}
         id="advanced-expiry"
       />
     </PurchaseTicketAdvancedInfo>
@@ -140,11 +138,11 @@ const PurchaseTicketsAdvanced = ({
       label={
         <T id="purchaseTickets.advanced.ticketAddress" m="Ticket Address" />
       }
-      className="ticket-address">
+      className={styles.ticketAddress}>
       <AddressInput
         disabled
         readOnly
-        className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
+        className={classNames(styles.input, styles.bigInput)}
         value={stakePool ? stakePool.value.TicketAddress : null}
         id="advanced-ticket-address"
       />
@@ -152,11 +150,11 @@ const PurchaseTicketsAdvanced = ({
     <PurchaseTicketAdvancedInfo
       id="advanced-vsp-address"
       label={<T id="purchaseTickets.advanced.poolAddress" m="VSP Address" />}
-      className="pool-address">
+      className={styles.poolAddress}>
       <AddressInput
         disabled
         readOnly
-        className="stakepool-purchase-ticket-input stakepool-advanced-big-input"
+        className={classNames(styles.input, styles.bigInput)}
         value={stakePool ? stakePool.value.PoolAddress : null}
         id="advanced-vsp-address"
       />
@@ -164,11 +162,11 @@ const PurchaseTicketsAdvanced = ({
     <PurchaseTicketAdvancedInfo
       id="advanced-vsp-fees"
       label={<T id="purchaseTickets.advanced.poolFees" m="VSP Fees" />}
-      className="pool-fees">
+      className={styles.poolFees}>
       <PercentInput
         disabled
         readOnly
-        className="stakepool-purchase-ticket-input advanced-small-input"
+        className={classNames(styles.input, styles.smallInput)}
         value={stakePool ? stakePool.value.PoolFees : null}
         id="advanced-vsp-fees"
       />
