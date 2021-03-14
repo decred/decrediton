@@ -147,6 +147,8 @@ let mockStartTicketBuyerV2Attempt;
 let mockIsTicketAutoBuyerEnabled;
 let mockTicketBuyerV2Cancel;
 let mockGetRunningIndicator;
+let mockAddCustomStakePool;
+
 beforeEach(() => {
   sel.getIsLegacy = jest.fn(() => true);
   sel.stakePoolListingEnabled = jest.fn(() => true);
@@ -170,6 +172,9 @@ beforeEach(() => {
   );
   mockDismissBackupRedeemScript = spa.dismissBackupRedeemScript = jest.fn(
     () => () => {}
+  );
+  mockAddCustomStakePool = spa.addCustomStakePool = jest.fn(() => () =>
+    Promise.resolve()
   );
   mockRevokeTicketsAttempt = ca.revokeTicketsAttempt = jest.fn(() => () => {});
   mockStartTicketBuyerV2Attempt = ca.startTicketBuyerV2Attempt = jest.fn(
@@ -423,4 +428,14 @@ test("test legacy autobuyer (a process is runnning)", () => {
     screen.queryByText(/start ticket buyer confirmation/i)
   ).not.toBeInTheDocument();
   expect(mockGetRunningIndicator).toHaveBeenCalled();
+});
+
+test("test add custom stakepool", () => {
+  sel.configuredStakePools = jest.fn(() => []);
+  render(<Purchase />);
+  const testStakePoolHost = "test-stakepool-host";
+  user.type(screen.getByRole("combobox"), testStakePoolHost);
+  user.click(screen.getByRole("option", { name: testStakePoolHost }));
+  expect(mockAddCustomStakePool).toHaveBeenCalledWith(testStakePoolHost);
+  screen.debug();
 });
