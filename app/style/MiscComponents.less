@@ -1,23 +1,70 @@
 @import (reference) "./main.less";
 
-.accounts-button-icon {
+.key-blue-button {
+  cursor: pointer;
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: var(--accounts-button-icon);
-  background-position: 50%;
-  background-size: 12px auto;
-  background-repeat: no-repeat;
-  box-shadow: 0 3px 8px var(--input-color-shadow);
+  padding: 12px 30px 14px 30px;
   border-radius: 5px;
   background-color: var(--input-color);
-  cursor: pointer;
-  vertical-align: middle;
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
+  color: var(--white-button-text);
+  font-size: 13px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  user-select: none;
 }
 
-.accounts-button-icon:hover {
-  box-shadow: 0 1px 3px var(--input-color-shadow);
-  background-color: var(--account-button-hover);
+.key-blue-button:hover {
+  background-color: var(--input-color-hover);
+}
+
+.key-blue-button:active {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--input-color-hover);
+}
+
+.key-blue-button-disabled,
+.key-blue-button[disabled],
+.danger-button-disabled,
+.danger-button[disabled] {
+  cursor: default;
+  display: inline-block;
+  padding: 12px 30px 14px 30px;
+  border-radius: 5px;
+  background-color: var(--disabled-background-color);
+  box-shadow: none;
+  color: var(--disabled-color);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  user-select: none;
+}
+
+.slate-gray-button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 12px 30px 14px 30px;
+  border-radius: 5px;
+  background-color: var(--back-button-bg);
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
+  color: var(--back-button-text);
+  font-size: 13px;
+  line-height: 17px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  user-select: none;
+}
+
+.slate-gray-button:hover {
+  background-color: var(--stroke-color-hovered);
 }
 
 .thin-button {
@@ -158,33 +205,48 @@
   background: var(--input-color);
 }
 
-// Style of UnsignedTxs component
-.unsigned-raw-tx-title {
-  color: var(--title-text-and-button-background);
-  font-size: 14pt;
-  padding-bottom: 10px;
+@media screen and (max-width: 511px) {
+  .settings-save-button .key-blue-button {
+    margin-top: 0;
+    padding: 12px 30px 14px 30px;
+  }
+  .confirm-modal-toolbar .key-blue-button {
+    margin-top: 0;
+    padding: 12px 30px 14px 30px;
+  }
+
+  .danger-button {
+    margin-left: 145px;
+    margin-top: 18px;
+  }
 }
 
-.unsigned-raw-tx-area {
-  word-wrap: break-word;
-  width: 600px;
-  height: 110px;
-  background: var(--background-back-color);
-  margin-top: 10px;
-  padding: 20px;
-  border-radius: 10px;
-  display: table;
+@media screen and (max-width: 409px) {
+  .danger-button {
+    margin-left: 55px;
+    width: 122px;
+  }
 }
 
-.unsigned-raw-tx {
-  float: left;
-  width: 550px;
+@media screen and (max-width: 299px) {
+  .danger-button {
+    margin-left: 55px;
+    width: 122px;
+  }
+
+  .key-blue-button {
+    position: absolute;
+    bottom: 18px;
+  }
 }
 
-.unsigned-raw-tx-copy-to-clipboard-icon {
-  float: right;
-  margin-left: 20px;
-  margin-top: 10px;
+.go-back-icon-button {
+  height: 12px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: var(--x-grey);
+  padding: 0px;
 }
 
 .rebroadcast-button-container,

@@ -1,0 +1,27 @@
+.txArea {
+  word-wrap: break-word;
+  width: 600px;
+  height: 110px;
+  background: var(--background-back-color);
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  display: table;
+}
+
+.txTitle {
+  color: var(--title-text-and-button-background);
+  font-size: 14pt;
+  padding-bottom: 10px;
+}
+
+.tx {
+  float: left;
+  width: 550px;
+}
+
+.copyIcon {
+  float: right;
+  margin-left: 20px;
+  margin-top: 10px;
+}
