@@ -71,9 +71,7 @@ const Tickets = ({
           />
         </div>
       ) : (
-        <TicketAutoBuyer
-          {...{ ...props, notMixedAccounts, getRunningIndicator }}
-        />
+        <TicketAutoBuyer />
       )}
     </div>
   );

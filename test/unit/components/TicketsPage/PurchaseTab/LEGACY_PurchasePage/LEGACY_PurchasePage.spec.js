@@ -1,8 +1,9 @@
 import Purchase from "../../../../../../app/components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
+import TicketAutoBuyer from "../../../../../../app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { fireEvent } from "@testing-library/react";
-import { screen, wait } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as spa from "actions/VSPActions";
@@ -142,6 +143,10 @@ const initialState = {
 let mockPurchaseTicketsAttempt;
 let mockDismissBackupRedeemScript;
 let mockRevokeTicketsAttempt;
+let mockStartTicketBuyerV2Attempt;
+let mockIsTicketAutoBuyerEnabled;
+let mockTicketBuyerV2Cancel;
+let mockGetRunningIndicator;
 beforeEach(() => {
   sel.getIsLegacy = jest.fn(() => true);
   sel.stakePoolListingEnabled = jest.fn(() => true);
@@ -167,6 +172,14 @@ beforeEach(() => {
     () => () => {}
   );
   mockRevokeTicketsAttempt = ca.revokeTicketsAttempt = jest.fn(() => () => {});
+  mockStartTicketBuyerV2Attempt = ca.startTicketBuyerV2Attempt = jest.fn(
+    () => () => {}
+  );
+  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+    () => false
+  );
+  mockTicketBuyerV2Cancel = ca.ticketBuyerV2Cancel = jest.fn(() => () => {});
+  mockGetRunningIndicator = sel.getRunningIndicator = jest.fn(() => false);
 });
 
 test("render LEGACY_PurchasePage", () => {
@@ -218,9 +231,11 @@ test("render LEGACY_PurchasePage", () => {
   );
 
   // change stakepool
-  user.click(
-    screen.getByRole("option", { name: mockConfiguredStakePools[0].Host })
-  );
+  const stakePoolSelectOption = screen.getAllByRole("option", {
+    name: mockConfiguredStakePools[0].Host
+  })[0];
+
+  user.click(stakePoolSelectOption);
   user.click(
     screen.getByRole("option", { name: mockConfiguredStakePools[1].Host })
   );
@@ -344,4 +359,68 @@ test("render LEGACY_PurchasePage", () => {
   user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
+});
+
+test("test legacy autobuyer", () => {
+  render(<TicketAutoBuyer />, initialState);
+  const mockBalanceToMaintain = 14;
+  user.type(
+    screen.getByLabelText("Balance to Maintain:"),
+    `${mockBalanceToMaintain}`
+  );
+
+  // change stakepool
+  const stakePoolSelectOption = screen.getAllByRole("option", {
+    name: mockConfiguredStakePools[0].Host
+  })[0];
+
+  user.click(stakePoolSelectOption);
+  user.click(
+    screen.getByRole("option", { name: mockConfiguredStakePools[1].Host })
+  );
+  user.click(screen.getByTestId("toggleSwitch"));
+
+  expect(
+    screen.getByText(/start ticket buyer confirmation/i)
+  ).toBeInTheDocument();
+  expect(screen.getAllByText(mockConfiguredStakePools[1].Host).length).toBe(2);
+  expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument();
+  // cancel first
+  user.click(screen.getByText("Cancel"));
+  // try again
+  user.click(screen.getByTestId("toggleSwitch"));
+  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.click(screen.getByText("Continue"));
+  expect(mockStartTicketBuyerV2Attempt).toHaveBeenCalledWith(
+    mockPassphrase,
+    mockMixedAccount,
+    mockBalanceToMaintain * 100000000,
+    mockConfiguredStakePools[1]
+  );
+  //
+});
+
+test("test legacy autobuyer (autobuyer is runnning)", () => {
+  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+    () => true
+  );
+  render(<TicketAutoBuyer />, initialState);
+  expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
+  expect(screen.getByText(/turn off auto buyer/i)).toBeInTheDocument();
+  user.click(screen.getByTestId("toggleSwitch"));
+  expect(mockTicketBuyerV2Cancel).toHaveBeenCalled();
+});
+
+test("test legacy autobuyer (a process is runnning)", () => {
+  mockGetRunningIndicator = sel.getRunningIndicator = jest.fn(() => true);
+  render(<TicketAutoBuyer />, initialState);
+  expect(
+    screen.getByText(/privacy mixer or purchase ticket attempt running/i)
+  ).toBeInTheDocument();
+  user.click(screen.getByTestId("toggleSwitch"));
+
+  expect(
+    screen.queryByText(/start ticket buyer confirmation/i)
+  ).not.toBeInTheDocument();
+  expect(mockGetRunningIndicator).toHaveBeenCalled();
 });

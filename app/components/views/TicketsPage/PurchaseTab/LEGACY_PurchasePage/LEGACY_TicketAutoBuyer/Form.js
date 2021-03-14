@@ -9,13 +9,13 @@ const TicketAutoBuyerForm = ({
   onDisableTicketAutoBuyer,
   isTicketAutoBuyerEnabled,
   balanceToMaintain,
-  onChangeBalanceToMaintain,
+  setBalanceToMaintain,
   balanceToMaintainError,
   account,
-  changeAccount,
+  setAccount,
   configuredStakePools,
   stakePool,
-  changeStakePool,
+  setStakePool,
   isFormValid,
   clicked,
   onClick,
@@ -99,7 +99,7 @@ const TicketAutoBuyerForm = ({
             <AccountsSelect
               {...{ account }}
               disabled={isTicketAutoBuyerEnabled}
-              onChange={changeAccount}
+              onChange={setAccount}
               showAccountsButton={false}
               hideSpendable={true}
               filterAccounts={notMixedAccounts}
@@ -115,21 +115,26 @@ const TicketAutoBuyerForm = ({
               options={configuredStakePools}
               disabled={isTicketAutoBuyerEnabled}
               value={stakePool}
-              onChange={changeStakePool}
+              onChange={setStakePool}
             />
           </div>
         </div>
       </div>
       <div className="stakepool-auto-buyer-row">
         <div className="stakepool-auto-buyer-row-portion-full">
-          <div className="stakepool-autobuyer-label">
+          <label
+            className="stakepool-autobuyer-label"
+            htmlFor="balanceToMaintain">
             <T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />:
-          </div>
+          </label>
           <div className="stakepool-autobuyer-input">
             <DcrInput
+              id="balanceToMaintain"
               disabled={isTicketAutoBuyerEnabled}
               amount={balanceToMaintain}
-              onChangeAmount={onChangeBalanceToMaintain}
+              onChangeAmount={({ atomValue }) =>
+                setBalanceToMaintain(atomValue)
+              }
               invalid={balanceToMaintainError}
               invalidMessage={
                 <T

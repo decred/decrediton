@@ -16,6 +16,7 @@ const ToggleSwitch = ({
     content={enabled ? enabledText : notEnabledText}>
     <div className={styles.toggleSwitch}>
       <div
+        data-testid="toggleSwitch"
         className={enabled ? styles.enabled : styles.disabled}
         onClick={!disabled ? onClick : undefined}>
         <div
