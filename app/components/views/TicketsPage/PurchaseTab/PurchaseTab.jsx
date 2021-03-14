@@ -13,7 +13,7 @@ function Purchase() {
 
   return isLegacy ? (
     <LEGACY_PurchasePage
-      {...{isShowingVsp, toggleShowVsp, toggleIsLegacy }}
+      {...{ isShowingVsp, toggleShowVsp, toggleIsLegacy }}
     />
   ) : (
     <PurchasePage {...{ toggleIsLegacy }} />

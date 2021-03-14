@@ -1,7 +1,7 @@
 import { compose, eq, get } from "fp";
 import { spring } from "react-motion";
 import PurchaseTicketsForm from "./Form";
-import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced/PurchaseTicketsAdvanced";
+import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
 import { isNullOrUndefined } from "util";
 import { usePurchaseTickets } from "./hooks";

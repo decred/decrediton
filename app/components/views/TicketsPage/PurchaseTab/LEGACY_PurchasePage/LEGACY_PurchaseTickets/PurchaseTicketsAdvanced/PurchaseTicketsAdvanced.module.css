@@ -97,3 +97,36 @@ label.expiry {
   margin: 0;
   padding: 0;
 }
+
+@media screen and (max-width: 1179px) {
+  .infoGrid {
+    grid-template-columns: repeat(4, max-content);
+  }
+
+  label.expiry {
+    margin-left: 0;
+    grid-column-start: 1;
+  }
+
+  .infoValue.expiry {
+    grid-column: 2 / -1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, max-content);
+  }
+  .bigInput {
+    width: 150px;
+  }
+  label.ticketFee,
+  label.txFee {
+    margin-left: 0;
+    grid-column-start: 1;
+  }
+
+  .infoValue {
+    grid-column: 2 / -1;
+  }
+}
