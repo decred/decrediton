@@ -6,7 +6,6 @@ import {
 } from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
-import { purchaseTickets } from "connectors";
 import { Balance } from "shared";
 import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
@@ -14,6 +13,7 @@ import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
 import styles from "./TicketsPage.module.css";
 import { TICKET_ICON } from "constants";
+import { useTicketsPage } from "./hooks";
 
 const PageHeader = () => (
   <TitleHeader
@@ -22,25 +22,28 @@ const PageHeader = () => (
   />
 );
 
-const TabHeader = purchaseTickets(({ ticketPrice }) => (
-  <DescriptionHeader
-    description={
-      <T
-        id="tickets.description"
-        m="Current Price: {ticketPrice}"
-        values={{
-          ticketPrice: (
-            <Balance
-              flat
-              amount={ticketPrice}
-              classNameWrapper={styles.smallBalance}
-            />
-          )
-        }}
-      />
-    }
-  />
-));
+const TabHeader = () => {
+  const { ticketPrice } = useTicketsPage();
+  return (
+    <DescriptionHeader
+      description={
+        <T
+          id="tickets.description"
+          m="Current Price: {ticketPrice}"
+          values={{
+            ticketPrice: (
+              <Balance
+                flat
+                amount={ticketPrice}
+                classNameWrapper={styles.smallBalance}
+              />
+            )
+          }}
+        />
+      }
+    />
+  );
+};
 
 export default () => (
   <TabbedPage header={<PageHeader />}>

@@ -339,6 +339,14 @@ test("render LEGACY_PurchasePage", () => {
   // backup redeem script
   user.click(screen.getByText("Backup Redeem Scripts"));
   expect(screen.getByText("Configured VSPs")).toBeInTheDocument();
+
+  // try to add add custom VSP
+  user.click(screen.getByText("Add VSP"));
+  const testStakePoolHost = "test-stakepool-host";
+  user.type(screen.getByRole("combobox"), testStakePoolHost);
+  user.click(screen.getByRole("option", { name: testStakePoolHost }));
+  expect(mockAddCustomStakePool).toHaveBeenCalledWith(testStakePoolHost);
+
   user.click(screen.getByText("Cancel"));
   expect(screen.getByText("Purchase Tickets")).toBeInTheDocument();
 
@@ -428,14 +436,4 @@ test("test legacy autobuyer (a process is runnning)", () => {
     screen.queryByText(/start ticket buyer confirmation/i)
   ).not.toBeInTheDocument();
   expect(mockGetRunningIndicator).toHaveBeenCalled();
-});
-
-test("test add custom stakepool", () => {
-  sel.configuredStakePools = jest.fn(() => []);
-  render(<Purchase />);
-  const testStakePoolHost = "test-stakepool-host";
-  user.type(screen.getByRole("combobox"), testStakePoolHost);
-  user.click(screen.getByRole("option", { name: testStakePoolHost }));
-  expect(mockAddCustomStakePool).toHaveBeenCalledWith(testStakePoolHost);
-  screen.debug();
 });
