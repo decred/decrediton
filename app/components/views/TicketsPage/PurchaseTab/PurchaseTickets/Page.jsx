@@ -110,7 +110,7 @@ export function PurchasePage({
   ...props
 }) {
   return (
-    <div className="purchase-ticket-area">
+    <div className={styles.purchaseTicketArea}>
       <StakeInfo {...{ sidebarOnBottom }} />
       {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
       <Subtitle

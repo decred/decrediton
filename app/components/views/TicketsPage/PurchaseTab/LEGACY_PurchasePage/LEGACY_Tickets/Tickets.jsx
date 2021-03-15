@@ -1,12 +1,11 @@
-import PurchaseTickets from "./LEGACY_PurchaseTickets";
-import TicketAutoBuyer from "./LEGACY_TicketAutoBuyer";
+import PurchaseTickets from "../LEGACY_PurchaseTickets";
+import TicketAutoBuyer from "../LEGACY_TicketAutoBuyer";
 import { FormattedMessage as T } from "react-intl";
-import StakeInfo from "../StakeInfo/StakeInfo";
+import StakeInfo from "../../StakeInfo/StakeInfo";
 import { ShowWarning, Subtitle } from "shared";
-import "style/PurchaseTickets.less";
 import { InfoDocModalButton } from "buttons";
-import UnsignedTickets from "../UnsignedTickets";
-import styles from "../PurchaseTab.module.css";
+import UnsignedTickets from "../../UnsignedTickets";
+import styles from "./Tickets.module.css";
 import { Checkbox } from "pi-ui";
 
 const getTitleIcon = ({ toggleIsLegacy }) => (
@@ -15,7 +14,7 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
       <InfoDocModalButton
         document="PurchaseTicketsInfo"
         modalClassName={styles.infoFields}
-        className="info-title-icon"
+        className={styles.infoTitleIcon}
         draggable
       />
       <Checkbox
@@ -40,12 +39,12 @@ const Tickets = ({
   ...props
 }) => {
   return (
-    <div className="purchase-ticket-area">
+    <div className={styles.purchaseTicketArea}>
       <StakeInfo {...{ sidebarOnBottom }} />
       <Subtitle
         title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
         children={getTitleIcon({ toggleIsLegacy })}
-        className="is-row"
+        className={styles.isRow}
       />
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
@@ -64,7 +63,7 @@ const Tickets = ({
       {isWatchingOnly ? (
         <UnsignedTickets {...{ ...props }} />
       ) : spvMode ? (
-        <div className="spv-autobuyer-warning">
+        <div>
           <T
             id="spv.auto.buyer.warn"
             m="Ticket Auto Buyer not available while using SPV"

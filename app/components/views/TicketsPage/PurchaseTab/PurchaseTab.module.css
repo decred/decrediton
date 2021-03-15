@@ -209,6 +209,68 @@
 .vspContainer .ticketPoolFee > div:nth-child(1) {
   width: 50px;
 }
+.purchaseTicketArea {
+  width: 740px;
+  -webkit-user-select: text;
+}
+.purchaseTicketArea .tabbedPageSubtitle {
+  width: auto;
+  justify-content: space-between;
+}
+.autoBuyerRow {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+  flex-direction: row-reverse;
+}
+.autobuyerInput {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+
+  width: 200px;
+}
+.autoBuyerRowPortionFull {
+  width: 100%;
+  text-align: center;
+}
+.autoBuyerRowPortionFull .autobuyerInput {
+  width: 100px;
+}
+.autoBuyerRowPortionHalf {
+  width: 50%;
+  display: flex;
+  margin-bottom: 10px;
+}
+.autoBuyerRowPortionHalf .autobuyerInput {
+  width: 230px;
+}
+.autoBuyerRowPortionHalf {
+  width: 50%;
+  display: flex;
+  margin-bottom: 10px;
+}
+.autoBuyerRowPortionHalf .autobuyerInput {
+  width: 230px;
+}
+.autobuyerLabel {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+
+  font-size: 16px;
+  line-height: 20px;
+}
+.error {
+  color: var(--error-text-color);
+}
+.orangeWarning {
+  position: inherit;
+}
+.confirmLabel {
+  display: inline-block;
+  margin-right: 0.5em;
+}
 
 @media screen and (max-width: 1179px) {
   .inputSelect {
@@ -217,9 +279,15 @@
   .buttonsArea {
     width: 667px;
   }
+  .purchaseTicketArea {
+    width: 667px;
+  }
 }
 
 @media screen and (max-width: 768px) {
+  .purchaseTicketArea {
+    width: 355px;
+  }
   .ticketForm {
     display: grid;
     grid-template-columns: 50px 225px;
@@ -260,5 +328,11 @@
   .buttonsArea {
     width: 355px;
     margin-bottom: 20px;
+  }
+  .autoBuyerRow {
+    flex-direction: column;
+  }
+  .autoBuyerRowPortionFull {
+    text-align: start;
   }
 }

@@ -1,65 +1,12 @@
 @import (reference) "./main.less";
 @import (reference) "./MiscComponents.less";
 
-.purchase-ticket-area {
-  width: 740px;
-}
-
-.purchase-ticket-area .tabbed-page-subtitle {
-  width: auto;
-  justify-content: space-between;
-}
-
 .stakepool-purchase-ticket-title-info-icon {
   margin-left: auto;
 }
 
-.info-title-icon {
-  align-self: flex-end;
-  margin-right: 10px;
-}
-
 .stakepool-purchase-ticket-input {
   height: 20px;
-}
-
-.stakepool-auto-buyer-row {
-  display: flex;
-  margin-bottom: 10px;
-  width: 100%;
-  flex-direction: row-reverse;
-}
-
-.stakepool-auto-buyer-row-portion-full {
-  width: 100%;
-  text-align: center;
-
-  .stakepool-autobuyer-input {
-    width: 100px;
-  }
-}
-
-.stakepool-auto-buyer-row-portion-half {
-  width: 50%;
-  display: flex;
-  margin-bottom: 10px;
-
-  .stakepool-autobuyer-input {
-    width: 230px;
-  }
-}
-
-.stakepool-autobuyer-label {
-  .inline-block-mixin;
-
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.stakepool-autobuyer-input {
-  .inline-block-mixin;
-
-  width: 200px;
 }
 
 .stakepool-auto-buyer-show-advanced-area {
@@ -68,31 +15,13 @@
   float: right;
 }
 
-@media screen and (max-width: 1179px) {
-  .purchase-ticket-area {
-    width: 667px;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .stakepool-advanced-big-input {
     width: 150px;
   }
 
-  .purchase-ticket-area {
-    width: 355px;
-  }
-
   .stakepool-purchase-ticket-num-select {
     width: 231px;
-  }
-
-  .stakepool-auto-buyer-row {
-    flex-direction: column;
-  }
-
-  .stakepool-auto-buyer-row-portion-full {
-    text-align: start;
   }
 
   .num-tickets-icon.less {

@@ -15,7 +15,6 @@
   width: 100%;
   flex-direction: row-reverse;
 }
-
 .rowPortionFull {
   width: 100%;
   text-align: center;
@@ -23,7 +22,6 @@
 .rowPortionFull .input {
   width: 100px;
 }
-
 .rowPortionHalf {
   width: 50%;
   display: flex;
