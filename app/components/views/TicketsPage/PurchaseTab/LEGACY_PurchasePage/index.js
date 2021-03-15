@@ -8,6 +8,7 @@ import { ExternalLink } from "shared";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 import { FormattedMessage as T } from "react-intl";
 import StakePoolsAddForm from "./LEGACY_AddForm";
+import styles from "./PurchasePage.module.css";
 
 const StakepoolListingDisabled = React.memo(() => (
   <div>
@@ -32,7 +33,7 @@ const NoAvailableStakepools = React.memo(() => (
       link: (
         <ExternalLink
           href="https://api.decred.org/?c=gsd"
-          className="stakepool-link">
+          className={styles.stakepoolLink}>
           <T id="stake.discoverStakeOoolsAPILink" m="this link" />
         </ExternalLink>
       )

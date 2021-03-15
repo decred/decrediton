@@ -15,7 +15,6 @@ import UISettings from "./UISettings";
 import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
 import { Subtitle } from "shared";
-import "style/StakePool.less"; // TODO: delete this as well!
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 

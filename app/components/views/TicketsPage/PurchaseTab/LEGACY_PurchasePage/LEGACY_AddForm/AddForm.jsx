@@ -6,9 +6,7 @@ import {
 } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, LEGACY_StakePoolSelect } from "inputs";
-import "style/Layout.less";
-import "style/StakePool.less";
-import styles from "../PurchaseTab.module.css";
+import styles from "./AddForm.module.css";
 import { AddVSPButton } from "buttons";
 import { Checkbox } from "pi-ui";
 
@@ -42,7 +40,7 @@ const StakePoolsAddForm = ({
   addCustomStakePool
 }) => (
   <>
-    <div className="stakepool-add-title">
+    <div className={styles.addTitle}>
       <T id="stakepool.addPoolTitle" m="Add a VSP" />
       <div className={styles.iconWrapper}>
         <Checkbox
@@ -54,13 +52,13 @@ const StakePoolsAddForm = ({
         />
       </div>
     </div>
-    <div className="stakepool-add-area">
-      <div className="stakepool-add-area-left">
-        <div className="stakepool-field">
-          <div className="stakepool-field-label">
+    <div className={styles.addArea}>
+      <div className={styles.addAreaLeft}>
+        <div className={styles.field}>
+          <div className={styles.fieldLabel}>
             <T id="stakepool.label" m="VSP" />:
           </div>
-          <div className="stakepool-field-value">
+          <div className={styles.fieldValue}>
             <LEGACY_StakePoolSelect
               creatable
               options={unconfiguredStakePools}
@@ -70,15 +68,14 @@ const StakePoolsAddForm = ({
             />
           </div>
         </div>
-        <div className="stakepool-field">
-          <div className="stakepool-field-label">
+        <div className={styles.field}>
+          <div className={styles.fieldLabel}>
             <T id="stakepool.apikey" m="API Key" />:
           </div>
-          <div className="stakepool-field-value">
+          <div className={styles.fieldValue}>
             <TextInput
               required
               showErrors={hasFailedAttempt}
-              className="stakepool-add-apikey"
               placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
               value={apiKey}
               onChange={(e) => onChangeApiKey(e.target.value)}
@@ -86,8 +83,8 @@ const StakePoolsAddForm = ({
           </div>
         </div>
       </div>
-      <div className="stakepool-add-area-right">
-        <div className="stakepool-add-instructions">
+      <div className={styles.addAreaRight}>
+        <div>
           <div>
             <T
               id="stake.addPool.info"
@@ -101,10 +98,10 @@ const StakePoolsAddForm = ({
               }}
             />
           </div>
-          <div className="stakepool-link-button-container">
+          <div className={styles.linkButtonContainer}>
             <ScriptRedeemableButton
               document={"ScriptNotRedeemableInfo"}
-              className="stakepool-add-not-redeemable"
+              className={styles.addNotRedeemable}
               buttonLabel={
                 <T id="stake.notRedeemed" m={"Script not redeemable?"} />
               }
@@ -113,12 +110,12 @@ const StakePoolsAddForm = ({
           </div>
         </div>
       </div>
-      <div className="stakepool-add-toolbar">
+      <div className={styles.addToolbar}>
         <AddVSPButton
           modalTitle={<T id="stake.addPoolConfirmation" m="VSP Confirmation" />}
           loading={isSavingStakePoolConfig}
           disabled={!apiKey || isSavingStakePoolConfig}
-          className="stakepool-confirm-button"
+          className={styles.confirmButton}
           onSubmit={onSetStakePoolInfo}
           buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}
           modalContent={
@@ -130,7 +127,7 @@ const StakePoolsAddForm = ({
         />
         {configuredStakePools.length ? (
           <SlateGrayButton
-            className="stakepool-hide-config"
+            className={styles.hideConfig}
             onClick={onCancelAddStakePool}>
             <T id="stake.addPool.cancelBtn" m="Cancel" />
           </SlateGrayButton>

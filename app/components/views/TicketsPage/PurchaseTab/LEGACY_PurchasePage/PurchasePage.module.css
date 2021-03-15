@@ -1,0 +1,5 @@
+.stakepoolLink {
+  color: var(--input-color);
+  font-weight: bold;
+  cursor: pointer;
+}

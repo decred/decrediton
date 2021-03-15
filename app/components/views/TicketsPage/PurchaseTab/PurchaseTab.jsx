@@ -1,7 +1,6 @@
 import PurchasePage from "./PurchaseTickets/PurchaseTickets";
 import LEGACY_PurchasePage from "./LEGACY_PurchasePage";
 import { useState } from "react";
-import "style/StakePool.less";
 import { usePurchaseTab } from "./hooks";
 
 function Purchase() {

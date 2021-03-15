@@ -4,8 +4,6 @@ import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { Balance } from "shared";
 import styles from "../PurchaseTab.module.css";
-// XXX this should go away!
-import "style/StakePool.less";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
 
