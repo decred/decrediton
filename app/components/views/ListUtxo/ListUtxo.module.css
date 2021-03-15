@@ -12,3 +12,25 @@
   border-bottom: 1px solid var(--disabled-background-color);
   padding: 10px;
 }
+
+.inputSelect {
+  font-size: 16px;
+  text-align: left;
+  width: 220px;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-top: 3px;
+}
+
+@media screen and (max-width: 1179px) {
+  .inputSelect {
+    width: 220px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .inputSelect {
+    margin-left: 10px;
+    align-self: flex-end;
+  }
+}

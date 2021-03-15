@@ -32,7 +32,7 @@ const PurchaseTicketAdvancedInfo = ({
   children
 }) => (
   <>
-    <label htmlFor={id} className={className}>
+    <label htmlFor={id} className={classNames(styles.infoLabel, className)}>
       {label}:
     </label>
     <div className={classNames(styles.infoValue, className)}>

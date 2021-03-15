@@ -10,38 +10,6 @@
   justify-content: space-between;
 }
 
-.purchase-ticket-area-row-label {
-  font-size: 19px;
-  color: var(--input-color-default);
-  align-self: flex-end;
-}
-
-.purchase-ticket-input-address {
-  align-self: flex-start;
-
-  .purchase-ticket-area-row-label {
-    width: 82px;
-    text-align: right;
-    justify-self: flex-end;
-  }
-}
-
-.purchase-ticket-input-amount {
-  flex-wrap: wrap;
-  align-self: flex-start;
-}
-
-.purchase-ticket-input-amount .purchase-ticket-area-row-label {
-  padding-left: 52px;
-}
-
-.stakepool-purchase-ticket-buttons-area {
-  text-align: right;
-  display: flex;
-  width: 740px;
-  justify-content: flex-end;
-}
-
 .stakepool-purchase-ticket-title-info-icon {
   margin-left: auto;
 }
@@ -51,34 +19,8 @@
   margin-right: 10px;
 }
 
-.purchase-ticket-area-row {
-  padding: 29px 0 0 20px;
-  border-bottom: 1px var(--disabled-background-color) solid;
-  background-color: var(--background-back-color);
-  padding-bottom: 40px;
-  align-content: flex-start;
-}
-
-.stakepool-purchase-ticket-input-select-container {
-  display: flex;
-  align-self: center;
-}
-
-.stakepool-purchase-ticket-input-select {
-  font-size: 16px;
-  text-align: left;
-  width: 220px;
-  margin-right: 6px;
-  margin-left: 6px;
-  margin-top: 3px;
-}
-
 .stakepool-purchase-ticket-input {
   height: 20px;
-}
-
-..stakepool-content-revoke-button {
-  margin-right: 10px;
 }
 
 .stakepool-auto-buyer-row {
@@ -126,84 +68,9 @@
   float: right;
 }
 
-.stakepool-info-icon {
-  background-position: 0px 50%;
-  background-size: 16px;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  width: 100%;
-  font-family: var(--font-family-monospace);
-  color: var(--header-desc-lighter-color);
-  font-size: 11px;
-  line-height: 11px;
-  display: flex;
-  align-items: center;
-  height: 25px;
-
-  &.stakepool-icon {
-    background-image: var(--stake-pool-icon);
-  }
-
-  &.stakepool-expiry-icon {
-    background-image: var(--expiry-icon);
-  }
-
-  &.stakepool-fee-icon {
-    background-image: var(--split-fee-icon);
-  }
-
-  &.stakepool-ticket-address-icon {
-    background-image: var(--ticket-address-icon);
-  }
-
-  &.stakepool-fee-address-icon {
-    background-image: var(--fee-address-icon);
-  }
-
-  &.stakepool-pool-fee-icon {
-    background-image: var(--pool-fee-icon);
-  }
-
-  &.account-select-icon {
-    background-image: var(--wallet-gray-icon);
-    width: 25px;
-    background-position: 2px 5px;
-    background-size: 22px;
-    align-self: flex-end;
-  }
-}
-
-.purchase-ticket-action-buttons {
-  float: right;
-  margin: 15px 19px 0 0;
-}
-
-.stakepool-purchase-ticket-info {
-  margin-bottom: 10px;
-  background-color: var(--transfer-details-bg);
-}
-
-.input-purchase-ticket-valid-message-area {
-  width: 200px;
-  position: relative;
-  display: grid;
-  grid-template-rows: 20px 20px;
-  grid-template-columns: 72px auto;
-  bottom: 0px;
-  left: 0px;
-  margin: 0;
-  padding-top: 10px;
-  padding-left: 72px;
-}
-
 @media screen and (max-width: 1179px) {
-  .purchase-ticket-area,
-  .stakepool-purchase-ticket-buttons-area {
+  .purchase-ticket-area {
     width: 667px;
-  }
-
-  .stakepool-purchase-ticket-input-select {
-    width: 220px;
   }
 }
 
@@ -212,59 +79,12 @@
     width: 150px;
   }
 
-  .purchase-ticket-area,
-  .stakepool-purchase-ticket-buttons-area {
+  .purchase-ticket-area {
     width: 355px;
-  }
-
-  .stakepool-purchase-ticket-buttons-area {
-    margin-bottom: 20px;
-  }
-
-  .purchase-ticket-area-row {
-    padding: 23px 0 0 25px;
-
-    &.is-row {
-      flex-direction: column;
-    }
   }
 
   .stakepool-purchase-ticket-num-select {
     width: 231px;
-  }
-
-  .stakepool-purchase-ticket-input-select-container {
-    display: flex;
-  }
-
-  .stakepool-purchase-ticket-input-select-container
-    .stakepool-purchase-ticket-input-select {
-    width: 205px;
-  }
-
-  .stakepool-purchase-ticket-input-select {
-    margin-left: 10px;
-    align-self: flex-end;
-  }
-
-  .purchase-ticket-area-row-label {
-    font-size: 13px;
-  }
-
-  .purchase-ticket-input-address {
-    .purchase-ticket-area-row-label {
-      width: inherit;
-      text-align: right;
-    }
-  }
-
-  .purchase-ticket-input-amount {
-    margin-top: 25px;
-    margin-bottom: 40px;
-
-    .purchase-ticket-area-row-label {
-      padding-left: 0;
-    }
   }
 
   .stakepool-auto-buyer-row {
@@ -277,17 +97,5 @@
 
   .num-tickets-icon.less {
     margin-left: auto;
-  }
-}
-
-.purchase-ticket-vsp-container {
-  display: flex;
-
-  .ticket_pool_fee {
-    margin-left: 10px;
-
-    & > div:nth-child(1) {
-      width: 50px;
-    }
   }
 }

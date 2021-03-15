@@ -1,0 +1,152 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+.areaRow {
+  padding: 29px 0 0 20px;
+  border-bottom: 1px var(--disabled-background-color) solid;
+  background-color: var(--background-back-color);
+  padding-bottom: 40px;
+  align-content: flex-start;
+}
+.inputAddress {
+  align-self: flex-start;
+}
+.inputAddress .rowLabel {
+  width: 82px;
+  text-align: right;
+  justify-self: flex-end;
+}
+.inputAmount {
+  flex-wrap: wrap;
+  align-self: flex-start;
+}
+.inputAmount .rowLabel {
+  padding-left: 52px;
+}
+.inputSelect {
+  font-size: 16px;
+  text-align: left;
+  width: 220px;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-top: 3px;
+}
+.infoIcon {
+  background-position: 0px 50%;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  width: 100%;
+  font-family: var(--font-family-monospace);
+  color: var(--header-desc-lighter-color);
+  font-size: 11px;
+  line-height: 11px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+}
+.infoIcon.feeIcon {
+  background-image: var(--split-fee-icon);
+}
+.infoIcon.accountSelectIcon {
+  background-image: var(--wallet-gray-icon);
+  width: 25px;
+  background-position: 2px 5px;
+  background-size: 22px;
+  align-self: flex-end;
+}
+.inputValidMessageArea {
+  width: 200px;
+  position: relative;
+  display: grid;
+  grid-template-rows: 20px 20px;
+  grid-template-columns: 72px auto;
+  bottom: 0px;
+  left: 0px;
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 72px;
+}
+.info {
+  margin-bottom: 10px;
+  background-color: var(--transfer-details-bg);
+}
+.actionButtons {
+  float: right;
+  margin: 15px 19px 0 0;
+}
+.buttonsArea {
+  text-align: right;
+  display: flex;
+  width: 740px;
+  justify-content: flex-end;
+}
+.revokeButton {
+  margin-right: 10px;
+}
+.warningArea {
+  padding-left: 50px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: 5px 50%;
+  border: 1px solid var(--error-text-color);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.backupButtonsRowArea {
+  justify-content: flex-end;
+}
+.stakepoolContentSend {
+  margin-top: 1em;
+}
+.vspWarningBackupRedeemButton {
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 1179px) {
+  .inputSelect {
+    width: 220px;
+  }
+  .buttonsArea {
+    width: 667px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .areaRow {
+    padding: 23px 0 0 25px;
+  }
+  .areaRow.isRow {
+    flex-direction: column;
+  }
+  .rowLabel {
+    font-size: 13px;
+  }
+  .inputAddress .rowLabel {
+    width: inherit;
+    text-align: right;
+  }
+  .inputAmount {
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+  .inputAmount .rowLabel {
+    padding-left: 0;
+  }
+  .inputSelect {
+    margin-left: 10px;
+    align-self: flex-end;
+  }
+  .buttonsArea {
+    width: 355px;
+    margin-bottom: 20px;
+  }
+}

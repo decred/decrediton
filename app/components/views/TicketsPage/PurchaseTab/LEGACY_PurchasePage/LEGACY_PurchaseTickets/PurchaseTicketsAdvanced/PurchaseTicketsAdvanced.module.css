@@ -4,17 +4,17 @@
   grid-template-columns: repeat(6, max-content);
   align-items: center;
 }
-label {
+label.infoLabel {
   white-space: nowrap;
   font-size: 13px;
   text-align: right;
   grid-column: 1;
 }
-label.txFee {
+label.infoLabel.txFee {
   grid-column: 3;
   margin-left: 30px;
 }
-label.expiry {
+label.infoLabel.expiry {
   grid-column: 5;
   margin-left: 30px;
 }
@@ -103,7 +103,7 @@ label.expiry {
     grid-template-columns: repeat(4, max-content);
   }
 
-  label.expiry {
+  label.infoLabel.expiry {
     margin-left: 0;
     grid-column-start: 1;
   }
@@ -120,8 +120,8 @@ label.expiry {
   .bigInput {
     width: 150px;
   }
-  label.ticketFee,
-  label.txFee {
+  label.infoLabel.ticketFee,
+  label.infoLabel.txFee {
     margin-left: 0;
     grid-column-start: 1;
   }
