@@ -1,0 +1,20 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.select {
+  width: 300px;
+}
+.value {
+  display: flex;
+  justify-content: space-between;
+}
+.name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.spendable {
+  min-width: 10em;
+  text-align: right;
+}
