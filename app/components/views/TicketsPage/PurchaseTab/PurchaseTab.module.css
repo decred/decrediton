@@ -161,8 +161,8 @@
   align-items: center;
   height: 25px;
 }
-.infoIcon.feeIcon {
-  background-image: var(--split-fee-icon);
+.infoIcon.poolFeeIcon {
+  background-image: var(--pool-fee-icon);
 }
 .infoIcon.accountSelectIcon {
   background-image: var(--wallet-gray-icon);

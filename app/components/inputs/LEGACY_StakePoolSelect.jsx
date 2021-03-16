@@ -85,12 +85,11 @@ const StakePoolSelect = ({
   };
 
   const Component = creatable ? Creatable : Select;
-  const options = getOptions();
 
   return (
     <Component
       {...props}
-      options={options}
+      options={getOptions()}
       placeholder={intl.formatMessage(messages.placeholder)}
       promptTextCreator={addStakePoolLabel}
       onChange={onChangeLocal}
