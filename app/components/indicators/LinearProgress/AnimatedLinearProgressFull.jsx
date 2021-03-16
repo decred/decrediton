@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDaemonStartup, useMountEffect } from "hooks";
-import "style/Loading.less"; // XXX: continue css module here!
 import { HeaderTimeMsg } from "views/GetStartedPage/messages";
 import { FormattedRelative } from "shared";
 import { FormattedMessage as T } from "react-intl";

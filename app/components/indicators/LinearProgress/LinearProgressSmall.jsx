@@ -1,4 +1,3 @@
-import "style/Loading.less";
 import style from "./LinearProgress.module.css";
 import { classNames } from "pi-ui";
 
