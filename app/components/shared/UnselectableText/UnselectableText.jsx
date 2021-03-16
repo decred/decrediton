@@ -1,4 +1,4 @@
-import "style/MiscComponents.less";
+import "./UnselectableText.module.css";
 
 export const UnselectableText = ({ children, ...props }) => (
   <p data-pseudo-content={children} {...props} />

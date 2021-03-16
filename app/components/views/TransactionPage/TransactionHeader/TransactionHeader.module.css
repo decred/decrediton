@@ -31,6 +31,9 @@
   width: 80px;
   max-height: 22px;
 }
+.thinButton {
+  padding: 5px 20px 5px 20px !important;
+}
 @media screen and (max-width: 768px) {
   .standalonePage .subtitle {
     margin-top: 10px;

@@ -207,6 +207,8 @@
 .tabbed-page-header > .tabs > .tab {
   line-height: 35px;
   margin-right: 55px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .tabbed-page-header > .tabs > .tab:last-of-type {
@@ -223,6 +225,17 @@
   background-color: var(--accent-color);
   position: absolute;
   height: 5px;
+}
+
+.tabbed-page-header .tabs > .tab > a {
+  margin: 0px 5px 0px 5px;
+  color: var(--tab-text);
+  text-decoration: none;
+}
+
+.tabbed-page-header .tabs > .tab > a:hover,
+.tabbed-page-header .tabs > .tab > a.active {
+  color: var(--tab-text-active-hover);
 }
 
 .tabbed-page-body.governance>.tab-content {
