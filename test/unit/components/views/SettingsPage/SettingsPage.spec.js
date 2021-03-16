@@ -314,14 +314,14 @@ const testComboxBoxInput = (
   });
   user.click(screen.getByRole("link", { name: "Settings" }));
   const saveButton = screen.getByText("Save");
-  expect(saveButton.className).toMatch("disabled");
+  expect(saveButton.disabled).toBe(true);
   const inputControl = screen.getByLabelText(labelName);
   const inputValueSpan = getOptionByNameAndType(oldValue, "value");
   expect(inputValueSpan.textContent).toMatch(oldValue);
   user.click(inputControl.parentNode);
   user.click(getOptionByNameAndType(option, "option"));
 
-  expect(screen.getByText("Save").className).not.toMatch("disabled");
+  expect(screen.getByText("Save").disabled).toBe(false);
 
   if (needsConfirm) {
     testConfirmModal("Save", "Reset required");
@@ -382,14 +382,14 @@ const testTextFieldInput = (
   });
   user.click(screen.getByRole("link", { name: "Settings" }));
   const saveButton = screen.getByText("Save");
-  expect(saveButton.className).toMatch("disabled");
+  expect(saveButton.disabled).toBe(true);
 
   const inputControl = screen.getByLabelText(labelName);
   expect(inputControl.value).toMatch(oldValue);
   user.clear(inputControl);
   user.type(inputControl, newValue);
 
-  expect(saveButton.className).not.toMatch("disabled");
+  expect(saveButton.disabled).toBe(false);
   if (needsConfirm) {
     testConfirmModal("Save", "Reset required");
   } else {
@@ -433,7 +433,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
   });
   user.click(screen.getByRole("link", { name: "Settings" }));
   const saveButton = screen.getByText("Save");
-  expect(saveButton.className).toMatch("disabled");
+  expect(saveButton.disabled).toBe(true);
 
   options.forEach((option) =>
     expect(screen.getByLabelText(option.label).checked).toBe(
@@ -452,7 +452,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
     )
   );
 
-  expect(saveButton.className).not.toMatch("disabled");
+  expect(saveButton.disabled).toBe(false);
   user.click(saveButton);
   const expectedChange = { ...testCurrentSettings };
   expectedChange[configKey] = otherOption.value;
@@ -469,7 +469,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
     )
   );
 
-  expect(saveButton.className).toMatch("disabled");
+  expect(saveButton.disabled).toBe(true);
 };
 
 test.each([
@@ -498,10 +498,11 @@ const testCheckBoxInput = (label, configKey) => {
   const saveButton = screen.getByText("Save");
 
   expect(checkbox.checked).toBe(defaultCheckedValue);
-  expect(saveButton.className).toMatch("disabled");
+
+  expect(saveButton.disabled).toBe(true);
   user.click(checkbox);
   expect(checkbox.checked).toBe(!defaultCheckedValue);
-  expect(saveButton.className).not.toMatch("disabled");
+  expect(saveButton.disabled).toBe(false);
 
   user.click(saveButton);
   const expectedChange = { ...testCurrentSettings };
@@ -570,12 +571,12 @@ test("test update private passphrase", () => {
   expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
 
   const continueButton = screen.getByText("Continue");
-  expect(continueButton.className).toMatch("disabled");
+  expect(continueButton.disabled).toBe(true);
   // test 'This Field is required' error message
   testPassphraseInputRequiedErrorMsg("Private Passphrase:");
   testPassphraseInputRequiedErrorMsg("New Private Passphrase:");
   testPassphraseInputRequiedErrorMsg("Confirm:");
-  expect(continueButton.className).toMatch("disabled");
+  expect(continueButton.disabled).toBe(true);
 
   // fill input fields
   const testPassphrase = "test-passphrase";
@@ -586,7 +587,7 @@ test("test update private passphrase", () => {
     screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
-  expect(continueButton.className).toMatch("disabled");
+  expect(continueButton.disabled).toBe(true);
   user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
   expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
 
@@ -596,13 +597,13 @@ test("test update private passphrase", () => {
   expect(
     screen.queryByText("Passwords does not match.")
   ).not.toBeInTheDocument();
-  expect(continueButton.className).not.toMatch("disabled");
+  expect(continueButton.disabled).toBe(false);
 
   // clear confirm and new passphrases. should get an error message
   user.clear(screen.getByLabelText(/^confirm/i));
   user.clear(screen.getByLabelText(/^new private passphrase/i));
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
-  expect(continueButton.className).toMatch("disabled");
+  expect(continueButton.disabled).toBe(true);
 
   //refill inputs
   user.type(
@@ -611,7 +612,7 @@ test("test update private passphrase", () => {
   );
   user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
-  expect(continueButton.className).not.toMatch("disabled");
+  expect(continueButton.disabled).toBe(false);
 
   user.click(screen.getByText("Continue"));
   expect(mockChangePassphrase).toHaveBeenCalledWith(

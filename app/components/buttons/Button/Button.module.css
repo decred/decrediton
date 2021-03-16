@@ -1,0 +1,27 @@
+.button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  padding: 12px 30px 14px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  user-select: none;
+  font-family: var(--font-family-regular);
+}
+
+.button[disabled],
+.button[disabled]:hover {
+  cursor: default;
+  background-color: var(--disabled-background-color);
+  color: var(--disabled-color);
+  box-shadow: none;
+  font-weight: 400;
+}

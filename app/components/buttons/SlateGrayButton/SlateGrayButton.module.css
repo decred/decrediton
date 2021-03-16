@@ -1,0 +1,8 @@
+.slateGrayButton {
+  background-color: var(--back-button-bg);
+  color: var(--back-button-text);
+  font-weight: 400;
+}
+.slateGrayButton:hover {
+  background-color: var(--stroke-color-hovered);
+}

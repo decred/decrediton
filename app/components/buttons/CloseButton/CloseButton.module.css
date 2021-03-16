@@ -1,0 +1,7 @@
+.closeButton {
+  background-color: var(--title-text-and-button-background);
+  color: var(--stroke-color-default);
+}
+.closeButton:hover {
+  background-color: var(--title-text-and-button-background-hovered);
+}

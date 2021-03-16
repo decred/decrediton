@@ -21,9 +21,9 @@ const ImportScriptModal = ({ onCancelModal, onSubmit, show }) => {
         <T id="importRedeemScriptModal.title" m="Import Redeem Script" />
       </div>
       <div className={style.importRedeemScriptField}>
-        <div className={style.importRedeemScriptLabel}>
+        <label htmlFor="script" className={style.importRedeemScriptLabel}>
           <T id="importRedeemScriptModal.label" m="Script:" />
-        </div>
+        </label>
         <TextInput
           autoFocus
           required

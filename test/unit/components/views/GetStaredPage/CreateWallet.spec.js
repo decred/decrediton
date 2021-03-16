@@ -173,15 +173,15 @@ test("test copy seed view", async () => {
 
   const confirmSeedCopyButton = screen.getByText(/confirm seed copy/i);
   expect(confirmSeedCopyButton).toBeInTheDocument();
-  expect(confirmSeedCopyButton).toHaveAttribute("disabled");
+  expect(confirmSeedCopyButton.disabled).toBe(true);
 
   const inputControl = screen.getByRole("textbox");
   user.type(inputControl, "some random text");
-  expect(confirmSeedCopyButton).toHaveAttribute("disabled");
+  expect(confirmSeedCopyButton.disabled).toBe(true);
 
   user.clear(inputControl);
   user.type(inputControl, "I understand the risks");
-  expect(confirmSeedCopyButton).not.toHaveAttribute("disabled");
+  expect(confirmSeedCopyButton.disabled).toBe(false);
 
   user.click(confirmSeedCopyButton);
   expect(mockCopySeedToClipboard).toHaveBeenCalledWith(testSeedMnemonic);
@@ -191,7 +191,7 @@ test("test typing a seed word and click on the combobox option on confirm seed v
   await goToConfirmView();
 
   const createWalletButton = screen.getByText(/create wallet/i);
-  expect(createWalletButton).toHaveAttribute("disabled");
+  expect(createWalletButton.disabled).toBe(true);
 
   const comboboxArray = screen.getAllByRole("combobox");
   let savedInvalidCombobox = null;
@@ -234,7 +234,7 @@ test("test typing a seed word and click on the combobox option on confirm seed v
   );
   expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
 
-  await wait(() => expect(createWalletButton).not.toHaveAttribute("disabled"));
+  await wait(() => expect(createWalletButton.disabled).toBe(false));
   user.click(createWalletButton);
   expect(mockCreateWallet).toHaveBeenCalled();
 });
@@ -258,7 +258,7 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
     })
   );
 
-  await wait(() => expect(createWalletButton).not.toHaveAttribute("disabled"));
+  await wait(() => expect(createWalletButton.disabled).toBe(false));
   user.click(createWalletButton);
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
@@ -273,7 +273,7 @@ test("test typing a valid seed word on existing seed view", async () => {
   await goToExistingSeedView();
 
   const createWalletButton = screen.getByText(/create wallet/i);
-  expect(createWalletButton).toHaveAttribute("disabled");
+  expect(createWalletButton.disabled).toBe(true);
 
   const comboboxArray = screen.getAllByRole("combobox");
   expect(comboboxArray.length).toBe(testSeedArray.length);
@@ -376,7 +376,7 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
     )
   );
   await testPrivatePassphraseInputs();
-  expect(screen.getByText(/create wallet/i)).not.toHaveAttribute("disabled");
+  expect(screen.getByText(/create wallet/i).disabled).toBe(false);
 
   const privatePassphraseInput = screen.getByPlaceholderText(
     "Private Passphrase"
@@ -388,24 +388,24 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   // differentiate passphrases
   user.type(repeatPrivatePassphraseInput, "plus-string");
   await wait(() => screen.getByText(/passphrases do not match/i));
-  expect(screen.getByText(/create wallet/i)).toHaveAttribute("disabled");
+  expect(screen.getByText(/create wallet/i).disabled).toBe(true);
   // fix, button should be enabled
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
   await testPrivatePassphraseInputs();
-  expect(screen.getByText(/create wallet/i)).not.toHaveAttribute("disabled");
+  expect(screen.getByText(/create wallet/i).disabled).toBe(false);
 
   // clear passphrases
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
   await wait(() => screen.getByText(/please enter your private passphrase/i));
-  expect(screen.getByText(/create wallet/i)).toHaveAttribute("disabled");
+  expect(screen.getByText(/create wallet/i).disabled).toBe(true);
 
   // fix, button should be enabled
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
   await testPrivatePassphraseInputs();
-  expect(screen.getByText(/create wallet/i)).not.toHaveAttribute("disabled");
+  expect(screen.getByText(/create wallet/i).disabled).toBe(false);
 
   // clear the first seed input, button should be disabled
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () => Promise.reject({}));
@@ -414,7 +414,7 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   await wait(() =>
     expect(screen.getByText("1.").parentNode.className).toMatch(/restore/)
   );
-  expect(screen.getByText(/create wallet/i)).toHaveAttribute("disabled");
+  expect(screen.getByText(/create wallet/i).disabled).toBe(true);
 
   // fix, button should be enabled
   mockDecodeSeed = wla.decodeSeed = jest.fn(() => () =>

@@ -1,0 +1,17 @@
+.keyBlueButton {
+  background-color: var(--input-color);
+  color: var(--white-button-text);
+}
+.keyBlueButton:hover {
+  background-color: var(--input-color-hover);
+}
+.keyBlueButton:active {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--input-color-hover);
+}
+@media screen and (max-width: 299px) {
+  .keyBlueButton {
+    position: absolute;
+    bottom: 18px;
+  }
+}
