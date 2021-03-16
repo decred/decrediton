@@ -169,17 +169,60 @@
 .last {
   border-bottom: 0px none transparent;
 }
+
+.rebroadcastBtnContainer,
+.abandonBtnContainer {
+  width: 815px;
+}
+
+.rebroadcastBtn {
+  background-image: var(--rebroadcast-transaction-icon);
+  background-position: 20px 12px;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  padding-left: 48px;
+  float: right;
+  margin-top: -22px;
+}
+
+.abandonBtn {
+  float: right;
+  margin-top: -22px;
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 1179px) {
+  .rebroadcastBtnContainer,
+  .abandonBtnContainer {
+    width: 770px;
+  }
+}
+
 @media screen and (max-width: 1106px) {
-  .overview {
-    width: 633px;
+  .rebroadcastBtnContainer,
+  .abandonBtnContainer {
+    width: 670px;
   }
-  .io,
-  .details,
-  .top {
-    padding-left: 36px;
+
+  .abandonBtnContainer {
+    width: 670px;
   }
-  .value-rawtx {
-    width: 511px;
+}
+
+@media screen and (max-width: 768px) {
+  .rebroadcastBtnContainer,
+  .abandonBtnContainer {
+    width: 375px;
+    text-align: center;
+    display: block;
+    margin-top: -22px;
+
+    .rebroadcastBtn,
+    .abandonBtn {
+      float: none;
+      padding: 12px 30px 14px 48px;
+      margin-top: 0;
+    }
   }
 }
 @media screen and (max-width: 1106px) {
