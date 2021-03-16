@@ -34,7 +34,6 @@
   background-size: 16px;
   background-repeat: no-repeat;
   padding-left: 30px;
-  width: 100%;
   font-family: var(--font-family-monospace);
   color: var(--header-desc-lighter-color);
   font-size: 11px;
@@ -72,7 +71,15 @@
 @media screen and (max-width: 1179px) {
   .quickBar {
     grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 25px;
+    grid-column-gap: 9px;
+    padding-left: 10px;
+  }
+  .icon {
+    padding-left: 20px;
+  }
+  .ticketTxFee,
+  .ticketFee {
+    width: 124px;
   }
 }
 
@@ -98,5 +105,12 @@
   .ticketPoolFee {
     grid-column-start: 3;
     grid-row-start: 2;
+  }
+  .icon {
+    padding-left: 30px;
+  }
+  .ticketTxFee,
+  .ticketFee {
+    width: initial;
   }
 }
