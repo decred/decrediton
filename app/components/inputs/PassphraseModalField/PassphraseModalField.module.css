@@ -3,7 +3,7 @@
   height: 36px;
   margin-bottom: 5px;
 }
-.passphraseModalField span {
+.passphraseModalField label .labelSpan {
   font-size: 13px;
   text-align: right;
   width: 12em;
