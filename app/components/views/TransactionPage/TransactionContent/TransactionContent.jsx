@@ -137,10 +137,10 @@ const TransactionContent = ({
         )}
       </div>
       {isPending && (
-        <div className={styles.abandonRebroadcastArea}>
-          <div className={styles.rebroadcastButtonContainer}>
+        <div>
+          <div className={styles.rebroadcastBtnContainer}>
             <KeyBlueButton
-              className={styles.rebroadcastButton}
+              className={styles.rebroadcastBtn}
               onClick={publishUnminedTransactions}>
               <T
                 id="txDetails.rebroadcastTransactions"
@@ -148,9 +148,9 @@ const TransactionContent = ({
               />
             </KeyBlueButton>
           </div>
-          <div className={styles.abandonButtonContainer}>
+          <div className={styles.abandonBtnContainer}>
             <KeyBlueButton
-              className={styles.abandonButton}
+              className={styles.abandonBtn}
               onClick={() => abandonTransaction(txHash)}>
               <T id="txDetails.abandontTransaction" m="Abandon Transaction" />
             </KeyBlueButton>
