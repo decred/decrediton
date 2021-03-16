@@ -1,4 +1,3 @@
-import "style/Loading.less";
 import style from "./DecredLoading.module.css";
 import { classNames } from "pi-ui";
 
