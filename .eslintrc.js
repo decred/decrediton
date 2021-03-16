@@ -6,7 +6,7 @@ module.exports = {
     es6: true
   },
   plugins: ["react", "react-hooks"],
-  parser: "babel-eslint",
+  parser: "@babel/eslint-parser",
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: "module",

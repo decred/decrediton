@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useMemo, useState } from "react";
 import { useMountEffect } from "hooks";
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
@@ -39,10 +39,11 @@ const EyeFilterMenuWithSliderMenu = ({
     }
   });
 
-  const onChangeSliderCallback = useCallback(
-    debounce((value, limit) => {
-      onChangeSlider(value, limit);
-    }, 100),
+  const onChangeSliderCallback = useMemo(
+    () =>
+      debounce((value, limit) => {
+        onChangeSlider(value, limit);
+      }, 500),
     [onChangeSlider]
   );
 

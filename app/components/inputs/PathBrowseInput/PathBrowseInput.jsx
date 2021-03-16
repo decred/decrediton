@@ -1,6 +1,4 @@
-const electron = require("electron");
-const dialog = electron.remote.dialog;
-
+import { ipcRenderer } from "electron";
 import PathInput from "../PathInput/PathInput";
 import style from "./PathBrowseInput.module.css";
 import { PathButton } from "buttons";
@@ -30,23 +28,20 @@ const PathBrowseInput = ({
   showErrors,
   ...props
 }) => {
-  const selectDirectory = () => {
+  const selectDirectory = async () => {
     const fileBrowserFilters = (filters || []).map((f) => {
       return { ...f, name: intl.formatMessage(FileBrowserFilterNames[f.key]) };
     });
 
-    const f = save ? dialog.showSaveDialog : dialog.showOpenDialog;
+    const sendChan = save ? "show-save-dialog" : "show-open-dialog";
     const opts = {
       properties: [type === "directory" ? "openDirectory" : "openFile"],
       filters: fileBrowserFilters
     };
-    const cb = directorySelectorCallback;
-    f(opts, directorySelectorCallback).then(cb);
-  };
 
-  const directorySelectorCallback = ({ filePaths, filePath }) => {
+    const { filePaths, filePath } = await ipcRenderer.invoke(sendChan, opts);
+
     let path;
-
     if (filePaths && filePaths.length > 0) {
       path = filePaths[0];
     } else if (filePath) {

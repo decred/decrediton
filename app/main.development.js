@@ -523,6 +523,18 @@ ipcMain.on("get-cli-options", (event) => {
   event.returnValue = cliOptions;
 });
 
+ipcMain.handle("show-save-dialog", async () => {
+  return await dialog.showSaveDialog();
+});
+
+ipcMain.handle("show-open-dialog", async (event, opts) => {
+  const allowedOpts = {
+    properties: opts ? opts.properties : undefined,
+    filters: opts ? opts.filters : undefined
+  };
+  return await dialog.showOpenDialog(allowedOpts);
+});
+
 function setMenuLocale(locale) {
   //Removes previous listeners of "context-menu" event.
   mainWindow.webContents._events["context-menu"] = [];
@@ -608,7 +620,8 @@ app.on("ready", async () => {
     page: "app.html",
     webPreferences: {
       nodeIntegration: true,
-      devTools: true
+      devTools: true,
+      contextIsolation: false
     },
     icon: __dirname + "/icon.png"
   };
