@@ -1,5 +1,5 @@
-import { TitleHeader } from "./TitleHeader";
-import DescriptionHeader from "./DescriptionHeader";
+import { TitleHeader } from "../TitleHeader";
+import DescriptionHeader from "../DescriptionHeader";
 import styles from "./StandaloneHeader.module.css";
 
 const StandaloneHeader = ({
