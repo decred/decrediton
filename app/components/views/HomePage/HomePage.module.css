@@ -19,7 +19,7 @@
 }
 
 .overviewSpendableLockedWrapper {
-  padding-top: 96px;
+  padding-top: 146px;
 }
 
 .overviewTransactionsTicket {
@@ -58,6 +58,7 @@
   font-size: 17px;
   font-family: var(--font-family-monospace);
   line-height: 18px;
+  white-space: nowrap;
 }
 
 .overviewBalanceSpendableLocked.active {
@@ -114,6 +115,11 @@
   height: 250px;
 }
 
+.lockedBalanceTooltipGrid {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+}
+
 @media screen and (max-width: 1179px) {
   .overviewTransactionsTicket {
     padding: 30px 20px;
@@ -126,10 +132,6 @@
 
   .overviewContentWrapper {
     padding-left: 20px;
-  }
-
-  .overviewSpendableLockedWrapper {
-    padding-top: 96px;
   }
 }
 

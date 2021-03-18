@@ -236,6 +236,11 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
+export const lockedTotalBalance = createSelector(
+  [totalBalance, spendableTotalBalance],
+  (totalBalance, spendableTotalBalance) => totalBalance - spendableTotalBalance
+);
+
 export const unconfirmedTotalBalance = createSelector(
   [balances],
   reduce(
@@ -287,9 +292,30 @@ export const getNotMixedAcctIfAllowed = createSelector(
   }
 );
 
-export const lockedBalance = createSelector(
+export const lockedByTicketsTotalBalance = createSelector(
   [balances],
   reduce((atoms, { lockedByTickets }) => atoms + lockedByTickets, 0)
+);
+
+export const immatureRewardTotalBalance = createSelector(
+  [balances],
+  reduce((total, { immatureReward }) => total + immatureReward, 0)
+);
+
+export const immatureStakeGenerationTotalBalance = createSelector(
+  [balances],
+  reduce(
+    (total, { immatureStakeGeneration }) => total + immatureStakeGeneration,
+    0
+  )
+);
+
+export const votingAuthorityTotalBalance = createSelector(
+  [balances],
+  reduce(
+    (total, { votingAuthorityBalance }) => total + votingAuthorityBalance,
+    0
+  )
 );
 
 export const networks = () => [{ name: TESTNET }, { name: MAINNET }];
@@ -1105,7 +1131,10 @@ export const changePassphraseRequestAttempt = get([
 
 export const constructTxLowBalance = get(["control", "constructTxLowBalance"]);
 export const constructTxResponse = get(["control", "constructTxResponse"]);
-export const constructTxRequestAttempt = get(["control", "constructTxRequestAttempt"]);
+export const constructTxRequestAttempt = get([
+  "control",
+  "constructTxRequestAttempt"
+]);
 const signTransactionRequestAttempt = get([
   "control",
   "signTransactionRequestAttempt"
