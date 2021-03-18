@@ -5,6 +5,7 @@ import ProposalsTab from "./Proposals/ProposalsTab";
 import VotingPrefsTab from "./Blockchain/Blockchain";
 import TabHeader from "./TabHeader/TabHeader";
 import { GOVERNANCE_ICON } from "constants";
+import styles from "./GovernancePage.module.css";
 
 const PageHeader = () => (
   <TitleHeader
@@ -14,7 +15,7 @@ const PageHeader = () => (
 );
 
 export default () => (
-  <TabbedPage className="governance" header={<PageHeader />}>
+  <TabbedPage className={styles.governance} header={<PageHeader />}>
     <Switch>
       <Redirect from="/governance" exact to="/governance/proposals" />
       <Redirect

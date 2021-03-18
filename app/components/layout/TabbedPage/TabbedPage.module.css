@@ -1,0 +1,76 @@
+.tabbedPageBody {
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 163px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--background-container);
+}
+
+.tabbedPageHeader {
+  background-color: var(--background-back-color);
+  padding: 43px 60px 0px 63px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  height: 114px;
+}
+
+.tabContent {
+  position: absolute;
+  overflow-x: hidden;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 38px 80px 30px 63px;
+  background-color: var(--background-container);
+}
+
+.tabContent:not(.visible)::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+
+.tabContent:not(.visible)::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+
+@media screen and (max-width: 1179px) {
+  .tabbedPageHeader {
+    padding-left: 20px;
+  }
+  .tabbedPageHeader > .tabs {
+    left: 55px;
+  }
+  .tabContent {
+    padding: 38px 20px 30px 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabbedPageBody {
+    top: 133px;
+  }
+
+  .tabbedPageHeader {
+    height: 82px;
+    padding-top: 30px;
+  }
+
+  .tabbedPageHeader > .tabs {
+    font-size: 13px;
+    left: 25px;
+    right: 20px;
+    .tab {
+      margin-right: 45px;
+    }
+  }
+
+  .tabContent {
+    padding: 0 10px 80px 10px;
+  }
+}

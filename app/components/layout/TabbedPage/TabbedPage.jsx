@@ -12,12 +12,13 @@ import { usePrevious } from "hooks";
 import { RoutedTabsHeader, RoutedTab } from "shared";
 import { getStyles, getMatchedTab, willEnter, willLeave } from "./helpers";
 import TabbedPageTab from "./TabbedPageTab";
+import styles from "./TabbedPage.module.css";
 
 // returns the state.styles in a static container, without animations.
-const staticStyles = (styles) => (
+const staticStyles = (stylesObj) => (
   <>
-    {styles.map(({ key, data: { element } }) => (
-      <div className="tab-content visible" key={key}>
+    {stylesObj.map(({ key, data: { element } }) => (
+      <div className={classNames(styles.tabContent, styles.visible)} key={key}>
         {element}
       </div>
     ))}
@@ -26,9 +27,9 @@ const staticStyles = (styles) => (
 
 // returns the state.styles wrapped in a TransitionMotion, to show the
 // animations.
-const animatedStyles = (styles, dir) => (
+const animatedStyles = (stylesObj, dir) => (
   <TransitionMotion
-    styles={styles}
+    styles={stylesObj}
     willLeave={() => willLeave(dir)}
     willEnter={() => willEnter(dir)}>
     {(interpolatedStyles) => (
@@ -37,8 +38,8 @@ const animatedStyles = (styles, dir) => (
           ({ key, data: { element }, style: { left, opacity } }) => (
             <div
               className={classNames(
-                "tab-content",
-                Math.abs(left) < 0.1 && "visible"
+                styles.tabContent,
+                Math.abs(left) < 0.1 && styles.visible
               )}
               style={{
                 left,
@@ -103,21 +104,21 @@ function TabbedPage({ children, header, className, onChange, caret }) {
     <Route key={path} path={path} component={header} />
   ));
 
-  const styles = getStyles(matchedTab);
+  const tabStyles = getStyles(matchedTab);
 
   const tabContents = uiAnimations
-    ? animatedStyles(styles, dir)
-    : staticStyles(styles);
+    ? animatedStyles(tabStyles, dir)
+    : staticStyles(tabStyles);
 
   return (
-    <div className="tabbed-page">
-      <div className="tabbed-page-header">
+    <div>
+      <div className={styles.tabbedPageHeader}>
         {header}
         <Switch>{headers}</Switch>
         <RoutedTabsHeader tabs={tabHeaders} caret={caret} />
       </div>
 
-      <div className={classNames("tabbed-page-body", className)}>
+      <div className={classNames(styles.tabbedPageBody, className)}>
         {tabContents}
         {nonTabs}
       </div>
