@@ -15,7 +15,10 @@ const PageHeader = () => (
 );
 
 export default () => (
-  <TabbedPage className={styles.governance} header={<PageHeader />}>
+  <TabbedPage
+    className={styles.governance}
+    header={<PageHeader />}
+    tabContentClassName={styles.tabContent}>
     <Switch>
       <Redirect from="/governance" exact to="/governance/proposals" />
       <Redirect

@@ -1,11 +1,7 @@
 import { classNames } from "pi-ui";
 import { Switch, Route } from "react-router-dom";
 import { TransitionMotion } from "react-motion";
-import {
-  useEffect,
-  useState,
-  useReducer
-} from "react";
+import { useEffect, useState, useReducer } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 import { usePrevious } from "hooks";
@@ -15,10 +11,16 @@ import TabbedPageTab from "./TabbedPageTab";
 import styles from "./TabbedPage.module.css";
 
 // returns the state.styles in a static container, without animations.
-const staticStyles = (stylesObj) => (
+const staticStyles = (stylesObj, contentClassName) => (
   <>
     {stylesObj.map(({ key, data: { element } }) => (
-      <div className={classNames(styles.tabContent, styles.visible)} key={key}>
+      <div
+        className={classNames(
+          styles.tabContent,
+          styles.visible,
+          contentClassName
+        )}
+        key={key}>
         {element}
       </div>
     ))}
@@ -27,7 +29,7 @@ const staticStyles = (stylesObj) => (
 
 // returns the state.styles wrapped in a TransitionMotion, to show the
 // animations.
-const animatedStyles = (stylesObj, dir) => (
+const animatedStyles = (stylesObj, dir, contentClassName) => (
   <TransitionMotion
     styles={stylesObj}
     willLeave={() => willLeave(dir)}
@@ -39,7 +41,8 @@ const animatedStyles = (stylesObj, dir) => (
             <div
               className={classNames(
                 styles.tabContent,
-                Math.abs(left) < 0.1 && styles.visible
+                Math.abs(left) < 0.1 && styles.visible,
+                contentClassName
               )}
               style={{
                 left,
@@ -57,7 +60,16 @@ const animatedStyles = (stylesObj, dir) => (
   </TransitionMotion>
 );
 
-function TabbedPage({ children, header, className, onChange, caret }) {
+const TabbedPage = ({
+  children,
+  className,
+  header,
+  headerClassName,
+  tabsClassName,
+  tabContentClassName,
+  onChange,
+  caret
+}) => {
   const location = useSelector(sel.location);
   const uiAnimations = useSelector(sel.uiAnimations);
   const [matchedTab, setMatchedTab] = useReducer(() =>
@@ -96,8 +108,9 @@ function TabbedPage({ children, header, className, onChange, caret }) {
 
   const nonTabs = children.filter(({ type }) => type !== TabbedPageTab);
 
-  const tabHeaders = tabs.map(({ props: { path, link } }) =>
-    RoutedTab(path, link)
+  const tabHeaders = tabs.map(
+    ({ props: { path, link, className, activeClassName } }) =>
+      RoutedTab(path, link, className, activeClassName)
   );
 
   const headers = tabs.map(({ props: { path, header } }) => (
@@ -107,15 +120,19 @@ function TabbedPage({ children, header, className, onChange, caret }) {
   const tabStyles = getStyles(matchedTab);
 
   const tabContents = uiAnimations
-    ? animatedStyles(tabStyles, dir)
-    : staticStyles(tabStyles);
+    ? animatedStyles(tabStyles, dir, tabContentClassName)
+    : staticStyles(tabStyles, tabContentClassName);
 
   return (
     <div>
-      <div className={styles.tabbedPageHeader}>
+      <div className={classNames(styles.tabbedPageHeader, headerClassName)}>
         {header}
         <Switch>{headers}</Switch>
-        <RoutedTabsHeader tabs={tabHeaders} caret={caret} />
+        <RoutedTabsHeader
+          tabs={tabHeaders}
+          tabsClassName={tabsClassName}
+          caret={caret}
+        />
       </div>
 
       <div className={classNames(styles.tabbedPageBody, className)}>
@@ -124,6 +141,6 @@ function TabbedPage({ children, header, className, onChange, caret }) {
       </div>
     </div>
   );
-}
+};
 
 export default TabbedPage;

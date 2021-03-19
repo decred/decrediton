@@ -17,6 +17,47 @@
   padding-bottom: 15px;
 }
 
+.tabsHeader {
+  padding: 0;
+  height: 133px;
+}
+
+.tabs {
+  position: relative;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  padding-left: 103px;
+  margin-bottom: 9px;
+  background-color: var(--tabbed-page-header-bg);
+}
+
+.tabsBody {
+  top: 170px;
+}
+
+.tab {
+  margin-right: 20px;
+}
+
+.tab a {
+  margin: 0;
+  border-radius: 5px;
+}
+
+.tab a span {
+  color: var(--tabbed-page-header-text);
+}
+
+.activeTab {
+  background-color: var(--tabbed-page-header-active-bg);
+  padding: 3px 10px 3px 10px;
+}
+
+.tabContent {
+  padding: 0;
+}
+
 .title {
   font-size: 21px;
   line-height: 27px;
@@ -83,6 +124,10 @@
 }
 
 @media screen and (max-width: 1179px) {
+  .tabs {
+    padding-left: 35px;
+  }
+
   .politeiaDisabled {
     padding-left: 20px;
   }

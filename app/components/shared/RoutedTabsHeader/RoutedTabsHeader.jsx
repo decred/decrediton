@@ -1,13 +1,19 @@
 import { useMemo, useCallback } from "react";
 import { NavLink as Link } from "react-router-dom";
 import { spring, Motion } from "react-motion";
+import { classNames } from "pi-ui";
 import { useRoutedTabsHeader } from "./hooks";
 import theme from "theme";
 import styles from "./RoutedTabsHeader.module.css";
 
-export const RoutedTab = (path, link) => ({ path, link });
+export const RoutedTab = (path, link, className, activeClassName) => ({
+  path,
+  link,
+  className,
+  activeClassName
+});
 
-const RoutedTabsHeader = ({ tabs, caret }) => {
+const RoutedTabsHeader = ({ tabs, tabsClassName, caret }) => {
   const { uiAnimations, caretLeft, caretWidth, nodes } = useRoutedTabsHeader();
 
   const getAnimatedCaret = useCallback(() => {
@@ -42,12 +48,14 @@ const RoutedTabsHeader = ({ tabs, caret }) => {
 
   const tabLinks = useMemo(
     () =>
-      tabs.map(({ path, link }) => (
+      tabs.map(({ path, link, className, activeClassName }) => (
         <span
-          className={styles.tab}
+          className={classNames(styles.tab, className)}
           key={path}
           ref={(ref) => nodes.current.set(path, ref)}>
-          <Link to={path} activeClassName={styles.active}>
+          <Link
+            to={path}
+            activeClassName={classNames(styles.active, activeClassName)}>
             {link}
           </Link>
         </span>
@@ -61,7 +69,7 @@ const RoutedTabsHeader = ({ tabs, caret }) => {
   );
 
   return (
-    <div className={styles.tabs}>
+    <div className={classNames(styles.tabs, tabsClassName)}>
       {tabLinks}
       {caret ? caret : localCaret}
     </div>
