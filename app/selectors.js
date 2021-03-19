@@ -310,14 +310,6 @@ export const immatureStakeGenerationTotalBalance = createSelector(
   )
 );
 
-export const votingAuthorityTotalBalance = createSelector(
-  [balances],
-  reduce(
-    (total, { votingAuthorityBalance }) => total + votingAuthorityBalance,
-    0
-  )
-);
-
 export const networks = () => [{ name: TESTNET }, { name: MAINNET }];
 export const network = get(["settings", "currentSettings", "network"]);
 export const isTestNet = compose(eq(TESTNET), network);

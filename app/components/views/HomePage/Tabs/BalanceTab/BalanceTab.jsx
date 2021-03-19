@@ -13,8 +13,7 @@ const BalanceTab = () => {
     unconfirmedTotalBalance,
     lockedByTicketsTotalBalance,
     immatureRewardTotalBalance,
-    immatureStakeGenerationTotalBalance,
-    votingAuthorityTotalBalance
+    immatureStakeGenerationTotalBalance
   } = useBalance();
   return (
     <div className={styles.overviewContentWrapper}>
@@ -54,14 +53,6 @@ const BalanceTab = () => {
                   styles.amount
                 )}
                 amount={lockedByTicketsTotalBalance}
-              />
-              <T id="home.votingAuthorityBalanceLabel" m="Voting Authority" />:
-              <Balance
-                classNameWrapper={classNames(
-                  styles.overviewBalanceSpendableLocked,
-                  styles.amount
-                )}
-                amount={votingAuthorityTotalBalance}
               />
               <T
                 id="home.immatureStakeGenerationBalanceLabel"

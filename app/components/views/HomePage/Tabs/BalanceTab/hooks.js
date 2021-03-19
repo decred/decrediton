@@ -16,9 +16,6 @@ export function useBalance() {
   const immatureStakeGenerationTotalBalance = useSelector(
     sel.immatureStakeGenerationTotalBalance
   );
-  const votingAuthorityTotalBalance = useSelector(
-    sel.votingAuthorityTotalBalance
-  );
 
   return {
     lockedTotalBalance,
@@ -27,7 +24,6 @@ export function useBalance() {
     unconfirmedTotalBalance,
     lockedByTicketsTotalBalance,
     immatureRewardTotalBalance,
-    immatureStakeGenerationTotalBalance,
-    votingAuthorityTotalBalance
+    immatureStakeGenerationTotalBalance
   };
 }
