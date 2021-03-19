@@ -1,6 +1,6 @@
 .tabs {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   left: 100px;
   white-space: nowrap;
 }
@@ -10,6 +10,17 @@
   margin-right: 55px;
   text-align: center;
   vertical-align: middle;
+}
+
+.tabs > .tab > a {
+  margin: 0 5px 0 5px;
+  color: var(--tab-text);
+  text-decoration: none;
+}
+
+.tabs > .tab > a:hover,
+.tabs > .tab > a.active {
+  color: var(--tab-text-active-hover);
 }
 
 .tabs > .tab:last-of-type {
