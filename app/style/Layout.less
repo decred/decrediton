@@ -39,45 +39,6 @@
   filter: blur(5px);
 }
 
-.react-draggable-transparent-selection {
-  .page-view.blur,
-  .page-view-reduced-bar.blur,
-  .getstarted-page-body.blur,
-  .pseudo-modal-wrapper.blur {
-    filter: initial;
-  }
-}
-
-// Base definition for the "page client area" (area where main content is
-// displayed")
-.page-content-mixin {
-  position: relative;
-  padding: 54px 60px 0px 80px;
-  background-color: var(--background-container);
-  overflow-y: scroll;
-  height: calc(100% - 214px);
-}
-
-// Main content that allows scrolling
-.page-content {
-  .page-content-mixin;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-// Main content that *does not* allow scrolling
-.page-content-fixed {
-  overflow: visible;
-}
-
-// Main content that has been blured by something positioned on top of it
-.page-content-blur {
-  .page-content-mixin;
-
-  filter: blur(6px);
-}
-
 .standalone-page-body {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -90,42 +51,12 @@
   background-color: var(--background-container);
 }
 
-.tabbed-page-subtitle {
-  color: var(--stroke-color-hovered);
-  font-size: 20px;
-  line-height: 25px;
-  margin-bottom: 17px;
-  margin-left: 0;
-  width: 740px;
-}
-
-.tabbed-page-subtitle.export {
-  margin-top: -20px;
-}
-
 .top-level-container,
 .top-level-container > div {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-
-.shutdown-page {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
-.scrollbar-overlay {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 20px;
-  background-color: var(--background-container);
 }
 
 .fatal-error-page {
@@ -179,10 +110,6 @@
   .standalone-page-body {
     padding-left: 20px;
   }
-  .tabbed-page-subtitle {
-    margin-left: 0;
-    width: 630px;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -194,29 +121,11 @@
     flex-direction: column-reverse;
   }
 
-  .tabbed-page-subtitle {
-    width: 355px;
-    margin-left: 0;
-  }
-
   .page-view {
     width: 100%;
   }
 
   .page-view-reduced-bar {
     width: 100%;
-  }
-  .description-header {
-    display: none;
-  }
-  
-    .standalone-page-header {
-    height: initial;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-    padding-bottom: 48px;
-    padding-top: 30px;
   }
 }

@@ -15,11 +15,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  /* XXX wassuuup here */
-  .tabbed-page-header > .standalone-page-header {
-    padding: 0;
-  }
-
   .header {
     height: initial;
     display: flex;
