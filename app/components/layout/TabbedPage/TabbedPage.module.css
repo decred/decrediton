@@ -38,13 +38,9 @@
   background-color: transparent;
 }
 
-
 @media screen and (max-width: 1179px) {
   .tabbedPageHeader {
     padding-left: 20px;
-  }
-  .tabbedPageHeader > .tabs {
-    left: 55px;
   }
   .tabContent {
     padding: 38px 20px 30px 20px;
@@ -59,15 +55,6 @@
   .tabbedPageHeader {
     height: 82px;
     padding-top: 30px;
-  }
-
-  .tabbedPageHeader > .tabs {
-    font-size: 13px;
-    left: 25px;
-    right: 20px;
-    .tab {
-      margin-right: 45px;
-    }
   }
 
   .tabContent {

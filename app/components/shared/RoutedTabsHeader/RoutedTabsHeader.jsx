@@ -1,22 +1,16 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useMemo, useCallback } from "react";
 import { NavLink as Link } from "react-router-dom";
 import { spring, Motion } from "react-motion";
 import { useRoutedTabsHeader } from "./hooks";
 import theme from "theme";
+import styles from "./RoutedTabsHeader.module.css";
 
 export const RoutedTab = (path, link) => ({ path, link });
 
 const RoutedTabsHeader = ({ tabs, caret }) => {
-  const nodes = useRef(new Map());
+  const { uiAnimations, caretLeft, caretWidth, nodes } = useRoutedTabsHeader();
 
-  const [caretLeft, setCaretLeft] = useState(null);
-  const [caretWidth, setCaretWidth] = useState(null);
-  const [selectedTab, setSelectedTab] = useState(null);
-  const [localSidebarOnBottom, setLocalSidebarOnBottom] = useState(null);
-
-  const { location, uiAnimations, sidebarOnBottom } = useRoutedTabsHeader();
-
-  const getAnimatedCaret = () => {
+  const getAnimatedCaret = useCallback(() => {
     const caretStyle = {
       left: spring(caretLeft, theme("springs.tab")),
       width: spring(caretWidth, theme("springs.tab"))
@@ -25,78 +19,49 @@ const RoutedTabsHeader = ({ tabs, caret }) => {
     return (
       <Motion style={caretStyle}>
         {(style) => (
-          <div className={"tabs-caret"}>
-            <div className={"active"} style={style} />
+          <div className={styles.tabCaret}>
+            <div className={styles.active} style={style} />
           </div>
         )}
       </Motion>
     );
-  };
+  }, [caretLeft, caretWidth]);
 
-  const getStaticCaret = () => {
+  const getStaticCaret = useCallback(() => {
     const style = {
       left: caretLeft,
       width: caretWidth
     };
 
     return (
-      <div className={"tabs-caret"}>
-        <div className={"active"} style={style}></div>
+      <div className={styles.tabsCaret}>
+        <div className={styles.active} style={style}></div>
       </div>
     );
-  };
+  }, [caretLeft, caretWidth]);
 
   const tabLinks = useMemo(
     () =>
-      tabs.map((t) => (
+      tabs.map(({ path, link }) => (
         <span
-          className={"tab"}
-          key={t.path}
-          ref={(ref) => nodes.current.set(t.path, ref)}>
-          <Link to={t.path} activeClassName={"active"}>
-            {t.link}
+          className={styles.tab}
+          key={path}
+          ref={(ref) => nodes.current.set(path, ref)}>
+          <Link to={path} activeClassName={styles.active}>
+            {link}
           </Link>
         </span>
       )),
-    [tabs]
+    [tabs, nodes]
   );
 
-  const localCaret = uiAnimations ? getAnimatedCaret() : getStaticCaret();
-
-  const updateCaretPosition = useCallback(() => {
-    const selectedTab = location.pathname;
-    const tabForRoute = nodes.current.get(selectedTab);
-    if (!tabForRoute) return null;
-    const tabRect = tabForRoute.getBoundingClientRect();
-    const caretLeft = tabForRoute.offsetLeft;
-    const caretWidth = tabRect.width;
-    setCaretLeft(caretLeft);
-    setCaretWidth(caretWidth);
-    setSelectedTab(selectedTab);
-  }, [location]);
-
-  useEffect(() => {
-    setLocalSidebarOnBottom(sidebarOnBottom);
-    updateCaretPosition();
-  }, [sidebarOnBottom, updateCaretPosition]);
-
-  useEffect(() => {
-    if (
-      selectedTab != location.pathname ||
-      localSidebarOnBottom != sidebarOnBottom
-    ) {
-      updateCaretPosition();
-    }
-  }, [
-    location,
-    selectedTab,
-    sidebarOnBottom,
-    localSidebarOnBottom,
-    updateCaretPosition
-  ]);
+  const localCaret = useMemo(
+    () => (uiAnimations ? getAnimatedCaret() : getStaticCaret()),
+    [uiAnimations, getAnimatedCaret, getStaticCaret]
+  );
 
   return (
-    <div className={"tabs"}>
+    <div className={styles.tabs}>
       {tabLinks}
       {caret ? caret : localCaret}
     </div>

@@ -1,0 +1,47 @@
+.tabs {
+  position: absolute;
+  bottom: 0px;
+  left: 100px;
+  white-space: nowrap;
+}
+
+.tabs > .tab {
+  line-height: 35px;
+  margin-right: 55px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tabs > .tab:last-of-type {
+  margin-right: 0;
+}
+
+.tabs > .tabCaret > {
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+}
+
+.tabs > .tabCaret > .active {
+  background-color: var(--accent-color);
+  position: absolute;
+  height: 5px;
+}
+
+@media screen and (max-width: 1179px) {
+  .tabs {
+    left: 55px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+    font-size: 13px;
+    left: 25px;
+    right: 20px;
+  }
+
+  .tabs > .tab {
+    margin-right: 45px;
+  }
+}
