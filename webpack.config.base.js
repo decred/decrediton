@@ -1,5 +1,5 @@
 /**
- * Base webpack config used across other specific configs
+ * Base webpack config. This is merged with other env-specific configs.
  */
 
 import path from "path";
@@ -13,36 +13,35 @@ export default {
   mode: "production",
 
   module: {
-    rules: [ {
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      include: /app/,
-      loader: "babel-loader"
-    },
-    {
-      test: /\.(png|jpg)$/,
-      use: [ {
-        loader: "url-loader",
-        options: {
-          limit: 8192
-        }
-      } ]
-    },
-    {
-      test: /\.node$/,
-      use: [ {
-        loader: "node-addon-loader",
-        options: {
-          basePath: path.resolve(__dirname, "bin")
-        }
-      } ]
-    },
-    {
-      test: /\.(md)$/,
-      use: [ {
-        loader: "raw-loader"
-      } ]
-    }]
+    rules: [
+      // Pass code through babel.
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        include: /app/,
+        loader: "babel-loader"
+      },
+
+      // Image files.
+      { test: /\.(svg|png|jpg|gif|mp4)$/, type: "asset" },
+
+      // Font files.
+      { test: /\.(woff|woff2|eot|ttf)$/, type: "asset" },
+
+      // Documents/texts.
+      { test: /\.(md)$/, type: "asset/source" },
+
+      // Native modules.
+      {
+        test: /\.node$/,
+        use: [ {
+          loader: "node-addon-loader",
+          options: {
+            basePath: path.resolve(__dirname, "bin")
+          }
+        } ]
+      }
+    ]
   },
 
   output: {
