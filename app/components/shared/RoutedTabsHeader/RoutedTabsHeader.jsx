@@ -34,7 +34,7 @@ const RoutedTabsHeader = ({ tabs, caret }) => {
     };
 
     return (
-      <div className={styles.tabsCaret}>
+      <div className={styles.tabCaret}>
         <div className={styles.active} style={style}></div>
       </div>
     );

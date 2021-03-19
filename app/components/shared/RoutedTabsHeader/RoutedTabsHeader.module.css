@@ -5,35 +5,35 @@
   white-space: nowrap;
 }
 
-.tabs > .tab {
+.tab {
   line-height: 35px;
   margin-right: 55px;
   text-align: center;
   vertical-align: middle;
 }
 
-.tabs > .tab > a {
+.tab a {
   margin: 0 5px 0 5px;
   color: var(--tab-text);
   text-decoration: none;
 }
 
-.tabs > .tab > a:hover,
-.tabs > .tab > a.active {
+.tab a:hover,
+.tab a.active {
   color: var(--tab-text-active-hover);
 }
 
-.tabs > .tab:last-of-type {
+.tab:last-of-type {
   margin-right: 0;
 }
 
-.tabs > .tabCaret > {
+.tabCaret {
   position: absolute;
   bottom: 0;
   height: 5px;
 }
 
-.tabs > .tabCaret > .active {
+.tabCaret .active {
   background-color: var(--accent-color);
   position: absolute;
   height: 5px;
@@ -52,7 +52,7 @@
     right: 20px;
   }
 
-  .tabs > .tab {
+  .tab {
     margin-right: 45px;
   }
 }
