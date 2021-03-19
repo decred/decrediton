@@ -1,55 +1,54 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
+import { Tooltip, classNames } from "pi-ui";
 import { addSpacingAroundText } from "helpers/strings";
+import styles from "./PurchaseTicketsQuickBar.module.css";
 
 const PurchaseTicketsAdvanced = ({ stakePool, ticketFee, txFee, expiry }) => (
-  <div className="stakepool-purchase-ticket-quick-bar">
+  <div className={styles.quickBar}>
     <Tooltip
       content={<T id="purchaseTickets.currentStakepool" m="Current VSP" />}
-      className="current_vsp">
-      <div className="stakepool-info-icon stakepool-icon">
+      className={styles.currentVsp}>
+      <div className={classNames(styles.icon, styles.stakepool)}>
         {stakePool && stakePool.value.Host}
       </div>
     </Tooltip>
     <Tooltip
       content={<T id="purchaseTickets.expiry" m="Expiry" />}
-      className="ticket_expiry">
-      <div className="stakepool-info-icon stakepool-expiry-icon">
+      className={styles.ticketExpiry}>
+      <div className={classNames(styles.icon, styles.expiry)}>
         {expiry} Blocks
       </div>
     </Tooltip>
     <Tooltip
       content={<T id="purchaseTickets.ticketFeeTip" m="Ticket Fee" />}
-      className="ticket_fee">
-      <div className="stakepool-info-icon stakepool-fee-icon">
+      className={styles.ticketFee}>
+      <div className={classNames(styles.icon, styles.fee)}>
         {ticketFee} DCR/KB
       </div>
     </Tooltip>
     <Tooltip
       content={<T id="purchaseTickets.txFeeTip" m="Tx Fee" />}
-      className="ticket_tx_fee">
-      <div className="stakepool-info-icon stakepool-fee-icon">
-        {txFee} DCR/KB
-      </div>
+      className={styles.ticketTxFee}>
+      <div className={classNames(styles.icon, styles.fee)}>{txFee} DCR/KB</div>
     </Tooltip>
     <Tooltip
       content={<T id="purchaseTickets.poolFee" m="VSP Fee" />}
-      className="ticket_pool_fee">
-      <div className="stakepool-info-icon stakepool-pool-fee-icon">
+      className={styles.ticketPoolFee}>
+      <div className={classNames(styles.icon, styles.poolFee)}>
         {stakePool && stakePool.value.PoolFees}%
       </div>
     </Tooltip>
     <Tooltip
       content={<T id="purchaseTickets.ticketAddress" m="Ticket Address" />}
-      className="ticket_address">
-      <div className="stakepool-info-icon stakepool-ticket-address-icon">
+      className={styles.ticketAddress}>
+      <div className={classNames(styles.icon, styles.ticketAddress)}>
         {stakePool && addSpacingAroundText(stakePool.value.TicketAddress)}
       </div>
     </Tooltip>
     <Tooltip
       content={<T id="purchaseTickets.poolAddress" m="VSP Address" />}
-      className="ticket_pool_address">
-      <div className="stakepool-info-icon stakepool-fee-address-icon">
+      className={styles.ticketPoolAddress}>
+      <div className={classNames(styles.icon, styles.feeAddress)}>
         {stakePool && addSpacingAroundText(stakePool.value.PoolAddress)}
       </div>
     </Tooltip>

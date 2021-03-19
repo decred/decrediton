@@ -1,6 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
 import { UnsignedTx } from "shared";
-import "style/StakePool.less";
 
 const UnsignedTicket = ({ splitTx, unsignedTickets }) => (
   <>

@@ -4,8 +4,6 @@ import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { Balance } from "shared";
 import styles from "../PurchaseTab.module.css";
-// XXX this should go away!
-import "style/StakePool.less";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
 
@@ -33,26 +31,28 @@ const PurchaseTicketsForm = ({
   getRunningIndicator
 }) => (
   <>
-    <div className={classNames(styles.purchaseForm, "is-row")}>
-      <div className="is-row purchase-ticket-input-address">
+    <div className={classNames(styles.purchaseForm, styles.isRow)}>
+      <div className={classNames(styles.isRow, styles.inputAddress)}>
         <div className={styles.ticketForm}>
-          <div className="purchase-ticket-area-row-label">
+          <label className={styles.rowLabel}>
             <T id="purchaseTickets.accountFrom" m="Account" />:
-          </div>
-          <div className={"stakepool-purchase-ticket-input-select-container"}>
+          </label>
+          <div className={styles.inputSelectContainer}>
             <AccountsSelect
               filterAccounts={notMixedAccounts}
-              className="stakepool-purchase-ticket-input-select"
+              className={styles.inputSelect}
               {...{ account, onChange: setAccount }}
             />
-            <div className="stakepool-info-icon account-select-icon" />
+            <div
+              className={classNames(styles.infoIcon, styles.accountSelectIcon)}
+            />
           </div>
-          <div className="purchase-ticket-area-row-label">
+          <label className={styles.rowLabel}>
             <T id="purchaseTickets.vspFrom" m="VSP" />:
-          </div>
-          <div className="purchase-ticket-vsp-container">
+          </label>
+          <div className={styles.vspContainer}>
             <VSPSelect
-              className="stakepool-purchase-ticket-input-select"
+              className={styles.inputSelect}
               style={{ width: "100%", marginRight: "10px" }}
               {...{
                 options: availableVSPs,
@@ -66,8 +66,8 @@ const PurchaseTicketsForm = ({
             {vsp && (
               <Tooltip
                 content={<T id="purchaseTickets.vspFee" m="VSP Fee" />}
-                className="ticket_pool_fee">
-                <div className="stakepool-info-icon stakepool-pool-fee-icon">
+                className={styles.ticketPoolFee}>
+                <div className={classNames(styles.infoIcon, styles.poolFeeIcon)}>
                   {vspFee} %
                 </div>
               </Tooltip>
@@ -89,10 +89,10 @@ const PurchaseTicketsForm = ({
           )}
         </div>
       </div>
-      <div className="is-row purchase-ticket-input-amount">
-        <div className="purchase-ticket-area-row-label">
+      <div className={classNames(styles.isRow, styles.inputAmount)}>
+        <label className={styles.rowLabel}>
           <T id="purchaseTickets.ticketAmount" m="Amount" />:
-        </div>
+        </label>
         <NumTicketsInput
           required
           invalid={account.spendable < numTickets * ticketPrice}
@@ -110,7 +110,7 @@ const PurchaseTicketsForm = ({
           showErrors={true}
         />
         {account.spendable >= numTickets * ticketPrice && (
-          <div className="input-purchase-ticket-valid-message-area">
+          <div className={styles.inputValidMessageArea}>
             <T
               id="purchaseTickets.validMsg"
               m="Total: {amount} Remaining: {remaining}"
@@ -128,16 +128,16 @@ const PurchaseTicketsForm = ({
         )}
       </div>
     </div>
-    <div className="stakepool-purchase-ticket-info">
-      <div className="purchase-ticket-action-buttons is-column" />
+    <div className={styles.info}>
+      <div className={classNames(styles.actionButtons, styles.isColumn)} />
       {/* ADD VSP INFO HERE */}
     </div>
-    <div className="stakepool-purchase-ticket-buttons-area">
+    <div className={styles.buttonsArea}>
       <PassphraseModalButton
         modalTitle={
           <T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />
         }
-        className="stakepool-content-revoke-button"
+        className={styles.revokeButton}
         onSubmit={onRevokeTickets}
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />

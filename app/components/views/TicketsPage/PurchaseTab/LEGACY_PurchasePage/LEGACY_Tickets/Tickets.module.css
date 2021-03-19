@@ -1,0 +1,37 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.useLegacyLabel {
+  font-size: 16px;
+}
+.infoFields strong {
+  color: var(--input-color);
+}
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.purchaseTicketArea {
+  -webkit-user-select: text;
+  width: 740px;
+}
+.purchaseTicketArea .tabbedPageSubtitle {
+  width: auto;
+  justify-content: space-between;
+}
+.infoTitleIcon {
+  align-self: flex-end;
+  margin-right: 10px;
+}
+@media screen and (max-width: 1179px) {
+  .purchaseTicketArea {
+    width: 667px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .purchaseTicketArea {
+    width: 355px;
+  }
+}

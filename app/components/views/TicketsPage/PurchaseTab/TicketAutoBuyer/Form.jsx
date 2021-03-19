@@ -1,6 +1,6 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
+import { Tooltip, classNames } from "pi-ui";
 import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
 import { Balance, Subtitle } from "shared";
 import styles from "../PurchaseTab.module.css";
@@ -28,7 +28,7 @@ const TicketAutoBuyerForm = ({
       title={<T id="vsp.autobuyer.subtitle" m="Automatic Ticket Purchases" />}
     />
     <div className={styles.autobuyerWrapper}>
-      <div className="stakepool-auto-buyer-row">
+      <div className={styles.autoBuyerRow}>
         {isRunning ? (
           <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
         ) : getRunningIndicator ? (
@@ -51,7 +51,7 @@ const TicketAutoBuyerForm = ({
             }
             modalDescription={
               <div>
-                <span className="orange-warning">
+                <span className={styles.orangeWarning}>
                   <T
                     id="vsp.tickets.startAutoBuyerConfirmation.attention"
                     m="Attention!"
@@ -61,24 +61,24 @@ const TicketAutoBuyerForm = ({
                   id="vsp.tickets.startAutoBuyerConfirmation.description"
                   m="Decrediton must remain running for tickets to be automatically purchased."
                 />
-                <div className="auto-buyer-modal-confirm">
-                  <div className="auto-buyer-modal-confirm-row">
-                    <div className="auto-buyer-modal-confirm-label">
+                <div>
+                  <div className={styles.isRow}>
+                    <div className={styles.confirmLabel}>
                       <T
                         id="vsp.autobuyer.modal.balanceToMaintain"
                         m="Balance To Maintain"
                       />
                       :
                     </div>
-                    <div className="auto-buyer-modal-confirm-value">
+                    <div>
                       <Balance flat amount={balanceToMaintain} />
                     </div>
                   </div>
-                  <div className="auto-buyer-modal-confirm-row">
-                    <div className="auto-buyer-modal-confirm-label">
+                  <div className={styles.isRow}>
+                    <div className={styles.confirmLabel}>
                       <T id="vsp.autobuyer.modal.stakepool" m="VSP" />:
                     </div>
-                    <div className="auto-buyer-modal-confirm-value">
+                    <div>
                       {vsp && vsp.host}
                     </div>
                   </div>
@@ -90,11 +90,11 @@ const TicketAutoBuyerForm = ({
             isValid={isValid}
           />
         )}
-        <div className="stakepool-auto-buyer-row-portion-half">
-          <div className="stakepool-autobuyer-label">
+        <div className={styles.autoBuyerRowPortionHalf}>
+          <div className={styles.autobuyerLabel}>
             <T id="vsp.autobuyer.accountFrom" m="From" />:
           </div>
-          <div className="stakepool-autobuyer-input">
+          <div className={styles.autobuyerInput}>
             <AccountsSelect
               {...{ account }}
               disabled={isRunning}
@@ -105,11 +105,11 @@ const TicketAutoBuyerForm = ({
             />
           </div>
         </div>
-        <div className="stakepool-auto-buyer-row-portion-half is-row">
-          <div className="stakepool-autobuyer-label">
+        <div className={classNames(styles.autoBuyerRowPortionHalf, styles.isRow)}>
+          <div className={styles.autobuyerLabel}>
             <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />:
           </div>
-          <div className="stakepool-autobuyer-input">
+          <div className={styles.autobuyerInput}>
             <VSPSelect
               options={availableVSPs}
               isDisabled={isRunning}
@@ -119,12 +119,12 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
       </div>
-      <div className="stakepool-auto-buyer-row">
-        <div className="stakepool-auto-buyer-row-portion-full">
-          <div className="stakepool-autobuyer-label">
+      <div className={styles.autoBuyerRow}>
+        <div className={styles.autoBuyerRowPortionFull}>
+          <label className={styles.autobuyerLabel}>
             <T id="vsp.autobuyer.balanceToMaintain" m="Balance to Maintain" />:
-          </div>
-          <div className="stakepool-autobuyer-input">
+          </label>
+          <div className={styles.autobuyerInput}>
             <DcrInput
               disabled={isRunning}
               amount={balanceToMaintain}
@@ -142,7 +142,7 @@ const TicketAutoBuyerForm = ({
         </div>
       </div>
       {clicked && isValid === false && (
-        <div className="error">
+        <div className={styles.error}>
           <T id="vsp.autobuyer.startErr" m="Fill all fields." />
         </div>
       )}

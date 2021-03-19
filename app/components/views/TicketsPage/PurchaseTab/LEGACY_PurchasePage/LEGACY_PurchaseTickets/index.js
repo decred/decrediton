@@ -1,37 +1,51 @@
-import React from "react";
-import { autobind } from "core-decorators";
-import { substruct, compose, eq, get } from "fp";
+import { compose, eq, get } from "fp";
 import { spring } from "react-motion";
 import PurchaseTicketsForm from "./Form";
-import purchaseTickets from "connectors/purchaseTickets";
 import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
-import { injectIntl } from "react-intl";
 import { isNullOrUndefined } from "util";
-import { MIN_RELAY_FEE, MAX_POSSIBLE_FEE_INPUT } from "constants";
+import { usePurchaseTickets } from "./hooks";
+import { MAX_POSSIBLE_FEE_INPUT } from "constants";
 
-@autobind
-class PurchaseTickets extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ticketFeeError: false,
-      txFeeError: false,
-      expiryError: false,
-      isShowingAdvanced: false,
-      numTicketsToBuy: this.props.numTicketsToBuy,
-      ticketFee: MIN_RELAY_FEE,
-      txFee: MIN_RELAY_FEE,
-      conf: 0,
-      expiry: 16,
-      account: props.defaultSpendingAccount,
-      stakePool: props.stakePool
-    };
-  }
+const PurchaseTickets = ({
+  toggleShowVsp,
+  onChangeAccount: onChangeAccountProp
+}) => {
+  const {
+    ticketPrice,
+    configuredStakePools,
+    numTicketsToBuy,
+    intl,
+    dismissBackupRedeemScript,
+    isWatchingOnly,
+    notMixedAccounts,
+    getRunningIndicator,
+    ticketFeeError,
+    setTicketFeeError,
+    txFeeError,
+    setTxFeeError,
+    expiryError,
+    setExpiryError,
+    isShowingAdvanced,
+    setIsShowingAdvanced,
+    setNumTicketsToBuy,
+    ticketFee,
+    setTicketFee,
+    txFee,
+    setTxFee,
+    conf,
+    expiry,
+    setExpiry,
+    account,
+    setAccount,
+    stakePool,
+    onPurchaseTickets: onPurchaseTicketsProp,
+    onChangeStakePool,
+    onRevokeTickets,
+    onDismissBackupRedeemScript
+  } = usePurchaseTickets();
 
-  getQuickBarComponent() {
-    const { getStakePool } = this;
-    const { ticketFee, txFee, expiry } = this.state;
+  const getQuickBarComponent = () => {
     return [
       {
         data: (
@@ -45,34 +59,20 @@ class PurchaseTickets extends React.Component {
         }
       }
     ];
-  }
+  };
 
-  getAdvancedComponent() {
+  const getAdvancedComponent = () => {
     const v = (e) => e.target.value;
-    const changeTicketFee = (e) => this.onChangeTicketFee(v(e));
-    const changeTxFee = (e) => this.onChangeTxFee(v(e));
-    const changeExpiry = (e) => this.onChangeExpiry(v(e));
-    const {
-      configuredStakePools,
-      onChangeStakePool,
-      toggleShowVsp,
-      intl: { formatMessage }
-    } = this.props;
-    const {
-      ticketFee,
-      txFee,
-      expiry,
-      ticketFeeError,
-      txFeeError,
-      expiryError
-    } = this.state;
+    const changeTicketFee = (e) => onChangeTicketFee(v(e));
+    const changeTxFee = (e) => onChangeTxFee(v(e));
+    const changeExpiry = (e) => onChangeExpiry(v(e));
     return [
       {
         data: (
           <PurchaseTicketsAdvanced
             {...{
               configuredStakePools,
-              stakePool: this.getStakePool(),
+              stakePool: getStakePool(),
               ticketFee,
               txFee,
               expiry,
@@ -84,7 +84,7 @@ class PurchaseTickets extends React.Component {
               onChangeTicketFee: changeTicketFee,
               onChangeTxFee: changeTxFee,
               onChangeExpiry: changeExpiry,
-              formatMessage
+              formatMessage: intl.formatMessage
             }}
           />
         ),
@@ -94,179 +94,155 @@ class PurchaseTickets extends React.Component {
         }
       }
     ];
-  }
+  };
 
-  willEnter(height) {
+  const willEnter = (height) => {
     return {
       height: height,
       opacity: 0
     };
-  }
+  };
 
-  willLeave() {
+  const willLeave = () => {
     return {
       height: 0,
       opacity: 0
     };
-  }
+  };
 
-  render() {
-    return (
-      <PurchaseTicketsForm
-        {...{
-          ...this.props,
-          ...this.state,
-          canAffordTickets: this.getCanAffordTickets(),
-          account: this.state.account,
-          ...substruct(
-            {
-              onToggleShowAdvanced: null,
-              onIncrementNumTickets: null,
-              onDecrementNumTickets: null,
-              onChangeNumTickets: null,
-              onChangeAccount: null,
-              onPurchaseTickets: null,
-              getQuickBarComponent: null,
-              getAdvancedComponent: null,
-              willEnter: null,
-              willLeave: null,
-              getIsValid: null,
-              handleOnKeyDown: null
-            },
-            this
-          )
-        }}
-      />
-    );
-  }
-
-  handleOnKeyDown = (e) => {
+  const handleOnKeyDown = (e) => {
     if (e.keyCode == 38) {
       e.preventDefault();
-      this.onIncrementNumTickets();
+      onIncrementNumTickets();
     } else if (e.keyCode == 40) {
       e.preventDefault();
-      this.onDecrementNumTickets();
+      onDecrementNumTickets();
     }
   };
 
-  getStakePool() {
-    const pool = this.state.stakePool;
-    return pool
-      ? this.props.configuredStakePools.find(
-          compose(eq(pool.Host), get("Host"))
-        )
+  const getStakePool = () => {
+    return stakePool
+      ? configuredStakePools.find(compose(eq(stakePool.Host), get("Host")))
       : null;
-  }
+  };
 
-  getCanAffordTickets() {
-    return (
-      this.state.account &&
-      this.state.account.spendable >
-        this.props.ticketPrice * this.state.numTicketsToBuy
+  const getCanAffordTickets = () => {
+    return account && account.spendable > ticketPrice * numTicketsToBuy;
+  };
+
+  const onHideAdvanced = () => {
+    setIsShowingAdvanced(false);
+  };
+
+  const onShowAdvanced = () => {
+    setIsShowingAdvanced(true);
+  };
+
+  const onToggleShowAdvanced = () => {
+    isShowingAdvanced ? onHideAdvanced() : onShowAdvanced();
+  };
+
+  const onChangeAccount = (account) => {
+    setAccount(account);
+    onChangeAccountProp?.(account);
+  };
+
+  const onIncrementNumTickets = () => {
+    setNumTicketsToBuy((numTicketsToBuy) =>
+      numTicketsToBuy == "" ? 1 : numTicketsToBuy + 1
     );
-  }
+  };
 
-  onHideAdvanced() {
-    this.setState({ isShowingAdvanced: false });
-  }
-
-  onShowAdvanced() {
-    this.setState({ isShowingAdvanced: true });
-  }
-
-  onToggleShowAdvanced() {
-    this.state.isShowingAdvanced
-      ? this.onHideAdvanced()
-      : this.onShowAdvanced();
-  }
-
-  onChangeAccount(account) {
-    const { onChangeAccount } = this.props;
-    this.setState({ account });
-    onChangeAccount && onChangeAccount(account);
-  }
-
-  onIncrementNumTickets() {
-    const { numTicketsToBuy } = this.state;
-    if (numTicketsToBuy == "") this.setState({ numTicketsToBuy: 1 });
-    else this.setState({ numTicketsToBuy: this.state.numTicketsToBuy + 1 });
-  }
-
-  onChangeNumTickets(numTicketsToBuy) {
+  const onChangeNumTickets = (numTicketsToBuy) => {
     if (parseInt(numTicketsToBuy)) {
-      this.setState({ numTicketsToBuy: parseInt(numTicketsToBuy) });
+      setNumTicketsToBuy(parseInt(numTicketsToBuy));
     } else if (numTicketsToBuy == "") {
-      this.setState({ numTicketsToBuy });
+      setNumTicketsToBuy(numTicketsToBuy);
     }
-  }
+  };
 
-  onDecrementNumTickets() {
-    const { numTicketsToBuy } = this.state;
-    this.setState({
-      numTicketsToBuy: numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1
-    });
-  }
+  const onDecrementNumTickets = () => {
+    setNumTicketsToBuy((numTicketsToBuy) =>
+      numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1
+    );
+  };
 
-  getIsValid() {
-    if (!this.getCanAffordTickets()) return false;
-    if (this.getErrors()) return false;
+  const getIsValid = () => {
+    if (!getCanAffordTickets()) return false;
+    if (getErrors()) return false;
     return true;
-  }
+  };
 
-  onPurchaseTickets(privpass) {
-    const { onPurchaseTickets } = this.props;
-    if (!this.getIsValid() || !privpass) return;
-    onPurchaseTickets &&
-      onPurchaseTickets(
-        privpass,
-        this.state.account.value,
-        this.state.account.spendable,
-        this.state.conf,
-        this.state.numTicketsToBuy,
-        this.state.expiry,
-        this.state.ticketFee,
-        this.state.txFee,
-        this.getStakePool().value
-      );
-  }
+  const onPurchaseTickets = (privpass) => {
+    if (!getIsValid() || !privpass) return;
+    onPurchaseTicketsProp?.(
+      privpass,
+      account.value,
+      account.spendable,
+      conf,
+      numTicketsToBuy,
+      expiry,
+      ticketFee,
+      txFee,
+      getStakePool().value
+    );
+  };
 
-  onChangeTicketFee(ticketFee) {
+  const onChangeTicketFee = (ticketFee) => {
     const ticketFeeError =
       isNaN(ticketFee) || ticketFee <= 0 || ticketFee >= MAX_POSSIBLE_FEE_INPUT;
-    this.setState({
-      ticketFee: ticketFee.replace(/[^\d.]/g, ""),
-      ticketFeeError: ticketFeeError
-    });
-  }
 
-  onChangeTxFee(txFee) {
+    setTicketFee(ticketFee.replace(/[^\d.]/g, ""));
+    setTicketFeeError(ticketFeeError);
+  };
+
+  const onChangeTxFee = (txFee) => {
     const txFeeError =
       isNaN(txFee) || txFee <= 0 || txFee >= MAX_POSSIBLE_FEE_INPUT;
-    this.setState({
-      txFee: txFee.replace(/[^\d.]/g, ""),
-      txFeeError: txFeeError
-    });
-  }
+    setTxFee(txFee.replace(/[^\d.]/g, ""));
+    setTxFeeError(txFeeError);
+  };
 
-  onChangeExpiry(expiry) {
+  const onChangeExpiry = (expiry) => {
     const expiryError =
       isNaN(expiry) || expiry < 0 || isNullOrUndefined(expiry) || expiry === "";
-    this.setState({
-      expiry: expiry.replace(/[^\d.]/g, ""),
-      expiryError: expiryError
-    });
-  }
+    setExpiry(expiry.replace(/[^\d.]/g, ""));
+    setExpiryError(expiryError);
+  };
 
-  getErrors() {
-    const {
-      ticketFeeError,
-      txFeeError,
-      expiryError,
-      numTicketsToBuy
-    } = this.state;
+  const getErrors = () => {
     return ticketFeeError || txFeeError || expiryError || !numTicketsToBuy;
-  }
-}
+  };
 
-export default injectIntl(purchaseTickets(PurchaseTickets));
+  return (
+    <PurchaseTicketsForm
+      {...{
+        isShowingAdvanced,
+        getQuickBarComponent,
+        getAdvancedComponent,
+        getIsValid,
+        handleOnKeyDown,
+        numTicketsToBuy,
+        onIncrementNumTickets,
+        onDecrementNumTickets,
+        onChangeNumTickets,
+        onChangeAccount,
+        onPurchaseTickets,
+        onRevokeTickets,
+        onToggleShowAdvanced,
+        account,
+        ticketPrice,
+        willEnter,
+        willLeave,
+        toggleShowVsp,
+        dismissBackupRedeemScript,
+        onDismissBackupRedeemScript,
+        isWatchingOnly,
+        notMixedAccounts,
+        getRunningIndicator
+      }}
+    />
+  );
+};
+
+export default PurchaseTickets;

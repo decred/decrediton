@@ -27,6 +27,7 @@ const StakePoolsList = ({
               return (
                 <div className={styles.configuredVSP} key={Host}>
                   <InvisibleConfirmModalButton
+                    ariaLabel="Remove VSP"
                     modalTitle={
                       <T id="stakePoolsList.removeModal.title" m="Remove VSP" />
                     }

@@ -70,7 +70,7 @@ const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
 };
 
 const backBtn = ({ goBack }) => (
-  <SlateGrayButton onClick={() => goBack()} className="thin-button">
+  <SlateGrayButton onClick={() => goBack()} className={styles.thinButton}>
     <T id="txDetails.backBtn" m="Back" />
   </SlateGrayButton>
 );

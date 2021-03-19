@@ -7,7 +7,7 @@ import {
 } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
+import { Tooltip, classNames } from "pi-ui";
 import {
   TransitionMotionWrapper,
   ShowWarning,
@@ -15,7 +15,7 @@ import {
   Balance
 } from "shared";
 
-import "style/StakePool.less";
+import styles from "./PurchaseTickets.module.css";
 
 const purchaseLabel = () => (
   <T id="purchas.legacypurchaseTickets.purchaseBtn" m="Purchase" />
@@ -47,22 +47,24 @@ const PurchaseTicketsForm = ({
   getRunningIndicator
 }) => (
   <>
-    <div className="purchase-ticket-area-row is-row">
-      <div className="is-row purchase-ticket-input-address">
-        <div className="purchase-ticket-area-row-label">
+    <div className={classNames(styles.areaRow, styles.isRow)}>
+      <div className={classNames(styles.isRow, styles.inputAddress)}>
+        <label className={styles.rowLabel}>
           <T id="purchaseTickets.accountFrom.legacy" m="From" />:
-        </div>
+        </label>
         <AccountsSelect
-          className="stakepool-purchase-ticket-input-select"
+          className={styles.inputSelect}
           filterAccounts={notMixedAccounts}
           {...{ account, onChange: onChangeAccount }}
         />
-        <div className="stakepool-info-icon account-select-icon"></div>
+        <div
+          className={classNames(styles.infoIcon, styles.accountSelectIcon)}
+        />
       </div>
-      <div className="is-row purchase-ticket-input-amount">
-        <div className="purchase-ticket-area-row-label">
+      <div className={classNames(styles.isRow, styles.inputAmount)}>
+        <label className={styles.rowLabel} htmlFor="numTicketsToBuy">
           <T id="purchaseTickets.ticketAmount.legacy" m="Amount" />:
-        </div>
+        </label>
         <NumTicketsInput
           required
           invalid={!getIsValid()}
@@ -77,9 +79,10 @@ const PurchaseTicketsForm = ({
           decrementNumTickets={onDecrementNumTickets}
           onChangeNumTickets={onChangeNumTickets}
           onKeyDown={handleOnKeyDown}
+          id="numTicketsToBuy"
           showErrors={true}></NumTicketsInput>
         {getIsValid() && (
-          <div className="input-purchase-ticket-valid-message-area">
+          <div className={styles.inputValidMessageArea}>
             <T
               id="purchaseTickets.validMsg.legacy"
               m="Total: {amount} Remaining: {remaining}"
@@ -97,11 +100,12 @@ const PurchaseTicketsForm = ({
         )}
       </div>
     </div>
-    <div className="stakepool-purchase-ticket-info">
-      <div className="purchase-ticket-action-buttons is-column">
+    <div className={styles.info}>
+      <div className={classNames(styles.actionButtons, styles.isColumn)}>
         <TicketsCogs
           opened={!isShowingAdvanced}
           onClick={onToggleShowAdvanced}
+          ariaLabel="Show advanced settings"
         />
         <ImportScriptIconButton />
       </div>
@@ -118,7 +122,7 @@ const PurchaseTicketsForm = ({
       />
     </div>
     {!dismissBackupRedeemScript && (
-      <div className="warning-area">
+      <div className={styles.warningArea}>
         <ShowWarning
           warn={
             <T
@@ -137,7 +141,7 @@ const PurchaseTicketsForm = ({
             />
           }
         />
-        <div className="is-row backup-buttons-row-area">
+        <div className={classNames(styles.isRow, styles.backupButtonsRowArea)}>
           <InvisibleConfirmModalButton
             modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss" />}
             modalContent={
@@ -150,17 +154,17 @@ const PurchaseTicketsForm = ({
               <T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />
             }
             onSubmit={() => onDismissBackupRedeemScript()}
-            className="stakepool-content-send"
+            className={styles.stakepoolContentSend}
           />
           <KeyBlueButton
-            className="vsp-warning-backup-redeem-button"
+            className={styles.vspWarningBackupRedeemButton}
             onClick={() => toggleShowVsp(true)}>
             <T id="purchase.ticket.warn.button" m="Backup Redeem Scripts" />
           </KeyBlueButton>
         </div>
       </div>
     )}
-    <div className="stakepool-purchase-ticket-buttons-area">
+    <div className={styles.buttonsArea}>
       <PassphraseModalButton
         modalTitle={
           <T
@@ -168,7 +172,7 @@ const PurchaseTicketsForm = ({
             m="Revoke Tickets Confirmation"
           />
         }
-        className="stakepool-content-revoke-button"
+        className={styles.revokeButton}
         onSubmit={onRevokeTickets}
         buttonLabel={<T id="purchaseTickets.revokeBtn.legacy" m="Revoke" />}
       />
@@ -192,7 +196,7 @@ const PurchaseTicketsForm = ({
           />
         </Tooltip>
       ) : (
-        <KeyBlueButton
+        <PassphraseModalButton
           modalTitle={
             <T
               id="tickets.purchaseConfirmation.legacy"
@@ -200,9 +204,9 @@ const PurchaseTicketsForm = ({
             />
           }
           disabled={getIsValid && !getIsValid()}
-          onSubmit={onPurchaseTickets}>
-          {purchaseLabel()}
-        </KeyBlueButton>
+          onSubmit={onPurchaseTickets}
+          buttonLabel={purchaseLabel()}
+        />
       )}
     </div>
   </>

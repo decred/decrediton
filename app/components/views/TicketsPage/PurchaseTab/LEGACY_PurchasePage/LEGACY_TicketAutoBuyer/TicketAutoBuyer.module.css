@@ -1,0 +1,62 @@
+.wrapper {
+  background-color: var(--background-back-color);
+  padding: 10px 20px 0px 20px;
+  flex-direction: column;
+  display: flex;
+}
+.input {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+.row {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+  flex-direction: row-reverse;
+}
+.rowPortionFull {
+  width: 100%;
+  text-align: center;
+}
+.rowPortionFull .input {
+  width: 100px;
+}
+.rowPortionHalf {
+  width: 50%;
+  display: flex;
+  margin-bottom: 10px;
+}
+.rowPortionHalf .input {
+  width: 230px;
+}
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+label {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+
+  font-size: 16px;
+  line-height: 20px;
+}
+.orangeWarning {
+  position: inherit;
+}
+.confirmLabel {
+  display: inline-block;
+  margin-right: 0.5em;
+}
+.error {
+  color: var(--error-text-color);
+}
+@media screen and (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  .rowPortionFull {
+    text-align: start;
+  }
+}
