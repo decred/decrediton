@@ -26,7 +26,11 @@ const ListUTXOsModal = ({ onCancelModal, show }) => {
         )
       };
     }) ?? [];
-  const headers = ["UTXO", "Value"];
+
+  const headers = [
+    <T id="listutxo.utxo" m="UTXO" />,
+    <T id="listutxo.value" m="Value" />
+  ];
 
   return (
     <Modal className={styles.modal} {...{ show, onCancelModal }}>
@@ -34,7 +38,10 @@ const ListUTXOsModal = ({ onCancelModal, show }) => {
         <div className={styles.title}>
           <T id="listutxos.listUnspentUTXOs" m="List Unspent UTXOs" />
         </div>
-        <AccountsSelect {...{ account, onChange: setAccount }} className={styles.accountSelect}/>
+        <AccountsSelect
+          {...{ account, onChange: setAccount }}
+          className={styles.accountSelect}
+        />
       </div>
       <div className={styles.closeButton} onClick={onCancelModal} />
 
