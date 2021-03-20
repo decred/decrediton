@@ -9,7 +9,7 @@ import configureStore from "./store/configureStore";
 import { getGlobalCfg, getDaemonIsAdvanced, getIsSpv } from "./config";
 import locales from "./i18n/locales";
 import "pi-ui/dist/index.css";
-import "./style/main.less";
+import "./style/main.css";
 import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
 import { log } from "./wallet";
@@ -18,7 +18,6 @@ import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import * as cfgConstants from "constants/config";
 import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
-
 import {
   defaultLightTheme,
   ThemeProvider,

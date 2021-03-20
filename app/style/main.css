@@ -1,10 +1,10 @@
-////////////////////////////////////
+/*///////////////////////////////////
 //  Global variables
-////////////////////////////////////
+///////////////////////////////////*/
 
 :root {
-  // TODO: check if these css variables aren't in style/themes/...
-  // and if not migrate theme and delete from here
+  /* TODO: check if these css variables aren't in style/themes/...
+  // and if not migrate theme and delete from here */
   --sidebar-width: 296px;
   --sidebar-width-reduced: 60px;
   --disabled-box-shadow-color: rgba(0, 0, 0, 0.1);
@@ -18,50 +18,15 @@
   --input-timing-function: ease-in-out;
 }
 
-////////////////////////////////////
-//  Global mixin classes
-////////////////////////////////////
-
-// Usage:
-//
-//  <div className="container">
-//      <div className="left">...</div>
-//      <div className="right">...</div>
-//  </div>
-//
-//  .container {
-//      .clearfloat-mixin;
-//  }
-//
-//  .left {
-//      float: left;
-//  }
-//  .right {
-//      float: right;
-//  }
-.clearfloat-mixin {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-// MixIn to be used on UI elements to be displayed side-by-side
-// Adds a minimial margin to the right for the spacing of the next element
-.inline-block-mixin {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.5em;
-}
-
-////////////////////////////////////
+/*///////////////////////////////////
 //  Global classes
-////////////////////////////////////
+///////////////////////////////////*/
 
-// TODO: delete box-sizing: content-box;
+/* TODO: delete box-sizing: content-box;
 // I added this ugly `:not` workaround to be able to skip pi-ui's classes
 // which are prefixed with 'styles_'.
 // Ideally we should use `* { box-sizing: inherit; } and html { box-sizing: border-box }`(already done in pi-ui)
-// we shouldn't override it in a global level - we should take care of this while migrating this file to a css module.
+// we shouldn't override it in a global level - we should take care of this while migrating this file to a css module.*/
 *:not([class^="styles_"]),
 *:not([class^="styles_"])::before,
 *:not([class^="styles_"])::after {
@@ -120,7 +85,7 @@ main {
   flex-direction: column;
 }
 
-// Main scroll bar styling
+/* Main scroll bar styling */
 ::-webkit-scrollbar {
   width: 5px;
   background-color: var(--disabled-background-color);
@@ -130,24 +95,12 @@ main {
   background-color: var(--disabled-color);
 }
 
-////////////////////////////////////
+/*///////////////////////////////////
 //  Disable element selection
-////////////////////////////////////
-
+///////////////////////////////////*/
 .decrediton {
   -webkit-user-select: none;
   -webkit-user-drag: none;
   -webkit-app-region: no-drag;
   cursor: default;
-}
-
-//Exceptions
-
-.snackbar,
-.receive-content-nest,
-.stakepool-flex-height,
-.tickets-list,
-.account-content-nest,
-.message-signature {
-  -webkit-user-select: text;
 }
