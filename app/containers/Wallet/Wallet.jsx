@@ -19,8 +19,9 @@ import LNPage from "components/views/LNPage";
 import SideBar from "components/SideBar/SideBar";
 import ListUtxo from "components/views/ListUtxo/ListUtxo";
 import { BlurableContainer } from "layout";
-import { useWallet } from "./hooks";
+import { useWallet } from "../hooks";
 import { useMountEffect } from "hooks";
+import styles from "./Wallet.module.css";
 
 const Wallet = ({ setInterval }) => {
   const { getPeerInfo, expandSideBar } = useWallet();
@@ -28,8 +29,7 @@ const Wallet = ({ setInterval }) => {
   // Notice that we return a cleanup logic function in useEffect/useMountEffect
   // which will run on unmount.
   useMountEffect(() => {
-    // Get peer info every 10 seconds, so we can no if there are no available
-    // peers.
+    // Fetch peers info every 10 seconds.
     const peerInfoInterval = setInterval(() => getPeerInfo(), 10000);
 
     // Cleanup interval on unmount.
@@ -39,10 +39,10 @@ const Wallet = ({ setInterval }) => {
   });
 
   return (
-    <div className={"page-body"}>
+    <div className={styles.pageBody}>
       <SideBar />
       <BlurableContainer
-        className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
+        className={expandSideBar ? styles.pageView : styles.reducedBar}>
         <StaticSwitch>
           <Route path="/home" component={HomePage} />
           <Route path="/accounts" component={AccountsPage} />

@@ -7,9 +7,10 @@ import SpvChoicePage from "components/views/GetStartedPage/SpvChoicePage/SpvChoi
 import CreateWalletPage from "components/views/GetStartedPage/CreateWalletPage/CreateWalletPage";
 import { BlurableContainer } from "layout";
 import { Route, Switch } from "react-router-dom";
+import styles from "./GetStarted.module.css";
 
-export default () => (
-  <BlurableContainer className="getstarted-page-body">
+const GetStarted = () => (
+  <BlurableContainer className={styles.getStartedBody}>
     <Switch>
       <Route path="/getstarted/language" component={LanguageSelectPage} />
       <Route
@@ -24,3 +25,5 @@ export default () => (
     </Switch>
   </BlurableContainer>
 );
+
+export default GetStarted;

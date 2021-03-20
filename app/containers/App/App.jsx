@@ -3,20 +3,20 @@ import { IntlProvider } from "react-intl";
 import { defaultFormats } from "i18n/locales";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { StaticSwitch } from "shared";
-import GetStartedContainer from "./GetStarted";
-import WalletContainer from "./Wallet";
+import GetStartedContainer from "../GetStarted";
+import WalletContainer from "../Wallet";
 import ShutdownPage from "components/views/ShutdownPage/ShutdownPage";
 import FatalErrorPage from "components/views/FatalErrorPage/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import AboutModal from "components/modals/AboutModal/AboutModal";
 import { log } from "wallet";
 import TrezorModals from "components/modals/TrezorModals/TrezorModals";
-import "style/Layout.less";
 import { ipcRenderer } from "electron";
 import { hot } from "react-hot-loader/root";
 import { CantCloseModals } from "modals";
 import { useMountEffect } from "hooks";
-import { useApp } from "./hooks";
+import { useApp } from "../hooks";
+import styles from "./App.module.css";
 
 // minimum size to reduce the sidebar in px.
 const MINIMUM_SIZE_TO_REDUCE_SIDEBAR = 1179;
@@ -126,7 +126,7 @@ const App = () => {
           <Redirect from="/" exact to="/getstarted" />
         </Switch>
         <Snackbar />
-        <StaticSwitch className="top-level-container">
+        <StaticSwitch className={styles.appContainer}>
           <Route path="/getstarted" component={GetStartedContainer} />
           <Route path="/shutdown" component={ShutdownPage} />
           <Route path="/error" component={FatalErrorPage} />
