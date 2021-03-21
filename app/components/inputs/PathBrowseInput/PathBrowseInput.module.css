@@ -4,7 +4,7 @@
   border-bottom: 1px var(--stroke-color-default) solid;
 }
 .pathInputAndButton:hover {
-  border-bottom: 1px var(--stroke-color-hovered) solid;
+  border-bottom: 1px solid var(--input-bottom-border-hovered);
 }
 .pathInputArea {
   width: 100%;

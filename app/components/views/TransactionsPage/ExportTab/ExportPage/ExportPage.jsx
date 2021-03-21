@@ -1,34 +1,70 @@
 import Select from "react-select";
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames } from "pi-ui";
-import { KeyBlueButton } from "buttons";
-import { InlineField, PathBrowseInput, FileBrowserFilters } from "inputs";
+import { KeyBlueButton, InfoModalButton } from "buttons";
+import { PathBrowseInput, FileBrowserFilters } from "inputs";
 import { Subtitle } from "shared";
 import styles from "./ExportPage.module.css";
 
 const FieldDescription = ({ name, description }) => (
   <li>
-    <span className={styles.exportInfoFieldName}>{name}:</span>
+    <span className={styles.exportInfoFieldName}>{name.trim()}:</span>
     {description}
   </li>
 );
+
+const messages = defineMessages({
+  destinationPlaceholder: {
+    id: "export.destination.placeholder",
+    defaultMessage: "Choose destination..."
+  }
+});
 
 const ExportPage = ({
   exportingData,
   availableExports,
   selectedExport,
-  expanded,
-  expandFields,
   destinationFile,
   setDestinationFile,
   onExportCSV,
-  onChangeSelectedExport
+  onChangeSelectedExport,
+  intl
 }) => (
   <>
-    <Subtitle title={<T id="export.subtitle" m="Export Transactions" />} />
+    <Subtitle
+      title={<T id="export.subtitle" m="Export Transactions" />}
+      className={classNames(styles.isRow)}
+      children={
+        <div className={classNames(styles.contentTitleButtonsArea)}>
+          <InfoModalButton
+            modalContent={
+              <div className={styles.modalContent}>
+                <div className={styles.exportInfoDescription}>
+                  {selectedExport.description}
+                </div>
+                <T id="export.infoFieldsHeader" m="Exported Fields" />:
+                <ul className={styles.exportInfoFields}>
+                  {selectedExport.fields.map((p) => (
+                    <FieldDescription key={p.name} {...p} />
+                  ))}
+                </ul>
+              </div>
+            }
+            modalTitle={
+              <div className={styles.modalTitle}>
+                <T id="export.modalTitle" m="Export Transactions" />
+              </div>
+            }
+            modalClassName={styles.modal}
+            draggable
+          />
+        </div>
+      }
+    />
     <div className={styles.exportArea}>
       <div className={styles.exportAreaLeft}>
-        <InlineField label={<T id="export.select" m="Export Type" />}>
+        <label>
+          <T id="export.select" m="Export Type" />
           <Select
             clearable={false}
             multi={false}
@@ -38,53 +74,37 @@ const ExportPage = ({
             options={availableExports}
             onChange={onChangeSelectedExport}
           />
-        </InlineField>
+        </label>
 
-        <InlineField label={<T id="export.destination" m="Destination" />}>
+        <label>
+          <T id="export.destination" m="Destination" />
           <PathBrowseInput
             save
             type="file"
+            placeholder={intl.formatMessage(messages.destinationPlaceholder)}
             value={destinationFile}
             filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
             onChange={(value) => setDestinationFile(value)}
           />
-        </InlineField>
+        </label>
       </div>
-      <div
-        className={classNames(
-          styles.exportAreaRight,
-          !expanded && styles.exportInfoNotExpanded
-        )}
-        onClick={expandFields}>
-        <div
-          className={
-            expanded
-              ? classNames(styles.verticalExpand, styles.expanded)
-              : styles.verticalExpand
-          }
-        />
+      <div className={classNames(styles.exportAreaRight)}>
         <p className={styles.exportInfoDescription}>
           {selectedExport.description}
         </p>
-        <T id="export.infoFieldsHeader" m="Exported Fields" />
-        :&nbsp;
-        {expanded ? (
-          <ul className={styles.exportInfoFields}>
-            {selectedExport.fields.map((p) => (
-              <FieldDescription key={p.name} {...p} />
-            ))}
-          </ul>
-        ) : (
-          <div className={styles.exportInfoNotExpanded}>
-            {selectedExport.fields.map((p, i) =>
-              i == selectedExport.fields.length - 1 ? (
-                <span key={p.name}>{p.name}.</span>
-              ) : (
-                <span key={p.name}>{p.name}, </span>
+        <div>
+          <T id="export.infoFieldsHeader" m="Exported Fields" />
+          :&nbsp;
+          <span className={styles.exportInfoNotExpanded}>
+            {selectedExport.fields
+              .map(
+                ({ name }) =>
+                  name.charAt(0).toUpperCase() + name.slice(1)
               )
-            )}
-          </div>
-        )}
+              .join(", ")}
+            .
+          </span>
+        </div>
       </div>
     </div>
     <div className={styles.exportAreaButton}>
