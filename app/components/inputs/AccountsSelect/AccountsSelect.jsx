@@ -7,6 +7,7 @@ import { classNames } from "pi-ui";
 const AccountsSelect = ({
   accountsType,
   className,
+  selectClassName,
   showAccountsButton,
   disabled,
   hideSpendable,
@@ -59,7 +60,7 @@ const AccountsSelect = ({
         valueRenderer={valueRenderer}
         optionRenderer={valueRenderer}
         onChange={(acc) => onChange?.(acc)}
-        className={styles.select}
+        className={classNames(styles.select, selectClassName)}
         onInputKeyDown={selectKeyDown}
       />
       {showAccountsButton && <LinkToAccounts />}

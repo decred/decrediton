@@ -1,28 +1,42 @@
 .receiveContent {
   background-color: var(--background-back-color);
-  padding-top: 20px;
-  padding-left: 28px;
-  width: 650px;
+  padding: 30px 40px;
+  width: 684px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
-.receiveContentNestForAddress {
+.inputs {
   display: flex;
-  margin-bottom: 20px;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.inputWrapper.amountInputWrapper {
+  align-self: flex-end;
 }
 
 .receiveSelectAmountInput {
-  width: 300px;
   display: flex;
 }
 
-.receiveSelectAccountInput {
-  width: 325px;
+.receiveSelectAccountSelect a {
+  margin-left: 10px;
+}
+
+.receiveSelectAccountSelectInput {
+  width: 344px;
 }
 
 .requestedAmountInput {
-  width: 285px;
+  width: 246px;
 }
 
 .receiveRequestedAmount {
@@ -30,15 +44,15 @@
   margin-bottom: 20px;
 }
 .receiveContentNestQR {
-  margin-right: 15px;
-  background-color: var(--background-address-copy-color);
+  margin-right: 10px;
+  background-color: var(--light-blue);
   border-radius: 5px;
   vertical-align: middle;
   height: 40px;
-  width: 470px;
-  color: var(--input-color-default);
-  font-size: 19px;
-  font-weight: 600;
+  width: 616px;
+  color: var(--main-dark-blue);
+  font-size: 16px;
+  font-weight: 400;
   text-align: center;
   line-height: 40px;
   position: relative;
@@ -99,47 +113,40 @@
 }
 
 .line {
-  height: 40px;
   display: flex;
-  margin-bottom: 21px;
-  text-align: center;
-  font-size: 11px;
+  align-items: center;
 }
 
-.receiveContentNestPrefix {
-  margin-right: 20px;
-  min-width: 125px;
-  margin-left: 0;
-  font-size: 19px;
-  line-height: 24px;
-  text-transform: capitalize;
-  text-align: right;
+.inputWrapper label {
+  margin: 0;
+  color: var(--grey-7);
+  font-size: 13px;
+  line-height: 16px;
 }
 
 .receiveContentCopyButton {
   background-repeat: no-repeat;
   background-position: center;
   background-image: var(--copy-to-clipboard-icon);
-  background-size: 20px 20px;
-  height: 30px;
-  width: 30px;
+  background-size: 14px 14px;
+  height: 24px;
+  width: 24px;
   box-shadow: 0px 3px 5px var(--icons-shadow);
   border-radius: 5px;
   cursor: pointer;
-  margin: 0 15px 2px 15px;
+  margin-right: 10px;
 }
 
 .receiveContentQRButton {
   background-repeat: no-repeat;
   background-position: center;
   background-image: var(--view-qr-icon);
-  background-size: 20px 20px;
-  height: 30px;
-  width: 30px;
+  background-size: 14px 14px;
+  height: 24px;
+  width: 24px;
   box-shadow: 0px 3px 5px var(--icons-shadow);
   border-radius: 5px;
   cursor: pointer;
-  margin: 0 20px 2px 20px;
 }
 
 .receiveContentShareButton {
@@ -167,69 +174,38 @@
   background-color: var(--background-copy-color);
 }
 
-.copyParent {
-  padding-top: 5px;
-  color: var(--tab-text-active-hover);
-}
-
-.viewQRParent {
-  padding-top: 5px;
-  margin-left: 5px;
-  color: var(--tab-text-active-hover);
-}
-
-.shareQRParent {
-  padding-top: 5px;
-  margin-left: 5px;
-  color: var(--tab-text-active-hover);
-}
-.copyParent:hover {
-  padding-top: 5px;
-  color: var(--input-color-default);
-}
-
-.viewQRParent:hover {
-  padding-top: 5px;
-  margin-left: 5px;
-  color: var(--input-color-default);
-}
-
-.shareQRParent:hover {
-  padding-top: 5px;
-  margin-left: 5px;
-  color: var(--input-color-default);
-}
-
 .generateButton {
   position: relative;
   margin-top: 20px;
-  margin-left: 600px;
-  width: 185px;
-  height: 45px;
+  margin-left: 550px;
+  width: 215px;
+  height: 44px;
 }
 
 .blueButton {
-  font-size: 13px;
-  padding: 12px 23px 14px 23px;
-}
-
-.receiveSelectAccountInput a {
-  margin-left: 10px;
+  font-size: 16px;
 }
 
 @media screen and (max-width: 768px) {
   .receiveContent {
     width: 355px;
-    height: 280px;
+  }
+
+  .inputs {
+    flex-direction: column;
+  }
+
+  .inputWrapper.amountInputWrapper {
+    align-self: flex-start;
+    margin-top: 20px;
+  }
+
+  .requestedAmountInput {
+    width: 321px;
   }
 
   .receiveContentNestPrefix {
     margin-bottom: 10px;
-  }
-
-  .receiveContentNestForAddress,
-  .receiveRequestedAmount {
-    flex-wrap: wrap;
   }
 
   .line {
@@ -238,7 +214,8 @@
   }
 
   .receiveContentNestQR {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-right: 0;
     font-size: 17px;
   }
 

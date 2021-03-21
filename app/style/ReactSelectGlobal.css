@@ -82,7 +82,7 @@
 .Select--single > .Select-control .Select-value {
   bottom: 0;
   left: 0;
-  padding: 0px 20px 0px 10px;
+  padding: 0px 20px 0px 0;
   position: absolute;
   right: 0;
   top: 0;
@@ -90,9 +90,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 16px;
 }
 .Select-placeholder {
-  color: var(--select-placeholder);
+  color: var(--gray-5);
 }
 
 .has-value.Select--single > .Select-control .Select-value a.Select-value-label,
@@ -232,7 +233,7 @@
 .Select-control:hover:not(:disabled) {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
   color: var(--input-color-hovered);
-  border-bottom: 1px solid var(--stroke-color-hovered);
+  border-bottom: 1px solid var(--input-bottom-border-hovered);
 }
 
 .Select-control:hover:not(:disabled) .Select-arrow {
