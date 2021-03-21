@@ -28,7 +28,11 @@ const Logo = React.memo(
         aria-label="Logo"
         onClick={!expandSideBar ? onExpandSideBar : null}
         className={
-          !expandSideBar ? styles.hamburger : isTestNet ? styles[TESTNET] : styles[MAINNET]
+          !expandSideBar
+            ? styles.hamburger
+            : isTestNet
+            ? styles[TESTNET]
+            : styles[MAINNET]
         }
       />
       {getRunningIndicator && (

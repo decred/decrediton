@@ -22,11 +22,7 @@ const NumTicketsInput = ({
       <T id="numTicketsInput.unit" m="Tickets" />
     );
   return (
-    <div
-      className={classNames(
-        style.container,
-        invalid && style.error
-      )}>
+    <div className={classNames(style.container, invalid && style.error)}>
       <IntegerInput
         {...{
           required,

@@ -78,9 +78,7 @@ const TicketAutoBuyerForm = ({
                     <div className={styles.confirmLabel}>
                       <T id="vsp.autobuyer.modal.stakepool" m="VSP" />:
                     </div>
-                    <div>
-                      {vsp && vsp.host}
-                    </div>
+                    <div>{vsp && vsp.host}</div>
                   </div>
                 </div>
               </div>
@@ -105,7 +103,8 @@ const TicketAutoBuyerForm = ({
             />
           </div>
         </div>
-        <div className={classNames(styles.autoBuyerRowPortionHalf, styles.isRow)}>
+        <div
+          className={classNames(styles.autoBuyerRowPortionHalf, styles.isRow)}>
           <div className={styles.autobuyerLabel}>
             <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />:
           </div>

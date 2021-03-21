@@ -5,10 +5,7 @@ const UnsignedTx = ({ tx, title }) => (
   <div className={styles.txArea}>
     <div className={styles.txTitle}>{title}</div>
     <div className={styles.tx}>{tx}</div>
-    <CopyToClipboard
-      textToCopy={tx}
-      className={styles.copyIcon}
-    />
+    <CopyToClipboard textToCopy={tx} className={styles.copyIcon} />
   </div>
 );
 

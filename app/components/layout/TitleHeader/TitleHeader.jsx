@@ -9,9 +9,7 @@ const TitleHeader = ({ title, iconType, optionalButton }) => (
       </div>
       <div className={styles.title}>{title}</div>
     </div>
-    {optionalButton && (
-      <div className={styles.button}>{optionalButton}</div>
-    )}
+    {optionalButton && <div className={styles.button}>{optionalButton}</div>}
   </div>
 );
 

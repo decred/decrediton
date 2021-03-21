@@ -10,7 +10,10 @@ import {
 } from "helpers/trezor";
 import { publishTransactionAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
-import { MODEL1_DECRED_HOMESCREEN, MODELT_DECRED_HOMESCREEN } from "constants/trezor";
+import {
+  MODEL1_DECRED_HOMESCREEN,
+  MODELT_DECRED_HOMESCREEN
+} from "constants/trezor";
 import { getWalletCfg } from "config";
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {
@@ -598,7 +601,8 @@ export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
     return;
   });
 
-  const hs = features.model == "T" ? MODELT_DECRED_HOMESCREEN : MODEL1_DECRED_HOMESCREEN;
+  const hs =
+    features.model == "T" ? MODELT_DECRED_HOMESCREEN : MODEL1_DECRED_HOMESCREEN;
 
   try {
     await deviceRun(dispatch, getState, async () => {

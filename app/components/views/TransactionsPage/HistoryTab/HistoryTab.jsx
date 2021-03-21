@@ -47,7 +47,6 @@ const HistoryTab = () => {
     onChangeTransactionsFilter
   } = useHistoryTab();
 
-
   const { search, listDirection } = transactionsFilter;
   const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
 

@@ -159,7 +159,21 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [ar, de, en, en_GB, en_AU, es, it, fr, ja, pl, pt_BR, zh, zh_HK];
+const locales = [
+  ar,
+  de,
+  en,
+  en_GB,
+  en_AU,
+  es,
+  it,
+  fr,
+  ja,
+  pl,
+  pt_BR,
+  zh,
+  zh_HK
+];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);

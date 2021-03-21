@@ -18,8 +18,8 @@ export function useTransactionPage(txHash) {
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
 
   const dispatch = useDispatch();
-  const abandonTransaction = useCallback((txHash) =>
-    dispatch(clia.abandonTransactionAttempt(txHash)),
+  const abandonTransaction = useCallback(
+    (txHash) => dispatch(clia.abandonTransactionAttempt(txHash)),
     [dispatch]
   );
   const decodeRawTransactions = useCallback(

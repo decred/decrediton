@@ -2,12 +2,7 @@ import { TitleHeader } from "../TitleHeader";
 import DescriptionHeader from "../DescriptionHeader";
 import styles from "./StandaloneHeader.module.css";
 
-const StandaloneHeader = ({
-  title,
-  description,
-  iconType,
-  actionButton
-}) => (
+const StandaloneHeader = ({ title, description, iconType, actionButton }) => (
   <div className={styles.header}>
     <TitleHeader
       title={title}

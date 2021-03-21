@@ -136,13 +136,19 @@ export const newTransactionsReceived = (
   // get vsp tickets fee status in case there is a stake tx and we show the
   // proper ticket value.
   const vspHashes = {};
-  vspHashes[VSP_FEE_PROCESS_ERRORED] = await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-  vspHashes[VSP_FEE_PROCESS_STARTED] = await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-  vspHashes[VSP_FEE_PROCESS_PAID] = await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+  vspHashes[VSP_FEE_PROCESS_ERRORED] = await dispatch(
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED)
+  );
+  vspHashes[VSP_FEE_PROCESS_STARTED] = await dispatch(
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED)
+  );
+  vspHashes[VSP_FEE_PROCESS_PAID] = await dispatch(
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID)
+  );
 
   // add feeStatus into unmined txs. With that there is no need to add into
   // mined txs.
-  Object.keys(vspHashes).forEach(feeStatus => {
+  Object.keys(vspHashes).forEach((feeStatus) => {
     vspHashes[feeStatus].forEach((ticketHash) => {
       if (!newlyUnminedMap.stakeTransactions[ticketHash]) {
         return;

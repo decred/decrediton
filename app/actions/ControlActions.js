@@ -388,7 +388,11 @@ export const newPurchaseTicketsAttempt = (
     dispatch(updateUsedVSPs(vsp));
     const numBought = purchaseTicketsResponse.getTicketHashesList().length;
     if (numBought < numTickets) {
-      dispatch({ purchaseTicketsResponse, numAttempted: numTickets, type: PURCHASETICKETS_SUCCESS_LESS });
+      dispatch({
+        purchaseTicketsResponse,
+        numAttempted: numTickets,
+        type: PURCHASETICKETS_SUCCESS_LESS
+      });
     } else {
       dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
     }
