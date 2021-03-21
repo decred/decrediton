@@ -104,17 +104,26 @@ ul.exportInfoFields {
 }
 
 @media screen and (max-width: 768px) {
+  .modal {
+    width: 247px !important;
+  }
   .exportArea {
     flex-direction: column;
+    height: initial;
   }
 
   .exportAreaLeft {
-    width: 307px;
+    width: 314px;
+    padding: 20px;
+  }
+  .exportAreaLeft label:first-child {
+    margin-bottom: 20px;
   }
 
   .exportAreaRight {
-    width: 305px;
+    width: 315px;
     min-height: 88px;
+    padding: 20px;
   }
 
   .exportAreaButton {
