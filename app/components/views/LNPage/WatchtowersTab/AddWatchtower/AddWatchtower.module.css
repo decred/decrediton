@@ -1,0 +1,39 @@
+.addWatchtower {
+  display: flex;
+  flex-direction: column;
+}
+
+.addWatchtowerContent {
+  background-color: var(--background-back-color);
+  padding-top: 20px;
+  padding-left: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.addWatchtowerNest {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.addWatchtowerNest > div:nth-child(2) {
+  width: 100%;
+  margin-right: 40px;
+}
+
+.addWatchtowerNestPrefix {
+  margin-right: 20px;
+  min-width: 80px;
+  margin-left: 0;
+  font-size: 19px;
+  line-height: 24px;
+  text-transform: capitalize;
+  text-align: right;
+}
+
+.addWatchtowerButton {
+  position: relative;
+  margin-top: 20px;
+  margin-left: auto;
+}

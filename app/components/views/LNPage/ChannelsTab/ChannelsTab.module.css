@@ -1,59 +1,5 @@
-.openChannel {
-  margin-top: 1em;
-  background-color: var(--background-back-color);
-  padding: 1em 1em 1em 3em;
-}
-
 .channelsContent {
   margin-top: 2em;
-}
-
-.dataWrapper {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  margin-right: 2em;
-}
-
-.remotePubkey {
-  color: var(--input-color-disabled);
-  margin-top: -15px;
-}
-
-.channelActive {
-  border-left: 10px solid var(--accent-color);
-}
-.channelInactive {
-  border-left: 10px solid var(--error-red);
-}
-.pendingOpen {
-  border-left: 10px solid var(--cyan-bold);
-}
-.pendingClose {
-  border-left: 10px solid var(--disabled-color);
-}
-.pendingForceclose {
-  border-left: 10px solid var(--error-text-color);
-}
-.pendingWaitclose {
-  border-left: 10px solid var(--input-color-disabled);
-}
-.channelClosed {
-  border-left: 10px solid var(--disabled-background-color);
-}
-
-.peerBalances {
-  text-align: right;
-  padding-top: 10px;
-}
-
-.peerBalances > div > div {
-  display: inline;
-  margin-left: 10px;
-}
-
-.capacity {
-  font-size: 32px;
-  padding-top: 10px;
 }
 
 .headerWrapper {
@@ -65,24 +11,6 @@
   z-index: 10;
   right: 10px;
   top: 10px;
-}
-
-.ln-open-channel-details,
-.ln-pending-channel-details,
-.channelDetails {
-  background-color: var(--background-back-color);
-  padding: 1em;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-}
-
-.channelDetails a {
-  color: var(--link-color);
-  cursor: pointer;
-}
-
-.channelDetails a:hover {
-  color: var(--link-color-hovered);
 }
 
 .openNewChannel {
@@ -103,46 +31,4 @@
   max-width: 3em;
   margin-top: 2em;
   grid-column-start: 1;
-}
-
-.modalChaninfo {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-}
-
-.channelStatusWrapper {
-  display: flex;
-  margin-top: 0.5em;
-}
-
-.balanceHeader {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 0px -5px 35px -5px;
-}
-
-.balanceTile {
-  padding: 30px;
-  background-color: var(--background-back-color);
-  max-width: 400px;
-  flex: 1 1 0;
-  margin: 0px 5px 10px 5px;
-}
-
-.balanceValue {
-  font-size: 32px;
-}
-.hasFunds {
-  border-bottom: 10px solid var(--accent-color);
-}
-.zeroFunds {
-  border-bottom: 10px solid var(--error-red);
-}
-
-.copyableText span {
-  font-size: 14px;
-  background: none;
-  padding: 0;
 }

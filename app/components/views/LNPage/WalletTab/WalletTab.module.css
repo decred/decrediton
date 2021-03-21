@@ -72,20 +72,11 @@
   width: 100%;
 }
 
-.backupInfoHeader {
-  display: flex;
-}
-
-.backupInfoText {
-  word-break: break-all;
-  padding-right: 40px;
-  padding-bottom: 8px;
-}
-
 .backupInfoBtn {
   margin-right: 2px;
 }
 
+/* BalanceHeader */
 .balanceHeader {
   display: flex;
   flex-direction: row;
@@ -94,6 +85,7 @@
   margin: 0px -5px 35px -5px;
 }
 
+/* BalanceHeader */
 .balanceTile {
   padding: 30px;
   background-color: var(--background-back-color);
@@ -102,15 +94,22 @@
   margin: 0px 5px 10px 5px;
 }
 
+/* BalanceHeader */
 .balanceValue {
   font-size: 32px;
 }
+
+/* BalanceHeader */
 .hasFunds {
   border-bottom: 10px solid var(--color-primary);
 }
+
+/* BalanceHeader */
 .unconfirmed {
   border-bottom: 10px solid var(--selected_wallet-label);
 }
+
+/* BalanceHeader */
 .zeroFunds {
   border-bottom: 10px solid var(--error-red);
 }

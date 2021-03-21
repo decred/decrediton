@@ -40,4 +40,4 @@ export function useNetworkTab() {
     getRoutesInfo,
     chanpointURL
   };
-}
+};

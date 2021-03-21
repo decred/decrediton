@@ -1,0 +1,18 @@
+
+/* .nodeInfo */
+
+.basicInfo {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
+  border-bottom: 10px solid var(--color-primary);
+}
+
+.basicInfoContent {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 1em;
+}
+
+/* .channelList */

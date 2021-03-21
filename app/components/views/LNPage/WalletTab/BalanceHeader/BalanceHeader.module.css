@@ -1,0 +1,31 @@
+.balanceHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0px -5px 35px -5px;
+}
+
+.balanceTile {
+  padding: 30px;
+  background-color: var(--background-back-color);
+  max-width: 400px;
+  flex: 1 1 0px;
+  margin: 0px 5px 10px 5px;
+}
+
+.zeroFunds {
+  border-bottom: 10px solid var(--error-red);
+}
+
+.balanceValue {
+  font-size: 32px;
+}
+
+.hasFunds {
+  border-bottom: 10px solid var(--color-primary);
+}
+
+.unconfirmed {
+  border-bottom: 10px solid var(--selected_wallet-label);
+}

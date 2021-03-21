@@ -1,0 +1,48 @@
+.tabsWrapper {
+  position: relative;
+}
+
+.tabs {
+  display: flex;
+  z-index: 999;
+  width: 240px;
+  position: absolute;
+  margin-left: 30px;
+  margin-top: -20px;
+  opacity: 1;
+  color: var(--input-color-default);
+}
+
+.tabLeft {
+  width: 120px;
+  height: 30px;
+  border: 1px var(--disabled-background-color) solid;
+  border-radius: 5px 0px 0px 5px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.tabRight {
+  width: 120px;
+  height: 30px;
+  border: 1px var(--disabled-background-color) solid;
+  border-left: none;
+  border-radius: 0px 5px 5px 0px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.tabBackgroundSelected {
+  background: var(--background-back-color);
+}
+
+.tabBackgroundUnselected {
+  background: var(--disabled-background-color);
+  color: var(--disabled-color);
+}

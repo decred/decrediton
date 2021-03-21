@@ -1,0 +1,21 @@
+.channelDetails {
+  background-color: var(--background-back-color);
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.channelDetails a {
+  color: var(--link-color);
+  cursor: pointer;
+}
+
+.channelDetails a:hover {
+  color: var(--link-color-hovered);
+}
+
+.copyableText span {
+  font-size: 14px;
+  background: none;
+  padding: 0;
+}

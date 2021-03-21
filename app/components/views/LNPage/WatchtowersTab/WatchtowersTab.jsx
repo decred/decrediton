@@ -1,48 +1,21 @@
-import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { CopyableText, Tooltip } from "pi-ui";
 import { useWatchtowersTab } from "./hooks";
 import styles from "./WatchtowersTab.module.css";
-import { TextInput } from "inputs";
 import { Subtitle } from "shared";
-import { KeyBlueButton } from "buttons";
+import AddWatchtower from "./AddWatchtower/AddWatchtower";
+import { DescriptionHeader } from "layout";
 
-const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
-  const [pubkey, setPubkey] = useState("");
-  const [addr, setAddr] = useState("");
-
-  return (
-    <div className={styles.addWatchtower}>
-      <div className={styles.addWatchtowerContent}>
-        <div className={styles.addWatchtowerNest}>
-          <div className={styles.addWatchtowerNestPrefix}>
-            <T id="ln.watchtowersTab.Pubkey" m="Tower ID:" />
-          </div>
-          <TextInput
-            value={pubkey}
-            onChange={(e) => setPubkey(e.target.value.trim())}
-          />
-        </div>
-        <div className={styles.addWatchtowerNest}>
-          <div className={styles.addWatchtowerNestPrefix}>
-            <T id="ln.watchtowersTab.address" m="Address:" />
-          </div>
-          <TextInput
-            value={addr}
-            onChange={(e) => setAddr(e.target.value.trim())}
-          />
-        </div>
-      </div>
-      <KeyBlueButton
-        className={styles.addWatchtowerButton}
-        onClick={() =>
-          addWatchtower(pubkey, addr).then(() => listWatchtowers())
-        }>
-        <T id="ln.watchtowersTab.addBtn" m="Add" />
-      </KeyBlueButton>
-    </div>
-  );
-};
+export const WatchtowersTabHeader = () => (
+  <DescriptionHeader
+    description={
+      <T
+        id="ln.description.watchtowers"
+        m="Manage connection to watchtowers."
+      />
+    }
+  />
+);
 
 const WatchtowersTab = () => {
   const {
