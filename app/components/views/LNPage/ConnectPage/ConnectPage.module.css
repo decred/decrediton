@@ -8,37 +8,8 @@
   max-width: 420px;
 }
 
-.connectOpts .connectOpt {
+.connectOpt {
   flex-wrap: wrap;
   display: flex;
   padding-top: 18px;
-}
-
-.connectOpts .connectOpt .label {
-  display: inline-block;
-  margin-top: 8px;
-  margin-right: 14px;
-  width: 125px;
-}
-
-.connectOpts .connectOpt .accountSelection {
-  display: grid;
-  grid-row-gap: 10px;
-  justify-items: right;
-}
-
-.connectOpts .connectOpt .accountList {
-  width: 210px;
-}
-
-.connectOpts .connectOpt .existingAccountWarning {
-  color: var(--error-text-color);
-  font-size: 11px;
-  line-height: 15px;
-  margin-top: 5px;
-}
-
-.connectOpts .connectOpt .fileInput {
-  padding-right: 10px;
-  margin-top: 8px;
 }
