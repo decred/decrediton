@@ -5,7 +5,7 @@ import { DescriptionHeader } from "layout";
 import { TextInput, DcrInput } from "inputs";
 import styles from "./InvoicesTab.module.css";
 import InvoiceRow from "./InvoiceRow/InvoiceRow";
-import BalanceHeader from "./BalanceHeader/BalanceHeader";
+import BalanceHeader from "../BalanceHeader/BalanceHeader";
 import { useInvoicesTab } from "./hooks";
 
 export const InvoicesTabHeader = () => (
@@ -56,7 +56,7 @@ const InvoicesTab = () => {
           disabled={addInvoiceAttempt}>
           +
         </KeyBlueButton>
-        {!lastPayRequest ? null : (
+        {lastPayRequest && (
           <>
             <div className={styles.lastPayRequest}>{lastPayRequest}</div>
             <CopyToClipboard
@@ -65,18 +65,18 @@ const InvoicesTab = () => {
             />
           </>
         )}
-        {!lastError ? null : (
+        {lastError && (
           <>
             <div className={styles.lastError}>{"" + lastError}</div>
           </>
         )}
       </div>
 
-      {invoices > 0 ? (
+      {invoices > 0 && (
         <Subtitle
           title={<T id="ln.invoicesTab.invoicesHeader" m="Latest Invoices" />}
         />
-      ) : null}
+      )}
       <div className="ln-invoice-list">
         {invoices.map((inv) => (
           <InvoiceRow key={inv.addIndex} invoice={inv} tsDate={tsDate} />

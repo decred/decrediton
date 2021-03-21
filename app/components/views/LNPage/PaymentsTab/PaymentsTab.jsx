@@ -3,14 +3,10 @@ import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton } from "buttons";
 import { TextInput } from "inputs";
 import styles from "./PaymentsTab.module.css";
-import {
-  Subtitle,
-  Balance,
-  VerticalAccordion
-} from "shared";
+import { Subtitle, Balance, VerticalAccordion } from "shared";
 import { DescriptionHeader } from "layout";
 import ReactTimeout from "react-timeout";
-import BalanceHeader from "./BalanceHeader/BalanceHeader";
+import BalanceHeader from "../BalanceHeader/BalanceHeader";
 import DecodedPayRequest from "./DecodedPayRequest/DecodedPayRequest";
 import OutstandingPayment from "./OutstandingPayment/OutstandingPayment";
 import FailedPayment from "./FailedPayment/FailedPayment";
@@ -47,20 +43,18 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
     <>
       <Subtitle title={<T id="ln.paymentsTab.balanceHeader" m="Balance" />} />
       <BalanceHeader channelBalances={channelBalances} />
-
       <Subtitle
         title={<T id="ln.paymentsTab.sendPayment" m="Send Payment" />}
       />
-
       <div className={styles.lnSendPayment}>
         <div className="payreq">
           <T id="ln.paymentsTab.payReq" m="Payment Request" />
           <TextInput value={payRequest} onChange={onPayRequestChanged} />
         </div>
-        {decodingError ? (
+        {decodingError && (
           <div className={styles.decodingError}>{"" + decodingError}</div>
-        ) : null}
-        {decodedPayRequest ? (
+        )}
+        {decodedPayRequest && (
           <>
             <DecodedPayRequest
               decoded={decodedPayRequest}
@@ -73,15 +67,13 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
               <T id="ln.paymentsTab.sendBtn" m="Send" />
             </KeyBlueButton>
           </>
-        ) : null}
+        )}
       </div>
-
-      {Object.keys(outstandingPayments).length > 0 ? (
+      {Object.keys(outstandingPayments).length > 0 && (
         <Subtitle
           title={<T id="ln.paymentsTab.outstanding" m="Ongoing Payments" />}
         />
-      ) : null}
-
+      )}
       <div className={styles.lnPaymentsList}>
         {Object.keys(outstandingPayments).map((ph) => (
           <OutstandingPayment
@@ -91,13 +83,11 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
           />
         ))}
       </div>
-
-      {failedPayments.length > 0 ? (
+      {failedPayments.length > 0 && (
         <Subtitle
           title={<T id="ln.paymentsTag.failed" m="Failed Payments" />}
         />
-      ) : null}
-
+      )}
       <div className={styles.lnPaymentsList}>
         {failedPayments.map((p) => (
           <FailedPayment
@@ -108,13 +98,11 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
           />
         ))}
       </div>
-
-      {payments.length > 0 ? (
+      {payments.length > 0 && (
         <Subtitle
           title={<T id="ln.paymentsTab.latestPayments" m="Latest Payments" />}
         />
-      ) : null}
-
+      )}
       <div className={styles.lnPaymentsList}>
         {payments.map((p) => (
           <VerticalAccordion
@@ -164,6 +152,5 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
     </>
   );
 };
-
 
 export default ReactTimeout(PaymentsTab);

@@ -4,19 +4,19 @@
   padding: 1em 1em 1em 3em;
 }
 
-.pendingOpen {
+.pendingopen {
   border-left: 10px solid var(--cyan-bold);
 }
 
-.pendingClose {
+.pendingclose {
   border-left: 10px solid var(--disabled-color);
 }
 
-.pendingForceclose {
+.pendingforceclose {
   border-left: 10px solid var(--error-text-color);
 }
 
-.pendingWaitclose {
+.pendingwaitclose {
   border-left: 10px solid var(--input-color-disabled);
 }
 

@@ -16,10 +16,10 @@ const BalanceHeader = ({ walletBalance, totalBandwidth }) => (
       <T id="ln.channelsTab.balance.onChain" m="Confirmed on-chain balance" />
     </div>
     <div
-      className={`${styles.balanceTile} ${
+      className={classNames(
+        styles.balanceTile,
         totalBandwidth === 0 ? styles.zeroFunds : styles.hasFunds
-      }
-        `}>
+      )}>
       <div className={styles.balanceValue}>
         <Balance amount={totalBandwidth} />
       </div>

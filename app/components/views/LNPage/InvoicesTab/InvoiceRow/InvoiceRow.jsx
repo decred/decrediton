@@ -17,11 +17,11 @@ const InvoiceRow = ({ invoice, tsDate }) => (
       <div className={styles.value}>
         <Balance amount={invoice.value} />
       </div>
-      {invoice.amtPaidAtoms && invoice.amtPaidAtoms !== invoice.value ? (
+      {invoice.amtPaidAtoms && invoice.amtPaidAtoms !== invoice.value && (
         <div className="amtpaid">
           <Balance amount={invoice.amtPaidAtoms} />
         </div>
-      ) : null}
+      )}
     </div>
     <div className="memo-wrapper">
       <div className={styles.memo}>{invoice.memo}</div>
@@ -35,7 +35,7 @@ const InvoiceRow = ({ invoice, tsDate }) => (
           values={{ creationDate: tsDate(invoice.creationDate) }}
         />
       </div>
-      {invoice.settleDate ? (
+      {invoice.settleDate && (
         <div className="settledate">
           <T
             id="ln.invoicesTab.invoice.settleDate"
@@ -43,7 +43,7 @@ const InvoiceRow = ({ invoice, tsDate }) => (
             values={{ settleDate: tsDate(invoice.settleDate) }}
           />
         </div>
-      ) : null}
+      )}
     </div>
   </div>
 );

@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { CopyableText, Tooltip } from "pi-ui";
+import { classNames, CopyableText, Tooltip } from "pi-ui";
 import { useWatchtowersTab } from "./hooks";
 import styles from "./WatchtowersTab.module.css";
 import { Subtitle } from "shared";
@@ -37,7 +37,7 @@ const WatchtowersTab = () => {
         listWatchtowers={listWatchtowers}
         towersList={towersList}
       />
-      {towersList.length > 0 ? (
+      {towersList.length > 0 && (
         <Subtitle
           title={
             <T
@@ -46,17 +46,15 @@ const WatchtowersTab = () => {
             />
           }
         />
-      ) : null}
-
+      )}
       {towersList.map((tower) => (
         <div
-          className={`
-            ${styles.tower} ${
+          className={classNames(
+            styles.tower,
             tower.activeSessionCandidate
               ? styles.statusTrue
               : styles.statusFalse
-          }
-          `}
+          )}
           key={tower.pubkey}>
           <Tooltip
             className={styles.removeTowerBtn}

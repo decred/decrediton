@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { Balance, ExternalLink } from "shared";
-import { CopyableText } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import styles from "../ChannelsTab.module.css";
+import { CopyableText } from "pi-ui";
+import styles from "./PendingChannelDetails.module.css";
 
 const PendingOpenChannelDetails = ({ channel }) => (
   <>
@@ -9,9 +10,6 @@ const PendingOpenChannelDetails = ({ channel }) => (
       <T id="ln.pendingOpenDetails.commitFee" m="Commit Fee" />
     </span>
     <Balance amount={channel.commitFee} />
-    {/*     <span><T id="ln.pendingOpenDetails.confirmationHeight" m="Confirmation Height" /></span>
-    <span>{channel.confirmationHeight}</span>
-    */}
   </>
 );
 
@@ -36,9 +34,6 @@ const PendingForceCloseChannelDetails = ({ channel }) => (
       />
     </span>
     <Balance amount={channel.recoveredBalance} />
-    {/*    <span><T id="ln.pendingForceCloseDetails.maturityHeight" m="Maturity Height" /></span>
-    <span>{channel.maturityHeight}</span>
-    */}
   </>
 );
 
@@ -52,39 +47,41 @@ const PendingWaitCloseChannelDetails = ({ channel }) => (
 );
 
 const PendingChannelDetails = ({ channel }) => {
-  let DetailsCompo;
-  let detailsType;
+  const { DetailsCompo, detailsType } = useMemo(() => {
+    switch (channel.pendingStatus) {
+      case "open":
+        return {
+          DetailsCompo: PendingOpenChannelDetails,
+          detailsType: <T id="ln.pendingChannelDetails.typeOpen" m="Open" />
+        };
+      case "close":
+        return {
+          DetailsCompo: PendingCloseChannelDetails,
+          detailsType: <T id="ln.pendingChannelDetails.typeClose" m="Close" />
+        };
+      case "forceclose":
+        return {
+          DetailsCompo: PendingForceCloseChannelDetails,
+          detailsType: (
+            <T id="ln.pendingChannelDetails.typeForceclose" m="Force Close" />
+          )
+        };
+      case "waitclose":
+        return {
+          DetailsCompo: PendingWaitCloseChannelDetails,
+          detailsType: (
+            <T id="ln.pendingChannelDetails.typeWaitclose" m="Waiting Close" />
+          )
+        };
+      default:
+        return {
+          DetailsCompo: null,
+          detailsType: null
+        };
+    }
+  }, [channel.pendingStatus]);
 
-  switch (channel.pendingStatus) {
-    case "open":
-      DetailsCompo = PendingOpenChannelDetails;
-      detailsType = <T id="ln.pendingChannelDetails.typeOpen" m="Open" />;
-      break;
-
-    case "close":
-      DetailsCompo = PendingCloseChannelDetails;
-      detailsType = <T id="ln.pendingChannelDetails.typeClose" m="Close" />;
-      break;
-
-    case "forceclose":
-      DetailsCompo = PendingForceCloseChannelDetails;
-      detailsType = (
-        <T id="ln.pendingChannelDetails.typeForceclose" m="Force Close" />
-      );
-      break;
-
-    case "waitclose":
-      DetailsCompo = PendingWaitCloseChannelDetails;
-      detailsType = (
-        <T id="ln.pendingChannelDetails.typeWaitclose" m="Waiting Close" />
-      );
-      break;
-
-    default:
-      return <div>unknown channel status '{channel.pendingStatus}'</div>;
-  }
-
-  return (
+  return DetailsCompo ? (
     <div className={styles.channelDetails}>
       <span>
         <T id="ln.pendingChannelDetails.type" m="Type" />
@@ -106,6 +103,8 @@ const PendingChannelDetails = ({ channel }) => {
       </span>
       <DetailsCompo channel={channel} />
     </div>
+  ) : (
+    <div>unknown channel status '{channel.pendingStatus}'</div>
   );
 };
 

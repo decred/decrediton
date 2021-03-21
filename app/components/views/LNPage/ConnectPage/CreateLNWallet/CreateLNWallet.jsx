@@ -95,18 +95,17 @@ const CreateLNWallet = ({
           />
         </div>
         <TransitionMotionWrapper
-          {...{
-            styles:
-              accountOption === NEW_ACCOUNT
-                ? nullStyles
-                : getAccountsListComponent(
-                    <AccountsListComponent
-                      account={account}
-                      onChangeAccount={onChangeAccount}
-                    />
-                  ),
-            wrapperComponent
-          }}
+          styles={
+            accountOption === NEW_ACCOUNT
+              ? nullStyles
+              : getAccountsListComponent(
+                  <AccountsListComponent
+                    account={account}
+                    onChangeAccount={onChangeAccount}
+                  />
+                )
+          }
+          wrapperComponent={wrapperComponent}
         />
       </div>
     </div>

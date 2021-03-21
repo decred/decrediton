@@ -1,23 +1,14 @@
 import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
 import styles from "./PendingChannel.module.css";
 
 const PendingChannel = ({ channel }) => (
   <div
-    className={`
-      ${styles.openChannel}
-      ${
-        channel.pendingStatus === "open"
-          ? styles.pendingOpen
-          : channel.pendingStatus === "close"
-          ? styles.pendingClose
-          : channel.pendingStatus === "forceclose"
-          ? styles.pendingForceclose
-          : channel.pendingStatus === "waitclose"
-          ? styles.pendingWaitclose
-          : ""
-      }
-    `}>
+    className={classNames(
+      styles.openChannel,
+      styles[`pending${channel.pendingStatus}`]
+    )}>
     <div className={styles.dataWrapper}>
       <div className={styles.capacity}>
         <Balance amount={channel.capacity} />

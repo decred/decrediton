@@ -63,7 +63,9 @@ const ChannelsTab = () => {
           channelBalances.maxInboundAmount + channelBalances.maxOutboundAmount
         }
       />
-      <Subtitle title={<T id="ln.channelsTab.openChannel" m="Open Channel" />} />
+      <Subtitle
+        title={<T id="ln.channelsTab.openChannel" m="Open Channel" />}
+      />
       <div className={styles.openNewChannel}>
         <div className={styles.node}>
           <T id="ln.openChannel.node" m="Counterparty (node@ip:port)" />
@@ -73,7 +75,7 @@ const ChannelsTab = () => {
           <T id="ln.openChannel.localAmt" m="Total Funding Amount" />
           <DcrInput amount={localAmtAtoms} onChangeAmount={onLocalAmtChanged} />
         </div>
-        {isMainNet ? null : ( // Not allowing to push atoms in mainnet as a precaution from inadvertent user action for the moment.
+        {!isMainNet && (
           <div className="push-amt">
             <T id="ln.openChannel.pushAmt" m="Push Amount (optional)" />
             <DcrInput amount={pushAmtAtoms} onChangeAmount={onPushAmtChanged} />
@@ -88,11 +90,11 @@ const ChannelsTab = () => {
         </KeyBlueButton>
       </div>
       <div className={styles.channelsContent}>
-        {pendingChannels.length > 0 ? (
+        {pendingChannels.length > 0 && (
           <Subtitle
             title={<T id="ln.channelsTab.pendingList" m="Pending Channels" />}
           />
-        ) : null}
+        )}
         {pendingChannels.map((c) => (
           <VerticalAccordion
             key={c.channelPoint}
@@ -105,11 +107,11 @@ const ChannelsTab = () => {
         ))}
       </div>
       <div className={styles.channelsContent}>
-        {channels.length > 0 ? (
+        {channels.length > 0 && (
           <Subtitle
             title={<T id="ln.channelsTab.channelList" m="Open Channels" />}
           />
-        ) : null}
+        )}
         {channels.map((c) => (
           <div className={styles.headerWrapper} key={c.channelPoint}>
             <Tooltip
@@ -141,11 +143,11 @@ const ChannelsTab = () => {
         ))}
       </div>
       <div className={styles.channelsContent}>
-        {closedChannels.length > 0 ? (
+        {closedChannels.length > 0 && (
           <Subtitle
             title={<T id="ln.channelsTab.closedList" m="Closed Channels" />}
           />
-        ) : null}
+        )}
         {closedChannels.map((c) => (
           <VerticalAccordion
             key={c.channelPoint}

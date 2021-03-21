@@ -49,9 +49,8 @@ const ConnectPageHeader = () => (
   />
 );
 
-const LNStartupStage = ({ stage }) => (
-  <div>{stageMsgs[stage] ? stageMsgs[stage] : null}</div>
-);
+const LNStartupStage = ({ stage }) =>
+  stageMsgs[stage] && <div>{stageMsgs[stage]}</div>;
 
 const LNCreationWarning = ({ onAcceptCreationWarning }) => (
   <>
@@ -97,7 +96,7 @@ const ConnectPage = () => {
       ) : (
         <div>
           <div className={styles.connectOpts}>
-            {!lightningWalletExists ? (
+            {!lightningWalletExists && (
               <CreateLNWallet
                 account={account}
                 accountOption={accountOption}
@@ -106,7 +105,7 @@ const ConnectPage = () => {
                 onChangeAccount={onChangeAccount}
                 onAccountOptionClick={onAccountOptionClick}
               />
-            ) : null}
+            )}
             <div className={classNames(styles.connectOpt, styles.checkbox)}>
               <Checkbox
                 label={
