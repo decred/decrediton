@@ -5,7 +5,7 @@ import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import QRCodeModal from "./QRCodeModal/QRCodeModal";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames } from "pi-ui";
 import style from "./ReceivePage.module.css";
 
 const messages = defineMessages({
