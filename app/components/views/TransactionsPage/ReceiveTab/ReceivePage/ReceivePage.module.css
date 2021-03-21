@@ -188,7 +188,8 @@
 
 @media screen and (max-width: 768px) {
   .receiveContent {
-    width: 355px;
+    width: 324px;
+    padding: 20px 30px;
   }
 
   .inputs {
@@ -201,7 +202,7 @@
   }
 
   .requestedAmountInput {
-    width: 321px;
+    width: 290px;
   }
 
   .receiveContentNestPrefix {
@@ -216,11 +217,11 @@
   .receiveContentNestQR {
     margin-bottom: 30px;
     margin-right: 0;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .generateButton {
-    margin-left: 216px;
+    margin-left: 170px;
   }
 
   .copyParent {
