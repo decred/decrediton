@@ -27,27 +27,53 @@ export function useLNPage() {
 
   const dispatch = useDispatch();
 
-  const updateWalletBalances = useCallback(() => dispatch(lna.updateLNWalletBalances()), [dispatch]);
-  const addInvoice = useCallback((memo, value) => dispatch(lna.addInvoice(memo, value)), [dispatch]);
-  const decodePayRequest = useCallback((payReq) => dispatch(lna.decodePayRequest(payReq)), [dispatch]);
-  const sendPayment = useCallback((payReq, value) => dispatch(lna.sendPayment(payReq, value)), [dispatch]);
-  const openChannel = useCallback((node, localAmt, pushAmt) => dispatch(lna.openChannel(node, localAmt, pushAmt)), [dispatch]);
-  const closeChannel = useCallback((channelPoint, force) => dispatch(lna.closeChannel(channelPoint, force)), [dispatch]);
-  const fundWallet = useCallback((amount, accountNb, passphrase) => dispatch(lna.fundWallet(amount, accountNb, passphrase)), [dispatch]);
-  const withdrawWallet = useCallback((amount, accountNb) => dispatch(lna.withdrawWallet(amount, accountNb)), [dispatch]);
-  const startDcrlnd = useCallback((
-    passphrase,
-    autopilotEnabled,
-    walletAccount,
-    scbFile
-  ) => dispatch(lna.startDcrlnd(
-    passphrase,
-    autopilotEnabled,
-    walletAccount,
-    scbFile
-  )), [dispatch]);
-  const exportBackup = useCallback((path) => dispatch(lna.exportBackup(path)), [dispatch]);
-  const verifyBackup = useCallback((path) => dispatch(lna.verifyBackup(path)), [dispatch]);
+  const updateWalletBalances = useCallback(
+    () => dispatch(lna.updateLNWalletBalances()),
+    [dispatch]
+  );
+  const addInvoice = useCallback(
+    (memo, value) => dispatch(lna.addInvoice(memo, value)),
+    [dispatch]
+  );
+  const decodePayRequest = useCallback(
+    (payReq) => dispatch(lna.decodePayRequest(payReq)),
+    [dispatch]
+  );
+  const sendPayment = useCallback(
+    (payReq, value) => dispatch(lna.sendPayment(payReq, value)),
+    [dispatch]
+  );
+  const openChannel = useCallback(
+    (node, localAmt, pushAmt) =>
+      dispatch(lna.openChannel(node, localAmt, pushAmt)),
+    [dispatch]
+  );
+  const closeChannel = useCallback(
+    (channelPoint, force) => dispatch(lna.closeChannel(channelPoint, force)),
+    [dispatch]
+  );
+  const fundWallet = useCallback(
+    (amount, accountNb, passphrase) =>
+      dispatch(lna.fundWallet(amount, accountNb, passphrase)),
+    [dispatch]
+  );
+  const withdrawWallet = useCallback(
+    (amount, accountNb) => dispatch(lna.withdrawWallet(amount, accountNb)),
+    [dispatch]
+  );
+  const startDcrlnd = useCallback(
+    (passphrase, autopilotEnabled, walletAccount, scbFile) =>
+      dispatch(
+        lna.startDcrlnd(passphrase, autopilotEnabled, walletAccount, scbFile)
+      ),
+    [dispatch]
+  );
+  const exportBackup = useCallback((path) => dispatch(lna.exportBackup(path)), [
+    dispatch
+  ]);
+  const verifyBackup = useCallback((path) => dispatch(lna.verifyBackup(path)), [
+    dispatch
+  ]);
 
   return {
     lnActive,
@@ -82,4 +108,4 @@ export function useLNPage() {
     exportBackup,
     verifyBackup
   };
-};
+}

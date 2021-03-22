@@ -19,20 +19,16 @@ export function readFileBackward(path, maxSize, end) {
       let offset = 0;
       let length = buffer.length;
       const read = function () {
-        fs.read(
-          descriptor,
-          buffer,
-          offset,
-          length,
-          position,
-          function (error, copied) {
-            if (error) return end(error);
-            offset += copied;
-            length -= copied;
-            if (length === 0) return end(undefined, buffer);
-            read();
-          }
-        );
+        fs.read(descriptor, buffer, offset, length, position, function (
+          error,
+          copied
+        ) {
+          if (error) return end(error);
+          offset += copied;
+          length -= copied;
+          if (length === 0) return end(undefined, buffer);
+          read();
+        });
       };
       read();
     });

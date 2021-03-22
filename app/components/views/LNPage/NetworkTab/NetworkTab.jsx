@@ -61,7 +61,11 @@ const NetworkTab = () => {
       ) : getNodeInfoAttempt || getRoutesInfoAttempt ? (
         <SimpleLoading />
       ) : nodeInfo && activeTab === 0 ? (
-        <NodeInfo nodeInfo={nodeInfo} tsDate={tsDate} chanpointURL={chanpointURL} />
+        <NodeInfo
+          nodeInfo={nodeInfo}
+          tsDate={tsDate}
+          chanpointURL={chanpointURL}
+        />
       ) : showResult &&
         nodeID.length === 66 &&
         routesInfo &&

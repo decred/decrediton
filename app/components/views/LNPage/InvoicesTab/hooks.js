@@ -12,8 +12,7 @@ export function useInvoicesTab() {
 
   const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
 
-  const onValueChanged = ({ atomValue }) =>
-    setAtomValue(atomValue);
+  const onValueChanged = ({ atomValue }) => setAtomValue(atomValue);
 
   const onMemoChanged = (e) => {
     if (e.target.value.length > 639) {
@@ -54,6 +53,4 @@ export function useInvoicesTab() {
     onAddInvoice,
     channelBalances
   };
-};
-
-
+}

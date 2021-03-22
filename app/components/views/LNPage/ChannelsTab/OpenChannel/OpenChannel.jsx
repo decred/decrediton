@@ -18,9 +18,7 @@ export const CloseChannelModalContent = ({ channel }) => (
         />
       )}
     </p>
-    {!channel.active && (
-      <Documentation name="LNForceCloseChannelWarning" />
-    )}
+    {!channel.active && <Documentation name="LNForceCloseChannelWarning" />}
     <div className={styles.modalChaninfo}>
       <T id="ln.closeChannelModal.capacity" m="Capacity" />
       <div className={styles.capacity}>

@@ -18,7 +18,9 @@ export function useConnectPage() {
   const [account, setAccount] = useState(defaultAccount);
   const [accountOption, setAccountOption] = useState(NEW_ACCOUNT);
   const [scbFile, setScbFile] = useState("");
-  const [displayCreationWarning, setDisplayCreationWarning] = useState(!lightningWalletExists);
+  const [displayCreationWarning, setDisplayCreationWarning] = useState(
+    !lightningWalletExists
+  );
 
   const onChangeAccount = (account) => {
     setAccount(account);
@@ -34,12 +36,7 @@ export function useConnectPage() {
       }
     }
 
-    startDcrlnd(
-      passphrase,
-      autopilotEnabled,
-      accountAux,
-      scbFile
-    );
+    startDcrlnd(passphrase, autopilotEnabled, accountAux, scbFile);
   };
 
   const onChangeEnableAutopilot = () => {
@@ -70,4 +67,4 @@ export function useConnectPage() {
     onAccountOptionClick,
     onAcceptCreationWarning
   };
-};
+}

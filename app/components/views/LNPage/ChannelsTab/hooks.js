@@ -83,4 +83,4 @@ export function useChannelsTab() {
     onCloseChannel,
     onToggleChannelDetails
   };
-};
+}

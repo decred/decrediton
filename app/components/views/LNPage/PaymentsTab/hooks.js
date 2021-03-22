@@ -62,7 +62,6 @@ export function usePaymentsTab(setTimeout) {
       });
   }, [payRequest, decodePayRequest, checkExpired, setTimeout]);
 
-
   const onPayRequestChanged = (e) => {
     setPayRequest((e.target.value || "").trim());
     setDecodedPayRequest(null);

@@ -61,11 +61,7 @@ const WalletTab = () => {
         title={<T id="ln.walletTab.backup" m="Backup" />}
         className={styles.backupSubtitle}>
         <div className={styles.backupInfoBtn}>
-          <InfoDocModalButton
-            document="LNBackupInfo"
-            double
-            draggable
-          />
+          <InfoDocModalButton document="LNBackupInfo" double draggable />
         </div>
       </Subtitle>
       <div className={styles.backupPanel}>
