@@ -12,6 +12,7 @@ export { default as EnableExternalRequestButton } from "./EnableExternalRequestB
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
+export { default as ListUTXOsButton } from "./ListUTXOsButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";

@@ -1,0 +1,8 @@
+.button {
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: underline;
+  margin-left: auto;
+  padding: 0;
+  color: var(--gray-7);
+}

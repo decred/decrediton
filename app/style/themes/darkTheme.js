@@ -132,6 +132,10 @@ const darkTheme = {
   "privacy-mixer-status-color": "#b7deee",
   "mixer-settings-label": "#e9f8fe",
   "mixer-settings-disabled": "#3c62b0",
+  "grey-2": "#1f325f",
+  "grey-5": "#3c62b0",
+  "grey-7": "#608ace",
+  "main-dark-blue": "#e9f8fe0",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",

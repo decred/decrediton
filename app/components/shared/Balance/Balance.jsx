@@ -13,6 +13,7 @@ export const Balance = ({
   title,
   noSmallAmount,
   classNameWrapper,
+  classNameSecondary,
   classNameUnit,
   preScaled,
   hideCurrency,
@@ -44,7 +45,7 @@ export const Balance = ({
             <span
               className={classNames(
                 styles[secondary],
-                classNameUnit,
+                classNameSecondary,
                 bold && "bold"
               )}>
               {`${tail} `}

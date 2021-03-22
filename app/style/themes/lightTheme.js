@@ -134,6 +134,10 @@ const lightTheme = {
   "privacy-mixer-status-color": "#0C1E3E",
   "mixer-settings-label": "#0C1E3E",
   "mixer-settings-disabled": "#8997A5",
+  "grey-2": "#F3F5F6",
+  "grey-5": "#8997A5",
+  "grey-7": "#3D5873",
+  "main-dark-blue": "#091440",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border
