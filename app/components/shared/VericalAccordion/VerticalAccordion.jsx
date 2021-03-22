@@ -82,7 +82,11 @@ const VerticalAccordion = ({
         return h(
           "div",
           childProps,
-          h("div", { ref: (el) => el && childRef(el), className: childrenClassName }, data)
+          h(
+            "div",
+            { ref: (el) => el && childRef(el), className: childrenClassName },
+            data
+          )
         );
       })
     );

@@ -30,17 +30,22 @@ export function useSendTransaction() {
 
   const dispatch = useDispatch();
 
-  const attemptConstructTransaction = useCallback((account, confirmations, outputs, all) =>
-    dispatch(
-      ca.constructTransactionAttempt(account, confirmations, outputs, all)
-    ), [dispatch]);
+  const attemptConstructTransaction = useCallback(
+    (account, confirmations, outputs, all) =>
+      dispatch(
+        ca.constructTransactionAttempt(account, confirmations, outputs, all)
+      ),
+    [dispatch]
+  );
 
   const validateAddress = (address) => dispatch(ca.validateAddress(address));
 
   const onClearTransaction = () => dispatch(ca.clearTransaction());
 
-  const onGetNextAddressAttempt = useCallback((account) =>
-    dispatch(ca.getNextAddressAttempt(account)), [dispatch]);
+  const onGetNextAddressAttempt = useCallback(
+    (account) => dispatch(ca.getNextAddressAttempt(account)),
+    [dispatch]
+  );
 
   const getRunningIndicator = useSelector(sel.getRunningIndicator);
   return {

@@ -23,7 +23,7 @@ const FirmwareUpdate = ({
   return (
     <TrezorPageAccordion
       label={<T id="trezor.firmwareUpdate.header" m="Firmware Update" />}>
-        <Documentation name="TrezorFirmwareUpdateWarning" />
+      <Documentation name="TrezorFirmwareUpdateWarning" />
       <p>
         <T id="trezorPage.updateFirmwarePah" m="Path to firmware file" />
       </p>

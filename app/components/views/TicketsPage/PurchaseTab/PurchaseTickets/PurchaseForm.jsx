@@ -67,7 +67,8 @@ const PurchaseTicketsForm = ({
               <Tooltip
                 content={<T id="purchaseTickets.vspFee" m="VSP Fee" />}
                 className={styles.ticketPoolFee}>
-                <div className={classNames(styles.infoIcon, styles.poolFeeIcon)}>
+                <div
+                  className={classNames(styles.infoIcon, styles.poolFeeIcon)}>
                   {vspFee} %
                 </div>
               </Tooltip>

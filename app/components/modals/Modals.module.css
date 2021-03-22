@@ -574,7 +574,7 @@
 .mixerSettingsTitle {
   font-size: 20px;
 }
- @media screen and (max-width: 1179px) {
+@media screen and (max-width: 1179px) {
   .mixerSettings.info {
     width: 594px !important;
   }

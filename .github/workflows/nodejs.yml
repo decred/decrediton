@@ -19,6 +19,8 @@ jobs:
       run: yarn --network-concurrency 1
     - name: linter checks
       run: yarn lint
+    - name: prettify diff
+      run: yarn prettify:diff
     - name: tests
       run: yarn test
       env:

@@ -137,7 +137,9 @@ function FatalErrorPage() {
         </div>
         <div className={styles.toolbar}>
           {isAdvancedDaemon && (
-            <KeyBlueButton className={styles.button} onClick={backToCredentials}>
+            <KeyBlueButton
+              className={styles.button}
+              onClick={backToCredentials}>
               <T
                 id="fatal.retry.connection.button"
                 m="Return to Daemon Connection"

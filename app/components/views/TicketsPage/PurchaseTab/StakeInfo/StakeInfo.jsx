@@ -3,13 +3,15 @@ import StakeInfoDisplay from "./StakeInfoDisplay";
 import { useStakeInfo } from "./hooks";
 
 const StakeInfo = () => {
-  const { ownMempoolTicketsCount,
-      immatureTicketsCount,
-      liveTicketsCount,
-      unspentTicketsCount,
-      isSPV,
-      lastVotedTicket,
-      ...other } = useStakeInfo();
+  const {
+    ownMempoolTicketsCount,
+    immatureTicketsCount,
+    liveTicketsCount,
+    unspentTicketsCount,
+    isSPV,
+    lastVotedTicket,
+    ...other
+  } = useStakeInfo();
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const onToggleStakeinfo = () => setIsShowingDetails((p) => !p);
 

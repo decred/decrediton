@@ -26,7 +26,10 @@ export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
 export const saveSettings = (settings) => async (dispatch, getState) => {
   const {
-    settings: { needNetworkReset, currentSettings: { locale } }
+    settings: {
+      needNetworkReset,
+      currentSettings: { locale }
+    }
   } = getState();
   const {
     daemon: { walletName }

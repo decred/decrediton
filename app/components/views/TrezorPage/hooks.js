@@ -23,9 +23,10 @@ export function useTrezorPage() {
     () => dispatch(trza.changeToDecredHomeScreen()),
     [dispatch]
   );
-  const changeLabel = useCallback((label) => dispatch(trza.changeLabel(label)), [
-    dispatch
-  ]);
+  const changeLabel = useCallback(
+    (label) => dispatch(trza.changeLabel(label)),
+    [dispatch]
+  );
   const wipeDevice = useCallback(() => dispatch(trza.wipeDevice()), [dispatch]);
   const recoverDevice = useCallback(() => dispatch(trza.recoverDevice()), [
     dispatch
@@ -34,9 +35,10 @@ export function useTrezorPage() {
   const backupDevice = useCallback(() => dispatch(trza.backupDevice()), [
     dispatch
   ]);
-  const updateFirmware = useCallback((path) => dispatch(trza.updateFirmware(path)), [
-    dispatch
-  ]);
+  const updateFirmware = useCallback(
+    (path) => dispatch(trza.updateFirmware(path)),
+    [dispatch]
+  );
   const enableTrezor = useCallback(() => dispatch(trza.enableTrezor()), [
     dispatch
   ]);
@@ -57,4 +59,4 @@ export function useTrezorPage() {
     updateFirmware,
     enableTrezor
   };
-};
+}

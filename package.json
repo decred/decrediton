@@ -35,13 +35,7 @@
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
     "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}'",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{jsx,jsx,css,json}": [
-      "yarn prettify",
-      "yarn lint-fix"
-    ]
+    "prettify:diff": "prettier --list-different 'app/**/*.{js,jsx,css,json}'"
   },
   "jest": {
     "verbose": true,
@@ -65,12 +59,8 @@
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
     },
-    "setupFiles": [
-      "<rootDir>/test/setup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-dom/extend-expect"
-    ],
+    "setupFiles": ["<rootDir>/test/setup.js"],
+    "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"],
     "modulePaths": [
       "<rootDir>/app",
       "<rootDir>/app/components",
@@ -79,13 +69,8 @@
       "<rootDir>/test"
     ],
     "testEnvironment": "jsdom",
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "collectCoverageFrom": [
-      "<rootDir>/app/**/*.+(js|jsx)"
-    ],
+    "moduleFileExtensions": ["js", "jsx"],
+    "collectCoverageFrom": ["<rootDir>/app/**/*.+(js|jsx)"],
     "coverageDirectory": "<rootDir>/coverage",
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
@@ -148,12 +133,7 @@
     },
     "linux": {
       "category": "public.app-category.tools",
-      "target": [
-        "AppImage",
-        "deb",
-        "rpm",
-        "tar.gz"
-      ],
+      "target": ["AppImage", "deb", "rpm", "tar.gz"],
       "icon": "./build/icon/"
     },
     "directories": {
@@ -245,12 +225,11 @@
     "jest-date-mock": "^1.0.8",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "lint-staged": "^10.2.0",
     "mini-css-extract-plugin": "^0.8.2",
     "minimist": "^1.2.0",
     "node-gyp": "6.1.0",
     "node-loader": "^0.6.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.2.1",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
     "sinon": "^7.4.2",

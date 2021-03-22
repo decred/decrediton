@@ -51,8 +51,7 @@ export const Balance = ({
             </span>
           )}
           {!hideCurrency && (
-            <span
-              className={classNames(styles[secondary], classNameUnit)}>
+            <span className={classNames(styles[secondary], classNameUnit)}>
               DCR
             </span>
           )}
@@ -72,8 +71,7 @@ export const Balance = ({
           />
         </span>
         {!hideCurrency && (
-          <span
-            className={classNames(styles[secondary], classNameUnit)}>
+          <span className={classNames(styles[secondary], classNameUnit)}>
             {" "}
             atoms
           </span>

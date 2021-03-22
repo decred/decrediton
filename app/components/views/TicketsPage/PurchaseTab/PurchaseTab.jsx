@@ -10,9 +10,7 @@ function Purchase() {
   const { isLegacy, toggleIsLegacy } = usePurchaseTab();
 
   return isLegacy ? (
-    <LEGACY_PurchasePage
-      {...{ isShowingVsp, toggleShowVsp, toggleIsLegacy }}
-    />
+    <LEGACY_PurchasePage {...{ isShowingVsp, toggleShowVsp, toggleIsLegacy }} />
   ) : (
     <PurchasePage {...{ toggleIsLegacy }} />
   );

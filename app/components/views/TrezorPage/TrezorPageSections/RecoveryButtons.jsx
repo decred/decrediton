@@ -12,7 +12,7 @@ const RecoveryButtons = ({
 }) => (
   <TrezorPageAccordion
     label={<T id="trezor.recoveryButtons.header" m="Device Recovery" />}>
-      <Documentation name="TrezorWipeWarning" />
+    <Documentation name="TrezorWipeWarning" />
     <DangerButton
       onClick={wipeDevice}
       loading={performingOperation}

@@ -23,12 +23,9 @@ const SendTransactionButton = ({
     onAttemptSignTransaction?.(privpass, unsignedTransaction);
   };
 
-  const signTransactionTrezor =  () => {
+  const signTransactionTrezor = () => {
     if (disabled) return;
-    onAttemptSignTransactionTrezor?.(
-      unsignedTransaction,
-      constructTxResponse
-    );
+    onAttemptSignTransactionTrezor?.(unsignedTransaction, constructTxResponse);
     onSubmit?.();
   };
 
