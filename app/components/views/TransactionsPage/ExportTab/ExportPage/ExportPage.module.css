@@ -31,9 +31,6 @@
 }
 
 .exportAreaRight .verticalExpand {
-  position: absolute;
-  right: 20px;
-  top: 20px;
   background-image: var(--arrow-right-gray-icon);
   background-repeat: no-repeat;
   background-size: 20px 10px;

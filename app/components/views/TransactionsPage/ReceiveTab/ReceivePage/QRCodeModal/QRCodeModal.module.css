@@ -42,7 +42,6 @@
   padding-top: 20px;
   padding-left: 20px;
   box-shadow: 0px 5px 21px var(--icons-shadow);
-  box-sizing: border-box;
   margin-bottom: 20px;
   box-sizing: border-box !important;
 }

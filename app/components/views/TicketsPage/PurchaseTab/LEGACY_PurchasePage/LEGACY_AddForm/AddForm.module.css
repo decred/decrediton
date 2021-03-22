@@ -99,9 +99,6 @@
     width: 634px;
     grid-template-columns: auto 316px;
   }
-  .addTitle {
-    width: 634px;
-  }
   .linkButtonContainer {
     margin-left: 0;
   }
@@ -121,10 +118,6 @@
   .addArea {
     grid-template-columns: 1fr;
     width: 355px;
-  }
-  .addTitle {
-    width: 355px;
-    margin-bottom: 20px;
   }
   .addToolbar {
     grid-column: 1;

@@ -29,15 +29,10 @@ label.infoLabel.expiry {
 .infoValue.stakePools .icon {
   background-color: var(--input-color);
   background-image: var(--manage-pools-icon);
-  background-position: 50% 50%;
-  background-size: 12px;
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
   border-radius: 5px;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
   cursor: pointer;
-
   width: 20px;
   height: 20px;
   background-position: 4px 4px;

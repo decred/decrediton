@@ -245,14 +245,6 @@
 .autoBuyerRowPortionHalf .autobuyerInput {
   width: 230px;
 }
-.autoBuyerRowPortionHalf {
-  width: 50%;
-  display: flex;
-  margin-bottom: 10px;
-}
-.autoBuyerRowPortionHalf .autobuyerInput {
-  width: 230px;
-}
 .autobuyerLabel {
   display: inline-block;
   vertical-align: middle;
