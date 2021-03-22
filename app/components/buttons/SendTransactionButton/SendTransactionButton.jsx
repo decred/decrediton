@@ -7,13 +7,13 @@ const SendTransactionButton = ({
   disabled,
   onSubmit,
   children,
-  isTrezor,
   buttonLabel
 }) => {
   const {
     constructTxResponse,
     unsignedTransaction,
     isSendingTransaction,
+    isTrezor,
     onAttemptSignTransaction,
     onAttemptSignTransactionTrezor
   } = useSendTransactionButton();

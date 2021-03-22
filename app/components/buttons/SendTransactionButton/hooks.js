@@ -7,6 +7,7 @@ export function useSendTransactionButton() {
   const unsignedTransaction = useSelector(sel.unsignedTransaction);
   const constructTxResponse = useSelector(sel.constructTxResponse);
   const isSendingTransaction = useSelector(sel.isSendingTransaction);
+  const isTrezor = useSelector(sel.isTrezor);
 
   const dispatch = useDispatch();
   const onAttemptSignTransaction = (passphrase, rawTx) =>
@@ -18,6 +19,7 @@ export function useSendTransactionButton() {
     unsignedTransaction,
     constructTxResponse,
     isSendingTransaction,
+    isTrezor,
     onAttemptSignTransaction,
     onAttemptSignTransactionTrezor
   };
