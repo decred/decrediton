@@ -12,9 +12,8 @@ export function useInvoicesTab() {
 
   const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
 
-  const onValueChanged = ({ atomValue }) => {
+  const onValueChanged = ({ atomValue }) =>
     setAtomValue(atomValue);
-  };
 
   const onMemoChanged = (e) => {
     if (e.target.value.length > 639) {
