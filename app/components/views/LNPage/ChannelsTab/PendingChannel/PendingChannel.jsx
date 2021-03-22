@@ -14,11 +14,11 @@ const PendingChannel = ({ channel }) => (
         <Balance amount={channel.capacity} />
       </div>
       <div className={styles.peerBalances}>
-        <div className="local-balance">
+        <div>
           <T id="ln.channelsTab.pendingChannel.localBalance" m="Local" />
           <Balance amount={channel.localBalance} />
         </div>
-        <div className="remote-balance">
+        <div>
           <T id="ln.channelsTab.pendingChannel.remoteBalance" m="Remote" />
           <Balance amount={channel.remoteBalance} />
         </div>

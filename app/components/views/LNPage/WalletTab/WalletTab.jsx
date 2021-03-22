@@ -63,7 +63,6 @@ const WalletTab = () => {
         <div className={styles.backupInfoBtn}>
           <InfoDocModalButton
             document="LNBackupInfo"
-            modalClassName="info-modal-fields"
             double
             draggable
           />
@@ -92,7 +91,7 @@ const WalletTab = () => {
               id="ln.confirmBackupOverwrite.content"
               m="Really overwrite the backup file {file}? The existing backup data will be LOST."
               values={{
-                file: <span className="mono">{confirmFileOverwrite}</span>
+                file: <span>{confirmFileOverwrite}</span>
               }}
             />
           </>

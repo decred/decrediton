@@ -17,3 +17,13 @@
   height: 16px;
   width: 16px;
 }
+
+.value {
+  font-size: 32px;
+}
+
+.memo {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 18em;
+}

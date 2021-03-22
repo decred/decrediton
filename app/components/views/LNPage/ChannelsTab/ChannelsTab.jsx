@@ -66,12 +66,12 @@ const ChannelsTab = () => {
           <T id="ln.openChannel.node" m="Counterparty (node@ip:port)" />
           <TextInput value={node} onChange={onNodeChanged} />
         </div>
-        <div className="local-amt">
+        <div>
           <T id="ln.openChannel.localAmt" m="Total Funding Amount" />
           <DcrInput amount={localAmtAtoms} onChangeAmount={onLocalAmtChanged} />
         </div>
         {!isMainNet && (
-          <div className="push-amt">
+          <div>
             <T id="ln.openChannel.pushAmt" m="Push Amount (optional)" />
             <DcrInput amount={pushAmtAtoms} onChangeAmount={onPushAmtChanged} />
           </div>

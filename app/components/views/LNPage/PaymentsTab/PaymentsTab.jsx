@@ -48,12 +48,12 @@ const PaymentsTab = ({ setTimeout }) => {
         title={<T id="ln.paymentsTab.sendPayment" m="Send Payment" />}
       />
       <div className={styles.lnSendPayment}>
-        <div className="payreq">
+        <div>
           <T id="ln.paymentsTab.payReq" m="Payment Request" />
           <TextInput value={payRequest} onChange={onPayRequestChanged} />
         </div>
         {!!decodingError && (
-          <div className={styles.decodingError}>{"" + decodingError}</div>
+          <div className={styles.decodingError}>{decodingError || ""}</div>
         )}
         {!!decodedPayRequest && (
           <>
@@ -64,7 +64,7 @@ const PaymentsTab = ({ setTimeout }) => {
               sendValue={sendValue}
               onSendValueChanged={onSendValueChanged}
             />
-            <KeyBlueButton className="sendpayment" onClick={onSendPayment}>
+            <KeyBlueButton onClick={onSendPayment}>
               <T id="ln.paymentsTab.sendBtn" m="Send" />
             </KeyBlueButton>
           </>

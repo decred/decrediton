@@ -17,7 +17,7 @@
   width: 120px;
   height: 30px;
   border: 1px var(--disabled-background-color) solid;
-  border-radius: 5px 0px 0px 5px;
+  border-radius: 5px 0 0 5px;
   text-align: center;
   font-size: 13px;
   letter-spacing: 0;
@@ -30,7 +30,7 @@
   height: 30px;
   border: 1px var(--disabled-background-color) solid;
   border-left: none;
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 0 5px 5px 0;
   text-align: center;
   font-size: 13px;
   letter-spacing: 0;

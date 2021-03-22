@@ -10,11 +10,11 @@ const ClosedChannel = ({ channel }) => (
         <Balance amount={channel.capacity} />
       </div>
       <div className={styles.peerBalances}>
-        <div className="local-balance">
+        <div>
           <T id="ln.channelsTab.closedChannel.settledBalance" m="Settled" />
           <Balance amount={channel.settledBalance} />
         </div>
-        <div className="remote-balance">
+        <div>
           <T
             id="ln.channelsTab.closedChannel.timeLockedBalance"
             m="Timelocked"

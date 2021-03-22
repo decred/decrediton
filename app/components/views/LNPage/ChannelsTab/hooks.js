@@ -22,7 +22,7 @@ export function useChannelsTab() {
 
   const onNodeChanged = (e) => {
     const _canOpen = e.target.value && localAmtAtoms > 0;
-    setNode(("" + e.target.value).trim());
+    setNode((e.target.value || "").trim());
     setCanOpen(_canOpen);
   };
 
@@ -49,14 +49,11 @@ export function useChannelsTab() {
         setPushAmtAtoms(0);
         setCanOpen(false);
       })
-      .catch(() => {
-        setOpening(false);
-      });
+      .catch(() => setOpening(false));
   };
 
-  const onCloseChannel = (channel) => {
+  const onCloseChannel = (channel) =>
     closeChannel(channel.channelPoint, !channel.active);
-  };
 
   const onToggleChannelDetails = (channel) => {
     if (detailedChannel === channel) {

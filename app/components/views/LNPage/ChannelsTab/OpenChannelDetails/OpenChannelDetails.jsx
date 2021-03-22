@@ -3,7 +3,7 @@ import styles from "./OpenChannelDetails.module.css";
 import { Balance, ExternalLink } from "shared";
 import { CopyableText } from "pi-ui";
 
-export const OpenChannelDetails = ({ channel }) => (
+const OpenChannelDetails = ({ channel }) => (
   <div className={styles.channelDetails}>
     <T id="ln.openChannelDetails.chanId" m="Channel ID" />
     <span>{channel.chanId}</span>

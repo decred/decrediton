@@ -29,3 +29,13 @@
   padding: 1em 2em;
   grid-column: 1 / 3;
 }
+
+.value {
+  font-size: 32px;
+}
+
+.memo {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 18em;
+}

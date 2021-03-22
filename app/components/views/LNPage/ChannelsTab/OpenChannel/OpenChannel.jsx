@@ -27,13 +27,13 @@ export const CloseChannelModalContent = ({ channel }) => (
         <Balance amount={channel.capacity} />
       </div>
       <T id="ln.closeChannelModal.localBalance" m="Local Balance" />
-      <div className="local-balance">
+      <div>
         <Balance amount={channel.localBalance} />
       </div>
       <T id="ln.closeChannelModal.node" m="Counterparty" />
       <div className={styles.node}>{channel.remotePubkey}</div>
       <T id="ln.closeChannelModal.channelPoint" m="Channel Point" />
-      <div className="channelpoint">{channel.channelPoint}</div>
+      <div>{channel.channelPoint}</div>
     </div>
   </>
 );
@@ -89,11 +89,11 @@ const OpenChannel = ({ channel }) => (
         <Balance amount={channel.capacity} />
       </div>
       <div className={styles.peerBalances}>
-        <div className="local-balance">
+        <div>
           <T id="ln.channelsTab.openChannel.localBalance" m="Local" />
           <Balance amount={channel.localBalance} />
         </div>
-        <div className="remote-balance">
+        <div>
           <T id="ln.channelsTab.openChannel.remoteBalance" m="Remote" />
           <Balance amount={channel.remoteBalance} />
         </div>

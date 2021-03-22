@@ -42,11 +42,11 @@ const InvoicesTab = () => {
         title={<T id="ln.invoicesTab.addInvoiceHeader" m="Add Invoice" />}
       />
       <div className={styles.lnAddInvoice}>
-        <div className="memo">
+        <div className={styles.memo}>
           <T id="ln.invoicesTab.addInvoice.memo" m="Description" />
           <TextInput value={memo} onChange={onMemoChanged} />
         </div>
-        <div className="value">
+        <div className={styles.value}>
           <T id="ln.invoicesTab.addInvoice.value" m="Value" />
           <DcrInput amount={value} onChangeAmount={onValueChanged} />
         </div>
@@ -77,7 +77,7 @@ const InvoicesTab = () => {
           title={<T id="ln.invoicesTab.invoicesHeader" m="Latest Invoices" />}
         />
       )}
-      <div className="ln-invoice-list">
+      <div>
         {invoices.map((inv) => (
           <InvoiceRow key={inv.addIndex} invoice={inv} tsDate={tsDate} />
         ))}

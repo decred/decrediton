@@ -23,7 +23,7 @@ const closeTypes = {
   [lna.CLOSETYPE_ABANDONED]: <T id="ln.closeTypeAbandoned" m="Abandoned" />
 };
 
-export const ClosedChannelDetails = ({ channel }) => (
+const ClosedChannelDetails = ({ channel }) => (
   <div className={styles.channelDetails}>
     <div>
       <T id="ln.closedChannelDetails.chanId" m="Channel ID" />

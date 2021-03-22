@@ -8,7 +8,7 @@ const Payment = ({ payment, tsDate }) => (
       <div className={styles.value}>
         <Balance amount={payment.valueAtoms} />
       </div>
-      <div className="fee">
+      <div>
         <Balance amount={payment.fee} />
       </div>
     </div>
