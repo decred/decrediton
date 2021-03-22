@@ -698,7 +698,10 @@ const getMissingStakeTxData = async (
     const spenderHash = ticket.spender.getHash();
     if (spenderHash) {
       try {
-        const spender = await wallet.getTransaction(walletService, rawHashToHex(spenderHash));
+        const spender = await wallet.getTransaction(
+          walletService,
+          rawHashToHex(spenderHash)
+        );
         spenderTx = spender.tx;
       } catch (error) {
         if (String(error).indexOf("NOT_FOUND") === -1) {
