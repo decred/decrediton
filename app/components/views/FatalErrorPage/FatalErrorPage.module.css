@@ -1,0 +1,51 @@
+.pageBody {
+  display: flex;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.errorPage {
+  margin: 138px 50px 0 50px;
+}
+
+.title {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.error {
+  font-family: var(--font-family-regular);
+  font-size: 13px;
+}
+
+.suggestion {
+  font-size: 13px;
+  margin: 10px 20px;
+  padding: 10px;
+  border: 1px solid var(--title-text-and-button-background);
+  border-radius: 3px;
+}
+
+.toolbar {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.button {
+  margin-left: 10px;
+}
+
+.removeButton {
+  float: left;
+}
+
+.reset {
+  float: left;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .pageBody {
+    flex-direction: column-reverse;
+  }
+}

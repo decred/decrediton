@@ -1,0 +1,37 @@
+.pageBody {
+  display: flex;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.pageView {
+  height: 100%;
+  width: calc(100% - var(--sidebar-width));
+  position: absolute;
+  right: 0px;
+  background-color: var(--background-container);
+  overflow-x: hidden;
+}
+
+.reducedBar {
+  height: 100%;
+  width: calc(100% - var(--sidebar-width-reduced));
+  position: absolute;
+  right: 0px;
+  background-color: var(--background-container);
+  overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .pageBody {
+    flex-direction: column-reverse;
+  }
+
+  .pageView {
+    width: 100%;
+  }
+
+  .reducedBar {
+    width: 100%;
+  }
+}

@@ -4,7 +4,7 @@ import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
 import { getAppDataDirectory } from "main_dev/paths.js";
 import { useFatalErrorPage } from "./hooks";
-import "style/Layout.less";
+import styles from "./FatalErrorPage.module.css";
 
 // right now we need to add logs by hand. It would be good having a better way
 // of recognizing errors.
@@ -51,14 +51,14 @@ function FatalErrorPage() {
         daemonError.indexOf(checkSumError) !== -1:
         errorMessage = (
           <>
-            <div className="fatal-error-reset-blockchain">
+            <div className={styles.reset}>
               <T
                 id="fatal.suggestion.corrupted"
                 m="This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart Decrediton, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord to get advice about running disk utilities. "
               />
             </div>
             <RemoveDaemonButton
-              className="fatal-remove-button"
+              className={styles.removeButton}
               modalTitle={
                 <T id="fatal.removeConfirmModal.title" m="Remove daemon data" />
               }
@@ -98,16 +98,16 @@ function FatalErrorPage() {
   };
 
   return (
-    <div className="page-body getstarted">
-      <div className="fatal-error-page">
-        <div className="fatal-error-title">
+    <div className={styles.pageBody}>
+      <div className={styles.errorPage}>
+        <div className={styles.title}>
           <T id="fatal.header.title" m="Fatal error" />:
         </div>
-        <div className="log-area">
-          <div className="log-area-logs">
+        <div>
+          <div>
             {daemonError && (
               <>
-                <div className="fatal-error">
+                <div className={styles.error}>
                   <T id="fatal.daemon.title" m="Daemon Error" />
                 </div>
                 <textarea rows="10" value={daemonError} disabled />
@@ -116,7 +116,7 @@ function FatalErrorPage() {
             )}
             {walletError && (
               <>
-                <div className="fatal-error">
+                <div className={styles.error}>
                   <T id="fatal.wallet.title" m="Wallet Error" />
                 </div>
                 <CopyToClipboard textToCopy={walletError} />
@@ -125,26 +125,26 @@ function FatalErrorPage() {
             )}
           </div>
         </div>
-        <div className="fatal-error-title">
+        <div className={styles.title}>
           <T
             id="fatal.suggestion.title"
             m="Suggested action to resolve the error"
           />
           :
         </div>
-        <div className="fatal-error-suggestion">
+        <div className={styles.suggestion}>
           {daemonError && getErrorAction()}
         </div>
-        <div className="fatal-error-toolbar">
+        <div className={styles.toolbar}>
           {isAdvancedDaemon && (
-            <KeyBlueButton onClick={backToCredentials}>
+            <KeyBlueButton className={styles.button} onClick={backToCredentials}>
               <T
                 id="fatal.retry.connection.button"
                 m="Return to Daemon Connection"
               />
             </KeyBlueButton>
           )}
-          <KeyBlueButton onClick={shutdownApp}>
+          <KeyBlueButton className={styles.button} onClick={shutdownApp}>
             <T id="fatal.button" m="Close Decrediton" />
           </KeyBlueButton>
         </div>

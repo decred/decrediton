@@ -10,3 +10,9 @@
   margin-right: 5px;
   border-radius: 3px;
 }
+
+@media screen and (max-width: 768px) {
+  .descriptionHeader {
+    display: none;
+  }
+}

@@ -1,0 +1,58 @@
+.tabs {
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+  white-space: nowrap;
+}
+
+.tab {
+  line-height: 35px;
+  margin-right: 55px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tab a {
+  margin: 0 5px 0 5px;
+  color: var(--tab-text);
+  text-decoration: none;
+}
+
+.tab a:hover,
+.tab a.active {
+  color: var(--tab-text-active-hover);
+}
+
+.tab:last-of-type {
+  margin-right: 0;
+}
+
+.tabCaret {
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+}
+
+.tabCaret .active {
+  background-color: var(--accent-color);
+  position: absolute;
+  height: 5px;
+}
+
+@media screen and (max-width: 1179px) {
+  .tabs {
+    left: 55px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+    font-size: 13px;
+    left: 25px;
+    right: 20px;
+  }
+
+  .tab {
+    margin-right: 45px;
+  }
+}

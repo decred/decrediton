@@ -73,13 +73,19 @@ const ProposalsTab = () => {
   return (
     <TabbedPage
       caret={<div />}
+      className={styles.tabsBody}
       header={
         <PageHeader {...{ isTestnet, onRefreshProposals: compareInventory }} />
-      }>
+      }
+      headerClassName={styles.tabsHeader}
+      tabsClassName={styles.tabs}
+      tabContentClassName={styles.tabContent}>
       <Tab
         path="/governance/proposals/prevote"
         component={h(ProposalsList, { tab })}
         key="preVote"
+        className={styles.tab}
+        activeClassName={styles.activeTab}
         link={
           <ListLink count={preVoteCount}>
             <T id="proposals.statusLinks.preVote" m="In Discussion" />
@@ -90,6 +96,8 @@ const ProposalsTab = () => {
         path="/governance/proposals/activevote"
         component={h(ProposalsList, { tab })}
         key="activevote"
+        className={styles.tab}
+        activeClassName={styles.activeTab}
         link={
           <ListLink count={activeVoteCount}>
             <T id="proposals.statusLinks.underVote" m="Voting" />
@@ -100,12 +108,16 @@ const ProposalsTab = () => {
         path="/governance/proposals/voted"
         component={h(ProposalsList, { finishedVote: true, tab })}
         key="activevote"
+        className={styles.tab}
+        activeClassName={styles.activeTab}
         link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}
       />
       <Tab
         path="/governance/proposals/abandoned"
         component={h(ProposalsList, { tab })}
         key="abandoned"
+        className={styles.tab}
+        activeClassName={styles.activeTab}
         link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}
       />
     </TabbedPage>

@@ -12,6 +12,7 @@ const TabHeader = () => {
         description={
           <T id="governance.description" m="Governance aspects of Decred." />
         }
+        className={styles.descriptionHeader}
       />
       {treasuryBalance && (
         <DescriptionHeader
@@ -30,6 +31,7 @@ const TabHeader = () => {
               }}
             />
           }
+          className={styles.descriptionHeader}
         />
       )}
     </>

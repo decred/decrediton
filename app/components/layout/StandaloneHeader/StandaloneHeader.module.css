@@ -1,0 +1,27 @@
+.header {
+  background-color: var(--background-back-color);
+  padding: 43px 60px 0px 63px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  height: 114px;
+}
+
+@media screen and (max-width: 1179px) {
+  .header {
+    padding-left: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    height: initial;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    padding-bottom: 48px;
+    padding-top: 30px;
+  }
+}

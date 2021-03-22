@@ -1,0 +1,15 @@
+.governance {
+  top: 157px;
+}
+
+.tabContent {
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .governance {
+    top: 112px;
+  }
+}
+
+
