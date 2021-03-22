@@ -1,80 +1,69 @@
+import { useState } from "react";
 import Select from "react-select";
 import { injectIntl } from "react-intl";
 import { classNames } from "pi-ui";
+import { useMountEffect } from "hooks";
 import styles from "./LanguageSelectInput.module.css";
 
-// XXX: functional component
+const LanguageSelectInput = ({
+  className,
+  value,
+  onChange,
+  valueKey,
+  labelKey,
+  options,
+  ariaLabelledBy
+}) => {
+  const [stateValue, setValue] = useState(null);
 
-@autobind
-class LanguageSelectInput extends React.Component {
-  static propTypes = {
-    className: PropTypes.string
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: null
-    };
-  }
-
-  componentDidMount() {
-    const { value } = this.props;
+  useMountEffect(() => {
     if (value) {
-      this.setState({ value: value });
+      setValue(value);
     }
-  }
+  });
 
-  render() {
-    const {
-      valueKey,
-      labelKey,
-      options,
-      className,
-      ariaLabelledBy
-    } = this.props;
-
-    return (
-      <div className={classNames(styles.input, className)}>
-        <Select
-          clearable={false}
-          multi={false}
-          value={this.state.value}
-          valueKey={valueKey}
-          labelKey={labelKey}
-          options={options}
-          valueRenderer={this.valueRenderer}
-          optionRenderer={this.valueRenderer}
-          onChange={this.onChangeSelect}
-          onInputKeyDown={this.selectKeyDown}
-          aria-labelledby={ariaLabelledBy}
-        />
-      </div>
-    );
-  }
-
-  selectKeyDown(e) {
+  const selectKeyDown = (e) => {
     switch (e.keyCode) {
       case 8:
       case 46:
         e.preventDefault();
         break;
     }
-  }
+  };
 
-  valueRenderer(option) {
-    return (
-      <div className={styles.label}>
-        <div className={classNames(styles.flag, styles[option.language])} />
-        <div className={styles.name}>{option.description}</div>
-      </div>
-    );
-  }
+  const valueRenderer = (option) => (
+    <div className={styles.label}>
+      <div className={classNames(styles.flag, styles[option.language])} />
+      <div className={styles.name}>{option.description}</div>
+    </div>
+  );
 
-  onChangeSelect(value) {
-    this.setState({ value: value });
-    this.props.onChange(value);
-  }
-}
+  const onChangeSelect = (value) => {
+    setValue(value);
+    onChange?.(value);
+  };
+
+  return (
+    <div className={classNames(styles.input, className)}>
+      <Select
+        clearable={false}
+        multi={false}
+        value={stateValue}
+        valueKey={valueKey}
+        labelKey={labelKey}
+        options={options}
+        valueRenderer={valueRenderer}
+        optionRenderer={valueRenderer}
+        onChange={onChangeSelect}
+        onInputKeyDown={selectKeyDown}
+        aria-labelledby={ariaLabelledBy}
+      />
+    </div>
+  );
+};
+
+LanguageSelectInput.propTypes = {
+  className: PropTypes.string
+};
 
 export default injectIntl(LanguageSelectInput);
