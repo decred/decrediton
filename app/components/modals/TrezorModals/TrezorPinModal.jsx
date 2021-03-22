@@ -48,6 +48,7 @@ const TrezorPinModal = ({
         <div className={styles.pinPad}>
           {[7, 8, 9, 4, 5, 6, 1, 2, 3].map((index) => (
             <div
+              key={`trzPadBtn${index}`}
               className={styles.pinPadButton}
               onClick={() => setCurrentPin(currentPin + index)}>
               •
