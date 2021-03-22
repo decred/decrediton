@@ -7,11 +7,7 @@ import { Balance } from "shared";
 import { AccountsSelect } from "inputs";
 
 const ListUTXOsModal = ({ onCancelModal, show }) => {
-  const {
-    unspentOutputs,
-    account,
-    setAccount
-  } = useListUtxo();
+  const { unspentOutputs, account, setAccount } = useListUtxo();
 
   const data =
     unspentOutputs?.map((utxo) => {
