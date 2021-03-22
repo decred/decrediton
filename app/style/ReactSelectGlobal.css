@@ -219,6 +219,33 @@
   width: 10px;
 }
 
+.detailedAccountSelect .Select-arrow-zone {
+  vertical-align: top;
+}
+.detailedAccountSelect .Select-value-label {
+  display: block;
+  width: max-content;
+}
+.detailedAccountSelect .Select-placeholder,
+.detailedAccountSelect .Select-value {
+  width: max-content !important;
+  max-width: max-content !important;
+  position: relative !important;
+}
+.detailedAccountSelect .Select-multi-value-wrapper {
+  display: block;
+  width: max-content;
+  max-width: max-content;
+}
+.detailedAccountSelect .Select-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.detailedAccountSelect .Select-control {
+  height: 48px;
+}
+
 .Select-arrow {
   border-color: var(--stroke-color-default) transparent transparent;
   border-style: solid;

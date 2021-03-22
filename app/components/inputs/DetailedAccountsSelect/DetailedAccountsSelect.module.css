@@ -1,0 +1,67 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.select {
+  width: auto;
+}
+.value {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: max-content;
+  max-width: 300px;
+}
+.value.option {
+  width: 100%;
+}
+.name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0em;
+  color: var(--main-dark-blue);
+}
+.name.icon {
+  background-image: var(--accounts-default);
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: 0 1px;
+  padding-left: 25px;
+}
+.name.imported {
+  background-image: var(--accounts-imported);
+}
+.name.mixed {
+  background-image: var(--mixed-account-icon);
+}
+.name.unmixed {
+  background-image: var(--unmixed-account-icon);
+}
+.spendable {
+  min-width: 10em;
+  display: flex;
+  align-items: baseline;
+  width: max-content;
+}
+.balanceLabel {
+  margin-right: 16px;
+  color: var(--grey-5);
+  font-size: 13px;
+  line-height: 16px;
+}
+.balanceAmount {
+  color: var(--main-dark-blue);
+  font-size: 13px;
+  line-height: 16px;
+}
+.balanceSecondary {
+  color: var(--grey-5);
+  font-size: 13px;
+}
+.balanceUnit {
+  color: var(--main-dark-blue);
+  font-size: 13px;
+}
