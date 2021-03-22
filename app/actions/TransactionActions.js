@@ -10,7 +10,7 @@ import {
 import { getVSPTicketsByFeeStatus } from "./VSPActions";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
-import { hexToBytes, strHashToRaw } from "helpers";
+import { hexToBytes, strHashToRaw, rawHashToHex } from "helpers";
 import {
   RECENT_TX_COUNT,
   BATCH_TX_COUNT,
@@ -698,7 +698,7 @@ const getMissingStakeTxData = async (
     const spenderHash = ticket.spender.getHash();
     if (spenderHash) {
       try {
-        const spender = await wallet.getTransaction(walletService, spenderHash);
+        const spender = await wallet.getTransaction(walletService, rawHashToHex(spenderHash));
         spenderTx = spender.tx;
       } catch (error) {
         if (String(error).indexOf("NOT_FOUND") === -1) {
