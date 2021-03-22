@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
+import { SimpleLoading } from "indicators";
 import styles from "./OutstandingPayment.module.css";
 
 const OutstandingPayment = ({ payment, tsDate }) => (

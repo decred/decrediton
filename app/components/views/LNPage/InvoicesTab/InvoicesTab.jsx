@@ -56,7 +56,7 @@ const InvoicesTab = () => {
           disabled={addInvoiceAttempt}>
           +
         </KeyBlueButton>
-        {lastPayRequest && (
+        {!!lastPayRequest && (
           <>
             <div className={styles.lastPayRequest}>{lastPayRequest}</div>
             <CopyToClipboard
@@ -65,7 +65,7 @@ const InvoicesTab = () => {
             />
           </>
         )}
-        {lastError && (
+        {!!lastError && (
           <>
             <div className={styles.lastError}>{"" + lastError}</div>
           </>

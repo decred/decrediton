@@ -43,7 +43,7 @@ export function useConnectPage() {
   };
 
   const onChangeEnableAutopilot = () => {
-    setAutopilotEnabled(autopilotEnabled);
+    setAutopilotEnabled(!autopilotEnabled);
   };
 
   const onAccountOptionClick = (value) => {

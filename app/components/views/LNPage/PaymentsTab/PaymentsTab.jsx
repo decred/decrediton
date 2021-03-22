@@ -10,6 +10,7 @@ import BalanceHeader from "../BalanceHeader/BalanceHeader";
 import DecodedPayRequest from "./DecodedPayRequest/DecodedPayRequest";
 import OutstandingPayment from "./OutstandingPayment/OutstandingPayment";
 import FailedPayment from "./FailedPayment/FailedPayment";
+import Payment from "./Payment/Payment";
 
 export const PaymentsTabHeader = () => (
   <DescriptionHeader
@@ -19,7 +20,7 @@ export const PaymentsTabHeader = () => (
   />
 );
 
-const PaymentsTab = ({ setTimeout, clearTimeout }) => {
+const PaymentsTab = ({ setTimeout }) => {
   const {
     payments,
     outstandingPayments,
@@ -37,7 +38,7 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
     selectedPaymentDetails,
     onToggleShowDetails,
     channelBalances
-  } = usePaymentsTab(setTimeout, clearTimeout);
+  } = usePaymentsTab(setTimeout);
 
   return (
     <>
@@ -51,10 +52,10 @@ const PaymentsTab = ({ setTimeout, clearTimeout }) => {
           <T id="ln.paymentsTab.payReq" m="Payment Request" />
           <TextInput value={payRequest} onChange={onPayRequestChanged} />
         </div>
-        {decodingError && (
+        {!!decodingError && (
           <div className={styles.decodingError}>{"" + decodingError}</div>
         )}
-        {decodedPayRequest && (
+        {!!decodedPayRequest && (
           <>
             <DecodedPayRequest
               decoded={decodedPayRequest}

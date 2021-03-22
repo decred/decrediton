@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
-import styles from "./OutstandingPayment.module.css";
+import styles from "./Payment.module.css";
 
 const Payment = ({ payment, tsDate }) => (
   <div className={styles.lnPayment}>

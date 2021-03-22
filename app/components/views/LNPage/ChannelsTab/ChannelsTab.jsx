@@ -7,19 +7,14 @@ import { DescriptionHeader } from "layout";
 import styles from "./ChannelsTab.module.css";
 import { useChannelsTab } from "./hooks";
 import BalanceHeader from "./BalanceHeader/BalanceHeader";
-import {
-  default as OpenChannel,
-  OpenChannelDetails,
+import OpenChannel, {
   CloseChannelModalContent
 } from "./OpenChannel/OpenChannel";
-import {
-  default as PendingChannel,
-  PendingChannelDetails
-} from "./PendingChannel/PendingChannel";
-import {
-  default as ClosedChannel,
-  ClosedChannelDetails
-} from "./ClosedChannel/ClosedChannel";
+import PendingChannel from "./PendingChannel/PendingChannel";
+import ClosedChannel from "./ClosedChannel/ClosedChannel";
+import OpenChannelDetails from "./OpenChannelDetails/OpenChannelDetails";
+import PendingChannelDetails from "./PendingChannelDetails/PendingChannelDetails";
+import ClosedChannelDetails from "./ClosedChannelDetails/ClosedChannelDetails";
 
 export const ChannelsTabHeader = () => (
   <DescriptionHeader

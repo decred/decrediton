@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useLNPage } from "../hooks";
 
-export function usePaymentsTab(setTimeout, clearTimeout) {
+export function usePaymentsTab(setTimeout) {
   const [sendValueAtom, setSendValueAtom] = useState(0);
   const [payRequest, setPayRequest] = useState("");
   const [decodedPayRequest, setDecodedPayRequest] = useState(null);
@@ -10,8 +10,6 @@ export function usePaymentsTab(setTimeout, clearTimeout) {
   const [sending, setSendValue] = useState();
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const [selectedPaymentDetails, setSelectedPaymentDetails] = useState(null);
-
-  const lastDecodeTimer = useRef(null);
 
   const {
     payments,
@@ -31,7 +29,7 @@ export function usePaymentsTab(setTimeout, clearTimeout) {
     [isShowingDetails]
   );
 
-  const checkExpired = () => {
+  const checkExpired = useCallback(() => {
     if (!decodedPayRequest) return;
     const timeToExpire =
       (decodedPayRequest.timestamp + decodedPayRequest.expiry) * 1000 -
@@ -39,10 +37,9 @@ export function usePaymentsTab(setTimeout, clearTimeout) {
     if (timeToExpire < 0) {
       setExpired(true);
     }
-  };
+  }, [decodedPayRequest]);
 
-  const decodePayRequestCallback = () => {
-    lastDecodeTimer.current = null;
+  useEffect(() => {
     if (!payRequest) {
       setDecodingError(null);
       setDecodedPayRequest(null);
@@ -63,16 +60,13 @@ export function usePaymentsTab(setTimeout, clearTimeout) {
         setDecodedPayRequest(null);
         setDecodingError(error);
       });
-  };
+  }, [payRequest, decodePayRequest, checkExpired, setTimeout]);
+
 
   const onPayRequestChanged = (e) => {
     setPayRequest(("" + e.target.value).trim());
     setDecodedPayRequest(null);
     setExpired(false);
-    if (lastDecodeTimer.current) {
-      clearTimeout(lastDecodeTimer.current);
-    }
-    lastDecodeTimer.current = setTimeout(decodePayRequestCallback, 1000);
   };
 
   const onSendValueChanged = ({ atomValue }) => {

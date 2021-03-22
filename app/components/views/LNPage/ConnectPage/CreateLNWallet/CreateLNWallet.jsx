@@ -56,7 +56,7 @@ const wrapperComponent = (props) => (
 // The below constant MUST match what TextToggle expects/uses.
 const NEW_ACCOUNT = "left";
 
-export const CreateLNWalletPageHeader = () => (
+export const CreateLNWalletHeader = () => (
   <StandaloneHeader
     title={<T id="ln.createLNWalletPage.title" m="Create Lightning Wallet" />}
     description={

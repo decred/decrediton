@@ -42,7 +42,7 @@ const NetworkTab = () => {
 
   return (
     <>
-      {network && <NetworkInfo network={network} />}
+      {!!network && <NetworkInfo network={network} />}
       <Tabs active={activeTab} set={setActiveTab} />
       {activeTab === 0 ? (
         <QueryNode getNodeInfo={getNodeInfo} />

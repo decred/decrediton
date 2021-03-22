@@ -13,8 +13,7 @@ import {
 import styles from "./ConnectPage.module.css";
 import { LN_ICON } from "constants";
 import { useConnectPage } from "./hooks";
-import {
-  default as CreateLNWallet,
+import CreateLNWallet, {
   CreateLNWalletHeader
 } from "./CreateLNWallet/CreateLNWallet";
 
@@ -48,9 +47,6 @@ const ConnectPageHeader = () => (
     iconType={LN_ICON}
   />
 );
-
-const LNStartupStage = ({ stage }) =>
-  stageMsgs[stage] && <div>{stageMsgs[stage]}</div>;
 
 const LNCreationWarning = ({ onAcceptCreationWarning }) => (
   <>
@@ -125,7 +121,6 @@ const ConnectPage = () => {
               />
             </div>
           </div>
-
           <PassphraseModalButton
             modalTitle={
               <T id="ln.connectPage.unlockWalletModal" m="Unlock LN Wallet" />
@@ -137,7 +132,7 @@ const ConnectPage = () => {
               <T id="ln.connectPage.launchBtn" m="Start and Unlock LN Wallet" />
             }
           />
-          <LNStartupStage stage={startupStage} />
+          {stageMsgs[startupStage] && <div>{stageMsgs[startupStage]}</div>}
         </div>
       )}
     </StandalonePage>

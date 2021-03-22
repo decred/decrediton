@@ -2,12 +2,14 @@ import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import ConnectPage from "./ConnectPage/ConnectPage";
-import { default as WalletTab, WalletTabHeader } from "./WalletTab/WalletTab";
-import { default as ChannelsTab, ChannelsTabHeader } from "./ChannelsTab/ChannelsTab";
-import { default as InvoicesTab, InvoicesTabHeader } from "./InvoicesTab/InvoicesTab";
-import { default as PaymentsTab, PaymentsTabHeader } from "./PaymentsTab/PaymentsTab";
-import { default as WatchtowersTab, WatchtowersTabHeader } from "./WatchtowersTab/WatchtowersTab";
-import { default as NetworkTab, NetworkTabHeader } from "./NetworkTab/NetworkTab";
+import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
+import ChannelsTab, { ChannelsTabHeader } from "./ChannelsTab/ChannelsTab";
+import InvoicesTab, { InvoicesTabHeader } from "./InvoicesTab/InvoicesTab";
+import PaymentsTab, { PaymentsTabHeader } from "./PaymentsTab/PaymentsTab";
+import WatchtowersTab, {
+  WatchtowersTabHeader
+} from "./WatchtowersTab/WatchtowersTab";
+import NetworkTab, { NetworkTabHeader } from "./NetworkTab/NetworkTab";
 import { LN_ICON } from "constants";
 import { useLNPage } from "./hooks";
 
