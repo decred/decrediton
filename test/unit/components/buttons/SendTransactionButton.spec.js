@@ -32,6 +32,7 @@ beforeEach(() => {
     () => testConstructTxResponse
   );
   mockIsSendingTransaction = sel.isSendingTransaction = jest.fn(() => false);
+  sel.isTrezor = jest.fn(() => false);
 });
 
 test("render default SendTransactionButton ", () => {
@@ -65,7 +66,8 @@ test("render default SendTransactionButton ", () => {
 });
 
 test("render SendTransactionButton when trezor is enabled", async () => {
-  render(<SendTransactionButton onSubmit={mockOnSubmit} isTrezor />);
+  sel.isTrezor = jest.fn(() => true);
+  render(<SendTransactionButton onSubmit={mockOnSubmit} />);
   expect(screen.getByText(/send/i)).toBeInTheDocument();
   const button = screen.getByRole("button");
   user.click(button);
@@ -79,7 +81,7 @@ test("render SendTransactionButton when trezor is enabled", async () => {
 
 test("render loading default SendTransactionButton ", () => {
   mockIsSendingTransaction = sel.isSendingTransaction = jest.fn(() => true);
-  render(<SendTransactionButton isTrezor={false} />);
+  render(<SendTransactionButton />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   const button = screen.getByRole("button");
   user.click(button);
@@ -91,7 +93,7 @@ test("render loading default SendTransactionButton ", () => {
 
 test("render loading SendTransactionButton when trezor is enabled", () => {
   mockIsSendingTransaction = sel.isSendingTransaction = jest.fn(() => true);
-  render(<SendTransactionButton isTrezor />);
+  render(<SendTransactionButton />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   const button = screen.getByRole("button");
   user.click(button);
@@ -103,14 +105,8 @@ test("render loading SendTransactionButton when trezor is enabled", () => {
 
 test("render default SendTransactionButton with custom button label", () => {
   render(
-    <SendTransactionButton isTrezor={false} buttonLabel={testButtonLabel} />
+    <SendTransactionButton buttonLabel={testButtonLabel} />
   );
-  expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(testButtonLabel)).toBeInTheDocument();
-});
-
-test("render SendTransactionButton when trezor is enabled with custom label", () => {
-  render(<SendTransactionButton isTrezor buttonLabel={testButtonLabel} />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   expect(screen.queryByText(testButtonLabel)).toBeInTheDocument();
 });
