@@ -41,7 +41,7 @@ const config = merge(baseConfig, {
         include: /\.module\.css$/
       },
       {
-        test: [/\.css$/, /\.less$/],
+        test: [/\.css$/],
         use: [{
           loader: MiniCssExtractPlugin.loader
         }, {
@@ -53,18 +53,6 @@ const config = merge(baseConfig, {
           }
         }],
         exclude: /\.module\.css$/
-      },
-      {
-        test: /\.less$/,
-        use: [
-          {
-            loader: "less-loader",
-            options: {
-              noIeCompat: true,
-              strictMath: true
-            }
-          }
-        ]
       },
       {
         test: [/\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/],
