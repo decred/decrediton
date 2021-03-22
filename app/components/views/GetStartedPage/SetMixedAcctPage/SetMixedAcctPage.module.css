@@ -34,16 +34,13 @@
 }
 
 .coinjoinLabel {
+  font-size: 13px;
   margin-top: 8px;
 }
 
 .accountLabel {
   font-size: 19px;
   margin-left: 10px;
-}
-
-.coinjoinLabel {
-  font-size: 13px;
 }
 
 .coinjoinSum {

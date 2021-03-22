@@ -177,9 +177,3 @@
     font-size: 13px;
   }
 }
-
-.purchaseTicketTitle {
-  box-sizing: content-box;
-  grid-area: purchaseTicketsTitle;
-  font-size: 15px;
-}

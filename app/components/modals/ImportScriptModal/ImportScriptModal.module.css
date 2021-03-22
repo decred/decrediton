@@ -1,4 +1,8 @@
 .importRedeemScriptTitle {
+  font-size: 27px;
+  text-transform: capitalize;
+  padding-top: 5px;
+  display: flex;
   margin-bottom: 15px;
 }
 
@@ -12,13 +16,6 @@
 
 .importRedeemScriptLabel {
   margin-right: 10px;
-}
-
-.importRedeemScriptTitle {
-  font-size: 27px;
-  text-transform: capitalize;
-  padding-top: 5px;
-  display: flex;
 }
 
 .importRedeemScriptButtons {
