@@ -15,7 +15,7 @@
     "build-main": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress=profile --color",
     "build-renderer": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress=profile --color",
     "build": "npm run build-main && npm run build-renderer",
-    "rebuild-natives": "cd app && ../node_modules/.bin/electron-rebuild",
+    "rebuild-natives": "node_modules/.bin/electron-rebuild",
     "start": "cross-env NODE_ENV=production electron ./app/ --debug --custombinpath=./bin",
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development",
     "start-hot-nosandbox": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development -r --no-sandbox",
@@ -301,7 +301,8 @@
   },
   "optionalDependencies": {
     "google-proto-files": "^1.1.2",
-    "grpc-tools": "^1.8.1"
+    "grpc-tools": "^1.8.1",
+    "win32ipc": "./modules/win32ipc"
   },
   "devEngines": {
     "node": ">=6.x",

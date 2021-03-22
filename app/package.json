@@ -12,8 +12,5 @@
   "license": "ISC",
   "dependencies": {
     "connect": "https://github.com/JoeGruffins/npm-extended-dcr#093a27dd6b0309351a2e53c705fe4710becd0368"
-  },
-  "optionalDependencies": {
-    "win32ipc": "./modules/win32ipc"
   }
 }
