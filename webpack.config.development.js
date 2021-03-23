@@ -42,7 +42,7 @@ export default merge(baseConfig, {
         include: /\.module\.css$/
       },
       {
-        test: [ /\.less$/, /\.css$/ ],
+        test: [/\.css$/ ],
         use: [ {
           loader: "style-loader"
         }, {
@@ -55,19 +55,6 @@ export default merge(baseConfig, {
           }
         }],
         exclude: /\.module\.css$/
-      },
-      {
-        test: /\.less$/,
-        use: [
-          {
-            loader: "less-loader",
-            options: {
-              sourceMap: true,
-              noIeCompat: true,
-              strictMath: true
-            }
-          }
-]
       },
       {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],

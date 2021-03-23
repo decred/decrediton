@@ -42,7 +42,7 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$": "<rootDir>/test/mocks/fileMock.js",
       "\\.module\\.css$": "identity-obj-proxy",
-      "\\.(css|less)$": "<rootDir>/test/mocks/styleMock.js",
+      "\\.css$": "<rootDir>/test/mocks/styleMock.js",
       "^grpc$": "<rootDir>/test/mocks/grpcMock.js",
       "^electron$": "<rootDir>/test/mocks/electronMock.js"
     },
@@ -59,8 +59,12 @@
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
     },
-    "setupFiles": ["<rootDir>/test/setup.js"],
-    "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"],
+    "setupFiles": [
+      "<rootDir>/test/setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
+    ],
     "modulePaths": [
       "<rootDir>/app",
       "<rootDir>/app/components",
@@ -69,8 +73,13 @@
       "<rootDir>/test"
     ],
     "testEnvironment": "jsdom",
-    "moduleFileExtensions": ["js", "jsx"],
-    "collectCoverageFrom": ["<rootDir>/app/**/*.+(js|jsx)"],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/app/**/*.+(js|jsx)"
+    ],
     "coverageDirectory": "<rootDir>/coverage",
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
@@ -133,7 +142,12 @@
     },
     "linux": {
       "category": "public.app-category.tools",
-      "target": ["AppImage", "deb", "rpm", "tar.gz"],
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "tar.gz"
+      ],
       "icon": "./build/icon/"
     },
     "directories": {
@@ -223,8 +237,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.0",
     "jest-date-mock": "^1.0.8",
-    "less": "^3.10.3",
-    "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.2",
     "minimist": "^1.2.0",
     "node-gyp": "6.1.0",
