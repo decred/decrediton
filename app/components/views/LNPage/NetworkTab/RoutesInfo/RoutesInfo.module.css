@@ -1,0 +1,44 @@
+.copyableText span {
+  font-size: 14px;
+  background: none;
+  padding: 0;
+}
+
+.route {
+  margin-top: 1em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
+}
+
+.infoContent {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+.infoContent a {
+  color: var(--link-color);
+}
+
+.infoContent a:hover {
+  color: var(--link-color-hovered);
+}
+
+.hopsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+}
+
+.basicInfo {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
+  border-bottom: 10px solid var(--color-primary);
+}
+
+.basicInfoContent {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 1em;
+}

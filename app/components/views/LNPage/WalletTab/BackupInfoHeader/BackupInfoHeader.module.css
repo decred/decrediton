@@ -1,0 +1,9 @@
+.header {
+  display: flex;
+}
+
+.text {
+  word-break: break-all;
+  padding-right: 40px;
+  padding-bottom: 8px;
+}

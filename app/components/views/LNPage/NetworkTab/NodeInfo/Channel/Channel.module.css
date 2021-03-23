@@ -1,0 +1,45 @@
+.channel {
+  margin-top: 1em;
+  padding: 1em 2em 1em 2em;
+  background-color: var(--background-back-color);
+}
+
+.channelInfo {
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--color-primary-dark);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.infoContent {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+
+.infoContent a {
+  color: var(--link-color);
+}
+
+.infoContent a:hover {
+  color: var(--link-color-hovered);
+}
+
+.copyableNode span {
+  font-size: 15px;
+  font-weight: 600;
+  background: none;
+  padding: 0;
+}
+
+.policyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column: 1;
+  grid-column-end: 3;
+  margin-top: 0.5em;
+}
+
+.policyLabel {
+  font-style: italic;
+}

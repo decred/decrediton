@@ -1,0 +1,25 @@
+.balanceHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -5px 35px -5px;
+}
+
+.balanceTile {
+  padding: 30px;
+  background-color: var(--background-back-color);
+  max-width: 400px;
+  flex: 1 1 0;
+  margin: 0 5px 10px 5px;
+}
+
+.balanceValue {
+  font-size: 32px;
+}
+.hasFunds {
+  border-bottom: 10px solid var(--accent-color);
+}
+.zeroFunds {
+  border-bottom: 10px solid var(--error-red);
+}

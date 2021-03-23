@@ -1,0 +1,15 @@
+.connectOpts {
+  background-color: var(--background-back-color);
+  padding: 8px 25px 40px 25px;
+  margin-bottom: 37px;
+}
+
+.checkbox {
+  max-width: 420px;
+}
+
+.connectOpt {
+  flex-wrap: wrap;
+  display: flex;
+  padding-top: 18px;
+}

@@ -1,0 +1,23 @@
+.lnPayment > .spinner {
+  align-self: center;
+}
+
+.lnPayment {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 1em 1em 1em 3em;
+  display: grid;
+  grid-template-columns: 4fr 4fr 1fr;
+  min-height: 40px;
+}
+
+.value {
+  font-size: 32px;
+}
+
+.rhash {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 10em;
+  color: var(--stroke-color-default);
+}

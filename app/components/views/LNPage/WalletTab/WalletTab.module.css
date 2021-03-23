@@ -13,6 +13,7 @@
 .copyableText {
   margin-top: 10px;
 }
+
 .copyableText span {
   background-color: var(--background-address-copy-color);
   border-radius: 5px;
@@ -35,7 +36,7 @@
 .copyableText svg {
   color: var(--tab-text-active-hover);
   padding: 7px;
-  box-shadow: 0px 3px 5px var(--icons-shadow);
+  box-shadow: 0 3px 5px var(--icons-shadow);
   border-radius: 5px;
   cursor: pointer;
   margin: 0 15px 2px 15px;
@@ -72,16 +73,6 @@
   width: 100%;
 }
 
-.backupInfoHeader {
-  display: flex;
-}
-
-.backupInfoText {
-  word-break: break-all;
-  padding-right: 40px;
-  padding-bottom: 8px;
-}
-
 .backupInfoBtn {
   margin-right: 2px;
 }
@@ -91,26 +82,29 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0px -5px 35px -5px;
+  margin: 0 -5px 35px -5px;
 }
 
 .balanceTile {
   padding: 30px;
   background-color: var(--background-back-color);
   max-width: 400px;
-  flex: 1 1 0px;
-  margin: 0px 5px 10px 5px;
+  flex: 1 1 0;
+  margin: 0 5px 10px 5px;
 }
 
 .balanceValue {
   font-size: 32px;
 }
+
 .hasFunds {
   border-bottom: 10px solid var(--color-primary);
 }
+
 .unconfirmed {
   border-bottom: 10px solid var(--selected_wallet-label);
 }
+
 .zeroFunds {
   border-bottom: 10px solid var(--error-red);
 }

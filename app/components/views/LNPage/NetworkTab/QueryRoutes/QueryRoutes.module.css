@@ -1,0 +1,29 @@
+.queryRoutes {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 3em 2em 3em;
+  display: grid;
+  grid-template-columns: 23fr 8fr 50px;
+  grid-column-gap: 20px;
+  margin-bottom: 4em;
+}
+
+.queryRoutesButton {
+  background-image: var(--search-icon-light);
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  background-position: 8px 8px;
+  padding: 12px;
+  height: 16px;
+  width: 16px;
+}
+
+.value {
+  font-size: 32px;
+}
+
+.memo {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 18em;
+}

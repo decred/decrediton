@@ -1,0 +1,5 @@
+.queryNode {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 3em 2em 3em;
+}
