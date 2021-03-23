@@ -60,7 +60,6 @@ module.exports = {
   },
   globals: {
     Uint8Array: true,
-    autobind: "readonly",
     React: "readonly",
     PropTypes: "readonly"
   }
