@@ -146,6 +146,8 @@ const lightTheme = {
   "main-dark-blue": "#091440",
   "small-button-shadow": "rgba(0, 0, 0, 0.12)",
   "small-button-bg": "#fff",
+  "small-button-disabled-bg": "#e6eaed",
+  "send-transaction-border": "var(--grey-3)",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border

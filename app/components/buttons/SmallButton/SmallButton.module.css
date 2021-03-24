@@ -13,3 +13,6 @@
 .button:hover {
   opacity: 0.85;
 }
+.button::disabled {
+  background-color: var(--small-button-disabled-bg) !important;
+}

@@ -4,7 +4,7 @@
   padding-right: 20px;
   flex-direction: column;
   width: 366px;
-  border-right: 1px solid var(--grey-3);
+  border-right: 1px solid var(--send-transaction-border);
 }
 .sendOutputContainer.plus {
   border-right: none;
@@ -38,8 +38,9 @@
   margin-top: 8px;
 }
 .add:disabled {
-  background-color: var(--grey-3) !important;
+  background-color: var(--small-button-disabled-bg) !important;
   cursor: default;
+  opacity: 0.5;
 }
 
 .selfAccount {
@@ -60,9 +61,10 @@
   background-image: var(--send-all-hover);
 }
 .sendAllButton:disabled {
-  background-color: var(--grey-3) !important;
+  background-color: var(--small-button-disabled-bg) !important;
   background-image: var(--send-all-disabled);
   cursor: default;
+  opacity: 0.5;
 }
 
 .cancelSendAll {

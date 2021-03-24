@@ -44,7 +44,10 @@ const getSendAllFundsIcon = ({
       <Tooltip
         contentClassName={styles.tooltipSendAll}
         content={
-          <T id="sendtab.sendAllTitle" m="Send all funds from selected account" />
+          <T
+            id="sendtab.sendAllTitle"
+            m="Send all funds from selected account"
+          />
         }>
         <SmallButton className={styles.sendAllButton} onClick={onShowSendAll} />
       </Tooltip>
@@ -80,7 +83,9 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
   !isSendSelf ? (
     <Tooltip
       contentClassName={styles.tooltipSendToSelf}
-      content={<T id="sendtab.sendSelfTitle" m="Send funds to another account" />}>
+      content={
+        <T id="sendtab.sendSelfTitle" m="Send funds to another account" />
+      }>
       <SmallButton className={styles.selfAccount} onClick={onShowSendSelf} />
     </Tooltip>
   ) : (

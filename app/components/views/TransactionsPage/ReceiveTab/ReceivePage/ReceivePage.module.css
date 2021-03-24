@@ -47,7 +47,7 @@
 }
 .receiveContentNestQR {
   margin-right: 10px;
-  background-color: var(--light-blue);
+  background-color: var(--background-address-copy-color);
   border-radius: 5px;
   vertical-align: middle;
   height: 40px;
