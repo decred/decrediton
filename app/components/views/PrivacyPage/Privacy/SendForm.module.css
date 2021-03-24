@@ -38,35 +38,6 @@
   float: right;
 }
 
-.sendOutputContainer {
-  display: grid;
-  grid-template-columns: max-content 276px minmax(max-content, 1fr) 276px;
-  grid-template-rows: repeat(2, 25px);
-  grid-column-gap: 10px;
-  grid-row-gap: 30px;
-  padding: 0 0 26px 0;
-  margin-top: 10px;
-  width: 700px;
-}
-.sendOutputContainer label {
-  text-align: right;
-  font-size: 13px;
-  line-height: 24px;
-}
-
-.sendOutputContainer .dcrInput {
-  width: 150px;
-}
-.sendAllFundsIcon {
-  grid-column: 2;
-  grid-row: 2;
-  margin-left: 170px;
-}
-.amountInputWrapper {
-  grid-column: 2;
-  grid-row: 2;
-  width: 160px;
-}
 .error {
   color: var(--error-text-color);
   position: absolute;
@@ -78,20 +49,7 @@
   display: flex;
   align-items: center;
 }
-@media screen and (max-width: 1179px) {
-  .sendOutputContainer {
-    grid-template-columns: max-content 240px minmax(max-content, 1fr) 240px;
-    padding: 7px 0 26px 0;
-    width: 594px;
-  }
-}
 @media screen and (max-width: 768px) {
-  .sendOutputContainer {
-    grid-template-columns: max-content 256px;
-    grid-template-rows: repeat(3, 25px);
-    padding: 7px 0 26px 0;
-    width: 315px;
-  }
   .isRow.sendArea {
     flex-direction: column;
     height: auto;
@@ -100,9 +58,6 @@
     width: 334px;
     position: relative;
     text-align: right;
-  }
-  .sendAllFundsIcon,
-  .amountInputWrapper {
-    grid-row: 3;
+    margin-top: 20px;
   }
 }

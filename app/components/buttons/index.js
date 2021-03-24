@@ -23,6 +23,7 @@ import CloseButton from "./CloseButton";
 import HelpLink from "./HelpLink/HelpLink";
 import InvisibleButton from "./InvisibleButton";
 import Button from "./Button/Button";
+import SmallButton from "./SmallButton";
 export {
   ModalButton,
   ToggleSwitch,
@@ -31,7 +32,8 @@ export {
   DangerButton,
   CloseButton,
   InvisibleButton,
-  Button
+  Button,
+  SmallButton
 };
 
 /***************************************************

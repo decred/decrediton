@@ -24,10 +24,9 @@ const getSendAllFundsIcon = ({
   isSendAll,
   onShowSendAll,
   onHideSendAll,
-  outputs,
-  extStyle
+  outputs
 }) => (
-  <div className={extStyle.sendAllFundsIcon}>
+  <div className={styles.sendAllFundsIcon}>
     {outputs.length > 1 ? (
       <Tooltip
         contentClassName={styles.tooltipSendAllDisabled}
@@ -146,14 +145,9 @@ const SendOutputRow = ({
   accountsType,
   onlySendSelfAllowed,
   receiveAccountsSelectDisabled,
-  extStyle,
   receiveAccount
 }) => (
-  <div
-    className={classNames(
-      extStyle.sendOutputContainer,
-      index > 0 && extStyle.plus
-    )}>
+  <div className={classNames(styles.sendOutputContainer)}>
     {index === 0 && (
       <>
         <label>
@@ -216,7 +210,7 @@ const SendOutputRow = ({
     <div
       className={classNames(
         styles.sendInputWrapper,
-        extStyle.amountInputWrapper
+        styles.amountInputWrapper
       )}>
       {isSendAll ? (
         <Balance
@@ -226,7 +220,7 @@ const SendOutputRow = ({
         />
       ) : (
         <DcrInput
-          className={classNames(extStyle.dcrInput)}
+          className={classNames(styles.dcrInput)}
           required={true}
           showErrors={error && error.amount}
           invalid={error && error.amount}
@@ -245,8 +239,7 @@ const SendOutputRow = ({
         isSendAll,
         onShowSendAll,
         onHideSendAll,
-        outputs,
-        extStyle
+        outputs
       })}
   </div>
 );

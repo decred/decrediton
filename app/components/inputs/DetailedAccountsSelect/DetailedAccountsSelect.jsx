@@ -42,10 +42,7 @@ const DetailedAccountsSelect = ({ selectClassName, ...props }) => {
     <div className={classNames(styles.value, styles.option)}>
       <div className={styles.name}>{option.name}</div>
       <div className={styles.spendable}>
-        <Balance
-          flat
-          amount={option.spendable}
-        />
+        <Balance flat amount={option.spendable} />
       </div>
     </div>
   );

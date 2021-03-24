@@ -3,7 +3,7 @@ import copy from "clipboard-copy";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, SmallButton } from "buttons";
 import QRCodeModal from "./QRCodeModal/QRCodeModal";
 import { classNames } from "pi-ui";
 import style from "./ReceivePage.module.css";
@@ -106,7 +106,7 @@ const ReceivePage = ({
               </div>
             </div>
           </div>
-          <div
+          <SmallButton
             className={style.receiveContentCopyButton}
             onClick={() => {
               copy(nextAddress);
@@ -114,7 +114,7 @@ const ReceivePage = ({
               showTooltip();
             }}
           />
-          <div
+          <SmallButton
             className={style.receiveContentQRButton}
             onClick={() => setModal(true)}
           />

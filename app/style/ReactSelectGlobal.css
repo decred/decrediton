@@ -219,33 +219,6 @@
   width: 10px;
 }
 
-.detailedAccountSelect .Select-arrow-zone {
-  vertical-align: top;
-}
-.detailedAccountSelect .Select-value-label {
-  display: block;
-  width: max-content;
-}
-.detailedAccountSelect .Select-placeholder,
-.detailedAccountSelect .Select-value {
-  width: max-content !important;
-  max-width: max-content !important;
-  position: relative !important;
-}
-.detailedAccountSelect .Select-multi-value-wrapper {
-  display: block;
-  width: max-content;
-  max-width: max-content;
-}
-.detailedAccountSelect .Select-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.detailedAccountSelect .Select-control {
-  height: 48px;
-}
-
 .Select-arrow {
   border-color: var(--stroke-color-default) transparent transparent;
   border-style: solid;
@@ -260,7 +233,7 @@
 .Select-control:hover:not(:disabled) {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
   color: var(--input-color-hovered);
-  border-bottom: 1px solid var(--input-bottom-border-hovered);
+  border-bottom: 1px solid var(--accent-blue);
 }
 
 .Select-control:hover:not(:disabled) .Select-arrow {
@@ -480,4 +453,46 @@
   to {
     -webkit-transform: rotate(1turn);
   }
+}
+
+.detailedAccountSelect .Select-arrow-zone {
+  vertical-align: top;
+}
+.detailedAccountSelect .Select-value-label {
+  display: block;
+  width: max-content;
+}
+.detailedAccountSelect .Select-placeholder,
+.detailedAccountSelect .Select-value {
+  width: max-content !important;
+  max-width: max-content !important;
+  position: relative !important;
+}
+.detailedAccountSelect .Select-multi-value-wrapper {
+  display: block;
+  width: max-content;
+  max-width: max-content;
+}
+.detailedAccountSelect .Select-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.detailedAccountSelect .Select-control {
+  height: 48px;
+  cursor: pointer;
+  border-bottom: none;
+}
+.detailedAccountSelect .Select-control:hover {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+.detailedAccountSelect .Select-menu-outer {
+  border: none !important;
+  border-top-color: var(--white-border);
+  border-bottom-color: none !important;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.16);
+  border-radius: 2px !important;
+  margin-top: -21px;
+  margin-left: 5px;
 }

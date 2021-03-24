@@ -52,6 +52,9 @@
     left: 25px;
     right: 20px;
   }
+  .tab a {
+    font-size: 13px;
+  }
 
   .tab {
     margin-right: 45px;

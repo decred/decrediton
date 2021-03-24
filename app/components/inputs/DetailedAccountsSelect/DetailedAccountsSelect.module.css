@@ -10,7 +10,7 @@
   justify-content: space-between;
   flex-direction: column;
   width: max-content;
-  max-width: 300px;
+  max-width: 250px;
 }
 .value.option {
   width: 100%;
@@ -64,4 +64,9 @@
 .balanceUnit {
   color: var(--main-dark-blue);
   font-size: 13px;
+}
+@media screen and (max-width: 768px) {
+  .value {
+    max-width: 235px;
+  }
 }

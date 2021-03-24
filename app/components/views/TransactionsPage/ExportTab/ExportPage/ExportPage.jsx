@@ -97,10 +97,7 @@ const ExportPage = ({
           :&nbsp;
           <span className={styles.exportInfoNotExpanded}>
             {selectedExport.fields
-              .map(
-                ({ name }) =>
-                  name.charAt(0).toUpperCase() + name.slice(1)
-              )
+              .map(({ name }) => name.charAt(0).toUpperCase() + name.slice(1))
               .join(", ")}
             .
           </span>

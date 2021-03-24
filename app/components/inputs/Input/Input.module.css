@@ -6,6 +6,7 @@
   font-family: var(--font-family-regular);
   font-size: 16px;
   color: var(--input-color-default);
+  padding-bottom: 2px;
 }
 .inputAndUnit.error {
   border-bottom: 1px var(--error-text-color) solid;
@@ -29,7 +30,7 @@
 }
 .inputAndUnit:hover:not(.disabled):not(.active):not(.error) {
   color: var(--input-color-hovered);
-  border-bottom: 1px var(--input-bottom-border-hovered) solid;
+  border-bottom: 1px var(--accent-blue) solid;
   opacity: 1;
 }
 .inputAndUnit.active:not(.disabled) {

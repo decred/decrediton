@@ -23,5 +23,7 @@
   .tabbedPageSubtitle {
     width: 355px;
     margin-left: 0;
+    font-size: 20px;
+    line-height: 25px;
   }
 }

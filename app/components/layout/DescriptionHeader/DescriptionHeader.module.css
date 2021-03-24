@@ -15,3 +15,8 @@
 .actionButton > .button {
   min-width: 76px;
 }
+@media screen and (max-width: 768px) {
+  .header {
+    display: none;
+  }
+}

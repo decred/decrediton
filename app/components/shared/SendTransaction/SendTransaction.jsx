@@ -2,7 +2,6 @@ import { FormattedMessage as T } from "react-intl";
 import { useSendTransaction, useOutputs } from "./hooks";
 import { useState, useEffect, useCallback } from "react";
 import { useMountEffect } from "hooks";
-import SendOutputRow from "./SendOutputRow/SendOutputRow";
 import { spring, presets } from "react-motion";
 import { baseOutput } from "./helpers";
 import { usePrevious } from "hooks";
@@ -16,7 +15,8 @@ const SendTransaction = ({
   sendButtonLabel,
   receiveAccount,
   spendingAccount,
-  filterFromAccounts
+  filterFromAccounts,
+  SendOutputRow
 }) => {
   const {
     defaultSpendingAccount,
@@ -237,7 +237,6 @@ const SendTransaction = ({
             accountsType,
             onlySendSelfAllowed,
             receiveAccountsSelectDisabled,
-            extStyle: styles,
             receiveAccount
           }}
         />

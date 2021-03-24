@@ -136,13 +136,16 @@ const lightTheme = {
   "privacy-mixer-status-color": "#0C1E3E",
   "mixer-settings-label": "#0C1E3E",
   "mixer-settings-disabled": "#8997A5",
-  "input-bottom-border-hovered": "#2970FF",
+  "accent-blue": "#2970FF",
   "grey-2": "#F3F5F6",
+  "grey-3": "#E6EAED",
   "grey-5": "#8997A5",
   "grey-6": "#596D81",
   "grey-7": "#3D5873",
   "light-blue": "#D4F0FD",
   "main-dark-blue": "#091440",
+  "small-button-shadow": "rgba(0, 0, 0, 0.12)",
+  "small-button-bg": "#fff",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border

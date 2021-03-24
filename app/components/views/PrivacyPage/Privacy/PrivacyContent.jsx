@@ -13,6 +13,7 @@ import { SendFromUnmixedAccountModal } from "modals";
 import style from "./Privacy.module.css";
 import styles from "./SendForm.module.css";
 import { useService } from "hooks";
+import SendOutputRow from "./SendOutputRow";
 
 const PrivacyContent = ({
   accountMixerError,
@@ -156,6 +157,7 @@ const PrivacyContent = ({
             receiveAccount={changeAccount}
             spendingAccount={defaultSpendingAccountDisregardMixedAccount}
             filterFromAccounts={[changeAccount]}
+            SendOutputRow={SendOutputRow}
           />
         </div>
       )}

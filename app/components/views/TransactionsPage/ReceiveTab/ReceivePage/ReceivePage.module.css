@@ -26,7 +26,9 @@
 .receiveSelectAmountInput {
   display: flex;
 }
-
+.receiveSelectAccountSelect {
+  align-items: flex-end;
+}
 .receiveSelectAccountSelect a {
   margin-left: 10px;
 }
@@ -125,28 +127,12 @@
 }
 
 .receiveContentCopyButton {
-  background-repeat: no-repeat;
-  background-position: center;
   background-image: var(--copy-to-clipboard-icon);
-  background-size: 14px 14px;
-  height: 24px;
-  width: 24px;
-  box-shadow: 0px 3px 5px var(--icons-shadow);
-  border-radius: 5px;
-  cursor: pointer;
   margin-right: 10px;
 }
 
 .receiveContentQRButton {
-  background-repeat: no-repeat;
-  background-position: center;
   background-image: var(--view-qr-icon);
-  background-size: 14px 14px;
-  height: 24px;
-  width: 24px;
-  box-shadow: 0px 3px 5px var(--icons-shadow);
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .receiveContentShareButton {
