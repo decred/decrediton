@@ -28,7 +28,7 @@ export const getStartedMachine = Machine({
         SHOW_TREZOR_CONFIG: "trezorConfig",
         SHOW_RELEASE_NOTES: "releaseNotes",
         SHOW_CREATE_WALLET: "creatingWallet",
-        SHOW_SETTING_UP_WALLET: "settingUpWallet",
+        SHOW_SETTING_UP_WALLET: "settingUpWallet"
       },
       states: {
         preStart: {
@@ -319,8 +319,8 @@ export const getStartedMachine = Machine({
       states: {
         settingUpWallet: {
           entry: assign({
-            settingUpWalletRef: (ctx, e) => {
-              console.log(ctx)
+            settingUpWalletRef: (ctx) => {
+              console.log(ctx);
               let spawnedMachine;
               // spawn a new actor machine so we can comunicate with the
               // getStartedMachine.
@@ -330,8 +330,8 @@ export const getStartedMachine = Machine({
                 spawnedMachine = spawn(
                   SetupWalletConfigMachine.withContext({
                     selectedWallet: ctx.selectedWallet,
-                    isCreateNewWallet: ctx.isCreateNewWallet,
-                    
+                    isCreateNewWallet: ctx.isCreateNewWallet
+
                     // walletMasterPubKey: ctx.walletMasterPubKey,
                     // isTrezor: ctx.isTrezor
                   })
@@ -383,6 +383,6 @@ export const getStartedMachine = Machine({
         BACK: "startMachine.hist",
         SHOW_SETTINGS: "settings"
       }
-    },
+    }
   }
 });

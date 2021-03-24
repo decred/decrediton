@@ -1,61 +1,41 @@
 import { injectIntl } from "react-intl";
 import { withRouter } from "react-router";
 import { createElement as h } from "react";
-import { DecredLoading } from "indicators";
 import { useState, useEffect, useCallback } from "react";
 import { useService } from "@xstate/react";
-import { sendParent } from "xstate";
 import SetupWalletPage from "./SetupWalletPage";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
-import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
-import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
+// import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
+// import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 import { useDaemonStartup, useAccounts } from "hooks";
 import { IMMATURE, LIVE, UNMINED } from "constants/Decrediton";
 
-const SetupWallet = ({ settingUpWalletRef, isTestNet }) => {
-  // const {
-  //   decodeSeed,
-  //   cancelCreateWallet,
-  //   generateSeed,
-  //   createWatchOnlyWalletRequest,
-  //   createWalletRequest,
-  //   isTestNet
-  // } = useCreateWallet();
+const SetupWallet = ({ settingUpWalletRef }) => {
   const {
     getCoinjoinOutputspByAcct,
     stakeTransactions,
-    goToHome  
+    onProcessManagedTickets,
+    goToHome
   } = useDaemonStartup();
   const { mixedAccount } = useAccounts();
   const [current, send] = useService(settingUpWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
-  const [isValid, setIsValid] = useState(false);
-
-  const sendEvent = useCallback(
-    (data) => {
-      const { type, payload } = data;
-      send({ type, payload });
-    },
-    [send]
-  );
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
   }, [send]);
 
-  const previousStep = useCallback(() => {
-    send({ type: "BACK", isTestNet });
-  }, [send, isTestNet]);
-
   const getStateComponent = useCallback(async () => {
-    const { error } = current.context;
-    let component;
+    const { isCreateNewWallet, passPhrase, selectedWallet } = current.context;
+    let { isWatchingOnly, isTrezor } = selectedWallet && selectedWallet;
+
+    let component, hasLive, hasSoloTickets;
 
     switch (current.value) {
       case "settingMixedAccount":
         getCoinjoinOutputspByAcct()
           .then((outputsByAcctMap) => {
-            console.log(outputsByAcctMap)
+            console.log(outputsByAcctMap);
             const hasMixedOutputs =
               outputsByAcctMap &&
               outputsByAcctMap.reduce(
@@ -65,11 +45,11 @@ const SetupWallet = ({ settingUpWalletRef, isTestNet }) => {
             if (!hasMixedOutputs || mixedAccount) {
               sendContinue();
             } else {
-              PageComponent = h(SettingMixedAccount, {
+              const PageComponent = h(SettingMixedAccount, {
                 cancel: sendContinue,
                 sendContinue
               });
-              setPageComponent(PageComponent);
+              setStateComponent(PageComponent);
             }
           })
           .catch((err) => console.log(err));
@@ -82,17 +62,11 @@ const SetupWallet = ({ settingUpWalletRef, isTestNet }) => {
       // is this needed?
       // state for recoverying tickets if creating new wallet.
       case "syncVSPTickets":
-        const { isCreateNewWallet, passPhrase, selectedWallet } = current.context;
-        console.log(isCreateNewWallet)
-        console.log(passPhrase)
-        console.log(selectedWallet)
         // isCreateNewWallet needs to be false for indicating a wallet
         // restore. Can be other cases if it is null or undefined.
-        let { isWatchingOnly, isTrezor } = selectedWallet;
-        const val = selectedWallet.value;
-        if (val) {
-          if (!isWatchingOnly) isWatchingOnly = val.isWatchingOnly;
-          if (!isTrezor) isTrezor = val.isTrezor;
+        if (selectedWallet.value) {
+          if (!isWatchingOnly) isWatchingOnly = selectedWallet.value.isWatchingOnly;
+          if (!isTrezor) isTrezor = selectedWallet.value.isTrezor;
         }
         // Watching only wallets can not sync tickets as they need signing.
         if (isWatchingOnly || isTrezor) {
@@ -105,10 +79,10 @@ const SetupWallet = ({ settingUpWalletRef, isTestNet }) => {
           });
         }
 
-        sendContinue();        
+        sendContinue();
         break;
       case "processingManagedTickets":
-        const hasLive = Object.keys(stakeTransactions).some((hash) => {
+        hasLive = Object.keys(stakeTransactions).some((hash) => {
           const tx = stakeTransactions[hash];
           // check if the wallet has at least one vsp live ticket.
           if (
@@ -131,7 +105,7 @@ const SetupWallet = ({ settingUpWalletRef, isTestNet }) => {
         }
         break;
       case "processingUnmanagedTickets":
-        let hasSoloTickets = false;
+        hasSoloTickets = false;
         Object.keys(stakeTransactions).forEach((hash) => {
           const tx = stakeTransactions[hash];
           // check if it is a spendable ticket.
@@ -161,18 +135,23 @@ const SetupWallet = ({ settingUpWalletRef, isTestNet }) => {
         break;
     }
 
-    console.log(component)
+    console.log(component);
     return setStateComponent(component);
   }, [
-    previousStep,
+    getCoinjoinOutputspByAcct,
+    goToHome,
+    mixedAccount,
+    onProcessManagedTickets,
+    send,
+    stakeTransactions,
     current.context,
     current.value,
     sendContinue
   ]);
 
   useEffect(() => {
-    getStateComponent()
-  }, [current])
+    getStateComponent();
+  }, [current, getStateComponent]);
   // useEffect(() => {
   //   const { isNew, walletMasterPubKey, mnemonic } = current.context;
   //   switch (current.value) {

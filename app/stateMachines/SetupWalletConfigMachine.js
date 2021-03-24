@@ -1,4 +1,4 @@
-import { Machine, assign, sendParent } from "xstate";
+import { Machine, assign } from "xstate";
 
 // Hierarchical state machine called inside getStartedStateMachine.
 // This is done this way so we can exchange passPhrase between them without

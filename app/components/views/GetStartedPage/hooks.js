@@ -18,7 +18,7 @@ import {
   OPENWALLET_INPUTPRIVPASS
 } from "actions/WalletLoaderActions";
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useDaemonStartup, useAccounts } from "hooks";
+import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
@@ -48,19 +48,12 @@ export const useGetStarted = () => {
     onStartWallet,
     syncDaemon,
     onOpenWallet,
-    goToHome,
     onShowTutorial,
     appVersion,
     syncAttemptRequest,
     onGetDcrdLogs,
-    daemonWarning,
-    onProcessUnmanagedTickets,
-    onProcessManagedTickets,
-    stakeTransactions,
-    isProcessingManaged,
-    isProcessingUnmanaged
+    daemonWarning
   } = useDaemonStartup();
-  const { mixedAccount } = useAccounts();
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
   const [state, send] = useMachine(getStartedMachine, {
@@ -227,7 +220,7 @@ export const useGetStarted = () => {
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
         }
-      },
+      }
     }
   });
   const getError = useCallback((serviceError) => {
@@ -481,7 +474,6 @@ export const useGetStarted = () => {
             break;
         }
         PageComponent = h(GetStartedMachinePage, {
-          onShowSettingUpWallet,
           submitRemoteCredentials,
           submitAppdata,
           error,
@@ -520,11 +512,11 @@ export const useGetStarted = () => {
           onSendBack
         });
       }
-      console.log(key)
+      console.log(key);
       if (key === "settingUpWallet") {
         PageComponent = h(SettingUpWalletMachine, {
           settingUpWalletRef
-        })
+        });
       }
       if (key === "settingMixedAccount") {
         // Display a message while checking for coinjoin outputs and go to set
@@ -562,63 +554,10 @@ export const useGetStarted = () => {
           StateComponent: updatedComponent ? updatedComponent : component
         });
       }
-      if (key === "processingUnmanagedTickets") {
-        PageComponent = h(ProcessUnmanagedTickets, {
-          error,
-          send,
-          onSendContinue,
-          onSendError,
-          onProcessTickets: onProcessUnmanagedTickets,
-          isProcessingUnmanaged: isProcessingUnmanaged,
-          cancel: onSendBack,
-          title: (
-            <T
-              id="getstarted.processUnmangedTickets.title"
-              m="Process Unmanaged Tickets"
-            />
-          ),
-          description: (
-            <T
-              id="getstarted.processUnmangedTickets.description"
-              m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
-              to vote and they are not linked with a vsp, they may miss, if you are not
-              properly dealing with solo vote.`}
-            />
-          )
-        });
-      }
-      if (key === "processingManagedTickets") {
-        PageComponent = h(ProcessManagedTickets, {
-          error,
-          onSendContinue,
-          onSendError,
-          send,
-          cancel: onSendBack,
-          onProcessTickets: onProcessManagedTickets,
-          title: (
-            <T
-              id="getstarted.processManagedTickets.title"
-              m="Process Managed Tickets"
-            />
-          ),
-          isProcessingManaged: isProcessingManaged,
-          noVspSelection: true,
-          description: (
-            <T
-              id="getstarted.processManagedTickets.description"
-              m={`Your wallet appears to have live tickets. Processing managed
-            tickets confirms with the VSPs that all of your submitted tickets
-            are currently known and paid for by the VSPs. If you've already
-            confirmed your tickets then you may skip this step.`}
-            />
-          )
-        });
-      }
 
       setPageComponent(PageComponent);
     },
     [
-      mixedAccount,
       state,
       isTestNet,
       onSendBack,
@@ -639,11 +578,7 @@ export const useGetStarted = () => {
       onSendSetPassphrase,
       error,
       daemonWarning,
-      onProcessUnmanagedTickets,
-      onProcessManagedTickets,
-      send,
-      isProcessingManaged,
-      isProcessingUnmanaged
+      onShowSettingUpWallet
     ]
   );
 
