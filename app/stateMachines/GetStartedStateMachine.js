@@ -1,5 +1,6 @@
 import { Machine, assign, spawn } from "xstate";
 import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
+import { SetupWalletConfigMachine } from "stateMachines/SetupWalletConfigMachine";
 
 export const getStartedMachine = Machine({
   id: "getStarted",
@@ -8,6 +9,7 @@ export const getStartedMachine = Machine({
     // createWalletRef represents the a ref to the createWallet state
     // machine.
     createWalletRef: null,
+    settingUpWalletRef: null,
     credentials: {},
     selectedWallet: null,
     appdata: null,
@@ -26,10 +28,7 @@ export const getStartedMachine = Machine({
         SHOW_TREZOR_CONFIG: "trezorConfig",
         SHOW_RELEASE_NOTES: "releaseNotes",
         SHOW_CREATE_WALLET: "creatingWallet",
-        SET_MIXED_ACCOUNT: {
-          target: "settingMixedAccount"
-        },
-        GO_TO_HOME_VIEW: "goToHomeView"
+        SHOW_SETTING_UP_WALLET: "settingUpWallet",
       },
       states: {
         preStart: {
@@ -315,74 +314,33 @@ export const getStartedMachine = Machine({
     // make a machine for final configurations, similar to how we create
     // the create wallet machine, so we can set mix accounts sync vsp and
     // any other config which may come.
-    settingMixedAccount: {
-      onEntry: "isAtSettingAccount",
-      initial: "settingMixedAccount",
+    settingUpWallet: {
+      initial: "settingUpWallet",
       states: {
-        settingMixedAccount: {}
-      },
-      on: {
-        CONTINUE: "syncVSPTickets"
-      }
-    },
-    syncVSPTickets: {
-      onEntry: "isAtSyncingVSPTickets",
-      initial: "syncingVSPTickets",
-      states: {
-        syncingVSPTickets: {}
-      },
-      on: {
-        FINISH: "goToHomeView",
-        CONTINUE: "processingManagedTickets"
-      }
-    },
-    processingManagedTickets: {
-      onEntry: "isAtProcessingManagedTickets",
-      initial: "processingManagedTickets",
-      states: {
-        processingManagedTickets: {}
-      },
-      on: {
-        BACK: "processingUnmanagedTickets",
-        CONTINUE: "processingUnmanagedTickets",
-        ERROR: {
-          target: "processingManagedTickets",
-          actions: assign({
-            error: (context, event) => event.error && event.error
-          })
-        }
-      }
-    },
-    processingUnmanagedTickets: {
-      onEntry: "isAtProcessingUnmanagedTickets",
-      initial: "processingUnmanagedTickets",
-      states: {
-        processingUnmanagedTickets: {}
-      },
-      on: {
-        CONTINUE: "goToHomeView",
-        BACK: "goToHomeView",
-        ERROR: {
-          target: "processingUnmanagedTickets",
-          actions: assign({
-            error: (context, event) => event.error && event.error
-          })
-        }
-      }
-    },
-    isLoadingConfig: {
-      onEntry: "isAtLoadingConfig",
-      initial: "isLoadingConfig",
-      states: {
-        isLoadingConfig: {}
-      },
-      on: {
-        FINISH: "goToHomeView",
-        CONTINUE: "processingUnmanagedTickets",
-        ERROR: {
-          target: "processingManagedTickets",
-          actions: assign({
-            error: (context, event) => event.error && event.error
+        settingUpWallet: {
+          entry: assign({
+            settingUpWalletRef: (ctx, e) => {
+              console.log(ctx)
+              let spawnedMachine;
+              // spawn a new actor machine so we can comunicate with the
+              // getStartedMachine.
+
+              // source: https://xstate.js.org/docs/guides/actors.html#spawning-machines
+              try {
+                spawnedMachine = spawn(
+                  SetupWalletConfigMachine.withContext({
+                    selectedWallet: ctx.selectedWallet,
+                    isCreateNewWallet: ctx.isCreateNewWallet,
+                    
+                    // walletMasterPubKey: ctx.walletMasterPubKey,
+                    // isTrezor: ctx.isTrezor
+                  })
+                );
+              } catch (e) {
+                console.log(e);
+              }
+              return spawnedMachine;
+            }
           })
         }
       }
@@ -426,11 +384,5 @@ export const getStartedMachine = Machine({
         SHOW_SETTINGS: "settings"
       }
     },
-    // goToHomeView goes to home view. We do that, instead of going to a final
-    // state, because the machine can still be called, like when a refresh
-    // happens in dev mode.
-    goToHomeView: {
-      onEntry: "isAtFinishMachine"
-    }
   }
 });
