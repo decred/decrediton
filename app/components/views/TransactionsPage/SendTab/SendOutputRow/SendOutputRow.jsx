@@ -13,11 +13,11 @@ import styles from "./SendOutputRow.module.css";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {
-    id: "send.recipientsAddrPlaceholder",
+    id: "sendtab.recipientsAddrPlaceholder",
     defaultMessage: "Recipient’s DCR Address"
   },
   amountPlaceholder: {
-    id: "send.amountPlaceholder",
+    id: "sendtab.amountPlaceholder",
     defaultMessage: "Amount"
   }
 });
@@ -34,7 +34,7 @@ const getSendAllFundsIcon = ({
         contentClassName={styles.tooltipSendAllDisabled}
         content={
           <T
-            id="send.sendAllTitle.disabled"
+            id="sendtab.sendAllTitle.disabled"
             m="Send all funds from selected account - Disabled"
           />
         }>
@@ -44,7 +44,7 @@ const getSendAllFundsIcon = ({
       <Tooltip
         contentClassName={styles.tooltipSendAll}
         content={
-          <T id="send.sendAllTitle" m="Send all funds from selected account" />
+          <T id="sendtab.sendAllTitle" m="Send all funds from selected account" />
         }>
         <SmallButton className={styles.sendAllButton} onClick={onShowSendAll} />
       </Tooltip>
@@ -52,7 +52,7 @@ const getSendAllFundsIcon = ({
       <Tooltip
         contentClassName={styles.tooltipSendAllDisabled}
         content={
-          <T id="send.cancelSendAllTitle" m="Cancel sending all funds" />
+          <T id="sendtab.cancelSendAllTitle" m="Cancel sending all funds" />
         }>
         <SmallButton className={styles.cancelSendAll} onClick={onHideSendAll} />
       </Tooltip>
@@ -80,14 +80,14 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
   !isSendSelf ? (
     <Tooltip
       contentClassName={styles.tooltipSendToSelf}
-      content={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
+      content={<T id="sendtab.sendSelfTitle" m="Send funds to another account" />}>
       <SmallButton className={styles.selfAccount} onClick={onShowSendSelf} />
     </Tooltip>
   ) : (
     <Tooltip
       contentClassName={styles.tooltipSendAllDisabled}
       content={
-        <T id="send.sendOthersTitle" m="Send funds to another wallet" />
+        <T id="sendtab.sendOthersTitle" m="Send funds to another wallet" />
       }>
       <SmallButton
         className={styles.selfAccountCancel}
@@ -176,7 +176,7 @@ const SendOutputRow = ({
       <div className={styles.amountContainer}>
         <div className={styles.sendInputWrapper}>
           <label htmlFor="amountInput">
-            <T id="send.amount" m="Amount" />
+            <T id="sendtab.amount" m="Amount" />
           </label>
           {isSendAll ? (
             <Balance
@@ -209,7 +209,7 @@ const SendOutputRow = ({
             percentOfBalance > 100 && styles.error
           )}>
           <T
-            id="send.percentOfBalance"
+            id="sendtab.percentOfBalance"
             m="{percent}% of Account Balance"
             values={{
               percent: percentOfBalance > 100 ? ">100" : percentOfBalance
@@ -221,7 +221,7 @@ const SendOutputRow = ({
       <div className={styles.destinationContainer}>
         <div className={classNames(styles.sendInputWrapper, styles.address)}>
           <label htmlFor="addressInput">
-            <T id="send.sendTo" m="Send to" />
+            <T id="sendtab.sendTo" m="Send to" />
           </label>
           {isSendSelf ? (
             <ReceiveAccountsSelect
