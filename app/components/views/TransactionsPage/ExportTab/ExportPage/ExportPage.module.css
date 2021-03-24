@@ -54,6 +54,26 @@
   margin-bottom: 1em;
 }
 
+.pathBrowseInput {
+  width: 100%;
+  font-size: 16px;
+  padding-left: 0;
+  padding-bottom: 2px;
+}
+.pathBrowseInput:hover {
+  border-bottom: 1px solid var(--accent-blue);
+}
+.pathBrowseInput hover:not(.disabled):not(.active):not(.error) {
+  border-bottom: 1px var(--accent-blue) solid;
+}
+.pathBrowseInput input {
+  font-size: 16px;
+  line-height: 16px;
+}
+.pathBrowseInput input::placeholder {
+  font-size: 16px;
+}
+
 .modal {
   width: 347px !important;
 }

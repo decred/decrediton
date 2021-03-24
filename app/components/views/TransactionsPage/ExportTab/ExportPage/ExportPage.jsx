@@ -62,7 +62,13 @@ const ExportPage = ({
       }
     />
     <div className={styles.exportArea}>
-      <div className={styles.exportAreaLeft}>
+      {
+        // `selectWithBigFont` className is
+        // temp solution to skinning from ReactSelectGlobal.css.
+        // When react-select will be replaced by the `pi-ui` component,
+        // this className can be deleted.
+      }
+      <div className={classNames(styles.exportAreaLeft, "selectWithBigFont")}>
         <label>
           <T id="export.select" m="Export Type" />
           <Select
@@ -81,6 +87,7 @@ const ExportPage = ({
           <PathBrowseInput
             save
             type="file"
+            className={styles.pathBrowseInput}
             placeholder={intl.formatMessage(messages.destinationPlaceholder)}
             value={destinationFile}
             filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}

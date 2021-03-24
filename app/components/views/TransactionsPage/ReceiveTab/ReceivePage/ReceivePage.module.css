@@ -41,6 +41,22 @@
   width: 246px;
 }
 
+.requestedAmountInput {
+  width: 100%;
+  font-size: 16px;
+  padding-left: 0;
+  padding-bottom: 2px;
+}
+.requestedAmountInput hover:not(.disabled):not(.active):not(.error) {
+  border-bottom: 1px var(--accent-blue) solid;
+}
+.requestedAmountInput input {
+  font-size: 16px;
+  line-height: 16px;
+}
+.requestedAmountInput input::placeholder {
+  font-size: 16px;
+}
 .receiveRequestedAmount {
   display: flex;
   margin-bottom: 20px;

@@ -15,5 +15,5 @@
   width: 100%;
 }
 .pathInput:hover {
-  border-bottom: 1px solid var(--accent-blue);
+  opacity: 0.7;
 }

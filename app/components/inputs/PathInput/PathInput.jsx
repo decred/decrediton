@@ -1,11 +1,12 @@
 import Input from "../Input/Input";
 import style from "./PathInput.module.css";
+import { classNames } from "pi-ui";
 
-const PathInput = ({ onChange, ...props }) => (
+const PathInput = ({ onChange, className, ...props }) => (
   <Input
     {...{
       ...props,
-      className: style.pathInput,
+      className: classNames(style.pathInput, className),
       onChange: (e) => onChange(e.target.value)
     }}
   />

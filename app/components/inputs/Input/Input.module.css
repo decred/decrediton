@@ -4,9 +4,9 @@
   align-items: center;
   border-bottom: 1px var(--select-stroke-color) solid;
   font-family: var(--font-family-regular);
-  font-size: 16px;
+  font-size: 13px;
   color: var(--input-color-default);
-  padding-bottom: 2px;
+  padding-left: 5px;
 }
 .inputAndUnit.error {
   border-bottom: 1px var(--error-text-color) solid;
@@ -30,7 +30,7 @@
 }
 .inputAndUnit:hover:not(.disabled):not(.active):not(.error) {
   color: var(--input-color-hovered);
-  border-bottom: 1px var(--accent-blue) solid;
+  border-bottom: 1px var(--stroke-color-hovered) solid;
   opacity: 1;
 }
 .inputAndUnit.active:not(.disabled) {
@@ -48,12 +48,12 @@
   outline: none;
   color: var(--input-color-default);
   width: calc(100% - 20px);
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 13px;
+  line-height: 13px;
 }
 .inputAndUnit input::placeholder {
   color: var(--disabled-color);
-  font-size: 16px;
+  font-size: 13px;
   line-height: 17px;
 }
 .inputErrorsArea {

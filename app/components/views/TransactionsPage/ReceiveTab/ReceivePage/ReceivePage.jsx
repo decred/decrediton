@@ -47,10 +47,19 @@ const ReceivePage = ({
             <label htmlFor="receiveAccountSelect">
               <T id="receive.accountLabel" m="This address is for" />
             </label>
+            {
+              // `selectWithBigFont` className is
+              // temp solution to skinning from ReactSelectGlobal.css.
+              // When react-select will be replaced by the `pi-ui` component,
+              // this className can be deleted.
+            }
             <ReceiveAccountsSelect
               id="receiveAccountSelect"
               showAccountsButton
-              className={style.receiveSelectAccountSelect}
+              className={classNames(
+                style.receiveSelectAccountSelect,
+                "selectWithBigFont"
+              )}
               selectClassName={style.receiveSelectAccountSelectInput}
             />
           </div>

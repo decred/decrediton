@@ -47,13 +47,13 @@ const DetailedAccountsSelect = ({ selectClassName, ...props }) => {
     </div>
   );
 
-  // `detailedAccountSelect` className is a temp solution to
-  // skinning from ReactSelectGlobal.css. When react-select
-  // will be replaced by the `pi-ui` component, this className
-  // can be deleted.
+  // `detailedAccountSelect` and `selectWithBigFont` classNames are
+  // temp solution to skinning from ReactSelectGlobal.css.
+  // When react-select will be replaced by the `pi-ui` component,
+  // this className can be deleted.
   return (
     <AccountsSelect
-      className="detailedAccountSelect"
+      className={classNames("detailedAccountSelect", "selectWithBigFont")}
       valueRenderer={valueRenderer}
       optionRenderer={optionRenderer}
       selectClassName={classNames(styles.select, selectClassName)}

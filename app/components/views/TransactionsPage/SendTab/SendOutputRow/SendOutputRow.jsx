@@ -229,8 +229,13 @@ const SendOutputRow = ({
             <T id="sendtab.sendTo" m="Send to" />
           </label>
           {isSendSelf ? (
+            // `selectWithBigFont` className is
+            // temp solution to skinning from ReactSelectGlobal.css.
+            // When react-select will be replaced by the `pi-ui` component,
+            // this className can be deleted.
             <ReceiveAccountsSelect
               id="addressInput"
+              className="selectWithBigFont"
               selectClassName={styles.receiveAccountSelect}
               disabled={receiveAccountsSelectDisabled}
               getAddressForSelected={true}
