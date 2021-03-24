@@ -42,6 +42,12 @@ const config = merge(baseConfig, {
     })
   ],
 
+  node: {
+    // Trezor-connect currently fails without this.
+    __dirname: true
+  },
+
+
   optimization: {
     minimizer: [
       new TerserPlugin({

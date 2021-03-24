@@ -40,6 +40,11 @@ export default merge(baseConfig, {
     }
   },
 
+  node: {
+    // Trezor-connect currently fails without this.
+    __dirname: true
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
 

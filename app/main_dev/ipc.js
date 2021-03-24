@@ -18,9 +18,9 @@ import {
 } from "./launch";
 import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
-import { initTransport } from "actions/TrezorActions.js";
-import * as connect from "connect";
-import { rawToHex } from "helpers";
+//import { initTransport } from "actions/TrezorActions.js";
+//import * as connect from "connect";
+//import { rawToHex } from "helpers";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -149,6 +149,7 @@ export const removeWallet = (testnet, walletPath) => {
 // device and update it with the firmware at path. It returns an error string
 // in case of error and whether the update process was started at all.
 export const updateTrezorFirmware = async (firmwarePath, model) => {
+  /*
   let started = false;
   let completed = false;
   const rawFirmware = fs.readFileSync(firmwarePath);
@@ -195,6 +196,7 @@ export const updateTrezorFirmware = async (firmwarePath, model) => {
   } finally {
     session = null;
   }
+  */
 };
 
 export const startWallet = (

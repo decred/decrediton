@@ -97,6 +97,23 @@ export const installSessionHandlers = (mainLogger) => {
       }
     }
   );
+
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    const newHeaders = { ...details.responseHeaders };
+
+    if (
+      process.env.NODE_ENV === "development" &&
+      allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] &&
+      /^http:\/\/127.0.0.1:21325\//.test(details.url)
+    ) {
+      // For development (when accessing via the HMR server) we need to overwrite
+      // the origin, otherwise electron fails to contact trezor bridge due to
+      // CORS violation.
+      newHeaders["Access-Control-Allow-Origin"] = "http://localhost:3000";
+    }
+
+    callback({ responseHeaders: newHeaders });
+  });
 };
 
 const addAllowedURL = (url) => {

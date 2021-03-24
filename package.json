@@ -297,7 +297,8 @@
     "timezone-mock": "^1.0.12",
     "winston": "^2.3.1",
     "ws": "^7.4.4",
-    "xstate": "^4.10.0"
+    "xstate": "^4.10.0",
+    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#093a27dd6b0309351a2e53c705fe4710becd0368"
   },
   "optionalDependencies": {
     "google-proto-files": "^1.1.2",
