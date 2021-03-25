@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { IntlProvider } from "react-intl";
 import { defaultFormats } from "i18n/locales";
 import { Redirect, Route, Switch } from "react-router-dom";
@@ -44,6 +44,8 @@ const App = () => {
   } = useApp();
 
   const [isWaiting, setIsWaiting] = useState(false);
+  const [stateCanClose, setCanClose] = useState(canClose);
+  const [stateModalVisible, setModalVisible] = useState(modalVisible);
 
   const onClick = (event) => {
     const target = event.target;
@@ -88,6 +90,34 @@ const App = () => {
     ipcRenderer.send("app-reload-ui");
   };
 
+  const setCanCloseCheck = useCallback(
+    (canClose) => {
+      ipcRenderer.removeAllListeners("check-can-close");
+      ipcRenderer.on("check-can-close", () => {
+        if (canClose) {
+          shutdownApp();
+        } else {
+          log("warning", "A process is still running, preventing shutdown");
+          showCantCloseModal();
+        }
+      });
+    },
+    [shutdownApp, showCantCloseModal]
+  );
+
+  const setModalVisibleCheck = useCallback(
+    (modalVisible) => {
+      ipcRenderer.removeAllListeners("show-about-modal");
+      ipcRenderer.on("show-about-modal", () => {
+        // Ignore click if a modal is already shown
+        if (modalVisible == false) {
+          showAboutModalMacOS();
+        }
+      });
+    },
+    [showAboutModalMacOS]
+  );
+
   useMountEffect(() => {
     window.addEventListener("click", onClick);
     window.addEventListener("auxclick", onAuxClick);
@@ -95,24 +125,26 @@ const App = () => {
     updateWindowDimensions();
     decreditonInit();
     listenForAppReloadRequest(onReloadRequested);
-
-    ipcRenderer.on("show-about-modal", () => {
-      // Ignore click if a modal is already shown
-      if (modalVisible == false) {
-        showAboutModalMacOS();
-      }
-    });
-    ipcRenderer.on("check-can-close", () => {
-      if (canClose) {
-        shutdownApp();
-      } else {
-        log("warning", "A process is still running, preventing shutdown");
-        showCantCloseModal();
-      }
-    });
-
+    setCanCloseCheck(stateCanClose);
+    setModalVisibleCheck(stateModalVisible);
     log("info", "Main app container mounted");
   });
+
+  // Updates can close check if given canClose value updated.
+  useEffect(() => {
+    if (canClose !== stateCanClose) {
+      setCanCloseCheck(canClose);
+      setCanClose(canClose);
+    }
+  }, [canClose, stateCanClose, setCanCloseCheck, setCanClose, shutdownApp]);
+
+  // Updates modal visible check if given modalVisible updated.
+  useEffect(() => {
+    if (modalVisible !== stateModalVisible) {
+      setModalVisibleCheck(modalVisible);
+      setModalVisible(modalVisible);
+    }
+  }, [modalVisible, stateModalVisible, setModalVisibleCheck, setModalVisible]);
 
   return (
     <IntlProvider
