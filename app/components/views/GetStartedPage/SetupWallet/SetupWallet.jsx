@@ -27,19 +27,19 @@ const SetupWallet = ({ settingUpWalletRef }) => {
 
   const previousState = usePrevious(current);
 
-  const sendContinue = () => {
+  const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
-  };
+  }, [send]);
 
-  const onSendError = (error) => {
+  const onSendError = useCallback((error) => {
     send({ type: "ERROR", error });
-  };
+  }, [send]);
 
-  const onSendBack = () => {
+  const onSendBack = useCallback(() => {
     send({ type: "BACK" });
-  }
+  }, [send]);
 
-  const getStateComponent = useCallback(async () => {
+  const getStateComponent = useCallback(() => {
     const { error } = current.context;
 
     let component, hasLive, hasSoloTickets;
@@ -178,7 +178,13 @@ const SetupWallet = ({ settingUpWalletRef }) => {
     stakeTransactions,
     current.context,
     current.value,
-    sendContinue
+    sendContinue,
+    isProcessingManaged,
+    isProcessingUnmanaged,
+    onProcessUnmanagedTickets,
+    onSendBack,
+    onSendError,
+    previousState
   ]);
 
   useEffect(() => {

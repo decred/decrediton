@@ -223,7 +223,6 @@ export const useGetStarted = () => {
       }
     }
   });
-
   const getError = useCallback((serviceError) => {
     if (!serviceError) return;
     // We can return errors in the form of react component, which are objects.
