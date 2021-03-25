@@ -55,7 +55,7 @@
   background-color: var(--transfer-details-bg);
   padding: 30px 20px;
   width: 284px;
-  height: 60px;
+  height: 130px;
 }
 
 .overviewVotingButton {
@@ -157,7 +157,7 @@
   background-color: var(--background-back-color);
   margin: 20px 0 80px;
   border-top: 1px solid var(--tabbed-page-header-bg);
-  width: 700px;
+  width: 740px;
 }
 
 .detailsText .links {
@@ -303,13 +303,13 @@
   }
 
   .detailsText {
-    width: 594px;
+    width: 635px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .overview {
-    width: 355px;
+    width: 100%;
   }
 
   .overview.is-row {
@@ -332,7 +332,7 @@
 
   .detailsText {
     padding-left: 20px;
-    width: 335px;
+    width: 100%;
   }
 
   .smallWidth {
