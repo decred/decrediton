@@ -310,17 +310,12 @@ export const getStartedMachine = Machine({
         }
       }
     },
-    // XXX
-    // make a machine for final configurations, similar to how we create
-    // the create wallet machine, so we can set mix accounts sync vsp and
-    // any other config which may come.
     settingUpWallet: {
       initial: "settingUpWallet",
       states: {
         settingUpWallet: {
           entry: assign({
             settingUpWalletRef: (ctx) => {
-              console.log(ctx);
               let spawnedMachine;
               // spawn a new actor machine so we can comunicate with the
               // getStartedMachine.
@@ -331,9 +326,6 @@ export const getStartedMachine = Machine({
                   SetupWalletConfigMachine.withContext({
                     selectedWallet: ctx.selectedWallet,
                     isCreateNewWallet: ctx.isCreateNewWallet
-
-                    // walletMasterPubKey: ctx.walletMasterPubKey,
-                    // isTrezor: ctx.isTrezor
                   })
                 );
               } catch (e) {

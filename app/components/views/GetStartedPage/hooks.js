@@ -512,7 +512,6 @@ export const useGetStarted = () => {
           onSendBack
         });
       }
-      console.log(key);
       if (key === "settingUpWallet") {
         PageComponent = h(SettingUpWalletMachine, {
           settingUpWalletRef
