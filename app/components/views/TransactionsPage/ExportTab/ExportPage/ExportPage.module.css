@@ -13,16 +13,16 @@
   color: var(--title-text-and-button-background);
   font-size: 13px;
   line-height: 17px;
-  padding: 30px 20px 0px 28px;
-  width: 366px;
-  height: 98px;
+  padding: 30px 20px 0 28px;
+  width: 430px;
+  height: 134px;
   background-color: var(--background-back-color);
 }
 
 .exportAreaRight {
   background-color: var(--disabled-background-color-dark);
   padding: 30px 30px 10px 30px;
-  width: 266px;
+  width: 310px;
   font-size: 13px;
   line-height: 19px;
   cursor: pointer;
@@ -54,7 +54,7 @@
 }
 
 .exportInfoDescription {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 ul.exportInfoFields {

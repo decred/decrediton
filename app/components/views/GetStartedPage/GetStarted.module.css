@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* XXX */
   box-sizing: border-box !important;
   width: 240px;
   clear: left;

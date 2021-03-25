@@ -22,28 +22,12 @@
 //  Global classes
 ///////////////////////////////////*/
 
-/* TODO: delete box-sizing: content-box;
-// I added this ugly `:not` workaround to be able to skip pi-ui's classes
-// which are prefixed with 'styles_'.
-// Ideally we should use `* { box-sizing: inherit; } and html { box-sizing: border-box }`(already done in pi-ui)
-// we shouldn't override it in a global level - we should take care of this while migrating this file to a css module.*/
-*:not([class^="styles_"]),
-*:not([class^="styles_"])::before,
-*:not([class^="styles_"])::after {
-  box-sizing: content-box;
-}
-
-[class^="styles_"] > * {
-  box-sizing: inherit;
-}
-
 body {
   font-family: var(--font-family-regular);
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
-  margin: 0px;
-  box-sizing: border-box;
+  margin: 0;
   font-variant-ligatures: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

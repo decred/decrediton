@@ -37,7 +37,7 @@ const ProposalsListItem = ({
       onClick={viewProposalDetailsHandler}
       className={classNames(
         "is-row",
-        styles.listiTtem,
+        styles.listItem,
         styles[voteResult],
         !approved && styles.declined,
         finishedVote && styles.ended,

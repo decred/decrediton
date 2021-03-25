@@ -1,5 +1,5 @@
 .tabs {
-  max-width: 738px;
+  width: 800px;
   margin-left: 85px;
   height: 40px;
 }
@@ -18,7 +18,18 @@
   padding-top: 0px;
 }
 
+@media screen and (max-width: 1179px) {
+  .tabs {
+    margin-left: 0;
+    width: 700px;
+  }
+}
+
 @media screen and (max-width: 768px) {
+  .tabs {
+    width: 100%;
+  }
+
   .allIcon {
     background-image: var(--ticket-live-icon);
   }
@@ -32,12 +43,5 @@
   }
   .tabs > div > ul {
     left: 0px;
-  }
-}
-
-@media screen and (max-width: 1179px) {
-  .tabs {
-    margin-left: 0;
-    max-width: 673px;
   }
 }

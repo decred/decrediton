@@ -47,10 +47,6 @@
   margin-left: 130px;
 }
 
-.links a {
-  margin: 0 !important;
-}
-
 .infoButton {
   border-radius: 0px;
   background-image: var(--tickets-info-icon);

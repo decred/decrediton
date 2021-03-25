@@ -1,11 +1,11 @@
 .header {
   background-color: var(--background-back-color);
-  padding: 43px 60px 0px 63px;
+  padding: 43px 60px 0 63px;
   position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  height: 114px;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 157px;
 }
 
 @media screen and (max-width: 1179px) {

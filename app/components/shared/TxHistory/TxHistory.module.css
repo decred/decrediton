@@ -129,41 +129,39 @@
 .direction {
   display: flex;
   align-items: center;
+  margin-left: 15px;
 }
 
 .accountName {
   background-color: var(--transaction-account-name-bg);
-  padding: 2px 4px;
+  padding: 2px;
   border-radius: 5px;
   font-size: 11px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  height: 20px;
+  max-width: 120px;
   margin-right: 10px;
-  height: 15px;
-  max-width: 210px;
-  line-height: 15px;
+  line-height: 16px;
   text-align: center;
 }
 
 .overviewRow .feeStatus {
-  margin-left: auto;
-  margin-right: 0;
-  width: 70px;
+  width: 75px;
 }
 
 .feeStatus {
   background-color: var(--transaction-account-name-bg);
-  padding: 2px 4px;
+  padding: 2px;
   border-radius: 5px;
   font-size: 11px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  height: 15px;
-  max-width: 180px;
-  margin-left: 20px;
-  line-height: 15px;
+  height: 20px;
+  max-width: 120px;
+  line-height: 16px;
   text-align: center;
 }
 
@@ -244,8 +242,8 @@
 }
 
 .overviewRow {
-  width: 368px;
-  height: 54px;
+  width: 375px;
+  height: 60px;
   background: var(--background-back-color);
   border-bottom: 1px solid var(--disabled-background-color);
   cursor: pointer;
@@ -304,7 +302,7 @@
 
 .historyRow .txInfo .txRowWrapper {
   padding: 16px 20px;
-  width: 90%;
+  width: 97%;
 }
 
 .eligibleRow {
