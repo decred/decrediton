@@ -15,7 +15,6 @@
   background-color: var(--background-back-color);
   padding-left: 40px;
   padding-top: 20px;
-  box-sizing: border-box !important;
   position: relative;
   margin-bottom: 20px;
 }
@@ -47,7 +46,6 @@
   margin-right: 5px;
   width: 270px;
   height: 35px;
-  box-sizing: border-box !important;
   text-align: center;
 }
 
@@ -61,7 +59,6 @@
   background-color: var(--background-container);
   padding: 10px;
   word-wrap: break-word;
-  box-sizing: border-box !important;
   display: inline-block;
 }
 
@@ -74,7 +71,6 @@
   background: var(--tx-detail-raw-shadow);
   border-bottom: 1px var(--background-container) solid;
   border-left: 1px var(--background-container) solid;
-  box-sizing: border-box !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -130,7 +126,6 @@
 .addVSP {
   width: 107px;
   height: 44px;
-  box-sizing: border-box !important;
   text-align: center;
   padding: 0;
   line-height: 44px;
@@ -139,7 +134,6 @@
 .cancelVSP {
   width: 107px;
   height: 44px;
-  box-sizing: border-box !important;
 }
 
 .backupRedeemScriptModal {

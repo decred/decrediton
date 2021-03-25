@@ -99,10 +99,6 @@
   line-height: 0;
 }
 
-div.radioButtonsWrapper > * {
-  box-sizing: border-box;
-}
-
 .radioButtonsList {
   margin-left: -7px;
 }

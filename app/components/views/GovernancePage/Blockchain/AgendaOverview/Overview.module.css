@@ -51,10 +51,6 @@
   text-transform: capitalize;
 }
 
-div.radioButtonsWrapper > * {
-  box-sizing: border-box;
-}
-
 .bottom {
   padding-top: 15px;
   display: flex;
