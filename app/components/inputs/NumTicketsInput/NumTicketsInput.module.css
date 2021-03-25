@@ -1,72 +1,77 @@
 .container {
   height: 24px;
   margin-left: 6px;
-  border-bottom: 1px var(--stroke-color-default) solid;
-  width: 125px;
+  width: 183px;
   position: relative;
   display: flex;
   flex-direction: row;
 }
-.container.error {
-  border-bottom: 1px var(--error-text-color) solid;
-}
 .container.error input {
-  max-width: initial;
   color: var(--error-text-color);
 }
-.container.error::before {
+.container.error .integerInput::before {
   position: absolute;
   content: "";
   width: 18px;
   height: 22px;
   top: 0;
-  right: 43px;
+  right: 0;
   display: block;
   background-repeat: no-repeat;
   background-image: var(--warning-input-icon);
   background-size: 16px 16px;
   background-position: 0 center;
 }
-.integerInput,
+.integerInput {
+  width: 75px;
+  font-size: 16px;
+  padding-left: 0;
+  padding-bottom: 2px;
+  position: relative;
+}
+.integerInput:hover {
+  border-bottom: 1px solid var(--accent-blue);
+}
 .integerInput:hover:not(.disabled):not(.active):not(.error) {
-  border: none !important;
+  border-bottom: 1px var(--accent-blue) solid;
 }
 .integerInput input {
-  max-width: 30px;
-  height: 22px;
+  font-size: 16px;
+  line-height: 16px;
 }
-.integerInput .unitArea {
-  color: var(--tx-detail-text) !important;
+.integerInput input::placeholder {
+  font-size: 16px;
+}
+.container.error .integerInput,
+.container.error .integerInput:hover:not(.disabled):not(.active):not(.error) {
+  border-bottom: 1px var(--error-text-color) solid;
 }
 .inputError {
-  border-bottom: 0;
   background-image: none;
 }
 .inputErrorsArea {
   width: 100%;
   position: absolute;
   bottom: -13px;
-  left: 6px;
+  left: 0;
   margin: 0;
 }
 .integerInput.error:hover {
   border-bottom: 0 !important;
 }
 .icon {
-  width: 20px;
-  height: 20px;
-  background-size: 6px;
+  width: 24px;
+  height: 24px;
+  background-size: 9px;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-color: var(--account-text);
-  box-shadow: 0px 3px 8px var(--icons-shadow);
-  margin-left: 3px;
+  background-color: var(--accent-blue);
   border-radius: 5px;
-  position: absolute;
-  top: 0;
   border: none;
   outline: 0;
   cursor: pointer;
+  position: absolute;
+  top: 0;
 }
 .icon.more {
   background-image: var(--tickets-plus-icon);
@@ -77,8 +82,13 @@
 }
 .icon.less {
   background-image: var(--tickets-minus-icon);
-  right: 22px;
+  right: 29px;
 }
 .icon.less:hover {
   opacity: 0.7;
+}
+.ticketUnitLabel {
+  color: var(--grey-5);
+  font-size: 16px;
+  line-height: 22px;
 }
