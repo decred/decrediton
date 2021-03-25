@@ -18,20 +18,7 @@ const StakeInfoDisplayItem = ({ label, value, foot }) => (
 );
 
 const StakeInfoDisplayTicketCount = ({ value }) => (
-  <span className={styles.purchaseTicketLabel}>
-    <T
-      id="stake.ticketCount"
-      m="{ticketsFmt} {tickets, plural, one {ticket} other {tickets}}"
-      values={{
-        ticketsFmt: (
-          <span className={styles.purchaseTicketCount}>
-            <FormattedNumber value={value} />
-          </span>
-        ),
-        tickets: value
-      }}
-    />
-  </span>
+  <FormattedNumber value={value} />
 );
 
 const StakeInfoDisplay = ({
@@ -147,7 +134,8 @@ const StakeInfoDisplay = ({
       show={isShowingDetails}
       onToggleAccordion={onToggleStakeinfo}
       className={styles.accordion}
-      arrowClassName={styles.accordionArrow}>
+      arrowClassName={styles.accordionArrow}
+      activeArrowClassName={styles.activeAccordionArrow}>
       <StakeInfoDetails
         {...{
           ticketPoolSize,
