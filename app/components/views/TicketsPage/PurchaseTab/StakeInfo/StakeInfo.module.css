@@ -14,7 +14,7 @@
 
 .area {
   background-color: var(--background-back-color);
-  padding: 30px 40px 20px 40px;
+  padding: 30px 40px 20px 0;
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(max-content, 1fr));

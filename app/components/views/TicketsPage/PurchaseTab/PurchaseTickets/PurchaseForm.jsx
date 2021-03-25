@@ -32,24 +32,19 @@ const PurchaseTicketsForm = ({
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, styles.isRow)}>
-      <div className={classNames(styles.isRow, styles.inputAddress)}>
-        <div className={styles.ticketForm}>
-          <label className={styles.rowLabel}>
-            <T id="purchaseTickets.accountFrom" m="Account" />:
-          </label>
+      <div className={classNames(styles.isColumn, styles.inputAddress)}>
+        <label className={styles.rowLabel}>
+          <T id="purchaseTickets.accountFrom" m="Account" />:
           <div className={styles.inputSelectContainer}>
             <AccountsSelect
               filterAccounts={notMixedAccounts}
               className={styles.inputSelect}
               {...{ account, onChange: setAccount }}
             />
-            <div
-              className={classNames(styles.infoIcon, styles.accountSelectIcon)}
-            />
           </div>
-          <label className={styles.rowLabel}>
-            <T id="purchaseTickets.vspFrom" m="VSP" />:
-          </label>
+        </label>
+        <label className={styles.rowLabel}>
+          <T id="purchaseTickets.vspFrom" m="VSP" />:
           <div className={styles.vspContainer}>
             <VSPSelect
               className={styles.inputSelect}
@@ -63,64 +58,73 @@ const PurchaseTicketsForm = ({
                 setVspFee
               }}
             />
-            {vsp && (
-              <Tooltip
-                content={<T id="purchaseTickets.vspFee" m="VSP Fee" />}
-                className={styles.ticketPoolFee}>
-                <div
-                  className={classNames(styles.infoIcon, styles.poolFeeIcon)}>
-                  {vspFee} %
-                </div>
-              </Tooltip>
-            )}
           </div>
-          {vsp && (
-            <Checkbox
-              className={styles.rememberVspCheckBox}
-              label={
-                <T
-                  id="purchaseTickets.alwaysUseThisVSP"
-                  m="Always use this VSP"
-                />
-              }
-              id="rememberVspHost"
-              checked={!!rememberedVspHost}
-              onChange={toggleRememberVspHostCheckBox}
-            />
-          )}
-        </div>
+        </label>
+        {vsp && (
+          <Checkbox
+            className={styles.rememberVspCheckBox}
+            label={
+              <T
+                id="purchaseTickets.alwaysUseThisVSP"
+                m="Always use this VSP"
+              />
+            }
+            id="rememberVspHost"
+            checked={!!rememberedVspHost}
+            onChange={toggleRememberVspHostCheckBox}
+          />
+        )}
       </div>
       <div className={classNames(styles.isRow, styles.inputAmount)}>
         <label className={styles.rowLabel}>
           <T id="purchaseTickets.ticketAmount" m="Amount" />:
+          <NumTicketsInput
+            required
+            invalid={account.spendable < numTickets * ticketPrice}
+            invalidMessage={
+              <T
+                id="purchaseTickets.errors.insufficientBalance"
+                m="Not enough funds"
+              />
+            }
+            numTickets={numTickets}
+            incrementNumTickets={() => onChangeNumTickets(true)}
+            decrementNumTickets={() => onChangeNumTickets(false)}
+            onChangeNumTickets={setNumTickets}
+            onKeyDown={handleOnKeyDown}
+            showErrors={true}
+          />
         </label>
-        <NumTicketsInput
-          required
-          invalid={account.spendable < numTickets * ticketPrice}
-          invalidMessage={
-            <T
-              id="purchaseTickets.errors.insufficientBalance"
-              m="Not enough funds"
-            />
-          }
-          numTickets={numTickets}
-          incrementNumTickets={() => onChangeNumTickets(true)}
-          decrementNumTickets={() => onChangeNumTickets(false)}
-          onChangeNumTickets={setNumTickets}
-          onKeyDown={handleOnKeyDown}
-          showErrors={true}
-        />
         {account.spendable >= numTickets * ticketPrice && (
           <div className={styles.inputValidMessageArea}>
+            {vsp && (
+              <>
+                <span>
+                  <T id="purchaseTickets.vspFee" m="VSP Fee" />:
+                </span>
+                <span className={styles.vspFee}>{vspFee} %</span>
+              </>
+            )}
             <T
               id="purchaseTickets.validMsg"
               m="Total: {amount} Remaining: {remaining}"
               values={{
-                amount: <Balance flat amount={numTickets * ticketPrice} />,
+                amount: (
+                  <Balance
+                    flat
+                    amount={numTickets * ticketPrice}
+                    classNameWrapper={styles.validMsgBalance}
+                    classNameSecondary={styles.validMsgBalanceSecondary}
+                    classNameUnit={styles.validMsgBalanceUnit}
+                  />
+                ),
                 remaining: (
                   <Balance
                     flat
                     amount={account.spendable - numTickets * ticketPrice}
+                    classNameWrapper={styles.validMsgBalance}
+                    classNameSecondary={styles.validMsgBalanceSecondary}
+                    classNameUnit={styles.validMsgBalanceUnit}
                   />
                 )
               }}
