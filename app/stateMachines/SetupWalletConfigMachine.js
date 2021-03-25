@@ -14,12 +14,6 @@ export const SetupWalletConfigMachine = Machine({
   states: {
     settingMixedAccount: {
       on: {
-        CONTINUE: "syncVSPTickets"
-      }
-    },
-    syncVSPTickets: {
-      on: {
-        FINISH: "goToHomeView",
         CONTINUE: "processingManagedTickets"
       }
     },

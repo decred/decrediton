@@ -223,6 +223,7 @@ export const useGetStarted = () => {
       }
     }
   });
+
   const getError = useCallback((serviceError) => {
     if (!serviceError) return;
     // We can return errors in the form of react component, which are objects.
@@ -516,42 +517,6 @@ export const useGetStarted = () => {
       if (key === "settingUpWallet") {
         PageComponent = h(SettingUpWalletMachine, {
           settingUpWalletRef
-        });
-      }
-      if (key === "settingMixedAccount") {
-        // Display a message while checking for coinjoin outputs and go to set
-        // mixed account only if coinjoin outputs found & mixed account not set yet
-        animationType = styles.establishingRpc;
-        text = (
-          <T
-            id="loaderBar.checkingMixedAccount"
-            m="Seaching for coinjoin transactions..."
-          />
-        );
-        PageComponent = h(GetStartedMachinePage, {
-          text: updatedText ? updatedText : text,
-          animationType: updatedAnimationType
-            ? updatedAnimationType
-            : animationType,
-          StateComponent: updatedComponent ? updatedComponent : component
-        });
-
-      }
-      if (key === "syncVSPTickets") {
-        // Display a message while checking for tickets to be synced.
-        animationType = styles.establishingRpc;
-        text = (
-          <T
-            id="loaderBar.syncingTickets"
-            m="Seaching for unsynced tickets transactions..."
-          />
-        );
-        PageComponent = h(GetStartedMachinePage, {
-          text: updatedText ? updatedText : text,
-          animationType: updatedAnimationType
-            ? updatedAnimationType
-            : animationType,
-          StateComponent: updatedComponent ? updatedComponent : component
         });
       }
 
