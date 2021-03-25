@@ -66,11 +66,12 @@ export const enableTrezor = () => (dispatch, getState) => {
 export const initTransport = async (session, debug) => {
   await session
     .init({
-      connectSrc: "https://localhost:8088/",
+      connectSrc: "./",
       env: "web",
       lazyLoad: false,
       popup: false,
       transportReconnect: false,
+      webusb: false,
       manifest: {
         email: "joegruffins@gmail.com",
         appUrl: "https://github.com/decred/decrediton"
@@ -281,9 +282,7 @@ function setDeviceListeners(dispatch, getState) {
       }
 
       case UI.FIRMWARE_PROGRESS: {
-        console.log(
-          "Trezor update progress: " + event.payload.progress + "%"
-        );
+        console.log("Trezor update progress: " + event.payload.progress + "%");
       }
     }
   });
@@ -828,15 +827,7 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
 
   try {
     if (device != BOOTLOADER_MODE) throw "device must be in bootloader mode";
-    // Ask main.development.js to send the firmware for us.
-    /*
-    const { error, started } = await ipcRenderer.invoke(
-      "upload-firmware",
-      path,
-      features.model
-    );
-    */
-   const { error, started } = await doUpdateFirmware(path, features.model);
+    const { error, started } = await doUpdateFirmware(path, features.model);
     // If the updated started, the device must be disconnected before further
     // use.
     if (started) alertNoConnectedDevice()(dispatch);
