@@ -87,32 +87,33 @@ const SetupWallet = ({ settingUpWalletRef }) => {
         // if no live tickets, we can skip it.
         if (!hasLive) {
           sendContinue();
+        } else {
+          component = h(ProcessManagedTickets, {
+            error,
+            onSendContinue: sendContinue,
+            onSendError,
+            send,
+            cancel: onSendBack,
+            onProcessTickets: onProcessManagedTickets,
+            title: (
+              <T
+                id="getstarted.processManagedTickets.title"
+                m="Process Managed Tickets"
+              />
+            ),
+            isProcessingManaged: isProcessingManaged,
+            noVspSelection: true,
+            description: (
+              <T
+                id="getstarted.processManagedTickets.description"
+                m={`Your wallet appears to have live tickets. Processing managed
+              tickets confirms with the VSPs that all of your submitted tickets
+              are currently known and paid for by the VSPs. If you've already 
+              confirmed your tickets then you may skip this step.`}
+              />
+            )
+          });
         }
-        component = h(ProcessManagedTickets, {
-          error,
-          onSendContinue: sendContinue,
-          onSendError,
-          send,
-          cancel: onSendBack,
-          onProcessTickets: onProcessManagedTickets,
-          title: (
-            <T
-              id="getstarted.processManagedTickets.title"
-              m="Process Managed Tickets"
-            />
-          ),
-          isProcessingManaged: isProcessingManaged,
-          noVspSelection: true,
-          description: (
-            <T
-              id="getstarted.processManagedTickets.description"
-              m={`Your wallet appears to have live tickets. Processing managed
-            tickets confirms with the VSPs that all of your submitted tickets
-            are currently known and paid for by the VSPs. If you've already 
-            confirmed your tickets then you may skip this step.`}
-            />
-          )
-        });
         break;
       case "processingUnmanagedTickets":
         hasSoloTickets = false;
@@ -138,30 +139,31 @@ const SetupWallet = ({ settingUpWalletRef }) => {
         });
         if (!hasSoloTickets) {
           sendContinue();
+        } else {
+          component = h(ProcessUnmanagedTickets, {
+            error,
+            send,
+            onSendContinue: sendContinue,
+            onSendError,
+            onProcessTickets: onProcessUnmanagedTickets,
+            isProcessingUnmanaged: isProcessingUnmanaged,
+            cancel: onSendBack,
+            title: (
+              <T
+                id="getstarted.processUnmangedTickets.title"
+                m="Process Unmanaged Tickets"
+              />
+            ),
+            description: (
+              <T
+                id="getstarted.processUnmangedTickets.description"
+                m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
+                to vote and they are not linked with a vsp, they may miss, if you are not
+                properly dealing with solo vote.`}
+              />
+            )
+          });
         }
-        component = h(ProcessUnmanagedTickets, {
-          error,
-          send,
-          onSendContinue: sendContinue,
-          onSendError,
-          onProcessTickets: onProcessUnmanagedTickets,
-          isProcessingUnmanaged: isProcessingUnmanaged,
-          cancel: onSendBack,
-          title: (
-            <T
-              id="getstarted.processUnmangedTickets.title"
-              m="Process Unmanaged Tickets"
-            />
-          ),
-          description: (
-            <T
-              id="getstarted.processUnmangedTickets.description"
-              m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
-              to vote and they are not linked with a vsp, they may miss, if you are not
-              properly dealing with solo vote.`}
-            />
-          )
-        });
         break;
       case "goToHomeView":
         goToHome();
