@@ -28,14 +28,14 @@ export const addressPath = (index, branch, account, coinType) => {
 };
 
 // walletTxToBtcjsTx is a aux function to convert a tx decoded by the decred wallet (ie,
-// returned from wallet.decoreRawTransaction call) into a bitcoinjs-compatible
+// returned from wallet.decodeRawTransaction call) into a bitcoinjs-compatible
 // transaction (to be used in trezor).
 export const walletTxToBtcjsTx = async (
   walletService,
   chainParams,
   tx,
   inputTxs,
-  changeIndex
+  changeIndexes
 ) => {
   const inputs = tx.inputs.map(async (inp) => {
     const addr = inp.outpointAddress;
@@ -81,7 +81,7 @@ export const walletTxToBtcjsTx = async (
     const addrValidResp = await wallet.validateAddress(walletService, addr);
     if (!addrValidResp.isValid) throw "Not a valid address: " + addr;
     let address_n = null;
-    if (i === changeIndex && addrValidResp.isMine) {
+    if (changeIndexes.includes(i) && addrValidResp.isMine) {
       const addrIndex = addrValidResp.index;
       const addrBranch = addrValidResp.isInternal ? 1 : 0;
       address_n = addressPath(
@@ -124,7 +124,10 @@ export const walletTxToRefTx = async (walletService, tx) => {
   const outputs = tx.outputs.map(async (outp) => {
     const addr = outp.decodedScript.address;
     const addrValidResp = await wallet.validateAddress(walletService, addr);
-    if (!addrValidResp.isValid) throw new Error("Not a valid address: " + addr);
+    // Scripts with zero value can be ignored as they are not a concern when
+    // spending from an outpoint.
+    if (outp.value != 0 && !addrValidResp.isValid)
+      throw new Error("Not a valid address: " + addr);
     return {
       amount: outp.value,
       script_pubkey: rawToHex(outp.script),

@@ -19,6 +19,9 @@ import {
   TRZ_PASSPHRASE_REQUESTED,
   TRZ_PASSPHRASE_ENTERED,
   TRZ_PASSPHRASE_CANCELED,
+  TRZ_PURCHASETICKET_ATTEMPT,
+  TRZ_PURCHASETICKET_FAILED,
+  TRZ_PURCHASETICKET_SUCCESS,
   TRZ_WORD_REQUESTED,
   TRZ_WORD_ENTERED,
   TRZ_WORD_CANCELED,
@@ -279,6 +282,12 @@ export default function trezor(state = {}, action) {
         performingOperation: false,
         performingTogglePassphraseOnDeviceProtection: false
       };
+    case TRZ_PURCHASETICKET_ATTEMPT:
+      return {
+        ...state,
+        performingOperation: true,
+        purchasingTickets: true
+      };
     case SIGNTX_FAILED:
     case SIGNTX_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_FAILED:
@@ -305,7 +314,6 @@ export default function trezor(state = {}, action) {
         performingOperation: false,
         performingUpdate: false
       };
-
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPINPROTECTION_SUCCESS:
       return {
@@ -324,6 +332,13 @@ export default function trezor(state = {}, action) {
         ...state,
         performingOperation: false,
         performingTogglePassphraseOnDeviceProtection: false
+      };
+    case TRZ_PURCHASETICKET_FAILED:
+    case TRZ_PURCHASETICKET_SUCCESS:
+      return {
+        ...state,
+        performingOperation: false,
+        purchasingTickets: false
       };
     case CLOSEWALLET_SUCCESS:
       return { ...state, enabled: false };
