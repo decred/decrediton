@@ -1,4 +1,4 @@
-import SetMixedAcctPage from "components/views/GetStartedPage/SetMixedAcctPage/SetMixedAcctPage";
+import SetMixedAcctPage from "components/views/GetStartedPage/SetupWallet/SetMixedAcctPage/SetMixedAcctPage";
 import { render } from "test-utils.js";
 import { screen, wait } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
