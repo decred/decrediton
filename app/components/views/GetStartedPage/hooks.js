@@ -70,7 +70,6 @@ export const useGetStarted = () => {
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
       isAtPreStart: () => {
-        console.log("is at pre start");
         preStartDaemon();
       },
       isAtStartAdvancedDaemon: () => {},
@@ -78,7 +77,6 @@ export const useGetStarted = () => {
       isAtSettingAccount: () => {},
       isAtStartSPV: () => onSendContinue(),
       isAtStartingDaemon: (_, event) => {
-        console.log("is at Starting Daemonn");
         const { appdata } = event;
         return onStartDaemon({ appdata })
           .then((started) => {
@@ -93,7 +91,6 @@ export const useGetStarted = () => {
           );
       },
       isAtDaemonError: (context, event) => {
-        console.log("is at daemon error");
         if (!event) return;
         const {
           payload: { error }
@@ -109,7 +106,6 @@ export const useGetStarted = () => {
         send({ type: "START_ADVANCED_DAEMON", payload: { error } });
       },
       isAtConnectingDaemon: (_, event) => {
-        console.log(" is at connect daemon ");
         const { remoteCredentials } = event;
         const daemonRemote = !!remoteCredentials;
         return onConnectDaemon(remoteCredentials, daemonRemote)
@@ -133,7 +129,6 @@ export const useGetStarted = () => {
           });
       },
       isAtCheckNetworkMatch: () => {
-        console.log(" is at check network ");
         return checkNetworkMatch()
           .then(() => send({ type: "CHOOSE_WALLET" }))
           .catch((error) =>
@@ -141,7 +136,6 @@ export const useGetStarted = () => {
           );
       },
       isAtSyncingDaemon: () => {
-        console.log(" is at syncing daemon ");
         syncDaemon()
           .then(() => send({ type: "CHECK_NETWORK_MATCH" }))
           .catch((error) =>
@@ -149,7 +143,6 @@ export const useGetStarted = () => {
           );
       },
       isAtChoosingWallet: (_, event) => {
-        console.log("is at choosingWallet");
         const { selectedWallet, error } = event;
         if (selectedWallet) {
           return submitChosenWallet(selectedWallet);
@@ -164,7 +157,6 @@ export const useGetStarted = () => {
           .catch((error) => onSendError(error));
       },
       isAtStartWallet: (context) => {
-        console.log("is At Start Wallet");
         const { selectedWallet } = context;
         const { passPhrase } = context;
         const { isWatchingOnly, isTrezor } = selectedWallet.value;
@@ -270,7 +262,6 @@ export const useGetStarted = () => {
       // processingUnmanagedTickets process solo tickets and must be called
       // after processingManagedTickets.
       isAtProcessingUnmanagedTickets: () => {
-        console.log("is at processingUnmanagedTickets");
         let hasSoloTickets = false;
         Object.keys(stakeTransactions).forEach((hash) => {
           const tx = stakeTransactions[hash];
@@ -299,7 +290,6 @@ export const useGetStarted = () => {
       },
       // processingManagedTickets process vsp tickets updating its status.
       isAtProcessingManagedTickets: () => {
-        console.log("is at isAtProcessingManagedTickets");
         const hasLive = Object.keys(stakeTransactions).some((hash) => {
           const tx = stakeTransactions[hash];
           // check if the wallet has at least one vsp live ticket.
@@ -707,7 +697,7 @@ export const useGetStarted = () => {
               id="getstarted.processManagedTickets.description"
               m={`Your wallet appears to have live tickets. Processing managed
             tickets confirms with the VSPs that all of your submitted tickets
-            are currently known and paid for by the VSPs. If you've already 
+            are currently known and paid for by the VSPs. If you've already
             confirmed your tickets then you may skip this step.`}
             />
           )

@@ -6,10 +6,12 @@ export const remote = {
 };
 
 export const ipcRenderer = {
-  sendSync: jest.fn(channel => {
+  sendSync: jest.fn(() => {
     return {};
   }),
-  send: jest.fn(() => {})
+  send: jest.fn(() => {}),
+  once: jest.fn(),
+  invoke: jest.fn()
 };
 
 export const clipboard = {

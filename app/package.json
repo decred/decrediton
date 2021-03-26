@@ -11,13 +11,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@grpc/grpc-js": "^1.2.5",
-    "blake-hash": "^2.0.0",
-    "bs58check": "^2.1.1",
-    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#093a27dd6b0309351a2e53c705fe4710becd0368",
-    "electron-store": "^6.0.0",
-    "fs-extra": "^5.0.0",
-    "minimist": "^1.2.3"
+    "connect": "https://github.com/JoeGruffins/npm-extended-dcr#093a27dd6b0309351a2e53c705fe4710becd0368"
   },
   "optionalDependencies": {
     "win32ipc": "./modules/win32ipc"

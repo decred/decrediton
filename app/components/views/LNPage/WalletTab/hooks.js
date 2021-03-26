@@ -1,5 +1,4 @@
-const electron = require("electron");
-const dialog = electron.remote.dialog;
+import { ipcRenderer } from "electron";
 import fs from "fs";
 import { useEffect, useState } from "react";
 import { useLNPage } from "../hooks";
@@ -36,8 +35,7 @@ export function useWalletTab() {
 
   const onBackup = async () => {
     setConfirmFileOverwrite(null);
-
-    const { filePath } = await dialog.showSaveDialog();
+    const { filePath } = await ipcRenderer.invoke("show-save-dialog");
     if (!filePath) {
       return;
     }
@@ -52,7 +50,7 @@ export function useWalletTab() {
   };
 
   const onVerifyBackup = async () => {
-    const { filePaths } = await dialog.showOpenDialog();
+    const { filePaths } = await ipcRenderer.invoke("show-open-dialog");
     const filePath = filePaths[0];
     if (!filePath) {
       return;
