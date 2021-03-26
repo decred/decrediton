@@ -63,7 +63,7 @@ import {
   CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_FAILED_LOW_BALANCE,
   SETBALANCETOMAINTAIN,
-  MODAL_SHOWN,
+  MODAL_VISIBLE,
   MODAL_HIDDEN,
   SHOW_ABOUT_MODAL_MACOS,
   HIDE_ABOUT_MODAL_MACOS,
@@ -494,7 +494,7 @@ export default function control(state = {}, action) {
       return { ...state, exportingData: false };
     case EXPORT_ERROR:
       return { ...state, exportingData: false };
-    case MODAL_SHOWN:
+    case MODAL_VISIBLE:
       return { ...state, modalVisible: true };
     case MODAL_HIDDEN:
       return { ...state, modalVisible: false };
