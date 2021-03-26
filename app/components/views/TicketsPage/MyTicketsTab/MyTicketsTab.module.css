@@ -13,6 +13,8 @@
   text-align: right;
   margin-right: 20px;
   margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .subtitle {

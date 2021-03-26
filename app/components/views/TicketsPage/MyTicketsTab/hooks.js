@@ -1,10 +1,11 @@
+import { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as ca from "actions/ClientActions";
 import * as ta from "actions/TransactionActions";
-
-let qrPage = 0;
-const TICKET_QR_PAGE = "TICKET_QR_PAGE";
+import { UNMINED, IMMATURE, LIVE } from "constants";
+import { isEqual } from "lodash";
+import QRCode from "qrcode";
 
 export const useTicketsList = () => {
   const dispatch = useDispatch();
@@ -21,10 +22,58 @@ export const useTicketsList = () => {
   const getTickets = (isStake) => dispatch(ta.getTransactions(isStake));
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));
-  const setQRPage = (page) => {
-    qrPage = page;
-    dispatch({ type: TICKET_QR_PAGE });
+
+  const [QRs, setQRs] = useState([]);
+  const [qrHashes, setQRHashes] = useState([]);
+  const [QRsPage, setQRsPage] = useState(0);
+  const [loadingQRs, setLoadingQRs] = useState(true);
+
+  // XXX make app or file level constant.
+  const txPerQR = 2; // 15
+
+  const activeFilter = ({ status }) =>
+    status === UNMINED || status === IMMATURE || status === LIVE;
+
+  const onQRPageClick = ({ selected }) => {
+    setQRsPage(selected);
   };
+
+  // prepareQR asychronously updates the qr codes if current viewed ticket hashes
+  // have changed since last viewing.
+  const prepareQRs = useCallback(() => {
+    setLoadingQRs(true);
+    const filteredTiks = tickets.filter(activeFilter);
+    const filteredHashes = filteredTiks.map(({ txHash }) => txHash);
+
+    if (filteredHashes.length == 0) {
+      setLoadingQRs(false);
+      return;
+    }
+
+    // If QRs already generated for all given tickets, then nothing to do.
+    if (isEqual(qrHashes, filteredHashes)) {
+      setLoadingQRs(false);
+      return;
+    }
+
+    const qrsPromises = [];
+    // Create for each page of hashes a QR.
+    for (let i = 0; i < Math.ceil(filteredHashes.length / txPerQR); i++) {
+      const start = i * txPerQR;
+      const qrdata = JSON.stringify(
+        filteredHashes.slice(start, start + txPerQR)
+      );
+      qrsPromises.push(QRCode.toDataURL(qrdata));
+    }
+    Promise.all(qrsPromises)
+      .then((qrs) => {
+        setQRHashes(filteredHashes);
+        setQRs(qrs);
+        setLoadingQRs(false);
+      })
+      // XXX snackbar error instead plzx.
+      .catch((err) => console.log(err));
+  }, [tickets, qrHashes]);
 
   return {
     tickets,
@@ -34,8 +83,11 @@ export const useTicketsList = () => {
     window,
     goBackHistory,
     getTickets,
-    qrPage,
-    setQRPage,
-    changeTicketsFilter
+    changeTicketsFilter,
+    QRsPage,
+    onQRPageClick,
+    loadingQRs,
+    QRs,
+    prepareQRs
   };
 };

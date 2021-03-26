@@ -18,11 +18,11 @@ const subtitleMenu = ({
   selectedTicketTypeKey,
   onChangeSelectedType,
   onChangeSortType,
-  qrs,
-  loadingQR,
-  qrPage,
-  handlePageClick,
-  getQR
+  QRs,
+  loadingQRs,
+  QRsPage,
+  onQRPageClick,
+  prepareQRs
 }) => (
   <div className={styles.ticketsButtons}>
     <Tooltip
@@ -55,28 +55,32 @@ const subtitleMenu = ({
         <QRModalButton
           className={styles.qrButton}
           modalTitle={<T id="tickets.qr.button" m="Active Tickets QR Code" />}
-          pagesRemaining={qrs.length > 1 ? qrPage + 1 + "/" + qrs.length : null}
+          pagesRemaining={
+            QRs.length > 1 ? QRsPage + 1 + "/" + QRs.length : null
+          }
           // TODO: Use translated phrase.
           modalContent={
-            qrs.length != 0 ? (
-              <img src={qrs[qrPage]} />
+            QRs.length != 0 ? (
+              <img src={QRs[QRsPage]} />
+            ) : loadingQRs ? (
+              "loading"
             ) : (
-              loadingQR || "No active tickets in the current view."
+              "No active tickets in the current view."
             )
           }
-          onClick={getQR}
+          onClick={prepareQRs}
           pages={
-            qrs.length > 1 ? (
+            QRs.length > 1 && (
               <ReactPaginate
                 previousLabel={"<"}
                 nextLabel={">"}
                 breakLabel={"..."}
-                pageCount={qrs.length}
+                pageCount={QRs.length}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
+                onPageChange={onQRPageClick}
               />
-            ) : null
+            )
           }
         />
       </div>
@@ -95,11 +99,11 @@ const TicketListPage = ({
   sortTypes,
   ticketTypes,
   tsDate,
-  loadingQR,
-  qrPage,
-  handlePageClick,
-  qrs,
-  getQR
+  QRs,
+  loadingQRs,
+  QRsPage,
+  onQRPageClick,
+  prepareQRs
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   return (
@@ -119,11 +123,11 @@ const TicketListPage = ({
           selectedTicketTypeKey,
           onChangeSelectedType,
           onChangeSortType,
-          loadingQR,
-          qrPage,
-          handlePageClick,
-          qrs,
-          getQR
+          QRs,
+          loadingQRs,
+          QRsPage,
+          onQRPageClick,
+          prepareQRs
         })}
       />
       {tickets.length > 0 && (

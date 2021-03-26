@@ -1,3 +1,6 @@
+/* XXX this should be split to smaller modal specific encapsulated 
+ * css modules! */ 
+
 .overlay,
 .overlayReducedBar,
 .overlayStandalone {
@@ -70,6 +73,8 @@
   line-height: 17px;
 }
 
+/* QR modal css */
+
 .modal.qr {
   height: 600px;
   width: 500px;
@@ -82,7 +87,6 @@
   position: absolute;
   height: 40px;
   display: inline-block;
-  align: left;
   bottom: 0;
   list-style-type: none;
 }
@@ -168,7 +172,7 @@
   float: left;
   height: 231px;
   width: 231px;
-  box-shadow: 0px 13px 21px rgba(9, 20, 64, 0.34);
+  box-shadow: 0 13px 21px rgba(9, 20, 64, 0.34);
   margin-left: 20px;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -241,6 +245,8 @@
   float: right;
 }
 
+/* XXX this should move to a component instead of importing this
+ * css module in all modals to use this class! */
 .infoCloseButtonTop {
   position: absolute;
   top: 20px;
@@ -528,7 +534,7 @@
 
 .confirmSeedCopyPhrase {
   text-decoration: underline;
-  margin: 0px 4px 0px 4px;
+  margin: 0 4px 0 4px;
 }
 
 .watchOnlyModalTitle {
