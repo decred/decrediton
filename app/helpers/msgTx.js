@@ -1,6 +1,7 @@
 import {
   rawToHex,
   reverseHash,
+  rawHashToHex,
   putUint8,
   putUint16,
   putUint32,
@@ -8,6 +9,7 @@ import {
   hexToBytes
 } from "./byteActions";
 import { Uint64LE } from "int64-buffer";
+import { blake256 } from "walletCrypto";
 
 // const SERTYPE_FULL = 0
 const SERTYPE_NOWITNESS = 1;
@@ -268,6 +270,9 @@ export function decodeRawTransaction(rawTx) {
     position += 4;
     tx.expiry = rawTx.readUInt32LE(position);
     position += 4;
+    const prefix = rawTx.slice(0, position);
+    prefix.set(putUint16(SERTYPE_NOWITNESS), 2);
+    tx.txid = rawHashToHex(blake256(prefix));
   }
 
   if (tx.serType !== SERTYPE_NOWITNESS) {
