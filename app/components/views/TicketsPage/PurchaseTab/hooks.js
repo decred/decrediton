@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react";
 import { useSettings } from "hooks";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 
+import { purchaseTicketsAttempt as trezorPurchseTicketsAttempt } from "actions/TrezorActions.js";
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
 import * as sel from "selectors";
@@ -21,6 +22,8 @@ export const usePurchaseTab = () => {
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
+  const isTrezor = useSelector(sel.isTrezor);
+  const isPurchasingTicketsTrezor = useSelector(sel.isPurchasingTicketsTrezor);
 
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const visibleAccounts = useSelector(sel.visibleAccounts);
@@ -54,9 +57,16 @@ export const usePurchaseTab = () => {
     [dispatch]
   );
   const purchaseTicketsAttempt = useCallback(
-    (passphrase, account, numTickets, vsp) =>
-      dispatch(ca.purchaseTicketsAttempt(passphrase, account, numTickets, vsp)),
-    [dispatch]
+    (passphrase, account, numTickets, vsp) => {
+      if (isTrezor) {
+        dispatch(trezorPurchseTicketsAttempt(account, numTickets, vsp));
+      } else {
+        dispatch(
+          ca.purchaseTicketsAttempt(passphrase, account, numTickets, vsp)
+        );
+      }
+    },
+    [dispatch, isTrezor]
   );
 
   const setRememberedVspHost = useCallback(
@@ -140,6 +150,7 @@ export const usePurchaseTab = () => {
     vsp,
     setVSP,
     numTicketsToBuy,
-    setNumTicketsToBuy
+    setNumTicketsToBuy,
+    isPurchasingTicketsTrezor
   };
 };
