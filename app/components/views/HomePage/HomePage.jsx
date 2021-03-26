@@ -54,11 +54,12 @@ export default () => {
     tsDate
   } = useHomePage();
 
-  // TODO: Enable ticket purchacing for Trezor.
+  // TODO: Enable ticket purchacing for Trezor on mainnet.
   const isTrezor = useSelector(sel.isTrezor);
   const isLedger = useSelector(sel.isLedger);
+  const isTestNet = useSelector(sel.isTestNet);
   let recentTickets, tabs;
-  if (isTrezor || isLedger) {
+  if ((isTrezor && !isTestNet) || isLedger) {
     tabs = [balanceTab, transactionsTab];
   } else {
     recentTickets = (

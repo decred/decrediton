@@ -121,6 +121,10 @@ export const installSessionHandlers = (mainLogger) => {
         `connect-src ${connectSrc}; `;
     }
 
+    const requestURL = new URL(details.url);
+    const maybeVSPReqType = `stakepool_${requestURL.protocol}//${requestURL.host}`;
+    const isVSPRequest = allowedExternalRequests[maybeVSPReqType];
+
     if (isDev && /^http[s]?:\/\//.test(details.url)) {
       // In development (when accessing via the HMR server) we need to overwrite
       // the origin, otherwise electron fails to contact external servers due
@@ -142,6 +146,12 @@ export const installSessionHandlers = (mainLogger) => {
       if (isPoliteia && details.method === "OPTIONS") {
         statusLine = "OK";
         newHeaders["Access-Control-Allow-Headers"] = "Content-Type";
+      }
+
+      if (isVSPRequest && details.method === "OPTIONS") {
+        statusLine = "OK";
+        newHeaders["Access-Control-Allow-Headers"] =
+          "Content-Type,vsp-client-signature";
       }
 
       const globalCfg = getGlobalCfg();
@@ -204,6 +214,10 @@ export const allowVSPRequests = (stakePoolHost) => {
 
   addAllowedURL(stakePoolHost + "/api/v3/vspinfo");
   addAllowedURL(stakePoolHost + "/api/v3/ticketstatus");
+  addAllowedURL(stakePoolHost + "/api/v3/feeaddress");
+  addAllowedURL(stakePoolHost + "/api/v3/payfee");
+  addAllowedURL(stakePoolHost + "/api/ticketstatus");
+  allowedExternalRequests[reqType] = true;
 };
 
 export const reloadAllowedExternalRequests = () => {

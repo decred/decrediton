@@ -19,6 +19,7 @@ export function useMenuLinks() {
   const isTrezor = useSelector(sel.isTrezor);
   const isLedger = useSelector(sel.isLedger);
   const lnEnabled = useSelector(sel.lnEnabled);
+  const isTestNet = useSelector(sel.isTestNet);
 
   const newActiveVoteProposalsCount = useSelector(
     sel.newActiveVoteProposalsCount
@@ -54,14 +55,12 @@ export function useMenuLinks() {
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
     }
-    // TODO: Enable ticket purchacing for Trezor.
+    // TODO: Enable ticket purchacing for Trezor on mainnet.
     if (isTrezor || isLedger) {
-      links = links.filter(
-        (l) => l.key !== DEX_KEY && l.key !== TICKETS_KEY && l.key !== GOV_KEY
-      );
+      links = links.filter((l) => l.key !== DEX_KEY && l.key !== GOV_KEY);
     }
-    if (isLedger) {
-      links = links.filter((l) => l.key !== PRIV_KEY);
+    if (isLedger || (isTrezor && !isTestNet)) {
+      links = links.filter((l) => l.key !== PRIV_KEY && l.key !== TICKETS_KEY);
     }
     return links.map((link) => ({
       ...link,
@@ -70,7 +69,7 @@ export function useMenuLinks() {
         0
       )
     }));
-  }, [notifProps, isTrezor, lnEnabled, isLedger]);
+  }, [notifProps, isTrezor, lnEnabled, isLedger, isTestNet]);
 
   const [activeTabIndex, setActiveTabIndex] = useState(-1);
   const history = useHistory();
