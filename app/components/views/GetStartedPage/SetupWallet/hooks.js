@@ -29,9 +29,12 @@ export const useWalletSetup = (settingUpWalletRef) => {
     send({ type: "CONTINUE" });
   }, [send]);
 
-  const onSendError = useCallback((error) => {
-    send({ type: "ERROR", error });
-  }, [send]);
+  const onSendError = useCallback(
+    (error) => {
+      send({ type: "ERROR", error });
+    },
+    [send]
+  );
 
   const onSendBack = useCallback(() => {
     send({ type: "BACK" });

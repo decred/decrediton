@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import { useWalletSetup } from "./hooks";
 
 const SetupWallet = ({ settingUpWalletRef }) => {
-  const { getStateComponent, StateComponent } = useWalletSetup(settingUpWalletRef);
+  const { getStateComponent, StateComponent } = useWalletSetup(
+    settingUpWalletRef
+  );
 
   useEffect(() => {
     getStateComponent();
@@ -12,11 +14,12 @@ const SetupWallet = ({ settingUpWalletRef }) => {
 
   return (
     <div>
-      { StateComponent &&
-        (React.isValidElement(StateComponent) ? StateComponent : (
-            <StateComponent />
-          ))
-      }
+      {StateComponent &&
+        (React.isValidElement(StateComponent) ? (
+          StateComponent
+        ) : (
+          <StateComponent />
+        ))}
     </div>
   );
 };

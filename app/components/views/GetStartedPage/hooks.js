@@ -363,7 +363,12 @@ export const useGetStarted = () => {
 
   const getStateComponent = useCallback(
     (updatedText, updatedAnimationType, updatedComponent) => {
-      const { isCreateNewWallet, isSPV, createWalletRef, settingUpWalletRef } = state.context;
+      const {
+        isCreateNewWallet,
+        isSPV,
+        createWalletRef,
+        settingUpWalletRef
+      } = state.context;
       let component, text, animationType, PageComponent;
 
       const key = Object.keys(state.value)[0];
