@@ -6,8 +6,8 @@
 }
 
 .shortSeparator {
-  height: 7px;
-  margin-bottom: 15px;
+  height: 15px;
+  margin-bottom: 12px;
   background-image: var(--menu-arrow-up);
   background-position: 50% 8px;
   background-repeat: no-repeat;

@@ -200,15 +200,15 @@
   margin-top: 18px;
   width: 88%;
 }
-.actionsPubkey .actionsPubkeyLabel {
+.actionsPubkeyLabel {
   font-size: 13px;
   line-height: 17px;
   margin-top: 2px;
   margin-right: 14px;
 }
-.actionsPubkey .actionsPubkeyButton {
-  height: 15px;
-  width: 37px;
+.actionsPubkeyButton {
+  height: 25px;
+  width: 75px;
   color: var(--input-color-default);
   font-size: 13px;
   line-height: 17px;
@@ -219,20 +219,20 @@
   transition: all 131ms var(--ease-in-out-quart);
   cursor: auto;
 }
-.actionsPubkey .actionsPubkeyArea {
+.actionsPubkeyArea {
   color: var(--input-color);
   font-size: 13px;
   line-height: 17px;
-  font-weight: N00;
+  font-weight: 600;
   padding: 2px 20px 3px 20px;
   border-radius: 3px;
   background-color: var(--background-copy-color);
-  height: 32px;
+  height: 55px;
   width: 390px;
   word-break: break-all;
   transition: all 131ms var(--ease-in-out-quart);
 }
-.actionsPubkey .actionsPubkeyClipboard {
+.actionsPubkeyClipboard {
   margin-left: 10px;
 }
 .disabled {

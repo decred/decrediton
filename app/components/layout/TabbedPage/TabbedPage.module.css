@@ -10,12 +10,12 @@
 
 .tabbedPageHeader {
   background-color: var(--background-back-color);
-  padding: 43px 60px 0px 63px;
+  padding: 43px 60px 0 63px;
   position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  height: 114px;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 157px;
 }
 
 .tabContent {
@@ -53,11 +53,11 @@
   }
 
   .tabbedPageHeader {
-    height: 82px;
+    height: 135px;
     padding-top: 30px;
   }
 
   .tabContent {
-    padding: 0 10px 80px 10px;
+    padding: 10px 10px 80px 10px;
   }
 }

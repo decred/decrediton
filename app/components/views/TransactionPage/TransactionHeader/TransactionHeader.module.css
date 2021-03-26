@@ -5,7 +5,7 @@
 }
 .subtitlePair {
   display: flex;
-  margin-top: 3px;
+  align-items: center;
 }
 .subtitleSentfrom {
   margin-right: 5px;
@@ -28,7 +28,7 @@
   max-height: 22px;
 }
 .subtitleAccount {
-  width: 80px;
+  width: 100px;
   max-height: 22px;
 }
 .thinButton {

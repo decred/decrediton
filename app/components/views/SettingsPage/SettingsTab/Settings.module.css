@@ -223,10 +223,6 @@
   color: var(--error-text-color);
 }
 
-div.radioButtonsWrapper > * {
-  box-sizing: border-box;
-}
-
 .timezoneOption {
   margin: 0 0 1rem 0 !important;
 }

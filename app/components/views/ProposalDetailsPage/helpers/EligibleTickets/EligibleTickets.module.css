@@ -1,7 +1,7 @@
 .wrapper {
   background-color: var(--background-back-color);
   padding: 20px;
-  width: 700px;
+  width: 740px;
   margin-top: 20px;
 }
 
@@ -55,12 +55,12 @@
 
 @media screen and (max-width: 1179px) {
   .wrapper {
-    width: 594px;
+    width: 635px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .wrapper {
-    width: 315px;
+    width: 100%;
   }
 }

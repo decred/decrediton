@@ -2,10 +2,10 @@
   overflow-x: hidden;
   overflow-y: scroll;
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 157px;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
   padding: 38px 60px 30px 63px;
   background-color: var(--background-container);
 }
@@ -18,6 +18,6 @@
 
 @media screen and (max-width: 768px) {
   .body {
-    top: 113px;
+    top: 135px;
   }
 }

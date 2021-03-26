@@ -51,10 +51,6 @@
   text-transform: capitalize;
 }
 
-div.radioButtonsWrapper > * {
-  box-sizing: border-box;
-}
-
 .bottom {
   padding-top: 15px;
   display: flex;
@@ -91,8 +87,8 @@ div.radioButtonsWrapper > * {
 }
 
 .agendaCard {
-  width: 180px;
-  height: 190px;
+  width: 225px;
+  height: 225px;
   margin-bottom: 20px;
   margin-right: 20px;
   padding: 20px;

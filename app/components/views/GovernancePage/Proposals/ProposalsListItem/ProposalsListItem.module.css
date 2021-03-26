@@ -1,22 +1,22 @@
-.listiTtem {
+.listItem {
   padding: 18px 16px 6px 20px;
   border-left: 2px solid var(--background-back-color);
   border-bottom: 2px solid var(--background-container);
   cursor: pointer;
   background-color: var(--background-back-color);
   min-height: 30px;
-  width: 700px;
+  width: 800px;
 }
 
-.listiTtem.ended.passed {
+.listItem.ended.passed {
   border-left: 2px solid var(--vote-yes-color);
 }
 
-.listiTtem.ended.declined {
+.listItem.ended.declined {
   border-left: 2px solid var(--vote-no-color);
 }
 
-.listiTtem.ended .proposalName {
+.listItem.ended .proposalName {
   color: var(--stroke-color-hovered);
 }
 
@@ -28,7 +28,7 @@
   padding-top: 6px;
 }
 
-.listiTtem:hover .name {
+.listItem:hover .name {
   color: var(--input-color);
 }
 
@@ -102,7 +102,13 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .listiTtem {
-    width: 600px;
+  .listItem {
+    width: 700px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .listItem {
+    width: 100%;
   }
 }
