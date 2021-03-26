@@ -280,6 +280,8 @@ export const purchaseTicketsV3 = (
       resObj.ticketHashes = response
         .getTicketHashesList()
         .map((v) => rawHashToHex(v));
+      resObj.splitTx = Buffer.from(response.getSplitTx());
+      resObj.ticketsList = response.getTicketsList().map((v) => Buffer.from(v));
       resolve(resObj);
     });
   });

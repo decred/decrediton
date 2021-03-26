@@ -1569,6 +1569,7 @@ export const confirmationDialogModalVisible = bool(
 
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
+export const isPurchasingTicketsTrezor = get(["trezor", "purchasingTickets"]);
 
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isChangePassPhraseDisabled = isWatchingOnly;
