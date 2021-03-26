@@ -81,39 +81,27 @@
   z-index: 98;
   margin-left: 150px;
   padding: 30px 40px 30px 58px;
+  position: relative;
 }
 
-.qrPages ul {
-  position: absolute;
-  height: 40px;
-  display: inline-block;
-  bottom: 0;
-  list-style-type: none;
+.qrTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 10px;
 }
 
-.qrPages li {
-  display: inline-block;
+.qrContent {
+  height: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.qrPages ul li a {
-  text-decoration: none;
-  padding: 16px;
+.qrCounter {
+  text-align: center;
 }
 
-.qrPages ul li a:hover {
-  background-color: var(--transaction-account-name-bg);
-}
-
-.qrPages ul li a:focus {
-  outline: none;
-}
-
-.pseudo-modal.info {
-  z-index: 98;
-  margin-top: 0;
-  margin-left: 150px;
-  padding: 30px 40px 30px 58px;
-}
+/* QR modal css end */
 
 .modal.info {
   display: flex;

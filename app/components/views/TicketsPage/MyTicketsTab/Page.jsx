@@ -55,23 +55,26 @@ const subtitleMenu = ({
         <QRModalButton
           className={styles.qrButton}
           modalTitle={<T id="tickets.qr.button" m="Active Tickets QR Code" />}
-          pagesRemaining={
-            QRs.length > 1 ? QRsPage + 1 + "/" + QRs.length : null
-          }
-          // TODO: Use translated phrase.
+          pagesRemaining={QRs.length > 1 && `${QRsPage + 1}/${QRs.length}`}
           modalContent={
             QRs.length != 0 ? (
               <img src={QRs[QRsPage]} />
             ) : loadingQRs ? (
-              "loading"
+              <T id="tickets.qr.loading" m="Loading..." />
             ) : (
-              "No active tickets in the current view."
+              <T
+                id="tickets.qr.notickets"
+                m="No active tickets in the current view."
+              />
             )
           }
           onClick={prepareQRs}
           pages={
             QRs.length > 1 && (
               <ReactPaginate
+                containerClassName={styles.qrsPaginator}
+                pageClassName={styles.qrPage}
+                activeClassName={styles.qrPageActive}
                 previousLabel={"<"}
                 nextLabel={">"}
                 breakLabel={"..."}

@@ -6,7 +6,7 @@
 
 .qrTooltip {
   font-size: 14px;
-  width: 8rem;
+  width: 9.5rem;
 }
 
 .ticketsButtons {
@@ -58,25 +58,48 @@
 }
 
 .menuButton {
-  margin-left: 0.5em;
   height: 20px;
 }
 
 .qrButton {
+  margin-left: 10px;
   background-position: 10px 1px;
   background-repeat: no-repeat;
   background-size: 18px 18px;
   width: 40px;
   height: 20px;
   border-radius: 4px;
-  padding: 0px;
-  display: list-item;
+  padding: 0;
   background-image: var(--qrcode);
   background-color: var(--text-toggle-button-inactive-text);
 }
 
 .qrButton:hover {
   background-color: var(--filter-menu-bg-hover);
+}
+
+.qrsPaginator {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.qrsPaginator > li {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.qrsPaginator > li > a {
+  outline: none;
+}
+
+.qrPageActive {
+  background-color: var(--transaction-account-name-bg);
 }
 
 @media screen and (max-width: 768px) {

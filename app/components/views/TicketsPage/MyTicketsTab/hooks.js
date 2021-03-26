@@ -28,8 +28,8 @@ export const useTicketsList = () => {
   const [QRsPage, setQRsPage] = useState(0);
   const [loadingQRs, setLoadingQRs] = useState(true);
 
-  // XXX make app or file level constant.
-  const txPerQR = 2; // 15
+  // Number of transaction hashes per QR.
+  const TX_PER_QR = 1;
 
   const activeFilter = ({ status }) =>
     status === UNMINED || status === IMMATURE || status === LIVE;
@@ -58,10 +58,10 @@ export const useTicketsList = () => {
 
     const qrsPromises = [];
     // Create for each page of hashes a QR.
-    for (let i = 0; i < Math.ceil(filteredHashes.length / txPerQR); i++) {
-      const start = i * txPerQR;
+    for (let i = 0; i < Math.ceil(filteredHashes.length / TX_PER_QR); i++) {
+      const start = i * TX_PER_QR;
       const qrdata = JSON.stringify(
-        filteredHashes.slice(start, start + txPerQR)
+        filteredHashes.slice(start, start + TX_PER_QR)
       );
       qrsPromises.push(QRCode.toDataURL(qrdata));
     }

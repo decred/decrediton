@@ -16,11 +16,11 @@ const QRModal = ({
   <Modal
     className={classNames(styles.qr, modalClassName)}
     {...{ show, onCancelModal, draggable }}>
-    {modalTitle && modalTitle}
+    <div className={styles.qrTitle}>{modalTitle && modalTitle}</div>
     <div className={styles.infoCloseButtonTop} onClick={onCancelModal} />
-    <div>{pagesRemaining}</div>
-    <div>{modalContent}</div>
-    <div className={styles.qrPages}>{pages}</div>
+    <div className={styles.qrContent}>{modalContent}</div>
+    {pagesRemaining && <div className={styles.qrCounter}>{pagesRemaining}</div>}
+    {pages}
   </Modal>
 );
 
