@@ -22,7 +22,7 @@
   font-size: 13px;
   line-height: 17px;
   padding: 20px 40px;
-  width: 366px;
+  width: 405px;
   background-color: var(--background-back-color);
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@
 .exportAreaRight {
   background-color: var(--disabled-background-color-dark);
   padding: 30px 40px;
-  width: 266px;
+  width: 335px;
   font-size: 13px;
   line-height: 16px;
   color: var(--main-dark-blue);
@@ -75,7 +75,7 @@
 }
 
 .modal {
-  width: 347px !important;
+  width: 470px !important;
 }
 .modalTitle {
   color: var(--grey-7);
@@ -111,11 +111,11 @@ ul.exportInfoFields {
 
 @media screen and (max-width: 1180px) {
   .exportAreaLeft {
-    width: 273px;
+    width: 388px;
   }
   .exportAreaRight {
     padding-right: 20px;
-    width: 263px;
+    width: 287px;
   }
 
   .exportAreaButton {
@@ -125,7 +125,7 @@ ul.exportInfoFields {
 
 @media screen and (max-width: 768px) {
   .modal {
-    width: 247px !important;
+    width: 350px !important;
   }
   .exportArea {
     flex-direction: column;
@@ -133,7 +133,7 @@ ul.exportInfoFields {
   }
 
   .exportAreaLeft {
-    width: 314px;
+    width: 355px;
     padding: 20px;
   }
   .exportAreaLeft label:first-child {
@@ -141,7 +141,7 @@ ul.exportInfoFields {
   }
 
   .exportAreaRight {
-    width: 315px;
+    width: 355px;
     min-height: 88px;
     padding: 20px;
   }
