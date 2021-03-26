@@ -181,6 +181,7 @@
 }
 
 .pasteButton {
+  font-family: var(--font-family-regular);
   position: absolute;
   right: 0;
   top: 9px;
