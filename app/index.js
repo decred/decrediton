@@ -1,4 +1,3 @@
-// @flow
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
@@ -25,7 +24,7 @@ import {
   DEFAULT_DARK_THEME_NAME,
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
-import { lightTheme, darkTheme, icons } from "style/themes";
+import { sharedTheme, lightTheme, darkTheme, icons } from "style/themes";
 import SourceSansProLight from "style/fonts/SourceSansPro-Light.ttf";
 import SourceSansProLightItalic from "style/fonts/SourceSansPro-LightItalic.ttf";
 import SourceSansProRegular from "style/fonts/SourceSansPro-Regular.ttf";
@@ -498,8 +497,18 @@ const fonts = [
 ];
 
 const themes = {
-  [DEFAULT_LIGHT_THEME_NAME]: { ...defaultLightTheme, ...lightTheme, ...icons },
-  [DEFAULT_DARK_THEME_NAME]: { ...defaultDarkTheme, ...darkTheme, ...icons }
+  [DEFAULT_LIGHT_THEME_NAME]: {
+    ...defaultLightTheme,
+    ...sharedTheme,
+    ...lightTheme,
+    ...icons
+  },
+  [DEFAULT_DARK_THEME_NAME]: {
+    ...defaultDarkTheme,
+    ...sharedTheme,
+    ...darkTheme,
+    ...icons
+  }
 };
 
 const history = createMemoryHistory();
