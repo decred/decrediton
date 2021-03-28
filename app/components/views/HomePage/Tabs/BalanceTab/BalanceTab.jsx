@@ -32,6 +32,7 @@ const BalanceTab = () => {
           </div>
         </div>
         <Tooltip
+          contentClassName={styles.balanceTooltip}
           content={
             <div className={styles.lockedBalanceTooltipGrid}>
               <T id="home.immatureRewardBalanceLabel" m="Immature Rewards" />:
