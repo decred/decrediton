@@ -139,6 +139,10 @@
   .overviewContentWrapper {
     padding-left: 20px;
   }
+
+  .balanceTooltip {
+    left: 110% !important;
+  }
 }
 
 @media screen and (max-width: 768px) {
