@@ -1,36 +1,40 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
+import { AutoBuyerSettingsModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip, classNames } from "pi-ui";
-import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
-import { Balance, Subtitle } from "shared";
-import styles from "../PurchaseTab.module.css";
+import { Tooltip } from "pi-ui";
+import { Balance } from "shared";
+import styles from "./TicketAutoBuyer.module.css";
 
 const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
   onStopAutoBuyer,
   isRunning,
   balanceToMaintain,
-  onChangeBalanceToMaintain,
-  balanceToMaintainError,
+  setBalanceToMaintain,
   account,
-  changeAccount,
+  setAccount,
   vsp,
-  changeVSP,
+  setVsp,
   availableVSPs,
   isValid,
-  onClick,
   clicked,
+  onClick,
   notMixedAccounts,
-  getRunningIndicator
+  getRunningIndicator,
+  onSaveAutoBuyerSettings,
+  isSettingsModalVisible,
+  showSettingsModal,
+  hideSettingsModal
 }) => (
   <>
-    <Subtitle
-      title={<T id="vsp.autobuyer.subtitle" m="Automatic Ticket Purchases" />}
-    />
-    <div className={styles.autobuyerWrapper}>
-      <div className={styles.autoBuyerRow}>
+    <div className={styles.wrapper}>
+      <div>
         {isRunning ? (
-          <AutoBuyerSwitch enabled onClick={onStopAutoBuyer} />
+          <AutoBuyerSwitch
+            enabled
+            onClick={onStopAutoBuyer}
+            className={styles.toggleSwitch}
+          />
         ) : getRunningIndicator ? (
           <Tooltip
             content={
@@ -43,6 +47,7 @@ const TicketAutoBuyerForm = ({
           </Tooltip>
         ) : (
           <AutoBuyerPassphraseModalSwitch
+            className={styles.toggleSwitch}
             modalTitle={
               <T
                 id="vsp.tickets.startAutoBuyerConfirmation"
@@ -71,7 +76,7 @@ const TicketAutoBuyerForm = ({
                       :
                     </div>
                     <div>
-                      <Balance flat amount={balanceToMaintain} />
+                      <Balance flat amount={balanceToMaintain?.atomValue} />
                     </div>
                   </div>
                   <div className={styles.isRow}>
@@ -88,63 +93,28 @@ const TicketAutoBuyerForm = ({
             isValid={isValid}
           />
         )}
-        <div className={styles.autoBuyerRowPortionHalf}>
-          <div className={styles.autobuyerLabel}>
-            <T id="vsp.autobuyer.accountFrom" m="From" />:
-          </div>
-          <div className={styles.autobuyerInput}>
-            <AccountsSelect
-              {...{ account }}
-              disabled={isRunning}
-              onChange={changeAccount}
-              showAccountsButton={false}
-              hideSpendable={true}
-              filterAccounts={notMixedAccounts}
-            />
-          </div>
-        </div>
-        <div
-          className={classNames(styles.autoBuyerRowPortionHalf, styles.isRow)}>
-          <div className={styles.autobuyerLabel}>
-            <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />:
-          </div>
-          <div className={styles.autobuyerInput}>
-            <VSPSelect
-              options={availableVSPs}
-              isDisabled={isRunning}
-              value={vsp}
-              onChange={changeVSP}
-            />
-          </div>
-        </div>
       </div>
-      <div className={styles.autoBuyerRow}>
-        <div className={styles.autoBuyerRowPortionFull}>
-          <label className={styles.autobuyerLabel}>
-            <T id="vsp.autobuyer.balanceToMaintain" m="Balance to Maintain" />:
-          </label>
-          <div className={styles.autobuyerInput}>
-            <DcrInput
-              disabled={isRunning}
-              amount={balanceToMaintain}
-              onChangeAmount={onChangeBalanceToMaintain}
-              invalid={balanceToMaintainError}
-              invalidMessage={
-                <T
-                  id="vsp.autobuyer.balanceToMaintainError"
-                  m="Your balance to mantain is invalid"
-                />
-              }
-              showErrors
-            />
-          </div>
-        </div>
+      <div className={styles.subtitle}>
+        <T id="vsp.autobuyer.subtitle" m="Automatic Ticket Purchases" />
       </div>
-      {clicked && isValid === false && (
-        <div className={styles.error}>
-          <T id="vsp.autobuyer.startErr" m="Fill all fields." />
-        </div>
-      )}
+      <button className={styles.settingsButton} onClick={showSettingsModal} />
+      <AutoBuyerSettingsModal
+        {...{
+          show: isSettingsModalVisible,
+          onSubmit: onSaveAutoBuyerSettings,
+          onCancelModal: hideSettingsModal,
+          balanceToMaintain,
+          setBalanceToMaintain,
+          account,
+          setAccount,
+          vsp,
+          setVsp,
+          availableVSPs,
+          notMixedAccounts,
+          isValid,
+          clicked
+        }}
+      />
     </div>
   </>
 );

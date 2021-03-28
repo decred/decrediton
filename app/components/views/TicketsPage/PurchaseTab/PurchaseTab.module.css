@@ -87,11 +87,6 @@
   margin-bottom: 10px;
 }
 
-.autobuyerWrapper {
-  background-color: var(--background-back-color);
-  padding: 29px 20px 29px 20px;
-}
-
 .rememberVspCheckBox {
   grid-column: 2;
   justify-self: right;
@@ -185,51 +180,8 @@
   width: auto;
   justify-content: space-between;
 }
-.autoBuyerRow {
-  display: flex;
-  margin-bottom: 10px;
-  width: 100%;
-  flex-direction: row-reverse;
-}
-.autobuyerInput {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.5em;
-
-  width: 200px;
-}
-.autoBuyerRowPortionFull {
-  width: 100%;
-  text-align: center;
-}
-.autoBuyerRowPortionFull .autobuyerInput {
-  width: 100px;
-}
-.autoBuyerRowPortionHalf {
-  width: 50%;
-  display: flex;
-  margin-bottom: 10px;
-}
-.autoBuyerRowPortionHalf .autobuyerInput {
-  width: 230px;
-}
-.autobuyerLabel {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.5em;
-
-  font-size: 16px;
-  line-height: 20px;
-}
 .error {
   color: var(--error-text-color);
-}
-.orangeWarning {
-  position: inherit;
-}
-.confirmLabel {
-  display: inline-block;
-  margin-right: 0.5em;
 }
 
 @media screen and (max-width: 1179px) {
@@ -288,11 +240,5 @@
   .buttonsArea {
     width: 355px;
     margin-bottom: 20px;
-  }
-  .autoBuyerRow {
-    flex-direction: column;
-  }
-  .autoBuyerRowPortionFull {
-    text-align: start;
   }
 }

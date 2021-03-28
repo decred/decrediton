@@ -35,11 +35,11 @@ test("test StakeInfo (SPV enabled)", () => {
 
   const unspentTickets = screen.getByText(/unspent tickets/i);
   expect(unspentTickets.nextElementSibling.textContent).toBe(
-    `${mockUnspentTicketsCount} tickets`
+    `${mockUnspentTicketsCount}`
   );
 
   expect(screen.getByText(/total voted/i).nextElementSibling.textContent).toBe(
-    `${mockVotedTicketsCount} tickets`
+    `${mockVotedTicketsCount}`
   );
   expect(
     screen.getByText(/last ticket voted/i).nextElementSibling.textContent

@@ -50,9 +50,6 @@
   display: inline-block;
   margin-right: 0.5em;
 }
-.error {
-  color: var(--error-text-color);
-}
 @media screen and (max-width: 768px) {
   .row {
     flex-direction: column;

@@ -773,3 +773,15 @@ export const setVSPDVoteChoices = (passphrase) => async (
     dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
   }
 };
+
+export const SAVE_AUTOBUYER_SETTINGS = "SAVE_AUTOBUYER_SETTINGS";
+export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
+  dispatch
+) => {
+  dispatch({
+    type: SAVE_AUTOBUYER_SETTINGS,
+    balanceToMaintain,
+    account,
+    vsp
+  });
+};

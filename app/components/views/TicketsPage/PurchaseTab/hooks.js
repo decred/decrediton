@@ -25,7 +25,7 @@ export const usePurchaseTab = () => {
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
   const buyerVSP = useSelector(sel.buyerVSP);
-  const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
+  const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
   const buyerAccount = useSelector(sel.buyerAccount);
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
 
@@ -120,7 +120,7 @@ export const usePurchaseTab = () => {
     ticketAutoBuyerRunning,
     buyerVSP,
     buyerAccount,
-    buyerBalanceToMantain,
+    buyerBalanceToMaintain,
     getVSPTicketsByFeeStatus,
     isLegacy,
     toggleIsLegacy,

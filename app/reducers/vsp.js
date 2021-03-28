@@ -16,7 +16,8 @@ import {
   PROCESSUNMANAGEDTICKETS_FAILED,
   SETVSPDVOTECHOICE_ATTEMPT,
   SETVSPDVOTECHOICE_FAILED,
-  SETVSPDVOTECHOICE_SUCCESS
+  SETVSPDVOTECHOICE_SUCCESS,
+  SAVE_AUTOBUYER_SETTINGS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -137,6 +138,13 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         setVspdVoteChoicesRequestAttempt: false
+      };
+    case SAVE_AUTOBUYER_SETTINGS:
+      return {
+        ...state,
+        balanceToMaintain: action.balanceToMaintain,
+        account: action.account,
+        vsp: action.vsp
       };
     default:
       return state;
