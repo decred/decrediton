@@ -26,7 +26,6 @@ import {
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
-import { ipcRenderer } from "electron";
 
 const session = require("connect").default;
 const { TRANSPORT_EVENT, UI, UI_EVENT, DEVICE_EVENT } = require("connect");
