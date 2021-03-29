@@ -1,24 +1,4 @@
 /*///////////////////////////////////
-//  Global variables
-///////////////////////////////////*/
-
-:root {
-  /* TODO: check if these css variables aren't in style/themes/...
-  // and if not migrate theme and delete from here */
-  --sidebar-width: 296px;
-  --sidebar-width-reduced: 60px;
-  --disabled-box-shadow-color: rgba(0, 0, 0, 0.1);
-  --disabled-box-shadow: 0px 1px 1px var(--disabled-box-shadow-color);
-
-  --font-family-monospace: "Source Code Pro", monospace;
-  --font-family-regular: "Source Sans Pro", sans-serif;
-  --font-family-regular-semi-bold: "Source Sans Pro Semi Bold", sans-serif;
-
-  --input-transition-time: 230ms;
-  --input-timing-function: ease-in-out;
-}
-
-/*///////////////////////////////////
 //  Global classes
 ///////////////////////////////////*/
 
