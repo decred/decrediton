@@ -1,5 +1,4 @@
-import React from "react";
-import ChooseVoteOption from "./ChooseVoteOption.jsx";
+import { memo } from "react";
 import {
   VOTESTATUS_ACTIVEVOTE,
   VOTESTATUS_FINISHEDVOTE,
@@ -9,23 +8,23 @@ import {
   ProposalNotVoting,
   NoTicketsVotingInfo,
   NoElligibleTicketsVotingInfo,
-  ProposalAbandoned
+  ProposalAbandoned,
+  ChooseVoteOption
 } from "./";
 
-const VoteInfo = React.memo(
+const VoteInfo = memo(
   ({
     proposalStatus,
     voteStatus,
     hasTickets,
-    hasEligibleTickets,
     currentVoteChoice,
     viewedProposalDetails,
-    eligibleTicketCount,
     newVoteChoice,
     setVoteOption,
     showPurchaseTicketsPage,
     voteOptions
   }) => {
+    const { hasEligibleTickets, eligibleTicketCount } = viewedProposalDetails;
     if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
       return <ProposalAbandoned />;
     }

@@ -14,14 +14,6 @@ export const shortDatetimeFormatter = new Intl.DateTimeFormat(
   shortDateTimeOptions
 );
 
-const dateOptions = {
-  year: "numeric",
-  month: "numeric",
-  day: "numeric"
-};
-
-export const dateFormatter = new Intl.DateTimeFormat("default", dateOptions);
-
 // dateToLocal converts the specified unix timestamp (possibly a block or
 // transaction timestamp) from seconds to a JS Date object.
 export function dateToLocal(timestamp) {

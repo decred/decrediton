@@ -1,11 +1,11 @@
-import { fetchMachine } from "stateMachines/FetchStateMachine";
-import { useMachine } from "@xstate/react";
-import { StakeyBounceXs } from "indicators";
 import { useDispatch } from "react-redux";
 import { useState, useCallback, useMemo } from "react";
+import { useMachine } from "@xstate/react";
+import { fetchMachine } from "stateMachines/FetchStateMachine";
+import { StakeyBounceXs } from "indicators";
 import * as gov from "actions/GovernanceActions";
-import styles from "../ProposalDetails.module.css";
-import ChooseOptions from "./ChooseOptions";
+import styles from "./ChooseVoteOption.module.css";
+import { ChooseOptions } from "../";
 import { FormattedMessage as T } from "react-intl";
 
 const getError = (error) => {
@@ -21,9 +21,10 @@ const ChooseVoteOption = ({
   viewedProposalDetails,
   voteOptions,
   currentVoteChoice,
-  votingComplete,
-  eligibleTicketCount
+  votingComplete
 }) => {
+  // XXX move all hooks/state logic to a custom hook ie. useChooseVoteOption
+  const { eligibleTicketCount } = viewedProposalDetails;
   const [newVoteChoice, setVoteOption] = useState(null);
 
   const dispatch = useDispatch();

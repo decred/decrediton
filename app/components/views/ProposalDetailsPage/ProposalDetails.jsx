@@ -8,15 +8,8 @@ import {
   DEFAULT_DARK_THEME_NAME
 } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
-import { InvisibleButton } from "buttons";
 import { PoliteiaLink } from "shared";
-import {
-  OverviewField,
-  TimeValue,
-  ProposalText,
-  VoteInfo,
-  EligibleTickets
-} from "./helpers";
+import { OverviewField, TimeValue, ProposalText, VoteSection } from "./helpers";
 import { getStatusBarData } from "./utils";
 import {
   VOTESTATUS_ACTIVEVOTE,
@@ -32,7 +25,6 @@ const ProposalDetails = ({
     timestamp,
     endTimestamp,
     currentVoteChoice,
-    hasEligibleTickets,
     name,
     token,
     voteStatus,
@@ -48,15 +40,9 @@ const ProposalDetails = ({
   setVoteOption,
   newVoteChoice,
   text,
-  goBackHistory,
-  eligibleTicketCount,
+  //goBackHistory,
   linkedProposal
 }) => {
-  walletEligibleTickets = walletEligibleTickets.map((et, i) => {
-    walletEligibleTickets[i].txHash = et.ticket;
-    return walletEligibleTickets[i];
-  });
-
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const { themeName } = useTheme();
   const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
@@ -126,25 +112,6 @@ const ProposalDetails = ({
               />
             </div>
           </div>
-          <div className={styles.overviewVoting}>
-            <InvisibleButton
-              className={styles.backIconButton}
-              onClick={goBackHistory}
-            />
-            <VoteInfo
-              proposalStatus={proposalStatus}
-              voteStatus={voteStatus}
-              hasTickets={hasTickets}
-              hasEligibleTickets={hasEligibleTickets}
-              currentVoteChoice={currentVoteChoice}
-              viewedProposalDetails={viewedProposalDetails}
-              eligibleTicketCount={eligibleTicketCount}
-              newVoteChoice={newVoteChoice}
-              setVoteOption={setVoteOption}
-              showPurchaseTicketsPage={showPurchaseTicketsPage}
-              voteOptions={voteOptions}
-            />
-          </div>
         </div>
         {votingActiveOrFinished && (
           <StatusBar
@@ -170,11 +137,21 @@ const ProposalDetails = ({
           />
         )}
       </div>
+      {/* XXX [&& walletEligibleTickets] ? */}
       {votingActiveOrFinished && walletEligibleTickets && (
-        <EligibleTickets
-          tickets={walletEligibleTickets}
-          tsDate={tsDate}
-          voteChoice={newVoteChoice || currentVoteChoice.id}
+        <VoteSection
+          {...{
+            hasTickets,
+            walletEligibleTickets,
+            viewedProposalDetails,
+            proposalStatus,
+            voteStatus,
+            currentVoteChoice,
+            newVoteChoice,
+            setVoteOption,
+            voteOptions,
+            showPurchaseTicketsPage
+          }}
         />
       )}
       <div className={styles.detailsText}>

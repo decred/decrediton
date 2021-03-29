@@ -1,0 +1,26 @@
+.voteSection {
+  background-color: var(--background-back-color);
+  padding: 20px;
+  width: 740px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1179px) {
+  .voteSection {
+    width: 635px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .voteSection {
+    width: 100%;
+  }
+}

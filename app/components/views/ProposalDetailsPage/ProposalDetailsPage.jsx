@@ -11,7 +11,6 @@ import { LoadingError } from "shared";
 const ProposalDetailsPage = () => {
   const {
     viewedProposalDetails,
-    eligibleTicketCount,
     votingStatus,
     getProposalError,
     goBackHistory,
@@ -19,6 +18,7 @@ const ProposalDetailsPage = () => {
     send,
     linkedProposal
   } = useProposalDetailsPage();
+  const { eligibleTicketCount } = viewedProposalDetails || {};
 
   const stateComponent = useMemo(() => {
     let text = "";
@@ -43,7 +43,6 @@ const ProposalDetailsPage = () => {
               text,
               viewedProposalDetails,
               goBackHistory,
-              eligibleTicketCount,
               showPurchaseTicketsPage,
               linkedProposal
             }}
@@ -63,7 +62,6 @@ const ProposalDetailsPage = () => {
         return null;
     }
   }, [
-    eligibleTicketCount,
     goBackHistory,
     viewedProposalDetails,
     getProposalError,

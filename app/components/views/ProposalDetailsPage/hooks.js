@@ -35,11 +35,6 @@ export const useProposalDetailsPage = () => {
     [proposals, viewedProposalDetails]
   );
 
-  const eligibleTicketCount =
-    viewedProposalDetails && viewedProposalDetails.walletEligibleTickets
-      ? proposalsDetails[token].walletEligibleTickets.length
-      : 0;
-
   const showPurchaseTicketsPage = useCallback(
     () => dispatch(cli.showPurchaseTicketsPage()),
     [dispatch]
@@ -72,7 +67,6 @@ export const useProposalDetailsPage = () => {
 
   return {
     viewedProposalDetails,
-    eligibleTicketCount,
     votingStatus,
     getProposalError,
     proposalsDetails,
