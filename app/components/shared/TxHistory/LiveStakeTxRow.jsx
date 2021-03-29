@@ -67,7 +67,9 @@ const StakeTxRow = ({
           <span className={classNames(styles[className], styles.icon)} />
           <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+        <Tooltip
+          className={styles.tooltip}
+          content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
           <Balance
             bold
             classNameAmount={styles.myTicketsPrice}
@@ -77,6 +79,7 @@ const StakeTxRow = ({
         </Tooltip>
         <div></div>
         <Tooltip
+          className={styles.tooltip}
           content={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />}>
           <div className={classNames(styles.feeStatus)}>{feeStatusString}</div>
         </Tooltip>
