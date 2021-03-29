@@ -9,13 +9,6 @@ import styles from "../PurchaseTab.module.css";
 import { KeyBlueButton } from "buttons";
 import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
 
-export const LegacyVSPWarning = () => (
-  <T
-    id="purchase.isLegacyDescription"
-    m="Use a VSP which has not updated to vspd. Not recommended, legacy VSP support will soon be removed."
-  />
-);
-
 const PrivacyInfo = () => {
   const [show, setShow] = useState(false);
   return (
@@ -34,34 +27,6 @@ const PrivacyInfo = () => {
     </div>
   );
 };
-
-const TitleIcon = ({ toggleIsLegacy }) => (
-  <div className={styles.iconWrapper}>
-    {/* The div below is a placeholder for the info modal "i" icon which is not
-        displayed on the new VSP form. Including this here ensures the layout is
-        consistent and prevents things from moving then the "i" is hidden.
-        This div can be removed when the legacy VSP form is removed. */}
-    <div
-      style={{
-        width: "20px",
-        height: "20px",
-        padding: "3px",
-        margin: "4px 0 4px 0"
-      }}
-    />
-    <Tooltip
-      contentClassName={styles.useLegacyTooltip}
-      content={<LegacyVSPWarning />}>
-      <Checkbox
-        label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
-        className={styles.useLegacyLabel}
-        id="box"
-        checked={false}
-        onChange={() => toggleIsLegacy(true)}
-      />
-    </Tooltip>
-  </div>
-);
 
 const EnableVSP = ({ onEnableVSP }) => (
   <div className={styles.enableVSPWrapper}>
@@ -115,8 +80,7 @@ export function PurchasePage({
       {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
       <Subtitle
         title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-        className="flex-row">
-        <TitleIcon toggleIsLegacy={toggleIsLegacy} />
+        className="is-row">
       </Subtitle>
       {mixedAccount && changeAccount && <PrivacyInfo />}
       {spvMode && blocksNumberToNextTicket === 2 ? (
@@ -150,7 +114,8 @@ export function PurchasePage({
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
             onRevokeTickets,
-            getRunningIndicator
+            getRunningIndicator,
+            toggleIsLegacy
           }}
         />
       )}

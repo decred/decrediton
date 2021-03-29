@@ -6,6 +6,12 @@ import { Balance } from "shared";
 import styles from "../PurchaseTab.module.css";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
+export const LegacyVSPWarning = () => (
+  <T
+    id="purchase.isLegacyDescription"
+    m="Use a VSP which has not updated to vspd. Not recommended, legacy VSP support will soon be removed."
+  />
+);
 
 const PurchaseTicketsForm = ({
   isValid,
@@ -28,7 +34,8 @@ const PurchaseTicketsForm = ({
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
   notMixedAccounts,
-  getRunningIndicator
+  getRunningIndicator,
+  toggleIsLegacy
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, styles.isRow)}>
@@ -60,20 +67,35 @@ const PurchaseTicketsForm = ({
             />
           </div>
         </label>
-        {vsp && (
-          <Checkbox
-            className={styles.rememberVspCheckBox}
-            label={
-              <T
-                id="purchaseTickets.alwaysUseThisVSP"
-                m="Always use this VSP"
+        <div className={styles.checkboxWrapper}>
+          <div>
+            <Tooltip
+              contentClassName={styles.useLegacyTooltip}
+              content={<LegacyVSPWarning />}>
+              <Checkbox
+                label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
+                className={styles.useLegacyLabel}
+                id="box"
+                checked={false}
+                onChange={() => toggleIsLegacy(true)}
               />
-            }
-            id="rememberVspHost"
-            checked={!!rememberedVspHost}
-            onChange={toggleRememberVspHostCheckBox}
-          />
-        )}
+            </Tooltip>
+          </div>
+          {vsp && (
+            <Checkbox
+              className={styles.rememberVspCheckBox}
+              label={
+                <T
+                  id="purchaseTickets.alwaysUseThisVSP"
+                  m="Always use this VSP"
+                />
+              }
+              id="rememberVspHost"
+              checked={!!rememberedVspHost}
+              onChange={toggleRememberVspHostCheckBox}
+            />
+          )}
+        </div>
       </div>
       <div className={classNames(styles.isRow, styles.inputAmount)}>
         <label className={styles.rowLabel}>
@@ -97,14 +119,13 @@ const PurchaseTicketsForm = ({
         </label>
         {account.spendable >= numTickets * ticketPrice && (
           <div className={styles.inputValidMessageArea}>
-            {vsp && (
-              <>
-                <span>
-                  <T id="purchaseTickets.vspFee" m="VSP Fee" />:
-                </span>
-                <span className={styles.vspFee}>{vspFee} %</span>
-              </>
-            )}
+            <span>
+              <T id="purchaseTickets.vspFee" m="VSP Fee" />:
+            </span>
+            <span
+              className={classNames(styles.vspFee, vsp && styles.haveVspFee)}>
+              {vsp && vspFee ? vspFee : 0} %
+            </span>
             <T
               id="purchaseTickets.validMsg"
               m="Total: {amount} Remaining: {remaining}"

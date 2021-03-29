@@ -12,12 +12,6 @@
   cursor: pointer;
 }
 
-.iconWrapper {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
 .useLegacyTooltip {
   font-size: 12px;
   width: 20rem;
@@ -25,6 +19,8 @@
 
 .useLegacyLabel {
   font-size: 16px;
+  line-height: 20px;
+  color: var(--grey-7);
 }
 
 .infoFields strong {
@@ -69,13 +65,13 @@
   height: 15px;
   width: 12px;
   margin-left: auto;
-  transform: rotate(180deg);
-  background-position-y: 0;
+  background-position-y: 8px;
+  transform: rotate(0);
 }
 
 .readMoreIcon.active {
-  background-position-y: 8px;
-  transform: rotate(0);
+  transform: rotate(180deg);
+  background-position-y: 0;
 }
 
 .privacyInfo:hover {
@@ -90,6 +86,9 @@
 .rememberVspCheckBox {
   grid-column: 2;
   justify-self: right;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--grey-7);
 }
 
 .enableVSPButton {
@@ -143,6 +142,9 @@
   color: var(--grey-5);
 }
 .vspFee {
+  color: var(--main-dark-blue);
+}
+.haveVspFee {
   color: var(--error-red);
 }
 .validMsgBalanceUnit,
@@ -182,6 +184,12 @@
 }
 .error {
   color: var(--error-text-color);
+}
+.checkboxWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 24px;
 }
 
 @media screen and (max-width: 1179px) {
