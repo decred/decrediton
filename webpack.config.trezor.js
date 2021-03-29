@@ -20,7 +20,7 @@ module.exports = {
     devtool: "inline-source-map",
 
     output: {
-      filename: "iframe.js",
+      filename: "trezor-iframe.js",
       path: path.join(__dirname, "app/dist-trezor"),
       publicPath: "./"
     },
@@ -44,9 +44,11 @@ module.exports = {
         new webpack.NormalModuleReplacementPlugin(/.blake2b$/, "./blake2b.js"),
 
         new HtmlWebpackPlugin({
+            // trezor-connect doesn't allow overriding the iframe source file,
+            // so we need to use the too-generic "iframe.html" filename.
             filename: "iframe.html",
             template: "./app/trezor-iframe.development.html",
-            inject: false
+            scriptLoading: "blocking"
         }),
 
         new CopyWebpackPlugin({
