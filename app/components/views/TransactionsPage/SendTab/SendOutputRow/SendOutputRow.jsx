@@ -72,11 +72,17 @@ const getAddInputIcon = ({
   onlySendSelfAllowed
 }) =>
   isSendSelf || onlySendSelfAllowed || isSendAll ? (
-    <Button onClick={onAddOutput} className={styles.add} disabled />
+    <Button onClick={onAddOutput} className={styles.add} disabled>
+      <div />
+    </Button>
   ) : index === 0 ? (
-    <Button onClick={onAddOutput} className={styles.add} />
+    <Button onClick={onAddOutput} className={styles.add}>
+      <div />
+    </Button>
   ) : (
-    <Button onClick={() => onRemoveOutput(index)} className={styles.delete} />
+    <Button onClick={() => onRemoveOutput(index)} className={styles.delete}>
+      <div />
+    </Button>
   );
 
 const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
@@ -284,8 +290,9 @@ const SendOutputRow = ({
                   onClick={(e) => {
                     e.preventDefault();
                     onValidateAddress({ address: "", index });
-                  }}
-                />
+                  }}>
+                  <div />
+                </Button>
               )}
             </>
           )}
