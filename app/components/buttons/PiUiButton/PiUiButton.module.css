@@ -1,0 +1,6 @@
+.button {
+  font-family: var(--font-family-regular);
+}
+.button.secondary {
+  background-color: var(--secondary-piui-button-bg);
+}

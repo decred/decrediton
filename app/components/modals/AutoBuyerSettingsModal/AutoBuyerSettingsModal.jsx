@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import Modal from "../Modal";
 import styles from "./AutoBuyerSettingsModal.module.css";
-import { Button } from "pi-ui";
 import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
+import { PiUiButton, InvisiblePiUiButton } from "buttons";
 
 const AutoBuyerSettingsModal = ({
   onCancelModal,
@@ -25,15 +25,15 @@ const AutoBuyerSettingsModal = ({
         <T id="autoBuyerSettings.header" m="Automatic ticket purchases" />
       </div>
       <div className={styles.infoCloseButtonTop} onClick={onCancelModal} />
-      <label>
-        <T id="vsp.autobuyer.balanceToMaintain" m="Balance to Maintain" />:
+      <label className={styles.label}>
+        <T id="vsp.autobuyer.balanceToMaintain" m="Balance to Maintain" />
         <DcrInput
           amount={balanceToMaintain?.value}
           onChangeAmount={setBalanceToMaintain}
         />
       </label>
-      <label>
-        <T id="vsp.autobuyer.accountFrom" m="From" />:
+      <label className={styles.label}>
+        <T id="vsp.autobuyer.accountFrom" m="From" />
         <AccountsSelect
           {...{ account }}
           onChange={setAccount}
@@ -42,8 +42,8 @@ const AutoBuyerSettingsModal = ({
           filterAccounts={notMixedAccounts}
         />
       </label>
-      <label>
-        <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />:
+      <label className={styles.label}>
+        <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />
         <VSPSelect options={availableVSPs} value={vsp} onChange={setVsp} />
       </label>
       {clicked && isValid === false && (
@@ -51,18 +51,14 @@ const AutoBuyerSettingsModal = ({
           <T id="autobuyer.startErr" m="Fill all fields." />
         </div>
       )}
-      <div>
-        <Button
-          className={styles.cancelButton}
-          onClick={onCancelModal}
-          kind="secondary">
+      <div className={styles.buttons}>
+        <InvisiblePiUiButton onClick={onCancelModal}>
           <T id="autoBuyerSettings.cancel" m="Cancel" />
-        </Button>
-        <Button
-          className={styles.saveButton}
+        </InvisiblePiUiButton>
+        <PiUiButton
           onClick={() => onSubmit(balanceToMaintain, account, vsp)}>
           <T id="autoBuyerSettings.save" m="Save" />
-        </Button>
+        </PiUiButton>
       </div>
     </Modal>
   );

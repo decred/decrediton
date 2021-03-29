@@ -1,0 +1,11 @@
+.button {
+  color: var(--disabled-color) !important;
+}
+.button:hover {
+  color: var(--stroke-color-hovered) !important;
+}
+.button,
+.button:hover {
+  background-color: transparent !important;
+  border: none !important;
+}

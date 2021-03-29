@@ -1,6 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
-import { PassphraseModalButton, KeyBlueButton } from "buttons";
+import {
+  TicketPurchaseModalButton,
+  RevokeModalButton,
+  PiUiButton
+} from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { Balance } from "shared";
 import styles from "../PurchaseTab.module.css";
@@ -159,20 +163,21 @@ const PurchaseTicketsForm = ({
       {/* ADD VSP INFO HERE */}
     </div>
     <div className={styles.buttonsArea}>
-      <PassphraseModalButton
+      <RevokeModalButton
         modalTitle={
           <T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />
         }
         className={styles.revokeButton}
         onSubmit={onRevokeTickets}
+        kind="secondary"
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />
       {isWatchingOnly ? (
-        <KeyBlueButton disabled={!isValid} onClick={onV3PurchaseTicket}>
+        <PiUiButton disabled={!isValid} onClick={onV3PurchaseTicket}>
           {purchaseLabel()}
-        </KeyBlueButton>
+        </PiUiButton>
       ) : isLoading ? (
-        <KeyBlueButton disabled={true} loading={true} />
+        <PiUiButton disabled={true} loading={true} />
       ) : getRunningIndicator ? (
         <Tooltip
           content={
@@ -181,13 +186,13 @@ const PurchaseTicketsForm = ({
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
             />
           }>
-          <PassphraseModalButton
+          <PiUiButton
             disabled={true}
             buttonLabel={purchaseLabel()}
           />
         </Tooltip>
       ) : (
-        <PassphraseModalButton
+        <TicketPurchaseModalButton
           modalTitle={
             <T
               id="tickets.purchaseConfirmation"

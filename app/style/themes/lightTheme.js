@@ -148,6 +148,7 @@ const lightTheme = {
   "small-button-bg": "#fff",
   "small-button-disabled-bg": "#e6eaed",
   "send-transaction-border": "var(--grey-3)",
+  "secondary-piui-button-bg": "#fff",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border

@@ -30,3 +30,14 @@
 .error {
   color: var(--error-text-color);
 }
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+.label {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+}

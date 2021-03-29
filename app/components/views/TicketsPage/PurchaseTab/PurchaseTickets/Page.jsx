@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Checkbox, classNames, Tooltip } from "pi-ui";
+import { classNames } from "pi-ui";
 import UnsignedTickets from "../UnsignedTickets";
-import StakeInfo from "../StakeInfo/StakeInfo";
+import StakeInfo from "../StakeInfo";
+
 import PurchaseForm from "./PurchaseForm";
 import { ShowWarning, Subtitle } from "shared";
 import styles from "../PurchaseTab.module.css";
 import { KeyBlueButton } from "buttons";
-import TicketAutoBuyer from "../TicketAutoBuyer/TicketAutoBuyer";
+import TicketAutoBuyer from "../TicketAutoBuyer";
 
 const PrivacyInfo = () => {
   const [show, setShow] = useState(false);
