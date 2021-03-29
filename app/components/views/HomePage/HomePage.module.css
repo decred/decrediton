@@ -115,6 +115,12 @@
   height: 250px;
 }
 
+.balanceTooltip {
+  width: 31rem;
+  max-width: 31rem !important;
+  left: 90% !important;
+}
+
 .lockedBalanceTooltipGrid {
   display: grid;
   grid-template-columns: repeat(2, max-content);
@@ -132,6 +138,10 @@
 
   .overviewContentWrapper {
     padding-left: 20px;
+  }
+
+  .balanceTooltip {
+    left: 110% !important;
   }
 }
 
