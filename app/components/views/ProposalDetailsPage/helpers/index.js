@@ -12,3 +12,4 @@ export { default as VoteInfo } from "./VoteInfo";
 export { default as ChooseOptions } from "./ChooseOptions";
 export { default as ChooseVoteOption } from "./ChooseVoteOption";
 export { default as VoteSection } from "./VoteSection";
+export { default as NoTicketsMsg } from "./NoTicketsMsg";

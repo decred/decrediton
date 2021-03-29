@@ -1,20 +1,17 @@
-import styles from "../ProposalDetails.module.css";
-import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
+import { VoteButton, NoTicketsMsg } from "./";
 
 const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <>
-    <div className={styles.noTickets}>
+    <NoTicketsMsg>
       <T
         id="proposalDetails.votingInfo.noTickets"
         m="Voting is only available upon participation in Staking."
       />
-    </div>
-    <KeyBlueButton
-      className={styles.overviewVotingButton}
-      onClick={showPurchaseTicketsPage}>
+    </NoTicketsMsg>
+    <VoteButton onClick={showPurchaseTicketsPage}>
       <T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking" />
-    </KeyBlueButton>
+    </VoteButton>
   </>
 );
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { FormattedMessage as T } from "react-intl";
 import { RadioButtonGroup } from "pi-ui";
-import styles from "../ProposalDetails.module.css";
+import styles from "./ChooseOptions.module.css";
 import { PassphraseModalButton } from "buttons";
 
 const UpdateVoteChoiceModalButton = ({
@@ -29,7 +29,7 @@ const UpdateVoteChoiceModalButton = ({
     }
     disabled={!newVoteChoice || votedSuccessfully}
     onSubmit={onSubmit}
-    className={styles.overviewVotingButton}
+    className={styles.voteButton}
     buttonLabel={
       <T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />
     }
@@ -55,7 +55,7 @@ const ChooseOptions = React.memo(
             m="My Voting Preference"
           />
         </div>
-        <div className={styles.radioButtonsWrapper}>
+        <div>
           <RadioButtonGroup
             options={voteOptions.map((o) => ({
               label: `${o.id.charAt(0).toUpperCase()}${o.id.slice(1)}`,

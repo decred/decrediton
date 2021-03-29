@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { RadioButtonGroup, classNames } from "pi-ui";
+import { RadioButtonGroup } from "pi-ui";
 import styles from "./Settings.module.css";
 
 const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
@@ -34,11 +34,7 @@ const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
       <div className={styles.columnTitle}>
         <T id="settings.timezone.title" m="Timezone" />
       </div>
-      <div
-        className={classNames(
-          styles.columnContent,
-          styles.radioButtonsWrapper
-        )}>
+      <div className={styles.columnContent}>
         <RadioButtonGroup
           options={timezoneOptions}
           onChange={(option) => update(option.value)}

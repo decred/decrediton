@@ -51,15 +51,6 @@
   margin-top: 11px;
 }
 
-.overviewVotingButton {
-  padding: 6px 18px;
-  position: relative;
-  top: -4px;
-  left: 158px;
-}
-
-.noTickets,
-.votingPreference,
 .notVoting,
 .voted {
   font-size: 13px;
@@ -68,33 +59,12 @@
   height: 64px;
 }
 
-.votingPreference {
-  line-height: 0;
-}
-
-.radioButtonsList {
-  margin-left: -7px;
-}
-
 .notVoting {
   background-image: var(--chat-bubbles);
   background-repeat: no-repeat;
   background-size: 30px;
   padding-left: 38px;
   padding-top: 7px;
-}
-
-.preferenceTitle {
-  margin-bottom: 10px;
-}
-
-.noTickets {
-  background-size: 30px 30px;
-  background-position: 0 50%;
-  background-repeat: no-repeat;
-  background-image: var(--ticket-voted-grey-icon);
-  width: 157px;
-  padding-left: 40px;
 }
 
 .overviewField .label {
@@ -185,52 +155,6 @@
   color: var(--tab-text-active-color) !important;
 }
 
-.yes > label > span:nth-child(1) {
-  border-color: var(--vote-yes-color);
-}
-
-.yes > label > span:nth-child(2) {
-  background-color: var(--vote-yes-color);
-}
-
-.no > label > span:nth-child(1) {
-  border-color: var(--vote-no-color);
-}
-
-.no > label > span:nth-child(2) {
-  background-color: var(--vote-no-color);
-}
-
-.voteConfirmation {
-  background-color: var(--background-container);
-  font-size: 27px;
-  line-height: 34px;
-  margin-left: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  display: flex;
-  flex-direction: row;
-  text-transform: capitalize;
-}
-
-.yesProposal {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
-  background-color: var(--vote-yes-color);
-  margin-top: 13px;
-  margin-right: 5px;
-}
-
-.noProposal {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
-  background-color: var(--vote-no-color);
-  margin-top: 13px;
-  margin-right: 5px;
-}
-
 .loadingPage {
   width: 100%;
   text-align: center;
@@ -254,10 +178,6 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .overviewVotingButton {
-    left: 123px;
-  }
-
   .overview {
     width: 634px;
   }
