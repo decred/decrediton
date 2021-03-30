@@ -1,6 +1,6 @@
 import WalletSelection from "./WalletSelection/WalletSelection";
 import CreateWalletMachine from "./CreateWalletPage/CreateWalletPage";
-import SettingUpWalletMachine from "./SetupWallet/SetupWallet";
+import SettingUpWalletMachine from "./SetupWallet";
 import Settings from "./Settings/Settings";
 import Logs from "./Logs/Logs";
 import { FormattedMessage as T } from "react-intl";
