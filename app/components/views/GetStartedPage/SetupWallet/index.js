@@ -1,3 +1,1 @@
-import SetupWallet from "./SetupWallet";
-
-export default SetupWallet;
+export { default } from "./SetupWallet";
