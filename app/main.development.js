@@ -627,7 +627,8 @@ app.on("ready", async () => {
     webPreferences: {
       nodeIntegration: true,
       devTools: true,
-      contextIsolation: false
+      contextIsolation: false,
+      webSecurity: false
     },
     icon: __dirname + "/icon.png"
   };
