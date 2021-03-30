@@ -41,7 +41,6 @@ export const useWalletSetup = (settingUpWalletRef) => {
   }, [send]);
 
   const getStateComponent = useCallback(() => {
-    console.log(current);
     const { error } = current.context;
 
     let component, hasLive, hasSoloTickets;
