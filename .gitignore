@@ -4,6 +4,7 @@ app/dist-trezor/
 app/main.js
 app/main.js.map
 app/main.js.LICENSE.txt
+app/*.node
 node_modules/
 npm-debug.log
 public/js/bundle.js

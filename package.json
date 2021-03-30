@@ -114,21 +114,20 @@
     },
     "files": [
       "dist/",
-      "node_modules/",
       "app.html",
       "staticPages/",
       "main.js",
       "main.js.map",
       "package.json",
       "icons/*",
-      "icon.*"
+      "icon.*",
+      "*.node"
     ],
     "extraResources": [
       {
         "from": "bin",
         "to": "bin"
       },
-      "*.node",
       "certs"
     ],
     "mac": {
@@ -219,6 +218,8 @@
     "eslint-formatter-pretty": "^3.0.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "electron-builder": "^22.8.0",
+    "electron-rebuild": "^2.3.5",
     "express": "^4.16.4",
     "google-protobuf": "^3.11.2",
     "html-webpack-plugin": "^5.3.1",
@@ -256,9 +257,7 @@
     "connected-react-router": "^6.8.0",
     "copy-webpack-plugin": "^8.1.0",
     "dom-helpers": "^3.4.0",
-    "electron-builder": "^22.8.0",
     "electron-devtools-installer": "^2.2.4",
-    "electron-rebuild": "^2.3.5",
     "electron-store": "^7.0.2",
     "enzyme-adapter-react-16": "^1.15.2",
     "fs-extra": "^5.0.0",
@@ -268,12 +267,10 @@
     "lodash": "^4.17.14",
     "minimist": "^1.2.3",
     "mv": "^2.1.1",
-    "node-addon-loader": "decred/node-addon-loader#master",
     "node-polyfill-webpack-plugin": "^1.0.3",
     "pi-ui": "https://github.com/decred/pi-ui",
     "prop-types": "^15.7.2",
     "qr-image": "^3.2.0",
-    "raw-loader": "^0.5.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-draggable": "^4.2.0",
