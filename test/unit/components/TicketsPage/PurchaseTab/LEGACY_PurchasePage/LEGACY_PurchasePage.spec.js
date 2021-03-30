@@ -389,7 +389,7 @@ test("test legacy autobuyer", () => {
   const settingsButton = screen.getByRole("button", {
     name: "Ticket Autobuyer Settings"
   });
-  user.click(settingsButton);
+  user.click(screen.getByTestId("toggleSwitch"));
   const saveButton = screen.getByRole("button", { name: "Save" });
   user.click(saveButton);
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
@@ -413,10 +413,22 @@ test("test legacy autobuyer", () => {
   // set account
   user.click(screen.getByText("Select account"));
   user.click(screen.getByText(mockMixedAccount.name));
-
   user.click(saveButton);
-  user.click(screen.getByTestId("toggleSwitch"));
 
+  // check settings
+  user.click(settingsButton);
+  expect(screen.getByLabelText(/Balance to Maintain/i).value).toBe(
+    `${mockBalanceToMaintain}`
+  );
+  expect(
+    screen.getByText(mockConfiguredStakePools[1].Host)
+  ).toBeInTheDocument();
+  expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
+  user.click(screen.getByRole("button", { name: "Cancel" }));
+
+  user.click(screen.getByTestId("toggleSwitch"));
+  // clicking again on switch should open the confirmation modal
+  user.click(screen.getByTestId("toggleSwitch"));
   expect(
     screen.getByText(/start ticket buyer confirmation/i)
   ).toBeInTheDocument();
