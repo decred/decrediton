@@ -100,7 +100,11 @@ const TicketAutoBuyerForm = ({
       <div className={styles.subtitle}>
         <T id="vsp.autobuyer.subtitle" m="Automatic Ticket Purchases" />
       </div>
-      <button aria-label="Ticket Autobuyer Settings" className={styles.settingsButton} onClick={showSettingsModal} />
+      <button
+        aria-label="Ticket Autobuyer Settings"
+        className={styles.settingsButton}
+        onClick={showSettingsModal}
+      />
       <AutoBuyerSettingsModal
         {...{
           show: isSettingsModalVisible,
