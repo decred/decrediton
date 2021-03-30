@@ -611,17 +611,24 @@ app.on("ready", async () => {
     locale = locales.find((value) => value.key === newCfgLocale);
   }
 
+  let url = `file://${__dirname}/dist/app.html`;
+  if (process.env.NODE_ENV === "development") {
+    // Load from the webpack dev server with hot module replacement.
+    const port = process.env.PORT || 3000;
+    url = `http://localhost:${port}/dist/app.html`;
+  }
+
   let windowOpts = {
     show: false,
     minWidth: 350,
     width: 1192,
     minHeight: 299,
     height: 790,
-    page: "app.html",
     webPreferences: {
       nodeIntegration: true,
       devTools: true,
-      contextIsolation: false
+      contextIsolation: false,
+      webSecurity: false
     },
     icon: __dirname + "/icon.png"
   };
@@ -633,9 +640,9 @@ app.on("ready", async () => {
       minHeight: 299,
       height: 275,
       autoHideMenuBar: true,
-      resizable: false,
-      page: "staticPages/secondInstance.html"
+      resizable: false
     };
+    url = `file://${__dirname}/staticPages/secondInstance.html`;
   } else {
     await installExtensions();
     await setupProxy(logger);
@@ -645,7 +652,7 @@ app.on("ready", async () => {
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);
   if (debug) mainWindow.webContents.openDevTools();
-  mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
+  mainWindow.loadURL(url);
 
   mainWindow.webContents.on("did-finish-load", () => {
     mainWindow.show();

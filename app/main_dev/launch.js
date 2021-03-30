@@ -124,7 +124,7 @@ export function closeDCRD() {
     dcrdPID = null;
   } else if (require("is-running")(dcrdPID)) {
     try {
-      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+      const win32ipc = require("win32ipc/build/Release/win32ipc.node");
       win32ipc.closePipe(dcrdPipeRx);
       dcrdPID = null;
     } catch (e) {
@@ -150,7 +150,7 @@ export const closeDCRW = () => {
       process.kill(dcrwPID, "SIGINT");
     } else if (isRunning(dcrwPID)) {
       try {
-        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+        const win32ipc = require("win32ipc/build/Release/win32ipc.node");
         dcrwTxStream.close();
         win32ipc.closePipe(dcrwPipeTx);
         win32ipc.closePipe(dcrwPipeRx);
@@ -178,7 +178,7 @@ export const closeDcrlnd = () => {
     dcrlndCreds = null;
   } else if (require("is-running")(dcrlndPID)) {
     try {
-      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+      const win32ipc = require("win32ipc/build/Release/win32ipc.node");
       win32ipc.closePipe(dcrlndPipeRx);
       dcrlndPID = null;
       dcrlndCreds = null;
@@ -316,7 +316,7 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
 
     if (os.platform() == "win32") {
       try {
-        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+        const win32ipc = require("win32ipc/build/Release/win32ipc.node");
         dcrdPipeRx = win32ipc.createPipe("out");
         args.push(util.format("--piperx=%d", dcrdPipeRx.readEnd));
       } catch (e) {
@@ -590,7 +590,7 @@ export const launchDCRWallet = (
 
   if (os.platform() == "win32") {
     try {
-      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+      const win32ipc = require("win32ipc/build/Release/win32ipc.node");
       dcrwPipeRx = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", dcrwPipeRx.readEnd));
 
@@ -737,7 +737,7 @@ export const launchDCRLnd = (
 
     if (os.platform() == "win32") {
       try {
-        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
+        const win32ipc = require("win32ipc/build/Release/win32ipc.node");
         dcrlndPipeRx = win32ipc.createPipe("out");
         args.push(util.format("--piperx=%d", dcrlndPipeRx.readEnd));
       } catch (e) {

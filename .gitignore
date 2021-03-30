@@ -2,6 +2,7 @@
 app/dist/
 app/main.js
 app/main.js.map
+app/main.js.LICENSE.txt
 node_modules/
 npm-debug.log
 public/js/bundle.js

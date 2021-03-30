@@ -1,3 +1,6 @@
+// url converts from the the webpack-genetered asset url into a css url directive.
+const url = (s) => `url('${s}')`;
+
 const darkTheme = {
   "background-back-color": "#223767",
   "background-container": "#1B2B54",
@@ -147,117 +150,150 @@ const darkTheme = {
   "tab-text-color": "var(--sidebar-menu-link)",
 
   /* icons */
-  "menu-settings": "url('style/icons/menuSettingsDark.svg')",
-  "menu-accounts": "url('style/icons/accountsActiveDark.svg')",
-  "menu-governance": "url('style/icons/governanceActiveDark.svg')",
-  "menu-transactions": "url('style/icons/transactionsActiveDark.svg')",
-  "menu-overview": "url('style/icons/overviewActiveDark.svg')",
-  "menu-privacy": "url('style/icons/privacyDark.svg')",
-  "menu-tickets": "url('style/icons/ticketsActiveDark.svg')",
-  "menu-ln": "url('style/icons/lightningDark.svg')",
-  "menu-trezor": "url('style/icons/trezorActiveDark.svg')",
-  "menu-hamburger": "url('style/icons/hamburgerDark.svg')",
-  "menu-arrow": "url('style/icons/arrowDark.svg')",
-  "menu-mixer-icon": "url('style/icons/menuMixerDark.svg')",
-  "menu-spvon-icon": "url('style/icons/menuSpvOnDark.svg')",
-  "menu-spvoff-icon": "url('style/icons/menuSpvOffDark.svg')",
-  "menu-block-synced-icon": "url('style/icons/blockSyncedDark.svg')",
-  "tab-icon-balance": "url('style/icons/sidebarBalanceDark.svg')",
-  "tab-icon-transactions": "url('style/icons/transactionsDefaultDark.svg')",
-  "tab-icon-tickets": "url('style/icons/ticketsDefaultDark.svg')",
-  "sidebar-balance-icon": "url('style/icons/sidebarBalanceDark.svg')",
-  "testnet-logo": "url('style/icons/testnetLogoDark.svg')",
-  "mainnet-logo": "url('style/icons/decredLogoDark.svg')",
-  createnewwallet: "url('style/icons/createnewwalletDark.svg')",
-  "wallet-blue-icon": "url('style/icons/walletBlueDark.svg')",
-  "wallet-gray-icon": "url('style/icons/walletGrayDark.svg')",
-  blockchain: "url('style/icons/blockchainDark.svg')",
-  "blockchain-default": "url('style/icons/blockchainDefaultDark.svg')",
-  "blockchain-initial": "url('style/icons/blockchainInitialDark.svg')",
-  "launcher-edit-wallets": "url('style/icons/editDefaultDark.svg')",
-  "launcher-edit-wallets-hover": "url('style/icons/editHoverDark.svg')",
-  "onboarding-checkcircle": "url('style/icons/onboardingCheckcircleDark.svg')",
-  "x-grey": "url('style/icons/xGreyDark.svg')",
-  "copy-to-clipboard-icon": "url('style/icons/copyToClipboardBlueDark.svg')",
-  "stakey-privacy-standard": "url('style/icons/privacyStandardDark.svg')",
-  "stakey-privacy-disabled": "url('style/icons/privacyDisabledDark.svg')",
-  "stakey-privacy-custom": "url('style/icons/privacyCustomDark.svg')",
-  "header-transactions": "url('style/icons/transactionsHeaderDark.svg')",
-  "header-governance": "url('style/icons/governanceHeaderDark.svg')",
-  "header-tickets": "url('style/icons/ticketsHeaderDark.svg')",
-  "header-accounts": "url('style/icons/accountsHeaderDark.svg')",
-  "header-lightning": "url('style/icons/lightningHeaderDark.svg')",
-  "header-security": "url('style/icons/privacyHeaderDark.svg')",
-  "header-trezor": "url('style/icons/trezorHeaderDark.svg')",
-  "help-docs": "url('style/icons/docsGreyDark.svg')",
-  "help-github": "url('style/icons/githubGreyDark.svg')",
-  "help-forum": "url('style/icons/forumGreyDark.svg')",
-  "help-stakepools": "url('style/icons/stakepoolsGreyDark.svg')",
-  "help-matrix": "url('style/icons/matrixGreyDark.svg')",
-  "help-blockchain-explorer":
-    "url('style/icons/blockchainExplorerGreyDark.svg')",
-  "help-constitution": "url('style/icons/constitutionGreyDark.svg')",
-  "help-star": "url('style/icons/starGreyDark.svg')",
-  "help-external-default": "url('style/icons/externalDefaultDark.svg')",
-  "help-external-hover": "url('style/icons/externalHoverDark.svg')",
-  "help-expand-default": "url('style/icons/expandDefaultDark.svg')",
-  "help-expand-hover": "url('style/icons/expandHoverDark.svg')",
-  "menu-arrow-up": "url('style/icons/menuArrowUpDark.svg')",
-  "agenda-close-icon": "url('style/icons/ticketsAgendaCloseDark.svg')",
-  "tickets-info-icon": "url('style/icons/ticketsInfoDark.svg')",
-  "agenda-card-kebab": "url('style/icons/ticketsAgendaCardKebabDark.svg')",
-  "arrow-right-gray-icon": "url('style/icons/arrowRightGrayDark.svg')",
-  "send-self-default": "url('style/icons/sendSelfDefaultDark.svg')",
-  "send-all-default": "url('style/icons/sendMaxDefaultDark.svg')",
-  "search-icon": "url('style/icons/searchDark.svg')",
-  "wallet-tutorial-check-circle":
-    "url('style/icons/walletTutorialCheckcircleDark.svg')",
-  "importscript-icon": "url('style/icons/importScriptDark.svg')",
-  "stakepool-stats-active-icon": "url('style/icons/stakepoolsActiveDark.svg')",
-  "accounts-default": "url('style/icons/accountDefaultDark.svg')",
-  "accounts-imported": "url('style/icons/accountImportedDark.svg')",
-  password: "url('style/icons/passwordDark.svg')",
-  "tx-details-arrow-left": "url('style/icons/txDetailsArrowLeftDark.svg')",
-  "stake-pool-icon": "url('style/icons/stakepoolDark.svg')",
-  "expiry-icon": "url('style/icons/expiryDark.svg')",
-  "split-fee-icon": "url('style/icons/splitFeeDark.svg')",
-  "pool-fee-icon": "url('style/icons/poolFeesDark.svg')",
-  "tickets-cogs-opened-icon": "url('style/icons/ticketsCogsOpenedDark.svg')",
-  "ticket-address-icon": "url('style/icons/votingAddressDark.svg')",
-  "fee-address-icon": "url('style/icons/poolFeeAddressDark.svg')",
-  "sort-by-icon": "url('style/icons/sortbyDark.svg')",
-  "contextbutton-eye-default-icon":
-    "url('style/icons/contextbuttonEyeDefaultDark.svg')",
-  "launcher-logo": "url('style/icons/launcherLogoDark.svg')",
-  "help-getstared": "url('style/icons/helpGetstaredDark.svg')",
-  "no-tx-icon": "url('style/icons/noTxDark.svg')",
-  "ticket-reward-icon": "url('style/icons/blockRewardDark.svg')",
-  "time-lock-icon": "url('style/icons/timeLockDark.svg')",
-  "small-logo": "url('style/icons/logoDark.svg')",
-  "stakepool-stats-icon": "url('style/icons/stakepoolsDefaultDark.svg')",
-  "vote-time-stats-icon": "url('style/icons/voteTimeDefaultDark.svg')",
-  "vote-time-stats-active-icon": "url('style/icons/voteTimeActiveDark.svg')",
-  "stakerewards-stats-icon": "url('style/icons/stakeRewardsDefaultDark.svg')",
-  "stakerewards-stats-active-icon":
-    "url('style/icons/stakeRewardsActiveDark.svg')",
-  "send-self-hover": "url('style/icons/sendSelfHoverDark.svg')",
-  "send-all-hover": "url('style/icons/sendMaxHoverDark.svg')",
-  "select-arrow-up": "url('style/icons/selectArrowUpDark.svg')",
-  "info-icon": "url('style/icons/informationDark.svg')",
-  "menu-cancel-rescan-icon": "url('style/icons/menuCancelRescanDark.svg')",
-  "politeia-loading-icon": "url('style/icons/politeia-loading-dark.gif')",
-  "backup-icon": "url('style/icons/harddriveDark.svg')",
-  "loader-animation-daemon-waiting-initial":
-    "url('style/icons/daemonWaitingLoaderInitialDark.gif')",
-  "mixed-account-icon": "url('style/icons/mixedAccountDark.svg')",
-  "unmixed-account-icon": "url('style/icons/unmixedAccountDark.svg')",
-  "privacy-running-arrows": "url('style/icons/mixerArrowsDark.gif')",
-  "decentralized-loop-still":
-    "url('style/icons/decentralizedLoopStillDark.svg')",
-  "decentralized-loop-animation":
-    "url('style/icons/decentralizedLoopAnimationDark.gif')",
-  "self-transaction-icon": "url('style/icons/sentToSelfTxDark.svg')",
-  "proposals-refresh-icon": "url('style/icons/menuMixerDark.svg')"
+  "menu-settings": url(require("style/icons/menuSettingsDark.svg")),
+  "menu-accounts": url(require("style/icons/accountsActiveDark.svg")),
+  "menu-governance": url(require("style/icons/governanceActiveDark.svg")),
+  "menu-transactions": url(require("style/icons/transactionsActiveDark.svg")),
+  "menu-overview": url(require("style/icons/overviewActiveDark.svg")),
+  "menu-privacy": url(require("style/icons/privacyDark.svg")),
+  "menu-tickets": url(require("style/icons/ticketsActiveDark.svg")),
+  "menu-ln": url(require("style/icons/lightningDark.svg")),
+  "menu-trezor": url(require("style/icons/trezorActiveDark.svg")),
+  "menu-hamburger": url(require("style/icons/hamburgerDark.svg")),
+  "menu-arrow": url(require("style/icons/arrowDark.svg")),
+  "menu-mixer-icon": url(require("style/icons/menuMixerDark.svg")),
+  "menu-spvon-icon": url(require("style/icons/menuSpvOnDark.svg")),
+  "menu-spvoff-icon": url(require("style/icons/menuSpvOffDark.svg")),
+  "menu-block-synced-icon": url(require("style/icons/blockSyncedDark.svg")),
+  "tab-icon-balance": url(require("style/icons/sidebarBalanceDark.svg")),
+  "tab-icon-transactions": url(
+    require("style/icons/transactionsDefaultDark.svg")
+  ),
+  "tab-icon-tickets": url(require("style/icons/ticketsDefaultDark.svg")),
+  "sidebar-balance-icon": url(require("style/icons/sidebarBalanceDark.svg")),
+  "testnet-logo": url(require("style/icons/testnetLogoDark.svg")),
+  "mainnet-logo": url(require("style/icons/decredLogoDark.svg")),
+  createnewwallet: url(require("style/icons/createnewwalletDark.svg")),
+  "wallet-blue-icon": url(require("style/icons/walletBlueDark.svg")),
+  "wallet-gray-icon": url(require("style/icons/walletGrayDark.svg")),
+  blockchain: url(require("style/icons/blockchainDark.svg")),
+  "blockchain-default": url(require("style/icons/blockchainDefaultDark.svg")),
+  "blockchain-initial": url(require("style/icons/blockchainInitialDark.svg")),
+  "launcher-edit-wallets": url(require("style/icons/editDefaultDark.svg")),
+  "launcher-edit-wallets-hover": url(require("style/icons/editHoverDark.svg")),
+  "onboarding-checkcircle": url(
+    require("style/icons/onboardingCheckcircleDark.svg")
+  ),
+  "x-grey": url(require("style/icons/xGreyDark.svg")),
+  "copy-to-clipboard-icon": url(
+    require("style/icons/copyToClipboardBlueDark.svg")
+  ),
+  "stakey-privacy-standard": url(
+    require("style/icons/privacyStandardDark.svg")
+  ),
+  "stakey-privacy-disabled": url(
+    require("style/icons/privacyDisabledDark.svg")
+  ),
+  "stakey-privacy-custom": url(require("style/icons/privacyCustomDark.svg")),
+  "header-transactions": url(require("style/icons/transactionsHeaderDark.svg")),
+  "header-governance": url(require("style/icons/governanceHeaderDark.svg")),
+  "header-tickets": url(require("style/icons/ticketsHeaderDark.svg")),
+  "header-accounts": url(require("style/icons/accountsHeaderDark.svg")),
+  "header-lightning": url(require("style/icons/lightningHeaderDark.svg")),
+  "header-security": url(require("style/icons/privacyHeaderDark.svg")),
+  "header-trezor": url(require("style/icons/trezorHeaderDark.svg")),
+  "help-docs": url(require("style/icons/docsGreyDark.svg")),
+  "help-github": url(require("style/icons/githubGreyDark.svg")),
+  "help-forum": url(require("style/icons/forumGreyDark.svg")),
+  "help-stakepools": url(require("style/icons/stakepoolsGreyDark.svg")),
+  "help-matrix": url(require("style/icons/matrixGreyDark.svg")),
+  "help-blockchain-explorer": url(
+    require("style/icons/blockchainExplorerGreyDark.svg")
+  ),
+  "help-constitution": url(require("style/icons/constitutionGreyDark.svg")),
+  "help-star": url(require("style/icons/starGreyDark.svg")),
+  "help-external-default": url(require("style/icons/externalDefaultDark.svg")),
+  "help-external-hover": url(require("style/icons/externalHoverDark.svg")),
+  "help-expand-default": url(require("style/icons/expandDefaultDark.svg")),
+  "help-expand-hover": url(require("style/icons/expandHoverDark.svg")),
+  "menu-arrow-up": url(require("style/icons/menuArrowUpDark.svg")),
+  "agenda-close-icon": url(require("style/icons/ticketsAgendaCloseDark.svg")),
+  "tickets-info-icon": url(require("style/icons/ticketsInfoDark.svg")),
+  "agenda-card-kebab": url(
+    require("style/icons/ticketsAgendaCardKebabDark.svg")
+  ),
+  "arrow-right-gray-icon": url(require("style/icons/arrowRightGrayDark.svg")),
+  "send-self-default": url(require("style/icons/sendSelfDefaultDark.svg")),
+  "send-all-default": url(require("style/icons/sendMaxDefaultDark.svg")),
+  "search-icon": url(require("style/icons/searchDark.svg")),
+  "wallet-tutorial-check-circle": url(
+    require("style/icons/walletTutorialCheckcircleDark.svg")
+  ),
+  "importscript-icon": url(require("style/icons/importScriptDark.svg")),
+  "stakepool-stats-active-icon": url(
+    require("style/icons/stakepoolsActiveDark.svg")
+  ),
+  "accounts-default": url(require("style/icons/accountDefaultDark.svg")),
+  "accounts-imported": url(require("style/icons/accountImportedDark.svg")),
+  password: url(require("style/icons/passwordDark.svg")),
+  "tx-details-arrow-left": url(
+    require("style/icons/txDetailsArrowLeftDark.svg")
+  ),
+  "stake-pool-icon": url(require("style/icons/stakepoolDark.svg")),
+  "expiry-icon": url(require("style/icons/expiryDark.svg")),
+  "split-fee-icon": url(require("style/icons/splitFeeDark.svg")),
+  "pool-fee-icon": url(require("style/icons/poolFeesDark.svg")),
+  "tickets-cogs-opened-icon": url(
+    require("style/icons/ticketsCogsOpenedDark.svg")
+  ),
+  "ticket-address-icon": url(require("style/icons/votingAddressDark.svg")),
+  "fee-address-icon": url(require("style/icons/poolFeeAddressDark.svg")),
+  "sort-by-icon": url(require("style/icons/sortbyDark.svg")),
+  "contextbutton-eye-default-icon": url(
+    require("style/icons/contextbuttonEyeDefaultDark.svg")
+  ),
+  "launcher-logo": url(require("style/icons/launcherLogoDark.svg")),
+  "help-getstared": url(require("style/icons/helpGetstaredDark.svg")),
+  "no-tx-icon": url(require("style/icons/noTxDark.svg")),
+  "ticket-reward-icon": url(require("style/icons/blockRewardDark.svg")),
+  "time-lock-icon": url(require("style/icons/timeLockDark.svg")),
+  "small-logo": url(require("style/icons/logoDark.svg")),
+  "stakepool-stats-icon": url(require("style/icons/stakepoolsDefaultDark.svg")),
+  "vote-time-stats-icon": url(require("style/icons/voteTimeDefaultDark.svg")),
+  "vote-time-stats-active-icon": url(
+    require("style/icons/voteTimeActiveDark.svg")
+  ),
+  "stakerewards-stats-icon": url(
+    require("style/icons/stakeRewardsDefaultDark.svg")
+  ),
+  "stakerewards-stats-active-icon": url(
+    require("style/icons/stakeRewardsActiveDark.svg")
+  ),
+  "send-self-hover": url(require("style/icons/sendSelfHoverDark.svg")),
+  "send-all-hover": url(require("style/icons/sendMaxHoverDark.svg")),
+  "select-arrow-up": url(require("style/icons/selectArrowUpDark.svg")),
+  "info-icon": url(require("style/icons/informationDark.svg")),
+  "menu-cancel-rescan-icon": url(
+    require("style/icons/menuCancelRescanDark.svg")
+  ),
+  "politeia-loading-icon": url(
+    require("style/icons/politeia-loading-dark.gif")
+  ),
+  "backup-icon": url(require("style/icons/harddriveDark.svg")),
+  "loader-animation-daemon-waiting-initial": url(
+    require("style/icons/daemonWaitingLoaderInitialDark.gif")
+  ),
+  "mixed-account-icon": url(require("style/icons/mixedAccountDark.svg")),
+  "unmixed-account-icon": url(require("style/icons/unmixedAccountDark.svg")),
+  "privacy-running-arrows": url(require("style/icons/mixerArrowsDark.gif")),
+  "decentralized-loop-still": url(
+    require("style/icons/decentralizedLoopStillDark.svg")
+  ),
+  "decentralized-loop-animation": url(
+    require("style/icons/decentralizedLoopAnimationDark.gif")
+  ),
+  "self-transaction-icon": url(require("style/icons/sentToSelfTxDark.svg")),
+  "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg"))
 };
 
 export default darkTheme;
