@@ -75,7 +75,7 @@ test("test StakeInfo (SPV disabled)", () => {
 
   const liveTickets = screen.getByText(/live/i);
   expect(liveTickets.nextElementSibling.textContent).toBe(
-    `${mockLiveTicketsCount} tickets`
+    `${mockLiveTicketsCount}`
   );
   expect(liveTickets.nextElementSibling.nextElementSibling.textContent).toMatch(
     `Own Mempool: ${mockOwnMempoolTicketsCount}`

@@ -399,11 +399,11 @@ test("render default NumTicketsInput", () => {
   checkDefaultInput(input, inputTag, "text", "", testInitValue);
   expect(input.className).toMatch("numericInput");
   expect(input.className).toMatch("integerInput");
-  expect(screen.getByText("Ticket")).toBeInTheDocument(); // single ticket
+  expect(screen.getByText("ticket")).toBeInTheDocument(); // single ticket
   //manual type a value
   user.type(inputTag, "2.3");
   expect(inputTag.value).toBe("123");
-  expect(screen.getByText("Tickets")).toBeInTheDocument(); // multiple tickets
+  expect(screen.getByText("tickets")).toBeInTheDocument(); // multiple tickets
 
   /* test buttons */
   const lessButton = screen.getByRole("button", { name: "less" });
