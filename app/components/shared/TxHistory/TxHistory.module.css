@@ -161,6 +161,11 @@
   text-align: center;
 }
 
+.tooltip {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .timeDateSpacer {
   font-size: 11px;
   text-align: right;
@@ -266,7 +271,7 @@
   background-repeat: no-repeat;
   width: 40px;
   flex-basis: 40px;
-  height: 54px;
+  height: 59px;
   cursor: pointer;
   text-align: center;
 }
