@@ -33,7 +33,7 @@
 }
 
 .details {
-  height: 70px;
+  height: 100px;
   display: grid;
   grid-template-columns: minmax(max-content, 1fr) minmax(max-content, 1fr) auto;
   row-gap: 11px;

@@ -1,6 +1,6 @@
 .quickBar {
   padding: 14px 0 14px 18px;
-  height: 56px;
+  height: 80px;
   display: grid;
   grid-template-columns: repeat(4, max-content);
   align-items: center;
