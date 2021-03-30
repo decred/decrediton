@@ -27,3 +27,4 @@ export { default as PrivacyForm } from "./PrivacyForm/PrivacyForm";
 export { default as Log } from "./Log/Log";
 export { default as SendTransaction } from "./SendTransaction/SendTransaction";
 export { default as Collapse } from "./Collapse";
+export { default as TicketAutoBuyerForm } from "./TicketAutoBuyerForm";

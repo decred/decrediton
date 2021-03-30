@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import Modal from "../Modal";
 import styles from "./AutoBuyerSettingsModal.module.css";
-import { DcrInput, AccountsSelect, VSPSelect } from "inputs";
+import { DcrInput, AccountsSelect } from "inputs";
 import { PiUiButton, InvisiblePiUiButton } from "buttons";
 
 const AutoBuyerSettingsModal = ({
@@ -13,11 +13,10 @@ const AutoBuyerSettingsModal = ({
   account,
   setAccount,
   vsp,
-  setVsp,
-  availableVSPs,
   notMixedAccounts,
   isValid,
-  clicked
+  clicked,
+  VSPSelectControl
 }) => {
   return (
     <Modal className={styles.modal} {...{ show }}>
@@ -44,7 +43,7 @@ const AutoBuyerSettingsModal = ({
       </label>
       <label className={styles.label}>
         <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />
-        <VSPSelect options={availableVSPs} value={vsp} onChange={setVsp} />
+        {VSPSelectControl}
       </label>
       {clicked && isValid === false && (
         <div className={styles.error}>

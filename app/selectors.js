@@ -913,6 +913,12 @@ export const isSyncingTickets = get(["vsp", "syncVSPRequestAttempt"]);
 
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
+export const legacyBuyerVSP = get(["control", "legacyVsp"]);
+export const legacyBuyerBalanceToMaintain = get([
+  "control",
+  "legacyBalanceToMaintain"
+]);
+export const legacyBuyerAccount = get(["control", "legacyAccount"]);
 export const buyerVSP = get(["vsp", "vsp"]);
 export const buyerBalanceToMaintain = get(["vsp", "balanceToMaintain"]);
 export const buyerAccount = get(["vsp", "account"]);

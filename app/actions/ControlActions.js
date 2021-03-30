@@ -924,3 +924,17 @@ export const getPeerInfo = () => (dispatch, getState) => {
     })
     .catch((error) => dispatch({ type: GETPEERINFO_FAILED, error }));
 };
+
+export const SAVE_LEGACY_AUTOBUYER_SETTINGS = "SAVE_LEGACY_AUTOBUYER_SETTINGS ";
+export const saveLegacyAutoBuyerSettings = ({
+  balanceToMaintain,
+  account,
+  vsp
+}) => (dispatch) => {
+  dispatch({
+    type: SAVE_LEGACY_AUTOBUYER_SETTINGS,
+    balanceToMaintain,
+    account,
+    vsp
+  });
+};

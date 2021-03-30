@@ -3,7 +3,7 @@ import { AutoBuyerSettingsModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "pi-ui";
 import { Balance } from "shared";
-import styles from "./TicketAutoBuyer.module.css";
+import styles from "./TicketAutoBuyerForm.module.css";
 
 const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
@@ -14,8 +14,7 @@ const TicketAutoBuyerForm = ({
   account,
   setAccount,
   vsp,
-  setVsp,
-  availableVSPs,
+  vspHost,
   isValid,
   clicked,
   onClick,
@@ -24,7 +23,8 @@ const TicketAutoBuyerForm = ({
   onSaveAutoBuyerSettings,
   isSettingsModalVisible,
   showSettingsModal,
-  hideSettingsModal
+  hideSettingsModal,
+  VSPSelectControl
 }) => (
   <>
     <div className={styles.wrapper}>
@@ -43,7 +43,10 @@ const TicketAutoBuyerForm = ({
                 m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before starting autobuyer."
               />
             }>
-            <AutoBuyerPassphraseModalSwitch isValid={false} />
+            <AutoBuyerPassphraseModalSwitch
+              className={styles.toggleSwitch}
+              disabled={true}
+            />
           </Tooltip>
         ) : (
           <AutoBuyerPassphraseModalSwitch
@@ -83,14 +86,14 @@ const TicketAutoBuyerForm = ({
                     <div className={styles.confirmLabel}>
                       <T id="vsp.autobuyer.modal.stakepool" m="VSP" />:
                     </div>
-                    <div>{vsp && vsp.host}</div>
+                    <div>{vspHost && vspHost}</div>
                   </div>
                 </div>
               </div>
             }
             onSubmit={onStartAutoBuyer}
             onClick={onClick}
-            isValid={isValid}
+            isValid={!!isValid}
           />
         )}
       </div>
@@ -108,11 +111,10 @@ const TicketAutoBuyerForm = ({
           account,
           setAccount,
           vsp,
-          setVsp,
-          availableVSPs,
           notMixedAccounts,
           isValid,
-          clicked
+          clicked,
+          VSPSelectControl
         }}
       />
     </div>

@@ -1,30 +1,28 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useCallback, useEffect } from "react";
-import { useIntl } from "react-intl";
-
 import * as vspa from "actions/VSPActions";
-import * as ca from "actions/ControlActions.js";
+import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
 export const useTicketAutoBuyer = () => {
-  const intl = useIntl();
   const availableVSPs = useSelector(sel.getAvailableVSPs);
-  const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
-  const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
+  const isRunning = useSelector(sel.getTicketAutoBuyerRunning);
 
-  const buyerVSP = useSelector(sel.buyerVSP);
   const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
   const buyerAccount = useSelector(sel.buyerAccount);
+  const buyerVSP = useSelector(sel.buyerVSP);
 
   const [balanceToMaintain, setBalanceToMaintain] = useState(
     buyerBalanceToMaintain
   );
   const [account, setAccount] = useState(buyerAccount);
   const [vsp, setVsp] = useState(buyerVSP);
+
+  const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
   // isValid check if we can show the modal to start the auto buyer.
   const [isValid, setIsValid] = useState(null);
-  const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
 
+  const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
   const showSettingsModal = () => setIsSettingsModalVisible(true);
   const hideSettingsModal = () => {
     resetSettingsState();
@@ -50,7 +48,6 @@ export const useTicketAutoBuyer = () => {
     } else {
       isValid = false;
     }
-
     // balance to mantain can be 0.
     return isValid && balanceToMaintain?.atomValue >= 0 && !!account;
   };
@@ -62,8 +59,6 @@ export const useTicketAutoBuyer = () => {
     }
   };
 
-  const onStopAutoBuyer = () => onDisableTicketAutoBuyer();
-
   useEffect(
     // we pass those values as parameter, so we don't need to add checkIsValid
     // into the dependecy array.
@@ -72,6 +67,7 @@ export const useTicketAutoBuyer = () => {
     },
     [vsp, balanceToMaintain, account]
   );
+  const getRunningIndicator = useSelector(sel.getRunningIndicator);
 
   const resetSettingsState = () => {
     setBalanceToMaintain(buyerBalanceToMaintain);
@@ -79,6 +75,7 @@ export const useTicketAutoBuyer = () => {
     setVsp(buyerVSP);
     setClicked(false);
   };
+  const vspHost = vsp && vsp.host;
 
   const dispatch = useDispatch();
   const onEnableTicketAutoBuyer = useCallback(
@@ -93,12 +90,11 @@ export const useTicketAutoBuyer = () => {
       ),
     [dispatch]
   );
-  const onDisableTicketAutoBuyer = useCallback(
-    () => dispatch(ca.ticketBuyerCancel()),
-    [dispatch]
-  );
 
-  const getRunningIndicator = useSelector(sel.getRunningIndicator);
+  const onStopAutoBuyer = useCallback(() => dispatch(ca.ticketBuyerCancel()), [
+    dispatch
+  ]);
+
   const onSaveAutoBuyerSettings = (balanceToMaintain, account, vsp) => {
     setIsValid(checkIsValid(vsp, balanceToMaintain, account));
     if (!isValid) {
@@ -115,7 +111,6 @@ export const useTicketAutoBuyer = () => {
     }
   };
   return {
-    intl,
     balanceToMaintain,
     setBalanceToMaintain,
     account,
@@ -123,22 +118,18 @@ export const useTicketAutoBuyer = () => {
     vsp,
     setVsp,
     availableVSPs,
-    onEnableTicketAutoBuyer,
-    onDisableTicketAutoBuyer,
-    ticketAutoBuyerRunning,
-    buyerAccount,
-    buyerBalanceToMaintain,
-    buyerVSP,
+    isRunning,
     notMixedAccounts,
     getRunningIndicator,
-    isValid,
     clicked,
+    isValid,
     isSettingsModalVisible,
     showSettingsModal,
     hideSettingsModal,
     onClick,
     onStartAutoBuyer,
     onStopAutoBuyer,
-    onSaveAutoBuyerSettings
+    onSaveAutoBuyerSettings,
+    vspHost
   };
 };
