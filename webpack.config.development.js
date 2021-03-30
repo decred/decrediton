@@ -30,8 +30,39 @@ export default merge(baseConfig, {
 
   module: {
     rules: [
-      // CSS and Less files, injected directly in the DOM.
-      { test: /\.css$/, use: [ "style-loader", "css-loader" ] },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+              modules: {
+                localIdentName: "[local]__[hash:base64:5]"
+              }
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: [/\.css$/],
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              importLoaders: 1
+            }
+          }
+        ],
+        exclude: /\.module\.css$/
+      }
     ]
   },
   resolve: {

@@ -16,10 +16,7 @@ const config = merge(baseConfig, {
 
   devtool: "cheap-module-source-map",
 
-  entry: [
-    "@babel/polyfill",
-    "./app/index"
-  ],
+  entry: ["@babel/polyfill", "./app/index"],
 
   output: {
     path: path.join(__dirname, "app/dist"),
@@ -28,8 +25,39 @@ const config = merge(baseConfig, {
 
   module: {
     rules: [
-      // CSS and Less files, bundled into a single css file.
-      { test: /\.css$/, use: [ { loader: MiniCssExtractPlugin.loader }, "css-loader" ] },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: {
+                localIdentName: "[hash:base64]"
+              }
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: [/\.css$/],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1
+            }
+          }
+        ],
+        exclude: /\.module\.css$/
+      }
     ]
   },
 
