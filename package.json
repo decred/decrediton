@@ -20,7 +20,7 @@
     "start": "cross-env NODE_ENV=production electron ./app/ --debug --custombinpath=./bin",
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development",
     "start-hot-nosandbox": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.development -r --no-sandbox",
-    "postinstall": "concurrently \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
+    "postinstall": "electron-builder install-app-deps",
     "dev": "npm run hot-server -- --start-hot",
     "dev-nosandbox": "npm run hot-server -- --start-hot-nosandbox",
     "package": "npm run build && ./node_modules/.bin/electron-builder build --publish never",
@@ -209,7 +209,6 @@
     "babel-plugin-react-intl": "^5.1.18",
     "babel-runtime": "^6.26.0",
     "clipboard-copy": "^2.0.1",
-    "concurrently": "^5.1.0",
     "core-decorators": "^0.20.0",
     "cross-env": "^5.2.1",
     "css-loader": "^5.1.3",
@@ -221,7 +220,6 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.16.4",
-    "fbjs-scripts": "^3.0.0",
     "google-protobuf": "^3.11.2",
     "html-webpack-plugin": "^5.3.1",
     "identity-obj-proxy": "^3.0.0",
@@ -310,8 +308,8 @@
     "grpc-tools": "^1.8.1",
     "win32ipc": "./modules/win32ipc"
   },
-  "devEngines": {
-    "node": ">=6.x",
-    "npm": ">=3.x"
+  "engines": {
+    "node": ">=14.16",
+    "yarn": "^1.22"
   }
 }
