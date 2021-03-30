@@ -1,7 +1,7 @@
 import IntegerInput from "../IntegerInput";
 import { FormattedMessage as T } from "react-intl";
 import style from "./NumTicketsInput.module.css";
-import { classNames  } from "pi-ui";
+import { classNames } from "pi-ui";
 
 const NumTicketsInput = ({
   numTickets,

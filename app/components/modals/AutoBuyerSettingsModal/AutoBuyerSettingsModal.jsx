@@ -54,8 +54,7 @@ const AutoBuyerSettingsModal = ({
         <InvisiblePiUiButton onClick={onCancelModal}>
           <T id="autoBuyerSettings.cancel" m="Cancel" />
         </InvisiblePiUiButton>
-        <PiUiButton
-          onClick={() => onSubmit(balanceToMaintain, account, vsp)}>
+        <PiUiButton onClick={() => onSubmit(balanceToMaintain, account, vsp)}>
           <T id="autoBuyerSettings.save" m="Save" />
         </PiUiButton>
       </div>

@@ -186,10 +186,7 @@ const PurchaseTicketsForm = ({
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
             />
           }>
-          <PiUiButton
-            disabled={true}
-            buttonLabel={purchaseLabel()}
-          />
+          <PiUiButton disabled={true} buttonLabel={purchaseLabel()} />
         </Tooltip>
       ) : (
         <TicketPurchaseModalButton

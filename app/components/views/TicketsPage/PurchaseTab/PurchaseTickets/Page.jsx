@@ -81,8 +81,7 @@ export function PurchasePage({
       {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
       <Subtitle
         title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-        className="is-row">
-      </Subtitle>
+        className="is-row"></Subtitle>
       {mixedAccount && changeAccount && <PrivacyInfo />}
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
