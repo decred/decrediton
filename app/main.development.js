@@ -92,6 +92,11 @@ import {
   LOCALE,
   DISABLE_HARDWARE_ACCEL
 } from "constants/config";
+import {
+  default as devtoolsInstaller,
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} from "electron-devtools-installer";
 
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
@@ -238,16 +243,13 @@ process.on("uncaughtException", (err) => {
 
 const installExtensions = async () => {
   if (process.env.NODE_ENV === "development") {
-    const installer = require("electron-devtools-installer"); // eslint-disable-line global-require
-
-    const extensions = ["REACT_DEVELOPER_TOOLS", "REDUX_DEVTOOLS"];
+    const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
     for (const name of extensions) {
-      // eslint-disable-line
       try {
-        await installer.default(installer[name], forceDownload);
+        await devtoolsInstaller(name, forceDownload);
       } catch (e) {
-        console.log("Error installing extesion: " + e);
+        console.log("Error installing extension: " + e);
       }
     }
   }
@@ -645,11 +647,11 @@ app.on("ready", async () => {
 
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);
-  if (debug) mainWindow.webContents.openDevTools();
   mainWindow.loadURL(url);
 
   mainWindow.webContents.on("did-finish-load", () => {
     mainWindow.show();
+    if (debug) mainWindow.webContents.openDevTools();
     mainWindow.focus();
   });
 
