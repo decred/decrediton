@@ -217,7 +217,6 @@
     "enzyme": "^3.11.0",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-formatter-pretty": "^3.0.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.16.4",
