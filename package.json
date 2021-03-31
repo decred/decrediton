@@ -262,7 +262,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "fs-extra": "^9.1.0",
     "ini": "^2.0.0",
-    "int64-buffer": "^0.1.10",
+    "int64-buffer": "^1.0.0",
     "is-running": "^2.1.0",
     "lodash": "^4.17.14",
     "minimist": "^1.2.3",
