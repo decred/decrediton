@@ -1,6 +1,6 @@
 .voteSection {
   background-color: var(--background-back-color);
-  padding: 20px;
+  padding: 10px 40px;
   width: 740px;
   margin-top: 20px;
   display: flex;

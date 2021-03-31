@@ -1,14 +1,15 @@
 import React from "react";
 import { FormattedMessage as T } from "react-intl";
 import { RadioButtonGroup } from "pi-ui";
-import styles from "./ChooseOptions.module.css";
 import { PassphraseModalButton } from "buttons";
+import VotedCheckmark from "./VotedCheckmark";
+import styles from "./ChooseOptions.module.css";
 
+// XXX move to a separate file
 const UpdateVoteChoiceModalButton = ({
   onSubmit,
   newVoteChoice,
-  eligibleTicketCount,
-  votedSuccessfully
+  eligibleTicketCount
 }) => (
   <PassphraseModalButton
     modalTitle={
@@ -27,7 +28,6 @@ const UpdateVoteChoiceModalButton = ({
         values={{ count: eligibleTicketCount }}
       />
     }
-    disabled={!newVoteChoice || votedSuccessfully}
     onSubmit={onSubmit}
     className={styles.voteButton}
     buttonLabel={
@@ -47,40 +47,35 @@ const ChooseOptions = React.memo(
     setVoteOption,
     votedSuccessfully
   }) => (
-    <>
-      <div className={styles.votingPreference}>
-        <div className={styles.preferenceTitle}>
-          <T
-            id="proposalDetails.votingInfo.votingPreferenceTitle"
-            m="My Voting Preference"
-          />
-        </div>
-        <div>
-          <RadioButtonGroup
-            options={voteOptions.map((o) => ({
-              label: `${o.id.charAt(0).toUpperCase()}${o.id.slice(1)}`,
-              value: o.id
-            }))}
-            onChange={(option) => setVoteOption(option.value)}
-            value={newVoteChoice || currentVoteChoice.id}
-            vertical
-            disabled={votingComplete || currentVoteChoice !== "abstain"}
-            optionsListClassName={styles.radioButtonsList}
-            optionsClassName={voteOptions.map((o) => styles[o.id])}
-          />
-        </div>
+    <div className={styles.votePreference}>
+      <div className={styles.preferenceTitle}>
+        <T
+          id="proposalDetails.votingInfo.votingPreferenceTitle"
+          m="My voting preference:"
+        />
       </div>
-      {!votingComplete && (
+      <RadioButtonGroup
+        className={styles.voteRadioButtons}
+        options={voteOptions.map((o) => ({
+          label: `${o.id.charAt(0).toUpperCase()}${o.id.slice(1)}`,
+          value: o.id
+        }))}
+        onChange={(option) => setVoteOption(option.value)}
+        value={newVoteChoice || currentVoteChoice.id}
+        disabled={votingComplete || currentVoteChoice !== "abstain"}
+        optionsClassName={voteOptions.map((o) => styles[o.id])}
+      />
+      {!votingComplete && !votedSuccessfully && newVoteChoice && (
         <UpdateVoteChoiceModalButton
           {...{
             newVoteChoice,
             onSubmit: onVoteSubmit,
-            eligibleTicketCount,
-            votedSuccessfully
+            eligibleTicketCount
           }}
         />
       )}
-    </>
+      <VotedCheckmark />
+    </div>
   )
 );
 

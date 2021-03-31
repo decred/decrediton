@@ -24,7 +24,7 @@ const ChooseVoteOption = ({
   votingComplete
 }) => {
   // XXX move all hooks/state logic to a custom hook ie. useChooseVoteOption
-  const { eligibleTicketCount } = viewedProposalDetails;
+  const { eligibleTicketCount } = viewedProposalDetails || {};
   const [newVoteChoice, setVoteOption] = useState(null);
 
   const dispatch = useDispatch();

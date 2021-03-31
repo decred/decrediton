@@ -16,21 +16,19 @@ const VoteSection = ({
   const { eligibleTicketCount } = viewedProposalDetails;
   return (
     <div className={styles.voteSection}>
-      <div>
-        <VoteInfo
-          {...{
-            hasTickets,
-            proposalStatus,
-            voteStatus,
-            currentVoteChoice,
-            viewedProposalDetails,
-            newVoteChoice,
-            setVoteOption,
-            showPurchaseTicketsPage,
-            voteOptions
-          }}
-        />
-      </div>
+      <VoteInfo
+        {...{
+          hasTickets,
+          proposalStatus,
+          voteStatus,
+          currentVoteChoice,
+          viewedProposalDetails,
+          newVoteChoice,
+          setVoteOption,
+          showPurchaseTicketsPage,
+          voteOptions
+        }}
+      />
       <div>
         <T
           id="proposals.detail.wallet.eligible.header"
