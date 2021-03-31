@@ -3555,10 +3555,10 @@ cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.5.0.tgz#12763e47251bf951cb75c201dfa58ff1bcb2d047"
   integrity sha512-PC+AmIuK04E6aeSs/pUccSujsTzBhu4HzC2dL+CfJB/Jcc2qTRbEwZQDfIUpt2Xl8BodYBEq8w4fc0kU2I9DjQ==
 
-clipboard-copy@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/clipboard-copy/-/clipboard-copy-2.0.1.tgz#25214db3aabc282109cfa3429ffd885b014fc8b3"
-  integrity sha512-/JBr7ryeWwl2w33SRMYGfOZU5SWPVNtpB9oTxUzFp7olKKd2HM+cnhSMeETblJMnjgqtL581ncI/pcZX7o7Big==
+clipboard-copy@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/clipboard-copy/-/clipboard-copy-4.0.1.tgz#326ef9726d4ffe72d9a82a7bbe19379de692017d"
+  integrity sha512-wOlqdqziE/NNTUJsfSgXmBMIrYmfd5V0HCGsR8uAKHcg+h9NENWINcfRjtWGU77wDHC8B8ijV4hMTGYbrKovng==
 
 cliui@^6.0.0:
   version "6.0.0"
