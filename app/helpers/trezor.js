@@ -117,7 +117,6 @@ export const walletTxToRefTx = async (walletService, tx) => {
   const inputs = tx.inputs.map((inp) => ({
     prev_hash: inp.prevTxId,
     prev_index: inp.outputIndex,
-    amount: inp.valueIn.toString(),
     script_sig: inp.sigScript,
     sequence: inp.sequence,
     decred_tree: inp.outputTree
