@@ -231,7 +231,6 @@
     "prettier": "^2.2.1",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
-    "sinon": "^7.4.2",
     "style-loader": "^2.0.0",
     "stylelint-config-standard": "^19.0.0",
     "terser-webpack-plugin": "^5.1.1",
