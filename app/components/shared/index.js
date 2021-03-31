@@ -28,3 +28,4 @@ export { default as Log } from "./Log/Log";
 export { default as SendTransaction } from "./SendTransaction/SendTransaction";
 export { default as Collapse } from "./Collapse";
 export { default as TicketAutoBuyerForm } from "./TicketAutoBuyerForm";
+export { default as PurchaseTicketsForm } from "./PurchaseTicketsForm";

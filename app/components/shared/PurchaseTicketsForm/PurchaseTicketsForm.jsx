@@ -7,7 +7,7 @@ import {
 } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
 import { Balance } from "shared";
-import styles from "../PurchaseTab.module.css";
+import styles from "./PurchaseTicketsForm.module.css";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
 export const LegacyVSPWarning = () => (
@@ -20,9 +20,10 @@ export const LegacyVSPWarning = () => (
 const PurchaseTicketsForm = ({
   isValid,
   handleOnKeyDown,
-  numTickets,
+  numTicketsToBuy,
   onChangeNumTickets,
-  setNumTickets,
+  onIncrementNumTickets,
+  onDecrementNumTickets,
   setAccount,
   account,
   ticketPrice,
@@ -31,7 +32,7 @@ const PurchaseTicketsForm = ({
   vsp,
   vspFee,
   setVspFee,
-  onV3PurchaseTicket,
+  onPurchaseTicket,
   onRevokeTickets,
   availableVSPs,
   isLoading,
@@ -45,18 +46,23 @@ const PurchaseTicketsForm = ({
     <div className={classNames(styles.purchaseForm, styles.isRow)}>
       <div className={classNames(styles.isColumn, styles.inputAddress)}>
         <label className={styles.rowLabel}>
-          <T id="purchaseTickets.accountFrom" m="Account" />:
-          <div className={styles.inputSelectContainer}>
+          <T id="purchaseTickets.accountFrom" m="Account" />
+          <div
+            className={classNames(
+              styles.inputSelectContainer,
+              "selectWithBigFont"
+            )}>
             <AccountsSelect
               filterAccounts={notMixedAccounts}
               className={styles.inputSelect}
+              selectClassName={styles.accountSelectInput}
               {...{ account, onChange: setAccount }}
             />
           </div>
         </label>
         <label className={styles.rowLabel}>
-          <T id="purchaseTickets.vspFrom" m="VSP" />:
-          <div className={styles.vspContainer}>
+          <T id="purchaseTickets.vspFrom" m="VSP" />
+          <div className={classNames(styles.vspContainer, "selectWithBigFont")}>
             <VSPSelect
               className={styles.inputSelect}
               style={{ width: "100%", marginRight: "10px" }}
@@ -103,25 +109,25 @@ const PurchaseTicketsForm = ({
       </div>
       <div className={classNames(styles.isRow, styles.inputAmount)}>
         <label className={styles.rowLabel}>
-          <T id="purchaseTickets.ticketAmount" m="Amount" />:
+          <T id="purchaseTickets.ticketAmount" m="Amount" />
           <NumTicketsInput
             required
-            invalid={account.spendable < numTickets * ticketPrice}
+            invalid={account.spendable < numTicketsToBuy * ticketPrice}
             invalidMessage={
               <T
                 id="purchaseTickets.errors.insufficientBalance"
                 m="Not enough funds"
               />
             }
-            numTickets={numTickets}
-            incrementNumTickets={() => onChangeNumTickets(true)}
-            decrementNumTickets={() => onChangeNumTickets(false)}
-            onChangeNumTickets={setNumTickets}
+            numTickets={numTicketsToBuy}
+            incrementNumTickets={onIncrementNumTickets}
+            decrementNumTickets={onDecrementNumTickets}
+            onChangeNumTickets={onChangeNumTickets}
             onKeyDown={handleOnKeyDown}
             showErrors={true}
           />
         </label>
-        {account.spendable >= numTickets * ticketPrice && (
+        {account.spendable >= numTicketsToBuy * ticketPrice && (
           <div className={styles.inputValidMessageArea}>
             <span>
               <T id="purchaseTickets.vspFee" m="VSP Fee" />:
@@ -137,7 +143,7 @@ const PurchaseTicketsForm = ({
                 amount: (
                   <Balance
                     flat
-                    amount={numTickets * ticketPrice}
+                    amount={numTicketsToBuy * ticketPrice}
                     classNameWrapper={styles.validMsgBalance}
                     classNameSecondary={styles.validMsgBalanceSecondary}
                     classNameUnit={styles.validMsgBalanceUnit}
@@ -146,7 +152,7 @@ const PurchaseTicketsForm = ({
                 remaining: (
                   <Balance
                     flat
-                    amount={account.spendable - numTickets * ticketPrice}
+                    amount={account.spendable - numTicketsToBuy * ticketPrice}
                     classNameWrapper={styles.validMsgBalance}
                     classNameSecondary={styles.validMsgBalanceSecondary}
                     classNameUnit={styles.validMsgBalanceUnit}
@@ -157,10 +163,6 @@ const PurchaseTicketsForm = ({
           </div>
         )}
       </div>
-    </div>
-    <div className={styles.info}>
-      <div className={classNames(styles.actionButtons, styles.isColumn)} />
-      {/* ADD VSP INFO HERE */}
     </div>
     <div className={styles.buttonsArea}>
       <RevokeModalButton
@@ -173,7 +175,7 @@ const PurchaseTicketsForm = ({
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />
       {isWatchingOnly ? (
-        <PiUiButton disabled={!isValid} onClick={onV3PurchaseTicket}>
+        <PiUiButton disabled={!isValid} onClick={onPurchaseTicket}>
           {purchaseLabel()}
         </PiUiButton>
       ) : isLoading ? (
@@ -197,7 +199,7 @@ const PurchaseTicketsForm = ({
             />
           }
           disabled={!isValid}
-          onSubmit={onV3PurchaseTicket}
+          onSubmit={onPurchaseTicket}
           buttonLabel={purchaseLabel()}
         />
       )}

@@ -4,7 +4,7 @@ import { classNames } from "pi-ui";
 import UnsignedTickets from "../UnsignedTickets";
 import StakeInfo from "../StakeInfo";
 
-import PurchaseForm from "./PurchaseForm";
+import { PurchaseTicketsForm } from "shared";
 import { ShowWarning, Subtitle } from "shared";
 import styles from "../PurchaseTab.module.css";
 import { KeyBlueButton } from "buttons";
@@ -51,9 +51,10 @@ export function PurchasePage({
   availableVSPs,
   account,
   setAccount,
-  numTickets,
+  numTicketsToBuy,
+  onIncrementNumTickets,
+  onDecrementNumTickets,
   onChangeNumTickets,
-  setNumTickets,
   handleOnKeyDown,
   ticketPrice,
   setVSP,
@@ -93,23 +94,24 @@ export function PurchasePage({
           }
         />
       ) : (
-        <PurchaseForm
+        <PurchaseTicketsForm
           {...{
             notMixedAccounts,
             ticketPrice,
             setAccount,
-            setNumTickets,
             handleOnKeyDown,
             availableVSPs,
             account,
-            numTickets,
+            numTicketsToBuy,
+            onIncrementNumTickets,
+            onDecrementNumTickets,
             onChangeNumTickets,
             setVSP,
             vsp,
             vspFee,
             setVspFee,
             isValid,
-            onV3PurchaseTicket,
+            onPurchaseTicket: onV3PurchaseTicket,
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,

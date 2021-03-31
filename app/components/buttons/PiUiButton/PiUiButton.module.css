@@ -4,3 +4,6 @@
 .button.secondary {
   background-color: var(--secondary-piui-button-bg);
 }
+.button.secondary:hover {
+  opacity: 0.7;
+}

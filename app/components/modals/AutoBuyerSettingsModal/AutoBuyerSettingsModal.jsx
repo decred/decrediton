@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import styles from "./AutoBuyerSettingsModal.module.css";
 import { DcrInput, AccountsSelect } from "inputs";
 import { PiUiButton, InvisiblePiUiButton } from "buttons";
+import { classNames } from "pi-ui";
 
 const AutoBuyerSettingsModal = ({
   onCancelModal,
@@ -29,9 +30,10 @@ const AutoBuyerSettingsModal = ({
         <DcrInput
           amount={balanceToMaintain?.value}
           onChangeAmount={setBalanceToMaintain}
+          className={styles.balanceToMaintainInput}
         />
       </label>
-      <label className={styles.label}>
+      <label className={classNames(styles.label, "selectWithBigFont")}>
         <T id="vsp.autobuyer.accountFrom" m="From" />
         <AccountsSelect
           {...{ account }}
@@ -39,9 +41,10 @@ const AutoBuyerSettingsModal = ({
           showAccountsButton={false}
           hideSpendable={true}
           filterAccounts={notMixedAccounts}
+          selectClassName={styles.accountSelectInput}
         />
       </label>
-      <label className={styles.label}>
+      <label className={classNames(styles.label, "selectWithBigFont")}>
         <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />
         {VSPSelectControl}
       </label>

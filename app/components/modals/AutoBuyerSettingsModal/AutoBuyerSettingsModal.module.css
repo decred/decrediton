@@ -28,6 +28,7 @@
   opacity: 0.7;
 }
 .error {
+  margin-top: 20px;
   color: var(--error-text-color);
 }
 .buttons {
@@ -40,4 +41,11 @@
   font-size: 13px;
   line-height: 16px;
   color: var(--grey-7);
+}
+.accountSelectInput {
+  width: 332px;
+  margin-bottom: 25px;
+}
+.balanceToMaintainInput {
+  margin-bottom: 20px;
 }

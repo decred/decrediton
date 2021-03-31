@@ -1,49 +1,3 @@
-.isRow {
-  display: flex;
-  flex-direction: row;
-}
-.isColumn {
-  display: flex;
-  flex-direction: column;
-}
-
-.legacyIcon {
-  margin-left: auto;
-  cursor: pointer;
-}
-
-.useLegacyTooltip {
-  font-size: 12px;
-  width: 20rem;
-}
-
-.useLegacyLabel {
-  font-size: 16px;
-  line-height: 20px;
-  color: var(--grey-7);
-}
-
-.infoFields strong {
-  color: var(--input-color);
-}
-
-.privacyForm {
-  background-color: var(--background-back-color);
-  border-radius: 10px;
-}
-
-.purchaseForm {
-  background-color: var(--background-back-color);
-  padding: 30px 40px;
-}
-
-.privacyArea {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 16px 19px;
-  background-color: var(--background-back-color);
-}
-
 .privacyInfo {
   background-color: var(--info-message-background);
   background-image: var(--tickets-info-icon);
@@ -56,7 +10,9 @@
   grid-row-gap: 10px;
   padding: 10px 10px 10px 40px;
 }
-
+.privacyInfo:hover {
+  cursor: pointer;
+}
 .readMoreIcon {
   background-image: var(--arrow-down-mid-blue-icon);
   background-position-x: right;
@@ -68,137 +24,29 @@
   background-position-y: 8px;
   transform: rotate(0);
 }
-
 .readMoreIcon.active {
   transform: rotate(180deg);
   background-position-y: 0;
 }
-
-.privacyInfo:hover {
-  cursor: pointer;
-}
-
-.title {
-  font-size: 15px;
-  margin-bottom: 10px;
-}
-
-.rememberVspCheckBox {
-  grid-column: 2;
-  justify-self: right;
-  font-size: 16px;
-  line-height: 20px;
-  color: var(--grey-7);
-}
-
-.enableVSPButton {
-  margin-bottom: 40px;
-}
-
 .enableVSPWrapper {
   margin: 10px;
 }
-
 .enableVSPMessage {
   padding-bottom: 20px;
 }
-
-.rowLabel {
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--grey-7);
-  align-self: flex-end;
-  width: 100%;
-}
-
-.inputAddress {
-  align-self: flex-start;
-}
-.inputAmount {
-  flex-wrap: wrap;
-  align-self: flex-start;
-}
-.inputAmount .rowLabel {
-  padding-left: 40px;
-}
-.inputSelectContainer {
-  display: flex;
-  align-self: center;
-}
-.inputSelect {
-  width: 412px;
-}
-.inputValidMessageArea {
-  width: 183px;
-  position: relative;
-  display: grid;
-  grid-template-columns: max-content auto;
-  row-gap: 10px;
-  margin: 0;
-  padding: 35px 0 0 40px;
-  text-align: right;
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--grey-5);
-}
-.vspFee {
-  color: var(--main-dark-blue);
-}
-.haveVspFee {
-  color: var(--error-red);
-}
-.validMsgBalanceUnit,
-.validMsgBalance {
-  color: var(--main-dark-blue);
-}
-.validMsgBalanceSecondary {
-  color: var(--grey-5);
-}
-.info {
-  margin-bottom: 10px;
-  background-color: var(--transfer-details-bg);
-}
-.actionButtons {
-  float: right;
-  margin: 15px 19px 0 0;
-}
-.buttonsArea {
-  text-align: right;
-  display: flex;
-  width: 740px;
-  justify-content: flex-end;
-}
-.revokeButton {
-  margin-right: 10px;
-}
-.vspContainer {
-  display: flex;
+.enableVSPButton {
+  margin-bottom: 40px;
 }
 .purchaseTicketArea {
-  width: 740px;
+  width: 764px;
   -webkit-user-select: text;
 }
 .purchaseTicketArea .tabbedPageSubtitle {
   width: auto;
   justify-content: space-between;
 }
-.error {
-  color: var(--error-text-color);
-}
-.checkboxWrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 24px;
-}
 
 @media screen and (max-width: 1179px) {
-  .inputSelect {
-    width: 220px;
-  }
-  .buttonsArea {
-    width: 667px;
-  }
   .purchaseTicketArea {
     width: 667px;
   }
@@ -207,46 +55,5 @@
 @media screen and (max-width: 768px) {
   .purchaseTicketArea {
     width: 355px;
-  }
-  .ticketForm {
-    display: grid;
-    grid-template-columns: 50px 225px;
-    text-align: right;
-  }
-  .purchaseForm {
-    padding-bottom: 0;
-    flex-direction: column !important;
-  }
-
-  .purchaseForm.isRow {
-    flex-direction: column;
-  }
-  .rowLabel {
-    font-size: 13px;
-  }
-  .inputAddress .rowLabel {
-    width: inherit;
-    text-align: right;
-  }
-  .inputAmount {
-    margin-top: 25px;
-    margin-bottom: 40px;
-  }
-  .inputAmount .rowLabel {
-    padding-left: 0;
-  }
-  .inputSelectContainer .inputSelect {
-    width: 205px;
-  }
-  .inputSelectContainer {
-    display: flex;
-  }
-  .inputSelect {
-    margin-left: 10px;
-    align-self: flex-end;
-  }
-  .buttonsArea {
-    width: 355px;
-    margin-bottom: 20px;
   }
 }

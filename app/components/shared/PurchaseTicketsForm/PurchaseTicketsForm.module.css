@@ -1,0 +1,180 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.legacyIcon {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.useLegacyTooltip {
+  font-size: 12px;
+  width: 20rem;
+}
+
+.useLegacyLabel {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--grey-7);
+}
+
+.infoFields strong {
+  color: var(--input-color);
+}
+
+.privacyForm {
+  background-color: var(--background-back-color);
+  border-radius: 10px;
+}
+
+.purchaseForm {
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+}
+
+.privacyArea {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 16px 19px;
+  background-color: var(--background-back-color);
+}
+
+.title {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.rememberVspCheckBox {
+  grid-column: 2;
+  justify-self: right;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--grey-7);
+}
+
+.rowLabel {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+  align-self: flex-end;
+  width: 100%;
+}
+
+.inputAddress {
+  align-self: flex-start;
+  padding-right: 40px;
+}
+.inputAmount {
+  flex-wrap: wrap;
+  align-self: flex-start;
+  border-left: 1px solid var(--purchase-ticket-border);
+}
+.inputAmount .rowLabel {
+  padding-left: 40px;
+}
+.inputSelectContainer {
+  display: flex;
+  align-self: center;
+  margin-bottom: 25px;
+}
+.accountSelectInput {
+  width: 421px;
+}
+.inputValidMessageArea {
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 10px;
+  margin: 0;
+  padding: 35px 0 0 40px;
+  text-align: right;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-5);
+}
+.vspFee {
+  color: var(--main-dark-blue);
+}
+.haveVspFee {
+  color: var(--error-red);
+}
+.validMsgBalanceUnit,
+.validMsgBalance {
+  color: var(--main-dark-blue);
+}
+.validMsgBalanceSecondary {
+  color: var(--grey-5);
+}
+.buttonsArea {
+  margin-top: 20px;
+  text-align: right;
+  display: flex;
+  width: 764px;
+  justify-content: flex-end;
+}
+.revokeButton {
+  margin-right: 10px;
+}
+.vspContainer {
+  display: flex;
+  font-size: 16px;
+}
+.error {
+  color: var(--error-text-color);
+  font-size: 13px;
+}
+.checkboxWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+@media screen and (max-width: 1179px) {
+  .buttonsArea {
+    width: 667px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ticketForm {
+    display: grid;
+    grid-template-columns: 50px 225px;
+    text-align: right;
+  }
+  .purchaseForm {
+    padding-bottom: 0;
+    flex-direction: column !important;
+  }
+
+  .purchaseForm.isRow {
+    flex-direction: column;
+  }
+  .rowLabel {
+    font-size: 13px;
+  }
+  .inputAddress .rowLabel {
+    width: inherit;
+    text-align: right;
+  }
+  .inputAmount {
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+  .inputAmount .rowLabel {
+    padding-left: 0;
+  }
+  .inputSelectContainer {
+    display: flex;
+  }
+  .buttonsArea {
+    width: 355px;
+    margin-bottom: 20px;
+  }
+}

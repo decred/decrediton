@@ -25,7 +25,7 @@ const PurchaseTicketsForm = ({
   isShowingAdvanced,
   getQuickBarComponent,
   getAdvancedComponent,
-  getIsValid,
+  isValid,
   handleOnKeyDown,
   numTicketsToBuy,
   onIncrementNumTickets,
@@ -67,7 +67,7 @@ const PurchaseTicketsForm = ({
         </label>
         <NumTicketsInput
           required
-          invalid={!getIsValid()}
+          invalid={!isValid}
           invalidMessage={
             <T
               id="purchaseTickets.errors.insufficientBalance.legacy"
@@ -81,7 +81,7 @@ const PurchaseTicketsForm = ({
           onKeyDown={handleOnKeyDown}
           id="numTicketsToBuy"
           showErrors={true}></NumTicketsInput>
-        {getIsValid() && (
+        {isValid && (
           <div className={styles.inputValidMessageArea}>
             <T
               id="purchaseTickets.validMsg.legacy"
@@ -177,9 +177,7 @@ const PurchaseTicketsForm = ({
         buttonLabel={<T id="purchaseTickets.revokeBtn.legacy" m="Revoke" />}
       />
       {isWatchingOnly ? (
-        <KeyBlueButton
-          disabled={getIsValid && !getIsValid()}
-          onClick={onPurchaseTickets}>
+        <KeyBlueButton disabled={!isValid} onClick={onPurchaseTickets}>
           {purchaseLabel()}
         </KeyBlueButton>
       ) : getRunningIndicator ? (
@@ -203,7 +201,7 @@ const PurchaseTicketsForm = ({
               m="Ticket Purchase Confirmation"
             />
           }
-          disabled={getIsValid && !getIsValid()}
+          disabled={!isValid}
           onSubmit={onPurchaseTickets}
           buttonLabel={purchaseLabel()}
         />

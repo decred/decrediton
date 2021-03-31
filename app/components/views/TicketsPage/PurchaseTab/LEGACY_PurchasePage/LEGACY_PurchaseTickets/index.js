@@ -220,7 +220,7 @@ const PurchaseTickets = ({
         isShowingAdvanced,
         getQuickBarComponent,
         getAdvancedComponent,
-        getIsValid,
+        isValid: getIsValid(),
         handleOnKeyDown,
         numTicketsToBuy,
         onIncrementNumTickets,
