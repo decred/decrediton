@@ -290,7 +290,7 @@
     "reselect": "^4.0.0",
     "sharedworker-loader": "^2.1.1",
     "source-map-support": "^0.5.16",
-    "string-argv": "0.1.1",
+    "string-argv": "^0.3.1",
     "stylelint": "^13.12.0",
     "timezone-mock": "^1.0.12",
     "winston": "^3.3.3",
