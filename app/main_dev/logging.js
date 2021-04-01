@@ -74,15 +74,17 @@ export function createLogger(debug) {
   });
 
   if (debug) {
-    logger.add(new winston.transports.Console({
-      level: "debug",
-      format: combine(
-        timestamp({ format: logTimestamp }),
-        splat(),
-        printf(logFormatter),
-        colorize({ all: true })
-      )
-    }));
+    logger.add(
+      new winston.transports.Console({
+        level: "debug",
+        format: combine(
+          timestamp({ format: logTimestamp }),
+          splat(),
+          printf(logFormatter),
+          colorize({ all: true })
+        )
+      })
+    );
   }
 
   return logger;
