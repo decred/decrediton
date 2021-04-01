@@ -1,11 +1,15 @@
+// source: rpc.proto
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {missingRequire} reports error on implicit type usages.
  * @suppress {messageConventions} JS Compiler reports an error if a variable or
  *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
+/* eslint-disable */
+// @ts-nocheck
 
 var jspb = require('google-protobuf');
 var goog = jspb;
@@ -38,15 +42,18 @@ goog.exportSymbol('proto.lnrpc.ChannelEdge', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelEdgeUpdate', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelEventSubscription', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelEventUpdate', null, global);
+goog.exportSymbol('proto.lnrpc.ChannelEventUpdate.ChannelCase', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelEventUpdate.UpdateType', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelFeeReport', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelGraph', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelGraphRequest', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelOpenUpdate', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelPoint', null, global);
+goog.exportSymbol('proto.lnrpc.ChannelPoint.FundingTxidCase', null, global);
 goog.exportSymbol('proto.lnrpc.ChannelUpdate', null, global);
 goog.exportSymbol('proto.lnrpc.CloseChannelRequest', null, global);
 goog.exportSymbol('proto.lnrpc.CloseStatusUpdate', null, global);
+goog.exportSymbol('proto.lnrpc.CloseStatusUpdate.UpdateCase', null, global);
 goog.exportSymbol('proto.lnrpc.ClosedChannelUpdate', null, global);
 goog.exportSymbol('proto.lnrpc.ClosedChannelsRequest', null, global);
 goog.exportSymbol('proto.lnrpc.ClosedChannelsResponse', null, global);
@@ -71,6 +78,7 @@ goog.exportSymbol('proto.lnrpc.Failure.FailureCode', null, global);
 goog.exportSymbol('proto.lnrpc.Feature', null, global);
 goog.exportSymbol('proto.lnrpc.FeatureBit', null, global);
 goog.exportSymbol('proto.lnrpc.FeeLimit', null, global);
+goog.exportSymbol('proto.lnrpc.FeeLimit.LimitCase', null, global);
 goog.exportSymbol('proto.lnrpc.FeeReportRequest', null, global);
 goog.exportSymbol('proto.lnrpc.FeeReportResponse', null, global);
 goog.exportSymbol('proto.lnrpc.FloatMetric', null, global);
@@ -80,9 +88,11 @@ goog.exportSymbol('proto.lnrpc.ForwardingHistoryResponse', null, global);
 goog.exportSymbol('proto.lnrpc.FundingPsbtFinalize', null, global);
 goog.exportSymbol('proto.lnrpc.FundingPsbtVerify', null, global);
 goog.exportSymbol('proto.lnrpc.FundingShim', null, global);
+goog.exportSymbol('proto.lnrpc.FundingShim.ShimCase', null, global);
 goog.exportSymbol('proto.lnrpc.FundingShimCancel', null, global);
 goog.exportSymbol('proto.lnrpc.FundingStateStepResp', null, global);
 goog.exportSymbol('proto.lnrpc.FundingTransitionMsg', null, global);
+goog.exportSymbol('proto.lnrpc.FundingTransitionMsg.TriggerCase', null, global);
 goog.exportSymbol('proto.lnrpc.GetInfoRequest', null, global);
 goog.exportSymbol('proto.lnrpc.GetInfoResponse', null, global);
 goog.exportSymbol('proto.lnrpc.GetRecoveryInfoRequest', null, global);
@@ -139,6 +149,7 @@ goog.exportSymbol('proto.lnrpc.NodeUpdate', null, global);
 goog.exportSymbol('proto.lnrpc.Op', null, global);
 goog.exportSymbol('proto.lnrpc.OpenChannelRequest', null, global);
 goog.exportSymbol('proto.lnrpc.OpenStatusUpdate', null, global);
+goog.exportSymbol('proto.lnrpc.OpenStatusUpdate.UpdateCase', null, global);
 goog.exportSymbol('proto.lnrpc.OutPoint', null, global);
 goog.exportSymbol('proto.lnrpc.PayReq', null, global);
 goog.exportSymbol('proto.lnrpc.PayReqString', null, global);
@@ -163,6 +174,7 @@ goog.exportSymbol('proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel', nul
 goog.exportSymbol('proto.lnrpc.PendingHTLC', null, global);
 goog.exportSymbol('proto.lnrpc.PendingUpdate', null, global);
 goog.exportSymbol('proto.lnrpc.PolicyUpdateRequest', null, global);
+goog.exportSymbol('proto.lnrpc.PolicyUpdateRequest.ScopeCase', null, global);
 goog.exportSymbol('proto.lnrpc.PolicyUpdateResponse', null, global);
 goog.exportSymbol('proto.lnrpc.PsbtShim', null, global);
 goog.exportSymbol('proto.lnrpc.QueryRoutesRequest', null, global);
@@ -173,6 +185,7 @@ goog.exportSymbol('proto.lnrpc.ResolutionOutcome', null, global);
 goog.exportSymbol('proto.lnrpc.ResolutionType', null, global);
 goog.exportSymbol('proto.lnrpc.RestoreBackupResponse', null, global);
 goog.exportSymbol('proto.lnrpc.RestoreChanBackupRequest', null, global);
+goog.exportSymbol('proto.lnrpc.RestoreChanBackupRequest.BackupCase', null, global);
 goog.exportSymbol('proto.lnrpc.Route', null, global);
 goog.exportSymbol('proto.lnrpc.RouteHint', null, global);
 goog.exportSymbol('proto.lnrpc.RoutingPolicy', null, global);
@@ -196,7 +209,6 @@ goog.exportSymbol('proto.lnrpc.VerifyMessageRequest', null, global);
 goog.exportSymbol('proto.lnrpc.VerifyMessageResponse', null, global);
 goog.exportSymbol('proto.lnrpc.WalletBalanceRequest', null, global);
 goog.exportSymbol('proto.lnrpc.WalletBalanceResponse', null, global);
-
 /**
  * Generated by JsPbCodeGenerator.
  * @param {Array=} opt_data Optional initial data array, typically from a
@@ -212,19 +224,3512 @@ proto.lnrpc.Utxo = function(opt_data) {
 };
 goog.inherits(proto.lnrpc.Utxo, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
   proto.lnrpc.Utxo.displayName = 'proto.lnrpc.Utxo';
 }
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Transaction = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Transaction.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Transaction, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Transaction.displayName = 'proto.lnrpc.Transaction';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GetTransactionsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.GetTransactionsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GetTransactionsRequest.displayName = 'proto.lnrpc.GetTransactionsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.TransactionDetails = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.TransactionDetails.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.TransactionDetails, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.TransactionDetails.displayName = 'proto.lnrpc.TransactionDetails';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FeeLimit = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.FeeLimit.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.FeeLimit, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FeeLimit.displayName = 'proto.lnrpc.FeeLimit';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.SendRequest.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.SendRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendRequest.displayName = 'proto.lnrpc.SendRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SendResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendResponse.displayName = 'proto.lnrpc.SendResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendToRouteRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SendToRouteRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendToRouteRequest.displayName = 'proto.lnrpc.SendToRouteRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelAcceptRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelAcceptRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelAcceptRequest.displayName = 'proto.lnrpc.ChannelAcceptRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelAcceptResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelAcceptResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelAcceptResponse.displayName = 'proto.lnrpc.ChannelAcceptResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelPoint = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.ChannelPoint.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.ChannelPoint, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelPoint.displayName = 'proto.lnrpc.ChannelPoint';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.OutPoint = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.OutPoint, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.OutPoint.displayName = 'proto.lnrpc.OutPoint';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.LightningAddress = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.LightningAddress, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.LightningAddress.displayName = 'proto.lnrpc.LightningAddress';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.EstimateFeeRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.EstimateFeeRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.EstimateFeeRequest.displayName = 'proto.lnrpc.EstimateFeeRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.EstimateFeeResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.EstimateFeeResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.EstimateFeeResponse.displayName = 'proto.lnrpc.EstimateFeeResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendManyRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SendManyRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendManyRequest.displayName = 'proto.lnrpc.SendManyRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendManyResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SendManyResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendManyResponse.displayName = 'proto.lnrpc.SendManyResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendCoinsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SendCoinsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendCoinsRequest.displayName = 'proto.lnrpc.SendCoinsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SendCoinsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SendCoinsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SendCoinsResponse.displayName = 'proto.lnrpc.SendCoinsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListUnspentRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListUnspentRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListUnspentRequest.displayName = 'proto.lnrpc.ListUnspentRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListUnspentResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListUnspentResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ListUnspentResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListUnspentResponse.displayName = 'proto.lnrpc.ListUnspentResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NewAddressRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NewAddressRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NewAddressRequest.displayName = 'proto.lnrpc.NewAddressRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NewAddressResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NewAddressResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NewAddressResponse.displayName = 'proto.lnrpc.NewAddressResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SignMessageRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SignMessageRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SignMessageRequest.displayName = 'proto.lnrpc.SignMessageRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.SignMessageResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.SignMessageResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.SignMessageResponse.displayName = 'proto.lnrpc.SignMessageResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.VerifyMessageRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.VerifyMessageRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.VerifyMessageRequest.displayName = 'proto.lnrpc.VerifyMessageRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.VerifyMessageResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.VerifyMessageResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.VerifyMessageResponse.displayName = 'proto.lnrpc.VerifyMessageResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ConnectPeerRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ConnectPeerRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ConnectPeerRequest.displayName = 'proto.lnrpc.ConnectPeerRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ConnectPeerResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ConnectPeerResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ConnectPeerResponse.displayName = 'proto.lnrpc.ConnectPeerResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DisconnectPeerRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DisconnectPeerRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DisconnectPeerRequest.displayName = 'proto.lnrpc.DisconnectPeerRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DisconnectPeerResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DisconnectPeerResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DisconnectPeerResponse.displayName = 'proto.lnrpc.DisconnectPeerResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.HTLC = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.HTLC, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.HTLC.displayName = 'proto.lnrpc.HTLC';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelConstraints = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelConstraints, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelConstraints.displayName = 'proto.lnrpc.ChannelConstraints';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Channel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Channel.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Channel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Channel.displayName = 'proto.lnrpc.Channel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListChannelsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListChannelsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListChannelsRequest.displayName = 'proto.lnrpc.ListChannelsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListChannelsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListChannelsResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ListChannelsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListChannelsResponse.displayName = 'proto.lnrpc.ListChannelsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelCloseSummary = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ChannelCloseSummary.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ChannelCloseSummary, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelCloseSummary.displayName = 'proto.lnrpc.ChannelCloseSummary';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Resolution = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.Resolution, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Resolution.displayName = 'proto.lnrpc.Resolution';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ClosedChannelsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ClosedChannelsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ClosedChannelsRequest.displayName = 'proto.lnrpc.ClosedChannelsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ClosedChannelsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ClosedChannelsResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ClosedChannelsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ClosedChannelsResponse.displayName = 'proto.lnrpc.ClosedChannelsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Peer = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Peer.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Peer, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Peer.displayName = 'proto.lnrpc.Peer';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.TimestampedError = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.TimestampedError, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.TimestampedError.displayName = 'proto.lnrpc.TimestampedError';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListPeersRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListPeersRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListPeersRequest.displayName = 'proto.lnrpc.ListPeersRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListPeersResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListPeersResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ListPeersResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListPeersResponse.displayName = 'proto.lnrpc.ListPeersResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PeerEventSubscription = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PeerEventSubscription, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PeerEventSubscription.displayName = 'proto.lnrpc.PeerEventSubscription';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PeerEvent = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PeerEvent, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PeerEvent.displayName = 'proto.lnrpc.PeerEvent';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GetInfoRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.GetInfoRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GetInfoRequest.displayName = 'proto.lnrpc.GetInfoRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GetInfoResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, 500, proto.lnrpc.GetInfoResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.GetInfoResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GetInfoResponse.displayName = 'proto.lnrpc.GetInfoResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GetRecoveryInfoRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.GetRecoveryInfoRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GetRecoveryInfoRequest.displayName = 'proto.lnrpc.GetRecoveryInfoRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GetRecoveryInfoResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.GetRecoveryInfoResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GetRecoveryInfoResponse.displayName = 'proto.lnrpc.GetRecoveryInfoResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Chain = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.Chain, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Chain.displayName = 'proto.lnrpc.Chain';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ConfirmationUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ConfirmationUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ConfirmationUpdate.displayName = 'proto.lnrpc.ConfirmationUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelOpenUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelOpenUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelOpenUpdate.displayName = 'proto.lnrpc.ChannelOpenUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelCloseUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelCloseUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelCloseUpdate.displayName = 'proto.lnrpc.ChannelCloseUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.CloseChannelRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.CloseChannelRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.CloseChannelRequest.displayName = 'proto.lnrpc.CloseChannelRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.CloseStatusUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.CloseStatusUpdate.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.CloseStatusUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.CloseStatusUpdate.displayName = 'proto.lnrpc.CloseStatusUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingUpdate.displayName = 'proto.lnrpc.PendingUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ReadyForPsbtFunding = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ReadyForPsbtFunding, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ReadyForPsbtFunding.displayName = 'proto.lnrpc.ReadyForPsbtFunding';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.OpenChannelRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.OpenChannelRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.OpenChannelRequest.displayName = 'proto.lnrpc.OpenChannelRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.OpenStatusUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.OpenStatusUpdate.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.OpenStatusUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.OpenStatusUpdate.displayName = 'proto.lnrpc.OpenStatusUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.KeyLocator = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.KeyLocator, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.KeyLocator.displayName = 'proto.lnrpc.KeyLocator';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.KeyDescriptor = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.KeyDescriptor, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.KeyDescriptor.displayName = 'proto.lnrpc.KeyDescriptor';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChanPointShim = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChanPointShim, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChanPointShim.displayName = 'proto.lnrpc.ChanPointShim';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PsbtShim = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PsbtShim, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PsbtShim.displayName = 'proto.lnrpc.PsbtShim';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FundingShim = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.FundingShim.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.FundingShim, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FundingShim.displayName = 'proto.lnrpc.FundingShim';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FundingShimCancel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.FundingShimCancel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FundingShimCancel.displayName = 'proto.lnrpc.FundingShimCancel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FundingPsbtVerify = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.FundingPsbtVerify, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FundingPsbtVerify.displayName = 'proto.lnrpc.FundingPsbtVerify';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FundingPsbtFinalize = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.FundingPsbtFinalize, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FundingPsbtFinalize.displayName = 'proto.lnrpc.FundingPsbtFinalize';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FundingTransitionMsg = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.FundingTransitionMsg.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.FundingTransitionMsg, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FundingTransitionMsg.displayName = 'proto.lnrpc.FundingTransitionMsg';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FundingStateStepResp = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.FundingStateStepResp, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FundingStateStepResp.displayName = 'proto.lnrpc.FundingStateStepResp';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingHTLC = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingHTLC, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingHTLC.displayName = 'proto.lnrpc.PendingHTLC';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsRequest.displayName = 'proto.lnrpc.PendingChannelsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.PendingChannelsResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.displayName = 'proto.lnrpc.PendingChannelsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse.PendingChannel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse.PendingChannel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.PendingChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.PendingChannel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse.PendingOpenChannel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse.PendingOpenChannel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.PendingOpenChannel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse.Commitments = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse.Commitments, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.Commitments.displayName = 'proto.lnrpc.PendingChannelsResponse.Commitments';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse.ClosedChannel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse.ClosedChannel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.ClosedChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.ClosedChannel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PendingChannelsResponse.ForceClosedChannel = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.PendingChannelsResponse.ForceClosedChannel, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.ForceClosedChannel';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelEventSubscription = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelEventSubscription, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelEventSubscription.displayName = 'proto.lnrpc.ChannelEventSubscription';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelEventUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.ChannelEventUpdate.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.ChannelEventUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelEventUpdate.displayName = 'proto.lnrpc.ChannelEventUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.WalletBalanceRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.WalletBalanceRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.WalletBalanceRequest.displayName = 'proto.lnrpc.WalletBalanceRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.WalletBalanceResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.WalletBalanceResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.WalletBalanceResponse.displayName = 'proto.lnrpc.WalletBalanceResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelBalanceRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelBalanceRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelBalanceRequest.displayName = 'proto.lnrpc.ChannelBalanceRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelBalanceResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelBalanceResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelBalanceResponse.displayName = 'proto.lnrpc.ChannelBalanceResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.QueryRoutesRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.QueryRoutesRequest.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.QueryRoutesRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.QueryRoutesRequest.displayName = 'proto.lnrpc.QueryRoutesRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodePair = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NodePair, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodePair.displayName = 'proto.lnrpc.NodePair';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.EdgeLocator = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.EdgeLocator, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.EdgeLocator.displayName = 'proto.lnrpc.EdgeLocator';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.QueryRoutesResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.QueryRoutesResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.QueryRoutesResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.QueryRoutesResponse.displayName = 'proto.lnrpc.QueryRoutesResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Hop = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.Hop, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Hop.displayName = 'proto.lnrpc.Hop';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.MPPRecord = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.MPPRecord, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.MPPRecord.displayName = 'proto.lnrpc.MPPRecord';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Route = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Route.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Route, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Route.displayName = 'proto.lnrpc.Route';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodeInfoRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NodeInfoRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodeInfoRequest.displayName = 'proto.lnrpc.NodeInfoRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodeInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.NodeInfo.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.NodeInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodeInfo.displayName = 'proto.lnrpc.NodeInfo';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.LightningNode = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.LightningNode.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.LightningNode, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.LightningNode.displayName = 'proto.lnrpc.LightningNode';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodeAddress = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NodeAddress, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodeAddress.displayName = 'proto.lnrpc.NodeAddress';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.RoutingPolicy = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.RoutingPolicy, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.RoutingPolicy.displayName = 'proto.lnrpc.RoutingPolicy';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelEdge = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelEdge, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelEdge.displayName = 'proto.lnrpc.ChannelEdge';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelGraphRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelGraphRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelGraphRequest.displayName = 'proto.lnrpc.ChannelGraphRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelGraph = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ChannelGraph.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ChannelGraph, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelGraph.displayName = 'proto.lnrpc.ChannelGraph';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodeMetricsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.NodeMetricsRequest.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.NodeMetricsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodeMetricsRequest.displayName = 'proto.lnrpc.NodeMetricsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodeMetricsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NodeMetricsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodeMetricsResponse.displayName = 'proto.lnrpc.NodeMetricsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FloatMetric = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.FloatMetric, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FloatMetric.displayName = 'proto.lnrpc.FloatMetric';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChanInfoRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChanInfoRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChanInfoRequest.displayName = 'proto.lnrpc.ChanInfoRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NetworkInfoRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NetworkInfoRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NetworkInfoRequest.displayName = 'proto.lnrpc.NetworkInfoRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NetworkInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.NetworkInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NetworkInfo.displayName = 'proto.lnrpc.NetworkInfo';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.StopRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.StopRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.StopRequest.displayName = 'proto.lnrpc.StopRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.StopResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.StopResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.StopResponse.displayName = 'proto.lnrpc.StopResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GraphTopologySubscription = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.GraphTopologySubscription, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GraphTopologySubscription.displayName = 'proto.lnrpc.GraphTopologySubscription';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.GraphTopologyUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.GraphTopologyUpdate.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.GraphTopologyUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.GraphTopologyUpdate.displayName = 'proto.lnrpc.GraphTopologyUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.NodeUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.NodeUpdate.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.NodeUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.NodeUpdate.displayName = 'proto.lnrpc.NodeUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelEdgeUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelEdgeUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelEdgeUpdate.displayName = 'proto.lnrpc.ChannelEdgeUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ClosedChannelUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ClosedChannelUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ClosedChannelUpdate.displayName = 'proto.lnrpc.ClosedChannelUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.HopHint = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.HopHint, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.HopHint.displayName = 'proto.lnrpc.HopHint';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.RouteHint = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.RouteHint.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.RouteHint, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.RouteHint.displayName = 'proto.lnrpc.RouteHint';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Invoice = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, 500, proto.lnrpc.Invoice.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Invoice, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Invoice.displayName = 'proto.lnrpc.Invoice';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.InvoiceHTLC = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.InvoiceHTLC, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.InvoiceHTLC.displayName = 'proto.lnrpc.InvoiceHTLC';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.AddInvoiceResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.AddInvoiceResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.AddInvoiceResponse.displayName = 'proto.lnrpc.AddInvoiceResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PaymentHash = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PaymentHash, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PaymentHash.displayName = 'proto.lnrpc.PaymentHash';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListInvoiceRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListInvoiceRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListInvoiceRequest.displayName = 'proto.lnrpc.ListInvoiceRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListInvoiceResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListInvoiceResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ListInvoiceResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListInvoiceResponse.displayName = 'proto.lnrpc.ListInvoiceResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.InvoiceSubscription = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.InvoiceSubscription, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.InvoiceSubscription.displayName = 'proto.lnrpc.InvoiceSubscription';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Payment = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Payment.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Payment, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Payment.displayName = 'proto.lnrpc.Payment';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.HTLCAttempt = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.HTLCAttempt, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.HTLCAttempt.displayName = 'proto.lnrpc.HTLCAttempt';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListPaymentsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListPaymentsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListPaymentsRequest.displayName = 'proto.lnrpc.ListPaymentsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListPaymentsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListPaymentsResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ListPaymentsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListPaymentsResponse.displayName = 'proto.lnrpc.ListPaymentsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DeleteAllPaymentsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DeleteAllPaymentsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DeleteAllPaymentsRequest.displayName = 'proto.lnrpc.DeleteAllPaymentsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DeleteAllPaymentsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DeleteAllPaymentsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DeleteAllPaymentsResponse.displayName = 'proto.lnrpc.DeleteAllPaymentsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.AbandonChannelRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.AbandonChannelRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.AbandonChannelRequest.displayName = 'proto.lnrpc.AbandonChannelRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.AbandonChannelResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.AbandonChannelResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.AbandonChannelResponse.displayName = 'proto.lnrpc.AbandonChannelResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DebugLevelRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DebugLevelRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DebugLevelRequest.displayName = 'proto.lnrpc.DebugLevelRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DebugLevelResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DebugLevelResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DebugLevelResponse.displayName = 'proto.lnrpc.DebugLevelResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PayReqString = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PayReqString, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PayReqString.displayName = 'proto.lnrpc.PayReqString';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PayReq = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.PayReq.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.PayReq, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PayReq.displayName = 'proto.lnrpc.PayReq';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Feature = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.Feature, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Feature.displayName = 'proto.lnrpc.Feature';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FeeReportRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.FeeReportRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FeeReportRequest.displayName = 'proto.lnrpc.FeeReportRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelFeeReport = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelFeeReport, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelFeeReport.displayName = 'proto.lnrpc.ChannelFeeReport';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.FeeReportResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.FeeReportResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.FeeReportResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.FeeReportResponse.displayName = 'proto.lnrpc.FeeReportResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PolicyUpdateRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.PolicyUpdateRequest.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.PolicyUpdateRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PolicyUpdateRequest.displayName = 'proto.lnrpc.PolicyUpdateRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.PolicyUpdateResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.PolicyUpdateResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.PolicyUpdateResponse.displayName = 'proto.lnrpc.PolicyUpdateResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ForwardingHistoryRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ForwardingHistoryRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ForwardingHistoryRequest.displayName = 'proto.lnrpc.ForwardingHistoryRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ForwardingEvent = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ForwardingEvent, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ForwardingEvent.displayName = 'proto.lnrpc.ForwardingEvent';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ForwardingHistoryResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ForwardingHistoryResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ForwardingHistoryResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ForwardingHistoryResponse.displayName = 'proto.lnrpc.ForwardingHistoryResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ExportChannelBackupRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ExportChannelBackupRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ExportChannelBackupRequest.displayName = 'proto.lnrpc.ExportChannelBackupRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelBackup = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelBackup, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelBackup.displayName = 'proto.lnrpc.ChannelBackup';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.MultiChanBackup = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.MultiChanBackup.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.MultiChanBackup, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.MultiChanBackup.displayName = 'proto.lnrpc.MultiChanBackup';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChanBackupExportRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChanBackupExportRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChanBackupExportRequest.displayName = 'proto.lnrpc.ChanBackupExportRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChanBackupSnapshot = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChanBackupSnapshot, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChanBackupSnapshot.displayName = 'proto.lnrpc.ChanBackupSnapshot';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelBackups = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ChannelBackups.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ChannelBackups, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelBackups.displayName = 'proto.lnrpc.ChannelBackups';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.RestoreChanBackupRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_);
+};
+goog.inherits(proto.lnrpc.RestoreChanBackupRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.RestoreChanBackupRequest.displayName = 'proto.lnrpc.RestoreChanBackupRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.RestoreBackupResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.RestoreBackupResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.RestoreBackupResponse.displayName = 'proto.lnrpc.RestoreBackupResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelBackupSubscription = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelBackupSubscription, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelBackupSubscription.displayName = 'proto.lnrpc.ChannelBackupSubscription';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.VerifyChanBackupResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.VerifyChanBackupResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.VerifyChanBackupResponse.displayName = 'proto.lnrpc.VerifyChanBackupResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.MacaroonPermission = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.MacaroonPermission, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.MacaroonPermission.displayName = 'proto.lnrpc.MacaroonPermission';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.BakeMacaroonRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.BakeMacaroonRequest.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.BakeMacaroonRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.BakeMacaroonRequest.displayName = 'proto.lnrpc.BakeMacaroonRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.BakeMacaroonResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.BakeMacaroonResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.BakeMacaroonResponse.displayName = 'proto.lnrpc.BakeMacaroonResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListMacaroonIDsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListMacaroonIDsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListMacaroonIDsRequest.displayName = 'proto.lnrpc.ListMacaroonIDsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListMacaroonIDsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListMacaroonIDsResponse.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.ListMacaroonIDsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListMacaroonIDsResponse.displayName = 'proto.lnrpc.ListMacaroonIDsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DeleteMacaroonIDRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DeleteMacaroonIDRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DeleteMacaroonIDRequest.displayName = 'proto.lnrpc.DeleteMacaroonIDRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.DeleteMacaroonIDResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.DeleteMacaroonIDResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.DeleteMacaroonIDResponse.displayName = 'proto.lnrpc.DeleteMacaroonIDResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.MacaroonPermissionList = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.MacaroonPermissionList.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.MacaroonPermissionList, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.MacaroonPermissionList.displayName = 'proto.lnrpc.MacaroonPermissionList';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListPermissionsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListPermissionsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListPermissionsRequest.displayName = 'proto.lnrpc.ListPermissionsRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ListPermissionsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ListPermissionsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ListPermissionsResponse.displayName = 'proto.lnrpc.ListPermissionsResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Failure = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.Failure, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Failure.displayName = 'proto.lnrpc.Failure';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.ChannelUpdate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.lnrpc.ChannelUpdate, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.ChannelUpdate.displayName = 'proto.lnrpc.ChannelUpdate';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.MacaroonId = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.MacaroonId.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.MacaroonId, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.MacaroonId.displayName = 'proto.lnrpc.MacaroonId';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.lnrpc.Op = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Op.repeatedFields_, null);
+};
+goog.inherits(proto.lnrpc.Op, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.lnrpc.Op.displayName = 'proto.lnrpc.Op';
+}
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Utxo.prototype.toObject = function(opt_includeInstance) {
@@ -234,8 +3739,8 @@ proto.lnrpc.Utxo.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Utxo} msg The msg instance to transform.
  * @return {!Object}
@@ -394,9 +3899,12 @@ proto.lnrpc.Utxo.prototype.getAddressType = function() {
 };
 
 
-/** @param {!proto.lnrpc.AddressType} value */
+/**
+ * @param {!proto.lnrpc.AddressType} value
+ * @return {!proto.lnrpc.Utxo} returns this
+ */
 proto.lnrpc.Utxo.prototype.setAddressType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -409,9 +3917,12 @@ proto.lnrpc.Utxo.prototype.getAddress = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Utxo} returns this
+ */
 proto.lnrpc.Utxo.prototype.setAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -424,9 +3935,12 @@ proto.lnrpc.Utxo.prototype.getAmountAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Utxo} returns this
+ */
 proto.lnrpc.Utxo.prototype.setAmountAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -439,9 +3953,12 @@ proto.lnrpc.Utxo.prototype.getPkScript = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Utxo} returns this
+ */
 proto.lnrpc.Utxo.prototype.setPkScript = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -455,14 +3972,21 @@ proto.lnrpc.Utxo.prototype.getOutpoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.OutPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.OutPoint|undefined} value
+ * @return {!proto.lnrpc.Utxo} returns this
+*/
 proto.lnrpc.Utxo.prototype.setOutpoint = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
+  return jspb.Message.setWrapperField(this, 5, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.Utxo} returns this
+ */
 proto.lnrpc.Utxo.prototype.clearOutpoint = function() {
-  this.setOutpoint(undefined);
+  return this.setOutpoint(undefined);
 };
 
 
@@ -484,30 +4008,16 @@ proto.lnrpc.Utxo.prototype.getConfirmations = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.Utxo.prototype.setConfirmations = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.Utxo} returns this
  */
-proto.lnrpc.Transaction = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Transaction.repeatedFields_, null);
+proto.lnrpc.Utxo.prototype.setConfirmations = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.Transaction, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Transaction.displayName = 'proto.lnrpc.Transaction';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -519,13 +4029,15 @@ proto.lnrpc.Transaction.repeatedFields_ = [8];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Transaction.prototype.toObject = function(opt_includeInstance) {
@@ -535,8 +4047,8 @@ proto.lnrpc.Transaction.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Transaction} msg The msg instance to transform.
  * @return {!Object}
@@ -551,7 +4063,7 @@ proto.lnrpc.Transaction.toObject = function(includeInstance, msg) {
     blockHeight: jspb.Message.getFieldWithDefault(msg, 5, 0),
     timeStamp: jspb.Message.getFieldWithDefault(msg, 6, 0),
     totalFees: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    destAddressesList: jspb.Message.getRepeatedField(msg, 8),
+    destAddressesList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
     rawTxHex: jspb.Message.getFieldWithDefault(msg, 9, ""),
     label: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
@@ -741,9 +4253,12 @@ proto.lnrpc.Transaction.prototype.getTxHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setTxHash = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -756,9 +4271,12 @@ proto.lnrpc.Transaction.prototype.getAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -771,9 +4289,12 @@ proto.lnrpc.Transaction.prototype.getNumConfirmations = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setNumConfirmations = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -786,9 +4307,12 @@ proto.lnrpc.Transaction.prototype.getBlockHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setBlockHash = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -801,9 +4325,12 @@ proto.lnrpc.Transaction.prototype.getBlockHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setBlockHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -816,9 +4343,12 @@ proto.lnrpc.Transaction.prototype.getTimeStamp = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setTimeStamp = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -831,9 +4361,12 @@ proto.lnrpc.Transaction.prototype.getTotalFees = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setTotalFees = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -846,23 +4379,31 @@ proto.lnrpc.Transaction.prototype.getDestAddressesList = function() {
 };
 
 
-/** @param {!Array<string>} value */
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setDestAddressesList = function(value) {
-  jspb.Message.setField(this, 8, value || []);
+  return jspb.Message.setField(this, 8, value || []);
 };
 
 
 /**
  * @param {string} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.Transaction} returns this
  */
 proto.lnrpc.Transaction.prototype.addDestAddresses = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 8, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.clearDestAddressesList = function() {
-  this.setDestAddressesList([]);
+  return this.setDestAddressesList([]);
 };
 
 
@@ -875,9 +4416,12 @@ proto.lnrpc.Transaction.prototype.getRawTxHex = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Transaction} returns this
+ */
 proto.lnrpc.Transaction.prototype.setRawTxHex = function(value) {
-  jspb.Message.setProto3StringField(this, 9, value);
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -890,41 +4434,29 @@ proto.lnrpc.Transaction.prototype.getLabel = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.Transaction.prototype.setLabel = function(value) {
-  jspb.Message.setProto3StringField(this, 10, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.Transaction} returns this
  */
-proto.lnrpc.GetTransactionsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Transaction.prototype.setLabel = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
 };
-goog.inherits(proto.lnrpc.GetTransactionsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GetTransactionsRequest.displayName = 'proto.lnrpc.GetTransactionsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GetTransactionsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -934,8 +4466,8 @@ proto.lnrpc.GetTransactionsRequest.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GetTransactionsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -1044,9 +4576,12 @@ proto.lnrpc.GetTransactionsRequest.prototype.getStartHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetTransactionsRequest} returns this
+ */
 proto.lnrpc.GetTransactionsRequest.prototype.setStartHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -1059,30 +4594,16 @@ proto.lnrpc.GetTransactionsRequest.prototype.getEndHeight = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.GetTransactionsRequest.prototype.setEndHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.GetTransactionsRequest} returns this
  */
-proto.lnrpc.TransactionDetails = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.TransactionDetails.repeatedFields_, null);
+proto.lnrpc.GetTransactionsRequest.prototype.setEndHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.TransactionDetails, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.TransactionDetails.displayName = 'proto.lnrpc.TransactionDetails';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -1094,13 +4615,15 @@ proto.lnrpc.TransactionDetails.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.TransactionDetails.prototype.toObject = function(opt_includeInstance) {
@@ -1110,8 +4633,8 @@ proto.lnrpc.TransactionDetails.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.TransactionDetails} msg The msg instance to transform.
  * @return {!Object}
@@ -1212,9 +4735,12 @@ proto.lnrpc.TransactionDetails.prototype.getTransactionsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Transaction>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Transaction>} value
+ * @return {!proto.lnrpc.TransactionDetails} returns this
+*/
 proto.lnrpc.TransactionDetails.prototype.setTransactionsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -1228,29 +4754,16 @@ proto.lnrpc.TransactionDetails.prototype.addTransactions = function(opt_value, o
 };
 
 
-proto.lnrpc.TransactionDetails.prototype.clearTransactionsList = function() {
-  this.setTransactionsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.TransactionDetails} returns this
  */
-proto.lnrpc.FeeLimit = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.FeeLimit.oneofGroups_);
+proto.lnrpc.TransactionDetails.prototype.clearTransactionsList = function() {
+  return this.setTransactionsList([]);
 };
-goog.inherits(proto.lnrpc.FeeLimit, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FeeLimit.displayName = 'proto.lnrpc.FeeLimit';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -1282,13 +4795,15 @@ proto.lnrpc.FeeLimit.prototype.getLimitCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FeeLimit.prototype.toObject = function(opt_includeInstance) {
@@ -1298,8 +4813,8 @@ proto.lnrpc.FeeLimit.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FeeLimit} msg The msg instance to transform.
  * @return {!Object}
@@ -1420,14 +4935,21 @@ proto.lnrpc.FeeLimit.prototype.getFixed = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.FeeLimit} returns this
+ */
 proto.lnrpc.FeeLimit.prototype.setFixed = function(value) {
-  jspb.Message.setOneofField(this, 1, proto.lnrpc.FeeLimit.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 1, proto.lnrpc.FeeLimit.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.FeeLimit} returns this
+ */
 proto.lnrpc.FeeLimit.prototype.clearFixed = function() {
-  jspb.Message.setOneofField(this, 1, proto.lnrpc.FeeLimit.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 1, proto.lnrpc.FeeLimit.oneofGroups_[0], undefined);
 };
 
 
@@ -1449,14 +4971,21 @@ proto.lnrpc.FeeLimit.prototype.getFixedMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.FeeLimit} returns this
+ */
 proto.lnrpc.FeeLimit.prototype.setFixedMAtoms = function(value) {
-  jspb.Message.setOneofField(this, 3, proto.lnrpc.FeeLimit.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 3, proto.lnrpc.FeeLimit.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.FeeLimit} returns this
+ */
 proto.lnrpc.FeeLimit.prototype.clearFixedMAtoms = function() {
-  jspb.Message.setOneofField(this, 3, proto.lnrpc.FeeLimit.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 3, proto.lnrpc.FeeLimit.oneofGroups_[0], undefined);
 };
 
 
@@ -1478,14 +5007,21 @@ proto.lnrpc.FeeLimit.prototype.getPercent = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.FeeLimit} returns this
+ */
 proto.lnrpc.FeeLimit.prototype.setPercent = function(value) {
-  jspb.Message.setOneofField(this, 2, proto.lnrpc.FeeLimit.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 2, proto.lnrpc.FeeLimit.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.FeeLimit} returns this
+ */
 proto.lnrpc.FeeLimit.prototype.clearPercent = function() {
-  jspb.Message.setOneofField(this, 2, proto.lnrpc.FeeLimit.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 2, proto.lnrpc.FeeLimit.oneofGroups_[0], undefined);
 };
 
 
@@ -1500,23 +5036,6 @@ proto.lnrpc.FeeLimit.prototype.hasPercent = function() {
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.SendRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.SendRequest.repeatedFields_, null);
-};
-goog.inherits(proto.lnrpc.SendRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendRequest.displayName = 'proto.lnrpc.SendRequest';
-}
-/**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
@@ -1527,13 +5046,15 @@ proto.lnrpc.SendRequest.repeatedFields_ = [16];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendRequest.prototype.toObject = function(opt_includeInstance) {
@@ -1543,8 +5064,8 @@ proto.lnrpc.SendRequest.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -1562,12 +5083,12 @@ proto.lnrpc.SendRequest.toObject = function(includeInstance, msg) {
     finalCltvDelta: jspb.Message.getFieldWithDefault(msg, 7, 0),
     feeLimit: (f = msg.getFeeLimit()) && proto.lnrpc.FeeLimit.toObject(includeInstance, f),
     outgoingChanId: jspb.Message.getFieldWithDefault(msg, 10, "0"),
-    ignoreMaxOutboundAmt: jspb.Message.getFieldWithDefault(msg, 9, false),
+    ignoreMaxOutboundAmt: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     lastHopPubkey: msg.getLastHopPubkey_asB64(),
     cltvLimit: jspb.Message.getFieldWithDefault(msg, 11, 0),
     destCustomRecordsMap: (f = msg.getDestCustomRecordsMap()) ? f.toObject(includeInstance, undefined) : [],
-    allowSelfPayment: jspb.Message.getFieldWithDefault(msg, 15, false),
-    destFeaturesList: jspb.Message.getRepeatedField(msg, 16)
+    allowSelfPayment: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
+    destFeaturesList: (f = jspb.Message.getRepeatedField(msg, 16)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -1660,7 +5181,7 @@ proto.lnrpc.SendRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 12:
       var value = msg.getDestCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0, "");
          });
       break;
     case 15:
@@ -1668,8 +5189,10 @@ proto.lnrpc.SendRequest.deserializeBinaryFromReader = function(msg, reader) {
       msg.setAllowSelfPayment(value);
       break;
     case 16:
-      var value = /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (reader.readPackedEnum());
-      msg.setDestFeaturesList(value);
+      var values = /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addDestFeatures(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -1846,9 +5369,12 @@ proto.lnrpc.SendRequest.prototype.getDest_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setDest = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1861,9 +5387,12 @@ proto.lnrpc.SendRequest.prototype.getDestString = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setDestString = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1876,9 +5405,12 @@ proto.lnrpc.SendRequest.prototype.getAmt = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setAmt = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -1891,9 +5423,12 @@ proto.lnrpc.SendRequest.prototype.getAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -1930,9 +5465,12 @@ proto.lnrpc.SendRequest.prototype.getPaymentHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setPaymentHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value);
+  return jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -1945,9 +5483,12 @@ proto.lnrpc.SendRequest.prototype.getPaymentHashString = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setPaymentHashString = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -1960,9 +5501,12 @@ proto.lnrpc.SendRequest.prototype.getPaymentRequest = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -1975,9 +5519,12 @@ proto.lnrpc.SendRequest.prototype.getFinalCltvDelta = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setFinalCltvDelta = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -1991,14 +5538,21 @@ proto.lnrpc.SendRequest.prototype.getFeeLimit = function() {
 };
 
 
-/** @param {?proto.lnrpc.FeeLimit|undefined} value */
+/**
+ * @param {?proto.lnrpc.FeeLimit|undefined} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+*/
 proto.lnrpc.SendRequest.prototype.setFeeLimit = function(value) {
-  jspb.Message.setWrapperField(this, 8, value);
+  return jspb.Message.setWrapperField(this, 8, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.clearFeeLimit = function() {
-  this.setFeeLimit(undefined);
+  return this.setFeeLimit(undefined);
 };
 
 
@@ -2020,26 +5574,30 @@ proto.lnrpc.SendRequest.prototype.getOutgoingChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setOutgoingChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 10, value);
+  return jspb.Message.setProto3StringIntField(this, 10, value);
 };
 
 
 /**
  * optional bool ignore_max_outbound_amt = 9;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.SendRequest.prototype.getIgnoreMaxOutboundAmt = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setIgnoreMaxOutboundAmt = function(value) {
-  jspb.Message.setProto3BooleanField(this, 9, value);
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -2076,9 +5634,12 @@ proto.lnrpc.SendRequest.prototype.getLastHopPubkey_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setLastHopPubkey = function(value) {
-  jspb.Message.setProto3BytesField(this, 14, value);
+  return jspb.Message.setProto3BytesField(this, 14, value);
 };
 
 
@@ -2091,9 +5652,12 @@ proto.lnrpc.SendRequest.prototype.getCltvLimit = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setCltvLimit = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -2110,25 +5674,30 @@ proto.lnrpc.SendRequest.prototype.getDestCustomRecordsMap = function(opt_noLazyC
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.clearDestCustomRecordsMap = function() {
   this.getDestCustomRecordsMap().clear();
-};
+  return this;};
 
 
 /**
  * optional bool allow_self_payment = 15;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.SendRequest.prototype.getAllowSelfPayment = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 15, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setAllowSelfPayment = function(value) {
-  jspb.Message.setProto3BooleanField(this, 15, value);
+  return jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 
@@ -2141,55 +5710,48 @@ proto.lnrpc.SendRequest.prototype.getDestFeaturesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.FeatureBit>} value */
+/**
+ * @param {!Array<!proto.lnrpc.FeatureBit>} value
+ * @return {!proto.lnrpc.SendRequest} returns this
+ */
 proto.lnrpc.SendRequest.prototype.setDestFeaturesList = function(value) {
-  jspb.Message.setField(this, 16, value || []);
+  return jspb.Message.setField(this, 16, value || []);
 };
 
 
 /**
  * @param {!proto.lnrpc.FeatureBit} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.SendRequest} returns this
  */
 proto.lnrpc.SendRequest.prototype.addDestFeatures = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 16, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 16, value, opt_index);
 };
-
-
-proto.lnrpc.SendRequest.prototype.clearDestFeaturesList = function() {
-  this.setDestFeaturesList([]);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.SendRequest} returns this
  */
-proto.lnrpc.SendResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SendRequest.prototype.clearDestFeaturesList = function() {
+  return this.setDestFeaturesList([]);
 };
-goog.inherits(proto.lnrpc.SendResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendResponse.displayName = 'proto.lnrpc.SendResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendResponse.prototype.toObject = function(opt_includeInstance) {
@@ -2199,8 +5761,8 @@ proto.lnrpc.SendResponse.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -2335,9 +5897,12 @@ proto.lnrpc.SendResponse.prototype.getPaymentError = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendResponse} returns this
+ */
 proto.lnrpc.SendResponse.prototype.setPaymentError = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -2374,9 +5939,12 @@ proto.lnrpc.SendResponse.prototype.getPaymentPreimage_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SendResponse} returns this
+ */
 proto.lnrpc.SendResponse.prototype.setPaymentPreimage = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -2390,14 +5958,21 @@ proto.lnrpc.SendResponse.prototype.getPaymentRoute = function() {
 };
 
 
-/** @param {?proto.lnrpc.Route|undefined} value */
+/**
+ * @param {?proto.lnrpc.Route|undefined} value
+ * @return {!proto.lnrpc.SendResponse} returns this
+*/
 proto.lnrpc.SendResponse.prototype.setPaymentRoute = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.SendResponse} returns this
+ */
 proto.lnrpc.SendResponse.prototype.clearPaymentRoute = function() {
-  this.setPaymentRoute(undefined);
+  return this.setPaymentRoute(undefined);
 };
 
 
@@ -2443,41 +6018,29 @@ proto.lnrpc.SendResponse.prototype.getPaymentHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.SendResponse.prototype.setPaymentHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SendResponse} returns this
  */
-proto.lnrpc.SendToRouteRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SendResponse.prototype.setPaymentHash = function(value) {
+  return jspb.Message.setProto3BytesField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.SendToRouteRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendToRouteRequest.displayName = 'proto.lnrpc.SendToRouteRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendToRouteRequest.prototype.toObject = function(opt_includeInstance) {
@@ -2487,8 +6050,8 @@ proto.lnrpc.SendToRouteRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendToRouteRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -2635,9 +6198,12 @@ proto.lnrpc.SendToRouteRequest.prototype.getPaymentHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SendToRouteRequest} returns this
+ */
 proto.lnrpc.SendToRouteRequest.prototype.setPaymentHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -2650,9 +6216,12 @@ proto.lnrpc.SendToRouteRequest.prototype.getPaymentHashString = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendToRouteRequest} returns this
+ */
 proto.lnrpc.SendToRouteRequest.prototype.setPaymentHashString = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -2666,14 +6235,21 @@ proto.lnrpc.SendToRouteRequest.prototype.getRoute = function() {
 };
 
 
-/** @param {?proto.lnrpc.Route|undefined} value */
+/**
+ * @param {?proto.lnrpc.Route|undefined} value
+ * @return {!proto.lnrpc.SendToRouteRequest} returns this
+*/
 proto.lnrpc.SendToRouteRequest.prototype.setRoute = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
+  return jspb.Message.setWrapperField(this, 4, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.SendToRouteRequest} returns this
+ */
 proto.lnrpc.SendToRouteRequest.prototype.clearRoute = function() {
-  this.setRoute(undefined);
+  return this.setRoute(undefined);
 };
 
 
@@ -2687,34 +6263,19 @@ proto.lnrpc.SendToRouteRequest.prototype.hasRoute = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelAcceptRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelAcceptRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelAcceptRequest.displayName = 'proto.lnrpc.ChannelAcceptRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelAcceptRequest.prototype.toObject = function(opt_includeInstance) {
@@ -2724,8 +6285,8 @@ proto.lnrpc.ChannelAcceptRequest.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelAcceptRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -2990,9 +6551,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getNodePubkey_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setNodePubkey = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -3029,9 +6593,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getChainHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setChainHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -3068,9 +6635,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -3083,9 +6653,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getFundingAmt = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setFundingAmt = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -3098,9 +6671,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getPushAmt = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setPushAmt = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -3113,9 +6689,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getDustLimit = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setDustLimit = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -3128,9 +6707,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getMaxValueInFlight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setMaxValueInFlight = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -3143,9 +6725,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getChannelReserve = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setChannelReserve = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -3158,9 +6743,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getMinHtlc = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setMinHtlc = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -3173,9 +6761,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getFeePerKb = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setFeePerKb = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -3188,9 +6779,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getCsvDelay = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setCsvDelay = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -3203,9 +6797,12 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getMaxAcceptedHtlcs = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
+ */
 proto.lnrpc.ChannelAcceptRequest.prototype.setMaxAcceptedHtlcs = function(value) {
-  jspb.Message.setProto3IntField(this, 12, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -3218,41 +6815,29 @@ proto.lnrpc.ChannelAcceptRequest.prototype.getChannelFlags = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ChannelAcceptRequest.prototype.setChannelFlags = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelAcceptRequest} returns this
  */
-proto.lnrpc.ChannelAcceptResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChannelAcceptRequest.prototype.setChannelFlags = function(value) {
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
-goog.inherits(proto.lnrpc.ChannelAcceptResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelAcceptResponse.displayName = 'proto.lnrpc.ChannelAcceptResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelAcceptResponse.prototype.toObject = function(opt_includeInstance) {
@@ -3262,8 +6847,8 @@ proto.lnrpc.ChannelAcceptResponse.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelAcceptResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -3271,7 +6856,7 @@ proto.lnrpc.ChannelAcceptResponse.prototype.toObject = function(opt_includeInsta
  */
 proto.lnrpc.ChannelAcceptResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    accept: jspb.Message.getFieldWithDefault(msg, 1, false),
+    accept: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     pendingChanId: msg.getPendingChanId_asB64()
   };
 
@@ -3365,18 +6950,19 @@ proto.lnrpc.ChannelAcceptResponse.serializeBinaryToWriter = function(message, wr
 
 /**
  * optional bool accept = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ChannelAcceptResponse.prototype.getAccept = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ChannelAcceptResponse} returns this
+ */
 proto.lnrpc.ChannelAcceptResponse.prototype.setAccept = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -3413,30 +6999,16 @@ proto.lnrpc.ChannelAcceptResponse.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.ChannelAcceptResponse.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelAcceptResponse} returns this
  */
-proto.lnrpc.ChannelPoint = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.ChannelPoint.oneofGroups_);
+proto.lnrpc.ChannelAcceptResponse.prototype.setPendingChanId = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ChannelPoint, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelPoint.displayName = 'proto.lnrpc.ChannelPoint';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -3467,13 +7039,15 @@ proto.lnrpc.ChannelPoint.prototype.getFundingTxidCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelPoint.prototype.toObject = function(opt_includeInstance) {
@@ -3483,8 +7057,8 @@ proto.lnrpc.ChannelPoint.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelPoint} msg The msg instance to transform.
  * @return {!Object}
@@ -3629,14 +7203,21 @@ proto.lnrpc.ChannelPoint.prototype.getFundingTxidBytes_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelPoint} returns this
+ */
 proto.lnrpc.ChannelPoint.prototype.setFundingTxidBytes = function(value) {
-  jspb.Message.setOneofField(this, 1, proto.lnrpc.ChannelPoint.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 1, proto.lnrpc.ChannelPoint.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.ChannelPoint} returns this
+ */
 proto.lnrpc.ChannelPoint.prototype.clearFundingTxidBytes = function() {
-  jspb.Message.setOneofField(this, 1, proto.lnrpc.ChannelPoint.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 1, proto.lnrpc.ChannelPoint.oneofGroups_[0], undefined);
 };
 
 
@@ -3658,14 +7239,21 @@ proto.lnrpc.ChannelPoint.prototype.getFundingTxidStr = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelPoint} returns this
+ */
 proto.lnrpc.ChannelPoint.prototype.setFundingTxidStr = function(value) {
-  jspb.Message.setOneofField(this, 2, proto.lnrpc.ChannelPoint.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 2, proto.lnrpc.ChannelPoint.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.ChannelPoint} returns this
+ */
 proto.lnrpc.ChannelPoint.prototype.clearFundingTxidStr = function() {
-  jspb.Message.setOneofField(this, 2, proto.lnrpc.ChannelPoint.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 2, proto.lnrpc.ChannelPoint.oneofGroups_[0], undefined);
 };
 
 
@@ -3687,41 +7275,29 @@ proto.lnrpc.ChannelPoint.prototype.getOutputIndex = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ChannelPoint.prototype.setOutputIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelPoint} returns this
  */
-proto.lnrpc.OutPoint = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChannelPoint.prototype.setOutputIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.OutPoint, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.OutPoint.displayName = 'proto.lnrpc.OutPoint';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.OutPoint.prototype.toObject = function(opt_includeInstance) {
@@ -3731,8 +7307,8 @@ proto.lnrpc.OutPoint.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.OutPoint} msg The msg instance to transform.
  * @return {!Object}
@@ -3877,9 +7453,12 @@ proto.lnrpc.OutPoint.prototype.getTxidBytes_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.OutPoint} returns this
+ */
 proto.lnrpc.OutPoint.prototype.setTxidBytes = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -3892,9 +7471,12 @@ proto.lnrpc.OutPoint.prototype.getTxidStr = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.OutPoint} returns this
+ */
 proto.lnrpc.OutPoint.prototype.setTxidStr = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -3907,41 +7489,29 @@ proto.lnrpc.OutPoint.prototype.getOutputIndex = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.OutPoint.prototype.setOutputIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.OutPoint} returns this
  */
-proto.lnrpc.LightningAddress = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.OutPoint.prototype.setOutputIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.LightningAddress, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.LightningAddress.displayName = 'proto.lnrpc.LightningAddress';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.LightningAddress.prototype.toObject = function(opt_includeInstance) {
@@ -3951,8 +7521,8 @@ proto.lnrpc.LightningAddress.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.LightningAddress} msg The msg instance to transform.
  * @return {!Object}
@@ -4061,9 +7631,12 @@ proto.lnrpc.LightningAddress.prototype.getPubkey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.LightningAddress} returns this
+ */
 proto.lnrpc.LightningAddress.prototype.setPubkey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -4076,41 +7649,29 @@ proto.lnrpc.LightningAddress.prototype.getHost = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.LightningAddress.prototype.setHost = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.LightningAddress} returns this
  */
-proto.lnrpc.EstimateFeeRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.LightningAddress.prototype.setHost = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.EstimateFeeRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.EstimateFeeRequest.displayName = 'proto.lnrpc.EstimateFeeRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.EstimateFeeRequest.prototype.toObject = function(opt_includeInstance) {
@@ -4120,8 +7681,8 @@ proto.lnrpc.EstimateFeeRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.EstimateFeeRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -4170,7 +7731,7 @@ proto.lnrpc.EstimateFeeRequest.deserializeBinaryFromReader = function(msg, reade
     case 1:
       var value = msg.getAddrtoamountMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64, null, "");
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64, null, "", 0);
          });
       break;
     case 2:
@@ -4233,9 +7794,13 @@ proto.lnrpc.EstimateFeeRequest.prototype.getAddrtoamountMap = function(opt_noLaz
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.EstimateFeeRequest} returns this
+ */
 proto.lnrpc.EstimateFeeRequest.prototype.clearAddrtoamountMap = function() {
   this.getAddrtoamountMap().clear();
-};
+  return this;};
 
 
 /**
@@ -4247,41 +7812,29 @@ proto.lnrpc.EstimateFeeRequest.prototype.getTargetConf = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.EstimateFeeRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.EstimateFeeRequest} returns this
  */
-proto.lnrpc.EstimateFeeResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.EstimateFeeRequest.prototype.setTargetConf = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.EstimateFeeResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.EstimateFeeResponse.displayName = 'proto.lnrpc.EstimateFeeResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.EstimateFeeResponse.prototype.toObject = function(opt_includeInstance) {
@@ -4291,8 +7844,8 @@ proto.lnrpc.EstimateFeeResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.EstimateFeeResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -4401,9 +7954,12 @@ proto.lnrpc.EstimateFeeResponse.prototype.getFeeAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.EstimateFeeResponse} returns this
+ */
 proto.lnrpc.EstimateFeeResponse.prototype.setFeeAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -4416,41 +7972,29 @@ proto.lnrpc.EstimateFeeResponse.prototype.getFeerateAtomsPerByte = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.EstimateFeeResponse.prototype.setFeerateAtomsPerByte = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.EstimateFeeResponse} returns this
  */
-proto.lnrpc.SendManyRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.EstimateFeeResponse.prototype.setFeerateAtomsPerByte = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.SendManyRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendManyRequest.displayName = 'proto.lnrpc.SendManyRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendManyRequest.prototype.toObject = function(opt_includeInstance) {
@@ -4460,8 +8004,8 @@ proto.lnrpc.SendManyRequest.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendManyRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -4512,7 +8056,7 @@ proto.lnrpc.SendManyRequest.deserializeBinaryFromReader = function(msg, reader) 
     case 1:
       var value = msg.getAddrtoamountMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64, null, "");
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readInt64, null, "", 0);
          });
       break;
     case 3:
@@ -4597,9 +8141,13 @@ proto.lnrpc.SendManyRequest.prototype.getAddrtoamountMap = function(opt_noLazyCr
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.SendManyRequest} returns this
+ */
 proto.lnrpc.SendManyRequest.prototype.clearAddrtoamountMap = function() {
   this.getAddrtoamountMap().clear();
-};
+  return this;};
 
 
 /**
@@ -4611,9 +8159,12 @@ proto.lnrpc.SendManyRequest.prototype.getTargetConf = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendManyRequest} returns this
+ */
 proto.lnrpc.SendManyRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -4626,9 +8177,12 @@ proto.lnrpc.SendManyRequest.prototype.getAtomsPerByte = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendManyRequest} returns this
+ */
 proto.lnrpc.SendManyRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -4641,41 +8195,29 @@ proto.lnrpc.SendManyRequest.prototype.getLabel = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.SendManyRequest.prototype.setLabel = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.SendManyRequest} returns this
  */
-proto.lnrpc.SendManyResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SendManyRequest.prototype.setLabel = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.SendManyResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendManyResponse.displayName = 'proto.lnrpc.SendManyResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendManyResponse.prototype.toObject = function(opt_includeInstance) {
@@ -4685,8 +8227,8 @@ proto.lnrpc.SendManyResponse.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendManyResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -4783,41 +8325,29 @@ proto.lnrpc.SendManyResponse.prototype.getTxid = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.SendManyResponse.prototype.setTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.SendManyResponse} returns this
  */
-proto.lnrpc.SendCoinsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SendManyResponse.prototype.setTxid = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.SendCoinsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendCoinsRequest.displayName = 'proto.lnrpc.SendCoinsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendCoinsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -4827,8 +8357,8 @@ proto.lnrpc.SendCoinsRequest.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendCoinsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -4840,7 +8370,7 @@ proto.lnrpc.SendCoinsRequest.toObject = function(includeInstance, msg) {
     amount: jspb.Message.getFieldWithDefault(msg, 2, 0),
     targetConf: jspb.Message.getFieldWithDefault(msg, 3, 0),
     atomsPerByte: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    sendAll: jspb.Message.getFieldWithDefault(msg, 6, false),
+    sendAll: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     label: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
 
@@ -4985,9 +8515,12 @@ proto.lnrpc.SendCoinsRequest.prototype.getAddr = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.SendCoinsRequest} returns this
+ */
 proto.lnrpc.SendCoinsRequest.prototype.setAddr = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5000,9 +8533,12 @@ proto.lnrpc.SendCoinsRequest.prototype.getAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendCoinsRequest} returns this
+ */
 proto.lnrpc.SendCoinsRequest.prototype.setAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -5015,9 +8551,12 @@ proto.lnrpc.SendCoinsRequest.prototype.getTargetConf = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendCoinsRequest} returns this
+ */
 proto.lnrpc.SendCoinsRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -5030,26 +8569,30 @@ proto.lnrpc.SendCoinsRequest.prototype.getAtomsPerByte = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.SendCoinsRequest} returns this
+ */
 proto.lnrpc.SendCoinsRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
  * optional bool send_all = 6;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.SendCoinsRequest.prototype.getSendAll = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.SendCoinsRequest} returns this
+ */
 proto.lnrpc.SendCoinsRequest.prototype.setSendAll = function(value) {
-  jspb.Message.setProto3BooleanField(this, 6, value);
+  return jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -5062,41 +8605,29 @@ proto.lnrpc.SendCoinsRequest.prototype.getLabel = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.SendCoinsRequest.prototype.setLabel = function(value) {
-  jspb.Message.setProto3StringField(this, 7, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.SendCoinsRequest} returns this
  */
-proto.lnrpc.SendCoinsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SendCoinsRequest.prototype.setLabel = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
-goog.inherits(proto.lnrpc.SendCoinsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SendCoinsResponse.displayName = 'proto.lnrpc.SendCoinsResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SendCoinsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -5106,8 +8637,8 @@ proto.lnrpc.SendCoinsResponse.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SendCoinsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -5204,41 +8735,29 @@ proto.lnrpc.SendCoinsResponse.prototype.getTxid = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.SendCoinsResponse.prototype.setTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.SendCoinsResponse} returns this
  */
-proto.lnrpc.ListUnspentRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SendCoinsResponse.prototype.setTxid = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.ListUnspentRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListUnspentRequest.displayName = 'proto.lnrpc.ListUnspentRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListUnspentRequest.prototype.toObject = function(opt_includeInstance) {
@@ -5248,8 +8767,8 @@ proto.lnrpc.ListUnspentRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListUnspentRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -5358,9 +8877,12 @@ proto.lnrpc.ListUnspentRequest.prototype.getMinConfs = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListUnspentRequest} returns this
+ */
 proto.lnrpc.ListUnspentRequest.prototype.setMinConfs = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -5373,30 +8895,16 @@ proto.lnrpc.ListUnspentRequest.prototype.getMaxConfs = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ListUnspentRequest.prototype.setMaxConfs = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ListUnspentRequest} returns this
  */
-proto.lnrpc.ListUnspentResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListUnspentResponse.repeatedFields_, null);
+proto.lnrpc.ListUnspentRequest.prototype.setMaxConfs = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ListUnspentResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListUnspentResponse.displayName = 'proto.lnrpc.ListUnspentResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -5408,13 +8916,15 @@ proto.lnrpc.ListUnspentResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListUnspentResponse.prototype.toObject = function(opt_includeInstance) {
@@ -5424,8 +8934,8 @@ proto.lnrpc.ListUnspentResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListUnspentResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -5526,9 +9036,12 @@ proto.lnrpc.ListUnspentResponse.prototype.getUtxosList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Utxo>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Utxo>} value
+ * @return {!proto.lnrpc.ListUnspentResponse} returns this
+*/
 proto.lnrpc.ListUnspentResponse.prototype.setUtxosList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -5542,40 +9055,29 @@ proto.lnrpc.ListUnspentResponse.prototype.addUtxos = function(opt_value, opt_ind
 };
 
 
-proto.lnrpc.ListUnspentResponse.prototype.clearUtxosList = function() {
-  this.setUtxosList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ListUnspentResponse} returns this
  */
-proto.lnrpc.NewAddressRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ListUnspentResponse.prototype.clearUtxosList = function() {
+  return this.setUtxosList([]);
 };
-goog.inherits(proto.lnrpc.NewAddressRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NewAddressRequest.displayName = 'proto.lnrpc.NewAddressRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NewAddressRequest.prototype.toObject = function(opt_includeInstance) {
@@ -5585,8 +9087,8 @@ proto.lnrpc.NewAddressRequest.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NewAddressRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -5683,41 +9185,29 @@ proto.lnrpc.NewAddressRequest.prototype.getType = function() {
 };
 
 
-/** @param {!proto.lnrpc.AddressType} value */
-proto.lnrpc.NewAddressRequest.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!proto.lnrpc.AddressType} value
+ * @return {!proto.lnrpc.NewAddressRequest} returns this
  */
-proto.lnrpc.NewAddressResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NewAddressRequest.prototype.setType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.NewAddressResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NewAddressResponse.displayName = 'proto.lnrpc.NewAddressResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NewAddressResponse.prototype.toObject = function(opt_includeInstance) {
@@ -5727,8 +9217,8 @@ proto.lnrpc.NewAddressResponse.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NewAddressResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -5825,41 +9315,29 @@ proto.lnrpc.NewAddressResponse.prototype.getAddress = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.NewAddressResponse.prototype.setAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.NewAddressResponse} returns this
  */
-proto.lnrpc.SignMessageRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NewAddressResponse.prototype.setAddress = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.SignMessageRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SignMessageRequest.displayName = 'proto.lnrpc.SignMessageRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SignMessageRequest.prototype.toObject = function(opt_includeInstance) {
@@ -5869,8 +9347,8 @@ proto.lnrpc.SignMessageRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SignMessageRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -5991,41 +9469,29 @@ proto.lnrpc.SignMessageRequest.prototype.getMsg_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.SignMessageRequest.prototype.setMsg = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.SignMessageRequest} returns this
  */
-proto.lnrpc.SignMessageResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SignMessageRequest.prototype.setMsg = function(value) {
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.SignMessageResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.SignMessageResponse.displayName = 'proto.lnrpc.SignMessageResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.SignMessageResponse.prototype.toObject = function(opt_includeInstance) {
@@ -6035,8 +9501,8 @@ proto.lnrpc.SignMessageResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.SignMessageResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -6133,41 +9599,29 @@ proto.lnrpc.SignMessageResponse.prototype.getSignature = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.SignMessageResponse.prototype.setSignature = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.SignMessageResponse} returns this
  */
-proto.lnrpc.VerifyMessageRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.SignMessageResponse.prototype.setSignature = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.VerifyMessageRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.VerifyMessageRequest.displayName = 'proto.lnrpc.VerifyMessageRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.VerifyMessageRequest.prototype.toObject = function(opt_includeInstance) {
@@ -6177,8 +9631,8 @@ proto.lnrpc.VerifyMessageRequest.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.VerifyMessageRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -6311,9 +9765,12 @@ proto.lnrpc.VerifyMessageRequest.prototype.getMsg_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.VerifyMessageRequest} returns this
+ */
 proto.lnrpc.VerifyMessageRequest.prototype.setMsg = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -6326,41 +9783,29 @@ proto.lnrpc.VerifyMessageRequest.prototype.getSignature = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.VerifyMessageRequest.prototype.setSignature = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.VerifyMessageRequest} returns this
  */
-proto.lnrpc.VerifyMessageResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.VerifyMessageRequest.prototype.setSignature = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.VerifyMessageResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.VerifyMessageResponse.displayName = 'proto.lnrpc.VerifyMessageResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.VerifyMessageResponse.prototype.toObject = function(opt_includeInstance) {
@@ -6370,8 +9815,8 @@ proto.lnrpc.VerifyMessageResponse.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.VerifyMessageResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -6379,7 +9824,7 @@ proto.lnrpc.VerifyMessageResponse.prototype.toObject = function(opt_includeInsta
  */
 proto.lnrpc.VerifyMessageResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    valid: jspb.Message.getFieldWithDefault(msg, 1, false),
+    valid: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     pubkey: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
@@ -6473,18 +9918,19 @@ proto.lnrpc.VerifyMessageResponse.serializeBinaryToWriter = function(message, wr
 
 /**
  * optional bool valid = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.VerifyMessageResponse.prototype.getValid = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.VerifyMessageResponse} returns this
+ */
 proto.lnrpc.VerifyMessageResponse.prototype.setValid = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -6497,41 +9943,29 @@ proto.lnrpc.VerifyMessageResponse.prototype.getPubkey = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.VerifyMessageResponse.prototype.setPubkey = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.VerifyMessageResponse} returns this
  */
-proto.lnrpc.ConnectPeerRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.VerifyMessageResponse.prototype.setPubkey = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ConnectPeerRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ConnectPeerRequest.displayName = 'proto.lnrpc.ConnectPeerRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ConnectPeerRequest.prototype.toObject = function(opt_includeInstance) {
@@ -6541,8 +9975,8 @@ proto.lnrpc.ConnectPeerRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ConnectPeerRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -6551,7 +9985,7 @@ proto.lnrpc.ConnectPeerRequest.prototype.toObject = function(opt_includeInstance
 proto.lnrpc.ConnectPeerRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     addr: (f = msg.getAddr()) && proto.lnrpc.LightningAddress.toObject(includeInstance, f),
-    perm: jspb.Message.getFieldWithDefault(msg, 2, false)
+    perm: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -6654,14 +10088,21 @@ proto.lnrpc.ConnectPeerRequest.prototype.getAddr = function() {
 };
 
 
-/** @param {?proto.lnrpc.LightningAddress|undefined} value */
+/**
+ * @param {?proto.lnrpc.LightningAddress|undefined} value
+ * @return {!proto.lnrpc.ConnectPeerRequest} returns this
+*/
 proto.lnrpc.ConnectPeerRequest.prototype.setAddr = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ConnectPeerRequest} returns this
+ */
 proto.lnrpc.ConnectPeerRequest.prototype.clearAddr = function() {
-  this.setAddr(undefined);
+  return this.setAddr(undefined);
 };
 
 
@@ -6676,50 +10117,36 @@ proto.lnrpc.ConnectPeerRequest.prototype.hasAddr = function() {
 
 /**
  * optional bool perm = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ConnectPeerRequest.prototype.getPerm = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ConnectPeerRequest.prototype.setPerm = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ConnectPeerRequest} returns this
  */
-proto.lnrpc.ConnectPeerResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ConnectPeerRequest.prototype.setPerm = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ConnectPeerResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ConnectPeerResponse.displayName = 'proto.lnrpc.ConnectPeerResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ConnectPeerResponse.prototype.toObject = function(opt_includeInstance) {
@@ -6729,8 +10156,8 @@ proto.lnrpc.ConnectPeerResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ConnectPeerResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -6808,34 +10235,19 @@ proto.lnrpc.ConnectPeerResponse.serializeBinaryToWriter = function(message, writ
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.DisconnectPeerRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.DisconnectPeerRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DisconnectPeerRequest.displayName = 'proto.lnrpc.DisconnectPeerRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DisconnectPeerRequest.prototype.toObject = function(opt_includeInstance) {
@@ -6845,8 +10257,8 @@ proto.lnrpc.DisconnectPeerRequest.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DisconnectPeerRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -6943,41 +10355,29 @@ proto.lnrpc.DisconnectPeerRequest.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.DisconnectPeerRequest.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.DisconnectPeerRequest} returns this
  */
-proto.lnrpc.DisconnectPeerResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.DisconnectPeerRequest.prototype.setPubKey = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.DisconnectPeerResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DisconnectPeerResponse.displayName = 'proto.lnrpc.DisconnectPeerResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DisconnectPeerResponse.prototype.toObject = function(opt_includeInstance) {
@@ -6987,8 +10387,8 @@ proto.lnrpc.DisconnectPeerResponse.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DisconnectPeerResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -7066,34 +10466,19 @@ proto.lnrpc.DisconnectPeerResponse.serializeBinaryToWriter = function(message, w
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.HTLC = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.HTLC, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.HTLC.displayName = 'proto.lnrpc.HTLC';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.HTLC.prototype.toObject = function(opt_includeInstance) {
@@ -7103,8 +10488,8 @@ proto.lnrpc.HTLC.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.HTLC} msg The msg instance to transform.
  * @return {!Object}
@@ -7112,7 +10497,7 @@ proto.lnrpc.HTLC.prototype.toObject = function(opt_includeInstance) {
  */
 proto.lnrpc.HTLC.toObject = function(includeInstance, msg) {
   var f, obj = {
-    incoming: jspb.Message.getFieldWithDefault(msg, 1, false),
+    incoming: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     amount: jspb.Message.getFieldWithDefault(msg, 2, 0),
     hashLock: msg.getHashLock_asB64(),
     expirationHeight: jspb.Message.getFieldWithDefault(msg, 4, 0)
@@ -7230,18 +10615,19 @@ proto.lnrpc.HTLC.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * optional bool incoming = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.HTLC.prototype.getIncoming = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.HTLC} returns this
+ */
 proto.lnrpc.HTLC.prototype.setIncoming = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -7254,9 +10640,12 @@ proto.lnrpc.HTLC.prototype.getAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.HTLC} returns this
+ */
 proto.lnrpc.HTLC.prototype.setAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -7293,9 +10682,12 @@ proto.lnrpc.HTLC.prototype.getHashLock_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.HTLC} returns this
+ */
 proto.lnrpc.HTLC.prototype.setHashLock = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -7308,41 +10700,29 @@ proto.lnrpc.HTLC.prototype.getExpirationHeight = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.HTLC.prototype.setExpirationHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.HTLC} returns this
  */
-proto.lnrpc.ChannelConstraints = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.HTLC.prototype.setExpirationHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.ChannelConstraints, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelConstraints.displayName = 'proto.lnrpc.ChannelConstraints';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelConstraints.prototype.toObject = function(opt_includeInstance) {
@@ -7352,8 +10732,8 @@ proto.lnrpc.ChannelConstraints.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelConstraints} msg The msg instance to transform.
  * @return {!Object}
@@ -7510,9 +10890,12 @@ proto.lnrpc.ChannelConstraints.prototype.getCsvDelay = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelConstraints} returns this
+ */
 proto.lnrpc.ChannelConstraints.prototype.setCsvDelay = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -7525,9 +10908,12 @@ proto.lnrpc.ChannelConstraints.prototype.getChanReserveAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelConstraints} returns this
+ */
 proto.lnrpc.ChannelConstraints.prototype.setChanReserveAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -7540,9 +10926,12 @@ proto.lnrpc.ChannelConstraints.prototype.getDustLimitAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelConstraints} returns this
+ */
 proto.lnrpc.ChannelConstraints.prototype.setDustLimitAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -7555,9 +10944,12 @@ proto.lnrpc.ChannelConstraints.prototype.getMaxPendingAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelConstraints} returns this
+ */
 proto.lnrpc.ChannelConstraints.prototype.setMaxPendingAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -7570,9 +10962,12 @@ proto.lnrpc.ChannelConstraints.prototype.getMinHtlcMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelConstraints} returns this
+ */
 proto.lnrpc.ChannelConstraints.prototype.setMinHtlcMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -7585,30 +10980,16 @@ proto.lnrpc.ChannelConstraints.prototype.getMaxAcceptedHtlcs = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ChannelConstraints.prototype.setMaxAcceptedHtlcs = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelConstraints} returns this
  */
-proto.lnrpc.Channel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Channel.repeatedFields_, null);
+proto.lnrpc.ChannelConstraints.prototype.setMaxAcceptedHtlcs = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.Channel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Channel.displayName = 'proto.lnrpc.Channel';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -7620,13 +11001,15 @@ proto.lnrpc.Channel.repeatedFields_ = [15];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Channel.prototype.toObject = function(opt_includeInstance) {
@@ -7636,8 +11019,8 @@ proto.lnrpc.Channel.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Channel} msg The msg instance to transform.
  * @return {!Object}
@@ -7645,7 +11028,7 @@ proto.lnrpc.Channel.prototype.toObject = function(opt_includeInstance) {
  */
 proto.lnrpc.Channel.toObject = function(includeInstance, msg) {
   var f, obj = {
-    active: jspb.Message.getFieldWithDefault(msg, 1, false),
+    active: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     remotePubkey: jspb.Message.getFieldWithDefault(msg, 2, ""),
     channelPoint: jspb.Message.getFieldWithDefault(msg, 3, ""),
     chanId: jspb.Message.getFieldWithDefault(msg, 4, "0"),
@@ -7662,12 +11045,12 @@ proto.lnrpc.Channel.toObject = function(includeInstance, msg) {
     pendingHtlcsList: jspb.Message.toObjectList(msg.getPendingHtlcsList(),
     proto.lnrpc.HTLC.toObject, includeInstance),
     csvDelay: jspb.Message.getFieldWithDefault(msg, 16, 0),
-    pb_private: jspb.Message.getFieldWithDefault(msg, 17, false),
-    initiator: jspb.Message.getFieldWithDefault(msg, 18, false),
+    pb_private: jspb.Message.getBooleanFieldWithDefault(msg, 17, false),
+    initiator: jspb.Message.getBooleanFieldWithDefault(msg, 18, false),
     chanStatusFlags: jspb.Message.getFieldWithDefault(msg, 19, ""),
     localChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 20, 0),
     remoteChanReserveAtoms: jspb.Message.getFieldWithDefault(msg, 21, 0),
-    staticRemoteKey: jspb.Message.getFieldWithDefault(msg, 22, false),
+    staticRemoteKey: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
     commitmentType: jspb.Message.getFieldWithDefault(msg, 26, 0),
     lifetime: jspb.Message.getFieldWithDefault(msg, 23, 0),
     uptime: jspb.Message.getFieldWithDefault(msg, 24, 0),
@@ -8082,18 +11465,19 @@ proto.lnrpc.Channel.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * optional bool active = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Channel.prototype.getActive = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setActive = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -8106,9 +11490,12 @@ proto.lnrpc.Channel.prototype.getRemotePubkey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setRemotePubkey = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -8121,9 +11508,12 @@ proto.lnrpc.Channel.prototype.getChannelPoint = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setChannelPoint = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -8136,9 +11526,12 @@ proto.lnrpc.Channel.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 4, value);
+  return jspb.Message.setProto3StringIntField(this, 4, value);
 };
 
 
@@ -8151,9 +11544,12 @@ proto.lnrpc.Channel.prototype.getCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -8166,9 +11562,12 @@ proto.lnrpc.Channel.prototype.getLocalBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setLocalBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -8181,9 +11580,12 @@ proto.lnrpc.Channel.prototype.getRemoteBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setRemoteBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -8196,9 +11598,12 @@ proto.lnrpc.Channel.prototype.getCommitFee = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setCommitFee = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -8211,9 +11616,12 @@ proto.lnrpc.Channel.prototype.getCommitSize = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setCommitSize = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -8226,9 +11634,12 @@ proto.lnrpc.Channel.prototype.getFeePerKb = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setFeePerKb = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -8241,9 +11652,12 @@ proto.lnrpc.Channel.prototype.getUnsettledBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setUnsettledBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -8256,9 +11670,12 @@ proto.lnrpc.Channel.prototype.getTotalAtomsSent = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setTotalAtomsSent = function(value) {
-  jspb.Message.setProto3IntField(this, 12, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -8271,9 +11688,12 @@ proto.lnrpc.Channel.prototype.getTotalAtomsReceived = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setTotalAtomsReceived = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -8286,9 +11706,12 @@ proto.lnrpc.Channel.prototype.getNumUpdates = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setNumUpdates = function(value) {
-  jspb.Message.setProto3IntField(this, 14, value);
+  return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
@@ -8302,9 +11725,12 @@ proto.lnrpc.Channel.prototype.getPendingHtlcsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.HTLC>} value */
+/**
+ * @param {!Array<!proto.lnrpc.HTLC>} value
+ * @return {!proto.lnrpc.Channel} returns this
+*/
 proto.lnrpc.Channel.prototype.setPendingHtlcsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 15, value);
+  return jspb.Message.setRepeatedWrapperField(this, 15, value);
 };
 
 
@@ -8318,8 +11744,12 @@ proto.lnrpc.Channel.prototype.addPendingHtlcs = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.clearPendingHtlcsList = function() {
-  this.setPendingHtlcsList([]);
+  return this.setPendingHtlcsList([]);
 };
 
 
@@ -8332,43 +11762,48 @@ proto.lnrpc.Channel.prototype.getCsvDelay = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setCsvDelay = function(value) {
-  jspb.Message.setProto3IntField(this, 16, value);
+  return jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
 /**
  * optional bool private = 17;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Channel.prototype.getPrivate = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 17, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 17, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setPrivate = function(value) {
-  jspb.Message.setProto3BooleanField(this, 17, value);
+  return jspb.Message.setProto3BooleanField(this, 17, value);
 };
 
 
 /**
  * optional bool initiator = 18;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Channel.prototype.getInitiator = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 18, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 18, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setInitiator = function(value) {
-  jspb.Message.setProto3BooleanField(this, 18, value);
+  return jspb.Message.setProto3BooleanField(this, 18, value);
 };
 
 
@@ -8381,9 +11816,12 @@ proto.lnrpc.Channel.prototype.getChanStatusFlags = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setChanStatusFlags = function(value) {
-  jspb.Message.setProto3StringField(this, 19, value);
+  return jspb.Message.setProto3StringField(this, 19, value);
 };
 
 
@@ -8396,9 +11834,12 @@ proto.lnrpc.Channel.prototype.getLocalChanReserveAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setLocalChanReserveAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 20, value);
+  return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
@@ -8411,26 +11852,30 @@ proto.lnrpc.Channel.prototype.getRemoteChanReserveAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setRemoteChanReserveAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 21, value);
+  return jspb.Message.setProto3IntField(this, 21, value);
 };
 
 
 /**
  * optional bool static_remote_key = 22;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Channel.prototype.getStaticRemoteKey = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 22, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setStaticRemoteKey = function(value) {
-  jspb.Message.setProto3BooleanField(this, 22, value);
+  return jspb.Message.setProto3BooleanField(this, 22, value);
 };
 
 
@@ -8443,9 +11888,12 @@ proto.lnrpc.Channel.prototype.getCommitmentType = function() {
 };
 
 
-/** @param {!proto.lnrpc.CommitmentType} value */
+/**
+ * @param {!proto.lnrpc.CommitmentType} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setCommitmentType = function(value) {
-  jspb.Message.setProto3EnumField(this, 26, value);
+  return jspb.Message.setProto3EnumField(this, 26, value);
 };
 
 
@@ -8458,9 +11906,12 @@ proto.lnrpc.Channel.prototype.getLifetime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setLifetime = function(value) {
-  jspb.Message.setProto3IntField(this, 23, value);
+  return jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
@@ -8473,9 +11924,12 @@ proto.lnrpc.Channel.prototype.getUptime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setUptime = function(value) {
-  jspb.Message.setProto3IntField(this, 24, value);
+  return jspb.Message.setProto3IntField(this, 24, value);
 };
 
 
@@ -8488,9 +11942,12 @@ proto.lnrpc.Channel.prototype.getCloseAddress = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setCloseAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 25, value);
+  return jspb.Message.setProto3StringField(this, 25, value);
 };
 
 
@@ -8503,9 +11960,12 @@ proto.lnrpc.Channel.prototype.getPushAmountAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setPushAmountAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 27, value);
+  return jspb.Message.setProto3IntField(this, 27, value);
 };
 
 
@@ -8518,9 +11978,12 @@ proto.lnrpc.Channel.prototype.getThawHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.setThawHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 28, value);
+  return jspb.Message.setProto3IntField(this, 28, value);
 };
 
 
@@ -8534,14 +11997,21 @@ proto.lnrpc.Channel.prototype.getLocalConstraints = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelConstraints|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelConstraints|undefined} value
+ * @return {!proto.lnrpc.Channel} returns this
+*/
 proto.lnrpc.Channel.prototype.setLocalConstraints = function(value) {
-  jspb.Message.setWrapperField(this, 29, value);
+  return jspb.Message.setWrapperField(this, 29, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.clearLocalConstraints = function() {
-  this.setLocalConstraints(undefined);
+  return this.setLocalConstraints(undefined);
 };
 
 
@@ -8564,14 +12034,21 @@ proto.lnrpc.Channel.prototype.getRemoteConstraints = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelConstraints|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelConstraints|undefined} value
+ * @return {!proto.lnrpc.Channel} returns this
+*/
 proto.lnrpc.Channel.prototype.setRemoteConstraints = function(value) {
-  jspb.Message.setWrapperField(this, 30, value);
+  return jspb.Message.setWrapperField(this, 30, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.Channel} returns this
+ */
 proto.lnrpc.Channel.prototype.clearRemoteConstraints = function() {
-  this.setRemoteConstraints(undefined);
+  return this.setRemoteConstraints(undefined);
 };
 
 
@@ -8585,34 +12062,19 @@ proto.lnrpc.Channel.prototype.hasRemoteConstraints = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ListChannelsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ListChannelsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListChannelsRequest.displayName = 'proto.lnrpc.ListChannelsRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListChannelsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -8622,8 +12084,8 @@ proto.lnrpc.ListChannelsRequest.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListChannelsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -8631,10 +12093,10 @@ proto.lnrpc.ListChannelsRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.lnrpc.ListChannelsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    activeOnly: jspb.Message.getFieldWithDefault(msg, 1, false),
-    inactiveOnly: jspb.Message.getFieldWithDefault(msg, 2, false),
-    publicOnly: jspb.Message.getFieldWithDefault(msg, 3, false),
-    privateOnly: jspb.Message.getFieldWithDefault(msg, 4, false),
+    activeOnly: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    inactiveOnly: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    publicOnly: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    privateOnly: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     peer: msg.getPeer_asB64()
   };
 
@@ -8761,69 +12223,73 @@ proto.lnrpc.ListChannelsRequest.serializeBinaryToWriter = function(message, writ
 
 /**
  * optional bool active_only = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListChannelsRequest.prototype.getActiveOnly = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListChannelsRequest} returns this
+ */
 proto.lnrpc.ListChannelsRequest.prototype.setActiveOnly = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
 /**
  * optional bool inactive_only = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListChannelsRequest.prototype.getInactiveOnly = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListChannelsRequest} returns this
+ */
 proto.lnrpc.ListChannelsRequest.prototype.setInactiveOnly = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
 /**
  * optional bool public_only = 3;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListChannelsRequest.prototype.getPublicOnly = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListChannelsRequest} returns this
+ */
 proto.lnrpc.ListChannelsRequest.prototype.setPublicOnly = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
 /**
  * optional bool private_only = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListChannelsRequest.prototype.getPrivateOnly = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListChannelsRequest} returns this
+ */
 proto.lnrpc.ListChannelsRequest.prototype.setPrivateOnly = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -8860,30 +12326,16 @@ proto.lnrpc.ListChannelsRequest.prototype.getPeer_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.ListChannelsRequest.prototype.setPeer = function(value) {
-  jspb.Message.setProto3BytesField(this, 5, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ListChannelsRequest} returns this
  */
-proto.lnrpc.ListChannelsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListChannelsResponse.repeatedFields_, null);
+proto.lnrpc.ListChannelsRequest.prototype.setPeer = function(value) {
+  return jspb.Message.setProto3BytesField(this, 5, value);
 };
-goog.inherits(proto.lnrpc.ListChannelsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListChannelsResponse.displayName = 'proto.lnrpc.ListChannelsResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -8895,13 +12347,15 @@ proto.lnrpc.ListChannelsResponse.repeatedFields_ = [11];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListChannelsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -8911,8 +12365,8 @@ proto.lnrpc.ListChannelsResponse.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListChannelsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -9013,9 +12467,12 @@ proto.lnrpc.ListChannelsResponse.prototype.getChannelsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Channel>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Channel>} value
+ * @return {!proto.lnrpc.ListChannelsResponse} returns this
+*/
 proto.lnrpc.ListChannelsResponse.prototype.setChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 11, value);
+  return jspb.Message.setRepeatedWrapperField(this, 11, value);
 };
 
 
@@ -9029,29 +12486,16 @@ proto.lnrpc.ListChannelsResponse.prototype.addChannels = function(opt_value, opt
 };
 
 
-proto.lnrpc.ListChannelsResponse.prototype.clearChannelsList = function() {
-  this.setChannelsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ListChannelsResponse} returns this
  */
-proto.lnrpc.ChannelCloseSummary = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ChannelCloseSummary.repeatedFields_, null);
+proto.lnrpc.ListChannelsResponse.prototype.clearChannelsList = function() {
+  return this.setChannelsList([]);
 };
-goog.inherits(proto.lnrpc.ChannelCloseSummary, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelCloseSummary.displayName = 'proto.lnrpc.ChannelCloseSummary';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -9063,13 +12507,15 @@ proto.lnrpc.ChannelCloseSummary.repeatedFields_ = [13];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelCloseSummary.prototype.toObject = function(opt_includeInstance) {
@@ -9079,8 +12525,8 @@ proto.lnrpc.ChannelCloseSummary.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelCloseSummary} msg The msg instance to transform.
  * @return {!Object}
@@ -9336,9 +12782,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getChannelPoint = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setChannelPoint = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -9351,9 +12800,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 2, value);
+  return jspb.Message.setProto3StringIntField(this, 2, value);
 };
 
 
@@ -9366,9 +12818,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getChainHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setChainHash = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -9381,9 +12836,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getClosingTxHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setClosingTxHash = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -9396,9 +12854,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getRemotePubkey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setRemotePubkey = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -9411,9 +12872,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -9426,9 +12890,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCloseHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setCloseHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -9441,9 +12908,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getSettledBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setSettledBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -9456,9 +12926,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getTimeLockedBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setTimeLockedBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -9471,9 +12944,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCloseType = function() {
 };
 
 
-/** @param {!proto.lnrpc.ChannelCloseSummary.ClosureType} value */
+/**
+ * @param {!proto.lnrpc.ChannelCloseSummary.ClosureType} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setCloseType = function(value) {
-  jspb.Message.setProto3EnumField(this, 10, value);
+  return jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -9486,9 +12962,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getOpenInitiator = function() {
 };
 
 
-/** @param {!proto.lnrpc.Initiator} value */
+/**
+ * @param {!proto.lnrpc.Initiator} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setOpenInitiator = function(value) {
-  jspb.Message.setProto3EnumField(this, 11, value);
+  return jspb.Message.setProto3EnumField(this, 11, value);
 };
 
 
@@ -9501,9 +12980,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getCloseInitiator = function() {
 };
 
 
-/** @param {!proto.lnrpc.Initiator} value */
+/**
+ * @param {!proto.lnrpc.Initiator} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+ */
 proto.lnrpc.ChannelCloseSummary.prototype.setCloseInitiator = function(value) {
-  jspb.Message.setProto3EnumField(this, 12, value);
+  return jspb.Message.setProto3EnumField(this, 12, value);
 };
 
 
@@ -9517,9 +12999,12 @@ proto.lnrpc.ChannelCloseSummary.prototype.getResolutionsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Resolution>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Resolution>} value
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
+*/
 proto.lnrpc.ChannelCloseSummary.prototype.setResolutionsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 13, value);
+  return jspb.Message.setRepeatedWrapperField(this, 13, value);
 };
 
 
@@ -9533,40 +13018,29 @@ proto.lnrpc.ChannelCloseSummary.prototype.addResolutions = function(opt_value, o
 };
 
 
-proto.lnrpc.ChannelCloseSummary.prototype.clearResolutionsList = function() {
-  this.setResolutionsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ChannelCloseSummary} returns this
  */
-proto.lnrpc.Resolution = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChannelCloseSummary.prototype.clearResolutionsList = function() {
+  return this.setResolutionsList([]);
 };
-goog.inherits(proto.lnrpc.Resolution, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Resolution.displayName = 'proto.lnrpc.Resolution';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Resolution.prototype.toObject = function(opt_includeInstance) {
@@ -9576,8 +13050,8 @@ proto.lnrpc.Resolution.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Resolution} msg The msg instance to transform.
  * @return {!Object}
@@ -9724,9 +13198,12 @@ proto.lnrpc.Resolution.prototype.getResolutionType = function() {
 };
 
 
-/** @param {!proto.lnrpc.ResolutionType} value */
+/**
+ * @param {!proto.lnrpc.ResolutionType} value
+ * @return {!proto.lnrpc.Resolution} returns this
+ */
 proto.lnrpc.Resolution.prototype.setResolutionType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -9739,9 +13216,12 @@ proto.lnrpc.Resolution.prototype.getOutcome = function() {
 };
 
 
-/** @param {!proto.lnrpc.ResolutionOutcome} value */
+/**
+ * @param {!proto.lnrpc.ResolutionOutcome} value
+ * @return {!proto.lnrpc.Resolution} returns this
+ */
 proto.lnrpc.Resolution.prototype.setOutcome = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value);
+  return jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -9755,14 +13235,21 @@ proto.lnrpc.Resolution.prototype.getOutpoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.OutPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.OutPoint|undefined} value
+ * @return {!proto.lnrpc.Resolution} returns this
+*/
 proto.lnrpc.Resolution.prototype.setOutpoint = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.Resolution} returns this
+ */
 proto.lnrpc.Resolution.prototype.clearOutpoint = function() {
-  this.setOutpoint(undefined);
+  return this.setOutpoint(undefined);
 };
 
 
@@ -9784,9 +13271,12 @@ proto.lnrpc.Resolution.prototype.getAmountAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Resolution} returns this
+ */
 proto.lnrpc.Resolution.prototype.setAmountAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -9799,41 +13289,29 @@ proto.lnrpc.Resolution.prototype.getSweepTxid = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.Resolution.prototype.setSweepTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.Resolution} returns this
  */
-proto.lnrpc.ClosedChannelsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Resolution.prototype.setSweepTxid = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
-goog.inherits(proto.lnrpc.ClosedChannelsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ClosedChannelsRequest.displayName = 'proto.lnrpc.ClosedChannelsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -9843,8 +13321,8 @@ proto.lnrpc.ClosedChannelsRequest.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ClosedChannelsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -9852,12 +13330,12 @@ proto.lnrpc.ClosedChannelsRequest.prototype.toObject = function(opt_includeInsta
  */
 proto.lnrpc.ClosedChannelsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    cooperative: jspb.Message.getFieldWithDefault(msg, 1, false),
-    localForce: jspb.Message.getFieldWithDefault(msg, 2, false),
-    remoteForce: jspb.Message.getFieldWithDefault(msg, 3, false),
-    breach: jspb.Message.getFieldWithDefault(msg, 4, false),
-    fundingCanceled: jspb.Message.getFieldWithDefault(msg, 5, false),
-    abandoned: jspb.Message.getFieldWithDefault(msg, 6, false)
+    cooperative: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    localForce: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    remoteForce: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    breach: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    fundingCanceled: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    abandoned: jspb.Message.getBooleanFieldWithDefault(msg, 6, false)
   };
 
   if (includeInstance) {
@@ -9994,124 +13472,113 @@ proto.lnrpc.ClosedChannelsRequest.serializeBinaryToWriter = function(message, wr
 
 /**
  * optional bool cooperative = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.getCooperative = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ClosedChannelsRequest} returns this
+ */
 proto.lnrpc.ClosedChannelsRequest.prototype.setCooperative = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
 /**
  * optional bool local_force = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.getLocalForce = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ClosedChannelsRequest} returns this
+ */
 proto.lnrpc.ClosedChannelsRequest.prototype.setLocalForce = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
 /**
  * optional bool remote_force = 3;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.getRemoteForce = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ClosedChannelsRequest} returns this
+ */
 proto.lnrpc.ClosedChannelsRequest.prototype.setRemoteForce = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
 /**
  * optional bool breach = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.getBreach = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ClosedChannelsRequest} returns this
+ */
 proto.lnrpc.ClosedChannelsRequest.prototype.setBreach = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
 /**
  * optional bool funding_canceled = 5;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.getFundingCanceled = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ClosedChannelsRequest} returns this
+ */
 proto.lnrpc.ClosedChannelsRequest.prototype.setFundingCanceled = function(value) {
-  jspb.Message.setProto3BooleanField(this, 5, value);
+  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
 /**
  * optional bool abandoned = 6;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ClosedChannelsRequest.prototype.getAbandoned = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ClosedChannelsRequest.prototype.setAbandoned = function(value) {
-  jspb.Message.setProto3BooleanField(this, 6, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ClosedChannelsRequest} returns this
  */
-proto.lnrpc.ClosedChannelsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ClosedChannelsResponse.repeatedFields_, null);
+proto.lnrpc.ClosedChannelsRequest.prototype.setAbandoned = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.ClosedChannelsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ClosedChannelsResponse.displayName = 'proto.lnrpc.ClosedChannelsResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -10123,13 +13590,15 @@ proto.lnrpc.ClosedChannelsResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ClosedChannelsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -10139,8 +13608,8 @@ proto.lnrpc.ClosedChannelsResponse.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ClosedChannelsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -10241,9 +13710,12 @@ proto.lnrpc.ClosedChannelsResponse.prototype.getChannelsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelCloseSummary>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelCloseSummary>} value
+ * @return {!proto.lnrpc.ClosedChannelsResponse} returns this
+*/
 proto.lnrpc.ClosedChannelsResponse.prototype.setChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -10257,29 +13729,16 @@ proto.lnrpc.ClosedChannelsResponse.prototype.addChannels = function(opt_value, o
 };
 
 
-proto.lnrpc.ClosedChannelsResponse.prototype.clearChannelsList = function() {
-  this.setChannelsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ClosedChannelsResponse} returns this
  */
-proto.lnrpc.Peer = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Peer.repeatedFields_, null);
+proto.lnrpc.ClosedChannelsResponse.prototype.clearChannelsList = function() {
+  return this.setChannelsList([]);
 };
-goog.inherits(proto.lnrpc.Peer, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Peer.displayName = 'proto.lnrpc.Peer';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -10291,13 +13750,15 @@ proto.lnrpc.Peer.repeatedFields_ = [12];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Peer.prototype.toObject = function(opt_includeInstance) {
@@ -10307,8 +13768,8 @@ proto.lnrpc.Peer.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Peer} msg The msg instance to transform.
  * @return {!Object}
@@ -10322,7 +13783,7 @@ proto.lnrpc.Peer.toObject = function(includeInstance, msg) {
     bytesRecv: jspb.Message.getFieldWithDefault(msg, 5, 0),
     atomsSent: jspb.Message.getFieldWithDefault(msg, 6, 0),
     atomsRecv: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    inbound: jspb.Message.getFieldWithDefault(msg, 8, false),
+    inbound: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     pingTime: jspb.Message.getFieldWithDefault(msg, 9, 0),
     syncType: jspb.Message.getFieldWithDefault(msg, 10, 0),
     featuresMap: (f = msg.getFeaturesMap()) ? f.toObject(includeInstance, proto.lnrpc.Feature.toObject) : [],
@@ -10403,7 +13864,7 @@ proto.lnrpc.Peer.deserializeBinaryFromReader = function(msg, reader) {
     case 11:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0, new proto.lnrpc.Feature());
          });
       break;
     case 12:
@@ -10536,9 +13997,12 @@ proto.lnrpc.Peer.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -10551,9 +14015,12 @@ proto.lnrpc.Peer.prototype.getAddress = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -10566,9 +14033,12 @@ proto.lnrpc.Peer.prototype.getBytesSent = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setBytesSent = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -10581,9 +14051,12 @@ proto.lnrpc.Peer.prototype.getBytesRecv = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setBytesRecv = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -10596,9 +14069,12 @@ proto.lnrpc.Peer.prototype.getAtomsSent = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setAtomsSent = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -10611,26 +14087,30 @@ proto.lnrpc.Peer.prototype.getAtomsRecv = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setAtomsRecv = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
  * optional bool inbound = 8;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Peer.prototype.getInbound = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 8, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setInbound = function(value) {
-  jspb.Message.setProto3BooleanField(this, 8, value);
+  return jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -10643,9 +14123,12 @@ proto.lnrpc.Peer.prototype.getPingTime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setPingTime = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -10658,9 +14141,12 @@ proto.lnrpc.Peer.prototype.getSyncType = function() {
 };
 
 
-/** @param {!proto.lnrpc.Peer.SyncType} value */
+/**
+ * @param {!proto.lnrpc.Peer.SyncType} value
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.setSyncType = function(value) {
-  jspb.Message.setProto3EnumField(this, 10, value);
+  return jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -10677,9 +14163,13 @@ proto.lnrpc.Peer.prototype.getFeaturesMap = function(opt_noLazyCreate) {
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.Peer} returns this
+ */
 proto.lnrpc.Peer.prototype.clearFeaturesMap = function() {
   this.getFeaturesMap().clear();
-};
+  return this;};
 
 
 /**
@@ -10692,9 +14182,12 @@ proto.lnrpc.Peer.prototype.getErrorsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.TimestampedError>} value */
+/**
+ * @param {!Array<!proto.lnrpc.TimestampedError>} value
+ * @return {!proto.lnrpc.Peer} returns this
+*/
 proto.lnrpc.Peer.prototype.setErrorsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 12, value);
+  return jspb.Message.setRepeatedWrapperField(this, 12, value);
 };
 
 
@@ -10708,40 +14201,29 @@ proto.lnrpc.Peer.prototype.addErrors = function(opt_value, opt_index) {
 };
 
 
-proto.lnrpc.Peer.prototype.clearErrorsList = function() {
-  this.setErrorsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Peer} returns this
  */
-proto.lnrpc.TimestampedError = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Peer.prototype.clearErrorsList = function() {
+  return this.setErrorsList([]);
 };
-goog.inherits(proto.lnrpc.TimestampedError, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.TimestampedError.displayName = 'proto.lnrpc.TimestampedError';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.TimestampedError.prototype.toObject = function(opt_includeInstance) {
@@ -10751,8 +14233,8 @@ proto.lnrpc.TimestampedError.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.TimestampedError} msg The msg instance to transform.
  * @return {!Object}
@@ -10861,9 +14343,12 @@ proto.lnrpc.TimestampedError.prototype.getTimestamp = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.TimestampedError} returns this
+ */
 proto.lnrpc.TimestampedError.prototype.setTimestamp = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -10876,41 +14361,29 @@ proto.lnrpc.TimestampedError.prototype.getError = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.TimestampedError.prototype.setError = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.TimestampedError} returns this
  */
-proto.lnrpc.ListPeersRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.TimestampedError.prototype.setError = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ListPeersRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListPeersRequest.displayName = 'proto.lnrpc.ListPeersRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListPeersRequest.prototype.toObject = function(opt_includeInstance) {
@@ -10920,8 +14393,8 @@ proto.lnrpc.ListPeersRequest.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListPeersRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -10929,7 +14402,7 @@ proto.lnrpc.ListPeersRequest.prototype.toObject = function(opt_includeInstance) 
  */
 proto.lnrpc.ListPeersRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    latestError: jspb.Message.getFieldWithDefault(msg, 1, false)
+    latestError: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
   };
 
   if (includeInstance) {
@@ -11011,39 +14484,23 @@ proto.lnrpc.ListPeersRequest.serializeBinaryToWriter = function(message, writer)
 
 /**
  * optional bool latest_error = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListPeersRequest.prototype.getLatestError = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ListPeersRequest.prototype.setLatestError = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListPeersRequest} returns this
  */
-proto.lnrpc.ListPeersResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListPeersResponse.repeatedFields_, null);
+proto.lnrpc.ListPeersRequest.prototype.setLatestError = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.ListPeersResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListPeersResponse.displayName = 'proto.lnrpc.ListPeersResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -11055,13 +14512,15 @@ proto.lnrpc.ListPeersResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListPeersResponse.prototype.toObject = function(opt_includeInstance) {
@@ -11071,8 +14530,8 @@ proto.lnrpc.ListPeersResponse.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListPeersResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -11173,9 +14632,12 @@ proto.lnrpc.ListPeersResponse.prototype.getPeersList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Peer>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Peer>} value
+ * @return {!proto.lnrpc.ListPeersResponse} returns this
+*/
 proto.lnrpc.ListPeersResponse.prototype.setPeersList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -11189,40 +14651,29 @@ proto.lnrpc.ListPeersResponse.prototype.addPeers = function(opt_value, opt_index
 };
 
 
-proto.lnrpc.ListPeersResponse.prototype.clearPeersList = function() {
-  this.setPeersList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ListPeersResponse} returns this
  */
-proto.lnrpc.PeerEventSubscription = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ListPeersResponse.prototype.clearPeersList = function() {
+  return this.setPeersList([]);
 };
-goog.inherits(proto.lnrpc.PeerEventSubscription, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PeerEventSubscription.displayName = 'proto.lnrpc.PeerEventSubscription';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PeerEventSubscription.prototype.toObject = function(opt_includeInstance) {
@@ -11232,8 +14683,8 @@ proto.lnrpc.PeerEventSubscription.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PeerEventSubscription} msg The msg instance to transform.
  * @return {!Object}
@@ -11311,34 +14762,19 @@ proto.lnrpc.PeerEventSubscription.serializeBinaryToWriter = function(message, wr
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.PeerEvent = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.PeerEvent, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PeerEvent.displayName = 'proto.lnrpc.PeerEvent';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PeerEvent.prototype.toObject = function(opt_includeInstance) {
@@ -11348,8 +14784,8 @@ proto.lnrpc.PeerEvent.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PeerEvent} msg The msg instance to transform.
  * @return {!Object}
@@ -11466,9 +14902,12 @@ proto.lnrpc.PeerEvent.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PeerEvent} returns this
+ */
 proto.lnrpc.PeerEvent.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -11481,41 +14920,29 @@ proto.lnrpc.PeerEvent.prototype.getType = function() {
 };
 
 
-/** @param {!proto.lnrpc.PeerEvent.EventType} value */
-proto.lnrpc.PeerEvent.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!proto.lnrpc.PeerEvent.EventType} value
+ * @return {!proto.lnrpc.PeerEvent} returns this
  */
-proto.lnrpc.GetInfoRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PeerEvent.prototype.setType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.GetInfoRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GetInfoRequest.displayName = 'proto.lnrpc.GetInfoRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GetInfoRequest.prototype.toObject = function(opt_includeInstance) {
@@ -11525,8 +14952,8 @@ proto.lnrpc.GetInfoRequest.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GetInfoRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -11605,23 +15032,6 @@ proto.lnrpc.GetInfoRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.GetInfoResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, 500, proto.lnrpc.GetInfoResponse.repeatedFields_, null);
-};
-goog.inherits(proto.lnrpc.GetInfoResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GetInfoResponse.displayName = 'proto.lnrpc.GetInfoResponse';
-}
-/**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
@@ -11632,13 +15042,15 @@ proto.lnrpc.GetInfoResponse.repeatedFields_ = [16,12];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GetInfoResponse.prototype.toObject = function(opt_includeInstance) {
@@ -11648,8 +15060,8 @@ proto.lnrpc.GetInfoResponse.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GetInfoResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -11669,14 +15081,14 @@ proto.lnrpc.GetInfoResponse.toObject = function(includeInstance, msg) {
     blockHeight: jspb.Message.getFieldWithDefault(msg, 6, 0),
     blockHash: jspb.Message.getFieldWithDefault(msg, 8, ""),
     bestHeaderTimestamp: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    syncedToChain: jspb.Message.getFieldWithDefault(msg, 9, false),
-    syncedToGraph: jspb.Message.getFieldWithDefault(msg, 18, false),
-    testnet: jspb.Message.getFieldWithDefault(msg, 10, false),
+    syncedToChain: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
+    syncedToGraph: jspb.Message.getBooleanFieldWithDefault(msg, 18, false),
+    testnet: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
     chainsList: jspb.Message.toObjectList(msg.getChainsList(),
     proto.lnrpc.Chain.toObject, includeInstance),
-    urisList: jspb.Message.getRepeatedField(msg, 12),
+    urisList: (f = jspb.Message.getRepeatedField(msg, 12)) == null ? undefined : f,
     featuresMap: (f = msg.getFeaturesMap()) ? f.toObject(includeInstance, proto.lnrpc.Feature.toObject) : [],
-    serverActive: jspb.Message.getFieldWithDefault(msg, 901, false)
+    serverActive: jspb.Message.getBooleanFieldWithDefault(msg, 901, false)
   };
 
   if (includeInstance) {
@@ -11785,7 +15197,7 @@ proto.lnrpc.GetInfoResponse.deserializeBinaryFromReader = function(msg, reader) 
     case 19:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0, new proto.lnrpc.Feature());
          });
       break;
     case 901:
@@ -11964,9 +15376,12 @@ proto.lnrpc.GetInfoResponse.prototype.getVersion = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setVersion = function(value) {
-  jspb.Message.setProto3StringField(this, 14, value);
+  return jspb.Message.setProto3StringField(this, 14, value);
 };
 
 
@@ -11979,9 +15394,12 @@ proto.lnrpc.GetInfoResponse.prototype.getCommitHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setCommitHash = function(value) {
-  jspb.Message.setProto3StringField(this, 20, value);
+  return jspb.Message.setProto3StringField(this, 20, value);
 };
 
 
@@ -11994,9 +15412,12 @@ proto.lnrpc.GetInfoResponse.prototype.getIdentityPubkey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setIdentityPubkey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -12009,9 +15430,12 @@ proto.lnrpc.GetInfoResponse.prototype.getAlias = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setAlias = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -12024,9 +15448,12 @@ proto.lnrpc.GetInfoResponse.prototype.getColor = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setColor = function(value) {
-  jspb.Message.setProto3StringField(this, 17, value);
+  return jspb.Message.setProto3StringField(this, 17, value);
 };
 
 
@@ -12039,9 +15466,12 @@ proto.lnrpc.GetInfoResponse.prototype.getNumPendingChannels = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setNumPendingChannels = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -12054,9 +15484,12 @@ proto.lnrpc.GetInfoResponse.prototype.getNumActiveChannels = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setNumActiveChannels = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -12069,9 +15502,12 @@ proto.lnrpc.GetInfoResponse.prototype.getNumInactiveChannels = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setNumInactiveChannels = function(value) {
-  jspb.Message.setProto3IntField(this, 15, value);
+  return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -12084,9 +15520,12 @@ proto.lnrpc.GetInfoResponse.prototype.getNumPeers = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setNumPeers = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -12099,9 +15538,12 @@ proto.lnrpc.GetInfoResponse.prototype.getBlockHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setBlockHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -12114,9 +15556,12 @@ proto.lnrpc.GetInfoResponse.prototype.getBlockHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setBlockHash = function(value) {
-  jspb.Message.setProto3StringField(this, 8, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -12129,60 +15574,66 @@ proto.lnrpc.GetInfoResponse.prototype.getBestHeaderTimestamp = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setBestHeaderTimestamp = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
  * optional bool synced_to_chain = 9;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.GetInfoResponse.prototype.getSyncedToChain = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setSyncedToChain = function(value) {
-  jspb.Message.setProto3BooleanField(this, 9, value);
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
 /**
  * optional bool synced_to_graph = 18;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.GetInfoResponse.prototype.getSyncedToGraph = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 18, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 18, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setSyncedToGraph = function(value) {
-  jspb.Message.setProto3BooleanField(this, 18, value);
+  return jspb.Message.setProto3BooleanField(this, 18, value);
 };
 
 
 /**
  * optional bool testnet = 10;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.GetInfoResponse.prototype.getTestnet = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 10, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 10, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setTestnet = function(value) {
-  jspb.Message.setProto3BooleanField(this, 10, value);
+  return jspb.Message.setProto3BooleanField(this, 10, value);
 };
 
 
@@ -12196,9 +15647,12 @@ proto.lnrpc.GetInfoResponse.prototype.getChainsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Chain>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Chain>} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+*/
 proto.lnrpc.GetInfoResponse.prototype.setChainsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 16, value);
+  return jspb.Message.setRepeatedWrapperField(this, 16, value);
 };
 
 
@@ -12212,8 +15666,12 @@ proto.lnrpc.GetInfoResponse.prototype.addChains = function(opt_value, opt_index)
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.clearChainsList = function() {
-  this.setChainsList([]);
+  return this.setChainsList([]);
 };
 
 
@@ -12226,23 +15684,31 @@ proto.lnrpc.GetInfoResponse.prototype.getUrisList = function() {
 };
 
 
-/** @param {!Array<string>} value */
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.setUrisList = function(value) {
-  jspb.Message.setField(this, 12, value || []);
+  return jspb.Message.setField(this, 12, value || []);
 };
 
 
 /**
  * @param {string} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
  */
 proto.lnrpc.GetInfoResponse.prototype.addUris = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 12, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 12, value, opt_index);
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.clearUrisList = function() {
-  this.setUrisList([]);
+  return this.setUrisList([]);
 };
 
 
@@ -12259,57 +15725,47 @@ proto.lnrpc.GetInfoResponse.prototype.getFeaturesMap = function(opt_noLazyCreate
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
 proto.lnrpc.GetInfoResponse.prototype.clearFeaturesMap = function() {
   this.getFeaturesMap().clear();
-};
+  return this;};
 
 
 /**
  * optional bool server_active = 901;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.GetInfoResponse.prototype.getServerActive = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 901, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 901, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.GetInfoResponse.prototype.setServerActive = function(value) {
-  jspb.Message.setProto3BooleanField(this, 901, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
  */
-proto.lnrpc.GetRecoveryInfoRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.GetInfoResponse.prototype.setServerActive = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 901, value);
 };
-goog.inherits(proto.lnrpc.GetRecoveryInfoRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GetRecoveryInfoRequest.displayName = 'proto.lnrpc.GetRecoveryInfoRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GetRecoveryInfoRequest.prototype.toObject = function(opt_includeInstance) {
@@ -12319,8 +15775,8 @@ proto.lnrpc.GetRecoveryInfoRequest.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GetRecoveryInfoRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -12398,34 +15854,19 @@ proto.lnrpc.GetRecoveryInfoRequest.serializeBinaryToWriter = function(message, w
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.GetRecoveryInfoResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.GetRecoveryInfoResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GetRecoveryInfoResponse.displayName = 'proto.lnrpc.GetRecoveryInfoResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.toObject = function(opt_includeInstance) {
@@ -12435,8 +15876,8 @@ proto.lnrpc.GetRecoveryInfoResponse.prototype.toObject = function(opt_includeIns
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GetRecoveryInfoResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -12444,9 +15885,9 @@ proto.lnrpc.GetRecoveryInfoResponse.prototype.toObject = function(opt_includeIns
  */
 proto.lnrpc.GetRecoveryInfoResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    recoveryMode: jspb.Message.getFieldWithDefault(msg, 1, false),
-    recoveryFinished: jspb.Message.getFieldWithDefault(msg, 2, false),
-    progress: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
+    recoveryMode: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    recoveryFinished: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    progress: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0)
   };
 
   if (includeInstance) {
@@ -12550,35 +15991,37 @@ proto.lnrpc.GetRecoveryInfoResponse.serializeBinaryToWriter = function(message, 
 
 /**
  * optional bool recovery_mode = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.getRecoveryMode = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.GetRecoveryInfoResponse} returns this
+ */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.setRecoveryMode = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
 /**
  * optional bool recovery_finished = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.getRecoveryFinished = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.GetRecoveryInfoResponse} returns this
+ */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.setRecoveryFinished = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -12587,45 +16030,33 @@ proto.lnrpc.GetRecoveryInfoResponse.prototype.setRecoveryFinished = function(val
  * @return {number}
  */
 proto.lnrpc.GetRecoveryInfoResponse.prototype.getProgress = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 3, 0.0));
 };
-
-
-/** @param {number} value */
-proto.lnrpc.GetRecoveryInfoResponse.prototype.setProgress = function(value) {
-  jspb.Message.setProto3FloatField(this, 3, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.GetRecoveryInfoResponse} returns this
  */
-proto.lnrpc.Chain = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.GetRecoveryInfoResponse.prototype.setProgress = function(value) {
+  return jspb.Message.setProto3FloatField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.Chain, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Chain.displayName = 'proto.lnrpc.Chain';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Chain.prototype.toObject = function(opt_includeInstance) {
@@ -12635,8 +16066,8 @@ proto.lnrpc.Chain.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Chain} msg The msg instance to transform.
  * @return {!Object}
@@ -12745,9 +16176,12 @@ proto.lnrpc.Chain.prototype.getChain = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Chain} returns this
+ */
 proto.lnrpc.Chain.prototype.setChain = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -12760,41 +16194,29 @@ proto.lnrpc.Chain.prototype.getNetwork = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.Chain.prototype.setNetwork = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.Chain} returns this
  */
-proto.lnrpc.ConfirmationUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Chain.prototype.setNetwork = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ConfirmationUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ConfirmationUpdate.displayName = 'proto.lnrpc.ConfirmationUpdate';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ConfirmationUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -12804,8 +16226,8 @@ proto.lnrpc.ConfirmationUpdate.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ConfirmationUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -12950,9 +16372,12 @@ proto.lnrpc.ConfirmationUpdate.prototype.getBlockSha_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ConfirmationUpdate} returns this
+ */
 proto.lnrpc.ConfirmationUpdate.prototype.setBlockSha = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -12965,9 +16390,12 @@ proto.lnrpc.ConfirmationUpdate.prototype.getBlockHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ConfirmationUpdate} returns this
+ */
 proto.lnrpc.ConfirmationUpdate.prototype.setBlockHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -12980,41 +16408,29 @@ proto.lnrpc.ConfirmationUpdate.prototype.getNumConfsLeft = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ConfirmationUpdate.prototype.setNumConfsLeft = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ConfirmationUpdate} returns this
  */
-proto.lnrpc.ChannelOpenUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ConfirmationUpdate.prototype.setNumConfsLeft = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.ChannelOpenUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelOpenUpdate.displayName = 'proto.lnrpc.ChannelOpenUpdate';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelOpenUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -13024,8 +16440,8 @@ proto.lnrpc.ChannelOpenUpdate.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelOpenUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -13125,14 +16541,21 @@ proto.lnrpc.ChannelOpenUpdate.prototype.getChannelPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ChannelOpenUpdate} returns this
+*/
 proto.lnrpc.ChannelOpenUpdate.prototype.setChannelPoint = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelOpenUpdate} returns this
+ */
 proto.lnrpc.ChannelOpenUpdate.prototype.clearChannelPoint = function() {
-  this.setChannelPoint(undefined);
+  return this.setChannelPoint(undefined);
 };
 
 
@@ -13146,34 +16569,19 @@ proto.lnrpc.ChannelOpenUpdate.prototype.hasChannelPoint = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelCloseUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelCloseUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelCloseUpdate.displayName = 'proto.lnrpc.ChannelCloseUpdate';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelCloseUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -13183,8 +16591,8 @@ proto.lnrpc.ChannelCloseUpdate.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelCloseUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -13193,7 +16601,7 @@ proto.lnrpc.ChannelCloseUpdate.prototype.toObject = function(opt_includeInstance
 proto.lnrpc.ChannelCloseUpdate.toObject = function(includeInstance, msg) {
   var f, obj = {
     closingTxid: msg.getClosingTxid_asB64(),
-    success: jspb.Message.getFieldWithDefault(msg, 2, false)
+    success: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -13317,58 +16725,47 @@ proto.lnrpc.ChannelCloseUpdate.prototype.getClosingTxid_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelCloseUpdate} returns this
+ */
 proto.lnrpc.ChannelCloseUpdate.prototype.setClosingTxid = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
 /**
  * optional bool success = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ChannelCloseUpdate.prototype.getSuccess = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ChannelCloseUpdate.prototype.setSuccess = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ChannelCloseUpdate} returns this
  */
-proto.lnrpc.CloseChannelRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChannelCloseUpdate.prototype.setSuccess = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.CloseChannelRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.CloseChannelRequest.displayName = 'proto.lnrpc.CloseChannelRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.CloseChannelRequest.prototype.toObject = function(opt_includeInstance) {
@@ -13378,8 +16775,8 @@ proto.lnrpc.CloseChannelRequest.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.CloseChannelRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -13388,7 +16785,7 @@ proto.lnrpc.CloseChannelRequest.prototype.toObject = function(opt_includeInstanc
 proto.lnrpc.CloseChannelRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     channelPoint: (f = msg.getChannelPoint()) && proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
-    force: jspb.Message.getFieldWithDefault(msg, 2, false),
+    force: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     targetConf: jspb.Message.getFieldWithDefault(msg, 3, 0),
     atomsPerByte: jspb.Message.getFieldWithDefault(msg, 4, 0),
     deliveryAddress: jspb.Message.getFieldWithDefault(msg, 5, "")
@@ -13527,14 +16924,21 @@ proto.lnrpc.CloseChannelRequest.prototype.getChannelPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.CloseChannelRequest} returns this
+*/
 proto.lnrpc.CloseChannelRequest.prototype.setChannelPoint = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.CloseChannelRequest} returns this
+ */
 proto.lnrpc.CloseChannelRequest.prototype.clearChannelPoint = function() {
-  this.setChannelPoint(undefined);
+  return this.setChannelPoint(undefined);
 };
 
 
@@ -13549,18 +16953,19 @@ proto.lnrpc.CloseChannelRequest.prototype.hasChannelPoint = function() {
 
 /**
  * optional bool force = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.CloseChannelRequest.prototype.getForce = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.CloseChannelRequest} returns this
+ */
 proto.lnrpc.CloseChannelRequest.prototype.setForce = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -13573,9 +16978,12 @@ proto.lnrpc.CloseChannelRequest.prototype.getTargetConf = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.CloseChannelRequest} returns this
+ */
 proto.lnrpc.CloseChannelRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -13588,9 +16996,12 @@ proto.lnrpc.CloseChannelRequest.prototype.getAtomsPerByte = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.CloseChannelRequest} returns this
+ */
 proto.lnrpc.CloseChannelRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -13603,30 +17014,16 @@ proto.lnrpc.CloseChannelRequest.prototype.getDeliveryAddress = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.CloseChannelRequest.prototype.setDeliveryAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.CloseChannelRequest} returns this
  */
-proto.lnrpc.CloseStatusUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.CloseStatusUpdate.oneofGroups_);
+proto.lnrpc.CloseChannelRequest.prototype.setDeliveryAddress = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
-goog.inherits(proto.lnrpc.CloseStatusUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.CloseStatusUpdate.displayName = 'proto.lnrpc.CloseStatusUpdate';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -13657,13 +17054,15 @@ proto.lnrpc.CloseStatusUpdate.prototype.getUpdateCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.CloseStatusUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -13673,8 +17072,8 @@ proto.lnrpc.CloseStatusUpdate.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.CloseStatusUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -13788,14 +17187,21 @@ proto.lnrpc.CloseStatusUpdate.prototype.getClosePending = function() {
 };
 
 
-/** @param {?proto.lnrpc.PendingUpdate|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingUpdate|undefined} value
+ * @return {!proto.lnrpc.CloseStatusUpdate} returns this
+*/
 proto.lnrpc.CloseStatusUpdate.prototype.setClosePending = function(value) {
-  jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.CloseStatusUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.CloseStatusUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.CloseStatusUpdate} returns this
+ */
 proto.lnrpc.CloseStatusUpdate.prototype.clearClosePending = function() {
-  this.setClosePending(undefined);
+  return this.setClosePending(undefined);
 };
 
 
@@ -13818,14 +17224,21 @@ proto.lnrpc.CloseStatusUpdate.prototype.getChanClose = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelCloseUpdate|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelCloseUpdate|undefined} value
+ * @return {!proto.lnrpc.CloseStatusUpdate} returns this
+*/
 proto.lnrpc.CloseStatusUpdate.prototype.setChanClose = function(value) {
-  jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.CloseStatusUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.CloseStatusUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.CloseStatusUpdate} returns this
+ */
 proto.lnrpc.CloseStatusUpdate.prototype.clearChanClose = function() {
-  this.setChanClose(undefined);
+  return this.setChanClose(undefined);
 };
 
 
@@ -13839,34 +17252,19 @@ proto.lnrpc.CloseStatusUpdate.prototype.hasChanClose = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.PendingUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.PendingUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingUpdate.displayName = 'proto.lnrpc.PendingUpdate';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -13876,8 +17274,8 @@ proto.lnrpc.PendingUpdate.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -14010,9 +17408,12 @@ proto.lnrpc.PendingUpdate.prototype.getTxid_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.PendingUpdate} returns this
+ */
 proto.lnrpc.PendingUpdate.prototype.setTxid = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -14025,41 +17426,29 @@ proto.lnrpc.PendingUpdate.prototype.getOutputIndex = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.PendingUpdate.prototype.setOutputIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingUpdate} returns this
  */
-proto.lnrpc.ReadyForPsbtFunding = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PendingUpdate.prototype.setOutputIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ReadyForPsbtFunding, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ReadyForPsbtFunding.displayName = 'proto.lnrpc.ReadyForPsbtFunding';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ReadyForPsbtFunding.prototype.toObject = function(opt_includeInstance) {
@@ -14069,8 +17458,8 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ReadyForPsbtFunding} msg The msg instance to transform.
  * @return {!Object}
@@ -14191,9 +17580,12 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.getFundingAddress = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ReadyForPsbtFunding} returns this
+ */
 proto.lnrpc.ReadyForPsbtFunding.prototype.setFundingAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -14206,9 +17598,12 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.getFundingAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ReadyForPsbtFunding} returns this
+ */
 proto.lnrpc.ReadyForPsbtFunding.prototype.setFundingAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -14245,41 +17640,29 @@ proto.lnrpc.ReadyForPsbtFunding.prototype.getPsbt_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.ReadyForPsbtFunding.prototype.setPsbt = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ReadyForPsbtFunding} returns this
  */
-proto.lnrpc.OpenChannelRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ReadyForPsbtFunding.prototype.setPsbt = function(value) {
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.OpenChannelRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.OpenChannelRequest.displayName = 'proto.lnrpc.OpenChannelRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.OpenChannelRequest.prototype.toObject = function(opt_includeInstance) {
@@ -14289,8 +17672,8 @@ proto.lnrpc.OpenChannelRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.OpenChannelRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -14304,11 +17687,11 @@ proto.lnrpc.OpenChannelRequest.toObject = function(includeInstance, msg) {
     pushAtoms: jspb.Message.getFieldWithDefault(msg, 5, 0),
     targetConf: jspb.Message.getFieldWithDefault(msg, 6, 0),
     atomsPerByte: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    pb_private: jspb.Message.getFieldWithDefault(msg, 8, false),
+    pb_private: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
     minHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 9, 0),
     remoteCsvDelay: jspb.Message.getFieldWithDefault(msg, 10, 0),
     minConfs: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    spendUnconfirmed: jspb.Message.getFieldWithDefault(msg, 12, false),
+    spendUnconfirmed: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
     closeAddress: jspb.Message.getFieldWithDefault(msg, 13, ""),
     fundingShim: (f = msg.getFundingShim()) && proto.lnrpc.FundingShim.toObject(includeInstance, f),
     remoteMaxValueInFlightMAtoms: jspb.Message.getFieldWithDefault(msg, 15, 0),
@@ -14581,9 +17964,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getNodePubkey_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setNodePubkey = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -14596,9 +17982,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getNodePubkeyString = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setNodePubkeyString = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -14611,9 +18000,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getLocalFundingAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setLocalFundingAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -14626,9 +18018,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getPushAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setPushAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -14641,9 +18036,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getTargetConf = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setTargetConf = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -14656,26 +18054,30 @@ proto.lnrpc.OpenChannelRequest.prototype.getAtomsPerByte = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setAtomsPerByte = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
  * optional bool private = 8;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.OpenChannelRequest.prototype.getPrivate = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 8, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setPrivate = function(value) {
-  jspb.Message.setProto3BooleanField(this, 8, value);
+  return jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -14688,9 +18090,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getMinHtlcMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setMinHtlcMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -14703,9 +18108,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getRemoteCsvDelay = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setRemoteCsvDelay = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -14718,26 +18126,30 @@ proto.lnrpc.OpenChannelRequest.prototype.getMinConfs = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setMinConfs = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
 /**
  * optional bool spend_unconfirmed = 12;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.OpenChannelRequest.prototype.getSpendUnconfirmed = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 12, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 12, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setSpendUnconfirmed = function(value) {
-  jspb.Message.setProto3BooleanField(this, 12, value);
+  return jspb.Message.setProto3BooleanField(this, 12, value);
 };
 
 
@@ -14750,9 +18162,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getCloseAddress = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setCloseAddress = function(value) {
-  jspb.Message.setProto3StringField(this, 13, value);
+  return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 
@@ -14766,14 +18181,21 @@ proto.lnrpc.OpenChannelRequest.prototype.getFundingShim = function() {
 };
 
 
-/** @param {?proto.lnrpc.FundingShim|undefined} value */
+/**
+ * @param {?proto.lnrpc.FundingShim|undefined} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+*/
 proto.lnrpc.OpenChannelRequest.prototype.setFundingShim = function(value) {
-  jspb.Message.setWrapperField(this, 14, value);
+  return jspb.Message.setWrapperField(this, 14, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.clearFundingShim = function() {
-  this.setFundingShim(undefined);
+  return this.setFundingShim(undefined);
 };
 
 
@@ -14795,9 +18217,12 @@ proto.lnrpc.OpenChannelRequest.prototype.getRemoteMaxValueInFlightMAtoms = funct
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
+ */
 proto.lnrpc.OpenChannelRequest.prototype.setRemoteMaxValueInFlightMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 15, value);
+  return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -14810,30 +18235,16 @@ proto.lnrpc.OpenChannelRequest.prototype.getRemoteMaxHtlcs = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.OpenChannelRequest.prototype.setRemoteMaxHtlcs = function(value) {
-  jspb.Message.setProto3IntField(this, 16, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.OpenChannelRequest} returns this
  */
-proto.lnrpc.OpenStatusUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.OpenStatusUpdate.oneofGroups_);
+proto.lnrpc.OpenChannelRequest.prototype.setRemoteMaxHtlcs = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
 };
-goog.inherits(proto.lnrpc.OpenStatusUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.OpenStatusUpdate.displayName = 'proto.lnrpc.OpenStatusUpdate';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -14865,13 +18276,15 @@ proto.lnrpc.OpenStatusUpdate.prototype.getUpdateCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.OpenStatusUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -14881,8 +18294,8 @@ proto.lnrpc.OpenStatusUpdate.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.OpenStatusUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -15022,14 +18435,21 @@ proto.lnrpc.OpenStatusUpdate.prototype.getChanPending = function() {
 };
 
 
-/** @param {?proto.lnrpc.PendingUpdate|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingUpdate|undefined} value
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
+*/
 proto.lnrpc.OpenStatusUpdate.prototype.setChanPending = function(value) {
-  jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.OpenStatusUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.OpenStatusUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
+ */
 proto.lnrpc.OpenStatusUpdate.prototype.clearChanPending = function() {
-  this.setChanPending(undefined);
+  return this.setChanPending(undefined);
 };
 
 
@@ -15052,14 +18472,21 @@ proto.lnrpc.OpenStatusUpdate.prototype.getChanOpen = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelOpenUpdate|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelOpenUpdate|undefined} value
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
+*/
 proto.lnrpc.OpenStatusUpdate.prototype.setChanOpen = function(value) {
-  jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.OpenStatusUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.OpenStatusUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
+ */
 proto.lnrpc.OpenStatusUpdate.prototype.clearChanOpen = function() {
-  this.setChanOpen(undefined);
+  return this.setChanOpen(undefined);
 };
 
 
@@ -15082,14 +18509,21 @@ proto.lnrpc.OpenStatusUpdate.prototype.getPsbtFund = function() {
 };
 
 
-/** @param {?proto.lnrpc.ReadyForPsbtFunding|undefined} value */
+/**
+ * @param {?proto.lnrpc.ReadyForPsbtFunding|undefined} value
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
+*/
 proto.lnrpc.OpenStatusUpdate.prototype.setPsbtFund = function(value) {
-  jspb.Message.setOneofWrapperField(this, 5, proto.lnrpc.OpenStatusUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 5, proto.lnrpc.OpenStatusUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
+ */
 proto.lnrpc.OpenStatusUpdate.prototype.clearPsbtFund = function() {
-  this.setPsbtFund(undefined);
+  return this.setPsbtFund(undefined);
 };
 
 
@@ -15135,41 +18569,29 @@ proto.lnrpc.OpenStatusUpdate.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.OpenStatusUpdate.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.OpenStatusUpdate} returns this
  */
-proto.lnrpc.KeyLocator = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.OpenStatusUpdate.prototype.setPendingChanId = function(value) {
+  return jspb.Message.setProto3BytesField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.KeyLocator, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.KeyLocator.displayName = 'proto.lnrpc.KeyLocator';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.KeyLocator.prototype.toObject = function(opt_includeInstance) {
@@ -15179,8 +18601,8 @@ proto.lnrpc.KeyLocator.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.KeyLocator} msg The msg instance to transform.
  * @return {!Object}
@@ -15289,9 +18711,12 @@ proto.lnrpc.KeyLocator.prototype.getKeyFamily = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.KeyLocator} returns this
+ */
 proto.lnrpc.KeyLocator.prototype.setKeyFamily = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -15304,41 +18729,29 @@ proto.lnrpc.KeyLocator.prototype.getKeyIndex = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.KeyLocator.prototype.setKeyIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.KeyLocator} returns this
  */
-proto.lnrpc.KeyDescriptor = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.KeyLocator.prototype.setKeyIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.KeyDescriptor, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.KeyDescriptor.displayName = 'proto.lnrpc.KeyDescriptor';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.KeyDescriptor.prototype.toObject = function(opt_includeInstance) {
@@ -15348,8 +18761,8 @@ proto.lnrpc.KeyDescriptor.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.KeyDescriptor} msg The msg instance to transform.
  * @return {!Object}
@@ -15484,9 +18897,12 @@ proto.lnrpc.KeyDescriptor.prototype.getRawKeyBytes_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.KeyDescriptor} returns this
+ */
 proto.lnrpc.KeyDescriptor.prototype.setRawKeyBytes = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -15500,14 +18916,21 @@ proto.lnrpc.KeyDescriptor.prototype.getKeyLoc = function() {
 };
 
 
-/** @param {?proto.lnrpc.KeyLocator|undefined} value */
+/**
+ * @param {?proto.lnrpc.KeyLocator|undefined} value
+ * @return {!proto.lnrpc.KeyDescriptor} returns this
+*/
 proto.lnrpc.KeyDescriptor.prototype.setKeyLoc = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.KeyDescriptor} returns this
+ */
 proto.lnrpc.KeyDescriptor.prototype.clearKeyLoc = function() {
-  this.setKeyLoc(undefined);
+  return this.setKeyLoc(undefined);
 };
 
 
@@ -15521,34 +18944,19 @@ proto.lnrpc.KeyDescriptor.prototype.hasKeyLoc = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChanPointShim = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChanPointShim, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChanPointShim.displayName = 'proto.lnrpc.ChanPointShim';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChanPointShim.prototype.toObject = function(opt_includeInstance) {
@@ -15558,8 +18966,8 @@ proto.lnrpc.ChanPointShim.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChanPointShim} msg The msg instance to transform.
  * @return {!Object}
@@ -15720,9 +19128,12 @@ proto.lnrpc.ChanPointShim.prototype.getAmt = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+ */
 proto.lnrpc.ChanPointShim.prototype.setAmt = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -15736,14 +19147,21 @@ proto.lnrpc.ChanPointShim.prototype.getChanPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+*/
 proto.lnrpc.ChanPointShim.prototype.setChanPoint = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+ */
 proto.lnrpc.ChanPointShim.prototype.clearChanPoint = function() {
-  this.setChanPoint(undefined);
+  return this.setChanPoint(undefined);
 };
 
 
@@ -15766,14 +19184,21 @@ proto.lnrpc.ChanPointShim.prototype.getLocalKey = function() {
 };
 
 
-/** @param {?proto.lnrpc.KeyDescriptor|undefined} value */
+/**
+ * @param {?proto.lnrpc.KeyDescriptor|undefined} value
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+*/
 proto.lnrpc.ChanPointShim.prototype.setLocalKey = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+ */
 proto.lnrpc.ChanPointShim.prototype.clearLocalKey = function() {
-  this.setLocalKey(undefined);
+  return this.setLocalKey(undefined);
 };
 
 
@@ -15819,9 +19244,12 @@ proto.lnrpc.ChanPointShim.prototype.getRemoteKey_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+ */
 proto.lnrpc.ChanPointShim.prototype.setRemoteKey = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value);
+  return jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -15858,9 +19286,12 @@ proto.lnrpc.ChanPointShim.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChanPointShim} returns this
+ */
 proto.lnrpc.ChanPointShim.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 5, value);
+  return jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -15873,41 +19304,29 @@ proto.lnrpc.ChanPointShim.prototype.getThawHeight = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ChanPointShim.prototype.setThawHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ChanPointShim} returns this
  */
-proto.lnrpc.PsbtShim = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChanPointShim.prototype.setThawHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.PsbtShim, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PsbtShim.displayName = 'proto.lnrpc.PsbtShim';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PsbtShim.prototype.toObject = function(opt_includeInstance) {
@@ -15917,8 +19336,8 @@ proto.lnrpc.PsbtShim.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PsbtShim} msg The msg instance to transform.
  * @return {!Object}
@@ -15928,7 +19347,7 @@ proto.lnrpc.PsbtShim.toObject = function(includeInstance, msg) {
   var f, obj = {
     pendingChanId: msg.getPendingChanId_asB64(),
     basePsbt: msg.getBasePsbt_asB64(),
-    noPublish: jspb.Message.getFieldWithDefault(msg, 3, false)
+    noPublish: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -16063,9 +19482,12 @@ proto.lnrpc.PsbtShim.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.PsbtShim} returns this
+ */
 proto.lnrpc.PsbtShim.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16102,47 +19524,34 @@ proto.lnrpc.PsbtShim.prototype.getBasePsbt_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.PsbtShim} returns this
+ */
 proto.lnrpc.PsbtShim.prototype.setBasePsbt = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
 /**
  * optional bool no_publish = 3;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.PsbtShim.prototype.getNoPublish = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.PsbtShim.prototype.setNoPublish = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.PsbtShim} returns this
  */
-proto.lnrpc.FundingShim = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.FundingShim.oneofGroups_);
+proto.lnrpc.PsbtShim.prototype.setNoPublish = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.FundingShim, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FundingShim.displayName = 'proto.lnrpc.FundingShim';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -16173,13 +19582,15 @@ proto.lnrpc.FundingShim.prototype.getShimCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FundingShim.prototype.toObject = function(opt_includeInstance) {
@@ -16189,8 +19600,8 @@ proto.lnrpc.FundingShim.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FundingShim} msg The msg instance to transform.
  * @return {!Object}
@@ -16304,14 +19715,21 @@ proto.lnrpc.FundingShim.prototype.getChanPointShim = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChanPointShim|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChanPointShim|undefined} value
+ * @return {!proto.lnrpc.FundingShim} returns this
+*/
 proto.lnrpc.FundingShim.prototype.setChanPointShim = function(value) {
-  jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.FundingShim.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.FundingShim.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.FundingShim} returns this
+ */
 proto.lnrpc.FundingShim.prototype.clearChanPointShim = function() {
-  this.setChanPointShim(undefined);
+  return this.setChanPointShim(undefined);
 };
 
 
@@ -16334,14 +19752,21 @@ proto.lnrpc.FundingShim.prototype.getPsbtShim = function() {
 };
 
 
-/** @param {?proto.lnrpc.PsbtShim|undefined} value */
+/**
+ * @param {?proto.lnrpc.PsbtShim|undefined} value
+ * @return {!proto.lnrpc.FundingShim} returns this
+*/
 proto.lnrpc.FundingShim.prototype.setPsbtShim = function(value) {
-  jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.FundingShim.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.FundingShim.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.FundingShim} returns this
+ */
 proto.lnrpc.FundingShim.prototype.clearPsbtShim = function() {
-  this.setPsbtShim(undefined);
+  return this.setPsbtShim(undefined);
 };
 
 
@@ -16355,34 +19780,19 @@ proto.lnrpc.FundingShim.prototype.hasPsbtShim = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.FundingShimCancel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.FundingShimCancel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FundingShimCancel.displayName = 'proto.lnrpc.FundingShimCancel';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FundingShimCancel.prototype.toObject = function(opt_includeInstance) {
@@ -16392,8 +19802,8 @@ proto.lnrpc.FundingShimCancel.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FundingShimCancel} msg The msg instance to transform.
  * @return {!Object}
@@ -16514,41 +19924,29 @@ proto.lnrpc.FundingShimCancel.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.FundingShimCancel.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.FundingShimCancel} returns this
  */
-proto.lnrpc.FundingPsbtVerify = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.FundingShimCancel.prototype.setPendingChanId = function(value) {
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.FundingPsbtVerify, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FundingPsbtVerify.displayName = 'proto.lnrpc.FundingPsbtVerify';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FundingPsbtVerify.prototype.toObject = function(opt_includeInstance) {
@@ -16558,8 +19956,8 @@ proto.lnrpc.FundingPsbtVerify.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FundingPsbtVerify} msg The msg instance to transform.
  * @return {!Object}
@@ -16692,9 +20090,12 @@ proto.lnrpc.FundingPsbtVerify.prototype.getFundedPsbt_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.FundingPsbtVerify} returns this
+ */
 proto.lnrpc.FundingPsbtVerify.prototype.setFundedPsbt = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16731,41 +20132,29 @@ proto.lnrpc.FundingPsbtVerify.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.FundingPsbtVerify.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.FundingPsbtVerify} returns this
  */
-proto.lnrpc.FundingPsbtFinalize = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.FundingPsbtVerify.prototype.setPendingChanId = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.FundingPsbtFinalize, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FundingPsbtFinalize.displayName = 'proto.lnrpc.FundingPsbtFinalize';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FundingPsbtFinalize.prototype.toObject = function(opt_includeInstance) {
@@ -16775,8 +20164,8 @@ proto.lnrpc.FundingPsbtFinalize.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FundingPsbtFinalize} msg The msg instance to transform.
  * @return {!Object}
@@ -16921,9 +20310,12 @@ proto.lnrpc.FundingPsbtFinalize.prototype.getSignedPsbt_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.FundingPsbtFinalize} returns this
+ */
 proto.lnrpc.FundingPsbtFinalize.prototype.setSignedPsbt = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16960,9 +20352,12 @@ proto.lnrpc.FundingPsbtFinalize.prototype.getPendingChanId_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.FundingPsbtFinalize} returns this
+ */
 proto.lnrpc.FundingPsbtFinalize.prototype.setPendingChanId = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -16999,30 +20394,16 @@ proto.lnrpc.FundingPsbtFinalize.prototype.getFinalRawTx_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.FundingPsbtFinalize.prototype.setFinalRawTx = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.FundingPsbtFinalize} returns this
  */
-proto.lnrpc.FundingTransitionMsg = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.FundingTransitionMsg.oneofGroups_);
+proto.lnrpc.FundingPsbtFinalize.prototype.setFinalRawTx = function(value) {
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.FundingTransitionMsg, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FundingTransitionMsg.displayName = 'proto.lnrpc.FundingTransitionMsg';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -17055,13 +20436,15 @@ proto.lnrpc.FundingTransitionMsg.prototype.getTriggerCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FundingTransitionMsg.prototype.toObject = function(opt_includeInstance) {
@@ -17071,8 +20454,8 @@ proto.lnrpc.FundingTransitionMsg.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FundingTransitionMsg} msg The msg instance to transform.
  * @return {!Object}
@@ -17214,14 +20597,21 @@ proto.lnrpc.FundingTransitionMsg.prototype.getShimRegister = function() {
 };
 
 
-/** @param {?proto.lnrpc.FundingShim|undefined} value */
+/**
+ * @param {?proto.lnrpc.FundingShim|undefined} value
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+*/
 proto.lnrpc.FundingTransitionMsg.prototype.setShimRegister = function(value) {
-  jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+ */
 proto.lnrpc.FundingTransitionMsg.prototype.clearShimRegister = function() {
-  this.setShimRegister(undefined);
+  return this.setShimRegister(undefined);
 };
 
 
@@ -17244,14 +20634,21 @@ proto.lnrpc.FundingTransitionMsg.prototype.getShimCancel = function() {
 };
 
 
-/** @param {?proto.lnrpc.FundingShimCancel|undefined} value */
+/**
+ * @param {?proto.lnrpc.FundingShimCancel|undefined} value
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+*/
 proto.lnrpc.FundingTransitionMsg.prototype.setShimCancel = function(value) {
-  jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+ */
 proto.lnrpc.FundingTransitionMsg.prototype.clearShimCancel = function() {
-  this.setShimCancel(undefined);
+  return this.setShimCancel(undefined);
 };
 
 
@@ -17274,14 +20671,21 @@ proto.lnrpc.FundingTransitionMsg.prototype.getPsbtVerify = function() {
 };
 
 
-/** @param {?proto.lnrpc.FundingPsbtVerify|undefined} value */
+/**
+ * @param {?proto.lnrpc.FundingPsbtVerify|undefined} value
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+*/
 proto.lnrpc.FundingTransitionMsg.prototype.setPsbtVerify = function(value) {
-  jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+ */
 proto.lnrpc.FundingTransitionMsg.prototype.clearPsbtVerify = function() {
-  this.setPsbtVerify(undefined);
+  return this.setPsbtVerify(undefined);
 };
 
 
@@ -17304,14 +20708,21 @@ proto.lnrpc.FundingTransitionMsg.prototype.getPsbtFinalize = function() {
 };
 
 
-/** @param {?proto.lnrpc.FundingPsbtFinalize|undefined} value */
+/**
+ * @param {?proto.lnrpc.FundingPsbtFinalize|undefined} value
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+*/
 proto.lnrpc.FundingTransitionMsg.prototype.setPsbtFinalize = function(value) {
-  jspb.Message.setOneofWrapperField(this, 4, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 4, proto.lnrpc.FundingTransitionMsg.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.FundingTransitionMsg} returns this
+ */
 proto.lnrpc.FundingTransitionMsg.prototype.clearPsbtFinalize = function() {
-  this.setPsbtFinalize(undefined);
+  return this.setPsbtFinalize(undefined);
 };
 
 
@@ -17325,34 +20736,19 @@ proto.lnrpc.FundingTransitionMsg.prototype.hasPsbtFinalize = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.FundingStateStepResp = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.FundingStateStepResp, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FundingStateStepResp.displayName = 'proto.lnrpc.FundingStateStepResp';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FundingStateStepResp.prototype.toObject = function(opt_includeInstance) {
@@ -17362,8 +20758,8 @@ proto.lnrpc.FundingStateStepResp.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FundingStateStepResp} msg The msg instance to transform.
  * @return {!Object}
@@ -17441,34 +20837,19 @@ proto.lnrpc.FundingStateStepResp.serializeBinaryToWriter = function(message, wri
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.PendingHTLC = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.PendingHTLC, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingHTLC.displayName = 'proto.lnrpc.PendingHTLC';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingHTLC.prototype.toObject = function(opt_includeInstance) {
@@ -17478,8 +20859,8 @@ proto.lnrpc.PendingHTLC.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingHTLC} msg The msg instance to transform.
  * @return {!Object}
@@ -17487,7 +20868,7 @@ proto.lnrpc.PendingHTLC.prototype.toObject = function(opt_includeInstance) {
  */
 proto.lnrpc.PendingHTLC.toObject = function(includeInstance, msg) {
   var f, obj = {
-    incoming: jspb.Message.getFieldWithDefault(msg, 1, false),
+    incoming: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     amount: jspb.Message.getFieldWithDefault(msg, 2, 0),
     outpoint: jspb.Message.getFieldWithDefault(msg, 3, ""),
     maturityHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
@@ -17629,18 +21010,19 @@ proto.lnrpc.PendingHTLC.serializeBinaryToWriter = function(message, writer) {
 
 /**
  * optional bool incoming = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.PendingHTLC.prototype.getIncoming = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.PendingHTLC} returns this
+ */
 proto.lnrpc.PendingHTLC.prototype.setIncoming = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -17653,9 +21035,12 @@ proto.lnrpc.PendingHTLC.prototype.getAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingHTLC} returns this
+ */
 proto.lnrpc.PendingHTLC.prototype.setAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -17668,9 +21053,12 @@ proto.lnrpc.PendingHTLC.prototype.getOutpoint = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingHTLC} returns this
+ */
 proto.lnrpc.PendingHTLC.prototype.setOutpoint = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -17683,9 +21071,12 @@ proto.lnrpc.PendingHTLC.prototype.getMaturityHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingHTLC} returns this
+ */
 proto.lnrpc.PendingHTLC.prototype.setMaturityHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -17698,9 +21089,12 @@ proto.lnrpc.PendingHTLC.prototype.getBlocksTilMaturity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingHTLC} returns this
+ */
 proto.lnrpc.PendingHTLC.prototype.setBlocksTilMaturity = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -17713,41 +21107,29 @@ proto.lnrpc.PendingHTLC.prototype.getStage = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.PendingHTLC.prototype.setStage = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingHTLC} returns this
  */
-proto.lnrpc.PendingChannelsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PendingHTLC.prototype.setStage = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.PendingChannelsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsRequest.displayName = 'proto.lnrpc.PendingChannelsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -17757,8 +21139,8 @@ proto.lnrpc.PendingChannelsRequest.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -17837,23 +21219,6 @@ proto.lnrpc.PendingChannelsRequest.serializeBinaryToWriter = function(message, w
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.PendingChannelsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.PendingChannelsResponse.repeatedFields_, null);
-};
-goog.inherits(proto.lnrpc.PendingChannelsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.displayName = 'proto.lnrpc.PendingChannelsResponse';
-}
-/**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
@@ -17864,13 +21229,15 @@ proto.lnrpc.PendingChannelsResponse.repeatedFields_ = [2,3,4,5];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -17880,8 +21247,8 @@ proto.lnrpc.PendingChannelsResponse.prototype.toObject = function(opt_includeIns
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -18030,34 +21397,19 @@ proto.lnrpc.PendingChannelsResponse.serializeBinaryToWriter = function(message, 
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.PendingChannelsResponse.PendingChannel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.PendingChannelsResponse.PendingChannel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.PendingChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.PendingChannel';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.toObject = function(opt_includeInstance) {
@@ -18067,8 +21419,8 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.toObject = function
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse.PendingChannel} msg The msg instance to transform.
  * @return {!Object}
@@ -18261,9 +21613,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getRemoteNodePub = 
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setRemoteNodePub = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -18276,9 +21631,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getChannelPoint = f
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setChannelPoint = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -18291,9 +21649,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getCapacity = funct
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -18306,9 +21667,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getLocalBalance = f
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setLocalBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -18321,9 +21685,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getRemoteBalance = 
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setRemoteBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -18336,9 +21703,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getLocalChanReserve
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setLocalChanReserveAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -18351,9 +21721,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getRemoteChanReserv
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setRemoteChanReserveAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -18366,9 +21739,12 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getInitiator = func
 };
 
 
-/** @param {!proto.lnrpc.Initiator} value */
+/**
+ * @param {!proto.lnrpc.Initiator} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setInitiator = function(value) {
-  jspb.Message.setProto3EnumField(this, 8, value);
+  return jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -18381,41 +21757,29 @@ proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.getCommitmentType =
 };
 
 
-/** @param {!proto.lnrpc.CommitmentType} value */
-proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setCommitmentType = function(value) {
-  jspb.Message.setProto3EnumField(this, 9, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!proto.lnrpc.CommitmentType} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingChannel} returns this
  */
-proto.lnrpc.PendingChannelsResponse.PendingOpenChannel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PendingChannelsResponse.PendingChannel.prototype.setCommitmentType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 9, value);
 };
-goog.inherits(proto.lnrpc.PendingChannelsResponse.PendingOpenChannel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.PendingOpenChannel';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.toObject = function(opt_includeInstance) {
@@ -18425,8 +21789,8 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.toObject = func
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} msg The msg instance to transform.
  * @return {!Object}
@@ -18574,14 +21938,21 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getChannel = fu
 };
 
 
-/** @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setChannel = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.clearChannel = function() {
-  this.setChannel(undefined);
+  return this.setChannel(undefined);
 };
 
 
@@ -18603,9 +21974,12 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getConfirmation
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setConfirmationHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -18618,9 +21992,12 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getCommitFee = 
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setCommitFee = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -18633,9 +22010,12 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getCommitSize =
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setCommitSize = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -18648,41 +22028,29 @@ proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.getFeePerKb = f
 };
 
 
-/** @param {number} value */
-proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setFeePerKb = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel} returns this
  */
-proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PendingChannelsResponse.PendingOpenChannel.prototype.setFeePerKb = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.toObject = function(opt_includeInstance) {
@@ -18692,8 +22060,8 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.toObject = fun
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel} msg The msg instance to transform.
  * @return {!Object}
@@ -18819,14 +22187,21 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.getChannel = f
 };
 
 
-/** @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.setChannel = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.clearChannel = function() {
-  this.setChannel(undefined);
+  return this.setChannel(undefined);
 };
 
 
@@ -18848,9 +22223,12 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.getLimboBalanc
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.setLimboBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -18864,14 +22242,21 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.getCommitments
 };
 
 
-/** @param {?proto.lnrpc.PendingChannelsResponse.Commitments|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingChannelsResponse.Commitments|undefined} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.setCommitments = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.clearCommitments = function() {
-  this.setCommitments(undefined);
+  return this.setCommitments(undefined);
 };
 
 
@@ -18885,34 +22270,19 @@ proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel.prototype.hasCommitments
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.PendingChannelsResponse.Commitments = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.PendingChannelsResponse.Commitments, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.Commitments.displayName = 'proto.lnrpc.PendingChannelsResponse.Commitments';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.toObject = function(opt_includeInstance) {
@@ -18922,8 +22292,8 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.toObject = function(op
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse.Commitments} msg The msg instance to transform.
  * @return {!Object}
@@ -19080,9 +22450,12 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getLocalTxid = functio
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.Commitments} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setLocalTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -19095,9 +22468,12 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemoteTxid = functi
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.Commitments} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemoteTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -19110,9 +22486,12 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemotePendingTxid =
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.Commitments} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemotePendingTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -19125,9 +22504,12 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getLocalCommitFeeAtoms
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.Commitments} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setLocalCommitFeeAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -19140,9 +22522,12 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemoteCommitFeeAtom
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.Commitments} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemoteCommitFeeAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -19155,41 +22540,29 @@ proto.lnrpc.PendingChannelsResponse.Commitments.prototype.getRemotePendingCommit
 };
 
 
-/** @param {number} value */
-proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemotePendingCommitFeeAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.Commitments} returns this
  */
-proto.lnrpc.PendingChannelsResponse.ClosedChannel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PendingChannelsResponse.Commitments.prototype.setRemotePendingCommitFeeAtoms = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.PendingChannelsResponse.ClosedChannel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.ClosedChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.ClosedChannel';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.toObject = function(opt_includeInstance) {
@@ -19199,8 +22572,8 @@ proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.toObject = function(
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse.ClosedChannel} msg The msg instance to transform.
  * @return {!Object}
@@ -19312,14 +22685,21 @@ proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.getChannel = functio
 };
 
 
-/** @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ClosedChannel} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.setChannel = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.PendingChannelsResponse.ClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.clearChannel = function() {
-  this.setChannel(undefined);
+  return this.setChannel(undefined);
 };
 
 
@@ -19341,30 +22721,16 @@ proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.getClosingTxid = fun
 };
 
 
-/** @param {string} value */
-proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.setClosingTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ClosedChannel} returns this
  */
-proto.lnrpc.PendingChannelsResponse.ForceClosedChannel = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.repeatedFields_, null);
+proto.lnrpc.PendingChannelsResponse.ClosedChannel.prototype.setClosingTxid = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.PendingChannelsResponse.ForceClosedChannel, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.displayName = 'proto.lnrpc.PendingChannelsResponse.ForceClosedChannel';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -19376,13 +22742,15 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.repeatedFields_ = [8];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.toObject = function(opt_includeInstance) {
@@ -19392,8 +22760,8 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.toObject = func
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} msg The msg instance to transform.
  * @return {!Object}
@@ -19589,14 +22957,21 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getChannel = fu
 };
 
 
-/** @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingChannelsResponse.PendingChannel|undefined} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setChannel = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.clearChannel = function() {
-  this.setChannel(undefined);
+  return this.setChannel(undefined);
 };
 
 
@@ -19618,9 +22993,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getClosingTxid 
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setClosingTxid = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -19633,9 +23011,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getLimboBalance
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setLimboBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -19648,9 +23029,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getMaturityHeig
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setMaturityHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -19663,9 +23047,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getBlocksTilMat
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setBlocksTilMaturity = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -19678,9 +23065,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getRecoveredBal
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setRecoveredBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -19694,9 +23084,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getPendingHtlcs
 };
 
 
-/** @param {!Array<!proto.lnrpc.PendingHTLC>} value */
+/**
+ * @param {!Array<!proto.lnrpc.PendingHTLC>} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setPendingHtlcsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 8, value);
+  return jspb.Message.setRepeatedWrapperField(this, 8, value);
 };
 
 
@@ -19710,8 +23103,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.addPendingHtlcs
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.clearPendingHtlcsList = function() {
-  this.setPendingHtlcsList([]);
+  return this.setPendingHtlcsList([]);
 };
 
 
@@ -19724,9 +23121,12 @@ proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.getAnchor = fun
 };
 
 
-/** @param {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.AnchorState} value */
+/**
+ * @param {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.AnchorState} value
+ * @return {!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.ForceClosedChannel.prototype.setAnchor = function(value) {
-  jspb.Message.setProto3EnumField(this, 9, value);
+  return jspb.Message.setProto3EnumField(this, 9, value);
 };
 
 
@@ -19739,9 +23139,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.getTotalLimboBalance = function() 
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.prototype.setTotalLimboBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -19755,9 +23158,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.getPendingOpenChannelsList = funct
 };
 
 
-/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>} value */
+/**
+ * @param {!Array<!proto.lnrpc.PendingChannelsResponse.PendingOpenChannel>} value
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.prototype.setPendingOpenChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value);
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
 
 
@@ -19771,8 +23177,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.addPendingOpenChannels = function(
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.prototype.clearPendingOpenChannelsList = function() {
-  this.setPendingOpenChannelsList([]);
+  return this.setPendingOpenChannelsList([]);
 };
 
 
@@ -19786,9 +23196,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.getPendingClosingChannelsList = fu
 };
 
 
-/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>} value */
+/**
+ * @param {!Array<!proto.lnrpc.PendingChannelsResponse.ClosedChannel>} value
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.prototype.setPendingClosingChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 3, value);
+  return jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
 
 
@@ -19802,8 +23215,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.addPendingClosingChannels = functi
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.prototype.clearPendingClosingChannelsList = function() {
-  this.setPendingClosingChannelsList([]);
+  return this.setPendingClosingChannelsList([]);
 };
 
 
@@ -19817,9 +23234,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.getPendingForceClosingChannelsList
 };
 
 
-/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>} value */
+/**
+ * @param {!Array<!proto.lnrpc.PendingChannelsResponse.ForceClosedChannel>} value
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.prototype.setPendingForceClosingChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 4, value);
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
@@ -19833,8 +23253,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.addPendingForceClosingChannels = f
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+ */
 proto.lnrpc.PendingChannelsResponse.prototype.clearPendingForceClosingChannelsList = function() {
-  this.setPendingForceClosingChannelsList([]);
+  return this.setPendingForceClosingChannelsList([]);
 };
 
 
@@ -19848,9 +23272,12 @@ proto.lnrpc.PendingChannelsResponse.prototype.getWaitingCloseChannelsList = func
 };
 
 
-/** @param {!Array<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>} value */
+/**
+ * @param {!Array<!proto.lnrpc.PendingChannelsResponse.WaitingCloseChannel>} value
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
+*/
 proto.lnrpc.PendingChannelsResponse.prototype.setWaitingCloseChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 5, value);
+  return jspb.Message.setRepeatedWrapperField(this, 5, value);
 };
 
 
@@ -19864,40 +23291,29 @@ proto.lnrpc.PendingChannelsResponse.prototype.addWaitingCloseChannels = function
 };
 
 
-proto.lnrpc.PendingChannelsResponse.prototype.clearWaitingCloseChannelsList = function() {
-  this.setWaitingCloseChannelsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.PendingChannelsResponse} returns this
  */
-proto.lnrpc.ChannelEventSubscription = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PendingChannelsResponse.prototype.clearWaitingCloseChannelsList = function() {
+  return this.setWaitingCloseChannelsList([]);
 };
-goog.inherits(proto.lnrpc.ChannelEventSubscription, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelEventSubscription.displayName = 'proto.lnrpc.ChannelEventSubscription';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelEventSubscription.prototype.toObject = function(opt_includeInstance) {
@@ -19907,8 +23323,8 @@ proto.lnrpc.ChannelEventSubscription.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelEventSubscription} msg The msg instance to transform.
  * @return {!Object}
@@ -19987,23 +23403,6 @@ proto.lnrpc.ChannelEventSubscription.serializeBinaryToWriter = function(message,
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelEventUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.ChannelEventUpdate.oneofGroups_);
-};
-goog.inherits(proto.lnrpc.ChannelEventUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelEventUpdate.displayName = 'proto.lnrpc.ChannelEventUpdate';
-}
-/**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
  * other fields in the group are cleared. During deserialization, if multiple
@@ -20036,13 +23435,15 @@ proto.lnrpc.ChannelEventUpdate.prototype.getChannelCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelEventUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -20052,8 +23453,8 @@ proto.lnrpc.ChannelEventUpdate.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelEventUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -20232,14 +23633,21 @@ proto.lnrpc.ChannelEventUpdate.prototype.getOpenChannel = function() {
 };
 
 
-/** @param {?proto.lnrpc.Channel|undefined} value */
+/**
+ * @param {?proto.lnrpc.Channel|undefined} value
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+*/
 proto.lnrpc.ChannelEventUpdate.prototype.setOpenChannel = function(value) {
-  jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+ */
 proto.lnrpc.ChannelEventUpdate.prototype.clearOpenChannel = function() {
-  this.setOpenChannel(undefined);
+  return this.setOpenChannel(undefined);
 };
 
 
@@ -20262,14 +23670,21 @@ proto.lnrpc.ChannelEventUpdate.prototype.getClosedChannel = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelCloseSummary|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelCloseSummary|undefined} value
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+*/
 proto.lnrpc.ChannelEventUpdate.prototype.setClosedChannel = function(value) {
-  jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+ */
 proto.lnrpc.ChannelEventUpdate.prototype.clearClosedChannel = function() {
-  this.setClosedChannel(undefined);
+  return this.setClosedChannel(undefined);
 };
 
 
@@ -20292,14 +23707,21 @@ proto.lnrpc.ChannelEventUpdate.prototype.getActiveChannel = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+*/
 proto.lnrpc.ChannelEventUpdate.prototype.setActiveChannel = function(value) {
-  jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 3, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+ */
 proto.lnrpc.ChannelEventUpdate.prototype.clearActiveChannel = function() {
-  this.setActiveChannel(undefined);
+  return this.setActiveChannel(undefined);
 };
 
 
@@ -20322,14 +23744,21 @@ proto.lnrpc.ChannelEventUpdate.prototype.getInactiveChannel = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+*/
 proto.lnrpc.ChannelEventUpdate.prototype.setInactiveChannel = function(value) {
-  jspb.Message.setOneofWrapperField(this, 4, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 4, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+ */
 proto.lnrpc.ChannelEventUpdate.prototype.clearInactiveChannel = function() {
-  this.setInactiveChannel(undefined);
+  return this.setInactiveChannel(undefined);
 };
 
 
@@ -20352,14 +23781,21 @@ proto.lnrpc.ChannelEventUpdate.prototype.getPendingOpenChannel = function() {
 };
 
 
-/** @param {?proto.lnrpc.PendingUpdate|undefined} value */
+/**
+ * @param {?proto.lnrpc.PendingUpdate|undefined} value
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+*/
 proto.lnrpc.ChannelEventUpdate.prototype.setPendingOpenChannel = function(value) {
-  jspb.Message.setOneofWrapperField(this, 6, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 6, proto.lnrpc.ChannelEventUpdate.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
+ */
 proto.lnrpc.ChannelEventUpdate.prototype.clearPendingOpenChannel = function() {
-  this.setPendingOpenChannel(undefined);
+  return this.setPendingOpenChannel(undefined);
 };
 
 
@@ -20381,41 +23817,29 @@ proto.lnrpc.ChannelEventUpdate.prototype.getType = function() {
 };
 
 
-/** @param {!proto.lnrpc.ChannelEventUpdate.UpdateType} value */
-proto.lnrpc.ChannelEventUpdate.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 5, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!proto.lnrpc.ChannelEventUpdate.UpdateType} value
+ * @return {!proto.lnrpc.ChannelEventUpdate} returns this
  */
-proto.lnrpc.WalletBalanceRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChannelEventUpdate.prototype.setType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 5, value);
 };
-goog.inherits(proto.lnrpc.WalletBalanceRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.WalletBalanceRequest.displayName = 'proto.lnrpc.WalletBalanceRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.WalletBalanceRequest.prototype.toObject = function(opt_includeInstance) {
@@ -20425,8 +23849,8 @@ proto.lnrpc.WalletBalanceRequest.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.WalletBalanceRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -20504,34 +23928,19 @@ proto.lnrpc.WalletBalanceRequest.serializeBinaryToWriter = function(message, wri
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.WalletBalanceResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.WalletBalanceResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.WalletBalanceResponse.displayName = 'proto.lnrpc.WalletBalanceResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.WalletBalanceResponse.prototype.toObject = function(opt_includeInstance) {
@@ -20541,8 +23950,8 @@ proto.lnrpc.WalletBalanceResponse.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.WalletBalanceResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -20663,9 +24072,12 @@ proto.lnrpc.WalletBalanceResponse.prototype.getTotalBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.WalletBalanceResponse} returns this
+ */
 proto.lnrpc.WalletBalanceResponse.prototype.setTotalBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -20678,9 +24090,12 @@ proto.lnrpc.WalletBalanceResponse.prototype.getConfirmedBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.WalletBalanceResponse} returns this
+ */
 proto.lnrpc.WalletBalanceResponse.prototype.setConfirmedBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -20693,41 +24108,29 @@ proto.lnrpc.WalletBalanceResponse.prototype.getUnconfirmedBalance = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.WalletBalanceResponse.prototype.setUnconfirmedBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.WalletBalanceResponse} returns this
  */
-proto.lnrpc.ChannelBalanceRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.WalletBalanceResponse.prototype.setUnconfirmedBalance = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.ChannelBalanceRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelBalanceRequest.displayName = 'proto.lnrpc.ChannelBalanceRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelBalanceRequest.prototype.toObject = function(opt_includeInstance) {
@@ -20737,8 +24140,8 @@ proto.lnrpc.ChannelBalanceRequest.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelBalanceRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -20816,34 +24219,19 @@ proto.lnrpc.ChannelBalanceRequest.serializeBinaryToWriter = function(message, wr
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelBalanceResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelBalanceResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelBalanceResponse.displayName = 'proto.lnrpc.ChannelBalanceResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelBalanceResponse.prototype.toObject = function(opt_includeInstance) {
@@ -20853,8 +24241,8 @@ proto.lnrpc.ChannelBalanceResponse.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelBalanceResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -20987,9 +24375,12 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getBalance = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelBalanceResponse} returns this
+ */
 proto.lnrpc.ChannelBalanceResponse.prototype.setBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -21002,9 +24393,12 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getPendingOpenBalance = function() 
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelBalanceResponse} returns this
+ */
 proto.lnrpc.ChannelBalanceResponse.prototype.setPendingOpenBalance = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -21017,9 +24411,12 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getMaxInboundAmount = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelBalanceResponse} returns this
+ */
 proto.lnrpc.ChannelBalanceResponse.prototype.setMaxInboundAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -21032,30 +24429,16 @@ proto.lnrpc.ChannelBalanceResponse.prototype.getMaxOutboundAmount = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ChannelBalanceResponse.prototype.setMaxOutboundAmount = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelBalanceResponse} returns this
  */
-proto.lnrpc.QueryRoutesRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.QueryRoutesRequest.repeatedFields_, null);
+proto.lnrpc.ChannelBalanceResponse.prototype.setMaxOutboundAmount = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.QueryRoutesRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.QueryRoutesRequest.displayName = 'proto.lnrpc.QueryRoutesRequest';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -21067,13 +24450,15 @@ proto.lnrpc.QueryRoutesRequest.repeatedFields_ = [6,7,10,16,17];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.toObject = function(opt_includeInstance) {
@@ -21083,8 +24468,8 @@ proto.lnrpc.QueryRoutesRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.QueryRoutesRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -21101,7 +24486,7 @@ proto.lnrpc.QueryRoutesRequest.toObject = function(includeInstance, msg) {
     ignoredEdgesList: jspb.Message.toObjectList(msg.getIgnoredEdgesList(),
     proto.lnrpc.EdgeLocator.toObject, includeInstance),
     sourcePubKey: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    useMissionControl: jspb.Message.getFieldWithDefault(msg, 9, false),
+    useMissionControl: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     ignoredPairsList: jspb.Message.toObjectList(msg.getIgnoredPairsList(),
     proto.lnrpc.NodePair.toObject, includeInstance),
     cltvLimit: jspb.Message.getFieldWithDefault(msg, 11, 0),
@@ -21110,7 +24495,7 @@ proto.lnrpc.QueryRoutesRequest.toObject = function(includeInstance, msg) {
     lastHopPubkey: msg.getLastHopPubkey_asB64(),
     routeHintsList: jspb.Message.toObjectList(msg.getRouteHintsList(),
     proto.lnrpc.RouteHint.toObject, includeInstance),
-    destFeaturesList: jspb.Message.getRepeatedField(msg, 17)
+    destFeaturesList: (f = jspb.Message.getRepeatedField(msg, 17)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -21197,7 +24582,7 @@ proto.lnrpc.QueryRoutesRequest.deserializeBinaryFromReader = function(msg, reade
     case 13:
       var value = msg.getDestCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0, "");
          });
       break;
     case 14:
@@ -21214,8 +24599,10 @@ proto.lnrpc.QueryRoutesRequest.deserializeBinaryFromReader = function(msg, reade
       msg.addRouteHints(value);
       break;
     case 17:
-      var value = /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (reader.readPackedEnum());
-      msg.setDestFeaturesList(value);
+      var values = /** @type {!Array<!proto.lnrpc.FeatureBit>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addDestFeatures(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -21371,9 +24758,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -21386,9 +24776,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getAmt = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setAmt = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -21401,9 +24794,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 12, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -21416,9 +24812,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getFinalCltvDelta = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setFinalCltvDelta = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -21432,14 +24831,21 @@ proto.lnrpc.QueryRoutesRequest.prototype.getFeeLimit = function() {
 };
 
 
-/** @param {?proto.lnrpc.FeeLimit|undefined} value */
+/**
+ * @param {?proto.lnrpc.FeeLimit|undefined} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+*/
 proto.lnrpc.QueryRoutesRequest.prototype.setFeeLimit = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
+  return jspb.Message.setWrapperField(this, 5, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.clearFeeLimit = function() {
-  this.setFeeLimit(undefined);
+  return this.setFeeLimit(undefined);
 };
 
 
@@ -21485,23 +24891,31 @@ proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredNodesList_asU8 = function() {
 };
 
 
-/** @param {!(Array<!Uint8Array>|Array<string>)} value */
+/**
+ * @param {!(Array<!Uint8Array>|Array<string>)} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setIgnoredNodesList = function(value) {
-  jspb.Message.setField(this, 6, value || []);
+  return jspb.Message.setField(this, 6, value || []);
 };
 
 
 /**
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
  */
 proto.lnrpc.QueryRoutesRequest.prototype.addIgnoredNodes = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 6, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 6, value, opt_index);
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.clearIgnoredNodesList = function() {
-  this.setIgnoredNodesList([]);
+  return this.setIgnoredNodesList([]);
 };
 
 
@@ -21515,9 +24929,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredEdgesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.EdgeLocator>} value */
+/**
+ * @param {!Array<!proto.lnrpc.EdgeLocator>} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+*/
 proto.lnrpc.QueryRoutesRequest.prototype.setIgnoredEdgesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 7, value);
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
 };
 
 
@@ -21531,8 +24948,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.addIgnoredEdges = function(opt_value, o
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.clearIgnoredEdgesList = function() {
-  this.setIgnoredEdgesList([]);
+  return this.setIgnoredEdgesList([]);
 };
 
 
@@ -21545,26 +24966,30 @@ proto.lnrpc.QueryRoutesRequest.prototype.getSourcePubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setSourcePubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 8, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
  * optional bool use_mission_control = 9;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.QueryRoutesRequest.prototype.getUseMissionControl = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setUseMissionControl = function(value) {
-  jspb.Message.setProto3BooleanField(this, 9, value);
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -21578,9 +25003,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getIgnoredPairsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.NodePair>} value */
+/**
+ * @param {!Array<!proto.lnrpc.NodePair>} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+*/
 proto.lnrpc.QueryRoutesRequest.prototype.setIgnoredPairsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 10, value);
+  return jspb.Message.setRepeatedWrapperField(this, 10, value);
 };
 
 
@@ -21594,8 +25022,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.addIgnoredPairs = function(opt_value, o
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.clearIgnoredPairsList = function() {
-  this.setIgnoredPairsList([]);
+  return this.setIgnoredPairsList([]);
 };
 
 
@@ -21608,9 +25040,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getCltvLimit = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setCltvLimit = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -21627,9 +25062,13 @@ proto.lnrpc.QueryRoutesRequest.prototype.getDestCustomRecordsMap = function(opt_
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.clearDestCustomRecordsMap = function() {
   this.getDestCustomRecordsMap().clear();
-};
+  return this;};
 
 
 /**
@@ -21641,9 +25080,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getOutgoingChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setOutgoingChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 14, value);
+  return jspb.Message.setProto3StringIntField(this, 14, value);
 };
 
 
@@ -21680,9 +25122,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getLastHopPubkey_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setLastHopPubkey = function(value) {
-  jspb.Message.setProto3BytesField(this, 15, value);
+  return jspb.Message.setProto3BytesField(this, 15, value);
 };
 
 
@@ -21696,9 +25141,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.getRouteHintsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.RouteHint>} value */
+/**
+ * @param {!Array<!proto.lnrpc.RouteHint>} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+*/
 proto.lnrpc.QueryRoutesRequest.prototype.setRouteHintsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 16, value);
+  return jspb.Message.setRepeatedWrapperField(this, 16, value);
 };
 
 
@@ -21712,8 +25160,12 @@ proto.lnrpc.QueryRoutesRequest.prototype.addRouteHints = function(opt_value, opt
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.clearRouteHintsList = function() {
-  this.setRouteHintsList([]);
+  return this.setRouteHintsList([]);
 };
 
 
@@ -21726,55 +25178,48 @@ proto.lnrpc.QueryRoutesRequest.prototype.getDestFeaturesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.FeatureBit>} value */
+/**
+ * @param {!Array<!proto.lnrpc.FeatureBit>} value
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
+ */
 proto.lnrpc.QueryRoutesRequest.prototype.setDestFeaturesList = function(value) {
-  jspb.Message.setField(this, 17, value || []);
+  return jspb.Message.setField(this, 17, value || []);
 };
 
 
 /**
  * @param {!proto.lnrpc.FeatureBit} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
  */
 proto.lnrpc.QueryRoutesRequest.prototype.addDestFeatures = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 17, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 17, value, opt_index);
 };
-
-
-proto.lnrpc.QueryRoutesRequest.prototype.clearDestFeaturesList = function() {
-  this.setDestFeaturesList([]);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.QueryRoutesRequest} returns this
  */
-proto.lnrpc.NodePair = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.QueryRoutesRequest.prototype.clearDestFeaturesList = function() {
+  return this.setDestFeaturesList([]);
 };
-goog.inherits(proto.lnrpc.NodePair, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodePair.displayName = 'proto.lnrpc.NodePair';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodePair.prototype.toObject = function(opt_includeInstance) {
@@ -21784,8 +25229,8 @@ proto.lnrpc.NodePair.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodePair} msg The msg instance to transform.
  * @return {!Object}
@@ -21918,9 +25363,12 @@ proto.lnrpc.NodePair.prototype.getFrom_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.NodePair} returns this
+ */
 proto.lnrpc.NodePair.prototype.setFrom = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -21957,41 +25405,29 @@ proto.lnrpc.NodePair.prototype.getTo_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.NodePair.prototype.setTo = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.NodePair} returns this
  */
-proto.lnrpc.EdgeLocator = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NodePair.prototype.setTo = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.EdgeLocator, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.EdgeLocator.displayName = 'proto.lnrpc.EdgeLocator';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.EdgeLocator.prototype.toObject = function(opt_includeInstance) {
@@ -22001,8 +25437,8 @@ proto.lnrpc.EdgeLocator.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.EdgeLocator} msg The msg instance to transform.
  * @return {!Object}
@@ -22011,7 +25447,7 @@ proto.lnrpc.EdgeLocator.prototype.toObject = function(opt_includeInstance) {
 proto.lnrpc.EdgeLocator.toObject = function(includeInstance, msg) {
   var f, obj = {
     channelId: jspb.Message.getFieldWithDefault(msg, 1, "0"),
-    directionReverse: jspb.Message.getFieldWithDefault(msg, 2, false)
+    directionReverse: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -22111,47 +25547,34 @@ proto.lnrpc.EdgeLocator.prototype.getChannelId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.EdgeLocator} returns this
+ */
 proto.lnrpc.EdgeLocator.prototype.setChannelId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
 /**
  * optional bool direction_reverse = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.EdgeLocator.prototype.getDirectionReverse = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.EdgeLocator.prototype.setDirectionReverse = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.EdgeLocator} returns this
  */
-proto.lnrpc.QueryRoutesResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.QueryRoutesResponse.repeatedFields_, null);
+proto.lnrpc.EdgeLocator.prototype.setDirectionReverse = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.QueryRoutesResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.QueryRoutesResponse.displayName = 'proto.lnrpc.QueryRoutesResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -22163,13 +25586,15 @@ proto.lnrpc.QueryRoutesResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.QueryRoutesResponse.prototype.toObject = function(opt_includeInstance) {
@@ -22179,8 +25604,8 @@ proto.lnrpc.QueryRoutesResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.QueryRoutesResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -22190,7 +25615,7 @@ proto.lnrpc.QueryRoutesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     routesList: jspb.Message.toObjectList(msg.getRoutesList(),
     proto.lnrpc.Route.toObject, includeInstance),
-    successProb: +jspb.Message.getFieldWithDefault(msg, 2, 0.0)
+    successProb: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0)
   };
 
   if (includeInstance) {
@@ -22293,9 +25718,12 @@ proto.lnrpc.QueryRoutesResponse.prototype.getRoutesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Route>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Route>} value
+ * @return {!proto.lnrpc.QueryRoutesResponse} returns this
+*/
 proto.lnrpc.QueryRoutesResponse.prototype.setRoutesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -22309,8 +25737,12 @@ proto.lnrpc.QueryRoutesResponse.prototype.addRoutes = function(opt_value, opt_in
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.QueryRoutesResponse} returns this
+ */
 proto.lnrpc.QueryRoutesResponse.prototype.clearRoutesList = function() {
-  this.setRoutesList([]);
+  return this.setRoutesList([]);
 };
 
 
@@ -22319,45 +25751,33 @@ proto.lnrpc.QueryRoutesResponse.prototype.clearRoutesList = function() {
  * @return {number}
  */
 proto.lnrpc.QueryRoutesResponse.prototype.getSuccessProb = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
-
-
-/** @param {number} value */
-proto.lnrpc.QueryRoutesResponse.prototype.setSuccessProb = function(value) {
-  jspb.Message.setProto3FloatField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.QueryRoutesResponse} returns this
  */
-proto.lnrpc.Hop = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.QueryRoutesResponse.prototype.setSuccessProb = function(value) {
+  return jspb.Message.setProto3FloatField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.Hop, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Hop.displayName = 'proto.lnrpc.Hop';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Hop.prototype.toObject = function(opt_includeInstance) {
@@ -22367,8 +25787,8 @@ proto.lnrpc.Hop.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Hop} msg The msg instance to transform.
  * @return {!Object}
@@ -22384,7 +25804,7 @@ proto.lnrpc.Hop.toObject = function(includeInstance, msg) {
     amtToForwardMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
     feeMAtoms: jspb.Message.getFieldWithDefault(msg, 7, 0),
     pubKey: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    tlvPayload: jspb.Message.getFieldWithDefault(msg, 9, false),
+    tlvPayload: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
     mppRecord: (f = msg.getMppRecord()) && proto.lnrpc.MPPRecord.toObject(includeInstance, f),
     customRecordsMap: (f = msg.getCustomRecordsMap()) ? f.toObject(includeInstance, undefined) : []
   };
@@ -22467,7 +25887,7 @@ proto.lnrpc.Hop.deserializeBinaryFromReader = function(msg, reader) {
     case 11:
       var value = msg.getCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0, "");
          });
       break;
     default:
@@ -22586,9 +26006,12 @@ proto.lnrpc.Hop.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -22601,9 +26024,12 @@ proto.lnrpc.Hop.prototype.getChanCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setChanCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -22616,9 +26042,12 @@ proto.lnrpc.Hop.prototype.getAmtToForward = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setAmtToForward = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -22631,9 +26060,12 @@ proto.lnrpc.Hop.prototype.getFee = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setFee = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -22646,9 +26078,12 @@ proto.lnrpc.Hop.prototype.getExpiry = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setExpiry = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -22661,9 +26096,12 @@ proto.lnrpc.Hop.prototype.getAmtToForwardMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setAmtToForwardMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -22676,9 +26114,12 @@ proto.lnrpc.Hop.prototype.getFeeMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setFeeMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -22691,26 +26132,30 @@ proto.lnrpc.Hop.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 8, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
  * optional bool tlv_payload = 9;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Hop.prototype.getTlvPayload = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.setTlvPayload = function(value) {
-  jspb.Message.setProto3BooleanField(this, 9, value);
+  return jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 
@@ -22724,14 +26169,21 @@ proto.lnrpc.Hop.prototype.getMppRecord = function() {
 };
 
 
-/** @param {?proto.lnrpc.MPPRecord|undefined} value */
+/**
+ * @param {?proto.lnrpc.MPPRecord|undefined} value
+ * @return {!proto.lnrpc.Hop} returns this
+*/
 proto.lnrpc.Hop.prototype.setMppRecord = function(value) {
-  jspb.Message.setWrapperField(this, 10, value);
+  return jspb.Message.setWrapperField(this, 10, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.clearMppRecord = function() {
-  this.setMppRecord(undefined);
+  return this.setMppRecord(undefined);
 };
 
 
@@ -22757,40 +26209,29 @@ proto.lnrpc.Hop.prototype.getCustomRecordsMap = function(opt_noLazyCreate) {
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.Hop} returns this
+ */
 proto.lnrpc.Hop.prototype.clearCustomRecordsMap = function() {
   this.getCustomRecordsMap().clear();
-};
+  return this;};
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.MPPRecord = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.MPPRecord, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.MPPRecord.displayName = 'proto.lnrpc.MPPRecord';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.MPPRecord.prototype.toObject = function(opt_includeInstance) {
@@ -22800,8 +26241,8 @@ proto.lnrpc.MPPRecord.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.MPPRecord} msg The msg instance to transform.
  * @return {!Object}
@@ -22934,9 +26375,12 @@ proto.lnrpc.MPPRecord.prototype.getPaymentAddr_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.MPPRecord} returns this
+ */
 proto.lnrpc.MPPRecord.prototype.setPaymentAddr = function(value) {
-  jspb.Message.setProto3BytesField(this, 11, value);
+  return jspb.Message.setProto3BytesField(this, 11, value);
 };
 
 
@@ -22949,30 +26393,16 @@ proto.lnrpc.MPPRecord.prototype.getTotalAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.MPPRecord.prototype.setTotalAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.MPPRecord} returns this
  */
-proto.lnrpc.Route = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Route.repeatedFields_, null);
+proto.lnrpc.MPPRecord.prototype.setTotalAmtMAtoms = function(value) {
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
-goog.inherits(proto.lnrpc.Route, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Route.displayName = 'proto.lnrpc.Route';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -22984,13 +26414,15 @@ proto.lnrpc.Route.repeatedFields_ = [4];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Route.prototype.toObject = function(opt_includeInstance) {
@@ -23000,8 +26432,8 @@ proto.lnrpc.Route.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Route} msg The msg instance to transform.
  * @return {!Object}
@@ -23161,9 +26593,12 @@ proto.lnrpc.Route.prototype.getTotalTimeLock = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Route} returns this
+ */
 proto.lnrpc.Route.prototype.setTotalTimeLock = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -23176,9 +26611,12 @@ proto.lnrpc.Route.prototype.getTotalFees = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Route} returns this
+ */
 proto.lnrpc.Route.prototype.setTotalFees = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -23191,9 +26629,12 @@ proto.lnrpc.Route.prototype.getTotalAmt = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Route} returns this
+ */
 proto.lnrpc.Route.prototype.setTotalAmt = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -23207,9 +26648,12 @@ proto.lnrpc.Route.prototype.getHopsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Hop>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Hop>} value
+ * @return {!proto.lnrpc.Route} returns this
+*/
 proto.lnrpc.Route.prototype.setHopsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 4, value);
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
@@ -23223,8 +26667,12 @@ proto.lnrpc.Route.prototype.addHops = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Route} returns this
+ */
 proto.lnrpc.Route.prototype.clearHopsList = function() {
-  this.setHopsList([]);
+  return this.setHopsList([]);
 };
 
 
@@ -23237,9 +26685,12 @@ proto.lnrpc.Route.prototype.getTotalFeesMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Route} returns this
+ */
 proto.lnrpc.Route.prototype.setTotalFeesMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -23252,41 +26703,29 @@ proto.lnrpc.Route.prototype.getTotalAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.Route.prototype.setTotalAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.Route} returns this
  */
-proto.lnrpc.NodeInfoRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Route.prototype.setTotalAmtMAtoms = function(value) {
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.NodeInfoRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodeInfoRequest.displayName = 'proto.lnrpc.NodeInfoRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodeInfoRequest.prototype.toObject = function(opt_includeInstance) {
@@ -23296,8 +26735,8 @@ proto.lnrpc.NodeInfoRequest.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodeInfoRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -23306,7 +26745,7 @@ proto.lnrpc.NodeInfoRequest.prototype.toObject = function(opt_includeInstance) {
 proto.lnrpc.NodeInfoRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     pubKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    includeChannels: jspb.Message.getFieldWithDefault(msg, 2, false)
+    includeChannels: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -23406,47 +26845,34 @@ proto.lnrpc.NodeInfoRequest.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.NodeInfoRequest} returns this
+ */
 proto.lnrpc.NodeInfoRequest.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
  * optional bool include_channels = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.NodeInfoRequest.prototype.getIncludeChannels = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.NodeInfoRequest.prototype.setIncludeChannels = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.NodeInfoRequest} returns this
  */
-proto.lnrpc.NodeInfo = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.NodeInfo.repeatedFields_, null);
+proto.lnrpc.NodeInfoRequest.prototype.setIncludeChannels = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.NodeInfo, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodeInfo.displayName = 'proto.lnrpc.NodeInfo';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -23458,13 +26884,15 @@ proto.lnrpc.NodeInfo.repeatedFields_ = [4];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodeInfo.prototype.toObject = function(opt_includeInstance) {
@@ -23474,8 +26902,8 @@ proto.lnrpc.NodeInfo.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodeInfo} msg The msg instance to transform.
  * @return {!Object}
@@ -23614,14 +27042,21 @@ proto.lnrpc.NodeInfo.prototype.getNode = function() {
 };
 
 
-/** @param {?proto.lnrpc.LightningNode|undefined} value */
+/**
+ * @param {?proto.lnrpc.LightningNode|undefined} value
+ * @return {!proto.lnrpc.NodeInfo} returns this
+*/
 proto.lnrpc.NodeInfo.prototype.setNode = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.NodeInfo} returns this
+ */
 proto.lnrpc.NodeInfo.prototype.clearNode = function() {
-  this.setNode(undefined);
+  return this.setNode(undefined);
 };
 
 
@@ -23643,9 +27078,12 @@ proto.lnrpc.NodeInfo.prototype.getNumChannels = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NodeInfo} returns this
+ */
 proto.lnrpc.NodeInfo.prototype.setNumChannels = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -23658,9 +27096,12 @@ proto.lnrpc.NodeInfo.prototype.getTotalCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NodeInfo} returns this
+ */
 proto.lnrpc.NodeInfo.prototype.setTotalCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -23674,9 +27115,12 @@ proto.lnrpc.NodeInfo.prototype.getChannelsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelEdge>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelEdge>} value
+ * @return {!proto.lnrpc.NodeInfo} returns this
+*/
 proto.lnrpc.NodeInfo.prototype.setChannelsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 4, value);
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
@@ -23690,29 +27134,16 @@ proto.lnrpc.NodeInfo.prototype.addChannels = function(opt_value, opt_index) {
 };
 
 
-proto.lnrpc.NodeInfo.prototype.clearChannelsList = function() {
-  this.setChannelsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.NodeInfo} returns this
  */
-proto.lnrpc.LightningNode = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.LightningNode.repeatedFields_, null);
+proto.lnrpc.NodeInfo.prototype.clearChannelsList = function() {
+  return this.setChannelsList([]);
 };
-goog.inherits(proto.lnrpc.LightningNode, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.LightningNode.displayName = 'proto.lnrpc.LightningNode';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -23724,13 +27155,15 @@ proto.lnrpc.LightningNode.repeatedFields_ = [4];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.LightningNode.prototype.toObject = function(opt_includeInstance) {
@@ -23740,8 +27173,8 @@ proto.lnrpc.LightningNode.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.LightningNode} msg The msg instance to transform.
  * @return {!Object}
@@ -23816,7 +27249,7 @@ proto.lnrpc.LightningNode.deserializeBinaryFromReader = function(msg, reader) {
     case 6:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0, new proto.lnrpc.Feature());
          });
       break;
     default:
@@ -23900,9 +27333,12 @@ proto.lnrpc.LightningNode.prototype.getLastUpdate = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.LightningNode} returns this
+ */
 proto.lnrpc.LightningNode.prototype.setLastUpdate = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -23915,9 +27351,12 @@ proto.lnrpc.LightningNode.prototype.getPubKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.LightningNode} returns this
+ */
 proto.lnrpc.LightningNode.prototype.setPubKey = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -23930,9 +27369,12 @@ proto.lnrpc.LightningNode.prototype.getAlias = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.LightningNode} returns this
+ */
 proto.lnrpc.LightningNode.prototype.setAlias = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -23946,9 +27388,12 @@ proto.lnrpc.LightningNode.prototype.getAddressesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.NodeAddress>} value */
+/**
+ * @param {!Array<!proto.lnrpc.NodeAddress>} value
+ * @return {!proto.lnrpc.LightningNode} returns this
+*/
 proto.lnrpc.LightningNode.prototype.setAddressesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 4, value);
+  return jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
@@ -23962,8 +27407,12 @@ proto.lnrpc.LightningNode.prototype.addAddresses = function(opt_value, opt_index
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.LightningNode} returns this
+ */
 proto.lnrpc.LightningNode.prototype.clearAddressesList = function() {
-  this.setAddressesList([]);
+  return this.setAddressesList([]);
 };
 
 
@@ -23976,9 +27425,12 @@ proto.lnrpc.LightningNode.prototype.getColor = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.LightningNode} returns this
+ */
 proto.lnrpc.LightningNode.prototype.setColor = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -23995,40 +27447,29 @@ proto.lnrpc.LightningNode.prototype.getFeaturesMap = function(opt_noLazyCreate) 
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.LightningNode} returns this
+ */
 proto.lnrpc.LightningNode.prototype.clearFeaturesMap = function() {
   this.getFeaturesMap().clear();
-};
+  return this;};
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.NodeAddress = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.NodeAddress, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodeAddress.displayName = 'proto.lnrpc.NodeAddress';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodeAddress.prototype.toObject = function(opt_includeInstance) {
@@ -24038,8 +27479,8 @@ proto.lnrpc.NodeAddress.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodeAddress} msg The msg instance to transform.
  * @return {!Object}
@@ -24148,9 +27589,12 @@ proto.lnrpc.NodeAddress.prototype.getNetwork = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.NodeAddress} returns this
+ */
 proto.lnrpc.NodeAddress.prototype.setNetwork = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -24163,41 +27607,29 @@ proto.lnrpc.NodeAddress.prototype.getAddr = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.NodeAddress.prototype.setAddr = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.NodeAddress} returns this
  */
-proto.lnrpc.RoutingPolicy = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NodeAddress.prototype.setAddr = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.RoutingPolicy, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.RoutingPolicy.displayName = 'proto.lnrpc.RoutingPolicy';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.RoutingPolicy.prototype.toObject = function(opt_includeInstance) {
@@ -24207,8 +27639,8 @@ proto.lnrpc.RoutingPolicy.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.RoutingPolicy} msg The msg instance to transform.
  * @return {!Object}
@@ -24220,7 +27652,7 @@ proto.lnrpc.RoutingPolicy.toObject = function(includeInstance, msg) {
     minHtlc: jspb.Message.getFieldWithDefault(msg, 2, 0),
     feeBaseMAtoms: jspb.Message.getFieldWithDefault(msg, 3, 0),
     feeRateMilliMAtoms: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    disabled: jspb.Message.getFieldWithDefault(msg, 5, false),
+    disabled: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
     maxHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
     lastUpdate: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
@@ -24377,9 +27809,12 @@ proto.lnrpc.RoutingPolicy.prototype.getTimeLockDelta = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
+ */
 proto.lnrpc.RoutingPolicy.prototype.setTimeLockDelta = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -24392,9 +27827,12 @@ proto.lnrpc.RoutingPolicy.prototype.getMinHtlc = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
+ */
 proto.lnrpc.RoutingPolicy.prototype.setMinHtlc = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -24407,9 +27845,12 @@ proto.lnrpc.RoutingPolicy.prototype.getFeeBaseMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
+ */
 proto.lnrpc.RoutingPolicy.prototype.setFeeBaseMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -24422,26 +27863,30 @@ proto.lnrpc.RoutingPolicy.prototype.getFeeRateMilliMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
+ */
 proto.lnrpc.RoutingPolicy.prototype.setFeeRateMilliMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
  * optional bool disabled = 5;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.RoutingPolicy.prototype.getDisabled = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
+ */
 proto.lnrpc.RoutingPolicy.prototype.setDisabled = function(value) {
-  jspb.Message.setProto3BooleanField(this, 5, value);
+  return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -24454,9 +27899,12 @@ proto.lnrpc.RoutingPolicy.prototype.getMaxHtlcMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
+ */
 proto.lnrpc.RoutingPolicy.prototype.setMaxHtlcMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -24469,41 +27917,29 @@ proto.lnrpc.RoutingPolicy.prototype.getLastUpdate = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.RoutingPolicy.prototype.setLastUpdate = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.RoutingPolicy} returns this
  */
-proto.lnrpc.ChannelEdge = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.RoutingPolicy.prototype.setLastUpdate = function(value) {
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
-goog.inherits(proto.lnrpc.ChannelEdge, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelEdge.displayName = 'proto.lnrpc.ChannelEdge';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelEdge.prototype.toObject = function(opt_includeInstance) {
@@ -24513,8 +27949,8 @@ proto.lnrpc.ChannelEdge.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelEdge} msg The msg instance to transform.
  * @return {!Object}
@@ -24699,9 +28135,12 @@ proto.lnrpc.ChannelEdge.prototype.getChannelId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.setChannelId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -24714,9 +28153,12 @@ proto.lnrpc.ChannelEdge.prototype.getChanPoint = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.setChanPoint = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -24729,9 +28171,12 @@ proto.lnrpc.ChannelEdge.prototype.getLastUpdate = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.setLastUpdate = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -24744,9 +28189,12 @@ proto.lnrpc.ChannelEdge.prototype.getNode1Pub = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.setNode1Pub = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -24759,9 +28207,12 @@ proto.lnrpc.ChannelEdge.prototype.getNode2Pub = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.setNode2Pub = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -24774,9 +28225,12 @@ proto.lnrpc.ChannelEdge.prototype.getCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.setCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -24790,14 +28244,21 @@ proto.lnrpc.ChannelEdge.prototype.getNode1Policy = function() {
 };
 
 
-/** @param {?proto.lnrpc.RoutingPolicy|undefined} value */
+/**
+ * @param {?proto.lnrpc.RoutingPolicy|undefined} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+*/
 proto.lnrpc.ChannelEdge.prototype.setNode1Policy = function(value) {
-  jspb.Message.setWrapperField(this, 7, value);
+  return jspb.Message.setWrapperField(this, 7, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.clearNode1Policy = function() {
-  this.setNode1Policy(undefined);
+  return this.setNode1Policy(undefined);
 };
 
 
@@ -24820,14 +28281,21 @@ proto.lnrpc.ChannelEdge.prototype.getNode2Policy = function() {
 };
 
 
-/** @param {?proto.lnrpc.RoutingPolicy|undefined} value */
+/**
+ * @param {?proto.lnrpc.RoutingPolicy|undefined} value
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+*/
 proto.lnrpc.ChannelEdge.prototype.setNode2Policy = function(value) {
-  jspb.Message.setWrapperField(this, 8, value);
+  return jspb.Message.setWrapperField(this, 8, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEdge} returns this
+ */
 proto.lnrpc.ChannelEdge.prototype.clearNode2Policy = function() {
-  this.setNode2Policy(undefined);
+  return this.setNode2Policy(undefined);
 };
 
 
@@ -24841,34 +28309,19 @@ proto.lnrpc.ChannelEdge.prototype.hasNode2Policy = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelGraphRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelGraphRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelGraphRequest.displayName = 'proto.lnrpc.ChannelGraphRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelGraphRequest.prototype.toObject = function(opt_includeInstance) {
@@ -24878,8 +28331,8 @@ proto.lnrpc.ChannelGraphRequest.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelGraphRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -24887,7 +28340,7 @@ proto.lnrpc.ChannelGraphRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.lnrpc.ChannelGraphRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    includeUnannounced: jspb.Message.getFieldWithDefault(msg, 1, false)
+    includeUnannounced: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
   };
 
   if (includeInstance) {
@@ -24969,39 +28422,23 @@ proto.lnrpc.ChannelGraphRequest.serializeBinaryToWriter = function(message, writ
 
 /**
  * optional bool include_unannounced = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ChannelGraphRequest.prototype.getIncludeUnannounced = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ChannelGraphRequest.prototype.setIncludeUnannounced = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ChannelGraphRequest} returns this
  */
-proto.lnrpc.ChannelGraph = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ChannelGraph.repeatedFields_, null);
+proto.lnrpc.ChannelGraphRequest.prototype.setIncludeUnannounced = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.ChannelGraph, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelGraph.displayName = 'proto.lnrpc.ChannelGraph';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -25013,13 +28450,15 @@ proto.lnrpc.ChannelGraph.repeatedFields_ = [1,2];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelGraph.prototype.toObject = function(opt_includeInstance) {
@@ -25029,8 +28468,8 @@ proto.lnrpc.ChannelGraph.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelGraph} msg The msg instance to transform.
  * @return {!Object}
@@ -25146,9 +28585,12 @@ proto.lnrpc.ChannelGraph.prototype.getNodesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.LightningNode>} value */
+/**
+ * @param {!Array<!proto.lnrpc.LightningNode>} value
+ * @return {!proto.lnrpc.ChannelGraph} returns this
+*/
 proto.lnrpc.ChannelGraph.prototype.setNodesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -25162,8 +28604,12 @@ proto.lnrpc.ChannelGraph.prototype.addNodes = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ChannelGraph} returns this
+ */
 proto.lnrpc.ChannelGraph.prototype.clearNodesList = function() {
-  this.setNodesList([]);
+  return this.setNodesList([]);
 };
 
 
@@ -25177,9 +28623,12 @@ proto.lnrpc.ChannelGraph.prototype.getEdgesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelEdge>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelEdge>} value
+ * @return {!proto.lnrpc.ChannelGraph} returns this
+*/
 proto.lnrpc.ChannelGraph.prototype.setEdgesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value);
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
 
 
@@ -25193,29 +28642,16 @@ proto.lnrpc.ChannelGraph.prototype.addEdges = function(opt_value, opt_index) {
 };
 
 
-proto.lnrpc.ChannelGraph.prototype.clearEdgesList = function() {
-  this.setEdgesList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ChannelGraph} returns this
  */
-proto.lnrpc.NodeMetricsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.NodeMetricsRequest.repeatedFields_, null);
+proto.lnrpc.ChannelGraph.prototype.clearEdgesList = function() {
+  return this.setEdgesList([]);
 };
-goog.inherits(proto.lnrpc.NodeMetricsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodeMetricsRequest.displayName = 'proto.lnrpc.NodeMetricsRequest';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -25227,13 +28663,15 @@ proto.lnrpc.NodeMetricsRequest.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodeMetricsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -25243,8 +28681,8 @@ proto.lnrpc.NodeMetricsRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodeMetricsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -25252,7 +28690,7 @@ proto.lnrpc.NodeMetricsRequest.prototype.toObject = function(opt_includeInstance
  */
 proto.lnrpc.NodeMetricsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    typesList: jspb.Message.getRepeatedField(msg, 1)
+    typesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -25290,8 +28728,10 @@ proto.lnrpc.NodeMetricsRequest.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!Array<!proto.lnrpc.NodeMetricType>} */ (reader.readPackedEnum());
-      msg.setTypesList(value);
+      var values = /** @type {!Array<!proto.lnrpc.NodeMetricType>} */ (reader.isDelimited() ? reader.readPackedEnum() : [reader.readEnum()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addTypes(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -25341,55 +28781,48 @@ proto.lnrpc.NodeMetricsRequest.prototype.getTypesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.NodeMetricType>} value */
+/**
+ * @param {!Array<!proto.lnrpc.NodeMetricType>} value
+ * @return {!proto.lnrpc.NodeMetricsRequest} returns this
+ */
 proto.lnrpc.NodeMetricsRequest.prototype.setTypesList = function(value) {
-  jspb.Message.setField(this, 1, value || []);
+  return jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
  * @param {!proto.lnrpc.NodeMetricType} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.NodeMetricsRequest} returns this
  */
 proto.lnrpc.NodeMetricsRequest.prototype.addTypes = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
-
-
-proto.lnrpc.NodeMetricsRequest.prototype.clearTypesList = function() {
-  this.setTypesList([]);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.NodeMetricsRequest} returns this
  */
-proto.lnrpc.NodeMetricsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NodeMetricsRequest.prototype.clearTypesList = function() {
+  return this.setTypesList([]);
 };
-goog.inherits(proto.lnrpc.NodeMetricsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodeMetricsResponse.displayName = 'proto.lnrpc.NodeMetricsResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodeMetricsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -25399,8 +28832,8 @@ proto.lnrpc.NodeMetricsResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodeMetricsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -25448,7 +28881,7 @@ proto.lnrpc.NodeMetricsResponse.deserializeBinaryFromReader = function(msg, read
     case 1:
       var value = msg.getBetweennessCentralityMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.FloatMetric.deserializeBinaryFromReader, "");
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.FloatMetric.deserializeBinaryFromReader, "", new proto.lnrpc.FloatMetric());
          });
       break;
     default:
@@ -25500,40 +28933,29 @@ proto.lnrpc.NodeMetricsResponse.prototype.getBetweennessCentralityMap = function
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.NodeMetricsResponse} returns this
+ */
 proto.lnrpc.NodeMetricsResponse.prototype.clearBetweennessCentralityMap = function() {
   this.getBetweennessCentralityMap().clear();
-};
+  return this;};
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.FloatMetric = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.FloatMetric, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FloatMetric.displayName = 'proto.lnrpc.FloatMetric';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FloatMetric.prototype.toObject = function(opt_includeInstance) {
@@ -25543,8 +28965,8 @@ proto.lnrpc.FloatMetric.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FloatMetric} msg The msg instance to transform.
  * @return {!Object}
@@ -25552,8 +28974,8 @@ proto.lnrpc.FloatMetric.prototype.toObject = function(opt_includeInstance) {
  */
 proto.lnrpc.FloatMetric.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
-    normalizedValue: +jspb.Message.getFieldWithDefault(msg, 2, 0.0)
+    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0),
+    normalizedValue: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0)
   };
 
   if (includeInstance) {
@@ -25649,13 +29071,16 @@ proto.lnrpc.FloatMetric.serializeBinaryToWriter = function(message, writer) {
  * @return {number}
  */
 proto.lnrpc.FloatMetric.prototype.getValue = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.FloatMetric} returns this
+ */
 proto.lnrpc.FloatMetric.prototype.setValue = function(value) {
-  jspb.Message.setProto3FloatField(this, 1, value);
+  return jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -25664,45 +29089,33 @@ proto.lnrpc.FloatMetric.prototype.setValue = function(value) {
  * @return {number}
  */
 proto.lnrpc.FloatMetric.prototype.getNormalizedValue = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
-
-
-/** @param {number} value */
-proto.lnrpc.FloatMetric.prototype.setNormalizedValue = function(value) {
-  jspb.Message.setProto3FloatField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.FloatMetric} returns this
  */
-proto.lnrpc.ChanInfoRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.FloatMetric.prototype.setNormalizedValue = function(value) {
+  return jspb.Message.setProto3FloatField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ChanInfoRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChanInfoRequest.displayName = 'proto.lnrpc.ChanInfoRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChanInfoRequest.prototype.toObject = function(opt_includeInstance) {
@@ -25712,8 +29125,8 @@ proto.lnrpc.ChanInfoRequest.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChanInfoRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -25810,41 +29223,29 @@ proto.lnrpc.ChanInfoRequest.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.ChanInfoRequest.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.ChanInfoRequest} returns this
  */
-proto.lnrpc.NetworkInfoRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChanInfoRequest.prototype.setChanId = function(value) {
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.NetworkInfoRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NetworkInfoRequest.displayName = 'proto.lnrpc.NetworkInfoRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NetworkInfoRequest.prototype.toObject = function(opt_includeInstance) {
@@ -25854,8 +29255,8 @@ proto.lnrpc.NetworkInfoRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NetworkInfoRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -25933,34 +29334,19 @@ proto.lnrpc.NetworkInfoRequest.serializeBinaryToWriter = function(message, write
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.NetworkInfo = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.NetworkInfo, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NetworkInfo.displayName = 'proto.lnrpc.NetworkInfo';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NetworkInfo.prototype.toObject = function(opt_includeInstance) {
@@ -25970,8 +29356,8 @@ proto.lnrpc.NetworkInfo.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NetworkInfo} msg The msg instance to transform.
  * @return {!Object}
@@ -25980,12 +29366,12 @@ proto.lnrpc.NetworkInfo.prototype.toObject = function(opt_includeInstance) {
 proto.lnrpc.NetworkInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     graphDiameter: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    avgOutDegree: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+    avgOutDegree: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
     maxOutDegree: jspb.Message.getFieldWithDefault(msg, 3, 0),
     numNodes: jspb.Message.getFieldWithDefault(msg, 4, 0),
     numChannels: jspb.Message.getFieldWithDefault(msg, 5, 0),
     totalNetworkCapacity: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    avgChannelSize: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
+    avgChannelSize: jspb.Message.getFloatingPointFieldWithDefault(msg, 7, 0.0),
     minChannelSize: jspb.Message.getFieldWithDefault(msg, 8, 0),
     maxChannelSize: jspb.Message.getFieldWithDefault(msg, 9, 0),
     medianChannelSizeSat: jspb.Message.getFieldWithDefault(msg, 10, 0),
@@ -26188,9 +29574,12 @@ proto.lnrpc.NetworkInfo.prototype.getGraphDiameter = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setGraphDiameter = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -26199,13 +29588,16 @@ proto.lnrpc.NetworkInfo.prototype.setGraphDiameter = function(value) {
  * @return {number}
  */
 proto.lnrpc.NetworkInfo.prototype.getAvgOutDegree = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setAvgOutDegree = function(value) {
-  jspb.Message.setProto3FloatField(this, 2, value);
+  return jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -26218,9 +29610,12 @@ proto.lnrpc.NetworkInfo.prototype.getMaxOutDegree = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setMaxOutDegree = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -26233,9 +29628,12 @@ proto.lnrpc.NetworkInfo.prototype.getNumNodes = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setNumNodes = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -26248,9 +29646,12 @@ proto.lnrpc.NetworkInfo.prototype.getNumChannels = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setNumChannels = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -26263,9 +29664,12 @@ proto.lnrpc.NetworkInfo.prototype.getTotalNetworkCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setTotalNetworkCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -26274,13 +29678,16 @@ proto.lnrpc.NetworkInfo.prototype.setTotalNetworkCapacity = function(value) {
  * @return {number}
  */
 proto.lnrpc.NetworkInfo.prototype.getAvgChannelSize = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 7, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 7, 0.0));
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setAvgChannelSize = function(value) {
-  jspb.Message.setProto3FloatField(this, 7, value);
+  return jspb.Message.setProto3FloatField(this, 7, value);
 };
 
 
@@ -26293,9 +29700,12 @@ proto.lnrpc.NetworkInfo.prototype.getMinChannelSize = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setMinChannelSize = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -26308,9 +29718,12 @@ proto.lnrpc.NetworkInfo.prototype.getMaxChannelSize = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setMaxChannelSize = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -26323,9 +29736,12 @@ proto.lnrpc.NetworkInfo.prototype.getMedianChannelSizeSat = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
+ */
 proto.lnrpc.NetworkInfo.prototype.setMedianChannelSizeSat = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -26338,41 +29754,29 @@ proto.lnrpc.NetworkInfo.prototype.getNumZombieChans = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.NetworkInfo.prototype.setNumZombieChans = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.NetworkInfo} returns this
  */
-proto.lnrpc.StopRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NetworkInfo.prototype.setNumZombieChans = function(value) {
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
-goog.inherits(proto.lnrpc.StopRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.StopRequest.displayName = 'proto.lnrpc.StopRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.StopRequest.prototype.toObject = function(opt_includeInstance) {
@@ -26382,8 +29786,8 @@ proto.lnrpc.StopRequest.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.StopRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -26461,34 +29865,19 @@ proto.lnrpc.StopRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.StopResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.StopResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.StopResponse.displayName = 'proto.lnrpc.StopResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.StopResponse.prototype.toObject = function(opt_includeInstance) {
@@ -26498,8 +29887,8 @@ proto.lnrpc.StopResponse.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.StopResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -26577,34 +29966,19 @@ proto.lnrpc.StopResponse.serializeBinaryToWriter = function(message, writer) {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.GraphTopologySubscription = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.GraphTopologySubscription, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GraphTopologySubscription.displayName = 'proto.lnrpc.GraphTopologySubscription';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GraphTopologySubscription.prototype.toObject = function(opt_includeInstance) {
@@ -26614,8 +29988,8 @@ proto.lnrpc.GraphTopologySubscription.prototype.toObject = function(opt_includeI
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GraphTopologySubscription} msg The msg instance to transform.
  * @return {!Object}
@@ -26694,23 +30068,6 @@ proto.lnrpc.GraphTopologySubscription.serializeBinaryToWriter = function(message
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.GraphTopologyUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.GraphTopologyUpdate.repeatedFields_, null);
-};
-goog.inherits(proto.lnrpc.GraphTopologyUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.GraphTopologyUpdate.displayName = 'proto.lnrpc.GraphTopologyUpdate';
-}
-/**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
@@ -26721,13 +30078,15 @@ proto.lnrpc.GraphTopologyUpdate.repeatedFields_ = [1,2,3];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.GraphTopologyUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -26737,8 +30096,8 @@ proto.lnrpc.GraphTopologyUpdate.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.GraphTopologyUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -26869,9 +30228,12 @@ proto.lnrpc.GraphTopologyUpdate.prototype.getNodeUpdatesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.NodeUpdate>} value */
+/**
+ * @param {!Array<!proto.lnrpc.NodeUpdate>} value
+ * @return {!proto.lnrpc.GraphTopologyUpdate} returns this
+*/
 proto.lnrpc.GraphTopologyUpdate.prototype.setNodeUpdatesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -26885,8 +30247,12 @@ proto.lnrpc.GraphTopologyUpdate.prototype.addNodeUpdates = function(opt_value, o
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.GraphTopologyUpdate} returns this
+ */
 proto.lnrpc.GraphTopologyUpdate.prototype.clearNodeUpdatesList = function() {
-  this.setNodeUpdatesList([]);
+  return this.setNodeUpdatesList([]);
 };
 
 
@@ -26900,9 +30266,12 @@ proto.lnrpc.GraphTopologyUpdate.prototype.getChannelUpdatesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelEdgeUpdate>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelEdgeUpdate>} value
+ * @return {!proto.lnrpc.GraphTopologyUpdate} returns this
+*/
 proto.lnrpc.GraphTopologyUpdate.prototype.setChannelUpdatesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value);
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
 
 
@@ -26916,8 +30285,12 @@ proto.lnrpc.GraphTopologyUpdate.prototype.addChannelUpdates = function(opt_value
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.GraphTopologyUpdate} returns this
+ */
 proto.lnrpc.GraphTopologyUpdate.prototype.clearChannelUpdatesList = function() {
-  this.setChannelUpdatesList([]);
+  return this.setChannelUpdatesList([]);
 };
 
 
@@ -26931,9 +30304,12 @@ proto.lnrpc.GraphTopologyUpdate.prototype.getClosedChansList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ClosedChannelUpdate>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ClosedChannelUpdate>} value
+ * @return {!proto.lnrpc.GraphTopologyUpdate} returns this
+*/
 proto.lnrpc.GraphTopologyUpdate.prototype.setClosedChansList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 3, value);
+  return jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
 
 
@@ -26947,29 +30323,16 @@ proto.lnrpc.GraphTopologyUpdate.prototype.addClosedChans = function(opt_value, o
 };
 
 
-proto.lnrpc.GraphTopologyUpdate.prototype.clearClosedChansList = function() {
-  this.setClosedChansList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.GraphTopologyUpdate} returns this
  */
-proto.lnrpc.NodeUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.NodeUpdate.repeatedFields_, null);
+proto.lnrpc.GraphTopologyUpdate.prototype.clearClosedChansList = function() {
+  return this.setClosedChansList([]);
 };
-goog.inherits(proto.lnrpc.NodeUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.NodeUpdate.displayName = 'proto.lnrpc.NodeUpdate';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -26981,13 +30344,15 @@ proto.lnrpc.NodeUpdate.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.NodeUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -26997,8 +30362,8 @@ proto.lnrpc.NodeUpdate.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.NodeUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -27006,7 +30371,7 @@ proto.lnrpc.NodeUpdate.prototype.toObject = function(opt_includeInstance) {
  */
 proto.lnrpc.NodeUpdate.toObject = function(includeInstance, msg) {
   var f, obj = {
-    addressesList: jspb.Message.getRepeatedField(msg, 1),
+    addressesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
     identityKey: jspb.Message.getFieldWithDefault(msg, 2, ""),
     globalFeatures: msg.getGlobalFeatures_asB64(),
     alias: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -27143,23 +30508,31 @@ proto.lnrpc.NodeUpdate.prototype.getAddressesList = function() {
 };
 
 
-/** @param {!Array<string>} value */
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.lnrpc.NodeUpdate} returns this
+ */
 proto.lnrpc.NodeUpdate.prototype.setAddressesList = function(value) {
-  jspb.Message.setField(this, 1, value || []);
+  return jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
  * @param {string} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.NodeUpdate} returns this
  */
 proto.lnrpc.NodeUpdate.prototype.addAddresses = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.NodeUpdate} returns this
+ */
 proto.lnrpc.NodeUpdate.prototype.clearAddressesList = function() {
-  this.setAddressesList([]);
+  return this.setAddressesList([]);
 };
 
 
@@ -27172,9 +30545,12 @@ proto.lnrpc.NodeUpdate.prototype.getIdentityKey = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.NodeUpdate} returns this
+ */
 proto.lnrpc.NodeUpdate.prototype.setIdentityKey = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -27211,9 +30587,12 @@ proto.lnrpc.NodeUpdate.prototype.getGlobalFeatures_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.NodeUpdate} returns this
+ */
 proto.lnrpc.NodeUpdate.prototype.setGlobalFeatures = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -27226,9 +30605,12 @@ proto.lnrpc.NodeUpdate.prototype.getAlias = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.NodeUpdate} returns this
+ */
 proto.lnrpc.NodeUpdate.prototype.setAlias = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -27241,41 +30623,29 @@ proto.lnrpc.NodeUpdate.prototype.getColor = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.NodeUpdate.prototype.setColor = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.NodeUpdate} returns this
  */
-proto.lnrpc.ChannelEdgeUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.NodeUpdate.prototype.setColor = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
-goog.inherits(proto.lnrpc.ChannelEdgeUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelEdgeUpdate.displayName = 'proto.lnrpc.ChannelEdgeUpdate';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelEdgeUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -27285,8 +30655,8 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelEdgeUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -27447,9 +30817,12 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+ */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -27463,14 +30836,21 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getChanPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+*/
 proto.lnrpc.ChannelEdgeUpdate.prototype.setChanPoint = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+ */
 proto.lnrpc.ChannelEdgeUpdate.prototype.clearChanPoint = function() {
-  this.setChanPoint(undefined);
+  return this.setChanPoint(undefined);
 };
 
 
@@ -27492,9 +30872,12 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+ */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -27508,14 +30891,21 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getRoutingPolicy = function() {
 };
 
 
-/** @param {?proto.lnrpc.RoutingPolicy|undefined} value */
+/**
+ * @param {?proto.lnrpc.RoutingPolicy|undefined} value
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+*/
 proto.lnrpc.ChannelEdgeUpdate.prototype.setRoutingPolicy = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
+  return jspb.Message.setWrapperField(this, 4, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+ */
 proto.lnrpc.ChannelEdgeUpdate.prototype.clearRoutingPolicy = function() {
-  this.setRoutingPolicy(undefined);
+  return this.setRoutingPolicy(undefined);
 };
 
 
@@ -27537,9 +30927,12 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getAdvertisingNode = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
+ */
 proto.lnrpc.ChannelEdgeUpdate.prototype.setAdvertisingNode = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -27552,41 +30945,29 @@ proto.lnrpc.ChannelEdgeUpdate.prototype.getConnectingNode = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.ChannelEdgeUpdate.prototype.setConnectingNode = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelEdgeUpdate} returns this
  */
-proto.lnrpc.ClosedChannelUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ChannelEdgeUpdate.prototype.setConnectingNode = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.ClosedChannelUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ClosedChannelUpdate.displayName = 'proto.lnrpc.ClosedChannelUpdate';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ClosedChannelUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -27596,8 +30977,8 @@ proto.lnrpc.ClosedChannelUpdate.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ClosedChannelUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -27732,9 +31113,12 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ClosedChannelUpdate} returns this
+ */
 proto.lnrpc.ClosedChannelUpdate.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -27747,9 +31131,12 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getCapacity = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ClosedChannelUpdate} returns this
+ */
 proto.lnrpc.ClosedChannelUpdate.prototype.setCapacity = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -27762,9 +31149,12 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getClosedHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ClosedChannelUpdate} returns this
+ */
 proto.lnrpc.ClosedChannelUpdate.prototype.setClosedHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -27778,14 +31168,21 @@ proto.lnrpc.ClosedChannelUpdate.prototype.getChanPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ClosedChannelUpdate} returns this
+*/
 proto.lnrpc.ClosedChannelUpdate.prototype.setChanPoint = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
+  return jspb.Message.setWrapperField(this, 4, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ClosedChannelUpdate} returns this
+ */
 proto.lnrpc.ClosedChannelUpdate.prototype.clearChanPoint = function() {
-  this.setChanPoint(undefined);
+  return this.setChanPoint(undefined);
 };
 
 
@@ -27799,34 +31196,19 @@ proto.lnrpc.ClosedChannelUpdate.prototype.hasChanPoint = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.HopHint = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.HopHint, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.HopHint.displayName = 'proto.lnrpc.HopHint';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.HopHint.prototype.toObject = function(opt_includeInstance) {
@@ -27836,8 +31218,8 @@ proto.lnrpc.HopHint.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.HopHint} msg The msg instance to transform.
  * @return {!Object}
@@ -27982,9 +31364,12 @@ proto.lnrpc.HopHint.prototype.getNodeId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.HopHint} returns this
+ */
 proto.lnrpc.HopHint.prototype.setNodeId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -27997,9 +31382,12 @@ proto.lnrpc.HopHint.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.HopHint} returns this
+ */
 proto.lnrpc.HopHint.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 2, value);
+  return jspb.Message.setProto3StringIntField(this, 2, value);
 };
 
 
@@ -28012,9 +31400,12 @@ proto.lnrpc.HopHint.prototype.getFeeBaseMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.HopHint} returns this
+ */
 proto.lnrpc.HopHint.prototype.setFeeBaseMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -28027,9 +31418,12 @@ proto.lnrpc.HopHint.prototype.getFeeProportionalMillionths = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.HopHint} returns this
+ */
 proto.lnrpc.HopHint.prototype.setFeeProportionalMillionths = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -28042,30 +31436,16 @@ proto.lnrpc.HopHint.prototype.getCltvExpiryDelta = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.HopHint.prototype.setCltvExpiryDelta = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.HopHint} returns this
  */
-proto.lnrpc.RouteHint = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.RouteHint.repeatedFields_, null);
+proto.lnrpc.HopHint.prototype.setCltvExpiryDelta = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
-goog.inherits(proto.lnrpc.RouteHint, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.RouteHint.displayName = 'proto.lnrpc.RouteHint';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -28077,13 +31457,15 @@ proto.lnrpc.RouteHint.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.RouteHint.prototype.toObject = function(opt_includeInstance) {
@@ -28093,8 +31475,8 @@ proto.lnrpc.RouteHint.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.RouteHint} msg The msg instance to transform.
  * @return {!Object}
@@ -28195,9 +31577,12 @@ proto.lnrpc.RouteHint.prototype.getHopHintsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.HopHint>} value */
+/**
+ * @param {!Array<!proto.lnrpc.HopHint>} value
+ * @return {!proto.lnrpc.RouteHint} returns this
+*/
 proto.lnrpc.RouteHint.prototype.setHopHintsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -28211,29 +31596,16 @@ proto.lnrpc.RouteHint.prototype.addHopHints = function(opt_value, opt_index) {
 };
 
 
-proto.lnrpc.RouteHint.prototype.clearHopHintsList = function() {
-  this.setHopHintsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.RouteHint} returns this
  */
-proto.lnrpc.Invoice = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, 500, proto.lnrpc.Invoice.repeatedFields_, null);
+proto.lnrpc.RouteHint.prototype.clearHopHintsList = function() {
+  return this.setHopHintsList([]);
 };
-goog.inherits(proto.lnrpc.Invoice, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Invoice.displayName = 'proto.lnrpc.Invoice';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -28245,13 +31617,15 @@ proto.lnrpc.Invoice.repeatedFields_ = [14,22];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Invoice.prototype.toObject = function(opt_includeInstance) {
@@ -28261,8 +31635,8 @@ proto.lnrpc.Invoice.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Invoice} msg The msg instance to transform.
  * @return {!Object}
@@ -28275,7 +31649,7 @@ proto.lnrpc.Invoice.toObject = function(includeInstance, msg) {
     rHash: msg.getRHash_asB64(),
     value: jspb.Message.getFieldWithDefault(msg, 5, 0),
     valueMAtoms: jspb.Message.getFieldWithDefault(msg, 23, 0),
-    settled: jspb.Message.getFieldWithDefault(msg, 6, false),
+    settled: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
     creationDate: jspb.Message.getFieldWithDefault(msg, 7, 0),
     settleDate: jspb.Message.getFieldWithDefault(msg, 8, 0),
     paymentRequest: jspb.Message.getFieldWithDefault(msg, 9, ""),
@@ -28285,7 +31659,7 @@ proto.lnrpc.Invoice.toObject = function(includeInstance, msg) {
     cltvExpiry: jspb.Message.getFieldWithDefault(msg, 13, 0),
     routeHintsList: jspb.Message.toObjectList(msg.getRouteHintsList(),
     proto.lnrpc.RouteHint.toObject, includeInstance),
-    pb_private: jspb.Message.getFieldWithDefault(msg, 15, false),
+    pb_private: jspb.Message.getBooleanFieldWithDefault(msg, 15, false),
     addIndex: jspb.Message.getFieldWithDefault(msg, 16, 0),
     settleIndex: jspb.Message.getFieldWithDefault(msg, 17, 0),
     amtPaid: jspb.Message.getFieldWithDefault(msg, 18, 0),
@@ -28294,9 +31668,9 @@ proto.lnrpc.Invoice.toObject = function(includeInstance, msg) {
     state: jspb.Message.getFieldWithDefault(msg, 21, 0),
     htlcsList: jspb.Message.toObjectList(msg.getHtlcsList(),
     proto.lnrpc.InvoiceHTLC.toObject, includeInstance),
-    ignoreMaxInboundAmt: jspb.Message.getFieldWithDefault(msg, 1001, false),
+    ignoreMaxInboundAmt: jspb.Message.getBooleanFieldWithDefault(msg, 1001, false),
     featuresMap: (f = msg.getFeaturesMap()) ? f.toObject(includeInstance, proto.lnrpc.Feature.toObject) : [],
-    isKeysend: jspb.Message.getFieldWithDefault(msg, 25, false)
+    isKeysend: jspb.Message.getBooleanFieldWithDefault(msg, 25, false)
   };
 
   if (includeInstance) {
@@ -28430,7 +31804,7 @@ proto.lnrpc.Invoice.deserializeBinaryFromReader = function(msg, reader) {
     case 24:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0, new proto.lnrpc.Feature());
          });
       break;
     case 25:
@@ -28662,9 +32036,12 @@ proto.lnrpc.Invoice.prototype.getMemo = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setMemo = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -28701,9 +32078,12 @@ proto.lnrpc.Invoice.prototype.getRPreimage_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setRPreimage = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -28740,9 +32120,12 @@ proto.lnrpc.Invoice.prototype.getRHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setRHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 4, value);
+  return jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 
@@ -28755,9 +32138,12 @@ proto.lnrpc.Invoice.prototype.getValue = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setValue = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -28770,26 +32156,30 @@ proto.lnrpc.Invoice.prototype.getValueMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setValueMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 23, value);
+  return jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
 /**
  * optional bool settled = 6;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Invoice.prototype.getSettled = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setSettled = function(value) {
-  jspb.Message.setProto3BooleanField(this, 6, value);
+  return jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -28802,9 +32192,12 @@ proto.lnrpc.Invoice.prototype.getCreationDate = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setCreationDate = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -28817,9 +32210,12 @@ proto.lnrpc.Invoice.prototype.getSettleDate = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setSettleDate = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -28832,9 +32228,12 @@ proto.lnrpc.Invoice.prototype.getPaymentRequest = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setProto3StringField(this, 9, value);
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -28871,9 +32270,12 @@ proto.lnrpc.Invoice.prototype.getDescriptionHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setDescriptionHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 10, value);
+  return jspb.Message.setProto3BytesField(this, 10, value);
 };
 
 
@@ -28886,9 +32288,12 @@ proto.lnrpc.Invoice.prototype.getExpiry = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setExpiry = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -28901,9 +32306,12 @@ proto.lnrpc.Invoice.prototype.getFallbackAddr = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setFallbackAddr = function(value) {
-  jspb.Message.setProto3StringField(this, 12, value);
+  return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
@@ -28916,9 +32324,12 @@ proto.lnrpc.Invoice.prototype.getCltvExpiry = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setCltvExpiry = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -28932,9 +32343,12 @@ proto.lnrpc.Invoice.prototype.getRouteHintsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.RouteHint>} value */
+/**
+ * @param {!Array<!proto.lnrpc.RouteHint>} value
+ * @return {!proto.lnrpc.Invoice} returns this
+*/
 proto.lnrpc.Invoice.prototype.setRouteHintsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 14, value);
+  return jspb.Message.setRepeatedWrapperField(this, 14, value);
 };
 
 
@@ -28948,25 +32362,30 @@ proto.lnrpc.Invoice.prototype.addRouteHints = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.clearRouteHintsList = function() {
-  this.setRouteHintsList([]);
+  return this.setRouteHintsList([]);
 };
 
 
 /**
  * optional bool private = 15;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Invoice.prototype.getPrivate = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 15, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 15, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setPrivate = function(value) {
-  jspb.Message.setProto3BooleanField(this, 15, value);
+  return jspb.Message.setProto3BooleanField(this, 15, value);
 };
 
 
@@ -28979,9 +32398,12 @@ proto.lnrpc.Invoice.prototype.getAddIndex = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setAddIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 16, value);
+  return jspb.Message.setProto3IntField(this, 16, value);
 };
 
 
@@ -28994,9 +32416,12 @@ proto.lnrpc.Invoice.prototype.getSettleIndex = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setSettleIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 17, value);
+  return jspb.Message.setProto3IntField(this, 17, value);
 };
 
 
@@ -29009,9 +32434,12 @@ proto.lnrpc.Invoice.prototype.getAmtPaid = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setAmtPaid = function(value) {
-  jspb.Message.setProto3IntField(this, 18, value);
+  return jspb.Message.setProto3IntField(this, 18, value);
 };
 
 
@@ -29024,9 +32452,12 @@ proto.lnrpc.Invoice.prototype.getAmtPaidAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setAmtPaidAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 19, value);
+  return jspb.Message.setProto3IntField(this, 19, value);
 };
 
 
@@ -29039,9 +32470,12 @@ proto.lnrpc.Invoice.prototype.getAmtPaidMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setAmtPaidMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 20, value);
+  return jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
@@ -29054,9 +32488,12 @@ proto.lnrpc.Invoice.prototype.getState = function() {
 };
 
 
-/** @param {!proto.lnrpc.Invoice.InvoiceState} value */
+/**
+ * @param {!proto.lnrpc.Invoice.InvoiceState} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setState = function(value) {
-  jspb.Message.setProto3EnumField(this, 21, value);
+  return jspb.Message.setProto3EnumField(this, 21, value);
 };
 
 
@@ -29070,9 +32507,12 @@ proto.lnrpc.Invoice.prototype.getHtlcsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.InvoiceHTLC>} value */
+/**
+ * @param {!Array<!proto.lnrpc.InvoiceHTLC>} value
+ * @return {!proto.lnrpc.Invoice} returns this
+*/
 proto.lnrpc.Invoice.prototype.setHtlcsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 22, value);
+  return jspb.Message.setRepeatedWrapperField(this, 22, value);
 };
 
 
@@ -29086,25 +32526,30 @@ proto.lnrpc.Invoice.prototype.addHtlcs = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.clearHtlcsList = function() {
-  this.setHtlcsList([]);
+  return this.setHtlcsList([]);
 };
 
 
 /**
  * optional bool ignore_max_inbound_amt = 1001;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Invoice.prototype.getIgnoreMaxInboundAmt = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1001, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1001, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.setIgnoreMaxInboundAmt = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1001, value);
+  return jspb.Message.setProto3BooleanField(this, 1001, value);
 };
 
 
@@ -29121,57 +32566,47 @@ proto.lnrpc.Invoice.prototype.getFeaturesMap = function(opt_noLazyCreate) {
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.Invoice} returns this
+ */
 proto.lnrpc.Invoice.prototype.clearFeaturesMap = function() {
   this.getFeaturesMap().clear();
-};
+  return this;};
 
 
 /**
  * optional bool is_keysend = 25;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Invoice.prototype.getIsKeysend = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 25, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 25, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.Invoice.prototype.setIsKeysend = function(value) {
-  jspb.Message.setProto3BooleanField(this, 25, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Invoice} returns this
  */
-proto.lnrpc.InvoiceHTLC = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Invoice.prototype.setIsKeysend = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 25, value);
 };
-goog.inherits(proto.lnrpc.InvoiceHTLC, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.InvoiceHTLC.displayName = 'proto.lnrpc.InvoiceHTLC';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.InvoiceHTLC.prototype.toObject = function(opt_includeInstance) {
@@ -29181,8 +32616,8 @@ proto.lnrpc.InvoiceHTLC.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.InvoiceHTLC} msg The msg instance to transform.
  * @return {!Object}
@@ -29271,7 +32706,7 @@ proto.lnrpc.InvoiceHTLC.deserializeBinaryFromReader = function(msg, reader) {
     case 9:
       var value = msg.getCustomRecordsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint64, jspb.BinaryReader.prototype.readBytes, null, 0, "");
          });
       break;
     case 10:
@@ -29386,9 +32821,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 1, value);
+  return jspb.Message.setProto3StringIntField(this, 1, value);
 };
 
 
@@ -29401,9 +32839,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getHtlcIndex = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setHtlcIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -29416,9 +32857,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -29431,9 +32875,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getAcceptHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setAcceptHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -29446,9 +32893,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getAcceptTime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setAcceptTime = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -29461,9 +32911,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getResolveTime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setResolveTime = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -29476,9 +32929,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getExpiryHeight = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setExpiryHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -29491,9 +32947,12 @@ proto.lnrpc.InvoiceHTLC.prototype.getState = function() {
 };
 
 
-/** @param {!proto.lnrpc.InvoiceHTLCState} value */
+/**
+ * @param {!proto.lnrpc.InvoiceHTLCState} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.setState = function(value) {
-  jspb.Message.setProto3EnumField(this, 8, value);
+  return jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -29510,9 +32969,13 @@ proto.lnrpc.InvoiceHTLC.prototype.getCustomRecordsMap = function(opt_noLazyCreat
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
+ */
 proto.lnrpc.InvoiceHTLC.prototype.clearCustomRecordsMap = function() {
   this.getCustomRecordsMap().clear();
-};
+  return this;};
 
 
 /**
@@ -29524,41 +32987,29 @@ proto.lnrpc.InvoiceHTLC.prototype.getMppTotalAmtMAtoms = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.InvoiceHTLC.prototype.setMppTotalAmtMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceHTLC} returns this
  */
-proto.lnrpc.AddInvoiceResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.InvoiceHTLC.prototype.setMppTotalAmtMAtoms = function(value) {
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
-goog.inherits(proto.lnrpc.AddInvoiceResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.AddInvoiceResponse.displayName = 'proto.lnrpc.AddInvoiceResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.AddInvoiceResponse.prototype.toObject = function(opt_includeInstance) {
@@ -29568,8 +33019,8 @@ proto.lnrpc.AddInvoiceResponse.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.AddInvoiceResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -29714,9 +33165,12 @@ proto.lnrpc.AddInvoiceResponse.prototype.getRHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.AddInvoiceResponse} returns this
+ */
 proto.lnrpc.AddInvoiceResponse.prototype.setRHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -29729,9 +33183,12 @@ proto.lnrpc.AddInvoiceResponse.prototype.getPaymentRequest = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.AddInvoiceResponse} returns this
+ */
 proto.lnrpc.AddInvoiceResponse.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -29744,41 +33201,29 @@ proto.lnrpc.AddInvoiceResponse.prototype.getAddIndex = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.AddInvoiceResponse.prototype.setAddIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 16, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.AddInvoiceResponse} returns this
  */
-proto.lnrpc.PaymentHash = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.AddInvoiceResponse.prototype.setAddIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
 };
-goog.inherits(proto.lnrpc.PaymentHash, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PaymentHash.displayName = 'proto.lnrpc.PaymentHash';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PaymentHash.prototype.toObject = function(opt_includeInstance) {
@@ -29788,8 +33233,8 @@ proto.lnrpc.PaymentHash.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PaymentHash} msg The msg instance to transform.
  * @return {!Object}
@@ -29898,9 +33343,12 @@ proto.lnrpc.PaymentHash.prototype.getRHashStr = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PaymentHash} returns this
+ */
 proto.lnrpc.PaymentHash.prototype.setRHashStr = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -29937,41 +33385,29 @@ proto.lnrpc.PaymentHash.prototype.getRHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.PaymentHash.prototype.setRHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.PaymentHash} returns this
  */
-proto.lnrpc.ListInvoiceRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PaymentHash.prototype.setRHash = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ListInvoiceRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListInvoiceRequest.displayName = 'proto.lnrpc.ListInvoiceRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListInvoiceRequest.prototype.toObject = function(opt_includeInstance) {
@@ -29981,8 +33417,8 @@ proto.lnrpc.ListInvoiceRequest.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListInvoiceRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -29990,10 +33426,10 @@ proto.lnrpc.ListInvoiceRequest.prototype.toObject = function(opt_includeInstance
  */
 proto.lnrpc.ListInvoiceRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    pendingOnly: jspb.Message.getFieldWithDefault(msg, 1, false),
+    pendingOnly: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     indexOffset: jspb.Message.getFieldWithDefault(msg, 4, 0),
     numMaxInvoices: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    reversed: jspb.Message.getFieldWithDefault(msg, 6, false)
+    reversed: jspb.Message.getBooleanFieldWithDefault(msg, 6, false)
   };
 
   if (includeInstance) {
@@ -30108,18 +33544,19 @@ proto.lnrpc.ListInvoiceRequest.serializeBinaryToWriter = function(message, write
 
 /**
  * optional bool pending_only = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListInvoiceRequest.prototype.getPendingOnly = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListInvoiceRequest} returns this
+ */
 proto.lnrpc.ListInvoiceRequest.prototype.setPendingOnly = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -30132,9 +33569,12 @@ proto.lnrpc.ListInvoiceRequest.prototype.getIndexOffset = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListInvoiceRequest} returns this
+ */
 proto.lnrpc.ListInvoiceRequest.prototype.setIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -30147,47 +33587,34 @@ proto.lnrpc.ListInvoiceRequest.prototype.getNumMaxInvoices = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListInvoiceRequest} returns this
+ */
 proto.lnrpc.ListInvoiceRequest.prototype.setNumMaxInvoices = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
 /**
  * optional bool reversed = 6;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListInvoiceRequest.prototype.getReversed = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ListInvoiceRequest.prototype.setReversed = function(value) {
-  jspb.Message.setProto3BooleanField(this, 6, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListInvoiceRequest} returns this
  */
-proto.lnrpc.ListInvoiceResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListInvoiceResponse.repeatedFields_, null);
+proto.lnrpc.ListInvoiceRequest.prototype.setReversed = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.ListInvoiceResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListInvoiceResponse.displayName = 'proto.lnrpc.ListInvoiceResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -30199,13 +33626,15 @@ proto.lnrpc.ListInvoiceResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListInvoiceResponse.prototype.toObject = function(opt_includeInstance) {
@@ -30215,8 +33644,8 @@ proto.lnrpc.ListInvoiceResponse.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListInvoiceResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -30341,9 +33770,12 @@ proto.lnrpc.ListInvoiceResponse.prototype.getInvoicesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Invoice>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Invoice>} value
+ * @return {!proto.lnrpc.ListInvoiceResponse} returns this
+*/
 proto.lnrpc.ListInvoiceResponse.prototype.setInvoicesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -30357,8 +33789,12 @@ proto.lnrpc.ListInvoiceResponse.prototype.addInvoices = function(opt_value, opt_
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ListInvoiceResponse} returns this
+ */
 proto.lnrpc.ListInvoiceResponse.prototype.clearInvoicesList = function() {
-  this.setInvoicesList([]);
+  return this.setInvoicesList([]);
 };
 
 
@@ -30371,9 +33807,12 @@ proto.lnrpc.ListInvoiceResponse.prototype.getLastIndexOffset = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListInvoiceResponse} returns this
+ */
 proto.lnrpc.ListInvoiceResponse.prototype.setLastIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -30386,41 +33825,29 @@ proto.lnrpc.ListInvoiceResponse.prototype.getFirstIndexOffset = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ListInvoiceResponse.prototype.setFirstIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ListInvoiceResponse} returns this
  */
-proto.lnrpc.InvoiceSubscription = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ListInvoiceResponse.prototype.setFirstIndexOffset = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.InvoiceSubscription, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.InvoiceSubscription.displayName = 'proto.lnrpc.InvoiceSubscription';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.InvoiceSubscription.prototype.toObject = function(opt_includeInstance) {
@@ -30430,8 +33857,8 @@ proto.lnrpc.InvoiceSubscription.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.InvoiceSubscription} msg The msg instance to transform.
  * @return {!Object}
@@ -30540,9 +33967,12 @@ proto.lnrpc.InvoiceSubscription.prototype.getAddIndex = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceSubscription} returns this
+ */
 proto.lnrpc.InvoiceSubscription.prototype.setAddIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -30555,30 +33985,16 @@ proto.lnrpc.InvoiceSubscription.prototype.getSettleIndex = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.InvoiceSubscription.prototype.setSettleIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.InvoiceSubscription} returns this
  */
-proto.lnrpc.Payment = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Payment.repeatedFields_, null);
+proto.lnrpc.InvoiceSubscription.prototype.setSettleIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.Payment, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Payment.displayName = 'proto.lnrpc.Payment';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -30590,13 +34006,15 @@ proto.lnrpc.Payment.repeatedFields_ = [14];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Payment.prototype.toObject = function(opt_includeInstance) {
@@ -30606,8 +34024,8 @@ proto.lnrpc.Payment.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Payment} msg The msg instance to transform.
  * @return {!Object}
@@ -30885,9 +34303,12 @@ proto.lnrpc.Payment.prototype.getPaymentHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setPaymentHash = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -30900,9 +34321,12 @@ proto.lnrpc.Payment.prototype.getValue = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setValue = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -30915,9 +34339,12 @@ proto.lnrpc.Payment.prototype.getCreationDate = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setCreationDate = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -30930,9 +34357,12 @@ proto.lnrpc.Payment.prototype.getFee = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setFee = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -30945,9 +34375,12 @@ proto.lnrpc.Payment.prototype.getPaymentPreimage = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setPaymentPreimage = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -30960,9 +34393,12 @@ proto.lnrpc.Payment.prototype.getValueAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setValueAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -30975,9 +34411,12 @@ proto.lnrpc.Payment.prototype.getValueMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setValueMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -30990,9 +34429,12 @@ proto.lnrpc.Payment.prototype.getPaymentRequest = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setPaymentRequest = function(value) {
-  jspb.Message.setProto3StringField(this, 9, value);
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -31005,9 +34447,12 @@ proto.lnrpc.Payment.prototype.getStatus = function() {
 };
 
 
-/** @param {!proto.lnrpc.Payment.PaymentStatus} value */
+/**
+ * @param {!proto.lnrpc.Payment.PaymentStatus} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 10, value);
+  return jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -31020,9 +34465,12 @@ proto.lnrpc.Payment.prototype.getFeeAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setFeeAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -31035,9 +34483,12 @@ proto.lnrpc.Payment.prototype.getFeeMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setFeeMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 12, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -31050,9 +34501,12 @@ proto.lnrpc.Payment.prototype.getCreationTimeNs = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setCreationTimeNs = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -31066,9 +34520,12 @@ proto.lnrpc.Payment.prototype.getHtlcsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.HTLCAttempt>} value */
+/**
+ * @param {!Array<!proto.lnrpc.HTLCAttempt>} value
+ * @return {!proto.lnrpc.Payment} returns this
+*/
 proto.lnrpc.Payment.prototype.setHtlcsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 14, value);
+  return jspb.Message.setRepeatedWrapperField(this, 14, value);
 };
 
 
@@ -31082,8 +34539,12 @@ proto.lnrpc.Payment.prototype.addHtlcs = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.clearHtlcsList = function() {
-  this.setHtlcsList([]);
+  return this.setHtlcsList([]);
 };
 
 
@@ -31096,9 +34557,12 @@ proto.lnrpc.Payment.prototype.getPaymentIndex = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Payment} returns this
+ */
 proto.lnrpc.Payment.prototype.setPaymentIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 15, value);
+  return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
@@ -31111,41 +34575,29 @@ proto.lnrpc.Payment.prototype.getFailureReason = function() {
 };
 
 
-/** @param {!proto.lnrpc.PaymentFailureReason} value */
-proto.lnrpc.Payment.prototype.setFailureReason = function(value) {
-  jspb.Message.setProto3EnumField(this, 16, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!proto.lnrpc.PaymentFailureReason} value
+ * @return {!proto.lnrpc.Payment} returns this
  */
-proto.lnrpc.HTLCAttempt = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Payment.prototype.setFailureReason = function(value) {
+  return jspb.Message.setProto3EnumField(this, 16, value);
 };
-goog.inherits(proto.lnrpc.HTLCAttempt, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.HTLCAttempt.displayName = 'proto.lnrpc.HTLCAttempt';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.HTLCAttempt.prototype.toObject = function(opt_includeInstance) {
@@ -31155,8 +34607,8 @@ proto.lnrpc.HTLCAttempt.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.HTLCAttempt} msg The msg instance to transform.
  * @return {!Object}
@@ -31326,9 +34778,12 @@ proto.lnrpc.HTLCAttempt.prototype.getStatus = function() {
 };
 
 
-/** @param {!proto.lnrpc.HTLCAttempt.HTLCStatus} value */
+/**
+ * @param {!proto.lnrpc.HTLCAttempt.HTLCStatus} value
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+ */
 proto.lnrpc.HTLCAttempt.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -31342,14 +34797,21 @@ proto.lnrpc.HTLCAttempt.prototype.getRoute = function() {
 };
 
 
-/** @param {?proto.lnrpc.Route|undefined} value */
+/**
+ * @param {?proto.lnrpc.Route|undefined} value
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+*/
 proto.lnrpc.HTLCAttempt.prototype.setRoute = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+ */
 proto.lnrpc.HTLCAttempt.prototype.clearRoute = function() {
-  this.setRoute(undefined);
+  return this.setRoute(undefined);
 };
 
 
@@ -31371,9 +34833,12 @@ proto.lnrpc.HTLCAttempt.prototype.getAttemptTimeNs = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+ */
 proto.lnrpc.HTLCAttempt.prototype.setAttemptTimeNs = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -31386,9 +34851,12 @@ proto.lnrpc.HTLCAttempt.prototype.getResolveTimeNs = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+ */
 proto.lnrpc.HTLCAttempt.prototype.setResolveTimeNs = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -31402,14 +34870,21 @@ proto.lnrpc.HTLCAttempt.prototype.getFailure = function() {
 };
 
 
-/** @param {?proto.lnrpc.Failure|undefined} value */
+/**
+ * @param {?proto.lnrpc.Failure|undefined} value
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+*/
 proto.lnrpc.HTLCAttempt.prototype.setFailure = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
+  return jspb.Message.setWrapperField(this, 5, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
+ */
 proto.lnrpc.HTLCAttempt.prototype.clearFailure = function() {
-  this.setFailure(undefined);
+  return this.setFailure(undefined);
 };
 
 
@@ -31455,41 +34930,29 @@ proto.lnrpc.HTLCAttempt.prototype.getPreimage_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.HTLCAttempt.prototype.setPreimage = function(value) {
-  jspb.Message.setProto3BytesField(this, 6, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.HTLCAttempt} returns this
  */
-proto.lnrpc.ListPaymentsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.HTLCAttempt.prototype.setPreimage = function(value) {
+  return jspb.Message.setProto3BytesField(this, 6, value);
 };
-goog.inherits(proto.lnrpc.ListPaymentsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListPaymentsRequest.displayName = 'proto.lnrpc.ListPaymentsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListPaymentsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -31499,8 +34962,8 @@ proto.lnrpc.ListPaymentsRequest.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListPaymentsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -31508,10 +34971,10 @@ proto.lnrpc.ListPaymentsRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.lnrpc.ListPaymentsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    includeIncomplete: jspb.Message.getFieldWithDefault(msg, 1, false),
+    includeIncomplete: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     indexOffset: jspb.Message.getFieldWithDefault(msg, 2, 0),
     maxPayments: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    reversed: jspb.Message.getFieldWithDefault(msg, 4, false)
+    reversed: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -31626,18 +35089,19 @@ proto.lnrpc.ListPaymentsRequest.serializeBinaryToWriter = function(message, writ
 
 /**
  * optional bool include_incomplete = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListPaymentsRequest.prototype.getIncludeIncomplete = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListPaymentsRequest} returns this
+ */
 proto.lnrpc.ListPaymentsRequest.prototype.setIncludeIncomplete = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -31650,9 +35114,12 @@ proto.lnrpc.ListPaymentsRequest.prototype.getIndexOffset = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListPaymentsRequest} returns this
+ */
 proto.lnrpc.ListPaymentsRequest.prototype.setIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -31665,47 +35132,34 @@ proto.lnrpc.ListPaymentsRequest.prototype.getMaxPayments = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListPaymentsRequest} returns this
+ */
 proto.lnrpc.ListPaymentsRequest.prototype.setMaxPayments = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
  * optional bool reversed = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.ListPaymentsRequest.prototype.getReversed = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.ListPaymentsRequest.prototype.setReversed = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.ListPaymentsRequest} returns this
  */
-proto.lnrpc.ListPaymentsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListPaymentsResponse.repeatedFields_, null);
+proto.lnrpc.ListPaymentsRequest.prototype.setReversed = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.ListPaymentsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListPaymentsResponse.displayName = 'proto.lnrpc.ListPaymentsResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -31717,13 +35171,15 @@ proto.lnrpc.ListPaymentsResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListPaymentsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -31733,8 +35189,8 @@ proto.lnrpc.ListPaymentsResponse.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListPaymentsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -31859,9 +35315,12 @@ proto.lnrpc.ListPaymentsResponse.prototype.getPaymentsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Payment>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Payment>} value
+ * @return {!proto.lnrpc.ListPaymentsResponse} returns this
+*/
 proto.lnrpc.ListPaymentsResponse.prototype.setPaymentsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -31875,8 +35334,12 @@ proto.lnrpc.ListPaymentsResponse.prototype.addPayments = function(opt_value, opt
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ListPaymentsResponse} returns this
+ */
 proto.lnrpc.ListPaymentsResponse.prototype.clearPaymentsList = function() {
-  this.setPaymentsList([]);
+  return this.setPaymentsList([]);
 };
 
 
@@ -31889,9 +35352,12 @@ proto.lnrpc.ListPaymentsResponse.prototype.getFirstIndexOffset = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ListPaymentsResponse} returns this
+ */
 proto.lnrpc.ListPaymentsResponse.prototype.setFirstIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -31904,41 +35370,29 @@ proto.lnrpc.ListPaymentsResponse.prototype.getLastIndexOffset = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ListPaymentsResponse.prototype.setLastIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ListPaymentsResponse} returns this
  */
-proto.lnrpc.DeleteAllPaymentsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ListPaymentsResponse.prototype.setLastIndexOffset = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
-goog.inherits(proto.lnrpc.DeleteAllPaymentsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DeleteAllPaymentsRequest.displayName = 'proto.lnrpc.DeleteAllPaymentsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DeleteAllPaymentsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -31948,8 +35402,8 @@ proto.lnrpc.DeleteAllPaymentsRequest.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DeleteAllPaymentsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -32027,34 +35481,19 @@ proto.lnrpc.DeleteAllPaymentsRequest.serializeBinaryToWriter = function(message,
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.DeleteAllPaymentsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.DeleteAllPaymentsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DeleteAllPaymentsResponse.displayName = 'proto.lnrpc.DeleteAllPaymentsResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DeleteAllPaymentsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -32064,8 +35503,8 @@ proto.lnrpc.DeleteAllPaymentsResponse.prototype.toObject = function(opt_includeI
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DeleteAllPaymentsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -32143,34 +35582,19 @@ proto.lnrpc.DeleteAllPaymentsResponse.serializeBinaryToWriter = function(message
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.AbandonChannelRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.AbandonChannelRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.AbandonChannelRequest.displayName = 'proto.lnrpc.AbandonChannelRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.AbandonChannelRequest.prototype.toObject = function(opt_includeInstance) {
@@ -32180,8 +35604,8 @@ proto.lnrpc.AbandonChannelRequest.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.AbandonChannelRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -32190,7 +35614,7 @@ proto.lnrpc.AbandonChannelRequest.prototype.toObject = function(opt_includeInsta
 proto.lnrpc.AbandonChannelRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     channelPoint: (f = msg.getChannelPoint()) && proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
-    pendingFundingShimOnly: jspb.Message.getFieldWithDefault(msg, 2, false)
+    pendingFundingShimOnly: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -32293,14 +35717,21 @@ proto.lnrpc.AbandonChannelRequest.prototype.getChannelPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.AbandonChannelRequest} returns this
+*/
 proto.lnrpc.AbandonChannelRequest.prototype.setChannelPoint = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.AbandonChannelRequest} returns this
+ */
 proto.lnrpc.AbandonChannelRequest.prototype.clearChannelPoint = function() {
-  this.setChannelPoint(undefined);
+  return this.setChannelPoint(undefined);
 };
 
 
@@ -32315,50 +35746,36 @@ proto.lnrpc.AbandonChannelRequest.prototype.hasChannelPoint = function() {
 
 /**
  * optional bool pending_funding_shim_only = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.AbandonChannelRequest.prototype.getPendingFundingShimOnly = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.AbandonChannelRequest.prototype.setPendingFundingShimOnly = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.AbandonChannelRequest} returns this
  */
-proto.lnrpc.AbandonChannelResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.AbandonChannelRequest.prototype.setPendingFundingShimOnly = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.AbandonChannelResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.AbandonChannelResponse.displayName = 'proto.lnrpc.AbandonChannelResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.AbandonChannelResponse.prototype.toObject = function(opt_includeInstance) {
@@ -32368,8 +35785,8 @@ proto.lnrpc.AbandonChannelResponse.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.AbandonChannelResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -32447,34 +35864,19 @@ proto.lnrpc.AbandonChannelResponse.serializeBinaryToWriter = function(message, w
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.DebugLevelRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.DebugLevelRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DebugLevelRequest.displayName = 'proto.lnrpc.DebugLevelRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DebugLevelRequest.prototype.toObject = function(opt_includeInstance) {
@@ -32484,8 +35886,8 @@ proto.lnrpc.DebugLevelRequest.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DebugLevelRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -32493,7 +35895,7 @@ proto.lnrpc.DebugLevelRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.lnrpc.DebugLevelRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    show: jspb.Message.getFieldWithDefault(msg, 1, false),
+    show: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     levelSpec: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
@@ -32587,18 +35989,19 @@ proto.lnrpc.DebugLevelRequest.serializeBinaryToWriter = function(message, writer
 
 /**
  * optional bool show = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.DebugLevelRequest.prototype.getShow = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.DebugLevelRequest} returns this
+ */
 proto.lnrpc.DebugLevelRequest.prototype.setShow = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -32611,41 +36014,29 @@ proto.lnrpc.DebugLevelRequest.prototype.getLevelSpec = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.DebugLevelRequest.prototype.setLevelSpec = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.DebugLevelRequest} returns this
  */
-proto.lnrpc.DebugLevelResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.DebugLevelRequest.prototype.setLevelSpec = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.DebugLevelResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DebugLevelResponse.displayName = 'proto.lnrpc.DebugLevelResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DebugLevelResponse.prototype.toObject = function(opt_includeInstance) {
@@ -32655,8 +36046,8 @@ proto.lnrpc.DebugLevelResponse.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DebugLevelResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -32753,41 +36144,29 @@ proto.lnrpc.DebugLevelResponse.prototype.getSubSystems = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.DebugLevelResponse.prototype.setSubSystems = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.DebugLevelResponse} returns this
  */
-proto.lnrpc.PayReqString = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.DebugLevelResponse.prototype.setSubSystems = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.PayReqString, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PayReqString.displayName = 'proto.lnrpc.PayReqString';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PayReqString.prototype.toObject = function(opt_includeInstance) {
@@ -32797,8 +36176,8 @@ proto.lnrpc.PayReqString.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PayReqString} msg The msg instance to transform.
  * @return {!Object}
@@ -32895,30 +36274,16 @@ proto.lnrpc.PayReqString.prototype.getPayReq = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.PayReqString.prototype.setPayReq = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.PayReqString} returns this
  */
-proto.lnrpc.PayReq = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.PayReq.repeatedFields_, null);
+proto.lnrpc.PayReqString.prototype.setPayReq = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.PayReq, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PayReq.displayName = 'proto.lnrpc.PayReq';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -32930,13 +36295,15 @@ proto.lnrpc.PayReq.repeatedFields_ = [10];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PayReq.prototype.toObject = function(opt_includeInstance) {
@@ -32946,8 +36313,8 @@ proto.lnrpc.PayReq.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PayReq} msg The msg instance to transform.
  * @return {!Object}
@@ -33057,7 +36424,7 @@ proto.lnrpc.PayReq.deserializeBinaryFromReader = function(msg, reader) {
     case 13:
       var value = msg.getFeaturesMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readUint32, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.Feature.deserializeBinaryFromReader, 0, new proto.lnrpc.Feature());
          });
       break;
     default:
@@ -33190,9 +36557,12 @@ proto.lnrpc.PayReq.prototype.getDestination = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setDestination = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -33205,9 +36575,12 @@ proto.lnrpc.PayReq.prototype.getPaymentHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setPaymentHash = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -33220,9 +36593,12 @@ proto.lnrpc.PayReq.prototype.getNumAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setNumAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -33235,9 +36611,12 @@ proto.lnrpc.PayReq.prototype.getTimestamp = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setTimestamp = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -33250,9 +36629,12 @@ proto.lnrpc.PayReq.prototype.getExpiry = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setExpiry = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -33265,9 +36647,12 @@ proto.lnrpc.PayReq.prototype.getDescription = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setDescription = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -33280,9 +36665,12 @@ proto.lnrpc.PayReq.prototype.getDescriptionHash = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setDescriptionHash = function(value) {
-  jspb.Message.setProto3StringField(this, 7, value);
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -33295,9 +36683,12 @@ proto.lnrpc.PayReq.prototype.getFallbackAddr = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setFallbackAddr = function(value) {
-  jspb.Message.setProto3StringField(this, 8, value);
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -33310,9 +36701,12 @@ proto.lnrpc.PayReq.prototype.getCltvExpiry = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setCltvExpiry = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -33326,9 +36720,12 @@ proto.lnrpc.PayReq.prototype.getRouteHintsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.RouteHint>} value */
+/**
+ * @param {!Array<!proto.lnrpc.RouteHint>} value
+ * @return {!proto.lnrpc.PayReq} returns this
+*/
 proto.lnrpc.PayReq.prototype.setRouteHintsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 10, value);
+  return jspb.Message.setRepeatedWrapperField(this, 10, value);
 };
 
 
@@ -33342,8 +36739,12 @@ proto.lnrpc.PayReq.prototype.addRouteHints = function(opt_value, opt_index) {
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.clearRouteHintsList = function() {
-  this.setRouteHintsList([]);
+  return this.setRouteHintsList([]);
 };
 
 
@@ -33380,9 +36781,12 @@ proto.lnrpc.PayReq.prototype.getPaymentAddr_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setPaymentAddr = function(value) {
-  jspb.Message.setProto3BytesField(this, 11, value);
+  return jspb.Message.setProto3BytesField(this, 11, value);
 };
 
 
@@ -33395,9 +36799,12 @@ proto.lnrpc.PayReq.prototype.getNumMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.setNumMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 12, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
@@ -33414,40 +36821,29 @@ proto.lnrpc.PayReq.prototype.getFeaturesMap = function(opt_noLazyCreate) {
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.PayReq} returns this
+ */
 proto.lnrpc.PayReq.prototype.clearFeaturesMap = function() {
   this.getFeaturesMap().clear();
-};
+  return this;};
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.Feature = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.Feature, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Feature.displayName = 'proto.lnrpc.Feature';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Feature.prototype.toObject = function(opt_includeInstance) {
@@ -33457,8 +36853,8 @@ proto.lnrpc.Feature.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Feature} msg The msg instance to transform.
  * @return {!Object}
@@ -33467,8 +36863,8 @@ proto.lnrpc.Feature.prototype.toObject = function(opt_includeInstance) {
 proto.lnrpc.Feature.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    isRequired: jspb.Message.getFieldWithDefault(msg, 3, false),
-    isKnown: jspb.Message.getFieldWithDefault(msg, 4, false)
+    isRequired: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    isKnown: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -33579,75 +36975,65 @@ proto.lnrpc.Feature.prototype.getName = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Feature} returns this
+ */
 proto.lnrpc.Feature.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
  * optional bool is_required = 3;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Feature.prototype.getIsRequired = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Feature} returns this
+ */
 proto.lnrpc.Feature.prototype.setIsRequired = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
 /**
  * optional bool is_known = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.Feature.prototype.getIsKnown = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.Feature.prototype.setIsKnown = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.Feature} returns this
  */
-proto.lnrpc.FeeReportRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Feature.prototype.setIsKnown = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.FeeReportRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FeeReportRequest.displayName = 'proto.lnrpc.FeeReportRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FeeReportRequest.prototype.toObject = function(opt_includeInstance) {
@@ -33657,8 +37043,8 @@ proto.lnrpc.FeeReportRequest.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FeeReportRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -33736,34 +37122,19 @@ proto.lnrpc.FeeReportRequest.serializeBinaryToWriter = function(message, writer)
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelFeeReport = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelFeeReport, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelFeeReport.displayName = 'proto.lnrpc.ChannelFeeReport';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelFeeReport.prototype.toObject = function(opt_includeInstance) {
@@ -33773,8 +37144,8 @@ proto.lnrpc.ChannelFeeReport.prototype.toObject = function(opt_includeInstance) 
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelFeeReport} msg The msg instance to transform.
  * @return {!Object}
@@ -33786,7 +37157,7 @@ proto.lnrpc.ChannelFeeReport.toObject = function(includeInstance, msg) {
     channelPoint: jspb.Message.getFieldWithDefault(msg, 1, ""),
     baseFeeMAtoms: jspb.Message.getFieldWithDefault(msg, 2, 0),
     feePerMil: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    feeRate: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
+    feeRate: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0)
   };
 
   if (includeInstance) {
@@ -33919,9 +37290,12 @@ proto.lnrpc.ChannelFeeReport.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelFeeReport} returns this
+ */
 proto.lnrpc.ChannelFeeReport.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 5, value);
+  return jspb.Message.setProto3StringIntField(this, 5, value);
 };
 
 
@@ -33934,9 +37308,12 @@ proto.lnrpc.ChannelFeeReport.prototype.getChannelPoint = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelFeeReport} returns this
+ */
 proto.lnrpc.ChannelFeeReport.prototype.setChannelPoint = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -33949,9 +37326,12 @@ proto.lnrpc.ChannelFeeReport.prototype.getBaseFeeMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelFeeReport} returns this
+ */
 proto.lnrpc.ChannelFeeReport.prototype.setBaseFeeMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -33964,9 +37344,12 @@ proto.lnrpc.ChannelFeeReport.prototype.getFeePerMil = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelFeeReport} returns this
+ */
 proto.lnrpc.ChannelFeeReport.prototype.setFeePerMil = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -33975,34 +37358,20 @@ proto.lnrpc.ChannelFeeReport.prototype.setFeePerMil = function(value) {
  * @return {number}
  */
 proto.lnrpc.ChannelFeeReport.prototype.getFeeRate = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 4, 0.0));
 };
-
-
-/** @param {number} value */
-proto.lnrpc.ChannelFeeReport.prototype.setFeeRate = function(value) {
-  jspb.Message.setProto3FloatField(this, 4, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelFeeReport} returns this
  */
-proto.lnrpc.FeeReportResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.FeeReportResponse.repeatedFields_, null);
+proto.lnrpc.ChannelFeeReport.prototype.setFeeRate = function(value) {
+  return jspb.Message.setProto3FloatField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.FeeReportResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.FeeReportResponse.displayName = 'proto.lnrpc.FeeReportResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -34014,13 +37383,15 @@ proto.lnrpc.FeeReportResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.FeeReportResponse.prototype.toObject = function(opt_includeInstance) {
@@ -34030,8 +37401,8 @@ proto.lnrpc.FeeReportResponse.prototype.toObject = function(opt_includeInstance)
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.FeeReportResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -34168,9 +37539,12 @@ proto.lnrpc.FeeReportResponse.prototype.getChannelFeesList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelFeeReport>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelFeeReport>} value
+ * @return {!proto.lnrpc.FeeReportResponse} returns this
+*/
 proto.lnrpc.FeeReportResponse.prototype.setChannelFeesList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -34184,8 +37558,12 @@ proto.lnrpc.FeeReportResponse.prototype.addChannelFees = function(opt_value, opt
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.FeeReportResponse} returns this
+ */
 proto.lnrpc.FeeReportResponse.prototype.clearChannelFeesList = function() {
-  this.setChannelFeesList([]);
+  return this.setChannelFeesList([]);
 };
 
 
@@ -34198,9 +37576,12 @@ proto.lnrpc.FeeReportResponse.prototype.getDayFeeSum = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.FeeReportResponse} returns this
+ */
 proto.lnrpc.FeeReportResponse.prototype.setDayFeeSum = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -34213,9 +37594,12 @@ proto.lnrpc.FeeReportResponse.prototype.getWeekFeeSum = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.FeeReportResponse} returns this
+ */
 proto.lnrpc.FeeReportResponse.prototype.setWeekFeeSum = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -34228,30 +37612,16 @@ proto.lnrpc.FeeReportResponse.prototype.getMonthFeeSum = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.FeeReportResponse.prototype.setMonthFeeSum = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.FeeReportResponse} returns this
  */
-proto.lnrpc.PolicyUpdateRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.PolicyUpdateRequest.oneofGroups_);
+proto.lnrpc.FeeReportResponse.prototype.setMonthFeeSum = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.PolicyUpdateRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PolicyUpdateRequest.displayName = 'proto.lnrpc.PolicyUpdateRequest';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -34282,13 +37652,15 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getScopeCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PolicyUpdateRequest.prototype.toObject = function(opt_includeInstance) {
@@ -34298,8 +37670,8 @@ proto.lnrpc.PolicyUpdateRequest.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PolicyUpdateRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -34307,14 +37679,14 @@ proto.lnrpc.PolicyUpdateRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.lnrpc.PolicyUpdateRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    global: jspb.Message.getFieldWithDefault(msg, 1, false),
+    global: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     chanPoint: (f = msg.getChanPoint()) && proto.lnrpc.ChannelPoint.toObject(includeInstance, f),
     baseFeeMAtoms: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    feeRate: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
+    feeRate: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
     timeLockDelta: jspb.Message.getFieldWithDefault(msg, 5, 0),
     maxHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 6, 0),
     minHtlcMAtoms: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    minHtlcMAtomsSpecified: jspb.Message.getFieldWithDefault(msg, 8, false)
+    minHtlcMAtomsSpecified: jspb.Message.getBooleanFieldWithDefault(msg, 8, false)
   };
 
   if (includeInstance) {
@@ -34475,23 +37847,28 @@ proto.lnrpc.PolicyUpdateRequest.serializeBinaryToWriter = function(message, writ
 
 /**
  * optional bool global = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.PolicyUpdateRequest.prototype.getGlobal = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
-/** @param {boolean} value */
+/**
+ * @param {boolean} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.setGlobal = function(value) {
-  jspb.Message.setOneofField(this, 1, proto.lnrpc.PolicyUpdateRequest.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 1, proto.lnrpc.PolicyUpdateRequest.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.clearGlobal = function() {
-  jspb.Message.setOneofField(this, 1, proto.lnrpc.PolicyUpdateRequest.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 1, proto.lnrpc.PolicyUpdateRequest.oneofGroups_[0], undefined);
 };
 
 
@@ -34514,14 +37891,21 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getChanPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+*/
 proto.lnrpc.PolicyUpdateRequest.prototype.setChanPoint = function(value) {
-  jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.PolicyUpdateRequest.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 2, proto.lnrpc.PolicyUpdateRequest.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.clearChanPoint = function() {
-  this.setChanPoint(undefined);
+  return this.setChanPoint(undefined);
 };
 
 
@@ -34543,9 +37927,12 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getBaseFeeMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.setBaseFeeMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -34554,13 +37941,16 @@ proto.lnrpc.PolicyUpdateRequest.prototype.setBaseFeeMAtoms = function(value) {
  * @return {number}
  */
 proto.lnrpc.PolicyUpdateRequest.prototype.getFeeRate = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 4, 0.0));
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.setFeeRate = function(value) {
-  jspb.Message.setProto3FloatField(this, 4, value);
+  return jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -34573,9 +37963,12 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getTimeLockDelta = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.setTimeLockDelta = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -34588,9 +37981,12 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getMaxHtlcMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.setMaxHtlcMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -34603,58 +37999,47 @@ proto.lnrpc.PolicyUpdateRequest.prototype.getMinHtlcMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
+ */
 proto.lnrpc.PolicyUpdateRequest.prototype.setMinHtlcMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
  * optional bool min_htlc_m_atoms_specified = 8;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.PolicyUpdateRequest.prototype.getMinHtlcMAtomsSpecified = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 8, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.PolicyUpdateRequest.prototype.setMinHtlcMAtomsSpecified = function(value) {
-  jspb.Message.setProto3BooleanField(this, 8, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.PolicyUpdateRequest} returns this
  */
-proto.lnrpc.PolicyUpdateResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.PolicyUpdateRequest.prototype.setMinHtlcMAtomsSpecified = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 8, value);
 };
-goog.inherits(proto.lnrpc.PolicyUpdateResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.PolicyUpdateResponse.displayName = 'proto.lnrpc.PolicyUpdateResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.PolicyUpdateResponse.prototype.toObject = function(opt_includeInstance) {
@@ -34664,8 +38049,8 @@ proto.lnrpc.PolicyUpdateResponse.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.PolicyUpdateResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -34743,34 +38128,19 @@ proto.lnrpc.PolicyUpdateResponse.serializeBinaryToWriter = function(message, wri
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ForwardingHistoryRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ForwardingHistoryRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ForwardingHistoryRequest.displayName = 'proto.lnrpc.ForwardingHistoryRequest';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ForwardingHistoryRequest.prototype.toObject = function(opt_includeInstance) {
@@ -34780,8 +38150,8 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ForwardingHistoryRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -34914,9 +38284,12 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getStartTime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingHistoryRequest} returns this
+ */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setStartTime = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -34929,9 +38302,12 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getEndTime = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingHistoryRequest} returns this
+ */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setEndTime = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -34944,9 +38320,12 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getIndexOffset = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingHistoryRequest} returns this
+ */
 proto.lnrpc.ForwardingHistoryRequest.prototype.setIndexOffset = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -34959,41 +38338,29 @@ proto.lnrpc.ForwardingHistoryRequest.prototype.getNumMaxEvents = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ForwardingHistoryRequest.prototype.setNumMaxEvents = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingHistoryRequest} returns this
  */
-proto.lnrpc.ForwardingEvent = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ForwardingHistoryRequest.prototype.setNumMaxEvents = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
-goog.inherits(proto.lnrpc.ForwardingEvent, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ForwardingEvent.displayName = 'proto.lnrpc.ForwardingEvent';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ForwardingEvent.prototype.toObject = function(opt_includeInstance) {
@@ -35003,8 +38370,8 @@ proto.lnrpc.ForwardingEvent.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ForwardingEvent} msg The msg instance to transform.
  * @return {!Object}
@@ -35197,9 +38564,12 @@ proto.lnrpc.ForwardingEvent.prototype.getTimestamp = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setTimestamp = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -35212,9 +38582,12 @@ proto.lnrpc.ForwardingEvent.prototype.getChanIdIn = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setChanIdIn = function(value) {
-  jspb.Message.setProto3StringIntField(this, 2, value);
+  return jspb.Message.setProto3StringIntField(this, 2, value);
 };
 
 
@@ -35227,9 +38600,12 @@ proto.lnrpc.ForwardingEvent.prototype.getChanIdOut = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setChanIdOut = function(value) {
-  jspb.Message.setProto3StringIntField(this, 4, value);
+  return jspb.Message.setProto3StringIntField(this, 4, value);
 };
 
 
@@ -35242,9 +38618,12 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtIn = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setAmtIn = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -35257,9 +38636,12 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtOut = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setAmtOut = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -35272,9 +38654,12 @@ proto.lnrpc.ForwardingEvent.prototype.getFee = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setFee = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -35287,9 +38672,12 @@ proto.lnrpc.ForwardingEvent.prototype.getFeeMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setFeeMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -35302,9 +38690,12 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtInMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
+ */
 proto.lnrpc.ForwardingEvent.prototype.setAmtInMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -35317,30 +38708,16 @@ proto.lnrpc.ForwardingEvent.prototype.getAmtOutMAtoms = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ForwardingEvent.prototype.setAmtOutMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingEvent} returns this
  */
-proto.lnrpc.ForwardingHistoryResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ForwardingHistoryResponse.repeatedFields_, null);
+proto.lnrpc.ForwardingEvent.prototype.setAmtOutMAtoms = function(value) {
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
-goog.inherits(proto.lnrpc.ForwardingHistoryResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ForwardingHistoryResponse.displayName = 'proto.lnrpc.ForwardingHistoryResponse';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -35352,13 +38729,15 @@ proto.lnrpc.ForwardingHistoryResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ForwardingHistoryResponse.prototype.toObject = function(opt_includeInstance) {
@@ -35368,8 +38747,8 @@ proto.lnrpc.ForwardingHistoryResponse.prototype.toObject = function(opt_includeI
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ForwardingHistoryResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -35482,9 +38861,12 @@ proto.lnrpc.ForwardingHistoryResponse.prototype.getForwardingEventsList = functi
 };
 
 
-/** @param {!Array<!proto.lnrpc.ForwardingEvent>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ForwardingEvent>} value
+ * @return {!proto.lnrpc.ForwardingHistoryResponse} returns this
+*/
 proto.lnrpc.ForwardingHistoryResponse.prototype.setForwardingEventsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -35498,8 +38880,12 @@ proto.lnrpc.ForwardingHistoryResponse.prototype.addForwardingEvents = function(o
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ForwardingHistoryResponse} returns this
+ */
 proto.lnrpc.ForwardingHistoryResponse.prototype.clearForwardingEventsList = function() {
-  this.setForwardingEventsList([]);
+  return this.setForwardingEventsList([]);
 };
 
 
@@ -35512,41 +38898,29 @@ proto.lnrpc.ForwardingHistoryResponse.prototype.getLastOffsetIndex = function() 
 };
 
 
-/** @param {number} value */
-proto.lnrpc.ForwardingHistoryResponse.prototype.setLastOffsetIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.ForwardingHistoryResponse} returns this
  */
-proto.lnrpc.ExportChannelBackupRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ForwardingHistoryResponse.prototype.setLastOffsetIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ExportChannelBackupRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ExportChannelBackupRequest.displayName = 'proto.lnrpc.ExportChannelBackupRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ExportChannelBackupRequest.prototype.toObject = function(opt_includeInstance) {
@@ -35556,8 +38930,8 @@ proto.lnrpc.ExportChannelBackupRequest.prototype.toObject = function(opt_include
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ExportChannelBackupRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -35657,14 +39031,21 @@ proto.lnrpc.ExportChannelBackupRequest.prototype.getChanPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ExportChannelBackupRequest} returns this
+*/
 proto.lnrpc.ExportChannelBackupRequest.prototype.setChanPoint = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ExportChannelBackupRequest} returns this
+ */
 proto.lnrpc.ExportChannelBackupRequest.prototype.clearChanPoint = function() {
-  this.setChanPoint(undefined);
+  return this.setChanPoint(undefined);
 };
 
 
@@ -35678,34 +39059,19 @@ proto.lnrpc.ExportChannelBackupRequest.prototype.hasChanPoint = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelBackup = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelBackup, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelBackup.displayName = 'proto.lnrpc.ChannelBackup';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelBackup.prototype.toObject = function(opt_includeInstance) {
@@ -35715,8 +39081,8 @@ proto.lnrpc.ChannelBackup.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelBackup} msg The msg instance to transform.
  * @return {!Object}
@@ -35828,14 +39194,21 @@ proto.lnrpc.ChannelBackup.prototype.getChanPoint = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelPoint|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelPoint|undefined} value
+ * @return {!proto.lnrpc.ChannelBackup} returns this
+*/
 proto.lnrpc.ChannelBackup.prototype.setChanPoint = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChannelBackup} returns this
+ */
 proto.lnrpc.ChannelBackup.prototype.clearChanPoint = function() {
-  this.setChanPoint(undefined);
+  return this.setChanPoint(undefined);
 };
 
 
@@ -35881,30 +39254,16 @@ proto.lnrpc.ChannelBackup.prototype.getChanBackup_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.ChannelBackup.prototype.setChanBackup = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelBackup} returns this
  */
-proto.lnrpc.MultiChanBackup = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.MultiChanBackup.repeatedFields_, null);
+proto.lnrpc.ChannelBackup.prototype.setChanBackup = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.MultiChanBackup, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.MultiChanBackup.displayName = 'proto.lnrpc.MultiChanBackup';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -35916,13 +39275,15 @@ proto.lnrpc.MultiChanBackup.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.MultiChanBackup.prototype.toObject = function(opt_includeInstance) {
@@ -35932,8 +39293,8 @@ proto.lnrpc.MultiChanBackup.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.MultiChanBackup} msg The msg instance to transform.
  * @return {!Object}
@@ -36046,9 +39407,12 @@ proto.lnrpc.MultiChanBackup.prototype.getChanPointsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelPoint>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelPoint>} value
+ * @return {!proto.lnrpc.MultiChanBackup} returns this
+*/
 proto.lnrpc.MultiChanBackup.prototype.setChanPointsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -36062,8 +39426,12 @@ proto.lnrpc.MultiChanBackup.prototype.addChanPoints = function(opt_value, opt_in
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.MultiChanBackup} returns this
+ */
 proto.lnrpc.MultiChanBackup.prototype.clearChanPointsList = function() {
-  this.setChanPointsList([]);
+  return this.setChanPointsList([]);
 };
 
 
@@ -36100,41 +39468,29 @@ proto.lnrpc.MultiChanBackup.prototype.getMultiChanBackup_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.MultiChanBackup.prototype.setMultiChanBackup = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.MultiChanBackup} returns this
  */
-proto.lnrpc.ChanBackupExportRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.MultiChanBackup.prototype.setMultiChanBackup = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.ChanBackupExportRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChanBackupExportRequest.displayName = 'proto.lnrpc.ChanBackupExportRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChanBackupExportRequest.prototype.toObject = function(opt_includeInstance) {
@@ -36144,8 +39500,8 @@ proto.lnrpc.ChanBackupExportRequest.prototype.toObject = function(opt_includeIns
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChanBackupExportRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -36223,34 +39579,19 @@ proto.lnrpc.ChanBackupExportRequest.serializeBinaryToWriter = function(message, 
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChanBackupSnapshot = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChanBackupSnapshot, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChanBackupSnapshot.displayName = 'proto.lnrpc.ChanBackupSnapshot';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChanBackupSnapshot.prototype.toObject = function(opt_includeInstance) {
@@ -36260,8 +39601,8 @@ proto.lnrpc.ChanBackupSnapshot.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChanBackupSnapshot} msg The msg instance to transform.
  * @return {!Object}
@@ -36375,14 +39716,21 @@ proto.lnrpc.ChanBackupSnapshot.prototype.getSingleChanBackups = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelBackups|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelBackups|undefined} value
+ * @return {!proto.lnrpc.ChanBackupSnapshot} returns this
+*/
 proto.lnrpc.ChanBackupSnapshot.prototype.setSingleChanBackups = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
+  return jspb.Message.setWrapperField(this, 1, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChanBackupSnapshot} returns this
+ */
 proto.lnrpc.ChanBackupSnapshot.prototype.clearSingleChanBackups = function() {
-  this.setSingleChanBackups(undefined);
+  return this.setSingleChanBackups(undefined);
 };
 
 
@@ -36405,14 +39753,21 @@ proto.lnrpc.ChanBackupSnapshot.prototype.getMultiChanBackup = function() {
 };
 
 
-/** @param {?proto.lnrpc.MultiChanBackup|undefined} value */
+/**
+ * @param {?proto.lnrpc.MultiChanBackup|undefined} value
+ * @return {!proto.lnrpc.ChanBackupSnapshot} returns this
+*/
 proto.lnrpc.ChanBackupSnapshot.prototype.setMultiChanBackup = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  return jspb.Message.setWrapperField(this, 2, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.ChanBackupSnapshot} returns this
+ */
 proto.lnrpc.ChanBackupSnapshot.prototype.clearMultiChanBackup = function() {
-  this.setMultiChanBackup(undefined);
+  return this.setMultiChanBackup(undefined);
 };
 
 
@@ -36427,23 +39782,6 @@ proto.lnrpc.ChanBackupSnapshot.prototype.hasMultiChanBackup = function() {
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelBackups = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ChannelBackups.repeatedFields_, null);
-};
-goog.inherits(proto.lnrpc.ChannelBackups, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelBackups.displayName = 'proto.lnrpc.ChannelBackups';
-}
-/**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
@@ -36454,13 +39792,15 @@ proto.lnrpc.ChannelBackups.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelBackups.prototype.toObject = function(opt_includeInstance) {
@@ -36470,8 +39810,8 @@ proto.lnrpc.ChannelBackups.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelBackups} msg The msg instance to transform.
  * @return {!Object}
@@ -36572,9 +39912,12 @@ proto.lnrpc.ChannelBackups.prototype.getChanBackupsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.ChannelBackup>} value */
+/**
+ * @param {!Array<!proto.lnrpc.ChannelBackup>} value
+ * @return {!proto.lnrpc.ChannelBackups} returns this
+*/
 proto.lnrpc.ChannelBackups.prototype.setChanBackupsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -36588,29 +39931,16 @@ proto.lnrpc.ChannelBackups.prototype.addChanBackups = function(opt_value, opt_in
 };
 
 
-proto.lnrpc.ChannelBackups.prototype.clearChanBackupsList = function() {
-  this.setChanBackupsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ChannelBackups} returns this
  */
-proto.lnrpc.RestoreChanBackupRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_);
+proto.lnrpc.ChannelBackups.prototype.clearChanBackupsList = function() {
+  return this.setChanBackupsList([]);
 };
-goog.inherits(proto.lnrpc.RestoreChanBackupRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.RestoreChanBackupRequest.displayName = 'proto.lnrpc.RestoreChanBackupRequest';
-}
+
+
+
 /**
  * Oneof group definitions for this message. Each group defines the field
  * numbers belonging to that group. When of these fields' value is set, all
@@ -36641,13 +39971,15 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.getBackupCase = function() {
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.RestoreChanBackupRequest.prototype.toObject = function(opt_includeInstance) {
@@ -36657,8 +39989,8 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.RestoreChanBackupRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -36770,14 +40102,21 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.getChanBackups = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelBackups|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelBackups|undefined} value
+ * @return {!proto.lnrpc.RestoreChanBackupRequest} returns this
+*/
 proto.lnrpc.RestoreChanBackupRequest.prototype.setChanBackups = function(value) {
-  jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 1, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.RestoreChanBackupRequest} returns this
+ */
 proto.lnrpc.RestoreChanBackupRequest.prototype.clearChanBackups = function() {
-  this.setChanBackups(undefined);
+  return this.setChanBackups(undefined);
 };
 
 
@@ -36823,14 +40162,21 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.getMultiChanBackup_asU8 = functio
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.RestoreChanBackupRequest} returns this
+ */
 proto.lnrpc.RestoreChanBackupRequest.prototype.setMultiChanBackup = function(value) {
-  jspb.Message.setOneofField(this, 2, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 2, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_[0], value);
 };
 
 
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.lnrpc.RestoreChanBackupRequest} returns this
+ */
 proto.lnrpc.RestoreChanBackupRequest.prototype.clearMultiChanBackup = function() {
-  jspb.Message.setOneofField(this, 2, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 2, proto.lnrpc.RestoreChanBackupRequest.oneofGroups_[0], undefined);
 };
 
 
@@ -36844,34 +40190,19 @@ proto.lnrpc.RestoreChanBackupRequest.prototype.hasMultiChanBackup = function() {
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.RestoreBackupResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.RestoreBackupResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.RestoreBackupResponse.displayName = 'proto.lnrpc.RestoreBackupResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.RestoreBackupResponse.prototype.toObject = function(opt_includeInstance) {
@@ -36881,8 +40212,8 @@ proto.lnrpc.RestoreBackupResponse.prototype.toObject = function(opt_includeInsta
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.RestoreBackupResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -36960,34 +40291,19 @@ proto.lnrpc.RestoreBackupResponse.serializeBinaryToWriter = function(message, wr
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ChannelBackupSubscription = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ChannelBackupSubscription, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelBackupSubscription.displayName = 'proto.lnrpc.ChannelBackupSubscription';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelBackupSubscription.prototype.toObject = function(opt_includeInstance) {
@@ -36997,8 +40313,8 @@ proto.lnrpc.ChannelBackupSubscription.prototype.toObject = function(opt_includeI
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelBackupSubscription} msg The msg instance to transform.
  * @return {!Object}
@@ -37076,34 +40392,19 @@ proto.lnrpc.ChannelBackupSubscription.serializeBinaryToWriter = function(message
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.VerifyChanBackupResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.VerifyChanBackupResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.VerifyChanBackupResponse.displayName = 'proto.lnrpc.VerifyChanBackupResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.VerifyChanBackupResponse.prototype.toObject = function(opt_includeInstance) {
@@ -37113,8 +40414,8 @@ proto.lnrpc.VerifyChanBackupResponse.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.VerifyChanBackupResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -37192,34 +40493,19 @@ proto.lnrpc.VerifyChanBackupResponse.serializeBinaryToWriter = function(message,
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.MacaroonPermission = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.MacaroonPermission, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.MacaroonPermission.displayName = 'proto.lnrpc.MacaroonPermission';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.MacaroonPermission.prototype.toObject = function(opt_includeInstance) {
@@ -37229,8 +40515,8 @@ proto.lnrpc.MacaroonPermission.prototype.toObject = function(opt_includeInstance
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.MacaroonPermission} msg The msg instance to transform.
  * @return {!Object}
@@ -37339,9 +40625,12 @@ proto.lnrpc.MacaroonPermission.prototype.getEntity = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.MacaroonPermission} returns this
+ */
 proto.lnrpc.MacaroonPermission.prototype.setEntity = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -37354,30 +40643,16 @@ proto.lnrpc.MacaroonPermission.prototype.getAction = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.MacaroonPermission.prototype.setAction = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.MacaroonPermission} returns this
  */
-proto.lnrpc.BakeMacaroonRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.BakeMacaroonRequest.repeatedFields_, null);
+proto.lnrpc.MacaroonPermission.prototype.setAction = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.BakeMacaroonRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.BakeMacaroonRequest.displayName = 'proto.lnrpc.BakeMacaroonRequest';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -37389,13 +40664,15 @@ proto.lnrpc.BakeMacaroonRequest.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.BakeMacaroonRequest.prototype.toObject = function(opt_includeInstance) {
@@ -37405,8 +40682,8 @@ proto.lnrpc.BakeMacaroonRequest.prototype.toObject = function(opt_includeInstanc
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.BakeMacaroonRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -37519,9 +40796,12 @@ proto.lnrpc.BakeMacaroonRequest.prototype.getPermissionsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.MacaroonPermission>} value */
+/**
+ * @param {!Array<!proto.lnrpc.MacaroonPermission>} value
+ * @return {!proto.lnrpc.BakeMacaroonRequest} returns this
+*/
 proto.lnrpc.BakeMacaroonRequest.prototype.setPermissionsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -37535,8 +40815,12 @@ proto.lnrpc.BakeMacaroonRequest.prototype.addPermissions = function(opt_value, o
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.BakeMacaroonRequest} returns this
+ */
 proto.lnrpc.BakeMacaroonRequest.prototype.clearPermissionsList = function() {
-  this.setPermissionsList([]);
+  return this.setPermissionsList([]);
 };
 
 
@@ -37549,41 +40833,29 @@ proto.lnrpc.BakeMacaroonRequest.prototype.getRootKeyId = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.BakeMacaroonRequest.prototype.setRootKeyId = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.BakeMacaroonRequest} returns this
  */
-proto.lnrpc.BakeMacaroonResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.BakeMacaroonRequest.prototype.setRootKeyId = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
-goog.inherits(proto.lnrpc.BakeMacaroonResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.BakeMacaroonResponse.displayName = 'proto.lnrpc.BakeMacaroonResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.BakeMacaroonResponse.prototype.toObject = function(opt_includeInstance) {
@@ -37593,8 +40865,8 @@ proto.lnrpc.BakeMacaroonResponse.prototype.toObject = function(opt_includeInstan
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.BakeMacaroonResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -37691,41 +40963,29 @@ proto.lnrpc.BakeMacaroonResponse.prototype.getMacaroon = function() {
 };
 
 
-/** @param {string} value */
-proto.lnrpc.BakeMacaroonResponse.prototype.setMacaroon = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {string} value
+ * @return {!proto.lnrpc.BakeMacaroonResponse} returns this
  */
-proto.lnrpc.ListMacaroonIDsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.BakeMacaroonResponse.prototype.setMacaroon = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.ListMacaroonIDsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListMacaroonIDsRequest.displayName = 'proto.lnrpc.ListMacaroonIDsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListMacaroonIDsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -37735,8 +40995,8 @@ proto.lnrpc.ListMacaroonIDsRequest.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListMacaroonIDsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -37815,23 +41075,6 @@ proto.lnrpc.ListMacaroonIDsRequest.serializeBinaryToWriter = function(message, w
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ListMacaroonIDsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.ListMacaroonIDsResponse.repeatedFields_, null);
-};
-goog.inherits(proto.lnrpc.ListMacaroonIDsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListMacaroonIDsResponse.displayName = 'proto.lnrpc.ListMacaroonIDsResponse';
-}
-/**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
  * @const
@@ -37842,13 +41085,15 @@ proto.lnrpc.ListMacaroonIDsResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListMacaroonIDsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -37858,8 +41103,8 @@ proto.lnrpc.ListMacaroonIDsResponse.prototype.toObject = function(opt_includeIns
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListMacaroonIDsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -37867,7 +41112,7 @@ proto.lnrpc.ListMacaroonIDsResponse.prototype.toObject = function(opt_includeIns
  */
 proto.lnrpc.ListMacaroonIDsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    rootKeyIdsList: jspb.Message.getRepeatedField(msg, 1)
+    rootKeyIdsList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -37905,8 +41150,10 @@ proto.lnrpc.ListMacaroonIDsResponse.deserializeBinaryFromReader = function(msg, 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!Array<number>} */ (reader.readPackedUint64());
-      msg.setRootKeyIdsList(value);
+      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedUint64() : [reader.readUint64()]);
+      for (var i = 0; i < values.length; i++) {
+        msg.addRootKeyIds(values[i]);
+      }
       break;
     default:
       reader.skipField();
@@ -37956,55 +41203,48 @@ proto.lnrpc.ListMacaroonIDsResponse.prototype.getRootKeyIdsList = function() {
 };
 
 
-/** @param {!Array<number>} value */
+/**
+ * @param {!Array<number>} value
+ * @return {!proto.lnrpc.ListMacaroonIDsResponse} returns this
+ */
 proto.lnrpc.ListMacaroonIDsResponse.prototype.setRootKeyIdsList = function(value) {
-  jspb.Message.setField(this, 1, value || []);
+  return jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
  * @param {number} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.ListMacaroonIDsResponse} returns this
  */
 proto.lnrpc.ListMacaroonIDsResponse.prototype.addRootKeyIds = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
-
-
-proto.lnrpc.ListMacaroonIDsResponse.prototype.clearRootKeyIdsList = function() {
-  this.setRootKeyIdsList([]);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.ListMacaroonIDsResponse} returns this
  */
-proto.lnrpc.DeleteMacaroonIDRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.ListMacaroonIDsResponse.prototype.clearRootKeyIdsList = function() {
+  return this.setRootKeyIdsList([]);
 };
-goog.inherits(proto.lnrpc.DeleteMacaroonIDRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DeleteMacaroonIDRequest.displayName = 'proto.lnrpc.DeleteMacaroonIDRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DeleteMacaroonIDRequest.prototype.toObject = function(opt_includeInstance) {
@@ -38014,8 +41254,8 @@ proto.lnrpc.DeleteMacaroonIDRequest.prototype.toObject = function(opt_includeIns
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DeleteMacaroonIDRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -38112,41 +41352,29 @@ proto.lnrpc.DeleteMacaroonIDRequest.prototype.getRootKeyId = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.DeleteMacaroonIDRequest.prototype.setRootKeyId = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.DeleteMacaroonIDRequest} returns this
  */
-proto.lnrpc.DeleteMacaroonIDResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.DeleteMacaroonIDRequest.prototype.setRootKeyId = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.DeleteMacaroonIDResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.DeleteMacaroonIDResponse.displayName = 'proto.lnrpc.DeleteMacaroonIDResponse';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.DeleteMacaroonIDResponse.prototype.toObject = function(opt_includeInstance) {
@@ -38156,8 +41384,8 @@ proto.lnrpc.DeleteMacaroonIDResponse.prototype.toObject = function(opt_includeIn
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.DeleteMacaroonIDResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -38165,7 +41393,7 @@ proto.lnrpc.DeleteMacaroonIDResponse.prototype.toObject = function(opt_includeIn
  */
 proto.lnrpc.DeleteMacaroonIDResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    deleted: jspb.Message.getFieldWithDefault(msg, 1, false)
+    deleted: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
   };
 
   if (includeInstance) {
@@ -38247,39 +41475,23 @@ proto.lnrpc.DeleteMacaroonIDResponse.serializeBinaryToWriter = function(message,
 
 /**
  * optional bool deleted = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.lnrpc.DeleteMacaroonIDResponse.prototype.getDeleted = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
-
-
-/** @param {boolean} value */
-proto.lnrpc.DeleteMacaroonIDResponse.prototype.setDeleted = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
 
 
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {boolean} value
+ * @return {!proto.lnrpc.DeleteMacaroonIDResponse} returns this
  */
-proto.lnrpc.MacaroonPermissionList = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.MacaroonPermissionList.repeatedFields_, null);
+proto.lnrpc.DeleteMacaroonIDResponse.prototype.setDeleted = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
-goog.inherits(proto.lnrpc.MacaroonPermissionList, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.MacaroonPermissionList.displayName = 'proto.lnrpc.MacaroonPermissionList';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -38291,13 +41503,15 @@ proto.lnrpc.MacaroonPermissionList.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.MacaroonPermissionList.prototype.toObject = function(opt_includeInstance) {
@@ -38307,8 +41521,8 @@ proto.lnrpc.MacaroonPermissionList.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.MacaroonPermissionList} msg The msg instance to transform.
  * @return {!Object}
@@ -38409,9 +41623,12 @@ proto.lnrpc.MacaroonPermissionList.prototype.getPermissionsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.MacaroonPermission>} value */
+/**
+ * @param {!Array<!proto.lnrpc.MacaroonPermission>} value
+ * @return {!proto.lnrpc.MacaroonPermissionList} returns this
+*/
 proto.lnrpc.MacaroonPermissionList.prototype.setPermissionsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+  return jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
@@ -38425,40 +41642,29 @@ proto.lnrpc.MacaroonPermissionList.prototype.addPermissions = function(opt_value
 };
 
 
-proto.lnrpc.MacaroonPermissionList.prototype.clearPermissionsList = function() {
-  this.setPermissionsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.MacaroonPermissionList} returns this
  */
-proto.lnrpc.ListPermissionsRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.MacaroonPermissionList.prototype.clearPermissionsList = function() {
+  return this.setPermissionsList([]);
 };
-goog.inherits(proto.lnrpc.ListPermissionsRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListPermissionsRequest.displayName = 'proto.lnrpc.ListPermissionsRequest';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListPermissionsRequest.prototype.toObject = function(opt_includeInstance) {
@@ -38468,8 +41674,8 @@ proto.lnrpc.ListPermissionsRequest.prototype.toObject = function(opt_includeInst
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListPermissionsRequest} msg The msg instance to transform.
  * @return {!Object}
@@ -38547,34 +41753,19 @@ proto.lnrpc.ListPermissionsRequest.serializeBinaryToWriter = function(message, w
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.ListPermissionsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.ListPermissionsResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ListPermissionsResponse.displayName = 'proto.lnrpc.ListPermissionsResponse';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ListPermissionsResponse.prototype.toObject = function(opt_includeInstance) {
@@ -38584,8 +41775,8 @@ proto.lnrpc.ListPermissionsResponse.prototype.toObject = function(opt_includeIns
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ListPermissionsResponse} msg The msg instance to transform.
  * @return {!Object}
@@ -38633,7 +41824,7 @@ proto.lnrpc.ListPermissionsResponse.deserializeBinaryFromReader = function(msg, 
     case 1:
       var value = msg.getMethodPermissionsMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.MacaroonPermissionList.deserializeBinaryFromReader, "");
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.lnrpc.MacaroonPermissionList.deserializeBinaryFromReader, "", new proto.lnrpc.MacaroonPermissionList());
          });
       break;
     default:
@@ -38685,40 +41876,29 @@ proto.lnrpc.ListPermissionsResponse.prototype.getMethodPermissionsMap = function
 };
 
 
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.lnrpc.ListPermissionsResponse} returns this
+ */
 proto.lnrpc.ListPermissionsResponse.prototype.clearMethodPermissionsMap = function() {
   this.getMethodPermissionsMap().clear();
-};
+  return this;};
 
 
 
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.lnrpc.Failure = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.lnrpc.Failure, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Failure.displayName = 'proto.lnrpc.Failure';
-}
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Failure.prototype.toObject = function(opt_includeInstance) {
@@ -38728,8 +41908,8 @@ proto.lnrpc.Failure.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Failure} msg The msg instance to transform.
  * @return {!Object}
@@ -38945,9 +42125,12 @@ proto.lnrpc.Failure.prototype.getCode = function() {
 };
 
 
-/** @param {!proto.lnrpc.Failure.FailureCode} value */
+/**
+ * @param {!proto.lnrpc.Failure.FailureCode} value
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.setCode = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -38961,14 +42144,21 @@ proto.lnrpc.Failure.prototype.getChannelUpdate = function() {
 };
 
 
-/** @param {?proto.lnrpc.ChannelUpdate|undefined} value */
+/**
+ * @param {?proto.lnrpc.ChannelUpdate|undefined} value
+ * @return {!proto.lnrpc.Failure} returns this
+*/
 proto.lnrpc.Failure.prototype.setChannelUpdate = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
+  return jspb.Message.setWrapperField(this, 3, value);
 };
 
 
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.clearChannelUpdate = function() {
-  this.setChannelUpdate(undefined);
+  return this.setChannelUpdate(undefined);
 };
 
 
@@ -38990,9 +42180,12 @@ proto.lnrpc.Failure.prototype.getHtlcMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.setHtlcMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -39029,9 +42222,12 @@ proto.lnrpc.Failure.prototype.getOnionSha256_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.setOnionSha256 = function(value) {
-  jspb.Message.setProto3BytesField(this, 5, value);
+  return jspb.Message.setProto3BytesField(this, 5, value);
 };
 
 
@@ -39044,9 +42240,12 @@ proto.lnrpc.Failure.prototype.getCltvExpiry = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.setCltvExpiry = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -39059,9 +42258,12 @@ proto.lnrpc.Failure.prototype.getFlags = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.setFlags = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -39074,9 +42276,12 @@ proto.lnrpc.Failure.prototype.getFailureSourceIndex = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.Failure} returns this
+ */
 proto.lnrpc.Failure.prototype.setFailureSourceIndex = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -39089,41 +42294,29 @@ proto.lnrpc.Failure.prototype.getHeight = function() {
 };
 
 
-/** @param {number} value */
-proto.lnrpc.Failure.prototype.setHeight = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {number} value
+ * @return {!proto.lnrpc.Failure} returns this
  */
-proto.lnrpc.ChannelUpdate = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+proto.lnrpc.Failure.prototype.setHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
-goog.inherits(proto.lnrpc.ChannelUpdate, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.ChannelUpdate.displayName = 'proto.lnrpc.ChannelUpdate';
-}
+
+
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.ChannelUpdate.prototype.toObject = function(opt_includeInstance) {
@@ -39133,8 +42326,8 @@ proto.lnrpc.ChannelUpdate.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.ChannelUpdate} msg The msg instance to transform.
  * @return {!Object}
@@ -39387,9 +42580,12 @@ proto.lnrpc.ChannelUpdate.prototype.getSignature_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setSignature = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -39426,9 +42622,12 @@ proto.lnrpc.ChannelUpdate.prototype.getChainHash_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setChainHash = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -39441,9 +42640,12 @@ proto.lnrpc.ChannelUpdate.prototype.getChanId = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setChanId = function(value) {
-  jspb.Message.setProto3StringIntField(this, 3, value);
+  return jspb.Message.setProto3StringIntField(this, 3, value);
 };
 
 
@@ -39456,9 +42658,12 @@ proto.lnrpc.ChannelUpdate.prototype.getTimestamp = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setTimestamp = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -39471,9 +42676,12 @@ proto.lnrpc.ChannelUpdate.prototype.getMessageFlags = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setMessageFlags = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -39486,9 +42694,12 @@ proto.lnrpc.ChannelUpdate.prototype.getChannelFlags = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setChannelFlags = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  return jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -39501,9 +42712,12 @@ proto.lnrpc.ChannelUpdate.prototype.getTimeLockDelta = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setTimeLockDelta = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
+  return jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -39516,9 +42730,12 @@ proto.lnrpc.ChannelUpdate.prototype.getHtlcMinimumMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setHtlcMinimumMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 7, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -39531,9 +42748,12 @@ proto.lnrpc.ChannelUpdate.prototype.getBaseFee = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setBaseFee = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
@@ -39546,9 +42766,12 @@ proto.lnrpc.ChannelUpdate.prototype.getFeeRate = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setFeeRate = function(value) {
-  jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
@@ -39561,9 +42784,12 @@ proto.lnrpc.ChannelUpdate.prototype.getHtlcMaximumMAtoms = function() {
 };
 
 
-/** @param {number} value */
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
+ */
 proto.lnrpc.ChannelUpdate.prototype.setHtlcMaximumMAtoms = function(value) {
-  jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
@@ -39600,30 +42826,16 @@ proto.lnrpc.ChannelUpdate.prototype.getExtraOpaqueData_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
-proto.lnrpc.ChannelUpdate.prototype.setExtraOpaqueData = function(value) {
-  jspb.Message.setProto3BytesField(this, 12, value);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.ChannelUpdate} returns this
  */
-proto.lnrpc.MacaroonId = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.MacaroonId.repeatedFields_, null);
+proto.lnrpc.ChannelUpdate.prototype.setExtraOpaqueData = function(value) {
+  return jspb.Message.setProto3BytesField(this, 12, value);
 };
-goog.inherits(proto.lnrpc.MacaroonId, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.MacaroonId.displayName = 'proto.lnrpc.MacaroonId';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -39635,13 +42847,15 @@ proto.lnrpc.MacaroonId.repeatedFields_ = [3];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.MacaroonId.prototype.toObject = function(opt_includeInstance) {
@@ -39651,8 +42865,8 @@ proto.lnrpc.MacaroonId.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.MacaroonId} msg The msg instance to transform.
  * @return {!Object}
@@ -39800,9 +43014,12 @@ proto.lnrpc.MacaroonId.prototype.getNonce_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.MacaroonId} returns this
+ */
 proto.lnrpc.MacaroonId.prototype.setNonce = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -39839,9 +43056,12 @@ proto.lnrpc.MacaroonId.prototype.getStorageid_asU8 = function() {
 };
 
 
-/** @param {!(string|Uint8Array)} value */
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.lnrpc.MacaroonId} returns this
+ */
 proto.lnrpc.MacaroonId.prototype.setStorageid = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
+  return jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -39855,9 +43075,12 @@ proto.lnrpc.MacaroonId.prototype.getOpsList = function() {
 };
 
 
-/** @param {!Array<!proto.lnrpc.Op>} value */
+/**
+ * @param {!Array<!proto.lnrpc.Op>} value
+ * @return {!proto.lnrpc.MacaroonId} returns this
+*/
 proto.lnrpc.MacaroonId.prototype.setOpsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 3, value);
+  return jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
 
 
@@ -39871,29 +43094,16 @@ proto.lnrpc.MacaroonId.prototype.addOps = function(opt_value, opt_index) {
 };
 
 
-proto.lnrpc.MacaroonId.prototype.clearOpsList = function() {
-  this.setOpsList([]);
-};
-
-
-
 /**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.MacaroonId} returns this
  */
-proto.lnrpc.Op = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.lnrpc.Op.repeatedFields_, null);
+proto.lnrpc.MacaroonId.prototype.clearOpsList = function() {
+  return this.setOpsList([]);
 };
-goog.inherits(proto.lnrpc.Op, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.lnrpc.Op.displayName = 'proto.lnrpc.Op';
-}
+
+
+
 /**
  * List of repeated fields within this message type.
  * @private {!Array<number>}
@@ -39905,13 +43115,15 @@ proto.lnrpc.Op.repeatedFields_ = [2];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 /**
- * Creates an object representation of this proto suitable for use in Soy templates.
+ * Creates an object representation of this proto.
  * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
  * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
  * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
  * @return {!Object}
  */
 proto.lnrpc.Op.prototype.toObject = function(opt_includeInstance) {
@@ -39921,8 +43133,8 @@ proto.lnrpc.Op.prototype.toObject = function(opt_includeInstance) {
 
 /**
  * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
  *     http://goto/soy-param-migration
  * @param {!proto.lnrpc.Op} msg The msg instance to transform.
  * @return {!Object}
@@ -39931,7 +43143,7 @@ proto.lnrpc.Op.prototype.toObject = function(opt_includeInstance) {
 proto.lnrpc.Op.toObject = function(includeInstance, msg) {
   var f, obj = {
     entity: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    actionsList: jspb.Message.getRepeatedField(msg, 2)
+    actionsList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -40031,9 +43243,12 @@ proto.lnrpc.Op.prototype.getEntity = function() {
 };
 
 
-/** @param {string} value */
+/**
+ * @param {string} value
+ * @return {!proto.lnrpc.Op} returns this
+ */
 proto.lnrpc.Op.prototype.setEntity = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -40046,23 +43261,31 @@ proto.lnrpc.Op.prototype.getActionsList = function() {
 };
 
 
-/** @param {!Array<string>} value */
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.lnrpc.Op} returns this
+ */
 proto.lnrpc.Op.prototype.setActionsList = function(value) {
-  jspb.Message.setField(this, 2, value || []);
+  return jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
  * @param {string} value
  * @param {number=} opt_index
+ * @return {!proto.lnrpc.Op} returns this
  */
 proto.lnrpc.Op.prototype.addActions = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.lnrpc.Op} returns this
+ */
 proto.lnrpc.Op.prototype.clearActionsList = function() {
-  this.setActionsList([]);
+  return this.setActionsList([]);
 };
 
 
