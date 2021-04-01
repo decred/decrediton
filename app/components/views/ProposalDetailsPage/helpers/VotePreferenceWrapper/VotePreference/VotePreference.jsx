@@ -1,40 +1,9 @@
 import React from "react";
 import { FormattedMessage as T } from "react-intl";
 import { RadioButtonGroup } from "pi-ui";
-import { PassphraseModalButton } from "buttons";
 import VotedCheckmark from "./VotedCheckmark";
+import CastVoteModalButton from "./CastVoteModalButton";
 import styles from "./VotePreference.module.css";
-
-// XXX move to a separate file
-const UpdateVoteChoiceModalButton = ({
-  onSubmit,
-  newVoteChoice,
-  eligibleTicketCount
-}) => (
-  <PassphraseModalButton
-    modalTitle={
-      <>
-        <T id="proposals.updateVoteChoiceModal.title" m="Confirm Your Vote" />
-        <div className={styles.voteConfirmation}>
-          <div className={styles[`${newVoteChoice}Proposal`]} />
-          {newVoteChoice}
-        </div>
-      </>
-    }
-    modalDescription={
-      <T
-        id="proposalDetails.votingInfo.eligibleCount"
-        m="You have {count, plural, one {one ticket} other {# tickets}} eligible for voting"
-        values={{ count: eligibleTicketCount }}
-      />
-    }
-    onSubmit={onSubmit}
-    className={styles.voteButton}
-    buttonLabel={
-      <T id="proposals.updateVoteChoiceModal.btnLabel" m="Cast Vote" />
-    }
-  />
-);
 
 const VotePreference = React.memo(
   ({
@@ -67,7 +36,7 @@ const VotePreference = React.memo(
           optionsClassName={voteOptions.map((o) => styles[o.id])}
         />
         {!votingComplete && !votedSuccessfully && newVoteChoice && (
-          <UpdateVoteChoiceModalButton
+          <CastVoteModalButton
             {...{
               newVoteChoice,
               onSubmit: onVoteSubmit,
