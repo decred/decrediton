@@ -24,41 +24,8 @@ const config = merge(baseConfig, {
   },
 
   module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 1,
-              modules: {
-                localIdentName: "[hash:base64]"
-              }
-            }
-          }
-        ],
-        include: /\.module\.css$/
-      },
-      {
-        test: [/\.css$/],
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 1
-            }
-          }
-        ],
-        exclude: /\.module\.css$/
-      }
-    ]
+    // CSS injected directly in the DOM.
+    rules: [{ test: /\.css$/, use: ["style-loader", "css-loader"] }]
   },
 
   plugins: [

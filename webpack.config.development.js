@@ -31,6 +31,7 @@ export default merge(baseConfig, {
   module: {
     rules: [
       {
+        // CSS files injected directly in the DOM.
         test: /\.css$/,
         use: [
           "style-loader",
@@ -40,28 +41,13 @@ export default merge(baseConfig, {
               sourceMap: true,
               importLoaders: 1,
               modules: {
+                // Adds original className as prefix to the hashed css module
+                // class names.
                 localIdentName: "[local]__[hash:base64:5]"
               }
             }
           }
-        ],
-        include: /\.module\.css$/
-      },
-      {
-        test: [/\.css$/],
-        use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader",
-            options: {
-              sourceMap: true,
-              importLoaders: 1
-            }
-          }
-        ],
-        exclude: /\.module\.css$/
+        ]
       }
     ]
   },
