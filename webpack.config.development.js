@@ -41,8 +41,7 @@ export default merge(baseConfig, {
               sourceMap: true,
               importLoaders: 1,
               modules: {
-                // Adds original className as prefix to the hashed css module
-                // class names.
+                // Prepend the original class name in dev mode to ease debugging.
                 localIdentName: "[local]__[hash:base64:5]"
               }
             }
