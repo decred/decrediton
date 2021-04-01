@@ -1,3 +1,4 @@
+import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import styles from "./CastVoteModalButton.module.css";
 

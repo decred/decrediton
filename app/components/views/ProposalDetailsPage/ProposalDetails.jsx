@@ -137,8 +137,7 @@ const ProposalDetails = ({
           />
         )}
       </div>
-      {/* XXX [&& walletEligibleTickets] ? */}
-      {votingActiveOrFinished && walletEligibleTickets && (
+      {votingActiveOrFinished && (
         <VoteSection
           {...{
             hasTickets,
@@ -155,19 +154,19 @@ const ProposalDetails = ({
         />
       )}
       <div className={styles.detailsText}>
-        <div className={styles.links}>
-          <PoliteiaLink
-            className={styles.politeiaButton}
-            path={proposalPath}
-            CustomComponent={Button}
-            isTestnet={isTestnet}>
-            <T
-              id="proposals.community.goToProposal"
-              m="See proposal comments on Politeia"
-            />
-          </PoliteiaLink>
-        </div>
         <ProposalText text={text} />
+      </div>
+      <div className={styles.piButtonWrapper}>
+        <PoliteiaLink
+          className={styles.piButton}
+          path={proposalPath}
+          CustomComponent={Button}
+          isTestnet={isTestnet}>
+          <T
+            id="proposals.community.goToProposal"
+            m="See proposal comments on Politeia"
+          />
+        </PoliteiaLink>
       </div>
     </div>
   );

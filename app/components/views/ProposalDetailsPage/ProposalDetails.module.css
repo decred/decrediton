@@ -91,26 +91,17 @@
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
   min-height: 100%;
-  padding: 40px 0 40px 40px;
+  padding: 30px 40px;
   background-color: var(--background-back-color);
-  margin: 20px 0 80px;
+  margin: 20px 0;
   border-top: 1px solid var(--tabbed-page-header-bg);
   width: 740px;
-}
-
-.detailsText .links {
-  float: right;
-  margin-right: 20px;
-  margin-top: -20px;
+  font-size: 16px;
 }
 
 .detailsText p {
   word-wrap: break-word;
   margin: 10px 0;
-}
-
-.proposalBody {
-  width: 66%;
 }
 
 .detailsText a {
@@ -126,9 +117,10 @@
   padding: 16px;
 }
 
-.detailsText div:not(.links) {
-  padding-right: 30px;
-  padding-bottom: 20px;
+.piButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 740px;
 }
 
 .voteStatusBar {
@@ -160,21 +152,11 @@
   text-align: center;
 }
 
-.politeiaButton {
-  font-size: 13px !important;
-  line-height: 17px !important;
-  border-radius: 5px !important;
-  padding: 6px 15px !important;
-  margin: 4px !important;
-  color: var(--info-modal-button-text) !important;
-  background-color: var(--info-modal-button-bg) !important;
+.piButton {
   border: 0 !important;
   text-decoration: none !important;
-  box-shadow: 0 5px 13px var(--icons-shadow);
-}
-
-.politeiaButton:hover {
-  background-color: var(--title-text-and-button-background-hovered) !important;
+  color: var(--color-white) !important;
+  font-weight: var(--font-weight-semi-bold) !important;
 }
 
 @media screen and (max-width: 1179px) {
