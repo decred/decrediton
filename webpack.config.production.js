@@ -25,7 +25,12 @@ const config = merge(baseConfig, {
 
   module: {
     // CSS injected directly in the DOM.
-    rules: [{ test: /\.css$/, use: ["style-loader", "css-loader"] }]
+    rules: [
+      {
+        test: /\.css$/,
+        use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"]
+      }
+    ]
   },
 
   plugins: [

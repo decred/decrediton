@@ -29,9 +29,9 @@ export default merge(baseConfig, {
   },
 
   module: {
+    // CSS files injected directly in the DOM.
     rules: [
       {
-        // CSS files injected directly in the DOM.
         test: /\.css$/,
         use: [
           "style-loader",
@@ -47,7 +47,24 @@ export default merge(baseConfig, {
               }
             }
           }
-        ]
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: [/\.css$/],
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              importLoaders: 1
+            }
+          }
+        ],
+        exclude: /\.module\.css$/
       }
     ]
   },
