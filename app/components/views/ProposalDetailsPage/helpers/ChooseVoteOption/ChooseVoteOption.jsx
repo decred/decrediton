@@ -5,7 +5,7 @@ import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { StakeyBounceXs } from "indicators";
 import * as gov from "actions/GovernanceActions";
 import styles from "./ChooseVoteOption.module.css";
-import { ChooseOptions } from "../";
+import { VotePreference } from "../";
 import { FormattedMessage as T } from "react-intl";
 
 const getError = (error) => {
@@ -69,7 +69,7 @@ const ChooseVoteOption = ({
     case "idle":
     case "failure":
       return (
-        <ChooseOptions
+        <VotePreference
           {...{
             setVoteOption,
             newVoteChoice,
@@ -77,7 +77,8 @@ const ChooseVoteOption = ({
             currentVoteChoice,
             voteOptions,
             votingComplete,
-            onVoteSubmit: voteSubmitHandler
+            onVoteSubmit: voteSubmitHandler,
+            votedSuccessfully: currentVoteChoice !== "abstain"
           }}
         />
       );
@@ -94,7 +95,7 @@ const ChooseVoteOption = ({
       );
     case "success":
       return (
-        <ChooseOptions
+        <VotePreference
           {...{
             setVoteOption,
             newVoteChoice,
