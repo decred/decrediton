@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
+import { FormattedMessage as T } from "react-intl";
 import { useState, useCallback, useMemo } from "react";
 import { useMachine } from "@xstate/react";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { StakeyBounceXs } from "indicators";
 import * as gov from "actions/GovernanceActions";
-import styles from "./ChooseVoteOption.module.css";
-import { VotePreference } from "../";
-import { FormattedMessage as T } from "react-intl";
+import styles from "./VotePreferenceWrapper.module.css";
+import VotePreference from "./VotePreference";
 
 const getError = (error) => {
   if (!error) return;
@@ -17,13 +17,13 @@ const getError = (error) => {
   }
 };
 
-const ChooseVoteOption = ({
+const VotePreferenceWrapper = ({
   viewedProposalDetails,
   voteOptions,
   currentVoteChoice,
   votingComplete
 }) => {
-  // XXX move all hooks/state logic to a custom hook ie. useChooseVoteOption
+  // XXX move all hooks/state logic to a custom hook ie. useVotePreference
   const { eligibleTicketCount } = viewedProposalDetails || {};
   const [newVoteChoice, setVoteOption] = useState(null);
 
@@ -84,7 +84,7 @@ const ChooseVoteOption = ({
       );
     case "loading":
       return (
-        <div className={styles.voteChoice}>
+        <div className={styles.stakeyWrapper}>
           <StakeyBounceXs />
           <T
             id="proposalDetails.votingInfo.updatingVoteChoice"
@@ -111,4 +111,4 @@ const ChooseVoteOption = ({
   }
 };
 
-export default ChooseVoteOption;
+export default VotePreferenceWrapper;

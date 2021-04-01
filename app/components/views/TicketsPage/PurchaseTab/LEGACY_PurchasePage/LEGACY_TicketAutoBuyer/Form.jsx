@@ -121,7 +121,7 @@ const TicketAutoBuyerForm = ({
       </div>
       <div className={styles.row}>
         <div className={styles.rowPortionFull}>
-          <label className={styles.label}  htmlFor="balanceToMaintain">
+          <label className={styles.label} htmlFor="balanceToMaintain">
             <T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />:
           </label>
           <div className={styles.input}>

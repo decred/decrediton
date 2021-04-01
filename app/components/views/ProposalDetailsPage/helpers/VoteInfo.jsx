@@ -9,7 +9,7 @@ import {
   NoTicketsVotingInfo,
   NoElligibleTicketsVotingInfo,
   ProposalAbandoned,
-  ChooseVoteOption
+  VotePreference
 } from "./";
 
 const VoteInfo = memo(
@@ -30,7 +30,7 @@ const VoteInfo = memo(
     }
     if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
       return (
-        <ChooseVoteOption
+        <VotePreference
           {...{ voteOptions, currentVoteChoice, votingComplete: true }}
         />
       );
@@ -45,7 +45,7 @@ const VoteInfo = memo(
         );
       }
       return (
-        <ChooseVoteOption
+        <VotePreference
           {...{
             viewedProposalDetails,
             voteOptions,

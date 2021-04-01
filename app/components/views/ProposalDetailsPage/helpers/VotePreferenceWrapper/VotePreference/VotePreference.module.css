@@ -49,11 +49,13 @@
   margin-left: 10px;
 }
 
-.yes, .no {
+.yes,
+.no {
   margin-top: 0 !important;
 }
 
-.yes > label, .no > label {
+.yes > label,
+.no > label {
   display: flex;
   align-items: center;
 }

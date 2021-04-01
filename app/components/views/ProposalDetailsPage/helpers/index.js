@@ -9,7 +9,6 @@ export { default as TimeValue } from "./TimeValue";
 export { default as ProposalText } from "./ProposalText";
 export { default as Header } from "./Header";
 export { default as VoteInfo } from "./VoteInfo";
-export { default as VotePreference } from "./VotePreference";
-export { default as ChooseVoteOption } from "./ChooseVoteOption";
+export { default as VotePreference } from "./VotePreferenceWrapper";
 export { default as VoteSection } from "./VoteSection";
 export { default as NoTicketsMsg } from "./NoTicketsMsg";
