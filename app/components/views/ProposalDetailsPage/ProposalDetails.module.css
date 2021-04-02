@@ -1,7 +1,7 @@
 .overview {
   background-color: var(--background-back-color);
   width: 740px;
-  padding-bottom: 15px;
+  padding-bottom: 23px;
 }
 
 .overviewInfo {
@@ -19,40 +19,25 @@
   align-items: flex-end;
 }
 
-.voteEvent {
-  margin: 0.2rem 0.2rem 0 0;
-}
-
 .title {
   font-size: 18px;
   line-height: 23px;
-  color: var(--tutorial-header);
+  color: var(--tutorial-header) !important;
 }
 
-.proposedToRfp,
-.token {
+.proposedToRfp {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: var(--overview-balance-label);
+  color: var(--stroke-color-default);
 }
 
-.token {
-  width: 100px;
-}
-
-.proposedToRfp a,
-.token a {
+.proposedToRfp a {
   font-size: 13px;
   line-height: 19px;
   color: var(--overview-balance-label);
   text-decoration: none;
   cursor: pointer;
-}
-
-.proposedToRfp a:hover,
-.token a:hover {
-  color: var(--stroke-color-default);
 }
 
 .notVoting,
@@ -71,28 +56,12 @@
   padding-top: 7px;
 }
 
-.overviewField .label {
-  color: var(--agenda-card-bottom-cfg);
-  display: inline-block;
-  margin-right: 0.5em;
-  width: 100px;
-  text-align: right;
-  vertical-align: middle;
-}
-
-.overviewField .value {
-  color: var(--input-color-default);
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 229px;
-}
-
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
   min-height: 100%;
   padding: 30px 40px;
   background-color: var(--background-back-color);
-  margin: 20px 0;
+  margin: 5px 0 20px 0;
   border-top: 1px solid var(--tabbed-page-header-bg);
   width: 740px;
   font-size: 16px;
@@ -123,9 +92,18 @@
 }
 
 .voteStatusBar {
-  width: auto !important;
+  flex-basis: 80%;
+  margin-right: 10px;
+}
+
+.statusBarRow {
   padding: 0 20px;
-  margin-bottom: 15px;
+}
+
+.voteEnd {
+  align-items: flex-end;
+  flex-basis: 20%;
+  margin-top: -0.2rem;
 }
 
 .quorumTooltip {

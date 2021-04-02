@@ -42,7 +42,7 @@ const SendTab = () => {
     <>
       <Subtitle
         title={<T id="send.subtitle" m="Send DCR" />}
-        className={"is-row"}
+        className={"flex-row"}
         children={<ListUTXOsButton />}
       />
       <SendTransaction styles={styles} SendOutputRow={SendOutputRow} />

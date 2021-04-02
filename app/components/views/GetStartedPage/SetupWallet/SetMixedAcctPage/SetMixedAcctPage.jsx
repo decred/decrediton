@@ -106,11 +106,13 @@ export default ({ cancel, onSendContinue }) => {
       )}
       {coinjoinSumByAcct && (
         <>
-          <div className={classNames("is-row", styles.cardsWrapper)}>
+          <div className={classNames("flex-row", styles.cardsWrapper)}>
             {coinjoinSumByAcct.map(({ acctIdx, coinjoinSum }) => (
-              <div key={acctIdx} className={classNames("is-row", styles.card)}>
-                <div className={classNames("is-column", styles.labelWrapper)}>
-                  <div className="is-row">
+              <div
+                key={acctIdx}
+                className={classNames("flex-row", styles.card)}>
+                <div className={classNames("flex-column", styles.labelWrapper)}>
+                  <div className="flex-row">
                     <div className={styles.accountIcon} />
                     <div className={styles.accountLabel}>
                       <T
@@ -135,8 +137,8 @@ export default ({ cancel, onSendContinue }) => {
                   </div>
                 </div>
                 {acctIdx !== 0 && (
-                  <div className={classNames("is-column", styles.buttons)}>
-                    <div className={classNames("is-row", styles.checkboxRow)}>
+                  <div className={classNames("flex-column", styles.buttons)}>
+                    <div className={classNames("flex-row", styles.checkboxRow)}>
                       <Checkbox
                         id={`mixed${acctIdx}`}
                         label={
@@ -149,7 +151,7 @@ export default ({ cancel, onSendContinue }) => {
                         onChange={() => onSetMixedAcct(acctIdx)}
                       />
                     </div>
-                    <div className={classNames("is-row", styles.checkboxRow)}>
+                    <div className={classNames("flex-row", styles.checkboxRow)}>
                       <Checkbox
                         id={`change${acctIdx}`}
                         label={

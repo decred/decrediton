@@ -2,8 +2,8 @@ import { classNames } from "pi-ui";
 import styles from "./TitleHeader.module.css";
 
 const TitleHeader = ({ title, iconType, optionalButton }) => (
-  <div className={classNames(styles.container, "is-row")}>
-    <div className="is-row">
+  <div className={classNames(styles.container, "flex-row")}>
+    <div className="flex-row">
       <div className={styles.icon}>
         <div className={styles[iconType]} />
       </div>

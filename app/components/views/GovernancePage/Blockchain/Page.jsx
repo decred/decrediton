@@ -16,7 +16,7 @@ const VotingPrefs = ({
   isLoading
 }) => (
   <>
-    <div className={classNames(styles.header, "is-row")}>
+    <div className={classNames(styles.header, "flex-row")}>
       <div>
         <div className={styles.title}>
           <T id="votingPreferences.title" m="Consensus Changes" />

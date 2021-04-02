@@ -11,12 +11,12 @@ import {
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink } from "shared";
 import {
-  OverviewField,
   Event,
   VOTE_ENDS_EVENT,
   VOTE_ENDED_EVENT,
   ProposalText,
-  VoteSection
+  VoteSection,
+  Join
 } from "./helpers";
 import { getStatusBarData, getProposalStatusTagProps } from "./utils";
 import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
@@ -65,8 +65,23 @@ const ProposalDetails = ({
       <div className={styles.overview}>
         <div className={styles.overviewInfo}>
           <div className={styles.row}>
-            <div className={styles.title}>{name}</div>
-            <div className={styles.column}>
+            <div className="flex-column">
+              <PoliteiaLink
+                className={styles.title}
+                isTestnet={isTestnet}
+                path={proposalPath}>
+                {name}
+              </PoliteiaLink>
+              <Join>
+                <span>{creator}</span>
+                <Event timestamp={timestamp} tsDate={tsDate} />
+                <span>
+                  <T id="proposal.overview.version.label" m="version" />
+                  {version}
+                </span>
+              </Join>
+            </div>
+            <div className={classNames("flex-column", "align-end")}>
               <StatusTag
                 className={styles.statusTag}
                 {...getProposalStatusTagProps(
@@ -75,16 +90,7 @@ const ProposalDetails = ({
                   isDarkTheme
                 )}
               />
-              <Event
-                className={styles.voteEvent}
-                eventType={isVoteActive ? VOTE_ENDS_EVENT : VOTE_ENDED_EVENT}
-                timestamp={endTimestamp}
-                tsDate={tsDate}
-              />
-              <div>
-                {blocksLeft}{" "}
-                <T id="proposal.overview.blocksLeft" m="blocks left" />
-              </div>
+              <div className={styles.token}>{shortToken}</div>
             </div>
           </div>
           {linkedProposal && (
@@ -104,50 +110,44 @@ const ProposalDetails = ({
               />
             </div>
           )}
-          <div className={styles.token}>
-            <PoliteiaLink isTestnet={isTestnet} path={proposalPath}>
-              {shortToken}
-            </PoliteiaLink>
-          </div>
-          <div>
-            <OverviewField
-              label={<T id="proposal.overview.created.label" m="Created by" />}
-              value={creator}
-            />
-            <OverviewField
-              label={<T id="proposal.overview.version.label" m="Version" />}
-              value={version}
-            />
-            <OverviewField
-              label={
-                <T id="proposal.overview.lastUpdated.label" m="Last Updated" />
-              }
-              value={<Event timestamp={timestamp} tsDate={tsDate} />}
-            />
-          </div>
         </div>
         {isVoteActiveOrFinished && (
-          <StatusBar
-            className={styles.voteStatusBar}
-            max={quorumMinimumVotes}
-            status={getStatusBarData(voteCounts)}
-            showMarker={false}
-            renderStatusInfoComponent={
-              <Tooltip
-                className={classNames(
-                  styles.quorumTooltip,
-                  isDarkTheme && styles.darkQuorumTooltip
-                )}
-                content={`${totalVotes} votes cast, quorum requirement is ${quorumMinimumVotes} votes`}>
-                <Text className={styles.votesReceived} size="small">
-                  {totalVotes}
-                </Text>
-                <Text className={styles.votesQuorum} size="small">
-                  /{`${quorumMinimumVotes} votes`}
-                </Text>
-              </Tooltip>
-            }
-          />
+          <div className={classNames("flex-row", styles.statusBarRow)}>
+            <StatusBar
+              className={styles.voteStatusBar}
+              max={quorumMinimumVotes}
+              status={getStatusBarData(voteCounts)}
+              showMarker={false}
+              renderStatusInfoComponent={
+                <Tooltip
+                  className={classNames(
+                    styles.quorumTooltip,
+                    isDarkTheme && styles.darkQuorumTooltip
+                  )}
+                  content={`${totalVotes} votes cast, quorum requirement is ${quorumMinimumVotes} votes`}>
+                  <Text className={styles.votesReceived} size="small">
+                    {totalVotes}
+                  </Text>
+                  <Text className={styles.votesQuorum} size="small">
+                    /{`${quorumMinimumVotes} votes`}
+                  </Text>
+                </Tooltip>
+              }
+            />
+            <div className={classNames("flex-column", styles.voteEnd)}>
+              <Event
+                eventType={isVoteActive ? VOTE_ENDS_EVENT : VOTE_ENDED_EVENT}
+                timestamp={endTimestamp}
+                tsDate={tsDate}
+              />
+              {isVoteActive && (
+                <div>
+                  {blocksLeft}{" "}
+                  <T id="proposal.overview.blocksLeft" m="blocks left" />
+                </div>
+              )}
+            </div>
+          </div>
         )}
       </div>
       {isVoteActiveOrFinished && (

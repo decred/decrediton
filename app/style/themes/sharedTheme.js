@@ -1,4 +1,8 @@
 const sharedTheme = {
+  "spacing-extra-small": "0.5rem",
+  "spacing-small": "1rem",
+  "spacing-medium": "2rem",
+  "spacing-large": "3rem",
   "sidebar-width": "296px",
   "sidebar-width-reduced": "60px",
   "font-family-monospace": "'Source Code Pro', monospace",

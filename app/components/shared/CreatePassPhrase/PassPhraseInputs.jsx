@@ -47,10 +47,10 @@ const PassPhraseInputs = ({
   isValid
 }) => (
   <>
-    <div className={classNames("is-row", styles.passphraseRow)}>
+    <div className={classNames("flex-row", styles.passphraseRow)}>
       <div
         className={classNames(
-          "is-row",
+          "flex-row",
           styles.confirmSeedLabel,
           styles.passphraseRow
         )}>
@@ -70,7 +70,7 @@ const PassPhraseInputs = ({
         />
       </form>
     </div>
-    <div className={classNames("is-row", styles.passphraseRow)}>
+    <div className={classNames("flex-row", styles.passphraseRow)}>
       <div
         className={classNames(styles.confirmSeedLabel, styles.passphraseRow)}>
         {passPhraseVerificationLabel}

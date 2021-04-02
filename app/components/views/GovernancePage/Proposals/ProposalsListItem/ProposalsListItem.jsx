@@ -33,7 +33,7 @@ const ProposalsListItem = ({
     <div
       onClick={viewProposalDetailsHandler}
       className={classNames(
-        "is-row",
+        "flex-row",
         styles.listItem,
         styles[voteResult],
         !approved && styles.declined,
@@ -58,7 +58,7 @@ const ProposalsListItem = ({
       </div>
       <div className={styles.resultsArea}>
         {(isVoting || isVotingFinished) && (
-          <div className={classNames("is-row", styles.votingIndicator)}>
+          <div className={classNames("flex-row", styles.votingIndicator)}>
             <div
               className={classNames(
                 styles.voteChoice,
