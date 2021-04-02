@@ -5,16 +5,21 @@ import {
   Tooltip,
   Text,
   useTheme,
+  StatusTag,
   DEFAULT_DARK_THEME_NAME
 } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink } from "shared";
-import { OverviewField, TimeValue, ProposalText, VoteSection } from "./helpers";
-import { getStatusBarData } from "./utils";
 import {
-  VOTESTATUS_ACTIVEVOTE,
-  VOTESTATUS_FINISHEDVOTE
-} from "actions/GovernanceActions";
+  OverviewField,
+  Event,
+  VOTE_ENDS_EVENT,
+  VOTE_ENDED_EVENT,
+  ProposalText,
+  VoteSection
+} from "./helpers";
+import { getStatusBarData, getProposalStatusTagProps } from "./utils";
+import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
 
@@ -34,7 +39,9 @@ const ProposalDetails = ({
     version,
     totalVotes,
     quorumMinimumVotes,
-    walletEligibleTickets
+    walletEligibleTickets,
+    linkto,
+    blocksLeft
   },
   showPurchaseTicketsPage,
   setVoteOption,
@@ -49,71 +56,77 @@ const ProposalDetails = ({
   const shortToken = token.substring(0, 7);
   const shortRFPToken = linkedProposal?.token.substring(0, 7);
   const proposalPath = `/proposals/${shortToken}`;
-  const votingActiveOrFinished =
-    voteStatus === VOTESTATUS_ACTIVEVOTE ||
-    voteStatus === VOTESTATUS_FINISHEDVOTE;
+  const isVoteActive = voteStatus === PROPOSAL_VOTING_ACTIVE;
+  const isVoteActiveOrFinished =
+    isVoteActive || voteStatus === PROPOSAL_VOTING_FINISHED;
+
   return (
     <div>
       <div className={styles.overview}>
-        <div className={styles.overviewInfoWrapper}>
-          <div className={styles.overviewInfo}>
+        <div className={styles.overviewInfo}>
+          <div className={styles.row}>
             <div className={styles.title}>{name}</div>
-            {linkedProposal && (
-              <div className={styles.proposedToRfp}>
-                <T
-                  id="proposal.overview.proposedToRfp.label"
-                  m="Proposed for {linkedProposal}"
-                  values={{
-                    linkedProposal: (
-                      <PoliteiaLink
-                        isTestnet={isTestnet}
-                        path={`/proposals/${shortRFPToken}`}>
-                        {`${linkedProposal.name} (${shortRFPToken})`}
-                      </PoliteiaLink>
-                    )
-                  }}
-                />
+            <div className={styles.column}>
+              <StatusTag
+                className={styles.statusTag}
+                {...getProposalStatusTagProps(
+                  { status: proposalStatus, linkto },
+                  voteStatus,
+                  isDarkTheme
+                )}
+              />
+              <Event
+                className={styles.voteEvent}
+                eventType={isVoteActive ? VOTE_ENDS_EVENT : VOTE_ENDED_EVENT}
+                timestamp={endTimestamp}
+                tsDate={tsDate}
+              />
+              <div>
+                {blocksLeft}{" "}
+                <T id="proposal.overview.blocksLeft" m="blocks left" />
               </div>
-            )}
-            <div className={styles.token}>
-              <PoliteiaLink isTestnet={isTestnet} path={proposalPath}>
-                {shortToken}
-              </PoliteiaLink>
-            </div>
-            <div className={styles.fields}>
-              <OverviewField
-                label={
-                  <T id="proposal.overview.created.label" m="Created by" />
-                }
-                value={creator}
-              />
-              <OverviewField
-                label={<T id="proposal.overview.version.label" m="Version" />}
-                value={version}
-              />
-              <OverviewField
-                label={
-                  <T
-                    id="proposal.overview.lastUpdated.label"
-                    m="Last Updated"
-                  />
-                }
-                value={<TimeValue timestamp={timestamp} tsDate={tsDate} />}
-              />
-              <OverviewField
-                show={voteStatus === VOTESTATUS_ACTIVEVOTE && endTimestamp}
-                label={
-                  <T
-                    id="proposal.overview.deadline.label"
-                    m="Voting Deadline"
-                  />
-                }
-                value={<TimeValue timestamp={endTimestamp} tsDate={tsDate} />}
-              />
             </div>
           </div>
+          {linkedProposal && (
+            <div className={styles.proposedToRfp}>
+              <T
+                id="proposal.overview.proposedToRfp.label"
+                m="Proposed for {linkedProposal}"
+                values={{
+                  linkedProposal: (
+                    <PoliteiaLink
+                      isTestnet={isTestnet}
+                      path={`/proposals/${shortRFPToken}`}>
+                      {`${linkedProposal.name} (${shortRFPToken})`}
+                    </PoliteiaLink>
+                  )
+                }}
+              />
+            </div>
+          )}
+          <div className={styles.token}>
+            <PoliteiaLink isTestnet={isTestnet} path={proposalPath}>
+              {shortToken}
+            </PoliteiaLink>
+          </div>
+          <div>
+            <OverviewField
+              label={<T id="proposal.overview.created.label" m="Created by" />}
+              value={creator}
+            />
+            <OverviewField
+              label={<T id="proposal.overview.version.label" m="Version" />}
+              value={version}
+            />
+            <OverviewField
+              label={
+                <T id="proposal.overview.lastUpdated.label" m="Last Updated" />
+              }
+              value={<Event timestamp={timestamp} tsDate={tsDate} />}
+            />
+          </div>
         </div>
-        {votingActiveOrFinished && (
+        {isVoteActiveOrFinished && (
           <StatusBar
             className={styles.voteStatusBar}
             max={quorumMinimumVotes}
@@ -137,7 +150,7 @@ const ProposalDetails = ({
           />
         )}
       </div>
-      {votingActiveOrFinished && (
+      {isVoteActiveOrFinished && (
         <VoteSection
           {...{
             hasTickets,

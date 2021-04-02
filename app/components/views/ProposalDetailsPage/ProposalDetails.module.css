@@ -1,23 +1,31 @@
 .overview {
   background-color: var(--background-back-color);
-  justify-content: space-between;
   width: 740px;
   padding-bottom: 15px;
 }
 
-.overviewInfoWrapper {
+.overviewInfo {
+  padding: 20px;
+}
+
+.row {
   display: flex;
   justify-content: space-between;
 }
 
-.overviewInfo {
-  padding: 20px 10px 15px 40px;
-  max-width: 49%;
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.voteEvent {
+  margin: 0.2rem 0.2rem 0 0;
 }
 
 .title {
-  font-size: 19px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 23px;
   color: var(--tutorial-header);
 }
 
@@ -45,10 +53,6 @@
 .proposedToRfp a:hover,
 .token a:hover {
   color: var(--stroke-color-default);
-}
-
-.fields {
-  margin-top: 11px;
 }
 
 .notVoting,
@@ -81,11 +85,6 @@
   display: inline-block;
   vertical-align: middle;
   max-width: 229px;
-}
-
-.overviewField .timeValue {
-  font-weight: bold;
-  margin-right: 0.2em;
 }
 
 .detailsText {
@@ -125,7 +124,7 @@
 
 .voteStatusBar {
   width: auto !important;
-  padding: 0 40px;
+  padding: 0 20px;
   margin-bottom: 15px;
 }
 

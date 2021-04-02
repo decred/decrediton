@@ -1,9 +1,9 @@
 import { memo } from "react";
 import {
-  VOTESTATUS_ACTIVEVOTE,
-  VOTESTATUS_FINISHEDVOTE,
-  PROPOSALSTATUS_ABANDONED
-} from "actions/GovernanceActions";
+  PROPOSAL_VOTING_ACTIVE,
+  PROPOSAL_VOTING_FINISHED,
+  PROPOSAL_STATUS_ABANDONED
+} from "constants";
 import {
   ProposalNotVoting,
   NoTicketsVotingInfo,
@@ -25,17 +25,17 @@ const VoteInfo = memo(
     voteOptions
   }) => {
     const { hasEligibleTickets, eligibleTicketCount } = viewedProposalDetails;
-    if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
+    if (proposalStatus === PROPOSAL_STATUS_ABANDONED) {
       return <ProposalAbandoned />;
     }
-    if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
+    if (voteStatus === PROPOSAL_VOTING_FINISHED) {
       return (
         <VotePreference
           {...{ voteOptions, currentVoteChoice, votingComplete: true }}
         />
       );
     }
-    if (voteStatus === VOTESTATUS_ACTIVEVOTE) {
+    if (voteStatus === PROPOSAL_VOTING_ACTIVE) {
       if (!hasTickets) {
         return <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
       }

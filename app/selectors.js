@@ -1467,6 +1467,14 @@ export const blocksNumberToNextTicket = createSelector(
   }
 );
 
+// blocksFromBestBlock is a selector that returns a function that can be used
+// to calculate how many blocks a given block hieght is away from the current
+// best block.
+export const blocksFromBestBlock = createSelector(
+  [currentBlockHeight],
+  (currentHeight) => (block) => block - currentHeight
+);
+
 // blockTimestampFromNow is a selector that returns a function that can be used
 // to estimate when a given future block will be received. This is isn't super
 // accurate, and depends on the fact that blocks will take on average the
