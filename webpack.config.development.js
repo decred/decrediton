@@ -29,9 +29,42 @@ export default merge(baseConfig, {
   },
 
   module: {
+    // CSS files injected directly in the DOM.
     rules: [
-      // CSS and Less files, injected directly in the DOM.
-      { test: /\.css$/, use: [ "style-loader", "css-loader" ] },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+              modules: {
+                // Prepend the original class name in dev mode to ease debugging.
+                localIdentName: "[local]__[hash:base64:5]"
+              }
+            }
+          }
+        ],
+        include: /\.module\.css$/
+      },
+      {
+        test: [/\.css$/],
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              importLoaders: 1
+            }
+          }
+        ],
+        exclude: /\.module\.css$/
+      }
     ]
   },
   resolve: {
