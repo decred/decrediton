@@ -73,12 +73,17 @@ const ProposalDetails = ({
           <div className={styles.overviewInfo}>
             <div className={styles.row}>
               <div className="flex-column">
-                <PoliteiaLink
-                  className={styles.title}
-                  isTestnet={isTestnet}
-                  path={proposalPath}>
-                  {name}
-                </PoliteiaLink>
+                <Tooltip
+                  content={
+                    <T id="proposal.overview.title" m="See on Politeia" />
+                  }>
+                  <PoliteiaLink
+                    className={styles.title}
+                    isTestnet={isTestnet}
+                    path={proposalPath}>
+                    {name}
+                  </PoliteiaLink>
+                </Tooltip>
                 <Join className={classNames("margin-top-s", styles.subTitle)}>
                   <span className="color-primary">{creator}</span>
                   <Event
