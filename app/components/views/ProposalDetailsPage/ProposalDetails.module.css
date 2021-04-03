@@ -1,6 +1,25 @@
+.cardWrapper {
+  display: flex;
+}
+
+.backButton {
+  width: 30px;
+  background-color: var(--grey-3);
+  cursor: pointer;
+}
+
+.backArrow {
+  height: 15px;
+  width: 15px;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 5px;
+  background-repeat: no-repeat;
+  transform: rotate(-90deg);
+}
+
 .overview {
   background-color: var(--background-back-color);
-  width: 740px;
+  width: 710px;
   padding-bottom: 23px;
 }
 

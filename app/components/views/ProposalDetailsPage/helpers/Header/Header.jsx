@@ -1,17 +1,20 @@
 import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
 import { StandaloneHeader } from "layout";
 import { GOVERNANCE_ICON } from "constants";
+import styles from "./Header.module.css";
 
 const Header = React.memo(function Header({ eligibleTicketCount }) {
   return (
     <StandaloneHeader
       title={<T id="proposal.details.title" m="Governance" />}
       description={
-        <T
-          id="proposal.details.description"
-          m={"Your voting power: {votingPower}"}
-          values={{ votingPower: eligibleTicketCount }}
-        />
+        <div className={classNames(styles.header, "margin-top-s")}>
+          <T id="proposal.details.description" m="Your voting power: " />
+          <span className={classNames(styles.tickets, "margin-left-s")}>
+            {eligibleTicketCount}
+          </span>
+        </div>
       }
       iconType={GOVERNANCE_ICON}
     />

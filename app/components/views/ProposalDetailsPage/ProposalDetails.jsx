@@ -48,7 +48,7 @@ const ProposalDetails = ({
   setVoteOption,
   newVoteChoice,
   text,
-  //goBackHistory,
+  goBackHistory,
   linkedProposal
 }) => {
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
@@ -63,100 +63,107 @@ const ProposalDetails = ({
 
   return (
     <div>
-      <div className={styles.overview}>
-        <div className={styles.overviewInfo}>
-          <div className={styles.row}>
-            <div className="flex-column">
-              <PoliteiaLink
-                className={styles.title}
-                isTestnet={isTestnet}
-                path={proposalPath}>
-                {name}
-              </PoliteiaLink>
-              <Join className={classNames("margin-top-s", styles.subTitle)}>
-                <span className="color-primary">{creator}</span>
-                <Event
-                  eventType={PROPOSAL_UPDATED_EVENT}
-                  timestamp={timestamp}
-                  tsDate={tsDate}
-                  className={styles.updatedEvent}
+      <div className={styles.cardWrapper}>
+        <div
+          className={classNames(styles.backButton, "flex-centralize")}
+          onClick={goBackHistory}>
+          <div className={styles.backArrow}></div>
+        </div>
+        <div className={styles.overview}>
+          <div className={styles.overviewInfo}>
+            <div className={styles.row}>
+              <div className="flex-column">
+                <PoliteiaLink
+                  className={styles.title}
+                  isTestnet={isTestnet}
+                  path={proposalPath}>
+                  {name}
+                </PoliteiaLink>
+                <Join className={classNames("margin-top-s", styles.subTitle)}>
+                  <span className="color-primary">{creator}</span>
+                  <Event
+                    eventType={PROPOSAL_UPDATED_EVENT}
+                    timestamp={timestamp}
+                    tsDate={tsDate}
+                    className={styles.updatedEvent}
+                  />
+                  <span className={styles.version}>
+                    <T id="proposal.overview.version.label" m="version" />{" "}
+                    {version}
+                  </span>
+                </Join>
+              </div>
+              <div className={classNames("flex-column", "align-end")}>
+                <StatusTag
+                  className={styles.statusTag}
+                  {...getProposalStatusTagProps(
+                    { status: proposalStatus, linkto },
+                    voteStatus,
+                    isDarkTheme
+                  )}
                 />
-                <span className={styles.version}>
-                  <T id="proposal.overview.version.label" m="version" />{" "}
-                  {version}
-                </span>
-              </Join>
-            </div>
-            <div className={classNames("flex-column", "align-end")}>
-              <StatusTag
-                className={styles.statusTag}
-                {...getProposalStatusTagProps(
-                  { status: proposalStatus, linkto },
-                  voteStatus,
-                  isDarkTheme
-                )}
-              />
-              <div className={classNames("margin-top-s", styles.token)}>
-                {shortToken}
+                <div className={classNames("margin-top-s", styles.token)}>
+                  {shortToken}
+                </div>
               </div>
             </div>
+            {linkedProposal && (
+              <div className={styles.proposedToRfp}>
+                <T
+                  id="proposal.overview.proposedToRfp.label"
+                  m="Proposed for {linkedProposal}"
+                  values={{
+                    linkedProposal: (
+                      <PoliteiaLink
+                        isTestnet={isTestnet}
+                        path={`/proposals/${shortRFPToken}`}>
+                        {`${linkedProposal.name} (${shortRFPToken})`}
+                      </PoliteiaLink>
+                    )
+                  }}
+                />
+              </div>
+            )}
           </div>
-          {linkedProposal && (
-            <div className={styles.proposedToRfp}>
-              <T
-                id="proposal.overview.proposedToRfp.label"
-                m="Proposed for {linkedProposal}"
-                values={{
-                  linkedProposal: (
-                    <PoliteiaLink
-                      isTestnet={isTestnet}
-                      path={`/proposals/${shortRFPToken}`}>
-                      {`${linkedProposal.name} (${shortRFPToken})`}
-                    </PoliteiaLink>
-                  )
-                }}
+          {isVoteActiveOrFinished && (
+            <div className={classNames("flex-row", styles.statusBarRow)}>
+              <StatusBar
+                className={styles.voteStatusBar}
+                max={quorumMinimumVotes}
+                status={getStatusBarData(voteCounts)}
+                showMarker={false}
+                renderStatusInfoComponent={
+                  <Tooltip
+                    className={classNames(
+                      styles.quorumTooltip,
+                      isDarkTheme && styles.darkQuorumTooltip
+                    )}
+                    content={`${totalVotes} votes cast, quorum requirement is ${quorumMinimumVotes} votes`}>
+                    <Text className={styles.votesReceived} size="small">
+                      {totalVotes}
+                    </Text>
+                    <Text className={styles.votesQuorum} size="small">
+                      /{`${quorumMinimumVotes} votes`}
+                    </Text>
+                  </Tooltip>
+                }
               />
+              <div className={classNames("flex-column", styles.voteEnd)}>
+                <Event
+                  eventType={isVoteActive ? VOTE_ENDS_EVENT : VOTE_ENDED_EVENT}
+                  timestamp={endTimestamp}
+                  tsDate={tsDate}
+                />
+                {isVoteActive && (
+                  <div>
+                    {blocksLeft}{" "}
+                    <T id="proposal.overview.blocksLeft" m="blocks left" />
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
-        {isVoteActiveOrFinished && (
-          <div className={classNames("flex-row", styles.statusBarRow)}>
-            <StatusBar
-              className={styles.voteStatusBar}
-              max={quorumMinimumVotes}
-              status={getStatusBarData(voteCounts)}
-              showMarker={false}
-              renderStatusInfoComponent={
-                <Tooltip
-                  className={classNames(
-                    styles.quorumTooltip,
-                    isDarkTheme && styles.darkQuorumTooltip
-                  )}
-                  content={`${totalVotes} votes cast, quorum requirement is ${quorumMinimumVotes} votes`}>
-                  <Text className={styles.votesReceived} size="small">
-                    {totalVotes}
-                  </Text>
-                  <Text className={styles.votesQuorum} size="small">
-                    /{`${quorumMinimumVotes} votes`}
-                  </Text>
-                </Tooltip>
-              }
-            />
-            <div className={classNames("flex-column", styles.voteEnd)}>
-              <Event
-                eventType={isVoteActive ? VOTE_ENDS_EVENT : VOTE_ENDED_EVENT}
-                timestamp={endTimestamp}
-                tsDate={tsDate}
-              />
-              {isVoteActive && (
-                <div>
-                  {blocksLeft}{" "}
-                  <T id="proposal.overview.blocksLeft" m="blocks left" />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
       {isVoteActiveOrFinished && (
         <VoteSection
