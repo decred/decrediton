@@ -1,3 +1,7 @@
 .join {
   display: flex;
 }
+
+.separator {
+  color: var(--grey-5);
+}

@@ -25,6 +25,22 @@
   color: var(--tutorial-header) !important;
 }
 
+.subTitle {
+  font-size: 16px;
+}
+
+.updatedEvent,
+.version {
+  color: var(--grey-5);
+}
+
+.token {
+  padding: 4px 10px;
+  background-color: var(--color-blue-lighter);
+  border-radius: 5px;
+  font-size: 16px;
+}
+
 .proposedToRfp {
   overflow: hidden;
   white-space: nowrap;
@@ -104,6 +120,7 @@
   align-items: flex-end;
   flex-basis: 20%;
   margin-top: -0.2rem;
+  color: var(--grey-5);
 }
 
 .quorumTooltip {

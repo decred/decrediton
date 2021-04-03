@@ -14,6 +14,7 @@ import {
   Event,
   VOTE_ENDS_EVENT,
   VOTE_ENDED_EVENT,
+  PROPOSAL_UPDATED_EVENT,
   ProposalText,
   VoteSection,
   Join
@@ -72,11 +73,16 @@ const ProposalDetails = ({
                 path={proposalPath}>
                 {name}
               </PoliteiaLink>
-              <Join>
-                <span>{creator}</span>
-                <Event timestamp={timestamp} tsDate={tsDate} />
-                <span>
-                  <T id="proposal.overview.version.label" m="version" />
+              <Join className={classNames("margin-top-s", styles.subTitle)}>
+                <span className="color-primary">{creator}</span>
+                <Event
+                  eventType={PROPOSAL_UPDATED_EVENT}
+                  timestamp={timestamp}
+                  tsDate={tsDate}
+                  className={styles.updatedEvent}
+                />
+                <span className={styles.version}>
+                  <T id="proposal.overview.version.label" m="version" />{" "}
                   {version}
                 </span>
               </Join>
@@ -90,7 +96,9 @@ const ProposalDetails = ({
                   isDarkTheme
                 )}
               />
-              <div className={styles.token}>{shortToken}</div>
+              <div className={classNames("margin-top-s", styles.token)}>
+                {shortToken}
+              </div>
             </div>
           </div>
           {linkedProposal && (

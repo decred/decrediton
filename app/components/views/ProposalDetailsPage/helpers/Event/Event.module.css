@@ -1,3 +1,5 @@
 .tooltip {
   width: 14.5rem;
+  font-size: 14px;
+  color: var(--grey-5);
 }
