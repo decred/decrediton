@@ -1,6 +1,6 @@
 import DefaultModal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import styles from "../Modals.module.css";
+import styles from "./PassphraseModal.module.css";
 import { classNames } from "pi-ui";
 import { PasswordInput, PassphraseModalField } from "inputs";
 import { ButtonsToolbar } from "shared";
