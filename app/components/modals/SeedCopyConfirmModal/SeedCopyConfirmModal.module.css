@@ -1,0 +1,65 @@
+.confirmSeedCopy {
+  width: 950px;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: justify;
+}
+.confirmSeedCopyToolbar {
+  float: right;
+  margin-top: 2em;
+}
+.confirmConfirmButton {
+  float: right;
+}
+.confirmCloseButton {
+  float: right;
+}
+.titleWarningCopyModal {
+  font-size: 27px;
+  margin-bottom: 10px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 42px;
+  margin-left: -10px;
+  background-position: 0 center;
+}
+.confirmSeedCopyContentInput {
+  margin-left: 32px;
+  padding-left: 0;
+}
+.confirmSeedCopyContentInput > input {
+  width: 100%;
+}
+.confirmSeedCopyWarningText {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  margin-left: 32px;
+  column-count: 2;
+}
+.confirmSeedCopyWarningText p {
+  margin-top: 0;
+}
+.confirmSeedCopyWarningText strong {
+  text-decoration: underline;
+}
+.confirmSeedCopyWarningText em {
+  color: var(--error-text-color);
+}
+.confirmSeedCopyWarningText a {
+  color: var(--link-color);
+}
+.confirmSeedCopyPhrase {
+  text-decoration: underline;
+  margin: 0px 4px 0px 4px;
+}
+
+@media screen and (max-width: 768px) {
+  .confirmSeedCopyWarningText {
+    column-count: 1;
+  }
+}

@@ -5,9 +5,7 @@ import styles from "./MixerSettingsModal.module.css";
 import { PrivacyForm } from "shared";
 
 const MixerSettingsModal = ({ onCancelModal, show }) => (
-  <Modal
-    className={styles.mixerSettings}
-    {...{ show, onCancelModal }}>
+  <Modal className={styles.mixerSettings} {...{ show, onCancelModal }}>
     <div className={styles.mixerSettingsTitle}>
       <T id="mixerSetting.header" m="Mixer Settings" />
     </div>

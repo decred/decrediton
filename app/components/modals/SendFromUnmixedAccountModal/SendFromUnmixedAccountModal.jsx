@@ -9,7 +9,7 @@ const message = defineMessages({
   }
 });
 
-const SeedCopyConfirmModal = ({ onSubmit, onCancelModal, ...props }) => {
+const SendFromUnmixedAccountModal = ({ onSubmit, onCancelModal, ...props }) => {
   const {
     copyConfirmationPhrase,
     typedConfirmationPhrase,
@@ -32,4 +32,4 @@ const SeedCopyConfirmModal = ({ onSubmit, onCancelModal, ...props }) => {
   );
 };
 
-export default SeedCopyConfirmModal;
+export default SendFromUnmixedAccountModal;

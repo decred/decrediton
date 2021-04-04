@@ -1,18 +1,18 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
 import { InvisibleButton, KeyBlueButton } from "buttons";
-import style from "../Modals.module.css";
+import styles from "./CantCloseModals.module.css";
 import { NavLink as Link } from "react-router-dom";
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => {
   return (
-    <Modal className={style.confirm} {...{ show, onCancelModal }}>
-      <div className={style.confirmHeader}>
-        <div className={style.confirmHeaderTitle}>
+    <Modal className={styles.confirm} {...{ show, onCancelModal }}>
+      <div className={styles.confirmHeader}>
+        <div className={styles.confirmHeaderTitle}>
           <T id="tickets.fee.error.title" m="VSP Tickets Fee Error" />
         </div>
       </div>
-      <div className={style.confirmContent}>
+      <div>
         <T
           id="tickets.fee.error.message"
           m={
@@ -30,14 +30,14 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => {
           }}
         />
       </div>
-      <div className={style.confirmToolbar}>
+      <div className={styles.confirmToolbar}>
         <KeyBlueButton
-          className={style.confirmConfirmButton}
+          className={styles.confirmConfirmButton}
           onClick={onSubmit}>
           <T id="tickets.fee.error.confirmModal.closeAnyway" m="Close Anyway" />
         </KeyBlueButton>
         <InvisibleButton
-          className={style.confirmCloseButton}
+          className={styles.confirmCloseButton}
           onClick={onCancelModal}>
           <T id="tickets.fee.error.confirmModal.btnCancel" m="Cancel" />
         </InvisibleButton>

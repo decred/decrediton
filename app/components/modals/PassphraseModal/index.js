@@ -1,1 +1,1 @@
-export { default } from "./PassphraseModal.jsx";
+export { default } from "./PassphraseModal";

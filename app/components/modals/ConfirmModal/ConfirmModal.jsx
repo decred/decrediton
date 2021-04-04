@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 import { InvisibleButton, KeyBlueButton, DangerButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import style from "./Modals.module.css";
+import styles from "./ConfirmModal.module.css";
 
 const ConfirmModal = ({
   modalTitle,
@@ -12,25 +12,27 @@ const ConfirmModal = ({
   confirmLabel,
   danger
 }) => (
-  <Modal className={style.confirm} {...{ show, onCancelModal }}>
-    <div className={style.confirmHeader}>
-      <div className={style.confirmHeaderTitle}>{modalTitle}</div>
+  <Modal className={styles.confirm} {...{ show, onCancelModal }}>
+    <div className={styles.confirmHeader}>
+      <div className={styles.confirmHeaderTitle}>{modalTitle}</div>
     </div>
-    <div className={style.confirmContent}>{modalContent}</div>
-    <div className={style.confirmToolbar}>
+    <div>{modalContent}</div>
+    <div className={styles.confirmToolbar}>
       {danger ? (
-        <DangerButton className={style.confirmConfirmButton} onClick={onSubmit}>
+        <DangerButton
+          className={styles.confirmConfirmButton}
+          onClick={onSubmit}>
           {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
         </DangerButton>
       ) : (
         <KeyBlueButton
-          className={style.confirmConfirmButton}
+          className={styles.confirmConfirmButton}
           onClick={onSubmit}>
           {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
         </KeyBlueButton>
       )}
       <InvisibleButton
-        className={style.confirmCloseButton}
+        className={styles.confirmCloseButton}
         onClick={onCancelModal}>
         <T id="confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>

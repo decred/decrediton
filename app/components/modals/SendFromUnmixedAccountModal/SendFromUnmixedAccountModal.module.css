@@ -1,0 +1,52 @@
+.confirmSeedCopyToolbar {
+  float: right;
+  margin-top: 2em;
+}
+.confirmConfirmButton {
+  float: right;
+}
+.confirmCloseButton {
+  float: right;
+}
+.confirmSeedCopyWarningText {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  margin-left: 32px;
+  column-count: 2;
+}
+.confirmSeedCopyWarningText p {
+  margin-top: 0;
+}
+.confirmSeedCopyWarningText strong {
+  text-decoration: underline;
+}
+.confirmSeedCopyWarningText em {
+  color: var(--error-text-color);
+}
+.confirmSeedCopyWarningText a {
+  color: var(--link-color);
+}
+.confirmSeedCopyPhrase {
+  text-decoration: underline;
+  margin: 0px 4px 0px 4px;
+}
+.confirmSendFromUnmixed {
+  padding: 20px;
+  width: 700px;
+}
+.titleConfirmSendFromUnmixed {
+  font-size: 27px;
+  margin-bottom: 20px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 42px;
+  margin-left: 10px;
+  background-position: 0 center;
+}
+
+@media screen and (max-width: 768px) {
+  .confirmSeedCopyWarningText {
+    column-count: 1;
+  }
+}
