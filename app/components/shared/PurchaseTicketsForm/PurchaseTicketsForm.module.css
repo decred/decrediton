@@ -172,13 +172,14 @@
   .buttonsArea {
     width: 667px;
   }
+  .accountSelectInput {
+    width: 326px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .ticketForm {
-    display: grid;
-    grid-template-columns: 50px 225px;
-    text-align: right;
+  .purchaseForm {
+    padding: 30px 20px;
   }
   .purchaseForm {
     padding-bottom: 0;
@@ -191,9 +192,11 @@
   .rowLabel {
     font-size: 13px;
   }
-  .inputAddress .rowLabel {
-    width: inherit;
-    text-align: right;
+  .inputAddress {
+    border: none;
+  }
+  .numTicketsToBuy {
+    padding-left: 0;
   }
   .inputAmount {
     margin-top: 25px;
@@ -208,5 +211,8 @@
   .buttonsArea {
     width: 355px;
     margin-bottom: 20px;
+  }
+  .accountSelectInput {
+    width: 310px;
   }
 }

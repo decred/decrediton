@@ -52,3 +52,15 @@
 .balanceToMaintainInput input {
   font-size: 16px;
 }
+
+@media screen and (max-width: 1179px) {
+  .modal {
+    width: 421px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 355px;
+  }
+}

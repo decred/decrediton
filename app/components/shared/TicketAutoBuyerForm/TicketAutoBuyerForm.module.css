@@ -39,3 +39,9 @@
   display: inline-block;
   margin-right: 0.5em;
 }
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 20px;
+  }
+}

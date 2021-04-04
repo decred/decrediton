@@ -32,9 +32,15 @@
   .purchaseTicketArea {
     width: 667px;
   }
+  .subtitle {
+    width: 675px;
+  }
 }
 @media screen and (max-width: 768px) {
   .purchaseTicketArea {
     width: 355px;
+  }
+  .subtitle {
+    width: 365px;
   }
 }
