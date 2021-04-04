@@ -1,6 +1,6 @@
 import DefaultModal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import style from "../Modals.module.css";
+import styles from "../Modals.module.css";
 import { classNames } from "pi-ui";
 import { PasswordInput, PassphraseModalField } from "inputs";
 import { ButtonsToolbar } from "shared";
@@ -19,10 +19,10 @@ const Modal = ({
   isValid
 }) => (
   <DefaultModal
-    className={classNames(style.passphrase, modalClassName)}
+    className={classNames(styles.passphrase, modalClassName)}
     {...{ show, onCancelModal }}>
-    <div className={style.passphraseHeader}>
-      <div className={style.passphraseHeaderTitle}>
+    <div className={styles.passphraseHeader}>
+      <div className={styles.passphraseHeaderTitle}>
         {modalTitle ? (
           modalTitle
         ) : (
@@ -32,11 +32,11 @@ const Modal = ({
           />
         )}
       </div>
-      <div className={style.passphraseHeaderDescription}>
+      <div className={styles.passphraseHeaderDescription}>
         {modalDescription}
       </div>
     </div>
-    <div className={style.passphraseContent}>
+    <div className={styles.passphraseContent}>
       <PassphraseModalField
         label={
           <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
@@ -54,7 +54,7 @@ const Modal = ({
       </PassphraseModalField>
       {children}
     </div>
-    <div className={style.passphraseToolbar}>
+    <div className={styles.passphraseToolbar}>
       <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
     </div>
   </DefaultModal>
