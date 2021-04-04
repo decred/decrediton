@@ -49,116 +49,6 @@
   width: 540px;
 }
 
-.modal.info,
-.reducedBar.info,
-.standalone.info {
-  max-height: 60%;
-  z-index: 200;
-  overflow-y: auto;
-  text-align: left;
-  width: 445px;
-  background-image: var(--tickets-info-icon);
-  background-attachment: local;
-  background-size: 32px 32px;
-  background-repeat: no-repeat;
-  background-position: 18px 32px;
-  padding: 30px 40px 20px 58px;
-  font-size: 13px;
-  line-height: 17px;
-}
-
-.modal.info {
-  display: flex;
-  flex-direction: column;
-}
-
-.modal.info.double,
-.reducedBar.info.double,
-.standalone.info.double,
-.modal.importRedeemScript {
-  width: 540px;
-}
-
-.infoCloseButton {
-  font-size: 13px;
-  line-height: 17px;
-  padding: 6px 20px;
-  text-transform: none;
-  width: 80px;
-  height: 40px;
-  align-self: flex-end;
-}
-
-.infoCloseButtonTop {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  height: 10px;
-  width: 10px;
-  background-image: var(--x-grey);
-  background-size: 10px 10px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.infoCloseButtonTop:hover {
-  opacity: 0.7;
-}
-
-.double .infoDocumentation:not(.constitution) {
-  column-count: 2;
-  margin-bottom: 20px;
-}
-
-.infoContent h1 {
-  font-size: 27px;
-  line-height: 34px;
-  font-weight: 400;
-  margin-top: 0;
-  margin-bottom: 8px;
-  column-span: all;
-}
-
-.infoContent p {
-  break-inside: avoid-page;
-  color: var(--modal-text);
-  margin-bottom: 2em;
-  text-align: justify;
-}
-
-.infoContent li {
-  list-style-position: inside;
-  text-align: justify;
-}
-
-.infoContent li p {
-  display: inline;
-}
-
-.infoContent ol {
-  margin: 0;
-  padding: 0;
-  counter-reset: item;
-}
-
-.infoContent ol > li {
-  margin: 0;
-  list-style-type: none;
-  counter-increment: item;
-  list-style-position: inside;
-  margin-bottom: 2em;
-}
-
-.infoContent ol > li:before {
-  display: inline-block;
-  width: 1em;
-  padding-right: 0.5em;
-  margin-left: -3px;
-  font-weight: 600;
-  text-align: right;
-  content: counter(item) ".";
-}
-
 .standalone.confirm {
   width: 289px;
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
@@ -181,13 +71,6 @@
 .watchOnlyModalContent {
   color: var(--title-text-and-button-background);
   font-size: 13px;
-}
-
-.infoContent a {
-  color: var(--input-color);
-  cursor: pointer;
-  text-decoration: none;
-  word-break: break-word;
 }
 
 .backupRedeemScript {
@@ -241,19 +124,5 @@
   .overlayReducedBar {
     left: 0;
     bottom: 70px;
-  }
-
-  .reducedBar.info.double {
-    width: 300px !important;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .standalone.confirmSeedCopy {
-    max-height: 60%;
-  }
-
-  .reducedBar.info.double {
-    width: 250px !important;
   }
 }
