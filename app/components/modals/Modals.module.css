@@ -60,66 +60,6 @@
   text-align: left;
 }
 
-.watchOnlyModalTitle {
-  font-size: 27px;
-  color: var(--title-text-and-button-background);
-  line-height: 1;
-  width: 215px;
-  height: 102px;
-}
-
-.watchOnlyModalContent {
-  color: var(--title-text-and-button-background);
-  font-size: 13px;
-}
-
-.backupRedeemScript {
-  padding: 10px;
-}
-
-.backupRedeemScriptTextarea {
-  width: 100%;
-}
-
-.backupRedeemScriptTitle {
-  font-size: 19px;
-}
-
-.backupRedeemScriptMessage {
-  font-size: 16px;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--white-border);
-}
-
-.importRedeemScript {
-  display: flex;
-  flex-direction: column;
-  z-index: 200;
-  overflow-y: auto;
-  padding: 2em;
-  line-height: normal;
-  text-align: left;
-  color: var(--title-text-and-button-background);
-  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
-}
-
-.infoModalCloseButtonTop {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  height: 10px;
-  width: 10px;
-  background-image: var(--x-grey);
-  background-size: 10px 10px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.infoModalCloseButtonTop:hover {
-  opacity: 0.7;
-}
-
 @media screen and (max-width: 768px) {
   .overlayReducedBar {
     left: 0;
