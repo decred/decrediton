@@ -74,22 +74,6 @@
   cursor: pointer;
 }
 
-.notVoting,
-.voted {
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 15px;
-  height: 64px;
-}
-
-.notVoting {
-  background-image: var(--chat-bubbles);
-  background-repeat: no-repeat;
-  background-size: 30px;
-  padding-left: 38px;
-  padding-top: 7px;
-}
-
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
   min-height: 100%;

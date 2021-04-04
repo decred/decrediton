@@ -1,0 +1,11 @@
+.notVoting {
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 15px;
+  height: 64px;
+  background-image: var(--chat-bubbles);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 38px;
+  padding-top: 7px;
+}

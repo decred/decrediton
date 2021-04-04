@@ -15,7 +15,7 @@ import {
   VOTE_ENDS_EVENT,
   VOTE_ENDED_EVENT,
   PROPOSAL_UPDATED_EVENT,
-  ProposalText,
+  ProposalBody,
   VoteSection,
   Join
 } from "./helpers";
@@ -47,7 +47,7 @@ const ProposalDetails = ({
   showPurchaseTicketsPage,
   setVoteOption,
   newVoteChoice,
-  text,
+  body,
   goBackHistory,
   linkedProposal
 }) => {
@@ -187,7 +187,7 @@ const ProposalDetails = ({
         />
       )}
       <div className={styles.detailsText}>
-        <ProposalText text={text} />
+        <ProposalBody body={body} />
       </div>
       <div className={styles.piButtonWrapper}>
         <PoliteiaLink
