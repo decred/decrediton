@@ -20,7 +20,6 @@
 .overview {
   background-color: var(--background-back-color);
   width: 710px;
-  padding-bottom: 23px;
 }
 
 .overviewInfo {
@@ -127,19 +126,20 @@
 }
 
 .voteStatusBar {
-  flex-basis: 80%;
+  flex-basis: 75%;
   margin-right: 10px;
 }
 
 .statusBarRow {
-  padding: 0 20px;
+  padding: 0 20px 20px;
 }
 
 .voteEnd {
   align-items: flex-end;
-  flex-basis: 20%;
-  margin-top: -0.2rem;
+  flex-basis: 25%;
+  margin-top: -0.3rem;
   color: var(--grey-5);
+  font-size: 13px;
 }
 
 .quorumTooltip {
