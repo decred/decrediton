@@ -68,13 +68,13 @@
 .inputAddress {
   align-self: flex-start;
   padding-right: 40px;
+  border-right: 1px solid var(--purchase-ticket-border);
 }
 .inputAmount {
   flex-wrap: wrap;
   align-self: flex-start;
-  border-left: 1px solid var(--purchase-ticket-border);
 }
-.inputAmount .rowLabel {
+.numTicketsToBuy {
   padding-left: 40px;
 }
 .inputSelectContainer {
@@ -134,6 +134,38 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 24px;
+}
+
+/* legacy */
+
+.info {
+  margin-bottom: 10px;
+  background-color: var(--transfer-details-bg);
+}
+.actionButtons {
+  float: right;
+  margin: 15px 19px 0 0;
+}
+.warningArea {
+  padding-left: 50px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: 5px 50%;
+  border: 1px solid var(--error-text-color);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.backupButtonsRowArea {
+  justify-content: flex-end;
+}
+.stakepoolContentSend {
+  margin-top: 1em;
+}
+.vspWarningBackupRedeemButton {
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 1179px) {

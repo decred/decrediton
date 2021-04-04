@@ -6,9 +6,9 @@ import { ShowWarning, Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
 import UnsignedTickets from "../../UnsignedTickets";
 import styles from "./Tickets.module.css";
-import { Checkbox } from "pi-ui";
+import { classNames } from "pi-ui";
 
-const getTitleIcon = ({ toggleIsLegacy }) => (
+const getTitleIcon = () => (
   <>
     <div className={styles.iconWrapper}>
       <InfoDocModalButton
@@ -16,13 +16,6 @@ const getTitleIcon = ({ toggleIsLegacy }) => (
         modalClassName={styles.infoFields}
         className={styles.infoTitleIcon}
         draggable
-      />
-      <Checkbox
-        label={<T id="purchase.isLegacy.legacy" m="Use Legacy VSP" />}
-        className={styles.useLegacyLabel}
-        id="box"
-        checked={true}
-        onChange={() => toggleIsLegacy(false)}
       />
     </div>
   </>
@@ -43,8 +36,8 @@ const Tickets = ({
       <StakeInfo {...{ sidebarOnBottom }} />
       <Subtitle
         title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
-        children={getTitleIcon({ toggleIsLegacy })}
-        className={styles.isRow}
+        children={getTitleIcon()}
+        className={classNames(styles.isRow, styles.subtitle)}
       />
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
@@ -57,7 +50,12 @@ const Tickets = ({
         />
       ) : (
         <PurchaseTickets
-          {...{ ...props, notMixedAccounts, getRunningIndicator }}
+          {...{
+            ...props,
+            notMixedAccounts,
+            getRunningIndicator,
+            toggleIsLegacy
+          }}
         />
       )}
       {isWatchingOnly ? (

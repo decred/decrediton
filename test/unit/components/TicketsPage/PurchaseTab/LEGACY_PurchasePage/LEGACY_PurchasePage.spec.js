@@ -2,11 +2,11 @@ import Purchase from "../../../../../../app/components/views/TicketsPage/Purchas
 import TicketAutoBuyer from "../../../../../../app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { fireEvent } from "@testing-library/react";
-import { screen } from "@testing-library/react";
+import { screen, act, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as spa from "actions/VSPActions";
+import * as vspa from "actions/VSPActions";
 import { DCR } from "constants";
 import { MIN_RELAY_FEE } from "constants";
 
@@ -149,6 +149,7 @@ let mockIsTicketAutoBuyerEnabled;
 let mockTicketBuyerV2Cancel;
 let mockGetRunningIndicator;
 let mockAddCustomStakePool;
+let mockToggleIsLegacy;
 
 beforeEach(() => {
   sel.getIsLegacy = jest.fn(() => true);
@@ -189,16 +190,21 @@ beforeEach(() => {
   mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => false
   );
-  mockTicketBuyerV2Cancel = controlActions.ticketBuyerV2Cancel = jest.fn(
-    () => () => {}
-  );
-  mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
-    () => false
-  );
+  mockTicketBuyerV2Cancel = ca.ticketBuyerV2Cancel = jest.fn(() => () => {});
+  mockGetRunningIndicator = sel.getRunningIndicator = jest.fn(() => false);
+  mockToggleIsLegacy = vspa.toggleIsLegacy = jest.fn(() => () => {});
 });
 
 test("render LEGACY_PurchasePage", () => {
   render(<Purchase />, initialState);
+
+  // check Use Legacy VSP checkbox
+  expect(
+    screen.queryByText(/use a VSP which has not updated to vspd/i)
+  ).not.toBeInTheDocument(); // tooltip
+  user.click(screen.getByLabelText("Use Legacy VSP"));
+  expect(mockToggleIsLegacy).toHaveBeenCalledWith(false);
+
   expect(
     screen.getByText("Current VSP").nextElementSibling.textContent
   ).toMatch(mockConfiguredStakePools[0].Host);
@@ -245,6 +251,9 @@ test("render LEGACY_PurchasePage", () => {
     `${mockConfiguredStakePools[0].value.PoolFees}`
   );
 
+  expect(
+    screen.queryByLabelText("Always use this VSP")
+  ).not.toBeInTheDocument();
   // change stakepool
   const stakePoolSelectOption = screen.getAllByRole("option", {
     name: mockConfiguredStakePools[0].Host
@@ -310,7 +319,7 @@ test("render LEGACY_PurchasePage", () => {
   );
 
   // test amount input
-  const inputTag = screen.getByLabelText("Amount:");
+  const inputTag = screen.getByLabelText("Amount");
 
   const moreButton = screen.getByRole("button", { name: "more" });
   user.click(moreButton);
@@ -343,7 +352,7 @@ test("render LEGACY_PurchasePage", () => {
   expect(mockPurchaseTicketsAttempt).not.toHaveBeenCalled();
 
   //close advanced panel
-  user.click(ticketCogsButton);
+  act(() => user.click(ticketCogsButton));
   expect(ticketCogsButton.className).toMatch(/opened/i);
 
   // backup redeem script
@@ -426,7 +435,6 @@ test("test legacy autobuyer", () => {
   expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
   user.click(screen.getByRole("button", { name: "Cancel" }));
 
-  user.click(screen.getByTestId("toggleSwitch"));
   // clicking again on switch should open the confirmation modal
   user.click(screen.getByTestId("toggleSwitch"));
   expect(

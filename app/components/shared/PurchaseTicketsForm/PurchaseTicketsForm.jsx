@@ -3,10 +3,19 @@ import { classNames, Checkbox, Tooltip } from "pi-ui";
 import {
   TicketPurchaseModalButton,
   RevokeModalButton,
-  PiUiButton
+  PiUiButton,
+  TicketsCogs,
+  ImportScriptIconButton,
+  KeyBlueButton,
+  InvisibleConfirmModalButton
 } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
-import { Balance } from "shared";
+import {
+  TransitionMotionWrapper,
+  ShowWarning,
+  ExternalLink,
+  Balance
+} from "shared";
 import styles from "./PurchaseTicketsForm.module.css";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
@@ -14,6 +23,16 @@ export const LegacyVSPWarning = () => (
   <T
     id="purchase.isLegacyDescription"
     m="Use a VSP which has not updated to vspd. Not recommended, legacy VSP support will soon be removed."
+  />
+);
+
+const LegacyCheckbox = ({ isLegacy, toggleIsLegacy }) => (
+  <Checkbox
+    label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
+    className={styles.useLegacyLabel}
+    id="box"
+    checked={isLegacy}
+    onChange={() => toggleIsLegacy(!isLegacy)}
   />
 );
 
@@ -32,7 +51,7 @@ const PurchaseTicketsForm = ({
   vsp,
   vspFee,
   setVspFee,
-  onPurchaseTicket,
+  onPurchaseTickets,
   onRevokeTickets,
   availableVSPs,
   isLoading,
@@ -40,7 +59,17 @@ const PurchaseTicketsForm = ({
   toggleRememberVspHostCheckBox,
   notMixedAccounts,
   getRunningIndicator,
-  toggleIsLegacy
+  toggleIsLegacy,
+  isLegacy,
+  dismissBackupRedeemScript,
+  onDismissBackupRedeemScript,
+  isShowingAdvanced,
+  onToggleShowAdvanced,
+  getQuickBarComponent,
+  getAdvancedComponent,
+  willEnter,
+  willLeave,
+  toggleShowVsp
 }) => (
   <>
     <div className={classNames(styles.purchaseForm, styles.isRow)}>
@@ -60,38 +89,39 @@ const PurchaseTicketsForm = ({
             />
           </div>
         </label>
-        <label className={styles.rowLabel}>
-          <T id="purchaseTickets.vspFrom" m="VSP" />
-          <div className={classNames(styles.vspContainer, "selectWithBigFont")}>
-            <VSPSelect
-              className={styles.inputSelect}
-              style={{ width: "100%", marginRight: "10px" }}
-              {...{
-                options: availableVSPs,
-                account,
-                onChange: setVSP,
-                value: vsp,
-                isDisabled: !!rememberedVspHost,
-                setVspFee
-              }}
-            />
-          </div>
-        </label>
+        {!isLegacy && (
+          <label className={styles.rowLabel}>
+            <T id="purchaseTickets.vspFrom" m="VSP" />
+            <div
+              className={classNames(styles.vspContainer, "selectWithBigFont")}>
+              <VSPSelect
+                className={styles.inputSelect}
+                style={{ width: "100%", marginRight: "10px" }}
+                {...{
+                  options: availableVSPs,
+                  account,
+                  onChange: setVSP,
+                  value: vsp,
+                  isDisabled: !!rememberedVspHost,
+                  setVspFee
+                }}
+              />
+            </div>
+          </label>
+        )}
         <div className={styles.checkboxWrapper}>
           <div>
-            <Tooltip
-              contentClassName={styles.useLegacyTooltip}
-              content={<LegacyVSPWarning />}>
-              <Checkbox
-                label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
-                className={styles.useLegacyLabel}
-                id="box"
-                checked={false}
-                onChange={() => toggleIsLegacy(true)}
-              />
-            </Tooltip>
+            {!isLegacy ? (
+              <Tooltip
+                contentClassName={styles.useLegacyTooltip}
+                content={<LegacyVSPWarning />}>
+                <LegacyCheckbox {...{ isLegacy, toggleIsLegacy }} />
+              </Tooltip>
+            ) : (
+              <LegacyCheckbox {...{ isLegacy, toggleIsLegacy }} />
+            )}
           </div>
-          {vsp && (
+          {vsp && !isLegacy && (
             <Checkbox
               className={styles.rememberVspCheckBox}
               label={
@@ -108,8 +138,10 @@ const PurchaseTicketsForm = ({
         </div>
       </div>
       <div className={classNames(styles.isRow, styles.inputAmount)}>
-        <label className={styles.rowLabel}>
-          <T id="purchaseTickets.ticketAmount" m="Amount" />
+        <div className={styles.numTicketsToBuy}>
+          <label htmlFor="numTicketsToBuy">
+            <T id="purchaseTickets.ticketAmount" m="Amount" />
+          </label>
           <NumTicketsInput
             required
             invalid={account.spendable < numTicketsToBuy * ticketPrice}
@@ -124,10 +156,11 @@ const PurchaseTicketsForm = ({
             decrementNumTickets={onDecrementNumTickets}
             onChangeNumTickets={onChangeNumTickets}
             onKeyDown={handleOnKeyDown}
+            id="numTicketsToBuy"
             showErrors={true}
           />
-        </label>
-        {account.spendable >= numTicketsToBuy * ticketPrice && (
+        </div>
+        {isValid && (
           <div className={styles.inputValidMessageArea}>
             <span>
               <T id="purchaseTickets.vspFee" m="VSP Fee" />:
@@ -164,6 +197,72 @@ const PurchaseTicketsForm = ({
         )}
       </div>
     </div>
+    {isLegacy && (
+      <div className={styles.info}>
+        <div className={classNames(styles.actionButtons, styles.isColumn)}>
+          <TicketsCogs
+            opened={!isShowingAdvanced}
+            onClick={onToggleShowAdvanced}
+            ariaLabel="Show advanced settings"
+          />
+          <ImportScriptIconButton />
+        </div>
+        <TransitionMotionWrapper
+          {...{
+            styles: !isShowingAdvanced
+              ? getQuickBarComponent
+              : getAdvancedComponent,
+            willEnter: !isShowingAdvanced
+              ? () => willEnter(270)
+              : () => willEnter(80),
+            willLeave
+          }}
+        />
+      </div>
+    )}
+    {!dismissBackupRedeemScript && isLegacy && (
+      <div className={styles.warningArea}>
+        <ShowWarning
+          warn={
+            <T
+              id="purchase.ticket.backup.redeem.warn"
+              m="You must backup your redeem script. More information about it can be found at {link}"
+              values={{
+                link: (
+                  <ExternalLink
+                    href={
+                      "https://docs.decred.org/wallets/decrediton/using-decrediton/#backup-redeem-script"
+                    }>
+                    <T id="purchase.ticket.decred.docs" m="Decred docs" />
+                  </ExternalLink>
+                )
+              }}
+            />
+          }
+        />
+        <div className={classNames(styles.isRow, styles.backupButtonsRowArea)}>
+          <InvisibleConfirmModalButton
+            modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss" />}
+            modalContent={
+              <T
+                id="purchase.ticket.modal.desc"
+                m="Are you sure you want to dismiss this message? Make sure your redeem scripts are backed up."
+              />
+            }
+            buttonLabel={
+              <T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />
+            }
+            onSubmit={() => onDismissBackupRedeemScript()}
+            className={styles.stakepoolContentSend}
+          />
+          <KeyBlueButton
+            className={styles.vspWarningBackupRedeemButton}
+            onClick={() => toggleShowVsp(true)}>
+            <T id="purchase.ticket.warn.button" m="Backup Redeem Scripts" />
+          </KeyBlueButton>
+        </div>
+      </div>
+    )}
     <div className={styles.buttonsArea}>
       <RevokeModalButton
         modalTitle={
@@ -174,12 +273,15 @@ const PurchaseTicketsForm = ({
         kind="secondary"
         buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
       />
+
       {isWatchingOnly ? (
-        <PiUiButton disabled={!isValid} onClick={onPurchaseTicket}>
+        <PiUiButton disabled={!isValid} onClick={onPurchaseTickets}>
           {purchaseLabel()}
         </PiUiButton>
       ) : isLoading ? (
-        <PiUiButton disabled={true} loading={true} />
+        <PiUiButton loading={true}>
+          <div />
+        </PiUiButton>
       ) : getRunningIndicator ? (
         <Tooltip
           content={
@@ -188,7 +290,7 @@ const PurchaseTicketsForm = ({
               m="Privacy Mixer or Autobuyer running, please shut them off before purchasing a ticket."
             />
           }>
-          <PiUiButton disabled={true} buttonLabel={purchaseLabel()} />
+          <PiUiButton disabled={true}>{purchaseLabel()}</PiUiButton>
         </Tooltip>
       ) : (
         <TicketPurchaseModalButton
@@ -199,7 +301,7 @@ const PurchaseTicketsForm = ({
             />
           }
           disabled={!isValid}
-          onSubmit={onPurchaseTicket}
+          onSubmit={onPurchaseTickets}
           buttonLabel={purchaseLabel()}
         />
       )}

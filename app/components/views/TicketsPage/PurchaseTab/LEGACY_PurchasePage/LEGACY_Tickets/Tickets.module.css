@@ -15,7 +15,10 @@
 }
 .purchaseTicketArea {
   -webkit-user-select: text;
-  width: 740px;
+  width: 764px;
+}
+.subtitle {
+  width: 775px;
 }
 .purchaseTicketArea .tabbedPageSubtitle {
   width: auto;

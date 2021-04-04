@@ -111,13 +111,14 @@ export function PurchasePage({
             vspFee,
             setVspFee,
             isValid,
-            onPurchaseTicket: onV3PurchaseTicket,
+            onPurchaseTickets: onV3PurchaseTicket,
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
             onRevokeTickets,
             getRunningIndicator,
-            toggleIsLegacy
+            toggleIsLegacy,
+            isLegacy: false
           }}
         />
       )}
