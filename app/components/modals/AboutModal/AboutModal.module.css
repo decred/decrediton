@@ -1,0 +1,117 @@
+.about {
+  max-height: 60%;
+  z-index: 200;
+  overflow-y: auto;
+  text-align: left;
+  width: 611px !important;
+  height: 342px;
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--modal-text);
+  position: relative;
+}
+.about a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--modal-text);
+}
+.about a:active {
+  color: var(--input-color);
+}
+.aboutIcon {
+  float: left;
+  height: 231px;
+  width: 231px;
+  box-shadow: 0px 13px 21px rgba(9, 20, 64, 0.34);
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-position: 50%;
+  background-image: var(--decred-macos-1024-logo);
+  background-size: 231px;
+  background-repeat: no-repeat;
+  border-radius: 48px;
+}
+.aboutContent {
+  float: left;
+  width: 260px;
+  margin-left: 50px;
+  margin-top: 30px;
+}
+.aboutTitle {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 20px;
+}
+.infoModalCloseButtonTop {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.infoModalCloseButtonTop:hover {
+  opacity: 0.7;
+}
+.aboutTextParagraph {
+  margin-bottom: 10px;
+}
+.aboutText {
+  font-size: 13px;
+  line-height: 17px;
+}
+.aboutBottomArea {
+  float: left;
+  width: 571px;
+  margin-left: 20px;
+  border-top: 1px solid var(--modal-stroke-color);
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--modal-bottom);
+}
+.aboutBottomArea .aboutBottomAreaMiddle a,
+.aboutBottomArea .aboutBottomAreaRight a {
+  color: var(--modal-bottom) !important;
+}
+.aboutBottomArea a.aboutUpgrade {
+  color: var(--input-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+.aboutBottomArea a.aboutUpgrade:hover {
+  color: var(--input-color-hover);
+}
+
+@media screen and (max-width: 955px) {
+  .about {
+    width: inherit;
+  }
+}
+
+@media screen and (max-width: 588px) {
+  .about {
+    width: 455px !important;
+    height: 290px;
+    overflow: hidden;
+  }
+  .about .aboutContent {
+    margin-left: 25px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+  }
+  .about .aboutIcon {
+    margin-top: 20px;
+    height: 66px;
+    width: 66px;
+    background-size: 59px;
+    border-radius: 23px;
+  }
+  .about .aboutBottomArea {
+    width: 413px;
+  }
+}
