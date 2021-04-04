@@ -40,7 +40,7 @@
   padding: 24px 0 30px 0;
   margin: 0 40px;
   background-color: var(--background-back-color);
-  border-top: 1px solid var(--grey-3);
+  border-top: 1px solid var(--stakeinfo-border);
 }
 
 .stakeInfo {
@@ -53,7 +53,7 @@
   vertical-align: middle;
   line-height: 16px;
   font-size: 13px;
-  color: var(--grey-7);
+  color: var(--purchase-label);
   margin-bottom: 10px;
 }
 
@@ -62,7 +62,7 @@
   line-height: 22px;
   font-size: 18px;
   font-weight: 600;
-  color: var(--main-dark-blue);
+  color: var(--stakeinfo-value);
 }
 
 .foot {

@@ -150,6 +150,9 @@ const lightTheme = {
   "send-transaction-border": "var(--grey-3)",
   "secondary-piui-button-bg": "#fff",
   "purchase-ticket-border": "var(--grey-3)",
+  "stakeinfo-value": "var(--main-dark-blue)",
+  "stakeinfo-border": "var(--grey-3)",
+  "purchase-label": "var(--grey-7)",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border

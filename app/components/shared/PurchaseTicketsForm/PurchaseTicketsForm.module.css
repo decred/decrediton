@@ -20,7 +20,7 @@
 .useLegacyLabel {
   font-size: 16px;
   line-height: 20px;
-  color: var(--grey-7);
+  color: var(--purchase-label);
 }
 
 .infoFields strong {
@@ -54,13 +54,13 @@
   justify-self: right;
   font-size: 16px;
   line-height: 20px;
-  color: var(--grey-7);
+  color: var(--purchase-label);
 }
 
 .rowLabel {
   font-size: 13px;
   line-height: 16px;
-  color: var(--grey-7);
+  color: var(--purchase-label);
   align-self: flex-end;
   width: 100%;
 }
@@ -96,7 +96,7 @@
   text-align: right;
   font-size: 13px;
   line-height: 16px;
-  color: var(--grey-5);
+  color: var(--purchase-label);
 }
 .vspFee {
   color: var(--main-dark-blue);
@@ -106,10 +106,10 @@
 }
 .validMsgBalanceUnit,
 .validMsgBalance {
-  color: var(--main-dark-blue);
+  color: var(--input-color-default);
 }
 .validMsgBalanceSecondary {
-  color: var(--grey-5);
+  color: var(--account-text);
 }
 .buttonsArea {
   margin-top: 20px;
