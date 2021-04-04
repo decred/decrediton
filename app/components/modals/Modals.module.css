@@ -74,13 +74,6 @@
   flex-direction: column;
 }
 
-.mixerSettings.info {
-  background-image: none;
-  padding: 30px;
-  min-width: 620px;
-  overflow-x: hidden;
-}
-
 .modal.info.double,
 .reducedBar.info.double,
 .standalone.info.double,
@@ -91,100 +84,6 @@
   width: 540px;
 }
 
-.modal.about,
-.reducedBar.about,
-.standalone.about {
-  max-height: 60%;
-  z-index: 200;
-  overflow-y: auto;
-  text-align: left;
-  width: 611px !important;
-  height: 342px;
-  font-size: 13px;
-  line-height: 17px;
-  color: var(--modal-text);
-}
-
-.modal.about a,
-.reducedBar.about a,
-.standalone.about a {
-  cursor: pointer;
-  text-decoration: underline;
-  color: var(--modal-text);
-}
-
-.modal.about a:hover,
-.reducedBar.about a:hover,
-.standalone.about a:hover,
-.modal.about a:active,
-.reducedBar.about a:active,
-.standalone.about a:active {
-  color: var(--input-color);
-}
-
-.aboutIcon {
-  float: left;
-  height: 231px;
-  width: 231px;
-  box-shadow: 0px 13px 21px rgba(9, 20, 64, 0.34);
-  margin-left: 20px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  background-position: 50%;
-  background-image: var(--decred-macos-1024-logo);
-  background-size: 231px;
-  background-repeat: no-repeat;
-  border-radius: 48px;
-}
-
-.aboutContent {
-  float: left;
-  width: 260px;
-  margin-left: 50px;
-  margin-top: 30px;
-}
-
-.aboutTitle {
-  font-size: 27px;
-  line-height: 34px;
-  margin-bottom: 20px;
-}
-
-.aboutText {
-  font-size: 13px;
-  line-height: 17px;
-}
-
-.aboutBottomArea {
-  float: left;
-  width: 571px;
-  margin-left: 20px;
-  border-top: 1px solid var(--modal-stroke-color);
-  padding-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  color: var(--modal-bottom);
-}
-
-.aboutBottomArea .aboutBottomAreaMiddle a,
-.aboutBottomArea .aboutBottomAreaRight a {
-  color: var(--modal-bottom) !important;
-}
-
-.aboutBottomArea a.aboutUpgrade {
-  color: var(--input-color);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.aboutBottomArea a.aboutUpgrade:hover {
-  color: var(--input-color-hover);
-}
-
-.aboutTextParagraph {
-  margin-bottom: 10px;
-}
-
 .infoCloseButton {
   font-size: 13px;
   line-height: 17px;
@@ -193,10 +92,6 @@
   width: 80px;
   height: 40px;
   align-self: flex-end;
-}
-
-.mixerSettings .infoCloseButton {
-  float: right;
 }
 
 .infoCloseButtonTop {
@@ -572,15 +467,6 @@
   background-position: 0 center;
 }
 
-.mixerSettingsTitle {
-  font-size: 20px;
-}
-@media screen and (max-width: 1179px) {
-  .mixerSettings.info {
-    width: 594px !important;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .confirmSeedCopyWarningText {
     column-count: 1;
@@ -594,11 +480,6 @@
   .reducedBar.info.double {
     width: 300px !important;
   }
-
-  .mixerSettings.info {
-    width: 305px;
-    min-width: unset;
-  }
 }
 
 @media screen and (max-width: 420px) {
@@ -611,39 +492,5 @@
 
   .reducedBar.info.double {
     width: 250px !important;
-  }
-}
-
-@media screen and (max-width: 955px) {
-  .modal.about,
-  .reducedBar.about,
-  .standalone.about {
-    width: inherit;
-  }
-}
-
-@media screen and (max-width: 588px) {
-  .reducedBar.about {
-    width: 455px !important;
-    height: 290px;
-    overflow: hidden;
-  }
-
-  .reducedBar.about .aboutContent {
-    margin-left: 25px;
-    padding-bottom: 20px;
-    margin-top: 20px;
-  }
-
-  .reducedBar.about .aboutIcon {
-    margin-top: 20px;
-    height: 66px;
-    width: 66px;
-    background-size: 59px;
-    border-radius: 23px;
-  }
-
-  .reducedBar.about .aboutBottomArea {
-    width: 413px;
   }
 }
