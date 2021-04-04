@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../Modal";
 import { InvisibleButton, KeyBlueButton, DangerButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./ConfirmModal.module.css";

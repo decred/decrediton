@@ -1,4 +1,4 @@
-import InfoConfirmModal from "./InfoConfirmModal";
+import InfoConfirmModal from "../InfoConfirmModal";
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
 import styles from "./BackupRedeemScriptModal.module.css";

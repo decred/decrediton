@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../Modal";
 import { CloseButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./InfoConfirmModal.module.css";

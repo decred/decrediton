@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from "../Modal";
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./InfoModal.module.css";
