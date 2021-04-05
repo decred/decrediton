@@ -4,9 +4,7 @@ import {
   PROPOSAL_VOTING_NOT_AUTHORIZED,
   PROPOSAL_VOTING_AUTHORIZED,
   PROPOSAL_VOTING_ACTIVE,
-  PROPOSAL_VOTING_FINISHED,
-  PROPOSAL_VOTING_REJECTED,
-  PROPOSAL_VOTING_APPROVED
+  PROPOSAL_VOTING_FINISHED
 } from "constants";
 
 // politeiaMarkdownIndexMd returns markdown text from the payload of a politeia
