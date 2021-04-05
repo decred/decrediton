@@ -959,7 +959,6 @@ export const createWalletDexcCall = (
         rpclisten
       };
     } else if (assetID == 0) {
-      pw = "password";
       const splitRPC = rpclisten.split(":");
       if (splitRPC.length < 2) {
         return reject("error: rpclisten malformed for btc");
@@ -974,7 +973,7 @@ export const createWalletDexcCall = (
     }
     try {
       let init = callDEX("CreateWallet", {
-        pass: pw,
+        pass: passphrase ? passphrase : null,
         appPass: appPassphrase,
         config,
         assetID
