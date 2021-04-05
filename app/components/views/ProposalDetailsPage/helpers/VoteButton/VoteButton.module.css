@@ -1,12 +1,3 @@
 .voteButton {
-  padding: 6px 18px;
-  position: relative;
-  top: -4px;
-  left: 158px;
-}
-
-@media screen and (max-width: 1179px) {
-  .voteButton {
-    left: 123px;
-  }
+  padding: 5px;
 }

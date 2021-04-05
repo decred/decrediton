@@ -13,7 +13,7 @@ const VoteSection = ({
   voteOptions,
   showPurchaseTicketsPage
 }) => {
-  const { eligibleTicketCount } = viewedProposalDetails;
+  const { eligibleTicketCount, hasEligibleTickets } = viewedProposalDetails;
   return (
     <div className={styles.voteSection}>
       <VoteInfo
@@ -29,13 +29,15 @@ const VoteSection = ({
           voteOptions
         }}
       />
-      <div>
-        <T
-          id="proposals.detail.wallet.eligible.header"
-          m="Tickets eligible for voting: "
-        />
-        <span className={styles.total}>{`${eligibleTicketCount}`}</span>
-      </div>
+      {hasEligibleTickets && (
+        <div>
+          <T
+            id="proposals.detail.wallet.eligible.header"
+            m="Tickets eligible for voting: "
+          />
+          <span className={styles.total}>{`${eligibleTicketCount}`}</span>
+        </div>
+      )}
     </div>
   );
 };

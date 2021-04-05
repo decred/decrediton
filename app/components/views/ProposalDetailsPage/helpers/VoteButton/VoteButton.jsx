@@ -1,3 +1,4 @@
+import { KeyBlueButton } from "buttons";
 import styles from "./VoteButton.module.css";
 
 const VoteButton = ({ onClick, children }) => (

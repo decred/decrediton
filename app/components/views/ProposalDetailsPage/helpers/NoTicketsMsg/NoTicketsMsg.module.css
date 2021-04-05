@@ -1,12 +1,9 @@
 .noTickets {
   font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 15px;
-  height: 64px;
   background-size: 30px 30px;
   background-position: 0 50%;
   background-repeat: no-repeat;
   background-image: var(--ticket-voted-grey-icon);
-  width: 157px;
   padding-left: 40px;
+  flex-basis: 75%;
 }
