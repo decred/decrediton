@@ -8,7 +8,7 @@
 }
 .stepIndicator button.current {
   cursor: initial;
-  margin: 12px;
+  margin: 14px 12px 12px 12px;
   height: 14px;
   width: 14px;
   border: 2px solid var(--step-indicator);

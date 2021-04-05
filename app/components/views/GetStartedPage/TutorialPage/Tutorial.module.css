@@ -65,14 +65,14 @@ video {
 .nextButton {
   margin-left: 40px;
   margin-top: 8px;
-  height: 16px;
+  height: 26px;
   padding: 5px 20px 6px 20px;
 }
 
 .skipButton {
   margin-right: 10px;
   margin-top: 8px;
-  height: 16px;
+  height: 26px;
   padding: 5px 20px 6px 0px;
   width: 34px;
 }
