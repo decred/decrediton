@@ -42,7 +42,8 @@ const ProposalDetails = ({
     quorumMinimumVotes,
     walletEligibleTickets,
     linkto,
-    blocksLeft
+    blocksLeft,
+    approved
   },
   showPurchaseTicketsPage,
   setVoteOption,
@@ -103,7 +104,7 @@ const ProposalDetails = ({
                   className={styles.statusTag}
                   {...getProposalStatusTagProps(
                     { status: proposalStatus, linkto },
-                    voteStatus,
+                    { status: voteStatus, approved },
                     isDarkTheme
                   )}
                 />

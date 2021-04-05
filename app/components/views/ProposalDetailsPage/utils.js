@@ -49,14 +49,28 @@ const isPublicProposal = ({ status }) => status === PROPOSAL_STATUS_PUBLIC;
 const isAbandonedProposal = ({ status }) =>
   status === PROPOSAL_STATUS_ABANDONED;
 
+/**
+ * Returns true if the given proposal is approved
+ * @param {Object} proposal
+ * @param {Object} voteSummary
+ * @returns {Boolean} isApproved
+ */
+export const isApprovedProposal = (proposal, voteSummary) => {
+  if (!proposal || !voteSummary || !isPublicProposal(proposal)) {
+    return false;
+  }
+  const { approved } = voteSummary;
+  return approved;
+};
+
 export const getProposalStatusTagProps = (
   proposal,
-  voteStatus,
+  voteSummary,
   isDarkTheme
 ) => {
   const isRfpSubmission = !!proposal.linkto;
-  if (isPublicProposal(proposal) && !!voteStatus) {
-    switch (voteStatus) {
+  if (isPublicProposal(proposal) && !!voteSummary) {
+    switch (voteSummary.status) {
       case PROPOSAL_VOTING_NOT_AUTHORIZED:
         return {
           type: isDarkTheme ? "blueTime" : "blackTime",
@@ -72,27 +86,21 @@ export const getProposalStatusTagProps = (
       case PROPOSAL_VOTING_ACTIVE:
         return { type: "bluePending", text: "Active" };
       case PROPOSAL_VOTING_FINISHED:
-        return {
-          type: isDarkTheme ? "blueNegative" : "grayNegative",
-          text: "Finished"
-        };
-      case PROPOSAL_VOTING_REJECTED:
-        return {
-          type: "orangeNegativeCircled",
-          text: "Rejected"
-        };
-      case PROPOSAL_VOTING_APPROVED:
-        return { type: "greenCheck", text: "Approved" };
+        if (isApprovedProposal(proposal, voteSummary)) {
+          return { type: "greenCheck", text: "Finished" };
+        } else {
+          return {
+            type: isDarkTheme ? "blueNegative" : "grayNegative",
+            text: "Finished"
+          };
+        }
       default:
         break;
     }
   }
 
   if (isAbandonedProposal(proposal)) {
-    return {
-      type: isDarkTheme ? "blueNegative" : "grayNegative",
-      text: "Abandoned"
-    };
+    return { type: "orangeNegativeCircled", text: "Abandoned" };
   }
 
   return { type: "grayNegative", text: "missing" };
