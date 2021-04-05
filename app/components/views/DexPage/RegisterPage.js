@@ -109,10 +109,10 @@ export const RegisterPageContent = () => {
 
 export const RegisterPageHeader = () => (
   <StandaloneHeader
-    title={<T id="dex.loginPage.title" m="DEX Server Payment" />}
+    title={<T id="dex.registerPage.title" m="DEX Server Payment" />}
     description={
       <T
-        id="dex.loginPage.description"
+        id="dex.registerPage.description"
         m={"Register your wallet with the DEX Server"}
       />
     }

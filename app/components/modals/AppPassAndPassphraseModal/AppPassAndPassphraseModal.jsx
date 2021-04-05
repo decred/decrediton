@@ -37,7 +37,7 @@ const AppPassAndPassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
       return;
     }
     if (!appPassphrase) {
-      const error = <T id="error.empty.fields" m="Fill all fields." />;
+      const error = <T id="error.empty.fields.app.pass" m="Fill all fields." />;
       setIsError(error);
       return;
     }

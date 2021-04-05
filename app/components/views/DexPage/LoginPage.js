@@ -10,10 +10,10 @@ export const LoginPageContent = () => {
   return (
     <PassphraseModalButton
       disabled={loginAttempt}
-      modalTitle={<T id="dex.initPassphrase" m="Enter Dexc App Passphrase" />}
+      modalTitle={<T id="dex.loginPassphrase" m="Enter DEX Passphrase" />}
       loading={loginAttempt}
       onSubmit={onLoginDexc}
-      buttonLabel={<T id="dex.initPassphraseButton" m="Login" />}
+      buttonLabel={<T id="dex.loginPassphraseButton" m="Login" />}
     />
   );
 };
