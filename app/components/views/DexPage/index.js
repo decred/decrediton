@@ -13,7 +13,7 @@ import {
   CreateDexAccountPageContent,
   CreateDexAccountPageHeader
 } from "./CreateDexAccountPage";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 import { FormattedMessage as T } from "react-intl";
 
 const DexPage = () => {
@@ -64,7 +64,7 @@ const ErrorHeader = () => (
   <StandaloneHeader
     title={<T id="dex.error.title" m="Dexc Error" />}
     description={<T id="dex.error.description" m={"Dex not running"} />}
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );
 

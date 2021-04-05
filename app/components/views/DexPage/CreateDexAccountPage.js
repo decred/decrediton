@@ -3,7 +3,7 @@ import { PassphraseModalButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { AddAccountModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 import style from "./DexPage.module.css";
 
 export const CreateDexAccountPageContent = () => {
@@ -40,6 +40,6 @@ export const CreateDexAccountPageHeader = () => (
         }
       />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

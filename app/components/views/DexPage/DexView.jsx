@@ -2,7 +2,7 @@ import { useDex } from "./hooks";
 import { KeyBlueButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 
 export const DexViewContent = () => {
   const { onLaunchDexWindow } = useDex();
@@ -25,6 +25,6 @@ export const DexViewHeader = () => (
         m={"Launch the window to access the DEX"}
       />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

@@ -2,7 +2,7 @@ import { useDex } from "./hooks";
 import { PassphraseModalButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 
 export const LoginPageContent = () => {
   const { onLoginDexc, loginAttempt } = useDex();
@@ -24,6 +24,6 @@ export const LoginPageHeader = () => (
     description={
       <T id="dex.loginPage.description" m={"Login and connect wallet to Dex"} />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

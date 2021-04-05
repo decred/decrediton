@@ -2,7 +2,7 @@ import { useDex } from "./hooks";
 import { ResetNetworkButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 
 export const EnablePageContent = () => {
   const { onEnableDexc, enableDexAttempt } = useDex();
@@ -43,6 +43,6 @@ export const EnablePageHeader = () => (
         m={"You must enable DEX features to use them."}
       />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

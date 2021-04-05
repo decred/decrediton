@@ -2,7 +2,7 @@ import { useDex } from "./hooks";
 import { SetNewPassphraseModalButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 
 export const InitPageContent = () => {
   const { onInitDexc, initDexcAttempt } = useDex();
@@ -35,6 +35,6 @@ export const InitPageHeader = () => (
         }
       />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

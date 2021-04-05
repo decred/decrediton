@@ -119,3 +119,4 @@ export const MIXED_ICON = "mixed";
 export const SELF_ICON = "self";
 export const OUT_ICON = "out";
 export const IN_ICON = "in";
+export const DEX_ICON = "dex";

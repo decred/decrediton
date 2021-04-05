@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from "react";
 import { TextInput } from "inputs";
 import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 import style from "./DexPage.module.css";
 
 export const RegisterPageContent = () => {
@@ -116,6 +116,6 @@ export const RegisterPageHeader = () => (
         m={"Register your wallet with the DEX Server"}
       />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

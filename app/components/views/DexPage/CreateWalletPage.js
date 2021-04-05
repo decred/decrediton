@@ -5,7 +5,7 @@ import { StandaloneHeader } from "layout";
 import { TextInput } from "inputs";
 import { useState, useCallback, useEffect } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { LN_ICON } from "constants";
+import { DEX_ICON } from "constants";
 
 export const CreateWalletPageContent = () => {
   const {
@@ -179,6 +179,6 @@ export const CreateWalletPageHeader = () => (
         }
       />
     }
-    iconType={LN_ICON}
+    iconType={DEX_ICON}
   />
 );

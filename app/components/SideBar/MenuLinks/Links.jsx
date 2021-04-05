@@ -59,7 +59,7 @@ export const linkList = [
   {
     path: "/dex",
     link: <T id="sidebar.link.dex" m="DEX" />,
-    icon: LN_KEY, // XXX NEED DEX ICON
+    icon: DEX_KEY,
     key: DEX_KEY,
     ariaLabel: "DEX"
   }
