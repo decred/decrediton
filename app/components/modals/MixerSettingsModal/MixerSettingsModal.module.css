@@ -31,6 +31,7 @@
   width: 80px;
   height: 40px;
   align-self: flex-end;
+  float: right;
 }
 
 @media screen and (max-width: 1179px) {
