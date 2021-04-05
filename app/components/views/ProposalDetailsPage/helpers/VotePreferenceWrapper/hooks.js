@@ -13,7 +13,7 @@ const getError = (error) => {
   }
 };
 
-export const useVotePreference = ({ viewedProposalDetails }) => {
+export const useVotePreference = (viewedProposalDetails) => {
   const { eligibleTicketCount } = viewedProposalDetails || {};
   const [newVoteChoice, setVoteOption] = useState(null);
 
