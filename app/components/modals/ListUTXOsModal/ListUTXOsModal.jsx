@@ -1,4 +1,4 @@
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, defineMessages } from "react-intl";
 import Modal from "../Modal";
 import styles from "./ListUTXOsModal.module.css";
 import { Table } from "pi-ui";
@@ -6,8 +6,19 @@ import { useListUtxo } from "./hooks";
 import { Balance } from "shared";
 import { AccountsSelect } from "inputs";
 
+const messages = defineMessages({
+  utxo: {
+    id: "listutxo.header.utxo",
+    defaultMessage: "UTXO"
+  },
+  value: {
+    id: "listutxo.header.value",
+    defaultMessage: "Value"
+  }
+});
+
 const ListUTXOsModal = ({ onCancelModal, show }) => {
-  const { unspentOutputs, account, setAccount } = useListUtxo();
+  const { intl, unspentOutputs, account, setAccount } = useListUtxo();
 
   const data =
     unspentOutputs?.map((utxo) => {
@@ -24,8 +35,8 @@ const ListUTXOsModal = ({ onCancelModal, show }) => {
     }) ?? [];
 
   const headers = [
-    <T id="listutxo.utxo" m="UTXO" />,
-    <T id="listutxo.value" m="Value" />
+    intl.formatMessage(messages.utxo),
+    intl.formatMessage(messages.value)
   ];
 
   return (

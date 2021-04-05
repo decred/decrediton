@@ -1,4 +1,5 @@
 export { default as AccountsSelect } from "./AccountsSelect";
+export { default as DetailedAccountsSelect } from "./DetailedAccountsSelect";
 export { default as AddressInput } from "./AddressInput";
 export { default as BlocksInput } from "./BlocksInput";
 export { default as DcrInput } from "./DcrInput";

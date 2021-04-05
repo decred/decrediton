@@ -1,3 +1,10 @@
+.contentTitleButtonsArea {
+  margin-left: auto;
+}
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
 .exportInfoFieldName {
   font-weight: 600;
   margin-right: 0.5em;
@@ -7,54 +14,88 @@
 .exportArea {
   display: flex;
   width: 740px;
+  height: 187px;
 }
 
 .exportAreaLeft {
   color: var(--title-text-and-button-background);
   font-size: 13px;
   line-height: 17px;
-  padding: 30px 20px 0 28px;
-  width: 430px;
-  height: 134px;
+  padding: 20px 40px;
+  width: 405px;
   background-color: var(--background-back-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.exportAreaLeft label {
+  font-size: 13px;
+  color: var(--grey-7);
 }
 
 .exportAreaRight {
   background-color: var(--disabled-background-color-dark);
-  padding: 30px 30px 10px 30px;
-  width: 310px;
+  padding: 30px 40px;
+  width: 335px;
   font-size: 13px;
-  line-height: 19px;
-  cursor: pointer;
-  color: var(--wallet-label);
-  position: relative;
-}
-
-.exportAreaRight .verticalExpand {
-  background-image: var(--arrow-right-gray-icon);
-  background-repeat: no-repeat;
-  background-size: 20px 10px;
-  display: inline-block;
-  width: 20px;
-  height: 10px;
-  transform: rotate(90deg);
-  transition: all 0.5s;
-  position: absolute;
-  top: 28px;
-  right: 25px;
-}
-
-.exportAreaRight .verticalExpand.expanded {
-  transform: rotate(270deg);
+  line-height: 16px;
+  color: var(--main-dark-blue);
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .exportAreaRight .exportInfoNotExpanded {
   font-weight: 600;
-  display: inline;
 }
 
 .exportInfoDescription {
-  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.pathBrowseInput {
+  width: 100%;
+  font-size: 16px;
+  padding-left: 0;
+  padding-bottom: 2px;
+}
+.pathBrowseInput:hover {
+  border-bottom: 1px solid var(--accent-blue);
+}
+.pathBrowseInput:hover:not(.disabled):not(.active):not(.error) {
+  border-bottom: 1px var(--accent-blue) solid;
+}
+.pathBrowseInput input {
+  font-size: 16px;
+  line-height: 16px;
+}
+.pathBrowseInput input::placeholder {
+  font-size: 16px;
+}
+
+.modal {
+  width: 470px !important;
+}
+.modalTitle {
+  color: var(--grey-7);
+  font-size: 28px;
+  line-height: 35px;
+  margin-bottom: 20px;
+}
+
+.modalContent {
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--main-dark-blue);
+}
+
+.modalContent ul {
+  margin-left: 0 !important;
+}
+.modalContent ul li {
+  text-align: left;
 }
 
 ul.exportInfoFields {
@@ -70,30 +111,39 @@ ul.exportInfoFields {
 
 @media screen and (max-width: 1180px) {
   .exportAreaLeft {
-    width: 273px;
+    width: 388px;
   }
   .exportAreaRight {
     padding-right: 20px;
-    width: 263px;
+    width: 287px;
   }
 
   .exportAreaButton {
-    width: 634px;
+    width: 676px;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .modal {
+    width: 350px !important;
+  }
   .exportArea {
     flex-direction: column;
+    height: initial;
   }
 
   .exportAreaLeft {
-    width: 307px;
+    width: 355px;
+    padding: 20px;
+  }
+  .exportAreaLeft label:first-child {
+    margin-bottom: 20px;
   }
 
   .exportAreaRight {
-    width: 305px;
+    width: 355px;
     min-height: 88px;
+    padding: 20px;
   }
 
   .exportAreaButton {

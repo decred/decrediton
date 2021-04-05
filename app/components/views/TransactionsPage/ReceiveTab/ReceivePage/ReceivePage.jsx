@@ -3,7 +3,7 @@ import copy from "clipboard-copy";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, SmallButton } from "buttons";
 import QRCodeModal from "./QRCodeModal/QRCodeModal";
 import { classNames } from "pi-ui";
 import style from "./ReceivePage.module.css";
@@ -42,30 +42,48 @@ const ReceivePage = ({
       {modal && <QRCodeModal {...{ amount, nextAddress, setModal }} />}
       <Subtitle title={<T id="receive.subtitle" m="Receive DCR" />} />
       <div className={style.receiveContent}>
-        <div className={style.receiveContentNestForAddress}>
-          <div className={style.receiveContentNestPrefix}>
-            <T id="receive.accountLabel" m="This address is for" />:
-          </div>
-          <ReceiveAccountsSelect
-            showAccountsButton
-            className={style.receiveSelectAccountInput}
-          />
-        </div>
-        <div className={style.receiveRequestedAmount}>
-          <div className={style.receiveContentNestPrefix}>
-            <T id="receive.requestedAmountLabel" m="Requested amount" />:
-          </div>
-          <div className={style.receiveSelectAmountInput}>
-            <DcrInput
-              className={style.requestedAmountInput}
-              required={false}
-              showErrors={error && error.amount}
-              invalid={error && error.amount}
-              invalidMessage={error && error.amount}
-              amount={amountAtomValue}
-              placeholder={intl.formatMessage(messages.amountPlaceholder)}
-              onChangeAmount={(e) => onValidateAmount(e)}
+        <div className={style.inputs}>
+          <div className={style.inputWrapper}>
+            <label htmlFor="receiveAccountSelect">
+              <T id="receive.accountLabel" m="This address is for" />
+            </label>
+            {
+              // `selectWithBigFont` className is
+              // temp solution to skinning from ReactSelectGlobal.css.
+              // When react-select will be replaced by the `pi-ui` component,
+              // this className can be deleted.
+            }
+            <ReceiveAccountsSelect
+              id="receiveAccountSelect"
+              showAccountsButton
+              className={classNames(
+                style.receiveSelectAccountSelect,
+                "selectWithBigFont"
+              )}
+              selectClassName={style.receiveSelectAccountSelectInput}
             />
+          </div>
+          <div
+            className={classNames(
+              style.inputWrapper,
+              style.amountInputWrapper
+            )}>
+            <label htmlFor="amountInput">
+              <T id="receive.requestedAmountLabel" m="Requested Amount" />
+            </label>
+            <div className={style.receiveSelectAmountInput}>
+              <DcrInput
+                id="amountInput"
+                className={style.requestedAmountInput}
+                required={false}
+                showErrors={error && error.amount}
+                invalid={error && error.amount}
+                invalidMessage={error && error.amount}
+                amount={amountAtomValue}
+                placeholder={intl.formatMessage(messages.amountPlaceholder)}
+                onChangeAmount={(e) => onValidateAmount(e)}
+              />
+            </div>
           </div>
         </div>
 
@@ -97,28 +115,18 @@ const ReceivePage = ({
               </div>
             </div>
           </div>
-          <div className={style.copyParent}>
-            <div
-              className={style.receiveContentCopyButton}
-              onClick={() => {
-                copy(nextAddress);
-                setTooltipText(false);
-                showTooltip();
-              }}
-            />
-            <span>
-              <T id="receive.copyHash" m="Copy" />
-            </span>
-          </div>
-          <div className={style.viewQRParent}>
-            <div
-              className={style.receiveContentQRButton}
-              onClick={() => setModal(true)}
-            />
-            <span>
-              <T id="receive.viewQR" m="View QR" />
-            </span>
-          </div>
+          <SmallButton
+            className={style.receiveContentCopyButton}
+            onClick={() => {
+              copy(nextAddress);
+              setTooltipText(false);
+              showTooltip();
+            }}
+          />
+          <SmallButton
+            className={style.receiveContentQRButton}
+            onClick={() => setModal(true)}
+          />
         </div>
       </div>
       <div className={style.generateButton}>

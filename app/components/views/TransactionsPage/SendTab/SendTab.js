@@ -6,6 +6,7 @@ import { useService } from "hooks";
 import styles from "./SendForm.module.css";
 import { Subtitle } from "shared";
 import { ListUTXOsButton } from "buttons";
+import SendOutputRow from "./SendOutputRow";
 
 export const SendTabHeader = () => {
   const { isTestNet } = useService();
@@ -44,7 +45,7 @@ const SendTab = () => {
         className={"is-row"}
         children={<ListUTXOsButton />}
       />
-      <SendTransaction styles={styles} />
+      <SendTransaction styles={styles} SendOutputRow={SendOutputRow} />
     </>
   );
 };

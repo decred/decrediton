@@ -1,0 +1,240 @@
+.sendOutputContainer {
+  display: flex;
+  margin: 30px 0 30px 40px;
+  padding-right: 20px;
+  flex-direction: column;
+  width: 366px;
+  border-right: 1px solid var(--send-transaction-border);
+}
+.sendOutputContainer.plus {
+  border-right: none;
+}
+.sendOutputContainer label {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+}
+.add {
+  padding: 0 !important;
+  width: 24px;
+  height: 24px;
+  background-image: var(--add-icon);
+  background-size: 9px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: none !important;
+  margin-top: 9px;
+}
+.delete {
+  padding: 0 !important;
+  width: 24px;
+  height: 24px;
+  background-image: var(--delete-icon);
+  background-size: 9px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: var(--grey-7) !important;
+  border: none !important;
+  margin-top: 8px;
+}
+.add:disabled {
+  background-color: var(--small-button-disabled-bg) !important;
+  cursor: default;
+  opacity: 0.5;
+}
+
+.selfAccount {
+  background-image: var(--menu-accounts);
+  margin-left: 10px;
+}
+.selfAccountCancel {
+  background-image: var(--indicator-invalid-icon);
+  margin-left: 10px;
+}
+.selfAccountCancel:hover {
+  opacity: 0.85;
+}
+.sendAllButton {
+  background-image: var(--send-all-default);
+}
+.sendAllButton:hover {
+  background-image: var(--send-all-hover);
+}
+.sendAllButton:disabled {
+  background-color: var(--small-button-disabled-bg) !important;
+  background-image: var(--send-all-disabled);
+  cursor: default;
+  opacity: 0.5;
+}
+
+.cancelSendAll {
+  background-image: var(--indicator-invalid-icon);
+}
+.cancelSendAll:hover {
+  opacity: 0.85;
+}
+
+.amountContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0 20px 0;
+  align-items: flex-start;
+}
+.amountContainer .sendInputWrapper {
+  width: 193px;
+}
+.amountContainer .percentOfBalance {
+  font-size: 13px;
+  line-height: 22px;
+  color: var(--grey-5);
+  margin-top: 15px;
+}
+.amountContainer .percentOfBalance.error {
+  color: var(--error-text-color);
+}
+.amountContainer .dcrInput {
+  font-size: 13px;
+}
+
+.destinationContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.destinationContainer label {
+  width: 100%;
+}
+
+.sendInputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.sendInputWrapper.from {
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-direction: row;
+}
+.addressInput {
+  width: 100%;
+}
+.addressInput,
+.dcrInput {
+  width: 100%;
+  font-size: 16px;
+  padding-left: 0;
+  padding-bottom: 2px;
+}
+.addressInput:hover:not(.disabled):not(.active):not(.error),
+.dcrInput:hover:not(.disabled):not(.active):not(.error) {
+  border-bottom: 1px var(--accent-blue) solid;
+}
+.addressInput input,
+.dcrInput input {
+  font-size: 16px;
+  line-height: 16px;
+}
+.dcrInput input::placeholder,
+.addressInput input::placeholder {
+  font-size: 16px;
+}
+.sendInputWrapper .inputErrorsArea {
+  margin-bottom: -14px;
+}
+.sendIcons {
+  display: flex;
+  flex-direction: row;
+}
+
+.sendAll {
+  border-bottom: 1px var(--stroke-color-default) solid;
+  text-align: right;
+  background-color: var(--disabled-background-color);
+  font-size: 14px;
+  line-height: 15px;
+  padding: 4px 2px 4px 2px;
+}
+
+.tooltipSendAll {
+  width: 22rem;
+}
+
+.tooltipSendAllDisabled,
+.tooltipSendToSelf {
+  width: 18rem;
+}
+
+.sendInputWrapper.address {
+  position: relative;
+  width: 100%;
+  margin-right: 10px;
+  line-height: 23px;
+}
+
+.sendInputWrapper.address div {
+  /* hide warning icon,
+   * because it's cover Paste button */
+  background-image: none;
+}
+.receiveAccountSelect {
+  width: 334px;
+}
+
+.pasteButton {
+  font-family: var(--font-family-regular);
+  position: absolute;
+  right: 0;
+  top: 9px;
+  padding: 3px 10px !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  transition: none !important;
+}
+.clearAddressButton {
+  position: absolute;
+  right: 0;
+  top: 14px;
+  width: 24px;
+  background-image: var(--indicator-invalid-icon);
+  height: 24px;
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  background-size: 21px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.clearAddressButton:hover {
+  opacity: 0.85;
+}
+
+.inputErrorArea {
+  margin: 0;
+}
+@media screen and (max-width: 1179px) {
+  .sendOutputContainer {
+    margin: 20px 0 20px 20px;
+    width: 360px;
+  }
+  .receiveAccountSelect {
+    width: 304px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .sendOutputContainer {
+    padding: 0;
+    margin: 10px;
+    border: none;
+    width: 335px;
+  }
+  .sendOutputContainer label {
+    font-size: 13px;
+  }
+  .addressInput input {
+    font-size: 15px;
+    line-height: 21px;
+  }
+  .amountContainer .sendInputWrapper {
+    width: 175px;
+  }
+}

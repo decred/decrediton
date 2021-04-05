@@ -17,10 +17,9 @@ export const ExportTabHeader = () => (
 );
 
 const ExportTab = () => {
-  const { exportingData, exportStatToCSV } = useExportTab();
+  const { exportingData, exportStatToCSV, intl } = useExportTab();
   const [selectedExport, setSelectedExport] = useState(availableExports[0]);
   const [destinationFile, setDestinationFile] = useState("");
-  const [expanded, setExpanded] = useState(false);
 
   const onExportCSV = () => {
     const opts = {
@@ -29,7 +28,6 @@ const ExportTab = () => {
     };
     exportStatToCSV(opts);
   };
-  const onExpandFields = () => setExpanded(!expanded);
   const onSetDestinationFile = (df) => setDestinationFile(df);
   const onSetSelectedExport = (se) => setSelectedExport(se);
 
@@ -38,12 +36,11 @@ const ExportTab = () => {
       exportingData={exportingData}
       availableExports={availableExports}
       selectedExport={selectedExport}
-      expanded={expanded}
-      expandFields={onExpandFields}
       destinationFile={destinationFile}
       setDestinationFile={onSetDestinationFile}
       onExportCSV={onExportCSV}
       onChangeSelectedExport={onSetSelectedExport}
+      intl={intl}
     />
   );
 };

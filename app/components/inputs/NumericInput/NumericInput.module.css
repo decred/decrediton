@@ -2,6 +2,6 @@
   font-family: var(--font-family-regular);
 }
 .numericInputUnitArea {
-  color: var(--select-placeholder);
+  color: var(--main-dark-blue);
   line-height: 13px;
 }

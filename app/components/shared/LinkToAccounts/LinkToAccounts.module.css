@@ -1,10 +1,10 @@
 .icon {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   background-image: var(--accounts-button-icon);
   background-position: 50%;
-  background-size: 12px auto;
+  background-size: 14px auto;
   background-repeat: no-repeat;
   box-shadow: 0 3px 8px var(--input-color-shadow);
   border-radius: 5px;

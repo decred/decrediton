@@ -9,41 +9,37 @@
 }
 .detailsArea {
   width: 318px;
-  height: 159px;
-  background-color: var(--transfer-details-bg);
-  padding: 14px 20px 0 0;
-  font-size: 11px;
+  height: 215px;
+  padding: 30px 20px 0 0;
+  font-size: 13px;
   color: var(--account-text);
-}
-.detailsArea .detailsValueColumn {
-  color: var(--sidebar-bottom-light-text-color);
-}
-.detailsArea .detailsValueColumn .totalAmountBytes {
-  color: var(--account-text);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .detailsValueColumn {
   text-align: right;
   flex-grow: 1;
+  color: var(--main-dark-blue);
+  padding-bottom: 10px;
 }
-.detailsTitle {
-  text-align: right;
-  margin-bottom: 45px;
+.detailsUnit {
+  color: var(--main-dark-blue);
 }
 .detailsLabelColumn {
   white-space: nowrap;
+  text-align: right;
+  padding-left: 20px;
 }
-.detailsLabelColumn .totalAmountText {
-  margin-left: 27px;
-}
-.detailsLabelColumn .estimatedFeeText {
-  margin-left: 64px;
-}
-.detailsLabelColumn .estimatedSizeText {
-  margin-left: 61px;
+.detailsLabelColumn div,
+.detailsValueColumn div {
+  padding-bottom: 10px;
 }
 .sendButtonArea {
-  width: 740px;
   text-align: right;
+}
+.sendButtonArea button {
+  font-size: 16px;
 }
 .passphraseModal {
   width: 415px;
@@ -65,23 +61,6 @@
   margin-top: 5px;
   float: right;
 }
-.sendOutputContainer {
-  display: grid;
-  grid-template-columns: max-content 260px 20px;
-  grid-template-rows: repeat(3, 25px);
-  grid-column-gap: 10px;
-  grid-row-gap: 19px;
-  padding: 20px 43px 26px 16px;
-}
-.sendOutputContainer.plus {
-  grid-template-rows: repeat(2, 25px);
-}
-.sendOutputContainer label {
-  text-align: right;
-  font-size: 19px;
-  line-height: 21px;
-  grid-column: 1;
-}
 .error {
   color: var(--error-text-color);
 }
@@ -97,8 +76,11 @@
   .sendArea {
     width: 667px;
   }
-  .sendButtonArea {
-    width: 667px;
+  .detailsLabelColumn {
+    padding-left: 10px;
+  }
+  .detailsArea {
+    padding: 30px 20px 0 0;
   }
 }
 
@@ -110,26 +92,15 @@
   .sendArea {
     width: 355px;
   }
-  .sendOutputContainer {
-    grid-template-columns: max-content 242px 20px;
-    padding-right: 12px;
-  }
-  .sendOutputContainer label {
-    font-size: 13px;
-  }
   .sendButtonArea {
     width: 355px;
+    margin-top: 10px;
   }
   .detailsArea {
-    padding: 0;
     display: flex;
-    width: 355px;
-    height: 85px;
-  }
-  .detailsTitle {
-    text-align: left;
-    padding-left: 20px;
-    padding-top: 20px;
+    width: 340px;
+    height: 147px;
+    padding: 30px 20px 30px 0;
   }
   .detailsValueColumn {
     padding-top: 20px;

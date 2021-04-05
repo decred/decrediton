@@ -7,6 +7,7 @@ import * as sel from "selectors";
 function ReceiveAccountsSelect({
   onChange,
   className,
+  selectClassName,
   showAccountsButton,
   disabled,
   account
@@ -38,6 +39,7 @@ function ReceiveAccountsSelect({
       {...{
         showAccountsButton,
         className,
+        selectClassName,
         onChange: onChangeAccount,
         accountsType: "visible",
         filterAccounts: [mixedAccount],

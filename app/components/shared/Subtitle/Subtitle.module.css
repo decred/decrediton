@@ -1,6 +1,6 @@
 .tabbedPageSubtitle {
-  color: var(--stroke-color-hovered);
-  font-size: 20px;
+  color: var(--grey-6);
+  font-size: 24px;
   line-height: 25px;
   margin-bottom: 17px;
   margin-left: 0;
@@ -23,5 +23,7 @@
   .tabbedPageSubtitle {
     width: 355px;
     margin-left: 0;
+    font-size: 20px;
+    line-height: 25px;
   }
 }

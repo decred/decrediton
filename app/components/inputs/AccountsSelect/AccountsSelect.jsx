@@ -7,13 +7,17 @@ import { classNames } from "pi-ui";
 const AccountsSelect = ({
   accountsType,
   className,
+  selectClassName,
   showAccountsButton,
   disabled,
   hideSpendable,
   filterAccounts,
   account: accountProp,
   onChange,
-  onKeyDown
+  onKeyDown,
+  valueRenderer,
+  optionRenderer,
+  searchable
 }) => {
   const { account, accounts, placeholder } = useAccountsSelect({
     accountProp,
@@ -31,16 +35,18 @@ const AccountsSelect = ({
     onKeyDown?.(e);
   };
 
-  const valueRenderer = (option) => (
-    <div className={styles.value}>
-      <div className={styles.name}>{option.name}</div>
-      {!hideSpendable && (
-        <div className={styles.spendable}>
-          <Balance flat amount={option.spendable} />
-        </div>
-      )}
-    </div>
-  );
+  if (!valueRenderer) {
+    valueRenderer = (option) => (
+      <div className={styles.value}>
+        <div className={styles.name}>{option.name}</div>
+        {!hideSpendable && (
+          <div className={styles.spendable}>
+            <Balance flat amount={option.spendable} />
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -57,10 +63,11 @@ const AccountsSelect = ({
         labelKey="label"
         options={accounts}
         valueRenderer={valueRenderer}
-        optionRenderer={valueRenderer}
+        optionRenderer={optionRenderer ?? valueRenderer}
         onChange={(acc) => onChange?.(acc)}
-        className={styles.select}
+        className={classNames(styles.select, selectClassName)}
         onInputKeyDown={selectKeyDown}
+        searchable={searchable}
       />
       {showAccountsButton && <LinkToAccounts />}
     </div>

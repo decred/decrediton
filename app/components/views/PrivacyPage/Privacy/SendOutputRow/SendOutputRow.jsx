@@ -24,10 +24,9 @@ const getSendAllFundsIcon = ({
   isSendAll,
   onShowSendAll,
   onHideSendAll,
-  outputs,
-  extStyle
+  outputs
 }) => (
-  <div className={extStyle.sendAllFundsIcon}>
+  <div className={styles.sendAllFundsIcon}>
     {outputs.length > 1 ? (
       <Tooltip
         contentClassName={styles.tooltipSendAllDisabled}
@@ -71,62 +70,10 @@ const getSendAllFundsIcon = ({
   </div>
 );
 
-const getAddInputIcon = ({
-  isSendSelf,
-  onAddOutput,
-  onRemoveOutput,
-  index,
-  isSendAll
-}) =>
-  isSendSelf ? (
-    <div
-      className={classNames(
-        styles.sendIconWrapper,
-        styles.add,
-        styles.disabled
-      )}></div>
-  ) : (
-    !isSendAll &&
-    (index === 0 ? (
-      <div
-        className={classNames(styles.sendIconWrapper, styles.add)}
-        onClick={onAddOutput}></div>
-    ) : (
-      <div
-        className={classNames(styles.sendIconWrapper, styles.delete)}
-        onClick={() => onRemoveOutput(index)}></div>
-    ))
-  );
-
-const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
-  !isSendSelf ? (
-    <Tooltip
-      contentClassName={styles.tooltipSendToSelf}
-      content={<T id="send.sendSelfTitle" m="Send funds to another account" />}>
-      <a
-        className={classNames(styles.sendIconWrapper, styles.selfAccountIcon)}
-        onClick={onShowSendSelf}
-      />
-    </Tooltip>
-  ) : (
-    <Tooltip
-      contentClassName={styles.tooltipSendAllDisabled}
-      content={
-        <T id="send.sendOthersTitle" m="Send funds to another wallet" />
-      }>
-      <a
-        className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
-        onClick={onShowSendOthers}
-      />
-    </Tooltip>
-  );
-
 const SendOutputRow = ({
   index,
   destination,
   amount,
-  onAddOutput,
-  onRemoveOutput,
   onValidateAmount,
   onValidateAddress,
   isSendAll,
@@ -139,21 +86,13 @@ const SendOutputRow = ({
   isSendSelf,
   outputs,
   onChangeAccount,
-  onShowSendSelf,
   account,
-  onShowSendOthers,
   filterAccounts,
   accountsType,
-  onlySendSelfAllowed,
   receiveAccountsSelectDisabled,
-  extStyle,
   receiveAccount
 }) => (
-  <div
-    className={classNames(
-      extStyle.sendOutputContainer,
-      index > 0 && extStyle.plus
-    )}>
+  <div className={classNames(styles.sendOutputContainer)}>
     {index === 0 && (
       <>
         <label>
@@ -170,8 +109,6 @@ const SendOutputRow = ({
             }}
           />
         </div>
-        {!onlySendSelfAllowed &&
-          getSendSelfIcon({ isSendSelf, onShowSendSelf, onShowSendOthers })}
       </>
     )}
     <label>
@@ -202,21 +139,13 @@ const SendOutputRow = ({
         />
       )}
     </div>
-    {!onlySendSelfAllowed &&
-      getAddInputIcon({
-        isSendSelf,
-        onAddOutput,
-        onRemoveOutput,
-        index,
-        isSendAll
-      })}
     <label>
       <T id="send.amount" m="Amount" />:
     </label>
     <div
       className={classNames(
         styles.sendInputWrapper,
-        extStyle.amountInputWrapper
+        styles.amountInputWrapper
       )}>
       {isSendAll ? (
         <Balance
@@ -226,7 +155,7 @@ const SendOutputRow = ({
         />
       ) : (
         <DcrInput
-          className={classNames(extStyle.dcrInput)}
+          className={classNames(styles.dcrInput)}
           required={true}
           showErrors={error && error.amount}
           invalid={error && error.amount}
@@ -245,8 +174,7 @@ const SendOutputRow = ({
         isSendAll,
         onShowSendAll,
         onHideSendAll,
-        outputs,
-        extStyle
+        outputs
       })}
   </div>
 );

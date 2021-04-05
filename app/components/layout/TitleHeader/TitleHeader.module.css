@@ -8,8 +8,8 @@
 
 .title {
   margin-bottom: 3px;
-  color: var(--stroke-color-hovered);
-  font-size: 27px;
+  color: var(--grey-6);
+  font-size: 28px;
   line-height: 30px;
 }
 

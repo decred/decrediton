@@ -1,7 +1,7 @@
 .header {
   white-space: pre-wrap;
-  color: var(--header-desc-lighter-color);
-  font-size: 13px;
+  color: var(--main-dark-blue);
+  font-size: 16px;
   float: left;
   width: 100%;
   margin-left: 40px;
@@ -14,4 +14,9 @@
 
 .actionButton > .button {
   min-width: 76px;
+}
+@media screen and (max-width: 768px) {
+  .header {
+    display: none;
+  }
 }
