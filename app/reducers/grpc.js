@@ -117,7 +117,8 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         accountMixerRunning: true,
-        mixerStreamer: action.mixerStreamer
+        mixerStreamer: action.mixerStreamer,
+        mixerStreamerError: null
       };
     case RUNACCOUNTMIXER_FAILED:
       return {

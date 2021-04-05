@@ -26,7 +26,8 @@ const Form = ({
   styles,
   hideDetails,
   sendButtonLabel,
-  getRunningIndicator
+  getRunningIndicator,
+  account
 }) => (
   <>
     <div className={classNames(styles.sendArea, styles.isRow)}>
@@ -87,7 +88,9 @@ const Form = ({
                 disabled={!isValid()}
                 showModal={showPassphraseModal}
                 onShow={resetShowPassphraseModal}
-                buttonLabel={sendButtonLabel}>
+                buttonLabel={sendButtonLabel}
+                account={account}
+              >
                 <div className={styles.passphraseModal}>
                   {!isSendSelf ? (
                     <>

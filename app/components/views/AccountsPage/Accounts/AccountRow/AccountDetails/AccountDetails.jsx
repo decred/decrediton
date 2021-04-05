@@ -19,7 +19,8 @@ const AccountsDetails = ({
   showAccount,
   showPubKey,
   onTogglePubkey,
-  accountExtendedKey
+  accountExtendedKey,
+  onSetAccountPassphrase
 }) => (
   <div key={`details${account.accountNumber}`}>
     <div className={styles.columns}>

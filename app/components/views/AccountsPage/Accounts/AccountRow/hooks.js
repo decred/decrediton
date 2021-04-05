@@ -1,6 +1,9 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { usePrevious } from "hooks";
 import { useIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import * as ca from "actions/ControlActions";
+import * as sel from "selectors";
 
 export function useAccountRow(
   account,
@@ -39,14 +42,14 @@ export function useAccountRow(
     previousAccountNumDetailsShown
   ]);
 
-  const updateRenameAccountName = useCallback((accountName) => {
+  const updateRenameAccountName = (accountName) => {
     if (accountName == "") {
       setHasFailedAttempt(true);
     }
     setRenameAccountName(accountName);
-  }, []);
+  };
 
-  const renameAccountCallback = useCallback(() => {
+  const renameAccountCallback = () => {
     if (!renameAccountName || renameAccountName == "") {
       setHasFailedAttempt(true);
       return;
@@ -54,35 +57,45 @@ export function useAccountRow(
     renameAccount(renameAccountNumber, renameAccountName);
     setRenameAccountName(null);
     setIsShowingRenameAccount(false);
-  }, [renameAccount, renameAccountName, renameAccountNumber]);
+  };
 
-  const showRenameAccount = useCallback(() => {
+  const showRenameAccount = () => {
     setHasFailedAttempt(false);
     setIsShowingRenameAccount(true);
-  }, []);
+  };
 
-  const hideRenameAccount = useCallback(() => {
+  const hideRenameAccount = () => {
     setIsShowingRenameAccount(false);
-  }, []);
+  };
 
-  const showAccountCallback = useCallback(() => {
+  const showAccountCallback =() => {
     showAccount(account.accountNumber);
     setHidden(false);
-  }, [showAccount, account.accountNumber]);
+  };
 
-  const hideAccountCallback = useCallback(() => {
+  const hideAccountCallback = () => {
     hideAccount(account.accountNumber);
     setHidden(true);
-  }, [hideAccount, account.accountNumber]);
+  };
 
-  const onTogglePubkey = useCallback(() => {
+  const onTogglePubkey = () => {
     onGetAccountExtendedKey(account.accountNumber);
     setShowPubKey(!showPubKey);
-  }, [onGetAccountExtendedKey, account.accountNumber, showPubKey]);
+  };
 
-  const onToggleShowDetails = useCallback(() => {
+  const onToggleShowDetails = () => {
     setIsShowingDetails(!isShowingDetails);
-  }, [isShowingDetails]);
+  };
+
+  // TODO move functions which are being imported as props to here.
+  const dispatch = useDispatch();
+  const onSetAccountPassphrase = (passphrase, args) => {
+    const { newPassphrase } = args;
+    account.encrypted ?
+      dispatch(ca.setAccountPassphrase(account.accountNumber, passphrase, newPassphrase)) :
+      dispatch(ca.setAccountPassphrase(account.accountNumber, null, newPassphrase, passphrase));
+  };
+  const changeAccount = useSelector(sel.getChangeAccount);
 
   return {
     isShowingRenameAccount,
@@ -99,6 +112,8 @@ export function useAccountRow(
     hideAccountCallback,
     onTogglePubkey,
     onToggleShowDetails,
-    intl
+    intl,
+    onSetAccountPassphrase,
+    changeAccount
   };
 }

@@ -5,6 +5,7 @@ import { useSendTransactionButton } from "./hooks";
 
 const SendTransactionButton = ({
   disabled,
+  account,
   onSubmit,
   children,
   buttonLabel
@@ -20,7 +21,7 @@ const SendTransactionButton = ({
 
   const signTransaction = (privpass) => {
     if (!privpass || disabled) return;
-    onAttemptSignTransaction?.(privpass, unsignedTransaction);
+    onAttemptSignTransaction?.(privpass, unsignedTransaction, account);
   };
 
   const signTransactionTrezor = () => {

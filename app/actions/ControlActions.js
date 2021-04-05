@@ -222,23 +222,32 @@ export const SIGNTX_ATTEMPT = "SIGNTX_ATTEMPT";
 export const SIGNTX_FAILED = "SIGNTX_FAILED";
 export const SIGNTX_SUCCESS = "SIGNTX_SUCCESS";
 
-export const signTransactionAttempt = (passphrase, rawTx) => (
+export const signTransactionAttempt = (passphrase, rawTx, acct) => async (
   dispatch,
   getState
 ) => {
   dispatch({ type: SIGNTX_ATTEMPT });
-  return wallet
-    .signTransaction(sel.walletService(getState()), passphrase, rawTx)
-    .then((signTransactionResponse) => {
-      dispatch({
-        signTransactionResponse: signTransactionResponse,
-        type: SIGNTX_SUCCESS
-      });
-      dispatch(
-        publishTransactionAttempt(signTransactionResponse.getTransaction())
-      );
-    })
-    .catch((error) => dispatch({ error, type: SIGNTX_FAILED }));
+  try {
+    const acctNumber = acct.encrypted ? acct.value : null;
+    const error = await dispatch(unlockWalletOrAcct(passphrase, acctNumber));
+    if (error) {
+      return dispatch({ error, type: SIGNTX_FAILED });
+    }
+    const signTransactionResponse = await wallet.signTransaction(
+      sel.walletService(getState()),
+      rawTx
+    );
+    dispatch({
+      signTransactionResponse: signTransactionResponse,
+      type: SIGNTX_SUCCESS
+    });
+    dispatch(
+      publishTransactionAttempt(signTransactionResponse.getTransaction())
+    );
+    await dispatch(lockWalletOrAcct(acctNumber));
+  } catch(error) {
+    dispatch({ error, type: SIGNTX_FAILED });
+  }
 };
 
 export const PUBLISHTX_ATTEMPT = "PUBLISHTX_ATTEMPT";
@@ -288,7 +297,7 @@ export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 // TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
   passphrase,
-  accountNum,
+  account,
   spendLimit,
   requiredConf,
   numTickets,
@@ -315,9 +324,10 @@ export const purchaseTicketsAttempt = (
       );
     }
 
+    let accountNum = null;
+    // If we need to sign the tx, we re-import the script to ensure the
+    // wallet will control the ticket. And unlock the wallet
     if (!dontSignTx) {
-      // If we need to sign the tx, we re-import the script to ensure the
-      // wallet will control the ticket.
       const importScriptResponse = await dispatch(
         importScriptAttempt(stakepool.Script)
       );
@@ -326,12 +336,16 @@ export const purchaseTicketsAttempt = (
           "Trying to use a ticket address not corresponding to script"
         );
       }
+      accountNum = account.encrypted ? account.value : null;
+      const error = await dispatch(unlockWalletOrAcct(passphrase, accountNum));
+      if (error) {
+        return dispatch({ error, type: PURCHASETICKETS_FAILED });
+      }
     }
 
     const purchaseTicketsResponse = await wallet.purchaseTickets(
       walletService,
-      passphrase,
-      accountNum,
+      account,
       spendLimit,
       requiredConf,
       numTickets,
@@ -347,6 +361,7 @@ export const purchaseTicketsAttempt = (
         type: CREATE_UNSIGNEDTICKETS_SUCCESS
       });
     }
+    await dispatch(lockWalletOrAcct(accountNum));
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: PURCHASETICKETS_FAILED });
@@ -355,7 +370,7 @@ export const purchaseTicketsAttempt = (
 
 export const newPurchaseTicketsAttempt = (
   passphrase,
-  accountNum,
+  account,
   numTickets,
   vsp
 ) => async (dispatch, getState) => {
@@ -370,11 +385,14 @@ export const newPurchaseTicketsAttempt = (
       csppPort: sel.getCsppPort(getState()),
       mixedAcctBranch: sel.getMixedAccountBranch(getState())
     };
-
+    const accountNum = account.encrypted ? account.value : null;
+    const error = await dispatch(unlockWalletOrAcct(passphrase, accountNum));
+    if (error) {
+      return dispatch({ error, type: PURCHASETICKETS_FAILED });
+    }
     const purchaseTicketsResponse = await wallet.purchaseTicketsV3(
       walletService,
-      passphrase,
-      accountNum,
+      account,
       numTickets,
       !dontSignTx,
       vsp,
@@ -397,6 +415,7 @@ export const newPurchaseTicketsAttempt = (
       });
     } else {
       dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+      await dispatch(lockWalletOrAcct(accountNum));
     }
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
@@ -409,7 +428,7 @@ export const newPurchaseTicketsAttempt = (
       if (unspentOutputs.length < numTickets * 2) {
         // check if amount is indeed insufficient
         const ticketPrice = sel.ticketPrice(getState());
-        if (accountNum.spendable > ticketPrice * numTickets) {
+        if (account.spendable > ticketPrice * numTickets) {
           return dispatch({
             error: `Not enough utxo. Need to break the input so one can be reserved
             for paying the fee.`,
@@ -452,82 +471,72 @@ export const startTicketBuyerV3Attempt = (
   account,
   balanceToMaintain,
   vsp
-) => (dispatch, getState) => {
-  const request = new RunTicketBuyerRequest();
+) => async (dispatch, getState) => {
   const mixedAccount = sel.getMixedAccount(getState());
   const changeAccount = sel.getChangeAccount(getState());
   const csppServer = sel.getCsppServer(getState());
   const csppPort = sel.getCsppPort(getState());
   const mixedAcctBranch = sel.getMixedAccountBranch(getState());
-
-  if (mixedAccount && changeAccount) {
-    if (
-      !mixedAccount ||
-      !changeAccount ||
-      !csppServer ||
-      !csppPort ||
-      typeof mixedAcctBranch === "undefined"
-    ) {
-      throw "missing cspp argument";
-    }
-    request.setMixedAccount(mixedAccount);
-    request.setMixedSplitAccount(mixedAccount);
-    request.setChangeAccount(changeAccount);
-    request.setCsppServer(`${csppServer}:${csppPort}`);
-    request.setMixedAccountBranch(mixedAcctBranch);
-  }
-
-  request.setBalanceToMaintain(balanceToMaintain);
-  request.setAccount(account.value);
-  request.setVotingAccount(account.value);
-  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  const { pubkey, host } = vsp;
-  request.setVspPubkey(pubkey);
-  request.setVspHost("https://" + host);
   const ticketBuyerConfig = { vsp, balanceToMaintain, account };
-  return new Promise(() => {
-    const { ticketBuyerService } = getState().grpc;
-    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV3_ATTEMPT });
-    const ticketBuyer = ticketBuyerService.runTicketBuyer(request);
-    ticketBuyer.on("data", function (response) {
-      // No expected responses but log in case.
-      console.log(response);
-    });
-    ticketBuyer.on("end", function (response) {
-      // No expected response in end but log in case.
-      console.log(response);
-    });
-    ticketBuyer.on("error", function (status) {
-      status = status + "";
-      if (status.indexOf("Cancelled") < 0) {
-        if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYERV3_FAILED });
-        }
-      } else {
-        dispatch({ type: STOPTICKETBUYER_SUCCESS });
-      }
-    });
-    // update used vsps
-    dispatch(updateUsedVSPs(vsp));
 
-    dispatch({
-      ticketBuyerCall: ticketBuyer,
-      vsp,
-      balanceToMaintain,
-      account,
-      type: STARTTICKETBUYERV3_SUCCESS
-    });
+  const { ticketBuyerService } = getState().grpc;
+  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV3_ATTEMPT });
+  const accountNum = account.encrypted ? account.value : null;
+  const error = await dispatch(unlockWalletOrAcct(passphrase, accountNum));
+  if (error) {
+    dispatch({ error, type: STARTTICKETBUYERV3_FAILED });
+    return error;
+  }
+  const ticketBuyer = await wallet.startTicketAutoBuyerV3(ticketBuyerService, {
+    mixedAccount,
+    mixedAcctBranch,
+    changeAccount,
+    csppServer,
+    csppPort,
+    balanceToMaintain,
+    accountNum,
+    pubkey: vsp.pubkey,
+    host: vsp.host
   });
+  ticketBuyer.on("data", function (response) {
+    // No expected responses but log in case.
+    console.log(response);
+  });
+  ticketBuyer.on("end", function (response) {
+    // No expected response in end but log in case.
+    console.log(response);
+  });
+  ticketBuyer.on("error", function (status) {
+    status = status + "";
+    if (status.indexOf("Cancelled") < 0) {
+      if (status.indexOf("invalid passphrase") > 0) {
+        dispatch({ error: status, type: STARTTICKETBUYERV3_FAILED });
+      }
+    } else {
+      dispatch({ type: STOPTICKETBUYER_SUCCESS });
+    }
+  });
+  // update used vsps
+  dispatch(updateUsedVSPs(vsp));
+  dispatch({
+    ticketBuyerCall: ticketBuyer,
+    vsp,
+    balanceToMaintain,
+    account,
+    type: STARTTICKETBUYERV3_SUCCESS
+  });
+  return ticketBuyer;
 };
 
 export function ticketBuyerCancel() {
-  return (dispatch, getState) => {
-    const { ticketBuyerCall } = getState().vsp;
+  return async (dispatch, getState) => {
+    const { ticketBuyerCall, account } = getState().vsp;
     if (!ticketBuyerCall) return;
     if (ticketBuyerCall) {
-      dispatch({ type: STOPTICKETBUYER_ATTEMPT });
-      wallet.lockWallet(sel.walletService(getState()));
       ticketBuyerCall.cancel();
+      dispatch({ type: STOPTICKETBUYER_ATTEMPT });
+      const acctNumber = account.encrypted ? account.value : null;
+      await dispatch(lockWalletOrAcct(acctNumber));
     }
   };
 }
@@ -861,50 +870,57 @@ export const startTicketBuyerV2Attempt = (
   account,
   balanceToMaintain,
   stakepool
-) => (dispatch, getState) => {
+) => async (dispatch, getState) => {
   const request = new RunTicketBuyerRequest();
   request.setBalanceToMaintain(balanceToMaintain);
   request.setAccount(account.value);
   request.setVotingAccount(account.value);
-  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setVotingAddress(stakepool.TicketAddress);
   const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
-  return new Promise(() => {
-    const { ticketBuyerService } = getState().grpc;
-    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
-    const ticketBuyer = ticketBuyerService.runTicketBuyer(request);
-    ticketBuyer.on("data", function (response) {
-      // No expected responses but log in case.
-      console.log(response);
-    });
-    ticketBuyer.on("end", function (response) {
-      // No expected response in end but log in case.
-      console.log(response);
-    });
-    ticketBuyer.on("error", function (status) {
-      status = status + "";
-      if (status.indexOf("Cancelled") < 0) {
-        if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
-        }
-      } else {
-        dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+  const { ticketBuyerService } = getState().grpc;
+  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
+  const accountNum = account.encrypted ? account.value : null;
+  const error = await dispatch(unlockWalletOrAcct(passphrase, accountNum));
+  if (error) {
+    dispatch({ error, type: STARTTICKETBUYERV2_FAILED });
+    return error;
+  }
+
+  const ticketBuyer = ticketBuyerService.runTicketBuyer(request);
+  ticketBuyer.on("data", function (response) {
+    // No expected responses but log in case.
+    console.log(response);
+  });
+  ticketBuyer.on("end", function (response) {
+    // No expected response in end but log in case.
+    console.log(response);
+  });
+  ticketBuyer.on("error", function (status) {
+    status = status + "";
+    if (status.indexOf("Cancelled") < 0) {
+      if (status.indexOf("invalid passphrase") > 0) {
+        dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
       }
-    });
-    dispatch({
-      ticketBuyerCall: ticketBuyer,
-      type: STARTTICKETBUYERV2_SUCCESS
-    });
+    } else {
+      dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+    }
+  });
+  dispatch({
+    ticketBuyerCall: ticketBuyer,
+    ticketBuyerAcct: account,
+    type: STARTTICKETBUYERV2_SUCCESS
   });
 };
 
 export function ticketBuyerV2Cancel() {
-  return (dispatch, getState) => {
-    const { ticketBuyerCall } = getState().control;
+  return async (dispatch, getState) => {
+    const { ticketBuyerCall, ticketBuyerAcct } = getState().control;
     if (!ticketBuyerCall) return;
     if (ticketBuyerCall) {
       dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
       ticketBuyerCall.cancel();
+      const acctNumber = ticketBuyerAcct.encrypted ? ticketBuyerAcct.value : null;
+      await dispatch(lockWalletOrAcct(acctNumber));
     }
   };
 }
@@ -940,4 +956,91 @@ export const saveLegacyAutoBuyerSettings = ({
     account,
     vsp
   });
+};
+
+export const SETACCOUNTPASSPHRASE_ATTEMPT = "SETACCOUNTPASSPHRASE_ATTEMPT";
+export const SETACCOUNTPASSPHRASE_FAILED = "SETACCOUNTPASSPHRASE_FAILED";
+export const SETACCOUNTPASSPHRASE_SUCCESS = "SETACCOUNTPASSPHRASE_SUCCESS";
+
+export const setAccountPassphrase = (accountNumber, accountPassphrase, newAcctPassphrase, walletPassphrase) => (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: SETACCOUNTPASSPHRASE_ATTEMPT });
+  return wallet
+    .setAccountPassphrase(sel.walletService(getState()), accountNumber, accountPassphrase, newAcctPassphrase, walletPassphrase)
+    .then(() => {
+      const oldAccounts = sel.balances(getState());
+      const accounts = oldAccounts.map((acct) => {
+        if (acct.accountNumber !== accountNumber) {
+          return acct;
+        }
+        acct.encrypted = true;
+        return acct;
+      });
+
+      return dispatch({ type: SETACCOUNTPASSPHRASE_SUCCESS, accounts });
+    })
+    .catch((error) => dispatch({ error, type: SETACCOUNTPASSPHRASE_FAILED }));
+};
+
+export const UNLOCKACCTORWALLET_ATTEMPT = "UNLOCKACCTORWALLET_ATTEMPT";
+export const UNLOCKACCTORWALLET_FAILED = "UNLOCKACCTORWALLET_FAILED";
+export const UNLOCKACCTORWALLET_SUCCESS = "UNLOCKACCTORWALLET_SUCCESS";
+
+// unlockWalletOrAcct unlocks the wallet if no account number informed and an
+// account otherwise.
+export const unlockWalletOrAcct = (passphrase, acctNumber) => async (dispatch, getState) => {
+  dispatch({ type: UNLOCKACCTORWALLET_ATTEMPT });
+  try {
+    const accounts = sel.balances(getState());
+    // accNumber can be 0
+    if (!acctNumber && acctNumber !== 0) {
+      await wallet.unlockWallet(sel.walletService(getState()), passphrase);
+      dispatch({ type: UNLOCKACCTORWALLET_SUCCESS });
+      return null;
+    }
+
+    const account = accounts.find(acct => acct.accountNumber === acctNumber );
+    if (!account) {
+      throw "Account not found";
+    }
+    if (!account.encrypted) {
+      throw "Account not encrypted";
+    }
+    await wallet.unlockAccount(sel.walletService(getState()), passphrase, acctNumber);
+    dispatch({ type: UNLOCKACCTORWALLET_SUCCESS });
+    return null;
+  } catch (error) {
+    dispatch({ type: UNLOCKACCTORWALLET_FAILED, error });
+    return error;
+  }
+};
+
+export const LOCKACCTORWALLET_ATTEMPT = "LOCKACCTORWALLET_ATTEMPT";
+export const LOCKACCTORWALLET_FAILED = "LOCKACCTORWALLET_FAILED";
+export const LOCKACCTORWALLET_SUCCESS = "LOCKACCTORWALLET_SUCCESS";
+
+export const lockWalletOrAcct = (acctNumber) => async (dispatch, getState) => {
+  dispatch({ type: LOCKACCTORWALLET_ATTEMPT });
+  try {
+    const accounts = sel.balances(getState());
+    if (!acctNumber) {
+      await wallet.lockWallet(sel.walletService(getState()));
+      dispatch({ type: LOCKACCTORWALLET_SUCCESS });
+      return;
+    }
+
+    const account = accounts.find(acct => acct.accountNumber === acctNumber );
+    if (!account) {
+      throw "Account not found";
+    }
+    if (!account.encrypted) {
+      throw "Account not encrypted";
+    }
+    await wallet.lockAccount(sel.walletService(getState()), acctNumber);
+    dispatch({ type: LOCKACCTORWALLET_SUCCESS });
+  } catch (error) {
+    dispatch({ type: LOCKACCTORWALLET_FAILED, error });
+  }
 };

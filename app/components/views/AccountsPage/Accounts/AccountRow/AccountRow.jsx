@@ -6,7 +6,6 @@ import { useAccountRow } from "./hooks";
 const AccountRow = ({
   account,
   mixedAccount,
-  changeAccount,
   accountNumDetailsShown,
   renameAccount,
   showAccount,
@@ -30,7 +29,9 @@ const AccountRow = ({
     hideAccountCallback,
     onTogglePubkey,
     onToggleShowDetails,
-    intl
+    intl,
+    onSetAccountPassphrase,
+    changeAccount
   } = useAccountRow(
     account,
     accountNumDetailsShown,
@@ -64,7 +65,9 @@ const AccountRow = ({
         showAccount: showAccountCallback,
         onTogglePubkey,
         showPubKey,
-        accountExtendedKey
+        accountExtendedKey,
+        onSetAccountPassphrase,
+        changeAccount
       }}
     />
   );

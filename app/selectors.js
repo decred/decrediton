@@ -192,6 +192,9 @@ export const previousWallet = get(["daemon", "previousWallet"]);
 export const getWalletName = get(["daemon", "walletName"]);
 export const getSelectedWallet = get(["walletLoader", "selectedWallet"]);
 
+// balances is the selector responsable for keeping account balances and
+// other informations. This is the selector which we sort our accounts,
+// for example.
 export const balances = or(get(["grpc", "balances"]), () => []);
 
 // dcrwallet grpc services

@@ -31,7 +31,7 @@ export const NEWBLOCKCONNECTED = "NEWBLOCKCONNECTED";
 // that on a heavily used wallet, where a large number of notifications is
 // received in a short period of time after a new block is connected, only a
 // single global state change is dispatched instead of many individual changes.
-const transactionNtfnsDataHandler = (dispatch, getState) => {
+const transactionNtfnsDataHandler = () => (dispatch, getState) => {
   let ntfTimer;
   let newlyMined = [];
   let newlyUnmined = [];
@@ -163,7 +163,7 @@ export const transactionNtfnsStart = () => (dispatch, getState) => {
   const { walletService } = getState().grpc;
   const transactionNtfns = walletService.transactionNotifications(request);
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
-  transactionNtfns.on("data", transactionNtfnsDataHandler(dispatch, getState));
+  transactionNtfns.on("data", dispatch(transactionNtfnsDataHandler()));
   transactionNtfns.on("end", () => {
     dispatch({ type: TRANSACTIONNTFNS_END });
   });
