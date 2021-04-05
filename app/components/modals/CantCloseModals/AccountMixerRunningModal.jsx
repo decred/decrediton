@@ -5,8 +5,8 @@ import styles from "./CantCloseModals.module.css";
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
   <Modal className={styles.confirm} {...{ show, onCancelModal }}>
-    <div className={styles.confirmHeader}>
-      <div className={styles.confirmHeaderTitle}>
+    <div className={styles.header}>
+      <div className={styles.headerTitle}>
         <T id="account.mixer.running.title" m="Account mixer is running" />
       </div>
     </div>
@@ -17,16 +17,14 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
             cancelled and no more Decred will be mixed if you proceed."
       />
     </div>
-    <div className={styles.confirmToolbar}>
-      <KeyBlueButton className={styles.confirmConfirmButton} onClick={onSubmit}>
+    <div className={styles.toolbar}>
+      <KeyBlueButton className={styles.confirmButton} onClick={onSubmit}>
         <T
           id="tickets.mixer.running.confirmModal.closeAnyway"
           m="Close Anyway"
         />
       </KeyBlueButton>
-      <InvisibleButton
-        className={styles.confirmCloseButton}
-        onClick={onCancelModal}>
+      <InvisibleButton className={styles.closeButton} onClick={onCancelModal}>
         <T id="account.mixer.running.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>

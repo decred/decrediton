@@ -16,12 +16,12 @@ const ImportScriptModal = ({ onCancelModal, onSubmit, show }) => {
   } = useImportScriptModal(onCancelModal, onSubmit);
 
   return (
-    <Modal className={style.importRedeemScript} {...{ show, onCancelModal }}>
-      <div className={style.importRedeemScriptTitle}>
+    <Modal className={style.importScriptModal} {...{ show, onCancelModal }}>
+      <div className={style.title}>
         <T id="importRedeemScriptModal.title" m="Import Redeem Script" />
       </div>
-      <div className={style.importRedeemScriptField}>
-        <label htmlFor="script" className={style.importRedeemScriptLabel}>
+      <div className={style.field}>
+        <label htmlFor="script" className={style.label}>
           <T id="importRedeemScriptModal.label" m="Script:" />
         </label>
         <TextInput
@@ -32,11 +32,11 @@ const ImportScriptModal = ({ onCancelModal, onSubmit, show }) => {
           type="text"
           placeholder=""
           value={script}
-          className={style.importRedeemScriptInput}
+          className={style.input}
           onChange={(e) => setScriptCallback(e.target.value)}
         />
       </div>
-      <div className={style.importRedeemScriptButtons}>
+      <div className={style.buttons}>
         <InvisibleButton onClick={onCancelModalCallback}>
           <T id="importRedeemScriptModal.btnCancel" m="Cancel" />
         </InvisibleButton>

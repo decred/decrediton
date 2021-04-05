@@ -19,15 +19,14 @@ const SendFromUnmixedAccountContent = ({
       <T id="SendFromUnmixed.titleWarning" m="Sending from Unmixed Accounts" />
     </div>
     <div>
-      <div className={styles.confirmSeedCopyWarningText}>
+      <div className={styles.warningText}>
         <Documentation name="SendFromUnmixedInfo" />
         <T
           id="SendFromUnmixed.confirmPhraseInstruction"
           m="Please type {confirmationPhrase} to allow sending from unmixed accounts."
           values={{
             confirmationPhrase: (
-              <span
-                className={classNames("mono", styles.confirmSeedCopyPhrase)}>
+              <span className={classNames("mono", styles.phrase)}>
                 '{copyConfirmationPhrase}'
               </span>
             )
@@ -44,9 +43,9 @@ const SendFromUnmixedAccountContent = ({
         }
       />
     </div>
-    <div className={styles.confirmSeedCopyToolbar}>
+    <div className={styles.toolbar}>
       <DangerButton
-        className={styles.confirmConfirmButton}
+        className={styles.confirmButton}
         onClick={onSubmit}
         disabled={
           typedConfirmationPhrase.toLowerCase() !==
@@ -57,9 +56,7 @@ const SendFromUnmixedAccountContent = ({
           m="Enable sending from unmixed accounts"
         />
       </DangerButton>
-      <InvisibleButton
-        className={styles.confirmCloseButton}
-        onClick={onCancelModal}>
+      <InvisibleButton className={styles.closeButton} onClick={onCancelModal}>
         <T id="SendFromUnmixed.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>

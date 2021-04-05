@@ -12,13 +12,16 @@
 }
 .about a {
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: underline !important;
   color: var(--modal-text);
 }
 .about a:active {
   color: var(--input-color);
 }
-.aboutIcon {
+.about p {
+  margin-bottom: 10px;
+}
+.icon {
   float: left;
   height: 231px;
   width: 231px;
@@ -32,18 +35,18 @@
   background-repeat: no-repeat;
   border-radius: 48px;
 }
-.aboutContent {
+.content {
   float: left;
   width: 260px;
   margin-left: 50px;
   margin-top: 30px;
 }
-.aboutTitle {
+.title {
   font-size: 27px;
   line-height: 34px;
   margin-bottom: 20px;
 }
-.infoModalCloseButtonTop {
+.closeButtonTop {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -54,17 +57,10 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.infoModalCloseButtonTop:hover {
+.closeButtonTop:hover {
   opacity: 0.7;
 }
-.aboutTextParagraph {
-  margin-bottom: 10px;
-}
-.aboutText {
-  font-size: 13px;
-  line-height: 17px;
-}
-.aboutBottomArea {
+.bottomArea {
   float: left;
   width: 571px;
   margin-left: 20px;
@@ -74,16 +70,16 @@
   justify-content: space-between;
   color: var(--modal-bottom);
 }
-.aboutBottomArea .aboutBottomAreaMiddle a,
-.aboutBottomArea .aboutBottomAreaRight a {
+.bottomAreaMiddle a,
+.bottomAreaRight a {
   color: var(--modal-bottom) !important;
 }
-.aboutBottomArea a.aboutUpgrade {
+.bottomArea a.upgrade {
   color: var(--input-color);
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: none !important;
 }
-.aboutBottomArea a.aboutUpgrade:hover {
+.bottomArea a.upgrade:hover {
   color: var(--input-color-hover);
 }
 
@@ -99,19 +95,19 @@
     height: 290px;
     overflow: hidden;
   }
-  .about .aboutContent {
+  .about .content {
     margin-left: 25px;
     padding-bottom: 20px;
     margin-top: 20px;
   }
-  .about .aboutIcon {
+  .about .icon {
     margin-top: 20px;
     height: 66px;
     width: 66px;
     background-size: 59px;
     border-radius: 23px;
   }
-  .about .aboutBottomArea {
+  .about .bottomArea {
     width: 413px;
   }
 }

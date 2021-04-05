@@ -8,14 +8,14 @@
   line-height: normal;
   text-align: justify;
 }
-.confirmSeedCopyToolbar {
+.toolbar {
   float: right;
   margin-top: 2em;
 }
-.confirmConfirmButton {
+.confirmButton {
   float: right;
 }
-.confirmCloseButton {
+.closeButton {
   float: right;
 }
 .titleWarningCopyModal {
@@ -28,38 +28,38 @@
   margin-left: -10px;
   background-position: 0 center;
 }
-.confirmSeedCopyContentInput {
+.contentInput {
   margin-left: 32px;
   padding-left: 0;
 }
-.confirmSeedCopyContentInput > input {
+.contentInput > input {
   width: 100%;
 }
-.confirmSeedCopyWarningText {
+.warningText {
   white-space: pre-line;
   margin-bottom: 20px;
   margin-left: 32px;
   column-count: 2;
 }
-.confirmSeedCopyWarningText p {
+.warningText p {
   margin-top: 0;
 }
-.confirmSeedCopyWarningText strong {
+.warningText strong {
   text-decoration: underline;
 }
-.confirmSeedCopyWarningText em {
+.warningText em {
   color: var(--error-text-color);
 }
-.confirmSeedCopyWarningText a {
+.warningText a {
   color: var(--link-color);
 }
-.confirmSeedCopyPhrase {
+.phrase {
   text-decoration: underline;
   margin: 0px 4px 0px 4px;
 }
 
 @media screen and (max-width: 768px) {
-  .confirmSeedCopyWarningText {
+  .warningText {
     column-count: 1;
   }
 }

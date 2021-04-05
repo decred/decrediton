@@ -18,7 +18,7 @@
 .info.double {
   width: 540px;
 }
-.infoContent h1 {
+.content h1 {
   font-size: 27px;
   line-height: 34px;
   font-weight: 400;
@@ -26,32 +26,32 @@
   margin-bottom: 8px;
   column-span: all;
 }
-.infoContent p {
+.content p {
   break-inside: avoid-page;
   color: var(--modal-text);
   margin-bottom: 2em;
   text-align: justify;
 }
-.infoContent li {
+.content li {
   list-style-position: inside;
   text-align: justify;
 }
-.infoContent li p {
+.content li p {
   display: inline;
 }
-.infoContent ol {
+.content ol {
   margin: 0;
   padding: 0;
   counter-reset: item;
 }
-.infoContent ol > li {
+.content ol > li {
   margin: 0;
   list-style-type: none;
   counter-increment: item;
   list-style-position: inside;
   margin-bottom: 2em;
 }
-.infoContent ol > li:before {
+.content ol > li:before {
   display: inline-block;
   width: 1em;
   padding-right: 0.5em;
@@ -60,13 +60,13 @@
   text-align: right;
   content: counter(item) ".";
 }
-.infoContent a {
+.content a {
   color: var(--input-color);
   cursor: pointer;
   text-decoration: none;
   word-break: break-word;
 }
-.infoCloseButtonTop {
+.closeButtonTop {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -77,10 +77,10 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.infoCloseButtonTop:hover {
+.closeButtonTop:hover {
   opacity: 0.7;
 }
-.infoCloseButton {
+.closeButton {
   font-size: 13px;
   line-height: 17px;
   padding: 6px 20px;

@@ -19,15 +19,14 @@ const SeedCopyConfirmModalContent = ({
       <T id="seedCopyConfirm.titleWarning" m="Seed Clipboard Copy Warning" />
     </div>
     <div>
-      <div className={styles.confirmSeedCopyWarningText}>
+      <div className={styles.warningText}>
         <Documentation name="SeedCopyWarning" />
         <T
           id="seedCopyConfirmModal.confirmPhraseInstruction"
           m="Please type {confirmationPhrase} to copy the seed."
           values={{
             confirmationPhrase: (
-              <span
-                className={classNames("mono", styles.confirmSeedCopyPhrase)}>
+              <span className={classNames("mono", styles.phrase)}>
                 '{copyConfirmationPhrase}'
               </span>
             )
@@ -38,16 +37,16 @@ const SeedCopyConfirmModalContent = ({
         autoFocus
         value={typedConfirmationPhrase}
         onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}
-        className={styles.confirmSeedCopyContentInput}
+        className={styles.contentInput}
         onKeyDownSubmit={() =>
           typedConfirmationPhrase.toLowerCase() ===
             copyConfirmationPhrase.toLowerCase() && onSubmit()
         }
       />
     </div>
-    <div className={styles.confirmSeedCopyToolbar}>
+    <div className={styles.toolbar}>
       <DangerButton
-        className={styles.confirmConfirmButton}
+        className={styles.confirmButton}
         onClick={onSubmit}
         disabled={
           typedConfirmationPhrase.toLowerCase() !==
@@ -56,7 +55,7 @@ const SeedCopyConfirmModalContent = ({
         <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
       <InvisibleButton
-        className={styles.confirmCloseButton}
+        className={styles.closeButton}
         onClick={onCancelModal}
         ariaLabel="Cancel seed copy">
         <T id="seedCopyConfirm.btnCancel" m="Cancel" />

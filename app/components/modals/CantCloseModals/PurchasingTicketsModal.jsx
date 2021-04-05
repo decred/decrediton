@@ -5,8 +5,8 @@ import styles from "./CantCloseModals.module.css";
 
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
   <Modal className={styles.confirm} {...{ show, onCancelModal }}>
-    <div className={styles.confirmHeader}>
-      <div className={styles.confirmHeaderTitle}>
+    <div className={styles.header}>
+      <div className={styles.headerTitle}>
         <T id="tickets.purchasing.title" m="Purchasing Tickets" />
       </div>
     </div>
@@ -18,13 +18,11 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => (
             result in missed votes."
       />
     </div>
-    <div className={styles.confirmToolbar}>
-      <KeyBlueButton className={styles.confirmConfirmButton} onClick={onSubmit}>
+    <div className={styles.toolbar}>
+      <KeyBlueButton className={styles.confirmButton} onClick={onSubmit}>
         <T id="tickets.purchasing.confirmModal.closeAnyway" m="Close Anyway" />
       </KeyBlueButton>
-      <InvisibleButton
-        className={styles.confirmCloseButton}
-        onClick={onCancelModal}>
+      <InvisibleButton className={styles.closeButton} onClick={onCancelModal}>
         <T id="tickets.purchasing.confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>

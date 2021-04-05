@@ -1,13 +1,10 @@
-.backupRedeemScript {
-  padding: 10px;
-}
-.backupRedeemScriptTextarea {
+.textarea {
   width: 100%;
 }
-.backupRedeemScriptTitle {
+.title {
   font-size: 19px;
 }
-.backupRedeemScriptMessage {
+.message {
   font-size: 16px;
   margin-bottom: 10px;
   padding-bottom: 10px;

@@ -1,23 +1,23 @@
-.confirmToolbar {
+.toolbar {
   margin-top: 2em;
   bottom: 20px;
   right: 20px;
 }
-.confirmToolbar > .confirmConfirmButton {
+.toolbar > .confirmButton {
   float: right;
 }
-.confirmToolbar > .confirmCloseButton {
+.toolbar > .closeButton {
   float: right;
 }
-.confirmHeader {
+.header {
   margin-bottom: 1em;
 }
-.confirmHeaderTitle {
+.headerTitle {
   font-weight: 400;
   font-size: 27px;
   text-transform: capitalize;
 }
-.confirmHeaderTitle .mono {
+.headerTitle .mono {
   text-transform: lowercase;
 }
 

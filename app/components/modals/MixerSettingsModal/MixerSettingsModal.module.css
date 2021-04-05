@@ -5,13 +5,10 @@
   overflow-x: hidden;
   position: relative;
 }
-.mixerSettings .infoCloseButton {
-  float: right;
-}
-.mixerSettingsTitle {
+.title {
   font-size: 20px;
 }
-.infoCloseButtonTop {
+.closeButtonTop {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -22,10 +19,11 @@
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.infoCloseButtonTop:hover {
+.closeButtonTop:hover {
   opacity: 0.7;
+  float: right;
 }
-.infoCloseButton {
+.closeButton {
   font-size: 13px;
   line-height: 17px;
   padding: 6px 20px;
@@ -36,12 +34,12 @@
 }
 
 @media screen and (max-width: 1179px) {
-  .mixerSettings.info {
+  .mixerSettings {
     width: 594px !important;
   }
 }
 @media screen and (max-width: 768px) {
-  .mixerSettings.info {
+  .mixerSettings {
     width: 305px;
     min-width: unset;
   }

@@ -9,37 +9,37 @@
   color: var(--title-text-and-button-background);
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
 }
-.passphraseHeader {
+.header {
   float: left;
   background-image: var(--password);
   background-size: 40px 40px;
   background-repeat: no-repeat;
   margin-bottom: 10px;
 }
-.passphraseHeaderTitle {
+.headerTitle {
   margin-left: 50px;
   font-size: 27px;
   text-transform: capitalize;
   padding-top: 5px;
   display: flex;
 }
-.passphraseContent {
+.content {
   float: left;
   width: 100%;
 }
-.passphraseHeaderDescription {
+.headerDescription {
   margin-top: 10px;
   margin-left: 50px;
   font-size: 15px;
   float: left;
 }
-.passphraseToolbar {
+.toolbar {
   margin-top: 20px;
   height: 44px;
   float: right;
 }
 @media screen and (max-width: 420px) {
-  .modal.passphrase {
+  .passphrase {
     max-height: 60%;
   }
 }

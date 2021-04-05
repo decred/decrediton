@@ -7,8 +7,8 @@ import { NavLink as Link } from "react-router-dom";
 const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => {
   return (
     <Modal className={styles.confirm} {...{ show, onCancelModal }}>
-      <div className={styles.confirmHeader}>
-        <div className={styles.confirmHeaderTitle}>
+      <div className={styles.header}>
+        <div className={styles.headerTitle}>
           <T id="tickets.fee.error.title" m="VSP Tickets Fee Error" />
         </div>
       </div>
@@ -30,15 +30,11 @@ const AutobuyerRunningModal = ({ show, onCancelModal, onSubmit }) => {
           }}
         />
       </div>
-      <div className={styles.confirmToolbar}>
-        <KeyBlueButton
-          className={styles.confirmConfirmButton}
-          onClick={onSubmit}>
+      <div className={styles.toolbar}>
+        <KeyBlueButton className={styles.confirmButton} onClick={onSubmit}>
           <T id="tickets.fee.error.confirmModal.closeAnyway" m="Close Anyway" />
         </KeyBlueButton>
-        <InvisibleButton
-          className={styles.confirmCloseButton}
-          onClick={onCancelModal}>
+        <InvisibleButton className={styles.closeButton} onClick={onCancelModal}>
           <T id="tickets.fee.error.confirmModal.btnCancel" m="Cancel" />
         </InvisibleButton>
       </div>

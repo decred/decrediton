@@ -21,8 +21,8 @@ const Modal = ({
   <DefaultModal
     className={classNames(styles.passphrase, modalClassName)}
     {...{ show, onCancelModal }}>
-    <div className={styles.passphraseHeader}>
-      <div className={styles.passphraseHeaderTitle}>
+    <div className={styles.header}>
+      <div className={styles.headerTitle}>
         {modalTitle ? (
           modalTitle
         ) : (
@@ -32,11 +32,9 @@ const Modal = ({
           />
         )}
       </div>
-      <div className={styles.passphraseHeaderDescription}>
-        {modalDescription}
-      </div>
+      <div className={styles.headerDescription}>{modalDescription}</div>
     </div>
-    <div className={styles.passphraseContent}>
+    <div className={styles.content}>
       <PassphraseModalField
         label={
           <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
@@ -54,7 +52,7 @@ const Modal = ({
       </PassphraseModalField>
       {children}
     </div>
-    <div className={styles.passphraseToolbar}>
+    <div className={styles.toolbar}>
       <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
     </div>
   </DefaultModal>

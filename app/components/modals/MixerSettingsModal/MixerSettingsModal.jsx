@@ -6,13 +6,13 @@ import { PrivacyForm } from "shared";
 
 const MixerSettingsModal = ({ onCancelModal, show }) => (
   <Modal className={styles.mixerSettings} {...{ show, onCancelModal }}>
-    <div className={styles.mixerSettingsTitle}>
+    <div className={styles.title}>
       <T id="mixerSetting.header" m="Mixer Settings" />
     </div>
-    <div className={styles.infoCloseButtonTop} onClick={onCancelModal} />
+    <div className={styles.closeButtonTop} onClick={onCancelModal} />
     <PrivacyForm />
     <div>
-      <KeyBlueButton className={styles.infoCloseButton} onClick={onCancelModal}>
+      <KeyBlueButton className={styles.closeButton} onClick={onCancelModal}>
         <T id="mixerSettings.gotIt" m="Got it" />
       </KeyBlueButton>
     </div>
