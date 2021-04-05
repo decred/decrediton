@@ -4,9 +4,10 @@ import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
-import { GoBackMsg } from "../messages";
+import { GoBackMsg } from "../../messages";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
-import GetStartedStyles from "../GetStarted.module.css";
+// change this import and move all styles to component's css module
+import GetStartedStyles from "../../GetStarted.module.css";
 import styles from "./SetMixedAcctPage.module.css";
 
 export default ({ cancel, onSendContinue }) => {
