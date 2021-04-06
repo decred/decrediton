@@ -15,7 +15,6 @@ import { log } from "./wallet";
 import { ipcRenderer } from "electron";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import * as cfgConstants from "constants/config";
-import { getSelectedWallet } from "./main_dev/launch";
 import { AppContainer } from "react-hot-loader";
 import {
   defaultLightTheme,
@@ -245,8 +244,7 @@ const initialState = {
     rpcRetryAttempts: 0,
     curBlocks: 0,
     isWatchingOnly: false,
-    // getSelectedWallet returns null if no wallet is selected.
-    selectedWallet: getSelectedWallet(),
+    selectedWallet: null,
 
     synced: false,
     syncFetchHeadersComplete: false,
