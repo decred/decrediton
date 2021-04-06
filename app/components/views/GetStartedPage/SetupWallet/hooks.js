@@ -18,6 +18,11 @@ import {
 } from "actions/VSPActions";
 import { ExternalLink } from "shared";
 import { DecredLoading } from "indicators";
+import { useState } from "react";
+import { useService } from "@xstate/react";
+import { useSelector } from "react-redux";
+import * as sel from "selectors";
+import { useSettings } from "hooks";
 
 export const useWalletSetup = (settingUpWalletRef) => {
   const dispatch = useDispatch();
@@ -34,6 +39,9 @@ export const useWalletSetup = (settingUpWalletRef) => {
     isProcessingManaged,
     needsProcessManagedTickets
   } = useDaemonStartup();
+
+  const { isVSPListingEnabled } = useSettings();
+  const availableVSPs = useSelector(sel.getAvailableVSPs);
 
   const { mixedAccount } = useAccounts();
 
@@ -242,6 +250,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
             onProcessTickets: onProcessUnmanagedTickets,
             isProcessingUnmanaged: isProcessingUnmanaged,
             cancel: onSendBack,
+            availableVSPs: isVSPListingEnabled ? availableVSPs : [],
             title: (
               <T
                 id="getstarted.processUnmangedTickets.title"
@@ -281,6 +290,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     onSendError,
     previousState,
     current,
+    availableVSPs,
     onCheckAcctsPass,
     onProcessAccounts,
     onGetVSPsPubkeys,
