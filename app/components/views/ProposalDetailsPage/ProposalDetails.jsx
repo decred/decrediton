@@ -1,13 +1,4 @@
-import {
-  classNames,
-  Button,
-  StatusBar,
-  Tooltip,
-  Text,
-  useTheme,
-  StatusTag,
-  DEFAULT_DARK_THEME_NAME
-} from "pi-ui";
+import { classNames, Button, StatusBar, Tooltip, Text, StatusTag } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink } from "shared";
 import {
@@ -50,11 +41,10 @@ const ProposalDetails = ({
   newVoteChoice,
   body,
   goBackHistory,
-  linkedProposal
+  linkedProposal,
+  isDarkTheme
 }) => {
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
-  const { themeName } = useTheme();
-  const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
   const shortToken = token.substring(0, 7);
   const shortRFPToken = linkedProposal?.token.substring(0, 7);
   const proposalPath = `/proposals/${shortToken}`;
@@ -108,7 +98,12 @@ const ProposalDetails = ({
                     isDarkTheme
                   )}
                 />
-                <div className={classNames("margin-top-s", styles.token)}>
+                <div
+                  className={classNames(
+                    "margin-top-s",
+                    styles.token,
+                    isDarkTheme && styles.dark
+                  )}>
                   {shortToken}
                 </div>
               </div>

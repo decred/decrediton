@@ -16,7 +16,8 @@ const ProposalDetailsPage = () => {
     goBackHistory,
     showPurchaseTicketsPage,
     send,
-    linkedProposal
+    linkedProposal,
+    isDarkTheme
   } = useProposalDetailsPage();
   const { eligibleTicketCount } = viewedProposalDetails || {};
 
@@ -46,7 +47,8 @@ const ProposalDetailsPage = () => {
               viewedProposalDetails,
               goBackHistory,
               showPurchaseTicketsPage,
-              linkedProposal
+              linkedProposal,
+              isDarkTheme
             }}
           />
         );
@@ -54,10 +56,8 @@ const ProposalDetailsPage = () => {
         return (
           <LoadingError
             errorMessageDescription={String(getProposalError)}
-            cancelButton={true}
-            reload={() => {
-              send("RETRY");
-            }}
+            cancelButton
+            reload={() => send("RETRY")}
           />
         );
       default:
@@ -70,12 +70,13 @@ const ProposalDetailsPage = () => {
     votingStatus,
     showPurchaseTicketsPage,
     send,
-    linkedProposal
+    linkedProposal,
+    isDarkTheme
   ]);
 
   return (
     <StandalonePage
-      header={<Header eligibleTicketCount={eligibleTicketCount} />}>
+      header={<Header {...{ eligibleTicketCount, isDarkTheme }} />}>
       {stateComponent}
     </StandalonePage>
   );

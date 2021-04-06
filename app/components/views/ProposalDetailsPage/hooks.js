@@ -6,6 +6,7 @@ import * as cli from "actions/ClientActions";
 import { useParams } from "react-router-dom";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
+import { useTheme, DEFAULT_DARK_THEME_NAME } from "pi-ui";
 
 export const useProposalDetails = () => {
   const tsDate = useSelector(sel.tsDate);
@@ -15,6 +16,8 @@ export const useProposalDetails = () => {
 };
 
 export const useProposalDetailsPage = () => {
+  const { themeName } = useTheme();
+  const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
   const dispatch = useDispatch();
   const { token } = useParams();
   const proposals = useSelector(sel.proposals);
@@ -75,6 +78,7 @@ export const useProposalDetailsPage = () => {
     goBackHistory,
     showPurchaseTicketsPage,
     send,
-    linkedProposal
+    linkedProposal,
+    isDarkTheme
   };
 };

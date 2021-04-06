@@ -7,3 +7,7 @@
   background-color: var(--color-blue-lighter);
   border-radius: 5px;
 }
+
+.tickets.dark {
+  color: var(--grey-2);
+}
