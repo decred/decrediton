@@ -50,7 +50,7 @@ const AgendaVotingOptions = ({
           <T id="agenda.votingFor" m="Voting for" />
         )}
         :
-        <div className={styles.radioButtonsWrapper}>
+        <div>
           <RadioButtonGroup
             className={styles.optionsGroup}
             vertical

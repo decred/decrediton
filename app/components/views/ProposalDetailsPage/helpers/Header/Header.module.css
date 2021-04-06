@@ -1,0 +1,13 @@
+.header {
+  font-size: 16px;
+}
+
+.tickets {
+  padding: 4px 10px;
+  background-color: var(--color-blue-lighter);
+  border-radius: 5px;
+}
+
+.tickets.dark {
+  color: var(--grey-2);
+}

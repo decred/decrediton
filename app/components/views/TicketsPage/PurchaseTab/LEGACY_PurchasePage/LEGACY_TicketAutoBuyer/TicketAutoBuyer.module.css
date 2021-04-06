@@ -34,7 +34,8 @@
   display: flex;
   flex-direction: row;
 }
-label {
+
+.label {
   display: inline-block;
   vertical-align: middle;
   margin-right: 0.5em;

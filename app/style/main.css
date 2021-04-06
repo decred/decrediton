@@ -39,14 +39,200 @@ main {
   color: var(--error-text-color);
 }
 
-.is-row {
+/* Flex Helpers */
+.justify-end {
   display: flex;
-  flex-direction: row;
+  justify-content: flex-end !important;
 }
 
-.is-column {
+.justify-start {
+  display: flex;
+  justify-content: flex-start !important;
+}
+
+.justify-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
+.align-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+.align-end {
+  display: flex;
+  align-items: flex-end;
+}
+
+.align-stretch {
+  display: flex;
+  align-items: stretch;
+}
+
+.flex-centralize {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+}
+
+/* Generic helpers */
+
+/* No margin */
+.no-margin-left {
+  margin-left: 0 !important;
+}
+
+.no-margin-right {
+  margin-right: 0 !important;
+}
+
+.no-margin-top {
+  margin-top: 0 !important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+/* Extra Small margin */
+.margin-left-xs {
+  margin-left: var(--spacing-extra-small) !important;
+}
+
+.margin-right-xs {
+  margin-right: var(--spacing-extra-small) !important;
+}
+
+.margin-top-xs {
+  margin-top: var(--spacing-extra-small) !important;
+}
+
+.margin-bottom-xs {
+  margin-bottom: var(--spacing-extra-small) !important;
+}
+
+/* Small margin */
+.margin-left-s {
+  margin-left: var(--spacing-small) !important;
+}
+
+.margin-right-s {
+  margin-right: var(--spacing-small) !important;
+}
+
+.margin-top-s {
+  margin-top: var(--spacing-small) !important;
+}
+
+.margin-bottom-s {
+  margin-bottom: var(--spacing-small) !important;
+}
+
+/* Medium margin */
+.margin-left-m {
+  margin-left: var(--spacing-medium) !important;
+}
+
+.margin-right-m {
+  margin-right: var(--spacing-medium) !important;
+}
+
+.margin-top-m {
+  margin-top: var(--spacing-medium) !important;
+}
+
+.margin-bottom-m {
+  margin-bottom: var(--spacing-medium) !important;
+}
+
+/* Large margin */
+.margin-left-l {
+  margin-left: var(--spacing-large) !important;
+}
+
+.margin-right-l {
+  margin-right: var(--spacing-large) !important;
+}
+
+.margin-top-l {
+  margin-top: var(--spacing-large) !important;
+}
+
+.margin-bottom-l {
+  margin-bottom: var(--spacing-large) !important;
+}
+
+/* Padding helpers */
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
+}
+
+.padding-bottom-s {
+  padding-bottom: var(--spacing-small);
+}
+
+.padding-x-s {
+  padding-left: var(--spacing-small);
+  padding-right: var(--spacing-small);
+}
+
+.padding-y-s {
+  padding-top: var(--spacing-small);
+  padding-bottom: var(--spacing-small);
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* widht and height helpers */
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+/* Color helpers */
+.color-gray {
+  color: var(--color-gray);
+}
+
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-primary-dark {
+  color: var(--color-primary-dark);
+}
+
+.text-secondary-color {
+  color: var(--text-secondary-color);
 }
 
 /* Main scroll bar styling */

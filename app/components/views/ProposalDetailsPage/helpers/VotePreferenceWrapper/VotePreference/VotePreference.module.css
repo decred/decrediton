@@ -1,0 +1,56 @@
+.votePreference {
+  line-height: 0;
+  flex-basis: 73%;
+  display: flex;
+  align-items: center;
+  height: 35px;
+}
+
+.preferenceTitle {
+  font-size: 13px;
+}
+
+.voteRadioButtons {
+  margin-left: 10px;
+}
+
+.yes,
+.no {
+  margin-top: 0 !important;
+}
+
+.yes > label,
+.no > label {
+  display: flex;
+  align-items: center;
+}
+
+.yes > label > span:nth-child(1) {
+  border-color: var(--vote-yes-color);
+  top: 0 !important;
+}
+
+.yes > label > span:nth-child(2) {
+  background-color: var(--vote-yes-color);
+  top: 0.4rem !important;
+}
+
+.no > label > span:nth-child(1) {
+  border-color: var(--vote-no-color);
+  top: 0 !important;
+}
+
+.no > label > span:nth-child(2) {
+  background-color: var(--vote-no-color);
+  top: 0.4rem !important;
+}
+
+@media screen and (max-width: 1179px) {
+  .votePreference {
+    flex-basis: 70%;
+  }
+
+  .voteButton {
+    left: 123px;
+  }
+}

@@ -1,4 +1,3 @@
-// @flow
 import axios from "axios";
 
 // Uncomment this and comment the following definition to test locally.

@@ -2,7 +2,6 @@ import { shell } from "electron";
 import { InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { default as ReactMarkdown } from "react-markdown";
 import { FormattedMessage as T } from "react-intl";
-import styles from "../ProposalDetails.module.css";
 
 // This changes links to never open. Debatable whether we want to
 // allow proposals to link somewhere directly from decrediton.
@@ -35,11 +34,10 @@ const renderInternalProposalLink = ({ children, href }) => (
 // allow proposals to open images directly from decrediton.
 const renderProposalImage = ({ alt }) => <span>{alt}</span>;
 
-const ProposalText = ({ text }) => (
+const ProposalBody = ({ body }) => (
   <>
     <ReactMarkdown
-      source={text}
-      className={styles.proposalBody}
+      source={body}
       // NEVER set to false
       escapeHtml={true}
       // debatable whether we wanna allow the embedded html sections to be
@@ -61,4 +59,4 @@ const ProposalText = ({ text }) => (
   </>
 );
 
-export default ProposalText;
+export default ProposalBody;

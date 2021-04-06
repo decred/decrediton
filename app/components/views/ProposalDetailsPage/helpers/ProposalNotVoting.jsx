@@ -1,13 +1,13 @@
-import styles from "../ProposalDetails.module.css";
 import { FormattedMessage as T } from "react-intl";
+import { NotVotingMsg } from "./";
 
 const ProposalNotVoting = () => (
-  <div className={styles.notVoting}>
+  <NotVotingMsg>
     <T
       id="proposalDetails.votingInfo.notVoting"
       m="Proposal not yet on voting stage"
     />
-  </div>
+  </NotVotingMsg>
 );
 
 export default ProposalNotVoting;

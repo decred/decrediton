@@ -31,7 +31,7 @@ const ExistingSeedForm = ({
   error
 }) => (
   <div className={styles.createWalletWrapper}>
-    <div className={classNames(styles.contentTitleWrapper, "is-row")}>
+    <div className={classNames(styles.contentTitleWrapper, "flex-row")}>
       <div className={styles.contentTitle}>
         <T id="createWallet.restore.title" m={"Restore existing wallet"} />
       </div>
@@ -48,7 +48,7 @@ const ExistingSeedForm = ({
         </Tooltip>
       )}
     </div>
-    <div className={classNames("is-row", styles.seed)}>
+    <div className={classNames("flex-row", styles.seed)}>
       <div className={classNames(styles.confirmSeedLabel, styles.seed)}>
         <ConfirmSeedMsg />
       </div>

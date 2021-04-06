@@ -2,7 +2,13 @@ import { useMemo, useCallback } from "react";
 import { shell } from "electron";
 import { Link } from "pi-ui";
 
-export default ({ children, path, className, isTestnet, CustomComponent }) => {
+const PoliteiaLink = ({
+  children,
+  path,
+  className,
+  isTestnet,
+  CustomComponent
+}) => {
   const href = useMemo(
     () =>
       `https://${isTestnet ? "test-proposals" : "proposals"}.decred.org${
@@ -15,7 +21,7 @@ export default ({ children, path, className, isTestnet, CustomComponent }) => {
     <Link
       onClick={onClickHandler}
       className={className}
-      size="sm"
+      size="md"
       customComponent={
         CustomComponent
           ? (props) => <CustomComponent {...props}>{children}</CustomComponent>
@@ -25,3 +31,5 @@ export default ({ children, path, className, isTestnet, CustomComponent }) => {
     </Link>
   );
 };
+
+export default PoliteiaLink;

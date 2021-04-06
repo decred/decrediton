@@ -1,13 +1,13 @@
-import styles from "../ProposalDetails.module.css";
+import { NotVotingMsg } from "./";
 import { FormattedMessage as T } from "react-intl";
 
 const ProposalAbandoned = () => (
-  <div className={styles.notVoting}>
+  <NotVotingMsg>
     <T
       id="proposalDetails.votingInfo.abandoned"
       m="Proposal has been abandoned"
     />
-  </div>
+  </NotVotingMsg>
 );
 
 export default ProposalAbandoned;

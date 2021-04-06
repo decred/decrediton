@@ -11,17 +11,18 @@ import { LoadingError } from "shared";
 const ProposalDetailsPage = () => {
   const {
     viewedProposalDetails,
-    eligibleTicketCount,
     votingStatus,
     getProposalError,
     goBackHistory,
     showPurchaseTicketsPage,
     send,
-    linkedProposal
+    linkedProposal,
+    isDarkTheme
   } = useProposalDetailsPage();
+  const { eligibleTicketCount } = viewedProposalDetails || {};
 
   const stateComponent = useMemo(() => {
-    let text = "";
+    let body = "";
     switch (votingStatus) {
       case "idle":
         return <></>;
@@ -32,20 +33,22 @@ const ProposalDetailsPage = () => {
           </div>
         );
       case "success":
+        // XXX this should move to redux logic, we should parse proposal body
+        // when fetching and store the body as part of the proposal info.
         viewedProposalDetails.files.forEach((f) => {
           if (f.name === "index.md") {
-            text += politeiaMarkdownIndexMd(f.payload);
+            body += politeiaMarkdownIndexMd(f.payload);
           }
         });
         return (
           <ProposalDetails
             {...{
-              text,
+              body,
               viewedProposalDetails,
               goBackHistory,
-              eligibleTicketCount,
               showPurchaseTicketsPage,
-              linkedProposal
+              linkedProposal,
+              isDarkTheme
             }}
           />
         );
@@ -53,29 +56,27 @@ const ProposalDetailsPage = () => {
         return (
           <LoadingError
             errorMessageDescription={String(getProposalError)}
-            cancelButton={true}
-            reload={() => {
-              send("RETRY");
-            }}
+            cancelButton
+            reload={() => send("RETRY")}
           />
         );
       default:
         return null;
     }
   }, [
-    eligibleTicketCount,
     goBackHistory,
     viewedProposalDetails,
     getProposalError,
     votingStatus,
     showPurchaseTicketsPage,
     send,
-    linkedProposal
+    linkedProposal,
+    isDarkTheme
   ]);
 
   return (
     <StandalonePage
-      header={<Header eligibleTicketCount={eligibleTicketCount} />}>
+      header={<Header {...{ eligibleTicketCount, isDarkTheme }} />}>
       {stateComponent}
     </StandalonePage>
   );

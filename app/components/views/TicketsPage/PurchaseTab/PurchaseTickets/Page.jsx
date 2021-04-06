@@ -115,7 +115,7 @@ export function PurchasePage({
       {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
       <Subtitle
         title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-        className="is-row">
+        className="flex-row">
         <TitleIcon toggleIsLegacy={toggleIsLegacy} />
       </Subtitle>
       {mixedAccount && changeAccount && <PrivacyInfo />}

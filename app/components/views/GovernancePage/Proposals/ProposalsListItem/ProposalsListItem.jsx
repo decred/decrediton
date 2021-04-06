@@ -1,9 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { VotingProgress } from "indicators";
-import {
-  VOTESTATUS_ACTIVEVOTE,
-  VOTESTATUS_FINISHEDVOTE
-} from "actions/GovernanceActions";
+import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
 import { FormattedRelative } from "shared";
 import { classNames } from "pi-ui";
 import { useProposalsListItem } from "../hooks";
@@ -27,8 +24,8 @@ const ProposalsListItem = ({
   approved
 }) => {
   const { viewProposalDetailsHandler, tsDate } = useProposalsListItem(token);
-  const isVoting = voteStatus === VOTESTATUS_ACTIVEVOTE;
-  const isVotingFinished = voteStatus === VOTESTATUS_FINISHEDVOTE;
+  const isVoting = voteStatus === PROPOSAL_VOTING_ACTIVE;
+  const isVotingFinished = voteStatus === PROPOSAL_VOTING_FINISHED;
   const isModified =
     (!isVoting && modifiedSinceLastAccess) ||
     (isVoting && votingSinceLastAccess);
@@ -36,7 +33,7 @@ const ProposalsListItem = ({
     <div
       onClick={viewProposalDetailsHandler}
       className={classNames(
-        "is-row",
+        "flex-row",
         styles.listItem,
         styles[voteResult],
         !approved && styles.declined,
@@ -61,7 +58,7 @@ const ProposalsListItem = ({
       </div>
       <div className={styles.resultsArea}>
         {(isVoting || isVotingFinished) && (
-          <div className={classNames("is-row", styles.votingIndicator)}>
+          <div className={classNames("flex-row", styles.votingIndicator)}>
             <div
               className={classNames(
                 styles.voteChoice,
@@ -72,7 +69,7 @@ const ProposalsListItem = ({
             <VotingProgress {...{ voteCounts, quorumMinimumVotes }} />
           </div>
         )}
-        {voteStatus !== VOTESTATUS_FINISHEDVOTE ? (
+        {!isVotingFinished ? (
           <div className={styles.timestamp}>
             <T
               id="proposalItem.lastUpdatedAt"

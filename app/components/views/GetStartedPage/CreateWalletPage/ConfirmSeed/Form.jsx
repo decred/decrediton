@@ -25,7 +25,7 @@ export const ConfirmSeedForm = ({
   isCreatingWallet
 }) => (
   <div className={styles.createWalletWrapper}>
-    <div className={classNames(styles.contentTitleWrapper, "is-row")}>
+    <div className={classNames(styles.contentTitleWrapper, "flex-row")}>
       <div className={styles.contentTitle}>
         <CreateNewWalletTitle />
       </div>
@@ -35,9 +35,13 @@ export const ConfirmSeedForm = ({
         </Tooltip>
       )}
     </div>
-    <div className={classNames(styles.seed, "is-row")}>
+    <div className={classNames(styles.seed, "flex-row")}>
       <div
-        className={classNames(styles.confirmSeedLabel, styles.seed, "is-row")}>
+        className={classNames(
+          styles.confirmSeedLabel,
+          styles.seed,
+          "flex-row"
+        )}>
         <InfoDocFieldModalButton document="SeedInfo" />
         <div className={styles.infoLabel}>
           <ConfirmSeedMsg />

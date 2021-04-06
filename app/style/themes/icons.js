@@ -28,6 +28,7 @@ const icons = {
   "arrow-right-key-blue-icon": url(
     require("style/icons/arrow-right-key-blue.svg")
   ),
+  "arrow-left-white": url(require("style/icons/arrow-left-white.svg")),
   "bell-notification-icon": url(require("style/icons/bell-notification.svg")),
   "buy-decred-icon": url(require("style/icons/buy-decred.svg")),
   "checkmark-blue-icon": url(require("style/icons/checkmarkBlue.svg")),

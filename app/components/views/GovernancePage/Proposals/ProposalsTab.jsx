@@ -9,7 +9,7 @@ import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
 
 const PageHeader = ({ isTestnet, onRefreshProposals }) => (
-  <div className={classNames(styles.header, "is-row")}>
+  <div className={classNames(styles.header, "flex-row")}>
     {/* TODO: wrapp this 'header' in a component same header is used in VotingPrefs.jsx */}
     <div>
       <div className={styles.title}>

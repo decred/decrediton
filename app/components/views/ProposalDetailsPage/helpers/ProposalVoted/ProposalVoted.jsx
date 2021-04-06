@@ -1,5 +1,5 @@
-import styles from "../ProposalDetails.module.css";
 import { FormattedMessage as T } from "react-intl";
+import styles from "./ProposalVoted.module.css";
 
 const ProposalVoted = () => (
   <div className={styles.voted}>

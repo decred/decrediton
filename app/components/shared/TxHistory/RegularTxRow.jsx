@@ -85,17 +85,17 @@ const RegularTxRow = ({
         />
       </span>
       {txDirection === TICKET_FEE ? (
-        <div className={classNames("is-row", styles.txDirection)}>
+        <div className={classNames("flex-row", styles.txDirection)}>
           <TxDirection account={txAccountNameDebited} />
           <TxDirection account={txAccountNameCredited} isCred />
         </div>
       ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
-        <div className={classNames("is-row", styles.txDirection)}>
+        <div className={classNames("flex-row", styles.txDirection)}>
           <TxDirection account={txAccountName} />
           <TxDirection account={txOutputAddresses} isCred />
         </div>
       ) : (
-        <div className={classNames("is-row", styles.txDirection)}>
+        <div className={classNames("flex-row", styles.txDirection)}>
           <TxDirection account={txAccountName} isCred />
         </div>
       )}

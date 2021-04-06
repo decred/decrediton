@@ -1,42 +1,41 @@
-import React from "react";
-import ChooseVoteOption from "./ChooseVoteOption.jsx";
+import { memo } from "react";
 import {
-  VOTESTATUS_ACTIVEVOTE,
-  VOTESTATUS_FINISHEDVOTE,
-  PROPOSALSTATUS_ABANDONED
-} from "actions/GovernanceActions";
+  PROPOSAL_VOTING_ACTIVE,
+  PROPOSAL_VOTING_FINISHED,
+  PROPOSAL_STATUS_ABANDONED
+} from "constants";
 import {
   ProposalNotVoting,
   NoTicketsVotingInfo,
   NoElligibleTicketsVotingInfo,
-  ProposalAbandoned
+  ProposalAbandoned,
+  VotePreference
 } from "./";
 
-const VoteInfo = React.memo(
+const VoteInfo = memo(
   ({
     proposalStatus,
     voteStatus,
     hasTickets,
-    hasEligibleTickets,
     currentVoteChoice,
     viewedProposalDetails,
-    eligibleTicketCount,
     newVoteChoice,
     setVoteOption,
     showPurchaseTicketsPage,
     voteOptions
   }) => {
-    if (proposalStatus === PROPOSALSTATUS_ABANDONED) {
+    const { hasEligibleTickets, eligibleTicketCount } = viewedProposalDetails;
+    if (proposalStatus === PROPOSAL_STATUS_ABANDONED) {
       return <ProposalAbandoned />;
     }
-    if (voteStatus === VOTESTATUS_FINISHEDVOTE) {
+    if (voteStatus === PROPOSAL_VOTING_FINISHED) {
       return (
-        <ChooseVoteOption
+        <VotePreference
           {...{ voteOptions, currentVoteChoice, votingComplete: true }}
         />
       );
     }
-    if (voteStatus === VOTESTATUS_ACTIVEVOTE) {
+    if (voteStatus === PROPOSAL_VOTING_ACTIVE) {
       if (!hasTickets) {
         return <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
       }
@@ -46,7 +45,7 @@ const VoteInfo = React.memo(
         );
       }
       return (
-        <ChooseVoteOption
+        <VotePreference
           {...{
             viewedProposalDetails,
             voteOptions,

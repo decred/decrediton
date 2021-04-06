@@ -1,0 +1,15 @@
+.votedCheckmark {
+  width: 57px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.checkmark {
+  background-image: var(--checkmark-grey-icon);
+  height: 1.5rem;
+  width: 1.5rem;
+  background-size: 1.5rem;
+  background-repeat: no-repeat;
+  margin-top: 0.5rem;
+}

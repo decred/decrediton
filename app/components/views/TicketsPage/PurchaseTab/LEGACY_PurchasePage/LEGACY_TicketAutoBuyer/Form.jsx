@@ -91,7 +91,7 @@ const TicketAutoBuyerForm = ({
           />
         )}
         <div className={styles.rowPortionHalf}>
-          <label>
+          <label className={styles.label}>
             <T id="autobuyer.accountFrom" m="From" />:
           </label>
           <div className={styles.input}>
@@ -106,7 +106,7 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
         <div className={classNames(styles.rowPortionHalf, styles.isRow)}>
-          <label>
+          <label className={styles.label}>
             <T id="autobuyer.stakePoolLabel" m="VSP" />:
           </label>
           <div className={styles.input}>
@@ -121,7 +121,7 @@ const TicketAutoBuyerForm = ({
       </div>
       <div className={styles.row}>
         <div className={styles.rowPortionFull}>
-          <label htmlFor="balanceToMaintain">
+          <label className={styles.label} htmlFor="balanceToMaintain">
             <T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />:
           </label>
           <div className={styles.input}>

@@ -1,10 +1,9 @@
 import RegularTxRow from "./RegularTxRow";
 import StakeTxRow from "./StakeTxRow";
-import EligibleRow from "./EligibleRow";
 import LiveStakeTxRow from "./LiveStakeTxRow";
 import * as txTypes from "constants/Decrediton";
 import { withRouter } from "react-router-dom";
-import { dateFormatter, shortDatetimeFormatter } from "helpers";
+import { shortDatetimeFormatter } from "helpers";
 
 const TxRowByType = {
   // LiveStakeTxRow is used for tickets which can still be voted.
@@ -25,21 +24,12 @@ const TxRowByType = {
   [txTypes.TICKET_FEE]: RegularTxRow,
   [txTypes.SELFTRANSFER]: RegularTxRow,
   [txTypes.MIXED]: RegularTxRow,
-  [txTypes.COINBASE]: RegularTxRow,
-  [txTypes.ELIGIBLE]: EligibleRow
+  [txTypes.COINBASE]: RegularTxRow
 };
 
 // TxHistory is responsible for calling the right component row according to
 // the Tx row type.
-const TxHistory = ({
-  transactions = [],
-  limit,
-  overview,
-  mode,
-  tsDate,
-  history
-}) => {
-  const isEligibleTicket = mode === "eligible";
+const TxHistory = ({ transactions = [], limit, overview, tsDate, history }) => {
   return (
     <>
       {transactions.map((tx, index) => {
@@ -56,8 +46,7 @@ const TxHistory = ({
         if (tx.selfTx) rowType = txTypes.SELFTRANSFER;
 
         // gets the proper component to show, based on it rowType
-        const Component =
-          TxRowByType[isEligibleTicket ? txTypes.ELIGIBLE : rowType];
+        const Component = TxRowByType[rowType];
         const key = tx.spenderHash ? tx.spenderHash : tx.txHash;
 
         const txOutputAddresses =
@@ -80,9 +69,7 @@ const TxHistory = ({
               pending: tx.isPending,
               onClick: () => history.push(`/transaction/history/${tx.txHash}`),
               timeMessage: (txTimestamp) =>
-                isEligibleTicket
-                  ? dateFormatter.format(txTimestamp)
-                  : shortDatetimeFormatter.format(txTimestamp)
+                shortDatetimeFormatter.format(txTimestamp)
             }}
           />
         );

@@ -1,40 +1,86 @@
-.overview {
-  background-color: var(--background-back-color);
-  justify-content: space-between;
-  width: 740px;
-  padding-bottom: 15px;
+.cardWrapper {
+  display: flex;
 }
 
-.overviewInfoWrapper {
+.backButton {
+  width: 30px;
+  background-color: var(--grey-3);
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: var(--grey-5);
+}
+
+.backArrow {
+  height: 10px;
+  width: 10px;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 5px;
+  background-repeat: no-repeat;
+  transform: rotate(-90deg);
+}
+
+.backButton:hover .backArrow {
+  background-image: var(--arrow-left-white);
+  transform: rotate(0);
+  background-position: 50% 0;
+}
+
+.overview {
+  background-color: var(--background-back-color);
+  width: 710px;
+}
+
+.overviewInfo {
+  padding: 20px;
+}
+
+.row {
   display: flex;
   justify-content: space-between;
 }
 
-.overviewInfo {
-  padding: 20px 10px 15px 40px;
-  max-width: 49%;
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .title {
-  font-size: 19px;
-  line-height: 24px;
-  color: var(--tutorial-header);
+  font-size: 18px;
+  line-height: 23px;
+  color: var(--tutorial-header) !important;
 }
 
-.proposedToRfp,
+.subTitle {
+  font-size: 16px;
+}
+
+.updatedEvent,
+.version {
+  color: var(--grey-5);
+}
+
 .token {
+  padding: 4px 10px;
+  background-color: var(--color-blue-lighter);
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.token.dark {
+  color: var(--grey-2);
+}
+
+.proposedToRfp {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: var(--overview-balance-label);
+  color: var(--stroke-color-default);
 }
 
-.token {
-  width: 100px;
-}
-
-.proposedToRfp a,
-.token a {
+.proposedToRfp a {
   font-size: 13px;
   line-height: 19px;
   color: var(--overview-balance-label);
@@ -42,137 +88,20 @@
   cursor: pointer;
 }
 
-.proposedToRfp a:hover,
-.token a:hover {
-  color: var(--stroke-color-default);
-}
-
-.fields {
-  margin-top: 11px;
-}
-
-.overviewVoting {
-  background-color: var(--transfer-details-bg);
-  padding: 30px 20px;
-  width: 284px;
-  height: 130px;
-}
-
-.overviewVotingButton {
-  padding: 6px 18px;
-  position: relative;
-  top: -4px;
-  left: 158px;
-}
-
-.backIconButton {
-  margin: -20px -12px 0px 0px;
-  float: right;
-  cursor: pointer;
-  height: 12px;
-  width: 12px;
-  background-repeat: no-repeat;
-  background-size: 12px;
-  background-image: var(--x-grey);
-  padding: 0;
-}
-
-.backIconButton:hover {
-  opacity: 0.7;
-}
-
-.smallWidth .backIconButton {
-  visibility: hidden;
-}
-
-.noTickets,
-.votingPreference,
-.notVoting,
-.voted {
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 15px;
-  height: 64px;
-}
-
-.votingPreference {
-  line-height: 0;
-}
-
-.radioButtonsList {
-  margin-left: -7px;
-}
-
-.notVoting {
-  background-image: var(--chat-bubbles);
-  background-repeat: no-repeat;
-  background-size: 30px;
-  padding-left: 38px;
-  padding-top: 7px;
-}
-
-.voteChoice {
-  margin-top: 15px;
-  height: 64px;
-}
-
-.preferenceTitle {
-  margin-bottom: 10px;
-}
-
-.noTickets {
-  background-size: 30px 30px;
-  background-position: 0 50%;
-  background-repeat: no-repeat;
-  background-image: var(--ticket-voted-grey-icon);
-  width: 157px;
-  padding-left: 40px;
-}
-
-.overviewField .label {
-  color: var(--agenda-card-bottom-cfg);
-  display: inline-block;
-  margin-right: 0.5em;
-  width: 100px;
-  text-align: right;
-  vertical-align: middle;
-}
-
-.overviewField .value {
-  color: var(--input-color-default);
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 229px;
-}
-
-.overviewField .timeValue {
-  font-weight: bold;
-  margin-right: 0.2em;
-}
-
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
   min-height: 100%;
-  padding: 40px 0 40px 40px;
+  padding: 30px 40px;
   background-color: var(--background-back-color);
-  margin: 20px 0 80px;
+  margin: 5px 0 20px 0;
   border-top: 1px solid var(--tabbed-page-header-bg);
   width: 740px;
-}
-
-.detailsText .links {
-  float: right;
-  margin-right: 20px;
-  margin-top: -20px;
+  font-size: 16px;
 }
 
 .detailsText p {
   word-wrap: break-word;
   margin: 10px 0;
-}
-
-.proposalBody {
-  width: 66%;
 }
 
 .detailsText a {
@@ -188,15 +117,27 @@
   padding: 16px;
 }
 
-.detailsText div:not(.links) {
-  padding-right: 30px;
-  padding-bottom: 20px;
+.piButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 740px;
 }
 
 .voteStatusBar {
-  width: auto !important;
-  padding: 0 40px;
-  margin-bottom: 15px;
+  flex-basis: 75%;
+  margin-right: 10px;
+}
+
+.statusBarRow {
+  padding: 0 20px 20px;
+}
+
+.voteEnd {
+  align-items: flex-end;
+  flex-basis: 25%;
+  margin-top: -0.3rem;
+  color: var(--grey-5);
+  font-size: 13px;
 }
 
 .quorumTooltip {
@@ -217,79 +158,19 @@
   color: var(--tab-text-active-color) !important;
 }
 
-.yes > label > span:nth-child(1) {
-  border-color: var(--vote-yes-color);
-}
-
-.yes > label > span:nth-child(2) {
-  background-color: var(--vote-yes-color);
-}
-
-.no > label > span:nth-child(1) {
-  border-color: var(--vote-no-color);
-}
-
-.no > label > span:nth-child(2) {
-  background-color: var(--vote-no-color);
-}
-
-.voteConfirmation {
-  background-color: var(--background-container);
-  font-size: 27px;
-  line-height: 34px;
-  margin-left: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  display: flex;
-  flex-direction: row;
-  text-transform: capitalize;
-}
-
-.yesProposal {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
-  background-color: var(--vote-yes-color);
-  margin-top: 13px;
-  margin-right: 5px;
-}
-
-.noProposal {
-  width: 12px;
-  height: 12px;
-  border-radius: 100px;
-  background-color: var(--vote-no-color);
-  margin-top: 13px;
-  margin-right: 5px;
-}
-
 .loadingPage {
   width: 100%;
   text-align: center;
 }
 
-.politeiaButton {
-  font-size: 13px !important;
-  line-height: 17px !important;
-  border-radius: 5px !important;
-  padding: 6px 15px !important;
-  margin: 4px !important;
-  color: var(--info-modal-button-text) !important;
-  background-color: var(--info-modal-button-bg) !important;
+.piButton {
   border: 0 !important;
   text-decoration: none !important;
-  box-shadow: 0 5px 13px var(--icons-shadow);
-}
-
-.politeiaButton:hover {
-  background-color: var(--title-text-and-button-background-hovered) !important;
+  color: var(--color-white) !important;
+  font-weight: var(--font-weight-semi-bold) !important;
 }
 
 @media screen and (max-width: 1179px) {
-  .overviewVotingButton {
-    left: 123px;
-  }
-
   .overview {
     width: 634px;
   }
@@ -298,27 +179,14 @@
     padding: 20px;
   }
 
-  .overviewVoting {
-    width: 244px;
-  }
-
   .detailsText {
-    width: 635px;
+    width: 665px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .overview {
     width: 100%;
-  }
-
-  .overview.is-row {
-    flex-direction: column;
-  }
-
-  .overviewInfo {
-    padding: 20px;
-    max-width: 100%;
   }
 
   .votingProgress {
@@ -333,14 +201,5 @@
   .detailsText {
     padding-left: 20px;
     width: 100%;
-  }
-
-  .smallWidth {
-    float: right;
-    visibility: visible;
-  }
-
-  .backIconButton {
-    visibility: hidden;
   }
 }

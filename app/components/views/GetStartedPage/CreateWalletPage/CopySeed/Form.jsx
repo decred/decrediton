@@ -15,7 +15,7 @@ const CopySeedPage = ({
   sendContinue
 }) => (
   <div className={styles.createWalletWrapper}>
-    <div className={classNames(styles.contentTitleWrapper, "is-row")}>
+    <div className={classNames(styles.contentTitleWrapper, "flex-row")}>
       <div className={styles.contentTitle}>
         <CreateNewWalletTitle />
       </div>
