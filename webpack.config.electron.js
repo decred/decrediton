@@ -4,10 +4,8 @@
 
 import webpack from "webpack";
 import path from "path";
-import merge from "webpack-merge";
-import baseConfig from "./webpack.config.base";
 
-export default merge(baseConfig, {
+export default {
   // Generate code for electron's ipc-main process.
   target: "electron-main",
 
@@ -17,8 +15,33 @@ export default merge(baseConfig, {
 
   // 'main.js' in root
   output: {
-    path: __dirname,
-    filename: "./app/main.js"
+    path: path.resolve(__dirname, "app"),
+    filename: "main.js"
+  },
+
+  node: {
+    __dirname: false
+  },
+
+  module: {
+    rules: [
+      // Pass code through babel.
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        include: /app/,
+        loader: "babel-loader"
+      },
+
+      // Native modules.
+      {
+        test: /\.node$/,
+        loader: "node-loader",
+        options: {
+          name: "[name].[ext]"
+        }
+      }
+    ]
   },
 
   plugins: [
@@ -30,8 +53,12 @@ export default merge(baseConfig, {
   ],
 
   resolve: {
+    extensions: [ ".js", ".jsx", ".json", ".node" ],
+    modules: [
+      "node_modules"
+    ],
     alias: {
       ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js"))
     }
   }
-});
+};

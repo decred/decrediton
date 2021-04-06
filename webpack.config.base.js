@@ -25,18 +25,7 @@ export default {
       { test: /\.(woff|woff2|eot|ttf)$/, type: "asset" },
 
       // Documents/texts.
-      { test: /\.(md)$/, type: "asset/source" },
-
-      // Native modules.
-      {
-        test: /\.node$/,
-        use: [ {
-          loader: "node-addon-loader",
-          options: {
-            basePath: path.resolve(__dirname, "bin")
-          }
-        } ]
-      }
+      { test: /\.(md)$/, type: "asset/source" }
     ]
   },
 
@@ -50,7 +39,7 @@ export default {
 
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
-    extensions: [ ".js", ".jsx", ".json", ".node" ],
+    extensions: [ ".js", ".jsx", ".json" ],
     mainFields: [ "webpack", "browser", "web", "browserify", [ "jam", "main" ], "main" ],
     modules: [
       path.resolve(__dirname, "app"),
@@ -59,8 +48,14 @@ export default {
     ]
   },
 
-  plugins: [ new webpack.ProvidePlugin({
-    React: "react",
-    PropTypes: "prop-types"
-  }) ],
+  plugins: [
+    new webpack.ProvidePlugin({
+      React: "react",
+      PropTypes: "prop-types"
+    }),
+
+    new webpack.IgnorePlugin({
+      resourceRegExp: /\.node$/,
+    })
+ ]
 };

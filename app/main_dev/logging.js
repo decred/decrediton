@@ -3,6 +3,7 @@ import path from "path";
 import { MAX_LOG_LENGTH } from "constants";
 import { getAppDataDirectory } from "./paths";
 import os from "os";
+import logform from "logform";
 
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
@@ -45,15 +46,10 @@ const logLevelsPrintable = {
 
 const logFormatter = (opts) => {
   const lvl = logLevelsPrintable[opts.level] || "UNK";
-  const time = opts.timestamp();
+  const time = opts.timestamp;
   const msg = opts.message;
   const subsys = "DCTN";
   return `${time} [${lvl}] ${subsys}: ${msg}`;
-};
-
-const logFormatterColorized = (opts) => {
-  const config = winston.config;
-  return config.colorize(opts.level, logFormatter(opts));
 };
 
 // createLogger creates the main app logger. This stores all logs into the
@@ -61,23 +57,34 @@ const logFormatterColorized = (opts) => {
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
   if (logger) return logger;
-  logger = new winston.Logger({
+
+  const { combine, timestamp, printf, colorize, splat } = logform.format;
+
+  logger = new winston.createLogger({
     transports: [
       new winston.transports.File({
-        json: false,
         filename: path.join(getAppDataDirectory(), "decrediton.log"),
-        timestamp: logTimestamp,
-        formatter: logFormatter
+        format: combine(
+          timestamp({ format: logTimestamp }),
+          splat(),
+          printf(logFormatter)
+        )
       })
     ]
   });
 
   if (debug) {
-    logger.add(winston.transports.Console, {
-      timestamp: logTimestamp,
-      formatter: logFormatterColorized,
-      level: "debug"
-    });
+    logger.add(
+      new winston.transports.Console({
+        level: "debug",
+        format: combine(
+          timestamp({ format: logTimestamp }),
+          splat(),
+          printf(logFormatter),
+          colorize({ all: true })
+        )
+      })
+    );
   }
 
   return logger;
