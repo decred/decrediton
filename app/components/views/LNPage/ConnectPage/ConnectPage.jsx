@@ -104,6 +104,7 @@ const ConnectPage = () => {
             )}
             <div className={classNames(styles.connectOpt, styles.checkbox)}>
               <Checkbox
+                id="enableAutopilot"
                 label={
                   <T
                     id="ln.connectPage.enableAutopilot"
