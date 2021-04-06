@@ -1,5 +1,6 @@
 *~
 app/dist/
+app/dist-trezor/
 app/main.js
 app/main.js.map
 node_modules/

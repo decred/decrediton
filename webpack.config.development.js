@@ -7,6 +7,7 @@ import webpack from "webpack";
 import merge from "webpack-merge";
 import baseConfig from "./webpack.config.base";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
 const port = process.env.PORT || 3000;
 
@@ -73,6 +74,11 @@ export default merge(baseConfig, {
     }
   },
 
+  node: {
+    // Trezor-connect currently fails without this.
+    __dirname: true
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
 
@@ -82,6 +88,13 @@ export default merge(baseConfig, {
 
     new webpack.LoaderOptionsPlugin({
       debug: true
+    }),
+
+    new CopyWebpackPlugin({
+      patterns: [
+          // Copy the generated trezor iframe and code.
+          { from: "./app/dist-trezor", to: "" }
+      ]
     }),
 
     new HtmlWebpackPlugin({

@@ -4,10 +4,6 @@
 
 import path from "path";
 import webpack from "webpack";
-import {
-  dependencies,
-  optionalDependencies
-} from "./app/package.json";
 
 export default {
   mode: "production",
@@ -67,6 +63,4 @@ export default {
     React: "react",
     PropTypes: "prop-types"
   }) ],
-
-  externals: Object.keys(dependencies || {}).concat(Object.keys(optionalDependencies || {}))
 };

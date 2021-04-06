@@ -1,6 +1,7 @@
 import * as wallet from "wallet";
+import fs from "fs-extra";
 import * as selectors from "selectors";
-import { hexToBytes, str2utf8hex } from "helpers";
+import { hexToBytes, str2utf8hex, rawToHex } from "helpers";
 import {
   walletTxToBtcjsTx,
   walletTxToRefTx,
@@ -25,7 +26,6 @@ import {
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
-import { ipcRenderer } from "electron";
 
 const session = require("connect").default;
 const { TRANSPORT_EVENT, UI, UI_EVENT, DEVICE_EVENT } = require("connect");
@@ -65,11 +65,12 @@ export const enableTrezor = () => (dispatch, getState) => {
 export const initTransport = async (session, debug) => {
   await session
     .init({
-      connectSrc: "https://localhost:8088/",
+      connectSrc: "./",
       env: "web",
       lazyLoad: false,
       popup: false,
       transportReconnect: false,
+      webusb: false,
       manifest: {
         email: "joegruffins@gmail.com",
         appUrl: "https://github.com/decred/decrediton"
@@ -277,6 +278,10 @@ function setDeviceListeners(dispatch, getState) {
         };
         dispatch({ wordCallBack, type: TRZ_WORD_REQUESTED });
         break;
+      }
+
+      case UI.FIRMWARE_PROGRESS: {
+        console.log("Trezor update progress: " + event.payload.progress + "%");
       }
     }
   });
@@ -763,6 +768,40 @@ export const TRZ_UPDATEFIRMWARE_ATTEMPT = "TRZ_UPDATEFIRMWARE_ATTEMPT";
 export const TRZ_UPDATEFIRMWARE_FAILED = "TRZ_UPDATEFIRMWARE_FAILED";
 export const TRZ_UPDATEFIRMWARE_SUCCESS = "TRZ_UPDATEFIRMWARE_SUCCESS";
 
+const doUpdateFirmware = async (firmwarePath, model) => {
+  let started = false;
+  let completed = false;
+  const rawFirmware = fs.readFileSync(firmwarePath);
+  let firmwareData;
+  // Different models want data in different formats. Current models are either
+  // 1 or "T".
+  if (model === 1) {
+    firmwareData = rawToHex(rawFirmware);
+  } else {
+    firmwareData = rawFirmware.buffer;
+  }
+  try {
+    started = true;
+    const res = await session.firmwareUpdate({
+      binary: firmwareData
+    });
+    completed = true;
+    if (res.payload) {
+      if (res.payload.error) {
+        throw res.payload.error;
+      }
+      if (!res.payload.success) {
+        throw res.payload.code;
+      }
+    }
+    return { error: null, started };
+  } catch (e) {
+    if (completed) return { error: null, started };
+    console.log("error uploading trezor firmware: " + e);
+    return { error: e.toString(), started };
+  }
+};
+
 // updateFirmware attempts to update the device's firmware. For some reason,
 // possibly the size of the firmware, this action will not complete if called
 // from here. We send the firmware to a higher place in the electron hiearchy
@@ -787,12 +826,7 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
 
   try {
     if (device != BOOTLOADER_MODE) throw "device must be in bootloader mode";
-    // Ask main.development.js to send the firmware for us.
-    const { error, started } = await ipcRenderer.invoke(
-      "upload-firmware",
-      path,
-      features.model
-    );
+    const { error, started } = await doUpdateFirmware(path, features.model);
     // If the updated started, the device must be disconnected before further
     // use.
     if (started) alertNoConnectedDevice()(dispatch);

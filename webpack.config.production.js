@@ -8,6 +8,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import merge from "webpack-merge";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 import baseConfig from "./webpack.config.base";
 
 const config = merge(baseConfig, {
@@ -36,11 +37,24 @@ const config = merge(baseConfig, {
   plugins: [
     new MiniCssExtractPlugin({ filename: "style.css" }),
 
+    new CopyWebpackPlugin({
+      patterns: [
+          // Copy the generated trezor iframe and code.
+          { from: "./app/dist-trezor", to: "" }
+      ]
+    }),
+
     new HtmlWebpackPlugin({
       filename: "app.html",
       template: "app/app.development.html"
     })
   ],
+
+  node: {
+    // Trezor-connect currently fails without this.
+    __dirname: true
+  },
+
 
   optimization: {
     minimizer: [

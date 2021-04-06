@@ -18,9 +18,6 @@ import {
 } from "./launch";
 import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
-import { initTransport } from "actions/TrezorActions.js";
-import * as connect from "connect";
-import { rawToHex } from "helpers";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -142,58 +139,6 @@ export const removeWallet = (testnet, walletPath) => {
   } catch (e) {
     logger.log("error", "error creating wallet: " + e);
     return false;
-  }
-};
-
-// updateTrezorFirmware attempts to make a temporary connection to a trezor
-// device and update it with the firmware at path. It returns an error string
-// in case of error and whether the update process was started at all.
-export const updateTrezorFirmware = async (firmwarePath, model) => {
-  let started = false;
-  let completed = false;
-  const rawFirmware = fs.readFileSync(firmwarePath);
-  let firmwareData;
-  // Different models want data in different formats. Current models are either
-  // 1 or "T".
-  if (model === 1) {
-    firmwareData = rawToHex(rawFirmware);
-  } else {
-    firmwareData = rawFirmware.buffer;
-  }
-  let session = connect.default;
-  try {
-    await initTransport(session, false);
-    session.on(connect.UI_EVENT, (event) => {
-      if (event.type == connect.UI.FIRMWARE_PROGRESS) {
-        logger.log(
-          "info",
-          "Trezor update progress: " + event.payload.progress + "%"
-        );
-        // Ignore disconnect errors if completed.
-        if (event.payload.progress == 100) {
-          completed = true;
-        }
-      }
-    });
-    started = true;
-    const res = await session.firmwareUpdate({
-      binary: firmwareData
-    });
-    if (res.payload) {
-      if (res.payload.error) {
-        throw res.payload.error;
-      }
-      if (!res.payload.success) {
-        throw res.payload.code;
-      }
-    }
-    return { error: null, started };
-  } catch (e) {
-    if (completed) return { error: null, started };
-    logger.log("error", "error uploading trezor firmware: " + e);
-    return { error: e.toString(), started };
-  } finally {
-    session = null;
   }
 };
 
