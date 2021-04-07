@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var rpc_pb = require('./rpc_pb.js');
+var rpc_pb = require('./rpc_pb.js').lnrpc;
 
 function serialize_lnrpc_AbandonChannelRequest(arg) {
   if (!(arg instanceof rpc_pb.AbandonChannelRequest)) {
