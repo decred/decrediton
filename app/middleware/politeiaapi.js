@@ -1,4 +1,4 @@
-import axios from "axios";
+import { getJSON, postJSON } from "helpers/fetch";
 
 // Uncomment this and comment the following definition to test locally.
 // Also uncomment a code part at externalRequests.js, as politeia is a ssl-enabled
@@ -11,9 +11,9 @@ import axios from "axios";
 export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
 
-const GET = (piURL, path) => axios.get(`${piURL}${path}`);
+const GET = (piURL, path) => getJSON(`${piURL}${path}`);
 
-const POST = (piURL, path, payload) => axios.post(`${piURL}${path}`, payload);
+const POST = (piURL, path, payload) => postJSON(`${piURL}${path}`, payload);
 
 export const getProposal = ({ piURL, token }, cb) =>
   GET(piURL, `/v1/proposals/${token}`)
