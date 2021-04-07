@@ -9,7 +9,7 @@ import {
   getDcrwalletGrpcKeyCert
 } from "wallet";
 import * as wallet from "wallet";
-import { DEXC_LOGOUT_FAILED, logoutDexc, stopDexc } from "./DexActions";
+import { DEX_LOGOUT_FAILED, logoutDex, stopDex } from "./DexActions";
 import {
   rescanCancel,
   ticketBuyerCancel,
@@ -264,11 +264,10 @@ const finalCloseWallet = () => async (dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(stopDcrlnd());
-    await dispatch(stopDexc());
     await dispatch(ticketBuyerCancel());
     await dispatch(stopAccountMixer(true));
     await dispatch(setSelectedWallet(null));
-    await dispatch(stopDexc());
+    await dispatch(stopDex());
     if (walletReady) {
       await closeWallet(getState().walletLoader.loader);
     }
@@ -285,7 +284,7 @@ const finalCloseWallet = () => async (dispatch, getState) => {
 export const closeWalletRequest = () => (dispatch, getState) => {
   const { loggedIn } = getState().dex;
   if (loggedIn) {
-    logoutDexc()
+    logoutDex()
       .then(() => {
         dispatch(finalCloseWallet());
       })
@@ -294,7 +293,7 @@ export const closeWalletRequest = () => (dispatch, getState) => {
         if (error.indexOf("cannot log out with active orders", 0) > -1) {
           openOrder = true;
         }
-        dispatch({ type: DEXC_LOGOUT_FAILED, error, openOrder });
+        dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
         dispatch(showCantCloseModal());
       });
   } else {

@@ -20,7 +20,7 @@ import {
   getVSPTicketsByFeeStatus,
   setVSPDVoteChoices
 } from "./VSPActions";
-import { startDexc } from "./DexActions";
+import { startDex } from "./DexActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
@@ -95,9 +95,9 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
 
       await dispatch(getVoteChoicesAttempt());
 
-      // Start DEXC if dexEnabled and NOT SPV mode
+      // Start Dex if dexEnabled and NOT SPV mode
       if (dexEnabled && !sel.isSPV(getState())) {
-        await dispatch(startDexc());
+        await dispatch(startDex());
       }
     };
 

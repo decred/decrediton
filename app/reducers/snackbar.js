@@ -2,13 +2,13 @@
 // we disable no-fallthrough rule in this file to simplify the select/case below.
 import { defineMessages } from "react-intl";
 import {
-  DEXC_STARTUP_FAILED,
-  DEXC_LOGIN_FAILED,
-  DEXC_ENABLE_FAILED,
-  DEXC_INIT_FAILED,
-  DEXC_CREATEWALLET_FAILED,
-  DEXC_REGISTER_FAILED,
-  DEXC_GETFEE_FAILED,
+  DEX_STARTUP_FAILED,
+  DEX_LOGIN_FAILED,
+  DEX_ENABLE_FAILED,
+  DEX_INIT_FAILED,
+  DEX_CREATEWALLET_FAILED,
+  DEX_REGISTER_FAILED,
+  DEX_GETFEE_FAILED,
   BTC_CREATEWALLET_FAILED
 } from "../actions/DexActions";
 import {
@@ -573,31 +573,31 @@ const messages = defineMessages({
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
   },
-  DEXC_STARTUP_FAILED: {
+  DEX_STARTUP_FAILED: {
     id: "dex.startup.failed",
-    defaultMessage: "DEX Server Failed to Start: {originalError}"
+    defaultMessage: "DEX Client Failed to Start: {originalError}"
   },
-  DEXC_LOGIN_FAILED: {
+  DEX_LOGIN_FAILED: {
     id: "dex.login.failed",
     defaultMessage: "DEX Login Failed: {originalError}"
   },
-  DEXC_ENABLE_FAILED: {
+  DEX_ENABLE_FAILED: {
     id: "dex.enable.failed",
     defaultMessage: "Enabling DEX Failed: {originalError}"
   },
-  DEXC_INIT_FAILED: {
+  DEX_INIT_FAILED: {
     id: "dex.init.failed",
     defaultMessage: "Setting DEX Passphrase Failed: {originalError}"
   },
-  DEXC_CREATEWALLET_FAILED: {
+  DEX_CREATEWALLET_FAILED: {
     id: "dex.connectWallet.failed",
     defaultMessage: "Connecting to DCR wallet Failed: {originalError}"
   },
-  DEXC_REGISTER_FAILED: {
+  DEX_REGISTER_FAILED: {
     id: "dex.register.failed",
     defaultMessage: "Paying DEX Fee Failed: {originalError}"
   },
-  DEXC_GETFEE_FAILED: {
+  DEX_GETFEE_FAILED: {
     id: "dex.getFee.failed",
     defaultMessage: "Getting DEX Fee and Address Failed: {originalError}"
   },
@@ -810,13 +810,13 @@ export default function snackbar(state = {}, action) {
     case PROCESSMANAGEDTICKETS_FAILED:
     case SETVOTECHOICES_FAILED:
     case SETVSPDVOTECHOICE_FAILED:
-    case DEXC_STARTUP_FAILED:
-    case DEXC_LOGIN_FAILED:
-    case DEXC_ENABLE_FAILED:
-    case DEXC_INIT_FAILED:
-    case DEXC_CREATEWALLET_FAILED:
-    case DEXC_REGISTER_FAILED:
-    case DEXC_GETFEE_FAILED:
+    case DEX_STARTUP_FAILED:
+    case DEX_LOGIN_FAILED:
+    case DEX_ENABLE_FAILED:
+    case DEX_INIT_FAILED:
+    case DEX_CREATEWALLET_FAILED:
+    case DEX_REGISTER_FAILED:
+    case DEX_GETFEE_FAILED:
     case BTC_CREATEWALLET_FAILED:
       type = "Error";
       if (

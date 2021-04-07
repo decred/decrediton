@@ -52,7 +52,7 @@ let dcrwPipeRx, dcrwPipeTx, dcrwTxStream, dcrdPipeRx, dcrlndPipeRx;
 // general data that needs to keep consistency while decrediton is running.
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
-let dcrlndCreds, dexcCreds;
+let dcrlndCreds, dexCreds;
 let dcrwalletGrpcKeyCert;
 
 let dcrdSocket,
@@ -75,7 +75,7 @@ function closeClis() {
   if (dcrdPID && dcrdPID !== -1) closeDCRD();
   if (dcrwPID && dcrwPID !== -1) closeDCRW();
   if (dcrlndPID && dcrlndPID !== -1) closeDcrlnd();
-  if (dex) closeDexc();
+  if (dex) closeDex();
 }
 
 export const setHeightSynced = (isSynced) => {
@@ -207,8 +207,8 @@ export const closeDcrlnd = () => {
   return true;
 };
 
-export const closeDexc = () => {
-  logger.log("info", "closing dexc " + dex);
+export const closeDex = () => {
+  logger.log("info", "closing dex " + dex);
   if (!dex) {
     // process is not started by decrediton
     return true;
@@ -845,7 +845,7 @@ export const launchDCRLnd = (
 const Mainnet = 0;
 const Testnet = 1;
 
-export const launchDexc = (walletPath, testnet) =>
+export const launchDex = (walletPath, testnet) =>
   new Promise((resolve, reject) => {
     if (dex) {
       return resolve();
@@ -877,7 +877,7 @@ export const launchDexc = (walletPath, testnet) =>
     }
   });
 
-export const initCheckDexc = () =>
+export const initCheckDex = () =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -891,7 +891,7 @@ export const initCheckDexc = () =>
     }
   });
 
-export const initDexcCall = (passphrase) =>
+export const initDexCall = (passphrase) =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -905,7 +905,7 @@ export const initDexcCall = (passphrase) =>
     }
   });
 
-export const loginDexcCall = (passphrase) =>
+export const loginDexCall = (passphrase) =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -919,7 +919,7 @@ export const loginDexcCall = (passphrase) =>
     }
   });
 
-export const logoutDexcCall = () =>
+export const logoutDexCall = () =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -933,7 +933,7 @@ export const logoutDexcCall = () =>
     }
   });
 
-export const createWalletDexcCall = (
+export const createWalletDexCall = (
   assetID,
   passphrase,
   appPassphrase,
@@ -995,7 +995,7 @@ export const createWalletDexcCall = (
     }
   });
 
-export const getFeeDexcCall = (addr) =>
+export const getFeeDexCall = (addr) =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -1009,7 +1009,7 @@ export const getFeeDexcCall = (addr) =>
     }
   });
 
-export const registerDexcCall = (appPass, addr, fee) =>
+export const registerDexCall = (appPass, addr, fee) =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -1028,7 +1028,7 @@ export const registerDexcCall = (appPass, addr, fee) =>
     }
   });
 
-export const userDexcCall = () =>
+export const userDexCall = () =>
   new Promise((resolve, reject) => {
     if (!dex) {
       resolve();
@@ -1051,8 +1051,8 @@ export const GetDcrwPID = () => dcrwPID;
 export const GetDcrlndPID = () => dcrlndPID;
 export const GetDcrlndCreds = () => dcrlndCreds;
 
-export const GetDexcPID = () => dex;
-export const GetDexcCreds = () => dexcCreds;
+export const GetDexPID = () => dex;
+export const GetDexCreds = () => dexCreds;
 
 export const readExesVersion = (app, grpcVersions) => {
   const args = ["--version"];

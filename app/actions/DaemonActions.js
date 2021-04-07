@@ -10,7 +10,7 @@ import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel, showCantCloseModal } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
-import { DEXC_LOGOUT_FAILED, logoutDexc } from "./DexActions";
+import { DEX_LOGOUT_FAILED, logoutDex } from "./DexActions";
 import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
@@ -243,7 +243,7 @@ export const finalShutdown = () => (dispatch, getState) => {
 export const shutdownApp = () => (dispatch, getState) => {
   const { loggedIn } = getState().dex;
   if (loggedIn) {
-    logoutDexc()
+    logoutDex()
       .then(() => {
         dispatch(finalShutdown());
       })
@@ -252,7 +252,7 @@ export const shutdownApp = () => (dispatch, getState) => {
         if (error.indexOf("cannot log out with active orders", 0) > -1) {
           openOrder = true;
         }
-        dispatch({ type: DEXC_LOGOUT_FAILED, error, openOrder });
+        dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
         dispatch(showCantCloseModal());
       });
   } else {
@@ -378,7 +378,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
       const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
       const btcWalletName = walletCfg.get(cfgConstants.BTCWALLET_NAME);
-      let rpcCreds = null;
+      let rpcCreds = {};
       if (enableDex) {
         rpcCreds = {
           rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
@@ -389,9 +389,8 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
             "rpc.cert"
           )
         };
-      } else {
-        rpcCreds = {};
       }
+
       const walletStarted = await wallet.startWallet(
         selectedWallet.value.wallet,
         isTestnet,

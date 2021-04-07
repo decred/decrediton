@@ -9,9 +9,9 @@ import { DEX_ICON } from "constants";
 
 export const CreateWalletPageContent = () => {
   const {
-    onCreateWalletDexc,
-    createWalletDexcAttempt,
-    onBTCCreateWalletDexc,
+    onCreateWalletDex,
+    createWalletDexAttempt,
+    onBTCCreateWalletDex,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
     dexAccount,
@@ -58,13 +58,13 @@ export const CreateWalletPageContent = () => {
 
   const onCreateWallet = (passphrase, args) => {
     const { appPassphrase } = args;
-    onCreateWalletDexc(passphrase, appPassphrase, dexAccount);
+    onCreateWalletDex(passphrase, appPassphrase, dexAccount);
     resetState();
   };
 
   const onBTCCreateWallet = (passphrase, args) => {
     const { appPassphrase } = args;
-    onBTCCreateWalletDexc(passphrase, appPassphrase, walletName);
+    onBTCCreateWalletDex(passphrase, appPassphrase, walletName);
     resetState();
   };
 
@@ -93,7 +93,7 @@ export const CreateWalletPageContent = () => {
                 />
               }
               modalTitle={<T id="dex.createBTCWallet" m="Connect BTC Wallet" />}
-              loading={createWalletDexcAttempt}
+              loading={createWalletDexAttempt}
               onSubmit={onBTCCreateWallet}
               buttonLabel={
                 <T
@@ -145,9 +145,9 @@ export const CreateWalletPageContent = () => {
       )}
       {!dexDCRWalletRunning ? (
         <AppPassAndPassphraseModalButton
-          disabled={createWalletDexcAttempt}
+          disabled={createWalletDexAttempt}
           modalTitle={<T id="dex.createDCRWallet" m="Connect DCR Wallet" />}
-          loading={createWalletDexcAttempt}
+          loading={createWalletDexAttempt}
           onSubmit={onCreateWallet}
           buttonLabel={
             <T

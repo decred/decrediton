@@ -6,16 +6,16 @@ import { getWalletCfg } from "config";
 import { isTestNet } from "selectors";
 import { addAllowedExternalRequest } from "./SettingsActions";
 import { closeWalletRequest } from "./WalletLoaderActions";
-import { EXTERNALREQUEST_DEXC } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DEX } from "main_dev/externalRequests";
 import * as configConstants from "constants/config";
 import { makeRandomString } from "helpers";
 
-export const DEXC_ENABLE_ATTEMPT = "DEXC_ENABLE_ATTEMPT";
-export const DEXC_ENABLE_FAILED = "DEXC_ENABLE_FAILED";
-export const DEXC_ENABLE_SUCCESS = "DEXC_ENABLE_SUCCESS";
+export const DEX_ENABLE_ATTEMPT = "DEX_ENABLE_ATTEMPT";
+export const DEX_ENABLE_FAILED = "DEX_ENABLE_FAILED";
+export const DEX_ENABLE_SUCCESS = "DEX_ENABLE_SUCCESS";
 
-export const enableDexc = () => (dispatch, getState) => {
-  dispatch({ type: DEXC_ENABLE_ATTEMPT });
+export const enableDex = () => (dispatch, getState) => {
+  dispatch({ type: DEX_ENABLE_ATTEMPT });
   const {
     daemon: { walletName }
   } = getState();
@@ -32,22 +32,22 @@ export const enableDexc = () => (dispatch, getState) => {
     );
     walletConfig.set(configConstants.DEXWALLET_HOSTPORT, "127.0.0.1:19110");
     walletConfig.set(configConstants.ENABLE_DEX, true);
-    dispatch(addAllowedExternalRequest(EXTERNALREQUEST_DEXC));
+    dispatch(addAllowedExternalRequest(EXTERNALREQUEST_DEX));
 
-    dispatch({ type: DEXC_ENABLE_SUCCESS });
+    dispatch({ type: DEX_ENABLE_SUCCESS });
     dispatch(closeWalletRequest());
   } catch (error) {
-    dispatch({ type: DEXC_ENABLE_FAILED, error });
+    dispatch({ type: DEX_ENABLE_FAILED, error });
     return;
   }
 };
 
-export const DEXC_STARTUP_ATTEMPT = "DEXC_STARTUP_ATTEMPT";
-export const DEXC_STARTUP_FAILED = "DEXC_STARTUP_FAILED";
-export const DEXC_STARTUP_SUCCESS = "DEXC_STARTUP_SUCCESS";
+export const DEX_STARTUP_ATTEMPT = "DEX_STARTUP_ATTEMPT";
+export const DEX_STARTUP_FAILED = "DEX_STARTUP_FAILED";
+export const DEX_STARTUP_SUCCESS = "DEX_STARTUP_SUCCESS";
 
-export const startDexc = () => (dispatch, getState) => {
-  dispatch({ type: DEXC_STARTUP_ATTEMPT });
+export const startDex = () => (dispatch, getState) => {
+  dispatch({ type: DEX_STARTUP_ATTEMPT });
   const isTestnet = sel.isTestNet(getState());
   const {
     daemon: { walletName }
@@ -55,7 +55,7 @@ export const startDexc = () => (dispatch, getState) => {
   const walletPath = getWalletPath(isTestnet, walletName);
 
   try {
-    const res = ipcRenderer.sendSync("start-dexc", walletPath, isTestnet);
+    const res = ipcRenderer.sendSync("start-dex", walletPath, isTestnet);
     if (res instanceof Error) {
       throw res;
     }
@@ -64,22 +64,22 @@ export const startDexc = () => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEXC_STARTUP_SUCCESS, serverAddress: res });
-    dispatch(dexcCheckInit());
+    dispatch({ type: DEX_STARTUP_SUCCESS, serverAddress: res });
+    dispatch(dexCheckInit());
   } catch (error) {
-    dispatch({ type: DEXC_STARTUP_FAILED, error });
+    dispatch({ type: DEX_STARTUP_FAILED, error });
     return;
   }
 };
 
-export const DEXC_CHECKINIT_ATTEMPT = "DEXC_CHECKINIT_ATTEMPT";
-export const DEXC_CHECKINIT_FAILED = "DEXC_CHECKINIT_FAILED";
-export const DEXC_CHECKINIT_SUCCESS = "DEXC_CHECKINIT_SUCCESS";
+export const DEX_CHECKINIT_ATTEMPT = "DEX_CHECKINIT_ATTEMPT";
+export const DEX_CHECKINIT_FAILED = "DEX_CHECKINIT_FAILED";
+export const DEX_CHECKINIT_SUCCESS = "DEX_CHECKINIT_SUCCESS";
 
-export const dexcCheckInit = () => (dispatch) => {
-  dispatch({ type: DEXC_CHECKINIT_ATTEMPT });
+export const dexCheckInit = () => (dispatch) => {
+  dispatch({ type: DEX_CHECKINIT_ATTEMPT });
   try {
-    let res = ipcRenderer.sendSync("check-init-dexc");
+    let res = ipcRenderer.sendSync("check-init-dex");
     if (res instanceof Error) {
       throw res;
     }
@@ -89,36 +89,36 @@ export const dexcCheckInit = () => (dispatch) => {
       }
       res = res == "true" ? true : false;
     }
-    dispatch({ type: DEXC_CHECKINIT_SUCCESS, res });
+    dispatch({ type: DEX_CHECKINIT_SUCCESS, res });
   } catch (error) {
-    dispatch({ type: DEXC_CHECKINIT_FAILED, error });
+    dispatch({ type: DEX_CHECKINIT_FAILED, error });
     return;
   }
 };
 
-export const DEXC_STOPPED = "DEXC_STOPPED";
+export const DEX_STOPPED = "DEX_STOPPED";
 
-export const stopDexc = () => (dispatch, getState) => {
-  if (!sel.dexcActive(getState())) {
+export const stopDex = () => (dispatch, getState) => {
+  if (!sel.dexActive(getState())) {
     return;
   }
 
-  ipcRenderer.send("stop-dexc");
-  dispatch({ type: DEXC_STOPPED });
+  ipcRenderer.send("stop-dex");
+  dispatch({ type: DEX_STOPPED });
 };
 
-export const DEXC_INIT_ATTEMPT = "DEXC_INIT_ATTEMPT";
-export const DEXC_INIT_SUCCESS = "DEXC_INIT_SUCCESS";
-export const DEXC_INIT_FAILED = "DEXC_INIT_FAILED";
+export const DEX_INIT_ATTEMPT = "DEX_INIT_ATTEMPT";
+export const DEX_INIT_SUCCESS = "DEX_INIT_SUCCESS";
+export const DEX_INIT_FAILED = "DEX_INIT_FAILED";
 
-export const initDexc = (passphrase) => (dispatch, getState) => {
-  dispatch({ type: DEXC_INIT_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_INIT_FAILED, error: "Dexc isn't active" });
+export const initDex = (passphrase) => (dispatch, getState) => {
+  dispatch({ type: DEX_INIT_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_INIT_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("init-dexc", passphrase);
+    const res = ipcRenderer.sendSync("init-dex", passphrase);
     if (res instanceof Error) {
       throw res;
     } else if (typeof res === "string") {
@@ -126,27 +126,27 @@ export const initDexc = (passphrase) => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEXC_INIT_SUCCESS });
+    dispatch({ type: DEX_INIT_SUCCESS });
     // Request current user information
-    dispatch(userDexc());
+    dispatch(userDex());
   } catch (error) {
-    dispatch({ type: DEXC_INIT_FAILED, error });
+    dispatch({ type: DEX_INIT_FAILED, error });
     return;
   }
 };
 
-export const DEXC_LOGIN_ATTEMPT = "DEXC_LOGIN_ATTEMPT";
-export const DEXC_LOGIN_SUCCESS = "DEXC_LOGIN_SUCCESS";
-export const DEXC_LOGIN_FAILED = "DEXC_LOGIN_FAILED";
+export const DEX_LOGIN_ATTEMPT = "DEX_LOGIN_ATTEMPT";
+export const DEX_LOGIN_SUCCESS = "DEX_LOGIN_SUCCESS";
+export const DEX_LOGIN_FAILED = "DEX_LOGIN_FAILED";
 
-export const loginDexc = (passphrase) => (dispatch, getState) => {
-  dispatch({ type: DEXC_LOGIN_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_LOGIN_FAILED, error: "Dexc isn't active" });
+export const loginDex = (passphrase) => (dispatch, getState) => {
+  dispatch({ type: DEX_LOGIN_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_LOGIN_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("login-dexc", passphrase);
+    const res = ipcRenderer.sendSync("login-dex", passphrase);
     if (res instanceof Error) {
       throw res;
     } else if (typeof res === "string") {
@@ -154,23 +154,23 @@ export const loginDexc = (passphrase) => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEXC_LOGIN_SUCCESS });
+    dispatch({ type: DEX_LOGIN_SUCCESS });
     // Request current user information
-    dispatch(userDexc());
+    dispatch(userDex());
   } catch (error) {
-    dispatch({ type: DEXC_LOGIN_FAILED, error });
+    dispatch({ type: DEX_LOGIN_FAILED, error });
     return;
   }
 };
 
-export const DEXC_LOGOUT_ATTEMPT = "DEXC_LOGOUT_ATTEMPT";
-export const DEXC_LOGOUT_SUCCESS = "DEXC_LOGOUT_SUCCESS";
-export const DEXC_LOGOUT_FAILED = "DEXC_LOGOUT_FAILED";
+export const DEX_LOGOUT_ATTEMPT = "DEX_LOGOUT_ATTEMPT";
+export const DEX_LOGOUT_SUCCESS = "DEX_LOGOUT_SUCCESS";
+export const DEX_LOGOUT_FAILED = "DEX_LOGOUT_FAILED";
 
-export const logoutDexc = () =>
+export const logoutDex = () =>
   new Promise((resolve, reject) => {
     try {
-      const res = ipcRenderer.sendSync("logout-dexc");
+      const res = ipcRenderer.sendSync("logout-dex");
       if (res instanceof Error) {
         throw res;
       } else if (typeof res === "string") {
@@ -184,17 +184,17 @@ export const logoutDexc = () =>
     }
   });
 
-export const DEXC_CREATEWALLET_ATTEMPT = "DEXC_CREATEWALLET_ATTEMPT";
-export const DEXC_CREATEWALLET_SUCCESS = "DEXC_CREATEWALLET_SUCCESS";
-export const DEXC_CREATEWALLET_FAILED = "DEXC_CREATEWALLET_FAILED";
+export const DEX_CREATEWALLET_ATTEMPT = "DEX_CREATEWALLET_ATTEMPT";
+export const DEX_CREATEWALLET_SUCCESS = "DEX_CREATEWALLET_SUCCESS";
+export const DEX_CREATEWALLET_FAILED = "DEX_CREATEWALLET_FAILED";
 
-export const createWalletDexc = (passphrase, appPassphrase, accountName) => (
+export const createWalletDex = (passphrase, appPassphrase, accountName) => (
   dispatch,
   getState
 ) => {
-  dispatch({ type: DEXC_CREATEWALLET_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_CREATEWALLET_FAILED, error: "Dexc isn't active" });
+  dispatch({ type: DEX_CREATEWALLET_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_CREATEWALLET_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
@@ -209,7 +209,7 @@ export const createWalletDexc = (passphrase, appPassphrase, accountName) => (
     const rpccert = rpcCreds.rpcCert;
     const assetID = 42;
     const res = ipcRenderer.sendSync(
-      "create-wallet-dexc",
+      "create-wallet-dex",
       assetID,
       passphrase,
       appPassphrase,
@@ -226,11 +226,11 @@ export const createWalletDexc = (passphrase, appPassphrase, accountName) => (
         throw res;
       }
     }
-    dispatch({ type: DEXC_CREATEWALLET_SUCCESS });
+    dispatch({ type: DEX_CREATEWALLET_SUCCESS });
     // Request current user information
-    dispatch(userDexc());
+    dispatch(userDex());
   } catch (error) {
-    dispatch({ type: DEXC_CREATEWALLET_FAILED, error });
+    dispatch({ type: DEX_CREATEWALLET_FAILED, error });
     return;
   }
 };
@@ -239,14 +239,14 @@ export const BTC_CREATEWALLET_ATTEMPT = "BTC_CREATEWALLET_ATTEMPT";
 export const BTC_CREATEWALLET_SUCCESS = "BTC_CREATEWALLET_SUCCESS";
 export const BTC_CREATEWALLET_FAILED = "BTC_CREATEWALLET_FAILED";
 
-export const btcCreateWalletDexc = (
+export const btcCreateWalletDex = (
   passphrase,
   appPassphrase,
   btcWalletName
 ) => (dispatch, getState) => {
   dispatch({ type: BTC_CREATEWALLET_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: BTC_CREATEWALLET_FAILED, error: "Dexc isn't active" });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: BTC_CREATEWALLET_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
@@ -262,7 +262,7 @@ export const btcCreateWalletDexc = (
       : btcConfig.rpcbind + ":" + btcConfig.rpcport;
     const assetID = 0;
     const res = ipcRenderer.sendSync(
-      "create-wallet-dexc",
+      "create-wallet-dex",
       assetID,
       passphrase,
       appPassphrase,
@@ -285,25 +285,25 @@ export const btcCreateWalletDexc = (
     const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
     walletConfig.set(configConstants.BTCWALLET_NAME, account);
     // Request current user information
-    dispatch(userDexc());
+    dispatch(userDex());
   } catch (error) {
     dispatch({ type: BTC_CREATEWALLET_FAILED, error });
     return;
   }
 };
 
-export const DEXC_USER_ATTEMPT = "DEXC_USER_ATTEMPT";
-export const DEXC_USER_SUCCESS = "DEXC_USER_SUCCESS";
-export const DEXC_USER_FAILED = "DEXC_USER_FAILED";
+export const DEX_USER_ATTEMPT = "DEX_USER_ATTEMPT";
+export const DEX_USER_SUCCESS = "DEX_USER_SUCCESS";
+export const DEX_USER_FAILED = "DEX_USER_FAILED";
 
-export const userDexc = () => (dispatch, getState) => {
-  dispatch({ type: DEXC_USER_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_USER_FAILED, error: "Dexc isn't active" });
+export const userDex = () => (dispatch, getState) => {
+  dispatch({ type: DEX_USER_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_USER_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("user-dexc");
+    const res = ipcRenderer.sendSync("user-dex");
     if (res instanceof Error) {
       throw res;
     } else if (typeof res === "string") {
@@ -312,25 +312,25 @@ export const userDexc = () => (dispatch, getState) => {
       }
     }
     const resJson = JSON.parse(res);
-    dispatch({ type: DEXC_USER_SUCCESS, user: resJson });
+    dispatch({ type: DEX_USER_SUCCESS, user: resJson });
   } catch (error) {
-    dispatch({ type: DEXC_USER_FAILED, error });
+    dispatch({ type: DEX_USER_FAILED, error });
     return;
   }
 };
 
-export const DEXC_GETFEE_ATTEMPT = "DEXC_GETFEE_ATTEMPT";
-export const DEXC_GETFEE_SUCCESS = "DEXC_GETFEE_SUCCESS";
-export const DEXC_GETFEE_FAILED = "DEXC_GETFEE_FAILED";
+export const DEX_GETFEE_ATTEMPT = "DEX_GETFEE_ATTEMPT";
+export const DEX_GETFEE_SUCCESS = "DEX_GETFEE_SUCCESS";
+export const DEX_GETFEE_FAILED = "DEX_GETFEE_FAILED";
 
-export const getFeeDexc = (addr) => (dispatch, getState) => {
-  dispatch({ type: DEXC_GETFEE_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_GETFEE_FAILED, error: "Dexc isn't active" });
+export const getFeeDex = (addr) => (dispatch, getState) => {
+  dispatch({ type: DEX_GETFEE_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_GETFEE_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("get-fee-dexc", addr);
+    const res = ipcRenderer.sendSync("get-fee-dex", addr);
     if (res instanceof Error) {
       throw res;
     } else if (typeof res === "string") {
@@ -338,28 +338,28 @@ export const getFeeDexc = (addr) => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEXC_GETFEE_SUCCESS, fee: res, addr });
+    dispatch({ type: DEX_GETFEE_SUCCESS, fee: res, addr });
   } catch (error) {
-    dispatch({ type: DEXC_GETFEE_FAILED, error });
+    dispatch({ type: DEX_GETFEE_FAILED, error });
     return;
   }
 };
 
-export const DEXC_REGISTER_ATTEMPT = "DEXC_REGISTER_ATTEMPT";
-export const DEXC_REGISTER_SUCCESS = "DEXC_REGISTER_SUCCESS";
-export const DEXC_REGISTER_FAILED = "DEXC_REGISTER_FAILED";
+export const DEX_REGISTER_ATTEMPT = "DEX_REGISTER_ATTEMPT";
+export const DEX_REGISTER_SUCCESS = "DEX_REGISTER_SUCCESS";
+export const DEX_REGISTER_FAILED = "DEX_REGISTER_FAILED";
 
-export const registerDexc = (appPass) => (dispatch, getState) => {
-  dispatch({ type: DEXC_REGISTER_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_REGISTER_FAILED, error: "Dexc isn't active" });
+export const registerDex = (appPass) => (dispatch, getState) => {
+  dispatch({ type: DEX_REGISTER_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_REGISTER_FAILED, error: "Dex isn't active" });
     return;
   }
   const {
     dex: { fee, addr }
   } = getState();
   try {
-    let res = ipcRenderer.sendSync("register-dexc", appPass, addr, fee);
+    let res = ipcRenderer.sendSync("register-dex", appPass, addr, fee);
     if (res instanceof Error) {
       throw res;
     } else if (typeof res === "string") {
@@ -373,26 +373,26 @@ export const registerDexc = (appPass) => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEXC_REGISTER_SUCCESS });
+    dispatch({ type: DEX_REGISTER_SUCCESS });
     // Request current user information
-    dispatch(userDexc());
+    dispatch(userDex());
   } catch (error) {
-    dispatch({ type: DEXC_REGISTER_FAILED, error });
+    dispatch({ type: DEX_REGISTER_FAILED, error });
     return;
   }
 };
 
-export const DEXC_LAUNCH_WINDOW_ATTEMPT = "DEXC_LAUNCH_WINDOW_ATTEMPT";
-export const DEXC_LAUNCH_WINDOW_SUCCESS = "DEXC_LAUNCH_WINDOW_SUCCESS";
-export const DEXC_LAUNCH_WINDOW_FAILED = "DEXC_LAUNCH_WINDOW_FAILED";
+export const DEX_LAUNCH_WINDOW_ATTEMPT = "DEX_LAUNCH_WINDOW_ATTEMPT";
+export const DEX_LAUNCH_WINDOW_SUCCESS = "DEX_LAUNCH_WINDOW_SUCCESS";
+export const DEX_LAUNCH_WINDOW_FAILED = "DEX_LAUNCH_WINDOW_FAILED";
 
-export const launchDexcWindow = () => (dispatch, getState) => {
+export const launchDexWindow = () => (dispatch, getState) => {
   const {
     dex: { dexServerAddress }
   } = getState();
-  dispatch({ type: DEXC_LAUNCH_WINDOW_ATTEMPT });
-  if (!sel.dexcActive(getState())) {
-    dispatch({ type: DEXC_LAUNCH_WINDOW_FAILED, error: "Dexc isn't active" });
+  dispatch({ type: DEX_LAUNCH_WINDOW_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_LAUNCH_WINDOW_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
@@ -405,11 +405,11 @@ export const launchDexcWindow = () => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEXC_LAUNCH_WINDOW_SUCCESS });
+    dispatch({ type: DEX_LAUNCH_WINDOW_SUCCESS });
     // Request current user information
-    dispatch(userDexc());
+    dispatch(userDex());
   } catch (error) {
-    dispatch({ type: DEXC_LAUNCH_WINDOW_FAILED, error });
+    dispatch({ type: DEX_LAUNCH_WINDOW_FAILED, error });
     return;
   }
 };

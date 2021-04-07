@@ -10,11 +10,11 @@ import style from "./DexPage.module.css";
 
 export const RegisterPageContent = () => {
   const {
-    onRegisterDexc,
-    registerDexcAttempt,
+    onRegisterDex,
+    registerDexAttempt,
     onGetFee,
-    dexcFee,
-    dexcAddr,
+    dexFee,
+    dexAddr,
     defaultServerAddress,
     dexRegisterError
   } = useDex();
@@ -52,21 +52,21 @@ export const RegisterPageContent = () => {
     }
   }, [isValid, addr]);
 
-  if (dexcFee && dexcAddr) {
+  if (dexFee && dexAddr) {
     return (
       <div>
         <T
           id="dex.payRegistration.Fee"
           m="Please enter your DEX app passphrase to pay the following fee:"
         />
-        <Balance amount={dexcFee} />
+        <Balance amount={dexFee} />
         <T
           id="dex.payRegistration.Address"
           m="DEX Server registering to:"
         />{" "}
-        {dexcAddr}
+        {dexAddr}
         <PassphraseModalButton
-          disabled={registerDexcAttempt}
+          disabled={registerDexAttempt}
           modalTitle={<T id="dex.payDexFeeModalTitle" m="Pay DEX Fee" />}
           modalDescription={
             <T
@@ -77,8 +77,8 @@ export const RegisterPageContent = () => {
           passphraseLabel={
             <T id="dex.payDexFeeAppPassphrase" m="DEX App Passphrase" />
           }
-          loading={registerDexcAttempt}
-          onSubmit={onRegisterDexc}
+          loading={registerDexAttempt}
+          onSubmit={onRegisterDex}
           buttonLabel={<T id="dex.payDexFeeButton" m="Pay DEX Fee" />}
         />
         {dexRegisterError && (
@@ -97,8 +97,8 @@ export const RegisterPageContent = () => {
         />
         {error && <div className="error">{error}</div>}
         <KeyBlueButton
-          disabled={!isValid || registerDexcAttempt}
-          loading={registerDexcAttempt}
+          disabled={!isValid || registerDexAttempt}
+          loading={registerDexAttempt}
           onClick={onGetFeeDex}>
           <T id="dex.getFeeButton" m="Get Fee to Pay" />
         </KeyBlueButton>

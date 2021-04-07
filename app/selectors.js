@@ -1773,7 +1773,7 @@ export const getHasTicketFeeError = createSelector(
   }
 );
 export const dexOrdersOpen = get(["dex", "openOrder"]);
-export const loggedInDexc = bool(get(["dex", "loggedIn"]));
+export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
 export const getCanClose = not(or(getRunningIndicator, getHasTicketFeeError));
 // end of selectors for closing decrediton.
@@ -1809,28 +1809,28 @@ export const lnTowersList = get(["ln", "towersList"]);
 
 // start of dex selectors
 
-export const dexcEnabled = bool(get(["walletLoader", "dexEnabled"]));
+export const dexEnabled = bool(get(["walletLoader", "dexEnabled"]));
 export const enableDexAttempt = bool(get(["dex", "enableDexAttempt"]));
-export const dexcActive = bool(get(["dex", "active"]));
-export const dexcInit = bool(get(["dex", "dexcInit"]));
-export const initDexcAttempt = bool(get(["dex", "initAttempt"]));
-export const checkInitDexcAttempt = bool(get(["dex", "dexcCheckInitAttempt"]));
-export const registerDexcAttempt = bool(get(["dex", "registerAttempt"]));
-export const createWalletDexcAttempt = bool(
+export const dexActive = bool(get(["dex", "active"]));
+export const dexInit = bool(get(["dex", "dexInit"]));
+export const initDexAttempt = bool(get(["dex", "initAttempt"]));
+export const checkInitDexAttempt = bool(get(["dex", "dexCheckInitAttempt"]));
+export const registerDexAttempt = bool(get(["dex", "registerAttempt"]));
+export const createWalletDexAttempt = bool(
   get(["dex", "createWalletAttempt"])
 );
-export const loginDexcAttempt = bool(get(["dex", "loginAttempt"]));
-export const dexcUser = get(["dex", "user"]);
+export const loginDexAttempt = bool(get(["dex", "loginAttempt"]));
+export const dexUser = get(["dex", "user"]);
 
-export const dexcConnected = compose(
+export const dexConnected = compose(
   (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
-  dexcUser
+  dexUser
 );
 
 export const dexRegistered = compose(
   // XXX check if any of the exchanges that come back from users request are registered
   (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
-  dexcUser
+  dexUser
 );
 
 export const dexDCRWalletRunning = compose(
@@ -1841,7 +1841,7 @@ export const dexDCRWalletRunning = compose(
     user.assets["42"].wallet &&
     user.assets["42"].wallet.running &&
     user.assets["42"].wallet.synced,
-  dexcUser
+  dexUser
 );
 
 export const dexBTCWalletRunning = compose(
@@ -1852,11 +1852,11 @@ export const dexBTCWalletRunning = compose(
     user.assets["0"].wallet &&
     user.assets["0"].wallet.running &&
     user.assets["0"].wallet.synced,
-  dexcUser
+  dexUser
 );
 
-export const dexcAddr = get(["dex", "addr"]);
-export const dexcFee = get(["dex", "fee"]);
+export const dexAddr = get(["dex", "addr"]);
+export const dexFee = get(["dex", "fee"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
 export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
 

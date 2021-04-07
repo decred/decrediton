@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 
 export const InitPageContent = () => {
-  const { onInitDexc, initDexcAttempt } = useDex();
+  const { onInitDex, initDexAttempt } = useDex();
 
   return (
     <div>
@@ -14,10 +14,10 @@ export const InitPageContent = () => {
         m="Please set a new passphrase for the DEX.  You may use the same passphrase as you use for your wallet, or chose a new one.  ** Note ** If you lose the DEX passphrase, you will be forced to create a new DEX account and pay your exchange fees again."
       />
       <SetNewPassphraseModalButton
-        disabled={initDexcAttempt}
+        disabled={initDexAttempt}
         modalTitle={<T id="dex.initPassphrase" m="Set Dex Passphrase" />}
-        loading={initDexcAttempt}
-        onSubmit={onInitDexc}
+        loading={initDexAttempt}
+        onSubmit={onInitDex}
         buttonLabel={<T id="dex.initPassphraseButton" m="Set Dex Passphrase" />}
       />
     </div>

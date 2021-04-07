@@ -1,6 +1,5 @@
 import Modal from "./SetNewPassphraseModalContent";
-import { useState, useCallback } from "react";
-import { useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 const SetNewPassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   const [confirmPrivPass, setConfirmPrivPass] = useState(null);

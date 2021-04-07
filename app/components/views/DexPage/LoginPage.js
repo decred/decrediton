@@ -5,14 +5,14 @@ import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 
 export const LoginPageContent = () => {
-  const { onLoginDexc, loginAttempt } = useDex();
+  const { onLoginDex, loginAttempt } = useDex();
 
   return (
     <PassphraseModalButton
       disabled={loginAttempt}
       modalTitle={<T id="dex.loginPassphrase" m="Enter DEX Passphrase" />}
       loading={loginAttempt}
-      onSubmit={onLoginDexc}
+      onSubmit={onLoginDex}
       buttonLabel={<T id="dex.loginPassphraseButton" m="Login" />}
     />
   );

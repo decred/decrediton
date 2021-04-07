@@ -18,20 +18,20 @@ import {
   launchDCRLnd,
   GetDcrlndPID,
   GetDcrlndCreds,
-  launchDexc,
-  initCheckDexc,
-  initDexcCall,
-  createWalletDexcCall,
-  getFeeDexcCall,
-  registerDexcCall,
-  userDexcCall,
-  loginDexcCall,
-  logoutDexcCall,
-  GetDexcPID,
+  launchDex,
+  initCheckDex,
+  initDexCall,
+  createWalletDexCall,
+  getFeeDexCall,
+  registerDexCall,
+  userDexCall,
+  loginDexCall,
+  logoutDexCall,
+  GetDexPID,
   closeDcrlnd,
-  closeDexc,
+  closeDex,
   setDcrdRpcCredentials,
-  GetDexcCreds
+  GetDexCreds
 } from "./launch";
 import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
@@ -231,86 +231,86 @@ export const startDcrlnd = async (
   }
 };
 
-export const startDexc = async (walletPath, testnet) => {
-  if (GetDexcPID()) {
+export const startDex = async (walletPath, testnet) => {
+  if (GetDexPID()) {
     logger.log(
       "info",
-      "Skipping restart of dexc as it is already running " + GetDexcPID()
+      "Skipping restart of DEX as it is already running " + GetDexPID()
     );
-    const creds = GetDexcCreds();
+    const creds = GetDexCreds();
     return { wasRunning: true, ...creds };
   }
 
   try {
-    const started = await launchDexc(walletPath, testnet);
+    const started = await launchDex(walletPath, testnet);
     return started;
   } catch (e) {
-    logger.log("error", "error launching dexc: " + e);
+    logger.log("error", "error launching dex: " + e);
     return e;
   }
 };
 
-export const checkInitDexc = async () => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping check of init since dexc is not runnning");
+export const checkInitDex = async () => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping check of init since dex is not runnning");
     return false;
   }
 
   try {
-    const init = await initCheckDexc();
+    const init = await initCheckDex();
     return init;
   } catch (e) {
-    logger.log("error", "error checking init dexc: " + e);
+    logger.log("error", "error checking init dex: " + e);
     return e;
   }
 };
 
-export const initDexc = async (passphrase) => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping init since dexc is not runnning");
+export const initDex = async (passphrase) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping init since dex is not runnning");
     return false;
   }
 
   try {
-    const init = await initDexcCall(passphrase);
+    const init = await initDexCall(passphrase);
     return init;
   } catch (e) {
-    logger.log("error", "error init dexc: " + e);
+    logger.log("error", "error init dex: " + e);
     return e;
   }
 };
 
-export const loginDexc = async (passphrase) => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping login since dexc is not runnning");
+export const loginDex = async (passphrase) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping login since dex is not runnning");
     return false;
   }
 
   try {
-    const login = await loginDexcCall(passphrase);
+    const login = await loginDexCall(passphrase);
     return login;
   } catch (e) {
-    logger.log("error", "error login dexc: " + e);
+    logger.log("error", "error login dex: " + e);
     return e;
   }
 };
 
-export const logoutDexc = async () => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping login since dexc is not runnning");
+export const logoutDex = async () => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping login since dex is not runnning");
     return false;
   }
 
   try {
-    const login = await logoutDexcCall();
+    const login = await logoutDexCall();
     return login;
   } catch (e) {
-    logger.log("error", "error logout dexc: " + e);
+    logger.log("error", "error logout dex: " + e);
     return e;
   }
 };
 
-export const createWalletDexc = async (
+export const createWalletDex = async (
   assetID,
   passphrase,
   appPassphrase,
@@ -320,13 +320,13 @@ export const createWalletDexc = async (
   rpclisten,
   rpccert
 ) => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping create wallet since dexc is not runnning");
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping create wallet since dex is not runnning");
     return false;
   }
 
   try {
-    const createWallet = await createWalletDexcCall(
+    const createWallet = await createWalletDexCall(
       assetID,
       passphrase,
       appPassphrase,
@@ -338,52 +338,52 @@ export const createWalletDexc = async (
     );
     return createWallet;
   } catch (e) {
-    logger.log("error", "error create wallet dexc: " + e);
+    logger.log("error", "error create wallet dex: " + e);
     return e;
   }
 };
 
-export const getFeeDexc = async (addr) => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping getfee since dexc is not runnning");
+export const getFeeDex = async (addr) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping getfee since dex is not runnning");
     return false;
   }
 
   try {
-    const getFee = await getFeeDexcCall(addr);
+    const getFee = await getFeeDexCall(addr);
     return getFee;
   } catch (e) {
-    logger.log("error", "error get fee dexc: " + e);
+    logger.log("error", "error get fee dex: " + e);
     return e;
   }
 };
 
-export const registerDexc = async (appPass, addr, fee) => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping register since dexc is not runnning");
+export const registerDex = async (appPass, addr, fee) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping register since dex is not runnning");
     return false;
   }
 
   try {
-    const register = await registerDexcCall(appPass, addr, fee);
+    const register = await registerDexCall(appPass, addr, fee);
     return register;
   } catch (e) {
-    logger.log("error", "error register dexc: " + e);
+    logger.log("error", "error register dex: " + e);
     return e;
   }
 };
 
-export const userDexc = async () => {
-  if (!GetDexcPID()) {
-    logger.log("info", "Skipping user request since dexc is not runnning");
+export const userDex = async () => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping user request since dex is not runnning");
     return false;
   }
 
   try {
-    const user = await userDexcCall();
+    const user = await userDexCall();
     return user;
   } catch (e) {
-    logger.log("error", "error user dexc: " + e);
+    logger.log("error", "error user dex: " + e);
     return e;
   }
 };
@@ -400,8 +400,8 @@ export const stopDcrlnd = () => {
   return closeDcrlnd();
 };
 
-export const stopDexc = () => {
-  return closeDexc();
+export const stopDex = () => {
+  return closeDex();
 };
 
 export const removeDcrlnd = (walletName, testnet) => {

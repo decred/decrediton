@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 
 export const EnablePageContent = () => {
-  const { onEnableDexc, enableDexAttempt } = useDex();
+  const { onEnableDex, enableDexAttempt } = useDex();
 
   return (
     <div>
@@ -17,7 +17,7 @@ export const EnablePageContent = () => {
         modalTitle={
           <T id="dex.resetWalletRequired" m="Wallet reset required" />
         }
-        buttonLabel={<T id="dex.enableButton" m="Enable DEXC" />}
+        buttonLabel={<T id="dex.enableButton" m="Enable DEX" />}
         modalContent={
           <T
             id="dex.resetWalletRequiredContent"
@@ -28,7 +28,7 @@ export const EnablePageContent = () => {
         loading={enableDexAttempt}
         size="large"
         block={false}
-        onSubmit={onEnableDexc}
+        onSubmit={onEnableDex}
       />
     </div>
   );

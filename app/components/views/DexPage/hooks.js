@@ -5,21 +5,21 @@ import * as da from "actions/DexActions";
 
 export const useDex = () => {
   const dispatch = useDispatch();
-  const dexcEnabled = useSelector(sel.dexcEnabled);
-  const dexcActive = useSelector(sel.dexcActive);
-  const dexcInit = useSelector(sel.dexcInit);
-  const initDexcAttempt = useSelector(sel.initDexcAttempt);
-  const registerDexcAttempt = useSelector(sel.registerDexcAttempt);
-  const createWalletDexcAttempt = useSelector(sel.createWalletDexcAttempt);
-  const loginDexcAttempt = useSelector(sel.loginDexcAttempt);
-  const loggedIn = useSelector(sel.loggedInDexc);
-  const dexcAddr = useSelector(sel.dexcAddr);
-  const dexcFee = useSelector(sel.dexcFee);
+  const dexEnabled = useSelector(sel.dexEnabled);
+  const dexActive = useSelector(sel.dexActive);
+  const dexInit = useSelector(sel.dexInit);
+  const initDexAttempt = useSelector(sel.initDexAttempt);
+  const registerDexAttempt = useSelector(sel.registerDexAttempt);
+  const createWalletDexAttempt = useSelector(sel.createWalletDexAttempt);
+  const loginDexAttempt = useSelector(sel.loginDexAttempt);
+  const loggedIn = useSelector(sel.loggedInDex);
+  const dexAddr = useSelector(sel.dexAddr);
+  const dexFee = useSelector(sel.dexFee);
   const dexRegistered = useSelector(sel.dexRegistered);
-  const dexConnected = useSelector(sel.dexcConnected);
+  const dexConnected = useSelector(sel.dexConnected);
   const dexDCRWalletRunning = useSelector(sel.dexDCRWalletRunning);
   const dexBTCWalletRunning = useSelector(sel.dexBTCWalletRunning);
-  const user = useSelector(sel.dexcUser);
+  const user = useSelector(sel.dexUser);
   const enableDexAttempt = useSelector(sel.enableDexAttempt);
   const dexAccount = useSelector(sel.dexAccount);
   const dexAccountAttempt = useSelector(sel.dexAccountAttempt);
@@ -38,34 +38,34 @@ export const useDex = () => {
   const btcConfigUpdateNeeded = useSelector(sel.btcConfigUpdateNeeded);
   const btcWalletName = useSelector(sel.btcWalletName);
 
-  const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexcWindow()), [
+  const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
     dispatch
   ]);
 
-  const onInitDexc = useCallback(
-    (passphrase) => dispatch(da.initDexc(passphrase)),
+  const onInitDex = useCallback(
+    (passphrase) => dispatch(da.initDex(passphrase)),
     [dispatch]
   );
 
-  const onRegisterDexc = useCallback(
-    (passphrase) => dispatch(da.registerDexc(passphrase)),
+  const onRegisterDex = useCallback(
+    (passphrase) => dispatch(da.registerDex(passphrase)),
     [dispatch]
   );
 
-  const onCreateWalletDexc = useCallback(
+  const onCreateWalletDex = useCallback(
     (passphrase, appPassphrase, account) =>
-      dispatch(da.createWalletDexc(passphrase, appPassphrase, account)),
+      dispatch(da.createWalletDex(passphrase, appPassphrase, account)),
     [dispatch]
   );
 
-  const onBTCCreateWalletDexc = useCallback(
+  const onBTCCreateWalletDex = useCallback(
     (passphrase, appPassphrase, walletname) =>
-      dispatch(da.btcCreateWalletDexc(passphrase, appPassphrase, walletname)),
+      dispatch(da.btcCreateWalletDex(passphrase, appPassphrase, walletname)),
     [dispatch]
   );
 
-  const onLoginDexc = useCallback(
-    (passphrase) => dispatch(da.loginDexc(passphrase)),
+  const onLoginDex = useCallback(
+    (passphrase) => dispatch(da.loginDex(passphrase)),
     [dispatch]
   );
 
@@ -74,9 +74,9 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onEnableDexc = useCallback(() => dispatch(da.enableDexc()), [dispatch]);
+  const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
 
-  const onGetFee = useCallback((address) => dispatch(da.getFeeDexc(address)), [
+  const onGetFee = useCallback((address) => dispatch(da.getFeeDex(address)), [
     dispatch
   ]);
 
@@ -89,30 +89,30 @@ export const useDex = () => {
   ]);
 
   return {
-    dexcEnabled,
-    dexcActive,
-    dexcInit,
-    onInitDexc,
-    initDexcAttempt,
-    onRegisterDexc,
-    registerDexcAttempt,
-    onCreateWalletDexc,
-    createWalletDexcAttempt,
-    onLoginDexc,
-    loginDexcAttempt,
+    dexEnabled,
+    dexActive,
+    dexInit,
+    onInitDex,
+    initDexAttempt,
+    onRegisterDex,
+    registerDexAttempt,
+    onCreateWalletDex,
+    createWalletDexAttempt,
+    onLoginDex,
+    loginDexAttempt,
     loggedIn,
-    dexcAddr,
-    dexcFee,
+    dexAddr,
+    dexFee,
     dexRegistered,
     dexConnected,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
-    onEnableDexc,
+    onEnableDex,
     enableDexAttempt,
     onGetFee,
     user,
     onLaunchDexWindow,
-    onBTCCreateWalletDexc,
+    onBTCCreateWalletDex,
     onCreateDexAccount,
     dexAccount,
     dexAccountAttempt,

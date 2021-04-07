@@ -1,40 +1,40 @@
 import {
-  DEXC_ENABLE_ATTEMPT,
-  DEXC_ENABLE_FAILED,
-  DEXC_ENABLE_SUCCESS,
-  DEXC_STARTUP_ATTEMPT,
-  DEXC_STARTUP_FAILED,
-  DEXC_STARTUP_SUCCESS,
-  DEXC_INIT_ATTEMPT,
-  DEXC_INIT_SUCCESS,
-  DEXC_INIT_FAILED,
-  DEXC_LOGIN_ATTEMPT,
-  DEXC_LOGIN_SUCCESS,
-  DEXC_LOGIN_FAILED,
-  DEXC_REGISTER_ATTEMPT,
-  DEXC_REGISTER_SUCCESS,
-  DEXC_REGISTER_FAILED,
-  DEXC_LAUNCH_WINDOW_ATTEMPT,
-  DEXC_LAUNCH_WINDOW_SUCCESS,
-  DEXC_LAUNCH_WINDOW_FAILED,
-  DEXC_CHECKINIT_ATTEMPT,
-  DEXC_CHECKINIT_FAILED,
-  DEXC_CHECKINIT_SUCCESS,
-  DEXC_USER_ATTEMPT,
-  DEXC_USER_FAILED,
-  DEXC_USER_SUCCESS,
-  DEXC_CREATEWALLET_ATTEMPT,
-  DEXC_CREATEWALLET_FAILED,
-  DEXC_CREATEWALLET_SUCCESS,
-  DEXC_GETFEE_ATTEMPT,
-  DEXC_GETFEE_FAILED,
-  DEXC_GETFEE_SUCCESS,
+  DEX_ENABLE_ATTEMPT,
+  DEX_ENABLE_FAILED,
+  DEX_ENABLE_SUCCESS,
+  DEX_STARTUP_ATTEMPT,
+  DEX_STARTUP_FAILED,
+  DEX_STARTUP_SUCCESS,
+  DEX_INIT_ATTEMPT,
+  DEX_INIT_SUCCESS,
+  DEX_INIT_FAILED,
+  DEX_LOGIN_ATTEMPT,
+  DEX_LOGIN_SUCCESS,
+  DEX_LOGIN_FAILED,
+  DEX_REGISTER_ATTEMPT,
+  DEX_REGISTER_SUCCESS,
+  DEX_REGISTER_FAILED,
+  DEX_LAUNCH_WINDOW_ATTEMPT,
+  DEX_LAUNCH_WINDOW_SUCCESS,
+  DEX_LAUNCH_WINDOW_FAILED,
+  DEX_CHECKINIT_ATTEMPT,
+  DEX_CHECKINIT_FAILED,
+  DEX_CHECKINIT_SUCCESS,
+  DEX_USER_ATTEMPT,
+  DEX_USER_FAILED,
+  DEX_USER_SUCCESS,
+  DEX_CREATEWALLET_ATTEMPT,
+  DEX_CREATEWALLET_FAILED,
+  DEX_CREATEWALLET_SUCCESS,
+  DEX_GETFEE_ATTEMPT,
+  DEX_GETFEE_FAILED,
+  DEX_GETFEE_SUCCESS,
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
-  DEXC_LOGOUT_ATTEMPT,
-  DEXC_LOGOUT_SUCCESS,
-  DEXC_LOGOUT_FAILED,
+  DEX_LOGOUT_ATTEMPT,
+  DEX_LOGOUT_SUCCESS,
+  DEX_LOGOUT_FAILED,
   CHECK_BTC_CONFIG_ATTEMPT,
   CHECK_BTC_CONFIG_FAILED,
   CHECK_BTC_CONFIG_SUCCESS,
@@ -47,41 +47,41 @@ import {
 
 export default function ln(state = {}, action) {
   switch (action.type) {
-    case DEXC_ENABLE_ATTEMPT:
+    case DEX_ENABLE_ATTEMPT:
       return {
         ...state,
         enableDexAttempt: true,
         enabledDex: false,
         enabledError: null
       };
-    case DEXC_ENABLE_FAILED:
+    case DEX_ENABLE_FAILED:
       return {
         ...state,
         enableDexAttempt: false,
         enabledDex: false,
         enabledError: action.error
       };
-    case DEXC_ENABLE_SUCCESS:
+    case DEX_ENABLE_SUCCESS:
       return {
         ...state,
         enableDexAttempt: false,
         enabledDex: true,
         enabledError: null
       };
-    case DEXC_STARTUP_ATTEMPT:
+    case DEX_STARTUP_ATTEMPT:
       return {
         ...state,
         startAttempt: true,
         active: false,
         client: null
       };
-    case DEXC_STARTUP_FAILED:
+    case DEX_STARTUP_FAILED:
       return {
         ...state,
         startAttempt: false,
         startupStage: null
       };
-    case DEXC_STARTUP_SUCCESS:
+    case DEX_STARTUP_SUCCESS:
       return {
         ...state,
         startAttempt: false,
@@ -90,148 +90,148 @@ export default function ln(state = {}, action) {
         startupStage: null,
         dexServerAddress: action.serverAddress
       };
-    case DEXC_LOGIN_ATTEMPT:
+    case DEX_LOGIN_ATTEMPT:
       return {
         ...state,
         loginAttempt: true,
         loggedIn: false,
         loginError: null
       };
-    case DEXC_LOGIN_FAILED:
+    case DEX_LOGIN_FAILED:
       return {
         ...state,
         loginAttempt: false,
         loggedIn: false,
         loginError: action.error
       };
-    case DEXC_LOGIN_SUCCESS:
+    case DEX_LOGIN_SUCCESS:
       return {
         ...state,
         loginAttempt: false,
         loggedIn: true,
         loginError: null
       };
-    case DEXC_REGISTER_ATTEMPT:
+    case DEX_REGISTER_ATTEMPT:
       return {
         ...state,
         registerAttempt: true,
         registered: false,
         registerError: null
       };
-    case DEXC_REGISTER_FAILED:
+    case DEX_REGISTER_FAILED:
       return {
         ...state,
         registerAttempt: false,
         registered: false,
         registerError: action.error
       };
-    case DEXC_REGISTER_SUCCESS:
+    case DEX_REGISTER_SUCCESS:
       return {
         ...state,
         registerAttempt: false,
         registered: true,
         registerError: null
       };
-    case DEXC_CREATEWALLET_ATTEMPT:
+    case DEX_CREATEWALLET_ATTEMPT:
       return {
         ...state,
         createWalletAttempt: true,
         createWalletError: null
       };
-    case DEXC_CREATEWALLET_FAILED:
+    case DEX_CREATEWALLET_FAILED:
       return {
         ...state,
         createWalletAttempt: false,
         createWalletError: action.error
       };
-    case DEXC_CREATEWALLET_SUCCESS:
+    case DEX_CREATEWALLET_SUCCESS:
       return {
         ...state,
         createWalletAttempt: false,
         createWalletError: null
       };
-    case DEXC_USER_ATTEMPT:
+    case DEX_USER_ATTEMPT:
       return {
         ...state,
         userAttempt: true,
         user: null,
         userError: null
       };
-    case DEXC_USER_FAILED:
+    case DEX_USER_FAILED:
       return {
         ...state,
         userAttempt: false,
         userError: action.error
       };
-    case DEXC_USER_SUCCESS:
+    case DEX_USER_SUCCESS:
       return {
         ...state,
         userAttempt: false,
         user: action.user,
         userError: null
       };
-    case DEXC_INIT_ATTEMPT:
+    case DEX_INIT_ATTEMPT:
       return {
         ...state,
         initAttempt: true,
         registerError: null
       };
-    case DEXC_INIT_FAILED:
+    case DEX_INIT_FAILED:
       return {
         ...state,
         initAttempt: false,
         initError: action.error
       };
-    case DEXC_INIT_SUCCESS:
+    case DEX_INIT_SUCCESS:
       return {
         ...state,
         initAttempt: false,
-        dexcInit: true,
+        dexInit: true,
         loggedIn: true,
         registerError: null
       };
-    case DEXC_LAUNCH_WINDOW_ATTEMPT:
+    case DEX_LAUNCH_WINDOW_ATTEMPT:
       return {
         ...state,
         launchWindowAttempt: true,
         launchWindow: false,
         launchWindowError: null
       };
-    case DEXC_LAUNCH_WINDOW_FAILED:
+    case DEX_LAUNCH_WINDOW_FAILED:
       return {
         ...state,
         launchWindowAttempt: false,
         launchWindow: false,
         launchWindowError: action.error
       };
-    case DEXC_LAUNCH_WINDOW_SUCCESS:
+    case DEX_LAUNCH_WINDOW_SUCCESS:
       return {
         ...state,
         launchWindowAttempt: false,
         launchWindow: true,
         launchWindowError: null
       };
-    case DEXC_CHECKINIT_ATTEMPT:
+    case DEX_CHECKINIT_ATTEMPT:
       return {
         ...state,
-        dexcCheckInitAttempt: true,
-        dexcInitError: null
+        dexCheckInitAttempt: true,
+        dexInitError: null
       };
-    case DEXC_CHECKINIT_FAILED:
+    case DEX_CHECKINIT_FAILED:
       return {
         ...state,
-        dexcCheckInitAttempt: false,
-        dexcInit: false,
-        dexcInitError: action.error
+        dexCheckInitAttempt: false,
+        dexInit: false,
+        dexInitError: action.error
       };
-    case DEXC_CHECKINIT_SUCCESS:
+    case DEX_CHECKINIT_SUCCESS:
       return {
         ...state,
-        dexcCheckInitAttempt: false,
-        dexcInit: action.res,
-        dexcInitError: null
+        dexCheckInitAttempt: false,
+        dexInit: action.res,
+        dexInitError: null
       };
-    case DEXC_GETFEE_ATTEMPT:
+    case DEX_GETFEE_ATTEMPT:
       return {
         ...state,
         getFeeAttempt: true,
@@ -239,7 +239,7 @@ export default function ln(state = {}, action) {
         addr: null,
         getFeeError: null
       };
-    case DEXC_GETFEE_FAILED:
+    case DEX_GETFEE_FAILED:
       return {
         ...state,
         getFeeAttempt: false,
@@ -247,7 +247,7 @@ export default function ln(state = {}, action) {
         addr: null,
         getFeeError: action.error
       };
-    case DEXC_GETFEE_SUCCESS:
+    case DEX_GETFEE_SUCCESS:
       return {
         ...state,
         getFeeAttempt: false,
@@ -275,20 +275,20 @@ export default function ln(state = {}, action) {
         dexAccountError: null,
         dexAccount: action.dexAccount
       };
-    case DEXC_LOGOUT_ATTEMPT:
+    case DEX_LOGOUT_ATTEMPT:
       return {
         ...state,
         logoutAttempt: true,
         logoutError: null
       };
-    case DEXC_LOGOUT_SUCCESS:
+    case DEX_LOGOUT_SUCCESS:
       return {
         ...state,
         logoutAttempt: false,
         loggedIn: false,
         logoutError: null
       };
-    case DEXC_LOGOUT_FAILED:
+    case DEX_LOGOUT_FAILED:
       return {
         ...state,
         logoutAttempt: false,

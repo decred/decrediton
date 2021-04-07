@@ -19,20 +19,20 @@ import { FormattedMessage as T } from "react-intl";
 const DexPage = () => {
   let Page, Header;
   const {
-    dexcActive,
-    dexcInit,
+    dexActive,
+    dexInit,
     loggedIn,
     dexRegistered,
     dexDCRWalletRunning,
-    dexcEnabled,
+    dexEnabled,
     dexBTCWalletRunning,
     dexAccount
   } = useDex();
-  if (!dexcEnabled) {
+  if (!dexEnabled) {
     Page = <EnablePageContent />;
     Header = <EnablePageHeader />;
-  } else if (dexcActive) {
-    if (dexcInit) {
+  } else if (dexActive) {
+    if (dexInit) {
       if (!loggedIn) {
         Page = <LoginPageContent />;
         Header = <LoginPageHeader />;
@@ -54,7 +54,7 @@ const DexPage = () => {
       Header = <InitPageHeader />;
     }
   } else {
-    Page = <div>ERROR! DEXC NOT RUNNING</div>;
+    Page = <div>ERROR! DEX NOT RUNNING</div>;
     Header = <ErrorHeader />;
   }
   return <StandalonePage header={Header}>{Page}</StandalonePage>;
@@ -62,7 +62,7 @@ const DexPage = () => {
 
 const ErrorHeader = () => (
   <StandaloneHeader
-    title={<T id="dex.error.title" m="Dexc Error" />}
+    title={<T id="dex.error.title" m="DEX Error" />}
     description={<T id="dex.error.description" m={"Dex not running"} />}
     iconType={DEX_ICON}
   />

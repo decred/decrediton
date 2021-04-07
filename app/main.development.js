@@ -67,16 +67,16 @@ import {
   stopDcrlnd,
   removeDcrlnd,
   lnScbInfo,
-  startDexc,
-  stopDexc,
-  checkInitDexc,
-  initDexc,
-  createWalletDexc,
-  userDexc,
-  loginDexc,
-  logoutDexc,
-  getFeeDexc,
-  registerDexc
+  startDex,
+  stopDex,
+  checkInitDex,
+  initDex,
+  createWalletDex,
+  userDex,
+  loginDex,
+  logoutDex,
+  getFeeDex,
+  registerDex
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -385,9 +385,9 @@ ipcMain.on("stop-dcrlnd", async (event) => {
   event.returnValue = await stopDcrlnd();
 });
 
-ipcMain.on("check-init-dexc", async (event) => {
+ipcMain.on("check-init-dex", async (event) => {
   try {
-    event.returnValue = await checkInitDexc();
+    event.returnValue = await checkInitDex();
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -397,9 +397,9 @@ ipcMain.on("check-init-dexc", async (event) => {
   }
 });
 
-ipcMain.on("init-dexc", async (event, passphrase) => {
+ipcMain.on("init-dex", async (event, passphrase) => {
   try {
-    event.returnValue = await initDexc(passphrase);
+    event.returnValue = await initDex(passphrase);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -409,9 +409,9 @@ ipcMain.on("init-dexc", async (event, passphrase) => {
   }
 });
 
-ipcMain.on("login-dexc", async (event, passphrase) => {
+ipcMain.on("login-dex", async (event, passphrase) => {
   try {
-    event.returnValue = await loginDexc(passphrase);
+    event.returnValue = await loginDex(passphrase);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -421,9 +421,9 @@ ipcMain.on("login-dexc", async (event, passphrase) => {
   }
 });
 
-ipcMain.on("logout-dexc", async (event) => {
+ipcMain.on("logout-dex", async (event) => {
   try {
-    event.returnValue = await logoutDexc();
+    event.returnValue = await logoutDex();
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -434,7 +434,7 @@ ipcMain.on("logout-dexc", async (event) => {
 });
 
 ipcMain.on(
-  "create-wallet-dexc",
+  "create-wallet-dex",
   async (
     event,
     assetID,
@@ -447,7 +447,7 @@ ipcMain.on(
     rpccert
   ) => {
     try {
-      event.returnValue = await createWalletDexc(
+      event.returnValue = await createWalletDex(
         assetID,
         passphrase,
         appPassphrase,
@@ -467,9 +467,9 @@ ipcMain.on(
   }
 );
 
-ipcMain.on("get-fee-dexc", async (event, addr) => {
+ipcMain.on("get-fee-dex", async (event, addr) => {
   try {
-    event.returnValue = await getFeeDexc(addr);
+    event.returnValue = await getFeeDex(addr);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -479,9 +479,9 @@ ipcMain.on("get-fee-dexc", async (event, addr) => {
   }
 });
 
-ipcMain.on("register-dexc", async (event, appPass, addr, fee) => {
+ipcMain.on("register-dex", async (event, appPass, addr, fee) => {
   try {
-    event.returnValue = await registerDexc(appPass, addr, fee);
+    event.returnValue = await registerDex(appPass, addr, fee);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -491,9 +491,9 @@ ipcMain.on("register-dexc", async (event, appPass, addr, fee) => {
   }
 });
 
-ipcMain.on("user-dexc", async (event) => {
+ipcMain.on("user-dex", async (event) => {
   try {
-    event.returnValue = await userDexc();
+    event.returnValue = await userDex();
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -503,9 +503,9 @@ ipcMain.on("user-dexc", async (event) => {
   }
 });
 
-ipcMain.on("start-dexc", async (event, walletPath, testnet) => {
+ipcMain.on("start-dex", async (event, walletPath, testnet) => {
   try {
-    event.returnValue = await startDexc(walletPath, testnet);
+    event.returnValue = await startDex(walletPath, testnet);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);
@@ -515,8 +515,8 @@ ipcMain.on("start-dexc", async (event, walletPath, testnet) => {
   }
 });
 
-ipcMain.on("stop-dexc", async (event) => {
-  event.returnValue = await stopDexc();
+ipcMain.on("stop-dex", async (event) => {
+  event.returnValue = await stopDex();
 });
 
 ipcMain.on("launch-dex-window", async (event) => {

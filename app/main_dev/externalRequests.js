@@ -18,7 +18,7 @@ import {
 } from "../middleware/dcrdataapi";
 import * as cfgConstants from "constants/config";
 
-export const EXTERNALREQUEST_DEXC = "EXTERNALREQUEST_DEXC";
+export const EXTERNALREQUEST_DEX = "EXTERNALREQUEST_DEX";
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING =
   "EXTERNALREQUEST_STAKEPOOL_LISTING";
@@ -128,7 +128,7 @@ export const allowExternalRequest = (externalReqType) => {
   if (allowedExternalRequests[externalReqType]) return;
 
   switch (externalReqType) {
-    case EXTERNALREQUEST_DEXC:
+    case EXTERNALREQUEST_DEX:
       addAllowedURL("http://" + DEX_LOCALPAGE);
       addAllowedURL("ws://" + DEX_LOCALPAGE);
       break;
