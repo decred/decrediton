@@ -1,5 +1,5 @@
 import Promise from "promise";
-import * as api from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,

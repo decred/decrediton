@@ -1,7 +1,9 @@
 import Promise from "promise";
 import { withLog as log, withLogNoData, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
-import {
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
+
+const {
   CreateWalletRequest,
   OpenWalletRequest,
   CloseWalletRequest,
@@ -13,7 +15,7 @@ import {
   SpvSyncRequest,
   FetchMissingCFiltersRequest,
   RescanPointRequest
-} from "middleware/walletrpc/api_pb";
+} = api;
 
 export const getLoader = withLogNoData(
   ({ isTestNet, walletName, address, port, cert, key }) =>

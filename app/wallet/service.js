@@ -1,12 +1,11 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
 import {
   withLog as log,
   withLogNoData,
   logOptionNoResponseData
 } from "./index";
-import * as api from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
@@ -282,7 +281,7 @@ export const publishUnminedTransactions = log(
 export const committedTickets = withLogNoData(
   (walletService, ticketHashes) =>
     new Promise((resolve, reject) => {
-      const req = new CommittedTicketsRequest();
+      const req = new api.CommittedTicketsRequest();
       req.setTicketsList(ticketHashes);
       walletService.committedTickets(req, (err, tickets) =>
         err ? reject(err) : resolve(tickets)

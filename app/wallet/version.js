@@ -1,6 +1,6 @@
 import Promise from "promise";
 import { getVersionService as getService } from "../middleware/grpc/client";
-const messages = require("../middleware/walletrpc/api_pb");
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData } from "./index";
 
 export const getVersionService = withLogNoData(
@@ -20,12 +20,10 @@ export const getVersionService = withLogNoData(
   "Get Version Service"
 );
 
-export const getVersionResponse = log(
-  (versionService) =>
-    new Promise((resolve, reject) =>
-      versionService.version(new messages.VersionRequest(), (error, response) =>
-        error ? reject(error) : resolve(response)
-      )
-    ),
-  "Get Version Response"
-);
+export const getVersionResponse = log((versionService) => {
+  return new Promise((resolve, reject) =>
+    versionService.version(new api.VersionRequest(), (error, response) =>
+      error ? reject(error) : resolve(response)
+    )
+  );
+}, "Get Version Response");

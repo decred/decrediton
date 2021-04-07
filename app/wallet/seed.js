@@ -1,8 +1,7 @@
-import {
-  GenerateRandomSeedRequest,
-  DecodeSeedRequest
-} from "../middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLogNoData as log } from "./index";
+
+const { GenerateRandomSeedRequest, DecodeSeedRequest } = api;
 
 export const SEED_WORDS = require("../helpers/wordlist.js");
 SEED_WORDS.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));

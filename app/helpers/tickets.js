@@ -1,7 +1,8 @@
-import { GetTicketsResponse } from "../middleware/walletrpc/api_pb";
+import { walletrpc as api } from "../middleware/walletrpc/api_pb";
 import { OP_RETURN, SStxPKHMinOutSize, ripemd160Size } from "constants";
 import { checkEncode, newAddressScriptHashFromHash } from "./addresses";
 
+const GetTicketsResponse = api.GetTicketsResponse;
 export const TicketTypes = new Map([
   [GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN, "unknown"],
   [GetTicketsResponse.TicketDetails.TicketStatus.UNMINED, "unmined"],
