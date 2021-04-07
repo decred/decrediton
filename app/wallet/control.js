@@ -494,9 +494,9 @@ export const unlockAccount = (walletService, passphrase, acctNumber) => new Prom
 });
 
 export const lockAccount = (walletService, acctNumber) => new Promise((resolve, reject) => {
-  const lockReq = new api.LockWalletRequest();
+  const lockReq = new api.LockAccountRequest();
   lockReq.setAccountNumber(acctNumber);
-  walletService.lockWallet(lockReq, (error) => {
+  walletService.lockAccount(lockReq, (error) => {
     if (error) {
       reject(error);
     }

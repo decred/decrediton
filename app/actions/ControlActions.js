@@ -980,17 +980,21 @@ export const setAccountsPass = (walletPassphrase) => async (dispatch, getState) 
   try {
     const oldAccounts = sel.balances(getState());
     await wallet.unlockWallet(sel.walletService(getState()), walletPassphrase);
-    const accounts = oldAccounts.map((acct) => {
+    const accounts = Promise.all(oldAccounts.map(async (acct) => {
       // just skip if imported account.
-      if (acct.value === Math.pow(2, 31) - 1) {
+      if (acct.accountNumber === Math.pow(2, 31) - 1) {
         return acct;
       }
       // we set the account passphrase as the wallet passphrase to avoid the user
       // ending with multiple passphrases.
-      setAccountPassphrase(sel.walletService(getState()), acct.value, walletPassphrase, walletPassphrase, walletPassphrase)
-      acct.encrypted = true;
-      return acct;
-    });
+      try {
+        await setAccountPassphrase(sel.walletService(getState()), acct.accountNumber, walletPassphrase, walletPassphrase, walletPassphrase)
+        acct.encrypted = true;
+        return acct;
+      } catch (error) {
+        throw error;
+      }
+    }));
     return dispatch({ type: SETACCOUNTSPASSPHRASE_SUCCESS, accounts });
   } catch (error) {
     dispatch({ error, type: SETACCOUNTSPASSPHRASE_FAILED });
@@ -1002,30 +1006,58 @@ export const UNLOCKACCTORWALLET_FAILED = "UNLOCKACCTORWALLET_FAILED";
 export const UNLOCKACCTORWALLET_SUCCESS = "UNLOCKACCTORWALLET_SUCCESS";
 
 // unlockAcctAndExecFn unlocks the account and perform some acction. Locks the
-// account in case of success or error.
-export const unlockAcctAndExecFn = (passphrase, acctNumber, fn) => async (dispatch, getState) => {
+// account in case of success or error, if leaveUnlock is not informed.
+export const unlockAcctAndExecFn = (passphrase, acctNumber, fn, leaveUnlock) => async (dispatch, getState) => {
+  let res = null;
+  let fnError = null;
   dispatch({ type: UNLOCKACCTORWALLET_ATTEMPT });
-  try {
-    const accounts = sel.balances(getState());
 
-    const account = accounts.find(acct => acct.accountNumber === acctNumber );
-    if (!account) {
-      throw "Account not found";
-    }
-    if (!account.encrypted) {
-      throw "Account not encrypted";
-    }
-    await wallet.unlockAccount(sel.walletService(getState()), passphrase, acctNumber);
-    const res = await fn();
-    await dispatch(lockWalletOrAcct(acctNumber));
+  // sanity checks
+  const accounts = sel.balances(getState());
 
-    return res;
-  } catch (error) {
-    // lock in case of error
-    await dispatch(lockWalletOrAcct(acctNumber));
-    dispatch({ type: UNLOCKACCTORWALLET_FAILED, error });
-    return error;
+  const account = accounts.find(acct => acct.accountNumber === acctNumber );
+  if (!account) {
+    throw "Account not found";
   }
+  if (!account.encrypted) {
+    throw "Account not encrypted";
+  }
+
+  // unlock wallet
+  try {
+    await wallet.unlockAccount(sel.walletService(getState()), passphrase, acctNumber);
+  } catch (error) {
+    // no need to lock as unlock errored.
+    dispatch({ type: UNLOCKACCTORWALLET_FAILED, error });
+    throw error;
+  }
+
+  // execute method
+  try {
+    res = await fn();
+  } catch (error) {
+    fnError = error;
+  }
+
+  if (fnError !== null) {
+    throw fnError;
+  }
+
+
+  if (leaveUnlock) {
+    return res;
+  }
+
+  // lock account
+  try {
+    await wallet.lockAccount(sel.walletService(getState()), acctNumber);
+  } catch (error) {
+    // no need to lock as unlock errored.
+    dispatch({ type: LOCKACCTORWALLET_FAILED, error });
+    throw error;
+  }
+
+  return res;
 };
 
 export const LOCKACCTORWALLET_ATTEMPT = "LOCKACCTORWALLET_ATTEMPT";
