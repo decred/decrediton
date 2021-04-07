@@ -5,9 +5,12 @@ import { FormattedMessage as T } from "react-intl";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
+import SettingAccountsPassphrase from "./SettingAccountsPassphrase/SettingAccountsPassphrase";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
 
 export const useWalletSetup = (settingUpWalletRef) => {
+  const dispatch = useDispatch();
+
   const [current, send] = useService(settingUpWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
   const {
@@ -17,12 +20,20 @@ export const useWalletSetup = (settingUpWalletRef) => {
     goToHome,
     onProcessUnmanagedTickets,
     isProcessingUnmanaged,
-    isProcessingManaged
+    isProcessingManaged,
   } = useDaemonStartup();
 
   const { mixedAccount } = useAccounts();
 
   const previousState = usePrevious(current);
+
+  const onCheckAcctsPass = useCallback(() => {
+    return dispatch(checkAllAccountsEncrypted());
+  }, [dispatch, checkAllAccountsEncrypted]);
+
+  const onProcessAccounts = useCallback((passphrase) => {
+    return dispatch(setAccountsPass(passphrase));
+  },[dispatch, setAccountsPass])
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
@@ -46,6 +57,37 @@ export const useWalletSetup = (settingUpWalletRef) => {
     if (previousState && current.value === previousState.value) return;
 
     switch (current.value) {
+      case "settingAccountsPass":
+        const allEncrypted = onCheckAcctsPass();
+        if (allEncrypted) {
+          sendContinue();
+        } else {
+          component = h(SettingAccountsPassphrase, {
+            error,
+            onSendContinue: sendContinue,
+            onSendError,
+            send,
+            cancel: onSendBack,
+            // onProcessTickets: onProcessManagedTickets,
+            title: (
+              <T
+                id="getstarted.setAccountsPass.title"
+                m="Set Accounts Passphrase"
+              />
+            ),
+            onProcessAccounts,
+            isProcessingManaged: isProcessingManaged,
+            noVspSelection: true,
+            description: (
+              <T
+                id="getstarted.setAccountsPass.description"
+                m={`Your wallet have accounts with no passphrase. Enter your current
+                passphrase so we can update it`}
+              />
+            )
+          });
+        }
+        break;
       case "settingMixedAccount":
         getCoinjoinOutputspByAcct()
           .then((outputsByAcctMap) => {

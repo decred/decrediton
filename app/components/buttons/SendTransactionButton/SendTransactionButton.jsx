@@ -21,7 +21,7 @@ const SendTransactionButton = ({
 
   const signTransaction = (privpass) => {
     if (!privpass || disabled) return;
-    onAttemptSignTransaction?.(privpass, unsignedTransaction, account);
+    onAttemptSignTransaction?.(privpass, unsignedTransaction, account.value);
   };
 
   const signTransactionTrezor = () => {

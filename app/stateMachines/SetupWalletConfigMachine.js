@@ -6,12 +6,17 @@ import { Machine, assign } from "xstate";
 // source: https://github.com/davidkpiano/xstate#hierarchical-nested-state-machines
 export const SetupWalletConfigMachine = Machine({
   id: "setupWallet",
-  initial: "settingMixedAccount",
+  initial: "settingAccountsPass",
   context: {
     error: null,
     isNew: null
   },
   states: {
+    settingAccountsPass: {
+      on: {
+        CONTINUE: "settingMixedAccount"
+      }
+    },
     settingMixedAccount: {
       on: {
         CONTINUE: "processingManagedTickets"
