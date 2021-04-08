@@ -20,7 +20,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     goToHome,
     onProcessUnmanagedTickets,
     isProcessingUnmanaged,
-    isProcessingManaged,
+    isProcessingManaged
   } = useDaemonStartup();
 
   const { mixedAccount } = useAccounts();
@@ -31,9 +31,12 @@ export const useWalletSetup = (settingUpWalletRef) => {
     return dispatch(checkAllAccountsEncrypted());
   }, [dispatch, checkAllAccountsEncrypted]);
 
-  const onProcessAccounts = useCallback((passphrase) => {
-    return dispatch(setAccountsPass(passphrase));
-  },[dispatch, setAccountsPass])
+  const onProcessAccounts = useCallback(
+    (passphrase) => {
+      return dispatch(setAccountsPass(passphrase));
+    },
+    [dispatch, setAccountsPass]
+  );
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });

@@ -68,7 +68,7 @@ export function useAccountRow(
     setIsShowingRenameAccount(false);
   };
 
-  const showAccountCallback =() => {
+  const showAccountCallback = () => {
     showAccount(account.accountNumber);
     setHidden(false);
   };
@@ -91,9 +91,22 @@ export function useAccountRow(
   const dispatch = useDispatch();
   const onSetAccountPassphrase = (passphrase, args) => {
     const { newPassphrase } = args;
-    account.encrypted ?
-      dispatch(ca.setAccountPassphrase(account.accountNumber, passphrase, newPassphrase)) :
-      dispatch(ca.setAccountPassphrase(account.accountNumber, null, newPassphrase, passphrase));
+    account.encrypted
+      ? dispatch(
+          ca.setAccountPassphrase(
+            account.accountNumber,
+            passphrase,
+            newPassphrase
+          )
+        )
+      : dispatch(
+          ca.setAccountPassphrase(
+            account.accountNumber,
+            null,
+            newPassphrase,
+            passphrase
+          )
+        );
   };
   const changeAccount = useSelector(sel.getChangeAccount);
 

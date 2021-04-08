@@ -12,7 +12,7 @@ export function useSendTransactionButton() {
   const dispatch = useDispatch();
   const onAttemptSignTransaction = (passphrase, rawTx, acct) => {
     dispatch(ca.signTransactionAttempt(passphrase, rawTx, acct));
-  }
+  };
   const onAttemptSignTransactionTrezor = (rawUnsigTx, constructTxResponse) =>
     dispatch(tza.signTransactionAttemptTrezor(rawUnsigTx, constructTxResponse));
 

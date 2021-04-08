@@ -99,15 +99,20 @@ export const runAccountMixer = ({
   new Promise((resolve) => {
     dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
     const runMixerAsync = async () => {
-      const mixerStreamer = await dispatch(unlockAcctAndExecFn(passphrase, changeAccount, () => runAccountMixerRequest(
-        sel.accountMixerService(getState()),
-        {
-          mixedAccount,
-          mixedAccountBranch,
+      const mixerStreamer = await dispatch(
+        unlockAcctAndExecFn(
+          passphrase,
           changeAccount,
-          csppServer
-        }
-      ), true));
+          () =>
+            runAccountMixerRequest(sel.accountMixerService(getState()), {
+              mixedAccount,
+              mixedAccountBranch,
+              changeAccount,
+              csppServer
+            }),
+          true
+        )
+      );
       return { mixerStreamer };
     };
 

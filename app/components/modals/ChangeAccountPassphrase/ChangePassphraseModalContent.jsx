@@ -21,15 +21,16 @@ const Modal = ({
       ...props,
       onSubmit,
       parentIsValid: isValid,
-      passLabel: account.encrypted ?
-        <T id="acctPassphraseModal.privatePassphrase" m="Account Passphrase" /> :
-        null,
-      modalDescription: <Documentation
-        name="SetAcctPassphraseDocs"
-        className={styles.setPassAcctModalDescription}
-      />
+      passLabel: account.encrypted ? (
+        <T id="acctPassphraseModal.privatePassphrase" m="Account Passphrase" />
+      ) : null,
+      modalDescription: (
+        <Documentation
+          name="SetAcctPassphraseDocs"
+          className={styles.setPassAcctModalDescription}
+        />
+      )
     }}>
-
     <PassphraseModalField
       label={
         <T id="changeAcctPassModal.newPassphrase" m="New Account Passphrase" />
@@ -56,9 +57,7 @@ const Modal = ({
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
       />
     </PassphraseModalField>
-    {
-      error && <div className="error">{error}</div>
-    }
+    {error && <div className="error">{error}</div>}
   </PassphraseModal>
 );
 

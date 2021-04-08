@@ -89,8 +89,7 @@ const Form = ({
                 showModal={showPassphraseModal}
                 onShow={resetShowPassphraseModal}
                 buttonLabel={sendButtonLabel}
-                account={account}
-              >
+                account={account}>
                 <div className={styles.passphraseModal}>
                   {!isSendSelf ? (
                     <>

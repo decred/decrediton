@@ -162,7 +162,8 @@ export const purchaseTicketsV3 = (
   signTx,
   vsp,
   csppReq
-) => new Promise((resolve, reject) => {
+) =>
+  new Promise((resolve, reject) => {
     const request = new api.PurchaseTicketsRequest();
     const {
       mixedAccount,
@@ -439,19 +440,20 @@ export const setVspdAgendaChoices = (
     );
   });
 
-export const unlockWallet = (walletService, passphrase) => new Promise((resolve, reject) => {
-  const unlockReq = new api.UnlockWalletRequest();
-  console.log(console.log(passphrase));
-  unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  // Unlock wallet so we can call the request.
-  walletService.unlockWallet(unlockReq, (error) => {
-    console.log(error);
-    if (error) {
-      reject(error);
-    }
-    resolve(true);
+export const unlockWallet = (walletService, passphrase) =>
+  new Promise((resolve, reject) => {
+    const unlockReq = new api.UnlockWalletRequest();
+    console.log(console.log(passphrase));
+    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+    // Unlock wallet so we can call the request.
+    walletService.unlockWallet(unlockReq, (error) => {
+      console.log(error);
+      if (error) {
+        reject(error);
+      }
+      resolve(true);
+    });
   });
-});
 
 export const lockWallet = (walletService) =>
   new Promise((resolve, reject) => {
@@ -465,43 +467,59 @@ export const lockWallet = (walletService) =>
     });
   });
 
-export const unlockAccount = (walletService, passphrase, acctNumber) => new Promise((resolve, reject) => {
-  const unlockReq = new api.UnlockAccountRequest();
-  unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  unlockReq.setAccountNumber(acctNumber);
-  // Unlock wallet so we can call the request.
-  walletService.unlockAccount(unlockReq, (error) => {
-    if (error) {
-      reject(error);
-    }
-    resolve(true);
+export const unlockAccount = (walletService, passphrase, acctNumber) =>
+  new Promise((resolve, reject) => {
+    const unlockReq = new api.UnlockAccountRequest();
+    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+    unlockReq.setAccountNumber(acctNumber);
+    // Unlock wallet so we can call the request.
+    walletService.unlockAccount(unlockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(true);
+    });
   });
-});
 
-export const lockAccount = (walletService, acctNumber) => new Promise((resolve, reject) => {
-  const lockReq = new api.LockAccountRequest();
-  lockReq.setAccountNumber(acctNumber);
-  walletService.lockAccount(lockReq, (error) => {
-    if (error) {
-      reject(error);
-    }
-    resolve(true);
+export const lockAccount = (walletService, acctNumber) =>
+  new Promise((resolve, reject) => {
+    const lockReq = new api.LockAccountRequest();
+    lockReq.setAccountNumber(acctNumber);
+    walletService.lockAccount(lockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(true);
+    });
   });
-});
 
-export const setAccountPassphrase = (walletService, accountNumber, accountPassphrase, newAcctPassphrase, walletPassphrase) =>
-new Promise((ok, fail) => {
-  const request = new api.SetAccountPassphraseRequest();
-  request.setAccountNumber(accountNumber);
-  request.setNewAccountPassphrase(new Uint8Array(Buffer.from(newAcctPassphrase)));
-  if (accountPassphrase) {
-    request.setAccountPassphrase(new Uint8Array(Buffer.from(accountPassphrase)));
-  }
-  if (walletPassphrase) {
-    request.setWalletPassphrase(new Uint8Array(Buffer.from(walletPassphrase)));
-  }
-  walletService.setAccountPassphrase(request, (err, res) => err ? fail(err) : ok({ ...res }));
-});
+export const setAccountPassphrase = (
+  walletService,
+  accountNumber,
+  accountPassphrase,
+  newAcctPassphrase,
+  walletPassphrase
+) =>
+  new Promise((ok, fail) => {
+    const request = new api.SetAccountPassphraseRequest();
+    request.setAccountNumber(accountNumber);
+    request.setNewAccountPassphrase(
+      new Uint8Array(Buffer.from(newAcctPassphrase))
+    );
+    if (accountPassphrase) {
+      request.setAccountPassphrase(
+        new Uint8Array(Buffer.from(accountPassphrase))
+      );
+    }
+    if (walletPassphrase) {
+      request.setWalletPassphrase(
+        new Uint8Array(Buffer.from(walletPassphrase))
+      );
+    }
+    walletService.setAccountPassphrase(request, (err, res) =>
+      err ? fail(err) : ok({ ...res })
+    );
+  });
 
 export const startTicketAutoBuyerV3 = (
   ticketBuyerService,

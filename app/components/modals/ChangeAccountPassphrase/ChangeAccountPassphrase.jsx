@@ -3,7 +3,12 @@ import { useEffect, useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
 
 // TODO A lot of duplicated code with changePassphrase. Merge them?
-const ChangeAccountPassphrase = ({ account, onCancelModal, onSubmit, ...props }) => {
+const ChangeAccountPassphrase = ({
+  account,
+  onCancelModal,
+  onSubmit,
+  ...props
+}) => {
   const [newPassphrase, setNewPassphrase] = useState(null);
   const [confirmPrivPass, setConfirmPrivPass] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -19,14 +24,19 @@ const ChangeAccountPassphrase = ({ account, onCancelModal, onSubmit, ...props })
     onCancelModal && onCancelModal();
   }, [resetState, onCancelModal]);
 
-  const onSubmitCallback = useCallback((passPhrase) => {
-    onSubmit(passPhrase, { newPassphrase, accountNumber: account.accountNumber });
-    resetState();
-  }, [account.accountNumber, newPassphrase, onSubmit, resetState]);
+  const onSubmitCallback = useCallback(
+    (passPhrase) => {
+      onSubmit(passPhrase, {
+        newPassphrase,
+        accountNumber: account.accountNumber
+      });
+      resetState();
+    },
+    [account.accountNumber, newPassphrase, onSubmit, resetState]
+  );
 
   useEffect(() => {
-    setIsValid(!!newPassphrase &&
-      newPassphrase === confirmPrivPass);
+    setIsValid(!!newPassphrase && newPassphrase === confirmPrivPass);
   }, [newPassphrase, confirmPrivPass]);
 
   useEffect(() => {
@@ -43,7 +53,9 @@ const ChangeAccountPassphrase = ({ account, onCancelModal, onSubmit, ...props })
       return;
     }
     if (newPassphrase !== confirmPrivPass) {
-      const error = <T id="error.acct.not.same.pass" m="Passwords does not match." />;
+      const error = (
+        <T id="error.acct.not.same.pass" m="Passwords does not match." />
+      );
       setIsError(error);
       return;
     }

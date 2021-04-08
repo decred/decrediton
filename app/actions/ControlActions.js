@@ -228,12 +228,11 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
 ) => {
   dispatch({ type: SIGNTX_ATTEMPT });
   try {
-    const signTransactionResponse = await dispatch(unlockAcctAndExecFn(passphrase, acctNumber, () => wallet.signTransaction(
-      sel.walletService(getState()),
-      rawTx,
-      acctNumber
-    )
-    ));
+    const signTransactionResponse = await dispatch(
+      unlockAcctAndExecFn(passphrase, acctNumber, () =>
+        wallet.signTransaction(sel.walletService(getState()), rawTx, acctNumber)
+      )
+    );
 
     dispatch({
       signTransactionResponse: signTransactionResponse,
@@ -335,18 +334,22 @@ export const purchaseTicketsAttempt = (
         );
       }
       accountNum = account.encrypted ? account.value : null;
-      const purchaseTicketsResponse = await dispatch(unlockAcctAndExecFn(passphrase, accountNum, () => wallet.purchaseTickets(
-        walletService,
-        account,
-        spendLimit,
-        requiredConf,
-        numTickets,
-        expiry,
-        ticketFee,
-        txFee,
-        stakepool,
-        !dontSignTx
-      )));
+      const purchaseTicketsResponse = await dispatch(
+        unlockAcctAndExecFn(passphrase, accountNum, () =>
+          wallet.purchaseTickets(
+            walletService,
+            account,
+            spendLimit,
+            requiredConf,
+            numTickets,
+            expiry,
+            ticketFee,
+            txFee,
+            stakepool,
+            !dontSignTx
+          )
+        )
+      );
       if (dontSignTx) {
         return dispatch({
           purchaseTicketsResponse,
@@ -380,14 +383,18 @@ export const newPurchaseTicketsAttempt = (
       mixedAcctBranch: sel.getMixedAccountBranch(getState())
     };
 
-    const purchaseTicketsResponse = await dispatch(unlockAcctAndExecFn(passphrase, account.value, () => wallet.purchaseTicketsV3(
-      walletService,
-      account,
-      numTickets,
-      !dontSignTx,
-      vsp,
-      csppReq
-    )));
+    const purchaseTicketsResponse = await dispatch(
+      unlockAcctAndExecFn(passphrase, account.value, () =>
+        wallet.purchaseTicketsV3(
+          walletService,
+          account,
+          numTickets,
+          !dontSignTx,
+          vsp,
+          csppReq
+        )
+      )
+    );
     if (dontSignTx) {
       return dispatch({
         purchaseTicketsResponse,
@@ -473,17 +480,25 @@ export const startTicketBuyerV3Attempt = (
 
   try {
     const accountNum = account.encrypted ? account.value : null;
-    const ticketBuyer = await dispatch(unlockAcctAndExecFn(passphrase, accountNum, () => wallet.startTicketAutoBuyerV3(ticketBuyerService, {
-      mixedAccount,
-      mixedAcctBranch,
-      changeAccount,
-      csppServer,
-      csppPort,
-      balanceToMaintain,
-      accountNum,
-      pubkey: vsp.pubkey,
-      host: vsp.host
-    }), true));
+    const ticketBuyer = await dispatch(
+      unlockAcctAndExecFn(
+        passphrase,
+        accountNum,
+        () =>
+          wallet.startTicketAutoBuyerV3(ticketBuyerService, {
+            mixedAccount,
+            mixedAcctBranch,
+            changeAccount,
+            csppServer,
+            csppPort,
+            balanceToMaintain,
+            accountNum,
+            pubkey: vsp.pubkey,
+            host: vsp.host
+          }),
+        true
+      )
+    );
     ticketBuyer.on("data", function (response) {
       // No expected responses but log in case.
       console.log(response);
@@ -869,7 +884,11 @@ export const startTicketBuyerV2Attempt = (
     request.setVotingAccount(account.value);
     request.setVotingAddress(stakepool.TicketAddress);
     const { ticketBuyerService } = getState().grpc;
-    const ticketBuyer = await dispatch(unlockAcctAndExecFn(passphrase, accountNum, () => ticketBuyerService.runTicketBuyer(request)));
+    const ticketBuyer = await dispatch(
+      unlockAcctAndExecFn(passphrase, accountNum, () =>
+        ticketBuyerService.runTicketBuyer(request)
+      )
+    );
     ticketBuyer.on("data", function (response) {
       // No expected responses but log in case.
       console.log(response);
@@ -894,9 +913,8 @@ export const startTicketBuyerV2Attempt = (
       type: STARTTICKETBUYERV2_SUCCESS
     });
   } catch (error) {
-    dispatch({ error, type: STARTTICKETBUYERV2_FAILED })
+    dispatch({ error, type: STARTTICKETBUYERV2_FAILED });
   }
-
 };
 
 export function ticketBuyerV2Cancel() {
@@ -906,7 +924,9 @@ export function ticketBuyerV2Cancel() {
     if (ticketBuyerCall) {
       dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
       ticketBuyerCall.cancel();
-      const acctNumber = ticketBuyerAcct.encrypted ? ticketBuyerAcct.value : null;
+      const acctNumber = ticketBuyerAcct.encrypted
+        ? ticketBuyerAcct.value
+        : null;
       await dispatch(lockWalletOrAcct(acctNumber));
     }
   };
@@ -949,7 +969,13 @@ export const SETACCOUNTPASSPHRASE_ATTEMPT = "SETACCOUNTPASSPHRASE_ATTEMPT";
 export const SETACCOUNTPASSPHRASE_FAILED = "SETACCOUNTPASSPHRASE_FAILED";
 export const SETACCOUNTPASSPHRASE_SUCCESS = "SETACCOUNTPASSPHRASE_SUCCESS";
 
-const setAccountPassphrase = async (walletService, accountNumber, accountPassphrase, newAcctPassphrase, walletPassphrase) => {
+const setAccountPassphrase = async (
+  walletService,
+  accountNumber,
+  accountPassphrase,
+  newAcctPassphrase,
+  walletPassphrase
+) => {
   try {
     await wallet.setAccountPassphrase(
       walletService,
@@ -964,26 +990,37 @@ const setAccountPassphrase = async (walletService, accountNumber, accountPassphr
   }
 };
 
-export const setAccountsPass = (walletPassphrase) => async (dispatch, getState) => {
+export const setAccountsPass = (walletPassphrase) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: SETACCOUNTSPASSPHRASE_ATTEMPT });
   try {
     const oldAccounts = sel.balances(getState());
     await wallet.unlockWallet(sel.walletService(getState()), walletPassphrase);
-    const accounts = Promise.all(oldAccounts.map(async (acct) => {
-      // just skip if imported account.
-      if (acct.accountNumber === Math.pow(2, 31) - 1) {
-        return acct;
-      }
-      // we set the account passphrase as the wallet passphrase to avoid the user
-      // ending with multiple passphrases.
-      try {
-        await setAccountPassphrase(sel.walletService(getState()), acct.accountNumber, walletPassphrase, walletPassphrase, walletPassphrase)
-        acct.encrypted = true;
-        return acct;
-      } catch (error) {
-        throw error;
-      }
-    }));
+    const accounts = Promise.all(
+      oldAccounts.map(async (acct) => {
+        // just skip if imported account.
+        if (acct.accountNumber === Math.pow(2, 31) - 1) {
+          return acct;
+        }
+        // we set the account passphrase as the wallet passphrase to avoid the user
+        // ending with multiple passphrases.
+        try {
+          await setAccountPassphrase(
+            sel.walletService(getState()),
+            acct.accountNumber,
+            walletPassphrase,
+            walletPassphrase,
+            walletPassphrase
+          );
+          acct.encrypted = true;
+          return acct;
+        } catch (error) {
+          throw error;
+        }
+      })
+    );
     return dispatch({ type: SETACCOUNTSPASSPHRASE_SUCCESS, accounts });
   } catch (error) {
     dispatch({ error, type: SETACCOUNTSPASSPHRASE_FAILED });
@@ -996,7 +1033,12 @@ export const UNLOCKACCTORWALLET_SUCCESS = "UNLOCKACCTORWALLET_SUCCESS";
 
 // unlockAcctAndExecFn unlocks the account and perform some acction. Locks the
 // account in case of success or error, if leaveUnlock is not informed.
-export const unlockAcctAndExecFn = (passphrase, acctNumber, fn, leaveUnlock) => async (dispatch, getState) => {
+export const unlockAcctAndExecFn = (
+  passphrase,
+  acctNumber,
+  fn,
+  leaveUnlock
+) => async (dispatch, getState) => {
   let res = null;
   let fnError = null;
   dispatch({ type: UNLOCKACCTORWALLET_ATTEMPT });
@@ -1004,7 +1046,7 @@ export const unlockAcctAndExecFn = (passphrase, acctNumber, fn, leaveUnlock) => 
   // sanity checks
   const accounts = sel.balances(getState());
 
-  const account = accounts.find(acct => acct.accountNumber === acctNumber);
+  const account = accounts.find((acct) => acct.accountNumber === acctNumber);
   if (!account) {
     throw "Account not found";
   }
@@ -1014,7 +1056,11 @@ export const unlockAcctAndExecFn = (passphrase, acctNumber, fn, leaveUnlock) => 
 
   // unlock wallet
   try {
-    await wallet.unlockAccount(sel.walletService(getState()), passphrase, acctNumber);
+    await wallet.unlockAccount(
+      sel.walletService(getState()),
+      passphrase,
+      acctNumber
+    );
   } catch (error) {
     // no need to lock as unlock errored.
     dispatch({ type: UNLOCKACCTORWALLET_FAILED, error });
@@ -1031,7 +1077,6 @@ export const unlockAcctAndExecFn = (passphrase, acctNumber, fn, leaveUnlock) => 
   if (fnError !== null) {
     throw fnError;
   }
-
 
   if (leaveUnlock) {
     return res;
@@ -1063,7 +1108,7 @@ export const lockWalletOrAcct = (acctNumber) => async (dispatch, getState) => {
       return;
     }
 
-    const account = accounts.find(acct => acct.accountNumber === acctNumber);
+    const account = accounts.find((acct) => acct.accountNumber === acctNumber);
     if (!account) {
       throw "Account not found";
     }

@@ -107,10 +107,7 @@ export const InfoDocFieldModalButton = mbb(
 );
 export const ChangePassphraseButton = mbb(null, ChangePassphraseModal);
 
-export const ChangeAccountPassphraseButton = mbb(
-  null,
-  ChangeAccountPassphrase
-);
+export const ChangeAccountPassphraseButton = mbb(null, ChangeAccountPassphrase);
 
 export const InvisiblePassphraseModalButton = mbb(
   null,
