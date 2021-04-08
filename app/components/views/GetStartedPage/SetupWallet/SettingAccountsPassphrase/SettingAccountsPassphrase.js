@@ -21,7 +21,7 @@ export default ({
     onProcessAccounts(passphrase)
       .then(() => send({ type: "CONTINUE" }))
       .catch((error) => {
-        // send({ type: "ERROR", error });
+        send({ type: "ERROR", error });
       });
     return;
   };

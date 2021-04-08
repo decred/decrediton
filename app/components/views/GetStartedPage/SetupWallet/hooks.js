@@ -29,13 +29,13 @@ export const useWalletSetup = (settingUpWalletRef) => {
 
   const onCheckAcctsPass = useCallback(() => {
     return dispatch(checkAllAccountsEncrypted());
-  }, [dispatch, checkAllAccountsEncrypted]);
+  }, [dispatch]);
 
   const onProcessAccounts = useCallback(
     (passphrase) => {
       return dispatch(setAccountsPass(passphrase));
     },
-    [dispatch, setAccountsPass]
+    [dispatch]
   );
 
   const sendContinue = useCallback(() => {
@@ -60,7 +60,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     if (previousState && current.value === previousState.value) return;
 
     switch (current.value) {
-      case "settingAccountsPass":
+      case "settingAccountsPass": {
         const allEncrypted = onCheckAcctsPass();
         if (allEncrypted) {
           sendContinue();
@@ -91,6 +91,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
           });
         }
         break;
+      }
       case "settingMixedAccount":
         getCoinjoinOutputspByAcct()
           .then((outputsByAcctMap) => {
@@ -230,7 +231,9 @@ export const useWalletSetup = (settingUpWalletRef) => {
     onSendBack,
     onSendError,
     previousState,
-    current
+    current,
+    onCheckAcctsPass,
+    onProcessAccounts
   ]);
 
   return {

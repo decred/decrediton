@@ -321,6 +321,7 @@ export const purchaseTicketsAttempt = (
       );
     }
 
+    let purchaseTicketsResponse = null;
     let accountNum = null;
     // If we need to sign the tx, we re-import the script to ensure the
     // wallet will control the ticket. And unlock the wallet
@@ -334,7 +335,7 @@ export const purchaseTicketsAttempt = (
         );
       }
       accountNum = account.encrypted ? account.value : null;
-      const purchaseTicketsResponse = await dispatch(
+      purchaseTicketsResponse = await dispatch(
         unlockAcctAndExecFn(passphrase, accountNum, () =>
           wallet.purchaseTickets(
             walletService,
@@ -416,7 +417,7 @@ export const newPurchaseTicketsAttempt = (
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
       const unspentOutputs = await dispatch(
-        listUnspentOutputs(accountNum.value)
+        listUnspentOutputs(account.value)
       );
       // we need at least one 2 utxo for each ticket, one for paying the fee
       // and another for the splitTx and ticket purchase.
@@ -885,7 +886,7 @@ export const startTicketBuyerV2Attempt = (
     request.setVotingAddress(stakepool.TicketAddress);
     const { ticketBuyerService } = getState().grpc;
     const ticketBuyer = await dispatch(
-      unlockAcctAndExecFn(passphrase, accountNum, () =>
+      unlockAcctAndExecFn(passphrase, account.value, () =>
         ticketBuyerService.runTicketBuyer(request)
       )
     );
@@ -1006,19 +1007,16 @@ export const setAccountsPass = (walletPassphrase) => async (
         }
         // we set the account passphrase as the wallet passphrase to avoid the user
         // ending with multiple passphrases.
-        try {
-          await setAccountPassphrase(
-            sel.walletService(getState()),
-            acct.accountNumber,
-            walletPassphrase,
-            walletPassphrase,
-            walletPassphrase
-          );
-          acct.encrypted = true;
-          return acct;
-        } catch (error) {
-          throw error;
-        }
+
+        await setAccountPassphrase(
+          sel.walletService(getState()),
+          acct.accountNumber,
+          walletPassphrase,
+          walletPassphrase,
+          walletPassphrase
+        );
+        acct.encrypted = true;
+        return acct;
       })
     );
     return dispatch({ type: SETACCOUNTSPASSPHRASE_SUCCESS, accounts });
