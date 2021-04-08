@@ -4,6 +4,8 @@ decred.org/dcrdex v0.0.0-20210401142326-529cb0d17154 h1:mJ9duXGQ1IA1jtZnezrRS4ZJ
 decred.org/dcrdex v0.0.0-20210401142326-529cb0d17154/go.mod h1:7dhGujv+4YSK2ULxUKXhYskj3HsDJC8B1AIlfQrqR7Q=
 decred.org/dcrdex v0.0.0-20210402160203-4506406d974a h1:raJ1a2iAQ7YaKNenRUQa3y2DfF569SAvtSUrPqv4WSM=
 decred.org/dcrdex v0.0.0-20210402160203-4506406d974a/go.mod h1:7dhGujv+4YSK2ULxUKXhYskj3HsDJC8B1AIlfQrqR7Q=
+decred.org/dcrdex v0.0.0-20210408192432-c91bde4446a5 h1:XogMa3ww6+bz3rmL7z5WQCVQRLqCkFxAIhuCAwsrwvw=
+decred.org/dcrdex v0.0.0-20210408192432-c91bde4446a5/go.mod h1:7dhGujv+4YSK2ULxUKXhYskj3HsDJC8B1AIlfQrqR7Q=
 decred.org/dcrwallet v1.6.3-0.20210324151833-873c564976fd h1:tAaRGZmA8aj0F88oeFGhNXjtoV29E/jbuTYjVEVYU14=
 decred.org/dcrwallet v1.6.3-0.20210324151833-873c564976fd/go.mod h1:hNOGyvH53gWdgFB601/ubGRzCPfPtWnEVAi9Grs90y4=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
