@@ -29,9 +29,7 @@ const AccountRow = ({
     hideAccountCallback,
     onTogglePubkey,
     onToggleShowDetails,
-    intl,
-    onSetAccountPassphrase,
-    changeAccount
+    intl
   } = useAccountRow(
     account,
     accountNumDetailsShown,
@@ -65,9 +63,7 @@ const AccountRow = ({
         showAccount: showAccountCallback,
         onTogglePubkey,
         showPubKey,
-        accountExtendedKey,
-        onSetAccountPassphrase,
-        changeAccount
+        accountExtendedKey
       }}
     />
   );
@@ -77,7 +73,6 @@ const AccountRow = ({
       {...{
         account,
         mixedAccount,
-        changeAccount,
         accountNumDetailsShown,
         isShowingRenameAccount,
         hidden,

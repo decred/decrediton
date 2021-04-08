@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePrevious } from "hooks";
 import { useIntl } from "react-intl";
-import { useDispatch, useSelector } from "react-redux";
-import * as ca from "actions/ControlActions";
-import * as sel from "selectors";
 
 export function useAccountRow(
   account,
@@ -87,29 +84,6 @@ export function useAccountRow(
     setIsShowingDetails(!isShowingDetails);
   };
 
-  // TODO move functions which are being imported as props to here.
-  const dispatch = useDispatch();
-  const onSetAccountPassphrase = (passphrase, args) => {
-    const { newPassphrase } = args;
-    account.encrypted
-      ? dispatch(
-          ca.setAccountPassphrase(
-            account.accountNumber,
-            passphrase,
-            newPassphrase
-          )
-        )
-      : dispatch(
-          ca.setAccountPassphrase(
-            account.accountNumber,
-            null,
-            newPassphrase,
-            passphrase
-          )
-        );
-  };
-  const changeAccount = useSelector(sel.getChangeAccount);
-
   return {
     isShowingRenameAccount,
     renameAccountName,
@@ -125,8 +99,6 @@ export function useAccountRow(
     hideAccountCallback,
     onTogglePubkey,
     onToggleShowDetails,
-    intl,
-    onSetAccountPassphrase,
-    changeAccount
+    intl
   };
 }

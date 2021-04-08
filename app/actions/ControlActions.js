@@ -416,9 +416,7 @@ export const newPurchaseTicketsAttempt = (
     }
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
-      const unspentOutputs = await dispatch(
-        listUnspentOutputs(account.value)
-      );
+      const unspentOutputs = await dispatch(listUnspentOutputs(account.value));
       // we need at least one 2 utxo for each ticket, one for paying the fee
       // and another for the splitTx and ticket purchase.
       // Note: at least one of them needs to be big enough for ticket purchase.
