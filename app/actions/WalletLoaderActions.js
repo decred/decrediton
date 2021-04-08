@@ -290,7 +290,7 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
     }
     return dispatch(finalCloseWallet());
   } catch (error) {
-    let openOrder = error.indexOf("cannot log out with active orders", 0) > -1;
+    const openOrder = error.indexOf("cannot log out with active orders", 0) > -1;
     dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
     dispatch(showCantCloseModal());
   }
