@@ -1,8 +1,12 @@
+import { push as pushHistory } from "connected-react-router";
 import * as sel from "selectors";
 import * as pi from "wallet/politeia";
 import * as wallet from "wallet";
-import { push as pushHistory } from "connected-react-router";
-import { hexReversedHashToArray, reverseRawHash } from "helpers";
+import {
+  hexReversedHashToArray,
+  reverseRawHash,
+  politeiaMarkdownIndexMd
+} from "helpers";
 import {
   setPoliteiaPath,
   getEligibleTickets,
@@ -15,7 +19,8 @@ import { cloneDeep } from "fp";
 import {
   PROPOSAL_VOTING_ACTIVE,
   PROPOSAL_VOTING_FINISHED,
-  PROPOSAL_STATUS_ABANDONED
+  PROPOSAL_STATUS_ABANDONED,
+  PROPOSAL_INDEX_MD_FILE
 } from "constants";
 
 // defaultInventory is how inventory and proposals are stored at our redux state.
@@ -424,6 +429,7 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
       prop.token = token;
       prop.proposalStatus = prop.status;
 
+      // Fill vote information in proposal object.
       fillVoteSummary(
         prop,
         proposalSummary,
@@ -516,17 +522,22 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     let proposal = await getProposal(proposals, token);
 
     const p = request.data.proposal;
-    const files = p.files.map((f) => {
-      return {
-        digest: f.digest,
-        mime: f.mime,
-        name: f.name,
-        payload: decodeFilePayload(f)
-      };
-    });
+    const files = p.files.map((f) => ({
+      digest: f.digest,
+      mime: f.mime,
+      name: f.name,
+      payload: decodeFilePayload(f)
+    }));
+
+    // Parse proposal's body from index.md file.
+    const { payload } = files.find(
+      ({ name }) => name === PROPOSAL_INDEX_MD_FILE
+    );
+    const body = politeiaMarkdownIndexMd(payload);
 
     proposal = {
       ...proposal,
+      body,
       creator: p.username,
       token: token,
       version: p.version,

@@ -34,12 +34,12 @@ const ProposalDetails = ({
     walletEligibleTickets,
     linkto,
     blocksLeft,
-    approved
+    approved,
+    body
   },
   showPurchaseTicketsPage,
   setVoteOption,
   newVoteChoice,
-  body,
   goBackHistory,
   linkedProposal,
   isDarkTheme
