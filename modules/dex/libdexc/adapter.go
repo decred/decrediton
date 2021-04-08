@@ -18,7 +18,6 @@ import (
 
 	_ "decred.org/dcrdex/client/asset/btc" // register btc asset
 	_ "decred.org/dcrdex/client/asset/dcr" // register dcr asset
-	_ "decred.org/dcrdex/client/asset/ltc" // register ltc asset
 )
 
 type callHandler func(json.RawMessage) (string, error)
@@ -137,8 +136,8 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 	}
 	c.webServer = cm
 	go func() {
-		defer atomic.StoreUint32(&c.serverRunning, 0)
 		cm.Wait()
+		atomic.StoreUint32(&c.serverRunning, 0)
 	}()
 	return "", nil
 }
@@ -159,6 +158,9 @@ func (c *CoreAdapter) handlers(funcName string) (callHandler, callHandler) {
 }
 
 func (c *CoreAdapter) run(callData *CallData) (string, error) {
+	if callData == nil {
+		return "", fmt.Errorf("malformed call data")
+	}
 	switch preInitHandler, coreHandler := c.handlers(callData.Function); {
 	case callData.Function == "startCore":
 		return "", c.startCore(callData.Params)

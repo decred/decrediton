@@ -659,7 +659,7 @@ export const launchDCRWallet = (
   logger.log("info", `Starting ${dcrwExe} with ${args}`);
 
   // Check if dex is enabled and if so add rpc user/name, host, cert to options
-  // We'rd doing this after logger to avoid user/pass being logged.  It's randomly
+  // We're doing this after logger to avoid user/pass being logged.  It's randomly
   // set each start, but better to be safe.
   if (rpcUser) {
     args.push(util.format("--username=%s", rpcUser));
@@ -880,7 +880,7 @@ export const launchDex = (walletPath, testnet) =>
 export const initCheckDex = () =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     try {
       const init = callDEX("IsInitialized", {});
@@ -894,7 +894,7 @@ export const initCheckDex = () =>
 export const initDexCall = (passphrase) =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return  resolve();
     }
     try {
       const init = callDEX("Init", { pass: passphrase });
@@ -908,7 +908,7 @@ export const initDexCall = (passphrase) =>
 export const loginDexCall = (passphrase) =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     try {
       const login = callDEX("Login", { pass: passphrase });
@@ -922,7 +922,7 @@ export const loginDexCall = (passphrase) =>
 export const logoutDexCall = () =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     try {
       const logout = callDEX("Logout", {});
@@ -945,7 +945,7 @@ export const createWalletDexCall = (
 ) =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     let pw = {};
     let config = {};
@@ -970,6 +970,8 @@ export const createWalletDexCall = (
         rpcbind: splitRPC[0],
         rpcport: splitRPC[1]
       };
+    } else {
+      return reject("error: unsupported asset for DEX ", assetID);
     }
     try {
       let init = callDEX("CreateWallet", {
@@ -998,7 +1000,7 @@ export const createWalletDexCall = (
 export const getFeeDexCall = (addr) =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     try {
       const getfee = callDEX("GetFee", { addr });
@@ -1012,7 +1014,7 @@ export const getFeeDexCall = (addr) =>
 export const registerDexCall = (appPass, addr, fee) =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     try {
       const register = callDEX("Register", {
@@ -1031,7 +1033,7 @@ export const registerDexCall = (appPass, addr, fee) =>
 export const userDexCall = () =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      resolve();
+      return resolve();
     }
     try {
       const user = callDEX("User", {});

@@ -39,10 +39,10 @@ import {
   CHECK_BTC_CONFIG_FAILED,
   CHECK_BTC_CONFIG_SUCCESS,
   CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
+  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
   UPDATE_BTC_CONFIG_ATTEMPT,
   UPDATE_BTC_CONFIG_FAILED,
-  UPDATE_BTC_CONFIG_SUCCESS,
-  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL
+  UPDATE_BTC_CONFIG_SUCCESS
 } from "../actions/DexActions";
 
 export default function ln(state = {}, action) {
@@ -78,8 +78,7 @@ export default function ln(state = {}, action) {
     case DEX_STARTUP_FAILED:
       return {
         ...state,
-        startAttempt: false,
-        startupStage: null
+        startAttempt: false
       };
     case DEX_STARTUP_SUCCESS:
       return {
@@ -87,7 +86,6 @@ export default function ln(state = {}, action) {
         startAttempt: false,
         exists: true,
         active: true,
-        startupStage: null,
         dexServerAddress: action.serverAddress
       };
     case DEX_LOGIN_ATTEMPT:
@@ -279,14 +277,16 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         logoutAttempt: true,
-        logoutError: null
+        logoutError: null,
+        openOrder: false,
       };
     case DEX_LOGOUT_SUCCESS:
       return {
         ...state,
         logoutAttempt: false,
         loggedIn: false,
-        logoutError: null
+        logoutError: null,
+        openOrder: false
       };
     case DEX_LOGOUT_FAILED:
       return {
@@ -299,7 +299,9 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         checkBtcConfigAttempt: true,
-        checkBtcConfigError: null
+        checkBtcConfigError: null,
+        btcConfigUpdateNeeded: false,
+        btcInstallNeeded: false
       };
     case CHECK_BTC_CONFIG_FAILED:
       return {
@@ -323,13 +325,14 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         checkBtcConfigAttempt: false,
-        btcIntallNeeded: true
+        btcInstallNeeded: true
       };
     case UPDATE_BTC_CONFIG_ATTEMPT:
       return {
         ...state,
         updateBtcConfigAttempt: true,
-        updateBtcConfigError: null
+        updateBtcConfigError: null,
+        btcConfig: null
       };
     case UPDATE_BTC_CONFIG_FAILED:
       return {

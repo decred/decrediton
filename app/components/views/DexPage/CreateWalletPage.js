@@ -19,7 +19,7 @@ export const CreateWalletPageContent = () => {
     onCheckBTCConfig,
     onUpdateBTCConfig,
     btcConfigUpdateNeeded,
-    btcIntallNeeded,
+    btcInstallNeeded,
     btcWalletName
   } = useDex();
 
@@ -114,7 +114,7 @@ export const CreateWalletPageContent = () => {
               <T id="dex.updateBTCConfigButton" m="Update BTC Config" />
             </KeyBlueButton>
           </div>
-        ) : btcIntallNeeded ? (
+        ) : btcInstallNeeded ? (
           <div>
             <T
               id="dex.checkBTCConfig"

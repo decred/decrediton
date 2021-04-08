@@ -34,7 +34,7 @@ export const useDex = () => {
   const dexAccountError = useSelector(sel.dexAccountError);
   const dexEnableError = useSelector(sel.dexEnableError);
   const btcConfig = useSelector(sel.btcConfig);
-  const btcIntallNeeded = useSelector(sel.btcIntallNeeded);
+  const btcInstallNeeded = useSelector(sel.btcInstallNeeded);
   const btcConfigUpdateNeeded = useSelector(sel.btcConfigUpdateNeeded);
   const btcWalletName = useSelector(sel.btcWalletName);
 
@@ -128,7 +128,7 @@ export const useDex = () => {
     dexEnableError,
     btcConfig,
     onCheckBTCConfig,
-    btcIntallNeeded,
+    btcInstallNeeded,
     btcConfigUpdateNeeded,
     onUpdateBTCConfig,
     btcWalletName

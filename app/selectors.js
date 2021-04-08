@@ -1875,6 +1875,6 @@ export const initError = get(["dex", "initError"]);
 export const dexAccountError = get(["dex", "dexAccountError"]);
 export const dexEnableError = get(["dex", "enabledError"]);
 export const btcConfig = get(["dex", "btcConfig"]);
-export const btcIntallNeeded = get(["dex", "btcIntallNeeded"]);
+export const btcInstallNeeded = get(["dex", "btcInstallNeeded"]);
 export const btcConfigUpdateNeeded = get(["dex", "btcConfigUpdateNeeded"]);
 export const btcWalletName = get(["walletLoader", "btcWalletName"]);

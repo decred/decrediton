@@ -1,8 +1,7 @@
 {
-  "name": "electron-demo",
+  "name": "dex",
   "version": "1.0.0",
-  "description": "Demo of Electron App using with DEX Core Library",
-  "main": "main.js",
+  "description": "DEX Core Library node implementation",
   "gypfile": true,
   "scripts": {
     "install": "go build -buildmode=c-shared -o ./libdexc/libdexc.so ./libdexc/... && ../.bin/node-gyp configure && ../.bin/node-gyp build && ../.bin/electron-rebuild"
