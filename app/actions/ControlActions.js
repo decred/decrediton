@@ -1120,6 +1120,7 @@ export const lockWalletOrAcct = (acctNumber) => async (dispatch, getState) => {
 
 export const checkAllAccountsEncrypted = () => (dispatch, getState) => {
   const { balances } = getState().grpc;
+  if (!balances) return;
   let allEncrypted = true;
   balances.forEach((acct) => {
     // imported account can be skipped.

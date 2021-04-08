@@ -12,6 +12,7 @@ const testButtonLabel = "test-button-label";
 const trezorActions = tza;
 const selectors = sel;
 const controlActions = ca;
+const testAccount = 0;
 
 let mockOnSubmit;
 let mockSignTransactionAttemptTrezor;
@@ -19,6 +20,7 @@ let mockSignTransactionAttempt;
 let mockUnsignedTransaction;
 let mockConstructTxResponse;
 let mockIsSendingTransaction;
+let mockAccountValue;
 
 beforeEach(() => {
   mockOnSubmit = jest.fn(() => {});
@@ -38,10 +40,11 @@ beforeEach(() => {
     () => false
   );
   selectors.isTrezor = jest.fn(() => false);
+  mockAccountValue = selectors.balanaces = jest.fn(() => testAccount);
 });
 
 test("render default SendTransactionButton ", () => {
-  render(<SendTransactionButton isTrezor={false} />);
+  render(<SendTransactionButton isTrezor={false} account={ { value: 0 } } />);
   expect(screen.getByText(/send/i)).toBeInTheDocument();
   const button = screen.getByRole("button");
   user.click(button);
@@ -59,7 +62,8 @@ test("render default SendTransactionButton ", () => {
   user.click(screen.getByText(/continue/i));
   expect(mockSignTransactionAttempt).toHaveBeenCalledWith(
     testPassPhrase,
-    testUnsignedTransaction
+    testUnsignedTransaction,
+    testAccount
   );
   expect(mockSignTransactionAttemptTrezor).not.toHaveBeenCalled();
   // modal has been closed
