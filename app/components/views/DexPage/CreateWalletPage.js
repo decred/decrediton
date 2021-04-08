@@ -127,7 +127,7 @@ export const CreateWalletPageContent = () => {
         ) : (
           <div>
             <T
-              id="dex.bTCConfigError"
+              id="dex.btcConfigError"
               m="Something has gone wrong and we are unable to obtain your bitcoin.conf, please try again."
             />
             <KeyBlueButton onClick={onCheckBTCConfig}>

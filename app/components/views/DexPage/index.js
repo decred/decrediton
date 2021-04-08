@@ -54,7 +54,7 @@ const DexPage = () => {
       Header = <InitPageHeader />;
     }
   } else {
-    Page = <div>ERROR! DEX NOT RUNNING</div>;
+    Page = <div><T id="dex.error.page" m="Critical Error! DEX is not running.  Please restart and check logs if problem persists." /></div>;
     Header = <ErrorHeader />;
   }
   return <StandalonePage header={Header}>{Page}</StandalonePage>;

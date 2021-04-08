@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import {
-  getDefaultBitcoinConfig,
+  getCurrentBitcoinConfig,
   updateDefaultBitcoinConfig,
   initGlobalCfg,
   validateGlobalCfgFile
@@ -538,7 +538,7 @@ function createDexWindow() {
 
 ipcMain.on("check-btc-config", async (event) => {
   try {
-    event.returnValue = await getDefaultBitcoinConfig();
+    event.returnValue = await getCurrentBitcoinConfig();
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);

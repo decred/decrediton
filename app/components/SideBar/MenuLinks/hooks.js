@@ -39,7 +39,7 @@ export function useMenuLinks() {
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
     }
-    if (isSPV) {
+    if (isSPV || isTrezor) {
       links = links.filter((l) => l.key !== DEX_KEY);
     }
 

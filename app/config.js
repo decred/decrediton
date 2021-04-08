@@ -263,20 +263,11 @@ export function checkNoLegacyWalletConfig(testnet, walletPath, noLegacyRpc) {
   }
 }
 
-export const getDefaultBitcoinConfig = () =>
-  new Promise((resolve, reject) => {
-    try {
-      const config = ini.parse(
-        fs.readFileSync(
-          path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
-          "utf8"
-        )
-      );
-      resolve(config);
-    } catch (e) {
-      reject(e);
-    }
-  });
+
+export const getCurrentBitcoinConfig = async () => {
+  const btcConfPath = path.join(getDefaultBitcoinDirectory(), "bitcoin.conf");
+  return ini.parse(fs.readFileSync(btcConfPath, "utf8"));
+}
 
 export function newDefaultBitcoinConfig(
   rpcuser,
@@ -342,12 +333,7 @@ export const updateDefaultBitcoinConfig = (
         let needPassword = true;
         let needBind = true;
         let needPort = true;
-        fileContents = ini.parse(
-          fs.readFileSync(
-            path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
-            "utf8"
-          )
-        );
+        fileContents = getCurrentBitcoinConfig();
         fileContents = Object.fromEntries(
           Object.entries(fileContents).map(([key, value]) => {
             // Check if any fields that are needed are currently used, if so keep those values

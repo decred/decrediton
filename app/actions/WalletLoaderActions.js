@@ -281,23 +281,18 @@ const finalCloseWallet = () => async (dispatch, getState) => {
   }
 };
 
-export const closeWalletRequest = () => (dispatch, getState) => {
+export const closeWalletRequest = () => async (dispatch, getState) => {
   const { loggedIn } = getState().dex;
-  if (loggedIn) {
-    logoutDex()
-      .then(() => {
-        dispatch(finalCloseWallet());
-      })
-      .catch((error) => {
-        let openOrder = false;
-        if (error.indexOf("cannot log out with active orders", 0) > -1) {
-          openOrder = true;
-        }
-        dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
-        dispatch(showCantCloseModal());
-      });
-  } else {
-    dispatch(finalCloseWallet());
+  
+  try {
+    if (loggedIn) {
+      await logoutDex();
+    }
+    return dispatch(finalCloseWallet());
+  } catch (error) {
+    let openOrder = error.indexOf("cannot log out with active orders", 0) > -1;
+    dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
+    dispatch(showCantCloseModal());
   }
 };
 

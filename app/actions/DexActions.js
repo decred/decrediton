@@ -3,7 +3,6 @@ import * as wallet from "wallet";
 import { ipcRenderer } from "electron";
 import { getWalletPath } from "main_dev/paths";
 import { getWalletCfg } from "config";
-import { isTestNet } from "selectors";
 import { addAllowedExternalRequest } from "./SettingsActions";
 import { closeWalletRequest } from "./WalletLoaderActions";
 import { EXTERNALREQUEST_DEX } from "main_dev/externalRequests";
@@ -21,7 +20,7 @@ export const enableDex = () => (dispatch, getState) => {
   } = getState();
 
   try {
-    const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+    const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
     walletConfig.set(
       configConstants.DEXWALLET_RPCUSERNAME,
       makeRandomString(12)
@@ -30,7 +29,8 @@ export const enableDex = () => (dispatch, getState) => {
       configConstants.DEXWALLET_RPCPASSWORD,
       makeRandomString(12)
     );
-    walletConfig.set(configConstants.DEXWALLET_HOSTPORT, "127.0.0.1:19110");
+    walletConfig.set(configConstants.DEXWALLET_HOSTPORT, 
+      sel.chainParams(getState()).DefaultWalletRPCListener);
     walletConfig.set(configConstants.ENABLE_DEX, true);
     dispatch(addAllowedExternalRequest(EXTERNALREQUEST_DEX));
 
@@ -253,7 +253,7 @@ export const btcCreateWalletDex = (
     const {
       dex: { btcConfig }
     } = getState();
-    const testnet = isTestNet(getState());
+    const testnet = sel.isTestNet(getState());
     const account = btcWalletName;
     const rpcuser = btcConfig.rpcuser;
     const rpcpass = btcConfig.rpcpassword;
@@ -282,7 +282,7 @@ export const btcCreateWalletDex = (
     const {
       daemon: { walletName }
     } = getState();
-    const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+    const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
     walletConfig.set(configConstants.BTCWALLET_NAME, account);
     // Request current user information
     dispatch(userDex());
@@ -436,8 +436,8 @@ export const checkBTCConfig = () => (dispatch, getState) => {
     if (
       res.rpcuser &&
       res.rpcpassword &&
-      ((!isTestNet(getState()) && !res.test && res.rpcbind && res.rpcport) ||
-        (isTestNet(getState()) &&
+      ((!sel.isTestNet(getState()) && !res.test && res.rpcbind && res.rpcport) ||
+        (sel.isTestNet(getState()) &&
           res.test &&
           res.test.rpcbind &&
           res.test.rpcbind)) &&
@@ -469,8 +469,8 @@ export const updateBTCConfig = () => (dispatch, getState) => {
     const rpcuser = makeRandomString(12);
     const rpcpassword = makeRandomString(12);
     const rpcbind = "127.0.0.1";
-    const rpcport = isTestNet(getState()) ? "18332" : "8332";
-    const testnet = isTestNet(getState());
+    const rpcport = sel.isTestNet(getState()) ? "18332" : "8332";
+    const testnet = sel.isTestNet(getState());
     const res = ipcRenderer.sendSync(
       "update-btc-config",
       rpcuser,
@@ -504,7 +504,7 @@ export const createDexAccount = (passphrase, accountName) => (
   const {
     daemon: { walletName }
   } = getState();
-  const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+  const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
   dispatch({ type: CREATEDEXACCOUNT_ATTEMPT });
   return wallet
     .getNextAccount(sel.walletService(getState()), passphrase, accountName)
