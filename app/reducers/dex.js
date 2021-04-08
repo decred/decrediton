@@ -278,7 +278,7 @@ export default function ln(state = {}, action) {
         ...state,
         logoutAttempt: true,
         logoutError: null,
-        openOrder: false,
+        openOrder: false
       };
     case DEX_LOGOUT_SUCCESS:
       return {

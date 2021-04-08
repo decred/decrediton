@@ -894,7 +894,7 @@ export const initCheckDex = () =>
 export const initDexCall = (passphrase) =>
   new Promise((resolve, reject) => {
     if (!dex) {
-      return  resolve();
+      return resolve();
     }
     try {
       const init = callDEX("Init", { pass: passphrase });

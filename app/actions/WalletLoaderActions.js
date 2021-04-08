@@ -283,7 +283,7 @@ const finalCloseWallet = () => async (dispatch, getState) => {
 
 export const closeWalletRequest = () => async (dispatch, getState) => {
   const { loggedIn } = getState().dex;
-  
+
   try {
     if (loggedIn) {
       await logoutDex();

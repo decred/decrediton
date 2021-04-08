@@ -263,11 +263,10 @@ export function checkNoLegacyWalletConfig(testnet, walletPath, noLegacyRpc) {
   }
 }
 
-
 export const getCurrentBitcoinConfig = async () => {
   const btcConfPath = path.join(getDefaultBitcoinDirectory(), "bitcoin.conf");
   return ini.parse(fs.readFileSync(btcConfPath, "utf8"));
-}
+};
 
 export function newDefaultBitcoinConfig(
   rpcuser,

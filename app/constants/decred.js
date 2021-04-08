@@ -32,11 +32,10 @@ export const TestNetParams = {
   PKHEdwardsAddrID: [0x0f, 0x01], // starts with Te
   PKHSchnorrAddrID: [0x0e, 0xe3], // starts with TS
   ScriptHashAddrID: [0x0e, 0xfc], // starts with Tc
-  
+
   // DefaultWalletRPCListener is the default host and port that will be used
   // if the rpc server is started (currently only used when DEX is enabled).
-   DefaultWalletRPCListener: "127.0.0.1:19110"
-  
+  DefaultWalletRPCListener: "127.0.0.1:19110"
 };
 
 export const MainNetParams = {

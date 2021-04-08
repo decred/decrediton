@@ -29,8 +29,10 @@ export const enableDex = () => (dispatch, getState) => {
       configConstants.DEXWALLET_RPCPASSWORD,
       makeRandomString(12)
     );
-    walletConfig.set(configConstants.DEXWALLET_HOSTPORT, 
-      sel.chainParams(getState()).DefaultWalletRPCListener);
+    walletConfig.set(
+      configConstants.DEXWALLET_HOSTPORT,
+      sel.chainParams(getState()).DefaultWalletRPCListener
+    );
     walletConfig.set(configConstants.ENABLE_DEX, true);
     dispatch(addAllowedExternalRequest(EXTERNALREQUEST_DEX));
 
@@ -436,7 +438,10 @@ export const checkBTCConfig = () => (dispatch, getState) => {
     if (
       res.rpcuser &&
       res.rpcpassword &&
-      ((!sel.isTestNet(getState()) && !res.test && res.rpcbind && res.rpcport) ||
+      ((!sel.isTestNet(getState()) &&
+        !res.test &&
+        res.rpcbind &&
+        res.rpcport) ||
         (sel.isTestNet(getState()) &&
           res.test &&
           res.test.rpcbind &&
