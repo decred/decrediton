@@ -7,7 +7,6 @@ import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 import style from "./DexPage.module.css";
-import { dexConfig } from "../../../selectors";
 
 export const RegisterPageContent = () => {
   const {

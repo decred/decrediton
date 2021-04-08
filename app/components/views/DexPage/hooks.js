@@ -76,9 +76,10 @@ export const useDex = () => {
 
   const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
 
-  const onGetConfig = useCallback((address) => dispatch(da.getConfigDex(address)), [
-    dispatch
-  ]);
+  const onGetConfig = useCallback(
+    (address) => dispatch(da.getConfigDex(address)),
+    [dispatch]
+  );
 
   const onCheckBTCConfig = useCallback(() => dispatch(da.checkBTCConfig()), [
     dispatch

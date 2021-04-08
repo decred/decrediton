@@ -362,7 +362,7 @@ export const registerDex = (appPass) => (dispatch, getState) => {
     dex: { config, addr }
   } = getState();
   if (config.feeAsset.id != 42) {
-    throw("unexpected fee payment type, expected to be paid in DCR")
+    throw "unexpected fee payment type, expected to be paid in DCR";
   }
   const fee = config.feeAsset.amount;
   try {
