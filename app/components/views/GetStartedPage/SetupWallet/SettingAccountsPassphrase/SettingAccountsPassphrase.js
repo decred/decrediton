@@ -43,16 +43,16 @@ export default ({
       {error && <div className="error">{error}</div>}
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
-          modalTitle={<T id="process.mangedTickets.title" m="Passphrase" />}
+          modalTitle={<T id="process.settingPassAccts.title" m="Passphrase" />}
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
-          buttonLabel={<T id="process.mangedTickets.button" m="Continue" />}
+          buttonLabel={<T id="process.settingPassAccts.button" m="Continue" />}
           disabled={isProcessingManaged}
           loading={isProcessingManaged}
         />
         {!isProcessingManaged && (
           <InvisibleButton className={styles.skipButton} onClick={cancel}>
-            <T id="process.mangedTickets.button.skip" m="Skip" />
+            <T id="process.settingPassAccts.button.skip" m="Skip" />
           </InvisibleButton>
         )}
       </div>
