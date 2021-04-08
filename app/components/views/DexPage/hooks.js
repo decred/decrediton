@@ -14,7 +14,7 @@ export const useDex = () => {
   const loginDexAttempt = useSelector(sel.loginDexAttempt);
   const loggedIn = useSelector(sel.loggedInDex);
   const dexAddr = useSelector(sel.dexAddr);
-  const dexFee = useSelector(sel.dexFee);
+  const dexConfig = useSelector(sel.dexConfig);
   const dexRegistered = useSelector(sel.dexRegistered);
   const dexConnected = useSelector(sel.dexConnected);
   const dexDCRWalletRunning = useSelector(sel.dexDCRWalletRunning);
@@ -76,7 +76,7 @@ export const useDex = () => {
 
   const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
 
-  const onGetFee = useCallback((address) => dispatch(da.getFeeDex(address)), [
+  const onGetConfig = useCallback((address) => dispatch(da.getConfigDex(address)), [
     dispatch
   ]);
 
@@ -102,14 +102,14 @@ export const useDex = () => {
     loginDexAttempt,
     loggedIn,
     dexAddr,
-    dexFee,
+    dexConfig,
     dexRegistered,
     dexConnected,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
     onEnableDex,
     enableDexAttempt,
-    onGetFee,
+    onGetConfig,
     user,
     onLaunchDexWindow,
     onBTCCreateWalletDex,

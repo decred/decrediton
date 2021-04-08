@@ -997,14 +997,14 @@ export const createWalletDexCall = (
     }
   });
 
-export const getFeeDexCall = (addr) =>
+export const getDexConfigCall = (addr) =>
   new Promise((resolve, reject) => {
     if (!dex) {
       return resolve();
     }
     try {
-      const getfee = callDEX("GetFee", { addr });
-      return resolve(getfee);
+      const getDexConfig = callDEX("DexConfig", { addr });
+      return resolve(getDexConfig);
     } catch (error) {
       console.log("getfee error", error);
       return reject(error);

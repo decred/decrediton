@@ -321,18 +321,18 @@ export const userDex = () => (dispatch, getState) => {
   }
 };
 
-export const DEX_GETFEE_ATTEMPT = "DEX_GETFEE_ATTEMPT";
-export const DEX_GETFEE_SUCCESS = "DEX_GETFEE_SUCCESS";
-export const DEX_GETFEE_FAILED = "DEX_GETFEE_FAILED";
+export const DEX_GETCONFIG_ATTEMPT = "DEX_GETCONFIG_ATTEMPT";
+export const DEX_GETCONFIG_SUCCESS = "DEX_GETCONFIG_SUCCESS";
+export const DEX_GETCONFIG_FAILED = "DEX_GETCONFIG_FAILED";
 
-export const getFeeDex = (addr) => (dispatch, getState) => {
-  dispatch({ type: DEX_GETFEE_ATTEMPT });
+export const getConfigDex = (addr) => (dispatch, getState) => {
+  dispatch({ type: DEX_GETCONFIG_ATTEMPT });
   if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_GETFEE_FAILED, error: "Dex isn't active" });
+    dispatch({ type: DEX_GETCONFIG_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("get-fee-dex", addr);
+    const res = ipcRenderer.sendSync("get-config-dex", addr);
     if (res instanceof Error) {
       throw res;
     } else if (typeof res === "string") {
@@ -340,9 +340,10 @@ export const getFeeDex = (addr) => (dispatch, getState) => {
         throw res;
       }
     }
-    dispatch({ type: DEX_GETFEE_SUCCESS, fee: res, addr });
+    const resJson = JSON.parse(res);
+    dispatch({ type: DEX_GETCONFIG_SUCCESS, config: resJson, addr });
   } catch (error) {
-    dispatch({ type: DEX_GETFEE_FAILED, error });
+    dispatch({ type: DEX_GETCONFIG_FAILED, error });
     return;
   }
 };
@@ -354,12 +355,16 @@ export const DEX_REGISTER_FAILED = "DEX_REGISTER_FAILED";
 export const registerDex = (appPass) => (dispatch, getState) => {
   dispatch({ type: DEX_REGISTER_ATTEMPT });
   if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_REGISTER_FAILED, error: "Dex isn't active" });
+    dispatch({ type: DEX_REGISTER_FAILED, error: "Dex isn't acteive" });
     return;
   }
   const {
-    dex: { fee, addr }
+    dex: { config, addr }
   } = getState();
+  if (config.feeAsset.id != 42) {
+    throw("unexpected fee payment type, expected to be paid in DCR")
+  }
+  const fee = config.feeAsset.amount;
   try {
     let res = ipcRenderer.sendSync("register-dex", appPass, addr, fee);
     if (res instanceof Error) {

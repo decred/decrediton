@@ -7,13 +7,14 @@ import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 import style from "./DexPage.module.css";
+import { dexConfig } from "../../../selectors";
 
 export const RegisterPageContent = () => {
   const {
     onRegisterDex,
     registerDexAttempt,
-    onGetFee,
-    dexFee,
+    onGetConfig,
+    dexConfig,
     dexAddr,
     defaultServerAddress,
     dexRegisterError
@@ -26,8 +27,8 @@ export const RegisterPageContent = () => {
     setAddress(null);
   }, []);
 
-  const onGetFeeDex = () => {
-    onGetFee(addr);
+  const onGetConfigDex = () => {
+    onGetConfig(addr);
     resetState();
   };
 
@@ -52,14 +53,14 @@ export const RegisterPageContent = () => {
     }
   }, [isValid, addr]);
 
-  if (dexFee && dexAddr) {
+  if (dexConfig && dexAddr) {
     return (
       <div>
         <T
           id="dex.payRegistration.Fee"
           m="Please enter your DEX app passphrase to pay the following fee:"
         />
-        <Balance amount={dexFee} />
+        <Balance amount={dexConfig.feeAsset.amount} />
         <T
           id="dex.payRegistration.Address"
           m="DEX Server registering to:"
@@ -75,7 +76,7 @@ export const RegisterPageContent = () => {
             />
           }
           passphraseLabel={
-            <T id="dex.payDexFeeAppPassphrase" m="DEX App Passphrase" />
+            <T id="dex.payDexFeeAppPassphrase" m="DEX Passphrase" />
           }
           loading={registerDexAttempt}
           onSubmit={onRegisterDex}
@@ -99,7 +100,7 @@ export const RegisterPageContent = () => {
         <KeyBlueButton
           disabled={!isValid || registerDexAttempt}
           loading={registerDexAttempt}
-          onClick={onGetFeeDex}>
+          onClick={onGetConfigDex}>
           <T id="dex.getFeeButton" m="Get Fee to Pay" />
         </KeyBlueButton>
       </div>

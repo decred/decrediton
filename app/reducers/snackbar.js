@@ -8,7 +8,7 @@ import {
   DEX_INIT_FAILED,
   DEX_CREATEWALLET_FAILED,
   DEX_REGISTER_FAILED,
-  DEX_GETFEE_FAILED,
+  DEX_GETCONFIG_FAILED,
   BTC_CREATEWALLET_FAILED
 } from "../actions/DexActions";
 import {
@@ -597,9 +597,9 @@ const messages = defineMessages({
     id: "dex.register.failed",
     defaultMessage: "Paying DEX Fee Failed: {originalError}"
   },
-  DEX_GETFEE_FAILED: {
-    id: "dex.getFee.failed",
-    defaultMessage: "Getting DEX Fee and Address Failed: {originalError}"
+  DEX_GETCONFIG_FAILED: {
+    id: "dex.getConfig.failed",
+    defaultMessage: "Getting DEX Config Failed: {originalError}"
   },
   BTC_CREATEWALLET_FAILED: {
     id: "dex.connectBTCWallet.failed",
@@ -816,7 +816,7 @@ export default function snackbar(state = {}, action) {
     case DEX_INIT_FAILED:
     case DEX_CREATEWALLET_FAILED:
     case DEX_REGISTER_FAILED:
-    case DEX_GETFEE_FAILED:
+    case DEX_GETCONFIG_FAILED:
     case BTC_CREATEWALLET_FAILED:
       type = "Error";
       if (

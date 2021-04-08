@@ -75,7 +75,7 @@ import {
   userDex,
   loginDex,
   logoutDex,
-  getFeeDex,
+  getConfigDex,
   registerDex
 } from "./main_dev/ipc";
 import {
@@ -467,9 +467,9 @@ ipcMain.on(
   }
 );
 
-ipcMain.on("get-fee-dex", async (event, addr) => {
+ipcMain.on("get-config-dex", async (event, addr) => {
   try {
-    event.returnValue = await getFeeDex(addr);
+    event.returnValue = await getConfigDex(addr);
   } catch (error) {
     if (!(error instanceof Error)) {
       event.returnValue = new Error(error);

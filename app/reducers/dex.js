@@ -26,9 +26,9 @@ import {
   DEX_CREATEWALLET_ATTEMPT,
   DEX_CREATEWALLET_FAILED,
   DEX_CREATEWALLET_SUCCESS,
-  DEX_GETFEE_ATTEMPT,
-  DEX_GETFEE_FAILED,
-  DEX_GETFEE_SUCCESS,
+  DEX_GETCONFIG_ATTEMPT,
+  DEX_GETCONFIG_FAILED,
+  DEX_GETCONFIG_SUCCESS,
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
@@ -229,29 +229,27 @@ export default function ln(state = {}, action) {
         dexInit: action.res,
         dexInitError: null
       };
-    case DEX_GETFEE_ATTEMPT:
+    case DEX_GETCONFIG_ATTEMPT:
       return {
         ...state,
-        getFeeAttempt: true,
-        fee: null,
+        getConfigAttempt: true,
+        config: null,
         addr: null,
-        getFeeError: null
+        getConfigError: null
       };
-    case DEX_GETFEE_FAILED:
+    case DEX_GETCONFIG_FAILED:
       return {
         ...state,
-        getFeeAttempt: false,
-        fee: null,
-        addr: null,
-        getFeeError: action.error
+        getConfigAttempt: false,
+        getConfigError: action.error
       };
-    case DEX_GETFEE_SUCCESS:
+    case DEX_GETCONFIG_SUCCESS:
       return {
         ...state,
-        getFeeAttempt: false,
-        fee: action.fee,
+        getConfigAttempt: false,
+        config: action.config,
         addr: action.addr,
-        getFeeError: null
+        getConfigError: null
       };
     case CREATEDEXACCOUNT_ATTEMPT:
       return {

@@ -22,7 +22,7 @@ import {
   initCheckDex,
   initDexCall,
   createWalletDexCall,
-  getFeeDexCall,
+  getDexConfigCall,
   registerDexCall,
   userDexCall,
   loginDexCall,
@@ -343,17 +343,17 @@ export const createWalletDex = async (
   }
 };
 
-export const getFeeDex = async (addr) => {
+export const getConfigDex = async (addr) => {
   if (!GetDexPID()) {
-    logger.log("info", "Skipping getfee since dex is not runnning");
+    logger.log("info", "Skipping get config since dex is not runnning");
     return false;
   }
 
   try {
-    const getFee = await getFeeDexCall(addr);
-    return getFee;
+    const getDexConfig = await getDexConfigCall(addr);
+    return getDexConfig;
   } catch (e) {
-    logger.log("error", "error get fee dex: " + e);
+    logger.log("error", "error get config dex: " + e);
     return e;
   }
 };

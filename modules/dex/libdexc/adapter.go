@@ -71,7 +71,7 @@ func NewCoreAdapter() *CoreAdapter {
 		"Register":     c.register,
 		"Login":        c.login,
 		"Logout":       c.logout,
-		"GetFee":       c.getFee,
+		"DexConfig":    c.getDexConfig,
 	}
 
 	return c
@@ -125,7 +125,7 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	webSrv, err := webserver.New(c.core, form.WebAddr, form.SiteDir, dex.StdOutLogger("SRVR", c.logLevel), false)
+	webSrv, err := webserver.New(c.core, form.WebAddr, form.SiteDir, dex.StdOutLogger("SRVR", c.logLevel), false, false)
 	if err != nil {
 		return "", fmt.Errorf("Error creating web server: %v", err)
 	}
@@ -228,7 +228,7 @@ func (c *CoreAdapter) user(raw json.RawMessage) (string, error) {
 	return reply(c.core.User())
 }
 
-func (c *CoreAdapter) getFee(raw json.RawMessage) (string, error) {
+func (c *CoreAdapter) getDexConfig(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		Addr string `json:"addr"`
 		Cert string `json:"cert"` // Not required if there is an entry for the server in the dcrdex/client/core/certs.go
@@ -236,7 +236,7 @@ func (c *CoreAdapter) getFee(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	return replyWithErrorCheck(c.core.GetFee(form.Addr, []byte(form.Cert)))
+	return replyWithErrorCheck(c.core.GetDEXConfig(form.Addr, []byte(form.Cert)))
 }
 
 func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
