@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TicketListPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 import { useVSPTicketsList } from "./hooks";
-import * as txTypes from "constants/Decrediton";
+import * as txTypes from "constants/decrediton";
 import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,

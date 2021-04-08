@@ -1,7 +1,7 @@
 import { classNames, Tabs, Tab, Tooltip } from "pi-ui";
 import { useMenuLinks } from "./hooks";
 import styles from "./MenuLinks.module.css";
-import { MENU_LINKS_PER_ROW } from "constants/Decrediton";
+import { MENU_LINKS_PER_ROW } from "constants/decrediton";
 
 const MenuLinks = () => {
   const {

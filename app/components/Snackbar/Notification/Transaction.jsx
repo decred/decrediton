@@ -10,7 +10,7 @@ import {
   TICKET,
   VOTE,
   REVOCATION
-} from "constants/Decrediton";
+} from "constants/decrediton";
 import style from "../Snackbar.module.css";
 
 const messages = defineMessages({

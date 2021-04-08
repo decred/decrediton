@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
 import Row from "./Row";
 import { Balance } from "shared";
-import { diffBetweenTwoTs } from "helpers/dateFormat";
+import { diffBetweenTwoTs } from "helpers";
 import { messageByType } from "./helpers";
 import TicketPriceMessage from "./TicketPriceMessage";
 import styles from "./TxHistory.module.css";
