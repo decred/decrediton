@@ -14,6 +14,7 @@ import {
   getAccountsAttempt,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
+import { lockWalletOrAcct, unlockAcctAndExecFn } from "./ControlActions";
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -98,8 +99,7 @@ export const runAccountMixer = ({
   new Promise((resolve) => {
     dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
     const runMixerAsync = async () => {
-      await dispatch(unlockWalletOrAcct(passphrase));
-      const mixerStreamer = await runAccountMixerRequest(
+      const mixerStreamer = await dispatch(unlockAcctAndExecFn(passphrase, changeAccount, () => runAccountMixerRequest(
         sel.accountMixerService(getState()),
         {
           mixedAccount,
@@ -107,7 +107,7 @@ export const runAccountMixer = ({
           changeAccount,
           csppServer
         }
-      );
+      ), true));
       return { mixerStreamer };
     };
 
@@ -153,8 +153,9 @@ export const stopAccountMixer = (cleanLogs) => {
     if (!mixerStreamer) return;
     dispatch({ type: STOPMIXER_ATTEMPT });
     try {
+      const changeAccount = sel.getChangeAccount(getState());
       mixerStreamer.cancel();
-      await dispatch(lockWalletOrAcct());
+      await dispatch(lockWalletOrAcct(changeAccount));
       dispatch({ type: STOPMIXER_SUCCESS });
     } catch (error) {
       dispatch({ type: STOPMIXER_FAILED, error });

@@ -162,63 +162,48 @@ export const purchaseTicketsV3 = (
   signTx,
   vsp,
   csppReq
-) =>
-  new Promise((resolve, reject) => {
-    const unlockReq = new api.UnlockWalletRequest();
-    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-    // Unlock wallet so we can call the request.
-    walletService.unlockWallet(unlockReq, (error) => {
+) => new Promise((resolve, reject) => {
+    const request = new api.PurchaseTicketsRequest();
+    const {
+      mixedAccount,
+      changeAccount,
+      csppServer,
+      csppPort,
+      mixedAcctBranch
+    } = csppReq;
+    // if mixed or change account is defined it is a privacy request.
+    if (mixedAccount || changeAccount) {
+      // check if any cspp argument is missing.
+      // mixed acct branch can be 0.
+      if (
+        !mixedAccount ||
+        !changeAccount ||
+        !csppServer ||
+        !csppPort ||
+        (!mixedAcctBranch && mixedAcctBranch !== 0)
+      ) {
+        throw "missing cspp argument";
+      }
+      request.setMixedAccount(mixedAccount);
+      request.setMixedSplitAccount(mixedAccount);
+      request.setChangeAccount(changeAccount);
+      request.setCsppServer(csppServer + ":" + csppPort);
+      request.setMixedAccountBranch(mixedAcctBranch);
+    } else {
+      request.setChangeAccount(accountNum.value);
+    }
+    request.setAccount(accountNum.value);
+    request.setNumTickets(numTickets);
+    request.setDontSignTx(!signTx);
+    const { pubkey, host } = vsp;
+    request.setVspPubkey(pubkey);
+    request.setVspHost("https://" + host);
+    walletService.purchaseTickets(request, (error, response) => {
       if (error) {
         reject(error);
       }
-      const request = new api.PurchaseTicketsRequest();
-      const {
-        mixedAccount,
-        changeAccount,
-        csppServer,
-        csppPort,
-        mixedAcctBranch
-      } = csppReq;
-      // if mixed or change account is defined it is a privacy request.
-      if (mixedAccount || changeAccount) {
-        // check if any cspp argument is missing.
-        // mixed acct branch can be 0.
-        if (
-          !mixedAccount ||
-          !changeAccount ||
-          !csppServer ||
-          !csppPort ||
-          (!mixedAcctBranch && mixedAcctBranch !== 0)
-        ) {
-          throw "missing cspp argument";
-        }
-        request.setMixedAccount(mixedAccount);
-        request.setMixedSplitAccount(mixedAccount);
-        request.setChangeAccount(changeAccount);
-        request.setCsppServer(csppServer + ":" + csppPort);
-        request.setMixedAccountBranch(mixedAcctBranch);
-      } else {
-        request.setChangeAccount(accountNum.value);
-      }
-      request.setAccount(accountNum.value);
-      request.setNumTickets(numTickets);
-      request.setDontSignTx(!signTx);
-      const { pubkey, host } = vsp;
-      request.setVspPubkey(pubkey);
-      request.setVspHost("https://" + host);
-      walletService.purchaseTickets(request, (error, response) => {
-        if (error) {
-          reject(error);
-        }
-        // Lock wallet and return response from the request.
-        const lockReq = new api.LockWalletRequest();
-        walletService.lockWallet(lockReq, (error) => {
-          if (error) {
-            reject(error);
-          }
-          resolve(response);
-        });
-      });
+
+      resolve(response);
     });
   });
 
