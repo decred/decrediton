@@ -57,7 +57,7 @@ export const RegisterPageContent = () => {
       <div>
         <T
           id="dex.payRegistration.Fee"
-          m="Please enter your DEX app passphrase to pay the following fee:"
+          m="Please enter your DEX passphrase to pay the following fee:"
         />
         <Balance amount={dexConfig.feeAsset.amount} />
         <T
@@ -67,11 +67,12 @@ export const RegisterPageContent = () => {
         {dexAddr}
         <PassphraseModalButton
           disabled={registerDexAttempt}
-          modalTitle={<T id="dex.payDexFeeModalTitle" m="Pay DEX Fee" />}
+          modalTitle={<T id="dex.payDexFeeModalTitle" m="Confirm Registration" />}
           modalDescription={
             <T
               id="dex.payDexFeeModalDescription"
-              m="Please enter your DEX App passphrase to pay the fee to register to the DEX Server"
+              m="Enter your DEX passphrase to pay the registration fee of {fee} to register at the DEX of {address}.  ** Note ** The DCR lot size for this DEX is {lotsize}.  All trades are in multiples of this lot size.  This is the minimum possible trade amount in DCR."
+              values={{fee: <Balance noSmallAmount bold amount={dexConfig.feeAsset.amount} />, address: dexAddr, lotsize: <Balance noSmallAmount bold amount={dexConfig.assets["42"].lotSize} />}}
             />
           }
           passphraseLabel={
@@ -79,7 +80,7 @@ export const RegisterPageContent = () => {
           }
           loading={registerDexAttempt}
           onSubmit={onRegisterDex}
-          buttonLabel={<T id="dex.payDexFeeButton" m="Pay DEX Fee" />}
+          buttonLabel={<T id="dex.payDexFeeButton" m="Register" />}
         />
         {dexRegisterError && (
           <div className={style.error}>{dexRegisterError}</div>
