@@ -304,7 +304,8 @@ export default function control(state = {}, action) {
         ...state,
         purchaseTicketsError: null,
         purchaseTicketsRequestAttempt: true,
-        numTicketsToBuy: action.numTicketsToBuy
+        numTicketsToBuy: action.numTicketsToBuy,
+        modalVisible: false
       };
     case PURCHASETICKETS_FAILED:
       return {
