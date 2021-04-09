@@ -305,6 +305,11 @@ export default function control(state = {}, action) {
         purchaseTicketsError: null,
         purchaseTicketsRequestAttempt: true,
         numTicketsToBuy: action.numTicketsToBuy,
+        // set modalVisible to false to hide blur effect instantly.
+        // Without this, it is dismissed with delay. Some hint for later
+        // investigation: the redux store updates fine, but the selector reads
+        // the value of `modalVisible` wrong at first, and after some delay,
+        // it is updated with the right value.
         modalVisible: false
       };
     case PURCHASETICKETS_FAILED:
