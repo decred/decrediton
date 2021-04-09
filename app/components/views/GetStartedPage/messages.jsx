@@ -61,8 +61,13 @@ export const messages = defineMessages({
   }
 });
 
-export const UpdateAvailableLink = ({ updateAvailable }) => (
+export const UpdateAvailableLink = ({
+  updateAvailable,
+  className,
+  tooltipClassName
+}) => (
   <Tooltip
+    contentClassName={tooltipClassName}
     content={
       <T
         id="getStarted.updateAvailableTooltip"
@@ -70,7 +75,7 @@ export const UpdateAvailableLink = ({ updateAvailable }) => (
         values={{ version: updateAvailable }}
       />
     }>
-    <ExternalLink href="https://decred.org/downloads">
+    <ExternalLink href="https://decred.org/downloads" className={className}>
       <T id="getStarted.updateAvailable" m="Update Available" />
     </ExternalLink>
   </Tooltip>

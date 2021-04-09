@@ -37,7 +37,11 @@ const GetStarted = ({
       <div className={classNames(styles.getstarted, styles.loader)}>
         <div className={styles.loaderSettingsLogs}>
           {updateAvailable && (
-            <UpdateAvailableLink updateAvailable={updateAvailable} />
+            <UpdateAvailableLink
+              updateAvailable={updateAvailable}
+              className={styles.updateAvailableLink}
+              tooltipClassName={styles.updateAvailableLinkTooltip}
+            />
           )}
           <AboutModalButton {...{ appVersion, updateAvailable }} />
           {showNavLinks && (
