@@ -23,7 +23,6 @@ export const CreateWalletPageContent = () => {
     btcWalletName
   } = useDex();
 
-  const [isValid, setIsValid] = useState(false);
   const [walletName, setWalletName] = useState(btcWalletName);
   const [error, setIsError] = useState("");
 
@@ -34,27 +33,6 @@ export const CreateWalletPageContent = () => {
   useMountEffect(() => {
     onCheckBTCConfig();
   });
-
-  useEffect(() => {
-    setIsValid(!!walletName);
-  }, [walletName]);
-
-  useEffect(() => {
-    if (walletName === null) {
-      return;
-    }
-    if (isValid) {
-      setIsError(null);
-      return;
-    }
-    if (!walletName) {
-      const error = (
-        <T id="error.BTC.WatllName" m="Please enter a valid wallet name" />
-      );
-      setIsError(error);
-      return;
-    }
-  }, [isValid, walletName]);
 
   const onCreateWallet = (passphrase, args) => {
     const { appPassphrase } = args;
@@ -81,11 +59,10 @@ export const CreateWalletPageContent = () => {
               required
               value={walletName}
               onChange={(e) => setWalletName(e.target.value)}
-              placeholder="BTC Wallet Name"
+              placeholder="BTC Wallet Name (leave empty if unnamed default wallet)"
             />
             {error && <div className="error">{error}</div>}
             <AppPassAndPassphraseModalButton
-              disabled={!isValid}
               passphraseLabel={
                 <T
                   id="dex.createBTCWalletPassphrase"
