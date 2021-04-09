@@ -67,12 +67,30 @@ export const RegisterPageContent = () => {
         {dexAddr}
         <PassphraseModalButton
           disabled={registerDexAttempt}
-          modalTitle={<T id="dex.payDexFeeModalTitle" m="Confirm Registration" />}
+          modalTitle={
+            <T id="dex.payDexFeeModalTitle" m="Confirm Registration" />
+          }
           modalDescription={
             <T
               id="dex.payDexFeeModalDescription"
               m="Enter your DEX passphrase to pay the registration fee of {fee} to register at the DEX of {address}.  ** Note ** The DCR lot size for this DEX is {lotsize}.  All trades are in multiples of this lot size.  This is the minimum possible trade amount in DCR."
-              values={{fee: <Balance noSmallAmount bold amount={dexConfig.feeAsset.amount} />, address: dexAddr, lotsize: <Balance noSmallAmount bold amount={dexConfig.assets["42"].lotSize} />}}
+              values={{
+                fee: (
+                  <Balance
+                    noSmallAmount
+                    bold
+                    amount={dexConfig.feeAsset.amount}
+                  />
+                ),
+                address: dexAddr,
+                lotsize: (
+                  <Balance
+                    noSmallAmount
+                    bold
+                    amount={dexConfig.assets["42"].lotSize}
+                  />
+                )
+              }}
             />
           }
           passphraseLabel={

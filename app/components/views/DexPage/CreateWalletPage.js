@@ -3,7 +3,7 @@ import { useMountEffect } from "hooks";
 import { AppPassAndPassphraseModalButton, KeyBlueButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { TextInput } from "inputs";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 
@@ -24,7 +24,6 @@ export const CreateWalletPageContent = () => {
   } = useDex();
 
   const [walletName, setWalletName] = useState(btcWalletName);
-  const [error, setIsError] = useState("");
 
   const resetState = useCallback(() => {
     setWalletName(btcWalletName);
@@ -61,7 +60,6 @@ export const CreateWalletPageContent = () => {
               onChange={(e) => setWalletName(e.target.value)}
               placeholder="BTC Wallet Name (leave empty if unnamed default wallet)"
             />
-            {error && <div className="error">{error}</div>}
             <AppPassAndPassphraseModalButton
               passphraseLabel={
                 <T
