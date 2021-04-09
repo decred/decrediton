@@ -34,9 +34,7 @@ const Modal = ({
           />
         )}
       </div>
-      <div className={style.geaderDescription}>
-        {modalDescription}
-      </div>
+      <div className={style.geaderDescription}>{modalDescription}</div>
     </div>
     <div className={style.content}>
       <PassphraseModalField

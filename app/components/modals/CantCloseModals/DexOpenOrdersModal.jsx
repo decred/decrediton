@@ -17,9 +17,7 @@ const DexOpenOrdersModal = ({ show, onCancelModal }) => (
       />
     </div>
     <div className={styles.toolbar}>
-      <KeyBlueButton
-        className={styles.confirmButton}
-        onClick={onCancelModal}>
+      <KeyBlueButton className={styles.confirmButton} onClick={onCancelModal}>
         <T id="dex.openorders.confirmModal.goback" m="Go back" />
       </KeyBlueButton>
     </div>
