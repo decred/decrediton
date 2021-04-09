@@ -445,8 +445,11 @@ ipcMain.on("get-dcrlnd-logs", (event) => {
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
+  const logTransport = logger.transports.find(transport => {
+    return transport.filename === 'decrediton.log'
+  });
   const logFileName =
-    logger.transports.file.dirname + "/" + logger.transports.file.filename;
+    logTransport.dirname + "/" + logTransport.filename;
   readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
     if (err) {
       logger.log("error", "Error reading log: " + err);
