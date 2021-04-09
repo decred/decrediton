@@ -845,6 +845,21 @@
   color: var(--linear-progress-text);
   background-image: var(--blockchain);
 }
+.updateAvailableLink {
+  color: var(--input-color);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 600;
+  padding: 12px 30px 14px 30px;
+  outline: none;
+}
+.updateAvailableLink:hover {
+  color: var(--input-color-hover);
+}
+.updateAvailableLinkTooltip {
+  width: max-content;
+  text-align: center;
+}
 
 @media screen and (max-width: 1919px) {
   .settings .goBackScreenButtonArea {
