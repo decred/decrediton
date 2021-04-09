@@ -20,7 +20,7 @@ import {
   VSP_FEE_PROCESS_PAID
 } from "constants";
 import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
-import { getNextAddressAttempt } from "./ControlActions";
+import { getNextAddressAttempt, getReceivedByAddress } from "./ControlActions";
 export const { TRANSACTION_TYPES } = wallet;
 
 export const GETTRANSACTIONS_CANCEL = "GETTRANSACTIONS_CANCEL";
@@ -47,20 +47,14 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
   return accountsToUpdate;
 }
 
-// getNewAccountAddresses get accounts which received new inputs and get
-// new addresses for avoiding reuse.
-export const getNewAccountAddresses = (txs) => (dispatch) => {
-  const acctAddressUpdated = [];
-  txs.forEach((tx) => {
-    tx.tx.getCreditsList().forEach((credit) => {
-      const acctNumber = credit.getAccount();
-      // if account address not updated yet, update it
-      if (acctAddressUpdated.find(eq(acctNumber)) === undefined) {
-        acctAddressUpdated.push(acctNumber);
-        dispatch(getNextAddressAttempt(acctNumber));
-      }
-    });
-  });
+// getNewAccountAddress generates a new address for the current account if
+// its current address was already used.
+export const getNewAccountAddress = () => async (dispatch, getState) => {
+  const nextAddress = sel.nextAddress(getState());
+  const nextAddressAccountNumber = sel.nextAddressAccountNumber(getState());
+  const { isValid, amount } = await dispatch(getReceivedByAddress(nextAddress));
+  if (isValid && amount > 0)
+    dispatch(getNextAddressAttempt(nextAddressAccountNumber));
 };
 
 function checkForStakeTransactions(txs) {
@@ -185,13 +179,8 @@ export const newTransactionsReceived = (
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
-  // get new addresses for accounts which received decred
-  dispatch(
-    getNewAccountAddresses([
-      ...newlyUnminedTransactions,
-      ...newlyMinedTransactions
-    ])
-  );
+  // get new address for the current account, if it already received decred
+  dispatch(getNewAccountAddress());
 
   // Update mixer accounts balances
   const changeAccount = sel.getChangeAccount(getState());

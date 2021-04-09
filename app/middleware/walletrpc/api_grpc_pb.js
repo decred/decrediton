@@ -619,6 +619,28 @@ function deserialize_walletrpc_GetRawBlockResponse(buffer_arg) {
   return api_pb.GetRawBlockResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_GetReceivedByAddressRequest(arg) {
+  if (!(arg instanceof api_pb.GetReceivedByAddressRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetReceivedByAddressRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetReceivedByAddressRequest(buffer_arg) {
+  return api_pb.GetReceivedByAddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_GetReceivedByAddressResponse(arg) {
+  if (!(arg instanceof api_pb.GetReceivedByAddressResponse)) {
+    throw new Error('Expected argument of type walletrpc.GetReceivedByAddressResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetReceivedByAddressResponse(buffer_arg) {
+  return api_pb.GetReceivedByAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_GetTicketRequest(arg) {
   if (!(arg instanceof api_pb.GetTicketRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTicketRequest');
@@ -2287,6 +2309,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_NextAddressRequest,
     responseSerialize: serialize_walletrpc_NextAddressResponse,
     responseDeserialize: deserialize_walletrpc_NextAddressResponse,
+  },
+  getReceivedByAddress: {
+    path: '/walletrpc.WalletService/GetReceivedByAddress',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.GetReceivedByAddressRequest,
+    responseType: api_pb.GetReceivedByAddressResponse,
+    requestSerialize: serialize_walletrpc_GetReceivedByAddressRequest,
+    requestDeserialize: deserialize_walletrpc_GetReceivedByAddressRequest,
+    responseSerialize: serialize_walletrpc_GetReceivedByAddressResponse,
+    responseDeserialize: deserialize_walletrpc_GetReceivedByAddressResponse,
   },
   importPrivateKey: {
     path: '/walletrpc.WalletService/ImportPrivateKey',
