@@ -89,7 +89,10 @@ export const checkDecreditonVersion = () => (dispatch, getState) => {
       }
     })
     .catch(function (error) {
-      console.log("Unable to check latest decrediton release version.", error);
+      console.error(
+        "Unable to check latest decrediton release version.",
+        error
+      );
     });
 };
 
@@ -260,7 +263,7 @@ export const shutdownApp = () => async (dispatch, getState) => {
     return dispatch(finalShutdown());
   } catch (error) {
     const openOrder =
-      error.indexOf("cannot log out with active orders", 0) > -1;
+      String(error).indexOf("cannot log out with active orders", 0) > -1;
     dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
     dispatch(showCantCloseModal());
   }

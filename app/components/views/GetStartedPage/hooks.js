@@ -226,16 +226,24 @@ export const useGetStarted = () => {
   });
   const getError = useCallback((serviceError) => {
     if (!serviceError) return;
+
     // We can return errors in the form of react component, which are objects.
     // So we handle them first.
     if (React.isValidElement(serviceError)) {
       return serviceError;
     }
-    // If the errors is an object but not a react component, we strigfy it so we can
-    // render.
+
+    // If the error is an instance of the Error class, extract the message.
+    if (serviceError instanceof Error) {
+      return serviceError.message;
+    }
+
+    // If the error is an object but not a react component, we stringify it so
+    // we can render it.
     if (isObject(serviceError)) {
       return JSON.stringify(serviceError);
     }
+
     return serviceError;
   }, []);
   const error = useMemo(

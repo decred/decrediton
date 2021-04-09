@@ -3,20 +3,23 @@ import { ipcRenderer } from "electron";
 import { withLog as log, logOptionNoResponseData } from "./app";
 import { isString } from "lodash";
 
+// invoke calls ipcRenderer.invoke() with the given channel and args. If the
+// call returns an Error instance, then it throws an exception.
+const invoke = async (channel, ...args) => {
+  const res = await ipcRenderer.invoke(channel, ...args);
+  if (res instanceof Error) {
+    throw res;
+  }
+  return res;
+};
+
 export const checkDecreditonVersion = log(
   () => Promise.resolve(ipcRenderer.sendSync("check-version")),
   "Check Decrediton release version"
 );
 
 export const startDaemon = log(
-  (params, testnet) =>
-    new Promise((resolve, reject) => {
-      ipcRenderer.send("start-daemon", params, testnet);
-      ipcRenderer.on("start-daemon-response", (event, started) => {
-        if (started && started.err) reject(started.err);
-        resolve(started);
-      });
-    }),
+  (params, testnet) => invoke("start-daemon", params, testnet),
   "Start Daemon"
 );
 
@@ -26,14 +29,11 @@ export const deleteDaemonData = log(
   "Delete Daemon Data"
 );
 
-export const cleanShutdown = () => {
-  return new Promise((resolve) => {
-    ipcRenderer.send("clean-shutdown");
-    ipcRenderer.on("clean-shutdown-finished", (event, stopped) => {
-      if (!stopped) throw "Error shutting down app";
-      resolve(stopped);
-    });
-  });
+export const cleanShutdown = async () => {
+  // FIXME: clean-shutdown currently never fails. Revise this.
+  const stopped = await invoke("clean-shutdown");
+  if (!stopped) throw "Error shutting down app";
+  return stopped;
 };
 
 export const setIsWatchingOnly = log(
@@ -97,22 +97,7 @@ export const stopWallet = log(
 
 export const startWallet = log(
   (walletPath, testnet, rpcCreds) =>
-    new Promise((resolve, reject) => {
-      let port,
-        pid = "";
-
-      // resolveCheck must be done both on the dcrwallet-port event and on the
-      // return of the sendSync call because we can't be certain which will happen first
-      const resolveCheck = () => (pid && port ? resolve({ pid, port }) : null);
-
-      ipcRenderer.once("dcrwallet-port", (e, p) => {
-        port = p;
-        resolveCheck();
-      });
-      pid = ipcRenderer.sendSync("start-wallet", walletPath, testnet, rpcCreds);
-      if (!pid) reject("Error starting wallet");
-      resolveCheck();
-    }),
+    invoke("start-wallet", walletPath, testnet, rpcCreds),
   "Start Wallet"
 );
 
@@ -127,22 +112,17 @@ export const getPreviousWallet = log(
   logOptionNoResponseData()
 );
 
-export const getBlockCount = log(
-  () =>
-    new Promise((resolve) => {
-      ipcRenderer.once("check-daemon-response", (e, info) => {
-        const blockCount = isString(info.blockCount)
-          ? parseInt(info.blockCount.trim())
-          : info.blockCount;
-        const syncHeight = isString(info.syncHeight)
-          ? parseInt(info.syncHeight.trim())
-          : info.syncHeight;
-        resolve({ blockCount, syncHeight });
-      });
-      ipcRenderer.send("check-daemon");
-    }),
-  "Get Block Count"
-);
+export const getBlockCount = log(async () => {
+  const info = await invoke("check-daemon");
+  const blockCount = isString(info.blockCount)
+    ? parseInt(info.blockCount.trim())
+    : info.blockCount;
+  const syncHeight = isString(info.syncHeight)
+    ? parseInt(info.syncHeight.trim())
+    : info.syncHeight;
+
+  return { blockCount, syncHeight };
+}, "Get Block Count");
 
 export const setHeightSynced = log(
   () =>
@@ -155,17 +135,11 @@ export const setHeightSynced = log(
   "set height is synced"
 );
 
-export const getDaemonInfo = log(
-  (rpcCreds) =>
-    new Promise((resolve) => {
-      ipcRenderer.once("check-getinfo-response", (e, info) => {
-        const isTestnet = info ? info.testnet : null;
-        resolve({ isTestnet });
-      });
-      ipcRenderer.send("daemon-getinfo", rpcCreds);
-    }),
-  "Get Daemon network info"
-);
+export const getDaemonInfo = log(async (rpcCreds) => {
+  const info = await invoke("daemon-getinfo", rpcCreds);
+  const isTestnet = info ? info.testnet : null;
+  return { isTestnet };
+}, "Get Daemon network info");
 
 export const getAvailableWallets = log(
   (network) =>
@@ -202,21 +176,13 @@ export const allowStakePoolHost = log(
   "Allow StakePool Host"
 );
 
-export const connectDaemon = log(
-  (params) =>
-    new Promise((resolve, reject) => {
-      ipcRenderer.once("connectRpcDaemon-response", (e, info) => {
-        if (info.connected) {
-          resolve({ connected: true });
-        }
-        if (info.error) {
-          reject({ connected: false, error: info.error });
-        }
-      });
-      ipcRenderer.send("connect-daemon", params);
-    }),
-  "Connect Daemon"
-);
+export const connectDaemon = log(async (params) => {
+  try {
+    return await invoke("connect-daemon", params);
+  } catch (error) {
+    throw { connected: false, error: error.toString() };
+  }
+}, "Connect Daemon");
 
 // TODO create a wallet/log and move those method not related to daemon to there.
 

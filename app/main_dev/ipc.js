@@ -119,11 +119,10 @@ export const startDaemon = async (params, testnet, reactIPC) => {
     }
 
     const appdata = params && params.appdata;
-    const started = await launchDCRD(reactIPC, testnet, appdata);
-    return started;
+    return await launchDCRD(reactIPC, testnet, appdata);
   } catch (err) {
     logger.log("error", "error launching dcrd: " + err);
-    return { err };
+    throw err;
   }
 };
 
@@ -159,7 +158,7 @@ export const removeWallet = (testnet, walletPath) => {
   }
 };
 
-export const startWallet = (
+export const startWallet = async (
   mainWindow,
   daemonIsAdvanced,
   testnet,
@@ -172,8 +171,7 @@ export const startWallet = (
 ) => {
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
-    mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
-    return GetDcrwPID();
+    return { pid: GetDcrwPID(), port: GetDcrwPort() };
   }
   initWalletCfg(testnet, walletPath);
   checkNoLegacyWalletConfig(
@@ -182,7 +180,7 @@ export const startWallet = (
     rpcUser && rpcPass && rpcHost && rpcListen
   );
   try {
-    return launchDCRWallet(
+    return await launchDCRWallet(
       mainWindow,
       daemonIsAdvanced,
       walletPath,
@@ -195,6 +193,7 @@ export const startWallet = (
     );
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
+    throw e;
   }
 };
 

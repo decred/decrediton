@@ -59,6 +59,13 @@ let dcrdSocket,
   heightIsSynced,
   selectedWallet = null;
 
+// These lists track resolve() functions for getinfo/getblockchaininfo daemon
+// calls. When the renderer requests one of those calls, the corresponding
+// resolve function is added to this list. When the response is received from
+// dcrd, the resolve is shifted, so this behaves as a FIFO.
+const getInfoResolves = [];
+const getBlockchainInfoResolves = [];
+
 const callDEX = (func, params) => {
   // TODO: this can be done globally once ipcRenderer doesn't import launch.js anymore.
   const { getNativeFunction, getBufferPointer } = require("sbffi");
@@ -589,7 +596,7 @@ const DecodeDaemonIPCData = (data, cb) => {
   }
 };
 
-export const launchDCRWallet = (
+export const launchDCRWallet = async (
   mainWindow,
   daemonIsAdvanced,
   walletPath,
@@ -628,18 +635,22 @@ export const launchDCRWallet = (
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
-    logger.log(
-      "error",
-      "The dcrwallet executable does not exist. Expected to find it at " +
-        dcrwExe
-    );
-    return;
+    const msg = `The dcrwallet executable does not exist. Expected to find it at ${dcrwExe}`;
+    logger.log("error", msg);
+    throw new Error(msg);
   }
+
+  // Create a promise that will be resolved once the dcrwallet port is determined.
+  let portResolve, portReject;
+  const portPromise = new Promise((resolve, reject) => {
+    portResolve = resolve;
+    portReject = reject;
+  });
 
   const notifyGrpcPort = (port) => {
     dcrwPort = port;
-    logger.log("info", "wallet grpc running on port", port);
-    mainWindow.webContents.send("dcrwallet-port", port);
+    logger.log("info", "wallet grpc running on port %d", port);
+    portResolve(dcrwPort);
   };
 
   const decodeDcrwIPC = (data) =>
@@ -654,6 +665,7 @@ export const launchDCRWallet = (
             "error",
             "GRPC port not found on IPC channel to dcrwallet: " + intf
           );
+          portReject("dcrwallet gRPC port not found");
         }
       }
       if (mtype === "issuedclientcertificate") {
@@ -771,7 +783,8 @@ export const launchDCRWallet = (
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();
-  return dcrwPID;
+  const port = await portPromise;
+  return { pid: dcrwPID, port: port };
 };
 
 export const launchDCRLnd = (
@@ -1073,90 +1086,88 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
     rpc_port = rpcport;
   }
 
-  try {
-    // During the first startup, the rpc.cert file might not exist for a few
-    // seconds. In that case, we wait up to 30s before failing this call.
-    let tries = 0;
-    const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
-    while (tries++ < 30 && !fs.existsSync(rpc_cert)) await sleep(1000);
-    if (!fs.existsSync(rpc_cert)) {
-      return mainWindow.webContents.send("connectRpcDaemon-response", {
-        error: new Error("rpc cert '" + rpc_cert + "' does not exist")
-      });
-    }
-
-    const cert = fs.readFileSync(rpc_cert);
-    const url = `${rpc_host}:${rpc_port}`;
-    if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
-      return mainWindow.webContents.send("connectRpcDaemon-response", {
-        connected: true
-      });
-    }
-    dcrdSocket = new webSocket(`wss://${url}/ws`, {
-      headers: {
-        Authorization:
-          "Basic " + Buffer.from(rpc_user + ":" + rpc_pass).toString("base64")
-      },
-      cert: cert,
-      ecdhCurve: "secp521r1",
-      ca: [cert]
-    });
-    dcrdSocket.on("open", function () {
-      logger.log("info", "decrediton has connected to dcrd instance");
-      return mainWindow.webContents.send("connectRpcDaemon-response", {
-        connected: true
-      });
-    });
-    dcrdSocket.on("error", function (error) {
-      logger.log("error", `Error: ${error}`);
-      return mainWindow.webContents.send("connectRpcDaemon-response", {
-        connected: false,
-        error: error.toString()
-      });
-    });
-    dcrdSocket.on("message", function (data) {
-      const parsedData = JSON.parse(data);
-      const id = parsedData ? parsedData.id : "";
-      switch (id) {
-        case "getinfo":
-          mainWindow.webContents.send(
-            "check-getinfo-response",
-            parsedData.result
-          );
-          break;
-        case "getblockchaininfo": {
-          const dataResults = parsedData.result || {};
-          const blockCount = dataResults.blocks;
-          const syncHeight = dataResults.syncheight;
-          mainWindow.webContents.send("check-daemon-response", {
-            blockCount,
-            syncHeight
-          });
-          break;
-        }
-      }
-    });
-    dcrdSocket.on("close", () => {
-      logger.log("info", "decrediton has disconnected to dcrd instance");
-    });
-  } catch (error) {
-    return mainWindow.webContents.send("connectRpcDaemon-response", {
-      connected: false,
-      error
-    });
+  // Return early if already connected.
+  if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.OPEN) {
+    return { connected: true };
   }
+
+  // During the first startup, the rpc.cert file might not exist for a few
+  // seconds. In that case, we wait up to 30s before failing this call.
+  let tries = 0;
+  const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
+  while (tries++ < 30 && !fs.existsSync(rpc_cert)) await sleep(1000);
+  if (!fs.existsSync(rpc_cert)) {
+    throw new Error(`rpc cert ${rpc_cert}' does not exist`);
+  }
+
+  const cert = fs.readFileSync(rpc_cert);
+  const url = `${rpc_host}:${rpc_port}`;
+
+  // Create a promise that will be resolved when the socket is opened.
+  let openResolve, openReject;
+  const openPromise = new Promise((resolve, reject) => {
+    openResolve = resolve;
+    openReject = reject;
+  });
+
+  // Attempt a new connection to dcrd.
+  dcrdSocket = new webSocket(`wss://${url}/ws`, {
+    headers: {
+      Authorization:
+        "Basic " + Buffer.from(rpc_user + ":" + rpc_pass).toString("base64")
+    },
+    cert: cert,
+    ecdhCurve: "secp521r1",
+    ca: [cert]
+  });
+  dcrdSocket.on("open", function () {
+    logger.log("info", "decrediton has connected to dcrd instance");
+    openResolve({ connected: true });
+  });
+  dcrdSocket.on("error", function (error) {
+    logger.log("error", `Error: ${error}`);
+    openReject(error);
+  });
+  dcrdSocket.on("message", function (data) {
+    const parsedData = JSON.parse(data);
+    const id = parsedData ? parsedData.id : "";
+    switch (id) {
+      case "getinfo":
+        getInfoResolves.shift()(parsedData.result);
+        break;
+      case "getblockchaininfo": {
+        const dataResults = parsedData.result || {};
+        const blockCount = dataResults.blocks;
+        const syncHeight = dataResults.syncheight;
+        getBlockchainInfoResolves.shift()({
+          blockCount,
+          syncHeight
+        });
+        break;
+      }
+    }
+  });
+  dcrdSocket.on("close", () => {
+    logger.log("info", "decrediton has disconnected to dcrd instance");
+  });
+
+  return openPromise;
 };
 
 export const getDaemonInfo = () =>
-  dcrdSocket.send(
-    '{"jsonrpc":"1.0","id":"getinfo","method":"getinfo","params":[]}'
-  );
+  new Promise((resolve) => {
+    getInfoResolves.push(resolve);
+    dcrdSocket.send(
+      '{"jsonrpc":"1.0","id":"getinfo","method":"getinfo","params":[]}'
+    );
+  });
 
 export const getBlockChainInfo = () =>
   new Promise((resolve) => {
     if (dcrdSocket && dcrdSocket.readyState === dcrdSocket.CLOSED) {
       return resolve({});
     }
+    getBlockchainInfoResolves.push(resolve);
     dcrdSocket.send(
       '{"jsonrpc":"1.0","id":"getblockchaininfo","method":"getblockchaininfo","params":[]}'
     );
