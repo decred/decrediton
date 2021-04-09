@@ -27,16 +27,6 @@ export default ({
   };
   return (
     <div className={styles.content}>
-      <div className={GetStartedStyles.goBackScreenButtonArea}>
-        {!isProcessingManaged && (
-          <Tooltip content={<GoBackMsg />}>
-            <div
-              className={GetStartedStyles.goBackScreenButton}
-              onClick={cancel}
-            />
-          </Tooltip>
-        )}
-      </div>
       <Subtitle className={styles.subtitle} title={title} />
       <div className={styles.description}>{description}</div>
 
@@ -50,11 +40,6 @@ export default ({
           disabled={isProcessingManaged}
           loading={isProcessingManaged}
         />
-        {!isProcessingManaged && (
-          <InvisibleButton className={styles.skipButton} onClick={cancel}>
-            <T id="process.settingPassAccts.button.skip" m="Skip" />
-          </InvisibleButton>
-        )}
       </div>
     </div>
   );
