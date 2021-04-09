@@ -203,7 +203,6 @@ export const purchaseTicketsV3 = (
       if (error) {
         reject(error);
       }
-
       resolve(response);
     });
   });
@@ -443,11 +442,9 @@ export const setVspdAgendaChoices = (
 export const unlockWallet = (walletService, passphrase) =>
   new Promise((resolve, reject) => {
     const unlockReq = new api.UnlockWalletRequest();
-    console.log(console.log(passphrase));
     unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     // Unlock wallet so we can call the request.
     walletService.unlockWallet(unlockReq, (error) => {
-      console.log(error);
       if (error) {
         reject(error);
       }

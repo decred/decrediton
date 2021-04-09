@@ -14,7 +14,7 @@ import {
   getAccountsAttempt,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
-import { lockWalletOrAcct, unlockAcctAndExecFn } from "./ControlActions";
+import { lockAccount, unlockAcctAndExecFn } from "./ControlActions";
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -160,7 +160,7 @@ export const stopAccountMixer = (cleanLogs) => {
     try {
       const changeAccount = sel.getChangeAccount(getState());
       mixerStreamer.cancel();
-      await dispatch(lockWalletOrAcct(changeAccount));
+      await dispatch(lockAccount(changeAccount));
       dispatch({ type: STOPMIXER_SUCCESS });
     } catch (error) {
       dispatch({ type: STOPMIXER_FAILED, error });

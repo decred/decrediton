@@ -241,7 +241,6 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
     dispatch(
       publishTransactionAttempt(signTransactionResponse.getTransaction())
     );
-    await dispatch(lockWalletOrAcct(acctNumber));
   } catch (error) {
     dispatch({ error, type: SIGNTX_FAILED });
   }
@@ -358,8 +357,6 @@ export const purchaseTicketsAttempt = (
         });
       }
     }
-
-    await dispatch(lockWalletOrAcct(accountNum));
     dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: PURCHASETICKETS_FAILED });
@@ -539,7 +536,7 @@ export function ticketBuyerCancel() {
       ticketBuyerCall.cancel();
       dispatch({ type: STOPTICKETBUYER_ATTEMPT });
       const acctNumber = account.encrypted ? account.value : null;
-      await dispatch(lockWalletOrAcct(acctNumber));
+      await dispatch(lockAccount(acctNumber));
     }
   };
 }
@@ -926,7 +923,7 @@ export function ticketBuyerV2Cancel() {
       const acctNumber = ticketBuyerAcct.encrypted
         ? ticketBuyerAcct.value
         : null;
-      await dispatch(lockWalletOrAcct(acctNumber));
+      await dispatch(lockAccount(acctNumber));
     }
   };
 }
@@ -1027,7 +1024,7 @@ export const UNLOCKACCTORWALLET_ATTEMPT = "UNLOCKACCTORWALLET_ATTEMPT";
 export const UNLOCKACCTORWALLET_FAILED = "UNLOCKACCTORWALLET_FAILED";
 export const UNLOCKACCTORWALLET_SUCCESS = "UNLOCKACCTORWALLET_SUCCESS";
 
-// unlockAcctAndExecFn unlocks the account and perform some acction. Locks the
+// unlockAcctAndExecFn unlocks the account and performs some action. Locks the
 // account in case of success or error, if leaveUnlock is not informed.
 export const unlockAcctAndExecFn = (
   passphrase,
@@ -1070,10 +1067,6 @@ export const unlockAcctAndExecFn = (
     fnError = error;
   }
 
-  if (fnError !== null) {
-    throw fnError;
-  }
-
   if (leaveUnlock) {
     return res;
   }
@@ -1087,23 +1080,22 @@ export const unlockAcctAndExecFn = (
     throw error;
   }
 
+  // return fn error in case some happened.
+  if (fnError !== null) {
+    throw fnError;
+  }
+
   return res;
 };
 
-export const LOCKACCTORWALLET_ATTEMPT = "LOCKACCTORWALLET_ATTEMPT";
-export const LOCKACCTORWALLET_FAILED = "LOCKACCTORWALLET_FAILED";
-export const LOCKACCTORWALLET_SUCCESS = "LOCKACCTORWALLET_SUCCESS";
+export const LOCKACCOUNT_ATTEMPT = "LOCKACCOUNT_ATTEMPT";
+export const LOCKACCOUNT_FAILED = "LOCKACCOUNT_FAILED";
+export const LOCKACCOUNT_SUCCESS = "LOCKACCOUNT_SUCCESS";
 
-export const lockWalletOrAcct = (acctNumber) => async (dispatch, getState) => {
-  dispatch({ type: LOCKACCTORWALLET_ATTEMPT });
+export const lockAccount = (acctNumber) => async (dispatch, getState) => {
+  dispatch({ type: LOCKACCOUNT_ATTEMPT });
   try {
     const accounts = sel.balances(getState());
-    if (!acctNumber) {
-      await wallet.lockWallet(sel.walletService(getState()));
-      dispatch({ type: LOCKACCTORWALLET_SUCCESS });
-      return;
-    }
-
     const account = accounts.find((acct) => acct.accountNumber === acctNumber);
     if (!account) {
       throw "Account not found";
@@ -1112,9 +1104,9 @@ export const lockWalletOrAcct = (acctNumber) => async (dispatch, getState) => {
       throw "Account not encrypted";
     }
     await wallet.lockAccount(sel.walletService(getState()), acctNumber);
-    dispatch({ type: LOCKACCTORWALLET_SUCCESS });
+    dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
-    dispatch({ type: LOCKACCTORWALLET_FAILED, error });
+    dispatch({ type: LOCKACCOUNT_FAILED, error });
   }
 };
 
