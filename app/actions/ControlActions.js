@@ -1020,9 +1020,14 @@ export const setAccountsPass = (walletPassphrase) => async (
   }
 };
 
-export const UNLOCKACCTORWALLET_ATTEMPT = "UNLOCKACCTORWALLET_ATTEMPT";
-export const UNLOCKACCTORWALLET_FAILED = "UNLOCKACCTORWALLET_FAILED";
-export const UNLOCKACCTORWALLET_SUCCESS = "UNLOCKACCTORWALLET_SUCCESS";
+// unlock
+export const UNLOCKACCOUNT_ATTEMPT = "UNLOCKACCOUNT_ATTEMPT";
+export const UNLOCKACCOUNT_FAILED = "UNLOCKACCOUNT_FAILED";
+export const UNLOCKACCOUNT_SUCCESS = "UNLOCKACCOUNT_SUCCESS";
+// lock
+export const LOCKACCOUNT_ATTEMPT = "LOCKACCOUNT_ATTEMPT";
+export const LOCKACCOUNT_FAILED = "LOCKACCOUNT_FAILED";
+export const LOCKACCOUNT_SUCCESS = "LOCKACCOUNT_SUCCESS";
 
 // unlockAcctAndExecFn unlocks the account and performs some action. Locks the
 // account in case of success or error, if leaveUnlock is not informed.
@@ -1034,7 +1039,7 @@ export const unlockAcctAndExecFn = (
 ) => async (dispatch, getState) => {
   let res = null;
   let fnError = null;
-  dispatch({ type: UNLOCKACCTORWALLET_ATTEMPT });
+  dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
 
   // sanity checks
   const accounts = sel.balances(getState());
@@ -1056,7 +1061,7 @@ export const unlockAcctAndExecFn = (
     );
   } catch (error) {
     // no need to lock as unlock errored.
-    dispatch({ type: UNLOCKACCTORWALLET_FAILED, error });
+    dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
   }
 
@@ -1076,7 +1081,7 @@ export const unlockAcctAndExecFn = (
     await wallet.lockAccount(sel.walletService(getState()), acctNumber);
   } catch (error) {
     // no need to lock as unlock errored.
-    dispatch({ type: LOCKACCTORWALLET_FAILED, error });
+    dispatch({ type: LOCKACCOUNT_FAILED, error });
     throw error;
   }
 
@@ -1087,10 +1092,6 @@ export const unlockAcctAndExecFn = (
 
   return res;
 };
-
-export const LOCKACCOUNT_ATTEMPT = "LOCKACCOUNT_ATTEMPT";
-export const LOCKACCOUNT_FAILED = "LOCKACCOUNT_FAILED";
-export const LOCKACCOUNT_SUCCESS = "LOCKACCOUNT_SUCCESS";
 
 export const lockAccount = (acctNumber) => async (dispatch, getState) => {
   dispatch({ type: LOCKACCOUNT_ATTEMPT });

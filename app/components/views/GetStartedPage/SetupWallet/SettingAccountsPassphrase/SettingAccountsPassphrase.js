@@ -1,14 +1,9 @@
-import { Tooltip } from "pi-ui";
 import { Subtitle } from "shared";
-import { GoBackMsg } from "../../messages";
 import { FormattedMessage as T } from "react-intl";
-// XXX: change this import and move all styles to component's css module
-import GetStartedStyles from "../../GetStarted.module.css";
-import { PassphraseModalButton, InvisibleButton } from "buttons";
+import { PassphraseModalButton } from "buttons";
 import styles from "./SettingAccountsPassphrase.module.css";
 
 export default ({
-  cancel,
   send,
   onProcessAccounts,
   title,

@@ -70,8 +70,6 @@ export const useWalletSetup = (settingUpWalletRef) => {
             onSendContinue: sendContinue,
             onSendError,
             send,
-            cancel: onSendBack,
-            // onProcessTickets: onProcessManagedTickets,
             title: (
               <T
                 id="getstarted.setAccountsPass.title"
@@ -79,8 +77,6 @@ export const useWalletSetup = (settingUpWalletRef) => {
               />
             ),
             onProcessAccounts,
-            isProcessingManaged: isProcessingManaged,
-            noVspSelection: true,
             description: (
               <T
                 id="getstarted.setAccountsPass.description"
