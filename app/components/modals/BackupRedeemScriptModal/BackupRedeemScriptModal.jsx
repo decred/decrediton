@@ -1,11 +1,11 @@
-import InfoConfirmModal from "./InfoConfirmModal";
+import InfoConfirmModal from "../InfoConfirmModal";
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
-import style from "./Modals.module.css";
+import styles from "./BackupRedeemScriptModal.module.css";
 
 const Content = ({ script, key }) => (
   <>
-    <div key={key} className={style.backupRedeemScriptMessage}>
+    <div key={key} className={styles.message}>
       <T
         id="backup.redeem.script.message"
         m={`You must make a backup of the redeem script.
@@ -22,14 +22,10 @@ const Content = ({ script, key }) => (
         }}
       />
     </div>
-    <div className={style.backupRedeemScriptTitle}>
+    <div className={styles.title}>
       <T id="backup.redeem.script.title" m="Script" />
     </div>
-    <textarea
-      disabled
-      value={script}
-      className={style.backupRedeemScriptTextarea}
-    />
+    <textarea disabled value={script} className={styles.textarea} />
   </>
 );
 

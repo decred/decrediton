@@ -1,0 +1,32 @@
+.toolbar {
+  margin-top: 2em;
+  bottom: 20px;
+  right: 20px;
+}
+.toolbar > .confirmButton {
+  float: right;
+}
+.toolbar > .closeButton {
+  float: right;
+}
+.header {
+  margin-bottom: 1em;
+}
+.headerTitle {
+  font-weight: 400;
+  font-size: 27px;
+  text-transform: capitalize;
+}
+.headerTitle .mono {
+  text-transform: lowercase;
+}
+.infoConfirm {
+  width: 900px;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 29px 20px 29px 20px;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}

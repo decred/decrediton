@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import EventListener from "react-event-listener";
 import Draggable from "react-draggable";
 import { classNames } from "pi-ui";
-import style from "./Modals.module.css";
+import styles from "./Modal.module.css";
 import { useModal } from "./hooks";
 
 const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
@@ -23,11 +23,11 @@ const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
       className={classNames(
         showingSidebarMenu
           ? expandSideBar
-            ? style.modal
-            : style.reducedBar
-          : style.standalone,
+            ? styles.modal
+            : styles.reducedBar
+          : styles.standalone,
         className,
-        draggable && style.draggable
+        draggable && styles.draggable
       )}>
       {children}
     </div>
@@ -39,9 +39,9 @@ const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
         className={
           showingSidebarMenu
             ? expandSideBar
-              ? style.overlay
-              : style.overlayReducedBar
-            : style.overlayStandalone
+              ? styles.overlay
+              : styles.overlayReducedBar
+            : styles.overlayStandalone
         }>
         {draggable ? (
           <Draggable bounds="parent" cancel=".cancel-dragging">

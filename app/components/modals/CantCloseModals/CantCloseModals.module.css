@@ -1,0 +1,42 @@
+.toolbar {
+  margin-top: 2em;
+  bottom: 20px;
+  right: 20px;
+}
+.toolbar > .confirmButton {
+  float: right;
+}
+.toolbar > .closeButton {
+  float: right;
+}
+.header {
+  margin-bottom: 1em;
+}
+.headerTitle {
+  font-weight: 400;
+  font-size: 27px;
+  text-transform: capitalize;
+}
+.headerTitle .mono {
+  text-transform: lowercase;
+}
+.confirm {
+  max-height: 60%;
+  z-index: 200;
+  overflow-y: auto;
+  text-align: left;
+  width: 540px;
+  background-image: var(--tickets-info-icon);
+  background-attachment: local;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: 18px 32px;
+  padding: 30px 40px 20px 58px;
+  font-size: 13px;
+  line-height: 17px;
+}
+@media screen and (max-width: 420px) {
+  .confirm {
+    max-height: 60%;
+  }
+}

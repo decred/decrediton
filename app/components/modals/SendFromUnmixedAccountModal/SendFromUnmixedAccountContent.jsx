@@ -4,9 +4,9 @@ import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { TextInput } from "inputs";
 import { classNames } from "pi-ui";
-import style from "../Modals.module.css";
+import styles from "./SendFromUnmixedAccountModal.module.css";
 
-const Modal = ({
+const SendFromUnmixedAccountContent = ({
   show,
   onCancelModal,
   onSubmit,
@@ -14,19 +14,19 @@ const Modal = ({
   typedConfirmationPhrase,
   onTypedConfirmationPhraseChanged
 }) => (
-  <DefaultModal className={style.confirmSendFromUnmixed} {...{ show }}>
-    <div className={style.titleConfirmSendFromUnmixed}>
+  <DefaultModal className={styles.confirmSendFromUnmixed} {...{ show }}>
+    <div className={styles.titleConfirmSendFromUnmixed}>
       <T id="SendFromUnmixed.titleWarning" m="Sending from Unmixed Accounts" />
     </div>
-    <div className={style.confirmSeedCopyContent}>
-      <div className={style.confirmSeedCopyWarningText}>
+    <div>
+      <div className={styles.warningText}>
         <Documentation name="SendFromUnmixedInfo" />
         <T
           id="SendFromUnmixed.confirmPhraseInstruction"
           m="Please type {confirmationPhrase} to allow sending from unmixed accounts."
           values={{
             confirmationPhrase: (
-              <span className={classNames("mono", style.confirmSeedCopyPhrase)}>
+              <span className={classNames("mono", styles.phrase)}>
                 '{copyConfirmationPhrase}'
               </span>
             )
@@ -43,9 +43,9 @@ const Modal = ({
         }
       />
     </div>
-    <div className={style.confirmSeedCopyToolbar}>
+    <div className={styles.toolbar}>
       <DangerButton
-        className={style.confirmConfirmButton}
+        className={styles.confirmButton}
         onClick={onSubmit}
         disabled={
           typedConfirmationPhrase.toLowerCase() !==
@@ -56,13 +56,11 @@ const Modal = ({
           m="Enable sending from unmixed accounts"
         />
       </DangerButton>
-      <InvisibleButton
-        className={style.confirmCloseButton}
-        onClick={onCancelModal}>
+      <InvisibleButton className={styles.closeButton} onClick={onCancelModal}>
         <T id="SendFromUnmixed.btnCancel" m="Cancel" />
       </InvisibleButton>
     </div>
   </DefaultModal>
 );
 
-export default Modal;
+export default SendFromUnmixedAccountContent;

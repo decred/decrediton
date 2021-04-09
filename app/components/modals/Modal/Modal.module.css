@@ -1,0 +1,68 @@
+.overlay,
+.overlayReducedBar,
+.overlayStandalone {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  left: 296px;
+}
+
+.overlayReducedBar {
+  left: 60px;
+}
+
+.overlayStandalone {
+  left: 0;
+}
+
+.modal {
+  margin-right: 296px;
+  margin-bottom: 100px;
+  margin-left: 30px;
+}
+
+.reducedBar,
+.standalone {
+  margin-bottom: 100px;
+}
+
+.modal,
+.reducedBar,
+.standalone {
+  color: var(--title-text-and-button-background);
+  background-color: var(--background-back-color);
+  box-shadow: 0 15px 34px rgba(9, 20, 64, 0.21);
+  z-index: 200;
+}
+
+.reducedBar {
+  width: 540px;
+}
+
+.standalone.confirm {
+  width: 289px;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+  .overlayReducedBar {
+    left: 0;
+    bottom: 70px;
+  }
+}

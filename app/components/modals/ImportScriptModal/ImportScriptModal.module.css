@@ -1,31 +1,4 @@
-.importRedeemScriptTitle {
-  font-size: 27px;
-  text-transform: capitalize;
-  padding-top: 5px;
-  display: flex;
-  margin-bottom: 15px;
-}
-
-.importRedeemScriptField {
-  display: flex;
-}
-
-.importRedeemScriptInput {
-  width: 100%;
-}
-
-.importRedeemScriptLabel {
-  margin-right: 10px;
-}
-
-.importRedeemScriptButtons {
-  margin-top: 20px;
-  height: 44px;
-  float: right;
-  align-self: flex-end;
-}
-
-.importRedeemScript {
+.importScriptModal {
   display: flex;
   flex-direction: column;
   z-index: 200;
@@ -36,4 +9,26 @@
   color: var(--title-text-and-button-background);
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
   width: 540px;
+}
+.title {
+  font-size: 27px;
+  text-transform: capitalize;
+  padding-top: 5px;
+  display: flex;
+  margin-bottom: 15px;
+}
+.field {
+  display: flex;
+}
+.input {
+  width: 100%;
+}
+.label {
+  margin-right: 10px;
+}
+.buttons {
+  margin-top: 20px;
+  height: 44px;
+  float: right;
+  align-self: flex-end;
 }

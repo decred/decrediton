@@ -7,10 +7,9 @@ import WalletContainer from "../Wallet";
 import ShutdownPage from "components/views/ShutdownPage/ShutdownPage";
 import FatalErrorPage from "components/views/FatalErrorPage/FatalErrorPage";
 import Snackbar from "components/Snackbar";
-import AboutModal from "components/modals/AboutModal/AboutModal";
 import TrezorModals from "components/modals/TrezorModals/TrezorModals";
 import { hot } from "react-hot-loader/root";
-import { CantCloseModals } from "modals";
+import { CantCloseModals, AboutModal } from "modals";
 import { useApp } from "../hooks";
 import styles from "./App.module.css";
 

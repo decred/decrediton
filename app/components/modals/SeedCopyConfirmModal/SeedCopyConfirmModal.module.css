@@ -1,0 +1,70 @@
+.confirmSeedCopy {
+  width: 950px;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: var(--input-color-default);
+  line-height: normal;
+  text-align: justify;
+}
+.toolbar {
+  float: right;
+  margin-top: 2em;
+}
+.confirmButton {
+  float: right;
+}
+.closeButton {
+  float: right;
+}
+.titleWarningCopyModal {
+  font-size: 27px;
+  margin-bottom: 10px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  padding-left: 42px;
+  margin-left: -10px;
+  background-position: 0 center;
+}
+.contentInput {
+  margin-left: 32px;
+  padding-left: 0;
+}
+.contentInput > input {
+  width: 100%;
+}
+.warningText {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  margin-left: 32px;
+  column-count: 2;
+}
+.warningText p {
+  margin-top: 0;
+}
+.warningText strong {
+  text-decoration: underline;
+}
+.warningText em {
+  color: var(--error-text-color);
+}
+.warningText a {
+  color: var(--link-color);
+}
+.phrase {
+  text-decoration: underline;
+  margin: 0px 4px 0px 4px;
+}
+
+@media screen and (max-width: 768px) {
+  .warningText {
+    column-count: 1;
+  }
+}
+@media screen and (max-width: 420px) {
+  .confirmSeedCopy {
+    max-height: 60%;
+  }
+}

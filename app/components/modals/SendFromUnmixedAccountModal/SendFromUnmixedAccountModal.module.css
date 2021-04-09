@@ -1,0 +1,52 @@
+.toolbar {
+  float: right;
+  margin-top: 2em;
+}
+.confirmButton {
+  float: right;
+}
+.closeButton {
+  float: right;
+}
+.warningText {
+  white-space: pre-line;
+  margin-bottom: 20px;
+  margin-left: 32px;
+  column-count: 2;
+}
+.warningText p {
+  margin-top: 0;
+}
+.warningText strong {
+  text-decoration: underline;
+}
+.warningText em {
+  color: var(--error-text-color);
+}
+.warningText a {
+  color: var(--link-color);
+}
+.phrase {
+  text-decoration: underline;
+  margin: 0px 4px 0px 4px;
+}
+.confirmSendFromUnmixed {
+  padding: 20px;
+  width: 700px;
+}
+.titleConfirmSendFromUnmixed {
+  font-size: 27px;
+  margin-bottom: 20px;
+  background-image: var(--info-warning-icon);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 42px;
+  margin-left: 10px;
+  background-position: 0 center;
+}
+
+@media screen and (max-width: 768px) {
+  .warningText {
+    column-count: 1;
+  }
+}
