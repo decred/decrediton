@@ -4,6 +4,5 @@
 // base64 into bytes.
 export const politeiaMarkdownIndexMd = (payload) => {
   const text = decodeURIComponent(escape(payload));
-  console.log(text);
   return text.substring(text.indexOf("\n") + 1);
 };
