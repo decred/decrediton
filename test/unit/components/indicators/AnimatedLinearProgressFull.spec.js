@@ -146,7 +146,7 @@ test("dcrwallet log line is shown or log the error to console", async () => {
     Promise.resolve(testDcrwalletLogLine)
   ));
 
-  let mockGetDcrdLastLineLogs = (da.getDcrdLastLineLogs = jest.fn(() => () =>
+  const mockGetDcrdLastLineLogs = (da.getDcrdLastLineLogs = jest.fn(() => () =>
     Promise.reject()
   ));
   render(<AnimatedLinearProgressFull {...testProps} />);

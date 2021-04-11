@@ -233,7 +233,7 @@ test("test close wallet button (still finalizing ticket purchases) ", () => {
 });
 
 test("test close wallet button (legacy auto ticket buyer still running) ", () => {
-  mockGetTicketAutoBuyerRunning = sel.getTicketAutoBuyerRunning = jest.fn(
+  sel.getTicketAutoBuyerRunning = jest.fn(
     () => true
   );
   render(<SettingsPage />, {

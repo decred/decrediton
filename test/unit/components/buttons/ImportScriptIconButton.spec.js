@@ -21,7 +21,7 @@ beforeEach(() => {
 test("render ImportScriptIconButton", () => {
   render(<ImportScriptIconButton />);
   expect(screen.getByText(/import/i).textContent).toMatchInlineSnapshot(
-    `"Manually import a redeem script for tickets."`
+    "\"Manually import a redeem script for tickets.\""
   );
   const button = screen.getByRole("button");
   user.click(button);

@@ -64,7 +64,7 @@ test("test remote daemon form", async () => {
   expect(
     screen.getByText(/complete one of the following/i).textContent
   ).toMatchInlineSnapshot(
-    `"Complete one of the following forms to start Decrediton according to your local setup."`
+    "\"Complete one of the following forms to start Decrediton according to your local setup.\""
   );
 
   //test toggle control

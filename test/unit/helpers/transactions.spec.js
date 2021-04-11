@@ -1,25 +1,15 @@
-
 import {
-    mix0Hex,
-    coinbaseTxHex,
-    smallNonMixedPoolSplitTx,
-    hugeMixedSplitTx
+  mix0Hex,
+  coinbaseTxHex,
+  smallNonMixedPoolSplitTx,
+  hugeMixedSplitTx
 } from "../../data/HexTransactions";
-import {
-    decodeRawTransaction
-} from "../../../app/helpers/msgTx";
-import {
-    isMixTx,
-    isMixedSplitTx
-} from "../../../app/helpers/transactions";
-import {
-  transactionNormalizer
-} from "../../../app/selectors";
-import {
-  DefaultRelayFeePerKb
-} from "../../../app/constants";
+import { decodeRawTransaction } from "../../../app/helpers/msgTx";
+import { isMixTx, isMixedSplitTx } from "../../../app/helpers/transactions";
+import { DefaultRelayFeePerKb } from "../../../app/constants";
 
-const testIsMixTxs = [{
+const testIsMixTxs = [
+  {
     name: "Is mixed Transaction",
     tx: mix0Hex,
     expected: { isMix: true, mixCount: 11, mixDenom: 268435456 }
@@ -33,14 +23,15 @@ const testIsMixTxs = [{
     name: "smallNonMixedPoolSplitTx",
     tx: smallNonMixedPoolSplitTx,
     expected: { isMix: false }
-  },
+  }
 ];
 
 // ticket price so we can check if they are mixed split tx.
 const ticketPrice0 = 13909274457;
 const ticketPrice1 = 12978960619;
 
-const testIsMixedSplitTxs = [{
+const testIsMixedSplitTxs = [
+  {
     name: "ok mixed split tx",
     tx: hugeMixedSplitTx,
     ticketPrice: ticketPrice0,
@@ -60,15 +51,17 @@ const testIsMixedSplitTxs = [{
   }
 ];
 
-testIsMixedSplitTxs.forEach(testStruct => { 
+testIsMixedSplitTxs.forEach((testStruct) => {
   test("Is mix Tx ", () => {
-    const decodedTx = decodeRawTransaction(Buffer.from(testStruct.tx, "hex") )
-    expect(isMixedSplitTx(decodedTx, DefaultRelayFeePerKb, testStruct.ticketPrice)).toStrictEqual(testStruct.expected);
+    const decodedTx = decodeRawTransaction(Buffer.from(testStruct.tx, "hex"));
+    expect(
+      isMixedSplitTx(decodedTx, DefaultRelayFeePerKb, testStruct.ticketPrice)
+    ).toStrictEqual(testStruct.expected);
   });
-}); 
-testIsMixTxs.forEach(testStruct => {
+});
+testIsMixTxs.forEach((testStruct) => {
   test("Is mix Tx ", () => {
-    const decodedTx = decodeRawTransaction(Buffer.from(testStruct.tx, "hex") )
+    const decodedTx = decodeRawTransaction(Buffer.from(testStruct.tx, "hex"));
     expect(isMixTx(decodedTx)).toStrictEqual(testStruct.expected);
   });
 });

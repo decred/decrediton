@@ -9,8 +9,8 @@
     "test-watch": "./node_modules/.bin/jest --watch",
     "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --watch",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:@babel/register --require ./test/setup.js ./test/e2e.js",
-    "lint": "./node_modules/.bin/eslint app --ext .js --ext .jsx && ./node_modules/.bin/stylelint 'app/**/*.css' --ip 'app/dist'",
-    "lint-fix": "./node_modules/.bin/eslint app --ext .js --ext .jsx --fix && ./node_modules/.bin/stylelint 'app/**/*.css' --ip 'app/dist' --fix",
+    "lint": "./node_modules/.bin/eslint app --ext .js --ext .jsx && ./node_modules/.bin/eslint test --ext .js && ./node_modules/.bin/stylelint 'app/**/*.css' --ip 'app/dist'",
+    "lint-fix": "./node_modules/.bin/eslint app --ext .js --ext .jsx --fix && ./node_modules/.bin/eslint test --ext .js --fix && ./node_modules/.bin/stylelint 'app/**/*.css' --ip 'app/dist' --fix",
     "hot-server": "cross-env NODE_ENV=development node --max_old_space_size=4096 -r @babel/register server.js",
     "build-main": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress=profile --color",
     "build-renderer": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress=profile --color",
@@ -35,8 +35,8 @@
     "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
-    "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}'",
-    "prettify:diff": "prettier --list-different 'app/**/*.{js,jsx,css,json}'"
+    "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'",
+    "prettify:diff": "prettier --list-different 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'"
   },
   "jest": {
     "verbose": true,
@@ -60,12 +60,8 @@
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
     },
-    "setupFiles": [
-      "<rootDir>/test/setup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-dom/extend-expect"
-    ],
+    "setupFiles": ["<rootDir>/test/setup.js"],
+    "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"],
     "modulePaths": [
       "<rootDir>/app",
       "<rootDir>/app/components",
@@ -74,13 +70,8 @@
       "<rootDir>/test"
     ],
     "testEnvironment": "jsdom",
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "collectCoverageFrom": [
-      "<rootDir>/app/**/*.+(js|jsx)"
-    ],
+    "moduleFileExtensions": ["js", "jsx"],
+    "collectCoverageFrom": ["<rootDir>/app/**/*.+(js|jsx)"],
     "coverageDirectory": "<rootDir>/coverage",
     "coveragePathIgnorePatterns": [
       "<rootDir>/node_modules/",
@@ -142,12 +133,7 @@
     },
     "linux": {
       "category": "public.app-category.tools",
-      "target": [
-        "AppImage",
-        "deb",
-        "rpm",
-        "tar.gz"
-      ],
+      "target": ["AppImage", "deb", "rpm", "tar.gz"],
       "icon": "./build/icon/"
     },
     "directories": {

@@ -104,9 +104,7 @@ test("render loading SendTransactionButton when trezor is enabled", () => {
 });
 
 test("render default SendTransactionButton with custom button label", () => {
-  render(
-    <SendTransactionButton buttonLabel={testButtonLabel} />
-  );
+  render(<SendTransactionButton buttonLabel={testButtonLabel} />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   expect(screen.queryByText(testButtonLabel)).toBeInTheDocument();
 });

@@ -289,7 +289,7 @@ test("test trezor switch toggling and setup device page", async () => {
   expect(
     screen.getByText(/no trezor device detected/i).textContent
   ).toMatchInlineSnapshot(
-    "\"No Trezor device detected. Connect the device and check if Trezor bridge is installed and running.\""
+    '"No Trezor device detected. Connect the device and check if Trezor bridge is installed and running."'
   );
   user.click(screen.getByText(/connect to trezor/i));
   expect(mockTrezorConnect).toHaveBeenCalled();

@@ -438,7 +438,7 @@ test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
 
   render(<SideBar />);
   expect(screen.getByText(/watch-only/i).textContent).toMatchInlineSnapshot(
-    `"This is a watch-only wallet with limited functionality."`
+    "\"This is a watch-only wallet with limited functionality.\""
   );
 
   expect(mockIsWatchingOnly).toHaveBeenCalled();

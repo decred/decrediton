@@ -75,7 +75,7 @@ test("test SetMixedAcctPage", async () => {
   expect(
     screen.getByText(/you need to set/i).textContent
   ).toMatchInlineSnapshot(
-    `"You need to set a mixed and unmixed account, and they can not be the same"`
+    "\"You need to set a mixed and unmixed account, and they can not be the same\""
   );
 
   // Click on another account for change account

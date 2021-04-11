@@ -11,9 +11,13 @@ test("Needed size to serialize tx calculated by calculateSerializeSize():", () =
 });
 
 test("encode no witness tx: ", () => {
-  expect(selializeNoWitnessEncode(multiTxPrefix)).toStrictEqual(multiTxPrefixEncoded);
+  expect(selializeNoWitnessEncode(multiTxPrefix)).toStrictEqual(
+    multiTxPrefixEncoded
+  );
 });
 
 test("test msgTx decodeRawTransaction: ", () => {
-  expect(decodeRawTransaction(multiTxPrefixEncoded)).toStrictEqual(multiTxPrefix);
+  expect(decodeRawTransaction(multiTxPrefixEncoded)).toStrictEqual(
+    multiTxPrefix
+  );
 });

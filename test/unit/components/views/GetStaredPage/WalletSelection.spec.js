@@ -163,7 +163,7 @@ test("test editing wallets", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-user.click(screen.getByText(/edit wallets/i).nextElementSibling);
+  user.click(screen.getByText(/edit wallets/i).nextElementSibling);
   expect(screen.getByText("Close")).toBeInTheDocument();
   expect(screen.getAllByText(/remove wallet/i).length).toBe(
     testAvailableWallets.length
@@ -174,7 +174,7 @@ user.click(screen.getByText(/edit wallets/i).nextElementSibling);
   expect(
     screen.getByText(/warning this action/i).textContent
   ).toMatchInlineSnapshot(
-    "\"Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding.\""
+    '"Warning this action is permanent! Please make sure you have backed up your wallet\'s seed before proceeding."'
   );
   user.click(screen.getByText(/cancel/i));
   expect(screen.queryByText(/warning this action/i)).not.toBeInTheDocument();
@@ -218,7 +218,7 @@ test("launch an encrypted wallet", async () => {
   expect(
     screen.getByText(/this wallet is encrypted/i).textContent
   ).toMatchInlineSnapshot(
-    "\"This wallet is encrypted, please enter the public passphrase to decrypt it.\""
+    '"This wallet is encrypted, please enter the public passphrase to decrypt it."'
   );
   const publicPassphraseInput = screen.getByPlaceholderText(
     /public passphrase/i
@@ -238,7 +238,7 @@ test("launch an encrypted wallet", async () => {
   );
   expect(
     screen.getByText(/wrong public passphrase/i).textContent
-  ).toMatchInlineSnapshot("\"Wrong public passphrase inserted.\"");
+  ).toMatchInlineSnapshot('"Wrong public passphrase inserted."');
 
   // invalid passphrase & unknown error
   const UNKNOWN_ERROR = "UNKNOWN_ERROR";

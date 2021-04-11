@@ -1,2 +1,2 @@
 export default {};
-export function makeGenericClientConstructor() { }
+export function makeGenericClientConstructor() {}
