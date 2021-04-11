@@ -2,7 +2,6 @@ import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { DEFAULT_LIGHT_THEME_NAME, DEFAULT_DARK_THEME_NAME } from "pi-ui";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-
 import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
@@ -13,6 +12,11 @@ import { ipcRenderer } from "electron";
 jest.mock("electron");
 
 const testAppVersion = "0.test-version.0";
+const selectors = sel;
+const wlActions = wla;
+const daemonActions = da;
+const config = conf;
+const wallet = wa;
 
 let mockGetDaemonSynced;
 let mockIsSPV;
@@ -29,41 +33,47 @@ let mockUpdateAvailable;
 let mockDaemonWarning;
 
 beforeEach(() => {
-  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => true);
-  mockUpdateAvailable = sel.updateAvailable = jest.fn(() => true);
-  mockDaemonWarning = sel.daemonWarning = jest.fn(() => null);
-  mockIsSPV = sel.isSPV = jest.fn(() => false);
-  mockAppVersion = sel.appVersion = jest.fn(() => testAppVersion);
-  mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
-  mockGetAvailableWallets = da.getAvailableWallets = jest.fn(() => () =>
-    Promise.resolve({ availableWallets: [], previousWallet: null })
+  mockGetDaemonSynced = selectors.getDaemonSynced = jest.fn(() => true);
+  mockUpdateAvailable = selectors.updateAvailable = jest.fn(() => true);
+  mockDaemonWarning = selectors.daemonWarning = jest.fn(() => null);
+  mockIsSPV = selectors.isSPV = jest.fn(() => false);
+  mockAppVersion = selectors.appVersion = jest.fn(() => testAppVersion);
+  mockGetSelectedWallet = wlActions.getSelectedWallet = jest.fn(() => () =>
+    null
   );
-  mockIsTestNet = sel.isTestNet = jest.fn(() => false);
-  sel.changePassphraseRequestAttempt = jest.fn(() => false);
-  sel.settingsChanged = jest.fn(() => true);
-  mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
-    return {
-      get: () => DEFAULT_LIGHT_THEME_NAME,
-      set: () => {}
-    };
-  });
-  wa.getDcrdLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
-  wa.getDcrwalletLogs = jest.fn(() =>
+  mockGetAvailableWallets = daemonActions.getAvailableWallets = jest.fn(
+    () => () => Promise.resolve({ availableWallets: [], previousWallet: null })
+  );
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => false);
+  selectors.changePassphraseRequestAttempt = jest.fn(() => false);
+  selectors.settingsChanged = jest.fn(() => true);
+  mockGetGlobalCfg = config.getGlobalCfg = jest.fn(() => ({
+    get: () => DEFAULT_LIGHT_THEME_NAME,
+    set: () => {}
+  }));
+  wallet.getDcrdLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
+  wallet.getDcrwalletLogs = jest.fn(() =>
     Promise.resolve(Buffer.from("", "utf-8"))
   );
-  wa.getDecreditonLogs = jest.fn(() =>
+  wallet.getDecreditonLogs = jest.fn(() =>
     Promise.resolve(Buffer.from("", "utf-8"))
   );
-  wa.getDcrlndLogs = jest.fn(() => Promise.resolve(Buffer.from("", "utf-8")));
-  mockConnectDaemon = da.connectDaemon = jest.fn(() => () =>
+  wallet.getDcrlndLogs = jest.fn(() =>
+    Promise.resolve(Buffer.from("", "utf-8"))
+  );
+  mockConnectDaemon = daemonActions.connectDaemon = jest.fn(() => () =>
     Promise.resolve(true)
   );
-  mockStartDaemon = da.startDaemon = jest.fn(() => () => Promise.resolve(true));
-  mockSyncDaemon = da.syncDaemon = jest.fn(() => () => Promise.resolve());
-  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () =>
+  mockStartDaemon = daemonActions.startDaemon = jest.fn(() => () =>
+    Promise.resolve(true)
+  );
+  mockSyncDaemon = daemonActions.syncDaemon = jest.fn(() => () =>
     Promise.resolve()
   );
-  sel.stakeTransactions = jest.fn(() => []);
+  mockCheckNetworkMatch = daemonActions.checkNetworkMatch = jest.fn(() => () =>
+    Promise.resolve()
+  );
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 test("render empty wallet chooser view", async () => {
@@ -97,7 +107,7 @@ test("render empty wallet chooser view", async () => {
 });
 
 test("render empty wallet chooser view in SPV mode", async () => {
-  mockIsSPV = sel.isSPV = jest.fn(() => true);
+  mockIsSPV = selectors.isSPV = jest.fn(() => true);
 
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
@@ -108,7 +118,7 @@ test("render empty wallet chooser view in SPV mode", async () => {
 });
 
 test("render empty wallet chooser view in testnet mode", async () => {
-  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
 
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
@@ -189,12 +199,10 @@ test("click on settings link and change theme", async () => {
   user.click(screen.getByText(/settings/i));
   await wait(() => screen.getByText(/connectivity/i));
 
-  mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
-    return {
-      get: () => DEFAULT_DARK_THEME_NAME,
-      set: () => {}
-    };
-  });
+  mockGetGlobalCfg = config.getGlobalCfg = jest.fn(() => ({
+    get: () => DEFAULT_DARK_THEME_NAME,
+    set: () => {}
+  }));
   user.click(screen.getByText(/save/i));
   expect(mockGetGlobalCfg).toHaveBeenCalled();
 });
@@ -249,11 +257,11 @@ test("start regular daemon and not receive available wallet", async () => {
     };
   });
   const testGetAvailableWalletsErrorMsg = "get-available-wallet-error-msg";
-  mockGetAvailableWallets = da.getAvailableWallets = jest.fn(() => () =>
-    Promise.reject(testGetAvailableWalletsErrorMsg)
+  mockGetAvailableWallets = daemonActions.getAvailableWallets = jest.fn(
+    () => () => Promise.reject(testGetAvailableWalletsErrorMsg)
   );
-  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
-  mockIsSPV = sel.isSPV = jest.fn(() => false);
+  mockGetDaemonSynced = selectors.getDaemonSynced = jest.fn(() => false);
+  mockIsSPV = selectors.isSPV = jest.fn(() => false);
 
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
@@ -271,11 +279,11 @@ test("start regular daemon and receive sync daemon error", async () => {
     };
   });
   const testSyncErrorMsg = "sync-error-msg";
-  mockSyncDaemon = da.syncDaemon = jest.fn(() => () =>
+  mockSyncDaemon = daemonActions.syncDaemon = jest.fn(() => () =>
     Promise.reject(testSyncErrorMsg)
   );
-  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
-  mockIsSPV = sel.isSPV = jest.fn(() => false);
+  mockGetDaemonSynced = selectors.getDaemonSynced = jest.fn(() => false);
+  mockIsSPV = selectors.isSPV = jest.fn(() => false);
 
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
@@ -292,11 +300,11 @@ test("start regular daemon and receive network match error", async () => {
     };
   });
   const testNetworkMatchErrorMsg = "network-match-error-msg";
-  mockCheckNetworkMatch = da.checkNetworkMatch = jest.fn(() => () =>
+  mockCheckNetworkMatch = daemonActions.checkNetworkMatch = jest.fn(() => () =>
     Promise.reject(testNetworkMatchErrorMsg)
   );
-  mockGetDaemonSynced = sel.getDaemonSynced = jest.fn(() => false);
-  mockIsSPV = sel.isSPV = jest.fn(() => false);
+  mockGetDaemonSynced = selectors.getDaemonSynced = jest.fn(() => false);
+  mockIsSPV = selectors.isSPV = jest.fn(() => false);
 
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
@@ -313,7 +321,9 @@ test("test daemon warning", async () => {
     };
   });
   const testDaemonWarningText = "test-daemon-warning-text";
-  mockDaemonWarning = sel.daemonWarning = jest.fn(() => testDaemonWarningText);
+  mockDaemonWarning = selectors.daemonWarning = jest.fn(
+    () => testDaemonWarningText
+  );
   render(<GetStartedPage />);
   await wait(() => screen.getByText(testDaemonWarningText));
   expect(mockDaemonWarning).toHaveBeenCalled();

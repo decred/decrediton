@@ -33,10 +33,12 @@ const testInvalidMsg = "test-invalid-msg";
 const testRequiredMsg = "test-required-msg";
 const testUnit = "test-unit";
 const testPlaceholder = "test-placeholder";
-
 const invalidErrorMsg = "This field is wrong";
 const requiredErrorMsg = "This field is required";
 const testCurrency = "DCR-test";
+const anyArg = expect.anything;
+const testFilePath = "test-filePath";
+const selectors = sel;
 
 let mockCurrencyDisplay;
 let mockOnChange;
@@ -44,8 +46,6 @@ let mockOnKeyDownSubmit;
 let mockOnKeyDown;
 let mockOnFocus;
 let mockOnBlur;
-const anyArg = expect.anything;
-const testFilePath = "test-filePath";
 
 beforeEach(() => {
   mockOnChange = jest.fn(() => {});
@@ -53,7 +53,7 @@ beforeEach(() => {
   mockOnKeyDown = jest.fn(() => {});
   mockOnFocus = jest.fn(() => {});
   mockOnBlur = jest.fn(() => {});
-  mockCurrencyDisplay = sel.currencyDisplay = jest.fn(() => testCurrency);
+  mockCurrencyDisplay = selectors.currencyDisplay = jest.fn(() => testCurrency);
 });
 
 const getInputAndInputTag = (props) => {

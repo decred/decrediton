@@ -5,6 +5,7 @@ import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as wla from "actions/WalletLoaderActions";
+import * as ca from "actions/ClientActions";
 import {
   OPENWALLET_INPUT,
   OPENWALLET_SUCCESS,
@@ -12,20 +13,20 @@ import {
   OPENWALLET_INPUTPRIVPASS,
   SYNC_FAILED
 } from "actions/WalletLoaderActions";
-import * as ca from "actions/ClientActions";
 
 let mockSortedAvailableWallets;
 let mockRemoveWallet;
 let mockStartWallet;
 let mockSetSelectedWallet;
 let mockOpenWalletAttempt;
-let mockIsSPV;
-let mockSpvSyncAttempt;
-let mockGoToHomePage;
 let mockStartRpcRequestFunc;
 let mockGetSelectedWallet;
-
 let testAvailableWallets;
+
+const selectors = sel;
+const wlActions = wla;
+const daemonActions = da;
+const clientActions = ca;
 
 beforeEach(() => {
   const testLastAccessNow = new Date();
@@ -81,26 +82,28 @@ beforeEach(() => {
     }
   ];
 
-  sel.getDaemonSynced = jest.fn(() => true);
-  mockRemoveWallet = da.removeWallet = jest.fn(() => () => {});
-  mockSetSelectedWallet = wla.setSelectedWallet = jest.fn(() => () => {});
-  mockGetSelectedWallet = wla.getSelectedWallet = jest.fn(() => () => null);
-  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+  selectors.getDaemonSynced = jest.fn(() => true);
+  mockRemoveWallet = daemonActions.removeWallet = jest.fn(() => () => {});
+  mockSetSelectedWallet = wlActions.setSelectedWallet = jest.fn(() => () => {});
+  mockGetSelectedWallet = wlActions.getSelectedWallet = jest.fn(() => () =>
+    null
+  );
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
     Promise.reject(OPENWALLET_FAILED_INPUT)
   );
-  mockSpvSyncAttempt = wla.spvSyncAttempt = jest.fn(() => () =>
+  wlActions.spvSyncAttempt = jest.fn(() => () => Promise.reject());
+  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(() => () =>
     Promise.reject()
   );
-  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
-    Promise.reject()
+  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
+    Promise.resolve()
   );
-  mockStartWallet = da.startWallet = jest.fn(() => () => Promise.resolve());
-  mockSortedAvailableWallets = sel.sortedAvailableWallets = jest.fn(
+  mockSortedAvailableWallets = selectors.sortedAvailableWallets = jest.fn(
     () => testAvailableWallets
   );
-  mockIsSPV = sel.isSPV = jest.fn(() => false);
-  mockGoToHomePage = ca.goToHomePage = jest.fn(() => {});
-  sel.stakeTransactions = jest.fn(() => []);
+  selectors.isSPV = jest.fn(() => false);
+  clientActions.goToHomePage = jest.fn(() => {});
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 test("render wallet chooser view", async () => {
@@ -208,7 +211,7 @@ test("launch an encrypted wallet", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-  mockStartWallet = da.startWallet = jest.fn(() => () =>
+  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
     Promise.reject(OPENWALLET_INPUT)
   );
   user.click(screen.getByText(/launch wallet/i));
@@ -242,7 +245,7 @@ test("launch an encrypted wallet", async () => {
 
   // invalid passphrase & unknown error
   const UNKNOWN_ERROR = "UNKNOWN_ERROR";
-  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
     Promise.reject(UNKNOWN_ERROR)
   );
   user.type(publicPassphraseInput, testInvalidPassphrase);
@@ -262,7 +265,7 @@ test("launch an encrypted wallet", async () => {
   expect(mockOpenWalletAttempt).not.toHaveBeenCalled();
 
   // valid passphrase + submit the form by press enter
-  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
     Promise.resolve(OPENWALLET_SUCCESS)
   );
   user.type(publicPassphraseInput, testValidPassphrase + "{enter}");
@@ -278,10 +281,10 @@ test("ask for passphrase if account discovery is needed", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-  mockStartWallet = da.startWallet = jest.fn(() => () =>
+  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
     Promise.reject(OPENWALLET_INPUTPRIVPASS)
   );
-  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(
+  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(
     () => (dispatch) => {
       dispatch({ error: "status", type: SYNC_FAILED });
       return Promise.reject(OPENWALLET_INPUTPRIVPASS);
@@ -324,7 +327,7 @@ test("ask for passphrase if account discovery is needed", async () => {
   expect(mockStartRpcRequestFunc).not.toHaveBeenCalled();
 
   // valid passphrase + submit the form by press enter
-  mockStartRpcRequestFunc = wla.startRpcRequestFunc = jest.fn(() => () =>
+  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(() => () =>
     Promise.resolve()
   );
   user.type(privatePassphraseInput, testValidPassphrase + "{enter}");
@@ -340,10 +343,10 @@ test("launch an encrypted wallet and ask private passphrase too if account disco
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-  mockStartWallet = da.startWallet = jest.fn(() => () =>
+  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
     Promise.reject(OPENWALLET_INPUT)
   );
-  mockOpenWalletAttempt = wla.openWalletAttempt = jest.fn(() => () =>
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
     Promise.reject(OPENWALLET_INPUTPRIVPASS)
   );
   user.click(screen.getByText(/launch wallet/i));
@@ -367,10 +370,8 @@ test("launch an encrypted wallet and ask private passphrase too if account disco
 });
 
 test("test isSyncingRPC in SPV mode and receive error from SPV sync", async () => {
-  mockIsSPV = sel.isSPV = jest.fn(() => true);
-  mockSpvSyncAttempt = wla.spvSyncAttempt = jest.fn(() => () =>
-    Promise.reject()
-  );
+  selectors.isSPV = jest.fn(() => true);
+  wlActions.spvSyncAttempt = jest.fn(() => () => Promise.reject());
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });

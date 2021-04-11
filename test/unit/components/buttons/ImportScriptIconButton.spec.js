@@ -6,22 +6,24 @@ import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
 const testScript = "test-script";
+const selectors = sel;
+const controlActions = ca;
 
 let mockRescanRequest;
 let mockIsImportingScript;
 let mockOnImportScript;
 beforeEach(() => {
-  mockOnImportScript = ca.manualImportScriptAttempt = jest.fn(() => () =>
-    Promise.resolve()
+  mockOnImportScript = controlActions.manualImportScriptAttempt = jest.fn(
+    () => () => Promise.resolve()
   );
-  mockIsImportingScript = sel.isImportingScript = jest.fn(() => false);
-  mockRescanRequest = sel.rescanRequest = jest.fn(() => false);
+  mockIsImportingScript = selectors.isImportingScript = jest.fn(() => false);
+  mockRescanRequest = selectors.rescanRequest = jest.fn(() => false);
 });
 
 test("render ImportScriptIconButton", () => {
   render(<ImportScriptIconButton />);
   expect(screen.getByText(/import/i).textContent).toMatchInlineSnapshot(
-    "\"Manually import a redeem script for tickets.\""
+    '"Manually import a redeem script for tickets."'
   );
   const button = screen.getByRole("button");
   user.click(button);
@@ -44,7 +46,7 @@ test("render ImportScriptIconButton", () => {
 });
 
 test("render disabled ImportScriptIconButton (rescan is in progress)", () => {
-  mockRescanRequest = sel.rescanRequest = jest.fn(() => true);
+  mockRescanRequest = selectors.rescanRequest = jest.fn(() => true);
   render(<ImportScriptIconButton />);
   const button = screen.getByRole("button");
   expect(button.disabled).toBe(true);
@@ -53,7 +55,7 @@ test("render disabled ImportScriptIconButton (rescan is in progress)", () => {
 });
 
 test("render loading ImportScriptIconButton", () => {
-  mockIsImportingScript = sel.isImportingScript = jest.fn(() => true);
+  mockIsImportingScript = selectors.isImportingScript = jest.fn(() => true);
   render(<ImportScriptIconButton />);
   const button = screen.getByRole("button");
   expect(button.className).toMatch("loading");

@@ -9,6 +9,9 @@ import * as sel from "selectors";
 const testUnsignedTransaction = [0, 1, 2];
 const testConstructTxResponse = { totalAmount: 12 };
 const testButtonLabel = "test-button-label";
+const trezorActions = tza;
+const selectors = sel;
+const controlActions = ca;
 
 let mockOnSubmit;
 let mockSignTransactionAttemptTrezor;
@@ -19,20 +22,22 @@ let mockIsSendingTransaction;
 
 beforeEach(() => {
   mockOnSubmit = jest.fn(() => {});
-  mockSignTransactionAttemptTrezor = tza.signTransactionAttemptTrezor = jest.fn(
+  mockSignTransactionAttemptTrezor = trezorActions.signTransactionAttemptTrezor = jest.fn(
     () => () => Promise.resolve()
   );
-  mockSignTransactionAttempt = ca.signTransactionAttempt = jest.fn(() => () =>
-    Promise.resolve()
+  mockSignTransactionAttempt = controlActions.signTransactionAttempt = jest.fn(
+    () => () => Promise.resolve()
   );
-  mockUnsignedTransaction = sel.unsignedTransaction = jest.fn(
+  mockUnsignedTransaction = selectors.unsignedTransaction = jest.fn(
     () => testUnsignedTransaction
   );
-  mockConstructTxResponse = sel.constructTxResponse = jest.fn(
+  mockConstructTxResponse = selectors.constructTxResponse = jest.fn(
     () => testConstructTxResponse
   );
-  mockIsSendingTransaction = sel.isSendingTransaction = jest.fn(() => false);
-  sel.isTrezor = jest.fn(() => false);
+  mockIsSendingTransaction = selectors.isSendingTransaction = jest.fn(
+    () => false
+  );
+  selectors.isTrezor = jest.fn(() => false);
 });
 
 test("render default SendTransactionButton ", () => {
@@ -66,7 +71,7 @@ test("render default SendTransactionButton ", () => {
 });
 
 test("render SendTransactionButton when trezor is enabled", async () => {
-  sel.isTrezor = jest.fn(() => true);
+  selectors.isTrezor = jest.fn(() => true);
   render(<SendTransactionButton onSubmit={mockOnSubmit} />);
   expect(screen.getByText(/send/i)).toBeInTheDocument();
   const button = screen.getByRole("button");
@@ -80,7 +85,9 @@ test("render SendTransactionButton when trezor is enabled", async () => {
 });
 
 test("render loading default SendTransactionButton ", () => {
-  mockIsSendingTransaction = sel.isSendingTransaction = jest.fn(() => true);
+  mockIsSendingTransaction = selectors.isSendingTransaction = jest.fn(
+    () => true
+  );
   render(<SendTransactionButton />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   const button = screen.getByRole("button");
@@ -92,7 +99,9 @@ test("render loading default SendTransactionButton ", () => {
 });
 
 test("render loading SendTransactionButton when trezor is enabled", () => {
-  mockIsSendingTransaction = sel.isSendingTransaction = jest.fn(() => true);
+  mockIsSendingTransaction = selectors.isSendingTransaction = jest.fn(
+    () => true
+  );
   render(<SendTransactionButton />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   const button = screen.getByRole("button");

@@ -12,20 +12,22 @@ const mockImmatureTicketsCount = 6;
 const mockLiveTicketsCount = 7;
 const mockUnspentTicketsCount = 2;
 const mockTotalSubsidy = 400000000;
+const mockCurrencyDisplay = DCR;
+const selectors = sel;
+
 let mockIsSPV = true;
 let mockLastVotedTicket = null;
-const mockCurrencyDisplay = DCR;
 
-sel.votedTicketsCount = jest.fn(() => mockVotedTicketsCount);
-sel.ownMempoolTicketsCount = jest.fn(() => mockOwnMempoolTicketsCount);
-sel.revokedTicketsCount = jest.fn(() => mockRevokedTicketsCount);
-sel.immatureTicketsCount = jest.fn(() => mockImmatureTicketsCount);
-sel.liveTicketsCount = jest.fn(() => mockLiveTicketsCount);
-sel.unspentTicketsCount = jest.fn(() => mockUnspentTicketsCount);
-sel.totalSubsidy = jest.fn(() => mockTotalSubsidy);
-sel.isSPV = jest.fn(() => mockIsSPV);
-sel.lastVotedTicket = jest.fn(() => mockLastVotedTicket);
-sel.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
+selectors.votedTicketsCount = jest.fn(() => mockVotedTicketsCount);
+selectors.ownMempoolTicketsCount = jest.fn(() => mockOwnMempoolTicketsCount);
+selectors.revokedTicketsCount = jest.fn(() => mockRevokedTicketsCount);
+selectors.immatureTicketsCount = jest.fn(() => mockImmatureTicketsCount);
+selectors.liveTicketsCount = jest.fn(() => mockLiveTicketsCount);
+selectors.unspentTicketsCount = jest.fn(() => mockUnspentTicketsCount);
+selectors.totalSubsidy = jest.fn(() => mockTotalSubsidy);
+selectors.isSPV = jest.fn(() => mockIsSPV);
+selectors.lastVotedTicket = jest.fn(() => mockLastVotedTicket);
+selectors.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
 
 test("test StakeInfo (SPV enabled)", () => {
   render(<StakeInfo />);

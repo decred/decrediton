@@ -3,7 +3,6 @@ import { render } from "test-utils.js";
 import { screen, wait } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import user from "@testing-library/user-event";
-
 import * as ama from "actions/AccountMixerActions";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
@@ -20,18 +19,22 @@ let mockRenameAccountAttempt;
 let mockSetCoinjoinCfg;
 let mockOnSendContinue;
 
+const selectors = sel;
+const amActions = ama;
+const controlActions = ca;
+
 beforeEach(() => {
-  mockGetCoinjoinOutputspByAcct = ama.getCoinjoinOutputspByAcct = jest.fn(
+  mockGetCoinjoinOutputspByAcct = amActions.getCoinjoinOutputspByAcct = jest.fn(
     () => () => Promise.resolve(testCoinjoinSumByAcct)
   );
-  mockSetCoinjoinCfg = ama.setCoinjoinCfg = jest.fn(() => () =>
+  mockSetCoinjoinCfg = amActions.setCoinjoinCfg = jest.fn(() => () =>
     Promise.resolve(testCoinjoinSumByAcct)
   );
-  mockRenameAccountAttempt = ca.renameAccountAttempt = jest.fn(() => () =>
-    true
+  mockRenameAccountAttempt = controlActions.renameAccountAttempt = jest.fn(
+    () => () => true
   );
   mockOnSendContinue = jest.fn(() => true);
-  sel.stakeTransactions = jest.fn(() => []);
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 test("test SetMixedAcctPage", async () => {
@@ -75,7 +78,7 @@ test("test SetMixedAcctPage", async () => {
   expect(
     screen.getByText(/you need to set/i).textContent
   ).toMatchInlineSnapshot(
-    "\"You need to set a mixed and unmixed account, and they can not be the same\""
+    '"You need to set a mixed and unmixed account, and they can not be the same"'
   );
 
   // Click on another account for change account
@@ -113,7 +116,7 @@ test("test SetMixedAcctPage", async () => {
 });
 
 test("test when getCoinjoinOutputspByAcct rejected", () => {
-  mockGetCoinjoinOutputspByAcct = ama.getCoinjoinOutputspByAcct = jest.fn(
+  mockGetCoinjoinOutputspByAcct = amActions.getCoinjoinOutputspByAcct = jest.fn(
     () => () => Promise.reject()
   );
   render(<SetMixedAcctPage onSendContinue={mockOnSendContinue} />);

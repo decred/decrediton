@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { WatchOnlyWarnNotification } from "shared";
 import * as sel from "selectors";
 import { act } from "react-dom/test-utils";
-
 import {
   PURCHASETICKETS_SUCCESS,
   STARTTICKETBUYERV2_FAILED,
@@ -50,10 +49,11 @@ const testConnectDaemonErrorCode = "test-connect-daemon-error-code";
 const testFee = 33;
 const testAmount = 55;
 const testTxHash = "test-tx-hash";
+const selectors = sel;
 
 let mockUiAnimations;
 beforeEach(() => {
-  mockUiAnimations = sel.uiAnimations = jest.fn(() => true);
+  mockUiAnimations = selectors.uiAnimations = jest.fn(() => true);
 });
 
 afterEach(() => {
@@ -72,7 +72,7 @@ const SnackbarTesterComponent = ({ sender }) => {
 };
 
 test("test WatchOnlyWarnNotification without animation", async () => {
-  sel.uiAnimations = jest.fn(() => false);
+  selectors.uiAnimations = jest.fn(() => false);
 
   render(
     <>

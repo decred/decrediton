@@ -1,10 +1,12 @@
-import { getByText } from "@testing-library/dom";
 import { AccountsSelect } from "inputs";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import * as sel from "selectors";
 import { DCR } from "constants";
+
+let mockMixedAccountValue = 6;
+
 const mockDefaultAccount = {
   hidden: false,
   label: "default: 19 DCR",
@@ -14,7 +16,6 @@ const mockDefaultAccount = {
   total: 1900000000,
   value: 0
 };
-
 const mockUnmixedAccount = {
   hidden: false,
   label: "unmixed: 249.79547928 DCR",
@@ -24,7 +25,6 @@ const mockUnmixedAccount = {
   total: 24979547928,
   value: 1
 };
-
 const mockAccount2 = {
   hidden: false,
   label: "account-2: 7.4998063 DCR",
@@ -34,7 +34,6 @@ const mockAccount2 = {
   total: 749980630,
   value: 2
 };
-let mockMixedAccountValue = 6;
 const mockMixedAccount = {
   hidden: false,
   label: "mixed: 0 DCR",
@@ -44,7 +43,6 @@ const mockMixedAccount = {
   total: 0,
   value: mockMixedAccountValue
 };
-
 const mockSpendableAccounts = [
   mockDefaultAccount,
   mockUnmixedAccount,
@@ -57,11 +55,12 @@ const mockVisibleAccounts = [
   mockMixedAccount
 ];
 const mockFilterAccounts = [0, 1, mockMixedAccountValue];
+const selectors = sel;
 
-sel.spendingAccounts = jest.fn(() => mockSpendableAccounts);
-sel.visibleAccounts = jest.fn(() => mockVisibleAccounts);
-sel.getMixedAccount = jest.fn(() => mockMixedAccountValue);
-sel.currencyDisplay = jest.fn(() => DCR);
+selectors.spendingAccounts = jest.fn(() => mockSpendableAccounts);
+selectors.visibleAccounts = jest.fn(() => mockVisibleAccounts);
+selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+selectors.currencyDisplay = jest.fn(() => DCR);
 const mockOnChange = jest.fn(() => {});
 const testClassName = "test-class-name";
 
