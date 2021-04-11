@@ -80,9 +80,7 @@ export function PurchasePage({
     <div className={styles.purchaseTicketArea}>
       <StakeInfo {...{ sidebarOnBottom }} />
       {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
-      <Subtitle
-        title={<T id="purchase.subtitle" m="Purchase Tickets" />}
-        className="is-row"></Subtitle>
+      <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets" />} />
       {mixedAccount && changeAccount && <PrivacyInfo />}
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning
