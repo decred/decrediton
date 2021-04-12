@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import ProposalDetails from "./ProposalDetails";
-import { politeiaMarkdownIndexMd } from "./utils";
 import { Header } from "./helpers";
 import { PoliteiaLoading } from "indicators";
 import { StandalonePage } from "layout";
@@ -22,7 +21,6 @@ const ProposalDetailsPage = () => {
   const { eligibleTicketCount } = viewedProposalDetails || {};
 
   const stateComponent = useMemo(() => {
-    let body = "";
     switch (votingStatus) {
       case "idle":
         return <></>;
@@ -33,17 +31,9 @@ const ProposalDetailsPage = () => {
           </div>
         );
       case "success":
-        // XXX this should move to redux logic, we should parse proposal body
-        // when fetching and store the body as part of the proposal info.
-        viewedProposalDetails.files.forEach((f) => {
-          if (f.name === "index.md") {
-            body += politeiaMarkdownIndexMd(f.payload);
-          }
-        });
         return (
           <ProposalDetails
             {...{
-              body,
               viewedProposalDetails,
               goBackHistory,
               showPurchaseTicketsPage,

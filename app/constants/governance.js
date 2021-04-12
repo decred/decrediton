@@ -7,3 +7,6 @@ export const PROPOSAL_VOTING_FINISHED = 4;
 // Proposal statuses.
 export const PROPOSAL_STATUS_PUBLIC = 4;
 export const PROPOSAL_STATUS_ABANDONED = 6;
+
+// Proposal markdown index file name.
+export const PROPOSAL_INDEX_MD_FILE = "index.md";
