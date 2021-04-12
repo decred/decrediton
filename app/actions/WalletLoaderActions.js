@@ -9,7 +9,13 @@ import {
   getDcrwalletGrpcKeyCert
 } from "wallet";
 import * as wallet from "wallet";
-import { DEX_LOGOUT_FAILED, logoutDex, stopDex } from "./DexActions";
+import { 
+  DEX_LOGOUT_ATTEMPT,
+  DEX_LOGOUT_SUCCESS,
+  DEX_LOGOUT_FAILED,
+  logoutDex,
+  stopDex
+} from "./DexActions";
 import {
   rescanCancel,
   ticketBuyerCancel,
@@ -286,7 +292,9 @@ export const closeWalletRequest = () => async (dispatch, getState) => {
 
   try {
     if (loggedIn) {
+      dispatch({ type: DEX_LOGOUT_ATTEMPT });
       await logoutDex();
+      dispatch({ type: DEX_LOGOUT_SUCCESS });
     }
     return dispatch(finalCloseWallet());
   } catch (error) {

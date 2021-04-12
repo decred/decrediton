@@ -10,7 +10,12 @@ import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel, showCantCloseModal } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
-import { DEX_LOGOUT_FAILED, logoutDex } from "./DexActions";
+import { 
+  DEX_LOGOUT_ATTEMPT,
+  DEX_LOGOUT_SUCCESS,
+  DEX_LOGOUT_FAILED,
+  logoutDex
+} from "./DexActions";
 import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
@@ -240,23 +245,20 @@ export const finalShutdown = () => (dispatch, getState) => {
   dispatch(pushHistory("/shutdown"));
 };
 
-export const shutdownApp = () => (dispatch, getState) => {
+export const shutdownApp = () => async (dispatch, getState) => {
   const { loggedIn } = getState().dex;
-  if (loggedIn) {
-    logoutDex()
-      .then(() => {
-        dispatch(finalShutdown());
-      })
-      .catch((error) => {
-        let openOrder = false;
-        if (error.indexOf("cannot log out with active orders", 0) > -1) {
-          openOrder = true;
-        }
-        dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
-        dispatch(showCantCloseModal());
-      });
-  } else {
-    dispatch(finalShutdown());
+  try {
+    if (loggedIn) {
+      dispatch({ type: DEX_LOGOUT_ATTEMPT });
+      await logoutDex();
+      dispatch({ type: DEX_LOGOUT_SUCCESS });
+    }
+    return dispatch(finalShutdown());
+  } catch (error) {
+    const openOrder =
+      error.indexOf("cannot log out with active orders", 0) > -1;
+    dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
+    dispatch(showCantCloseModal());
   }
 };
 
