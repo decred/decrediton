@@ -1,5 +1,5 @@
 // Add any new files to this array
-const staticFilesData = [require("./menus.json")];
+const staticFilesData = [require("./menus.json"), require("./dialogs.json")];
 
 // staticDefaults are the flattened messages for all statically-defined
 // messages (all messages in this directory).

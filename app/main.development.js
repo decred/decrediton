@@ -628,6 +628,26 @@ ipcMain.handle("show-open-dialog", async (event, opts) => {
   return await dialog.showOpenDialog(allowedOpts);
 });
 
+ipcMain.on("confirm-file-overwrite", (event, filename) => {
+  const cfgLocale = globalCfg.get(LOCALE);
+  const locale = locales.find((value) => value.key === cfgLocale);
+  const msgTemplate = locale.messages["dialogs.confirmFileOverwrite"];
+  const msg = msgTemplate.replace("{filename}", filename);
+  const yesBtn = locale.messages["dialogs.yesButton"];
+  const cancelBtn = locale.messages["dialogs.cancelButton"];
+  const buttons = [cancelBtn, yesBtn];
+
+  const opts = {
+    message: msg,
+    type: "question",
+    buttons: buttons,
+    defaultId: buttons.indexOf(cancelBtn),
+    cancelId: buttons.indexOf(cancelBtn)
+  };
+  const res = dialog.showMessageBoxSync(mainWindow, opts);
+  event.returnValue = res === buttons.indexOf(yesBtn);
+});
+
 function setMenuLocale(locale) {
   //Removes previous listeners of "context-menu" event.
   mainWindow.webContents._events["context-menu"] = [];
