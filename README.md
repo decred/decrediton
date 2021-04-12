@@ -114,6 +114,22 @@ yarn
 yarn dev
 ```
 
+### Requirements for DEX Development Usage
+
+The building of the dex module requires Go to be installed.  
+
+The following are instructions to ensure the DEX site assets are in the 
+proper location that decrediton expects:
+```bash
+git clone https://github.com/decred/dcrdex
+cd dcrdex/client/webserver/site
+npm install && npm build
+change directory back to decrediton
+mkdir bin/site
+cp -R ../dcrdex/client/webserver/site/src bin/site
+cp -R ../dcrdex/client/webserver/site/dist bin/site
+```
+
 ### Keeping up with dcrd/dcrwallet changes
 
 If you're developing decrediton improvements on a daily basis, you need to also keep up to date with dcrd/dcrwallet changes (especially when developing things like new grpc calls).
