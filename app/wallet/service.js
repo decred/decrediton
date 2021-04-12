@@ -1,6 +1,5 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import { reverseHash, strHashToRaw, rawToHex } from "helpers/byteActions";
 import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
 import {
   withLog as log,
@@ -16,17 +15,20 @@ import {
   COINBASE,
   TICKET,
   VOTE,
-  REVOCATION
-} from "constants/Decrediton";
-import { MAX_DCR_AMOUNT } from "constants/Decred";
+  REVOCATION,
+  MAX_DCR_AMOUNT
+} from "constants";
 import {
   _blake256,
   selializeNoWitnessEncode,
-  decodeRawTransaction as decodeHelper
+  decodeRawTransaction as decodeHelper,
+  extractPkScriptAddrs,
+  hexToBytes,
+  addrFromSStxPkScrCommitment,
+  reverseHash,
+  strHashToRaw,
+  rawToHex
 } from "helpers";
-import { extractPkScriptAddrs } from "helpers/scripts";
-import { addrFromSStxPkScrCommitment } from "helpers/tickets";
-import { hexToBytes } from "../helpers/byteActions";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>

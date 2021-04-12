@@ -14,9 +14,14 @@ import {
   createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
-import { reverseHash, reverseRawHash } from "./helpers/byteActions";
-import { MainNetParams, TestNetParams } from "constants";
-import { decodeVoteScript } from "./helpers/tickets";
+import {
+  decodeVoteScript,
+  reverseHash,
+  reverseRawHash,
+  isMixTx,
+  dateToLocal,
+  dateToUTC
+} from "helpers";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
@@ -30,8 +35,9 @@ import {
   DCRDATA_URL_TESTNET,
   DCRDATA_URL_MAINNET
 } from "./middleware/dcrdataapi";
-import { isMixTx, dateToLocal, dateToUTC } from "./helpers";
 import {
+  MainNetParams,
+  TestNetParams,
   MIN_RELAY_FEE,
   DCR,
   ATOMS,
@@ -45,10 +51,10 @@ import {
   VOTED,
   LIVE,
   UNMINED,
-  IMMATURE
+  IMMATURE,
+  VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import * as wallet from "wallet";
-import { VSP_FEE_PROCESS_ERRORED } from "./constants/Decrediton";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
 

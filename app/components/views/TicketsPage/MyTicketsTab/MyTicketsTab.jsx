@@ -1,8 +1,8 @@
 import { useState } from "react";
-import TicketListPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
+import TicketListPage from "./Page";
 import { useTicketsList } from "./hooks";
-import * as txTypes from "constants/Decrediton";
+import * as txTypes from "constants/decrediton";
 
 const labels = {
   [txTypes.UNKNOWN]: <T id="ticket.status.multiple.unknown" m="unknown" />,

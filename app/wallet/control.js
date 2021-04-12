@@ -4,7 +4,7 @@ import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,
   VSP_FEE_PROCESS_ERRORED
-} from "../constants/Decrediton";
+} from "constants";
 
 const hexToBytes = (hex) => {
   const bytes = [];

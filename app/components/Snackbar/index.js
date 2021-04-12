@@ -11,7 +11,7 @@ import {
   TICKET,
   VOTE,
   REVOCATION
-} from "constants/Decrediton";
+} from "constants/decrediton";
 import { classNames } from "pi-ui";
 import style from "./Snackbar.module.css";
 

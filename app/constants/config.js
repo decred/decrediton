@@ -1,4 +1,4 @@
-import { MAINNET, DCR } from "./Decrediton";
+import { MAINNET, DCR } from "./decrediton";
 
 // Global config constants
 export const DAEMON_ADVANCED = "daemon_start_advanced";

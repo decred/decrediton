@@ -1,12 +1,11 @@
-import { useCallback, createElement as h } from "react";
-import { IMMATURE, LIVE, UNMINED } from "constants/Decrediton";
+import { useCallback, createElement as h, useState } from "react";
+import { useService } from "@xstate/react";
+import { IMMATURE, LIVE, UNMINED } from "constants/decrediton";
 import { FormattedMessage as T } from "react-intl";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
-import { useState } from "react";
-import { useService } from "@xstate/react";
 
 export const useWalletSetup = (settingUpWalletRef) => {
   const [current, send] = useService(settingUpWalletRef);

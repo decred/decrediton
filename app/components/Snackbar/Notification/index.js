@@ -8,7 +8,7 @@ import {
   TICKET,
   VOTE,
   REVOCATION
-} from "constants/Decrediton";
+} from "constants/decrediton";
 
 const transactionTypes = [
   TRANSACTION_DIR_SENT,
@@ -25,8 +25,8 @@ const Notification = ({
   onDismissMessages,
   type,
   ...message
-}) => {
-  return transactionTypes.indexOf(type) > -1 ? (
+}) =>
+  transactionTypes.indexOf(type) > -1 ? (
     <Transaction
       {...{ topNotification, progress, onDismissMessages, type, ...message }}
     />
@@ -35,6 +35,5 @@ const Notification = ({
       {...{ topNotification, progress, onDismissMessages, ...message, type }}
     />
   );
-};
 
 export default Notification;

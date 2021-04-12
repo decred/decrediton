@@ -17,9 +17,12 @@ import {
   DESC,
   VSP_FEE_PROCESS_ERRORED,
   VSP_FEE_PROCESS_STARTED,
-  VSP_FEE_PROCESS_PAID
+  VSP_FEE_PROCESS_PAID,
+  TICKET,
+  VOTE,
+  VOTED,
+  REVOKED
 } from "constants";
-import { TICKET, VOTE, VOTED, REVOKED } from "constants/Decrediton";
 import { getNextAddressAttempt } from "./ControlActions";
 export const { TRANSACTION_TYPES } = wallet;
 

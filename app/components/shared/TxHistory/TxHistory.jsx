@@ -1,8 +1,8 @@
+import { withRouter } from "react-router-dom";
 import RegularTxRow from "./RegularTxRow";
 import StakeTxRow from "./StakeTxRow";
 import LiveStakeTxRow from "./LiveStakeTxRow";
-import * as txTypes from "constants/Decrediton";
-import { withRouter } from "react-router-dom";
+import * as txTypes from "constants/decrediton";
 import { shortDatetimeFormatter } from "helpers";
 
 const TxRowByType = {

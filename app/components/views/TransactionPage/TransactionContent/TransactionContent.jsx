@@ -7,7 +7,7 @@ import {
   VOTE,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT
-} from "constants/Decrediton";
+} from "constants/decrediton";
 import styles from "./TransactionContent.module.css";
 import { classNames } from "pi-ui";
 

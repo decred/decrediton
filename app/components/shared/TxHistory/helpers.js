@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import * as txTypes from "constants/Decrediton";
+import * as txTypes from "constants/decrediton";
 
 export const messageByType = {
   [txTypes.TICKET]: <T id="transaction.type.ticket" m="Purchased" />,

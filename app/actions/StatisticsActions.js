@@ -9,7 +9,7 @@ import {
   TICKET,
   VOTE,
   REVOCATION
-} from "constants/Decrediton";
+} from "constants/decrediton";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";

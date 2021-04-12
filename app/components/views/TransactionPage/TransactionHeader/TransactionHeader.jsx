@@ -19,7 +19,7 @@ import {
   REVOCATION_ICON,
   MIXED_ICON,
   SELF_ICON
-} from "constants/Decrediton";
+} from "constants/decrediton";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader } from "layout";
 import { useSelector, useDispatch } from "react-redux";
