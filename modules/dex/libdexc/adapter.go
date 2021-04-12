@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sync"
 	"sync/atomic"
 
 	"decred.org/dcrdex/client/core"
@@ -47,6 +48,7 @@ type CoreAdapter struct {
 	serverRunning uint32
 	core          *core.Core
 	webServer     *dex.ConnectionMaster
+	wg            *sync.WaitGroup
 
 	preInitMethods map[string]callHandler
 	directMethods  map[string]callHandler
@@ -73,6 +75,7 @@ func NewCoreAdapter() *CoreAdapter {
 		"Logout":       c.logout,
 		"DexConfig":    c.getDexConfig,
 	}
+	c.wg = new(sync.WaitGroup)
 
 	return c
 }
@@ -91,7 +94,7 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		return err
 	}
 
-	err := os.MkdirAll(filepath.Dir(form.DBPath), 0777)
+	err := os.MkdirAll(filepath.Dir(form.DBPath), 0700)
 	if err != nil {
 		return err
 	}
@@ -108,7 +111,11 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	c.core = ccore
 	c.logLevel = form.LogLevel
 
-	go ccore.Run(c.ctx)
+	c.wg.Add(1)
+	go func() {
+		defer c.wg.Done()
+		ccore.Run(c.ctx)
+	}()
 	<-ccore.Ready()
 
 	return nil
@@ -143,13 +150,10 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 }
 
 func (c *CoreAdapter) shutdown(json.RawMessage) (string, error) {
-	if !atomic.CompareAndSwapUint32(&c.inited, 1, 0) || c.kill == nil {
-		return "", fmt.Errorf("already shut down")
-	}
-	if !atomic.CompareAndSwapUint32(&c.serverRunning, 1, 0) {
-		return "", fmt.Errorf("server not running initialized")
-	}
 	c.kill()
+	c.wg.Wait()
+	atomic.SwapUint32(&c.serverRunning, 0)
+	atomic.SwapUint32(&c.inited, 0)
 	return "", nil
 }
 
