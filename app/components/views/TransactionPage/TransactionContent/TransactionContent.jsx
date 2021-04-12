@@ -28,7 +28,7 @@ function mapNonWalletOutput(output) {
 
 function mapNonWalletInput(input) {
   const address = `${input.prevTxId}:${input.outputIndex}`;
-  const amount = input.amountIn;
+  const amount = input.amountIn ?? input.valueIn;
 
   return { address, amount };
 }

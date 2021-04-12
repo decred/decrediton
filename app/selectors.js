@@ -637,7 +637,9 @@ export const transactionNormalizer = createSelector(
         txHash,
         rawTx,
         outputs,
-        creditAddresses
+        creditAddresses,
+        direction,
+        amount: origAmount
       } = origTx;
       const txUrl = txURLBuilder(txHash);
       const txBlockHash = blockHash
@@ -708,6 +710,16 @@ export const transactionNormalizer = createSelector(
               txDirection: TICKET_FEE,
               txAccountNameCredited: creditedAccountName,
               txAccountNameDebited: debitedAccountName
+            }
+          : totalFundsReceived === 0 &&
+            totalChange > 0 &&
+            origAmount === totalChange &&
+            direction === TRANSACTION_DIR_RECEIVED
+          ? // probably this is an incoming atomic swap
+            {
+              txAmount: totalChange,
+              txDirection: TRANSACTION_DIR_RECEIVED,
+              txAccountName: creditedAccountName
             }
           : {
               txAmount: totalFundsReceived,
