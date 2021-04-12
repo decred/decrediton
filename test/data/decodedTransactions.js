@@ -26,7 +26,7 @@ export const decodedPurchasedTicketTx = {
         "scriptClass": 6,
         "address": "TsaqEon1LTaYNUC1yj4mL4rm5ps5UuqvrZN",
         "requiredSig": 1,
-        "asm": "OP_SSTX OP_DUP OP_HASH160 OP_DATA_20 6ba1f7a65b7f3a1db3455e17b11b48fc55df25b7 OP_EQUALVERIFY OP_CHECKSIG",
+        "asm": "OP_SSTX OP_DUP OP_HASH160 OP_DATA_20 6ba1f7a65b7f3a1db3455e17b11b48fc55df25b7 OP_EQUALVERIFY OP_CHECKSIG"
       }
     },
     {
@@ -85,8 +85,8 @@ export const multiTxPrefix = {
         0x34, 0xbc, 0x06, 0xd6, 0xd6, 0xed, 0xf6, 0x20,
         0xd1, 0x84, 0x24, 0x1a, 0x6a, 0xed, 0x8b, 0x63,
         0xa6, // 65-byte signature
-        0xac, // OP_CHECKSIG
-      ]),
+        0xac // OP_CHECKSIG
+      ])
     },
     {
       index: 1,
@@ -103,12 +103,12 @@ export const multiTxPrefix = {
         0x34, 0xbc, 0x06, 0xd6, 0xd6, 0xed, 0xf6, 0x20,
         0xd1, 0x84, 0x24, 0x1a, 0x6a, 0xed, 0x8b, 0x63,
         0xa6, // 65-byte signature
-        0xac, // OP_CHECKSIG
-      ]),
-    },
+        0xac // OP_CHECKSIG
+      ])
+    }
   ],
   lockTime: 0,
-  expiry: 0,
+  expiry: 0
 };
 
 export const decodedVoteTx = {
@@ -150,8 +150,8 @@ export const decodedVoteTx = {
         "asm": "OP_RETURN OP_DATA_36 50bda738744cec7aeeb40a93ed23a62a170091a540e32df643e2337f05000000d9c20600",
         "scriptClass": 0,
         "requiredSig": 0,
-        "address": null,
-      },
+        "address": null
+      }
     },
     {
       "value": 0,
@@ -162,7 +162,7 @@ export const decodedVoteTx = {
         "asm": "OP_RETURN OP_DATA_6 010008000000",
         "requiredSig": 0,
         "scriptClass": 0,
-        "address": null,
+        "address": null
       }
     },
     {
