@@ -9,7 +9,7 @@ import {
   getDcrwalletGrpcKeyCert
 } from "wallet";
 import * as wallet from "wallet";
-import { 
+import {
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,
   DEX_LOGOUT_FAILED,

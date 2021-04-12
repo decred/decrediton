@@ -10,7 +10,7 @@ import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel, showCantCloseModal } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
-import { 
+import {
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,
   DEX_LOGOUT_FAILED,
