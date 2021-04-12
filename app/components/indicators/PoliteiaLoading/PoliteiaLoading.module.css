@@ -1,6 +1,6 @@
 .politeiaLoading {
   background-size: 100%;
-  background-image: var(--politeia-loading-icon);
+  background-image: var(--politeia-loading-animation);
   background-position: center;
   background-repeat: no-repeat;
   display: inline-block;

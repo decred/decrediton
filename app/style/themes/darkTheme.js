@@ -282,8 +282,8 @@ const darkTheme = {
   "menu-cancel-rescan-icon": url(
     require("style/icons/menuCancelRescanDark.svg")
   ),
-  "politeia-loading-icon": url(
-    require("style/icons/politeia-loading-dark.gif")
+  "politeia-loading-animation": url(
+    require("style/animations/politeiaLoadingDark.gif")
   ),
   "backup-icon": url(require("style/icons/harddriveDark.svg")),
   "loader-animation-daemon-waiting-initial": url(
