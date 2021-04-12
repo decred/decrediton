@@ -31,8 +31,7 @@ import {
   reloadAllowedExternalRequests,
   LEGACY_allowStakepoolRequests,
   allowVSPRequests,
-  allowExternalRequest,
-  DEX_LOCALPAGE
+  allowExternalRequest
 } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import {
@@ -519,18 +518,17 @@ ipcMain.on("stop-dex", async (event) => {
   event.returnValue = await stopDex();
 });
 
-ipcMain.on("launch-dex-window", async (event) => {
-  event.returnValue = await createDexWindow();
+ipcMain.on("launch-dex-window", async (event, serverAddress) => {
+  event.returnValue = await createDexWindow(serverAddress);
 });
 
-function createDexWindow() {
+function createDexWindow(serverAddress) {
   const child = new BrowserWindow({
     parent: mainWindow,
-    modal: true,
     show: false,
     autoHideMenuBar: true
   });
-  child.loadURL("http://" + DEX_LOCALPAGE);
+  child.loadURL("http://" + serverAddress);
   child.once("ready-to-show", () => {
     child.show();
   });
