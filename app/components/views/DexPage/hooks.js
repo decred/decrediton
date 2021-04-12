@@ -1,7 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import { FormattedMessage as T } from "react-intl";
 import * as sel from "selectors";
 import * as da from "actions/DexActions";
+import { RegisterPage, RegisterPageHeader } from "./RegisterPage";
+import { DexView, DexViewHeader } from "./DexView";
+import {
+  CreateWalletsPage,
+  CreateWalletsPageHeader
+} from "./CreateWalletsPage";
+import { EnablePage, EnablePageHeader } from "./EnablePage";
+import { InitPage, InitPageHeader } from "./InitPage";
+import { LoginPage, LoginPageHeader } from "./LoginPage";
+import {
+  CreateDexAcctPage,
+  CreateDexAcctPageHeader
+} from "./CreateDexAcctPage";
+import ErrorHeader from "./ErrorHeader";
 
 export const useDex = () => {
   const dispatch = useDispatch();
@@ -89,6 +104,60 @@ export const useDex = () => {
     dispatch
   ]);
 
+  const { Page, Header } = useMemo(() => {
+    let page, header;
+    if (!dexEnabled) {
+      page = <EnablePage />;
+      header = <EnablePageHeader />;
+    } else if (dexActive) {
+      if (dexInit) {
+        if (!loggedIn) {
+          page = <LoginPage />;
+          header = <LoginPageHeader />;
+        } else if (
+          dexRegistered &&
+          dexDCRWalletRunning &&
+          dexBTCWalletRunning
+        ) {
+          page = <DexView />;
+          header = <DexViewHeader />;
+        } else if (dexDCRWalletRunning && dexBTCWalletRunning) {
+          page = <RegisterPage />;
+          header = <RegisterPageHeader />;
+        } else if (!dexAccount) {
+          page = <CreateDexAcctPage />;
+          header = <CreateDexAcctPageHeader />;
+        } else if (!dexDCRWalletRunning || !dexBTCWalletRunning) {
+          page = <CreateWalletsPage />;
+          header = <CreateWalletsPageHeader />;
+        }
+      } else {
+        page = <InitPage />;
+        header = <InitPageHeader />;
+      }
+    } else {
+      page = (
+        <div>
+          <T
+            id="dex.error.page"
+            m="Critical Error! DEX is not running.  Please restart and check logs if problem persists."
+          />
+        </div>
+      );
+      header = <ErrorHeader />;
+    }
+    return { Page: page, Header: header };
+  }, [
+    dexEnabled,
+    dexActive,
+    dexInit,
+    loggedIn,
+    dexRegistered,
+    dexDCRWalletRunning,
+    dexBTCWalletRunning,
+    dexAccount
+  ]);
+
   return {
     dexEnabled,
     dexActive,
@@ -132,6 +201,8 @@ export const useDex = () => {
     btcInstallNeeded,
     btcConfigUpdateNeeded,
     onUpdateBTCConfig,
-    btcWalletName
+    btcWalletName,
+    Page,
+    Header
   };
 };

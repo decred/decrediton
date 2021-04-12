@@ -1,6 +1,6 @@
-import DefaultModal from "../Modal";
+import DefaultModal from "../../Modal";
 import { FormattedMessage as T } from "react-intl";
-import style from "./SetNewPassphraseModal.module.css";
+import styles from "./SetNewPassModalContent.module.css";
 import { classNames } from "pi-ui";
 import { PasswordInput, PassphraseModalField } from "inputs";
 import { ButtonsToolbar } from "shared";
@@ -11,9 +11,9 @@ const Modal = ({
   modalDescription,
   modalTitle,
   onCancelModal,
-  passPhrase,
+  passphrase,
   onSubmit,
-  setPassPhrase,
+  setPassphrase,
   submitLabel,
   confirmPrivPass,
   onTriggerPassphraseModalSubmit,
@@ -21,10 +21,10 @@ const Modal = ({
   setConfirmPrivPass
 }) => (
   <DefaultModal
-    className={classNames(style.passphrase, modalClassName)}
+    className={classNames(styles.passphrase, modalClassName)}
     {...{ show, onCancelModal }}>
-    <div className={style.header}>
-      <div className={style.headerTitle}>
+    <div className={styles.header}>
+      <div className={styles.headerTitle}>
         {modalTitle ? (
           modalTitle
         ) : (
@@ -34,9 +34,9 @@ const Modal = ({
           />
         )}
       </div>
-      <div className={style.geaderDescription}>{modalDescription}</div>
+      <div className={styles.geaderDescription}>{modalDescription}</div>
     </div>
-    <div className={style.content}>
+    <div className={styles.content}>
       <PassphraseModalField
         label={
           <T id="setNewPassphraseModal.privatePassphrase" m="New Passphrase" />
@@ -46,10 +46,10 @@ const Modal = ({
           required
           id="passphrase"
           placeholder=""
-          value={passPhrase}
-          onChange={(e) => setPassPhrase(e.target.value)}
+          value={passphrase}
+          onChange={(e) => setPassphrase(e.target.value)}
           onKeyDownSubmit={onSubmit}
-          showErrors={passPhrase !== null && !passPhrase}
+          showErrors={passphrase !== null && !passphrase}
         />
       </PassphraseModalField>
       <PassphraseModalField
@@ -64,7 +64,7 @@ const Modal = ({
         />
       </PassphraseModalField>
     </div>
-    <div className={style.toolbar}>
+    <div className={styles.toolbar}>
       <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
     </div>
   </DefaultModal>

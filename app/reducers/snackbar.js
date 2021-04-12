@@ -10,7 +10,7 @@ import {
   DEX_REGISTER_FAILED,
   DEX_GETCONFIG_FAILED,
   BTC_CREATEWALLET_FAILED
-} from "../actions/DexActions";
+} from "actions/DexActions";
 import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED,
@@ -38,7 +38,7 @@ import {
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS,
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED
-} from "../actions/ControlActions";
+} from "actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS,
   UPDATESTAKEPOOLCONFIG_FAILED,
@@ -51,7 +51,7 @@ import {
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
   SETVSPDVOTECHOICE_FAILED
-} from "../actions/VSPActions";
+} from "actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
@@ -59,11 +59,11 @@ import {
   SEEDCOPIEDTOCLIPBOARD,
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS
-} from "../actions/ClientActions";
+} from "actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
   SNACKBAR_SIMPLE_MESSAGE
-} from "../actions/SnackbarActions";
+} from "actions/SnackbarActions";
 import {
   EXPORT_ERROR,
   EXPORT_COMPLETED,

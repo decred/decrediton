@@ -1,10 +1,8 @@
-import { useDex } from "./hooks";
+import { useDex } from "../hooks";
 import { PassphraseModalButton } from "buttons";
-import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { DEX_ICON } from "constants";
 
-export const LoginPageContent = () => {
+const LoginPage = () => {
   const { onLoginDex, loginAttempt } = useDex();
 
   return (
@@ -19,12 +17,4 @@ export const LoginPageContent = () => {
   );
 };
 
-export const LoginPageHeader = () => (
-  <StandaloneHeader
-    title={<T id="dex.loginPage.title" m="DEX Login" />}
-    description={
-      <T id="dex.loginPage.description" m={"Login and connect wallet to Dex"} />
-    }
-    iconType={DEX_ICON}
-  />
-);
+export default LoginPage;

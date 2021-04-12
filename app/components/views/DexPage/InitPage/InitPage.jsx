@@ -1,10 +1,8 @@
-import { useDex } from "./hooks";
-import { SetNewPassphraseModalButton } from "buttons";
-import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { DEX_ICON } from "constants";
+import { useDex } from "../hooks";
+import { SetNewPassphraseModalButton } from "buttons";
 
-export const InitPageContent = () => {
+const InitPage = () => {
   const { onInitDex, initDexAttempt } = useDex();
 
   return (
@@ -24,17 +22,4 @@ export const InitPageContent = () => {
   );
 };
 
-export const InitPageHeader = () => (
-  <StandaloneHeader
-    title={<T id="dex.initPage.title" m="Set DEX Password" />}
-    description={
-      <T
-        id="dex.initPage.description"
-        m={
-          "You must create a new passphrase that will be used to log into the DEX for this wallet."
-        }
-      />
-    }
-    iconType={DEX_ICON}
-  />
-);
+export default InitPage;

@@ -1,16 +1,14 @@
-import { useDex } from "./hooks";
-import { PassphraseModalButton } from "buttons";
-import { StandaloneHeader } from "layout";
-import { AddAccountModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
-import { DEX_ICON } from "constants";
-import style from "./DexPage.module.css";
+import { useDex } from "../hooks";
+import { PassphraseModalButton } from "buttons";
+import { AddAccountModal } from "modals";
+import styles from "./CreateDexAcctPage.module.css";
 
-export const CreateDexAccountPageContent = () => {
+const CreateDexAcctPage = () => {
   const { onCreateDexAccount, dexAccountAttempt } = useDex();
 
   return (
-    <div className={style.dexContent}>
+    <div className={styles.dexContent}>
       <T
         id="dex.newAccount"
         m="Please create a new account that will be connected to the DEX.  Transfer funds in and out of this account to deposit/withdrawal funds from what is accessible at the DEX."
@@ -29,17 +27,4 @@ export const CreateDexAccountPageContent = () => {
   );
 };
 
-export const CreateDexAccountPageHeader = () => (
-  <StandaloneHeader
-    title={<T id="dex.createDexAccount.title" m="Create DEX Account" />}
-    description={
-      <T
-        id="dex.createDexAccount.description"
-        m={
-          "A new account is required to be created to improve security for the wallet overall."
-        }
-      />
-    }
-    iconType={DEX_ICON}
-  />
-);
+export default CreateDexAcctPage;

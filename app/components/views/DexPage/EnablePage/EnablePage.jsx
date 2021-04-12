@@ -1,10 +1,8 @@
-import { useDex } from "./hooks";
-import { ResetNetworkButton } from "buttons";
-import { StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { DEX_ICON } from "constants";
+import { useDex } from "../hooks";
+import { ResetNetworkButton } from "buttons";
 
-export const EnablePageContent = () => {
+export const EnablePage = () => {
   const { onEnableDex, enableDexAttempt } = useDex();
 
   return (
@@ -33,16 +31,3 @@ export const EnablePageContent = () => {
     </div>
   );
 };
-
-export const EnablePageHeader = () => (
-  <StandaloneHeader
-    title={<T id="dex.enablePage.title" m="Enable DEX" />}
-    description={
-      <T
-        id="dex.enablePage.description"
-        m={"You must enable DEX features to use them."}
-      />
-    }
-    iconType={DEX_ICON}
-  />
-);

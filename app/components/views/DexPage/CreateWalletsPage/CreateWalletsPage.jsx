@@ -1,13 +1,10 @@
-import { useDex } from "./hooks";
-import { useMountEffect } from "hooks";
+import { useDex } from "../hooks";
+import { useDexCreateWallets } from "./hooks";
 import { AppPassAndPassphraseModalButton, KeyBlueButton } from "buttons";
-import { StandaloneHeader } from "layout";
 import { TextInput } from "inputs";
-import { useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { DEX_ICON } from "constants";
 
-export const CreateWalletPageContent = () => {
+const CreateWalletsPage = () => {
   const {
     onCreateWalletDex,
     createWalletDexAttempt,
@@ -23,27 +20,18 @@ export const CreateWalletPageContent = () => {
     btcWalletName
   } = useDex();
 
-  const [walletName, setWalletName] = useState(btcWalletName);
-
-  const resetState = useCallback(() => {
-    setWalletName(btcWalletName);
-  }, [btcWalletName]);
-
-  useMountEffect(() => {
-    onCheckBTCConfig();
+  const {
+    walletName,
+    setWalletName,
+    onCreateWallet,
+    onBTCCreateWallet
+  } = useDexCreateWallets({
+    btcWalletName,
+    dexAccount,
+    onBTCCreateWalletDex,
+    onCreateWalletDex,
+    onCheckBTCConfig
   });
-
-  const onCreateWallet = (passphrase, args) => {
-    const { appPassphrase } = args;
-    onCreateWalletDex(passphrase, appPassphrase, dexAccount);
-    resetState();
-  };
-
-  const onBTCCreateWallet = (passphrase, args) => {
-    const { appPassphrase } = args;
-    onBTCCreateWalletDex(passphrase, appPassphrase, walletName);
-    resetState();
-  };
 
   return (
     <div>
@@ -143,17 +131,4 @@ export const CreateWalletPageContent = () => {
   );
 };
 
-export const CreateWalletPageHeader = () => (
-  <StandaloneHeader
-    title={<T id="dex.createWallet.title" m="Connect Wallets to Dex" />}
-    description={
-      <T
-        id="dex.createWallet.description"
-        m={
-          "Complete the following steps to connect your DCR and BTC wallets to the DEX."
-        }
-      />
-    }
-    iconType={DEX_ICON}
-  />
-);
+export default CreateWalletsPage;

@@ -1,0 +1,15 @@
+.dexContent {
+  width: 740px;
+}
+@media screen and (max-width: 1179px) {
+  .dexContent {
+    width: 634px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dexContent {
+    width: 355px;
+    margin-left: 0;
+  }
+}

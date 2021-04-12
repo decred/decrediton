@@ -129,8 +129,8 @@ export const allowExternalRequest = (externalReqType) => {
 
   switch (externalReqType) {
     case EXTERNALREQUEST_DEX:
-      addAllowedURL("http://" + DEX_LOCALPAGE);
-      addAllowedURL("ws://" + DEX_LOCALPAGE);
+      addAllowedURL(`http://${DEX_LOCALPAGE}`);
+      addAllowedURL(`ws://${DEX_LOCALPAGE}`);
       break;
     case EXTERNALREQUEST_NETWORK_STATUS:
       addAllowedURL("https://testnet.decred.org/api/status");

@@ -1,14 +1,12 @@
-import { useDex } from "./hooks";
+import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { Balance } from "shared";
-import { useEffect, useState, useCallback } from "react";
 import { TextInput } from "inputs";
-import { StandaloneHeader } from "layout";
-import { FormattedMessage as T } from "react-intl";
-import { DEX_ICON } from "constants";
-import style from "./DexPage.module.css";
+import { useDex } from "../hooks";
+import { useDexRegisterPage } from "./hooks";
+import styles from "./RegisterPage.module.css";
 
-export const RegisterPageContent = () => {
+const RegisterPage = () => {
   const {
     onRegisterDex,
     registerDexAttempt,
@@ -18,39 +16,17 @@ export const RegisterPageContent = () => {
     defaultServerAddress,
     dexRegisterError
   } = useDex();
-  const [isValid, setIsValid] = useState(false);
-  const [addr, setAddress] = useState(defaultServerAddress);
-  const [error, setIsError] = useState("");
 
-  const resetState = useCallback(() => {
-    setAddress(null);
-  }, []);
-
-  const onGetConfigDex = () => {
-    onGetConfig(addr);
-    resetState();
-  };
-
-  useEffect(() => {
-    setIsValid(!!addr);
-  }, [addr]);
-
-  useEffect(() => {
-    if (addr === null) {
-      return;
-    }
-    if (isValid) {
-      setIsError(null);
-      return;
-    }
-    if (!addr) {
-      const error = (
-        <T id="error.Dex.Address" m="Please enter a valid DEX Server." />
-      );
-      setIsError(error);
-      return;
-    }
-  }, [isValid, addr]);
+  const {
+    isValid,
+    error,
+    onGetConfigDex,
+    addr,
+    setAddress
+  } = useDexRegisterPage({
+    onGetConfig,
+    defaultServerAddress
+  });
 
   if (dexConfig && dexAddr) {
     return (
@@ -101,7 +77,7 @@ export const RegisterPageContent = () => {
           buttonLabel={<T id="dex.payDexFeeButton" m="Register" />}
         />
         {dexRegisterError && (
-          <div className={style.error}>{dexRegisterError}</div>
+          <div className={styles.error}>{dexRegisterError}</div>
         )}
       </div>
     );
@@ -126,15 +102,4 @@ export const RegisterPageContent = () => {
   }
 };
 
-export const RegisterPageHeader = () => (
-  <StandaloneHeader
-    title={<T id="dex.registerPage.title" m="DEX Server Payment" />}
-    description={
-      <T
-        id="dex.registerPage.description"
-        m={"Register your wallet with the DEX Server"}
-      />
-    }
-    iconType={DEX_ICON}
-  />
-);
+export default RegisterPage;

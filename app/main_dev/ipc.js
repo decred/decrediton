@@ -209,7 +209,7 @@ export const startDcrlnd = async (
   if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
     logger.log(
       "info",
-      "Skipping restart of dcrlnd as it is already running " + GetDcrlndPID()
+      `Skipping restart of dcrlnd as it is already running ${GetDcrlndPID()}`
     );
     const creds = GetDcrlndCreds();
     return { wasRunning: true, ...creds };
@@ -226,7 +226,7 @@ export const startDcrlnd = async (
     );
     return started;
   } catch (e) {
-    logger.log("error", "error launching dcrlnd: " + e);
+    logger.log("error", `error launching dcrlnd: ${e}`);
     return e;
   }
 };
@@ -235,7 +235,7 @@ export const startDex = async (walletPath, testnet) => {
   if (GetDexPID()) {
     logger.log(
       "info",
-      "Skipping restart of DEX as it is already running " + GetDexPID()
+      `Skipping restart of DEX as it is already running ${GetDexPID()}`
     );
     const creds = GetDexCreds();
     return { wasRunning: true, ...creds };
@@ -245,7 +245,7 @@ export const startDex = async (walletPath, testnet) => {
     const started = await launchDex(walletPath, testnet);
     return started;
   } catch (e) {
-    logger.log("error", "error launching dex: " + e);
+    logger.log("error", `error launching dex: ${e}`);
     return e;
   }
 };
@@ -260,7 +260,7 @@ export const checkInitDex = async () => {
     const init = await initCheckDex();
     return init;
   } catch (e) {
-    logger.log("error", "error checking init dex: " + e);
+    logger.log("error", `error checking init dex: ${e}`);
     return e;
   }
 };
@@ -275,7 +275,7 @@ export const initDex = async (passphrase) => {
     const init = await initDexCall(passphrase);
     return init;
   } catch (e) {
-    logger.log("error", "error init dex: " + e);
+    logger.log("error", `error init dex: ${e}`);
     return e;
   }
 };
@@ -290,7 +290,7 @@ export const loginDex = async (passphrase) => {
     const login = await loginDexCall(passphrase);
     return login;
   } catch (e) {
-    logger.log("error", "error login dex: " + e);
+    logger.log("error", `error login dex: ${e}`);
     return e;
   }
 };
@@ -305,7 +305,7 @@ export const logoutDex = async () => {
     const login = await logoutDexCall();
     return login;
   } catch (e) {
-    logger.log("error", "error logout dex: " + e);
+    logger.log("error", `error logout dex: ${e}`);
     return e;
   }
 };
@@ -338,7 +338,7 @@ export const createWalletDex = async (
     );
     return createWallet;
   } catch (e) {
-    logger.log("error", "error create wallet dex: " + e);
+    logger.log("error", `error create wallet dex: ${e}`);
     return e;
   }
 };
@@ -353,7 +353,7 @@ export const getConfigDex = async (addr) => {
     const getDexConfig = await getDexConfigCall(addr);
     return getDexConfig;
   } catch (e) {
-    logger.log("error", "error get config dex: " + e);
+    logger.log("error", `error get config dex: ${e}`);
     return e;
   }
 };
@@ -368,7 +368,7 @@ export const registerDex = async (appPass, addr, fee) => {
     const register = await registerDexCall(appPass, addr, fee);
     return register;
   } catch (e) {
-    logger.log("error", "error register dex: " + e);
+    logger.log("error", `error register dex: ${e}`);
     return e;
   }
 };
@@ -383,7 +383,7 @@ export const userDex = async () => {
     const user = await userDexCall();
     return user;
   } catch (e) {
-    logger.log("error", "error user dex: " + e);
+    logger.log("error", `error user dex: ${e}`);
     return e;
   }
 };
@@ -400,9 +400,7 @@ export const stopDcrlnd = () => {
   return closeDcrlnd();
 };
 
-export const stopDex = () => {
-  return closeDex();
-};
+export const stopDex = () => closeDex();
 
 export const removeDcrlnd = (walletName, testnet) => {
   const walletPath = getWalletPath(testnet, walletName);

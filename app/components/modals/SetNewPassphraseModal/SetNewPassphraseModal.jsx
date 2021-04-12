@@ -1,42 +1,25 @@
-import Modal from "./SetNewPassphraseModalContent";
-import { useState, useCallback, useEffect } from "react";
+import SetNewPassModalContent from "./SetNewPassModalContent";
+import { useSetNewPassphraseModal } from "./hooks";
 
 const SetNewPassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
-  const [confirmPrivPass, setConfirmPrivPass] = useState(null);
-  const [passPhrase, setPassPhrase] = useState(null);
-  const [isValid, setIsValid] = useState(null);
-
-  const resetState = useCallback(() => {
-    setPassPhrase(null);
-    setConfirmPrivPass(null);
-  }, []);
-
-  const onCancelModalCallback = useCallback(() => {
-    resetState();
-    onCancelModal && onCancelModal();
-  }, [resetState, onCancelModal]);
-
-  const onSubmitCallback = useCallback(() => {
-    if (!isValid) {
-      return;
-    }
-
-    onSubmit(passPhrase);
-    resetState();
-  }, [passPhrase, onSubmit, resetState, isValid]);
-
-  useEffect(() => {
-    setIsValid(!!passPhrase && passPhrase === confirmPrivPass);
-  }, [passPhrase, confirmPrivPass]);
+  const {
+    passphrase,
+    confirmPrivPass,
+    onCancelModalCallback,
+    setPassphrase,
+    isValid,
+    onSubmitCallback,
+    setConfirmPrivPass
+  } = useSetNewPassphraseModal({ onCancelModal, onSubmit });
 
   return (
-    <Modal
+    <SetNewPassModalContent
       {...props}
       {...{
-        passPhrase,
+        passphrase,
         confirmPrivPass,
         onCancelModal: onCancelModalCallback,
-        setPassPhrase,
+        setPassphrase,
         isValid,
         onSubmit: onSubmitCallback,
         setConfirmPrivPass
