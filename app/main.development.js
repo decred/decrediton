@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import {
@@ -675,6 +676,24 @@ ipcMain.on("get-last-log-line-dcrwallet", (event) => {
 
 ipcMain.on("get-privacy-logs", (event) => {
   event.returnValue = getPrivacyLogs();
+});
+
+ipcMain.on("get-dex-logs", (event, walletPath,) => {
+  try {
+    const dexcRoot = path.join(walletPath, "dexc");
+    const logPath = path.join(dexcRoot, "logs");
+    const logFilename = path.join(logPath, "dexc.log");
+    console.log(walletPath, logFilename);
+    readFileBackward(logFilename, MAX_LOG_LENGTH, (err, data) => {
+      if (err) {
+        logger.log("error", "Error reading log: " + err);
+        return (event.returnValue = null);
+      }
+      event.returnValue = data.toString("utf8");
+    });
+  } catch(error) {
+    event.returnValue = error;
+  }
 });
 
 ipcMain.on("get-previous-wallet", (event) => {

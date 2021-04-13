@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react";
 import { FormattedMessage as T } from "react-intl";
 import * as sel from "selectors";
 import * as da from "actions/DexActions";
+import * as dm from "actions/DaemonActions";
 import { RegisterPage, RegisterPageHeader } from "./RegisterPage";
 import { DexView, DexViewHeader } from "./DexView";
 import {
@@ -53,6 +54,7 @@ export const useDex = () => {
   const btcConfigUpdateNeeded = useSelector(sel.btcConfigUpdateNeeded);
   const btcWalletName = useSelector(sel.btcWalletName);
 
+  const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
     dispatch
   ]);
@@ -165,6 +167,7 @@ export const useDex = () => {
     onInitDex,
     initDexAttempt,
     onRegisterDex,
+    onGetDexLogs,
     registerDexAttempt,
     onCreateWalletDex,
     createWalletDexAttempt,

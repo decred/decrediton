@@ -256,3 +256,6 @@ export const getDecreditonLogs = () =>
     if (logs) return logs;
     throw "Error getting decrediton logs";
   });
+
+export const getDexLogs = (walletPath) =>
+  Promise.resolve(ipcRenderer.sendSync("get-dex-logs", walletPath));

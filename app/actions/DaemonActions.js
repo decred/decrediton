@@ -69,6 +69,7 @@ export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
 export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 export const CREATE_WALLET_ERROR = "CREATE_WALLET_ERROR";
 export const CREATE_WALLET_ATTEMPT = "CREATE_WALLET_ATTEMPT";
+import * as sel from "selectors";
 
 export const checkDecreditonVersion = () => (dispatch, getState) => {
   const detectedVersion = getState().daemon.appVersion;
@@ -692,3 +693,17 @@ export const getDcrlndLogs = () => {
       return null, err;
     });
 };
+
+export const GET_DEX_LOGS = "GET_DEX_LOGS";
+export const getDexLogs = () => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: GET_DEX_LOGS });
+    const {
+      daemon: { walletName }
+    } = getState();
+    const walletPath = getWalletPath(isTestNet(getState()), walletName);
+    wallet
+      .getDexLogs(walletPath)
+      .then((logs) => resolve(logs))
+      .catch((err) => reject(err))
+  });
