@@ -678,12 +678,11 @@ ipcMain.on("get-privacy-logs", (event) => {
   event.returnValue = getPrivacyLogs();
 });
 
-ipcMain.on("get-dex-logs", (event, walletPath,) => {
+ipcMain.on("get-dex-logs", (event, walletPath) => {
   try {
     const dexcRoot = path.join(walletPath, "dexc");
     const logPath = path.join(dexcRoot, "logs");
     const logFilename = path.join(logPath, "dexc.log");
-    console.log(walletPath, logFilename);
     readFileBackward(logFilename, MAX_LOG_LENGTH, (err, data) => {
       if (err) {
         logger.log("error", "Error reading log: " + err);
@@ -691,7 +690,7 @@ ipcMain.on("get-dex-logs", (event, walletPath,) => {
       }
       event.returnValue = data.toString("utf8");
     });
-  } catch(error) {
+  } catch (error) {
     event.returnValue = error;
   }
 });

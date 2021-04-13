@@ -18,7 +18,7 @@ export const DexView = () => {
     onGetDexLogs()
       .then((dexLogs) => setLogs(dexLogs.toString("utf-8")))
       .catch((err) => err);
-  
+
     const dexInterval = setInterval(async () => {
       try {
         const dexLogs = await onGetDexLogs();
@@ -27,7 +27,7 @@ export const DexView = () => {
         console.log(err);
       }
     }, 2000);
-  
+
     // Cleanup intervals on unmount
     return () => {
       clearInterval(dexInterval);

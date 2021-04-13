@@ -69,7 +69,6 @@ export const SYNC_DAEMON_ATTEMPT = "SYNC_DAEMON_ATTEMPT";
 export const SYNC_DAEMON_FAILED = "SYNC_DAEMON_FAILED";
 export const CREATE_WALLET_ERROR = "CREATE_WALLET_ERROR";
 export const CREATE_WALLET_ATTEMPT = "CREATE_WALLET_ATTEMPT";
-import * as sel from "selectors";
 
 export const checkDecreditonVersion = () => (dispatch, getState) => {
   const detectedVersion = getState().daemon.appVersion;
@@ -705,5 +704,5 @@ export const getDexLogs = () => (dispatch, getState) =>
     wallet
       .getDexLogs(walletPath)
       .then((logs) => resolve(logs))
-      .catch((err) => reject(err))
+      .catch((err) => reject(err));
   });
