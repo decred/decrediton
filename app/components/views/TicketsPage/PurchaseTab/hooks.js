@@ -28,6 +28,7 @@ export const usePurchaseTab = () => {
   const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
   const buyerAccount = useSelector(sel.buyerAccount);
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
+  const visibleAccounts = useSelector(sel.visibleAccounts);
 
   // VSP listing checks
   const { onAddAllowedRequestType, isVSPListingEnabled } = useSettings();
@@ -134,6 +135,7 @@ export const usePurchaseTab = () => {
     isVSPListingEnabled,
     onEnableVSPListing,
     onListUnspentOutputs,
-    getRunningIndicator
+    getRunningIndicator,
+    visibleAccounts
   };
 };

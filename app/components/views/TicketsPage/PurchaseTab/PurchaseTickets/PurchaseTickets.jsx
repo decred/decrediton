@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
+import { isEqual } from "lodash/fp";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -25,10 +26,18 @@ const Tickets = ({ toggleIsLegacy }) => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
-    getRunningIndicator
+    getRunningIndicator,
+    visibleAccounts
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
+  useEffect(() => {
+    const newAccount = visibleAccounts?.find((a) =>
+      isEqual(a.value, account?.value)
+    );
+    newAccount && setAccount(newAccount);
+  }, [visibleAccounts, account]);
+
   // todo use this vsp to buy solo tickets.
   const [vsp, setVSP] = useState(
     rememberedVspHost ? { host: rememberedVspHost.host } : null
