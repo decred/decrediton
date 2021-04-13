@@ -29,7 +29,7 @@ export const useTicketsList = () => {
   const [loadingQRs, setLoadingQRs] = useState(true);
 
   // Number of transaction hashes per QR.
-  const TX_PER_QR = 1;
+  const TX_PER_QR = 10;
 
   const activeFilter = ({ status }) =>
     status === UNMINED || status === IMMATURE || status === LIVE;
