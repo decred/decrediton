@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput, PasswordInput, PathBrowseInput } from "inputs";
-import styles from "../GetStarted.module.css";
+import { Label, Input, Row } from "../helpers";
 
 const messages = defineMessages({
   messageLoginPlaceholder: {
@@ -44,11 +44,11 @@ const RemoteDaemonForm = ({
   intl
 }) => (
   <>
-    <div className={styles.daemonRow}>
-      <div className={styles.daemonLabel}>
+    <Row>
+      <Label>
         <T id="advanced.remote.rpcuser" m="RPC User" />
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <TextInput
           required
           value={rpc_user}
@@ -56,13 +56,13 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
           showErrors={rpcUserHasFailedAttempt}
         />
-      </div>
-    </div>
-    <div className={styles.daemonRow}>
-      <div className={styles.daemonLabel}>
+      </Input>
+    </Row>
+    <Row>
+      <Label>
         <T id="advanced.remote.rpcpass" m="RPC Password" />
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <PasswordInput
           required
           value={rpc_pass}
@@ -70,13 +70,13 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
           showErrors={rpcPasswordHasFailedAttempt}
         />
-      </div>
-    </div>
-    <div className={styles.daemonRow}>
-      <div className={styles.daemonLabel}>
+      </Input>
+    </Row>
+    <Row>
+      <Label>
         <T id="advanced.remote.rpccert" m="RPC Cert Path" />
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <PathBrowseInput
           required
           type="file"
@@ -85,13 +85,13 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
           showErrors={rpcCertHasFailedAttempt}
         />
-      </div>
-    </div>
-    <div className={styles.daemonRow}>
-      <div className={styles.daemonLabel}>
+      </Input>
+    </Row>
+    <Row>
+      <Label>
         <T id="advanced.remote.rpchost" m="RPC Host" />
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <TextInput
           required
           value={rpc_host}
@@ -99,13 +99,13 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
           showErrors={rpcHostHasFailedAttempt}
         />
-      </div>
-    </div>
-    <div className={styles.daemonRow}>
-      <div className={styles.daemonLabel}>
+      </Input>
+    </Row>
+    <Row>
+      <Label>
         <T id="advanced.remote.rpcport" m="RPC Port" />
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <TextInput
           required
           value={rpc_port}
@@ -113,8 +113,8 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
           showErrors={rpcPortHasFailedAttempt}
         />
-      </div>
-    </div>
+      </Input>
+    </Row>
   </>
 );
 

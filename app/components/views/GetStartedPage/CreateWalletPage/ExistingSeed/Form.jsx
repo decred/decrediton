@@ -11,6 +11,7 @@ import {
 } from "../../messages";
 import { WORDS, HEX } from "constants";
 import { CreatePassPhrase } from "shared";
+import { Container, TitleWrapper } from "../helpers";
 import styles from "../CreateWallet.module.css";
 
 const ExistingSeedForm = ({
@@ -30,11 +31,9 @@ const ExistingSeedForm = ({
   setPassPhrase,
   error
 }) => (
-  <div className={styles.createWalletWrapper}>
-    <div className={classNames(styles.contentTitleWrapper, "flex-row")}>
-      <div className={styles.contentTitle}>
-        <T id="createWallet.restore.title" m={"Restore existing wallet"} />
-      </div>
+  <Container>
+    <TitleWrapper
+      title={<T id="createWallet.restore.title" m="Restore existing wallet" />}>
       {/* XXX: Can we use here pi-iu's toggle? */}
       <TextToggle
         activeButton={"left"}
@@ -49,7 +48,7 @@ const ExistingSeedForm = ({
           </Tooltip>
         </div>
       )}
-    </div>
+    </TitleWrapper>
     <div className={classNames("flex-row", styles.seed)}>
       <div className={classNames(styles.confirmSeedLabel, styles.seed)}>
         <ConfirmSeedMsg />
@@ -119,7 +118,7 @@ const ExistingSeedForm = ({
         <BackBtnMsg />
       </InvisibleButton>
     </div>
-  </div>
+  </Container>
 );
 
 export default ExistingSeedForm;

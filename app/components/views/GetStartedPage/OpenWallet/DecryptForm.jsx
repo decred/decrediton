@@ -2,6 +2,7 @@ import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import styles from "../GetStarted.module.css";
+import { Label, Input, FormContainer } from "../helpers";
 
 const messages = defineMessages({
   publicPassphrasePlaceholder: {
@@ -17,34 +18,33 @@ const OpenWalletDecryptFormBodyBase = ({
   onOpenWallet,
   onKeyDown
 }) => (
-  <div className={styles.pageForm}>
-    <div className={styles.daemonRow}>
+  <FormContainer>
+    <Row>
       <T
         id="getStarted.decrypt.info"
         m="This wallet is encrypted, please enter the public passphrase to decrypt it."
       />
-    </div>
-    <div className={styles.deamonRow}>
-      <div className={styles.daemonLabel}>
+    </Row>
+    <Row>
+      <Label>
         <T id="getStarted.decrypt.label" m="Decrypt Wallet" />
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <PasswordInput
           autoFocus
-          className={styles.inputPrivatePassword} // TODO: is this needed/wokring ?
           placeholder={intl.formatMessage(messages.publicPassphrasePlaceholder)}
           value={publicPassPhrase}
           onChange={(e) => onSetPublicPassPhrase(e.target.value)}
           onKeyDown={onKeyDown}
         />
-      </div>
-    </div>
+      </Input>
+    </Row>
     <div className={styles.loaderBarButtons}>
       <KeyBlueButton onClick={onOpenWallet} disabled={publicPassPhrase == ""}>
         <T id="decryptWalletForm.openBtn" m="Open Wallet" />
       </KeyBlueButton>
     </div>
-  </div>
+  </FormContainer>
 );
 
 export default injectIntl(OpenWalletDecryptFormBodyBase);

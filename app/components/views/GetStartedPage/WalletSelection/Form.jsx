@@ -4,6 +4,7 @@ import { RemoveWalletButton } from "buttons";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { FormattedRelative } from "shared";
 import styles from "../GetStarted.module.css";
+import { FormContainer, Row } from "../helpers";
 
 const CreateRestoreButtons = ({ showCreateWalletForm }) => (
   <>
@@ -47,8 +48,8 @@ const WalletSelectionForm = ({
   submitChosenWallet
 }) => (
   <div>
-    <div className={styles.pageForm}>
-      <div className={styles.daemonRow}>
+    <FormContainer>
+      <Row>
         {availableWallets.map((wallet) => {
           const selected =
             selectedWallet &&
@@ -181,8 +182,8 @@ const WalletSelectionForm = ({
             />
           </Tooltip>
         )}
-      </div>
-    </div>
+      </Row>
+    </FormContainer>
   </div>
 );
 

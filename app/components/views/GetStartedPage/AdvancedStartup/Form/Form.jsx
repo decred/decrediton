@@ -1,10 +1,11 @@
 import { useCallback } from "react";
-import { KeyBlueButton, InvisibleButton } from "buttons";
-import RemoteDaemonForm from "./RemoteDaemonForm";
-import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
-import { Toggle, classNames } from "pi-ui";
-import styles from "../GetStarted.module.css";
+import { Toggle } from "pi-ui";
+import { KeyBlueButton, InvisibleButton } from "buttons";
+import RemoteDaemonForm from "../RemoteDaemonForm";
+import AppDataForm from "../AppDataForm";
+import styles from "./Form.module.css";
+import { FormContainer, ButtonsBar } from "../../helpers";
 
 const AdvancedBodyBase = ({
   onShowRemote,
@@ -54,7 +55,7 @@ const AdvancedBodyBase = ({
           Different Local Daemon Location
         </div>
       </div>
-      <div className={classNames(styles.pageForm, styles.toggle)}>
+      <FormContainer className={styles.togglable}>
         {sideActive ? (
           <RemoteDaemonForm
             {...{
@@ -88,7 +89,7 @@ const AdvancedBodyBase = ({
             }}
           />
         )}
-        <div className={styles.loaderBarButtons}>
+        <ButtonsBar>
           <InvisibleButton onClick={skipAdvancedDaemon}>
             <T id="advancedStartup.skip" m="Skip" />
           </InvisibleButton>
@@ -103,8 +104,8 @@ const AdvancedBodyBase = ({
               <T id="login.form.appdata.button" m="Start AppData Daemon" />
             </KeyBlueButton>
           )}
-        </div>
-      </div>
+        </ButtonsBar>
+      </FormContainer>
     </>
   );
 };

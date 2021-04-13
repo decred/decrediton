@@ -14,6 +14,7 @@ import {
 } from "../../messages";
 import { CreatePassPhrase } from "shared";
 import styles from "../CreateWallet.module.css";
+import { Container, TitleWrapper } from "../helpers";
 
 export const ConfirmSeedForm = ({
   seedWords,
@@ -24,17 +25,14 @@ export const ConfirmSeedForm = ({
   setPassPhrase,
   isCreatingWallet
 }) => (
-  <div className={styles.createWalletWrapper}>
-    <div className={classNames(styles.contentTitleWrapper, "flex-row")}>
-      <div className={styles.contentTitle}>
-        <CreateNewWalletTitle />
-      </div>
+  <Container>
+    <TitleWrapper title={<CreateNewWalletTitle />}>
       {sendBack && (
         <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}
-    </div>
+    </TitleWrapper>
     <div className={classNames(styles.seed, "flex-row")}>
       <div
         className={classNames(
@@ -97,7 +95,7 @@ export const ConfirmSeedForm = ({
         <BackBtnMsg />
       </InvisibleButton>
     </div>
-  </div>
+  </Container>
 );
 
 export default ConfirmSeedForm;

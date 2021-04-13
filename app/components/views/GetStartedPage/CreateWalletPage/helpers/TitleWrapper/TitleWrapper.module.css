@@ -1,0 +1,17 @@
+.titleWrapper {
+  width: 692px;
+}
+
+.title {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 35px;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .titleWrapper {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+}

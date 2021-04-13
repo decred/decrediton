@@ -4,6 +4,7 @@ import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
+import { Label, Input, Row } from "../helpers";
 import styles from "../GetStarted.module.css";
 
 const messages = defineMessages({
@@ -76,8 +77,8 @@ const CreateWalletForm = ({
         </div>
       </div>
     )}
-    <div className={styles.daemonRow}>
-      <div className={styles.daemonLabel}>
+    <Row>
+      <Label>
         {!isCreateNewWallet ? (
           <Tooltip
             content={intl.formatMessage(messages.messageWalletNameTooltip)}>
@@ -86,8 +87,8 @@ const CreateWalletForm = ({
         ) : (
           <T id="createwallet.walletname.label" m="Wallet Name" />
         )}
-      </div>
-      <div className={styles.daemonInput}>
+      </Label>
+      <Input>
         <TextInput
           required
           invalid={walletNameError}
@@ -101,10 +102,10 @@ const CreateWalletForm = ({
           )}
           showErrors={hasFailedAttemptName}
         />
-      </div>
-    </div>
+      </Input>
+    </Row>
     {!isCreateNewWallet && (
-      <div className={classNames(styles.daemonRow, styles.advancedOptions)}>
+      <Row className={styles.advancedOptions}>
         <Collapse
           header={
             <T id="createwallet.advancedOptions.label" m="Advanced Options" />
@@ -182,9 +183,9 @@ const CreateWalletForm = ({
             </>
           }
         />
-      </div>
+      </Row>
     )}
-    <div className={styles.daemonRow}>
+    <Row>
       <KeyBlueButton onClick={createWallet}>
         {creatingWallet ? (
           <T id="wallet.creating.button" m="Creating" />
@@ -195,7 +196,7 @@ const CreateWalletForm = ({
       <InvisibleButton onClick={hideCreateWalletForm}>
         <T id="advancedStartup.cancel" m="Cancel" />
       </InvisibleButton>
-    </div>
+    </Row>
   </>
 );
 

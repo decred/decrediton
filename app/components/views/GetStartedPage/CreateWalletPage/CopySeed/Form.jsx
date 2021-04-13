@@ -5,6 +5,7 @@ import { Documentation } from "shared";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg, GoBackMsg, CreateNewWalletTitle } from "../../messages";
 import styles from "../CreateWallet.module.css";
+import { Container, TitleWrapper } from "../helpers";
 
 const CopySeedPage = ({
   showCopySeedConfirm,
@@ -14,17 +15,14 @@ const CopySeedPage = ({
   sendBack,
   sendContinue
 }) => (
-  <div className={styles.createWalletWrapper}>
-    <div className={classNames(styles.contentTitleWrapper, "flex-row")}>
-      <div className={styles.contentTitle}>
-        <CreateNewWalletTitle />
-      </div>
+  <Container>
+    <TitleWrapper title={<CreateNewWalletTitle />}>
       {sendBack && (
         <Tooltip content={<GoBackMsg />}>
           <div className={styles.goBackScreenButton} onClick={sendBack} />
         </Tooltip>
       )}
-    </div>
+    </TitleWrapper>
     <Documentation
       name="WalletCreationWarning"
       className={styles.createWalletWarning}
@@ -57,7 +55,7 @@ const CopySeedPage = ({
       onSubmit={onSubmitCopySeedConfirm}
       onCancelModal={() => toggleCopySeed(false)}
     />
-  </div>
+  </Container>
 );
 
 export default CopySeedPage;

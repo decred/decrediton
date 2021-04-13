@@ -7,19 +7,6 @@
   padding: 5px 16px 10px 16px;
 }
 
-.toggleWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 240px;
-  clear: left;
-}
-
-.toggleLabelExample {
-  margin-left: 0.1rem;
-  margin-top: 0.1rem;
-}
-
 .getstartedNew {
   color: var(--title-text-and-button-background);
   padding-left: 52px;
@@ -31,49 +18,9 @@
   display: flex;
 }
 
-.pageForm {
-  width: 100%;
-  float: left;
-}
-
-.pageForm.toggle {
-  padding-top: 25px;
-  height: 258px;
-}
-
 .daemonNetwork {
   font-size: 20px;
   text-transform: capitalize;
-}
-
-.daemonRow {
-  float: left;
-  width: 100%;
-  height: 44px;
-  margin-bottom: 10px;
-}
-
-.daemonLabel {
-  float: left;
-  width: 130px;
-  text-align: right;
-  color: var(--wallet-tutorial-text);
-  font-size: 13px;
-}
-
-.daemonInput {
-  padding-left: 10px;
-  float: left;
-  width: 295px;
-}
-
-.daemonInput .inputAndUnit > input {
-  line-height: 17px;
-  font-size: 13px;
-}
-
-.daemonInput .inputAndUnit > input::placeholder {
-  color: #c4cbd2;
 }
 
 .daemonLongInput {
@@ -240,33 +187,12 @@
   background-color: var(--title-text-and-button-background-hovered);
 }
 
-.getstarted.loader .pageForm .loaderBarButtons {
-  position: absolute;
-  top: 320px;
-  right: 0px;
-}
-
 .getstarted.loader .contentTitle {
   font-size: 27px;
   line-height: 34px;
   margin-bottom: 13px;
   float: left;
   width: 100%;
-}
-
-.getstarted.loader .contentTitle .loaderBarButtons {
-  position: fixed;
-  right: 41px;
-  top: 425px;
-  user-select: none;
-}
-
-.getstarted.loader .contentTitle .loaderBarButtons > .button:not(:last-child) {
-  margin-right: 10px;
-}
-
-.getstarted.loader .contentTitle .loaderBarButtons .invisibleButton {
-  font-weight: 400;
 }
 
 .getstarted.content {
@@ -497,15 +423,6 @@
   line-height: 34px;
   margin-bottom: 35px;
   width: 100%;
-}
-
-.advancedDesc {
-  font-size: 19px;
-  color: var(--modal-text);
-  margin-bottom: 43px;
-  margin-top: 60px;
-  width: 444px;
-  float: left;
 }
 
 .releaseNotes {
@@ -959,12 +876,6 @@
     margin-left: 0;
   }
 
-  .advancedDesc {
-    width: 315px;
-    margin-top: 0;
-    margin-bottom: 30px;
-  }
-
   .textToggleButtonRight {
     padding: 6px 10px;
   }
@@ -984,29 +895,6 @@
     left: 0;
     display: flex;
     flex-direction: column;
-  }
-
-  .daemonLabel {
-    width: 77px;
-  }
-  .daemonInput {
-    width: 243px;
-  }
-
-  .daemonRow.dataform .daemonLabel {
-    width: 130px;
-  }
-  .daemonRow.dataform .daemonInput {
-    width: 190px;
-  }
-
-  .loaderBarButtons,
-  .getstarted.loader .pageForm .loaderBarButtons {
-    position: fixed;
-    margin-left: 10px;
-    bottom: 75px;
-    right: 20px;
-    top: initial;
   }
 
   .invisibleButton,
@@ -1053,10 +941,6 @@
   .settings .saveButtonWrapper {
     text-align: center;
     width: 355px;
-  }
-
-  .daemonRow.multipleRow {
-    width: 78%;
   }
 
   .loaderSettingsLogs {
@@ -1109,12 +993,6 @@
 
   .privacyTextContainer {
     margin: 20px 20px 20px 0;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .daemonRow.multipleRow {
-    width: 100%;
   }
 }
 

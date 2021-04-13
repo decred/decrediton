@@ -1,0 +1,34 @@
+.buttonsBar {
+  position: absolute;
+  top: 320px;
+  right: 0;
+}
+
+/*
+ * XXX ?ditch?unused?
+ *
+.getstarted.loader .contentTitle .buttonsBar {
+  position: fixed;
+  right: 41px;
+  top: 425px;
+  user-select: none;
+}
+
+.getstarted.loader .contentTitle .buttonsBar > .button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.getstarted.loader .contentTitle .buttonsBar .invisibleButton {
+  font-weight: 400;
+}
+*/
+
+@media screen and (max-width: 768px) {
+  .buttonsBar {
+    position: fixed;
+    margin-left: 10px;
+    bottom: 75px;
+    right: 20px;
+    top: initial;
+  }
+}
