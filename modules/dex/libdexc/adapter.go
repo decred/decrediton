@@ -49,6 +49,7 @@ type CoreAdapter struct {
 	core          *core.Core
 	webServer     *dex.ConnectionMaster
 	wg            *sync.WaitGroup
+	logMaker      *dex.LoggerMaker
 
 	preInitMethods map[string]callHandler
 	directMethods  map[string]callHandler
@@ -86,24 +87,33 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	}
 
 	form := new(struct {
-		DBPath   string      `json:"dbPath"`
-		Net      dex.Network `json:"net"`
-		LogLevel slog.Level  `json:"logLevel"`
+		LogFilename string      `json:"logFilename"`
+		DBPath      string      `json:"dbPath"`
+		Net         dex.Network `json:"net"`
+		LogLevel    slog.Level  `json:"logLevel"`
 	})
 	if err := json.Unmarshal(raw, form); err != nil {
 		return err
 	}
-
 	err := os.MkdirAll(filepath.Dir(form.DBPath), 0700)
 	if err != nil {
 		return err
 	}
 
+	fmt.Println(form.LogFilename, filepath.Dir(form.LogFilename))
+	err = os.MkdirAll(filepath.Dir(form.LogFilename), 0700)
+	if err != nil {
+		return err
+	}
+
+	c.logMaker = initLogging(filepath.Dir(form.LogFilename), form.LogFilename, form.LogLevel.String(), false)
+	logger := c.logMaker.Logger("DEXC")
+
 	c.ctx, c.kill = context.WithCancel(context.Background())
 	ccore, err := core.New(&core.Config{
 		DBPath: form.DBPath,
 		Net:    form.Net,
-		Logger: dex.StdOutLogger("CORE", form.LogLevel),
+		Logger: logger,
 	})
 	if err != nil {
 		return fmt.Errorf("error creating client core: %v", err)
@@ -132,7 +142,7 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	webSrv, err := webserver.New(c.core, form.WebAddr, form.SiteDir, dex.StdOutLogger("SRVR", c.logLevel), false, false)
+	webSrv, err := webserver.New(c.core, form.WebAddr, form.SiteDir, c.logMaker.Logger("SRVR"), false, false)
 	if err != nil {
 		return "", fmt.Errorf("Error creating web server: %v", err)
 	}

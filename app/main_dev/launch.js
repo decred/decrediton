@@ -852,11 +852,15 @@ export const launchDex = (walletPath, testnet) =>
     }
     try {
       const dexcRoot = path.join(walletPath, "dexc");
-      const dbPath = path.join(dexcRoot, "db");
+      const dbPath = path.join(dexcRoot, "dex.db");
+      const logPath = path.join(dexcRoot, "logs");
+      const logFilename = path.join(logPath, "dexc.log");
       let error = callDEX("startCore", {
         dbPath: dbPath,
         net: !testnet ? Mainnet : Testnet,
-        logLevel: 1 // LogLevelDebug
+        logLevel: 1, // LogLevelDebug
+        logPath: logPath,
+        logFilename: logFilename
       });
       if (error && String(error) != "") {
         throw error;
