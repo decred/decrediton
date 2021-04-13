@@ -1,0 +1,51 @@
+.qr {
+  max-height: 60%;
+  overflow-y: auto;
+  text-align: left;
+  background-image: var(--tickets-info-icon);
+  background-attachment: local;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: 18px 32px;
+  font-size: 13px;
+  line-height: 17px;
+  height: 600px;
+  width: 500px;
+  z-index: 98;
+  margin-left: 150px;
+  padding: 30px 40px 30px 58px;
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  opacity: 0.7;
+}
+
+.qrTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.qrContent {
+  height: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qrCounter {
+  text-align: center;
+}
