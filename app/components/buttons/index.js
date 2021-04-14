@@ -13,6 +13,8 @@ export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
 export { default as ListUTXOsButton } from "./ListUTXOsButton";
+export { default as PiUiButton } from "./PiUiButton";
+export { default as InvisiblePiUiButton } from "./InvisiblePiUiButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
@@ -24,6 +26,7 @@ import HelpLink from "./HelpLink/HelpLink";
 import InvisibleButton from "./InvisibleButton";
 import Button from "./Button/Button";
 import SmallButton from "./SmallButton";
+import PiUiButton from "./PiUiButton";
 export {
   ModalButton,
   ToggleSwitch,
@@ -106,6 +109,8 @@ export const InvisiblePassphraseModalButton = mbb(
   InvisibleButton
 );
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
+export const RevokeModalButton = mbb(null, PassphraseModal, PiUiButton);
+export const TicketPurchaseModalButton = mbb(null, PassphraseModal, PiUiButton);
 export const AutoBuyerPassphraseModalSwitch = mbb(
   null,
   PassphraseModal,

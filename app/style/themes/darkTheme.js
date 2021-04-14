@@ -145,6 +145,11 @@ const darkTheme = {
   "small-button-bg": "#2f4d8c",
   "small-button-disabled-bg": "#1f325f",
   "send-transaction-border": "#608ace",
+  "secondary-piui-button-bg": "#fff",
+  "purchase-ticket-border": "#608ace",
+  "stakeinfo-value": "#e9f8fe",
+  "stakeinfo-border": "#608ace",
+  "purchase-label": "#b7deee",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",

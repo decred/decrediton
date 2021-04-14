@@ -2,7 +2,7 @@ import FloatInput from "./FloatInput";
 import IntegerInput from "./IntegerInput";
 import { MAX_DCR_AMOUNT, UNIT_DIVISOR } from "constants";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { ATOMS } from "constants";
 import * as sel from "selectors";
 
@@ -17,7 +17,12 @@ import * as sel from "selectors";
  * and later re-displaying the value is consistent.
  */
 function DcrInput({ onChangeAmount, amount, ...props }) {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(() => {
+    if (amount === undefined || isNaN(amount)) {
+      return;
+    }
+    return amount;
+  });
   const currencyDisplay = useSelector(sel.currencyDisplay);
 
   useEffect(() => {

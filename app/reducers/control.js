@@ -71,7 +71,8 @@ import {
   GETACCOUNTEXTENDEDKEY_FAILED,
   GETACCOUNTEXTENDEDKEY_SUCCESS,
   HIDE_CANTCLOSE_MODAL,
-  SHOW_CANTCLOSE_MODAL
+  SHOW_CANTCLOSE_MODAL,
+  SAVE_LEGACY_AUTOBUYER_SETTINGS
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -526,6 +527,13 @@ export default function control(state = {}, action) {
       };
     case CLOSEWALLET_SUCCESS:
       return { ...state, changeScriptByAccount: {} };
+    case SAVE_LEGACY_AUTOBUYER_SETTINGS:
+      return {
+        ...state,
+        legacyBalanceToMaintain: action.balanceToMaintain,
+        legacyAccount: action.account,
+        legacyVsp: action.vsp
+      };
     default:
       return state;
   }

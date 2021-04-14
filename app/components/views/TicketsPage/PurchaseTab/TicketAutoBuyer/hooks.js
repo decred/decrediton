@@ -1,24 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useCallback, useEffect } from "react";
-import { compose, eq, get } from "fp";
+import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
 export const useTicketAutoBuyer = () => {
-  const configuredVsps = useSelector(sel.configuredStakePools);
-  const isRunning = useSelector(sel.isTicketAutoBuyerEnabled);
+  const availableVSPs = useSelector(sel.getAvailableVSPs);
+  const isRunning = useSelector(sel.getTicketAutoBuyerRunning);
 
-  const legacyBuyerBalanceToMaintain = useSelector(
-    sel.legacyBuyerBalanceToMaintain
-  );
-  const legacyBuyerAccount = useSelector(sel.legacyBuyerAccount);
-  const legacyBuyerVSP = useSelector(sel.legacyBuyerVSP);
+  const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
+  const buyerAccount = useSelector(sel.buyerAccount);
+  const buyerVSP = useSelector(sel.buyerVSP);
 
   const [balanceToMaintain, setBalanceToMaintain] = useState(
-    legacyBuyerBalanceToMaintain
+    buyerBalanceToMaintain
   );
-  const [account, setAccount] = useState(legacyBuyerAccount);
-  const [vsp, setVsp] = useState(legacyBuyerVSP);
+  const [account, setAccount] = useState(buyerAccount);
+  const [vsp, setVsp] = useState(buyerVSP);
 
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
   // isValid check if we can show the modal to start the auto buyer.
@@ -44,7 +42,7 @@ export const useTicketAutoBuyer = () => {
   const checkIsValid = (vsp, balanceToMaintain, account) => {
     let isValid = true;
     if (vsp) {
-      if (!vsp.Host) {
+      if (!vsp.pubkey || !vsp.host) {
         isValid = false;
       }
     } else {
@@ -52,9 +50,6 @@ export const useTicketAutoBuyer = () => {
     }
     // balance to mantain can be 0.
     return isValid && balanceToMaintain?.atomValue >= 0 && !!account;
-  };
-  const getVsp = () => {
-    return vsp ? configuredVsps.find(compose(eq(vsp.Host), get("Host"))) : null;
   };
 
   const onClick = () => {
@@ -75,18 +70,18 @@ export const useTicketAutoBuyer = () => {
   const getRunningIndicator = useSelector(sel.getRunningIndicator);
 
   const resetSettingsState = () => {
-    setBalanceToMaintain(legacyBuyerBalanceToMaintain);
-    setAccount(legacyBuyerAccount);
-    setVsp(legacyBuyerVSP);
+    setBalanceToMaintain(buyerBalanceToMaintain);
+    setAccount(buyerAccount);
+    setVsp(buyerVSP);
     setClicked(false);
   };
-  const vspHost = vsp && vsp.Host;
+  const vspHost = vsp && vsp.host;
 
   const dispatch = useDispatch();
   const onEnableTicketAutoBuyer = useCallback(
     (passphrase, account, balanceToMaintain, vsp) =>
       dispatch(
-        ca.startTicketBuyerV2Attempt(
+        ca.startTicketBuyerV3Attempt(
           passphrase,
           account,
           balanceToMaintain,
@@ -96,10 +91,9 @@ export const useTicketAutoBuyer = () => {
     [dispatch]
   );
 
-  const onStopAutoBuyer = useCallback(
-    () => dispatch(ca.ticketBuyerV2Cancel()),
-    [dispatch]
-  );
+  const onStopAutoBuyer = useCallback(() => dispatch(ca.ticketBuyerCancel()), [
+    dispatch
+  ]);
 
   const onSaveAutoBuyerSettings = (balanceToMaintain, account, vsp) => {
     setIsValid(checkIsValid(vsp, balanceToMaintain, account));
@@ -107,7 +101,7 @@ export const useTicketAutoBuyer = () => {
       setClicked(true);
     } else {
       dispatch(
-        ca.saveLegacyAutoBuyerSettings({
+        vspa.saveAutoBuyerSettings({
           balanceToMaintain,
           account,
           vsp
@@ -121,9 +115,9 @@ export const useTicketAutoBuyer = () => {
     setBalanceToMaintain,
     account,
     setAccount,
-    vsp: getVsp(),
+    vsp,
     setVsp,
-    configuredVsps,
+    availableVSPs,
     isRunning,
     notMixedAccounts,
     getRunningIndicator,

@@ -1,6 +1,6 @@
 import { compose, eq, get } from "fp";
 import { spring } from "react-motion";
-import PurchaseTicketsForm from "./Form";
+import { PurchaseTicketsForm } from "shared";
 import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
 import { isNullOrUndefined } from "util";
@@ -9,7 +9,8 @@ import { MAX_POSSIBLE_FEE_INPUT } from "constants";
 
 const PurchaseTickets = ({
   toggleShowVsp,
-  onChangeAccount: onChangeAccountProp
+  onChangeAccount: onChangeAccountProp,
+  toggleIsLegacy
 }) => {
   const {
     ticketPrice,
@@ -214,13 +215,17 @@ const PurchaseTickets = ({
     return ticketFeeError || txFeeError || expiryError || !numTicketsToBuy;
   };
 
+  const vspFee = getStakePool().PoolFees;
+
   return (
     <PurchaseTicketsForm
       {...{
         isShowingAdvanced,
         getQuickBarComponent,
         getAdvancedComponent,
-        getIsValid,
+        vsp: getStakePool(),
+        vspFee,
+        isValid: getIsValid(),
         handleOnKeyDown,
         numTicketsToBuy,
         onIncrementNumTickets,
@@ -239,7 +244,9 @@ const PurchaseTickets = ({
         onDismissBackupRedeemScript,
         isWatchingOnly,
         notMixedAccounts,
-        getRunningIndicator
+        getRunningIndicator,
+        toggleIsLegacy,
+        isLegacy: true
       }}
     />
   );

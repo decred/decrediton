@@ -17,9 +17,9 @@ const NumTicketsInput = ({
 }) => {
   const ticketUnitLabel =
     parseInt(numTickets) === 1 ? (
-      <T id="numTicketInput.unit" m="Ticket" />
+      <T id="numTicketsInput.ticket" m="ticket" />
     ) : (
-      <T id="numTicketsInput.unit" m="Tickets" />
+      <T id="numTicketsInput.tickets" m="tickets" />
     );
   return (
     <div className={classNames(style.container, invalid && style.error)}>
@@ -39,9 +39,9 @@ const NumTicketsInput = ({
           onChangeNumTickets && onChangeNumTickets(e.target.value)
         }
         data-max-width="70"
-        unit={!invalid && ticketUnitLabel}
         {...props}
       />
+      <div className={style.ticketUnitLabel}>{ticketUnitLabel}</div>
       <button
         key="less"
         aria-label="less"

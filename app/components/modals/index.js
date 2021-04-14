@@ -15,3 +15,4 @@ export { default as SyncVSPFailedTickets } from "./SyncVSPFailedTickets";
 export { default as CantCloseModals } from "./CantCloseModals/CantCloseModals";
 export { default as MixerSettingsModal } from "./MixerSettingsModal";
 export { default as ListUTXOsModal } from "./ListUTXOsModal";
+export { default as AutoBuyerSettingsModal } from "./AutoBuyerSettingsModal";

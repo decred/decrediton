@@ -25,9 +25,10 @@ export const usePurchaseTab = () => {
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
   const buyerVSP = useSelector(sel.buyerVSP);
-  const buyerBalanceToMantain = useSelector(sel.buyerBalanceToMantain);
+  const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
   const buyerAccount = useSelector(sel.buyerAccount);
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
+  const visibleAccounts = useSelector(sel.visibleAccounts);
 
   // VSP listing checks
   const { onAddAllowedRequestType, isVSPListingEnabled } = useSettings();
@@ -120,7 +121,7 @@ export const usePurchaseTab = () => {
     ticketAutoBuyerRunning,
     buyerVSP,
     buyerAccount,
-    buyerBalanceToMantain,
+    buyerBalanceToMaintain,
     getVSPTicketsByFeeStatus,
     isLegacy,
     toggleIsLegacy,
@@ -134,6 +135,7 @@ export const usePurchaseTab = () => {
     isVSPListingEnabled,
     onEnableVSPListing,
     onListUnspentOutputs,
-    getRunningIndicator
+    getRunningIndicator,
+    visibleAccounts
   };
 };

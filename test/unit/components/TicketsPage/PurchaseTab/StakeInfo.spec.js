@@ -35,11 +35,11 @@ test("test StakeInfo (SPV enabled)", () => {
 
   const unspentTickets = screen.getByText(/unspent tickets/i);
   expect(unspentTickets.nextElementSibling.textContent).toBe(
-    `${mockUnspentTicketsCount} tickets`
+    `${mockUnspentTicketsCount}`
   );
 
   expect(screen.getByText(/total voted/i).nextElementSibling.textContent).toBe(
-    `${mockVotedTicketsCount} tickets`
+    `${mockVotedTicketsCount}`
   );
   expect(
     screen.getByText(/last ticket voted/i).nextElementSibling.textContent
@@ -75,7 +75,7 @@ test("test StakeInfo (SPV disabled)", () => {
 
   const liveTickets = screen.getByText(/live/i);
   expect(liveTickets.nextElementSibling.textContent).toBe(
-    `${mockLiveTicketsCount} tickets`
+    `${mockLiveTicketsCount}`
   );
   expect(liveTickets.nextElementSibling.nextElementSibling.textContent).toMatch(
     `Own Mempool: ${mockOwnMempoolTicketsCount}`

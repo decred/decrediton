@@ -2,8 +2,7 @@ import Purchase from "../../../../../../app/components/views/TicketsPage/Purchas
 import TicketAutoBuyer from "../../../../../../app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { fireEvent } from "@testing-library/react";
-import { screen } from "@testing-library/react";
+import { screen, act, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as spa from "actions/VSPActions";
@@ -149,11 +148,15 @@ let mockIsTicketAutoBuyerEnabled;
 let mockTicketBuyerV2Cancel;
 let mockGetRunningIndicator;
 let mockAddCustomStakePool;
+let mockToggleIsLegacy;
 
 beforeEach(() => {
   selectors.getIsLegacy = jest.fn(() => true);
   selectors.stakePoolListingEnabled = jest.fn(() => true);
   selectors.unconfiguredStakePools = jest.fn(() => mockUnconfiguredStakePools);
+  selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
   selectors.configuredStakePools = jest.fn(() => mockConfiguredStakePools);
   selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
   //stakeInfo
@@ -192,10 +195,19 @@ beforeEach(() => {
   mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
     () => false
   );
+  mockToggleIsLegacy = spActions.toggleIsLegacy = jest.fn(() => () => {});
 });
 
 test("render LEGACY_PurchasePage", () => {
   render(<Purchase />, initialState);
+
+  // check Use Legacy VSP checkbox
+  expect(
+    screen.queryByText(/use a VSP which has not updated to vspd/i)
+  ).not.toBeInTheDocument(); // tooltip
+  user.click(screen.getByLabelText("Use Legacy VSP"));
+  expect(mockToggleIsLegacy).toHaveBeenCalledWith(false);
+
   expect(
     screen.getByText("Current VSP").nextElementSibling.textContent
   ).toMatch(mockConfiguredStakePools[0].Host);
@@ -242,6 +254,9 @@ test("render LEGACY_PurchasePage", () => {
     `${mockConfiguredStakePools[0].value.PoolFees}`
   );
 
+  expect(
+    screen.queryByLabelText("Always use this VSP")
+  ).not.toBeInTheDocument();
   // change stakepool
   const stakePoolSelectOption = screen.getAllByRole("option", {
     name: mockConfiguredStakePools[0].Host
@@ -307,7 +322,7 @@ test("render LEGACY_PurchasePage", () => {
   );
 
   // test amount input
-  const inputTag = screen.getByLabelText("Amount:");
+  const inputTag = screen.getByLabelText("Amount");
 
   const moreButton = screen.getByRole("button", { name: "more" });
   user.click(moreButton);
@@ -340,7 +355,7 @@ test("render LEGACY_PurchasePage", () => {
   expect(mockPurchaseTicketsAttempt).not.toHaveBeenCalled();
 
   //close advanced panel
-  user.click(ticketCogsButton);
+  act(() => user.click(ticketCogsButton));
   expect(ticketCogsButton.className).toMatch(/opened/i);
 
   // backup redeem script
@@ -383,27 +398,54 @@ test("render LEGACY_PurchasePage", () => {
 
 test("test legacy autobuyer", () => {
   render(<TicketAutoBuyer />, initialState);
+  const settingsButton = screen.getByRole("button", {
+    name: "Ticket Autobuyer Settings"
+  });
+  user.click(screen.getByTestId("toggleSwitch"));
+  const saveButton = screen.getByRole("button", { name: "Save" });
+  user.click(saveButton);
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
   const mockBalanceToMaintain = 14;
   user.type(
-    screen.getByLabelText("Balance to Maintain:"),
+    screen.getByLabelText(/Balance to Maintain/i),
     `${mockBalanceToMaintain}`
   );
 
-  // change stakepool
-  const stakePoolSelectOption = screen.getAllByRole("option", {
-    name: mockConfiguredStakePools[0].Host
-  })[0];
-
-  user.click(stakePoolSelectOption);
+  user.click(saveButton);
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+  // set stakepool
+  user.click(screen.getByText("Select VSP..."));
   user.click(
     screen.getByRole("option", { name: mockConfiguredStakePools[1].Host })
   );
-  user.click(screen.getByTestId("toggleSwitch"));
 
+  user.click(saveButton);
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+
+  // set account
+  user.click(screen.getByText("Select account"));
+  user.click(screen.getByText(mockMixedAccount.name));
+  user.click(saveButton);
+
+  // check settings
+  user.click(settingsButton);
+  expect(screen.getByLabelText(/Balance to Maintain/i).value).toBe(
+    `${mockBalanceToMaintain}`
+  );
+  expect(
+    screen.getByText(mockConfiguredStakePools[1].Host)
+  ).toBeInTheDocument();
+  expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
+  user.click(screen.getByRole("button", { name: "Cancel" }));
+
+  // clicking again on switch should open the confirmation modal
+  user.click(screen.getByTestId("toggleSwitch"));
   expect(
     screen.getByText(/start ticket buyer confirmation/i)
   ).toBeInTheDocument();
-  expect(screen.getAllByText(mockConfiguredStakePools[1].Host).length).toBe(2);
+  expect(
+    screen.getByText(mockConfiguredStakePools[1].Host)
+  ).toBeInTheDocument();
   expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument();
   // cancel first
   user.click(screen.getByText("Cancel"));
@@ -417,7 +459,6 @@ test("test legacy autobuyer", () => {
     mockBalanceToMaintain * 100000000,
     mockConfiguredStakePools[1]
   );
-  //
 });
 
 test("test legacy autobuyer (autobuyer is runnning)", () => {

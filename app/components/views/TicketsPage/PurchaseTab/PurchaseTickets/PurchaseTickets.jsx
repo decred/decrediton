@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
+import { isEqual } from "lodash/fp";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -25,49 +26,69 @@ const Tickets = ({ toggleIsLegacy }) => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
-    getRunningIndicator
+    getRunningIndicator,
+    visibleAccounts
   } = usePurchaseTab();
 
   const [account, setAccount] = useState(defaultSpendingAccount);
+  useEffect(() => {
+    const newAccount = visibleAccounts?.find((a) =>
+      isEqual(a.value, account?.value)
+    );
+    newAccount && setAccount(newAccount);
+  }, [visibleAccounts, account]);
+
   // todo use this vsp to buy solo tickets.
   const [vsp, setVSP] = useState(
     rememberedVspHost ? { host: rememberedVspHost.host } : null
   );
-  const [numTickets, setNumTickets] = useState(1);
+  const [numTicketsToBuy, setNumTicketsToBuy] = useState(1);
   const [isValid, setIsValid] = useState(false);
 
   const toggleRememberVspHostCheckBox = () => {
     setRememberedVspHost(!rememberedVspHost ? vsp : null);
   };
 
-  // onChangeNumTickets deals with ticket increment or decrement.
-  const onChangeNumTickets = (increment) => {
-    if (numTickets === 0 && !increment) return;
-    increment
-      ? setNumTickets(parseInt(numTickets) + 1)
-      : setNumTickets(parseInt(numTickets) - 1);
+  const handleOnKeyDown = (e) => {
+    if (e.keyCode == 38) {
+      e.preventDefault();
+      onIncrementNumTickets();
+    } else if (e.keyCode == 40) {
+      e.preventDefault();
+      onDecrementNumTickets();
+    }
+  };
+
+  const onIncrementNumTickets = () => {
+    setNumTicketsToBuy((numTicketsToBuy) =>
+      numTicketsToBuy == "" ? 1 : numTicketsToBuy + 1
+    );
+  };
+
+  const onChangeNumTickets = (numTicketsToBuy) => {
+    if (parseInt(numTicketsToBuy)) {
+      setNumTicketsToBuy(parseInt(numTicketsToBuy));
+    } else if (numTicketsToBuy == "") {
+      setNumTicketsToBuy(numTicketsToBuy);
+    }
+  };
+
+  const onDecrementNumTickets = () => {
+    setNumTicketsToBuy((numTicketsToBuy) =>
+      numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1
+    );
   };
 
   const onV3PurchaseTicket = (passphrase) => {
-    onPurchaseTicketV3(passphrase, account, numTickets, vsp);
+    onPurchaseTicketV3(passphrase, account, numTicketsToBuy, vsp);
   };
 
   useEffect(() => {
     const { spendable } = account;
-    const canAfford = numTickets * ticketPrice <= spendable;
-    const hasTickets = numTickets > 0;
+    const canAfford = numTicketsToBuy * ticketPrice <= spendable;
+    const hasTickets = numTicketsToBuy > 0;
     setIsValid(canAfford && hasTickets && !!vsp);
-  }, [ticketPrice, numTickets, account, vsp]);
-
-  const handleOnKeyDown = (e) => {
-    if (e.keyCode == 38) {
-      e.preventDefault();
-      onChangeNumTickets(true);
-    } else if (e.keyCode == 40) {
-      e.preventDefault();
-      onChangeNumTickets(false);
-    }
-  };
+  }, [ticketPrice, numTicketsToBuy, account, vsp]);
 
   const [vspFee, setVspFee] = useState(
     availableVSPs &&
@@ -83,9 +104,10 @@ const Tickets = ({ toggleIsLegacy }) => {
         sidebarOnBottom,
         isWatchingOnly,
         account,
-        numTickets,
+        numTicketsToBuy,
+        onIncrementNumTickets,
+        onDecrementNumTickets,
         onChangeNumTickets,
-        setNumTickets,
         handleOnKeyDown,
         setAccount,
         ticketPrice,

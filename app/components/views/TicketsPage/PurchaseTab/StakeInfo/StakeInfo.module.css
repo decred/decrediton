@@ -1,37 +1,27 @@
 .accordion {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .accordionArrow {
   top: 15px;
   right: 20px;
   height: 13px;
+  transform: rotate(90deg);
+}
+.activeAccordionArrow {
+  transform: rotate(-90deg) !important;
 }
 
 .area {
   background-color: var(--background-back-color);
-  padding: 16px 19px 16px 19px;
+  padding: 30px 40px 20px 0;
   position: relative;
   display: grid;
-  grid-template-areas: "purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle purchaseTicketsTitle";
-}
-
-.purchaseTicketTitle {
-  box-sizing: content-box;
-  grid-area: purchaseTicketsTitle;
-  font-size: 15px;
+  grid-template-columns: repeat(4, minmax(max-content, 1fr));
 }
 
 .purchaseTicketFoot {
   border-bottom: 1px var(--tx-detail-text) solid;
-}
-
-.purchaseTicketLabel {
-  font-size: 13px;
-}
-
-.purchaseTicketCount {
-  font-size: 17px;
 }
 
 .balance {
@@ -43,36 +33,36 @@
 }
 
 .details {
-  height: 70px;
+  height: 100px;
   display: grid;
-  grid-template-columns: 1.2fr repeat(3, 1fr);
-  grid-template-rows: 22px 22px;
+  grid-template-columns: minmax(max-content, 1fr) minmax(max-content, 1fr) auto;
   row-gap: 11px;
-  box-sizing: content-box;
-  padding-top: 12px;
-  margin-left: 19px;
-  margin-right: 19px;
+  padding: 24px 0 30px 0;
+  margin: 0 40px;
   background-color: var(--background-back-color);
-  border-top: 1px solid;
-  border-color: var(--input-placeholder-color);
+  border-top: 1px solid var(--stakeinfo-border);
 }
 
 .stakeInfo {
-  display: grid;
-  grid-template-rows: 15px 24px 15px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
 }
 
 .label {
   vertical-align: middle;
-  line-height: 15px;
-  font-size: 11px;
+  line-height: 16px;
+  font-size: 13px;
+  color: var(--purchase-label);
+  margin-bottom: 10px;
 }
 
 .value {
   vertical-align: middle;
-  line-height: 24px;
-  font-size: 17px;
+  line-height: 22px;
+  font-size: 18px;
   font-weight: 600;
+  color: var(--stakeinfo-value);
 }
 
 .foot {
@@ -84,22 +74,26 @@
 }
 
 .detail {
-  margin-bottom: 10px;
-  display: inline-grid;
-  grid-template-columns: 22px auto 1fr;
-  vertical-align: middle;
   line-height: 22px;
   font-size: 13px;
   min-width: 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .detailIcon {
   background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+}
+
+.detail:nth-child(3),
+.detail:nth-child(6) {
+  justify-content: flex-end;
 }
 
 .detailLabel {
-  display: block;
-  padding-left: 6px;
+  padding-left: 11px;
 }
 
 .detailValue {
@@ -135,45 +129,30 @@
   background-image: var(--ticket-voted);
 }
 
-@media screen and (max-width: 1179px) {
-  .details {
-    height: 85px;
-    row-gap: 25px;
-  }
-
-  .detail {
-    grid-template-columns: 22px auto 1fr;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .accordion {
     margin-bottom: 30px;
   }
 
   .area {
-    grid-template-areas:
-      "purchaseTicketsTitle purchaseTicketsTitle"
-      "purchaseTicketsTitle purchaseTicketsTitle";
-    grid-template-rows: 71px 60px;
+    grid-template-columns: repeat(2, minmax(max-content, 1fr));
+    grid-gap: 20px;
+    padding: 30px 20px;
   }
-
   .details {
-    height: 130px;
-    row-gap: 25px;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 22px 22px 22px;
+    margin: 0 15px 0 10px;
+    grid-gap: 12px;
+    height: 135px;
   }
-
-  .detail {
-    grid-template-columns: 22px auto 1fr;
+  .detail:nth-child(3),
+  .detail:nth-child(6) {
+    justify-content: flex-start;
   }
-
-  .details .detail:first-child .detailLabel {
-    width: 80px;
+  .detail:nth-child(even) {
+    justify-content: flex-end;
   }
-
-  .purchaseTicketLabel {
-    font-size: 13px;
+  .detailLabel {
+    padding-left: 2px;
   }
 }

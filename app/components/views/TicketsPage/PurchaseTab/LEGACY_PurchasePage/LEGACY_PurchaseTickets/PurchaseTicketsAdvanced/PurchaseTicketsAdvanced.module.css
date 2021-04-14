@@ -1,5 +1,5 @@
 .infoGrid {
-  padding: 10px 0 0 20px;
+  padding: 10px 0 10px 20px;
   display: grid;
   grid-template-columns: repeat(6, max-content);
   align-items: center;

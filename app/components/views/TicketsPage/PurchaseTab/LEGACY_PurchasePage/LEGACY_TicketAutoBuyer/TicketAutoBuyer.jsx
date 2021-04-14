@@ -1,49 +1,56 @@
 import { TicketAutoBuyerForm } from "shared";
 import { useTicketAutoBuyer } from "./hooks";
-import { VSPSelect } from "inputs";
+import { LEGACY_StakePoolSelect } from "inputs";
 
-function TicketAutoBuyer() {
+const TicketAutoBuyer = () => {
   const {
-    balanceToMaintain,
-    setBalanceToMaintain,
-    account,
-    setAccount,
-    vsp,
-    setVsp,
-    availableVSPs,
-    isRunning,
+    configuredVsps,
     notMixedAccounts,
     getRunningIndicator,
     clicked,
+    vsp,
+    setVsp,
+    account,
+    setAccount,
+    balanceToMaintain,
+    setBalanceToMaintain,
     isValid,
-    isSettingsModalVisible,
-    showSettingsModal,
-    hideSettingsModal,
+    isRunning,
     onClick,
     onStartAutoBuyer,
     onStopAutoBuyer,
     onSaveAutoBuyerSettings,
+    isSettingsModalVisible,
+    showSettingsModal,
+    hideSettingsModal,
     vspHost
   } = useTicketAutoBuyer();
 
   const VSPSelectControl = (
-    <VSPSelect options={availableVSPs} value={vsp} onChange={setVsp} />
+    <LEGACY_StakePoolSelect
+      options={configuredVsps}
+      disabled={isRunning}
+      value={vsp}
+      onChange={setVsp}
+    />
   );
 
   return (
     <TicketAutoBuyerForm
       {...{
+        isValid,
+        account,
+        setAccount,
+        vsp,
+        setVsp,
+        clicked,
+        onClick,
         onStartAutoBuyer,
         onStopAutoBuyer,
         isRunning,
         balanceToMaintain,
         setBalanceToMaintain,
-        account,
-        setAccount,
-        vsp,
-        isValid,
-        onClick,
-        clicked,
+        configuredVsps,
         notMixedAccounts,
         getRunningIndicator,
         onSaveAutoBuyerSettings,
@@ -55,6 +62,6 @@ function TicketAutoBuyer() {
       }}
     />
   );
-}
+};
 
 export default TicketAutoBuyer;
