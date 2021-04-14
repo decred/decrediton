@@ -125,7 +125,6 @@ export const AppPassAndPassphraseModalButton = mbb(
 export const RevokeModalButton = mbb(null, PassphraseModal, PiUiButton);
 export const TicketPurchaseModalButton = mbb(null, PassphraseModal, PiUiButton);
 
-
 export const AutoBuyerPassphraseModalSwitch = mbb(
   null,
   PassphraseModal,
