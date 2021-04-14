@@ -644,7 +644,7 @@ export const updateVoteChoice = (
   // politeiavoter.
   const messages = walletEligibleTickets.map((t) => ({
     address: t.address,
-    message: `${token}${t.txHash}${voteChoice.bits.toString(16)}`
+    message: `${token}${t.ticket}${voteChoice.bits.toString(16)}`
   }));
 
   const updatePropRef = (proposals, token, newProposal) => {
@@ -680,8 +680,8 @@ export const updateVoteChoice = (
         return;
       }
       const hexSig = Buffer.from(signature.getSignature()).toString("hex");
-      const voteBit = voteChoice.bits.toString(16);
-      const vote = { token, ticket: t.ticket, voteBit, signature: hexSig };
+      const votebit = voteChoice.bits.toString(16);
+      const vote = { token, ticket: t.ticket, votebit, signature: hexSig };
       votes.push(vote);
     });
 
