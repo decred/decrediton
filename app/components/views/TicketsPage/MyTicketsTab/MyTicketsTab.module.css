@@ -1,11 +1,7 @@
-.sortByTooltip {
-  font-size: 14px;
-  width: 4.5rem;
-}
-
+.sortByTooltip,
 .ticketStatusTooltip {
   font-size: 14px;
-  width: 8rem;
+  width: max-content;
 }
 
 .ticketsButtons {

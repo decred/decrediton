@@ -118,6 +118,12 @@
   height: 100%;
   margin-left: 42px;
 }
+.myTicketsTooltip,
+.myTicketsVoteTooltip,
+.myTicketsStakeTooltip {
+  font-size: 14px;
+  width: max-content;
+}
 
 @media screen and (max-width: 1179px) {
   .charts {
