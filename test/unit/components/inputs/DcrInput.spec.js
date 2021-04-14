@@ -5,8 +5,10 @@ import { render } from "test-utils.js";
 import * as sel from "selectors";
 import { DCR } from "constants";
 
+const selectors = sel;
+
 describe("DcrInput in DCR mode works", () => {
-  sel.currencyDisplay = jest.fn(() => DCR);
+  selectors.currencyDisplay = jest.fn(() => DCR);
   const expectAfterChange = (targetValue, displayValue) => {
     const Wrapper = () => {
       const [amount, setAmount] = useState(0);

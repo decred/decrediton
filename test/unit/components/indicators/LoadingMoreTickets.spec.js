@@ -17,13 +17,16 @@ const testTicketFilterDesc = {
 const testTicketFilterAsc = { ...testTicketFilterDesc, listDirection: "asc" };
 const testCurrentBlockHeight = 6000;
 const testClassName = "test-classname";
+const selectors = sel;
 
 beforeEach(() => {
-  mockStartRequestHeight = sel.startRequestHeight = jest.fn(
+  mockStartRequestHeight = selectors.startRequestHeight = jest.fn(
     () => testStartRequestHeight
   );
-  mockTicketsFilter = sel.ticketsFilter = jest.fn(() => testTicketFilterDesc);
-  mockCurrentBlockHeight = sel.currentBlockHeight = jest.fn(
+  mockTicketsFilter = selectors.ticketsFilter = jest.fn(
+    () => testTicketFilterDesc
+  );
+  mockCurrentBlockHeight = selectors.currentBlockHeight = jest.fn(
     () => testCurrentBlockHeight
   );
 });
@@ -56,7 +59,9 @@ test("test default LoadingMoreTickets", async () => {
 });
 
 test("test asc sorted LoadingMoreTickets", () => {
-  mockTicketsFilter = sel.ticketsFilter = jest.fn(() => testTicketFilterAsc);
+  mockTicketsFilter = selectors.ticketsFilter = jest.fn(
+    () => testTicketFilterAsc
+  );
   render(<LoadingMoreTicketsIndicator />);
 
   expect(mockTicketsFilter).toHaveBeenCalled();

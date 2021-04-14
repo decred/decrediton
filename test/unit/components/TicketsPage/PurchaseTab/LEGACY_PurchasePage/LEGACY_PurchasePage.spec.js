@@ -20,7 +20,6 @@ const mockTotalSubsidy = 400000000;
 const mockIsSPV = false;
 const mockLastVotedTicket = null;
 const mockCurrencyDisplay = DCR;
-
 const mockUnconfiguredStakePools = [
   {
     APIVersionsSupported: [1, 2],
@@ -59,7 +58,6 @@ const mockUnconfiguredStakePools = [
     }
   }
 ];
-
 const mockConfiguredStakePools = [
   {
     APIVersionsSupported: [1, 2],
@@ -139,6 +137,9 @@ const initialState = {
     }
   }
 };
+const selectors = sel;
+const controlActions = ca;
+const spActions = spa;
 
 let mockPurchaseTicketsAttempt;
 let mockDismissBackupRedeemScript;
@@ -150,41 +151,47 @@ let mockGetRunningIndicator;
 let mockAddCustomStakePool;
 
 beforeEach(() => {
-  sel.getIsLegacy = jest.fn(() => true);
-  sel.stakePoolListingEnabled = jest.fn(() => true);
-  sel.unconfiguredStakePools = jest.fn(() => mockUnconfiguredStakePools);
-  sel.configuredStakePools = jest.fn(() => mockConfiguredStakePools);
-  sel.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.getIsLegacy = jest.fn(() => true);
+  selectors.stakePoolListingEnabled = jest.fn(() => true);
+  selectors.unconfiguredStakePools = jest.fn(() => mockUnconfiguredStakePools);
+  selectors.configuredStakePools = jest.fn(() => mockConfiguredStakePools);
+  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
   //stakeInfo
-  sel.votedTicketsCount = jest.fn(() => mockVotedTicketsCount);
-  sel.ownMempoolTicketsCount = jest.fn(() => mockOwnMempoolTicketsCount);
-  sel.revokedTicketsCount = jest.fn(() => mockRevokedTicketsCount);
-  sel.immatureTicketsCount = jest.fn(() => mockImmatureTicketsCount);
-  sel.liveTicketsCount = jest.fn(() => mockLiveTicketsCount);
-  sel.unspentTicketsCount = jest.fn(() => mockUnspentTicketsCount);
-  sel.totalSubsidy = jest.fn(() => mockTotalSubsidy);
-  sel.isSPV = jest.fn(() => mockIsSPV);
-  sel.lastVotedTicket = jest.fn(() => mockLastVotedTicket);
-  sel.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
+  selectors.votedTicketsCount = jest.fn(() => mockVotedTicketsCount);
+  selectors.ownMempoolTicketsCount = jest.fn(() => mockOwnMempoolTicketsCount);
+  selectors.revokedTicketsCount = jest.fn(() => mockRevokedTicketsCount);
+  selectors.immatureTicketsCount = jest.fn(() => mockImmatureTicketsCount);
+  selectors.liveTicketsCount = jest.fn(() => mockLiveTicketsCount);
+  selectors.unspentTicketsCount = jest.fn(() => mockUnspentTicketsCount);
+  selectors.totalSubsidy = jest.fn(() => mockTotalSubsidy);
+  selectors.isSPV = jest.fn(() => mockIsSPV);
+  selectors.lastVotedTicket = jest.fn(() => mockLastVotedTicket);
+  selectors.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
 
-  mockPurchaseTicketsAttempt = ca.purchaseTicketsAttempt = jest.fn(
+  mockPurchaseTicketsAttempt = controlActions.purchaseTicketsAttempt = jest.fn(
     () => () => {}
   );
-  mockDismissBackupRedeemScript = spa.dismissBackupRedeemScript = jest.fn(
+  mockDismissBackupRedeemScript = spActions.dismissBackupRedeemScript = jest.fn(
     () => () => {}
   );
-  mockAddCustomStakePool = spa.addCustomStakePool = jest.fn(() => () =>
+  mockAddCustomStakePool = spActions.addCustomStakePool = jest.fn(() => () =>
     Promise.resolve()
   );
-  mockRevokeTicketsAttempt = ca.revokeTicketsAttempt = jest.fn(() => () => {});
-  mockStartTicketBuyerV2Attempt = ca.startTicketBuyerV2Attempt = jest.fn(
+  mockRevokeTicketsAttempt = controlActions.revokeTicketsAttempt = jest.fn(
     () => () => {}
   );
-  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+  mockStartTicketBuyerV2Attempt = controlActions.startTicketBuyerV2Attempt = jest.fn(
+    () => () => {}
+  );
+  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => false
   );
-  mockTicketBuyerV2Cancel = ca.ticketBuyerV2Cancel = jest.fn(() => () => {});
-  mockGetRunningIndicator = sel.getRunningIndicator = jest.fn(() => false);
+  mockTicketBuyerV2Cancel = controlActions.ticketBuyerV2Cancel = jest.fn(
+    () => () => {}
+  );
+  mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
+    () => false
+  );
 });
 
 test("render LEGACY_PurchasePage", () => {
@@ -414,7 +421,7 @@ test("test legacy autobuyer", () => {
 });
 
 test("test legacy autobuyer (autobuyer is runnning)", () => {
-  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => true
   );
   render(<TicketAutoBuyer />, initialState);
@@ -425,7 +432,7 @@ test("test legacy autobuyer (autobuyer is runnning)", () => {
 });
 
 test("test legacy autobuyer (a process is runnning)", () => {
-  mockGetRunningIndicator = sel.getRunningIndicator = jest.fn(() => true);
+  mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(() => true);
   render(<TicketAutoBuyer />, initialState);
   expect(
     screen.getByText(/privacy mixer or purchase ticket attempt running/i)

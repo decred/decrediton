@@ -90,54 +90,60 @@ let mockIsTicketAutoBuyerEnabled;
 let mockGetHasUnpaidFee;
 let mockGetAccountMixerRunning;
 let mockPurchaseTicketsRequestAttempt;
-let mockGetTicketAutoBuyerRunning;
+
+const config = conf;
+const selectors = sel;
+const controlActions = ca;
+const wlActions = wla;
+const settingsActions = sa;
+const vspActions = vspa;
 
 beforeEach(() => {
-  mockGetGlobalCfg = conf.getGlobalCfg = jest.fn(() => {
+  mockGetGlobalCfg = config.getGlobalCfg = jest.fn(() => {
     return {
       get: () => DEFAULT_LIGHT_THEME_NAME,
       set: () => {}
     };
   });
-  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
-  mockIsMainNet = sel.isMainNet = jest.fn(() => false);
-  mockIsChangePassPhraseDisabled = sel.isChangePassPhraseDisabled = jest.fn(
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
+  mockIsMainNet = selectors.isMainNet = jest.fn(() => false);
+  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
     () => false
   );
-  mockWalletService = sel.walletService = jest.fn(() => {
+  mockWalletService = selectors.walletService = jest.fn(() => {
     return {};
   });
-  mockTicketBuyerService = sel.ticketBuyerService = jest.fn(() => {
+  mockTicketBuyerService = selectors.ticketBuyerService = jest.fn(() => {
     return {};
   });
-  sel.changePassphraseRequestAttempt = jest.fn(() => false);
-  sel.getWalletName = jest.fn(() => testWalletName);
-  sel.getWalletReady = jest.fn(() => true);
-  ca.changePassphraseAttempt = jest.fn(() => true);
-  mockSaveSettings = sa.saveSettings = jest.fn(() => () => {});
-  wla.closeWalletRequest = jest.fn(() => () => {});
-  sa.addAllowedExternalRequest = jest.fn(() => true);
-  sa.toggleTheme = jest.fn(() => true);
-  mockChangePassphrase = ca.changePassphraseAttempt = jest.fn(() => () => {});
+  selectors.changePassphraseRequestAttempt = jest.fn(() => false);
+  selectors.getWalletName = jest.fn(() => testWalletName);
+  selectors.getWalletReady = jest.fn(() => true);
+  controlActions.changePassphraseAttempt = jest.fn(() => true);
+  mockSaveSettings = settingsActions.saveSettings = jest.fn(() => () => {});
+  wlActions.closeWalletRequest = jest.fn(() => () => {});
+  settingsActions.addAllowedExternalRequest = jest.fn(() => true);
+  settingsActions.toggleTheme = jest.fn(() => true);
+  mockChangePassphrase = controlActions.changePassphraseAttempt = jest.fn(
+    () => () => {}
+  );
 
-  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => false
   );
-  mockGetTicketAutoBuyerRunning = sel.getTicketAutoBuyerRunning = jest.fn(
+  selectors.getTicketAutoBuyerRunning = jest.fn(() => false);
+  mockGetHasUnpaidFee = selectors.getHasTicketFeeError = jest.fn(() => false);
+  mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => false
   );
-  mockGetHasUnpaidFee = sel.getHasTicketFeeError = jest.fn(() => false);
-  mockGetAccountMixerRunning = sel.getAccountMixerRunning = jest.fn(
+  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
     () => false
   );
-  mockPurchaseTicketsRequestAttempt = sel.purchaseTicketsRequestAttempt = jest.fn(
-    () => false
-  );
-  vspa.discoverAvailableVSPs = jest.fn(() => () => {});
+  vspActions.discoverAvailableVSPs = jest.fn(() => () => {});
 });
 
 test("show error when there is no walletService", () => {
-  mockWalletService = sel.walletService = jest.fn(() => {});
+  mockWalletService = selectors.walletService = jest.fn(() => {});
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -165,7 +171,7 @@ test("test close wallet button (there is no ongoing process) ", () => {
 });
 
 test("test close wallet button (ticket autobuyer is running) ", () => {
-  mockIsTicketAutoBuyerEnabled = sel.isTicketAutoBuyerEnabled = jest.fn(
+  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => true
   );
   render(<SettingsPage />, {
@@ -183,7 +189,7 @@ test("test close wallet button (ticket autobuyer is running) ", () => {
 });
 
 test("test close wallet button (has unpaid fee) ", () => {
-  mockGetHasUnpaidFee = sel.getHasTicketFeeError = jest.fn(() => true);
+  mockGetHasUnpaidFee = selectors.getHasTicketFeeError = jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -199,7 +205,9 @@ test("test close wallet button (has unpaid fee) ", () => {
 });
 
 test("test close wallet button (account mixer is running) ", () => {
-  mockGetAccountMixerRunning = sel.getAccountMixerRunning = jest.fn(() => true);
+  mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
+    () => true
+  );
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -215,7 +223,7 @@ test("test close wallet button (account mixer is running) ", () => {
 });
 
 test("test close wallet button (still finalizing ticket purchases) ", () => {
-  mockPurchaseTicketsRequestAttempt = sel.purchaseTicketsRequestAttempt = jest.fn(
+  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
     () => true
   );
   render(<SettingsPage />, {
@@ -233,9 +241,7 @@ test("test close wallet button (still finalizing ticket purchases) ", () => {
 });
 
 test("test close wallet button (legacy auto ticket buyer still running) ", () => {
-  mockGetTicketAutoBuyerRunning = sel.getTicketAutoBuyerRunning = jest.fn(
-    () => true
-  );
+  selectors.getTicketAutoBuyerRunning = jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -623,7 +629,7 @@ test("test update private passphrase", () => {
 });
 
 test("update private passphrase is disabled", () => {
-  mockIsChangePassPhraseDisabled = sel.isChangePassPhraseDisabled = jest.fn(
+  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
     () => true
   );
   render(<SettingsPage />, {

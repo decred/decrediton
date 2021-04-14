@@ -8,3 +8,4 @@
 /app/middleware/ln/google/api/*_pb.js
 /app/middleware/walletrpc/*_pb.js
 /app/main.js
+/test/data

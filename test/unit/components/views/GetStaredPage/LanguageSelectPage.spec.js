@@ -2,7 +2,6 @@ import LanguageSelectPage from "components/views/GetStartedPage/LanguageSelectPa
 import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
-
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 
@@ -11,17 +10,18 @@ const testLocalesArray = [
   { description: "second-test-language" },
   { description: "third-test-language" }
 ];
+const selectors = sel;
+const daemonActions = da;
+
 let mockSortedLocales;
 let mockSelectLanguage;
 let mockIsTestNet;
 
 beforeEach(() => {
-  mockSortedLocales = sel.sortedLocales = jest.fn(() => {
-    return testLocalesArray;
-  });
-  mockSelectLanguage = da.selectLanguage = jest.fn(() => () => {});
-  mockIsTestNet = sel.isTestNet = jest.fn(() => false);
-  sel.stakeTransactions = jest.fn(() => []);
+  mockSortedLocales = selectors.sortedLocales = jest.fn(() => testLocalesArray);
+  mockSelectLanguage = daemonActions.selectLanguage = jest.fn(() => () => {});
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => false);
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 test("render language select page", () => {
@@ -71,7 +71,7 @@ test("render language select page", () => {
 });
 
 test("render language select page in testnet mode", () => {
-  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
   render(<LanguageSelectPage />);
   expect(mockIsTestNet).toHaveBeenCalled();
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(

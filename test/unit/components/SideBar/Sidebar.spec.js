@@ -9,6 +9,8 @@ import {
   rescanCancel as mockRescanCancel
 } from "actions/ControlActions";
 
+const selectors = sel;
+
 jest.mock("actions/ControlActions", () => {
   const RESCAN_ATTEMPT = "RESCAN_ATTEMPT";
   const RESCAN_CANCEL = "RESCAN_CANCEL";
@@ -31,7 +33,6 @@ jest.mock("actions/ControlActions", () => {
 });
 
 const mockHistoryPush = jest.fn();
-
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useHistory: () => ({
@@ -70,7 +71,7 @@ const testBalances = [
     total: 93506029948
   }
 ];
-const mockBalances = (sel.balances = jest.fn(() => testBalances));
+const mockBalances = (selectors.balances = jest.fn(() => testBalances));
 const getMenuLinkByTestId = (testId, sidebarOnBottom, expandSideBar) => {
   const menuLinkLabel = screen.getByTestId(testId);
   let menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
@@ -243,7 +244,7 @@ test("renders default sidebar", () => {
 });
 
 test("renders sidebar on the bottom", () => {
-  const mockSidebarOnBottom = (sel.sidebarOnBottom = jest.fn(() => true));
+  const mockSidebarOnBottom = (selectors.sidebarOnBottom = jest.fn(() => true));
   render(<SideBar />);
 
   expectToHaveDefaultMenuLinks({
@@ -280,7 +281,7 @@ test("renders sidebar on the bottom", () => {
 });
 
 test("renders sidebar with trezor enabled", () => {
-  const mockIsTrezor = (sel.isTrezor = jest.fn(() => true));
+  const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
   render(<SideBar />);
   expectToHaveDefaultMenuLinks({
     isTrezorEnabled: true
@@ -291,7 +292,7 @@ test("renders sidebar with trezor enabled", () => {
 });
 
 test("renders sidebar with lightning network not enabled", () => {
-  const mockLnEnabled = (sel.lnEnabled = jest.fn(() => false));
+  const mockLnEnabled = (selectors.lnEnabled = jest.fn(() => false));
 
   render(<SideBar />);
   expectToHaveDefaultMenuLinks({
@@ -303,10 +304,12 @@ test("renders sidebar with lightning network not enabled", () => {
 });
 
 test("renders expanded sidebar with testnet network enabled", () => {
-  const mockIsTestNet = (sel.isTestNet = jest.fn(() => true));
-  const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => true));
-  const mockSidebarOnBottom = (sel.sidebarOnBottom = jest.fn(() => false));
-  const mockLnEnabled = (sel.lnEnabled = jest.fn(() => true));
+  const mockIsTestNet = (selectors.isTestNet = jest.fn(() => true));
+  const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => true));
+  const mockSidebarOnBottom = (selectors.sidebarOnBottom = jest.fn(
+    () => false
+  ));
+  const mockLnEnabled = (selectors.lnEnabled = jest.fn(() => true));
 
   render(<SideBar />);
   expectToHaveDefaultMenuLinks({
@@ -324,7 +327,7 @@ test("renders expanded sidebar with testnet network enabled", () => {
 });
 
 test("tests rescan on the expanded sidebar", () => {
-  const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => true));
+  const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => true));
 
   render(<SideBar />, {
     initialState: {
@@ -384,7 +387,7 @@ test("tests rescan on the expanded sidebar", () => {
 });
 
 test("tests rescan on the collapsed sidebar", () => {
-  const mockExpandSideBar = (sel.expandSideBar = jest.fn(() => false));
+  const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => false));
 
   render(<SideBar />, {
     initialState: {
@@ -434,11 +437,11 @@ test("tests rescan on the collapsed sidebar", () => {
 });
 
 test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
-  const mockIsWatchingOnly = (sel.isWatchingOnly = jest.fn(() => true));
+  const mockIsWatchingOnly = (selectors.isWatchingOnly = jest.fn(() => true));
 
   render(<SideBar />);
   expect(screen.getByText(/watch-only/i).textContent).toMatchInlineSnapshot(
-    `"This is a watch-only wallet with limited functionality."`
+    '"This is a watch-only wallet with limited functionality."'
   );
 
   expect(mockIsWatchingOnly).toHaveBeenCalled();
@@ -446,7 +449,7 @@ test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
 });
 
 test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
-  const mockGetAccountMixerRunning = (sel.getRunningIndicator = jest.fn(
+  const mockGetAccountMixerRunning = (selectors.getRunningIndicator = jest.fn(
     () => true
   ));
 
@@ -463,7 +466,7 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
 });
 
 test("tests notification icon on the menu link", () => {
-  const mockNewProposalsStartedVoting = (sel.newProposalsStartedVoting = jest.fn(
+  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting = jest.fn(
     () => true
   ));
   render(<SideBar />);

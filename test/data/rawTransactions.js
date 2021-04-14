@@ -39,5 +39,5 @@ export const multiTxPrefixEncoded = Buffer.from([
   0xa6,                   // 65-byte signature
   0xac,                   // OP_CHECKSIG
   0x00, 0x00, 0x00, 0x00, // Lock time [198]
-  0x00, 0x00, 0x00, 0x00, // Expiry [202]
+  0x00, 0x00, 0x00, 0x00 // Expiry [202]
 ]);

@@ -8,7 +8,10 @@ import * as sel from "selectors";
 // Mock currencyDisplay redux selector used in useBalance which is consumed by
 // the Balance component.
 let mockCurrencyDisplay;
-sel.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
+
+const selectors = sel;
+
+selectors.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
 
 const testDisplay = (currency, amount, display) => {
   mockCurrencyDisplay = currency;

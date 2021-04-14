@@ -33,10 +33,12 @@ const testInvalidMsg = "test-invalid-msg";
 const testRequiredMsg = "test-required-msg";
 const testUnit = "test-unit";
 const testPlaceholder = "test-placeholder";
-
 const invalidErrorMsg = "This field is wrong";
 const requiredErrorMsg = "This field is required";
 const testCurrency = "DCR-test";
+const anyArg = expect.anything;
+const testFilePath = "test-filePath";
+const selectors = sel;
 
 let mockCurrencyDisplay;
 let mockOnChange;
@@ -44,8 +46,6 @@ let mockOnKeyDownSubmit;
 let mockOnKeyDown;
 let mockOnFocus;
 let mockOnBlur;
-const anyArg = expect.anything;
-const testFilePath = "test-filePath";
 
 beforeEach(() => {
   mockOnChange = jest.fn(() => {});
@@ -53,7 +53,7 @@ beforeEach(() => {
   mockOnKeyDown = jest.fn(() => {});
   mockOnFocus = jest.fn(() => {});
   mockOnBlur = jest.fn(() => {});
-  mockCurrencyDisplay = sel.currencyDisplay = jest.fn(() => testCurrency);
+  mockCurrencyDisplay = selectors.currencyDisplay = jest.fn(() => testCurrency);
 });
 
 const getInputAndInputTag = (props) => {
@@ -438,9 +438,11 @@ test("open file with PathBrowseInput", async () => {
   checkDefaultInput(input, inputTag);
   expect(screen.getByText("Select a path")).toBeInTheDocument();
 
-
   /* electron returns both filePaths and filePath */
-  ipcRenderer.invoke.mockReturnValueOnce({ filePaths: [testFilePath], filePath: testFilePath });
+  ipcRenderer.invoke.mockReturnValueOnce({
+    filePaths: [testFilePath],
+    filePath: testFilePath
+  });
   user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(ipcRenderer.invoke).toHaveBeenCalledWith("show-open-dialog", anyArg());
   await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
@@ -456,7 +458,7 @@ test("open file with PathBrowseInput", async () => {
   /* electron does not return filePaths or filePath */
   mockOnChange.mockRestore();
   user.clear(inputTag);
-  ipcRenderer.invoke.mockReturnValueOnce({ });
+  ipcRenderer.invoke.mockReturnValueOnce({});
   user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(ipcRenderer.invoke).toHaveBeenCalledWith("show-open-dialog", anyArg());
   await wait(() => expect(mockOnChange).not.toHaveBeenCalledWith(testFilePath));

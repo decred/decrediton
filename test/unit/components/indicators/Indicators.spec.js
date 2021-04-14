@@ -107,49 +107,49 @@ test("render default LoadingMoreTransactionsIndicator", () => {
   lightRender(<LoadingMoreTransactionsIndicator />);
   expect(
     screen.getByText(/loading more transactions/i).textContent
-  ).toMatchInlineSnapshot(`"Loading more transactions..."`);
+  ).toMatchInlineSnapshot('"Loading more transactions..."');
 });
 
 test("render default NoMoreTransactions", () => {
   lightRender(<NoMoreTransactionsIndicator />);
   expect(
     screen.getByText(/no more transactions/i).textContent
-  ).toMatchInlineSnapshot(`"No more transactions."`);
+  ).toMatchInlineSnapshot('"No more transactions."');
 });
 
 test("render default NoStats", () => {
   lightRender(<NoStats />);
   expect(
     screen.getByText(/no statistics available/i).textContent
-  ).toMatchInlineSnapshot(`"No Statistics Available"`);
+  ).toMatchInlineSnapshot('"No Statistics Available"');
 });
 
 test("render default NoTransactions", () => {
   lightRender(<NoTransactions />);
   expect(
     screen.getByText(/no transactions found/i).textContent
-  ).toMatchInlineSnapshot(`"No Transactions Found"`);
+  ).toMatchInlineSnapshot('"No Transactions Found"');
 });
 
 test("render default NoTicketsIndicator", () => {
   lightRender(<NoTicketsIndicator />);
   expect(
     screen.getByText(/no tickets found/i).textContent
-  ).toMatchInlineSnapshot(`"No Tickets Found"`);
+  ).toMatchInlineSnapshot('"No Tickets Found"');
 });
 
 test("render default NoMoreTicketsIndicator", () => {
   lightRender(<NoMoreTicketsIndicator />);
   expect(
     screen.getByText(/no more tickets/i).textContent
-  ).toMatchInlineSnapshot(`"No More Tickets"`);
+  ).toMatchInlineSnapshot('"No More Tickets"');
 });
 
 test("render default NoProposals", () => {
   lightRender(<NoProposals />);
   expect(
     screen.getByText(/no proposals available/i).textContent
-  ).toMatchInlineSnapshot(`"No Proposals Available"`);
+  ).toMatchInlineSnapshot('"No Proposals Available"');
 });
 
 test("render default PoliteiaLoading", () => {

@@ -23,34 +23,45 @@ const Wrapper = ({ lastBlockTimestamp, setTimeout, clearTimeout }) => {
       messages={locale.messages}
       formats={locale.formats}
       defaultFormats={defaultFormats}
-      key={locale.key}
-    >
-      <LastBlockTime lastBlockTimestamp={lastBlockTimestamp} setTimeout={setTimeout} clearTimeout={clearTimeout} />
+      key={locale.key}>
+      <LastBlockTime
+        lastBlockTimestamp={lastBlockTimestamp}
+        setTimeout={setTimeout}
+        clearTimeout={clearTimeout}
+      />
     </IntlProvider>
   );
 };
 
 test("Recent mined block time displays correctly", () => {
-  const now = (new Date().getTime() / 1000) - 1;
+  const now = new Date().getTime() / 1000 - 1;
   const lbt = mount(
     <Wrapper
-      lastBlockTimestamp={now} setTimeout={() => { }} clearTimeout={() => { }}
+      lastBlockTimestamp={now}
+      setTimeout={() => {}}
+      clearTimeout={() => {}}
     />
   );
 
-  expect(lbt.find(LastBlockTime).find(FormattedMessage).prop("defaultMessage")).toBe("seconds ago");
+  expect(
+    lbt.find(LastBlockTime).find(FormattedMessage).prop("defaultMessage")
+  ).toBe("seconds ago");
 });
 
 test("Old mined block time displays correctly", () => {
-  const now = (new Date().getTime() / 1000) - 86400;
+  const now = new Date().getTime() / 1000 - 86400;
   const lbt = mount(
     <Wrapper
-      lastBlockTimestamp={now} setTimeout={() => { }} clearTimeout={() => { }}
+      lastBlockTimestamp={now}
+      setTimeout={() => {}}
+      clearTimeout={() => {}}
     />
   );
 
   const targetDate = new Date(now * 1000);
-  expect(lbt.find(LastBlockTime).find(FormattedRelative).prop("value")).toEqual(targetDate);
+  expect(lbt.find(LastBlockTime).find(FormattedRelative).prop("value")).toEqual(
+    targetDate
+  );
 });
 
 test("Block time updates after a minute", async () => {
@@ -80,7 +91,9 @@ test("Block time updates after a minute", async () => {
 test("Empty timestamp returns null", () => {
   const lbt = mount(
     <Wrapper
-      lastBlockTimestamp={null} setTimeout={() => { }} clearTimeout={() => { }}
+      lastBlockTimestamp={null}
+      setTimeout={() => {}}
+      clearTimeout={() => {}}
     />
   );
 

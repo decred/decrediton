@@ -1,10 +1,9 @@
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-
 import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
-import * as config from "config.js";
+import * as conf from "config.js";
 import * as da from "actions/DaemonActions";
 
 const testRemoteCredentials = {
@@ -24,6 +23,9 @@ const testEmptyRemoteCredentials = {
 const testConnectDaemonErrorMsg = { error: "test-connect-daemon-error-msw" };
 const testStartDaemonErrorMsg = "test-start-daemon-error-msw";
 const testDaemonDataDirectory = "test-daemon-data-directory";
+const selectors = sel;
+const config = conf;
+const daemonActions = da;
 
 let mockIsAdvancedDaemon;
 let mockGetRemoteCredentials;
@@ -34,21 +36,21 @@ let mockConnectDaemon;
 let mockStartDaemon;
 
 beforeEach(() => {
-  sel.isSPV = jest.fn(() => false);
-  mockIsAdvancedDaemon = sel.isAdvancedDaemon = jest.fn(() => true);
+  selectors.isSPV = jest.fn(() => false);
+  mockIsAdvancedDaemon = selectors.isAdvancedDaemon = jest.fn(() => true);
   mockGetRemoteCredentials = config.getRemoteCredentials = jest.fn(
     () => testEmptyRemoteCredentials
   );
   mockSetRemoteCredentials = config.setRemoteCredentials = jest.fn(() => {});
   mockGetAppdataPath = config.getAppdataPath = jest.fn(() => "");
   mockSetAppdataPath = config.setAppdataPath = jest.fn(() => "");
-  mockConnectDaemon = da.connectDaemon = jest.fn(() => () =>
+  mockConnectDaemon = daemonActions.connectDaemon = jest.fn(() => () =>
     Promise.reject(testConnectDaemonErrorMsg)
   );
-  mockStartDaemon = da.startDaemon = jest.fn(() => () =>
+  mockStartDaemon = daemonActions.startDaemon = jest.fn(() => () =>
     Promise.reject(testStartDaemonErrorMsg)
   );
-  sel.stakeTransactions = jest.fn(() => []);
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 test("test remote daemon form", async () => {
@@ -64,7 +66,7 @@ test("test remote daemon form", async () => {
   expect(
     screen.getByText(/complete one of the following/i).textContent
   ).toMatchInlineSnapshot(
-    `"Complete one of the following forms to start Decrediton according to your local setup."`
+    '"Complete one of the following forms to start Decrediton according to your local setup."'
   );
 
   //test toggle control

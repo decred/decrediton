@@ -3,14 +3,16 @@ import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import * as sel from "selectors";
-
 import * as da from "actions/DaemonActions";
 
 let mockFinishTutorial;
 
+const selectors = sel;
+const daemonActions = da;
+
 beforeEach(() => {
-  mockFinishTutorial = da.finishTutorial = jest.fn(() => () => {});
-  sel.stakeTransactions = jest.fn(() => []);
+  mockFinishTutorial = daemonActions.finishTutorial = jest.fn(() => () => {});
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 const checkIndicator = (currentIndex) => {

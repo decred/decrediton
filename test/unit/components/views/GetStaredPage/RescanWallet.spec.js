@@ -6,14 +6,18 @@ import { screen } from "@testing-library/react";
 const testStartBlock = 22;
 const testEndBlock = 66;
 const testCurrentBlock = 55;
+const selectors = sel;
 
 let mockRescanStartBlock;
 let mockRescanEndBlock;
 let mockRescanCurrentBlock;
+
 beforeEach(() => {
-  mockRescanStartBlock = sel.rescanStartBlock = jest.fn(() => testStartBlock);
-  mockRescanEndBlock = sel.rescanEndBlock = jest.fn(() => testEndBlock);
-  mockRescanCurrentBlock = sel.rescanCurrentBlock = jest.fn(
+  mockRescanStartBlock = selectors.rescanStartBlock = jest.fn(
+    () => testStartBlock
+  );
+  mockRescanEndBlock = selectors.rescanEndBlock = jest.fn(() => testEndBlock);
+  mockRescanCurrentBlock = selectors.rescanCurrentBlock = jest.fn(
     () => testCurrentBlock
   );
 });
@@ -31,7 +35,7 @@ test("test RescanWallet", () => {
 
 test("test if startBlock is larger than currentBlock", () => {
   const testLargerStartBlock = 56;
-  mockRescanStartBlock = sel.rescanStartBlock = jest.fn(
+  mockRescanStartBlock = selectors.rescanStartBlock = jest.fn(
     () => testLargerStartBlock
   );
   render(<RescanWallet />);

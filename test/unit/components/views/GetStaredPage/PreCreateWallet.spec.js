@@ -2,13 +2,12 @@ import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import { fireEvent } from "@testing-library/react";
 import user from "@testing-library/user-event";
-
 import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 import * as trza from "actions/TrezorActions";
-import * as ctrla from "actions/ControlActions";
+import * as ca from "actions/ControlActions";
 
 const testWalletName = "test-wallet-name";
 const invalidCharacters = "/.;:~";
@@ -25,6 +24,11 @@ const testSelectedWallet = {
     wallet: testWalletName
   }
 };
+const selectors = sel;
+const wlActions = wla;
+const daemonActions = da;
+const trezorActions = trza;
+const controlActions = ca;
 
 let mockCreateWallet;
 let mockGenerateSeed;
@@ -39,20 +43,20 @@ let mockTrezorConnect;
 let mockCreateWatchOnlyWalletRequest;
 
 beforeEach(() => {
-  sel.getDaemonSynced = jest.fn(() => true);
-  sel.isSPV = jest.fn(() => false);
-  wla.getSelectedWallet = jest.fn(() => () => null);
-  mockIsTestNet = sel.isTestNet = jest.fn(() => false);
-  mockCreateWallet = da.createWallet = jest.fn(() => () =>
+  selectors.getDaemonSynced = jest.fn(() => true);
+  selectors.isSPV = jest.fn(() => false);
+  wlActions.getSelectedWallet = jest.fn(() => () => null);
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => false);
+  mockCreateWallet = daemonActions.createWallet = jest.fn(() => () =>
     Promise.reject(testWalletCreateErrorMsg)
   );
-  mockGenerateSeed = wla.generateSeed = jest.fn(() => () =>
+  mockGenerateSeed = wlActions.generateSeed = jest.fn(() => () =>
     Promise.resolve({
       getSeedMnemonic: () => ""
     })
   );
-  sel.maxWalletCount = jest.fn(() => 3);
-  sel.sortedAvailableWallets = jest.fn(() => {
+  selectors.maxWalletCount = jest.fn(() => 3);
+  selectors.sortedAvailableWallets = jest.fn(() => {
     return [
       {
         label: `label-${usedTestWalletName}`,
@@ -62,23 +66,25 @@ beforeEach(() => {
       }
     ];
   });
-  mockEnableTrezor = trza.enableTrezor = jest.fn(() => () => {});
-  mockDisableTrezor = trza.disableTrezor = jest.fn(() => () => {});
-  mockGetWalletCreationMasterPubKey = trza.getWalletCreationMasterPubKey = jest.fn(
+  mockEnableTrezor = trezorActions.enableTrezor = jest.fn(() => () => {});
+  mockDisableTrezor = trezorActions.disableTrezor = jest.fn(() => () => {});
+  mockGetWalletCreationMasterPubKey = trezorActions.getWalletCreationMasterPubKey = jest.fn(
     () => () => Promise.resolve(testWalletCreationMasterPubKey)
   );
-  mockAlertNoConnectedDevice = trza.alertNoConnectedDevice = jest.fn(
+  mockAlertNoConnectedDevice = trezorActions.alertNoConnectedDevice = jest.fn(
     () => () => {}
   );
-  mockValidateMasterPubKey = ctrla.validateMasterPubKey = jest.fn(() => () => {
-    return { isValid: false, error: "" };
-  });
-  mockTrezorDevice = sel.trezorDevice = jest.fn(() => null);
-  mockTrezorConnect = trza.connect = jest.fn(() => () => {});
-  mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
+  mockValidateMasterPubKey = controlActions.validateMasterPubKey = jest.fn(
+    () => () => {
+      return { isValid: false, error: "" };
+    }
+  );
+  mockTrezorDevice = selectors.trezorDevice = jest.fn(() => null);
+  mockTrezorConnect = trezorActions.connect = jest.fn(() => () => {});
+  mockCreateWatchOnlyWalletRequest = wlActions.createWatchOnlyWalletRequest = jest.fn(
     () => () => Promise.reject()
   );
-  sel.stakeTransactions = jest.fn(() => []);
+  selectors.stakeTransactions = jest.fn(() => []);
 });
 
 const goToGetStartedView = async () => {
@@ -111,7 +117,7 @@ test("test when createWallet has been rejected", async () => {
 });
 
 test("daemon response success through createWallet function and createWalletPage has been reached", async () => {
-  mockCreateWallet = da.createWallet = jest.fn(() => () =>
+  mockCreateWallet = daemonActions.createWallet = jest.fn(() => () =>
     Promise.resolve(testSelectedWallet)
   );
   await goToCreateNewWalletView();
@@ -212,9 +218,11 @@ test("test watch only control on restore wallet", async () => {
   expect(screen.getByText(/invalid master pubkey/i)).toBeInTheDocument();
   // test valid master pub key
   const testValidMasterPubKey = "test-valid-master-pub-key";
-  mockValidateMasterPubKey = ctrla.validateMasterPubKey = jest.fn(() => () => {
-    return { isValid: true, error: null };
-  });
+  mockValidateMasterPubKey = controlActions.validateMasterPubKey = jest.fn(
+    () => () => {
+      return { isValid: true, error: null };
+    }
+  );
   fireEvent.change(masterPubKeyInput, {
     target: { value: testValidMasterPubKey }
   });
@@ -236,11 +244,11 @@ test("test watch only control on restore wallet", async () => {
   await wait(() =>
     expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey)
   );
-  mockCreateWallet = da.createWallet = jest.fn(() => () =>
+  mockCreateWallet = daemonActions.createWallet = jest.fn(() => () =>
     Promise.resolve(true)
   );
 
-  mockCreateWatchOnlyWalletRequest = wla.createWatchOnlyWalletRequest = jest.fn(
+  mockCreateWatchOnlyWalletRequest = wlActions.createWatchOnlyWalletRequest = jest.fn(
     () => () => Promise.resolve()
   );
   user.click(continueButton);
@@ -289,7 +297,7 @@ test("test trezor switch toggling and setup device page", async () => {
   expect(
     screen.getByText(/no trezor device detected/i).textContent
   ).toMatchInlineSnapshot(
-    "\"No Trezor device detected. Connect the device and check if Trezor bridge is installed and running.\""
+    '"No Trezor device detected. Connect the device and check if Trezor bridge is installed and running."'
   );
   user.click(screen.getByText(/connect to trezor/i));
   expect(mockTrezorConnect).toHaveBeenCalled();
@@ -300,7 +308,7 @@ test("test trezor switch toggling and setup device page", async () => {
 });
 
 test("trezor device is connected", async () => {
-  mockTrezorDevice = sel.trezorDevice = jest.fn(() => {
+  mockTrezorDevice = selectors.trezorDevice = jest.fn(() => {
     return { connected: true };
   });
   const testRestoreSelectedWallet = {
@@ -308,7 +316,7 @@ test("trezor device is connected", async () => {
     value: { ...testSelectedWallet.value, isNew: false, isTrezor: true },
     watchingOnly: true
   };
-  mockCreateWallet = da.createWallet = jest.fn(() => () =>
+  mockCreateWallet = daemonActions.createWallet = jest.fn(() => () =>
     Promise.resolve(testRestoreSelectedWallet)
   );
 
@@ -349,7 +357,7 @@ test("trezor device is connected", async () => {
 });
 
 test("trezor has to auto-disable when step back from restore view", async () => {
-  mockTrezorDevice = sel.trezorDevice = jest.fn(() => {
+  mockTrezorDevice = selectors.trezorDevice = jest.fn(() => {
     return { connected: true };
   });
   await goToRestoreWalletView();
@@ -369,7 +377,7 @@ test("test testnet logo on creating new wallet view", async () => {
     ...testSelectedWallet,
     value: { ...testSelectedWallet.value, network: "testnet" }
   };
-  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
 
   await goToCreateNewWalletView();
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
@@ -388,7 +396,7 @@ test("test testnet logo on restore wallet view", async () => {
     ...testSelectedWallet,
     value: { ...testSelectedWallet.value, isNew: false, network: "testnet" }
   };
-  mockIsTestNet = sel.isTestNet = jest.fn(() => true);
+  mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
 
   await goToRestoreWalletView();
   expect(mockIsTestNet).toHaveBeenCalled();

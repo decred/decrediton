@@ -11,6 +11,8 @@ const testProps = {
   text: "testText",
   animationType: "testAnimationType"
 };
+const selectors = sel;
+const daemonActions = da;
 
 test("tests default AnimatedLinearProgressFull", () => {
   const testNeededBlocks = 485461;
@@ -22,27 +24,29 @@ test("tests default AnimatedLinearProgressFull", () => {
     testSyncFetchHeadersLastHeaderTime.getHours() - 2
   );
 
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockStakeTransactions = (sel.stakeTransactions = jest.fn(() => []));
-  const mockGetSelectedWallet = (sel.getSelectedWallet = jest.fn(() => {
+  const mockIsSPV = (selectors.isSPV = jest.fn(() => false));
+  const mockStakeTransactions = (selectors.stakeTransactions = jest.fn(
+    () => []
+  ));
+  const mockGetSelectedWallet = (selectors.getSelectedWallet = jest.fn(() => {
     return {};
   }));
-  const mockSyncFetchHeadersLastHeaderTime = (sel.syncFetchHeadersLastHeaderTime = jest.fn(
+  const mockSyncFetchHeadersLastHeaderTime = (selectors.syncFetchHeadersLastHeaderTime = jest.fn(
     () => testSyncFetchHeadersLastHeaderTime
   ));
 
-  let mockGetCurrentBlockCount = (sel.getCurrentBlockCount = jest.fn(
+  let mockGetCurrentBlockCount = (selectors.getCurrentBlockCount = jest.fn(
     () => testCurrentBlockCount
   ));
-  const mockGetNeededBlocks = (sel.getNeededBlocks = jest.fn(
+  const mockGetNeededBlocks = (selectors.getNeededBlocks = jest.fn(
     () => testNeededBlocks
   ));
-  const mockGetEstimatedTimeLeft = (sel.getEstimatedTimeLeft = jest.fn(
+  const mockGetEstimatedTimeLeft = (selectors.getEstimatedTimeLeft = jest.fn(
     () => 3113
   ));
 
   const checkLinearProgressBoxes = (expectedWidth, expectedBoxCount) => {
-    mockGetCurrentBlockCount = sel.getCurrentBlockCount = jest.fn(
+    mockGetCurrentBlockCount = selectors.getCurrentBlockCount = jest.fn(
       () => testCurrentBlockCount
     );
 
@@ -128,13 +132,15 @@ test("tests default AnimatedLinearProgressFull", () => {
 test("dcrwallet log line is shown or log the error to console", async () => {
   jest.useFakeTimers();
 
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetSelectedWallet = (sel.getSelectedWallet = jest.fn(() => true));
-  const mockGetCurrentBlockCount = (sel.getCurrentBlockCount = jest.fn(
+  const mockIsSPV = (selectors.isSPV = jest.fn(() => false));
+  const mockGetSelectedWallet = (selectors.getSelectedWallet = jest.fn(
+    () => true
+  ));
+  const mockGetCurrentBlockCount = (selectors.getCurrentBlockCount = jest.fn(
     () => 0
   ));
-  const mockGetNeededBlocks = (sel.getNeededBlocks = jest.fn(() => 0));
-  const mockGetEstimatedTimeLeft = (sel.getEstimatedTimeLeft = jest.fn(
+  const mockGetNeededBlocks = (selectors.getNeededBlocks = jest.fn(() => 0));
+  const mockGetEstimatedTimeLeft = (selectors.getEstimatedTimeLeft = jest.fn(
     () => 0
   ));
   const mockConsoleLog = jest
@@ -142,12 +148,12 @@ test("dcrwallet log line is shown or log the error to console", async () => {
     .mockImplementation(() => {});
 
   const testDcrwalletLogLine = "testDcrwalletLogLine";
-  let mockGetDcrwalletLogs = (da.getDcrwalletLogs = jest.fn(() => () =>
-    Promise.resolve(testDcrwalletLogLine)
+  let mockGetDcrwalletLogs = (daemonActions.getDcrwalletLogs = jest.fn(
+    () => () => Promise.resolve(testDcrwalletLogLine)
   ));
 
-  let mockGetDcrdLastLineLogs = (da.getDcrdLastLineLogs = jest.fn(() => () =>
-    Promise.reject()
+  const mockGetDcrdLastLineLogs = (daemonActions.getDcrdLastLineLogs = jest.fn(
+    () => () => Promise.reject()
   ));
   render(<AnimatedLinearProgressFull {...testProps} />);
   expect(mockGetSelectedWallet).toHaveBeenCalled();
@@ -162,7 +168,7 @@ test("dcrwallet log line is shown or log the error to console", async () => {
   );
 
   // test DcrwalletLogLine error
-  mockGetDcrwalletLogs = da.getDcrwalletLogs = jest.fn(() => () =>
+  mockGetDcrwalletLogs = daemonActions.getDcrwalletLogs = jest.fn(() => () =>
     Promise.reject()
   );
   act(() => {
@@ -182,8 +188,8 @@ test("dcrwallet log line is shown or log the error to console", async () => {
 });
 
 test("tests when deamon is synced", () => {
-  const mockIsSPV = (sel.isSPV = jest.fn(() => false));
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => true));
+  const mockIsSPV = (selectors.isSPV = jest.fn(() => false));
+  const mockGetDaemonSynced = (selectors.getDaemonSynced = jest.fn(() => true));
   const { rerender } = render(<AnimatedLinearProgressFull {...testProps} />);
 
   const textElement = screen.getByText(testProps.text);
@@ -204,8 +210,10 @@ test("tests when deamon is synced", () => {
 });
 
 test("tests when isSPV is true", () => {
-  const mockIsSPV = (sel.isSPV = jest.fn(() => true));
-  const mockGetDaemonSynced = (sel.getDaemonSynced = jest.fn(() => false));
+  const mockIsSPV = (selectors.isSPV = jest.fn(() => true));
+  const mockGetDaemonSynced = (selectors.getDaemonSynced = jest.fn(
+    () => false
+  ));
 
   const { rerender } = render(<AnimatedLinearProgressFull {...testProps} />);
 
@@ -227,7 +235,7 @@ test("tests when isSPV is true", () => {
 });
 
 test("receiving null `estimatedTimeLeft` does no shows `Time from last fetched header` label", () => {
-  const mockGetEstimatedTimeLeft = (sel.getEstimatedTimeLeft = jest.fn(
+  const mockGetEstimatedTimeLeft = (selectors.getEstimatedTimeLeft = jest.fn(
     () => null
   ));
   render(<AnimatedLinearProgressFull {...testProps} />);
