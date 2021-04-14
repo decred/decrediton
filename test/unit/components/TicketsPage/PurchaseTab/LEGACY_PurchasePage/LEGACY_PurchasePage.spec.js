@@ -6,7 +6,6 @@ import { screen, act, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as spa from "actions/VSPActions";
-import * as vspa from "actions/VSPActions";
 import { DCR } from "constants";
 import { MIN_RELAY_FEE } from "constants";
 
@@ -152,14 +151,14 @@ let mockAddCustomStakePool;
 let mockToggleIsLegacy;
 
 beforeEach(() => {
-  sel.getIsLegacy = jest.fn(() => true);
-  sel.stakePoolListingEnabled = jest.fn(() => true);
-  sel.unconfiguredStakePools = jest.fn(() => mockUnconfiguredStakePools);
-  sel.spendingAccounts = jest.fn(() => [mockMixedAccount]);
-  sel.visibleAccounts = jest.fn(() => [mockMixedAccount]);
-  sel.getMixedAccount = jest.fn(() => mockMixedAccountValue);
-  sel.configuredStakePools = jest.fn(() => mockConfiguredStakePools);
-  sel.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.getIsLegacy = jest.fn(() => true);
+  selectors.stakePoolListingEnabled = jest.fn(() => true);
+  selectors.unconfiguredStakePools = jest.fn(() => mockUnconfiguredStakePools);
+  selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+  selectors.configuredStakePools = jest.fn(() => mockConfiguredStakePools);
+  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
   //stakeInfo
   selectors.votedTicketsCount = jest.fn(() => mockVotedTicketsCount);
   selectors.ownMempoolTicketsCount = jest.fn(() => mockOwnMempoolTicketsCount);
@@ -190,9 +189,13 @@ beforeEach(() => {
   mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => false
   );
-  mockTicketBuyerV2Cancel = ca.ticketBuyerV2Cancel = jest.fn(() => () => {});
-  mockGetRunningIndicator = sel.getRunningIndicator = jest.fn(() => false);
-  mockToggleIsLegacy = vspa.toggleIsLegacy = jest.fn(() => () => {});
+  mockTicketBuyerV2Cancel = controlActions.ticketBuyerV2Cancel = jest.fn(
+    () => () => {}
+  );
+  mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
+    () => false
+  );
+  mockToggleIsLegacy = spActions.toggleIsLegacy = jest.fn(() => () => {});
 });
 
 test("render LEGACY_PurchasePage", () => {
