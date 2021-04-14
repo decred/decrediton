@@ -9,6 +9,9 @@
   width: 100%;
 }
 
+.goBackScreenButtonWrapper {
+  margin: -20px 0 0 20px;
+}
 .goBackScreenButton {
   height: 12px;
   width: 12px;
@@ -17,7 +20,6 @@
   background-image: var(--x-grey);
   opacity: 1;
   cursor: pointer;
-  margin: -20px 0 0 20px;
 }
 
 .goBackScreenButton:hover {

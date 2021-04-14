@@ -43,9 +43,11 @@ const ExistingSeedForm = ({
         toggleAction={handleToggle}
       />
       {sendBack && (
-        <Tooltip content={<GoBackMsg />}>
-          <div className={styles.goBackScreenButton} onClick={sendBack} />
-        </Tooltip>
+        <div className={styles.goBackScreenButtonWrapper}>
+          <Tooltip content={<GoBackMsg />}>
+            <div className={styles.goBackScreenButton} onClick={sendBack} />
+          </Tooltip>
+        </div>
       )}
     </div>
     <div className={classNames("flex-row", styles.seed)}>
