@@ -1,5 +1,4 @@
 .qr {
-  max-height: 60%;
   overflow-y: auto;
   text-align: left;
   background-image: var(--tickets-info-icon);
@@ -9,8 +8,8 @@
   background-position: 18px 32px;
   font-size: 13px;
   line-height: 17px;
-  height: 600px;
-  width: 500px;
+  height: 700px;
+  width: 600px;
   z-index: 98;
   margin-left: 150px;
   padding: 30px 40px 30px 58px;
