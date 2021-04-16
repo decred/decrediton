@@ -116,8 +116,8 @@
 }
 
 .balanceTooltip {
-  width: 31rem;
-  max-width: 31rem !important;
+  width: max-content;
+  max-width: max-content !important;
   left: 90% !important;
 }
 

@@ -29,7 +29,7 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
     {hasStats && (
       <>
         <Tooltip
-          contentClassName="my-tickets-stake-tooltip"
+          contentClassName={styles.myTicketsStakeTooltip}
           content={
             <T id="mytickets.statistics.stakerewards.link" m="Stake Rewards" />
           }>
@@ -43,7 +43,7 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           />
         </Tooltip>
         <Tooltip
-          contentClassName="my-tickets-vote-tooltip"
+          contentClassName={styles.myTicketsVoteTooltip}
           content={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
           <Link
             to="/tickets/statistics/voteTime"
@@ -55,7 +55,7 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
           />
         </Tooltip>
         <Tooltip
-          contentClassName="my-tickets-tooltip"
+          contentClassName={styles.myTicketsTooltip}
           content={<T id="mytickets.statistics.heatmap.link" m="Heatmap" />}>
           <Link
             to="/tickets/statistics/heatmap"
