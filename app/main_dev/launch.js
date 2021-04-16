@@ -60,14 +60,39 @@ let dcrdSocket,
   selectedWallet = null;
 
 const callDEX = (func, params) => {
-  const dexc = require("dex/build/Release/dexc.node");
-  return dexc.call(
-    JSON.stringify({
-      function: func,
-      params: params
-    })
-  );
+  // TODO: this can be done globally once ipcRenderer doesn't import launch.js anymore.
+  const { getNativeFunction, getBufferPointer } = require("sbffi");
+  const dexLibPath = path.resolve("modules/dex/libdexc/libdexc.so");
+  const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int",
+    ["char *", "char *", "uint32_t", "uint32_t*"]);
+
+  const arg = JSON.stringify({ function: func, params: params });
+  const argBuffer = Buffer.from(arg);
+  const argPointer = getBufferPointer(argBuffer);
+
+  // All relevant DEX calls have been empirically determined to return less than
+  // about 6KB, so 50KB should be a reasonable size for the buffer.
+  const resBufferSz = 1000*50;
+  const resBuffer = Buffer.alloc(resBufferSz);
+  const resPointer = getBufferPointer(resBuffer);
+
+  const writtenSzBuffer = Buffer.alloc(8);
+  const writtenSzPointer = getBufferPointer(writtenSzBuffer);
+
+  const ret = dexLibCall(argPointer, resPointer, resBufferSz, writtenSzPointer);
+  const writtenSz = writtenSzBuffer.readUIntLE(0, 4);
+  const resNonZero = resBuffer.slice(0, writtenSz);
+  const resStr = resNonZero.toString().trim();
+
+  // TODO: check return value and throw exception if it was an error? Remove debug.
+  if (ret != 0) {
+    console.error(`DEX call to ${func} returned error ${resStr}`);
+  }
+
+  return resStr;
 };
+
+export const __pingDex = () => callDEX("__ping", "bleh");
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -863,7 +888,7 @@ export const launchDex = (walletPath, testnet) =>
         logFilename: logFilename
       });
       if (error && String(error) != "") {
-        throw error;
+        throw new Error(`startCore errored: ${error}`);
       }
       const serverAddress = testnet ? DEX_LOCALPAGE_TESTNET : DEX_LOCALPAGE;
       const sitePath = getSitePath(argv.custombinpath);
@@ -872,7 +897,7 @@ export const launchDex = (walletPath, testnet) =>
         webaddr: serverAddress
       });
       if (error && String(error) != "") {
-        throw error;
+        throw new Error(`startServer errored: ${error}`);
       }
       dex = true;
       return resolve(serverAddress);

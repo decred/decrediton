@@ -50,7 +50,8 @@ import {
   GetDcrlndPID,
   GetDcrlndCreds,
   dropDCRDSocket,
-  getDcrwalletGrpcKeyCert
+  getDcrwalletGrpcKeyCert,
+  __pingDex
 } from "./main_dev/launch";
 import {
   getAvailableWallets,
@@ -117,6 +118,13 @@ import {
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
 app.allowRendererProcessReuse = false;
+
+// See if we can communicate with the dexc lib.
+const dexPingRes = __pingDex();
+if (dexPingRes != "__pong!") {
+  console.error("Pinging Dex Lib", dexPingRes);
+}
+
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";

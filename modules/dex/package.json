@@ -4,9 +4,12 @@
   "description": "DEX Core Library node implementation",
   "gypfile": true,
   "scripts": {
-    "install": "go build -buildmode=c-shared -o ./libdexc/libdexc.so ./libdexc/... && ../.bin/node-gyp configure && ../.bin/node-gyp build && ../.bin/electron-rebuild"
+    "install": "go build -buildmode=c-shared -o ./libdexc/libdexc.so ./libdexc/..."
   },
   "keywords": [],
   "author": "Brian Stafford",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "sbffi": "^1.0.4"
+  }
 }

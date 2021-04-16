@@ -3,6 +3,7 @@
 
 package main
 
+import "C"
 import (
 	"context"
 	"encoding/json"
@@ -176,6 +177,8 @@ func (c *CoreAdapter) run(callData *CallData) (string, error) {
 		return "", fmt.Errorf("malformed call data")
 	}
 	switch preInitHandler, coreHandler := c.handlers(callData.Function); {
+	case callData.Function == "__ping":
+	    return "__pong! data="+string(callData.Params), nil
 	case callData.Function == "startCore":
 		return "", c.startCore(callData.Params)
 	case preInitHandler != nil:
