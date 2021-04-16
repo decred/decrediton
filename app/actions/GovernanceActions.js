@@ -687,12 +687,11 @@ export const updateVoteChoice = (
 
     // cast vote into pi server
     const response = await pi.castVotes({ piURL, votes });
-    const voteCastError = response.data.receipts.find(
-      (receipt) => receipt.error
-    );
+    const { error: voteCastError } =
+      response.data.receipts.find(({ error }) => error) || {};
 
     if (voteCastError) {
-      throw voteCastError.error;
+      throw voteCastError;
     }
 
     // cache information locally so we can show them without querying from
