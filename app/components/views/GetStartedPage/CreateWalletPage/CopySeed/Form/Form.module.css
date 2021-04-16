@@ -1,0 +1,50 @@
+.warning {
+  column-count: 2;
+  max-width: 48em;
+  font-size: 13px;
+  line-height: 16px;
+  margin-bottom: 1em;
+  color: var(--new-wallet-label);
+}
+
+.warning p {
+  margin-top: 0;
+}
+
+.warning em {
+  color: var(--error-text-color);
+}
+
+.warning strong {
+  color: var(--title-text-and-button-background);
+}
+
+.copy {
+  grid-column: 4 / 6;
+  padding-top: 2px;
+  padding-left: 43px;
+  height: 24px;
+  color: var(--input-color);
+  border: 1px solid var(--input-color);
+  border-radius: 3px;
+  margin: 4px;
+  font-size: 13px;
+  background-image: var(--copy-to-clipboard-icon);
+  background-position: 26px 3px;
+  background-size: 16px auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  user-select: none;
+}
+
+.copy:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+  .copy {
+    grid-column: 1 / 4;
+    background-position: 80px;
+    text-align: center;
+  }
+}

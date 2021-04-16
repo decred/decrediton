@@ -1,7 +1,6 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import styles from "../GetStarted.module.css";
 import { Label, Input, FormContainer, Row, ButtonsBar } from "../helpers";
 
 const messages = defineMessages({

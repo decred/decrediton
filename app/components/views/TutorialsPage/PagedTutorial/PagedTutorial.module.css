@@ -16,13 +16,13 @@
 .subtitle {
   font-size: 11px;
   margin-bottom: 20px;
-  color: var(--new_wallet-label);
+  color: var(--new-wallet-label);
 }
 
 .tutorial-subtitle {
   font-size: 11px;
   margin-bottom: 20px;
-  color: var(--new_wallet-label);
+  color: var(--new-wallet-label);
 }
 
 @media screen and (max-width: 800px) {

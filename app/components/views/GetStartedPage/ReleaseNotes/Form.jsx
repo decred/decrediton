@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
 import { Documentation } from "shared";
 import styles from "../GetStarted.module.css";
+import { BackButton } from "../helpers";
 
 export default ({
   onSendBack,
@@ -15,7 +16,7 @@ export default ({
     <div className={styles.contentTitle}>
       <div className={styles.goBackScreenButtonArea}>
         <Tooltip content={<T id="releaseNotes.goBack" m="Go back" />}>
-          <div className={styles.goBackScreenButton} onClick={onSendBack} />
+          <BackButton onClick={onSendBack} />
         </Tooltip>
       </div>
       <T

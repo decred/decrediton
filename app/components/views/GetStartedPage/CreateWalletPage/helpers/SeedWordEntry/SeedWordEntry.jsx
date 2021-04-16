@@ -2,10 +2,14 @@ import Select from "react-select";
 import { SEED_WORDS } from "wallet/seed";
 import { clipboard } from "electron";
 import { useLayoutEffect } from "react";
+// SeedWordSelect.css includes custom styling for seed word select which need
+// to be loaded *after* ReactSelectGlobal.less, both imports should be deleted
+// when migrating to pi-ui's Select componentt!
+import "./SeedWordSelect.css";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map((name) => ({ name }));
 
-const SingleSeedWordEntry = ({
+const SeedWordEntry = ({
   className,
   onPasteFromClipboard,
   onChange,
@@ -71,4 +75,4 @@ const SingleSeedWordEntry = ({
   );
 };
 
-export default SingleSeedWordEntry;
+export default SeedWordEntry;

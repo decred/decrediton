@@ -52,7 +52,7 @@ const lightTheme = {
   "sidebar-menu-link": "#8997a5",
   "linear-progress-text": "#fff",
   "wallet-label": "#091440",
-  "new_wallet-label": "#48566e",
+  "new-wallet-label": "#48566e",
   "selected_wallet-label": "#091440",
   "wallet-desc": "#091440",
   "getstarted-menu-color": "#8997a5",

@@ -1,0 +1,13 @@
+.seedArea {
+  margin: 0 5px 5px -5px;
+  width: 560px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media screen and (max-width: 768px) {
+  .seedArea {
+    grid-template-columns: repeat(3, 1fr);
+    width: 353px;
+  }
+}

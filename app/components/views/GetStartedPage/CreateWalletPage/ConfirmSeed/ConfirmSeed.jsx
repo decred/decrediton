@@ -38,9 +38,9 @@ const ConfirmSeed = ({
       .join(" ");
     if (seedWordStr === mnemonic) {
       decodeSeed(mnemonic)
-        // if no errors happened we set the seed at our machine state
-        .then((response) => {
-          setSeed(response.getDecodedSeed());
+        // if successfully decoded, update the state machine's seed.
+        .then(({ getDecodedSeed }) => {
+          setSeed(getDecodedSeed());
           setError("");
         })
         .catch((e) => {

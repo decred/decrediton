@@ -21,6 +21,7 @@ import {
 import stylesSettigs from "views/SettingsPage/SettingsTab/Settings.module.css";
 import stylesGetStarted from "../GetStarted.module.css";
 import { useSettings } from "hooks";
+import { BackButton } from "../helpers";
 
 const SetttingsForm = ({ onSendBack }) => {
   const { setThemeName } = useTheme();
@@ -57,7 +58,7 @@ const SetttingsForm = ({ onSendBack }) => {
       <div className={classNames(styles.logs, styles.settings)}>
         <div className={styles.goBackScreenButtonArea}>
           <Tooltip content={<GoBackMsg />}>
-            <div className={styles.goBackScreenButton} onClick={onSendBack} />
+            <BackButton onClick={onSendBack} />
           </Tooltip>
         </div>
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />

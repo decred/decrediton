@@ -52,7 +52,7 @@ const darkTheme = {
   "sidebar-menu-link": "#6F98D3",
   "linear-progress-text": "#1B2B54",
   "wallet-label": "#3C62B0",
-  "new_wallet-label": "#769ECF",
+  "new-wallet-label": "#769ECF",
   "selected_wallet-label": "#091440",
   "wallet-desc": "#25549F",
   "getstarted-menu-color": "#B7DEEE",

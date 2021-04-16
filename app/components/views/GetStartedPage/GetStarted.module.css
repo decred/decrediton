@@ -124,20 +124,6 @@
   line-height: 14px;
 }
 
-.goBackScreenButton {
-  height: 12px;
-  width: 12px;
-  background-repeat: no-repeat;
-  background-size: 12px;
-  background-image: var(--x-grey);
-  opacity: 1;
-  cursor: pointer;
-}
-
-.goBackScreenButton:hover {
-  opacity: 0.7;
-}
-
 .loaderBarIcon {
   position: absolute;
   right: 37px;
@@ -199,14 +185,6 @@
   margin-top: 55px;
 }
 
-.walletKeyBlueButton:not(.keyBlueButtonDisabled) {
-  box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.21);
-}
-
-.walletKeyBlueButton:hover {
-  box-shadow: none;
-}
-
 .walletIcon {
   margin-left: 54px;
   height: 62px;
@@ -258,7 +236,7 @@
 }
 
 .displayWallet.new .displayWalletName {
-  color: var(--new_wallet-label);
+  color: var(--new-wallet-label);
   margin-top: 20px;
 }
 
@@ -874,10 +852,6 @@
   .getstarted.loader {
     padding-top: 23px;
     margin-left: 0;
-  }
-
-  .textToggleButtonRight {
-    padding: 6px 10px;
   }
 
   .loaderButtons {
