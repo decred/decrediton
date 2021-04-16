@@ -686,7 +686,14 @@ export const updateVoteChoice = (
     });
 
     // cast vote into pi server
-    await pi.castVotes({ piURL, votes });
+    const response = await pi.castVotes({ piURL, votes });
+    const { error: voteCastError } =
+      response.data.receipts.find(({ error }) => error) || {};
+
+    if (voteCastError) {
+      throw voteCastError;
+    }
+
     // cache information locally so we can show them without querying from
     // pi server.
     savePiVote(votesToCache, token, testnet, walletName);
