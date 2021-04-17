@@ -1,8 +1,9 @@
 import { KeyBlueButton } from "buttons";
 import { LanguageSelectInput } from "inputs";
+import { PageBody } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { classNames } from "pi-ui";
-import styles from "../GetStarted.module.css";
+import styles from "./Page.module.css";
+import { Content, Title, SubTitle } from "../../helpers";
 
 const LanguageSelectPage = ({
   availableLanguages,
@@ -11,20 +12,17 @@ const LanguageSelectPage = ({
   onSelectLang,
   isTestNet
 }) => (
-  <div
+  <PageBody
     data-testid="getstarted-pagebody"
-    className={classNames(
-      styles.pageBody,
-      styles.getstarted,
-      isTestNet && styles.testnetBody
-    )}>
-    <div className={styles.getstartedNew}>
-      <div className={styles.title}>
-        <T id="selectLang.title" m={"Welcome to Decrediton Wallet"} />
-      </div>
-      <div className={styles.titleSub}>
-        <T id="selectLang.titleSub" m={"Choose your language"} />
-      </div>
+    getStarted
+    isTestNet={isTestNet}>
+    <Content>
+      <Title>
+        <T id="selectLang.title" m="Welcome to Decrediton Wallet" />
+      </Title>
+      <SubTitle>
+        <T id="selectLang.titleSub" m="Choose your language" />
+      </SubTitle>
       <div className={styles.toolbar}>
         <LanguageSelectInput
           value={selectedLang}
@@ -34,11 +32,11 @@ const LanguageSelectPage = ({
           options={availableLanguages}
         />
         <KeyBlueButton className={styles.button} onClick={onSelectLang}>
-          <T id="selectLang.continueBtn" m={"Continue"} />
+          <T id="selectLang.continueBtn" m="Continue" />
         </KeyBlueButton>
       </div>
-    </div>
-  </div>
+    </Content>
+  </PageBody>
 );
 
 export default LanguageSelectPage;

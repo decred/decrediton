@@ -7,6 +7,7 @@ import {
   UpdateAvailableLink,
   AboutModalButton
 } from "./messages";
+import { PageBody } from "layout";
 import { LoaderBarBottom } from "indicators";
 import { classNames } from "pi-ui";
 import styles from "./GetStarted.module.css";
@@ -27,14 +28,11 @@ const GetStarted = ({
   } = useGetStarted();
 
   return (
-    <div
+    <PageBody
       data-testid="getstarted-pagebody"
-      className={classNames(
-        styles.pageBody,
-        styles.getstarted,
-        isTestNet && styles.testnetBody
-      )}>
-      <div className={classNames(styles.getstarted, styles.loader)}>
+      getStarted
+      isTestNet={isTestNet}>
+      <div className={classNames(styles.container)}>
         <div className={styles.loaderSettingsLogs}>
           {updateAvailable && (
             <UpdateAvailableLink
@@ -65,7 +63,7 @@ const GetStarted = ({
           {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}
         />
       </div>
-    </div>
+    </PageBody>
   );
 };
 

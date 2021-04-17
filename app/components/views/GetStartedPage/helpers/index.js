@@ -3,4 +3,8 @@ export { default as Input } from "./Input";
 export { default as FormContainer } from "./FormContainer";
 export { default as Row } from "./Row";
 export { default as ButtonsBar } from "./ButtonsBar";
+export { default as BackButtonArea } from "./BackButtonArea";
 export { default as BackButton } from "./BackButton";
+export { default as Content } from "./Content";
+export { default as Title } from "./Title";
+export { default as SubTitle } from "./SubTitle";

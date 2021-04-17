@@ -1,14 +1,13 @@
-import { injectIntl } from "react-intl";
-import CreateWallet from "./CreateWallet";
-import { withRouter } from "react-router";
-import CopySeed from "./CopySeed/CopySeed";
-import ConfirmSeed from "./ConfirmSeed/ConfirmSeed";
-import ExistingSeed from "./ExistingSeed/ExistingSeed";
-import { createElement as h } from "react";
-import { DecredLoading } from "indicators";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, createElement as h } from "react";
 import { useService } from "@xstate/react";
 import { sendParent } from "xstate";
+import { withRouter } from "react-router";
+import { injectIntl } from "react-intl";
+import CreateWallet from "./CreateWallet";
+import CopySeed from "./CopySeed";
+import ConfirmSeed from "./ConfirmSeed";
+import ExistingSeed from "./ExistingSeed";
+import { DecredLoading } from "indicators";
 import { useCreateWallet } from "./hooks";
 
 const CreateWalletPage = ({ createWalletRef, onSendBack }) => {

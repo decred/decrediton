@@ -6,8 +6,7 @@ import { KeyBlueButton } from "buttons";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
 import { GoBackMsg } from "../../messages";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
-// change this import and move all styles to component's css module
-import GetStartedStyles from "../../GetStarted.module.css";
+import { BackButton, BackButtonArea } from "../../helpers";
 import styles from "./SetMixedAcctPage.module.css";
 
 export default ({ cancel, onSendContinue }) => {
@@ -59,14 +58,11 @@ export default ({ cancel, onSendContinue }) => {
 
   return (
     <div className={styles.content}>
-      <div className={GetStartedStyles.goBackScreenButtonArea}>
+      <BackButtonArea>
         <Tooltip content={<GoBackMsg />}>
-          <div
-            className={GetStartedStyles.goBackScreenButton}
-            onClick={cancel}
-          />
+          <BackButton onClick={cancel} />
         </Tooltip>
-      </div>
+      </BackButtonArea>
       <Subtitle
         className={styles.subtitle}
         title={<T id="getstarted.setAccount.title" m="Set Mixed Account" />}

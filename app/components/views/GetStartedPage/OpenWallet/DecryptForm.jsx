@@ -1,7 +1,6 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import styles from "../GetStarted.module.css";
 import { Label, Input, FormContainer } from "../helpers";
 
 const messages = defineMessages({
@@ -39,7 +38,7 @@ const OpenWalletDecryptFormBodyBase = ({
         />
       </Input>
     </Row>
-    <div className={styles.loaderBarButtons}>
+    <div>
       <KeyBlueButton onClick={onOpenWallet} disabled={publicPassPhrase == ""}>
         <T id="decryptWalletForm.openBtn" m="Open Wallet" />
       </KeyBlueButton>

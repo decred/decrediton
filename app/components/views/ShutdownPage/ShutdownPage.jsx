@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { useShutdown } from "./hooks";
 import { useMountEffect } from "hooks";
+import { PageBody } from "layout";
 import { DecredLoading } from "indicators";
-import { classNames } from "pi-ui";
 import styles from "../GetStartedPage/GetStarted.module.css";
 
 const ShutdownPage = () => {
@@ -12,12 +12,12 @@ const ShutdownPage = () => {
   });
 
   return (
-    <div className={classNames(styles.pageBody, styles.getstarted)}>
+    <PageBody getStarted>
       <DecredLoading />
       <div className={styles.shutdownText}>
         <T id="shutdown.header.title" m="Shutting down Decrediton" />
       </div>
-    </div>
+    </PageBody>
   );
 };
 

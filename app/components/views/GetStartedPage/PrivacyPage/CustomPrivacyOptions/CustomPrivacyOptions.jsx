@@ -1,21 +1,20 @@
 import { FormattedMessage as T } from "react-intl";
 import PrivacySettings from "views/SettingsPage/SettingsTab/PrivacySettings";
 import { InvisibleButton, KeyBlueButton } from "buttons";
-import styles from "../GetStarted.module.css";
+import { Title, SubTitle } from "../../helpers";
+import styles from "./CustomPrivacyOptions.module.css";
 
 export default ({ toggleCustomPrivacy, acceptCustomPrivacy, ...props }) => (
   <>
-    <div className={styles.title}>
-      <T id="privacy.custom.title" m={"Custom Privacy Options"} />
-    </div>
-    <div className={styles.titleSub}>
+    <Title>
+      <T id="privacy.custom.title" m="Custom Privacy Options" />
+    </Title>
+    <SubTitle>
       <T
         id="privacy.custom.titleSub"
-        m={
-          "Select which external requests Decrediton is allowed to make. You can change this later on the app settings page."
-        }
+        m="Select which external requests Decrediton is allowed to make. You can change this later on the app settings page."
       />
-    </div>
+    </SubTitle>
     <div className={styles.customPrivacySettings}>
       <PrivacySettings {...props} />
       <div className={styles.privacyButtons}>

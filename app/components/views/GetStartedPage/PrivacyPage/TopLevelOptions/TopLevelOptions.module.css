@@ -1,0 +1,29 @@
+@media screen and (max-width: 978px) {
+  .wide {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .option {
+    width: 209px;
+    min-width: 209px;
+  }
+
+  .icon {
+    background-size: 114px;
+    width: 114;
+    height: 114px;
+  }
+
+  .textContainer {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .wide {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+}

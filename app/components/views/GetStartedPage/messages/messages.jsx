@@ -2,7 +2,7 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Tooltip } from "pi-ui";
 import { ExternalLink } from "shared";
 import { AboutModalButtonInvisible } from "buttons";
-import styles from "./GetStarted.module.css";
+import styles from "./messages.module.css";
 
 export const LogsLinkMsg = () => <T id="getStarted.btnLogs" m="Logs" />;
 export const SettingsLinkMsg = () => (

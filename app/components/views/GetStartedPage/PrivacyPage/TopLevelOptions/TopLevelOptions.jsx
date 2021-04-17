@@ -1,26 +1,25 @@
 import { FormattedMessage as T } from "react-intl";
-import PrivacyOption from "./PrivacyOption";
-import { classNames } from "pi-ui";
-import styles from "../GetStarted.module.css";
+import PrivacyOption from "../PrivacyOption";
+import PrivacyOptions from "../PrivacyOptions";
+import { Title, SubTitle } from "../../helpers";
+import styles from "./TopLevelOptions.module.css";
 
-export default ({
+const TopLevelOptions = ({
   setupStandardPrivacy,
   setupDisabledPrivacy,
   toggleCustomPrivacy
 }) => (
   <>
-    <div className={styles.title}>
-      <T id="privacy.title" m={"Privacy Options"} />
-    </div>
-    <div className={styles.titleSub}>
+    <Title>
+      <T id="privacy.title" m="Privacy Options" />
+    </Title>
+    <SubTitle>
       <T
         id="privacy.titleSub"
-        m={
-          "Select how Decrediton should connect to external services. You can change this in the application settings later."
-        }
+        m="Select how Decrediton should connect to external services. You can change this in the application settings later."
       />
-    </div>
-    <div className={classNames(styles.privacyOptions, styles.wide)}>
+    </SubTitle>
+    <PrivacyOptions className={styles.wide}>
       <PrivacyOption
         title={<T id="privacy.options.standard.title" m="Standard" />}
         icon="standard"
@@ -31,6 +30,9 @@ export default ({
           />
         }
         onClick={setupStandardPrivacy}
+        className={styles.option}
+        iconClassName={styles.icon}
+        textClassName={styles.textContainer}
       />
 
       <PrivacyOption
@@ -45,6 +47,9 @@ export default ({
           />
         }
         onClick={setupDisabledPrivacy}
+        className={styles.option}
+        iconClassName={styles.icon}
+        textClassName={styles.textContainer}
       />
 
       <PrivacyOption
@@ -62,7 +67,12 @@ export default ({
           />
         }
         onClick={toggleCustomPrivacy}
+        className={styles.option}
+        iconClassName={styles.icon}
+        textClassName={styles.textContainer}
       />
-    </div>
+    </PrivacyOptions>
   </>
 );
+
+export default TopLevelOptions;

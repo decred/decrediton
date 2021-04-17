@@ -3,9 +3,9 @@ import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { TextInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { Collapse, ExternalLink } from "shared";
-import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
-import { Label, Input, Row } from "../helpers";
-import styles from "../GetStarted.module.css";
+import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
+import { Label, Input, Row } from "../../helpers";
+import styles from "./CreateWalletForm.module.css";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
@@ -63,16 +63,16 @@ const CreateWalletForm = ({
 }) => (
   <>
     {isCreateNewWallet ? (
-      <div className={styles.newWalletTitleArea}>
-        <div className={classNames(styles.walletIconSmall, styles.createnew)} />
-        <div className={styles.newWalletTitle}>
+      <div className={styles.titleArea}>
+        <div className={classNames(styles.iconSmall, styles.new)} />
+        <div className={styles.title}>
           <NewSeedTabMsg />
         </div>
       </div>
     ) : (
-      <div className={styles.newWalletTitleArea}>
-        <div className={classNames(styles.walletIconSmall, styles.restore)} />
-        <div className={styles.newWalletTitle}>
+      <div className={styles.titleArea}>
+        <div className={classNames(styles.iconSmall, styles.restore)} />
+        <div className={styles.title}>
           <RestoreTabMsg />
         </div>
       </div>
@@ -154,7 +154,7 @@ const CreateWalletForm = ({
                     <>
                       <T id="createwallet.isTrezor.label" m="Trezor" />
                       <span
-                        className={styles.whatsnew}
+                        className={styles.trezorWallet}
                         onClick={onShowTrezorConfig}>
                         <T
                           id="createWallet.isTrezor.setupLink"

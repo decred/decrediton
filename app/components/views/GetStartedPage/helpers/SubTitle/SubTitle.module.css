@@ -1,0 +1,11 @@
+.subTitle {
+  color: var(--header-desc-color);
+  font-size: 13px;
+  line-height: 17px;
+  margin-bottom: 42px;
+  width: 296px;
+}
+
+.subTitle a {
+  color: var(--link-color);
+}

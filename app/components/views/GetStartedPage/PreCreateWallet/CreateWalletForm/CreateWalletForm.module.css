@@ -1,0 +1,69 @@
+.titleArea {
+  float: left;
+  width: 100%;
+  margin-left: 22px;
+  margin-top: 20px;
+  margin-bottom: 22px;
+}
+
+.title {
+  float: left;
+  font-size: 15px;
+  line-height: 19px;
+  margin-top: 3px;
+}
+
+.iconSmall {
+  float: left;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  margin-right: 10px;
+}
+
+.iconSmall.createnew {
+  background-image: var(--createnewwallet);
+}
+
+.iconSmall.restore {
+  background-image: var(--restore-wallet-icon);
+}
+
+.advancedOptions {
+  height: 100%;
+  margin-bottom: 20px;
+  max-width: 600px;
+}
+
+.advancedOption {
+  margin: 10px;
+}
+
+.advancedOption > .extra {
+  margin: 15px 23px 30px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.daemonLongInput {
+  padding-left: 20px;
+  width: 350px;
+}
+
+.trezorWallet {
+  font-size: 13px;
+  margin-left: 20px;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--info-modal-button-bg);
+}
+
+.trezorWallet:hover {
+  opacity: 0.7;
+}
+
+.trezorDocs {
+  color: var(--link-color);
+}

@@ -1,0 +1,93 @@
+.option {
+  width: 296px;
+  min-width: 296px;
+  height: 342px;
+  border-radius: 5px;
+  margin-right: 20px;
+  padding: 1px;
+  background-color: var(--background-back-color);
+  color: var(--modal-text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.option:hover {
+  padding: 0;
+  border: 1px solid var(--input-color);
+}
+
+.option:hover .title {
+  color: var(--input-color);
+}
+
+.textContainer {
+  margin: 0 30px;
+  flex: 1;
+}
+
+.title {
+  font-size: 15px;
+  line-height: 19px;
+  margin-bottom: 8px;
+}
+
+.description {
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.icon {
+  margin: 30px 0 20px 0;
+  background-repeat: no-repeat;
+  background-size: 150px;
+  width: 150px;
+  height: 150px;
+  background-position: center;
+  align-self: center;
+}
+
+.icon.standard {
+  background-image: var(--stakey-privacy-standard);
+}
+
+.icon.disabled {
+  background-image: var(--stakey-privacy-disabled);
+}
+
+.icon.custom {
+  background-image: var(--stakey-privacy-custom);
+}
+
+.icon.spvOn {
+  background-image: var(--enable-spv);
+}
+
+.icon.spvOff {
+  background-image: var(--disable-spv);
+}
+
+@media screen and (max-width: 710px) {
+  .option {
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding: 0;
+    flex-direction: row;
+    align-items: flex-start;
+    min-height: 137px;
+    height: inherit;
+  }
+
+  .icon {
+    margin: 20px 0px;
+    background-size: 40px;
+    width: 80px;
+    height: 40px;
+    align-self: flex-start;
+  }
+
+  .textContainer {
+    margin: 20px 20px 20px 0;
+  }
+}

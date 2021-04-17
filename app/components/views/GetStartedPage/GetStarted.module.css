@@ -1,109 +1,25 @@
+.container {
+  color: var(--title-text-and-button-background);
+  padding-top: 57px;
+  position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding-top: 23px;
+    margin-left: 0;
+  }
+}
+
+/* XXX old code */
 .shutdownText {
   font-size: 30px;
   text-align: center;
 }
 
-.button {
-  padding: 5px 16px 10px 16px;
-}
-
-.getstartedNew {
-  color: var(--title-text-and-button-background);
-  padding-left: 52px;
-  padding-top: 106px;
-}
-
-.toolbar {
-  height: 29px;
-  display: flex;
-}
-
 .daemonNetwork {
   font-size: 20px;
   text-transform: capitalize;
-}
-
-.daemonLongInput {
-  padding-left: 20px;
-  width: 350px;
-}
-
-.advancedOption {
-  margin: 10px;
-}
-
-.advancedOption > .extra {
-  margin: 15px 23px 30px;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-}
-
-.advancedOptions {
-  height: 100%;
-  margin-bottom: 20px;
-  max-width: 600px;
-}
-
-.pageBody.getstarted {
-  padding: 40px;
-  display: block;
-  background-color: var(--background-container);
-  z-index: 3;
-  height: calc(100% - 60px);
-  overflow-x: hidden;
-}
-
-.pageBody.getstarted::before {
-  content: "";
-  width: 100%;
-  height: 33px;
-  top: 0;
-  left: 0;
-  display: block;
-  background-repeat: no-repeat;
-  background-image: var(--launcher-logo);
-  background-size: 173px;
-  background-position: 0 0;
-}
-
-.pageBody.getstarted.testnetBody::before {
-  background-image: var(--testnet-logo);
-}
-
-.pageBody.getstarted .tabbedPageSubtitle {
-  font-size: 27px;
-  margin-left: 10px;
-}
-.pageBody.getstarted .getstarted.settings .tabbedPageSubtitle {
-  margin-left: 0;
-}
-
-.getstarted {
-  color: var(--title-text-and-button-background);
-}
-
-.getstarted.loader.logs .active {
-  color: var(--input-color);
-}
-
-.getstarted.loader.logs .logContainer {
-  margin-top: 10px;
-  max-height: 600px;
-  width: 100%;
-  overflow-y: auto;
-}
-
-.getstarted.loader {
-  padding-top: 57px;
-  position: relative;
-}
-
-.settings .goBackScreenButtonArea {
-  position: absolute;
-  left: 1467px;
-  top: 66px;
-  right: initial;
 }
 
 .settings .saveButtonWrapper {
@@ -114,14 +30,6 @@
 .settings .saveButtonWrapper .keyBlueButton {
   margin-top: 0;
   padding: 12px 30px 14px 30px;
-}
-
-.goBackScreenButtonArea {
-  position: fixed;
-  right: 55px;
-  top: 135px;
-  font-size: 14px;
-  line-height: 14px;
 }
 
 .loaderBarIcon {
@@ -164,25 +72,21 @@
   user-select: none;
 }
 
-.getstarted.loader .tutorialButton {
+.tutorialButton {
   background-color: var(--info-modal-button-bg);
   color: var(--back-button-dark-text);
 }
 
-.getstarted.loader .tutorialButton:hover {
+.tutorialButton:hover {
   background-color: var(--title-text-and-button-background-hovered);
 }
 
-.getstarted.loader .contentTitle {
+.contentTitle {
   font-size: 27px;
   line-height: 34px;
-  margin-bottom: 13px;
-  float: left;
+  margin-bottom: 35px;
   width: 100%;
-}
-
-.getstarted.content {
-  margin-top: 55px;
+  float: left;
 }
 
 .walletIcon {
@@ -364,45 +268,6 @@
   background-image: var(--x-white-icon);
 }
 
-.newWalletTitleArea {
-  float: left;
-  width: 100%;
-  margin-left: 22px;
-  margin-top: 20px;
-  margin-bottom: 22px;
-}
-
-.newWalletTitle {
-  float: left;
-  font-size: 15px;
-  line-height: 19px;
-  margin-top: 3px;
-}
-
-.walletIconSmall {
-  float: left;
-  height: 30px;
-  width: 30px;
-  background-repeat: no-repeat;
-  background-size: 30px;
-  margin-right: 10px;
-}
-
-.walletIconSmall.createnew {
-  background-image: var(--createnewwallet);
-}
-
-.walletIconSmall.restore {
-  background-image: var(--restore-wallet-icon);
-}
-
-.contentTitle {
-  font-size: 27px;
-  line-height: 34px;
-  margin-bottom: 35px;
-  width: 100%;
-}
-
 .releaseNotes {
   display: flex;
   clear: both;
@@ -504,18 +369,6 @@
   text-decoration: none;
 }
 
-.whatsnew {
-  font-size: 13px;
-  margin-left: 20px;
-  text-decoration: underline;
-  cursor: pointer;
-  color: var(--info-modal-button-bg);
-}
-
-.whatsnew:hover {
-  opacity: 0.7;
-}
-
 @keyframes bounce {
   0% {
     margin-left: 0px;
@@ -535,105 +388,6 @@
   float: left;
   margin-top: 6px;
   animation: bounce 1s var(--ease-in-out-quart) infinite;
-}
-
-.customPrivacySettings {
-  width: 300px;
-}
-
-.title {
-  font-size: 27px;
-  line-height: 34px;
-  margin-bottom: 6px;
-}
-
-.titleSub {
-  color: var(--header-desc-color);
-  font-size: 13px;
-  line-height: 17px;
-  margin-bottom: 42px;
-  width: 296px;
-}
-
-.titleSub a {
-  color: var(--link-color);
-}
-
-.privacyOptions {
-  display: flex;
-  justify-content: center;
-  margin-left: 35px;
-  padding-right: 2em;
-}
-
-.privacyOption {
-  width: 296px;
-  min-width: 296px;
-  height: 342px;
-  border-radius: 5px;
-  margin-right: 20px;
-  padding: 1px;
-  background-color: var(--background-back-color);
-  color: var(--modal-text);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.privacyOption:hover {
-  padding: 0;
-  border: 1px solid var(--input-color);
-}
-
-.privacyOption:hover .privacyOptionTitle {
-  color: var(--input-color);
-}
-
-.privacyTextContainer {
-  margin: 0 30px;
-  flex: 1;
-}
-
-.privacyOptionTitle {
-  font-size: 15px;
-  line-height: 19px;
-  margin-bottom: 8px;
-}
-
-.privacyOptionDescription {
-  font-size: 13px;
-  line-height: 17px;
-}
-
-.privacyOptionIcon {
-  margin: 30px 0 20px 0;
-  background-repeat: no-repeat;
-  background-size: 150px;
-  width: 150px;
-  height: 150px;
-  background-position: center;
-  align-self: center;
-}
-
-.privacyOptionIcon.standard {
-  background-image: var(--stakey-privacy-standard);
-}
-
-.privacyOptionIcon.disabled {
-  background-image: var(--stakey-privacy-disabled);
-}
-
-.privacyOptionIcon.custom {
-  background-image: var(--stakey-privacy-custom);
-}
-
-.privacyOptionIcon.spvOn {
-  background-image: var(--enable-spv);
-}
-
-.privacyOptionIcon.spvOff {
-  background-image: var(--disable-spv);
 }
 
 .stakepoolAddRow {
@@ -674,10 +428,6 @@
 
 .trezorConfigSections {
   margin-top: 4em;
-}
-
-.trezorDocs {
-  color: var(--link-color);
 }
 
 .launchError {
@@ -757,61 +507,26 @@
 }
 
 @media screen and (max-width: 1919px) {
-  .settings .goBackScreenButtonArea {
-    left: 1230px;
-  }
   .settings .saveButtonWrapper {
     width: 1247px;
   }
 }
 
 @media screen and (max-width: 1679px) {
-  .settings .goBackScreenButtonArea {
-    left: 988px;
-  }
   .settings .saveButtonWrapper {
     width: 1002px;
   }
 }
 
 @media screen and (max-width: 1439px) {
-  .settings .goBackScreenButtonArea {
-    left: 726px;
-  }
   .settings .saveButtonWrapper {
     width: 740px;
   }
 }
 
 @media screen and (max-width: 1180px) {
-  .settings .goBackScreenButtonArea {
-    left: 636px;
-    top: 112px;
-  }
   .settings .saveButtonWrapper {
     width: 650px;
-  }
-}
-
-@media screen and (max-width: 978px) {
-  .privacyOptions.wide {
-    justify-content: flex-start;
-    margin-left: 0;
-  }
-
-  .privacyOptions.wide .privacyOption {
-    width: 209px;
-    min-width: 209px;
-  }
-
-  .privacyOptions.wide .privacyOption .privacyOptionIcon {
-    background-size: 114px;
-    width: 114;
-    height: 114px;
-  }
-
-  .privacyOptions.wide .privacyOption .privacyTextContainer {
-    margin: 0 20px;
   }
 }
 
@@ -820,38 +535,12 @@
     margin: 10px 0 0 0;
   }
 
-  .getstartedNew {
-    padding: 86px 0 0 0;
-  }
-
   .releaseNotes {
     height: 77vh;
   }
-
-  .privacyOptions {
-    margin: 0 -10px;
-  }
-
-  .pageBody.getstarted {
-    padding: 20px !important;
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 40px);
-  }
-
-  .pageBody.getstarted.testnetBody::before,
-  .pageBody.getstarted::before {
-    background-image: var(--small-logo);
-    background-size: 30px;
-  }
-
   .contentTitle {
+    font-size: 23px;
     margin-bottom: 20px;
-  }
-
-  .getstarted.loader {
-    padding-top: 23px;
-    margin-left: 0;
   }
 
   .loaderButtons {
@@ -871,45 +560,12 @@
     flex-direction: column;
   }
 
-  .invisibleButton,
-  .button {
+  .invisibleButton {
     padding: 6px 20px;
-  }
-
-  .getstarted.loader .contentTitle {
-    font-size: 23px;
-  }
-
-  .getstarted.loader.logs {
-    margin-left: -10px;
-    margin-right: -10px;
-    padding-top: 30px;
   }
 
   .logArea .logAreaLogs {
     margin: 20px;
-  }
-
-  .logContainer .tabbedPageSubtitle {
-    margin-left: 10px;
-  }
-
-  .getstarted.loader.logs .goBackScreenButtonArea {
-    top: 85px;
-    right: 20px;
-  }
-  .getstarted.loader.logs .loaderSettingsLogs {
-    right: -10px !important;
-    top: -40px !important;
-  }
-
-  .settings .tabbedPageSubtitle {
-    margin-left: 20px;
-  }
-
-  .settings .goBackScreenButtonArea {
-    top: 40px;
-    left: 342px;
   }
 
   .settings .saveButtonWrapper {
@@ -927,66 +583,14 @@
   }
 }
 
-@media screen and (max-height: 746px) {
-  .pageBody.getstarted {
-    height: calc(100% - 60px);
-  }
-}
-
 @media screen and (max-width: 511px) {
   .keyBlueButton {
-    margin-top: 0px;
-  }
-}
-
-@media screen and (max-width: 710px) {
-  .privacyOptions.wide,
-  .privacyOptions {
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-  }
-
-  .privacyOption {
-    width: 100%;
-    margin: 0 0 10px 0;
-    padding: 0;
-    flex-direction: row;
-    align-items: flex-start;
-    min-height: 137px;
-    height: inherit;
-  }
-
-  .privacyOptionIcon {
-    margin: 20px 0px;
-    background-size: 40px;
-    width: 80px;
-    height: 40px;
-    align-self: flex-start;
-  }
-
-  .privacyTextContainer {
-    margin: 20px 20px 20px 0;
+    margin-top: 0;
   }
 }
 
 @media screen and (max-width: 540px) {
-  .getstarted.loader .aboutModalButton {
+  .aboutModalButton {
     display: none;
-  }
-}
-
-@media screen and (max-width: 430px) {
-  .getstarted.loader .goBackScreenButtonArea {
-    right: 59px;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .getstartedNew {
-    padding: 64px 0 0 0px;
-  }
-  .title {
-    font-size: 23px;
   }
 }
