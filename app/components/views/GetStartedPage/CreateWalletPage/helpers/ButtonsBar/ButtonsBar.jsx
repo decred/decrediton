@@ -1,9 +1,10 @@
+import { classNames } from "pi-ui";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { BackBtnMsg } from "../../../messages";
 import styles from "./ButtonsBar.module.css";
 
 const ButtonsBar = ({ disabled, loading, onClick, onBackClick, message }) => (
-  <div className={styles.buttonsBar}>
+  <div className={classNames(styles.buttonsBar, "margin-top-m")}>
     <KeyBlueButton
       className={styles.primaryButton}
       disabled={disabled}

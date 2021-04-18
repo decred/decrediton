@@ -45,6 +45,7 @@ export const ConfirmSeedForm = ({
           <SeedWord
             seedWord={{ ...seedWord, index }}
             onChangeSeedWord={onChangeSeedWord}
+            isConfirm
           />
         ))}
       </SeedArea>

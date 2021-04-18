@@ -6,7 +6,8 @@ const SeedWord = ({
   seedWord,
   onChangeSeedWord,
   onPasteFromClipboard,
-  onPaste
+  onPaste,
+  isConfirm
 }) => {
   const { index, show, match, word, error } = seedWord;
   return (
@@ -15,12 +16,12 @@ const SeedWord = ({
       className={classNames(
         styles.seedWord,
         show && styles.filled,
-        !show && word !== "" && match && styles.match,
-        !show && word !== "" && !match && styles.noMatch,
-        !show && word === "" && styles.empty,
+        isConfirm && !show && word && match && styles.match,
+        isConfirm && !show && word && !match && styles.noMatch,
+        !show && !word && styles.empty,
         word && error && styles.error,
-        word && !error && styles.populated,
-        !word && !error && styles.restore
+        !isConfirm && word && !error && !show && styles.populated,
+        !isConfirm && !word && !error && !show && styles.restore
       )}>
       <span className={styles.number}>{index + 1}.</span>
       <span className={styles.word}>

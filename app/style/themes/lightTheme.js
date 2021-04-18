@@ -182,7 +182,7 @@ const lightTheme = {
   "sidebar-balance-icon": url(require("style/icons/sidebar-balance.svg")),
   "testnet-logo": url(require("style/icons/testnet-logo.svg")),
   "mainnet-logo": url(require("style/icons/decred-logo.svg")),
-  createnewwallet: url(require("style/icons/createnewwallet.svg")),
+  "create-wallet-icon": url(require("style/icons/createnewwallet.svg")),
   "wallet-blue-icon": url(require("style/icons/wallet-blue.svg")),
   "wallet-gray-icon": url(require("style/icons/wallet-gray.svg")),
   blockchain: url(require("style/icons/blockchain.svg")),

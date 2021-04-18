@@ -9,6 +9,7 @@ const LanguageSelect = () => {
     onSelectLanguage,
     isTestNet
   } = useDaemonStartup();
+
   const defaultLang = useMemo(
     () =>
       availableLanguages.find((v) => v.language === defaultLocale) ||

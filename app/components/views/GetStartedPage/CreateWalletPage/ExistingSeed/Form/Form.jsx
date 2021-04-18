@@ -37,7 +37,7 @@ const ExistingSeedForm = ({
   <Container>
     <TitleWrapper
       title={<T id="createWallet.restore.title" m="Restore existing wallet" />}>
-      {/* XXX: Can we use here pi-iu's toggle? */}
+      {/* XXX: Use pi-iu's toggle */}
       <TextToggle
         activeButton="left"
         leftText={WORDS}

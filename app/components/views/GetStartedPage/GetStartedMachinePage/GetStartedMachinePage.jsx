@@ -1,8 +1,9 @@
+import { classNames } from "pi-ui";
 import { AnimatedLinearProgressFull } from "indicators";
 import { SlateGrayButton } from "buttons";
-import { LearnBasicsMsg, WhatsNewLink, LoaderTitleMsg } from "./messages";
-import { classNames } from "pi-ui";
-import styles from "./GetStarted.module.css";
+import { LearnBasicsMsg, WhatsNewLink, LoaderTitleMsg } from "../messages";
+import { ContentContainer } from "../helpers";
+import styles from "./GetStartedMachinePage.module.css";
 
 export default ({
   StateComponent,
@@ -23,9 +24,9 @@ export default ({
   ...props
 }) => (
   <>
-    <div className={styles.contentTitle}>
+    <ContentContainer>
       <LoaderTitleMsg />
-    </div>
+    </ContentContainer>
     <div className={styles.loaderButtons}>
       <SlateGrayButton
         onClick={onShowTutorial}

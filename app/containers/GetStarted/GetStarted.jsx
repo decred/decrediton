@@ -1,3 +1,4 @@
+// XXX improve these imports
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import GetStartedPosition from "components/views/GetStartedPosition";
 import LanguageSelectPage from "components/views/GetStartedPage/LanguageSelectPage/LanguageSelectPage";

@@ -1,7 +1,8 @@
 .title {
   font-size: 27px;
   line-height: 34px;
-  margin-bottom: 6px;
+  margin-bottom: 35px;
+  width: 100%;
 }
 
 @media screen and (max-width: 375px) {

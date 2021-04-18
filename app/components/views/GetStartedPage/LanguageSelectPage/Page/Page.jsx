@@ -12,10 +12,7 @@ const LanguageSelectPage = ({
   onSelectLang,
   isTestNet
 }) => (
-  <PageBody
-    data-testid="getstarted-pagebody"
-    getStarted
-    isTestNet={isTestNet}>
+  <PageBody data-testid="getstarted-pagebody" getStarted isTestNet={isTestNet}>
     <Content>
       <Title>
         <T id="selectLang.title" m="Welcome to Decrediton Wallet" />

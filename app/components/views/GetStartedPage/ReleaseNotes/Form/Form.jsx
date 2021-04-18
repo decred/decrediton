@@ -1,10 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
 import { Documentation } from "shared";
-import styles from "../GetStarted.module.css";
-import { BackButton, BackButtonArea } from "../helpers";
+import styles from "./Form.module.css";
+import { BackButton, BackButtonArea, ContentContainer } from "../../helpers";
 
-export default ({
+const Form = ({
   onSendBack,
   version,
   docName,
@@ -13,7 +13,7 @@ export default ({
   onOlderVersion
 }) => (
   <>
-    <div className={styles.contentTitle}>
+    <ContentContainer>
       <BackButtonArea>
         <Tooltip content={<T id="releaseNotes.goBack" m="Go back" />}>
           <BackButton onClick={onSendBack} />
@@ -24,7 +24,7 @@ export default ({
         m="Decrediton v{version} Released"
         values={{ version }}
       />
-      <div className={styles.releaseNotesVersionNavigation}>
+      <div className={styles.navigation}>
         <a href="#" onClick={onNewerVersion}>
           <T id="getStarted.releaseNotes.NewerVersion" m="Newer Version" />
         </a>
@@ -32,12 +32,12 @@ export default ({
           <T id="getStarted.releaseNotes.OlderVersion" m="Older Version" />
         </a>
       </div>
-    </div>
+    </ContentContainer>
     <div className={styles.releaseNotes}>
-      <Documentation name={docName} className={styles.releaseNotesText} />
-      <div
-        className={classNames(styles.releaseNotesImage, styles[imgClassName])}
-      />
+      <Documentation name={docName} className={styles.text} />
+      <div className={classNames(styles.image, styles[imgClassName])} />
     </div>
   </>
 );
+
+export default Form;

@@ -85,7 +85,11 @@ const SetttingsForm = ({ onSendBack }) => {
             </div>
           </div>
 
-          <div className={classNames(settingsTabStyles.group, settingsTabStyles.general)}>
+          <div
+            className={classNames(
+              settingsTabStyles.group,
+              settingsTabStyles.general
+            )}>
             <Subtitle
               title={<T id="settings.group-title.general" m="General" />}
             />
@@ -95,13 +99,21 @@ const SetttingsForm = ({ onSendBack }) => {
                   {...{ tempSettings, locales, onChangeTempSettings }}
                 />
               </div>
-              <div className={classNames(settingsTabStyles.column, settingsTabStyles.timezone)}>
+              <div
+                className={classNames(
+                  settingsTabStyles.column,
+                  settingsTabStyles.timezone
+                )}>
                 <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
               </div>
             </div>
           </div>
 
-          <div className={classNames(settingsTabStyles.group, settingsTabStyles.privacy)}>
+          <div
+            className={classNames(
+              settingsTabStyles.group,
+              settingsTabStyles.privacy
+            )}>
             <Subtitle
               title={
                 <T

@@ -4,440 +4,12 @@
   position: relative;
 }
 
-@media screen and (max-width: 768px) {
-  .container {
-    padding-top: 23px;
-    margin-left: 0;
-  }
-}
-
-/* XXX old code */
-.shutdownText {
-  font-size: 30px;
-  text-align: center;
-}
-
-.daemonNetwork {
-  font-size: 20px;
-  text-transform: capitalize;
-}
-
-.settings .saveButtonWrapper {
-  width: 1484px;
-  text-align: right;
-}
-
-.settings .saveButtonWrapper .keyBlueButton {
-  margin-top: 0;
-  padding: 12px 30px 14px 30px;
-}
-
-.loaderBarIcon {
-  position: absolute;
-  right: 37px;
-  top: 286px;
-}
-
-.loaderBarIcon .loaderBarIconText {
-  float: left;
-  margin-top: 14px;
-  margin-right: 20px;
-}
-
-.loaderBarIcon .newLogoAnimation {
-  float: right;
-  margin: 0;
-  height: 50px;
-  width: 50px;
-  background-size: 50px;
-}
-
-.loaderBar {
-  float: left;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.loaderButtons {
-  float: left;
-  margin-bottom: 90px;
-  width: 100%;
-}
-
-.loaderSettingsLogs {
+.topLinks {
   position: absolute;
   right: 15px;
   top: -25px;
   margin: inherit;
   user-select: none;
-}
-
-.tutorialButton {
-  background-color: var(--info-modal-button-bg);
-  color: var(--back-button-dark-text);
-}
-
-.tutorialButton:hover {
-  background-color: var(--title-text-and-button-background-hovered);
-}
-
-.contentTitle {
-  font-size: 27px;
-  line-height: 34px;
-  margin-bottom: 35px;
-  width: 100%;
-  float: left;
-}
-
-.walletIcon {
-  margin-left: 54px;
-  height: 62px;
-  width: 62px;
-  background-repeat: no-repeat;
-  background-size: 45px 45px;
-  background-position: 8px 10px;
-}
-
-.walletIcon.wallet {
-  background-image: var(--wallet-gray-icon);
-}
-
-.walletIcon.selected {
-  background-image: var(--wallet-blue-icon);
-}
-
-.walletIcon.createnew {
-  margin-top: 25px;
-  background-size: 58px 58px;
-  background-position: 0px 5px;
-  background-image: var(--createnewwallet);
-}
-
-.walletIcon.restore {
-  margin-top: 25px;
-  background-size: 58px 58px;
-  background-position: 0px 5px;
-  background-image: var(--restore-wallet-icon);
-}
-.displayWallet {
-  margin: 5px 10px 5px 0px;
-  float: left;
-  height: 161px;
-  width: 168px;
-  border-radius: 5px;
-  border: 1px solid var(--background-container);
-  background: var(--display-wallet-bg);
-  font-size: 15px;
-}
-
-.displayWallet:hover {
-  cursor: pointer;
-}
-
-.displayWallet.new {
-  background: none;
-  background-color: var(--background-back-color);
-}
-
-.displayWallet.new .displayWalletName {
-  color: var(--new-wallet-label);
-  margin-top: 20px;
-}
-
-.displayWalletButtons {
-  text-align: center;
-  margin-top: 5px;
-  margin-right: 10px;
-  float: right;
-}
-
-.displayWalletButton {
-  height: 20px;
-  width: 20px;
-  border-radius: 3px;
-  background-repeat: no-repeat;
-  background-size: 14px;
-  background-position: 50% 50%;
-}
-
-.displayWalletButton.remove {
-  background-color: var(--button-text);
-  background-image: var(--launcher-wallet-delete);
-  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
-  padding: 0;
-}
-
-.displayWalletButton.remove:hover {
-  background-color: var(--button-text);
-  background-image: var(--launcher-wallet-delete-hover);
-  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
-}
-
-.displayWallet:hover:not(.selected) {
-  border: 1px solid var(--disabled-color);
-}
-
-.displayWallet.selected {
-  background: linear-gradient(
-    45deg,
-    var(--input-color),
-    var(--display-wallet-gradient-selected-right)
-  );
-  box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
-  border: 1px solid var(--input-color);
-}
-
-.displayWallet.selected .displayWalletName {
-  color: var(--selected_wallet-label);
-}
-
-.displayWalletComplete {
-  color: var(--title-text-and-button-background);
-  margin-top: 5px;
-  min-height: 20px;
-  text-align: center;
-  text-transform: capitalize;
-  font-size: 12px;
-}
-
-.displayWalletName {
-  color: var(--wallet-label);
-  text-align: center;
-}
-
-.displayWalletLastAccess {
-  height: 11px;
-  color: var(--button-text);
-  text-align: center;
-  font-size: 11px;
-}
-
-.displayWalletCancelChanges {
-  float: left;
-  margin-top: 7px;
-  margin-left: 39px;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 131ms var(--ease-in-out-quart);
-}
-
-.displayWalletLaunch {
-  color: var(--white-button-text);
-  float: left;
-  margin-top: 7px;
-  margin-left: 39px;
-  margin-right: 3px;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-  transition: color 131ms var(--ease-in-out-quart);
-}
-
-.displayWalletCancelChanges:hover,
-.displayWalletLaunch:hover {
-  border-bottom: 1px solid var(--background-back-color);
-}
-
-.displayWalletLastAccess.selected,
-.displayWalletComplete.selected {
-  color: var(--wallet-desc);
-}
-
-.editWalletsButton {
-  margin: 5px;
-  float: left;
-  height: 36px;
-  width: 36px;
-  border-radius: 5px;
-  background-color: var(--background-back-color);
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  background-position: 50% 50%;
-  background-image: var(--launcher-edit-wallets);
-  cursor: pointer;
-}
-
-.editWalletsButton:hover {
-  background-image: var(--launcher-edit-wallets-hover);
-}
-
-.editWalletsButton.close {
-  background-color: var(--disabled-color);
-  background-size: 12px 12px;
-  background-image: var(--x-white-icon);
-}
-
-.releaseNotes {
-  display: flex;
-  clear: both;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: 65vh;
-  overflow-y: scroll;
-  padding-right: 1em;
-}
-
-.releaseNotesImage {
-  width: 590px;
-  height: 295px;
-  margin-top: 14px;
-  background-repeat: no-repeat;
-  background-size: 590px;
-}
-
-@media screen and (max-width: 1140px) {
-  .releaseNotesImage {
-    flex: 1;
-    margin-top: 14px;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 0;
-    background-size: contain;
-    padding-bottom: 50%;
-  }
-}
-
-@media screen and (max-width: 890px) {
-  .releaseNotesText {
-    max-width: inherit;
-    margin-left: 15px;
-  }
-  .releaseNotesImage {
-    order: -1;
-  }
-}
-
-.releaseNotesImage.release-image-v130 {
-  background-image: var(--release-image-v130);
-}
-.releaseNotesImage.release-image-v140 {
-  background-image: var(--release-image-v140);
-}
-.releaseNotesImage.release-image-v150 {
-  background-image: var(--release-image-v150);
-}
-.releaseNotesImage.release-image-v160 {
-  background-image: var(--release-image-v160);
-}
-
-.releaseNotesText {
-  font-size: 13px;
-  font-family: Helvetica, sans-serif;
-  max-width: 410px;
-  margin-right: 15px;
-}
-
-.releaseNotesText p {
-  display: inline;
-}
-
-.releaseNotesText h2 {
-  margin: 10px 0;
-}
-
-.releaseNotesText p,
-.releaseNotesText ul,
-.releaseNotesText ol,
-.releaseNotesText h1,
-.releaseNotesText h2,
-.releaseNotesText h3,
-.releaseNotesText h4 {
-  margin-bottom: 1em;
-}
-
-.releaseNotesText ul,
-.releaseNotesText ol {
-  padding-left: 2em;
-}
-.releaseNotesText li {
-  padding: 0 0 5px;
-}
-
-.releaseNotesText a {
-  color: var(--link-color);
-}
-
-.releaseNotesVersionNavigation {
-  font-size: 13px;
-}
-
-.releaseNotesVersionNavigation > a {
-  margin-right: 30px;
-  cursor: pointer;
-  color: var(--title-text-and-button-background);
-  text-decoration: none;
-}
-
-@keyframes bounce {
-  0% {
-    margin-left: 0px;
-  }
-
-  50% {
-    margin-left: 2px;
-  }
-
-  100% {
-    margin-left: 0px;
-  }
-}
-
-.launchArrowBounce {
-  color: var(--white-button-text);
-  float: left;
-  margin-top: 6px;
-  animation: bounce 1s var(--ease-in-out-quart) infinite;
-}
-
-.stakepoolAddRow {
-  float: left;
-  width: 100%;
-}
-
-.stakepoolAddCol {
-  padding-top: 1em;
-}
-
-.stakepoolAddCol.left {
-  padding-right: 1em;
-}
-
-.stakepoolAddCol.right {
-  float: left;
-  width: 27%;
-  margin-left: 100px;
-  background-color: var(--disabled-background-color);
-  padding: 2em;
-}
-
-.field {
-  display: grid;
-  min-height: 2em;
-  grid-template-columns: 30% 87%;
-  margin-bottom: 2em;
-}
-
-.label {
-  text-align: right;
-}
-
-.stakepoolAddButtons {
-  float: left;
-}
-
-.trezorConfigSections {
-  margin-top: 4em;
-}
-
-.launchError {
-  margin: 0 300px 20px 0;
-  color: var(--error-text-color);
-  overflow-wrap: break-word;
-}
-
-.daemonWarning {
-  padding: 10px;
 }
 
 .blockchainSyncing {
@@ -446,50 +18,53 @@
   background-position: 15px 15px;
   background-size: 30px;
 }
+
 .daemonWaiting {
   padding-left: 56px;
   background-image: var(--loader-animation-daemon-waiting) !important;
   background-position: 15px 15px;
   background-size: 30px;
 }
+
 .daemonWaiting.initial {
   background-image: var(--loader-animation-daemon-waiting-initial) !important;
 }
+
 .discoveringAddresses {
   padding-left: 56px;
   background-image: var(--loader-animation-discovering-addresses) !important;
   background-position: 15px 15px;
   background-size: 30px;
 }
+
 .establishingRpc {
   padding-left: 56px;
   background-image: var(--loader-animation-establishing-rpc) !important;
   background-position: 15px 15px;
   background-size: 30px;
 }
+
 .fetchingHeaders {
   padding-left: 56px;
   background-image: var(--loader-animation-fetching-headers) !important;
   background-position: 15px 15px;
   background-size: 30px;
 }
+
 .finalizingSetup {
   padding-left: 56px;
   background-image: var(--loader-animation-finalizing-setup) !important;
   background-position: 15px 15px;
   background-size: 30px;
 }
+
 .scanningBlocks {
   padding-left: 56px;
   background-image: var(--loader-animation-scanning-blocks) !important;
   background-position: 15px 15px;
   background-size: 30px;
 }
-.loading {
-  margin-top: -55px;
-  color: var(--linear-progress-text);
-  background-image: var(--blockchain);
-}
+
 .updateAvailableLink {
   color: var(--input-color);
   font-size: 13px;
@@ -501,96 +76,18 @@
 .updateAvailableLink:hover {
   color: var(--input-color-hover);
 }
-.updateAvailableLinkTooltip {
+.updateAvailableTooltip {
   width: max-content;
   text-align: center;
 }
 
-@media screen and (max-width: 1919px) {
-  .settings .saveButtonWrapper {
-    width: 1247px;
-  }
-}
-
-@media screen and (max-width: 1679px) {
-  .settings .saveButtonWrapper {
-    width: 1002px;
-  }
-}
-
-@media screen and (max-width: 1439px) {
-  .settings .saveButtonWrapper {
-    width: 740px;
-  }
-}
-
-@media screen and (max-width: 1180px) {
-  .settings .saveButtonWrapper {
-    width: 650px;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .releaseNotesText {
-    margin: 10px 0 0 0;
+  .container {
+    padding-top: 23px;
+    margin-left: 0;
   }
 
-  .releaseNotes {
-    height: 77vh;
-  }
-  .contentTitle {
-    font-size: 23px;
-    margin-bottom: 20px;
-  }
-
-  .loaderButtons {
-    margin-bottom: 50px;
-  }
-
-  .editWalletsButton {
-    margin: 5px 0;
-  }
-
-  .loaderBar {
-    margin-bottom: 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .invisibleButton {
-    padding: 6px 20px;
-  }
-
-  .logArea .logAreaLogs {
-    margin: 20px;
-  }
-
-  .settings .saveButtonWrapper {
-    text-align: center;
-    width: 355px;
-  }
-
-  .loaderSettingsLogs {
+  .topLinks {
     right: -30px !important;
-  }
-
-  .launchError {
-    margin: 0 0 20px 0;
-    width: 315px;
-  }
-}
-
-@media screen and (max-width: 511px) {
-  .keyBlueButton {
-    margin-top: 0;
-  }
-}
-
-@media screen and (max-width: 540px) {
-  .aboutModalButton {
-    display: none;
   }
 }

@@ -3,7 +3,7 @@ import { useShutdown } from "./hooks";
 import { useMountEffect } from "hooks";
 import { PageBody } from "layout";
 import { DecredLoading } from "indicators";
-import styles from "../GetStartedPage/GetStarted.module.css";
+import styles from "./ShutdownPage.module.css";
 
 const ShutdownPage = () => {
   const { cleanShutdown } = useShutdown();

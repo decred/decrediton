@@ -1,0 +1,206 @@
+.displayWallet {
+  margin: 5px 10px 5px 0px;
+  float: left;
+  height: 161px;
+  width: 168px;
+  border-radius: 5px;
+  border: 1px solid var(--background-container);
+  background: var(--display-wallet-bg);
+  font-size: 15px;
+}
+
+.displayWallet:hover {
+  cursor: pointer;
+}
+
+.displayWallet.new {
+  background: none;
+  background-color: var(--background-back-color);
+}
+
+.displayWallet.new .displayWalletName {
+  color: var(--new-wallet-label);
+  margin-top: 20px;
+}
+
+.walletIcon {
+  margin-left: 54px;
+  height: 62px;
+  width: 62px;
+  background-repeat: no-repeat;
+  background-size: 45px 45px;
+  background-position: 8px 10px;
+}
+
+.displayWalletButtons {
+  text-align: center;
+  margin-top: 5px;
+  margin-right: 10px;
+  float: right;
+}
+
+.displayWalletButton {
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  background-position: 50% 50%;
+}
+
+.displayWalletButton.remove {
+  background-color: var(--button-text);
+  background-image: var(--launcher-wallet-delete);
+  box-shadow: 0px 3px 8px var(--title-text-and-button-background-drop-shadow);
+  padding: 0;
+}
+
+.displayWalletButton.remove:hover {
+  background-color: var(--button-text);
+  background-image: var(--launcher-wallet-delete-hover);
+  box-shadow: 0px 1px 3px var(--title-text-and-button-background-drop-shadow);
+}
+
+.displayWallet:hover:not(.selected) {
+  border: 1px solid var(--disabled-color);
+}
+
+.displayWallet.selected {
+  background: linear-gradient(
+    45deg,
+    var(--input-color),
+    var(--display-wallet-gradient-selected-right)
+  );
+  box-shadow: 0px 5px 21px var(--title-text-and-button-background-drop-shadow);
+  border: 1px solid var(--input-color);
+}
+
+.displayWallet.selected .displayWalletName {
+  color: var(--selected_wallet-label);
+}
+
+.displayWalletComplete {
+  color: var(--title-text-and-button-background);
+  margin-top: 5px;
+  min-height: 20px;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 12px;
+}
+
+.displayWalletName {
+  color: var(--wallet-label);
+  text-align: center;
+}
+
+.displayWalletLastAccess {
+  height: 11px;
+  color: var(--button-text);
+  text-align: center;
+  font-size: 11px;
+}
+
+.displayWalletCancelChanges {
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 131ms var(--ease-in-out-quart);
+}
+
+.displayWalletLaunch {
+  color: var(--white-button-text);
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  margin-right: 3px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: color 131ms var(--ease-in-out-quart);
+}
+
+.displayWalletCancelChanges:hover,
+.displayWalletLaunch:hover {
+  border-bottom: 1px solid var(--background-back-color);
+}
+
+.displayWalletLastAccess.selected,
+.displayWalletComplete.selected {
+  color: var(--wallet-desc);
+}
+
+.walletIcon.wallet {
+  background-image: var(--wallet-gray-icon);
+}
+
+.walletIcon.selected {
+  background-image: var(--wallet-blue-icon);
+}
+
+.walletIcon.createnew {
+  margin-top: 25px;
+  background-size: 58px 58px;
+  background-position: 0px 5px;
+  background-image: var(--create-wallet-icon);
+}
+
+.walletIcon.restore {
+  margin-top: 25px;
+  background-size: 58px 58px;
+  background-position: 0px 5px;
+  background-image: var(--restore-wallet-icon);
+}
+
+.editWalletsButton {
+  margin: 5px;
+  float: left;
+  height: 36px;
+  width: 36px;
+  border-radius: 5px;
+  background-color: var(--background-back-color);
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: 50% 50%;
+  background-image: var(--launcher-edit-wallets);
+  cursor: pointer;
+}
+
+.editWalletsButton:hover {
+  background-image: var(--launcher-edit-wallets-hover);
+}
+
+.editWalletsButton.close {
+  background-color: var(--disabled-color);
+  background-size: 12px 12px;
+  background-image: var(--x-white-icon);
+}
+
+@keyframes bounce {
+  0% {
+    margin-left: 0;
+  }
+
+  50% {
+    margin-left: 2px;
+  }
+
+  100% {
+    margin-left: 0;
+  }
+}
+
+.launchArrowBounce {
+  color: var(--white-button-text);
+  float: left;
+  margin-top: 6px;
+  animation: bounce 1s var(--ease-in-out-quart) infinite;
+}
+
+@media screen and (max-width: 768px) {
+  .editWalletsButton {
+    margin: 5px 0;
+  }
+}

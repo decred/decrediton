@@ -33,12 +33,12 @@ const GetStarted = ({
       getStarted
       isTestNet={isTestNet}>
       <div className={classNames(styles.container)}>
-        <div className={styles.loaderSettingsLogs}>
+        <div className={styles.topLinks}>
           {updateAvailable && (
             <UpdateAvailableLink
               updateAvailable={updateAvailable}
               className={styles.updateAvailableLink}
-              tooltipClassName={styles.updateAvailableLinkTooltip}
+              tooltipClassName={styles.updateAvailableTooltip}
             />
           )}
           <AboutModalButton {...{ appVersion, updateAvailable }} />

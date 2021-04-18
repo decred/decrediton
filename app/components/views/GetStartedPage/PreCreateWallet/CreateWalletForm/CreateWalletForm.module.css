@@ -22,8 +22,8 @@
   margin-right: 10px;
 }
 
-.iconSmall.createnew {
-  background-image: var(--createnewwallet);
+.iconSmall.new {
+  background-image: var(--create-wallet-icon);
 }
 
 .iconSmall.restore {

@@ -1,10 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
 import { RemoveWalletButton } from "buttons";
-import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
 import { FormattedRelative } from "shared";
-import styles from "../GetStarted.module.css";
-import { FormContainer, Row } from "../helpers";
+import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
+import { FormContainer, Row } from "../../helpers";
+import styles from "./Form.module.css";
 
 const CreateRestoreButtons = ({ showCreateWalletForm }) => (
   <>

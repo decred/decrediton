@@ -184,7 +184,7 @@ const darkTheme = {
   "sidebar-balance-icon": url(require("style/icons/sidebarBalanceDark.svg")),
   "testnet-logo": url(require("style/icons/testnetLogoDark.svg")),
   "mainnet-logo": url(require("style/icons/decredLogoDark.svg")),
-  createnewwallet: url(require("style/icons/createnewwalletDark.svg")),
+  "create-wallet-icon": url(require("style/icons/createnewwalletDark.svg")),
   "wallet-blue-icon": url(require("style/icons/walletBlueDark.svg")),
   "wallet-gray-icon": url(require("style/icons/walletGrayDark.svg")),
   blockchain: url(require("style/icons/blockchainDark.svg")),
