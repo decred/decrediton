@@ -12,7 +12,6 @@ const SeedWord = ({
   const { index, show, match, word, error } = seedWord;
   return (
     <div
-      key={`seeditem-${index}`}
       className={classNames(
         styles.seedWord,
         show && styles.filled,

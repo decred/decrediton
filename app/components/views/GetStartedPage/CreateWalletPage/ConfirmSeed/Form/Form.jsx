@@ -43,6 +43,7 @@ export const ConfirmSeedForm = ({
       <SeedArea>
         {seedWords.map((seedWord, index) => (
           <SeedWord
+            key={`seeditem-${index}`}
             seedWord={{ ...seedWord, index }}
             onChangeSeedWord={onChangeSeedWord}
             isConfirm

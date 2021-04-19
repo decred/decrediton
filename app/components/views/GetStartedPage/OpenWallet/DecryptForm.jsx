@@ -1,7 +1,7 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import { Label, Input, FormContainer } from "../helpers";
+import { Label, Input, FormContainer, Row } from "../helpers";
 
 const messages = defineMessages({
   publicPassphrasePlaceholder: {

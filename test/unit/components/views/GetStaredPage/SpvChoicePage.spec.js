@@ -1,4 +1,4 @@
-import SpvChoicePage from "components/views/GetStartedPage/SpvChoicePage/SpvChoicePage";
+import SpvChoicePage from "components/views/GetStartedPage/SpvChoicePage";
 import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import user from "@testing-library/user-event";

@@ -45,9 +45,11 @@ const ExistingSeedForm = ({
         toggleAction={handleToggle}
       />
       {sendBack && (
-        <Tooltip content={<GoBackMsg />}>
-          <BackButton onClick={sendBack} />
-        </Tooltip>
+        <div className={styles.backButtonWrapper}>
+          <Tooltip content={<GoBackMsg />}>
+            <BackButton onClick={sendBack} />
+          </Tooltip>
+        </div>
       )}
     </TitleWrapper>
     <Section className="flex-row">
@@ -58,6 +60,7 @@ const ExistingSeedForm = ({
         <SeedArea>
           {seedWords.map((seedWord, index) => (
             <SeedWord
+              key={`seeditem-${index}`}
               seedWord={{ ...seedWord, index }}
               onPaste={handleOnPaste}
               onChangeSeedWord={onChangeSeedWord}

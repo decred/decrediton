@@ -32,7 +32,10 @@ const CopySeedPage = ({
     <Documentation name="WalletCreationWarning" className={styles.warning} />
     <SeedArea>
       {mnemonic.split(" ").map((word, index) => (
-        <SeedWord seedWord={{ word, index, show: true }} />
+        <SeedWord
+          key={`seeditem-${index}`}
+          seedWord={{ word, index, show: true }}
+        />
       ))}
       <div className={styles.copy} onClick={() => toggleCopySeed(true)}>
         <T id="createWallet.copy" m="Copy seed words to clipboard" />
