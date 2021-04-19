@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { DEX_ICON } from "constants";
 import { StandaloneHeader } from "layout";
 
-export const EnablePageHeader = () => (
+const EnablePageHeader = () => (
   <StandaloneHeader
     title={<T id="dex.enablePage.title" m="Enable DEX" />}
     description={
@@ -14,3 +14,4 @@ export const EnablePageHeader = () => (
     iconType={DEX_ICON}
   />
 );
+export default EnablePageHeader;

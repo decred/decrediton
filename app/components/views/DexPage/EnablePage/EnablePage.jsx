@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { useDex } from "../hooks";
 import { ResetNetworkButton } from "buttons";
 
-export const EnablePage = () => {
+const EnablePage = () => {
   const { onEnableDex, enableDexAttempt } = useDex();
 
   return (
@@ -31,3 +31,5 @@ export const EnablePage = () => {
     </div>
   );
 };
+
+export default EnablePage;
