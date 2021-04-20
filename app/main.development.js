@@ -125,7 +125,6 @@ if (dexPingRes.params != "__pong") {
   console.error("Error pinging DEX lib", dexPingRes);
 }
 
-
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);

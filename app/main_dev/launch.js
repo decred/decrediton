@@ -63,8 +63,12 @@ const callDEX = (func, params) => {
   // TODO: this can be done globally once ipcRenderer doesn't import launch.js anymore.
   const { getNativeFunction, getBufferPointer } = require("sbffi");
   const dexLibPath = path.resolve("modules/dex/libdexc/libdexc.so");
-  const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int",
-    ["char *", "char *", "uint32_t", "uint32_t*"]);
+  const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int", [
+    "char *",
+    "char *",
+    "uint32_t",
+    "uint32_t*"
+  ]);
 
   const arg = JSON.stringify({ function: func, params: params });
   const argBuffer = Buffer.from(arg);
@@ -72,7 +76,7 @@ const callDEX = (func, params) => {
 
   // All relevant DEX calls have been empirically determined to return less than
   // about 6KB, so 50KB should be a reasonable size for the buffer.
-  const resBufferSz = 1000*50;
+  const resBufferSz = 1000 * 50;
   const resBuffer = Buffer.alloc(resBufferSz);
   const resPointer = getBufferPointer(resBuffer);
 
@@ -101,7 +105,7 @@ const callDEX = (func, params) => {
   return resStr.length > 0 ? JSON.parse(resStr) : null;
 };
 
-export const __pingDex = args => callDEX("__ping", args);
+export const __pingDex = (args) => callDEX("__ping", args);
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -904,8 +908,7 @@ export const launchDex = (walletPath, testnet) => {
   return serverAddress;
 };
 
-export const initCheckDex = () =>
-  !dex ? null : callDEX("IsInitialized", {});
+export const initCheckDex = () => (!dex ? null : callDEX("IsInitialized", {}));
 
 export const initDexCall = (passphrase) =>
   !dex ? null : callDEX("Init", { pass: passphrase });
@@ -913,7 +916,7 @@ export const initDexCall = (passphrase) =>
 export const loginDexCall = (passphrase) =>
   !dex ? null : callDEX("Login", { pass: passphrase });
 
-export const logoutDexCall = () => !dex ? null : callDEX("Logout", {});
+export const logoutDexCall = () => (!dex ? null : callDEX("Logout", {}));
 
 export const createWalletDexCall = (
   assetID,
@@ -978,15 +981,16 @@ export const getDexConfigCall = (addr) =>
   !dex ? null : callDEX("DexConfig", { addr });
 
 export const registerDexCall = (appPass, addr, fee) =>
-  !dex ? null : callDEX("Register", {
-    appPass,
-    url: addr,
-    fee: parseInt(fee),
-    cert: ""
-  });
+  !dex
+    ? null
+    : callDEX("Register", {
+        appPass,
+        url: addr,
+        fee: parseInt(fee),
+        cert: ""
+      });
 
-export const userDexCall = () =>
-  !dex ? null : callDEX("User", {});
+export const userDexCall = () => (!dex ? null : callDEX("User", {}));
 
 export const GetDcrwPort = () => dcrwPort;
 

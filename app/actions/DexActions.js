@@ -315,8 +315,9 @@ export const registerDex = (appPass) => (dispatch, getState) => {
     if (String(error).indexOf("insufficient funds") > -1) {
       dispatchError = new Error(
         "Insufficient funds in dex account to pay " +
-        fee +
-        ". Please fund the account, and try again.");
+          fee +
+          ". Please fund the account, and try again."
+      );
     }
     dispatch({ type: DEX_REGISTER_FAILED, error: dispatchError });
     return;
