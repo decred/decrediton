@@ -275,7 +275,9 @@ const lightTheme = {
   "select-arrow-up": url(require("style/icons/select-arrow-up.svg")),
   "info-icon": url(require("style/icons/information.svg")),
   "menu-cancel-rescan-icon": url(require("style/icons/menu-cancel-rescan.svg")),
-  "politeia-loading-icon": url(require("style/icons/politeia-loading.gif")),
+  "politeia-loading-animation": url(
+    require("style/animations/politeiaLoading.gif")
+  ),
   "backup-icon": url(require("style/icons/harddrive.svg")),
   "loader-animation-daemon-waiting-initial": url(
     require("style/icons/daemon_waiting_loader.gif")
