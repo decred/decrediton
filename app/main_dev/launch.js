@@ -84,15 +84,24 @@ const callDEX = (func, params) => {
   const resNonZero = resBuffer.slice(0, writtenSz);
   const resStr = resNonZero.toString().trim();
 
-  // TODO: check return value and throw exception if it was an error? Remove debug.
   if (ret != 0) {
-    console.error(`DEX call to ${func} returned error ${resStr}`);
+    // Function errored. Try to extract the error element.
+    let errMsg = resStr;
+    try {
+      const errObj = JSON.parse(resStr);
+      errMsg = errObj.error ? errObj.error : errMsg;
+    } catch (error) {
+      // Use full return value if we can't parse the error.
+    }
+    throw new Error(errMsg);
   }
 
-  return resStr;
+  // Function succeeded. Return parsed json response. Ordinarily, unmarshalling
+  // in this case shouldn't error.
+  return resStr.length > 0 ? JSON.parse(resStr) : null;
 };
 
-export const __pingDex = () => callDEX("__ping", "bleh");
+export const __pingDex = args => callDEX("__ping", args);
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -870,98 +879,41 @@ export const launchDCRLnd = (
 const Mainnet = 0;
 const Testnet = 1;
 
-export const launchDex = (walletPath, testnet) =>
-  new Promise((resolve, reject) => {
-    if (dex) {
-      return resolve();
-    }
-    try {
-      const dexcRoot = path.join(walletPath, "dexc");
-      const dbPath = path.join(dexcRoot, "dex.db");
-      const logPath = path.join(dexcRoot, "logs");
-      const logFilename = path.join(logPath, "dexc.log");
-      let error = callDEX("startCore", {
-        dbPath: dbPath,
-        net: !testnet ? Mainnet : Testnet,
-        logLevel: 1, // LogLevelDebug
-        logPath: logPath,
-        logFilename: logFilename
-      });
-      if (error && String(error) != "") {
-        throw new Error(`startCore errored: ${error}`);
-      }
-      const serverAddress = testnet ? DEX_LOCALPAGE_TESTNET : DEX_LOCALPAGE;
-      const sitePath = getSitePath(argv.custombinpath);
-      error = callDEX("startServer", {
-        sitedir: sitePath,
-        webaddr: serverAddress
-      });
-      if (error && String(error) != "") {
-        throw new Error(`startServer errored: ${error}`);
-      }
-      dex = true;
-      return resolve(serverAddress);
-    } catch (error) {
-      console.log("error", error);
-      return reject(error);
-    }
+export const launchDex = (walletPath, testnet) => {
+  if (dex) {
+    return;
+  }
+  const dexcRoot = path.join(walletPath, "dexc");
+  const dbPath = path.join(dexcRoot, "dex.db");
+  const logPath = path.join(dexcRoot, "logs");
+  const logFilename = path.join(logPath, "dexc.log");
+  callDEX("startCore", {
+    dbPath: dbPath,
+    net: !testnet ? Mainnet : Testnet,
+    logLevel: 1, // LogLevelDebug
+    logPath: logPath,
+    logFilename: logFilename
   });
+  const serverAddress = testnet ? DEX_LOCALPAGE_TESTNET : DEX_LOCALPAGE;
+  const sitePath = getSitePath(argv.custombinpath);
+  callDEX("startServer", {
+    sitedir: sitePath,
+    webaddr: serverAddress
+  });
+  dex = true;
+  return serverAddress;
+};
 
 export const initCheckDex = () =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const init = callDEX("IsInitialized", {});
-      return resolve(init);
-    } catch (error) {
-      console.log("check init error", error);
-      return reject(error);
-    }
-  });
+  !dex ? null : callDEX("IsInitialized", {});
 
 export const initDexCall = (passphrase) =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const init = callDEX("Init", { pass: passphrase });
-      return resolve(init);
-    } catch (error) {
-      console.log("init error", error);
-      return reject(error);
-    }
-  });
+  !dex ? null : callDEX("Init", { pass: passphrase });
 
 export const loginDexCall = (passphrase) =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const login = callDEX("Login", { pass: passphrase });
-      return resolve(login);
-    } catch (error) {
-      console.log("login error", error);
-      return reject(error);
-    }
-  });
+  !dex ? null : callDEX("Login", { pass: passphrase });
 
-export const logoutDexCall = () =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const logout = callDEX("Logout", {});
-      return resolve(logout);
-    } catch (error) {
-      console.log("login error", error);
-      return reject(error);
-    }
-  });
+export const logoutDexCall = () => !dex ? null : callDEX("Logout", {});
 
 export const createWalletDexCall = (
   assetID,
@@ -972,107 +924,69 @@ export const createWalletDexCall = (
   rpcpass,
   rpclisten,
   rpccert
-) =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
+) => {
+  if (!dex) {
+    return;
+  }
+  let pw = "";
+  let config = {};
+  if (assetID == 42) {
+    pw = passphrase;
+    config = {
+      account,
+      rpccert,
+      username: rpcuser,
+      password: rpcpass,
+      rpclisten
+    };
+  } else if (assetID == 0) {
+    const splitRPC = rpclisten.split(":");
+    if (splitRPC.length < 2) {
+      throw new Error("error: rpclisten malformed for btc");
     }
-    let pw = {};
-    let config = {};
-    if (assetID == 42) {
-      pw = passphrase;
-      config = {
-        account,
-        rpccert,
-        username: rpcuser,
-        password: rpcpass,
-        rpclisten
-      };
-    } else if (assetID == 0) {
-      const splitRPC = rpclisten.split(":");
-      if (splitRPC.length < 2) {
-        return reject("error: rpclisten malformed for btc");
-      }
-      config = {
-        walletname: account,
-        rpcuser,
-        rpcpassword: rpcpass,
-        rpcbind: splitRPC[0],
-        rpcport: splitRPC[1]
-      };
-    } else {
-      return reject("error: unsupported asset for DEX ", assetID);
-    }
-    try {
-      let init = callDEX("CreateWallet", {
-        pass: passphrase ? passphrase : null,
+    config = {
+      walletname: account,
+      rpcuser,
+      rpcpassword: rpcpass,
+      rpcbind: splitRPC[0],
+      rpcport: splitRPC[1]
+    };
+  } else {
+    throw new Error(`error: unsupported asset for DEX ${assetID}`);
+  }
+  try {
+    return callDEX("CreateWallet", {
+      pass: passphrase ? passphrase : null,
+      appPass: appPassphrase,
+      config,
+      assetID
+    });
+  } catch (error) {
+    if (String(error).indexOf("wallet already exists") > -1) {
+      return callDEX("UpdateWallet", {
+        pass: pw,
         appPass: appPassphrase,
         config,
         assetID
       });
-      if (
-        typeof init === "string" &&
-        init.indexOf("wallet already exists") > -1
-      ) {
-        init = callDEX("UpdateWallet", {
-          pass: pw,
-          appPass: appPassphrase,
-          config,
-          assetID
-        });
-      }
-      return resolve(init);
-    } catch (error) {
-      return reject(error);
     }
-  });
+    throw error;
+  }
+};
 
 export const getDexConfigCall = (addr) =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const getDexConfig = callDEX("DexConfig", { addr });
-      return resolve(getDexConfig);
-    } catch (error) {
-      console.log("getfee error", error);
-      return reject(error);
-    }
-  });
+  !dex ? null : callDEX("DexConfig", { addr });
 
 export const registerDexCall = (appPass, addr, fee) =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const register = callDEX("Register", {
-        appPass,
-        url: addr,
-        fee: parseInt(fee),
-        cert: ""
-      });
-      return resolve(register);
-    } catch (error) {
-      console.log("register error", error);
-      return reject(error);
-    }
+  !dex ? null : callDEX("Register", {
+    appPass,
+    url: addr,
+    fee: parseInt(fee),
+    cert: ""
   });
 
 export const userDexCall = () =>
-  new Promise((resolve, reject) => {
-    if (!dex) {
-      return resolve();
-    }
-    try {
-      const user = callDEX("User", {});
-      return resolve(user);
-    } catch (error) {
-      console.log("dex user error", error);
-      return reject(error);
-    }
-  });
+  !dex ? null : callDEX("User", {});
 
 export const GetDcrwPort = () => dcrwPort;
 

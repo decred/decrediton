@@ -9,6 +9,14 @@ import { EXTERNALREQUEST_DEX } from "main_dev/externalRequests";
 import * as configConstants from "constants/config";
 import { makeRandomString } from "helpers";
 
+const sendSync = (...args) => {
+  const res = ipcRenderer.sendSync(...args);
+  if (res instanceof Error) {
+    throw res;
+  }
+  return res;
+};
+
 export const DEX_ENABLE_ATTEMPT = "DEX_ENABLE_ATTEMPT";
 export const DEX_ENABLE_FAILED = "DEX_ENABLE_FAILED";
 export const DEX_ENABLE_SUCCESS = "DEX_ENABLE_SUCCESS";
@@ -57,15 +65,7 @@ export const startDex = () => (dispatch, getState) => {
   const walletPath = getWalletPath(isTestnet, walletName);
 
   try {
-    const res = ipcRenderer.sendSync("start-dex", walletPath, isTestnet);
-    if (res instanceof Error) {
-      throw res;
-    }
-    if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
+    const res = sendSync("start-dex", walletPath, isTestnet);
     dispatch({ type: DEX_STARTUP_SUCCESS, serverAddress: res });
     dispatch(dexCheckInit());
   } catch (error) {
@@ -81,16 +81,7 @@ export const DEX_CHECKINIT_SUCCESS = "DEX_CHECKINIT_SUCCESS";
 export const dexCheckInit = () => (dispatch) => {
   dispatch({ type: DEX_CHECKINIT_ATTEMPT });
   try {
-    let res = ipcRenderer.sendSync("check-init-dex");
-    if (res instanceof Error) {
-      throw res;
-    }
-    if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-      res = res == "true" ? true : false;
-    }
+    const res = sendSync("check-init-dex");
     dispatch({ type: DEX_CHECKINIT_SUCCESS, res });
   } catch (error) {
     dispatch({ type: DEX_CHECKINIT_FAILED, error });
@@ -120,14 +111,7 @@ export const initDex = (passphrase) => (dispatch, getState) => {
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("init-dex", passphrase);
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
+    sendSync("init-dex", passphrase);
     dispatch({ type: DEX_INIT_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -148,14 +132,7 @@ export const loginDex = (passphrase) => (dispatch, getState) => {
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("login-dex", passphrase);
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
+    sendSync("login-dex", passphrase);
     dispatch({ type: DEX_LOGIN_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -172,14 +149,7 @@ export const DEX_LOGOUT_FAILED = "DEX_LOGOUT_FAILED";
 export const logoutDex = () =>
   new Promise((resolve, reject) => {
     try {
-      const res = ipcRenderer.sendSync("logout-dex");
-      if (res instanceof Error) {
-        throw res;
-      } else if (typeof res === "string") {
-        if (res.indexOf("error", 0) > -1) {
-          throw res;
-        }
-      }
+      sendSync("logout-dex");
       return resolve(true);
     } catch (error) {
       return reject(error);
@@ -210,7 +180,7 @@ export const createWalletDex = (passphrase, appPassphrase, accountName) => (
     const rpclisten = rpcCreds.rpcListen;
     const rpccert = rpcCreds.rpcCert;
     const assetID = 42;
-    const res = ipcRenderer.sendSync(
+    sendSync(
       "create-wallet-dex",
       assetID,
       passphrase,
@@ -221,13 +191,6 @@ export const createWalletDex = (passphrase, appPassphrase, accountName) => (
       rpclisten,
       rpccert
     );
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
     dispatch({ type: DEX_CREATEWALLET_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -263,7 +226,7 @@ export const btcCreateWalletDex = (
       ? btcConfig.test.rpcbind + ":" + btcConfig.test.rpcport
       : btcConfig.rpcbind + ":" + btcConfig.rpcport;
     const assetID = 0;
-    const res = ipcRenderer.sendSync(
+    sendSync(
       "create-wallet-dex",
       assetID,
       passphrase,
@@ -273,13 +236,6 @@ export const btcCreateWalletDex = (
       rpcpass,
       rpclisten
     );
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
     dispatch({ type: BTC_CREATEWALLET_SUCCESS });
     const {
       daemon: { walletName }
@@ -305,16 +261,8 @@ export const userDex = () => (dispatch, getState) => {
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("user-dex");
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
-    const resJson = JSON.parse(res);
-    dispatch({ type: DEX_USER_SUCCESS, user: resJson });
+    const user = sendSync("user-dex");
+    dispatch({ type: DEX_USER_SUCCESS, user });
   } catch (error) {
     dispatch({ type: DEX_USER_FAILED, error });
     return;
@@ -332,16 +280,8 @@ export const getConfigDex = (addr) => (dispatch, getState) => {
     return;
   }
   try {
-    const res = ipcRenderer.sendSync("get-config-dex", addr);
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
-    const resJson = JSON.parse(res);
-    dispatch({ type: DEX_GETCONFIG_SUCCESS, config: resJson, addr });
+    const config = sendSync("get-config-dex", addr);
+    dispatch({ type: DEX_GETCONFIG_SUCCESS, config, addr });
   } catch (error) {
     dispatch({ type: DEX_GETCONFIG_FAILED, error });
     return;
@@ -366,25 +306,19 @@ export const registerDex = (appPass) => (dispatch, getState) => {
   }
   const fee = config.feeAsset.amount;
   try {
-    let res = ipcRenderer.sendSync("register-dex", appPass, addr, fee);
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        if (res.indexOf("insufficient funds") > -1) {
-          res =
-            "Insufficient funds in dex account to pay " +
-            fee +
-            ". Please fund the account, and try again.";
-        }
-        throw res;
-      }
-    }
+    sendSync("register-dex", appPass, addr, fee);
     dispatch({ type: DEX_REGISTER_SUCCESS });
     // Request current user information
     dispatch(userDex());
   } catch (error) {
-    dispatch({ type: DEX_REGISTER_FAILED, error });
+    let dispatchError = error;
+    if (String(error).indexOf("insufficient funds") > -1) {
+      dispatchError = new Error(
+        "Insufficient funds in dex account to pay " +
+        fee +
+        ". Please fund the account, and try again.");
+    }
+    dispatch({ type: DEX_REGISTER_FAILED, error: dispatchError });
     return;
   }
 };
@@ -404,14 +338,7 @@ export const launchDexWindow = () => (dispatch, getState) => {
   }
   try {
     const serverAddress = dexServerAddress;
-    const res = ipcRenderer.sendSync("launch-dex-window", serverAddress);
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
+    sendSync("launch-dex-window", serverAddress);
     dispatch({ type: DEX_LAUNCH_WINDOW_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -432,14 +359,7 @@ export const CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL =
 export const checkBTCConfig = () => (dispatch, getState) => {
   dispatch({ type: CHECK_BTC_CONFIG_ATTEMPT });
   try {
-    const res = ipcRenderer.sendSync("check-btc-config");
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
+    const res = sendSync("check-btc-config");
     if (
       res.rpcuser &&
       res.rpcpassword &&
@@ -481,7 +401,7 @@ export const updateBTCConfig = () => (dispatch, getState) => {
     const rpcbind = "127.0.0.1";
     const rpcport = sel.isTestNet(getState()) ? "18332" : "8332";
     const testnet = sel.isTestNet(getState());
-    const res = ipcRenderer.sendSync(
+    const res = sendSync(
       "update-btc-config",
       rpcuser,
       rpcpassword,
@@ -489,13 +409,6 @@ export const updateBTCConfig = () => (dispatch, getState) => {
       rpcport,
       testnet
     );
-    if (res instanceof Error) {
-      throw res;
-    } else if (typeof res === "string") {
-      if (res.indexOf("error", 0) > -1) {
-        throw res;
-      }
-    }
     dispatch({ type: UPDATE_BTC_CONFIG_SUCCESS, btcConfig: res });
   } catch (error) {
     dispatch({ type: UPDATE_BTC_CONFIG_FAILED, error });

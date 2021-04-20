@@ -178,7 +178,8 @@ func (c *CoreAdapter) run(callData *CallData) (string, error) {
 	}
 	switch preInitHandler, coreHandler := c.handlers(callData.Function); {
 	case callData.Function == "__ping":
-	    return "__pong! data="+string(callData.Params), nil
+	    res, err := json.Marshal(callData)
+      return string(res), err
 	case callData.Function == "startCore":
 		return "", c.startCore(callData.Params)
 	case preInitHandler != nil:

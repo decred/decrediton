@@ -77,7 +77,7 @@ const RegisterPage = () => {
           buttonLabel={<T id="dex.payDexFeeButton" m="Register" />}
         />
         {dexRegisterError && (
-          <div className={styles.error}>{dexRegisterError}</div>
+          <div className={styles.error}>{String(dexRegisterError)}</div>
         )}
       </div>
     );

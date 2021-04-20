@@ -120,9 +120,9 @@ app.setPath("userData", getAppDataDirectory());
 app.allowRendererProcessReuse = false;
 
 // See if we can communicate with the dexc lib.
-const dexPingRes = __pingDex();
-if (dexPingRes != "__pong!") {
-  console.error("Pinging Dex Lib", dexPingRes);
+const dexPingRes = __pingDex("__pong");
+if (dexPingRes.params != "__pong") {
+  console.error("Error pinging DEX lib", dexPingRes);
 }
 
 
