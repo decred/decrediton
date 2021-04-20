@@ -97,6 +97,10 @@ export const CSPP_PORT_MAINNET = "5760";
 // MENU_LINKS_PER_ROW is the default number of menu items shown in sidebar when it's located on bottom.
 export const MENU_LINKS_PER_ROW = 4;
 
+// PURCHASE_TICKET_RETRIES is the number of times decrediton will
+// retry ticket purchases in the case of insufficient balance errors.
+export const PURCHASE_TICKET_RETRIES = 5;
+
 // VSP_FEE_PROCESS_STARTED represents the state which process has being
 export const VSP_FEE_PROCESS_STARTED = 0;
 export const VSP_FEE_PROCESS_PAID = 1;

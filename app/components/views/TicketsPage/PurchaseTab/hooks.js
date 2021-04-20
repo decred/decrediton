@@ -46,7 +46,7 @@ export const usePurchaseTab = () => {
   const onPurchaseTicketV3 = useCallback(
     (passphrase, account, numTickets, vsp) =>
       dispatch(
-        ca.newPurchaseTicketsAttempt(passphrase, account, numTickets, vsp)
+        ca.newPurchaseTicketsAttempt(passphrase, account, numTickets, vsp, 0)
       ),
     [dispatch]
   );

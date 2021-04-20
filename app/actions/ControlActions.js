@@ -15,6 +15,7 @@ import {
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs } from "./VSPActions";
+import { PURCHASE_TICKET_RETRIES } from "constants";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -355,7 +356,8 @@ export const newPurchaseTicketsAttempt = (
   passphrase,
   accountNum,
   numTickets,
-  vsp
+  vsp,
+  attemptCount
 ) => async (dispatch, getState) => {
   const walletService = sel.walletService(getState());
   try {
@@ -398,25 +400,37 @@ export const newPurchaseTicketsAttempt = (
     }
   } catch (error) {
     if (String(error).indexOf("insufficient balance") > 0) {
-      const unspentOutputs = await dispatch(
-        listUnspentOutputs(accountNum.value)
-      );
-      // we need at least one 2 utxo for each ticket, one for paying the fee
-      // and another for the splitTx and ticket purchase.
-      // Note: at least one of them needs to be big enough for ticket purchase.
-      if (unspentOutputs.length < numTickets * 2) {
-        // check if amount is indeed insufficient
-        const ticketPrice = sel.ticketPrice(getState());
-        if (accountNum.spendable > ticketPrice * numTickets) {
+      // Retry 5 times if insufficient balance error received.  This is due
+      // to dcrwallet using random utxo selection.
+      if (attemptCount < PURCHASE_TICKET_RETRIES) {
+        attemptCount += 1;
+        dispatch(
+          newPurchaseTicketsAttempt(
+            passphrase,
+            accountNum,
+            numTickets,
+            vsp,
+            attemptCount
+          )
+        );
+      } else {
+        const unspentOutputs = await dispatch(
+          listUnspentOutputs(accountNum.value)
+        );
+        // we need at least one 2 utxo for each ticket, one for paying the fee
+        // and another for the splitTx and ticket purchase.
+        // Note: at least one of them needs to be big enough for ticket purchase.
+        if (unspentOutputs.length < numTickets * 2) {
           return dispatch({
             error: `Not enough utxo. Need to break the input so one can be reserved
             for paying the fee.`,
             type: PURCHASETICKETS_FAILED
           });
+        } else {
+          dispatch({ error, type: PURCHASETICKETS_FAILED });
         }
       }
     }
-    dispatch({ error, type: PURCHASETICKETS_FAILED });
   }
 };
 
