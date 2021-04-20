@@ -2,6 +2,23 @@
 // we disable no-fallthrough rule in this file to simplify the select/case below.
 import { defineMessages } from "react-intl";
 import {
+  DEX_STARTUP_FAILED,
+  DEX_LOGIN_FAILED,
+  DEX_ENABLE_FAILED,
+  DEX_INIT_FAILED,
+  DEX_CREATEWALLET_FAILED,
+  DEX_REGISTER_FAILED,
+  DEX_GETCONFIG_FAILED,
+  BTC_CREATEWALLET_FAILED,
+  DEX_CHECKINIT_FAILED,
+  DEX_LAUNCH_WINDOW_FAILED,
+  CHECK_BTC_CONFIG_FAILED,
+  UPDATE_BTC_CONFIG_FAILED,
+  CREATEDEXACCOUNT_FAILED,
+  DEX_LOGOUT_FAILED,
+  DEX_USER_FAILED
+} from "actions/DexActions";
+import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED,
   CONSTRUCTTX_FAILED,
@@ -28,7 +45,7 @@ import {
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS,
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED
-} from "../actions/ControlActions";
+} from "actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS,
   UPDATESTAKEPOOLCONFIG_FAILED,
@@ -41,7 +58,7 @@ import {
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
   SETVSPDVOTECHOICE_FAILED
-} from "../actions/VSPActions";
+} from "actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
@@ -49,11 +66,11 @@ import {
   SEEDCOPIEDTOCLIPBOARD,
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS
-} from "../actions/ClientActions";
+} from "actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
   SNACKBAR_SIMPLE_MESSAGE
-} from "../actions/SnackbarActions";
+} from "actions/SnackbarActions";
 import {
   EXPORT_ERROR,
   EXPORT_COMPLETED,
@@ -562,6 +579,69 @@ const messages = defineMessages({
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
+  },
+  DEX_STARTUP_FAILED: {
+    id: "dex.startup.failed",
+    defaultMessage: "DEX Client Failed to Start: {originalError}"
+  },
+  DEX_LOGIN_FAILED: {
+    id: "dex.login.failed",
+    defaultMessage: "DEX Login Failed: {originalError}"
+  },
+  DEX_ENABLE_FAILED: {
+    id: "dex.enable.failed",
+    defaultMessage: "Enabling DEX Failed: {originalError}"
+  },
+  DEX_INIT_FAILED: {
+    id: "dex.init.failed",
+    defaultMessage: "Setting DEX Passphrase Failed: {originalError}"
+  },
+  DEX_CREATEWALLET_FAILED: {
+    id: "dex.connectWallet.failed",
+    defaultMessage: "Connecting to DCR wallet Failed: {originalError}"
+  },
+  DEX_REGISTER_FAILED: {
+    id: "dex.register.failed",
+    defaultMessage: "Paying DEX Fee Failed: {originalError}"
+  },
+  DEX_GETCONFIG_FAILED: {
+    id: "dex.getConfig.failed",
+    defaultMessage: "Getting DEX Config Failed: {originalError}"
+  },
+  BTC_CREATEWALLET_FAILED: {
+    id: "dex.connectBTCWallet.failed",
+    defaultMessage: "Connect to BTC wallet Failed: {originalError}"
+  },
+  DEX_CHECKINIT_FAILED: {
+    id: "dex.checkInit.failed",
+    defaultMessage:
+      "Could not check DEX whether it is initialized: {originalError}"
+  },
+  DEX_LAUNCH_WINDOW_FAILED: {
+    id: "dex.launchWindow.failed",
+    defaultMessage: "DEX Windows failed to be launched: {originalError}"
+  },
+  CHECK_BTC_CONFIG_FAILED: {
+    id: "dex.checkBTCConfig.failed",
+    defaultMessage:
+      "Failed to check an existing BTC Config file: {originalError}"
+  },
+  UPDATE_BTC_CONFIG_FAILED: {
+    id: "dex.updateBTCConfig.failed",
+    defaultMessage:
+      "Failed to update an existing BTC Config file: {originalError}"
+  },
+  CREATEDEXACCOUNT_FAILED: {
+    id: "dex.createDEXAccount.failed",
+    defaultMessage: "Failed to create an account for DEX: {originalError}"
+  },
+  DEX_LOGOUT_FAILED: {
+    id: "dex.logout.failed",
+    defaultMessage: "Unable to logout from DEX: {originalError}"
+  },
+  DEX_USER_FAILED: {
+    id: "dex.user.failed",
+    defaultMessage: "Failed to retreive user information: {originalError}"
   }
 });
 
@@ -768,6 +848,21 @@ export default function snackbar(state = {}, action) {
     case PROCESSMANAGEDTICKETS_FAILED:
     case SETVOTECHOICES_FAILED:
     case SETVSPDVOTECHOICE_FAILED:
+    case DEX_STARTUP_FAILED:
+    case DEX_LOGIN_FAILED:
+    case DEX_ENABLE_FAILED:
+    case DEX_INIT_FAILED:
+    case DEX_CREATEWALLET_FAILED:
+    case DEX_REGISTER_FAILED:
+    case DEX_GETCONFIG_FAILED:
+    case BTC_CREATEWALLET_FAILED:
+    case CREATEDEXACCOUNT_FAILED:
+    case DEX_CHECKINIT_FAILED:
+    case DEX_LAUNCH_WINDOW_FAILED:
+    case CHECK_BTC_CONFIG_FAILED:
+    case UPDATE_BTC_CONFIG_FAILED:
+    case DEX_LOGOUT_FAILED:
+    case DEX_USER_FAILED:
       type = "Error";
       if (
         action.error &&

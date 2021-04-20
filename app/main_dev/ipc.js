@@ -2,7 +2,12 @@ import fs from "fs-extra";
 import path from "path";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDb, getDcrdPath } from "./paths";
-import { initWalletCfg, newWalletConfigCreation, getWalletCfg } from "config";
+import {
+  initWalletCfg,
+  newWalletConfigCreation,
+  getWalletCfg,
+  checkNoLegacyWalletConfig
+} from "config";
 import {
   launchDCRD,
   launchDCRWallet,
@@ -13,8 +18,20 @@ import {
   launchDCRLnd,
   GetDcrlndPID,
   GetDcrlndCreds,
+  launchDex,
+  initCheckDex,
+  initDexCall,
+  createWalletDexCall,
+  getDexConfigCall,
+  registerDexCall,
+  userDexCall,
+  loginDexCall,
+  logoutDexCall,
+  GetDexPID,
   closeDcrlnd,
-  setDcrdRpcCredentials
+  closeDex,
+  setDcrdRpcCredentials,
+  GetDexCreds
 } from "./launch";
 import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
@@ -147,7 +164,11 @@ export const startWallet = (
   daemonIsAdvanced,
   testnet,
   walletPath,
-  reactIPC
+  reactIPC,
+  rpcUser,
+  rpcPass,
+  rpcHost,
+  rpcListen
 ) => {
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
@@ -155,13 +176,22 @@ export const startWallet = (
     return GetDcrwPID();
   }
   initWalletCfg(testnet, walletPath);
+  checkNoLegacyWalletConfig(
+    testnet,
+    walletPath,
+    rpcUser && rpcPass && rpcHost && rpcListen
+  );
   try {
     return launchDCRWallet(
       mainWindow,
       daemonIsAdvanced,
       walletPath,
       testnet,
-      reactIPC
+      reactIPC,
+      rpcUser,
+      rpcPass,
+      rpcHost,
+      rpcListen
     );
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
@@ -179,7 +209,7 @@ export const startDcrlnd = async (
   if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
     logger.log(
       "info",
-      "Skipping restart of dcrlnd as it is already running " + GetDcrlndPID()
+      `Skipping restart of dcrlnd as it is already running ${GetDcrlndPID()}`
     );
     const creds = GetDcrlndCreds();
     return { wasRunning: true, ...creds };
@@ -196,7 +226,164 @@ export const startDcrlnd = async (
     );
     return started;
   } catch (e) {
-    logger.log("error", "error launching dcrlnd: " + e);
+    logger.log("error", `error launching dcrlnd: ${e}`);
+    return e;
+  }
+};
+
+export const startDex = async (walletPath, testnet) => {
+  if (GetDexPID()) {
+    logger.log(
+      "info",
+      `Skipping restart of DEX as it is already running ${GetDexPID()}`
+    );
+    const creds = GetDexCreds();
+    return { wasRunning: true, ...creds };
+  }
+
+  try {
+    const started = await launchDex(walletPath, testnet);
+    return started;
+  } catch (e) {
+    logger.log("error", `error launching dex: ${e}`);
+    return e;
+  }
+};
+
+export const checkInitDex = async () => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping check of init since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const init = await initCheckDex();
+    return init;
+  } catch (e) {
+    logger.log("error", `error checking init dex: ${e}`);
+    return e;
+  }
+};
+
+export const initDex = async (passphrase) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping init since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const init = await initDexCall(passphrase);
+    return init;
+  } catch (e) {
+    logger.log("error", `error init dex: ${e}`);
+    return e;
+  }
+};
+
+export const loginDex = async (passphrase) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping login since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const login = await loginDexCall(passphrase);
+    return login;
+  } catch (e) {
+    logger.log("error", `error login dex: ${e}`);
+    return e;
+  }
+};
+
+export const logoutDex = async () => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping login since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const login = await logoutDexCall();
+    return login;
+  } catch (e) {
+    logger.log("error", `error logout dex: ${e}`);
+    return e;
+  }
+};
+
+export const createWalletDex = async (
+  assetID,
+  passphrase,
+  appPassphrase,
+  account,
+  rpcuser,
+  rpcpass,
+  rpclisten,
+  rpccert
+) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping create wallet since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const createWallet = await createWalletDexCall(
+      assetID,
+      passphrase,
+      appPassphrase,
+      account,
+      rpcuser,
+      rpcpass,
+      rpclisten,
+      rpccert
+    );
+    return createWallet;
+  } catch (e) {
+    logger.log("error", `error create wallet dex: ${e}`);
+    return e;
+  }
+};
+
+export const getConfigDex = async (addr) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping get config since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const getDexConfig = await getDexConfigCall(addr);
+    return getDexConfig;
+  } catch (e) {
+    logger.log("error", `error get config dex: ${e}`);
+    return e;
+  }
+};
+
+export const registerDex = async (appPass, addr, fee) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping register since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const register = await registerDexCall(appPass, addr, fee);
+    return register;
+  } catch (e) {
+    logger.log("error", `error register dex: ${e}`);
+    return e;
+  }
+};
+
+export const userDex = async () => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping user request since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const user = await userDexCall();
+    return user;
+  } catch (e) {
+    logger.log("error", `error user dex: ${e}`);
     return e;
   }
 };
@@ -212,6 +399,8 @@ export const stopWallet = () => {
 export const stopDcrlnd = () => {
   return closeDcrlnd();
 };
+
+export const stopDex = () => closeDex();
 
 export const removeDcrlnd = (walletName, testnet) => {
   const walletPath = getWalletPath(testnet, walletName);

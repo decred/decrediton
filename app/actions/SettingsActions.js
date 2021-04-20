@@ -114,11 +114,11 @@ export const addAllowedExternalRequest = (requestType) => (
   dispatch,
   getState
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     const config = getGlobalCfg();
     const allowed = config.get(configConstants.ALLOWED_EXTERNAL_REQUESTS);
 
-    if (allowed.indexOf(requestType) > -1) return reject(false);
+    if (allowed.indexOf(requestType) > -1) return resolve(true);
 
     allowed.push(requestType);
     config.set(configConstants.ALLOWED_EXTERNAL_REQUESTS, allowed);

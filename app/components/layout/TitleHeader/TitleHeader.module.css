@@ -49,6 +49,9 @@
 .ln {
   background-image: var(--header-lightning);
 }
+.dex {
+  background-image: var(--header-dex);
+}
 .ticket {
   background-image: var(--ticket-live-icon);
 }

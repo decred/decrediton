@@ -437,6 +437,10 @@ const initialState = {
     getNodeInfoAttempt: false,
     towersList: []
   },
+  dex: {
+    dexOrdersOpen: false,
+    loggedIn: false
+  },
   locales: locales
 };
 

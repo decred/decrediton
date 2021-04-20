@@ -31,7 +31,11 @@ export const TestNetParams = {
   PubKeyHashAddrID: Buffer.from([0x0f, 0x21]), // starts with Ts
   PKHEdwardsAddrID: [0x0f, 0x01], // starts with Te
   PKHSchnorrAddrID: [0x0e, 0xe3], // starts with TS
-  ScriptHashAddrID: [0x0e, 0xfc] // starts with Tc
+  ScriptHashAddrID: [0x0e, 0xfc], // starts with Tc
+
+  // DefaultWalletRPCListener is the default host and port that will be used
+  // if the rpc server is started (currently only used when DEX is enabled).
+  DefaultWalletRPCListener: "127.0.0.1:19110"
 };
 
 export const MainNetParams = {
@@ -57,7 +61,11 @@ export const MainNetParams = {
   PubKeyHashAddrID: [0x07, 0x3f], // starts with Ds
   PKHEdwardsAddrID: [0x07, 0x1f], // starts with De
   PKHSchnorrAddrID: [0x07, 0x01], // starts with DS
-  ScriptHashAddrID: [0x07, 0x1a] // starts with Dc
+  ScriptHashAddrID: [0x07, 0x1a], // starts with Dc
+
+  // DefaultWalletRPCListener is the default host and port that will be used
+  // if the rpc server is started (currently only used when DEX is enabled).
+  DefaultWalletRPCListener: "127.0.0.1:9110"
 };
 
 // MAX_DCR_AMOUNT represents the maximum decred amount in atoms.

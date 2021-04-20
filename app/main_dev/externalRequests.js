@@ -6,7 +6,7 @@
  * allowed by passing the appropriate url to the ipcMain message "allowURL".
  */
 import { session } from "electron";
-import { isRegExp } from "util";
+import util from "util";
 import { getGlobalCfg } from "config";
 import {
   POLITEIA_URL_TESTNET,
@@ -18,6 +18,7 @@ import {
 } from "../middleware/dcrdataapi";
 import * as cfgConstants from "constants/config";
 
+export const EXTERNALREQUEST_DEX = "EXTERNALREQUEST_DEX";
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING =
   "EXTERNALREQUEST_STAKEPOOL_LISTING";
@@ -25,6 +26,9 @@ export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
 export const EXTERNALREQUEST_DCRDATA = "EXTERNALREQUEST_DCRDATA";
 export const EXTERNALREQUEST_TREZOR_BRIDGE = "EXTERNALREQUEST_TREZOR_BRIDGE";
+
+export const DEX_LOCALPAGE = "127.0.0.1:5760";
+export const DEX_LOCALPAGE_TESTNET = "127.0.0.2:5760";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
@@ -117,7 +121,7 @@ export const installSessionHandlers = (mainLogger) => {
 };
 
 const addAllowedURL = (url) => {
-  if (!isRegExp(url)) url = new RegExp(url);
+  if (!util.types.isRegExp(url)) url = new RegExp(url);
   allowedURLs.push(url);
 };
 
@@ -125,6 +129,12 @@ export const allowExternalRequest = (externalReqType) => {
   if (allowedExternalRequests[externalReqType]) return;
 
   switch (externalReqType) {
+    case EXTERNALREQUEST_DEX:
+      addAllowedURL(`http://${DEX_LOCALPAGE}`);
+      addAllowedURL(`ws://${DEX_LOCALPAGE}`);
+      addAllowedURL(`http://${DEX_LOCALPAGE_TESTNET}`);
+      addAllowedURL(`ws://${DEX_LOCALPAGE_TESTNET}`);
+      break;
     case EXTERNALREQUEST_NETWORK_STATUS:
       addAllowedURL("https://testnet.decred.org/api/status");
       addAllowedURL("https://mainnet.decred.org/api/status");

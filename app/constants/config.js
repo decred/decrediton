@@ -77,6 +77,12 @@ export const LAST_ACCESS = "lastaccess";
 export const STAKEPOOLS = "stakepools";
 export const LN_WALLET_EXISTS = "ln_wallet_exists";
 export const USED_VSPS = "used_vsps";
+export const DEX_ACCOUNT = "dex_account";
+export const ENABLE_DEX = "enableddex";
+export const DEXWALLET_RPCUSERNAME = "dexwallet_rpcuser";
+export const DEXWALLET_RPCPASSWORD = "dexwallet_rpcpass";
+export const DEXWALLET_HOSTPORT = "dexwallet_host";
+export const BTCWALLET_NAME = "btcwallet_name";
 
 export const WALLET_INITIAL_VALUE = {
   [ENABLE_TICKET_BUYER]: false,
@@ -109,6 +115,11 @@ export const WALLET_INITIAL_VALUE = {
   [LAST_ACCESS]: 0,
   [USED_VSPS]: [],
   [LN_WALLET_EXISTS]: false,
+  [ENABLE_DEX]: false,
+  [DEXWALLET_RPCUSERNAME]: "",
+  [DEXWALLET_RPCPASSWORD]: "",
+  [DEXWALLET_HOSTPORT]: "",
+  [DEX_ACCOUNT]: null,
   // STAKEPOOLS is a legacy code which can be deleted after stopping giving
   // support for old vsp versions.
   [STAKEPOOLS]: []

@@ -5,7 +5,8 @@ import {
   dcrdCfg,
   getAppDataDirectory,
   getDcrdPath,
-  getCertsPath
+  getCertsPath,
+  getSitePath
 } from "./paths";
 import { getWalletCfg, getGlobalCfg } from "config";
 import {
@@ -35,10 +36,13 @@ import webSocket from "ws";
 import path from "path";
 import ini from "ini";
 import { makeRandomString, makeFileBackup } from "helpers";
+import { DEX_LOCALPAGE, DEX_LOCALPAGE_TESTNET } from "./externalRequests";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
+
+let dex = null;
 
 let dcrdPID, dcrwPID, dcrlndPID;
 
@@ -48,12 +52,60 @@ let dcrwPipeRx, dcrwPipeTx, dcrwTxStream, dcrdPipeRx, dcrlndPipeRx;
 // general data that needs to keep consistency while decrediton is running.
 let dcrwPort;
 let rpcuser, rpcpass, rpccert, rpchost, rpcport;
-let dcrlndCreds;
+let dcrlndCreds, dexCreds;
 let dcrwalletGrpcKeyCert;
 
 let dcrdSocket,
   heightIsSynced,
   selectedWallet = null;
+
+const callDEX = (func, params) => {
+  // TODO: this can be done globally once ipcRenderer doesn't import launch.js anymore.
+  const { getNativeFunction, getBufferPointer } = require("sbffi");
+  const dexLibPath = path.resolve("modules/dex/libdexc/libdexc.so");
+  const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int", [
+    "char *",
+    "char *",
+    "uint32_t",
+    "uint32_t*"
+  ]);
+
+  const arg = JSON.stringify({ function: func, params: params });
+  const argBuffer = Buffer.from(arg);
+  const argPointer = getBufferPointer(argBuffer);
+
+  // All relevant DEX calls have been empirically determined to return less than
+  // about 6KB, so 50KB should be a reasonable size for the buffer.
+  const resBufferSz = 1000 * 50;
+  const resBuffer = Buffer.alloc(resBufferSz);
+  const resPointer = getBufferPointer(resBuffer);
+
+  const writtenSzBuffer = Buffer.alloc(8);
+  const writtenSzPointer = getBufferPointer(writtenSzBuffer);
+
+  const ret = dexLibCall(argPointer, resPointer, resBufferSz, writtenSzPointer);
+  const writtenSz = writtenSzBuffer.readUIntLE(0, 4);
+  const resNonZero = resBuffer.slice(0, writtenSz);
+  const resStr = resNonZero.toString().trim();
+
+  if (ret != 0) {
+    // Function errored. Try to extract the error element.
+    let errMsg = resStr;
+    try {
+      const errObj = JSON.parse(resStr);
+      errMsg = errObj.error ? errObj.error : errMsg;
+    } catch (error) {
+      // Use full return value if we can't parse the error.
+    }
+    throw new Error(errMsg);
+  }
+
+  // Function succeeded. Return parsed json response. Ordinarily, unmarshalling
+  // in this case shouldn't error.
+  return resStr.length > 0 ? JSON.parse(resStr) : null;
+};
+
+export const __pingDex = (args) => callDEX("__ping", args);
 
 function closeClis() {
   // shutdown daemon and wallet.
@@ -61,6 +113,7 @@ function closeClis() {
   if (dcrdPID && dcrdPID !== -1) closeDCRD();
   if (dcrwPID && dcrwPID !== -1) closeDCRW();
   if (dcrlndPID && dcrlndPID !== -1) closeDcrlnd();
+  if (dex) closeDex();
 }
 
 export const setHeightSynced = (isSynced) => {
@@ -189,6 +242,17 @@ export const closeDcrlnd = () => {
     dcrlndPID = null;
     dcrlndCreds = null;
   }
+  return true;
+};
+
+export const closeDex = () => {
+  logger.log("info", "closing dex " + dex);
+  if (!dex) {
+    // process is not started by decrediton
+    return true;
+  }
+  callDEX("shutdown", {});
+  dex = null;
   return true;
 };
 
@@ -523,7 +587,11 @@ export const launchDCRWallet = (
   daemonIsAdvanced,
   walletPath,
   testnet,
-  reactIPC
+  reactIPC,
+  rpcUser,
+  rpcPass,
+  rpcListen,
+  rpcCert
 ) => {
   const cfg = getWalletCfg(testnet, walletPath);
   const confFile = fs.existsSync(
@@ -627,6 +695,22 @@ export const launchDCRWallet = (
   }
 
   logger.log("info", `Starting ${dcrwExe} with ${args}`);
+
+  // Check if dex is enabled and if so add rpc user/name, host, cert to options
+  // We're doing this after logger to avoid user/pass being logged.  It's randomly
+  // set each start, but better to be safe.
+  if (rpcUser) {
+    args.push(util.format("--username=%s", rpcUser));
+  }
+  if (rpcPass) {
+    args.push(util.format("--password=%s", rpcPass));
+  }
+  if (rpcListen) {
+    args.push(util.format("--rpclisten=%s", rpcListen));
+  }
+  if (rpcCert) {
+    args.push(util.format("--rpccert=%s", rpcCert));
+  }
 
   const dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
@@ -796,6 +880,118 @@ export const launchDCRLnd = (
     return resolve(dcrlndCreds);
   });
 
+const Mainnet = 0;
+const Testnet = 1;
+
+export const launchDex = (walletPath, testnet) => {
+  if (dex) {
+    return;
+  }
+  const dexcRoot = path.join(walletPath, "dexc");
+  const dbPath = path.join(dexcRoot, "dex.db");
+  const logPath = path.join(dexcRoot, "logs");
+  const logFilename = path.join(logPath, "dexc.log");
+  callDEX("startCore", {
+    dbPath: dbPath,
+    net: !testnet ? Mainnet : Testnet,
+    logLevel: 1, // LogLevelDebug
+    logPath: logPath,
+    logFilename: logFilename
+  });
+  const serverAddress = testnet ? DEX_LOCALPAGE_TESTNET : DEX_LOCALPAGE;
+  const sitePath = getSitePath(argv.custombinpath);
+  callDEX("startServer", {
+    sitedir: sitePath,
+    webaddr: serverAddress
+  });
+  dex = true;
+  return serverAddress;
+};
+
+export const initCheckDex = () => (!dex ? null : callDEX("IsInitialized", {}));
+
+export const initDexCall = (passphrase) =>
+  !dex ? null : callDEX("Init", { pass: passphrase });
+
+export const loginDexCall = (passphrase) =>
+  !dex ? null : callDEX("Login", { pass: passphrase });
+
+export const logoutDexCall = () => (!dex ? null : callDEX("Logout", {}));
+
+export const createWalletDexCall = (
+  assetID,
+  passphrase,
+  appPassphrase,
+  account,
+  rpcuser,
+  rpcpass,
+  rpclisten,
+  rpccert
+) => {
+  if (!dex) {
+    return;
+  }
+  let pw = "";
+  let config = {};
+  if (assetID == 42) {
+    pw = passphrase;
+    config = {
+      account,
+      rpccert,
+      username: rpcuser,
+      password: rpcpass,
+      rpclisten
+    };
+  } else if (assetID == 0) {
+    const splitRPC = rpclisten.split(":");
+    if (splitRPC.length < 2) {
+      throw new Error("error: rpclisten malformed for btc");
+    }
+    config = {
+      walletname: account,
+      rpcuser,
+      rpcpassword: rpcpass,
+      rpcbind: splitRPC[0],
+      rpcport: splitRPC[1]
+    };
+  } else {
+    throw new Error(`error: unsupported asset for DEX ${assetID}`);
+  }
+  try {
+    return callDEX("CreateWallet", {
+      pass: passphrase ? passphrase : null,
+      appPass: appPassphrase,
+      config,
+      assetID
+    });
+  } catch (error) {
+    if (String(error).indexOf("wallet already exists") > -1) {
+      return callDEX("UpdateWallet", {
+        pass: pw,
+        appPass: appPassphrase,
+        config,
+        assetID
+      });
+    }
+    throw error;
+  }
+};
+
+export const getDexConfigCall = (addr) =>
+  !dex ? null : callDEX("DexConfig", { addr });
+
+export const registerDexCall = (appPass, addr, fee) =>
+  !dex
+    ? null
+    : callDEX("Register", {
+        appPass,
+        url: addr,
+        fee: parseInt(fee),
+        cert: ""
+      });
+
+export const userDexCall = () => (!dex ? null : callDEX("User", {}));
+
 export const GetDcrwPort = () => dcrwPort;
 
 export const GetDcrdPID = () => dcrdPID;
@@ -804,6 +1000,9 @@ export const GetDcrwPID = () => dcrwPID;
 
 export const GetDcrlndPID = () => dcrlndPID;
 export const GetDcrlndCreds = () => dcrlndCreds;
+
+export const GetDexPID = () => dex;
+export const GetDexCreds = () => dexCreds;
 
 export const readExesVersion = (app, grpcVersions) => {
   const args = ["--version"];

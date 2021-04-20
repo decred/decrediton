@@ -38,6 +38,8 @@ import {
 import {
   MainNetParams,
   TestNetParams,
+  MainNetDexServer,
+  TestNetDexServer,
   MIN_RELAY_FEE,
   DCR,
   ATOMS,
@@ -1770,8 +1772,10 @@ export const getHasTicketFeeError = createSelector(
       : false;
   }
 );
-export const getCanClose = not(or(getRunningIndicator, getHasTicketFeeError));
+export const dexOrdersOpen = get(["dex", "openOrder"]);
+export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
+export const getCanClose = not(or(getRunningIndicator, getHasTicketFeeError));
 // end of selectors for closing decrediton.
 
 // ln selectors
@@ -1802,3 +1806,71 @@ export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
 export const lnTowersList = get(["ln", "towersList"]);
 
 // end of ln selectors
+
+// start of dex selectors
+
+export const dexEnabled = bool(get(["walletLoader", "dexEnabled"]));
+export const enableDexAttempt = bool(get(["dex", "enableDexAttempt"]));
+export const dexActive = bool(get(["dex", "active"]));
+export const dexInit = bool(get(["dex", "dexInit"]));
+export const initDexAttempt = bool(get(["dex", "initAttempt"]));
+export const checkInitDexAttempt = bool(get(["dex", "dexCheckInitAttempt"]));
+export const registerDexAttempt = bool(get(["dex", "registerAttempt"]));
+export const createWalletDexAttempt = bool(get(["dex", "createWalletAttempt"]));
+export const loginDexAttempt = bool(get(["dex", "loginAttempt"]));
+export const dexUser = get(["dex", "user"]);
+
+export const dexConnected = compose(
+  (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
+  dexUser
+);
+
+export const dexRegistered = compose(
+  // XXX check if any of the exchanges that come back from users request are registered
+  (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
+  dexUser
+);
+
+export const dexDCRWalletRunning = compose(
+  (user) =>
+    user &&
+    user.assets &&
+    user.assets["42"] &&
+    user.assets["42"].wallet &&
+    user.assets["42"].wallet.running,
+  dexUser
+);
+
+export const dexBTCWalletRunning = compose(
+  (user) =>
+    user &&
+    user.assets &&
+    user.assets["0"] &&
+    user.assets["0"].wallet &&
+    user.assets["0"].wallet.running,
+  dexUser
+);
+
+export const dexAddr = get(["dex", "addr"]);
+export const dexConfig = get(["dex", "config"]);
+export const dexAccount = get(["walletLoader", "dexAccount"]);
+export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
+
+export const defaultDEXServer = compose(
+  (isTestNet) => (isTestNet ? TestNetDexServer : MainNetDexServer),
+  isTestNet
+);
+
+export const dexGetFeeError = get(["dex", "getConfigError"]);
+export const dexRegisterError = get(["dex", "registerError"]);
+export const dexLoginError = get(["dex", "loginError"]);
+export const dexLogoutError = get(["dex", "logoutError"]);
+export const dexCreateWalletError = get(["dex", "createWalletError"]);
+export const userError = get(["dex", "userError"]);
+export const initError = get(["dex", "initError"]);
+export const dexAccountError = get(["dex", "dexAccountError"]);
+export const dexEnableError = get(["dex", "enabledError"]);
+export const btcConfig = get(["dex", "btcConfig"]);
+export const btcInstallNeeded = get(["dex", "btcInstallNeeded"]);
+export const btcConfigUpdateNeeded = get(["dex", "btcConfigUpdateNeeded"]);
+export const btcWalletName = get(["walletLoader", "btcWalletName"]);

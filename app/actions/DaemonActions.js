@@ -1,3 +1,5 @@
+import path from "path";
+import { getWalletPath } from "main_dev/paths";
 import {
   syncCancel,
   setSelectedWallet,
@@ -6,8 +8,14 @@ import {
 import { getVersionServiceAttempt, semverCompatible } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
-import { rescanCancel } from "./ControlActions";
+import { rescanCancel, showCantCloseModal } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
+import {
+  DEX_LOGOUT_ATTEMPT,
+  DEX_LOGOUT_SUCCESS,
+  DEX_LOGOUT_FAILED,
+  logoutDex
+} from "./DexActions";
 import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
@@ -222,7 +230,7 @@ export const deleteDaemonData = () => (dispatch, getState) => {
     .catch((err) => dispatch({ err, type: DELETE_DCRD_FAILED }));
 };
 
-export const shutdownApp = () => (dispatch, getState) => {
+export const finalShutdown = () => (dispatch, getState) => {
   const { currentBlockHeight } = getState().grpc;
   if (currentBlockHeight) {
     setLastHeight(currentBlockHeight);
@@ -235,6 +243,23 @@ export const shutdownApp = () => (dispatch, getState) => {
   dispatch(rescanCancel());
   dispatch(syncCancel());
   dispatch(pushHistory("/shutdown"));
+};
+
+export const shutdownApp = () => async (dispatch, getState) => {
+  const { loggedIn } = getState().dex;
+  try {
+    if (loggedIn) {
+      dispatch({ type: DEX_LOGOUT_ATTEMPT });
+      await logoutDex();
+      dispatch({ type: DEX_LOGOUT_SUCCESS });
+    }
+    return dispatch(finalShutdown());
+  } catch (error) {
+    const openOrder =
+      error.indexOf("cannot log out with active orders", 0) > -1;
+    dispatch({ type: DEX_LOGOUT_FAILED, error, openOrder });
+    dispatch(showCantCloseModal());
+  }
 };
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
@@ -349,15 +374,31 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       if (!selectedWallet) {
         selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
       }
+      const isTestnet = network == "testnet";
+      const walletCfg = getWalletCfg(isTestnet, selectedWallet.value.wallet);
+
+      const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
+      const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
+      const btcWalletName = walletCfg.get(cfgConstants.BTCWALLET_NAME);
+      let rpcCreds = {};
+      if (enableDex) {
+        rpcCreds = {
+          rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
+          rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
+          rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
+          rpcCert: path.join(
+            getWalletPath(isTestnet, selectedWallet.value.wallet),
+            "rpc.cert"
+          )
+        };
+      }
+
       const walletStarted = await wallet.startWallet(
         selectedWallet.value.wallet,
-        network == "testnet"
+        isTestnet,
+        rpcCreds
       );
       const { port } = walletStarted;
-      const walletCfg = getWalletCfg(
-        network == "testnet",
-        selectedWallet.value.wallet
-      );
       wallet.setPreviousWallet(selectedWallet);
 
       // TODO clean up this found stakepool
@@ -436,7 +477,11 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         changeAccount,
         csppServer,
         csppPort,
-        mixedAccountBranch
+        mixedAccountBranch,
+        enableDex,
+        dexAccount,
+        rpcCreds,
+        btcWalletName
       });
       selectedWallet.value.isTrezor && dispatch(enableTrezor());
       await dispatch(getVersionServiceAttempt());
@@ -647,3 +692,17 @@ export const getDcrlndLogs = () => {
       return null, err;
     });
 };
+
+export const GET_DEX_LOGS = "GET_DEX_LOGS";
+export const getDexLogs = () => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: GET_DEX_LOGS });
+    const {
+      daemon: { walletName }
+    } = getState();
+    const walletPath = getWalletPath(isTestNet(getState()), walletName);
+    wallet
+      .getDexLogs(walletPath)
+      .then((logs) => resolve(logs))
+      .catch((err) => reject(err));
+  });

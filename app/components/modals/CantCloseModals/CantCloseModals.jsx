@@ -1,6 +1,8 @@
+import { useMemo } from "react";
 import PurchasingTicketsModal from "./PurchasingTicketsModal";
 import AccountMixerRunningModal from "./AccountMixerRunningModal";
 import AutobuyerRunning from "./AutobuyerRunningModal";
+import DexOpenOrdersModal from "./DexOpenOrdersModal";
 import HasTicketFeeErro from "./HasTicketFeeError";
 import { useCantCloseModal } from "./hooks";
 import { ConfirmModal } from "modals";
@@ -14,30 +16,35 @@ const CantCloseModals = (props) => {
     onHideCantCloseModal,
     shutdownApp,
     accountMixerRunning,
-    purchasingTickets
+    purchasingTickets,
+    dexOrdersOpen
   } = useCantCloseModal();
-  let Component = () => <></>;
-  if (autoBuyerRunning) {
-    Component = AutobuyerRunning;
-  } else if (hasUnpaidFee) {
-    Component = HasTicketFeeErro;
-  } else if (accountMixerRunning) {
-    Component = AccountMixerRunningModal;
-  } else if (purchasingTickets) {
-    Component = PurchasingTicketsModal;
-  } else if (modalContent) {
-    return <ConfirmModal {...props} />;
-  }
 
-  return (
+  const Component = useMemo(() => {
+    if (autoBuyerRunning) {
+      return AutobuyerRunning;
+    } else if (hasUnpaidFee) {
+      return HasTicketFeeErro;
+    } else if (accountMixerRunning) {
+      return AccountMixerRunningModal;
+    } else if (purchasingTickets) {
+      return PurchasingTicketsModal;
+    } else if (dexOrdersOpen) {
+      return DexOpenOrdersModal;
+    }
+    return;
+  }, [
+    autoBuyerRunning,
+    hasUnpaidFee,
+    accountMixerRunning,
+    purchasingTickets,
+    dexOrdersOpen
+  ]);
+
+  return Component ? (
     <Component
       show={show ?? cantCloseModalVisible}
       onSubmit={() => {
-        if (onCancelModal) {
-          onCancelModal();
-        } else {
-          onHideCantCloseModal();
-        }
         if (onSubmit) {
           onSubmit();
         } else {
@@ -46,6 +53,10 @@ const CantCloseModals = (props) => {
       }}
       onCancelModal={onCancelModal ?? onHideCantCloseModal}
     />
+  ) : modalContent ? (
+    <ConfirmModal {...props} />
+  ) : (
+    <></>
   );
 };
 

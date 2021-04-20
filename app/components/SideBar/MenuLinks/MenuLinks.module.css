@@ -48,6 +48,9 @@
 .tab.lnIcon {
   background-image: var(--menu-ln);
 }
+.tab.dexIcon {
+  background-image: var(--menu-dex);
+}
 .tab.notificationIcon::before {
   content: "";
   background-repeat: no-repeat;

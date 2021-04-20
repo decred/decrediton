@@ -15,6 +15,7 @@ import governance from "./governance";
 import trezor from "./trezor";
 import ln from "./ln";
 import vsp from "./vsp";
+import dex from "./dex";
 
 export default {
   grpc,
@@ -32,5 +33,6 @@ export default {
   governance,
   trezor,
   ln,
-  vsp
+  vsp,
+  dex
 };

@@ -20,6 +20,7 @@ import {
   getVSPTicketsByFeeStatus,
   setVSPDVoteChoices
 } from "./VSPActions";
+import { startDex } from "./DexActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
@@ -66,7 +67,8 @@ export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
 const startWalletServicesTrigger = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const startServicesAsync = async () => {
-      const { spvSynced, privacyEnabled } = getState().walletLoader;
+      const { spvSynced, privacyEnabled, dexEnabled } = getState().walletLoader;
+
       if (!spvSynced) {
         dispatch(getTicketBuyerServiceAttempt());
       }
@@ -92,6 +94,11 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
 
       await dispatch(getVoteChoicesAttempt());
+
+      // Start Dex if dexEnabled and NOT SPV mode
+      if (dexEnabled && !sel.isSPV(getState())) {
+        await dispatch(startDex());
+      }
     };
 
     startServicesAsync()

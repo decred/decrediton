@@ -55,7 +55,7 @@ export default {
     }),
 
     new webpack.IgnorePlugin({
-      resourceRegExp: /\.node$/,
+      resourceRegExp: /\.node$/
     })
  ]
 };

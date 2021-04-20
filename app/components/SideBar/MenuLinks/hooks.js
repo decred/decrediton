@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import { linkList, TREZOR_KEY, LN_KEY } from "./Links";
+import { linkList, TREZOR_KEY, LN_KEY, DEX_KEY } from "./Links";
 import { useHistory } from "react-router-dom";
 
 export function useMenuLinks() {
@@ -10,6 +10,7 @@ export function useMenuLinks() {
   const expandSideBar = useSelector(sel.expandSideBar);
   const isTrezor = useSelector(sel.isTrezor);
   const lnEnabled = useSelector(sel.lnEnabled);
+  const isSPV = useSelector(sel.isSPV);
 
   const newActiveVoteProposalsCount = useSelector(
     sel.newActiveVoteProposalsCount
@@ -37,6 +38,9 @@ export function useMenuLinks() {
     }
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
+    }
+    if (isSPV || isTrezor) {
+      links = links.filter((l) => l.key !== DEX_KEY);
     }
 
     return links;

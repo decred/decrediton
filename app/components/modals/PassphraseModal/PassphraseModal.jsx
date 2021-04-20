@@ -6,6 +6,7 @@ const PassphraseModal = ({
   onCancelModal,
   onSubmit,
   parentIsValid,
+  passphraseNotRequired,
   ...props
 }) => {
   const [passPhrase, setPassPhrase] = useState(null);
@@ -33,9 +34,10 @@ const PassphraseModal = ({
     () =>
       setIsValid(
         // if parentIsValid is not passed as props, we consider it as true.
-        (parentIsValid === undefined ? true : parentIsValid) && !!passPhrase
+        (parentIsValid === undefined ? true : parentIsValid) &&
+          (passphraseNotRequired ? true : !!passPhrase)
       ),
-    [passPhrase, parentIsValid]
+    [passPhrase, parentIsValid, passphraseNotRequired]
   );
 
   return (

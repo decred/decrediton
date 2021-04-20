@@ -176,6 +176,7 @@ const darkTheme = {
   "menu-spvon-icon": url(require("style/icons/menuSpvOnDark.svg")),
   "menu-spvoff-icon": url(require("style/icons/menuSpvOffDark.svg")),
   "menu-block-synced-icon": url(require("style/icons/blockSyncedDark.svg")),
+  "menu-dex": url(require("style/icons/dexDark.svg")),
   "tab-icon-balance": url(require("style/icons/sidebarBalanceDark.svg")),
   "tab-icon-transactions": url(
     require("style/icons/transactionsDefaultDark.svg")
@@ -213,6 +214,7 @@ const darkTheme = {
   "header-lightning": url(require("style/icons/lightningHeaderDark.svg")),
   "header-security": url(require("style/icons/privacyHeaderDark.svg")),
   "header-trezor": url(require("style/icons/trezorHeaderDark.svg")),
+  "header-dex": url(require("style/icons/dexDark.svg")),
   "help-docs": url(require("style/icons/docsGreyDark.svg")),
   "help-github": url(require("style/icons/githubGreyDark.svg")),
   "help-forum": url(require("style/icons/forumGreyDark.svg")),

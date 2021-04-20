@@ -16,7 +16,9 @@ const Modal = ({
   onSubmit,
   setPassPhrase,
   submitLabel,
-  isValid
+  isValid,
+  passphraseLabel,
+  passphraseNotRequired
 }) => (
   <DefaultModal
     className={classNames(styles.passphrase, modalClassName)}
@@ -37,13 +39,23 @@ const Modal = ({
     <div className={styles.content}>
       <PassphraseModalField
         label={
-          <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
+          passphraseLabel ? (
+            passphraseLabel
+          ) : (
+            <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
+          )
         }>
         <PasswordInput
           autoFocus={true}
-          required
+          required={!passphraseNotRequired}
           id="passphrase"
-          placeholder=""
+          placeholder={
+            passphraseNotRequired ? (
+              <T id="passphraseModal.NotRequired" m="(if required)" />
+            ) : (
+              ""
+            )
+          }
           value={passPhrase}
           onChange={(e) => setPassPhrase(e.target.value)}
           onKeyDownSubmit={onSubmit}

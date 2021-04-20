@@ -1,7 +1,13 @@
 import fs from "fs-extra";
+import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
-import { initGlobalCfg, validateGlobalCfgFile } from "./config";
+import {
+  getCurrentBitcoinConfig,
+  updateDefaultBitcoinConfig,
+  initGlobalCfg,
+  validateGlobalCfgFile
+} from "./config";
 import {
   appLocaleFromElectronLocale,
   default as locales
@@ -44,7 +50,8 @@ import {
   GetDcrlndPID,
   GetDcrlndCreds,
   dropDCRDSocket,
-  getDcrwalletGrpcKeyCert
+  getDcrwalletGrpcKeyCert,
+  __pingDex
 } from "./main_dev/launch";
 import {
   getAvailableWallets,
@@ -60,7 +67,17 @@ import {
   startDcrlnd,
   stopDcrlnd,
   removeDcrlnd,
-  lnScbInfo
+  lnScbInfo,
+  startDex,
+  stopDex,
+  checkInitDex,
+  initDex,
+  createWalletDex,
+  userDex,
+  loginDex,
+  logoutDex,
+  getConfigDex,
+  registerDex
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -101,6 +118,12 @@ import {
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
 app.allowRendererProcessReuse = false;
+
+// See if we can communicate with the dexc lib.
+const dexPingRes = __pingDex("__pong");
+if (dexPingRes.params != "__pong") {
+  console.error("Error pinging DEX lib", dexPingRes);
+}
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -320,13 +343,18 @@ ipcMain.on("stop-wallet", (event) => {
   event.returnValue = stopWallet();
 });
 
-ipcMain.on("start-wallet", (event, walletPath, testnet) => {
+ipcMain.on("start-wallet", (event, walletPath, testnet, rpcCreds) => {
+  const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
   event.returnValue = startWallet(
     mainWindow,
     daemonIsAdvanced,
     testnet,
     walletPath,
-    reactIPC
+    reactIPC,
+    rpcUser,
+    rpcPass,
+    rpcListen,
+    rpcCert
   );
 });
 
@@ -363,6 +391,189 @@ ipcMain.on(
 ipcMain.on("stop-dcrlnd", async (event) => {
   event.returnValue = await stopDcrlnd();
 });
+
+ipcMain.on("check-init-dex", async (event) => {
+  try {
+    event.returnValue = await checkInitDex();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("init-dex", async (event, passphrase) => {
+  try {
+    event.returnValue = await initDex(passphrase);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("login-dex", async (event, passphrase) => {
+  try {
+    event.returnValue = await loginDex(passphrase);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("logout-dex", async (event) => {
+  try {
+    event.returnValue = await logoutDex();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on(
+  "create-wallet-dex",
+  async (
+    event,
+    assetID,
+    passphrase,
+    appPassphrase,
+    account,
+    rpcuser,
+    rpcpass,
+    rpclisten,
+    rpccert
+  ) => {
+    try {
+      event.returnValue = await createWalletDex(
+        assetID,
+        passphrase,
+        appPassphrase,
+        account,
+        rpcuser,
+        rpcpass,
+        rpclisten,
+        rpccert
+      );
+    } catch (error) {
+      if (!(error instanceof Error)) {
+        event.returnValue = new Error(error);
+      } else {
+        event.returnValue = error;
+      }
+    }
+  }
+);
+
+ipcMain.on("get-config-dex", async (event, addr) => {
+  try {
+    event.returnValue = await getConfigDex(addr);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("register-dex", async (event, appPass, addr, fee) => {
+  try {
+    event.returnValue = await registerDex(appPass, addr, fee);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("user-dex", async (event) => {
+  try {
+    event.returnValue = await userDex();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("start-dex", async (event, walletPath, testnet) => {
+  try {
+    event.returnValue = await startDex(walletPath, testnet);
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on("stop-dex", async (event) => {
+  event.returnValue = await stopDex();
+});
+
+ipcMain.on("launch-dex-window", async (event, serverAddress) => {
+  event.returnValue = await createDexWindow(serverAddress);
+});
+
+function createDexWindow(serverAddress) {
+  const child = new BrowserWindow({
+    parent: mainWindow,
+    show: false,
+    autoHideMenuBar: true
+  });
+  child.loadURL("http://" + serverAddress);
+  child.once("ready-to-show", () => {
+    child.show();
+  });
+}
+
+ipcMain.on("check-btc-config", async (event) => {
+  try {
+    event.returnValue = await getCurrentBitcoinConfig();
+  } catch (error) {
+    if (!(error instanceof Error)) {
+      event.returnValue = new Error(error);
+    } else {
+      event.returnValue = error;
+    }
+  }
+});
+
+ipcMain.on(
+  "update-btc-config",
+  async (event, rpcuser, rpcpassword, rpcbind, rpcport, testnet) => {
+    try {
+      event.returnValue = await updateDefaultBitcoinConfig(
+        rpcuser,
+        rpcpassword,
+        rpcbind,
+        rpcport,
+        testnet
+      );
+    } catch (error) {
+      if (!(error instanceof Error)) {
+        event.returnValue = new Error(error);
+      } else {
+        event.returnValue = error;
+      }
+    }
+  }
+);
 
 ipcMain.on("dcrlnd-creds", (event) => {
   if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
@@ -472,6 +683,23 @@ ipcMain.on("get-last-log-line-dcrwallet", (event) => {
 
 ipcMain.on("get-privacy-logs", (event) => {
   event.returnValue = getPrivacyLogs();
+});
+
+ipcMain.on("get-dex-logs", (event, walletPath) => {
+  try {
+    const dexcRoot = path.join(walletPath, "dexc");
+    const logPath = path.join(dexcRoot, "logs");
+    const logFilename = path.join(logPath, "dexc.log");
+    readFileBackward(logFilename, MAX_LOG_LENGTH, (err, data) => {
+      if (err) {
+        logger.log("error", "Error reading log: " + err);
+        return (event.returnValue = null);
+      }
+      event.returnValue = data.toString("utf8");
+    });
+  } catch (error) {
+    event.returnValue = error;
+  }
 });
 
 ipcMain.on("get-previous-wallet", (event) => {
