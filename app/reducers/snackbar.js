@@ -9,7 +9,14 @@ import {
   DEX_CREATEWALLET_FAILED,
   DEX_REGISTER_FAILED,
   DEX_GETCONFIG_FAILED,
-  BTC_CREATEWALLET_FAILED
+  BTC_CREATEWALLET_FAILED,
+  DEX_CHECKINIT_FAILED,
+  DEX_LAUNCH_WINDOW_FAILED,
+  CHECK_BTC_CONFIG_FAILED,
+  UPDATE_BTC_CONFIG_FAILED,
+  CREATEDEXACCOUNT_FAILED,
+  DEX_LOGOUT_FAILED,
+  DEX_USER_FAILED
 } from "actions/DexActions";
 import {
   PUBLISHTX_FAILED,
@@ -604,6 +611,37 @@ const messages = defineMessages({
   BTC_CREATEWALLET_FAILED: {
     id: "dex.connectBTCWallet.failed",
     defaultMessage: "Connect to BTC wallet Failed: {originalError}"
+  },
+  DEX_CHECKINIT_FAILED: {
+    id: "dex.checkInit.failed",
+    defaultMessage:
+      "Could not check DEX whether it is initialized: {originalError}"
+  },
+  DEX_LAUNCH_WINDOW_FAILED: {
+    id: "dex.launchWindow.failed",
+    defaultMessage: "DEX Windows failed to be launched: {originalError}"
+  },
+  CHECK_BTC_CONFIG_FAILED: {
+    id: "dex.checkBTCConfig.failed",
+    defaultMessage:
+      "Failed to check an existing BTC Config file: {originalError}"
+  },
+  UPDATE_BTC_CONFIG_FAILED: {
+    id: "dex.updateBTCConfig.failed",
+    defaultMessage:
+      "Failed to update an existing BTC Config file: {originalError}"
+  },
+  CREATEDEXACCOUNT_FAILED: {
+    id: "dex.createDEXAccount.failed",
+    defaultMessage: "Failed to create an account for DEX: {originalError}"
+  },
+  DEX_LOGOUT_FAILED: {
+    id: "dex.logout.failed",
+    defaultMessage: "Unable to logout from DEX: {originalError}"
+  },
+  DEX_USER_FAILED: {
+    id: "dex.user.failed",
+    defaultMessage: "Failed to retreive user information: {originalError}"
   }
 });
 
@@ -818,6 +856,13 @@ export default function snackbar(state = {}, action) {
     case DEX_REGISTER_FAILED:
     case DEX_GETCONFIG_FAILED:
     case BTC_CREATEWALLET_FAILED:
+    case CREATEDEXACCOUNT_FAILED:
+    case DEX_CHECKINIT_FAILED:
+    case DEX_LAUNCH_WINDOW_FAILED:
+    case CHECK_BTC_CONFIG_FAILED:
+    case UPDATE_BTC_CONFIG_FAILED:
+    case DEX_LOGOUT_FAILED:
+    case DEX_USER_FAILED:
       type = "Error";
       if (
         action.error &&
