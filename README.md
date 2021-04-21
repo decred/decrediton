@@ -118,12 +118,13 @@ yarn dev
 
 The building of the dex module requires Go to be installed.  
 
-The following are instructions to ensure the DEX site assets are in the 
+The following are instructions to ensure the DEX site assets are in the
 proper location that decrediton expects:
+
 ```bash
 git clone https://github.com/decred/dcrdex
 cd dcrdex/client/webserver/site
-npm install && npm build
+npm install && npm run build
 change directory back to decrediton
 mkdir bin/site
 cp -R ../dcrdex/client/webserver/site/src bin/site
