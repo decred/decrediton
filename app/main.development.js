@@ -118,7 +118,7 @@ import {
 
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
-app.allowRendererProcessReuse = false;
+app.allowRendererProcessReuse = true;
 
 // See if we can communicate with the dexc lib.
 const dexPingRes = __pingDex("__pong");
@@ -725,6 +725,8 @@ app.on("ready", async () => {
   }
 
   let url = `file://${__dirname}/dist/app.html`;
+  const path = require("path"); // eslint-disable-line
+  const preloadPath = path.resolve(__dirname, "dist", "wallet-preload.js");
   if (process.env.NODE_ENV === "development") {
     // Load from the webpack dev server with hot module replacement.
     const port = process.env.PORT || 3000;
@@ -746,7 +748,8 @@ app.on("ready", async () => {
       devTools: true,
       contextIsolation: false,
       webSecurity: false,
-      enableRemoteModule
+      enableRemoteModule,
+      preload: preloadPath
     },
     icon: __dirname + "/icon.png"
   };

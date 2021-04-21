@@ -30,10 +30,16 @@ app.use(wdm);
 
 app.use(webpackHotMiddleware(compiler));
 
+let preloadProc;
+
 const server = app.listen(PORT, "localhost", serverError => {
   if (serverError) {
     return console.error(serverError);
   }
+
+  // Start a webpack run to watch for changes to the preload script.
+  preloadProc = spawn("npm", ["run", "start-preload"], { shell: true, env: process.env, stdio: "inherit" });
+
   if (argv["start-hot"]) {
     spawn("npm", [ "run", "start-hot" ], { shell: true, env: process.env, stdio: "inherit" })
       .on("close", code => process.exit(code))
@@ -45,6 +51,10 @@ const server = app.listen(PORT, "localhost", serverError => {
   }
 
   console.log(`Listening at http://localhost:${PORT}`);
+});
+
+process.on("exit", () => {
+  preloadProc && preloadProc.kill();
 });
 
 process.on("SIGTERM", () => {

@@ -1,5 +1,5 @@
 import fs from "fs";
-import { makeRandomString } from "helpers";
+import { makeRandomString } from "helpers/strings";
 import { ipcRenderer } from "electron";
 
 // This map decouples an fd (number) from an opaque identifier, so that the UI
