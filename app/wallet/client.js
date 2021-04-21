@@ -7,7 +7,7 @@ import {
   withLogNoData,
   withLogNoResponseData
 } from "./app";
-import * as api from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 
 const promisifyReq = (fnName, Req) =>
   log(

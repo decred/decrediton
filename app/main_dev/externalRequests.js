@@ -105,6 +105,30 @@ export const installSessionHandlers = (mainLogger) => {
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     const newHeaders = { ...details.responseHeaders };
 
+    if (/app\.html$/.test(details.url)) {
+      const isDev = process.env.NODE_ENV === "development";
+
+      // Allow unsafe-eval in dev mode due to react-devtools requiring it.
+      const defaultSrc = isDev ? "'self' 'unsafe-eval'" : "'self'";
+
+      // Allow http calls in dev mode so testing local services is easier.
+      const connectSrc = isDev ? "https: http:" : "https:";
+
+      // Allow unsafe-inline due to us injecting certain styles directly in
+      // elements.
+      const styleSrc = "'self' 'unsafe-inline'";
+
+      // Allow data: due to webpack injecting some assets directly as data URLs.
+      const imgSrc = "data: 'self'";
+
+      // Set the CSP header for the main wallet UI entry point.
+      newHeaders["Content-Security-Policy"] =
+        `default-src ${defaultSrc}; ` +
+        `style-src ${styleSrc}; ` +
+        `img-src ${imgSrc}; ` +
+        `connect-src ${connectSrc}; `;
+    }
+
     if (
       process.env.NODE_ENV === "development" &&
       allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] &&

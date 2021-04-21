@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var wtclient_pb = require('./wtclient_pb.js');
+var wtclient_pb = require('./wtclient_pb.js').wtclientrpc;
 
 function serialize_wtclientrpc_AddTowerRequest(arg) {
   if (!(arg instanceof wtclient_pb.AddTowerRequest)) {

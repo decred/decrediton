@@ -1,10 +1,9 @@
 import Promise from "promise";
-import {
-  TransactionNotificationsRequest,
-  AccountNotificationsRequest
-} from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { transactionNtfs, accountNtfs } from "middleware/grpc/client";
 import { withLog as log } from "./index";
+
+const { TransactionNotificationsRequest, AccountNotificationsRequest } = api;
 
 export const getTransactionNotifications = log(
   (walletService) =>

@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
-var api_pb = require('./api_pb.js');
+var api_pb = require('./api_pb.js').walletrpc;
 
 function serialize_walletrpc_AbandonTransactionRequest(arg) {
   if (!(arg instanceof api_pb.AbandonTransactionRequest)) {

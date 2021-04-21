@@ -7,14 +7,16 @@ import {
   startWalletServices,
   getStartupWalletInfo
 } from "./ClientActions";
-import {
-  RescanRequest,
-  ConstructTransactionRequest,
-  RunTicketBuyerRequest
-} from "../middleware/walletrpc/api_pb";
+import { walletrpc as api } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs } from "./VSPActions";
+
+const {
+  RescanRequest,
+  ConstructTransactionRequest,
+  RunTicketBuyerRequest
+} = api;
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";

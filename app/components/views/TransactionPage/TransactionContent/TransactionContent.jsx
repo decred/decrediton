@@ -2,7 +2,7 @@ import { Balance, CopyToClipboard, ExternalLink } from "shared";
 import { KeyBlueButton } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
-import { DecodedTransaction } from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import {
   VOTE,
   TRANSACTION_DIR_RECEIVED,
@@ -10,6 +10,8 @@ import {
 } from "constants/decrediton";
 import styles from "./TransactionContent.module.css";
 import { classNames } from "pi-ui";
+
+const { DecodedTransaction } = api;
 
 function mapNonWalletOutput(output) {
   const address =

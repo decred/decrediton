@@ -7,13 +7,12 @@ import {
   getBalanceUpdateAttempt
 } from "./ClientActions";
 import { newTransactionsReceived } from "./TransactionActions";
-import {
-  TransactionNotificationsRequest,
-  AccountNotificationsRequest
-} from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { stopAccountMixer } from "./AccountMixerActions";
 import * as sel from "selectors";
 import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
+
+const { TransactionNotificationsRequest, AccountNotificationsRequest } = api;
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";

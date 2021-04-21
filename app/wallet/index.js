@@ -1,4 +1,4 @@
-import { TransactionDetails } from "../middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 
 export * from "./app";
 export * from "./control";
@@ -13,4 +13,4 @@ export * from "./vsp";
 export * from "./version";
 export * from "./politeia";
 
-export const TransactionType = TransactionDetails.TransactionType;
+export const TransactionType = api.TransactionDetails.TransactionType;

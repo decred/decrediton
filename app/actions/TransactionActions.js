@@ -8,7 +8,7 @@ import {
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
 import { getVSPTicketsByFeeStatus } from "./VSPActions";
-import { TransactionDetails } from "middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
 import { hexToBytes, strHashToRaw, rawHashToHex } from "helpers";
 import {
@@ -24,6 +24,9 @@ import {
   REVOKED
 } from "constants";
 import { getNextAddressAttempt } from "./ControlActions";
+
+const { TransactionDetails } = api;
+
 export const { TRANSACTION_TYPES } = wallet;
 
 export const GETTRANSACTIONS_CANCEL = "GETTRANSACTIONS_CANCEL";

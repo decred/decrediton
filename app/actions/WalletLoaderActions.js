@@ -29,11 +29,7 @@ import { WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet, trezorDevice } from "selectors";
-import {
-  SpvSyncRequest,
-  SyncNotificationType,
-  RpcSyncRequest
-} from "../middleware/walletrpc/api_pb";
+import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { push as pushHistory } from "connected-react-router";
 import { stopNotifcations } from "./NotificationActions";
 import { stopDcrlnd } from "./LNActions";
@@ -43,6 +39,8 @@ import { ipcRenderer } from "electron";
 import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
 import { TRZ_WALLET_CLOSED } from "actions/TrezorActions";
+
+const { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } = api;
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;

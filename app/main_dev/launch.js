@@ -175,7 +175,7 @@ export function closeDCRD() {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
     dcrdPID = null;
-  } else if (require("is-running")(dcrdPID)) {
+  } else if (isRunning(dcrdPID)) {
     try {
       const win32ipc = require("win32ipc/build/Release/win32ipc.node");
       win32ipc.closePipe(dcrdPipeRx);
@@ -229,7 +229,7 @@ export const closeDcrlnd = () => {
     process.kill(dcrlndPID, "SIGINT");
     dcrlndPID = null;
     dcrlndCreds = null;
-  } else if (require("is-running")(dcrlndPID)) {
+  } else if (isRunning(dcrlndPID)) {
     try {
       const win32ipc = require("win32ipc/build/Release/win32ipc.node");
       win32ipc.closePipe(dcrlndPipeRx);

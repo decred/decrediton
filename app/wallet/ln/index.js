@@ -1,7 +1,7 @@
 import * as client from "middleware/ln/client";
 import fs from "fs";
-import * as pb from "middleware/ln/rpc_pb";
-import * as wupb from "middleware/ln/walletunlocker_pb";
+import { lnrpc as pb } from "middleware/ln/rpc_pb";
+import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 
