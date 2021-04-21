@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { isArray } from "lodash";
-import { Tooltip } from "pi-ui";
+import { Tooltip, classNames } from "pi-ui";
 import { SeedHexEntry } from "inputs";
 import { TextToggle } from "buttons";
 import { ConfirmSeedMsg, GoBackMsg, CreateWalletMsg } from "../../../messages";
@@ -54,7 +54,7 @@ const ExistingSeedForm = ({
         </div>
       )}
     </TitleWrapper>
-    <Section className="flex-row">
+    <Section className={classNames("flex-row", styles.seed)}>
       <Section className={styles.confirmSeedLabel}>
         <ConfirmSeedMsg />
       </Section>

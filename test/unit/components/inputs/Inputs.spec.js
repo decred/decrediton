@@ -26,6 +26,7 @@ import * as sel from "selectors";
 import * as wallet from "wallet";
 
 const inputDataTestId = "input-data-test-id";
+const inputId = "input-id";
 const testClassName = "test-class-name";
 const testValue = "test-value";
 const testSuccessMessage = "test-success-message";
@@ -60,14 +61,19 @@ const getInputAndInputTag = (props) => {
   if (props && props.hidden) {
     return { input: screen.queryByTestId(inputDataTestId) };
   }
-  const input = screen.getByTestId(inputDataTestId);
-  const getInputTag = () => input.firstElementChild;
-  return { input, inputTag: getInputTag() };
+  const inputTag = screen.getByTestId(inputDataTestId);
+  const input = inputTag.parentElement;
+  return { input, inputTag };
 };
 
 const renderInput = (Comp, props) => {
   render(
-    <Comp onChange={mockOnChange} dataTestId={inputDataTestId} {...props} />
+    <Comp
+      onChange={mockOnChange}
+      dataTestId={inputDataTestId}
+      id={inputId}
+      {...props}
+    />
   );
   return getInputAndInputTag(props);
 };
@@ -83,6 +89,7 @@ const renderWrappedInput = (Comp, props) => {
         }}
         dataTestId={inputDataTestId}
         value={value}
+        id={inputId}
         {...props}
       />
     );
@@ -97,6 +104,7 @@ const renderNumTicketsInput = (props) => {
     return (
       <NumTicketsInput
         {...props}
+        id={inputId}
         onChangeNumTickets={(e) => {
           setNumTickets(e);
         }}
@@ -124,10 +132,6 @@ const checkDefaultInput = (
   expectedValue = ""
 ) => {
   expect(input.className).not.toMatch(testClassName);
-  expect(input.className).not.toMatch("disabled");
-  expect(input.className).not.toMatch("error");
-  expect(input.className).not.toMatch("success");
-  expect(input.className).not.toMatch("active");
   expect(screen.queryByText(testSuccessMessage)).not.toBeInTheDocument();
   expect(screen.queryByText(invalidErrorMsg)).not.toBeInTheDocument();
   expect(screen.queryByText(testInvalidMsg)).not.toBeInTheDocument();
@@ -139,7 +143,7 @@ const checkDefaultInput = (
   expect(inputTag.type).toBe(expectedType);
   expect(inputTag.disabled).toBe(false);
   expect(inputTag.readOnly).toBe(false);
-  expect(inputTag.placeholder).toBe(expecedPlaceholder);
+  expect(inputTag.placeholder.trim()).toBe(expecedPlaceholder);
 };
 
 test("render default input", () => {
@@ -247,16 +251,14 @@ test("render default SettingsTextInput", () => {
 });
 
 test("test focus and blur event", () => {
-  const { input, inputTag } = renderInput(Input, {
+  const { inputTag } = renderInput(Input, {
     onFocus: mockOnFocus,
     onBlur: mockOnBlur
   });
   inputTag.focus();
-  expect(input.className).toMatch("active");
   expect(mockOnFocus).toHaveBeenCalled();
 
   inputTag.blur();
-  expect(input.className).not.toMatch("active");
   expect(mockOnBlur).toHaveBeenCalled();
 });
 
@@ -279,11 +281,10 @@ test("test key down events", () => {
 });
 
 test("test autoFocused input", () => {
-  const { input } = renderInput(Input, {
+  renderInput(Input, {
     onFocus: mockOnFocus,
     autoFocus: true
   });
-  expect(input.className).toMatch("active");
   expect(mockOnFocus).toHaveBeenCalled();
 });
 
@@ -298,10 +299,9 @@ test("render input with className prop", () => {
 });
 
 test("render disabled input", () => {
-  const { input, inputTag } = renderInput(Input, {
+  const { inputTag } = renderInput(Input, {
     disabled: true
   });
-  expect(input.className).toMatch("disabled");
   expect(inputTag.disabled).toBe(true);
 });
 
@@ -319,51 +319,46 @@ test("check custom inputTag props", () => {
 });
 
 test("render input in success state", () => {
-  const { input } = renderInput(Input, {
+  renderInput(Input, {
     showSuccess: true,
     successMessage: testSuccessMessage
   });
-  expect(input.className).toMatch("success");
   expect(screen.getByText(testSuccessMessage)).toBeInTheDocument();
 });
 
 test("render input in success state (without successMessage)", () => {
-  const { input } = renderInput(Input, {
+  renderInput(Input, {
     showSuccess: true
   });
-  expect(input.className).toMatch("success");
   expect(screen.queryByText(testSuccessMessage)).not.toBeInTheDocument();
 });
 
 test("render input in error state (has value but it is invalid )", () => {
-  const { input } = renderInput(Input, {
+  renderInput(Input, {
     showErrors: true,
     value: testValue,
     invalid: true
   });
-  expect(input.className).toMatch("error");
   expect(screen.getByText(invalidErrorMsg)).toBeInTheDocument();
   expect(screen.queryByText(testInvalidMsg)).not.toBeInTheDocument();
 });
 
 test("render input in error state (has value but it is invalid ) with custom msg", () => {
-  const { input } = renderInput(Input, {
+  renderInput(Input, {
     showErrors: true,
     value: testValue,
     invalid: true,
     invalidMessage: testInvalidMsg
   });
-  expect(input.className).toMatch("error");
   expect(screen.getByText(testInvalidMsg)).toBeInTheDocument();
   expect(screen.queryByText(invalidErrorMsg)).not.toBeInTheDocument();
 });
 
 test("render input in error state (has no value but it would be required )", () => {
-  const { input } = renderInput(Input, {
+  renderInput(Input, {
     showErrors: true,
     required: true
   });
-  expect(input.className).toMatch("error");
   expect(screen.getByText(requiredErrorMsg)).toBeInTheDocument();
   expect(screen.queryByText(testRequiredMsg)).not.toBeInTheDocument();
 });

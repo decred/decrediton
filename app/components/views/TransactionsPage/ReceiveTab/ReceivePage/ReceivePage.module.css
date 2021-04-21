@@ -39,20 +39,6 @@
 
 .requestedAmountInput {
   width: 246px;
-  width: 100%;
-  font-size: 16px;
-  padding-left: 0;
-  padding-bottom: 2px;
-}
-.requestedAmountInput:hover:not(.disabled):not(.active):not(.error) {
-  border-bottom: 1px var(--accent-blue) solid;
-}
-.requestedAmountInput input {
-  font-size: 16px;
-  line-height: 16px;
-}
-.requestedAmountInput input::placeholder {
-  font-size: 16px;
 }
 .receiveRequestedAmount {
   display: flex;
@@ -130,13 +116,6 @@
 .line {
   display: flex;
   align-items: center;
-}
-
-.inputWrapper label {
-  margin: 0;
-  color: var(--grey-7);
-  font-size: 13px;
-  line-height: 16px;
 }
 
 .receiveContentCopyButton {

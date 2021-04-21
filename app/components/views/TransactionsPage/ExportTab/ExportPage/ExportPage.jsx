@@ -81,19 +81,16 @@ const ExportPage = ({
             onChange={onChangeSelectedExport}
           />
         </label>
-
-        <label>
-          <T id="export.destination" m="Destination" />
-          <PathBrowseInput
-            save
-            type="file"
-            className={styles.pathBrowseInput}
-            placeholder={intl.formatMessage(messages.destinationPlaceholder)}
-            value={destinationFile}
-            filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
-            onChange={(value) => setDestinationFile(value)}
-          />
-        </label>
+        <PathBrowseInput
+          newBiggerFontStyle
+          save
+          type="file"
+          label={<T id="export.destination" m="Destination" />}
+          placeholder={intl.formatMessage(messages.destinationPlaceholder)}
+          value={destinationFile}
+          filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
+          onChange={(value) => setDestinationFile(value)}
+        />
       </div>
       <div className={classNames(styles.exportAreaRight)}>
         <p className={styles.exportInfoDescription}>

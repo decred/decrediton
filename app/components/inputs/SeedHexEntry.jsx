@@ -1,4 +1,4 @@
-import Input from "./Input/Input";
+import Input from "./Input";
 import { defineMessages, injectIntl } from "react-intl";
 
 const messages = defineMessages({

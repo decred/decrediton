@@ -50,6 +50,7 @@ const RemoteDaemonForm = ({
       </Label>
       <Input>
         <TextInput
+          id="prc-user"
           required
           value={rpc_user}
           onChange={(e) => setRpcUser(e.target.value)}
@@ -65,6 +66,7 @@ const RemoteDaemonForm = ({
       <Input>
         <PasswordInput
           required
+          id="prc-pass"
           value={rpc_pass}
           onChange={(e) => setRpcPass(e.target.value)}
           placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
@@ -79,6 +81,7 @@ const RemoteDaemonForm = ({
       <Input>
         <PathBrowseInput
           required
+          id="rpc-cert"
           type="file"
           value={rpc_cert}
           onChange={(value) => setRpcCert(value)}
@@ -93,6 +96,7 @@ const RemoteDaemonForm = ({
       </Label>
       <Input>
         <TextInput
+          id="rpc-host"
           required
           value={rpc_host}
           onChange={(e) => setRpcHost(e.target.value)}
@@ -107,6 +111,7 @@ const RemoteDaemonForm = ({
       </Label>
       <Input>
         <TextInput
+          id="rpc-port"
           required
           value={rpc_port}
           onChange={(e) => setRpcPort(e.target.value)}

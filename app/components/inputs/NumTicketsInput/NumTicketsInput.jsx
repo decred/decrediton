@@ -22,8 +22,9 @@ const NumTicketsInput = ({
       <T id="numTicketsInput.tickets" m="tickets" />
     );
   return (
-    <div className={classNames(style.container, invalid && style.error)}>
+    <div className={style.container}>
       <IntegerInput
+        newBiggerFontStyle
         {...{
           required,
           onKeyDown,
@@ -32,16 +33,21 @@ const NumTicketsInput = ({
           invalidMessage,
           value: numTickets
         }}
-        className={style.integerInput}
-        errorClassName={style.inputError}
-        inputErrorsAreaClassName={style.inputErrorsArea}
+        inputClassNames={classNames(
+          style.integerInput,
+          invalid && style.invalid
+        )}
+        className={classNames(
+          style.integerInputWrapper,
+          invalid && style.invalid
+        )}
         onChange={(e) =>
           onChangeNumTickets && onChangeNumTickets(e.target.value)
         }
         data-max-width="70"
-        {...props}
-      />
-      <div className={style.ticketUnitLabel}>{ticketUnitLabel}</div>
+        {...props}>
+        <div className={style.ticketUnitLabel}>{ticketUnitLabel}</div>
+      </IntegerInput>
       <button
         key="less"
         aria-label="less"

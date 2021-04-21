@@ -1,10 +1,22 @@
-import { FormattedMessage as T } from "react-intl";
-import style from "./Input.module.css";
-import { useRef } from "react";
-import { classNames } from "pi-ui";
-import { useMountEffect } from "hooks";
+import { defineMessages } from "react-intl";
+import styles from "./Input.module.css";
+import { classNames, TextInput } from "pi-ui";
+import { useIntl } from "react-intl";
+
+const messages = defineMessages({
+  invalidInput: {
+    id: "input.invalidInput",
+    defaultMessage: "This field is wrong"
+  },
+  requiredInput: {
+    id: "input.requiredInput",
+    defaultMessage: "This field is required"
+  }
+});
 
 const Input = ({
+  children,
+  label,
   id,
   onFocus,
   onBlur,
@@ -26,107 +38,76 @@ const Input = ({
   hidden,
   type,
   className,
-  errorClassName,
-  inputErrorsAreaClassName,
+  inputClassNames,
   unitAreaClassName,
   autoFocus,
   dataTestId,
-  ariaLabelledBy
+  ariaLabelledBy,
+  newBiggerFontStyle
 }) => {
-  const inputUnitDiv = useRef(null);
-  const input = useRef(null);
-
-  useMountEffect(() => {
-    autoFocus && input?.current.focus();
-  });
-
-  const onInputFocus = (e) => {
-    inputUnitDiv?.current.classList.add("active");
-    onFocus?.(e);
-  };
-
-  const onInputBlur = (e) => {
-    inputUnitDiv?.current.classList.remove("active");
-    onBlur?.(e);
-  };
-
   const onInputKeyDown = (e) => {
     e.keyCode === 13 && onKeyDownSubmit?.(e);
     !e.defaultPrevented && onKeyDown?.(e);
   };
 
+  let error = null;
+
+  const intl = useIntl();
   const hasErrorToShow =
     showErrors && ((invalid && value) || (required && !value));
+  if (showErrors) {
+    if (invalid && value) {
+      error = invalidMessage
+        ? invalidMessage
+        : intl.formatMessage(messages.invalidInput);
+    }
+    if (required && !value) {
+      error = requiredMessage
+        ? requiredMessage
+        : intl.formatMessage(messages.requiredInput);
+    }
+  }
 
   return hidden ? null : (
-    <>
-      <div
-        className={classNames(
-          style.inputAndUnit,
-          className,
-          disabled && style.disabled,
-          hasErrorToShow && (errorClassName || style.error),
-          showSuccess && style.success
-        )}
-        data-testid={dataTestId}
-        ref={inputUnitDiv}>
-        <input
-          id={id}
-          ref={input}
-          type={type ?? "text"}
-          disabled={disabled}
-          readOnly={readOnly}
-          placeholder={placeholder}
-          value={value ?? ""}
-          onChange={(e) => onChange?.(e)}
-          onFocus={onInputFocus}
-          onBlur={onInputBlur}
-          onKeyDown={onInputKeyDown}
-          aria-labelledby={ariaLabelledBy}
-        />
-        {unit && (
-          <span
-            className={classNames(
-              style.unitArea,
-              unitAreaClassName,
-              hasErrorToShow && style.error
-            )}>
-            {unit}
-          </span>
-        )}
-      </div>
-      {showErrors ? (
-        <div
+    <TextInput
+      {...{
+        id,
+        label,
+        error,
+        inputClassNames,
+        autoFocus,
+        disabled,
+        readOnly,
+        placeholder
+      }}
+      type={type ?? "text"}
+      success={showSuccess && successMessage}
+      value={value ?? ""}
+      onChange={(e) => onChange?.(e)}
+      onFocus={(e) => onFocus?.(e)}
+      onBlur={(e) => onBlur?.(e)}
+      wrapperClassNames={classNames(className, styles.wrapper)}
+      inputClassNames={classNames(
+        inputClassNames,
+        newBiggerFontStyle ? styles.newBiggerFontStyleInput : styles.input
+      )}
+      labelClassNames={styles.label}
+      messageClassNames={!newBiggerFontStyle && styles.message}
+      onKeyDown={onInputKeyDown}
+      data-testid={dataTestId}
+      aria-labelledby={ariaLabelledBy}>
+      {unit && (
+        <span
           className={classNames(
-            style.inputErrorsArea,
-            inputErrorsAreaClassName && inputErrorsAreaClassName
+            styles.unitArea,
+            unitAreaClassName,
+            hasErrorToShow && styles.error
           )}>
-          {invalid && value ? (
-            <div className={style.inputError}>
-              {invalidMessage ? (
-                invalidMessage
-              ) : (
-                <T id="input.invalidInput" m="This field is wrong" />
-              )}
-            </div>
-          ) : null}
-          {required && !value ? (
-            <div className={style.inputError}>
-              {requiredMessage ? (
-                requiredMessage
-              ) : (
-                <T id="input.requiredInput" m="This field is required" />
-              )}
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-      {showSuccess ? (
-        <div className={style.inputSuccessArea}>
-          {successMessage ? successMessage : null}
-        </div>
-      ) : null}
-    </>
+          {unit}
+        </span>
+      )}
+      {children}
+    </TextInput>
   );
 };
 

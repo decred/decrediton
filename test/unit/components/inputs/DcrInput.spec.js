@@ -14,6 +14,7 @@ describe("DcrInput in DCR mode works", () => {
       const [amount, setAmount] = useState(0);
       return (
         <DcrInput
+          id="test-id"
           onChangeAmount={(atomValue) => {
             setAmount(atomValue);
           }}

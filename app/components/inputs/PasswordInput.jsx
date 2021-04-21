@@ -1,4 +1,4 @@
-import Input from "./Input/Input";
+import Input from "./Input";
 
 const PasswordInput = ({ ...props }) => (
   <Input {...{ ...props, type: "password" }} />

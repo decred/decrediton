@@ -125,6 +125,7 @@ const SendOutputRow = ({
         />
       ) : (
         <AddressInput
+          id="addressInput"
           required={true}
           autoFocus={index === 0}
           showErrors={error && error.address}

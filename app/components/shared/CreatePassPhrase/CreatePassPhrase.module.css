@@ -1,5 +1,6 @@
 .passphraseRow {
   height: 50px;
+  align-items: baseline;
 }
 
 .passphrase .confirmSeedLabel {

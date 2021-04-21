@@ -11,7 +11,13 @@ const pleaseEnterErrorMsg = /please enter your private passphrase/i;
 const passphrasesNotMatchMsg = /passphrases do not match/i;
 
 test("test CreatePassPhrase component", () => {
-  render(<CreatePassPhrase onChange={mockOnChange} onSubmit={mockOnSubmit} />);
+  render(
+    <CreatePassPhrase
+      id="test-id"
+      onChange={mockOnChange}
+      onSubmit={mockOnSubmit}
+    />
+  );
 
   const privatePassphraseInput = screen.getByPlaceholderText(
     "Private Passphrase"

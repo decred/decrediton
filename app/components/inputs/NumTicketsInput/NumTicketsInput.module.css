@@ -2,61 +2,15 @@
   height: 24px;
   width: 183px;
   position: relative;
-  display: flex;
-  flex-direction: row;
 }
-.container.error input {
-  color: var(--error-text-color);
-}
-.container.error .integerInput::before {
-  position: absolute;
-  content: "";
-  width: 18px;
-  height: 22px;
-  top: 0;
-  right: 0;
-  display: block;
-  background-repeat: no-repeat;
-  background-image: var(--warning-input-icon);
-  background-size: 16px 16px;
-  background-position: 0 center;
+.integerInputWrapper {
+  width: 122px !important;
 }
 .integerInput {
-  width: 75px;
-  font-size: 16px;
-  padding-left: 0;
-  padding-bottom: 2px;
-  position: relative;
+  padding-right: 52px;
 }
-.integerInput:hover {
-  border-bottom: 1px solid var(--accent-blue);
-}
-.integerInput:hover:not(.disabled):not(.active):not(.error) {
-  border-bottom: 1px var(--accent-blue) solid;
-}
-.integerInput input {
-  font-size: 16px;
-  line-height: 16px;
-}
-.integerInput input::placeholder {
-  font-size: 16px;
-}
-.container.error .integerInput,
-.container.error .integerInput:hover:not(.disabled):not(.active):not(.error) {
-  border-bottom: 1px var(--error-text-color) solid;
-}
-.inputError {
-  background-image: none;
-}
-.inputErrorsArea {
-  width: 100%;
-  position: absolute;
-  bottom: -13px;
-  left: 0;
-  margin: 0;
-}
-.integerInput.error:hover {
-  border-bottom: 0 !important;
+.integerInput.invalid {
+  padding-right: 70px;
 }
 .icon {
   width: 24px;
@@ -70,7 +24,7 @@
   outline: 0;
   cursor: pointer;
   position: absolute;
-  top: 0;
+  bottom: 2px;
 }
 .icon.more {
   background-image: var(--tickets-plus-icon);
@@ -89,5 +43,5 @@
 .ticketUnitLabel {
   color: var(--grey-5);
   font-size: 16px;
-  line-height: 22px;
+  line-height: 16px !important;
 }

@@ -3,16 +3,11 @@
   margin: 30px 0 30px 40px;
   padding-right: 20px;
   flex-direction: column;
-  width: 366px;
+  width: 406px;
   border-right: 1px solid var(--send-transaction-border);
 }
 .sendOutputContainer.plus {
   border-right: none;
-}
-.sendOutputContainer label {
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--grey-7);
 }
 .add {
   padding: 0 !important;
@@ -23,7 +18,7 @@
   background-position: center center;
   background-repeat: no-repeat;
   border: none !important;
-  margin-top: 9px;
+  margin-top: 14px;
 }
 .delete {
   padding: 0 !important;
@@ -35,7 +30,7 @@
   background-repeat: no-repeat;
   background-color: var(--grey-7) !important;
   border: none !important;
-  margin-top: 8px;
+  margin-top: 14px;
 }
 .add:disabled {
   background-color: var(--small-button-disabled-bg) !important;
@@ -78,8 +73,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0 0 20px 0;
-  align-items: flex-start;
+  margin: 0;
+  align-items: center;
 }
 .amountContainer .sendInputWrapper {
   width: 193px;
@@ -88,7 +83,6 @@
   font-size: 13px;
   line-height: 22px;
   color: var(--grey-5);
-  margin-top: 15px;
 }
 .amountContainer .percentOfBalance.error {
   color: var(--error-text-color);
@@ -102,9 +96,6 @@
   flex-direction: row;
   align-items: flex-start;
 }
-.destinationContainer label {
-  width: 100%;
-}
 
 .sendInputWrapper {
   display: flex;
@@ -114,29 +105,6 @@
   justify-content: space-between;
   margin-bottom: 40px;
   flex-direction: row;
-}
-.addressInput {
-  width: 100%;
-}
-.addressInput,
-.dcrInput {
-  width: 100%;
-  font-size: 16px;
-  padding-left: 0;
-  padding-bottom: 2px;
-}
-.addressInput:hover:not(.disabled):not(.active):not(.error),
-.dcrInput:hover:not(.disabled):not(.active):not(.error) {
-  border-bottom: 1px var(--accent-blue) solid;
-}
-.addressInput input,
-.dcrInput input {
-  font-size: 16px;
-  line-height: 16px;
-}
-.dcrInput input::placeholder,
-.addressInput input::placeholder {
-  font-size: 16px;
 }
 .sendInputWrapper .inputErrorsArea {
   margin-bottom: -14px;
@@ -178,46 +146,39 @@
   line-height: 23px;
 }
 
-.sendInputWrapper.address div {
-  /* hide warning icon,
-   * because it's cover Paste button */
-  background-image: none;
-}
 .receiveAccountSelect {
   width: 311px;
 }
 
+.addressInput {
+  padding-right: 22px;
+}
+.addressInput.error {
+  padding-right: 39px;
+}
 .pasteButton {
   font-family: var(--font-family-regular);
-  position: absolute;
-  right: 0;
-  top: 9px;
   padding: 3px 10px !important;
   font-size: 13px !important;
   line-height: 16px !important;
   transition: none !important;
 }
 .clearAddressButton {
-  position: absolute;
-  right: 0;
-  top: 14px;
-  width: 24px;
+  width: 14px;
   background-image: var(--indicator-invalid-icon);
-  height: 24px;
+  height: 16px;
   border: none !important;
   padding: 0 !important;
   transition: none !important;
   background-size: 21px;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: var(--background-back-color) !important;
 }
 .clearAddressButton:hover {
   opacity: 0.85;
 }
 
-.inputErrorArea {
-  margin: 0;
-}
 @media screen and (max-width: 1179px) {
   .amountContainer .sendInputWrapper {
     width: 185px;
@@ -237,10 +198,7 @@
     border: none;
     width: 335px;
   }
-  .sendOutputContainer label {
-    font-size: 13px;
-  }
-  .addressInput input {
+  .addressInput {
     font-size: 15px;
     line-height: 21px;
   }

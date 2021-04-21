@@ -1,4 +1,4 @@
-import Input from "../Input/Input";
+import Input from "../Input";
 import style from "./PathInput.module.css";
 import { classNames } from "pi-ui";
 

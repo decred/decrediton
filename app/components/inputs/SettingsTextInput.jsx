@@ -1,3 +1,3 @@
-import TextInput from "./TextInput";
+import Input from "./Input";
 
-export default (props) => <TextInput {...props} />;
+export default (props) => <Input {...props} />;

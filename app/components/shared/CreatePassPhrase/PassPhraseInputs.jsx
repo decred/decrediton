@@ -1,4 +1,4 @@
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
 import { classNames } from "pi-ui";
@@ -12,31 +12,30 @@ const messages = defineMessages({
   verifyPassphrasePlaceholder: {
     id: "createWallet.verifyPassphrasePlaceholder",
     defaultMessage: "Confirm Private Passphrase"
+  },
+  passPhraseLabel: {
+    id: "createWallet.passhraseInput.label",
+    defaultMessage: "Private passphrase"
+  },
+  passPhraseVerificationLabel: {
+    id: "createWallet.passphraseInput.verifyLabel",
+    defaultMessage: "Repeat Private Passphrase"
+  },
+  blankPassPhraseError: {
+    id: "createWallet.passphraseInput.errors.noPassPhrase",
+    defaultMessage: "*Please enter your private passphrase"
+  },
+  passPhraseVerificationError: {
+    id: "createWallet.passphraseInput.errors.noMatch",
+    defaultMessage: "*Passphrases do not match"
   }
 });
 
 const PassPhraseInputs = ({
-  passPhraseLabel = (
-    <T id="createWallet.passhraseInput.label" m="Private passphrase" />
-  ),
-  passPhraseVerificationLabel = (
-    <T
-      id="createWallet.passphraseInput.verifyLabel"
-      m="Repeat Private Passphrase"
-    />
-  ),
-  blankPassPhraseError = (
-    <T
-      id="createWallet.passphraseInput.errors.noPassPhrase"
-      m="*Please enter your private passphrase"
-    />
-  ),
-  passPhraseVerificationError = (
-    <T
-      id="createWallet.passphraseInput.errors.noMatch"
-      m="*Passphrases do not match"
-    />
-  ),
+  passPhraseLabel,
+  passPhraseVerificationLabel,
+  blankPassPhraseError,
+  passPhraseVerificationError,
   passPhrase,
   passPhraseVerification,
   setPassPhrase,
@@ -55,31 +54,42 @@ const PassPhraseInputs = ({
           styles.passphraseRow
         )}>
         <InfoDocFieldModalButton document="PassphraseInfo" />
-        <div>{passPhraseLabel}</div>
+        <div>
+          {passPhraseLabel ?? intl.formatMessage(messages.passPhraseLabel)}
+        </div>
       </div>
       <form>
         <PasswordInput
           required
+          id="passPhrase"
           className={styles.inputPrivatePassword}
           placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
           value={passPhrase}
           onKeyDown={onKeyDown}
           onChange={(e) => setPassPhrase(e.target.value)}
           showErrors={hasFailedAttempt}
-          requiredMessage={blankPassPhraseError}
+          requiredMessage={
+            blankPassPhraseError ??
+            intl.formatMessage(messages.blankPassPhraseError)
+          }
         />
       </form>
     </div>
     <div className={classNames("flex-row", styles.passphraseRow)}>
       <div
         className={classNames(styles.confirmSeedLabel, styles.passphraseRow)}>
-        {passPhraseVerificationLabel}
+        {passPhraseVerificationLabel ??
+          intl.formatMessage(messages.passPhraseVerificationLabel)}
       </div>
       <form>
         <PasswordInput
+          id="passPhraseVerification"
           className={styles.inputPrivatePassword}
           invalid={!isValid}
-          invalidMessage={passPhraseVerificationError}
+          invalidMessage={
+            passPhraseVerificationError ??
+            intl.formatMessage(messages.passPhraseVerificationError)
+          }
           placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
           value={passPhraseVerification}
           onKeyDown={onKeyDown}
