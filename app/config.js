@@ -368,10 +368,16 @@ export const updateDefaultBitcoinConfig = (
         fileContents.server = 1;
 
         if (testnet) {
-          if (needBind) fileContents["test"].rpcbind = rpcbind;
+          if (!fileContents.test) {
+            fileContents.test = {};
+          }
+          if (needBind) fileContents.test.rpcbind = rpcbind;
 
-          if (needPort) fileContents["test"].rpcport = rpcport;
+          if (needPort) fileContents.test.rpcport = rpcport;
         } else {
+          if (fileContents.test) {
+            delete fileContents.test;
+          }
           if (needBind) fileContents.rpcbind = rpcbind;
 
           if (needPort) fileContents.rpcport = rpcport;
