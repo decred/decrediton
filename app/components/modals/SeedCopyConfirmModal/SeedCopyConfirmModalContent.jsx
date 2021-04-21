@@ -47,7 +47,7 @@ const SeedCopyConfirmModalContent = ({
     <div className={styles.toolbar}>
       <DangerButton
         className={styles.confirmButton}
-        onClick={onSubmit}
+        onSubmit={onSubmit}
         disabled={
           typedConfirmationPhrase.toLowerCase() !==
           copyConfirmationPhrase.toLowerCase()
