@@ -59,7 +59,7 @@ const Modal = ({
           value={passPhrase}
           onChange={(e) => setPassPhrase(e.target.value)}
           onKeyDownSubmit={onSubmit}
-          showErrors={passPhrase !== null && !passPhrase}
+          showErrors={passPhrase !== null && !passPhrase && !passphraseNotRequired}
         />
       </PassphraseModalField>
       {children}
