@@ -18,7 +18,7 @@ import TrezorPage from "components/views/TrezorPage";
 import LNPage from "components/views/LNPage";
 import DexPage from "components/views/DexPage";
 import SideBar from "components/SideBar/SideBar";
-import { BlurableContainer } from "layout";
+import { BlurableContainer, PageBody } from "layout";
 import { useWallet } from "../hooks";
 import { useMountEffect } from "hooks";
 import styles from "./Wallet.module.css";
@@ -39,7 +39,7 @@ const Wallet = ({ setInterval }) => {
   });
 
   return (
-    <div className={styles.pageBody}>
+    <PageBody>
       <SideBar />
       <BlurableContainer
         className={expandSideBar ? styles.pageView : styles.reducedBar}>
@@ -68,7 +68,7 @@ const Wallet = ({ setInterval }) => {
           component={ProposalDetailsPage}
         />
       </BlurableContainer>
-    </div>
+    </PageBody>
   );
 };
 

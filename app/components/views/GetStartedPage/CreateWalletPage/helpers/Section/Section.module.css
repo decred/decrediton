@@ -1,0 +1,15 @@
+.section {
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 1179px) {
+  .section {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+}

@@ -1,6 +1,8 @@
 import { useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
+// XXX add index.js in SettingsTab dir to have one import statement for all
+// settings components.
 import NetworkSettings from "views/SettingsPage/SettingsTab/NetworkSettings";
 import ProxySettings from "views/SettingsPage/SettingsTab/ProxySettings";
 import PrivacySettings from "views/SettingsPage/SettingsTab/PrivacySettings";
@@ -17,10 +19,12 @@ import {
   DEFAULT_DARK_THEME_NAME
 } from "pi-ui";
 // XXX we shouldn't import other view css module here, this is breaking
-// css modules encapsulation principle!!
-import stylesSettigs from "views/SettingsPage/SettingsTab/Settings.module.css";
-import stylesGetStarted from "../GetStarted.module.css";
+// css modules encapsulation principle - instead the shared classes should be
+// moved to a separate components and used in both places.
+import settingsTabStyles from "views/SettingsPage/SettingsTab/Settings.module.css";
 import { useSettings } from "hooks";
+import { BackButton, BackButtonArea } from "../helpers";
+import styles from "./Settings.module.css";
 
 const SetttingsForm = ({ onSendBack }) => {
   const { setThemeName } = useTheme();
@@ -35,6 +39,7 @@ const SetttingsForm = ({ onSendBack }) => {
     changePassphraseRequestAttempt,
     walletReady
   } = useSettings();
+
   const saveSettingsHandler = useCallback(() => {
     const config = getGlobalCfg();
     const oldTheme = config.get(configConstants.THEME);
@@ -48,28 +53,25 @@ const SetttingsForm = ({ onSendBack }) => {
     onSaveSettings(tempSettings);
     onSendBack();
   }, [onSaveSettings, onSendBack, tempSettings, setThemeName]);
-  const styles = {
-    ...stylesSettigs,
-    ...stylesGetStarted
-  };
+
   return (
     <>
-      <div className={classNames(styles.logs, styles.settings)}>
-        <div className={styles.goBackScreenButtonArea}>
+      <div>
+        <BackButtonArea className={styles.backButtonArea}>
           <Tooltip content={<GoBackMsg />}>
-            <div className={styles.goBackScreenButton} onClick={onSendBack} />
+            <BackButton onClick={onSendBack} />
           </Tooltip>
-        </div>
+        </BackButtonArea>
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />
-        <div className={styles.wrapper}>
-          <div className={styles.group}>
+        <div className={settingsTabStyles.wrapper}>
+          <div className={settingsTabStyles.group}>
             <Subtitle
               title={
                 <T id="settings.group-title.connectivity" m="Connectivity" />
               }
             />
-            <div className={styles.columnWrapper}>
-              <div className={styles.column}>
+            <div className={settingsTabStyles.columnWrapper}>
+              <div className={settingsTabStyles.column}>
                 <NetworkSettings
                   {...{
                     tempSettings,
@@ -77,29 +79,41 @@ const SetttingsForm = ({ onSendBack }) => {
                   }}
                 />
               </div>
-              <div className={styles.column}>
+              <div className={settingsTabStyles.column}>
                 <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
               </div>
             </div>
           </div>
 
-          <div className={classNames(styles.group, styles.general)}>
+          <div
+            className={classNames(
+              settingsTabStyles.group,
+              settingsTabStyles.general
+            )}>
             <Subtitle
               title={<T id="settings.group-title.general" m="General" />}
             />
-            <div className={styles.columnWrapper}>
-              <div className={styles.column}>
+            <div className={settingsTabStyles.columnWrapper}>
+              <div className={settingsTabStyles.column}>
                 <UISettings
                   {...{ tempSettings, locales, onChangeTempSettings }}
                 />
               </div>
-              <div className={classNames(styles.column, styles.timezone)}>
+              <div
+                className={classNames(
+                  settingsTabStyles.column,
+                  settingsTabStyles.timezone
+                )}>
                 <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
               </div>
             </div>
           </div>
 
-          <div className={classNames(styles.group, styles.privacy)}>
+          <div
+            className={classNames(
+              settingsTabStyles.group,
+              settingsTabStyles.privacy
+            )}>
             <Subtitle
               title={
                 <T
@@ -108,7 +122,7 @@ const SetttingsForm = ({ onSendBack }) => {
                 />
               }
             />
-            <div className={styles.columnWrapper}>
+            <div className={settingsTabStyles.columnWrapper}>
               <PrivacySettings
                 {...{
                   tempSettings,
@@ -123,7 +137,7 @@ const SetttingsForm = ({ onSendBack }) => {
           </div>
         </div>
       </div>
-      <div className={styles.formSaveButtonWrapper}>
+      <div className={settingsTabStyles.formSaveButtonWrapper}>
         <KeyBlueButton
           disabled={!areSettingsDirty}
           size="large"

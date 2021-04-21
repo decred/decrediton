@@ -1,0 +1,11 @@
+.whatsnew {
+  font-size: 13px;
+  margin-left: 20px;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--info-modal-button-bg);
+}
+
+.whatsnew:hover {
+  opacity: 0.7;
+}

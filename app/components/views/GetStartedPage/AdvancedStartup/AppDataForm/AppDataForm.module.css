@@ -1,0 +1,9 @@
+@media screen and (max-width: 768px) {
+  .label {
+    width: 130px;
+  }
+
+  .input {
+    width: 190px;
+  }
+}

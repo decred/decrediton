@@ -1,0 +1,114 @@
+.navigation {
+  font-size: 13px;
+}
+
+.navigation > a {
+  margin-right: 30px;
+  cursor: pointer;
+  color: var(--title-text-and-button-background);
+  text-decoration: none;
+}
+
+.releaseNotes {
+  display: flex;
+  clear: both;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 65vh;
+  overflow-y: scroll;
+  padding-right: 1em;
+}
+
+.text {
+  font-size: 13px;
+  font-family: Helvetica, sans-serif;
+  max-width: 410px;
+  margin-right: 15px;
+}
+
+.text p {
+  display: inline;
+}
+
+.text h2 {
+  margin: 10px 0;
+}
+
+.text p,
+.text ul,
+.text ol,
+.text h1,
+.text h2,
+.text h3,
+.text h4 {
+  margin-bottom: 1em;
+}
+
+.text ul,
+.text ol {
+  padding-left: 2em;
+}
+.text li {
+  padding: 0 0 5px;
+}
+
+.text a {
+  color: var(--link-color);
+}
+
+.image {
+  width: 590px;
+  height: 295px;
+  margin-top: 14px;
+  background-repeat: no-repeat;
+  background-size: 590px;
+}
+
+.image.v130 {
+  background-image: var(--release-image-v130);
+}
+
+.image.v140 {
+  background-image: var(--release-image-v140);
+}
+
+.image.v150 {
+  background-image: var(--release-image-v150);
+}
+
+.image.v160 {
+  background-image: var(--release-image-v160);
+}
+
+@media screen and (max-width: 1140px) {
+  .image {
+    flex: 1;
+    margin-top: 14px;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 0;
+    background-size: contain;
+    padding-bottom: 50%;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .text {
+    max-width: inherit;
+    margin-left: 15px;
+  }
+
+  .image {
+    order: -1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .text {
+    margin: 10px 0 0 0;
+  }
+
+  .releaseNotes {
+    height: 77vh;
+  }
+}

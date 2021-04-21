@@ -1,0 +1,14 @@
+.contentContainer {
+  font-size: 27px;
+  line-height: 34px;
+  margin-bottom: 13px;
+  width: 100%;
+  float: left;
+}
+
+@media screen and (max-width: 768px) {
+  .contentContainer {
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
+}

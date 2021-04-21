@@ -1,0 +1,13 @@
+.backButtonArea {
+  position: fixed;
+  right: 55px;
+  top: 135px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+@media screen and (max-width: 430px) {
+  .backButtonArea {
+    right: 59px;
+  }
+}

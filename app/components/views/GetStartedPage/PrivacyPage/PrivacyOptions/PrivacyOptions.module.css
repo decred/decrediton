@@ -1,0 +1,20 @@
+.options {
+  display: flex;
+  justify-content: center;
+  margin-left: 35px;
+  padding-right: 2em;
+}
+
+@media screen and (max-width: 768px) {
+  .options {
+    margin: 0 -10px;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .options {
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+}

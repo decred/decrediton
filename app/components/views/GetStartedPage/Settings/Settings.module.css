@@ -1,0 +1,38 @@
+.backButtonArea {
+  position: absolute;
+  left: 1467px;
+  top: 66px;
+  right: initial;
+}
+
+@media screen and (max-width: 1919px) {
+  .backButtonArea {
+    left: 1230px;
+  }
+}
+
+@media screen and (max-width: 1679px) {
+  .backButtonArea {
+    left: 988px;
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .backButtonArea {
+    left: 726px;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .backButtonArea {
+    left: 636px;
+    top: 112px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .backButtonArea {
+    top: 40px;
+    left: 342px;
+  }
+}

@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
+import { PageBody } from "layout";
 import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
 import { getAppDataDirectory } from "main_dev/paths.js";
@@ -98,7 +99,7 @@ function FatalErrorPage() {
   };
 
   return (
-    <div className={styles.pageBody}>
+    <PageBody>
       <div className={styles.errorPage}>
         <div className={styles.title}>
           <T id="fatal.header.title" m="Fatal error" />:
@@ -151,7 +152,7 @@ function FatalErrorPage() {
           </KeyBlueButton>
         </div>
       </div>
-    </div>
+    </PageBody>
   );
 }
 

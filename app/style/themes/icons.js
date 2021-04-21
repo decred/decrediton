@@ -179,7 +179,7 @@ const icons = {
   "view-qr-icon": url(require("style/icons/showQR.svg")),
   "share-icon": url(require("style/icons/share.svg")),
   "decred-logo": url(require("style/icons/dcrLogoShare.svg")),
-  "search-icon-light": url(require("style/icons/search-light.svg")),
+  "search-icon-hover": url(require("style/icons/search-hover.svg")),
   "animated-alert-icon": url(require("style/icons/animated_alert_icon.gif")),
   "mixed-transaction-icon": url(require("style/icons/mixedTx.svg"))
 };

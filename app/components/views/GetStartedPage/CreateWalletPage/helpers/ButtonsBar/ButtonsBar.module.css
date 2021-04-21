@@ -1,0 +1,31 @@
+.buttonsBar {
+  height: 44px;
+  width: 692px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.primaryButton {
+  float: left;
+  box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
+}
+
+.primaryButton:hover {
+  box-shadow: none;
+}
+
+.backButton {
+  color: var(--home-content-link);
+}
+
+.backButton:hover {
+  color: var(--title-text-and-button-background-hovered);
+}
+
+@media screen and (max-width: 768px) {
+  .buttonsBar {
+    display: flex;
+    justify-content: flex-end;
+    width: 365px;
+  }
+}

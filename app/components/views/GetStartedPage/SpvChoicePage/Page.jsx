@@ -1,17 +1,11 @@
 import TopLevelPrivacyOptions from "./TopLevelOptions";
-import { classNames } from "pi-ui";
-import styles from "../GetStarted.module.css";
+import { PageBody } from "layout";
+import { Content } from "../helpers";
 
 export default ({ isTestNet, ...props }) => (
-  <div
-    data-testid="getstarted-pagebody"
-    className={classNames(
-      styles.pageBody,
-      styles.getstarted,
-      isTestNet && styles.testnetBody
-    )}>
-    <div className={styles.getstartedNew}>
+  <PageBody data-testid="getstarted-pagebody" getStarted isTestNet={isTestNet}>
+    <Content>
       <TopLevelPrivacyOptions {...props} />
-    </div>
-  </div>
+    </Content>
+  </PageBody>
 );

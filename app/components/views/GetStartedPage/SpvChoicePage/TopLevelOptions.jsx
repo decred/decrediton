@@ -1,14 +1,15 @@
 import { FormattedMessage as T } from "react-intl";
 import { ExternalLink } from "shared";
 import PrivacyOption from "../PrivacyPage/PrivacyOption";
-import styles from "../GetStarted.module.css";
+import PrivacyOptions from "../PrivacyPage/PrivacyOptions";
+import { Title, SubTitle } from "../helpers";
 
 export default ({ toggleSpv }) => (
   <>
-    <div className={styles.title}>
+    <Title>
       <T id="spv.title" m={"Simple Payment Verification (SPV)"} />
-    </div>
-    <div className={styles.titleSub}>
+    </Title>
+    <SubTitle>
       <T
         id="spv.titleSub"
         m={
@@ -22,8 +23,8 @@ export default ({ toggleSpv }) => (
           )
         }}
       />
-    </div>
-    <div className={styles.privacyOptions}>
+    </SubTitle>
+    <PrivacyOptions>
       <PrivacyOption
         title={<T id="spv.options.enable.title" m="Enable SPV" />}
         icon="spvOn"
@@ -35,7 +36,6 @@ export default ({ toggleSpv }) => (
         }
         onClick={() => toggleSpv(true)}
       />
-
       <PrivacyOption
         title={<T id="spv.options.disable.title" m="Disable SPV" />}
         icon="spvOff"
@@ -47,6 +47,6 @@ export default ({ toggleSpv }) => (
         }
         onClick={() => toggleSpv(false)}
       />
-    </div>
+    </PrivacyOptions>
   </>
 );

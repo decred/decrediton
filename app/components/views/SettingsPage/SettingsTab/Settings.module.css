@@ -215,10 +215,6 @@
   max-width: 400px;
 }
 
-.privacyButtons {
-  text-align: right;
-}
-
 .hasWarning strong {
   color: var(--error-text-color);
 }

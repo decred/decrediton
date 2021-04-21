@@ -1,0 +1,15 @@
+.buttonsBar {
+  position: absolute;
+  top: 320px;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .buttonsBar {
+    position: fixed;
+    margin-left: 10px;
+    bottom: 75px;
+    right: 20px;
+    top: initial;
+  }
+}

@@ -3,10 +3,9 @@ import { Tooltip } from "pi-ui";
 import { Subtitle } from "shared";
 import { GoBackMsg } from "../../messages";
 import { FormattedMessage as T } from "react-intl";
-// XXX: change this import and move all styles to component's css module
-import GetStartedStyles from "../../GetStarted.module.css";
 import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
+import { BackButton, BackButtonArea } from "../../helpers";
 import { VSPSelect } from "inputs";
 
 export default ({
@@ -21,6 +20,7 @@ export default ({
 }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
+
   const onSubmitContinue = (passphrase) => {
     onProcessTickets(passphrase, vsp.host, vsp.pubkey)
       .then(() => send({ type: "CONTINUE" }))
@@ -41,16 +41,13 @@ export default ({
 
   return (
     <div className={styles.content}>
-      <div className={GetStartedStyles.goBackScreenButtonArea}>
+      <BackButtonArea>
         {isProcessingUnmanaged && (
           <Tooltip content={<GoBackMsg />}>
-            <div
-              className={GetStartedStyles.goBackScreenButton}
-              onClick={cancel}
-            />
+            <BackButton onClick={cancel} />
           </Tooltip>
         )}
-      </div>
+      </BackButtonArea>
       <Subtitle className={styles.subtitle} title={title} />
       <div className={styles.description}>{description}</div>
       {!noVspSelection && (

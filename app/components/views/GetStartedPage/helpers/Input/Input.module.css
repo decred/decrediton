@@ -1,0 +1,11 @@
+.input {
+  padding-left: 10px;
+  float: left;
+  width: 295px;
+}
+
+@media screen and (max-width: 768px) {
+  .input {
+    width: 243px;
+  }
+}
