@@ -6,12 +6,15 @@ const EnablePage = () => {
   const { onEnableDex, enableDexAttempt } = useDex();
 
   return (
-    <div>
-      <T
-        id="dex.enableInformation"
-        m="Welcome to Decred's Decentralized Exchange! By clicking the following button you are enabling DEX on this wallet.  For security purposes, we suggest using a separate DEX wallet and then transfer funds out from there to your normal wallet."
-      />
+    <>
+      <div>
+        <T
+          id="dex.enableInformation"
+          m="Welcome to Decred's Decentralized Exchange! By clicking the following button you are enabling DEX on this wallet.  For security purposes, we suggest using a separate DEX wallet and then transfer funds out from there to your normal wallet."
+        />
+      </div>
       <ResetNetworkButton
+        className="margin-top-m"
         modalTitle={
           <T id="dex.resetWalletRequired" m="Wallet reset required" />
         }
@@ -28,7 +31,7 @@ const EnablePage = () => {
         block={false}
         onSubmit={onEnableDex}
       />
-    </div>
+    </>
   );
 };
 

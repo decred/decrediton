@@ -1,4 +1,3 @@
-// @flow
 import {
   getLoader,
   createWallet,
@@ -348,14 +347,12 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
           return resolve();
         }
       });
-      rpcSyncCall.on("end", function (data) {
-        // It never gets here but log if it does.
-        console.log(data);
+      rpcSyncCall.on("end", function () {
+        // Connection closed.
       });
       rpcSyncCall.on("error", function (status) {
         status = status + "";
         if (status.indexOf("Cancelled") < 0) {
-          console.error(status);
           if (isRetry) {
             const { rpcRetryAttempts } = getState().walletLoader;
             if (rpcRetryAttempts < MAX_RPC_RETRIES) {
@@ -377,7 +374,8 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
               });
             }
           } else if (status.includes("wallet.Unlock: invalid passphrase")) {
-            // Wallet needs unlocking to discover accounts and passphrase is wrong.
+            // Wallet needs unlocking to discover accounts and passphrase
+            // is wrong.
             dispatch({ error: status, type: SYNC_FAILED });
             return reject(OPENWALLET_INPUTPRIVPASS);
           } else if (

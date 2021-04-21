@@ -1,8 +1,10 @@
+import { FormattedMessage as T } from "react-intl";
+import { classNames } from "pi-ui";
 import { useDex } from "../hooks";
 import { useDexCreateWallets } from "./hooks";
 import { AppPassAndPassphraseModalButton, KeyBlueButton } from "buttons";
 import { TextInput } from "inputs";
-import { FormattedMessage as T } from "react-intl";
+import styles from "./CreateWalletsPage.module.css";
 
 const CreateWalletsPage = () => {
   const {
@@ -34,21 +36,37 @@ const CreateWalletsPage = () => {
   });
 
   return (
-    <div>
+    <div className="flex-column align-start">
       {!dexBTCWalletRunning ? (
         btcConfig ? (
-          <div>
-            <T
-              id="dex.connectBTCWallet"
-              m="Please enter the name of your BTC Wallet then attempt to connect to the wallet.  ** Note ** We have found a bitcoin.conf at the default location which will be used to communicate with your BTC Wallet.  Make sure you BTC Wallet is currently running before attempting to connect."
-            />
+          <>
+            <div>
+              <T
+                id="dex.connectBTCWallet"
+                m="Please enter the name of your BTC Wallet then attempt to connect to the wallet."
+              />
+            </div>
+            <div className="margin-top-s">
+              <T
+                id="dex.connectBTCWalletNote"
+                m="Note: we have found a bitcoin.conf at the default location which will be used to communicate with your BTC Wallet."
+              />
+            </div>
+            <div className="margin-top-s">
+              <T
+                id="dex.connectBTCWalletNote2"
+                m="Make sure you BTC Wallet is currently running before attempting to connect."
+              />
+            </div>
             <TextInput
+              className={classNames("margin-top-m", styles.walletNameInput)}
               required
               value={walletName}
               onChange={(e) => setWalletName(e.target.value)}
               placeholder="BTC Wallet Name (leave empty if unnamed default wallet)"
             />
             <AppPassAndPassphraseModalButton
+              className="margin-top-m"
               passphraseLabel={
                 <T
                   id="dex.createBTCWalletPassphrase"
@@ -64,9 +82,9 @@ const CreateWalletsPage = () => {
                   m="Connect BTC Wallet"
                 />
               }
-              passphraseNotRequired={true}
+              passphraseNotRequired
             />
-          </div>
+          </>
         ) : btcConfigUpdateNeeded ? (
           <div>
             <T
@@ -108,6 +126,7 @@ const CreateWalletsPage = () => {
       )}
       {!dexDCRWalletRunning ? (
         <AppPassAndPassphraseModalButton
+          className="margin-top-m"
           disabled={createWalletDexAttempt}
           modalTitle={<T id="dex.createDCRWallet" m="Connect DCR Wallet" />}
           loading={createWalletDexAttempt}
