@@ -166,7 +166,6 @@ export const transactionNtfnsStart = () => (dispatch, getState) => {
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
   transactionNtfns.on("data", transactionNtfnsDataHandler(dispatch, getState));
   transactionNtfns.on("end", () => {
-    console.log("Transaction notifications done");
     dispatch({ type: TRANSACTIONNTFNS_END });
   });
   transactionNtfns.on("error", (error) => {
@@ -199,7 +198,6 @@ export const accountNtfnsStart = () => (dispatch, getState) => {
     dispatch(updateAccount(account));
   });
   accountNtfns.on("end", () => {
-    console.log("Account notifications done");
     dispatch({ type: ACCOUNTNTFNS_END });
   });
   accountNtfns.on("error", (error) => {
