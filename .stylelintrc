@@ -1,6 +1,8 @@
 {
   "extends": "stylelint-config-recommended",
 
+  "ignoreFiles": ["app/dist/*.css"],
+
   "rules": {
       "length-zero-no-unit": null,
       "shorthand-property-no-redundant-values": null,
