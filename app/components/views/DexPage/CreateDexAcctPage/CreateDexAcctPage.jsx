@@ -8,12 +8,15 @@ const CreateDexAcctPage = () => {
   const { onCreateDexAccount, dexAccountAttempt } = useDex();
 
   return (
-    <div className={styles.dexContent}>
-      <T
-        id="dex.newAccount"
-        m="Please create a new account that will be connected to the DEX.  Transfer funds in and out of this account to deposit/withdrawal funds from what is accessible at the DEX."
-      />
+    <>
+      <div className={styles.dexContent}>
+        <T
+          id="dex.newAccount"
+          m="Please create a new account that will be connected to the DEX.  Transfer funds in and out of this account to deposit/withdrawal funds from what is accessible at the DEX."
+        />
+      </div>
       <PassphraseModalButton
+        className="margin-top-m"
         disabled={dexAccountAttempt}
         modalTitle={<T id="dex.createDexAccount" m="Create DEX Account" />}
         loading={dexAccountAttempt}
@@ -23,7 +26,7 @@ const CreateDexAcctPage = () => {
           <T id="dex.createDexAccountButton" m="Create DEX Account" />
         }
       />
-    </div>
+    </>
   );
 };
 
