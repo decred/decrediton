@@ -1,0 +1,143 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.columns {
+  width: 100%;
+  color: var(--account-text);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.columnLeft,
+.columnRight {
+  margin-top: 15px;
+}
+
+.title {
+  font-size: 19px;
+  text-align: right;
+  padding-right: 200px;
+  margin-bottom: 10px;
+}
+
+.actions {
+  width: 93%;
+  margin-left: 20px;
+  height: 100px;
+  border-top: 1px solid var(--text-toggle-button-border);
+}
+
+.pubkey {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+  margin-top: 18px;
+  width: 88%;
+}
+
+.pubkeyLabel {
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 2px;
+  margin-right: 14px;
+}
+
+.pubkeyButton {
+  height: 25px;
+  width: 75px;
+  color: var(--input-color-default);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 400;
+  background-color: var(--disabled-color);
+  padding: 2px 20px 3px 20px;
+  box-shadow: none;
+  transition: all 131ms var(--ease-in-out-quart);
+  cursor: auto;
+}
+
+.pubkeyArea {
+  color: var(--input-color);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 600;
+  padding: 2px 20px 3px 20px;
+  border-radius: 3px;
+  background-color: var(--background-copy-color);
+  height: 55px;
+  width: 390px;
+  word-break: break-all;
+  transition: all 131ms var(--ease-in-out-quart);
+}
+
+.pubkeyClipboard {
+  margin-left: 10px;
+}
+
+.renameButton,
+.showButton,
+.hideButton,
+.revealPubkeyButton {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  border-radius: 5px;
+  background-position: 50% 50%;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  box-shadow: 0px 3px 5px rgba(9, 20, 64, 0.16);
+  outline: 0;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  background-color: var(--input-color);
+  border: 0;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 17px;
+}
+
+.revealPubkeyButtonShow {
+  background-image: var(--show-pubkey-icon);
+}
+
+.revealPubkeyButtonHide {
+  background-image: var(--hide-pubkey-icon);
+}
+
+.renameButton {
+  background-image: var(--account-rename-icon);
+  background-size: 20px;
+}
+
+.showButton {
+  background-image: var(--show-account-icon);
+}
+
+.hideButton {
+  background-image: var(--hide-account-icon);
+}
+
+.renameButton:hover,
+.showButton:hover,
+.hideButton:hover,
+.revealPubkeyButton:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+  .actions.isRow {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buttons {
+    margin: 0 auto;
+  }
+}

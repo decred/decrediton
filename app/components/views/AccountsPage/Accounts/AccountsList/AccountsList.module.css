@@ -1,0 +1,10 @@
+.contentNest {
+  padding-top: 1px;
+  width: 740px;
+}
+
+@media screen and (max-width: 1179px) {
+  .contentNest {
+    width: 667px;
+  }
+}

@@ -1,0 +1,58 @@
+.detailsTop {
+  cursor: pointer;
+  padding: 21px 30px 21px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-image: var(--accounts-default);
+  background-size: 20px auto;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  border-top: 1px solid var(--background-container-hover);
+}
+
+.detailsTop.imported {
+  background-image: var(--accounts-imported);
+}
+
+.detailsTop.mixed {
+  background-image: var(--mixed-account-icon);
+}
+
+.detailsTop.unmixed {
+  background-image: var(--unmixed-account-icon);
+}
+
+.detailsTop:hover {
+  background-color: var(--background-container-hover);
+}
+
+.detailsTop:hover.disabled {
+  background-color: var(--disabled-background-color);
+}
+
+.disabled {
+  background-color: var(--disabled-background-color);
+}
+
+.topName {
+  color: var(--tutorial-header);
+  font-size: 19px;
+}
+
+.topFunds {
+  color: var(--tutorial-header);
+  font-size: 19px;
+  text-align: right;
+}
+
+.topSpendable {
+  color: var(--account-text);
+  font-size: 13px;
+}
+
+.topSpendableValue {
+  color: var(--tutorial-header);
+  margin-left: 5px;
+}

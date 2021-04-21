@@ -1,6 +1,6 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import AccountsList from "./Accounts/Accounts";
+import AccountsList from "./Accounts";
 import { PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
