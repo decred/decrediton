@@ -219,7 +219,7 @@ export const btcCreateWalletDex = (
       dex: { btcConfig }
     } = getState();
     const testnet = sel.isTestNet(getState());
-    const account = btcWalletName;
+    let account = btcWalletName;
     const rpcuser = btcConfig.rpcuser;
     const rpcpass = btcConfig.rpcpassword;
     const rpclisten = testnet
@@ -237,6 +237,9 @@ export const btcCreateWalletDex = (
       rpclisten
     );
     dispatch({ type: BTC_CREATEWALLET_SUCCESS });
+    if (!account || account == "") {
+      account = "";
+    }
     const {
       daemon: { walletName }
     } = getState();
