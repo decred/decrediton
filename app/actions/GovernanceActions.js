@@ -22,6 +22,7 @@ import {
   PROPOSAL_STATUS_ABANDONED,
   PROPOSAL_INDEX_MD_FILE
 } from "constants";
+import { unlockAcctAndExecFn } from "./ControlActions";
 
 // defaultInventory is how inventory and proposals are stored at our redux state.
 const defaultInventory = {
@@ -640,6 +641,13 @@ export const updateVoteChoice = (
   const voteChoice = proposal.voteOptions.find((o) => o.id === newVoteChoiceID);
   if (!voteChoice) throw "Unknown vote choice for proposal";
 
+  // get account number. We consider all votes come from same account.
+  const address = walletEligibleTickets[0].address;
+  const response = await wallet.validateAddress(
+    sel.walletService(getState()),
+    address
+  );
+  const accountNumber = response.getAccountNumber();
   // msg here needs to follow the same syntax as what is defined on
   // politeiavoter.
   const messages = walletEligibleTickets.map((t) => ({
@@ -665,11 +673,10 @@ export const updateVoteChoice = (
 
   dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
   try {
-    const signed = await wallet.signMessages(
+    const signed = await dispatch(unlockAcctAndExecFn(passphrase, accountNumber, () => wallet.signMessages(
       walletService,
-      passphrase,
       messages
-    );
+    )));
 
     const votes = [];
     const votesToCache = { token, walletEligibleTickets, voteChoice };

@@ -15,7 +15,7 @@ export const signMessage = log((walletService, address, message) => {
   );
 }, "Sign Message");
 
-export const signMessages = log((walletService, passphrase, messages) => {
+export const signMessages = log((walletService, messages) => {
   const reqMessages = messages.map((m) => {
     const rm = new SignMessagesRequest.Message();
     rm.setAddress(m.address);
@@ -24,7 +24,6 @@ export const signMessages = log((walletService, passphrase, messages) => {
   });
 
   const request = new SignMessagesRequest();
-  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setMessagesList(reqMessages);
   return new Promise((resolve, reject) =>
     walletService.signMessages(request, (error, response) =>
