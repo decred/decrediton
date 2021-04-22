@@ -1,3 +1,5 @@
+import { FormattedMessage as T } from "react-intl";
+import { Checkbox } from "pi-ui";
 import { StakeyBounce } from "indicators";
 import StakePools from "./LEGACY_StakePools/StakePoolsList";
 import Tickets from "./LEGACY_Tickets";
@@ -5,7 +7,6 @@ import { useLegacyPurchasePage } from "./hooks";
 import { EnableExternalRequestButton } from "buttons";
 import { ExternalLink } from "shared";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
-import { FormattedMessage as T } from "react-intl";
 import StakePoolsAddForm from "./LEGACY_AddForm";
 import styles from "./PurchasePage.module.css";
 
@@ -24,20 +25,29 @@ const StakepoolListingDisabled = React.memo(() => (
   </div>
 ));
 
-const NoAvailableStakepools = React.memo(() => (
-  <T
-    id="stake.noAvailableStakepools"
-    m="No VSP found. Check your internet connection or {link} to see if the VSP API is down."
-    values={{
-      link: (
-        <ExternalLink
-          href="https://api.decred.org/?c=gsd"
-          className={styles.stakepoolLink}>
-          <T id="stake.discoverStakeOoolsAPILink" m="this link" />
-        </ExternalLink>
-      )
-    }}
-  />
+const NoAvailableStakepools = React.memo(({ toggleIsLegacy }) => (
+  <>
+    <T
+      id="stake.noAvailableStakepools"
+      m="No VSP found. Check your internet connection or {link} to see if the VSP API is down."
+      values={{
+        link: (
+          <ExternalLink
+            href="https://api.decred.org/?c=gsd"
+            className={styles.stakepoolLink}>
+            <T id="stake.discoverStakeOoolsAPILink" m="this link" />
+          </ExternalLink>
+        )
+      }}
+    />
+    <Checkbox
+      className="margin-top-m"
+      label={<T id="purchase.isLegacy.legacy.add" m="Use Legacy VSP" />}
+      id="box"
+      checked={true}
+      onChange={() => toggleIsLegacy(false)}
+    />
+  </>
 ));
 
 const PurchasePage = ({
@@ -76,7 +86,7 @@ const PurchasePage = ({
   return getNoAvailableStakepools && !getStakepoolListingEnabled() ? (
     <StakepoolListingDisabled />
   ) : getNoAvailableStakepools ? (
-    <NoAvailableStakepools />
+    <NoAvailableStakepools toggleIsLegacy={toggleIsLegacy} />
   ) : isPurchasingTickets ? (
     <StakeyBounce center />
   ) : getIsAdding ? (
