@@ -7,6 +7,8 @@ import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedT
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 import SettingAccountsPassphrase from "./SettingAccountsPassphrase/SettingAccountsPassphrase";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
+import { useDispatch } from "react-redux";
+import { checkAllAccountsEncrypted, setAccountsPass } from "actions/ControlActions";
 
 export const useWalletSetup = (settingUpWalletRef) => {
   const dispatch = useDispatch();

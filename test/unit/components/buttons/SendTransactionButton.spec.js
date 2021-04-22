@@ -20,7 +20,6 @@ let mockSignTransactionAttempt;
 let mockUnsignedTransaction;
 let mockConstructTxResponse;
 let mockIsSendingTransaction;
-let mockAccountValue;
 
 beforeEach(() => {
   mockOnSubmit = jest.fn(() => {});
@@ -40,7 +39,6 @@ beforeEach(() => {
     () => false
   );
   selectors.isTrezor = jest.fn(() => false);
-  mockAccountValue = selectors.balanaces = jest.fn(() => testAccount);
 });
 
 test("render default SendTransactionButton ", () => {
