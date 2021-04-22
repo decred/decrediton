@@ -51,7 +51,6 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  transition: all var(--input-transition-time) var(--input-timing-function);
 }
 
 .is-open .Select-control .Select-input:focus {
@@ -292,7 +291,6 @@
   width: 100%;
   z-index: 101;
   -webkit-overflow-scrolling: touch;
-  transition: all var(--input-transition-time) var(--input-timing-function);
 }
 
 .Select-menu-with-arrow .Select-menu-outer {
