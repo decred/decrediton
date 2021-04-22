@@ -42,7 +42,7 @@ const NoAvailableStakepools = React.memo(({ toggleIsLegacy }) => (
     />
     <Checkbox
       className="margin-top-m"
-      label={<T id="purchase.isLegacy.legacy.add" m="Use Legacy VSP" />}
+      label={<T id="stake.isLegacy" m="Use Legacy VSP" />}
       id="box"
       checked={true}
       onChange={() => toggleIsLegacy(false)}
