@@ -673,10 +673,11 @@ export const updateVoteChoice = (
 
   dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
   try {
-    const signed = await dispatch(unlockAcctAndExecFn(passphrase, accountNumber, () => wallet.signMessages(
-      walletService,
-      messages
-    )));
+    const signed = await dispatch(
+      unlockAcctAndExecFn(passphrase, accountNumber, () =>
+        wallet.signMessages(walletService, messages)
+      )
+    );
 
     const votes = [];
     const votesToCache = { token, walletEligibleTickets, voteChoice };
