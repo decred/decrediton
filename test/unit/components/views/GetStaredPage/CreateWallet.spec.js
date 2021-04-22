@@ -190,7 +190,7 @@ test("test copy seed view", async () => {
   user.type(inputControl, "I understand the risks");
   expect(confirmSeedCopyButton.disabled).toBe(false);
 
-  user.click(confirmSeedCopyButton);
+  fireEvent.submit(confirmSeedCopyButton);
   expect(mockCopySeedToClipboard).toHaveBeenCalledWith(testSeedMnemonic);
 });
 
