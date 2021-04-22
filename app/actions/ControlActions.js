@@ -745,7 +745,10 @@ export const SIGNMESSAGE_FAILED = "SIGNMESSAGE_FAILED";
 export const SIGNMESSAGE_SUCCESS = "SIGNMESSAGE_SUCCESS";
 export const SIGNMESSAGE_CLEANSTORE = "SIGNMESSAGE_CLEANSTORE";
 
-export const signMessageAttempt = (address, message, passphrase) => async (dispatch, getState) => {
+export const signMessageAttempt = (address, message, passphrase) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: SIGNMESSAGE_ATTEMPT });
   try {
     const response = await wallet.validateAddress(
@@ -753,20 +756,19 @@ export const signMessageAttempt = (address, message, passphrase) => async (dispa
       address
     );
     const accountNumber = response.getAccountNumber();
-    const getSignMessageResponse = await dispatch(unlockAcctAndExecFn(passphrase, accountNumber, () => wallet.signMessage(
-      sel.walletService(getState()),
-      address,
-      message
-    )));
+    const getSignMessageResponse = await dispatch(
+      unlockAcctAndExecFn(passphrase, accountNumber, () =>
+        wallet.signMessage(sel.walletService(getState()), address, message)
+      )
+    );
     dispatch({
       getSignMessageSignature: getSignMessageResponse.toObject().signature,
       type: SIGNMESSAGE_SUCCESS
     });
   } catch (error) {
-    dispatch({ error, type: SIGNMESSAGE_FAILED })
+    dispatch({ error, type: SIGNMESSAGE_FAILED });
   }
 };
-
 
 export const signMessageCleanStore = (dispatch) =>
   dispatch({ type: SIGNMESSAGE_CLEANSTORE });

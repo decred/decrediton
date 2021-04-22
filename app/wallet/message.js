@@ -4,19 +4,16 @@ import { withLogNoData as log } from "./app";
 
 const { SignMessageRequest, SignMessagesRequest, VerifyMessageRequest } = api;
 
-export const signMessage = log(
-  (walletService, address, message) => {
-    const request = new SignMessageRequest();
-    request.setAddress(address);
-    request.setMessage(message);
-    return new Promise((resolve, reject) =>
-      walletService.signMessage(request, (error, response) =>
-        error ? reject(error) : resolve(response)
-      )
-    );
-  },
-  "Sign Message"
-);
+export const signMessage = log((walletService, address, message) => {
+  const request = new SignMessageRequest();
+  request.setAddress(address);
+  request.setMessage(message);
+  return new Promise((resolve, reject) =>
+    walletService.signMessage(request, (error, response) =>
+      error ? reject(error) : resolve(response)
+    )
+  );
+}, "Sign Message");
 
 export const signMessages = log((walletService, passphrase, messages) => {
   const reqMessages = messages.map((m) => {

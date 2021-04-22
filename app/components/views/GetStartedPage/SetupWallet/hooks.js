@@ -59,7 +59,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
   }, [send]);
 
   const getStateComponent = useCallback(() => {
-    const { error, isWatchingOnly, isTrezor  } = current.context;
+    const { error, isWatchingOnly, isTrezor } = current.context;
 
     let component, hasLive, hasSoloTickets;
     if (previousState && current.value === previousState.value) return;
