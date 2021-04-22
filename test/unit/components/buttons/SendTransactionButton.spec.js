@@ -42,7 +42,7 @@ beforeEach(() => {
 });
 
 test("render default SendTransactionButton ", () => {
-  render(<SendTransactionButton isTrezor={false} account={ { value: 0 } } />);
+  render(<SendTransactionButton isTrezor={false} account={{ value: 0 }} />);
   expect(screen.getByText(/send/i)).toBeInTheDocument();
   const button = screen.getByRole("button");
   user.click(button);
