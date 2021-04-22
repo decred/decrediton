@@ -1060,7 +1060,7 @@ export const unlockAcctAndExecFn = (
       passphrase,
       acctNumber
     );
-    dispatch({ type: UNLOCKACCOUNT_SUCCESS, error });
+    dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
