@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
-import SettingAccountsPassphrase from "./SettingAccountsPassphrase/SettingAccountsPassphrase";
+import SettingAccountsPassphrase from "./SetAccountsPassphrase";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
 import { useDispatch } from "react-redux";
 import { checkAllAccountsEncrypted, setAccountsPass } from "actions/ControlActions";

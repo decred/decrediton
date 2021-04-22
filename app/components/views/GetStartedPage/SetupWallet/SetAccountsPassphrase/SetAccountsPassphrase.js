@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import styles from "./SettingAccountsPassphrase.module.css";
 
-export default ({
+const SetAccountsPassphrase = ({
   send,
   onProcessAccounts,
   title,
@@ -39,3 +39,5 @@ export default ({
     </div>
   );
 };
+
+export default SetAccountsPassphrase;

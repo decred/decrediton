@@ -105,7 +105,6 @@ export const InfoDocFieldModalButton = mbb(
   DocumentationInfoModal
 );
 export const ChangePassphraseButton = mbb(null, ChangePassphraseModal);
-
 export const InvisiblePassphraseModalButton = mbb(
   null,
   PassphraseModal,
