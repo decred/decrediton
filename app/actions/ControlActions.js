@@ -1017,6 +1017,7 @@ export const setAccountsPass = (walletPassphrase) => async (
     return dispatch({ type: SETACCOUNTSPASSPHRASE_SUCCESS, accounts });
   } catch (error) {
     dispatch({ error, type: SETACCOUNTSPASSPHRASE_FAILED });
+    throw error;
   }
 };
 
@@ -1059,6 +1060,7 @@ export const unlockAcctAndExecFn = (
       passphrase,
       acctNumber
     );
+    dispatch({ type: UNLOCKACCOUNT_SUCCESS, error });
   } catch (error) {
     // no need to lock as unlock errored.
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
@@ -1079,6 +1081,7 @@ export const unlockAcctAndExecFn = (
   // lock account
   try {
     await wallet.lockAccount(sel.walletService(getState()), acctNumber);
+    dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.
     dispatch({ type: LOCKACCOUNT_FAILED, error });

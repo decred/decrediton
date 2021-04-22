@@ -47,7 +47,8 @@ import {
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS,
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
-  STARTTICKETBUYERV3_FAILED
+  STARTTICKETBUYERV3_FAILED,
+  SETACCOUNTSPASSPHRASE_FAILED
 } from "actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS,
@@ -658,6 +659,10 @@ const messages = defineMessages({
   STARTTICKETBUYERV3_FAILED: {
     id: "vsp.runautobuyer.failed",
     defaultMessage: "{originalError}"
+  },
+  SETACCOUNTSPASSPHRASE_FAILED: {
+    id: "setupWallet.processAccounts.failed",
+    defaultMessage: "{originalError}"
   }
 });
 
@@ -882,6 +887,7 @@ export default function snackbar(state = {}, action) {
     case DEX_LOGOUT_FAILED:
     case DEX_USER_FAILED:
     case STARTTICKETBUYERV3_FAILED:
+    case SETACCOUNTSPASSPHRASE_FAILED:
       type = "Error";
       if (
         action.error &&

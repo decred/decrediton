@@ -14,7 +14,8 @@ export const SetupWalletConfigMachine = Machine({
   states: {
     settingAccountsPass: {
       on: {
-        CONTINUE: "settingMixedAccount"
+        CONTINUE: "settingMixedAccount",
+        ERROR: "settingAccountsPass"
       }
     },
     settingMixedAccount: {
