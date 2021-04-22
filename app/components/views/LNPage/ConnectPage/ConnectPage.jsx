@@ -122,17 +122,22 @@ const ConnectPage = () => {
               />
             </div>
           </div>
-          <PassphraseModalButton
-            modalTitle={
-              <T id="ln.connectPage.unlockWalletModal" m="Unlock LN Wallet" />
-            }
-            disabled={startAttempt}
-            onSubmit={onLaunch}
-            loading={startAttempt}
-            buttonLabel={
-              <T id="ln.connectPage.launchBtn" m="Start and Unlock LN Wallet" />
-            }
-          />
+          <div className={styles.buttonContrainer}>
+            <PassphraseModalButton
+              modalTitle={
+                <T id="ln.connectPage.unlockWalletModal" m="Unlock LN Wallet" />
+              }
+              disabled={startAttempt}
+              onSubmit={onLaunch}
+              loading={startAttempt}
+              buttonLabel={
+                <T
+                  id="ln.connectPage.launchBtn"
+                  m="Start and Unlock LN Wallet"
+                />
+              }
+            />
+          </div>
           {stageMsgs[startupStage] && <div>{stageMsgs[startupStage]}</div>}
         </div>
       )}

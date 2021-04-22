@@ -13,3 +13,7 @@
   display: flex;
   padding-top: 18px;
 }
+
+.buttonContrainer {
+  text-align: right;
+}

@@ -226,7 +226,6 @@
   height: 0;
   width: 0;
   position: relative;
-  transition: all var(--input-transition-time) var(--input-timing-function);
 }
 
 .Select-control:hover:not(:disabled) {
@@ -243,6 +242,7 @@
 .is-open .Select-control:hover:not(:disabled) .Select-arrow,
 .Select-arrow-zone:hover > .Select-arrow {
   border-top-color: var(--stroke-color-focused);
+  transform: rotate(180deg) translateY(4px);
 }
 
 .Select--multi .Select-multi-value-wrapper {

@@ -185,7 +185,10 @@ const CreateWalletForm = ({
         />
       </Row>
     )}
-    <Row>
+    <Row className={styles.buttonContrainer}>
+      <InvisibleButton onClick={hideCreateWalletForm}>
+        <T id="advancedStartup.cancel" m="Cancel" />
+      </InvisibleButton>
       <KeyBlueButton onClick={createWallet}>
         {creatingWallet ? (
           <T id="wallet.creating.button" m="Creating" />
@@ -193,9 +196,6 @@ const CreateWalletForm = ({
           <T id="wallet.create.button" m="Continue" />
         )}
       </KeyBlueButton>
-      <InvisibleButton onClick={hideCreateWalletForm}>
-        <T id="advancedStartup.cancel" m="Cancel" />
-      </InvisibleButton>
     </Row>
   </>
 );
