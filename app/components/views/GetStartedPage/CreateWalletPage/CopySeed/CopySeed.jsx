@@ -6,6 +6,7 @@ import * as cli from "actions/ClientActions";
 const CopySeed = ({ mnemonic, sendContinue, sendBack }) => {
   const [showCopySeedConfirm, setShowCopySeed] = useState(false);
   const dispatch = useDispatch();
+
   const copySeedToClipboard = (mnemonic) =>
     dispatch(cli.copySeedToClipboard(mnemonic));
 
