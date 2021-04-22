@@ -325,7 +325,9 @@ export const getStartedMachine = Machine({
                 spawnedMachine = spawn(
                   SetupWalletConfigMachine.withContext({
                     selectedWallet: ctx.selectedWallet,
-                    isCreateNewWallet: ctx.isCreateNewWallet
+                    isCreateNewWallet: ctx.isCreateNewWallet,
+                    isWatchingOnly: ctx.selectedWallet.isWatchingOnly,
+                    isTrezor: ctx.selectedWallet.isTrezor
                   })
                 );
               } catch (e) {

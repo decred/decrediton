@@ -59,13 +59,18 @@ export const useWalletSetup = (settingUpWalletRef) => {
   }, [send]);
 
   const getStateComponent = useCallback(() => {
-    const { error } = current.context;
+    const { error, isWatchingOnly, isTrezor  } = current.context;
 
     let component, hasLive, hasSoloTickets;
     if (previousState && current.value === previousState.value) return;
 
     switch (current.value) {
       case "settingAccountsPass": {
+        // step not needed with trezor or watching only wallets.
+        if (isWatchingOnly || isTrezor) {
+          sendContinue();
+          return;
+        }
         const allEncrypted = onCheckAcctsPass();
         if (allEncrypted) {
           sendContinue();
