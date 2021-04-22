@@ -1,7 +1,7 @@
 // @flow
 import Promise from "promise";
 import { getWalletCfg, updateStakePoolConfig } from "config";
-import { importScriptAttempt, rescanAttempt } from "./ControlActions";
+import { importScriptAttempt, rescanAttempt, unlockAcctAndExecFn } from "./ControlActions";
 import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
@@ -596,7 +596,6 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         }
         return false;
       });
-      let unlocked = false;
       const walletService = sel.walletService(getState());
       try {
         dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
@@ -610,23 +609,23 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
 
-        await wallet.unlockWallet(walletService, passphrase);
-        unlocked = true;
-        await Promise.all(
-          availableVSPs.map(async (vsp) => {
-            if (vsp.pubkey) {
-              await wallet.processManagedTickets(
-                walletService,
-                vsp.host,
-                vsp.pubkey,
-                feeAccount,
-                changeAccount
-              );
-            }
-          })
+        await dispatch(
+          unlockAcctAndExecFn(passphrase, feeAccount, () =>
+            Promise.all(
+              availableVSPs.map(async (vsp) => {
+                if (vsp.pubkey) {
+                  await wallet.processManagedTickets(
+                    walletService,
+                    vsp.host,
+                    vsp.pubkey,
+                    feeAccount,
+                    changeAccount
+                  );
+                }
+              })
+            )
+          )
         );
-
-        await wallet.lockWallet(walletService);
 
         // get vsp tickets fee status errored so we can resync them
         await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
@@ -635,7 +634,6 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
         resolve(true);
       } catch (error) {
-        if (unlocked) await wallet.lockWallet(walletService);
         dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
         if (
           String(error).indexOf(
@@ -683,13 +681,16 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
         }
 
         if (passphrase) {
-          await wallet.processUnmanagedTickets(
-            walletService,
-            passphrase,
-            vspHost,
-            vspPubkey,
-            feeAccount,
-            changeAccount
+          await dispatch(
+            unlockAcctAndExecFn(passphrase, feeAccount, () =>
+              wallet.processUnmanagedTicketsStartup(
+                walletService,
+                vspHost,
+                vspPubkey,
+                feeAccount,
+                changeAccount
+              )
+            )
           );
         } else {
           await wallet.processUnmanagedTicketsStartup(
