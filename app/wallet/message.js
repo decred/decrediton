@@ -5,11 +5,10 @@ import { withLogNoData as log } from "./app";
 const { SignMessageRequest, SignMessagesRequest, VerifyMessageRequest } = api;
 
 export const signMessage = log(
-  (walletService, address, message, passphrase) => {
+  (walletService, address, message) => {
     const request = new SignMessageRequest();
     request.setAddress(address);
     request.setMessage(message);
-    request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     return new Promise((resolve, reject) =>
       walletService.signMessage(request, (error, response) =>
         error ? reject(error) : resolve(response)
