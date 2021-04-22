@@ -38,14 +38,22 @@
 
 .buttonIcon::after {
   content: "";
-  border-color: var(--filter-menu-arrow) transparent transparent;
-  border-style: solid;
-  border-width: 5px 5px 2.5px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--filter-menu-arrow);
   height: 0;
   width: 0;
   top: 11px;
   left: 10px;
   position: relative;
+}
+
+.menu.open .buttonIcon::after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--filter-menu-arrow);
+  border-top: none;
+  top: -10px;
 }
 
 .buttonIcon:hover {

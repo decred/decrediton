@@ -10,6 +10,11 @@ const ButtonsToolbar = ({
   className
 }) => (
   <div className={className}>
+    <InvisibleButton
+      className={style.passphraseCloseButton}
+      onClick={onCancelModal}>
+      <T id="passphraseModal.btnCancel" m="Cancel" />
+    </InvisibleButton>
     <KeyBlueButton
       disabled={
         // if isValid is not passed as props, we never validate it.
@@ -22,11 +27,6 @@ const ButtonsToolbar = ({
         <T id="passphraseModal.continue" m="Continue" />
       )}
     </KeyBlueButton>
-    <InvisibleButton
-      className={style.passphraseCloseButton}
-      onClick={onCancelModal}>
-      <T id="passphraseModal.btnCancel" m="Cancel" />
-    </InvisibleButton>
   </div>
 );
 

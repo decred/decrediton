@@ -44,16 +44,16 @@ const RenameAccount = ({
       </div>
     </div>
     <div className={style.renameBottomButtons}>
-      <KeyBlueButton
-        className={style.contentConfirmNewAccount}
-        onClick={renameAccount}>
-        <T id="accounts.renameBtn" m="Rename" />
-      </KeyBlueButton>
       <InvisibleButton
         className={style.contentConfirmNewAccount}
         onClick={hideRenameAccount}>
         <T id="accounts.cancelRenameBtn" m="Cancel" />
       </InvisibleButton>
+      <KeyBlueButton
+        className={style.contentConfirmNewAccount}
+        onClick={renameAccount}>
+        <T id="accounts.renameBtn" m="Rename" />
+      </KeyBlueButton>
     </div>
   </div>
 );

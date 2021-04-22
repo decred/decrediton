@@ -139,7 +139,7 @@
   margin-left: 10px;
 }
 .contentConfirmNewAccount {
-  margin-right: 2em;
+  margin-right: 1em;
 }
 .renameButton,
 .showButton,
@@ -237,6 +237,9 @@
 }
 .disabled {
   background-color: var(--disabled-background-color);
+}
+.renameBottomButtons {
+  text-align: right;
 }
 @media screen and (max-width: 768px) {
   .actions.isRow {

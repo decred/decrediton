@@ -67,3 +67,9 @@
 .trezorDocs {
   color: var(--link-color);
 }
+
+.buttonContrainer {
+  clear: both;
+  text-align: right;
+  max-width: 600px;
+}
