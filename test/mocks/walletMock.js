@@ -19,3 +19,4 @@ export const getDcrlndLogs = () => "";
 export const getDecreditonLogs = () => "";
 export const reloadAllowedExternalRequests = () => null;
 export const setupProxy = () => null;
+export const readFromClipboard = jest.fn(() => "");

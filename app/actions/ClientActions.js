@@ -27,7 +27,6 @@ import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { getWalletCfg, getGlobalCfg } from "config";
-import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
 import { discoverAvailableVSPs } from "./VSPActions";
@@ -714,8 +713,7 @@ export const goBackHistory = () => (dispatch) => dispatch(goBack());
 
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
 export const copySeedToClipboard = (mnemonic) => (dispatch) => {
-  clipboard.clear();
-  clipboard.writeText(mnemonic);
+  wallet.copyToClipboard(mnemonic);
   dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
 };
 

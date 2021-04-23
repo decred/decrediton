@@ -10,7 +10,7 @@ import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 import * as ca from "actions/ClientActions";
-import { clipboard } from "electron";
+import * as wl from "wallet";
 jest.mock("electron");
 
 const testWalletName = "test-wallet-name";
@@ -38,6 +38,7 @@ const selectors = sel;
 const wlActions = wla;
 const daemonActions = da;
 const clientActions = ca;
+const wallet = wl;
 
 const testSeedArray = SEED_WORDS.slice(0, 33);
 const testSeedMnemonic = testSeedArray.join(" ");
@@ -77,7 +78,7 @@ beforeEach(() => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.reject({ details: "DECODE_ERROR" })
   );
-  mockClipboardReadText = clipboard.readText.mockImplementation(
+  mockClipboardReadText = wallet.readFromClipboard.mockImplementation(
     () => testSeedMnemonic
   );
   mockIsTestNet = selectors.isTestNet = jest.fn(() => false);

@@ -1,9 +1,9 @@
-import { shell } from "electron";
+import { openExternalURL } from "wallet";
 import { useNetwork } from "hooks";
 
 const clicker = (isTestNet, href, hrefTestNet) => () => {
   const url = hrefTestNet && isTestNet ? hrefTestNet : href;
-  shell.openExternal(url);
+  openExternalURL(url);
 };
 
 const ExternalLink = ({ className, href, children, hrefTestNet }) => {

@@ -1,4 +1,4 @@
-import { app } from "electron";
+import { appInfo as app } from "wallet";
 
 export const BOTH_CONNECTION_ERR_MESSAGE =
   "Cannot use both --testnet and --mainnet.";
@@ -22,7 +22,7 @@ export const DIFF_CONNECTION_ERROR =
   "daemon and decrediton does not have the same network";
 
 export const USAGE_MESSAGE = app
-  ? `${app.name} version ${app.getVersion()}
+  ? `${app.name} version ${app.version}
 Usage
   $ ${app.name} [OPTIONS]
 
@@ -45,7 +45,7 @@ Options
   : null;
 
 export const VERSION_MESSAGE = app
-  ? `${app.name} version ${app.getVersion()}`
+  ? `${app.name} version ${app.version}`
   : null;
 
 // POSITION_ERROR and MISMATCH_ERROR represent errors when creating or

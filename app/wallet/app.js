@@ -1,4 +1,4 @@
-import { ipcRenderer } from "electron";
+import { ipcRenderer, clipboard, shell, app } from "electron";
 import {
   isObject,
   isString,
@@ -88,4 +88,25 @@ export const withLogNoData = (f, msg, opts = {}) =>
 
 export const setupProxy = () => {
   ipcRenderer.send("setup-proxy");
+};
+
+export const copyToClipboard = data => {
+  clipboard.clear();
+  clipboard.writeText(data);
+};
+
+export const readFromClipboard = () => clipboard.readText();
+
+export const openExternalURL = (url) => {
+  // Allow opening external http:// sites only in development mode.
+  const regexp = (process.env.NODE_ENV === "development") ? /^https:\/\//  : /^https?:\/\//;
+  if (!regexp.test(url)) {
+    throw new Error("Unsupported external URL " + url);
+  }
+  shell.openExternal(url);
+};
+
+export const appInfo = {
+  name: app?.name,
+  version: app?.getVersion()
 };

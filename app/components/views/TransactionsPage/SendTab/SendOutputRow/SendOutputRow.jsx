@@ -1,6 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { classNames, Tooltip, Button } from "pi-ui";
-const { clipboard } = require("electron");
+import * as wallet from "wallet";
 import {
   DetailedAccountsSelect,
   AddressInput,
@@ -277,7 +277,7 @@ const SendOutputRow = ({
                   onClick={(e) => {
                     e.preventDefault();
                     onValidateAddress({
-                      address: clipboard.readText(),
+                      address: wallet.readFromClipboard(),
                       index
                     });
                   }}>
