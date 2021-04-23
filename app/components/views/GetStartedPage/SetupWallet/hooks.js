@@ -12,6 +12,7 @@ import {
   checkAllAccountsEncrypted,
   setAccountsPass
 } from "actions/ControlActions";
+import { ExternalLink } from "shared";
 
 export const useWalletSetup = (settingUpWalletRef) => {
   const dispatch = useDispatch();
@@ -92,7 +93,17 @@ export const useWalletSetup = (settingUpWalletRef) => {
                 id="getstarted.setAccountsPass.description"
                 m={`Decrediton now uses per-account locking, which requires a one time migration.
                   Enter your current passphrase to perform this upgrade.
-                  Visit docs.decred.org/wallets/decrediton/migrations to know more.`}
+                  Visit {link} to know more.`}
+                values={{
+                  link: (
+                    <ExternalLink
+                      href={
+                        "https://docs.decred.org/wallets/decrediton/migrations"
+                      }>
+                      <T id="getstarted.setAccountsPass.docs" m="Decred docs" />
+                    </ExternalLink>
+                  )
+                }}
               />
             )
           });
