@@ -1090,6 +1090,17 @@ export const unlockAcctAndExecFn = (
 
   // lock account
   try {
+    // do not allow locking of the dex account, as it isn't supposed to lock.
+    const dexAccountName = sel.dexAccount(getState());
+    const dexAccount = accounts.find((acct) => acct.accountName === dexAccountName);
+    if (dexAccount.accountNumber === acctNumber) {
+      // return fn error in case some happened.
+      if (fnError !== null) {
+        throw fnError;
+      }
+
+      return res;
+    }
     await wallet.lockAccount(sel.walletService(getState()), acctNumber);
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
