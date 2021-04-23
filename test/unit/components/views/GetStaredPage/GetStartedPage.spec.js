@@ -8,6 +8,7 @@ import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
 import * as conf from "config";
 import * as wa from "wallet/daemon";
+import * as wl from "wallet";
 import { ipcRenderer } from "electron";
 jest.mock("electron");
 
@@ -227,7 +228,7 @@ test("test if app receive daemon connection data from cli", async () => {
     rpcHost: "test-rpc-host",
     rpcPort: "test-rpc-port"
   };
-  ipcRenderer.sendSync.mockImplementation(() => {
+  wl.getCLIOptions.mockImplementation(() => {
     return {
       rpcPresent: true,
       ...rpcCreds
@@ -251,7 +252,7 @@ test("test if app receive daemon connection data from cli", async () => {
 });
 
 test("start regular daemon and not receive available wallet", async () => {
-  ipcRenderer.sendSync.mockImplementation(() => {
+  wl.getCLIOptions.mockImplementation(() => {
     return {
       rpcPresent: false
     };
@@ -268,12 +269,12 @@ test("start regular daemon and not receive available wallet", async () => {
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockSyncDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).toHaveBeenCalled();
-  ipcRenderer.sendSync.mockRestore();
+  wl.getCLIOptions.mockRestore();
   expect(screen.getByText(testGetAvailableWalletsErrorMsg)).toBeInTheDocument();
 });
 
 test("start regular daemon and receive sync daemon error", async () => {
-  ipcRenderer.sendSync.mockImplementation(() => {
+  wl.getCLIOptions.mockImplementation(() => {
     return {
       rpcPresent: false
     };
@@ -290,11 +291,11 @@ test("start regular daemon and receive sync daemon error", async () => {
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockSyncDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).not.toHaveBeenCalled();
-  ipcRenderer.sendSync.mockRestore();
+  wl.getCLIOptions.mockRestore();
 });
 
 test("start regular daemon and receive network match error", async () => {
-  ipcRenderer.sendSync.mockImplementation(() => {
+  wl.getCLIOptions.mockImplementation(() => {
     return {
       rpcPresent: false
     };
@@ -311,11 +312,11 @@ test("start regular daemon and receive network match error", async () => {
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockSyncDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).toHaveBeenCalled();
-  ipcRenderer.sendSync.mockRestore();
+  wl.getCLIOptions.mockRestore();
 });
 
 test("test daemon warning", async () => {
-  ipcRenderer.sendSync.mockImplementation(() => {
+  wl.getCLIOptions.mockImplementation(() => {
     return {
       rpcPresent: false
     };
@@ -327,5 +328,5 @@ test("test daemon warning", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(testDaemonWarningText));
   expect(mockDaemonWarning).toHaveBeenCalled();
-  ipcRenderer.sendSync.mockRestore();
+  wl.getCLIOptions.mockRestore();
 });

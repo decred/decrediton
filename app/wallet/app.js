@@ -11,6 +11,20 @@ import {
 export const onAppReloadRequested = (cb) =>
   ipcRenderer.on("app-reload-requested", cb);
 
+export const requestUIReload = () => ipcRenderer.send("app-reload-ui");
+
+export const onCheckCanClose = (cb) => {
+  ipcRenderer.removeAllListeners("check-can-close");
+  ipcRenderer.on("check-can-close", cb);
+};
+
+export const onShowAboutModal = (cb) => {
+  ipcRenderer.removeAllListeners("show-about-modal");
+  ipcRenderer.on("show-about-modal", cb);
+};
+
+export const getCLIOptions = () => ipcRenderer.sendSync("get-cli-options");
+
 export const log = (level, ...args) => {
   ipcRenderer.send("main-log", ...[level, ...args]);
 };
@@ -90,7 +104,7 @@ export const setupProxy = () => {
   ipcRenderer.send("setup-proxy");
 };
 
-export const copyToClipboard = data => {
+export const copyToClipboard = (data) => {
   clipboard.clear();
   clipboard.writeText(data);
 };
@@ -99,7 +113,8 @@ export const readFromClipboard = () => clipboard.readText();
 
 export const openExternalURL = (url) => {
   // Allow opening external http:// sites only in development mode.
-  const regexp = (process.env.NODE_ENV === "development") ? /^https:\/\//  : /^https?:\/\//;
+  const regexp =
+    process.env.NODE_ENV === "development" ? /^https:\/\// : /^https?:\/\//;
   if (!regexp.test(url)) {
     throw new Error("Unsupported external URL " + url);
   }
@@ -110,3 +125,9 @@ export const appInfo = {
   name: app?.name,
   version: app?.getVersion()
 };
+
+export const showSaveDialog = (opts) =>
+  ipcRenderer.invoke("show-save-dialog", opts);
+
+export const showOpenDialog = (opts) =>
+  ipcRenderer.invoke("show-open-dialog", opts);

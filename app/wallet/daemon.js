@@ -13,6 +13,8 @@ const invoke = async (channel, ...args) => {
   return res;
 };
 
+export const getHeightSynced = () => ipcRenderer.sendSync("get-height-synced");
+
 export const checkDecreditonVersion = log(
   () => Promise.resolve(ipcRenderer.sendSync("check-version")),
   "Check Decrediton release version"

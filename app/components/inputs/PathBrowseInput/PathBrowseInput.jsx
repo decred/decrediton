@@ -1,4 +1,4 @@
-import { ipcRenderer } from "electron";
+import { showOpenDialog, showSaveDialog } from "wallet";
 import PathInput from "../PathInput/PathInput";
 import style from "./PathBrowseInput.module.css";
 import { PathButton } from "buttons";
@@ -33,13 +33,13 @@ const PathBrowseInput = ({
       return { ...f, name: intl.formatMessage(FileBrowserFilterNames[f.key]) };
     });
 
-    const sendChan = save ? "show-save-dialog" : "show-open-dialog";
+    const dialogFunc = save ? showSaveDialog : showOpenDialog;
     const opts = {
       properties: [type === "directory" ? "openDirectory" : "openFile"],
       filters: fileBrowserFilters
     };
 
-    const { filePaths, filePath } = await ipcRenderer.invoke(sendChan, opts);
+    const { filePaths, filePath } = await dialogFunc(opts);
 
     let path;
     if (filePaths && filePaths.length > 0) {

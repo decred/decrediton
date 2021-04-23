@@ -11,8 +11,7 @@ import "pi-ui/dist/index.css";
 import "./style/main.css";
 import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
-import { log } from "./wallet";
-import { ipcRenderer } from "electron";
+import { log, getCLIOptions, getHeightSynced } from "./wallet";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import * as cfgConstants from "constants/config";
 import { AppContainer } from "react-hot-loader";
@@ -37,7 +36,7 @@ import SourceCodeProBold from "style/fonts/SourceCodePro-Bold.ttf";
 
 const globalCfg = getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
-const cliOptions = ipcRenderer.sendSync("get-cli-options");
+const cliOptions = getCLIOptions();
 
 log("info", "Starting main react app");
 
@@ -100,7 +99,7 @@ const initialState = {
     setLanguage: globalCfg.get(cfgConstants.SET_LANGUAGE),
     showSpvChoice: globalCfg.get(cfgConstants.SHOW_SPV_CHOICE),
     daemonStarted: false,
-    daemonSynced: ipcRenderer.sendSync("get-height-synced"),
+    daemonSynced: getHeightSynced(),
     daemonStopped: false,
     daemonTimeout: false,
     walletReady: false,

@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import { ipcRenderer } from "electron";
 import { useMountEffect } from "hooks";
 import { useSelector, useDispatch } from "react-redux";
-import { log } from "wallet";
+import {
+  log,
+  requestUIReload,
+  onCheckCanClose,
+  onShowAboutModal
+} from "wallet";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as cla from "actions/ClientActions";
@@ -86,17 +90,16 @@ const useApp = () => {
 
   const onReloadRequested = () => {
     log("info", "Main app received reload UI request");
-    ipcRenderer.send("app-reload-ui");
+    requestUIReload();
   };
 
   const setCanCloseCheck = useCallback(
     (canClose) => {
-      ipcRenderer.removeAllListeners("check-can-close");
-      ipcRenderer.on("check-can-close", () => {
+      onCheckCanClose(() => {
         if (canClose) {
           shutdownApp();
         } else {
-          log("warning", "A process is still running, preventing shutdown");
+          log("warn", "A process is still running, preventing shutdown");
           showCantCloseModal();
         }
       });
@@ -106,8 +109,7 @@ const useApp = () => {
 
   const setModalVisibleCheck = useCallback(
     (modalVisible) => {
-      ipcRenderer.removeAllListeners("show-about-modal");
-      ipcRenderer.on("show-about-modal", () => {
+      onShowAboutModal(() => {
         // Ignore click if a modal is already shown
         if (modalVisible == false) {
           showAboutModalMacOS();
