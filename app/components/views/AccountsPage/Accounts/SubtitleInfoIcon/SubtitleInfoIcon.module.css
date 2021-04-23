@@ -1,0 +1,7 @@
+.titleButtonsArea {
+  margin-left: auto;
+}
+
+.infoFields strong {
+  color: var(--input-color);
+}

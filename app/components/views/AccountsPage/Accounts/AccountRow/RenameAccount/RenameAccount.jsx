@@ -1,7 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { TextInput } from "inputs";
-import style from "../Accounts.module.css";
+import styles from "./RenameAccount.module.css";
 
 const messages = defineMessages({
   newNamePlaceholder: {
@@ -19,15 +19,15 @@ const RenameAccount = ({
   intl,
   hasFailedAttempt
 }) => (
-  <div className={style.renameBottom} key={`details${account.accountNumber}`}>
-    <div className={style.renameBottomTitle}>
+  <div className={styles.rename} key={`details${account.accountNumber}`}>
+    <div className={styles.renameTitle}>
       <T id="accounts.rename" m="Rename Account" />
     </div>
-    <div className={style.renameBottomFields}>
-      <div className={style.renameBottomLabel}>
+    <div className={styles.renameFields}>
+      <div>
         <T id="accounts.newName" m="New Account Name" />:
       </div>
-      <div className={style.renameBottomValue}>
+      <div className={styles.renameValue}>
         <TextInput
           required
           autoFocus
@@ -43,14 +43,14 @@ const RenameAccount = ({
         />
       </div>
     </div>
-    <div className={style.renameBottomButtons}>
+    <div>
       <InvisibleButton
-        className={style.contentConfirmNewAccount}
+        className={styles.confirmNewAccount}
         onClick={hideRenameAccount}>
         <T id="accounts.cancelRenameBtn" m="Cancel" />
       </InvisibleButton>
       <KeyBlueButton
-        className={style.contentConfirmNewAccount}
+        className={styles.confirmNewAccount}
         onClick={renameAccount}>
         <T id="accounts.renameBtn" m="Rename" />
       </KeyBlueButton>

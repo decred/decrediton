@@ -1,27 +1,9 @@
-import { FormattedMessage as T } from "react-intl";
-import AccountRow from "./AccountRow";
+import AccountRow from "../AccountRow";
 import { DecredLoading } from "indicators";
-import { InfoDocModalButton } from "buttons";
 import { Subtitle } from "shared";
-import style from "./Accounts.module.css";
-
-const SubtitleInfoIcon = React.memo(() => (
-  <div className={style.contentTitleButtonsArea}>
-    <InfoDocModalButton
-      document="BalanceOverviewInfo"
-      modalClassName={style.infoFields}
-      double
-      draggable
-    />
-  </div>
-));
-
-const SubtitleWalletName = React.memo(({ walletName }) => (
-  <span>
-    <span className={style.walletName}>{walletName}</span>
-    <T id="accounts.subtitle" m="Accounts" />
-  </span>
-));
+import SubtitleInfoIcon from "../SubtitleInfoIcon";
+import SubtitleWalletName from "../SubtitleWalletName";
+import styles from "./AccountsList.module.css";
 
 const AccountsList = ({
   accounts,
@@ -44,10 +26,10 @@ const AccountsList = ({
       <>
         <Subtitle
           title={<SubtitleWalletName {...{ walletName }} />}
-          className={style.isRow}
+          className="flex-row"
           children={<SubtitleInfoIcon />}
         />
-        <div className={style.contentNest}>
+        <div className={styles.contentNest}>
           {accounts.map((account) => (
             <AccountRow
               {...{

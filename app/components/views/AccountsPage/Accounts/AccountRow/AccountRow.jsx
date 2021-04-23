@@ -1,4 +1,4 @@
-import Row from "./AccountRowContent";
+import AccountRowContent from "./AccountRowContent";
 import AccountDetails from "./AccountDetails";
 import RenameAccount from "./RenameAccount";
 import { useAccountRow } from "./hooks";
@@ -70,7 +70,7 @@ const AccountRow = ({
   );
 
   return (
-    <Row
+    <AccountRowContent
       {...{
         account,
         mixedAccount,

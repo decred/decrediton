@@ -1,0 +1,16 @@
+.spec {
+  font-size: 12px;
+  margin-bottom: 0.5em;
+  display: grid;
+  grid-template-columns: 160px 200px;
+}
+
+.specName {
+  text-align: right;
+}
+
+.specValue {
+  margin-left: 1em;
+  text-align: left;
+  color: var(--tutorial-header);
+}

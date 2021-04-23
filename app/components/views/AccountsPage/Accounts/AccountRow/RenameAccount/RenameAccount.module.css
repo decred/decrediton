@@ -1,0 +1,23 @@
+.renameTitle {
+  font-size: 19px;
+}
+
+.rename {
+  color: var(--tutorial-header);
+  font-size: 12px;
+  padding: 14px;
+}
+
+.renameFields {
+  display: flex;
+  margin: 12px 0px;
+}
+
+.renameValue {
+  width: 70%;
+  margin-left: 10px;
+}
+
+.confirmNewAccount {
+  margin-right: 2em;
+}
