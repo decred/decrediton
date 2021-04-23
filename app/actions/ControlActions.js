@@ -1092,7 +1092,9 @@ export const unlockAcctAndExecFn = (
   try {
     // do not allow locking of the dex account, as it isn't supposed to lock.
     const dexAccountName = sel.dexAccount(getState());
-    const dexAccount = accounts.find((acct) => acct.accountName === dexAccountName);
+    const dexAccount = accounts.find(
+      (acct) => acct.accountName === dexAccountName
+    );
     if (dexAccount.accountNumber === acctNumber) {
       // return fn error in case some happened.
       if (fnError !== null) {

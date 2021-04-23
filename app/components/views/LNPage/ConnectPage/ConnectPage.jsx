@@ -128,8 +128,8 @@ const ConnectPage = () => {
               <Tooltip
                 content={
                   <T
-                    id="ln.connectPage.running"
-                    m="Privacy Mixer or Autobuyer running, please shut them off before running LN."
+                    id="ln.connectPage.unlockWalletModal"
+                    m="Unlock LN Wallet"
                   />
                 }>
                 <PassphraseModalButton
@@ -153,7 +153,7 @@ const ConnectPage = () => {
               <PassphraseModalButton
                 modalTitle={
                   <T
-                    id="ln.connectPage.unlockWalletModal"
+                    id="ln.connectPage.running"
                     m="Unlock LN Wallet"
                   />
                 }
