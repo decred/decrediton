@@ -5,8 +5,7 @@
 
 .addWatchtowerContent {
   background-color: var(--background-back-color);
-  padding-top: 20px;
-  padding-left: 30px;
+  padding: 30px 40px;
   display: flex;
   flex-direction: column;
 }

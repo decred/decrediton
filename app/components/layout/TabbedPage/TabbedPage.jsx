@@ -124,7 +124,7 @@ const TabbedPage = ({
     : staticStyles(tabStyles, tabContentClassName);
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className={classNames(styles.tabbedPageHeader, headerClassName)}>
         {header}
         <Switch>{headers}</Switch>

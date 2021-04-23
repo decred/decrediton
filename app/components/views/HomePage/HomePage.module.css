@@ -4,8 +4,8 @@
 }
 
 .overviewHeader {
-  padding-left: 63px;
-  padding-top: 47px;
+  padding-left: 60px;
+  padding-top: 40px;
   padding-right: 56px;
   flex-flow: column wrap;
   background-color: var(--background-back-color);
@@ -15,7 +15,7 @@
   justify-content: space-between;
   display: flex;
   background-color: var(--background-back-color);
-  padding-left: 63px;
+  padding-left: 60px;
 }
 
 .overviewSpendableLockedWrapper {
@@ -23,7 +23,7 @@
 }
 
 .overviewTransactionsTicket {
-  padding: 30px 63px;
+  padding: 30px 60px;
 }
 
 .overviewBalance {

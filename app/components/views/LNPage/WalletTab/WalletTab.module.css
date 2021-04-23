@@ -1,7 +1,7 @@
 .nodeInfos {
   margin-top: 1em;
   background-color: var(--background-back-color);
-  padding: 1em 1em 1em 3em;
+  padding: 30px 40px;
 }
 
 .nodeAlias {
@@ -58,12 +58,12 @@
 .backupPanel {
   background-image: var(--backup-icon);
   background-color: var(--background-back-color);
-  background-position: 23px 28px;
+  background-position: 40px 30px;
   background-repeat: no-repeat;
   background-size: 45px;
   margin-top: 20px;
   margin-bottom: 20px;
-  padding: 20px 20px 10px 100px;
+  padding: 30px 40px 30px 95px;
 }
 
 .backupSubtitle {

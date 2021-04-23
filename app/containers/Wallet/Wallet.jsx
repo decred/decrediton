@@ -43,7 +43,7 @@ const Wallet = ({ setInterval }) => {
       <SideBar />
       <BlurableContainer
         className={expandSideBar ? styles.pageView : styles.reducedBar}>
-        <StaticSwitch>
+        <StaticSwitch className={styles.staticSwitch}>
           <Route path="/home" component={HomePage} />
           <Route path="/accounts" component={AccountsPage} />
           <Route path="/settings" component={SettingsPage} />

@@ -1,12 +1,11 @@
 .sendOutputContainer {
   display: grid;
-  grid-template-columns: max-content 276px minmax(max-content, 1fr) 276px;
+  grid-template-columns: max-content 260px minmax(max-content, 1fr) 260px;
   grid-template-rows: repeat(2, 25px);
   grid-column-gap: 10px;
   grid-row-gap: 30px;
-  padding: 0 0 26px 0;
   margin-top: 10px;
-  width: 700px;
+  width: 660px;
 }
 .amountInputWrapper {
   grid-column: 2;

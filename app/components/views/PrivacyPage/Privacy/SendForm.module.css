@@ -5,13 +5,12 @@
 
 .sendArea {
   width: 740px;
-  margin-bottom: 20px;
 }
 
 .sendButtonArea {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 40px;
 }
 
 .passphraseModal {

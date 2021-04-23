@@ -1,8 +1,7 @@
 .tabs {
-  position: absolute;
-  bottom: 0;
-  left: 100px;
   white-space: nowrap;
+  margin: 30px 0 0 36px;
+  position: relative;
 }
 
 .tab {
@@ -40,17 +39,12 @@
   height: 5px;
 }
 
-@media screen and (max-width: 1179px) {
-  .tabs {
-    left: 55px;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .tabs {
     font-size: 13px;
-    left: 25px;
-    right: 20px;
+    margin-top: 15px;
+    margin-left: 0;
+    margin-right: 0;
   }
   .tab a {
     font-size: 13px;

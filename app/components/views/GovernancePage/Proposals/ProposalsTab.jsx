@@ -73,7 +73,6 @@ const ProposalsTab = () => {
   return (
     <TabbedPage
       caret={<div />}
-      className={styles.tabsBody}
       header={
         <PageHeader {...{ isTestnet, onRefreshProposals: compareInventory }} />
       }

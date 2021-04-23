@@ -4,7 +4,6 @@
   overflow-y: auto;
   text-align: left;
   width: 611px !important;
-  height: 342px;
   font-size: 13px;
   line-height: 17px;
   color: var(--modal-text);
@@ -26,7 +25,7 @@
   height: 231px;
   width: 231px;
   box-shadow: 0px 13px 21px rgba(9, 20, 64, 0.34);
-  margin-left: 20px;
+  margin-left: 40px;
   margin-top: 30px;
   margin-bottom: 30px;
   background-position: 50%;
@@ -62,13 +61,16 @@
 }
 .bottomArea {
   float: left;
-  width: 571px;
-  margin-left: 20px;
+  width: 100%;
+  padding: 0 40px 20px 40px;
+  color: var(--modal-bottom);
+}
+.bottomArea .wrapper {
   border-top: 1px solid var(--modal-stroke-color);
   padding-top: 10px;
   display: flex;
   justify-content: space-between;
-  color: var(--modal-bottom);
+  width: 100%;
 }
 .bottomAreaMiddle a,
 .bottomAreaRight a {

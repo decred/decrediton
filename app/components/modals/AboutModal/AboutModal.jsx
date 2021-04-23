@@ -41,30 +41,32 @@ const AboutModal = ({ show, onCancelModal }) => {
         </p>
       </div>
       <div className={styles.bottomArea}>
-        <div>
-          <T id="aboutModal.version" m="Version" /> {version} -&nbsp;
-          {updateAvailable ? (
-            <ExternalLink
-              href="https://github.com/decred/decred-binaries/releases"
-              className={styles.upgrade}>
-              <T id="aboutModal.upgradeAvailable" m="Upgrade Available" />
+        <div className={styles.wrapper}>
+          <div>
+            <T id="aboutModal.version" m="Version" /> {version} -&nbsp;
+            {updateAvailable ? (
+              <ExternalLink
+                href="https://github.com/decred/decred-binaries/releases"
+                className={styles.upgrade}>
+                <T id="aboutModal.upgradeAvailable" m="Upgrade Available" />
+              </ExternalLink>
+            ) : (
+              <ExternalLink
+                href={`https://github.com/decred/decred-binaries/releases/tag/v${version}`}
+                className={styles.upgrade}>
+                <T id="aboutModal.whatsNew" m="What's New?" />
+              </ExternalLink>
+            )}
+          </div>
+          <div className={styles.bottomAreaMiddle}>
+            Copyright &copy; 2020{" "}
+            <ExternalLink href="https://decred.org">Decred</ExternalLink>
+          </div>
+          <div className={styles.bottomAreaRight}>
+            <ExternalLink href="https://github.com/decred/decrediton/blob/master/LICENSE">
+              <T id="aboutModal.licensing" m="Licensing information" />
             </ExternalLink>
-          ) : (
-            <ExternalLink
-              href={`https://github.com/decred/decred-binaries/releases/tag/v${version}`}
-              className={styles.upgrade}>
-              <T id="aboutModal.whatsNew" m="What's New?" />
-            </ExternalLink>
-          )}
-        </div>
-        <div className={styles.bottomAreaMiddle}>
-          Copyright &copy; 2020{" "}
-          <ExternalLink href="https://decred.org">Decred</ExternalLink>
-        </div>
-        <div className={styles.bottomAreaRight}>
-          <ExternalLink href="https://github.com/decred/decrediton/blob/master/LICENSE">
-            <T id="aboutModal.licensing" m="Licensing information" />
-          </ExternalLink>
+          </div>
         </div>
       </div>
     </Modal>
