@@ -2,7 +2,7 @@ import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { Documentation } from "shared";
-import { Checkbox, classNames } from "pi-ui";
+import { Tooltip, Checkbox, classNames } from "pi-ui";
 import {
   LNWALLET_STARTUPSTAGE_STARTDCRLND,
   LNWALLET_STARTUPSTAGE_CONNECT,
@@ -75,7 +75,8 @@ const ConnectPage = () => {
     onLaunch,
     onChangeEnableAutopilot,
     onAccountOptionClick,
-    onAcceptCreationWarning
+    onAcceptCreationWarning,
+    runningIndicator
   } = useConnectPage();
 
   return (
@@ -123,20 +124,50 @@ const ConnectPage = () => {
             </div>
           </div>
           <div className={styles.buttonContrainer}>
-            <PassphraseModalButton
-              modalTitle={
-                <T id="ln.connectPage.unlockWalletModal" m="Unlock LN Wallet" />
-              }
-              disabled={startAttempt}
-              onSubmit={onLaunch}
-              loading={startAttempt}
-              buttonLabel={
-                <T
-                  id="ln.connectPage.launchBtn"
-                  m="Start and Unlock LN Wallet"
+            {runningIndicator ? (
+              <Tooltip
+                content={
+                  <T
+                    id="ln.connectPage.running"
+                    m="Privacy Mixer or Autobuyer running, please shut them off before running LN."
+                  />
+                }>
+                <PassphraseModalButton
+                  modalTitle={
+                    <T
+                      id="ln.connectPage.unlockWalletModal"
+                      m="Unlock LN Wallet"
+                    />
+                  }
+                  disabled={true}
+                  loading={startAttempt}
+                  buttonLabel={
+                    <T
+                      id="ln.connectPage.launchBtn"
+                      m="Start and Unlock LN Wallet"
+                    />
+                  }
                 />
-              }
-            />
+              </Tooltip>
+            ) : (
+              <PassphraseModalButton
+                modalTitle={
+                  <T
+                    id="ln.connectPage.unlockWalletModal"
+                    m="Unlock LN Wallet"
+                  />
+                }
+                disabled={startAttempt}
+                onSubmit={onLaunch}
+                loading={startAttempt}
+                buttonLabel={
+                  <T
+                    id="ln.connectPage.launchBtn"
+                    m="Start and Unlock LN Wallet"
+                  />
+                }
+              />
+            )}
           </div>
           {stageMsgs[startupStage] && <div>{stageMsgs[startupStage]}</div>}
         </div>

@@ -24,6 +24,7 @@ export function useLNPage() {
   const isMainNet = useSelector(sel.isMainNet);
   const scbPath = useSelector(sel.lnSCBPath);
   const scbUpdatedTime = useSelector(sel.lnSCBUpdatedTime);
+  const runningIndicator = useSelector(sel.getRunningIndicator);
 
   const dispatch = useDispatch();
 
@@ -106,6 +107,7 @@ export function useLNPage() {
     withdrawWallet,
     startDcrlnd,
     exportBackup,
-    verifyBackup
+    verifyBackup,
+    runningIndicator
   };
 }
