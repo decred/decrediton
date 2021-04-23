@@ -35,6 +35,7 @@ const SendFromUnmixedAccountContent = ({
       </div>
       <TextInput
         autoFocus
+        className={styles.input}
         value={typedConfirmationPhrase}
         onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}
         onKeyDownSubmit={() =>

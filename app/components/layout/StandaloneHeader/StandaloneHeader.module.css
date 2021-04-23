@@ -1,11 +1,6 @@
 .header {
   background-color: var(--background-back-color);
-  padding: 43px 60px 0 63px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 157px;
+  padding: 40px 60px 30px 60px;
 }
 
 @media screen and (max-width: 1179px) {
@@ -21,7 +16,7 @@
     flex-direction: column;
     width: 100%;
     position: relative;
-    padding-bottom: 48px;
+    padding-bottom: 30px;
     padding-top: 30px;
   }
 }

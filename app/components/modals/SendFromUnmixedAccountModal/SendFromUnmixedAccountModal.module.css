@@ -11,7 +11,7 @@
 .warningText {
   white-space: pre-line;
   margin-bottom: 20px;
-  margin-left: 32px;
+  margin-left: 35px;
   column-count: 2;
 }
 .warningText p {
@@ -31,8 +31,11 @@
   margin: 0px 4px 0px 4px;
 }
 .confirmSendFromUnmixed {
-  padding: 20px;
+  padding: 30px 40px 20px 40px;
   width: 700px;
+}
+.input {
+  margin-left: 35px;
 }
 .titleConfirmSendFromUnmixed {
   font-size: 27px;
@@ -40,8 +43,7 @@
   background-image: var(--info-warning-icon);
   background-repeat: no-repeat;
   background-size: 20px;
-  padding-left: 42px;
-  margin-left: 10px;
+  padding-left: 35px;
   background-position: 0 center;
 }
 

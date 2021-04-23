@@ -62,12 +62,8 @@
   order: 3;
 }
 
-.wrapper .group.privacy .columnWrapper {
-  padding: 40px 40px 10px 40px;
-}
-
 .columnWrapper {
-  padding: 20px 40px;
+  padding: 30px 40px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -240,19 +236,13 @@
     width: 600px;
   }
 
-  .group.privacy .columnWrapper {
-    padding-left: 15px;
-    padding-right: 30px;
-    padding-top: 38px;
-  }
-
   .column {
     width: 100%;
   }
 
   .group .columnWrapper {
-    padding-left: 15px;
-    padding-right: 30px;
+    padding-left: 30px;
+    padding-right: 40px;
   }
 
   .group .columnWrapper .privacy .columnContent .row {
@@ -297,7 +287,7 @@
   }
 
   .group.privacy .columnWrapper {
-    padding: 20px 40px;
+    padding: 30px 40px;
   }
 
   .group.general {
@@ -342,7 +332,7 @@
 
   .wrapper .group .columnWrapper {
     min-height: initial;
-    padding: 20px 40px;
+    padding: 30px 40px;
   }
 
   .wrapper .group .columnWrapper .column {

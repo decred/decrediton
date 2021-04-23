@@ -1,7 +1,7 @@
 .connectOpts {
   background-color: var(--background-back-color);
-  padding: 8px 25px 40px 25px;
-  margin-bottom: 37px;
+  padding: 30px 40px;
+  margin-bottom: 20px;
 }
 
 .checkbox {
@@ -11,7 +11,6 @@
 .connectOpt {
   flex-wrap: wrap;
   display: flex;
-  padding-top: 18px;
 }
 
 .buttonContrainer {

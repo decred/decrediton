@@ -6,10 +6,10 @@
   width: 445px;
   background-image: var(--tickets-info-icon);
   background-attachment: local;
-  background-size: 32px 32px;
+  background-size: 40px 32px;
   background-repeat: no-repeat;
   background-position: 18px 32px;
-  padding: 30px 40px 20px 58px;
+  padding: 30px 40px 20px 70px;
   font-size: 13px;
   line-height: 17px;
   display: flex;

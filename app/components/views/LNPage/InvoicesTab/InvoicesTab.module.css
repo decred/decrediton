@@ -3,7 +3,7 @@
   grid-template-columns: 23fr 8fr 50px;
   grid-column-gap: 20px;
   background-color: var(--background-back-color);
-  padding: 1em 2em 3em;
+  padding: 30px 40px;
   margin-bottom: 4em;
 }
 
@@ -16,7 +16,7 @@
 .lastPayRequest {
   word-break: break-all;
   grid-column: 1 / 3;
-  padding: 1em 2em;
+  padding: 30px 40px;
   color: var(--stroke-color-hovered);
 }
 

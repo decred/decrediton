@@ -77,7 +77,7 @@
   background-color: var(--background-back-color);
   position: absolute;
   right: 0px;
-  padding: 8px 0px;
+  padding: 15px 0;
   width: 168px;
   color: var(--input-color-default);
   text-align: left;
@@ -94,10 +94,9 @@
 
 .contextMenuItem {
   font-size: 13px;
-  line-height: 2em;
+  line-height: 30px;
   min-width: 10em;
-  padding-left: 28px;
-  padding-bottom: 5px;
+  padding-left: 30px;
 }
 
 .contextMenuItem:hover {
@@ -106,19 +105,19 @@
 
 .contextMenuItem.selected::before {
   content: "";
-  height: 10px;
+  height: 30px;
   width: 10px;
   background-image: var(--checkmark-context-icon);
   background-repeat: no-repeat;
+  background-position: 0;
   position: absolute;
   margin-left: -18px;
-  margin-top: 9px;
 }
 
 .arrowUp {
-  float: right;
-  margin-top: -13px;
-  margin-right: 23px;
+  position: absolute;
+  top: -5px;
+  right: 23px;
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
