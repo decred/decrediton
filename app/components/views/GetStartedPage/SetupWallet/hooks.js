@@ -83,15 +83,16 @@ export const useWalletSetup = (settingUpWalletRef) => {
             title: (
               <T
                 id="getstarted.setAccountsPass.title"
-                m="Set Accounts Passphrase"
+                m="Migrate to per-account passphrases"
               />
             ),
             onProcessAccounts,
             description: (
               <T
                 id="getstarted.setAccountsPass.description"
-                m={`Your wallet have accounts with no passphrase. Enter your current
-                passphrase so we can update it`}
+                m={`Decrediton now uses per-account locking, which requires a one time migration.
+                  Enter your current passphrase to perform this upgrade.
+                  Visit docs.decred.org/wallets/decrediton/migrations to know more.`}
               />
             )
           });
