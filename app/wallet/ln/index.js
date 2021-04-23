@@ -324,6 +324,18 @@ export const exportBackup = (client, destPath) =>
         return;
       }
 
+      // If this file already exists, show the confirmation modal.
+      if (fs.existsSync(destPath)) {
+        const confirmOverwrite = ipcRenderer.sendSync(
+          "confirm-file-overwrite",
+          destPath
+        );
+        if (!confirmOverwrite) {
+          reject("User canceled file overwrite");
+          return;
+        }
+      }
+
       const data = resp.getMultiChanBackup().getMultiChanBackup();
       try {
         fs.writeFileSync(destPath, data);

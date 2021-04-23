@@ -1,6 +1,5 @@
 import { ipcRenderer } from "electron";
-import fs from "fs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLNPage } from "../hooks";
 
 export function useWalletTab() {
@@ -14,35 +13,13 @@ export function useWalletTab() {
     scbUpdatedTime
   } = useLNPage();
 
-  const [confirmFileOverwrite, setConfirmFileOverwrite] = useState(null);
-
   useEffect(() => {
     setTimeout(() => updateWalletBalances(), 1000);
   }, [updateWalletBalances]);
 
-  const onConfirmFileOverwrite = async () => {
-    const filePath = confirmFileOverwrite;
-    if (!filePath) {
-      return;
-    }
-    setConfirmFileOverwrite(null);
-    await exportBackup(filePath);
-  };
-
-  const onCancelFileOverwrite = () => {
-    setConfirmFileOverwrite(null);
-  };
-
   const onBackup = async () => {
-    setConfirmFileOverwrite(null);
     const { filePath } = await ipcRenderer.invoke("show-save-dialog");
     if (!filePath) {
-      return;
-    }
-
-    // If this file already exists, show the confirmation modal.
-    if (fs.existsSync(filePath)) {
-      setConfirmFileOverwrite(filePath);
       return;
     }
 
@@ -64,10 +41,7 @@ export function useWalletTab() {
     info,
     scbPath,
     scbUpdatedTime,
-    confirmFileOverwrite,
     onBackup,
-    onVerifyBackup,
-    onCancelFileOverwrite,
-    onConfirmFileOverwrite
+    onVerifyBackup
   };
 }
