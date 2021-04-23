@@ -326,11 +326,6 @@ export const useGetStarted = () => {
     [send]
   );
 
-  const onShowSettingUpWallet = useCallback(
-    () => send({ type: "SHOW_SETTING_UP_WALLET" }),
-    [send]
-  );
-
   const onShowReleaseNotes = useCallback(
     () => send({ type: "SHOW_RELEASE_NOTES" }),
     [send]
@@ -488,7 +483,6 @@ export const useGetStarted = () => {
           appVersion,
           onGetDcrdLogs,
           daemonWarning,
-          onShowSettingUpWallet,
 
           // if updated* is set, we use it, as it means it is called by the componentDidUpdate.
           text: updatedText ? updatedText : text,
@@ -545,8 +539,7 @@ export const useGetStarted = () => {
       onSendDiscoverAccountsPassInput,
       onSendSetPassphrase,
       error,
-      daemonWarning,
-      onShowSettingUpWallet
+      daemonWarning
     ]
   );
 

@@ -98,10 +98,9 @@ export const changePassphrase = (walletService, oldPass, newPass, priv) =>
     );
   });
 
-export const signTransaction = (walletService, passphrase, rawTx) =>
+export const signTransaction = (walletService, rawTx) =>
   new Promise((ok, fail) => {
     const request = new api.SignTransactionRequest();
-    request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx)));
     walletService.signTransaction(request, (err, res) =>
       err ? fail(err) : ok(res)
@@ -119,7 +118,6 @@ export const publishTransaction = (walletService, tx) =>
 
 export const purchaseTickets = (
   walletService,
-  passphrase,
   accountNum,
   spendLimit,
   requiredConf,
@@ -140,7 +138,6 @@ export const purchaseTickets = (
       );
     }
     const request = new api.PurchaseTicketsRequest();
-    signTx && request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccount(accountNum);
     request.setChangeAccount(accountNum.value);
     request.setSpendLimit(spendLimit);
@@ -160,7 +157,6 @@ export const purchaseTickets = (
 
 export const purchaseTicketsV3 = (
   walletService,
-  passphrase,
   accountNum,
   numTickets,
   signTx,
@@ -168,61 +164,46 @@ export const purchaseTicketsV3 = (
   csppReq
 ) =>
   new Promise((resolve, reject) => {
-    const unlockReq = new api.UnlockWalletRequest();
-    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-    // Unlock wallet so we can call the request.
-    walletService.unlockWallet(unlockReq, (error) => {
+    const request = new api.PurchaseTicketsRequest();
+    const {
+      mixedAccount,
+      changeAccount,
+      csppServer,
+      csppPort,
+      mixedAcctBranch
+    } = csppReq;
+    // if mixed or change account is defined it is a privacy request.
+    if (mixedAccount || changeAccount) {
+      // check if any cspp argument is missing.
+      // mixed acct branch can be 0.
+      if (
+        !mixedAccount ||
+        !changeAccount ||
+        !csppServer ||
+        !csppPort ||
+        (!mixedAcctBranch && mixedAcctBranch !== 0)
+      ) {
+        throw "missing cspp argument";
+      }
+      request.setMixedAccount(mixedAccount);
+      request.setMixedSplitAccount(mixedAccount);
+      request.setChangeAccount(changeAccount);
+      request.setCsppServer(csppServer + ":" + csppPort);
+      request.setMixedAccountBranch(mixedAcctBranch);
+    } else {
+      request.setChangeAccount(accountNum.value);
+    }
+    request.setAccount(accountNum.value);
+    request.setNumTickets(numTickets);
+    request.setDontSignTx(!signTx);
+    const { pubkey, host } = vsp;
+    request.setVspPubkey(pubkey);
+    request.setVspHost("https://" + host);
+    walletService.purchaseTickets(request, (error, response) => {
       if (error) {
         reject(error);
       }
-      const request = new api.PurchaseTicketsRequest();
-      const {
-        mixedAccount,
-        changeAccount,
-        csppServer,
-        csppPort,
-        mixedAcctBranch
-      } = csppReq;
-      // if mixed or change account is defined it is a privacy request.
-      if (mixedAccount || changeAccount) {
-        // check if any cspp argument is missing.
-        // mixed acct branch can be 0.
-        if (
-          !mixedAccount ||
-          !changeAccount ||
-          !csppServer ||
-          !csppPort ||
-          (!mixedAcctBranch && mixedAcctBranch !== 0)
-        ) {
-          throw "missing cspp argument";
-        }
-        request.setMixedAccount(mixedAccount);
-        request.setMixedSplitAccount(mixedAccount);
-        request.setChangeAccount(changeAccount);
-        request.setCsppServer(csppServer + ":" + csppPort);
-        request.setMixedAccountBranch(mixedAcctBranch);
-      } else {
-        request.setChangeAccount(accountNum.value);
-      }
-      request.setAccount(accountNum.value);
-      request.setNumTickets(numTickets);
-      request.setDontSignTx(!signTx);
-      const { pubkey, host } = vsp;
-      request.setVspPubkey(pubkey);
-      request.setVspHost("https://" + host);
-      walletService.purchaseTickets(request, (error, response) => {
-        if (error) {
-          reject(error);
-        }
-        // Lock wallet and return response from the request.
-        const lockReq = new api.LockWalletRequest();
-        walletService.lockWallet(lockReq, (error) => {
-          if (error) {
-            reject(error);
-          }
-          resolve(response);
-        });
-      });
+      resolve(response);
     });
   });
 
@@ -288,7 +269,7 @@ export const constructSendAllTransaction = (
     );
   });
 
-export const getCoinjoinOutputspByAcct = (walletService) =>
+export const getCoinjoinOutputspByAcctReq = (walletService) =>
   new Promise((ok, fail) => {
     const request = new api.GetCoinjoinOutputspByAcctRequest();
     walletService.getCoinjoinOutputspByAcct(request, (err, res) =>
@@ -481,4 +462,102 @@ export const lockWallet = (walletService) =>
       }
       resolve(true);
     });
+  });
+
+export const unlockAccount = (walletService, passphrase, acctNumber) =>
+  new Promise((resolve, reject) => {
+    const unlockReq = new api.UnlockAccountRequest();
+    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+    unlockReq.setAccountNumber(acctNumber);
+    // Unlock wallet so we can call the request.
+    walletService.unlockAccount(unlockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(true);
+    });
+  });
+
+export const lockAccount = (walletService, acctNumber) =>
+  new Promise((resolve, reject) => {
+    const lockReq = new api.LockAccountRequest();
+    lockReq.setAccountNumber(acctNumber);
+    walletService.lockAccount(lockReq, (error) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(true);
+    });
+  });
+
+export const setAccountPassphrase = (
+  walletService,
+  accountNumber,
+  accountPassphrase,
+  newAcctPassphrase,
+  walletPassphrase
+) =>
+  new Promise((ok, fail) => {
+    const request = new api.SetAccountPassphraseRequest();
+    request.setAccountNumber(accountNumber);
+    request.setNewAccountPassphrase(
+      new Uint8Array(Buffer.from(newAcctPassphrase))
+    );
+    if (accountPassphrase) {
+      request.setAccountPassphrase(
+        new Uint8Array(Buffer.from(accountPassphrase))
+      );
+    }
+    if (walletPassphrase) {
+      request.setWalletPassphrase(
+        new Uint8Array(Buffer.from(walletPassphrase))
+      );
+    }
+    walletService.setAccountPassphrase(request, (err, res) =>
+      err ? fail(err) : ok({ ...res })
+    );
+  });
+
+export const startTicketAutoBuyerV3 = (
+  ticketBuyerService,
+  {
+    mixedAccount,
+    mixedAcctBranch,
+    changeAccount,
+    csppServer,
+    csppPort,
+    balanceToMaintain,
+    accountNum,
+    pubkey,
+    host
+  }
+) =>
+  new Promise((ok) => {
+    const request = new api.RunTicketBuyerRequest();
+    if (mixedAccount && changeAccount) {
+      if (
+        !mixedAccount ||
+        !changeAccount ||
+        !csppServer ||
+        !csppPort ||
+        typeof mixedAcctBranch === "undefined"
+      ) {
+        throw "missing cspp argument";
+      }
+
+      request.setMixedAccount(mixedAccount);
+      request.setMixedSplitAccount(mixedAccount);
+      request.setChangeAccount(changeAccount);
+      request.setCsppServer(`${csppServer}:${csppPort}`);
+      request.setMixedAccountBranch(mixedAcctBranch);
+    }
+
+    request.setVspPubkey(pubkey);
+    request.setVspHost("https://" + host);
+    request.setBalanceToMaintain(balanceToMaintain);
+    request.setAccount(accountNum);
+    request.setVotingAccount(accountNum);
+
+    const mixer = ticketBuyerService.runTicketBuyer(request);
+    ok(mixer);
   });

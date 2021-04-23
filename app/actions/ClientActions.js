@@ -239,6 +239,8 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
       externalKeys: account.getExternalKeyCount(),
       internalKeys: account.getInternalKeyCount(),
       importedKeys: account.getImportedKeyCount(),
+      encrypted: account.getAccountEncrypted(),
+      unlocked: account.getAccountUnlocked(),
       hidden: !!hiddenAccounts.find(eq(account.getAccountNumber())),
       HDPath:
         "m / 44' / " +

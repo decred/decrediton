@@ -11,7 +11,8 @@ export function useConnectPage() {
     lightningWalletExists,
     startDcrlnd,
     startAttempt,
-    startupStage
+    startupStage,
+    runningIndicator
   } = useLNPage();
 
   const [autopilotEnabled, setAutopilotEnabled] = useState(false);
@@ -65,6 +66,7 @@ export function useConnectPage() {
     onLaunch,
     onChangeEnableAutopilot,
     onAccountOptionClick,
-    onAcceptCreationWarning
+    onAcceptCreationWarning,
+    runningIndicator
   };
 }

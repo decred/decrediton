@@ -6,7 +6,6 @@ import { useAccountRow } from "./hooks";
 const AccountRow = ({
   account,
   mixedAccount,
-  changeAccount,
   accountNumDetailsShown,
   renameAccount,
   showAccount,
@@ -74,7 +73,6 @@ const AccountRow = ({
       {...{
         account,
         mixedAccount,
-        changeAccount,
         accountNumDetailsShown,
         isShowingRenameAccount,
         hidden,

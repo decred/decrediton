@@ -10,8 +10,9 @@ export function useSendTransactionButton() {
   const isTrezor = useSelector(sel.isTrezor);
 
   const dispatch = useDispatch();
-  const onAttemptSignTransaction = (passphrase, rawTx) =>
-    dispatch(ca.signTransactionAttempt(passphrase, rawTx));
+  const onAttemptSignTransaction = (passphrase, rawTx, acct) => {
+    dispatch(ca.signTransactionAttempt(passphrase, rawTx, acct));
+  };
   const onAttemptSignTransactionTrezor = (rawUnsigTx, constructTxResponse) =>
     dispatch(tza.signTransactionAttemptTrezor(rawUnsigTx, constructTxResponse));
 

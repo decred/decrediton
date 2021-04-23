@@ -5,9 +5,18 @@ import { FormattedMessage as T } from "react-intl";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
+import SettingAccountsPassphrase from "./SetAccountsPassphrase";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
+import { useDispatch } from "react-redux";
+import {
+  checkAllAccountsEncrypted,
+  setAccountsPass
+} from "actions/ControlActions";
+import { ExternalLink } from "shared";
 
 export const useWalletSetup = (settingUpWalletRef) => {
+  const dispatch = useDispatch();
+
   const [current, send] = useService(settingUpWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
   const {
@@ -23,6 +32,17 @@ export const useWalletSetup = (settingUpWalletRef) => {
   const { mixedAccount } = useAccounts();
 
   const previousState = usePrevious(current);
+
+  const onCheckAcctsPass = useCallback(() => {
+    return dispatch(checkAllAccountsEncrypted());
+  }, [dispatch]);
+
+  const onProcessAccounts = useCallback(
+    (passphrase) => {
+      return dispatch(setAccountsPass(passphrase));
+    },
+    [dispatch]
+  );
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
@@ -40,12 +60,56 @@ export const useWalletSetup = (settingUpWalletRef) => {
   }, [send]);
 
   const getStateComponent = useCallback(() => {
-    const { error } = current.context;
+    const { error, isWatchingOnly, isTrezor } = current.context;
 
     let component, hasLive, hasSoloTickets;
     if (previousState && current.value === previousState.value) return;
 
     switch (current.value) {
+      case "settingAccountsPass": {
+        // step not needed with trezor or watching only wallets.
+        if (isWatchingOnly || isTrezor) {
+          sendContinue();
+          return;
+        }
+        const allEncrypted = onCheckAcctsPass();
+        if (allEncrypted) {
+          sendContinue();
+        } else {
+          component = h(SettingAccountsPassphrase, {
+            error,
+            onSendContinue: sendContinue,
+            onSendError,
+            send,
+            title: (
+              <T
+                id="getstarted.setAccountsPass.title"
+                m="Migrate to per-account passphrases"
+              />
+            ),
+            onProcessAccounts,
+            description: (
+              <T
+                id="getstarted.setAccountsPass.description"
+                m={`Decrediton now uses per-account locking, which requires a one time migration.
+                  Enter your current passphrase to perform this upgrade.
+                  Visit {link} to know more.`}
+                values={{
+                  link: (
+                    <ExternalLink
+                      href={
+                        "https://docs.decred.org/wallets/decrediton/migrations"
+                      }>
+                      <T id="getstarted.setAccountsPass.docs" m="Decred docs" />
+                    </ExternalLink>
+                  )
+                }}
+              />
+            )
+          });
+        }
+        break;
+      }
       case "settingMixedAccount":
         getCoinjoinOutputspByAcct()
           .then((outputsByAcctMap) => {
@@ -185,7 +249,9 @@ export const useWalletSetup = (settingUpWalletRef) => {
     onSendBack,
     onSendError,
     previousState,
-    current
+    current,
+    onCheckAcctsPass,
+    onProcessAccounts
   ]);
 
   return {

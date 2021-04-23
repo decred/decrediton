@@ -30688,10 +30688,11 @@ proto.walletrpc.RunAccountMixerRequest.prototype.toObject = function(opt_include
 proto.walletrpc.RunAccountMixerRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     passphrase: msg.getPassphrase_asB64(),
-    mixedAccount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    changeAccount: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    csppServer: jspb.Message.getFieldWithDefault(msg, 5, "")
+    changeAccountPassphrase: msg.getChangeAccountPassphrase_asB64(),
+    mixedAccount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    csppServer: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -30733,18 +30734,22 @@ proto.walletrpc.RunAccountMixerRequest.deserializeBinaryFromReader = function(ms
       msg.setPassphrase(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setMixedAccount(value);
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setChangeAccountPassphrase(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setMixedAccountBranch(value);
+      msg.setMixedAccount(value);
       break;
     case 4:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setChangeAccount(value);
+      msg.setMixedAccountBranch(value);
       break;
     case 5:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setChangeAccount(value);
+      break;
+    case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setCsppServer(value);
       break;
@@ -30784,31 +30789,38 @@ proto.walletrpc.RunAccountMixerRequest.serializeBinaryToWriter = function(messag
       f
     );
   }
-  f = message.getMixedAccount();
-  if (f !== 0) {
-    writer.writeUint32(
+  f = message.getChangeAccountPassphrase_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
       2,
       f
     );
   }
-  f = message.getMixedAccountBranch();
+  f = message.getMixedAccount();
   if (f !== 0) {
     writer.writeUint32(
       3,
       f
     );
   }
-  f = message.getChangeAccount();
+  f = message.getMixedAccountBranch();
   if (f !== 0) {
     writer.writeUint32(
       4,
       f
     );
   }
+  f = message.getChangeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      5,
+      f
+    );
+  }
   f = message.getCsppServer();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      6,
       f
     );
   }
@@ -30858,28 +30870,52 @@ proto.walletrpc.RunAccountMixerRequest.prototype.setPassphrase = function(value)
 
 
 /**
- * optional uint32 mixed_account = 2;
+ * optional bytes change_account_passphrase = 2;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.RunAccountMixerRequest.prototype.getChangeAccountPassphrase = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * optional bytes change_account_passphrase = 2;
+ * This is a type-conversion wrapper around `getChangeAccountPassphrase()`
+ * @return {string}
+ */
+proto.walletrpc.RunAccountMixerRequest.prototype.getChangeAccountPassphrase_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getChangeAccountPassphrase()));
+};
+
+
+/**
+ * optional bytes change_account_passphrase = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getChangeAccountPassphrase()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.RunAccountMixerRequest.prototype.getChangeAccountPassphrase_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getChangeAccountPassphrase()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.walletrpc.RunAccountMixerRequest} returns this
+ */
+proto.walletrpc.RunAccountMixerRequest.prototype.setChangeAccountPassphrase = function(value) {
+  return jspb.Message.setProto3BytesField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 mixed_account = 3;
  * @return {number}
  */
 proto.walletrpc.RunAccountMixerRequest.prototype.getMixedAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.RunAccountMixerRequest} returns this
- */
-proto.walletrpc.RunAccountMixerRequest.prototype.setMixedAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-/**
- * optional uint32 mixed_account_branch = 3;
- * @return {number}
- */
-proto.walletrpc.RunAccountMixerRequest.prototype.getMixedAccountBranch = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
@@ -30888,16 +30924,16 @@ proto.walletrpc.RunAccountMixerRequest.prototype.getMixedAccountBranch = functio
  * @param {number} value
  * @return {!proto.walletrpc.RunAccountMixerRequest} returns this
  */
-proto.walletrpc.RunAccountMixerRequest.prototype.setMixedAccountBranch = function(value) {
+proto.walletrpc.RunAccountMixerRequest.prototype.setMixedAccount = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
- * optional uint32 change_account = 4;
+ * optional uint32 mixed_account_branch = 4;
  * @return {number}
  */
-proto.walletrpc.RunAccountMixerRequest.prototype.getChangeAccount = function() {
+proto.walletrpc.RunAccountMixerRequest.prototype.getMixedAccountBranch = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
@@ -30906,17 +30942,35 @@ proto.walletrpc.RunAccountMixerRequest.prototype.getChangeAccount = function() {
  * @param {number} value
  * @return {!proto.walletrpc.RunAccountMixerRequest} returns this
  */
-proto.walletrpc.RunAccountMixerRequest.prototype.setChangeAccount = function(value) {
+proto.walletrpc.RunAccountMixerRequest.prototype.setMixedAccountBranch = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional string cspp_server = 5;
+ * optional uint32 change_account = 5;
+ * @return {number}
+ */
+proto.walletrpc.RunAccountMixerRequest.prototype.getChangeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.RunAccountMixerRequest} returns this
+ */
+proto.walletrpc.RunAccountMixerRequest.prototype.setChangeAccount = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional string cspp_server = 6;
  * @return {string}
  */
 proto.walletrpc.RunAccountMixerRequest.prototype.getCsppServer = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
@@ -30925,7 +30979,7 @@ proto.walletrpc.RunAccountMixerRequest.prototype.getCsppServer = function() {
  * @return {!proto.walletrpc.RunAccountMixerRequest} returns this
  */
 proto.walletrpc.RunAccountMixerRequest.prototype.setCsppServer = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
