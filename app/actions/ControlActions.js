@@ -1095,7 +1095,7 @@ export const unlockAcctAndExecFn = (
     const dexAccount = accounts.find(
       (acct) => acct.accountName === dexAccountName
     );
-    if (dexAccount.accountNumber === acctNumber) {
+    if (dexAccount && dexAccount.accountNumber === acctNumber) {
       // return fn error in case some happened.
       if (fnError !== null) {
         throw fnError;
