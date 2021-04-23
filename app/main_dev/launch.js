@@ -62,7 +62,14 @@ let dcrdSocket,
 const callDEX = (func, params) => {
   // TODO: this can be done globally once ipcRenderer doesn't import launch.js anymore.
   const { getNativeFunction, getBufferPointer } = require("sbffi");
-  const dexLibPath = path.resolve("modules/dex/libdexc/libdexc.so");
+  const dexLibPath =
+    process.env.NODE_ENV === "development" || argv.custombinpath
+      ? // yarn dev || yarn start
+        path.resolve("modules/dex/libdexc/libdexc.so")
+      : // yarn package
+        path.resolve(
+          path.join(__dirname, "..", "..", "modules/dex/libdexc/libdexc.so")
+        );
   const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int", [
     "char *",
     "char *",
