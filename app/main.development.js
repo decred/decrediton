@@ -380,39 +380,9 @@ handle("start-wallet", (walletPath, testnet, rpcCreds) => {
   );
 });
 
-ipcMain.on(
-  "start-dcrlnd",
-  async (
-    event,
-    walletAccount,
-    walletPort,
-    rpcCreds,
-    walletPath,
-    testnet,
-    autopilotEnabled
-  ) => {
-    try {
-      event.returnValue = await startDcrlnd(
-        walletAccount,
-        walletPort,
-        rpcCreds,
-        walletPath,
-        testnet,
-        autopilotEnabled
-      );
-    } catch (error) {
-      if (!(error instanceof Error)) {
-        event.returnValue = new Error(error);
-      } else {
-        event.returnValue = error;
-      }
-    }
-  }
-);
+handle("start-dcrlnd", startDcrlnd);
 
-ipcMain.on("stop-dcrlnd", async (event) => {
-  event.returnValue = await stopDcrlnd();
-});
+handle("stop-dcrlnd", stopDcrlnd);
 
 handle("check-init-dex", checkInitDex);
 
@@ -452,37 +422,11 @@ handle("check-btc-config", getCurrentBitcoinConfig);
 
 handle("update-btc-config", updateDefaultBitcoinConfig);
 
-ipcMain.on("dcrlnd-creds", (event) => {
-  if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
-    event.returnValue = GetDcrlndCreds();
-  } else {
-    event.returnValue = null;
-  }
-});
+handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
 
-ipcMain.on("ln-scb-info", (event, walletPath, testnet) => {
-  try {
-    event.returnValue = lnScbInfo(walletPath, testnet);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("ln-scb-info", lnScbInfo);
 
-ipcMain.on("ln-remove-dir", (event, walletName, testnet) => {
-  try {
-    event.returnValue = removeDcrlnd(walletName, testnet);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("ln-remove-dir", removeDcrlnd);
 
 handle("check-daemon", getBlockChainInfo);
 
