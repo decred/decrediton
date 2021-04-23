@@ -36,7 +36,7 @@ import webSocket from "ws";
 import path from "path";
 import ini from "ini";
 import { makeRandomString, makeFileBackup } from "helpers";
-import { DEX_LOCALPAGE, DEX_LOCALPAGE_TESTNET } from "./externalRequests";
+import { DEX_LOCALPAGE } from "./externalRequests";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -905,7 +905,7 @@ export const launchDex = (walletPath, testnet) => {
     logPath: logPath,
     logFilename: logFilename
   });
-  const serverAddress = testnet ? DEX_LOCALPAGE_TESTNET : DEX_LOCALPAGE;
+  const serverAddress = DEX_LOCALPAGE;
   const sitePath = getSitePath(argv.custombinpath);
   callDEX("startServer", {
     sitedir: sitePath,
