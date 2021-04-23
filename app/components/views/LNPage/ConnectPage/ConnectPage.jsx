@@ -152,10 +152,7 @@ const ConnectPage = () => {
             ) : (
               <PassphraseModalButton
                 modalTitle={
-                  <T
-                    id="ln.connectPage.running"
-                    m="Unlock LN Wallet"
-                  />
+                  <T id="ln.connectPage.running" m="Unlock LN Wallet" />
                 }
                 disabled={startAttempt}
                 onSubmit={onLaunch}
