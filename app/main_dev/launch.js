@@ -36,7 +36,7 @@ import webSocket from "ws";
 import path from "path";
 import ini from "ini";
 import { makeRandomString, makeFileBackup } from "helpers";
-import { DEX_LOCALPAGE, DEX_LOCALPAGE_TESTNET } from "./externalRequests";
+import { DEX_LOCALPAGE } from "./externalRequests";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -62,7 +62,14 @@ let dcrdSocket,
 const callDEX = (func, params) => {
   // TODO: this can be done globally once ipcRenderer doesn't import launch.js anymore.
   const { getNativeFunction, getBufferPointer } = require("sbffi");
-  const dexLibPath = path.resolve("modules/dex/libdexc/libdexc.so");
+  const dexLibPath =
+    process.env.NODE_ENV === "development" || argv.custombinpath
+      ? // yarn dev || yarn start
+        path.resolve("modules/dex/libdexc/libdexc.so")
+      : // yarn package
+        path.resolve(
+          path.join(__dirname, "..", "..", "modules/dex/libdexc/libdexc.so")
+        );
   const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int", [
     "char *",
     "char *",
@@ -898,7 +905,7 @@ export const launchDex = (walletPath, testnet) => {
     logPath: logPath,
     logFilename: logFilename
   });
-  const serverAddress = testnet ? DEX_LOCALPAGE_TESTNET : DEX_LOCALPAGE;
+  const serverAddress = DEX_LOCALPAGE;
   const sitePath = getSitePath(argv.custombinpath);
   callDEX("startServer", {
     sitedir: sitePath,
