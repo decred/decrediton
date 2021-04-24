@@ -23,42 +23,45 @@ const MenuLinks = () => {
           expandSideBar && styles.expanded,
           sidebarOnBottom && styles.onBottom
         )}>
-        {menuLinks.map((menuLink, index) => {
-          const menuLinkLabel = (text) => (
-            <div
-              className={styles.menuLinkLabel}
-              data-testid={`menuLinkLabel-${menuLink.icon}`}>
-              {text}
-            </div>
-          );
-          const label =
-            expandSideBar && !sidebarOnBottom ? (
-              menuLinkLabel(menuLink.link)
-            ) : (
-              <Tooltip
-                content={menuLink.link}
-                placement={sidebarOnBottom ? "top" : "right"}>
-                {menuLinkLabel()}
-              </Tooltip>
+        {menuLinks.map(
+          ({ type, link, path, notifProp, backgroundBusy }, index) => {
+            const menuLinkLabel = (text) => (
+              <div
+                className={styles.menuLinkLabel}
+                data-testid={`menuLinkLabel-${type}`}>
+                {text}
+              </div>
             );
-          return (
-            (index < MENU_LINKS_PER_ROW ||
-              expandSideBar ||
-              !sidebarOnBottom) && (
-              <Tab
-                label={label}
-                key={menuLink.path}
-                className={classNames(
-                  styles.tab,
-                  styles[`${menuLink.icon}Icon`],
-                  expandSideBar && styles.expanded,
-                  sidebarOnBottom && styles.onBottom,
-                  menuLink.notifProp && styles.notificationIcon
-                )}
-              />
-            )
-          );
-        })}
+            const label =
+              expandSideBar && !sidebarOnBottom ? (
+                menuLinkLabel(link)
+              ) : (
+                <Tooltip
+                  content={link}
+                  placement={sidebarOnBottom ? "top" : "right"}>
+                  {menuLinkLabel()}
+                </Tooltip>
+              );
+            return (
+              (index < MENU_LINKS_PER_ROW ||
+                expandSideBar ||
+                !sidebarOnBottom) && (
+                <Tab
+                  label={label}
+                  key={path}
+                  className={classNames(
+                    styles.tab,
+                    styles[`${type}Icon`],
+                    expandSideBar && styles.expanded,
+                    sidebarOnBottom && styles.onBottom,
+                    notifProp && styles.notificationIcon,
+                    backgroundBusy && styles.backgroundBusy
+                  )}
+                />
+              )
+            );
+          }
+        )}
       </Tabs>
     </>
   );

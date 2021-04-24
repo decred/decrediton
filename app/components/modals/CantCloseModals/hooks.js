@@ -4,7 +4,7 @@ import * as da from "actions/DaemonActions";
 import { useSelector, useDispatch } from "react-redux";
 
 export function useCantCloseModal() {
-  const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
+  const legacyAutoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const hasUnpaidFee = useSelector(sel.getHasTicketFeeError);
   const cantCloseModalVisible = useSelector(sel.cantCloseModalVisible);
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
@@ -17,7 +17,7 @@ export function useCantCloseModal() {
   const shutdownApp = () => dispatch(da.shutdownApp());
 
   return {
-    autoBuyerRunning: autoBuyerRunning || ticketAutoBuyerRunning,
+    autoBuyerRunning: legacyAutoBuyerRunning || ticketAutoBuyerRunning,
     hasUnpaidFee,
     cantCloseModalVisible,
     onHideCantCloseModal,

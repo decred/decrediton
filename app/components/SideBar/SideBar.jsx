@@ -23,7 +23,6 @@ const SideBar = () => {
     expandSideBar,
     isWatchingOnly,
     sidebarOnBottom,
-    getRunningIndicator,
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
@@ -50,8 +49,7 @@ const SideBar = () => {
           sidebarOnBottom,
           onReduceSideBar,
           onExpandSideBar,
-          isWatchingOnly,
-          getRunningIndicator
+          isWatchingOnly
         }}
       />
       <div

@@ -17,7 +17,22 @@
   border-width: 5px !important;
   padding-left: 0 !important;
   font-size: 15px !important;
+  position: relative;
 }
+
+.tab.backgroundBusy::before {
+  content: "";
+  height: 20px;
+  width: 20px;
+  background-image: var(--pending-animation);
+  background-size: 20px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 35px;
+  top: 4px;
+}
+
 .tabs.expanded .tab span {
   padding-left: 55px !important;
 }
@@ -36,7 +51,7 @@
 .tab.accountsIcon {
   background-image: var(--menu-accounts);
 }
-.tab.securitycntrIcon {
+.tab.privacyIcon {
   background-image: var(--menu-privacy);
 }
 .tab.overviewIcon {

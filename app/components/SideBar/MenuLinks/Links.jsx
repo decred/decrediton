@@ -8,59 +8,65 @@ export const linkList = [
   {
     path: "/home",
     link: <T id="sidebar.link.home" m="Overview" />,
-    icon: "overview",
-    ariaLabel: "Overview"
+    type: "overview",
+    ariaLabel: "Overview",
+    backgroundBusy: false
   },
   {
     path: "/transactions",
     link: <T id="sidebar.link.transactions" m="On-chain Transactions" />,
-    icon: "transactions",
-    ariaLabel: "On-chain Transactions"
+    type: "transactions",
+    ariaLabel: "On-chain Transactions",
+    backgroundBusy: false
   },
   {
     path: "/ln",
     link: <T id="sidebar.link.ln" m="Lightning Transactions" />,
-    icon: LN_KEY,
-    key: LN_KEY,
-    ariaLabel: "Lightning Transactions"
+    type: LN_KEY,
+    ariaLabel: "Lightning Transactions",
+    backgroundBusy: false
   },
   {
     path: "/governance",
     link: <T id="sidebar.link.governance" m="Governance" />,
-    icon: "governance",
+    type: "governance",
     notifProp: "newProposalsStartedVoting",
-    ariaLabel: "Governance"
+    ariaLabel: "Governance",
+    backgroundBusy: false
   },
   {
     path: "/tickets",
     link: <T id="sidebar.link.staking" m="Staking" />,
-    icon: "tickets",
-    ariaLabel: "Staking"
+    type: "tickets",
+    ariaLabel: "Staking",
+    backgroundBusy: false
   },
   {
     path: "/privacy",
     link: <T id="sidebar.link.privacy" m="Privacy and Security" />,
-    icon: "securitycntr",
-    ariaLabel: "Privacy"
+    type: "privacy",
+    ariaLabel: "Privacy",
+    backgroundBusy: false
   },
   {
     path: "/accounts",
     link: <T id="sidebar.link.accounts" m="Accounts" />,
-    icon: "accounts",
-    ariaLabel: "Accounts"
+    type: "accounts",
+    ariaLabel: "Accounts",
+    backgroundBusy: false
   },
   {
     path: "/trezor",
     link: <T id="sidebar.link.trezor" m="Trezor" />,
-    icon: TREZOR_KEY,
-    key: TREZOR_KEY,
-    ariaLabel: "Trezor"
+    type: TREZOR_KEY,
+    ariaLabel: "Trezor",
+    backgroundBusy: false
   },
   {
     path: "/dex",
     link: <T id="sidebar.link.dex" m="DEX" />,
-    icon: DEX_KEY,
-    key: DEX_KEY,
-    ariaLabel: "DEX"
+    type: DEX_KEY,
+    ariaLabel: "DEX",
+    backgroundBusy: false
   }
 ];

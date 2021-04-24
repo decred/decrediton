@@ -144,9 +144,9 @@ const expectToHaveDefaultMenuLinks = (params) => {
       "/accounts"
     );
     expectToHaveMenuLink(
-      "menuLinkLabel-securitycntr",
+      "menuLinkLabel-privacy",
       "Privacy and Security",
-      "securitycntrIcon",
+      "privacyIcon",
       "/privacy"
     );
     if (isTrezorEnabled) {

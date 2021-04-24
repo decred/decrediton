@@ -172,7 +172,6 @@ const lightTheme = {
   "menu-trezor": url(require("style/icons/trezorActive.svg")),
   "menu-hamburger": url(require("style/icons/hamburger.svg")),
   "menu-arrow": url(require("style/icons/arrow.svg")),
-  "menu-mixer-icon": url(require("style/icons/menuMixer.svg")),
   "menu-spvon-icon": url(require("style/icons/menuSpvOn.svg")),
   "menu-spvoff-icon": url(require("style/icons/menuSpvOff.svg")),
   "menu-dex": url(require("style/icons/dex.svg")),

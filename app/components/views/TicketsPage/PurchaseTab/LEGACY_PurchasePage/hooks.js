@@ -63,8 +63,6 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     [dispatch]
   );
 
-  const isTicketAutoBuyerEnabled = useSelector(sel.isTicketAutoBuyerEnabled);
-
   const onShowAddStakePool = useCallback(() => {
     setIsAdding(true);
   }, []);
@@ -205,7 +203,6 @@ export function useLegacyPurchasePage(toggleShowVsp) {
     addCustomStakePool,
     onEnableTicketAutoBuyer,
     onDisableTicketAutoBuyer,
-    isTicketAutoBuyerEnabled,
     notMixedAccounts,
     getRunningIndicator,
     isPurchasingTickets

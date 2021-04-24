@@ -1753,12 +1753,13 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
 
 // selectors for checking if decrediton can be closed.
 
-// TODO remove duplicated auto buyer running selector
+// XXX remove legacy ticket autobuyer V1 & V2 running selector
 const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 
-// getRunningIndicator is a indicator for indicate something is runnning on
-// decrediton, like the ticket auto buyer or the mixer.
+// getRunningIndicator indicates that one of the following features is running
+// in the background: legacy ticket autobuyer, v3 ticket autobuyer, the mixer
+// or ticket purchase attempt.
 export const getRunningIndicator = or(
   getAccountMixerRunning,
   getTicketAutoBuyerRunning,

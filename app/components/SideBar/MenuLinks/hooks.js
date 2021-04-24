@@ -11,7 +11,6 @@ export function useMenuLinks() {
   const isTrezor = useSelector(sel.isTrezor);
   const lnEnabled = useSelector(sel.lnEnabled);
   const isSPV = useSelector(sel.isSPV);
-
   const newActiveVoteProposalsCount = useSelector(
     sel.newActiveVoteProposalsCount
   );
@@ -31,27 +30,48 @@ export function useMenuLinks() {
     ]
   );
 
+  const isTicketAutoBuyerEnabled = useSelector(sel.getTicketAutoBuyerRunning);
+  const isLegacyTicketAutobuyerEnabled = useSelector(
+    sel.isTicketAutoBuyerEnabled
+  );
+  const isTicketsPurchaseAttempt = useSelector(
+    sel.purchaseTicketsRequestAttempt
+  );
+  const isStakingBackgroundBusy =
+    isTicketAutoBuyerEnabled ||
+    isLegacyTicketAutobuyerEnabled ||
+    isTicketsPurchaseAttempt;
+  // Useful to handle the case staking backgroundBusy on => off.
+  const isStakingBackgroundBusyRef = useRef(isStakingBackgroundBusy);
+
+  const isMixerRunning = useSelector(sel.getAccountMixerRunning);
+  // Useful to handle the case on => off.
+  const isMixerRunningRef = useRef(isMixerRunning);
+
   const prepareLinkList = () => {
     let links = linkList;
     if (!isTrezor) {
-      links = links.filter((l) => l.key !== TREZOR_KEY);
+      links = links.filter(({ type }) => type !== TREZOR_KEY);
     }
     if (!lnEnabled) {
-      links = links.filter((l) => l.key !== LN_KEY);
+      links = links.filter(({ type }) => type !== LN_KEY);
     }
     if (isSPV || isTrezor) {
-      links = links.filter((l) => l.key !== DEX_KEY);
+      links = links.filter(({ type }) => type !== DEX_KEY);
     }
 
     return links;
   };
 
   const links = useRef(prepareLinkList());
-  const menuLinks = useMemo(() => {
-    return links.current.map((link) => {
-      return { ...link, notifProp: notifProps[link.notifProp] };
-    });
-  }, [notifProps]);
+  const menuLinks = useMemo(
+    () =>
+      links.current.map((link) => ({
+        ...link,
+        notifProp: notifProps[link.notifProp]
+      })),
+    [notifProps]
+  );
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const history = useHistory();
@@ -59,6 +79,31 @@ export function useMenuLinks() {
     setActiveTabIndex(index);
     history.push(menuLinks[index].path);
   };
+
+  // Populates backgroundBusy field values for menu links.
+  useEffect(() => {
+    // Mixer off => on.
+    if (isMixerRunning && !isMixerRunningRef.current) {
+      const privacyMenuItem = menuLinks.find(({ type }) => type === "privacy");
+      privacyMenuItem.backgroundBusy = true;
+      isMixerRunningRef.current = true;
+    } else if (!isMixerRunning && isMixerRunningRef.current) {
+      // Mixer on => off.
+      const privacyMenuItem = menuLinks.find(({ type }) => type === "privacy");
+      privacyMenuItem.backgroundBusy = false;
+      isMixerRunningRef.current = false;
+    } else if (isStakingBackgroundBusy && !isStakingBackgroundBusyRef.current) {
+      // Staking backgroundBusy false => true
+      const stakingMenuItem = menuLinks.find(({ type }) => type === "tickets");
+      stakingMenuItem.backgroundBusy = true;
+      isStakingBackgroundBusyRef.current = true;
+    } else if (!isStakingBackgroundBusy && isStakingBackgroundBusyRef.current) {
+      // Staking backgroundBusy false => true
+      const stakingMenuItem = menuLinks.find(({ type }) => type === "tickets");
+      stakingMenuItem.backgroundBusy = false;
+      isStakingBackgroundBusyRef.current = false;
+    }
+  }, [isMixerRunning, menuLinks, isStakingBackgroundBusy]);
 
   useEffect(() => {
     const tabbedPageCheck = location.pathname.indexOf("/", 1);
