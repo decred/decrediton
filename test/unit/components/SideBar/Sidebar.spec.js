@@ -448,23 +448,6 @@ test("tests tooltip on Logo when isWatchingOnly mode is active", () => {
   mockIsWatchingOnly.mockRestore();
 });
 
-test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
-  const mockGetAccountMixerRunning = (selectors.getRunningIndicator = jest.fn(
-    () => true
-  ));
-
-  render(<SideBar />);
-  expect(screen.getByText(/in the background/i).textContent)
-    .toMatchInlineSnapshot(`
-    "One or more of the following decrediton's features running in 
-                  the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket 
-                  Attempt"
-  `);
-
-  expect(mockGetAccountMixerRunning).toHaveBeenCalled();
-  mockGetAccountMixerRunning.mockRestore();
-});
-
 test("tests notification icon on the menu link", () => {
   const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting = jest.fn(
     () => true
