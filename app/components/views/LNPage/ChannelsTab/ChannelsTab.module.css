@@ -28,7 +28,7 @@
 }
 
 .openButton {
-  max-width: 3em;
+  max-width: 8em;
   margin-top: 2em;
   grid-column-start: 1;
 }

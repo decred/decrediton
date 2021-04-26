@@ -1,4 +1,4 @@
-import * as wpb from "middleware/ln/wtclient_pb";
+import { wtclientrpc as wpb } from "middleware/ln/wtclient_pb";
 import { hexToBytes } from "helpers/byteActions.js";
 
 export const addTower = (wtClient, wtPubKey, addr) => {
