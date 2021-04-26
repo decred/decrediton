@@ -10,7 +10,7 @@ import { LN_ICON } from "constants";
 const AccountsListComponent = ({ account, onChangeAccount }) => (
   <>
     <ReceiveAccountsSelect
-      account={account}
+      account={account.value}
       onChange={onChangeAccount}
       showAccountsButton={false}
       hideSpendable={false}

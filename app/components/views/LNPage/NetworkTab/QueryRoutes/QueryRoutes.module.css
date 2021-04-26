@@ -10,12 +10,12 @@
 
 .queryRoutesButton {
   background-image: var(--search-icon);
-  background-size: 25px 25px;
+  background-size: 16px 16px;
   background-repeat: no-repeat;
-  background-position: 8px 8px;
+  background-position: 12px 12px;
   padding: 12px;
-  height: 16px;
-  width: 16px;
+  height: 38px;
+  width: 38px;
 }
 
 .value {
