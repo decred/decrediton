@@ -7,3 +7,23 @@
   color: var(--error-text-color);
   margin-top: 8px;
 }
+
+.sendToDexAccount {
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+  margin: 20px 0 10px 0;
+  position: relative;
+  width: 740px;
+}
+
+.sendToDexAccount .title {
+  margin-right: auto;
+  font-size: 18px;
+  line-height: 32px;
+  color: var(--privacy-mixer-status-color);
+  padding-left: 42px;
+  background-size: 32px;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-image: var(--self-transaction-icon);
+}

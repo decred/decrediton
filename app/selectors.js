@@ -1857,6 +1857,24 @@ export const dexBTCWalletRunning = compose(
 export const dexAddr = get(["dex", "addr"]);
 export const dexConfig = get(["dex", "config"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
+export const dexAccountNumber = createSelector(
+  [dexAccount, balances],
+  (dexAccount, balances) =>
+    !dexAccount
+      ? null
+      : balances
+          .filter(({ accountName }) => accountName === dexAccount)
+          .map(({ accountNumber }) => accountNumber)[0]
+);
+export const dexAccountSpendable = createSelector(
+  [dexAccount, balances],
+  (dexAccount, balances) =>
+    !dexAccount
+      ? null
+      : balances
+          .filter(({ accountName }) => accountName === dexAccount)
+          .map(({ spendable }) => spendable)[0]
+);
 export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
 
 export const defaultDEXServer = compose(
