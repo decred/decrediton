@@ -1,5 +1,5 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames } from "pi-ui";
 import {
   AccountsSelect,
   AddressInput,
@@ -8,6 +8,7 @@ import {
 } from "inputs";
 import { Balance } from "shared";
 import styles from "./SendOutputRow.module.css";
+import SendAllFundsIcon from "./SendAllFundsIcon";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {
@@ -19,56 +20,6 @@ const messages = defineMessages({
     defaultMessage: "Amount"
   }
 });
-
-const getSendAllFundsIcon = ({
-  isSendAll,
-  onShowSendAll,
-  onHideSendAll,
-  outputs
-}) => (
-  <div className={styles.sendAllFundsIcon}>
-    {outputs.length > 1 ? (
-      <Tooltip
-        contentClassName={styles.tooltipSendAllDisabled}
-        content={
-          <T
-            id="send.dex.sendAllTitle.disabled"
-            m="Send all funds from selected account - Disabled"
-          />
-        }>
-        <a
-          className={classNames(
-            styles.sendIconWrapper,
-            styles.walletIcon,
-            styles.disabled
-          )}
-        />
-      </Tooltip>
-    ) : !isSendAll ? (
-      <Tooltip
-        contentClassName={styles.tooltipSendAll}
-        content={
-          <T id="send.dex.sendAllTitle" m="Send all funds from selected account" />
-        }>
-        <a
-          className={classNames(styles.sendIconWrapper, styles.walletIcon)}
-          onClick={onShowSendAll}
-        />
-      </Tooltip>
-    ) : (
-      <Tooltip
-        contentClassName={styles.tooltipSendAllDisabled}
-        content={
-          <T id="send.dex.cancelSendAllTitle" m="Cancel sending all funds" />
-        }>
-        <a
-          className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
-          onClick={onHideSendAll}
-        />
-      </Tooltip>
-    )}
-  </div>
-);
 
 const SendOutputRow = ({
   index,
@@ -169,13 +120,16 @@ const SendOutputRow = ({
         />
       )}
     </div>
-    {index === 0 &&
-      getSendAllFundsIcon({
-        isSendAll,
-        onShowSendAll,
-        onHideSendAll,
-        outputs
-      })}
+    {index === 0 && (
+      <SendAllFundsIcon
+        {...{
+          isSendAll,
+          onShowSendAll,
+          onHideSendAll,
+          outputs
+        }}
+      />
+    )}
   </div>
 );
 
