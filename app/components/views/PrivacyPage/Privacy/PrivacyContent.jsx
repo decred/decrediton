@@ -95,6 +95,7 @@ const PrivacyContent = ({
               </DangerButton>
             ) : getRunningIndicator ? (
               <Tooltip
+                contentClassName={style.disabledTooltip}
                 content={
                   <T
                     id="mixer.start.running"

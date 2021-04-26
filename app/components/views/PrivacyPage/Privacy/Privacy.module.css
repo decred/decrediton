@@ -149,6 +149,10 @@
   background-repeat: no-repeat;
   background-image: var(--self-transaction-icon);
 }
+.disabledTooltip {
+  width: 17rem;
+  text-align: center;
+}
 @media screen and (max-width: 1179px) {
   .privacyContent {
     width: 634px;
