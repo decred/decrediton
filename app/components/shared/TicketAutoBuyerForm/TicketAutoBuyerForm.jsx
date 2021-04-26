@@ -1,7 +1,6 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { AutoBuyerSettingsModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
 import { Balance } from "shared";
 import styles from "./TicketAutoBuyerForm.module.css";
 
@@ -36,18 +35,17 @@ const TicketAutoBuyerForm = ({
             className={styles.toggleSwitch}
           />
         ) : getRunningIndicator ? (
-          <Tooltip
-            content={
+          <AutoBuyerPassphraseModalSwitch
+            className={styles.toggleSwitch}
+            tooltipClassName={styles.disabledTooltip}
+            disabledText={
               <T
                 id="tickets.autobuyer.running"
                 m="Privacy Mixer or Purchase Ticket Attempt running, please shut them off before starting autobuyer."
               />
-            }>
-            <AutoBuyerPassphraseModalSwitch
-              className={styles.toggleSwitch}
-              disabled={true}
-            />
-          </Tooltip>
+            }
+            disabled={true}
+          />
         ) : (
           <AutoBuyerPassphraseModalSwitch
             className={styles.toggleSwitch}

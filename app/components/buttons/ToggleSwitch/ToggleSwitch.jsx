@@ -6,15 +6,17 @@ import { Tooltip, classNames } from "pi-ui";
 // enabledText and notEnabledText the tooltop contents when the switch is on/off.
 const ToggleSwitch = ({
   className,
+  tooltipClassName,
   enabled,
   onClick,
   disabled,
   enabledText,
+  disabledText,
   notEnabledText
 }) => (
   <Tooltip
-    contentClassName={styles.tooltip}
-    content={enabled ? enabledText : notEnabledText}>
+    contentClassName={classNames(styles.tooltip, tooltipClassName)}
+    content={disabled ? disabledText : enabled ? enabledText : notEnabledText}>
     <div className={classNames(styles.toggleSwitch, className)}>
       <div
         data-testid="toggleSwitch"

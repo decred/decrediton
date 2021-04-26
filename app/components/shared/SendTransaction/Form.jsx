@@ -72,6 +72,7 @@ const Form = ({
           {((isTrezor && isWatchingOnly) || !isWatchingOnly) &&
             (getRunningIndicator ? (
               <Tooltip
+                contentClassName={styles.disabledTooltip}
                 content={
                   <T
                     id="send.indicator.running"
