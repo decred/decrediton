@@ -11,11 +11,11 @@ import styles from "./SendOutputRow.module.css";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {
-    id: "send.destinationAddrPlaceholder",
+    id: "send.dex.destinationAddrPlaceholder",
     defaultMessage: "Address"
   },
   amountPlaceholder: {
-    id: "send.amountPlaceholder",
+    id: "send.dex.amountPlaceholder",
     defaultMessage: "Amount"
   }
 });
@@ -32,7 +32,7 @@ const getSendAllFundsIcon = ({
         contentClassName={styles.tooltipSendAllDisabled}
         content={
           <T
-            id="send.sendAllTitle.disabled"
+            id="send.dex.sendAllTitle.disabled"
             m="Send all funds from selected account - Disabled"
           />
         }>
@@ -48,7 +48,7 @@ const getSendAllFundsIcon = ({
       <Tooltip
         contentClassName={styles.tooltipSendAll}
         content={
-          <T id="send.sendAllTitle" m="Send all funds from selected account" />
+          <T id="send.dex.sendAllTitle" m="Send all funds from selected account" />
         }>
         <a
           className={classNames(styles.sendIconWrapper, styles.walletIcon)}
@@ -59,7 +59,7 @@ const getSendAllFundsIcon = ({
       <Tooltip
         contentClassName={styles.tooltipSendAllDisabled}
         content={
-          <T id="send.cancelSendAllTitle" m="Cancel sending all funds" />
+          <T id="send.dex.cancelSendAllTitle" m="Cancel sending all funds" />
         }>
         <a
           className={classNames(styles.sendIconWrapper, styles.cancelIcon)}
@@ -96,7 +96,7 @@ const SendOutputRow = ({
     {index === 0 && (
       <>
         <label>
-          <T id="send.from" m="From" />:
+          <T id="send.dex.from" m="From" />:
         </label>
         <div className={styles.sendInputWrapper}>
           <AccountsSelect
@@ -112,7 +112,7 @@ const SendOutputRow = ({
       </>
     )}
     <label>
-      <T id="send.to" m="To" />:
+      <T id="send.dex.to" m="To" />:
     </label>
     <div className={styles.sendInputWrapper}>
       {isSendSelf ? (
@@ -140,7 +140,7 @@ const SendOutputRow = ({
       )}
     </div>
     <label>
-      <T id="send.amount" m="Amount" />:
+      <T id="send.dex.amount" m="Amount" />:
     </label>
     <div
       className={classNames(
