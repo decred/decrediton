@@ -284,6 +284,7 @@ const PurchaseTicketsForm = ({
         </PiUiButton>
       ) : getRunningIndicator ? (
         <Tooltip
+          contentClassName={styles.disabledTooltip}
           content={
             <T
               id="tickets.purchase.running"

@@ -136,6 +136,12 @@
   margin-top: 24px;
 }
 
+.disabledTooltip {
+  width: 17rem;
+  text-align: center;
+  color: var(--input-color-default);
+}
+
 /* legacy */
 
 .info {

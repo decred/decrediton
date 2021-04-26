@@ -71,6 +71,11 @@
   text-decoration: underline;
   margin-left: auto;
 }
+.disabledTooltip {
+  width: 17rem;
+  text-align: center;
+  color: var(--input-color-default);
+}
 
 @media screen and (max-width: 1179px) {
   .sendArea {

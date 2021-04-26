@@ -48,6 +48,12 @@
   display: flex;
   align-items: center;
 }
+
+.disabledTooltip {
+  width: 17rem;
+  text-align: center;
+}
+
 @media screen and (max-width: 768px) {
   .isRow.sendArea {
     flex-direction: column;
