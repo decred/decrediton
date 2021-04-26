@@ -51,14 +51,14 @@ const RegisterPage = () => {
         </div>
         <div className={styles.sendToDexAccount}>
           <div className={styles.title}>
-            <T id="privacy.sendToDexAccount.title" m="Send to Dex Account" />
+            <T id="dex.sendToDexAccount.title" m="Send to Dex Account" />
           </div>
           <SendTransaction
             onlySendSelfAllowed={true}
             styles={sendFormStyles}
             receiveAccountsSelectDisabled={true}
             hideDetails={true}
-            sendButtonLabel={<T id="send.sendToSelfBtn" m="Send to Self" />}
+            sendButtonLabel={<T id="send.dex.sendToSelfBtn" m="Send to Self" />}
             receiveAccount={dexAccountNumber}
             spendingAccount={defaultSpendingAccount}
             filterFromAccounts={[dexAccountNumber]}
