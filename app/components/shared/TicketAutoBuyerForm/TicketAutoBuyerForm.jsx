@@ -1,7 +1,6 @@
 import { AutoBuyerSwitch, AutoBuyerPassphraseModalSwitch } from "buttons";
 import { AutoBuyerSettingsModal } from "modals";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
 import { Balance } from "shared";
 import styles from "./TicketAutoBuyerForm.module.css";
 
