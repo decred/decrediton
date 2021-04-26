@@ -1,9 +1,18 @@
 import { useEffect, useState, useCallback } from "react";
+import { useSelector, shallowEqual } from "react-redux";
+import * as sel from "selectors";
 
 export const useDexRegisterPage = ({ defaultServerAddress, onGetConfig }) => {
   const [isValid, setIsValid] = useState(false);
   const [addr, setAddress] = useState(defaultServerAddress);
   const [error, setIsError] = useState("");
+
+  const dexAccountNumber = useSelector(sel.dexAccountNumber);
+  const defaultSpendingAccount = useSelector(
+    sel.defaultSpendingAccount,
+    shallowEqual
+  );
+  const dexAccountSpendable = useSelector(sel.dexAccountSpendable);
 
   const resetState = useCallback(() => {
     setAddress(null);
@@ -40,6 +49,9 @@ export const useDexRegisterPage = ({ defaultServerAddress, onGetConfig }) => {
     error,
     isValid,
     addr,
-    setAddress
+    setAddress,
+    dexAccountNumber,
+    defaultSpendingAccount,
+    dexAccountSpendable
   };
 };
