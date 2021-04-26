@@ -124,17 +124,31 @@ export const GETNEXTACCOUNT_ATTEMPT = "GETNEXTACCOUNT_ATTEMPT";
 export const GETNEXTACCOUNT_FAILED = "GETNEXTACCOUNT_FAILED";
 export const GETNEXTACCOUNT_SUCCESS = "GETNEXTACCOUNT_SUCCESS";
 
-export const getNextAccountAttempt = (passphrase, accountName) => (
+export const getNextAccountAttempt = (passphrase, accountName) => async (
   dispatch,
   getState
 ) => {
   dispatch({ type: GETNEXTACCOUNT_ATTEMPT });
-  return wallet
-    .getNextAccount(sel.walletService(getState()), passphrase, accountName)
-    .then((getNextAccountResponse) =>
-      dispatch({ getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS })
-    )
-    .catch((error) => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));
+  try {
+    const getNextAccountResponse = await wallet.getNextAccount(
+      sel.walletService(getState()),
+      passphrase,
+      accountName
+    );
+    const accountNumber = getNextAccountResponse.getAccountNumber();
+    await dispatch(
+      setAccountPassphrase(
+        sel.walletService(getState()),
+        accountNumber,
+        null,
+        passphrase,
+        passphrase
+      )
+    );
+    return dispatch({ getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: GETNEXTACCOUNT_FAILED });
+  }
 };
 
 export const IMPORTPRIVKEY_ATTEMPT = "IMPORTPRIVKEY_ATTEMPT";
@@ -971,18 +985,19 @@ export const saveLegacyAutoBuyerSettings = ({
   });
 };
 
-export const SETACCOUNTSPASSPHRASE_ATTEMPT = "SETACCOUNTSPASSPHRASE_ATTEMPT";
-export const SETACCOUNTSPASSPHRASE_FAILED = "SETACCOUNTSPASSPHRASE_FAILED";
-export const SETACCOUNTSPASSPHRASE_SUCCESS = "SETACCOUNTSPASSPHRASE_SUCCESS";
+export const SETACCOUNTPASSPHRASE_ATTEMPT = "SETACCOUNTPASSPHRASE_ATTEMPT";
+export const SETACCOUNTPASSPHRASE_FAILED = "SETACCOUNTPASSPHRASE_FAILED";
+export const SETACCOUNTPASSPHRASE_SUCCESS = "SETACCOUNTPASSPHRASE_SUCCESS";
 
-const setAccountPassphrase = async (
+const setAccountPassphrase = (
   walletService,
   accountNumber,
   accountPassphrase,
   newAcctPassphrase,
   walletPassphrase
-) => {
+) => async (dispatch, getState) => {
   try {
+    dispatch({ type: SETACCOUNTPASSPHRASE_ATTEMPT });
     await wallet.setAccountPassphrase(
       walletService,
       accountNumber,
@@ -990,11 +1005,19 @@ const setAccountPassphrase = async (
       newAcctPassphrase,
       walletPassphrase
     );
-    return;
+    const accounts = sel.balances(getState());
+    const acct = accounts.find((acct) => acct.accountNumber === accountNumber);
+    acct.encrypted = true;
+    acct.locked = true;
+    return dispatch({ type: SETACCOUNTPASSPHRASE_SUCCESS, accounts });
   } catch (error) {
     return error;
   }
 };
+
+export const SETACCOUNTSPASSPHRASE_ATTEMPT = "SETACCOUNTSPASSPHRASE_ATTEMPT";
+export const SETACCOUNTSPASSPHRASE_FAILED = "SETACCOUNTSPASSPHRASE_FAILED";
+export const SETACCOUNTSPASSPHRASE_SUCCESS = "SETACCOUNTSPASSPHRASE_SUCCESS";
 
 export const setAccountsPass = (walletPassphrase) => async (
   dispatch,
@@ -1003,7 +1026,7 @@ export const setAccountsPass = (walletPassphrase) => async (
   dispatch({ type: SETACCOUNTSPASSPHRASE_ATTEMPT });
   try {
     const oldAccounts = sel.balances(getState());
-    const accounts = Promise.all(
+    const accounts = await Promise.all(
       oldAccounts.map(async (acct) => {
         // just skip if imported account.
         if (acct.accountNumber === Math.pow(2, 31) - 1) {
@@ -1012,15 +1035,15 @@ export const setAccountsPass = (walletPassphrase) => async (
         // we set the account passphrase as the wallet passphrase to avoid the user
         // ending with multiple passphrases.
 
-        await setAccountPassphrase(
-          sel.walletService(getState()),
-          acct.accountNumber,
-          walletPassphrase,
-          walletPassphrase,
-          walletPassphrase
+        await dispatch(
+          setAccountPassphrase(
+            sel.walletService(getState()),
+            acct.accountNumber,
+            null,
+            walletPassphrase,
+            walletPassphrase
+          )
         );
-        acct.encrypted = true;
-        acct.locked = true;
         return acct;
       })
     );
