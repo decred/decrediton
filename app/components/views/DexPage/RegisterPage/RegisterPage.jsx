@@ -5,6 +5,9 @@ import { TextInput } from "inputs";
 import { useDex } from "../hooks";
 import { useDexRegisterPage } from "./hooks";
 import styles from "./RegisterPage.module.css";
+import sendFormStyles from "./SendForm.module.css";
+import SendOutputRow from "./SendOutputRow";
+import { SendTransaction } from "shared";
 
 const RegisterPage = () => {
   const {
@@ -22,7 +25,10 @@ const RegisterPage = () => {
     error,
     onGetConfigDex,
     addr,
-    setAddress
+    setAddress,
+    dexAccountNumber,
+    defaultSpendingAccount,
+    dexAccountSpendable
   } = useDexRegisterPage({
     onGetConfig,
     defaultServerAddress
@@ -43,9 +49,28 @@ const RegisterPage = () => {
           />{" "}
           {dexAddr}
         </div>
+        <div className={styles.sendToDexAccount}>
+          <div className={styles.title}>
+            <T id="privacy.sendToDexAccount.title" m="Send to Dex Account" />
+          </div>
+          <SendTransaction
+            onlySendSelfAllowed={true}
+            styles={sendFormStyles}
+            receiveAccountsSelectDisabled={true}
+            hideDetails={true}
+            sendButtonLabel={<T id="send.sendToSelfBtn" m="Send to Self" />}
+            receiveAccount={dexAccountNumber}
+            spendingAccount={defaultSpendingAccount}
+            filterFromAccounts={[dexAccountNumber]}
+            SendOutputRow={SendOutputRow}
+          />
+        </div>
         <PassphraseModalButton
           className="margin-top-m"
-          disabled={registerDexAttempt}
+          disabled={
+            registerDexAttempt ||
+            dexAccountSpendable < dexConfig.feeAsset.amount
+          }
           modalTitle={
             <T id="dex.payDexFeeModalTitle" m="Confirm Registration" />
           }
