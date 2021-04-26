@@ -10,7 +10,6 @@
 .invoiceButton {
   font-size: 30px;
   padding: 12px;
-  height: 18px;
 }
 
 .lastPayRequest {
@@ -30,12 +29,7 @@
   grid-column: 1 / 3;
 }
 
-.value {
-  font-size: 32px;
-}
-
 .memo {
   text-overflow: ellipsis;
   overflow: hidden;
-  max-width: 18em;
 }
