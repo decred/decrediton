@@ -1,6 +1,15 @@
 .dexAddress {
-  width: 90%;
+  width: 50%;
   max-width: 650px;
+}
+
+.dexAddress input {
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.dexAddress input::placeholder {
+  font-size: 16px;
 }
 
 .error {
@@ -26,4 +35,20 @@
   background-position: 0 0;
   background-repeat: no-repeat;
   background-image: var(--self-transaction-icon);
+}
+label {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+}
+
+@media screen and (max-width: 768px) {
+  label {
+    font-size: 13px;
+  }
+
+  input {
+    font-size: 15px;
+    line-height: 21px;
+  }
 }
