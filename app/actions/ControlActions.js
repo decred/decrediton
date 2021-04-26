@@ -1003,7 +1003,6 @@ export const setAccountsPass = (walletPassphrase) => async (
   dispatch({ type: SETACCOUNTSPASSPHRASE_ATTEMPT });
   try {
     const oldAccounts = sel.balances(getState());
-    await wallet.unlockWallet(sel.walletService(getState()), walletPassphrase);
     const accounts = Promise.all(
       oldAccounts.map(async (acct) => {
         // just skip if imported account.
@@ -1021,6 +1020,7 @@ export const setAccountsPass = (walletPassphrase) => async (
           walletPassphrase
         );
         acct.encrypted = true;
+        acct.locked = true;
         return acct;
       })
     );
