@@ -36,7 +36,6 @@ import { stopNotifcations } from "./NotificationActions";
 import { stopDcrlnd } from "./LNActions";
 import { TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
-import { ipcRenderer } from "electron";
 import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
 import { TRZ_WALLET_CLOSED } from "actions/TrezorActions";
@@ -322,7 +321,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
     walletLoader: { discoverAccountsComplete }
   } = getState();
 
-  const credentials = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
+  const credentials = wallet.getDcrdRpcCredentials();
   const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
 
   const request = new RpcSyncRequest();
@@ -400,13 +399,13 @@ export const WALLET_SELECTED = "WALLET_SELECTED";
 // user after a refresh (common when in dev).
 export const setSelectedWallet = (selectedWallet) => (dispatch) => {
   dispatch({ type: WALLET_SELECTED, selectedWallet });
-  ipcRenderer.sendSync("set-selected-wallet", selectedWallet);
+  wallet.setSelectedWallet(selectedWallet);
 };
 
 // getSelectedWallet gets a wallet from the node memory. If it does exit, it is
 // dispatched and added to the reducer.
 export const getSelectedWallet = () => (dispatch) => {
-  const selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
+  const selectedWallet = wallet.getSelectedWallet();
   if (!selectedWallet) {
     return null;
   }

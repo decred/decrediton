@@ -19,7 +19,6 @@ import {
   resetInventoryAndProposals
 } from "actions/GovernanceActions";
 import * as configConstants from "constants/config";
-import { ipcRenderer } from "electron";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -75,7 +74,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   }
 
   if (locale != settings.locale) {
-    ipcRenderer.sendSync("change-menu-locale", settings.locale);
+    wallet.changeMenuLocale(settings.locale);
   }
 
   const newDcrdataEnabled =

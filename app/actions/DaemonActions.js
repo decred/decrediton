@@ -23,7 +23,6 @@ import {
 } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
-import { ipcRenderer } from "electron";
 import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
@@ -204,15 +203,14 @@ export const startDaemon = (params) => (dispatch, getState) =>
 
 export const registerForErrors = () => (dispatch) => {
   dispatch({ type: REGISTERFORERRORS });
-  ipcRenderer.send("register-for-errors");
-  ipcRenderer.on("error-received", (event, daemon, error) => {
+  wallet.onErrorReceived((event, daemon, error) => {
     if (daemon) {
       dispatch({ error, type: DAEMON_ERROR });
     } else {
       dispatch({ error, type: WALLET_ERROR });
     }
   });
-  ipcRenderer.on("warning-received", (event, daemon, warning) => {
+  wallet.onWarningReceived((event, daemon, warning) => {
     if (daemon) {
       dispatch({ warning, type: DAEMON_WARNING });
     } else {
@@ -243,9 +241,7 @@ export const finalShutdown = () => (dispatch, getState) => {
     setLastHeight(currentBlockHeight);
   }
   dispatch({ type: SHUTDOWN_REQUESTED });
-  ipcRenderer.on("daemon-stopped", () => {
-    dispatch({ type: DAEMONSTOPPED });
-  });
+  wallet.onDaemonStopped(() => dispatch({ type: DAEMONSTOPPED }));
   dispatch(stopNotifcations());
   dispatch(rescanCancel());
   dispatch(syncCancel());
@@ -379,7 +375,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       // it probably means it is a refresh, so we get the selected wallet
       // stored in ipc memory.
       if (!selectedWallet) {
-        selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
+        selectedWallet = wallet.getSelectedWallet();
       }
       const isTestnet = network == "testnet";
       const walletCfg = getWalletCfg(isTestnet, selectedWallet.value.wallet);
@@ -579,7 +575,7 @@ export const checkNetworkMatch = () => (dispatch, getState) =>
             error: DIFF_CONNECTION_ERROR,
             type: CHECK_NETWORKMATCH_FAILED
           });
-          ipcRenderer.send("drop-dcrd");
+          wallet.dropDcrd();
           return reject(DIFF_CONNECTION_ERROR);
         }
         dispatch({ type: CHECK_NETWORKMATCH_SUCCESS });

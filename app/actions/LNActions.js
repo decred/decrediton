@@ -1,7 +1,6 @@
 import * as ln from "wallet/ln";
 import * as sel from "selectors";
 import * as wallet from "wallet";
-import { ipcRenderer } from "electron";
 import { getWalletCfg } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
@@ -87,7 +86,7 @@ export const startDcrlnd = (
     creating = true;
   }
 
-  const rpcCreds = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
+  const rpcCreds = wallet.getDcrdRpcCredentials();
   const walletClientKeyCert = wallet.getDcrwalletGrpcKeyCert();
 
   let dcrlndCreds;

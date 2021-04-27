@@ -333,7 +333,7 @@ ipcMain.on("get-available-wallets", (event, network) => {
 });
 
 handle("start-daemon", (params, testnet) =>
-  startDaemon(params, testnet, reactIPC)
+  startDaemon(params, testnet, mainWindow.webContents)
 );
 
 handle("connect-daemon", ({ rpcCreds }) =>
@@ -356,9 +356,7 @@ ipcMain.on("stop-daemon", (event) => {
   event.returnValue = stopDaemon();
 });
 
-ipcMain.on("drop-dcrd", (event) => {
-  event.returnValue = dropDCRDSocket();
-});
+handle("drop-dcrd", () => dropDCRDSocket());
 
 ipcMain.on("stop-wallet", (event) => {
   previousWallet = null;
@@ -372,7 +370,7 @@ handle("start-wallet", (walletPath, testnet, rpcCreds) => {
     daemonIsAdvanced,
     testnet,
     walletPath,
-    reactIPC,
+    mainWindow.webContents,
     rpcUser,
     rpcPass,
     rpcListen,
@@ -435,12 +433,6 @@ handle("daemon-getinfo", getDaemonInfo);
 handle("clean-shutdown", () =>
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID())
 );
-
-let reactIPC;
-ipcMain.on("register-for-errors", function (event) {
-  reactIPC = event.sender;
-  event.returnValue = true;
-});
 
 ipcMain.on("app-reload-ui", () => {
   mainWindow.reload();
