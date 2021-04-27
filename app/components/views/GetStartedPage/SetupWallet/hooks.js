@@ -59,7 +59,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     send({ type: "BACK" });
   }, [send]);
 
-  const getStateComponent = useCallback(() => {
+  const getStateComponent = useCallback(async () => {
     const { error, isWatchingOnly, isTrezor } = current.context;
 
     let component, hasLive, hasSoloTickets;
@@ -110,25 +110,23 @@ export const useWalletSetup = (settingUpWalletRef) => {
         }
         break;
       }
-      case "settingMixedAccount":
-        getCoinjoinOutputspByAcct()
-          .then((outputsByAcctMap) => {
-            const hasMixedOutputs =
-              outputsByAcctMap &&
-              outputsByAcctMap.reduce(
-                (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
-                false
-              );
-            if (!hasMixedOutputs || mixedAccount) {
-              sendContinue();
-            } else {
-              component = h(SettingMixedAccount, {
-                cancel: sendContinue,
-                sendContinue
-              });
-            }
-          })
-          .catch((err) => console.log(err));
+      case "settingMixedAccount": {
+        const outputsByAcctMap = await getCoinjoinOutputspByAcct();
+        const hasMixedOutputs =
+          outputsByAcctMap &&
+          outputsByAcctMap.reduce(
+            (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
+            false
+          );
+        if (!hasMixedOutputs || mixedAccount) {
+          sendContinue();
+        } else {
+          component = h(SettingMixedAccount, {
+            cancel: sendContinue,
+            sendContinue
+          });
+        }
+      }
         break;
       case "processingManagedTickets":
         hasLive = Object.keys(stakeTransactions).some((hash) => {
