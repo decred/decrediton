@@ -20,6 +20,12 @@ export const SetupWalletConfigMachine = Machine({
     },
     settingMixedAccount: {
       on: {
+        CONTINUE: "gettingVSPInfo"
+      }
+    },
+    gettingVSPInfo: {
+      on: {
+        BACK: "processingManagedTickets",
         CONTINUE: "processingManagedTickets"
       }
     },

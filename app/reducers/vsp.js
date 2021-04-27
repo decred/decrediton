@@ -17,7 +17,8 @@ import {
   SETVSPDVOTECHOICE_ATTEMPT,
   SETVSPDVOTECHOICE_FAILED,
   SETVSPDVOTECHOICE_SUCCESS,
-  SAVE_AUTOBUYER_SETTINGS
+  SAVE_AUTOBUYER_SETTINGS,
+  GETVSPSPUBKEYS_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -146,6 +147,11 @@ export default function vsp(state = {}, action) {
         account: action.account,
         vsp: action.vsp
       };
+    case GETVSPSPUBKEYS_SUCCESS:
+      return {
+        ...state,
+        availableVSPsPubkeys: action.availableVSPsPubkeys
+      }
     default:
       return state;
   }
