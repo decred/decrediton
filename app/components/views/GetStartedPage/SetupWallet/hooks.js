@@ -46,7 +46,9 @@ export const useWalletSetup = (settingUpWalletRef) => {
     [dispatch]
   );
 
-  const onGetVSPsPubkeys = () => dispatch(getVSPsPubkeys());
+  const onGetVSPsPubkeys = useCallback(() => dispatch(getVSPsPubkeys()), [
+    dispatch
+  ]);
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
