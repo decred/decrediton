@@ -3,6 +3,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
 import {
+  getStakeInfoAttempt,
   startWalletServices,
   getStartupWalletInfo
 } from "./ClientActions";
@@ -464,6 +465,9 @@ export const revokeTicketsAttempt = (passphrase) => async (
       )
     );
     dispatch({ revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
+    setTimeout(() => {
+      dispatch(getStakeInfoAttempt());
+    }, 4000);
   } catch (error) {
     dispatch({ error, type: REVOKETICKETS_FAILED });
   }
