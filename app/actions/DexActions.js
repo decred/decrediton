@@ -4,6 +4,7 @@ import { ipcRenderer } from "electron";
 import { getWalletPath } from "main_dev/paths";
 import { getWalletCfg } from "config";
 import { addAllowedExternalRequest } from "./SettingsActions";
+import { getNextAccountAttempt } from "./ControlActions";
 import { closeWalletRequest } from "./WalletLoaderActions";
 import { EXTERNALREQUEST_DEX } from "main_dev/externalRequests";
 import * as configConstants from "constants/config";
@@ -424,20 +425,21 @@ export const CREATEDEXACCOUNT_ATTEMPT = "CREATEDEXACCOUNT_ATTEMPT";
 export const CREATEDEXACCOUNT_FAILED = "CREATEDEXACCOUNT_FAILED";
 export const CREATEDEXACCOUNT_SUCCESS = "CREATEDEXACCOUNT_SUCCESS";
 
-export const createDexAccount = (passphrase, accountName) => (
+export const createDexAccount = (passphrase, accountName) => async (
   dispatch,
   getState
 ) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
-  dispatch({ type: CREATEDEXACCOUNT_ATTEMPT });
-  return wallet
-    .getNextAccount(sel.walletService(getState()), passphrase, accountName)
-    .then(() => {
-      dispatch({ dexAccount: accountName, type: CREATEDEXACCOUNT_SUCCESS });
-      walletConfig.set(configConstants.DEX_ACCOUNT, accountName);
-    })
-    .catch((error) => dispatch({ error, type: CREATEDEXACCOUNT_FAILED }));
+
+  try {
+    const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
+    dispatch({ type: CREATEDEXACCOUNT_ATTEMPT });
+    await dispatch(getNextAccountAttempt(passphrase, accountName));
+    dispatch({ dexAccount: accountName, type: CREATEDEXACCOUNT_SUCCESS });
+    walletConfig.set(configConstants.DEX_ACCOUNT, accountName);
+  } catch (error) {
+    dispatch({ error, type: CREATEDEXACCOUNT_FAILED });
+  }
 };

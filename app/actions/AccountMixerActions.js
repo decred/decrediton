@@ -3,7 +3,6 @@ import * as sel from "selectors";
 import {
   runAccountMixerRequest,
   cleanPrivacyLogs,
-  getNextAccount,
   getAccountMixerService,
   getDcrwalletGrpcKeyCert,
   getCoinjoinOutputspByAcctReq
@@ -14,7 +13,7 @@ import {
   getAccountsAttempt,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
-import { lockAccount, unlockAcctAndExecFn } from "./ControlActions";
+import { lockAccount, unlockAcctAndExecFn, getNextAccountAttempt } from "./ControlActions";
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -181,17 +180,15 @@ export const createNeededAccounts = (
 
   const walletService = sel.walletService(getState());
 
-  const createAccount = (pass, name) =>
-    getNextAccount(walletService, pass, name);
-
   try {
-    const mixedAccount = await createAccount(passphrase, mixedAccountName);
-    const changeAccount = await createAccount(passphrase, changeAccountName);
+    const mixedAccount = await dispatch(getNextAccountAttempt(passphrase, mixedAccountName));
+    const changeAccount = await dispatch(getNextAccountAttempt(passphrase, changeAccountName));
+
 
     // update accounts selectors
     dispatch(getAccountsAttempt(true));
-    const mixedNumber = mixedAccount.getAccountNumber();
-    const changeNumber = changeAccount.getAccountNumber();
+    const mixedNumber = mixedAccount.getNextAccountResponse.getAccountNumber();
+    const changeNumber = changeAccount.getNextAccountResponse.getAccountNumber();
 
     dispatch(
       setCoinjoinCfg({
