@@ -110,23 +110,24 @@ export const useWalletSetup = (settingUpWalletRef) => {
         }
         break;
       }
-      case "settingMixedAccount": {
-        const outputsByAcctMap = await getCoinjoinOutputspByAcct();
-        const hasMixedOutputs =
-          outputsByAcctMap &&
-          outputsByAcctMap.reduce(
-            (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
-            false
-          );
-        if (!hasMixedOutputs || mixedAccount) {
-          sendContinue();
-        } else {
-          component = h(SettingMixedAccount, {
-            cancel: sendContinue,
-            sendContinue
-          });
+      case "settingMixedAccount":
+        {
+          const outputsByAcctMap = await getCoinjoinOutputspByAcct();
+          const hasMixedOutputs =
+            outputsByAcctMap &&
+            outputsByAcctMap.reduce(
+              (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
+              false
+            );
+          if (!hasMixedOutputs || mixedAccount) {
+            sendContinue();
+          } else {
+            component = h(SettingMixedAccount, {
+              cancel: sendContinue,
+              sendContinue
+            });
+          }
         }
-      }
         break;
       case "processingManagedTickets":
         hasLive = Object.keys(stakeTransactions).some((hash) => {
