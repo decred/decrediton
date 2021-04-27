@@ -11,7 +11,6 @@ import { walletrpc as api } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs } from "./VSPActions";
-import { accounts } from "../selectors";
 
 const {
   RescanRequest,
@@ -349,10 +348,8 @@ export const purchaseTicketsAttempt = (
         );
       }
       accountNum = account.encrypted ? account.value : null;
-      let accts = [accountNum];
-      if (accountNum !== 0) {
-        accts.push(0);
-      }
+      // Add default account unlock if account isn't default
+      const accts = accountNum !== 0 ? [accountNum, 0] : [accountNum];
       purchaseTicketsResponse = await dispatch(
         unlockAcctAndExecFn(passphrase, accts, () =>
           wallet.purchaseTickets(
@@ -399,10 +396,8 @@ export const newPurchaseTicketsAttempt = (
       csppPort: sel.getCsppPort(getState()),
       mixedAcctBranch: sel.getMixedAccountBranch(getState())
     };
-    let accts = [account.value];
-    if (account.value !== 0) {
-      accts.push(0);
-    }
+    // Add default account unlock if account isn't default
+    const accts = account.value !== 0 ? [account.value, 0] : [account.value];
     const purchaseTicketsResponse = await dispatch(
       unlockAcctAndExecFn(passphrase, accts, () =>
         wallet.purchaseTicketsV3(
@@ -1102,29 +1097,28 @@ export const unlockAcctAndExecFn = (
     if (!account.encrypted) {
       throw "Account not encrypted";
     }
-  })
+  });
 
   // unlock wallet
   try {
-    console.log(accts);
-    accts.map(async acctNumber => {
+    accts.map(async (acctNumber) => {
       console.log(" unlocking", acctNumber);
       await wallet.unlockAccount(
         sel.walletService(getState()),
         passphrase,
         acctNumber
       );
-    })
+    });
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
     // Need to try and lock all since 1 may have unlocked but not another?
-    accts.map(async acctNumber => {
+    accts.map(async (acctNumber) => {
       await wallet.lockAccount(
         sel.walletService(getState()),
         passphrase,
         acctNumber
       );
-    })
+    });
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
   }
@@ -1155,13 +1149,13 @@ export const unlockAcctAndExecFn = (
 
       return res;
     }
-    accts.map(async acctNumber => {
+    accts.map(async (acctNumber) => {
       await wallet.lockAccount(
         sel.walletService(getState()),
         passphrase,
         acctNumber
       );
-    })
+    });
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.

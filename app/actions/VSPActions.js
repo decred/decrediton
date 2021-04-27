@@ -106,10 +106,7 @@ export const syncVSPTicketsRequest = ({
 }) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   try {
-    let accts = [account];
-    if (account !== 0) {
-      accts.push(0);
-    }
+    const accts = account !== 0 ? [account, 0] : [account];
     await dispatch(
       unlockAcctAndExecFn(passphrase, accts, () =>
         wallet.syncVSPTickets(
@@ -632,10 +629,7 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
           feeAccount = sel.defaultSpendingAccount(getState()).value;
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
-        let accts = [feeAccount];
-        if (feeAccount !== 0) {
-          accts.push(0);
-        }
+        const accts = feeAccount !== 0 ? [feeAccount, 0] : [feeAccount];
         await dispatch(
           unlockAcctAndExecFn(passphrase, accts, () =>
             Promise.all(
@@ -705,10 +699,8 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
 
-        let accts = [feeAccount];
-        if (feeAccount !== 0) {
-          accts.push(0);
-        }
+        // Add default account unlock if account isn't default
+        const accts = feeAccount !== 0 ? [feeAccount, 0] : [feeAccount];
         if (passphrase) {
           await dispatch(
             unlockAcctAndExecFn(passphrase, accts, () =>
