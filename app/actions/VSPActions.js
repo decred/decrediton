@@ -106,8 +106,12 @@ export const syncVSPTicketsRequest = ({
 }) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   try {
+    let accts = [account];
+    if (account !== 0) {
+      accts.push(0);
+    }
     await dispatch(
-      unlockAcctAndExecFn(passphrase, account, 0, () =>
+      unlockAcctAndExecFn(passphrase, accts, () =>
         wallet.syncVSPTickets(
           getState().grpc.walletService,
           vspHost,
@@ -628,9 +632,12 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
           feeAccount = sel.defaultSpendingAccount(getState()).value;
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
-
+        let accts = [feeAccount];
+        if (feeAccount !== 0) {
+          accts.push(0);
+        }
         await dispatch(
-          unlockAcctAndExecFn(passphrase, feeAccount, 0, () =>
+          unlockAcctAndExecFn(passphrase, accts, () =>
             Promise.all(
               availableVSPsPubkeys.map(async (vsp) => {
                 await wallet.processManagedTickets(
@@ -698,9 +705,13 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
 
+        let accts = [feeAccount];
+        if (feeAccount !== 0) {
+          accts.push(0);
+        }
         if (passphrase) {
           await dispatch(
-            unlockAcctAndExecFn(passphrase, feeAccount, 0, () =>
+            unlockAcctAndExecFn(passphrase, accts, () =>
               wallet.processUnmanagedTicketsStartup(
                 walletService,
                 vspHost,

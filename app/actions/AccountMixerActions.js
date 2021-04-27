@@ -105,8 +105,7 @@ export const runAccountMixer = ({
       const mixerStreamer = await dispatch(
         unlockAcctAndExecFn(
           passphrase,
-          changeAccount,
-          null,
+          new Array(changeAccount),
           () =>
             runAccountMixerRequest(sel.accountMixerService(getState()), {
               mixedAccount,

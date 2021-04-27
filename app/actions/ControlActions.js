@@ -11,6 +11,7 @@ import { walletrpc as api } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs } from "./VSPActions";
+import { accounts } from "../selectors";
 
 const {
   RescanRequest,
@@ -243,7 +244,7 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
   dispatch({ type: SIGNTX_ATTEMPT });
   try {
     const signTransactionResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, acctNumber, null, () =>
+      unlockAcctAndExecFn(passphrase, new Array(acctNumber), () =>
         wallet.signTransaction(sel.walletService(getState()), rawTx, acctNumber)
       )
     );
@@ -348,8 +349,12 @@ export const purchaseTicketsAttempt = (
         );
       }
       accountNum = account.encrypted ? account.value : null;
+      let accts = [accountNum];
+      if (accountNum !== 0) {
+        accts.push(0);
+      }
       purchaseTicketsResponse = await dispatch(
-        unlockAcctAndExecFn(passphrase, accountNum, 0, () =>
+        unlockAcctAndExecFn(passphrase, accts, () =>
           wallet.purchaseTickets(
             walletService,
             account,
@@ -394,9 +399,12 @@ export const newPurchaseTicketsAttempt = (
       csppPort: sel.getCsppPort(getState()),
       mixedAcctBranch: sel.getMixedAccountBranch(getState())
     };
-
+    let accts = [account.value];
+    if (account.value !== 0) {
+      accts.push(0);
+    }
     const purchaseTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, account.value, 0, () =>
+      unlockAcctAndExecFn(passphrase, accts, () =>
         wallet.purchaseTicketsV3(
           walletService,
           account,
@@ -460,7 +468,7 @@ export const revokeTicketsAttempt = (passphrase) => async (
   const accountNum = 0;
   try {
     const revokeTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, accountNum, null, () =>
+      unlockAcctAndExecFn(passphrase, new Array(accountNum), () =>
         wallet.revokeTickets(walletService, passphrase)
       )
     );
@@ -502,8 +510,7 @@ export const startTicketBuyerV3Attempt = (
     const ticketBuyer = await dispatch(
       unlockAcctAndExecFn(
         passphrase,
-        accountNum,
-        null,
+        new Array(accountNum),
         () =>
           wallet.startTicketAutoBuyerV3(ticketBuyerService, {
             mixedAccount,
@@ -781,7 +788,7 @@ export const signMessageAttempt = (address, message, passphrase) => async (
     );
     const accountNumber = response.getAccountNumber();
     const getSignMessageResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, accountNumber, null, () =>
+      unlockAcctAndExecFn(passphrase, new Array(accountNumber), () =>
         wallet.signMessage(sel.walletService(getState()), address, message)
       )
     );
@@ -915,7 +922,7 @@ export const startTicketBuyerV2Attempt = (
     request.setVotingAddress(stakepool.TicketAddress);
     const { ticketBuyerService } = getState().grpc;
     const ticketBuyer = await dispatch(
-      unlockAcctAndExecFn(passphrase, account.value, null, () =>
+      unlockAcctAndExecFn(passphrase, new Array(account.value), () =>
         ticketBuyerService.runTicketBuyer(request)
       )
     );
@@ -1077,8 +1084,7 @@ export const LOCKACCOUNT_SUCCESS = "LOCKACCOUNT_SUCCESS";
 // account in case of success or error, if leaveUnlock is not informed.
 export const unlockAcctAndExecFn = (
   passphrase,
-  acctNumber,
-  secondaryAcctUnlock,
+  accts,
   fn,
   leaveUnlock
 ) => async (dispatch, getState) => {
@@ -1088,32 +1094,37 @@ export const unlockAcctAndExecFn = (
 
   // sanity checks
   const accounts = sel.balances(getState());
-
-  const account = accounts.find((acct) => acct.accountNumber === acctNumber);
-  if (!account) {
-    throw "Account not found";
-  }
-  if (!account.encrypted) {
-    throw "Account not encrypted";
-  }
+  accts.map((acctNum) => {
+    const account = accounts.find((acct) => acct.accountNumber === acctNum);
+    if (!account) {
+      throw "Account not found";
+    }
+    if (!account.encrypted) {
+      throw "Account not encrypted";
+    }
+  })
 
   // unlock wallet
   try {
-    await wallet.unlockAccount(
-      sel.walletService(getState()),
-      passphrase,
-      acctNumber
-    );
-    if (secondaryAcctUnlock !== null && secondaryAcctUnlock != acctNumber) {
+    console.log(accts);
+    accts.map(async acctNumber => {
+      console.log(" unlocking", acctNumber);
       await wallet.unlockAccount(
         sel.walletService(getState()),
         passphrase,
-        secondaryAcctUnlock
+        acctNumber
       );
-    }
+    })
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
-    // no need to lock as unlock errored.
+    // Need to try and lock all since 1 may have unlocked but not another?
+    accts.map(async acctNumber => {
+      await wallet.lockAccount(
+        sel.walletService(getState()),
+        passphrase,
+        acctNumber
+      );
+    })
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
   }
@@ -1136,7 +1147,7 @@ export const unlockAcctAndExecFn = (
     const dexAccount = accounts.find(
       (acct) => acct.accountName === dexAccountName
     );
-    if (dexAccount && dexAccount.accountNumber === acctNumber) {
+    if (dexAccount && accts.indexOf(dexAccount.accountNumber) > 0) {
       // return fn error in case some happened.
       if (fnError !== null) {
         throw fnError;
@@ -1144,13 +1155,13 @@ export const unlockAcctAndExecFn = (
 
       return res;
     }
-    await wallet.lockAccount(sel.walletService(getState()), acctNumber);
-    if (secondaryAcctUnlock !== null && secondaryAcctUnlock != acctNumber) {
+    accts.map(async acctNumber => {
       await wallet.lockAccount(
         sel.walletService(getState()),
-        secondaryAcctUnlock
+        passphrase,
+        acctNumber
       );
-    }
+    })
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.
