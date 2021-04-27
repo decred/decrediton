@@ -151,7 +151,7 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         availableVSPsPubkeys: action.availableVSPsPubkeys
-      }
+      };
     default:
       return state;
   }

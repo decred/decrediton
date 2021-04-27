@@ -268,7 +268,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
     previousState,
     current,
     onCheckAcctsPass,
-    onProcessAccounts
+    onProcessAccounts,
+    onGetVSPsPubkeys
   ]);
 
   return {
