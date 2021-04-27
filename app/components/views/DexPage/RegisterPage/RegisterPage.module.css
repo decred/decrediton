@@ -36,18 +36,19 @@
   background-repeat: no-repeat;
   background-image: var(--self-transaction-icon);
 }
-label {
+
+.dexAddressLabel label {
   font-size: 13px;
   line-height: 16px;
   color: var(--grey-7);
 }
 
 @media screen and (max-width: 768px) {
-  label {
+  .dexAddressLabel label {
     font-size: 13px;
   }
 
-  input {
+  .dexAddress input {
     font-size: 15px;
     line-height: 21px;
   }
