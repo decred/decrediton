@@ -7,3 +7,7 @@ export const invoke = async (...args) => {
   }
   return res;
 };
+
+// Invocable generates a function that calls invoke for the given channel,
+// passing all args.
+export const invocable = (channel) => (...args) => invoke(channel, ...args);

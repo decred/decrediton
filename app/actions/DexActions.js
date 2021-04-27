@@ -1,5 +1,5 @@
 import * as sel from "selectors";
-import { ipcRenderer } from "electron";
+import * as dex from "wallet/dex";
 import { getWalletPath } from "main_dev/paths";
 import { getWalletCfg } from "config";
 import { addAllowedExternalRequest } from "./SettingsActions";
@@ -8,14 +8,6 @@ import { closeWalletRequest } from "./WalletLoaderActions";
 import { EXTERNALREQUEST_DEX } from "main_dev/externalRequests";
 import * as configConstants from "constants/config";
 import { makeRandomString } from "helpers";
-
-const invoke = async (...args) => {
-  const res = await ipcRenderer.invoke(...args);
-  if (res instanceof Error) {
-    throw res;
-  }
-  return res;
-};
 
 export const DEX_ENABLE_ATTEMPT = "DEX_ENABLE_ATTEMPT";
 export const DEX_ENABLE_FAILED = "DEX_ENABLE_FAILED";
@@ -65,7 +57,7 @@ export const startDex = () => async (dispatch, getState) => {
   const walletPath = getWalletPath(isTestnet, walletName);
 
   try {
-    const res = await invoke("start-dex", walletPath, isTestnet);
+    const res = await dex.start(walletPath, isTestnet);
     dispatch({ type: DEX_STARTUP_SUCCESS, serverAddress: res });
     dispatch(dexCheckInit());
   } catch (error) {
@@ -81,7 +73,7 @@ export const DEX_CHECKINIT_SUCCESS = "DEX_CHECKINIT_SUCCESS";
 export const dexCheckInit = () => async (dispatch) => {
   dispatch({ type: DEX_CHECKINIT_ATTEMPT });
   try {
-    const res = await invoke("check-init-dex");
+    const res = await dex.checkInit();
     dispatch({ type: DEX_CHECKINIT_SUCCESS, res });
   } catch (error) {
     dispatch({ type: DEX_CHECKINIT_FAILED, error });
@@ -96,7 +88,7 @@ export const stopDex = () => (dispatch, getState) => {
     return;
   }
 
-  invoke("stop-dex");
+  dex.stop();
   dispatch({ type: DEX_STOPPED });
 };
 
@@ -111,7 +103,7 @@ export const initDex = (passphrase) => async (dispatch, getState) => {
     return;
   }
   try {
-    await invoke("init-dex", passphrase);
+    await dex.init(passphrase);
     dispatch({ type: DEX_INIT_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -132,7 +124,7 @@ export const loginDex = (passphrase) => async (dispatch, getState) => {
     return;
   }
   try {
-    await invoke("login-dex", passphrase);
+    await dex.login(passphrase);
     dispatch({ type: DEX_LOGIN_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -146,7 +138,7 @@ export const DEX_LOGOUT_ATTEMPT = "DEX_LOGOUT_ATTEMPT";
 export const DEX_LOGOUT_SUCCESS = "DEX_LOGOUT_SUCCESS";
 export const DEX_LOGOUT_FAILED = "DEX_LOGOUT_FAILED";
 
-export const logoutDex = () => invoke("logout-dex");
+export const logoutDex = () => dex.logout();
 
 export const DEX_CREATEWALLET_ATTEMPT = "DEX_CREATEWALLET_ATTEMPT";
 export const DEX_CREATEWALLET_SUCCESS = "DEX_CREATEWALLET_SUCCESS";
@@ -173,8 +165,7 @@ export const createWalletDex = (
     const rpclisten = rpcCreds.rpcListen;
     const rpccert = rpcCreds.rpcCert;
     const assetID = 42;
-    await invoke(
-      "create-wallet-dex",
+    await dex.createWallet(
       assetID,
       passphrase,
       appPassphrase,
@@ -219,8 +210,7 @@ export const btcCreateWalletDex = (
       ? btcConfig.test.rpcbind + ":" + btcConfig.test.rpcport
       : btcConfig.rpcbind + ":" + btcConfig.rpcport;
     const assetID = 0;
-    await invoke(
-      "create-wallet-dex",
+    await dex.createWallet(
       assetID,
       passphrase,
       appPassphrase,
@@ -257,7 +247,7 @@ export const userDex = () => async (dispatch, getState) => {
     return;
   }
   try {
-    const user = await invoke("user-dex");
+    const user = await dex.user();
     dispatch({ type: DEX_USER_SUCCESS, user });
   } catch (error) {
     dispatch({ type: DEX_USER_FAILED, error });
@@ -276,7 +266,7 @@ export const getConfigDex = (addr) => async (dispatch, getState) => {
     return;
   }
   try {
-    const config = await invoke("get-config-dex", addr);
+    const config = await dex.getConfig(addr);
     dispatch({ type: DEX_GETCONFIG_SUCCESS, config, addr });
   } catch (error) {
     dispatch({ type: DEX_GETCONFIG_FAILED, error });
@@ -302,7 +292,7 @@ export const registerDex = (appPass) => async (dispatch, getState) => {
   }
   const fee = config.feeAsset.amount;
   try {
-    await invoke("register-dex", appPass, addr, fee);
+    await dex.register(appPass, addr, fee);
     dispatch({ type: DEX_REGISTER_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -335,7 +325,7 @@ export const launchDexWindow = () => async (dispatch, getState) => {
   }
   try {
     const serverAddress = dexServerAddress;
-    await invoke("launch-dex-window", serverAddress);
+    await dex.launchWindow(serverAddress);
     dispatch({ type: DEX_LAUNCH_WINDOW_SUCCESS });
     // Request current user information
     dispatch(userDex());
@@ -356,7 +346,7 @@ export const CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL =
 export const checkBTCConfig = () => async (dispatch, getState) => {
   dispatch({ type: CHECK_BTC_CONFIG_ATTEMPT });
   try {
-    const res = await invoke("check-btc-config");
+    const res = await dex.checkBTCConfig();
     if (
       res.rpcuser &&
       res.rpcpassword &&
@@ -398,8 +388,7 @@ export const updateBTCConfig = () => async (dispatch, getState) => {
     const rpcbind = "127.0.0.1";
     const rpcport = sel.isTestNet(getState()) ? "18332" : "8332";
     const testnet = sel.isTestNet(getState());
-    const res = await invoke(
-      "update-btc-config",
+    const res = await dex.updateBTCConfig(
       rpcuser,
       rpcpassword,
       rpcbind,
