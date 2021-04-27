@@ -41,6 +41,7 @@ const ExistingSeed = ({
   const [hexSeed, setSeedHex] = useState(null);
   const [showPasteWarning, setShowPasteWarning] = useState(false);
   const [showPasteError, setShowPasteError] = useState(false);
+  const [showHexWarning, setShowHexWarning] = useState(false);
   const [seedType, setSeedType] = useState(WORDS);
   const prevHexSeed = usePrevious(hexSeed);
   const prevSeedWords = usePrevious(seedWords);
@@ -186,10 +187,12 @@ const ExistingSeed = ({
       setSeedWords(words);
       setShowPasteWarning(true);
       setShowPasteError(false);
+      setShowHexWarning(false);
       return true;
     } else {
       setShowPasteWarning(false);
       setShowPasteError(true);
+      setShowHexWarning(false);
       return false;
     }
   };
@@ -199,10 +202,12 @@ const ExistingSeed = ({
   };
 
   const isHexValid = (seed) => {
-    if (seed.length !== 64 && seed.length > SEED_LENGTH.HEX_MIN) {
-      return false;
-    }
-    return /^[0-9a-fA-F]*$/.test(seed) && seed.length <= SEED_LENGTH.HEX_MAX;
+    return (
+      seed.length <= SEED_LENGTH.HEX_MAX &&
+      seed.length >= SEED_LENGTH.HEX_MIN &&
+      seed.length % 2 == 0 &&
+      /^[0-9a-fA-F]*$/.test(seed)
+    );
   };
 
   const onChangeSeedWord = useCallback(
@@ -222,15 +227,17 @@ const ExistingSeed = ({
       } else {
         // validate seed inputed as HEX
         const trimmedSeed = seedWord.trim();
+        setShowPasteWarning(false);
+        setShowPasteError(false);
+        setSeedHex(trimmedSeed);
         if (isHexValid(trimmedSeed)) {
-          setSeedHex(trimmedSeed);
-          setShowPasteWarning(false);
-          setShowPasteError(false);
+          setShowHexWarning(trimmedSeed.length !== 64);
         } else {
+          setShowHexWarning(false);
           setError(
             <T
-              id="confirmSeed.errors.hexNot32Bytes"
-              m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences."
+              id="confirmSeed.errors.invalidHexSeed"
+              m="Invalid hex seed. Hex seeds need to be between 32 and 128 characters long."
             />
           );
         }
@@ -251,6 +258,7 @@ const ExistingSeed = ({
         handleToggle,
         showPasteWarning,
         showPasteError,
+        showHexWarning,
         setPassPhrase,
         seedType,
         sendBack,

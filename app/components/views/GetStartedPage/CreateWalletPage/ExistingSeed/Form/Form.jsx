@@ -28,6 +28,7 @@ const ExistingSeedForm = ({
   handleToggle,
   showPasteWarning,
   showPasteError,
+  showHexWarning,
   isValid,
   onCreateWallet,
   sendBack,
@@ -90,6 +91,14 @@ const ExistingSeedForm = ({
         <T
           id="confirmSeed.warnings.pasteExistingSeed"
           m="*Please make sure you also have a physical, written down copy of your seed."
+        />
+      </SeedError>
+    )}
+    {showHexWarning && (
+      <SeedError>
+        <T
+          id="confirmSeed.errors.hexNot32Bytes"
+          m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences."
         />
       </SeedError>
     )}

@@ -42,9 +42,13 @@ const clientActions = ca;
 const testSeedArray = SEED_WORDS.slice(0, 33);
 const testSeedMnemonic = testSeedArray.join(" ");
 const invalidSeedWord = SEED_WORDS[SEED_WORDS.length - 1];
-const testTooShortHexSeed = "test-short-seed-string";
-const testHexSeed = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-const testTooLongHexSeed = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+const testTooShortHexSeed = "a".repeat(31);
+const testShortHexSeed = "b".repeat(32);
+const testCompatibleHexSeed = "c".repeat(64);
+const testOddHexSeed = "c".repeat(63);
+const testInvalidCharHexSeed = "c".repeat(63) + "w";
+const testTooLongHexSeed = "d".repeat(129);
+const testMaxHexSeed = "e".repeat(128);
 const testCreateWalletRequestErrorMsg = "create-wallet-request-error-msg";
 
 beforeEach(() => {
@@ -526,6 +530,8 @@ test("test hex input tab on restore view", async () => {
   const hexInputPlaceholderText =
     "Enter the hex representation of your seed...";
   const hexSeedErrorMsg =
+    "Invalid hex seed. Hex seeds need to be between 32 and 128 characters long.";
+  const hexSeedWarningMsg =
     "Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences.";
   expect(
     screen.getByPlaceholderText(hexInputPlaceholderText)
@@ -547,29 +553,72 @@ test("test hex input tab on restore view", async () => {
     target: { value: testTooShortHexSeed }
   });
   expect(screen.getByText(hexSeedErrorMsg)).toBeInTheDocument();
+  expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
 
+  // Next tests will require some return value from the mock getDecodedSeed.
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testHexSeed
+      getDecodedSeed: () => testCompatibleHexSeed
     })
   );
-  // test valid hex word
+
+  // Test valid (but short, incompatible) hex seed.
   user.clear(hexInput);
   fireEvent.change(hexInput, {
-    target: { value: testHexSeed }
+    target: { value: testShortHexSeed }
   });
   await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
   expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
+  expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
 
-  // test too long hex word
+  // Test valid and compatible hex seed
+  user.clear(hexInput);
+  fireEvent.change(hexInput, {
+    target: { value: testCompatibleHexSeed }
+  });
+  await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
+  expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
+  expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
+
+  // Test valid hex seed with max chars
+  user.clear(hexInput);
+  fireEvent.change(hexInput, {
+    target: { value: testMaxHexSeed }
+  });
+  await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
+  expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
+  expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
+
+  // The next tests all assume a failed decode.
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.reject({})
   );
+
+  // Test too long hex seed.
   user.clear(hexInput);
   fireEvent.change(hexInput, {
     target: { value: testTooLongHexSeed }
   });
   expect(screen.getByText(hexSeedErrorMsg)).toBeInTheDocument();
+  expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
+  expect(hexInput.value).toMatch("");
+
+  // Test hex seed with odd number of characters.
+  user.clear(hexInput);
+  fireEvent.change(hexInput, {
+    target: { value: testOddHexSeed }
+  });
+  expect(screen.getByText(hexSeedErrorMsg)).toBeInTheDocument();
+  expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
+  expect(hexInput.value).toMatch("");
+
+  // Test hex seed with invalid character.
+  user.clear(hexInput);
+  fireEvent.change(hexInput, {
+    target: { value: testInvalidCharHexSeed }
+  });
+  expect(screen.getByText(hexSeedErrorMsg)).toBeInTheDocument();
+  expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
   expect(hexInput.value).toMatch("");
 });
 
