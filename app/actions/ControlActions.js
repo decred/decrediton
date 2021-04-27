@@ -3,7 +3,6 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
 import {
-  getStakeInfoAttempt,
   startWalletServices,
   getStartupWalletInfo
 } from "./ClientActions";

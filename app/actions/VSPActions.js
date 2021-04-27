@@ -105,16 +105,17 @@ export const syncVSPTicketsRequest = ({
   account
 }) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
-  try { 
-
-    await dispatch(unlockAcctAndExecFn(passphrase, account, 0, () =>
-      wallet.syncVSPTickets(
-        getState().grpc.walletService,
-        vspHost,
-        vspPubkey,
-        account
+  try {
+    await dispatch(
+      unlockAcctAndExecFn(passphrase, account, 0, () =>
+        wallet.syncVSPTickets(
+          getState().grpc.walletService,
+          vspHost,
+          vspPubkey,
+          account
+        )
       )
-    ));
+    );
     dispatch({ type: SYNCVSPTICKETS_SUCCESS });
     dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
   } catch (error) {
