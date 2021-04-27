@@ -243,7 +243,7 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
   dispatch({ type: SIGNTX_ATTEMPT });
   try {
     const signTransactionResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, acctNumber, () =>
+      unlockAcctAndExecFn(passphrase, acctNumber, null, () =>
         wallet.signTransaction(sel.walletService(getState()), rawTx, acctNumber)
       )
     );
@@ -349,7 +349,7 @@ export const purchaseTicketsAttempt = (
       }
       accountNum = account.encrypted ? account.value : null;
       purchaseTicketsResponse = await dispatch(
-        unlockAcctAndExecFn(passphrase, accountNum, () =>
+        unlockAcctAndExecFn(passphrase, accountNum, 0, () =>
           wallet.purchaseTickets(
             walletService,
             account,
@@ -396,7 +396,7 @@ export const newPurchaseTicketsAttempt = (
     };
 
     const purchaseTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, account.value, () =>
+      unlockAcctAndExecFn(passphrase, account.value, 0, () =>
         wallet.purchaseTicketsV3(
           walletService,
           account,
@@ -451,17 +451,23 @@ export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";
 export const REVOKETICKETS_FAILED = "REVOKETICKETS_FAILED";
 export const REVOKETICKETS_SUCCESS = "REVOKETICKETS_SUCCESS";
 
-export const revokeTicketsAttempt = (passphrase) => (dispatch, getState) => {
+export const revokeTicketsAttempt = (passphrase) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: REVOKETICKETS_ATTEMPT });
-  return wallet
-    .revokeTickets(sel.walletService(getState()), passphrase)
-    .then((revokeTicketsResponse) => {
-      setTimeout(() => {
-        dispatch(getStakeInfoAttempt());
-      }, 4000);
-      dispatch({ revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
-    })
-    .catch((error) => dispatch({ error, type: REVOKETICKETS_FAILED }));
+  const walletService = sel.walletService(getState());
+  const accountNum = 0;
+  try {
+    const revokeTicketsResponse = await dispatch(
+      unlockAcctAndExecFn(passphrase, accountNum, null, () =>
+        wallet.revokeTickets(walletService, passphrase)
+      )
+    );
+    dispatch({ revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: REVOKETICKETS_FAILED });
+  }
 };
 
 export const STARTTICKETBUYERV3_ATTEMPT = "STARTTICKETBUYERV3_ATTEMPT";
@@ -494,6 +500,7 @@ export const startTicketBuyerV3Attempt = (
       unlockAcctAndExecFn(
         passphrase,
         accountNum,
+        null,
         () =>
           wallet.startTicketAutoBuyerV3(ticketBuyerService, {
             mixedAccount,
@@ -771,7 +778,7 @@ export const signMessageAttempt = (address, message, passphrase) => async (
     );
     const accountNumber = response.getAccountNumber();
     const getSignMessageResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, accountNumber, () =>
+      unlockAcctAndExecFn(passphrase, accountNumber, null, () =>
         wallet.signMessage(sel.walletService(getState()), address, message)
       )
     );
@@ -905,7 +912,7 @@ export const startTicketBuyerV2Attempt = (
     request.setVotingAddress(stakepool.TicketAddress);
     const { ticketBuyerService } = getState().grpc;
     const ticketBuyer = await dispatch(
-      unlockAcctAndExecFn(passphrase, account.value, () =>
+      unlockAcctAndExecFn(passphrase, account.value, null, () =>
         ticketBuyerService.runTicketBuyer(request)
       )
     );
@@ -1068,6 +1075,7 @@ export const LOCKACCOUNT_SUCCESS = "LOCKACCOUNT_SUCCESS";
 export const unlockAcctAndExecFn = (
   passphrase,
   acctNumber,
+  secondaryAcctUnlock,
   fn,
   leaveUnlock
 ) => async (dispatch, getState) => {
@@ -1093,6 +1101,13 @@ export const unlockAcctAndExecFn = (
       passphrase,
       acctNumber
     );
+    if (secondaryAcctUnlock !== null && secondaryAcctUnlock != acctNumber) {
+      await wallet.unlockAccount(
+        sel.walletService(getState()),
+        passphrase,
+        secondaryAcctUnlock
+      );
+    }
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.
@@ -1127,6 +1142,12 @@ export const unlockAcctAndExecFn = (
       return res;
     }
     await wallet.lockAccount(sel.walletService(getState()), acctNumber);
+    if (secondaryAcctUnlock !== null && secondaryAcctUnlock != acctNumber) {
+      await wallet.lockAccount(
+        sel.walletService(getState()),
+        secondaryAcctUnlock
+      );
+    }
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.

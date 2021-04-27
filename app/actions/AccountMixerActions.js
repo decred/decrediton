@@ -106,6 +106,7 @@ export const runAccountMixer = ({
         unlockAcctAndExecFn(
           passphrase,
           changeAccount,
+          null,
           () =>
             runAccountMixerRequest(sel.accountMixerService(getState()), {
               mixedAccount,

@@ -103,23 +103,23 @@ export const syncVSPTicketsRequest = ({
   vspHost,
   vspPubkey,
   account
-}) => (dispatch, getState) => {
+}) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
-  wallet
-    .syncVSPTickets(
-      getState().grpc.walletService,
-      passphrase,
-      vspHost,
-      vspPubkey,
-      account
-    )
-    .then(() => {
-      dispatch({ type: SYNCVSPTICKETS_SUCCESS });
-      dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-    })
-    .catch((error) => {
-      dispatch({ type: SYNCVSPTICKETS_FAILED, error });
-    });
+  try { 
+
+    await dispatch(unlockAcctAndExecFn(passphrase, account, 0, () =>
+      wallet.syncVSPTickets(
+        getState().grpc.walletService,
+        vspHost,
+        vspPubkey,
+        account
+      )
+    ));
+    dispatch({ type: SYNCVSPTICKETS_SUCCESS });
+    dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+  } catch (error) {
+    dispatch({ type: SYNCVSPTICKETS_FAILED, error });
+  }
 };
 
 // getTicketSignature receives the tickethash and request and sign it using the
@@ -629,7 +629,7 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         }
 
         await dispatch(
-          unlockAcctAndExecFn(passphrase, feeAccount, () =>
+          unlockAcctAndExecFn(passphrase, feeAccount, 0, () =>
             Promise.all(
               availableVSPsPubkeys.map(async (vsp) => {
                 await wallet.processManagedTickets(
@@ -699,7 +699,7 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
 
         if (passphrase) {
           await dispatch(
-            unlockAcctAndExecFn(passphrase, feeAccount, () =>
+            unlockAcctAndExecFn(passphrase, feeAccount, 0, () =>
               wallet.processUnmanagedTicketsStartup(
                 walletService,
                 vspHost,
