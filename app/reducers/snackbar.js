@@ -40,7 +40,6 @@ import {
   GETNEXTACCOUNT_FAILED,
   CHANGEPASSPHRASE_SUCCESS,
   CHANGEPASSPHRASE_FAILED,
-  SETACCOUNTPASSPHRASE_SUCCESS,
   SETACCOUNTPASSPHRASE_FAILED,
   SIGNMESSAGE_FAILED,
   VERIFYMESSAGE_FAILED,
@@ -281,10 +280,6 @@ const messages = defineMessages({
   CHANGEPASSPHRASE_SUCCESS: {
     id: "settings.changePassphrase",
     defaultMessage: "Successfully changed private passphrase."
-  },
-  SETACCOUNTPASSPHRASE_SUCCESS: {
-    id: "settings.changeAcctPassphrase",
-    defaultMessage: "Successfully changed account passphrase."
   },
   CHANGEPASSPHRASE_FAILED: {
     id: "settings.errors.changePassphraseFailed",
@@ -709,7 +704,6 @@ export default function snackbar(state = {}, action) {
     case RENAMEACCOUNT_SUCCESS:
     case GETNEXTACCOUNT_SUCCESS:
     case CHANGEPASSPHRASE_SUCCESS:
-    case SETACCOUNTPASSPHRASE_SUCCESS:
     case REVOKETICKETS_SUCCESS:
     case IMPORTSCRIPT_MANUAL_SUCCESS:
     case STARTTICKETBUYERV2_SUCCESS:
