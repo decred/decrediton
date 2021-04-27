@@ -1,5 +1,4 @@
 import * as sel from "selectors";
-import * as wallet from "wallet";
 import { ipcRenderer } from "electron";
 import { getWalletPath } from "main_dev/paths";
 import { getWalletCfg } from "config";

@@ -13,7 +13,11 @@ import {
   getAccountsAttempt,
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
-import { lockAccount, unlockAcctAndExecFn, getNextAccountAttempt } from "./ControlActions";
+import {
+  lockAccount,
+  unlockAcctAndExecFn,
+  getNextAccountAttempt
+} from "./ControlActions";
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
@@ -175,15 +179,16 @@ export const createNeededAccounts = (
   passphrase,
   mixedAccountName,
   changeAccountName
-) => async (dispatch, getState) => {
+) => async (dispatch) => {
   dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
 
-  const walletService = sel.walletService(getState());
-
   try {
-    const mixedAccount = await dispatch(getNextAccountAttempt(passphrase, mixedAccountName));
-    const changeAccount = await dispatch(getNextAccountAttempt(passphrase, changeAccountName));
-
+    const mixedAccount = await dispatch(
+      getNextAccountAttempt(passphrase, mixedAccountName)
+    );
+    const changeAccount = await dispatch(
+      getNextAccountAttempt(passphrase, changeAccountName)
+    );
 
     // update accounts selectors
     dispatch(getAccountsAttempt(true));
