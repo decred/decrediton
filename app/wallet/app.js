@@ -142,11 +142,9 @@ export const appInfo = {
   version: app?.getVersion()
 };
 
-export const showSaveDialog = (opts) =>
-  invoke("show-save-dialog", opts);
+export const showSaveDialog = (opts) => invoke("show-save-dialog", opts);
 
-export const showOpenDialog = (opts) =>
-  invoke("show-open-dialog", opts);
+export const showOpenDialog = (opts) => invoke("show-open-dialog", opts);
 
 export const getSelectedWallet = () =>
   ipcRenderer.sendSync("get-selected-wallet");

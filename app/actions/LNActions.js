@@ -6,7 +6,6 @@ import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
 import { isNumber } from "lodash";
-import { invoke } from "helpers/electronRenderer";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -97,8 +96,7 @@ export const startDcrlnd = (
       stage: LNWALLET_STARTUPSTAGE_STARTDCRLND,
       type: LNWALLET_STARTUP_CHANGEDSTAGE
     });
-    const res = await invoke(
-      "start-dcrlnd",
+    const res = await ln.startDcrlnd(
       lnAccount,
       walletPort,
       rpcCreds,
@@ -117,7 +115,7 @@ export const startDcrlnd = (
   // dcrlnd is already running so if some error occurs we need to shut it down.
   const cleanup = () => {
     // Force dcrlnd to stop.
-    invoke("stop-dcrlnd");
+    ln.stopDcrlnd();
     dispatch({ type: LNWALLET_STARTUP_FAILED });
 
     if (creating) {
@@ -220,7 +218,7 @@ export const stopDcrlnd = () => (dispatch, getState) => {
     return;
   }
 
-  invoke("stop-dcrlnd");
+  ln.stopDcrlnd();
   dispatch({ type: LNWALLET_DCRLND_STOPPED });
 };
 
@@ -237,7 +235,7 @@ export const checkLnWallet = () => async (dispatch) => {
   }
 
   // Check whether the app knows of a previously running dcrlnd instance.
-  const creds = await invoke("dcrlnd-creds");
+  const creds = await ln.dcrlndCreds();
   if (!creds) {
     return;
   }

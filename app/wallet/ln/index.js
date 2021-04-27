@@ -12,6 +12,12 @@ export const getWalletUnlockerClient = client.getWalletUnlockerClient;
 
 export * from "./watchtower";
 
+export const startDcrlnd = (...args) => invoke("start-dcrlnd", ...args);
+
+export const stopDcrlnd = () => invoke("stop-dcrlnd");
+
+export const dcrlndCreds = () => invoke("dcrlnd-creds");
+
 export const getInfo = (client) => {
   const request = new pb.GetInfoRequest();
   return new Promise((resolve, reject) =>
