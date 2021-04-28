@@ -32,6 +32,9 @@ import {
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
+  SELECT_DEXACCOUNT_ATTEMPT,
+  SELECT_DEXACCOUNT_FAILED,
+  SELECT_DEXACCOUNT_SUCCESS,
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,
   DEX_LOGOUT_FAILED,
@@ -269,6 +272,26 @@ export default function ln(state = {}, action) {
         ...state,
         dexAccountAttempt: false,
         dexAccountError: null,
+        dexAccount: action.dexAccount
+      };
+    case SELECT_DEXACCOUNT_ATTEMPT:
+      return {
+        ...state,
+        dexSelectAccountAttempt: true,
+        dexSelectAccountError: null,
+        dexAccount: null
+      };
+    case SELECT_DEXACCOUNT_FAILED:
+      return {
+        ...state,
+        dexSelectAccountAttempt: false,
+        dexSelectAccountError: action.error
+      };
+    case SELECT_DEXACCOUNT_SUCCESS:
+      return {
+        ...state,
+        dexSelectAccountAttempt: false,
+        dexSelectAccountError: null,
         dexAccount: action.dexAccount
       };
     case DEX_LOGOUT_ATTEMPT:
