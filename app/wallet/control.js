@@ -207,10 +207,9 @@ export const purchaseTicketsV3 = (
     });
   });
 
-export const revokeTickets = (walletService, passphrase) =>
+export const revokeTickets = (walletService) =>
   new Promise((ok, fail) => {
     const request = new api.RevokeTicketsRequest();
-    request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     walletService.revokeTickets(request, (err, res) =>
       err ? fail(err) : ok(res)
     );

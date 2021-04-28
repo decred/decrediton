@@ -460,11 +460,20 @@ export const revokeTicketsAttempt = (passphrase) => async (
 ) => {
   dispatch({ type: REVOKETICKETS_ATTEMPT });
   const walletService = sel.walletService(getState());
-  const accountNum = 0;
+  const accounts = sel.balances(getState());
+  const accountUnlocks = [];
+  accounts.map((acct) => {
+    // just skip if imported account.
+    if (acct.accountNumber === Math.pow(2, 31) - 1) {
+      return;
+    }
+    accountUnlocks.push(acct.accountNumber);
+  });
+  console.log(accountUnlocks);
   try {
     const revokeTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, [accountNum], () =>
-        wallet.revokeTickets(walletService, passphrase)
+      unlockAcctAndExecFn(passphrase, accountUnlocks, () =>
+        wallet.revokeTickets(walletService)
       )
     );
     dispatch({ revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
@@ -1101,7 +1110,7 @@ export const unlockAcctAndExecFn = (
 
   // unlock wallet
   try {
-    accts.map(async (acctNumber) => {
+    await accts.map(async (acctNumber) => {
       console.log(" unlocking", acctNumber);
       await wallet.unlockAccount(
         sel.walletService(getState()),
@@ -1112,7 +1121,7 @@ export const unlockAcctAndExecFn = (
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
     // Need to try and lock all since 1 may have unlocked but not another?
-    accts.map(async (acctNumber) => {
+    await accts.map(async (acctNumber) => {
       await wallet.lockAccount(
         sel.walletService(getState()),
         passphrase,
@@ -1141,15 +1150,15 @@ export const unlockAcctAndExecFn = (
     const dexAccount = accounts.find(
       (acct) => acct.accountName === dexAccountName
     );
-    if (dexAccount && accts.indexOf(dexAccount.accountNumber) > 0) {
-      // return fn error in case some happened.
-      if (fnError !== null) {
-        throw fnError;
+    await accts.map(async (acctNumber) => {
+      if (dexAccount && acctNumber === dexAccount.accountNumber) {
+        // return fn error in case some happened.
+        if (fnError !== null) {
+          throw fnError;
+        }
+        return res;
       }
-
-      return res;
-    }
-    accts.map(async (acctNumber) => {
+      console.log("locking account", acctNumber);
       await wallet.lockAccount(
         sel.walletService(getState()),
         passphrase,
