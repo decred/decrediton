@@ -1095,6 +1095,7 @@ export const unlockAcctAndExecFn = (
   let res = null;
   let fnError = null;
   dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
+  const walletService = sel.walletService(getState());
 
   // sanity checks
   const accounts = sel.balances(getState());
@@ -1112,21 +1113,13 @@ export const unlockAcctAndExecFn = (
   try {
     await accts.map(async (acctNumber) => {
       console.log(" unlocking", acctNumber);
-      await wallet.unlockAccount(
-        sel.walletService(getState()),
-        passphrase,
-        acctNumber
-      );
+      await wallet.unlockAccount(walletService, passphrase, acctNumber);
     });
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
     // Need to try and lock all since 1 may have unlocked but not another?
     await accts.map(async (acctNumber) => {
-      await wallet.lockAccount(
-        sel.walletService(getState()),
-        passphrase,
-        acctNumber
-      );
+      await wallet.lockAccount(walletService, parseInt(acctNumber));
     });
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
@@ -1151,19 +1144,9 @@ export const unlockAcctAndExecFn = (
       (acct) => acct.accountName === dexAccountName
     );
     await accts.map(async (acctNumber) => {
-      if (dexAccount && acctNumber === dexAccount.accountNumber) {
-        // return fn error in case some happened.
-        if (fnError !== null) {
-          throw fnError;
-        }
-        return res;
+      if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+        await wallet.lockAccount(walletService, acctNumber);
       }
-      console.log("locking account", acctNumber);
-      await wallet.lockAccount(
-        sel.walletService(getState()),
-        passphrase,
-        acctNumber
-      );
     });
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
