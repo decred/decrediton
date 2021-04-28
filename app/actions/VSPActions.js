@@ -582,6 +582,29 @@ export const setRememberedVspHost = (rememberedVspHost) => (
   walletCfg.set(cfgConstants.REMEMBERED_VSP_HOST, rememberedVspHost);
 };
 
+export const GETVSPSPUBKEYS_ATTEMPT = "GETAVAILABLEVSP_ATTEMPT";
+export const GETVSPSPUBKEYS_SUCCESS = "GETVSPSPUBKEYS_SUCCESS";
+export const GETVSPSPUBKEYS_FAILED = "GETVSPSPUBKEYS_FAILED";
+
+// getVSPsPubkeys gets all available vsps and its pubkeys, so we can store it.
+export const getVSPsPubkeys = () => async (dispatch) => {
+  try {
+    dispatch({ type: GETVSPSPUBKEYS_ATTEMPT });
+    const availableVSPsPubkeys = [];
+    const vsps = await dispatch(discoverAvailableVSPs());
+    vsps.forEach(async (vsp) => {
+      const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+      if (pubkey) {
+        vsp.pubkey = pubkey;
+        availableVSPsPubkeys.push(vsp);
+      }
+    });
+    dispatch({ type: GETVSPSPUBKEYS_SUCCESS, availableVSPsPubkeys });
+  } catch (error) {
+    dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
+  }
+};
+
 export const PROCESSMANAGEDTICKETS_ATTEMPT = "PROCESSMANAGEDTICKETS_ATTEMPT";
 export const PROCESSMANAGEDTICKETS_SUCCESS = "PROCESSMANAGEDTICKETS_SUCCESS";
 export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
@@ -591,16 +614,8 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 export const processManagedTickets = (passphrase) => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const asyncProcess = async () => {
-      const availableVSPs = await dispatch(discoverAvailableVSPs());
-      availableVSPs.map(async (vsp) => {
-        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-        if (pubkey) {
-          vsp.pubkey = pubkey;
-          return vsp;
-        }
-        return false;
-      });
       const walletService = sel.walletService(getState());
+      const availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
       try {
         dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
         let feeAccount, changeAccount;
@@ -616,16 +631,14 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
         await dispatch(
           unlockAcctAndExecFn(passphrase, feeAccount, () =>
             Promise.all(
-              availableVSPs.map(async (vsp) => {
-                if (vsp.pubkey) {
-                  await wallet.processManagedTickets(
-                    walletService,
-                    vsp.host,
-                    vsp.pubkey,
-                    feeAccount,
-                    changeAccount
-                  );
-                }
+              availableVSPsPubkeys.map(async (vsp) => {
+                await wallet.processManagedTickets(
+                  walletService,
+                  vsp.host,
+                  vsp.pubkey,
+                  feeAccount,
+                  changeAccount
+                );
               })
             )
           )

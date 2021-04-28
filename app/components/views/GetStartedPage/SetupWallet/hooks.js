@@ -12,7 +12,9 @@ import {
   checkAllAccountsEncrypted,
   setAccountsPass
 } from "actions/ControlActions";
+import { getVSPsPubkeys } from "actions/VSPActions";
 import { ExternalLink } from "shared";
+import { DecredLoading } from "indicators";
 
 export const useWalletSetup = (settingUpWalletRef) => {
   const dispatch = useDispatch();
@@ -44,6 +46,10 @@ export const useWalletSetup = (settingUpWalletRef) => {
     [dispatch]
   );
 
+  const onGetVSPsPubkeys = useCallback(() => dispatch(getVSPsPubkeys()), [
+    dispatch
+  ]);
+
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
   }, [send]);
@@ -59,10 +65,30 @@ export const useWalletSetup = (settingUpWalletRef) => {
     send({ type: "BACK" });
   }, [send]);
 
-  const getStateComponent = useCallback(() => {
+  const getStateComponent = useCallback(async () => {
     const { error, isWatchingOnly, isTrezor } = current.context;
 
-    let component, hasLive, hasSoloTickets;
+    let component, hasSoloTickets;
+
+    // check if we have live tickets.
+    const hasLive = Object.keys(stakeTransactions).some((hash) => {
+      const tx = stakeTransactions[hash];
+      // check if the wallet has at least one vsp live ticket.
+      if (
+        tx.status === IMMATURE ||
+        tx.status === LIVE ||
+        tx.status === UNMINED
+      ) {
+        // On old vsp the fee is an input. So if the tx has more than one
+        // input, it means it is an old vsp ticket and have no feeStatus.
+        // So we can skip it.
+        if (tx.txInputs.length !== 1) {
+          return false;
+        }
+        return true;
+      }
+    });
+
     if (previousState && current.value === previousState.value) return;
 
     switch (current.value) {
@@ -130,24 +156,17 @@ export const useWalletSetup = (settingUpWalletRef) => {
           })
           .catch((err) => console.log(err));
         break;
+      case "gettingVSPInfo":
+        // if no live tickets, we can skip it.
+        if (!hasLive) {
+          sendContinue();
+        } else {
+          component = h(DecredLoading);
+          await onGetVSPsPubkeys();
+          sendContinue();
+        }
+        break;
       case "processingManagedTickets":
-        hasLive = Object.keys(stakeTransactions).some((hash) => {
-          const tx = stakeTransactions[hash];
-          // check if the wallet has at least one vsp live ticket.
-          if (
-            tx.status === IMMATURE ||
-            tx.status === LIVE ||
-            tx.status === UNMINED
-          ) {
-            // On old vsp the fee is an input. So if the tx has more than one
-            // input, it means it is an old vsp ticket and have no feeStatus.
-            // So we can skip it.
-            if (tx.txInputs.length !== 1) {
-              return false;
-            }
-            return true;
-          }
-        });
         // if no live tickets, we can skip it.
         if (!hasLive) {
           sendContinue();
@@ -251,7 +270,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
     previousState,
     current,
     onCheckAcctsPass,
-    onProcessAccounts
+    onProcessAccounts,
+    onGetVSPsPubkeys
   ]);
 
   return {

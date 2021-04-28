@@ -976,6 +976,9 @@ export const isProcessingUnmanaged = get([
   "vsp",
   "processUnmanagedTicketsAttempt"
 ]);
+
+export const getAvailableVSPsPubkeys = get(["vsp", "availableVSPsPubkeys"]);
+
 // ****************** end of vsp selectors ******************
 
 export const dailyBalancesStats = get(["statistics", "dailyBalances"]);
