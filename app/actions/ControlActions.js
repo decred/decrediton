@@ -469,7 +469,6 @@ export const revokeTicketsAttempt = (passphrase) => async (
     }
     accountUnlocks.push(acct.accountNumber);
   });
-  console.log(accountUnlocks);
   try {
     const revokeTicketsResponse = await dispatch(
       unlockAcctAndExecFn(passphrase, accountUnlocks, () =>
@@ -1111,16 +1110,17 @@ export const unlockAcctAndExecFn = (
 
   // unlock wallet
   try {
-    await accts.map(async (acctNumber) => {
-      console.log(" unlocking", acctNumber);
+    await Promise.all(
+      accts.map(async (acctNumber) => {
       await wallet.unlockAccount(walletService, passphrase, acctNumber);
-    });
+    }));
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
+    await Promise.all(
     // Need to try and lock all since 1 may have unlocked but not another?
-    await accts.map(async (acctNumber) => {
-      await wallet.lockAccount(walletService, parseInt(acctNumber));
-    });
+      accts.map(async (acctNumber) => {
+        await wallet.lockAccount(walletService, parseInt(acctNumber));
+      }));
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
   }
@@ -1143,11 +1143,12 @@ export const unlockAcctAndExecFn = (
     const dexAccount = accounts.find(
       (acct) => acct.accountName === dexAccountName
     );
-    await accts.map(async (acctNumber) => {
-      if (dexAccount && acctNumber !== dexAccount.accountNumber) {
-        await wallet.lockAccount(walletService, acctNumber);
-      }
-    });
+    await Promise.all(
+      accts.map(async (acctNumber) => {
+        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+          await wallet.lockAccount(walletService, acctNumber);
+        }
+    }));
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.
