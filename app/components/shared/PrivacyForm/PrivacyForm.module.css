@@ -1,9 +1,7 @@
 .privacyForm {
   margin-top: 20px;
   display: grid;
-  grid-template-columns:
-    max-content 123px minmax(max-content, 1fr) 123px minmax(max-content, 1fr)
-    30px;
+  grid-template-columns: max-content 123px max-content 123px;
   grid-column-gap: 10px;
   grid-row-gap: 20px;
   align-items: center;
