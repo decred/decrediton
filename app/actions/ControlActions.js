@@ -1122,14 +1122,16 @@ export const unlockAcctAndExecFn = (
     );
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
-    await Promise.all(
-      // Need to try and lock all since 1 may have unlocked but not another?
-      accts.map(async (acctNumber) => {
-        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
-          await wallet.lockAccount(walletService, parseInt(acctNumber));
-        }
-      })
-    );
+    if (String(error).indexOf("invalid passphrase") < 0) {
+      await Promise.all(
+        // Need to try and lock all since 1 may have unlocked but not another?
+        accts.map(async (acctNumber) => {
+          if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+            await wallet.lockAccount(walletService, parseInt(acctNumber));
+          }
+        })
+      );
+    }
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
   }
