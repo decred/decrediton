@@ -1876,6 +1876,9 @@ export const dexAccountSpendable = createSelector(
           .map(({ spendable }) => spendable)[0]
 );
 export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
+export const dexSelectAccountAttempt = bool(
+  get(["dex", "dexSelectAccountAttempt"])
+);
 
 export const defaultDEXServer = compose(
   (isTestNet) => (isTestNet ? TestNetDexServer : MainNetDexServer),

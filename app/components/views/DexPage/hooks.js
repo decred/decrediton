@@ -39,6 +39,7 @@ export const useDex = () => {
   const enableDexAttempt = useSelector(sel.enableDexAttempt);
   const dexAccount = useSelector(sel.dexAccount);
   const dexAccountAttempt = useSelector(sel.dexAccountAttempt);
+  const dexSelectAccountAttempt = useSelector(sel.dexSelectAccountAttempt);
   const defaultServerAddress = useSelector(sel.defaultDEXServer);
   const dexGetFeeError = useSelector(sel.dexGetFeeError);
   const dexRegisterError = useSelector(sel.dexRegisterError);
@@ -90,6 +91,10 @@ export const useDex = () => {
     (passphrase, name) => dispatch(da.createDexAccount(passphrase, name)),
     [dispatch]
   );
+  const onSelectDexAccount = useCallback(
+    (name) => dispatch(da.selectDexAccount(name)),
+    [dispatch]
+  );
 
   const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
 
@@ -123,12 +128,12 @@ export const useDex = () => {
         ) {
           page = <DexView />;
           header = <DexViewHeader />;
-        } else if (dexDCRWalletRunning && dexBTCWalletRunning) {
-          page = <RegisterPage />;
-          header = <RegisterPageHeader />;
         } else if (!dexAccount) {
           page = <CreateDexAcctPage />;
           header = <CreateDexAcctPageHeader />;
+        } else if (dexDCRWalletRunning && dexBTCWalletRunning) {
+          page = <RegisterPage />;
+          header = <RegisterPageHeader />;
         } else if (!dexDCRWalletRunning || !dexBTCWalletRunning) {
           page = <CreateWalletsPage />;
           header = <CreateWalletsPageHeader />;
@@ -187,8 +192,10 @@ export const useDex = () => {
     onLaunchDexWindow,
     onBTCCreateWalletDex,
     onCreateDexAccount,
+    onSelectDexAccount,
     dexAccount,
     dexAccountAttempt,
+    dexSelectAccountAttempt,
     defaultServerAddress,
     dexGetFeeError,
     dexRegisterError,

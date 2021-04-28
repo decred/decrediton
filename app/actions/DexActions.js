@@ -442,3 +442,22 @@ export const createDexAccount = (passphrase, accountName) => async (
     dispatch({ error, type: CREATEDEXACCOUNT_FAILED });
   }
 };
+
+export const SELECT_DEXACCOUNT_ATTEMPT = "SELECT_DEXACCOUNT_ATTEMPT";
+export const SELECT_DEXACCOUNT_FAILED = "SELECT_DEXACCOUNT_FAILED";
+export const SELECT_DEXACCOUNT_SUCCESS = "SELECT_DEXACCOUNT_SUCCESS";
+
+export const selectDexAccount = (accountName) => (dispatch, getState) => {
+  const {
+    daemon: { walletName }
+  } = getState();
+
+  try {
+    dispatch({ type: SELECT_DEXACCOUNT_ATTEMPT });
+    const walletConfig = getWalletCfg(sel.isTestNet(getState()), walletName);
+    dispatch({ dexAccount: accountName, type: SELECT_DEXACCOUNT_SUCCESS });
+    walletConfig.set(configConstants.DEX_ACCOUNT, accountName);
+  } catch (error) {
+    dispatch({ error, type: SELECT_DEXACCOUNT_FAILED });
+  }
+};
