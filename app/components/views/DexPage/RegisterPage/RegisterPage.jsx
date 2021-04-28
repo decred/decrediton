@@ -124,7 +124,11 @@ const RegisterPage = () => {
   } else {
     return (
       <div>
+        <label className={styles.dexAddressLabel} htmlFor="dexServer">
+          <T id="dex.dexServer" m="DEX Server" />
+        </label>
         <TextInput
+          id="dexServer"
           className={styles.dexAddress}
           required
           value={addr}
