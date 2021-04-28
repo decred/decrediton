@@ -66,12 +66,16 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     defaultSpendingAccount,
     syncVSPTicketsRequest,
     noMoreLiveTickets,
-    isSyncingTickets
+    isSyncingTickets,
+    rememberedVspHost,
+    availableVSPs
   } = useVSPTicketsList();
 
   const [tickets, setTickets] = useState([]);
   const [account, setAccount] = useState(defaultSpendingAccount);
-  const [vsp, setVSP] = useState(null);
+  const [vsp, setVSP] = useState(
+    rememberedVspHost ? { host: rememberedVspHost.host } : null
+  );
   const [selectedTicketTypeKey, setTicketTypeKey] = useState(
     selectTicketTypeFromFilter(ticketsFilter)
   );
@@ -150,7 +154,8 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
         setVSP,
         onSyncVspTicketsRequest,
         noMoreLiveTickets,
-        isSyncingTickets
+        isSyncingTickets,
+        availableVSPs
       }}
     />
   );
