@@ -1098,6 +1098,11 @@ export const unlockAcctAndExecFn = (
 
   // sanity checks
   const accounts = sel.balances(getState());
+  // do not allow locking of the dex account, as it isn't supposed to lock.
+  const dexAccountName = sel.dexAccount(getState());
+  const dexAccount = accounts.find(
+    (acct) => acct.accountName === dexAccountName
+  );
   accts.map((acctNum) => {
     const account = accounts.find((acct) => acct.accountNumber === acctNum);
     if (!account) {
@@ -1119,7 +1124,9 @@ export const unlockAcctAndExecFn = (
     await Promise.all(
     // Need to try and lock all since 1 may have unlocked but not another?
       accts.map(async (acctNumber) => {
-        await wallet.lockAccount(walletService, parseInt(acctNumber));
+        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+          await wallet.lockAccount(walletService, parseInt(acctNumber));
+        }
       }));
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
@@ -1138,11 +1145,6 @@ export const unlockAcctAndExecFn = (
 
   // lock account
   try {
-    // do not allow locking of the dex account, as it isn't supposed to lock.
-    const dexAccountName = sel.dexAccount(getState());
-    const dexAccount = accounts.find(
-      (acct) => acct.accountName === dexAccountName
-    );
     await Promise.all(
       accts.map(async (acctNumber) => {
         if (dexAccount && acctNumber !== dexAccount.accountNumber) {
