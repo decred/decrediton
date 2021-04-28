@@ -34,7 +34,10 @@ import {
   WALLET_SELECTED
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
-import { CREATEDEXACCOUNT_SUCCESS } from "actions/DexActions";
+import {
+  CREATEDEXACCOUNT_SUCCESS,
+  SELECT_DEXACCOUNT_SUCCESS
+} from "actions/DexActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
   TOGGLE_ALLOW_SEND_FROM_UNMIXED
@@ -233,6 +236,11 @@ export default function walletLoader(state = {}, action) {
         allowSendFromUnmixed: action.allow
       };
     case CREATEDEXACCOUNT_SUCCESS:
+      return {
+        ...state,
+        dexAccount: action.dexAccount
+      };
+    case SELECT_DEXACCOUNT_SUCCESS:
       return {
         ...state,
         dexAccount: action.dexAccount
