@@ -674,7 +674,7 @@ export const updateVoteChoice = (
   dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
   try {
     const signed = await dispatch(
-      unlockAcctAndExecFn(passphrase, new Array(accountNumber), () =>
+      unlockAcctAndExecFn(passphrase, [accountNumber], () =>
         wallet.signMessages(walletService, messages)
       )
     );

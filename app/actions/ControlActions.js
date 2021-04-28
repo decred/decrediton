@@ -243,7 +243,7 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
   dispatch({ type: SIGNTX_ATTEMPT });
   try {
     const signTransactionResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, new Array(acctNumber), () =>
+      unlockAcctAndExecFn(passphrase, [acctNumber], () =>
         wallet.signTransaction(sel.walletService(getState()), rawTx, acctNumber)
       )
     );
@@ -463,7 +463,7 @@ export const revokeTicketsAttempt = (passphrase) => async (
   const accountNum = 0;
   try {
     const revokeTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, new Array(accountNum), () =>
+      unlockAcctAndExecFn(passphrase, [accountNum], () =>
         wallet.revokeTickets(walletService, passphrase)
       )
     );
@@ -505,7 +505,7 @@ export const startTicketBuyerV3Attempt = (
     const ticketBuyer = await dispatch(
       unlockAcctAndExecFn(
         passphrase,
-        new Array(accountNum),
+        [accountNum],
         () =>
           wallet.startTicketAutoBuyerV3(ticketBuyerService, {
             mixedAccount,
@@ -783,7 +783,7 @@ export const signMessageAttempt = (address, message, passphrase) => async (
     );
     const accountNumber = response.getAccountNumber();
     const getSignMessageResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, new Array(accountNumber), () =>
+      unlockAcctAndExecFn(passphrase, [accountNumber], () =>
         wallet.signMessage(sel.walletService(getState()), address, message)
       )
     );
@@ -917,7 +917,7 @@ export const startTicketBuyerV2Attempt = (
     request.setVotingAddress(stakepool.TicketAddress);
     const { ticketBuyerService } = getState().grpc;
     const ticketBuyer = await dispatch(
-      unlockAcctAndExecFn(passphrase, new Array(account.value), () =>
+      unlockAcctAndExecFn(passphrase, [account.value], () =>
         ticketBuyerService.runTicketBuyer(request)
       )
     );
