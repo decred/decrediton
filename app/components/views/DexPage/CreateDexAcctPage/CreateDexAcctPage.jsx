@@ -13,7 +13,8 @@ const CreateDexAcctPage = () => {
     onCreateDexAccount,
     dexAccountAttempt,
     dexSelectAccountAttempt,
-    onSelectDexAccount
+    onSelectDexAccount,
+    mixedAccount
   } = useDex();
 
   return (
@@ -41,6 +42,7 @@ const CreateDexAcctPage = () => {
             disabled={dexAccountAttempt || dexSelectAccountAttempt}
             id="accountSelect"
             {...{ account, onChange: setAccount }}
+            filterAccounts={[mixedAccount]}
             className={styles.accountSelect}
           />
           <KeyBlueButton

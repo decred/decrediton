@@ -54,6 +54,7 @@ export const useDex = () => {
   const btcInstallNeeded = useSelector(sel.btcInstallNeeded);
   const btcConfigUpdateNeeded = useSelector(sel.btcConfigUpdateNeeded);
   const btcWalletName = useSelector(sel.btcWalletName);
+  const mixedAccount = useSelector(sel.getMixedAccount);
 
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
@@ -213,6 +214,7 @@ export const useDex = () => {
     onUpdateBTCConfig,
     btcWalletName,
     Page,
-    Header
+    Header,
+    mixedAccount
   };
 };
