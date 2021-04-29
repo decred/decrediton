@@ -17,7 +17,7 @@ import {
   SETVSPDVOTECHOICE_ATTEMPT,
   SETVSPDVOTECHOICE_FAILED,
   SETVSPDVOTECHOICE_SUCCESS,
-  SAVE_AUTOBUYER_SETTINGS,
+  SET_AUTOBUYER_SETTINGS,
   GETVSPSPUBKEYS_SUCCESS
 } from "actions/VSPActions";
 import {
@@ -140,12 +140,12 @@ export default function vsp(state = {}, action) {
         ...state,
         setVspdVoteChoicesRequestAttempt: false
       };
-    case SAVE_AUTOBUYER_SETTINGS:
+    case SET_AUTOBUYER_SETTINGS:
       return {
         ...state,
-        balanceToMaintain: action.balanceToMaintain,
-        account: action.account,
-        vsp: action.vsp
+        balanceToMaintain: action.autobuyerSettings?.balanceToMaintain,
+        account: action.autobuyerSettings?.account,
+        vsp: action.autobuyerSettings?.vsp
       };
     case GETVSPSPUBKEYS_SUCCESS:
       return {

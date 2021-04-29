@@ -16,7 +16,11 @@ import {
   DEX_LOGOUT_FAILED,
   logoutDex
 } from "./DexActions";
-import { TOGGLE_ISLEGACY, SET_REMEMBERED_VSP_HOST } from "./VSPActions";
+import {
+  TOGGLE_ISLEGACY,
+  SET_REMEMBERED_VSP_HOST,
+  SET_AUTOBUYER_SETTINGS
+} from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { ipcRenderer } from "electron";
@@ -445,6 +449,12 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
       const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
       const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
+
+      const autobuyerSettings = walletCfg.get(cfgConstants.AUTOBUYER_SETTINGS);
+      dispatch({
+        type: SET_AUTOBUYER_SETTINGS,
+        autobuyerSettings
+      });
 
       walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
       dispatch({
