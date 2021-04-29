@@ -163,7 +163,7 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 func (c *CoreAdapter) shutdown(json.RawMessage) (string, error) {
 	c.kill()
 	c.wg.Wait()
-	atomic.SwapUint32(&c.serverRunning, 0)
+	c.webServer.Wait()
 	atomic.SwapUint32(&c.inited, 0)
 	return "", nil
 }
@@ -178,8 +178,8 @@ func (c *CoreAdapter) run(callData *CallData) (string, error) {
 	}
 	switch preInitHandler, coreHandler := c.handlers(callData.Function); {
 	case callData.Function == "__ping":
-	    res, err := json.Marshal(callData)
-      return string(res), err
+		res, err := json.Marshal(callData)
+		return string(res), err
 	case callData.Function == "startCore":
 		return "", c.startCore(callData.Params)
 	case preInitHandler != nil:
