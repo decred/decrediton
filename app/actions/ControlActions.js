@@ -1174,14 +1174,11 @@ export const unlockAcctAndExecFn = (
 
 // unlockAllAcctAndExecFn unlocks all accounts and performs some action. Then
 // locks all accounts that were unlocked.  Dex account is never relocked.
-export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => async (
+export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => (
   dispatch,
   getState
 ) => {
-  let res = null;
-  let fnError = null;
   dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
-  const walletService = sel.walletService(getState());
   const accounts = sel.balances(getState());
   const accountUnlocks = [];
   accounts.forEach((acct) => {
@@ -1192,75 +1189,9 @@ export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => async (
     accountUnlocks.push(acct.accountNumber);
   });
 
-  // sanity checks
-  // do not allow locking of the dex account, as it isn't supposed to lock.
-  const dexAccountName = sel.dexAccount(getState());
-  const dexAccount = accounts.find(
-    (acct) => acct.accountName === dexAccountName
+  return dispatch(
+    unlockAcctAndExecFn(passphrase, accountUnlocks, fn, leaveUnlock)
   );
-
-  // unlock wallet
-  try {
-    await Promise.all(
-      accountUnlocks.map(async (acctNumber) => {
-        await wallet.unlockAccount(walletService, passphrase, acctNumber);
-      })
-    );
-    dispatch({ type: UNLOCKACCOUNT_SUCCESS });
-  } catch (error) {
-    await Promise.all(
-      // Need to try and lock all since 1 may have unlocked but not another?
-      accountUnlocks.map(async (acctNumber) => {
-        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
-          try {
-            await wallet.lockAccount(walletService, parseInt(acctNumber));
-          } catch (e) {
-            console.log("account lock failed", e);
-          }
-        }
-      })
-    );
-    dispatch({ type: UNLOCKACCOUNT_FAILED, error });
-    throw error;
-  }
-
-  // execute method
-  try {
-    res = await fn();
-  } catch (error) {
-    fnError = error;
-  }
-
-  if (leaveUnlock) {
-    return res;
-  }
-
-  // lock account
-  try {
-    await Promise.all(
-      accountUnlocks.map(async (acctNumber) => {
-        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
-          try {
-            await wallet.lockAccount(walletService, parseInt(acctNumber));
-          } catch (e) {
-            console.log("account lock failed", e);
-          }
-        }
-      })
-    );
-    dispatch({ type: LOCKACCOUNT_SUCCESS });
-  } catch (error) {
-    // no need to lock as unlock errored.
-    dispatch({ type: LOCKACCOUNT_FAILED, error });
-    throw error;
-  }
-
-  // return fn error in case some happened.
-  if (fnError !== null) {
-    throw fnError;
-  }
-
-  return res;
 };
 
 export const lockAccount = (acctNumber) => async (dispatch, getState) => {
