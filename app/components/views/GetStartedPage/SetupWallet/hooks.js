@@ -137,24 +137,23 @@ export const useWalletSetup = (settingUpWalletRef) => {
         break;
       }
       case "settingMixedAccount":
-        getCoinjoinOutputspByAcct()
-          .then((outputsByAcctMap) => {
-            const hasMixedOutputs =
-              outputsByAcctMap &&
-              outputsByAcctMap.reduce(
-                (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
-                false
-              );
-            if (!hasMixedOutputs || mixedAccount) {
-              sendContinue();
-            } else {
-              component = h(SettingMixedAccount, {
-                cancel: sendContinue,
-                sendContinue
-              });
-            }
-          })
-          .catch((err) => console.log(err));
+        {
+          const outputsByAcctMap = await getCoinjoinOutputspByAcct();
+          const hasMixedOutputs =
+            outputsByAcctMap &&
+            outputsByAcctMap.reduce(
+              (foundMixed, { coinjoinSum }) => coinjoinSum > 0 || foundMixed,
+              false
+            );
+          if (!hasMixedOutputs || mixedAccount) {
+            sendContinue();
+          } else {
+            component = h(SettingMixedAccount, {
+              cancel: sendContinue,
+              onSendContinue: sendContinue
+            });
+          }
+        }
         break;
       case "gettingVSPInfo":
         // if no live tickets, we can skip it.
