@@ -19,6 +19,7 @@ import {
 import styles from "./PurchaseTicketsForm.module.css";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
+const revokeLabel = () => <T id="purchaseTickets.revokeBtn" m="Revoke" />;
 export const LegacyVSPWarning = () => (
   <T
     id="purchase.isLegacyDescription"
@@ -264,15 +265,33 @@ const PurchaseTicketsForm = ({
       </div>
     )}
     <div className={styles.buttonsArea}>
-      <RevokeModalButton
-        modalTitle={
-          <T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />
-        }
-        className={styles.revokeButton}
-        onSubmit={onRevokeTickets}
-        kind="secondary"
-        buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
-      />
+      {getRunningIndicator ? (
+        <Tooltip
+          contentClassName={styles.disabledTooltip}
+          content={
+            <T
+              id="tickets.revoke.running"
+              m="Privacy Mixer or Autobuyer running, please shut them off before revoking tickets."
+            />
+          }>
+          <PiUiButton disabled={true} className={styles.revokeButton}>
+            {revokeLabel()}
+          </PiUiButton>
+        </Tooltip>
+      ) : (
+        <RevokeModalButton
+          modalTitle={
+            <T
+              id="tickets.revokeConfirmations"
+              m="Revoke Tickets Confirmation"
+            />
+          }
+          className={styles.revokeButton}
+          onSubmit={onRevokeTickets}
+          kind="secondary"
+          buttonLabel={revokeLabel()}
+        />
+      )}
 
       {isWatchingOnly ? (
         <PiUiButton disabled={!isValid} onClick={onPurchaseTickets}>
