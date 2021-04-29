@@ -11,7 +11,7 @@ const PoliteiaLink = ({
 }) => {
   const href = useMemo(
     () =>
-      `https://${isTestnet ? "test-proposals2" : "proposals"}.decred.org${
+      `https://${isTestnet ? "test-proposals" : "proposals"}.decred.org${
         path || ""
       }`,
     [isTestnet, path]
