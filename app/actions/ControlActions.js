@@ -348,7 +348,9 @@ export const purchaseTicketsAttempt = (
         );
       }
       accountNum = account.encrypted ? account.value : null;
-      // Add default account unlock if account isn't default
+      // Since we are currently using the default account for the ticket's
+      // voting address we also need to unlock that account in case we need
+      // that as well during purchasing tickets.
       const accts = accountNum !== 0 ? [accountNum, 0] : [accountNum];
       purchaseTicketsResponse = await dispatch(
         unlockAcctAndExecFn(passphrase, accts, () =>
@@ -396,7 +398,9 @@ export const newPurchaseTicketsAttempt = (
       csppPort: sel.getCsppPort(getState()),
       mixedAcctBranch: sel.getMixedAccountBranch(getState())
     };
-    // Add default account unlock if account isn't default
+    // Since we are currently using the default account for the ticket's
+    // voting address we also need to unlock that account so communication
+    // with the VSP may occur.
     const accts = account.value !== 0 ? [account.value, 0] : [account.value];
     const purchaseTicketsResponse = await dispatch(
       unlockAcctAndExecFn(passphrase, accts, () =>
@@ -460,18 +464,9 @@ export const revokeTicketsAttempt = (passphrase) => async (
 ) => {
   dispatch({ type: REVOKETICKETS_ATTEMPT });
   const walletService = sel.walletService(getState());
-  const accounts = sel.balances(getState());
-  const accountUnlocks = [];
-  accounts.map((acct) => {
-    // just skip if imported account.
-    if (acct.accountNumber === Math.pow(2, 31) - 1) {
-      return;
-    }
-    accountUnlocks.push(acct.accountNumber);
-  });
   try {
     const revokeTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, accountUnlocks, () =>
+      unlockAllAcctAndExecFn(passphrase, () =>
         wallet.revokeTickets(walletService)
       )
     );
@@ -1122,16 +1117,18 @@ export const unlockAcctAndExecFn = (
     );
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
-    if (String(error).indexOf("invalid passphrase") < 0) {
-      await Promise.all(
-        // Need to try and lock all since 1 may have unlocked but not another?
-        accts.map(async (acctNumber) => {
-          if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+    await Promise.all(
+      // Need to try and lock all since 1 may have unlocked but not another?
+      accts.map(async (acctNumber) => {
+        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+          try {
             await wallet.lockAccount(walletService, parseInt(acctNumber));
+          } catch (e) {
+            console.log("account lock failed", e);
           }
-        })
-      );
-    }
+        }
+      })
+    );
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     throw error;
   }
@@ -1152,7 +1149,102 @@ export const unlockAcctAndExecFn = (
     await Promise.all(
       accts.map(async (acctNumber) => {
         if (dexAccount && acctNumber !== dexAccount.accountNumber) {
-          await wallet.lockAccount(walletService, acctNumber);
+          try {
+            await wallet.lockAccount(walletService, parseInt(acctNumber));
+          } catch (e) {
+            console.log("account lock failed", e);
+          }
+        }
+      })
+    );
+    dispatch({ type: LOCKACCOUNT_SUCCESS });
+  } catch (error) {
+    // no need to lock as unlock errored.
+    dispatch({ type: LOCKACCOUNT_FAILED, error });
+    throw error;
+  }
+
+  // return fn error in case some happened.
+  if (fnError !== null) {
+    throw fnError;
+  }
+
+  return res;
+};
+
+// unlockAllAcctAndExecFn unlocks all accounts and performs some action. Then
+// locks all accounts that were unlocked.  Dex account is never relocked.
+export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => async (
+  dispatch,
+  getState
+) => {
+  let res = null;
+  let fnError = null;
+  dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
+  const walletService = sel.walletService(getState());
+  const accounts = sel.balances(getState());
+  const accountUnlocks = [];
+  accounts.forEach((acct) => {
+    // just skip if imported account.
+    if (acct.accountNumber >= Math.pow(2, 31) - 1 || !acct.encrypted) {
+      return;
+    }
+    accountUnlocks.push(acct.accountNumber);
+  });
+  console.log(accountUnlocks);
+  // sanity checks
+  // do not allow locking of the dex account, as it isn't supposed to lock.
+  const dexAccountName = sel.dexAccount(getState());
+  const dexAccount = accounts.find(
+    (acct) => acct.accountName === dexAccountName
+  );
+
+  // unlock wallet
+  try {
+    await Promise.all(
+      accountUnlocks.map(async (acctNumber) => {
+        await wallet.unlockAccount(walletService, passphrase, acctNumber);
+      })
+    );
+    dispatch({ type: UNLOCKACCOUNT_SUCCESS });
+  } catch (error) {
+    await Promise.all(
+      // Need to try and lock all since 1 may have unlocked but not another?
+      accountUnlocks.map(async (acctNumber) => {
+        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+          try {
+            await wallet.lockAccount(walletService, parseInt(acctNumber));
+          } catch (e) {
+            console.log("account lock failed", e);
+          }
+        }
+      })
+    );
+    dispatch({ type: UNLOCKACCOUNT_FAILED, error });
+    throw error;
+  }
+
+  // execute method
+  try {
+    res = await fn();
+  } catch (error) {
+    fnError = error;
+  }
+
+  if (leaveUnlock) {
+    return res;
+  }
+
+  // lock account
+  try {
+    await Promise.all(
+      accountUnlocks.map(async (acctNumber) => {
+        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+          try {
+            await wallet.lockAccount(walletService, parseInt(acctNumber));
+          } catch (e) {
+            console.log("account lock failed", e);
+          }
         }
       })
     );

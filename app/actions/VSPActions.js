@@ -4,7 +4,7 @@ import { getWalletCfg, updateStakePoolConfig } from "config";
 import {
   importScriptAttempt,
   rescanAttempt,
-  unlockAcctAndExecFn
+  unlockAllAcctAndExecFn
 } from "./ControlActions";
 import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
@@ -106,17 +106,8 @@ export const syncVSPTicketsRequest = ({
 }) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   try {
-    const accounts = sel.balances(getState());
-    const accountUnlocks = [];
-    accounts.map((acct) => {
-      // just skip if imported account.
-      if (acct.accountNumber === Math.pow(2, 31) - 1) {
-        return;
-      }
-      accountUnlocks.push(acct.accountNumber);
-    });
     await dispatch(
-      unlockAcctAndExecFn(passphrase, accountUnlocks, () =>
+      unlockAllAcctAndExecFn(passphrase, () =>
         wallet.syncVSPTickets(
           getState().grpc.walletService,
           vspHost,
@@ -637,17 +628,8 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
           feeAccount = sel.defaultSpendingAccount(getState()).value;
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
-        const accounts = sel.balances(getState());
-        const accountUnlocks = [];
-        accounts.map((acct) => {
-          // just skip if imported account.
-          if (acct.accountNumber === Math.pow(2, 31) - 1) {
-            return;
-          }
-          accountUnlocks.push(acct.accountNumber);
-        });
         await dispatch(
-          unlockAcctAndExecFn(passphrase, accountUnlocks, () =>
+          unlockAllAcctAndExecFn(passphrase, () =>
             Promise.all(
               availableVSPsPubkeys.map(async (vsp) => {
                 await wallet.processManagedTickets(
@@ -715,18 +697,9 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
 
-        const accounts = sel.balances(getState());
-        const accountUnlocks = [];
-        accounts.map((acct) => {
-          // just skip if imported account.
-          if (acct.accountNumber === Math.pow(2, 31) - 1) {
-            return;
-          }
-          accountUnlocks.push(acct.accountNumber);
-        });
         if (passphrase) {
           await dispatch(
-            unlockAcctAndExecFn(passphrase, accountUnlocks, () =>
+            unlockAllAcctAndExecFn(passphrase, () =>
               wallet.processUnmanagedTicketsStartup(
                 walletService,
                 vspHost,
