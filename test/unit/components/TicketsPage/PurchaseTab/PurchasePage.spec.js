@@ -276,6 +276,7 @@ test("test autobuyer", async () => {
   // set account
   user.click(screen.getByText("Select account"));
   user.click(screen.getByText(mockMixedAccount.name));
+  selectors.buyerAccount = jest.fn(() => mockMixedAccount);
   user.click(saveButton);
 
   // check settings

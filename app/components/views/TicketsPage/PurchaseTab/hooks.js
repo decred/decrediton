@@ -24,9 +24,6 @@ export const usePurchaseTab = () => {
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
-  const buyerVSP = useSelector(sel.buyerVSP);
-  const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
-  const buyerAccount = useSelector(sel.buyerAccount);
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const visibleAccounts = useSelector(sel.visibleAccounts);
 
@@ -119,9 +116,6 @@ export const usePurchaseTab = () => {
     onDisableTicketAutoBuyer,
     getTicketStatus,
     ticketAutoBuyerRunning,
-    buyerVSP,
-    buyerAccount,
-    buyerBalanceToMaintain,
     getVSPTicketsByFeeStatus,
     isLegacy,
     toggleIsLegacy,
