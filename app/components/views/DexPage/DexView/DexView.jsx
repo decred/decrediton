@@ -37,7 +37,7 @@ export const DexView = () => {
 
   return (
     <div>
-      <Documentation name={"DexNotes"} />
+      <Documentation name="DexNotes" />
       <KeyBlueButton onClick={onLaunchDexWindow}>
         <T id="dex.launchDexWindow" m="Launch DEX Window" />
       </KeyBlueButton>
