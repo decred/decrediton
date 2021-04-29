@@ -49,7 +49,9 @@ const TicketListPage = ({
   onSyncVspTicketsRequest,
   isValid,
   noMoreLiveTickets,
-  isSyncingTickets
+  isSyncingTickets,
+  vsp,
+  availableVSPs
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
@@ -78,9 +80,11 @@ const TicketListPage = ({
           {...{
             onSubmit: onSyncVspTicketsRequest,
             setVSP,
+            value: vsp,
             account,
             setAccount,
-            isValid
+            isValid,
+            options: availableVSPs
           }}
           loading={isSyncingTickets}
           disabled={!hasVSPTicketsError || isSyncingTickets}

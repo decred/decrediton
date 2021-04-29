@@ -16,6 +16,8 @@ export const useVSPTicketsList = () => {
   const defaultSpendingAccount = useSelector(sel.defaultSpendingAccount);
   const noMoreLiveTickets = useSelector(sel.getNoMoreLiveTickets);
   const isSyncingTickets = useSelector(sel.isSyncingTickets);
+  const rememberedVspHost = useSelector(sel.getRememberedVspHost);
+  const availableVSPs = useSelector(sel.getAvailableVSPs);
 
   // actions
   const dispatch = useDispatch();
@@ -49,6 +51,8 @@ export const useVSPTicketsList = () => {
     defaultSpendingAccount,
     syncVSPTicketsRequest,
     noMoreLiveTickets,
-    isSyncingTickets
+    isSyncingTickets,
+    rememberedVspHost,
+    availableVSPs
   };
 };

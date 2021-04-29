@@ -9,13 +9,15 @@ const SyncVSPFailedTickets = ({
   onSubmit,
   show,
   props,
-  onCancelModal
+  onCancelModal,
+  value,
+  options
 }) => (
   <PassphraseModal {...{ show, onSubmit, onCancelModal, ...props }}>
     <PassphraseModalField label={<T id="syncVsp.vsp" m="VSP Select" />}>
       <VSPSelect
         className="stakepool-purchase-ticket-input-select"
-        {...{ account, onChange: setVSP }}
+        {...{ account, onChange: setVSP, value, options }}
       />
     </PassphraseModalField>
     <PassphraseModalField label={<T id="syncVsp.account" m="Account" />}>
