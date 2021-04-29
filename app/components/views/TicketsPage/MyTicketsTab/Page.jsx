@@ -7,8 +7,9 @@ import {
   NoTicketsIndicator
 } from "indicators";
 import { TxHistory, Subtitle } from "shared";
-import { EyeFilterMenu } from "buttons";
+import { EyeFilterMenu, QRModalButton } from "buttons";
 import styles from "./MyTicketsTab.module.css";
+import ReactPaginate from "react-paginate";
 
 const subtitleMenu = ({
   sortTypes,
@@ -16,7 +17,12 @@ const subtitleMenu = ({
   selectedSortOrderKey,
   selectedTicketTypeKey,
   onChangeSelectedType,
-  onChangeSortType
+  onChangeSortType,
+  QRs,
+  loadingQRs,
+  QRsPage,
+  onQRPageClick,
+  prepareQRs
 }) => (
   <div className={styles.ticketsButtons}>
     <Tooltip
@@ -42,6 +48,46 @@ const subtitleMenu = ({
         onChange={onChangeSelectedType}
       />
     </Tooltip>
+    <Tooltip
+      contentClassName={styles.qrTooltip}
+      content={<T id="tickets.qr.tooltip" m="Tickets QR" />}>
+      <div className={styles.menuButton}>
+        <QRModalButton
+          className={styles.qrButton}
+          modalTitle={<T id="tickets.qr.button" m="Active Tickets QR Code" />}
+          pagesRemaining={QRs.length > 1 && `${QRsPage + 1}/${QRs.length}`}
+          modalContent={
+            QRs.length != 0 ? (
+              <img src={QRs[QRsPage]} />
+            ) : loadingQRs ? (
+              <T id="tickets.qr.loading" m="Loading..." />
+            ) : (
+              <T
+                id="tickets.qr.notickets"
+                m="No active tickets in the current view."
+              />
+            )
+          }
+          onClick={prepareQRs}
+          pages={
+            QRs.length > 1 && (
+              <ReactPaginate
+                containerClassName={styles.qrsPaginator}
+                pageClassName={styles.qrPage}
+                activeClassName={styles.qrPageActive}
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                pageCount={QRs.length}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={onQRPageClick}
+              />
+            )
+          }
+        />
+      </div>
+    </Tooltip>
   </div>
 );
 
@@ -55,7 +101,12 @@ const TicketListPage = ({
   selectedTicketTypeKey,
   sortTypes,
   ticketTypes,
-  tsDate
+  tsDate,
+  QRs,
+  loadingQRs,
+  QRsPage,
+  onQRPageClick,
+  prepareQRs
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   return (
@@ -74,7 +125,12 @@ const TicketListPage = ({
           selectedSortOrderKey,
           selectedTicketTypeKey,
           onChangeSelectedType,
-          onChangeSortType
+          onChangeSortType,
+          QRs,
+          loadingQRs,
+          QRsPage,
+          onQRPageClick,
+          prepareQRs
         })}
       />
       {tickets.length > 0 && (
