@@ -3,7 +3,7 @@ import { useDex } from "../hooks";
 import { KeyBlueButton } from "buttons";
 import { useMountEffect } from "hooks";
 import { useState } from "react";
-import { Log } from "shared";;
+import { Log } from "shared";
 import { Documentation } from "shared";
 
 export const DexView = () => {
