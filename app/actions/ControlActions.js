@@ -1120,7 +1120,7 @@ export const unlockAcctAndExecFn = (
     await Promise.all(
       // Need to try and lock all since 1 may have unlocked but not another?
       accts.map(async (acctNumber) => {
-        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+        if (!dexAccount || acctNumber !== dexAccount.accountNumber) {
           try {
             await wallet.lockAccount(walletService, parseInt(acctNumber));
           } catch (e) {
@@ -1148,7 +1148,7 @@ export const unlockAcctAndExecFn = (
   try {
     await Promise.all(
       accts.map(async (acctNumber) => {
-        if (dexAccount && acctNumber !== dexAccount.accountNumber) {
+        if (!dexAccount || acctNumber !== dexAccount.accountNumber) {
           try {
             await wallet.lockAccount(walletService, parseInt(acctNumber));
           } catch (e) {
