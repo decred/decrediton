@@ -75,7 +75,10 @@ export const useWalletSetup = (settingUpWalletRef) => {
   }, [send, dispatch]);
 
   const getStateComponent = useCallback(async () => {
-    const { error, isWatchingOnly, isTrezor } = current.context;
+    const ctx = current.context;
+    const { selectedWallet } = ctx;
+    const { error } = ctx;
+    const { isWatchingOnly, isTrezor } = selectedWallet.value;
 
     let component, hasSoloTickets;
 
