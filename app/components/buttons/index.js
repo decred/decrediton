@@ -44,6 +44,7 @@ export {
  ***************************************************/
 import {
   InfoModal,
+  QRModal,
   PassphraseModal,
   ChangePassphraseModal,
   ConfirmModal,
@@ -157,6 +158,7 @@ export const CloseChannelModalButton = mbb(
   ConfirmModal,
   InvisibleButton
 );
+export const QRModalButton = mbb(null, QRModal, InvisibleButton);
 export const InvisibleConfirmPoliteiaModalButton = mbb(
   null,
   ConfirmModal,

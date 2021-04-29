@@ -1,5 +1,5 @@
 .menu {
-  margin-left: 0.5em;
+  margin-left: 10px;
   position: relative;
 }
 
@@ -17,7 +17,7 @@
 .menuButton {
   height: 31px;
   width: 40px;
-  padding: 0px;
+  padding: 0;
 }
 
 .buttonIcon {
@@ -27,7 +27,7 @@
   width: 40px;
   height: 20px;
   border-radius: 4px;
-  padding: 0px;
+  padding: 0;
   background-image: var(--contextbutton-eye-default-icon);
   background-color: var(--text-toggle-button-inactive-text);
 }
@@ -81,7 +81,7 @@
   width: 168px;
   color: var(--input-color-default);
   text-align: left;
-  box-shadow: 0px 3px 8px var(--input-color-shadow);
+  box-shadow: 0 3px 8px var(--input-color-shadow);
   user-select: none;
   /* set z-index to cover the animated ellipsis of a pending tx */
   z-index: 1;

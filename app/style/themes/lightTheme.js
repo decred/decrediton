@@ -257,6 +257,7 @@ const lightTheme = {
   "contextbutton-eye-default-icon": url(
     require("style/icons/contextbutton-eye-default.svg")
   ),
+  qrcode: url(require("style/icons/decred-qrcode.png")),
   "launcher-logo": url(require("style/icons/launcher-logo.svg")),
   "help-getstared": url(require("style/icons/help-active.png")),
   "no-tx-icon": url(require("style/icons/no-tx.svg")),

@@ -2,72 +2,84 @@ import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import TicketListPage from "./Page";
 import { useTicketsList } from "./hooks";
-import * as txTypes from "constants/decrediton";
+import {
+  UNKNOWN,
+  UNMINED,
+  IMMATURE,
+  LIVE,
+  VOTED,
+  MISSED,
+  EXPIRED,
+  REVOKED,
+  DESC,
+  ASC,
+  ALL
+} from "constants";
 
 const labels = {
-  [txTypes.UNKNOWN]: <T id="ticket.status.multiple.unknown" m="unknown" />,
-  [txTypes.UNMINED]: <T id="ticket.status.multiple.unmined" m="unmined" />,
-  [txTypes.IMMATURE]: <T id="ticket.status.multiple.immature" m="immature" />,
-  [txTypes.LIVE]: <T id="ticket.status.multiple.live" m="live" />,
-  [txTypes.VOTED]: <T id="ticket.status.multiple.voted" m="voted" />,
-  [txTypes.MISSED]: <T id="ticket.status.multiple.missed" m="missed" />,
-  [txTypes.EXPIRED]: <T id="ticket.status.multiple.expired" m="expired" />,
-  [txTypes.REVOKED]: <T id="ticket.status.multiple.revoked" m="revoked" />
+  [UNKNOWN]: <T id="ticket.status.multiple.unknown" m="unknown" />,
+  [UNMINED]: <T id="ticket.status.multiple.unmined" m="unmined" />,
+  [IMMATURE]: <T id="ticket.status.multiple.immature" m="immature" />,
+  [LIVE]: <T id="ticket.status.multiple.live" m="live" />,
+  [VOTED]: <T id="ticket.status.multiple.voted" m="voted" />,
+  [MISSED]: <T id="ticket.status.multiple.missed" m="missed" />,
+  [EXPIRED]: <T id="ticket.status.multiple.expired" m="expired" />,
+  [REVOKED]: <T id="ticket.status.multiple.revoked" m="revoked" />
 };
 
 const sortTypes = [
   {
-    value: txTypes.DESC,
-    key: txTypes.DESC,
+    value: DESC,
+    key: DESC,
     label: <T id="tickets.sortby.newest" m="Newest" />
   },
   {
-    value: txTypes.ASC,
-    key: txTypes.ASC,
+    value: ASC,
+    key: ASC,
     label: <T id="tickets.sortby.oldest" m="Oldest" />
   }
 ];
 
 const ticketTypes = [
   {
-    key: txTypes.ALL,
+    key: ALL,
     value: { status: null },
     label: <T id="tickets.type.all" m="All" />
   },
   {
-    key: txTypes.UNMINED,
-    value: { status: txTypes.UNMINED },
-    label: labels[txTypes.UNMINED]
+    key: UNMINED,
+    value: { status: UNMINED },
+    label: labels[UNMINED]
   },
   {
-    key: txTypes.IMMATURE,
-    value: { status: txTypes.IMMATURE },
-    label: labels[txTypes.IMMATURE]
+    key: IMMATURE,
+    value: { status: IMMATURE },
+    label: labels[IMMATURE]
   },
   {
-    key: txTypes.LIVE,
-    value: { status: txTypes.LIVE },
-    label: labels[txTypes.LIVE]
+    key: LIVE,
+    value: { status: LIVE },
+    label: labels[LIVE]
   },
   {
-    key: txTypes.VOTED,
-    value: { status: txTypes.VOTED },
-    label: labels[txTypes.VOTED]
+    key: VOTED,
+    value: { status: VOTED },
+    label: labels[VOTED]
   },
   {
-    key: txTypes.MISSED,
-    value: { status: txTypes.MISSED },
-    label: labels[txTypes.MISSED]
+    key: MISSED,
+    value: { status: MISSED },
+    label: labels[MISSED]
   },
   {
-    key: txTypes.EXPIRED,
-    value: { status: txTypes.EXPIRED },
-    label: labels[txTypes.EXPIRED]
+    key: EXPIRED,
+    value: { status: EXPIRED },
+    label: labels[EXPIRED]
   },
   {
-    key: txTypes.REVOKED,
-    value: { status: txTypes.REVOKED },
-    label: labels[txTypes.REVOKED]
+    key: REVOKED,
+    value: { status: REVOKED },
+    label: labels[REVOKED]
   }
 ];
 
@@ -87,7 +99,12 @@ const MyTickets = ({ toggleIsLegacy }) => {
     window,
     goBackHistory,
     getTickets,
-    changeTicketsFilter
+    changeTicketsFilter,
+    QRsPage,
+    onQRPageClick,
+    loadingQRs,
+    QRs,
+    prepareQRs
   } = useTicketsList();
 
   const [selectedTicketTypeKey, setTicketTypeKey] = useState(
@@ -131,7 +148,12 @@ const MyTickets = ({ toggleIsLegacy }) => {
         getTickets,
         goBackHistory,
         noMoreTickets,
-        toggleIsLegacy
+        toggleIsLegacy,
+        loadingQRs,
+        QRs,
+        QRsPage,
+        onQRPageClick,
+        prepareQRs
       }}
     />
   );
