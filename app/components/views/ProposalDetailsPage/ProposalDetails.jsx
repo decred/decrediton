@@ -47,7 +47,7 @@ const ProposalDetails = ({
   const { tsDate, hasTickets, isTestnet } = useProposalDetails();
   const shortToken = token.substring(0, 7);
   const shortRFPToken = linkedProposal?.token.substring(0, 7);
-  const proposalPath = `/proposals/${shortToken}`;
+  const proposalPath = `/record/${shortToken}`;
   const isVoteActive = voteStatus === PROPOSAL_VOTING_ACTIVE;
   const isVoteActiveOrFinished =
     isVoteActive || voteStatus === PROPOSAL_VOTING_FINISHED;
@@ -117,7 +117,7 @@ const ProposalDetails = ({
                     linkedProposal: (
                       <PoliteiaLink
                         isTestnet={isTestnet}
-                        path={`/proposals/${shortRFPToken}`}>
+                        path={`/record/${shortRFPToken}`}>
                         {`${linkedProposal.name} (${shortRFPToken})`}
                       </PoliteiaLink>
                     )
