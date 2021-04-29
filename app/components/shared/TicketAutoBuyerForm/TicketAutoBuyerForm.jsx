@@ -100,6 +100,7 @@ const TicketAutoBuyerForm = ({
       </div>
       <button
         aria-label="Ticket Autobuyer Settings"
+        disabled={isRunning}
         className={styles.settingsButton}
         onClick={showSettingsModal}
       />

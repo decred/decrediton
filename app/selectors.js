@@ -924,9 +924,6 @@ export const legacyBuyerBalanceToMaintain = get([
   "legacyBalanceToMaintain"
 ]);
 export const legacyBuyerAccount = get(["control", "legacyAccount"]);
-export const buyerVSP = get(["vsp", "vsp"]);
-export const buyerBalanceToMaintain = get(["vsp", "balanceToMaintain"]);
-export const buyerAccount = get(["vsp", "account"]);
 export const getHasVSPTicketsError = get(["vsp", "hasVSPTicketsError"]);
 export const getIsLegacy = get(["vsp", "isLegacy"]);
 export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
@@ -1120,6 +1117,24 @@ export const spendingAccounts = createSelector(
       balances
     )
 );
+
+/* autobuyerSettings */
+export const buyerBalanceToMaintain = createSelector(
+  [get(["vsp", "balanceToMaintain"])],
+  (balanceToMaintain) =>
+    balanceToMaintain
+      ? {
+          atomValue: balanceToMaintain,
+          value: parseInt(balanceToMaintain) / UNIT_DIVISOR
+        }
+      : null
+);
+export const buyerAccount = createSelector(
+  [get(["vsp", "account"]), visibleAccounts],
+  (buyerAccountName, visibleAccounts) =>
+    visibleAccounts.filter(({ name }) => name === buyerAccountName)[0]
+);
+export const buyerVSP = get(["vsp", "vsp"]);
 
 const getNextAddressResponse = get(["control", "getNextAddressResponse"]);
 const nextAddressAccountNumber = compose(

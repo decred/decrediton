@@ -32,6 +32,10 @@
   border: none;
   cursor: pointer;
 }
+.settingsButton:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
 .orangeWarning {
   position: inherit;
 }

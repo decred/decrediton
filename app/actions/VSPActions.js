@@ -792,14 +792,23 @@ export const setVSPDVoteChoices = (passphrase) => async (
   }
 };
 
-export const SAVE_AUTOBUYER_SETTINGS = "SAVE_AUTOBUYER_SETTINGS";
+export const SET_AUTOBUYER_SETTINGS = "SET_AUTOBUYER_SETTINGS";
 export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
-  dispatch
+  dispatch,
+  getState
 ) => {
-  dispatch({
-    type: SAVE_AUTOBUYER_SETTINGS,
-    balanceToMaintain,
-    account,
+  const {
+    daemon: { walletName }
+  } = getState();
+  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const autobuyerSettings = {
+    balanceToMaintain: parseInt(balanceToMaintain.atomValue),
+    account: account.name,
     vsp
+  };
+  walletCfg.set(cfgConstants.AUTOBUYER_SETTINGS, autobuyerSettings);
+  dispatch({
+    type: SET_AUTOBUYER_SETTINGS,
+    autobuyerSettings
   });
 };

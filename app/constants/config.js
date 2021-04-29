@@ -77,6 +77,7 @@ export const LAST_ACCESS = "lastaccess";
 export const STAKEPOOLS = "stakepools";
 export const LN_WALLET_EXISTS = "ln_wallet_exists";
 export const USED_VSPS = "used_vsps";
+export const AUTOBUYER_SETTINGS = "autobuyer_settings";
 export const DEX_ACCOUNT = "dex_account";
 export const ENABLE_DEX = "enableddex";
 export const DEXWALLET_RPCUSERNAME = "dexwallet_rpcuser";
@@ -120,6 +121,7 @@ export const WALLET_INITIAL_VALUE = {
   [DEXWALLET_RPCPASSWORD]: "",
   [DEXWALLET_HOSTPORT]: "",
   [DEX_ACCOUNT]: null,
+  [AUTOBUYER_SETTINGS]: null,
   // STAKEPOOLS is a legacy code which can be deleted after stopping giving
   // support for old vsp versions.
   [STAKEPOOLS]: []
