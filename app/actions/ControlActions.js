@@ -1098,7 +1098,7 @@ export const unlockAcctAndExecFn = (
   const dexAccount = accounts.find(
     (acct) => acct.accountName === dexAccountName
   );
-  accts.map((acctNum) => {
+  accts.forEach((acctNum) => {
     const account = accounts.find((acct) => acct.accountNumber === acctNum);
     if (!account) {
       throw "Account not found";
@@ -1191,7 +1191,7 @@ export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => async (
     }
     accountUnlocks.push(acct.accountNumber);
   });
-  console.log(accountUnlocks);
+
   // sanity checks
   // do not allow locking of the dex account, as it isn't supposed to lock.
   const dexAccountName = sel.dexAccount(getState());
