@@ -885,9 +885,7 @@ export default function snackbar(state = {}, action) {
       type = "Error";
       if (
         action.error &&
-        String(action.error).indexOf(
-          "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
-        ) > -1
+        String(action.error).indexOf("invalid passphrase") > -1
       ) {
         // intercepting all wrong passphrase errors, independently of which error
         // state was triggered. Not terribly pretty.

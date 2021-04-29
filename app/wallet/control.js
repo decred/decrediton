@@ -207,10 +207,9 @@ export const purchaseTicketsV3 = (
     });
   });
 
-export const revokeTickets = (walletService, passphrase) =>
+export const revokeTickets = (walletService) =>
   new Promise((ok, fail) => {
     const request = new api.RevokeTicketsRequest();
-    request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     walletService.revokeTickets(request, (err, res) =>
       err ? fail(err) : ok(res)
     );
@@ -296,41 +295,19 @@ export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
     );
   });
 
-export const syncVSPTickets = (
-  walletService,
-  passphrase,
-  vspHost,
-  vspPubkey,
-  account
-) =>
+export const syncVSPTickets = (walletService, vspHost, vspPubkey, account) =>
   new Promise((resolve, reject) => {
-    const unlockReq = new api.UnlockWalletRequest();
-    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-    // Unlock wallet so we can call the request.
-    walletService.unlockWallet(unlockReq, (error) => {
+    const request = new api.SyncVSPTicketsRequest();
+    request.setAccount(account);
+    request.setVspPubkey(vspPubkey);
+    request.setVspHost("https://" + vspHost);
+
+    // Call the request
+    walletService.syncVSPFailedTickets(request, (error, response) => {
       if (error) {
         reject(error);
       }
-      const request = new api.SyncVSPTicketsRequest();
-      request.setAccount(account);
-      request.setVspPubkey(vspPubkey);
-      request.setVspHost("https://" + vspHost);
-
-      // Call the request
-      walletService.syncVSPFailedTickets(request, (error, response) => {
-        if (error) {
-          reject(error);
-        }
-        const lockReq = new api.LockWalletRequest();
-
-        // Lock wallet and return response from the request.
-        walletService.lockWallet(lockReq, (error) => {
-          if (error) {
-            reject(error);
-          }
-          resolve(response);
-        });
-      });
+      resolve(response);
     });
   });
 
