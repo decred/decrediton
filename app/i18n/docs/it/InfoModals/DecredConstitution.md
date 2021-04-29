@@ -145,7 +145,7 @@ ___
   cellule che lavorano su aspetti specifici risolvono le controversie e
   aggiungono nuovi membri in modo indipendente. Come descritto nella proposta
   approvata [Decred Contractor
-  Clearance](https://proposals.decred.org/proposals/fa38a3593d9a3f6cb2478a24c25114f5097c572f6dadf24c78bb521ed10992a4),
+  Clearance](https://proposals-archive.decred.org/proposals/fa38a3593d9a3f6cb2478a24c25114f5097c572f6dadf24c78bb521ed10992a4),
   le controversie che non possono essere risolte in modo soddisfacente
   all'interno di un team potranno essere portate al voto di tutti i consulenti,
   una volta che il sistema di gestione dei consulenti, che faciliterà questo
