@@ -43,3 +43,5 @@ export { default as TicketLifecycleTutorialPage05 } from "./TicketLifecycleTutor
 export { default as TicketLifecycleTutorialPage06 } from "./TicketLifecycleTutorial/Page06.md";
 
 export { default as LNBackupInfo } from "./LN/BackupInfo.md";
+
+export { default as DexNotes } from "./DexNotes/DexNotes.md";
