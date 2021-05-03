@@ -27,7 +27,7 @@ import { OPTIONS, UPGD_ELECTRON8 } from "constants";
 import * as cfgConstants from "constants/config";
 import os from "os";
 import fs from "fs-extra";
-import util from "util";
+import { format } from "util";
 import { spawn } from "child_process";
 import isRunning from "is-running";
 import stringArgv from "string-argv";
@@ -389,7 +389,7 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       try {
         const win32ipc = require("win32ipc/build/Release/win32ipc.node");
         dcrdPipeRx = win32ipc.createPipe("out");
-        args.push(util.format("--piperx=%d", dcrdPipeRx.readEnd));
+        args.push(format("--piperx=%d", dcrdPipeRx.readEnd));
       } catch (e) {
         logger.log("error", "can't find proper module to launch dcrd: " + e);
       }
@@ -667,10 +667,10 @@ export const launchDCRWallet = (
     try {
       const win32ipc = require("win32ipc/build/Release/win32ipc.node");
       dcrwPipeRx = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", dcrwPipeRx.readEnd));
+      args.push(format("--piperx=%d", dcrwPipeRx.readEnd));
 
       dcrwPipeTx = win32ipc.createPipe("in");
-      args.push(util.format("--pipetx=%d", dcrwPipeTx.writeEnd));
+      args.push(format("--pipetx=%d", dcrwPipeTx.writeEnd));
       args.push("--rpclistenerevents");
       const pipeTxReadFd = win32ipc.getPipeEndFd(dcrwPipeTx.readEnd);
       dcrwPipeTx.readEnd = -1; // -1 == INVALID_HANDLE_VALUE
@@ -707,16 +707,16 @@ export const launchDCRWallet = (
   // We're doing this after logger to avoid user/pass being logged.  It's randomly
   // set each start, but better to be safe.
   if (rpcUser) {
-    args.push(util.format("--username=%s", rpcUser));
+    args.push(format("--username=%s", rpcUser));
   }
   if (rpcPass) {
-    args.push(util.format("--password=%s", rpcPass));
+    args.push(format("--password=%s", rpcPass));
   }
   if (rpcListen) {
-    args.push(util.format("--rpclisten=%s", rpcListen));
+    args.push(format("--rpclisten=%s", rpcListen));
   }
   if (rpcCert) {
-    args.push(util.format("--rpccert=%s", rpcCert));
+    args.push(format("--rpccert=%s", rpcCert));
   }
 
   const dcrwallet = spawn(dcrwExe, args, {
@@ -830,7 +830,7 @@ export const launchDCRLnd = (
       try {
         const win32ipc = require("win32ipc/build/Release/win32ipc.node");
         dcrlndPipeRx = win32ipc.createPipe("out");
-        args.push(util.format("--piperx=%d", dcrlndPipeRx.readEnd));
+        args.push(format("--piperx=%d", dcrlndPipeRx.readEnd));
       } catch (e) {
         logger.log("error", "can't find proper module to launch dcrlnd: " + e);
       }

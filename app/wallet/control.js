@@ -5,6 +5,7 @@ import {
   VSP_FEE_PROCESS_PAID,
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
+import { isUndefined } from "lodash";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -517,7 +518,7 @@ export const startTicketAutoBuyerV3 = (
         !changeAccount ||
         !csppServer ||
         !csppPort ||
-        typeof mixedAcctBranch === "undefined"
+        isUndefined(mixedAcctBranch)
       ) {
         throw "missing cspp argument";
       }

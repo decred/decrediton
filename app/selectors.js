@@ -57,6 +57,7 @@ import {
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import * as wallet from "wallet";
+import { isFunction, isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
 
@@ -883,7 +884,7 @@ export const lastVotedTicket = createSelector(
         []
       );
 
-    return Array.isArray(lastVotedTicket) ? null : lastVotedTicket;
+    return isArray(lastVotedTicket) ? null : lastVotedTicket;
   }
 );
 
@@ -1667,10 +1668,7 @@ const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
     // When agenda has getId function (this happens when dcrdata privacy is disabled
     // or a possible dcrdata crash) or the agenda is the same for dcrwallet and dcrdata.
     // We use the information from our dcrwallet grpc request.
-    if (
-      typeof agenda.getId === "function" ||
-      currentAgenda.getId() === agenda.name
-    ) {
+    if (isFunction(agenda.getId) || currentAgenda.getId() === agenda.name) {
       currentAgenda.isCurrent = true;
       const agendaObj = {};
       agendaObj.name = currentAgenda.getId();

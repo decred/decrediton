@@ -1,11 +1,12 @@
 import { createElement as h, cloneElement as k } from "react";
 import { matchPath } from "react-router-dom";
+import { isArray } from "lodash";
 import { spring } from "react-motion";
 import theme from "theme";
 import TabbedPageTab from "./TabbedPageTab";
 
 const getTabs = (children) => {
-  if (!Array.isArray(children)) children = [children];
+  if (!isArray(children)) children = [children];
   return children
     .filter((c) => c.type === TabbedPageTab)
     .map((c, i) => ({ index: i, tab: c }));

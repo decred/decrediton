@@ -4,6 +4,7 @@ import { usePrevious } from "hooks";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 import { useState, useEffect, useCallback } from "react";
+import { isArray } from "lodash";
 import { isEqual } from "lodash/fp";
 
 const messages = defineMessages({
@@ -40,7 +41,7 @@ export const useAccountsSelect = ({
     let filteredAccounts = accountsPerType[accountsType || type];
     // filterAccounts remove accounts if needed. This is usefull to remove accounts
     // which are not supposed to be shown, for example, mixed accounts in privacy wallets
-    if (Array.isArray(filterAccounts)) {
+    if (isArray(filterAccounts)) {
       filteredAccounts = filteredAccounts.filter(
         ({ value }) => !filterAccounts.includes(value)
       );

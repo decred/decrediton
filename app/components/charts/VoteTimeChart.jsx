@@ -10,7 +10,7 @@ import {
   radiusFull,
   hoverFill
 } from "./Styles";
-import { isArray } from "util";
+import { isArray } from "lodash";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./Charts.module.css";
 import { useChart } from "./hooks";

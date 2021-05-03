@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { classNames } from "pi-ui";
 import InvisibleButton from "../InvisibleButton";
 import { useClickOutside } from "hooks";
+import { isArray } from "lodash";
 import styles from "./EyeFilterMenu.module.css";
 
 const EyeFilterMenu = ({
@@ -41,7 +42,7 @@ const EyeFilterMenu = ({
             key={i}
             className={classNames(
               styles.contextMenuItem,
-              (Array.isArray(selected)
+              (isArray(selected)
                 ? selected.includes(option.key)
                 : selected === option.key) && styles.selected
             )}
