@@ -1,6 +1,6 @@
 import { cloneElement as k, createElement as h } from "react";
 import { TransitionMotion } from "react-motion";
-import { isFunction } from "util";
+import { isFunction } from "lodash";
 import { useTheming } from "hooks";
 
 const TransitionMotionWrapper = ({

@@ -13,9 +13,9 @@ export {
 } from "lodash/fp";
 export { concat, isString, cloneDeep } from "lodash";
 
+import { isFunction } from "lodash";
 import compose from "lodash/fp/compose";
 import get from "lodash/fp/get";
-import { isFunction } from "util";
 
 export const not = (fn) => (...args) => !fn(...args);
 export const bool = compose(not, not);

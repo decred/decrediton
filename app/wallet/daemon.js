@@ -1,6 +1,7 @@
 import Promise from "promise";
 import { ipcRenderer } from "electron";
 import { withLog as log, logOptionNoResponseData } from "./app";
+import { isString } from "lodash";
 
 export const checkDecreditonVersion = log(
   () => Promise.resolve(ipcRenderer.sendSync("check-version")),
@@ -130,14 +131,12 @@ export const getBlockCount = log(
   () =>
     new Promise((resolve) => {
       ipcRenderer.once("check-daemon-response", (e, info) => {
-        const blockCount =
-          typeof info.blockCount === "string"
-            ? parseInt(info.blockCount.trim())
-            : info.blockCount;
-        const syncHeight =
-          typeof info.syncHeight === "string"
-            ? parseInt(info.syncHeight.trim())
-            : info.syncHeight;
+        const blockCount = isString(info.blockCount)
+          ? parseInt(info.blockCount.trim())
+          : info.blockCount;
+        const syncHeight = isString(info.syncHeight)
+          ? parseInt(info.syncHeight.trim())
+          : info.syncHeight;
         resolve({ blockCount, syncHeight });
       });
       ipcRenderer.send("check-daemon");

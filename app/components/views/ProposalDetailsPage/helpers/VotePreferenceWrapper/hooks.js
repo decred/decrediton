@@ -3,11 +3,12 @@ import { useState, useCallback, useMemo } from "react";
 import { useMachine } from "@xstate/react";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import * as gov from "actions/GovernanceActions";
+import { isString, isObject } from "lodash";
 
 const getError = (error) => {
   if (!error) return;
-  if (typeof error === "string") return error;
-  if (typeof error === "object") {
+  if (isString(error)) return error;
+  if (isObject(error)) {
     if (error.message) return error.message;
     return JSON.stringify(error);
   }

@@ -1,6 +1,7 @@
 import { Machine, assign, spawn } from "xstate";
 import { CreateWalletMachine } from "stateMachines/CreateWalletStateMachine";
 import { SetupWalletConfigMachine } from "stateMachines/SetupWalletConfigMachine";
+import { isUndefined } from "lodash";
 
 export const getStartedMachine = Machine({
   id: "getStarted",
@@ -190,7 +191,7 @@ export const getStartedMachine = Machine({
               target: "preCreateWallet",
               actions: assign({
                 isCreateNewWallet: (context, event) =>
-                  typeof event.isNew !== "undefined"
+                  !isUndefined(event.isNew)
                     ? event.isNew
                     : context.isCreateNewWallet
               })

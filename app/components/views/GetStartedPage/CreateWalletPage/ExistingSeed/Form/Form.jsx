@@ -1,4 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
+import { isArray } from "lodash";
 import { Tooltip } from "pi-ui";
 import { SeedHexEntry } from "inputs";
 import { TextToggle } from "buttons";
@@ -57,7 +58,7 @@ const ExistingSeedForm = ({
       <Section className={styles.confirmSeedLabel}>
         <ConfirmSeedMsg />
       </Section>
-      {seedType === WORDS && Array.isArray(seedWords) ? (
+      {seedType === WORDS && isArray(seedWords) ? (
         <SeedArea>
           {seedWords.map((seedWord, index) => (
             <SeedWord

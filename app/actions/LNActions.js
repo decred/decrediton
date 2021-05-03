@@ -6,6 +6,7 @@ import { getWalletCfg } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
+import { isString, isNumber } from "lodash";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -80,7 +81,7 @@ export const startDcrlnd = (
       dispatch({ type: LNWALLET_STARTUP_FAILED });
       throw error;
     }
-  } else if (typeof walletAccount === "number") {
+  } else if (isNumber(walletAccount)) {
     lnAccount = walletAccount;
     creating = true;
   }
@@ -105,7 +106,7 @@ export const startDcrlnd = (
       isTestnet,
       autopilotEnabled
     );
-    if (typeof res === "string" || res instanceof Error) {
+    if (isString(res) || res instanceof Error) {
       throw res;
     }
     dcrlndCreds = res;

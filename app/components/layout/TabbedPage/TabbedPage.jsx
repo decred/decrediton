@@ -9,6 +9,7 @@ import { RoutedTabsHeader, RoutedTab } from "shared";
 import { getStyles, getMatchedTab, willEnter, willLeave } from "./helpers";
 import TabbedPageTab from "./TabbedPageTab";
 import styles from "./TabbedPage.module.css";
+import { isFunction, isArray } from "lodash";
 
 // returns the state.styles in a static container, without animations.
 const staticStyles = (stylesObj, contentClassName) => (
@@ -84,7 +85,7 @@ const TabbedPage = ({
 
   useEffect(() => {
     if (previous && previous.location.pathname === location.pathname) return;
-    if (typeof onChange === "function") onChange();
+    if (isFunction(onChange)) onChange();
     const matchedTab = getMatchedTab(location, children);
     if (!matchedTab) return;
     // if (previous && previous.matchedTab) is false, it probably means it is
@@ -100,7 +101,7 @@ const TabbedPage = ({
     setMatchedTab(matchedTab);
   }, [location, previous, children, onChange]);
 
-  if (!Array.isArray(children)) children = [children];
+  if (!isArray(children)) children = [children];
 
   const tabs = children.filter(
     ({ type, props: { disabled } }) => type === TabbedPageTab && !disabled
