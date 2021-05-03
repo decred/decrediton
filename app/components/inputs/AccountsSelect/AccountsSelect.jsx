@@ -22,7 +22,8 @@ const AccountsSelect = ({
   const { account, accounts, placeholder } = useAccountsSelect({
     accountProp,
     accountsType,
-    filterAccounts
+    filterAccounts,
+    onChange
   });
 
   const selectKeyDown = (e) => {

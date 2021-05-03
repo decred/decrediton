@@ -212,6 +212,9 @@
   margin: 0;
 }
 @media screen and (max-width: 1179px) {
+  .amountContainer .sendInputWrapper {
+    width: 185px;
+  }
   .sendOutputContainer {
     margin: 20px 0 20px 20px;
     width: 360px;

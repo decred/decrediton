@@ -16,7 +16,8 @@ const messages = defineMessages({
 export const useAccountsSelect = ({
   accountProp,
   accountsType,
-  filterAccounts
+  filterAccounts,
+  onChange
 }) => {
   const spendingAccounts = useSelector(sel.spendingAccounts);
   const visibleAccounts = useSelector(sel.visibleAccounts);
@@ -55,6 +56,17 @@ export const useAccountsSelect = ({
 
   const [account, setAccount] = useState(accountProp);
   const [accounts, setAccounts] = useState(() => getAccountsToShow());
+
+  useEffect(() => {
+    const newAccounts = getAccountsToShow();
+    if (!isEqual(newAccounts, accounts)) {
+      if (!newAccounts.find((a) => isEqual(a.value, account.value))) {
+        setAccount(newAccounts[0]);
+        onChange(newAccounts[0]);
+      }
+      setAccounts(newAccounts);
+    }
+  }, [filterAccounts, getAccountsToShow, account, accounts, onChange]);
 
   useEffect(() => {
     let newAccount = null;
