@@ -3,6 +3,7 @@ import Store from "electron-store";
 import ini from "ini";
 import path from "path";
 import { stakePoolInfo } from "./middleware/vspapi";
+import { isArray } from "lodash";
 import {
   getGlobalCfgPath,
   getWalletPath,
@@ -135,7 +136,7 @@ export function getDcrdCert(dcrdCertPath) {
 export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   const currentStakePoolConfigs =
     config.has(cfgConstants.STAKEPOOLS) &&
-    Array.isArray(config.get(cfgConstants.STAKEPOOLS))
+      isArray(config.get(cfgConstants.STAKEPOOLS))
       ? config.get(cfgConstants.STAKEPOOLS)
       : [];
 

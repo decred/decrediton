@@ -1,11 +1,12 @@
 import { createElement as h, cloneElement as k } from "react";
 import { matchPath } from "react-router-dom";
+import { isArray } from "lodash";
 import { spring } from "react-motion";
 import theme from "theme";
 import TabbedPageTab from "./TabbedPageTab";
 
 const getTabs = (children) => {
-  if (!Array.isArray(children)) children = [children];
+  if (!isArray(children)) children = [children];
   return children
     .filter((c) => c.type === TabbedPageTab)
     .map((c, i) => ({ index: i, tab: c }));
@@ -25,12 +26,12 @@ export const getStyles = (matchedTab) => {
 
   const element = React.isValidElement(matchedTab.tab.props.component)
     ? k(matchedTab.tab.props.component, {
-        ...matchedTab.tab.props,
-        ...matchedTab.tab.props.component.props
-      })
+      ...matchedTab.tab.props,
+      ...matchedTab.tab.props.component.props
+    })
     : // If the component props are needed, make a valid react element
-      // before send, otherwise they will be undfined.
-      h(matchedTab.tab.props.component, { ...matchedTab.tab.props }, null);
+    // before send, otherwise they will be undfined.
+    h(matchedTab.tab.props.component, { ...matchedTab.tab.props }, null);
   return [
     {
       key: matchedTab.tab.props.path,

@@ -1,7 +1,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
-import { isNumber, isNullOrUndefined, isUndefined } from "util";
+import { isNumber, isNil, isUndefined } from "lodash";
 import { endOfDay, formatLocalISODate, isSameDate } from "helpers";
 import {
   REGULAR,
@@ -355,7 +355,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const quote = (v) => '"' + v.replace('"', '\\"') + '"';
   const formatTime = (v) => (v ? formatLocalISODate(v, timezone) : "");
   const csvValue = (v) =>
-    isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
+    isNil(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
   const seriesValueFormatFunc = (series) => {

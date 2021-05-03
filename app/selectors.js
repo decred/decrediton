@@ -57,6 +57,7 @@ import {
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import * as wallet from "wallet";
+import { isFunction, isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
 
@@ -267,8 +268,8 @@ export const getMixedAccountName = createSelector(
     !mixedAcc
       ? null
       : balances
-          .filter(({ accountNumber }) => accountNumber === mixedAcc)
-          .map(({ accountName }) => accountName)[0]
+        .filter(({ accountNumber }) => accountNumber === mixedAcc)
+        .map(({ accountName }) => accountName)[0]
 );
 
 export const getChangeAccountName = createSelector(
@@ -277,8 +278,8 @@ export const getChangeAccountName = createSelector(
     !changeAcc
       ? null
       : balances
-          .filter(({ accountNumber }) => accountNumber === changeAcc)
-          .map(({ accountName }) => accountName)[0]
+        .filter(({ accountNumber }) => accountNumber === changeAcc)
+        .map(({ accountName }) => accountName)[0]
 );
 
 // getNotMixedAccounts Is an array of all accountNumbers which is not the mixedaccount.
@@ -290,8 +291,8 @@ export const getNotMixedAccounts = createSelector(
     !mixedAcc
       ? []
       : balances
-          .filter(({ accountNumber }) => accountNumber !== mixedAcc)
-          .map(({ accountNumber }) => accountNumber)
+        .filter(({ accountNumber }) => accountNumber !== mixedAcc)
+        .map(({ accountNumber }) => accountNumber)
 );
 
 // getNotMixedAcctIfAllowed checks if it is allowed to send from unmixed
@@ -384,24 +385,21 @@ export const locale = createSelector(
 );
 
 export const txURLBuilder = createSelector([network], (network) => (txHash) =>
-  `https://${
-    network !== TESTNET ? "dcrdata" : "testnet"
+  `https://${network !== TESTNET ? "dcrdata" : "testnet"
   }.decred.org/tx/${txHash}`
 );
 
 export const blockURLBuilder = createSelector(
   [network],
   (network) => (txHash) =>
-    `https://${
-      network !== TESTNET ? "dcrdata" : "testnet"
+    `https://${network !== TESTNET ? "dcrdata" : "testnet"
     }.decred.org/block/${txHash}`
 );
 
 export const txOutURLBuilder = createSelector(
   [network],
   (network) => (txHash, outputIdx) =>
-    `https://${
-      network !== "testnet" ? "explorer" : network
+    `https://${network !== "testnet" ? "explorer" : network
     }.dcrdata.org/tx/${txHash}/out/${outputIdx}`
 );
 
@@ -705,32 +703,32 @@ export const transactionNormalizer = createSelector(
       const txDetails =
         totalFundsReceived + totalChange + fee < totalDebit
           ? {
-              txAmount: totalDebit - fee - totalChange - totalFundsReceived,
-              txDirection: TRANSACTION_DIR_SENT,
-              txAccountName: debitedAccountName
-            }
+            txAmount: totalDebit - fee - totalChange - totalFundsReceived,
+            txDirection: TRANSACTION_DIR_SENT,
+            txAccountName: debitedAccountName
+          }
           : totalFundsReceived + totalChange + fee === totalDebit
-          ? {
+            ? {
               txAmount: fee,
               txDirection: TICKET_FEE,
               txAccountNameCredited: creditedAccountName,
               txAccountNameDebited: debitedAccountName
             }
-          : totalFundsReceived === 0 &&
-            totalChange > 0 &&
-            origAmount === totalChange &&
-            direction === TRANSACTION_DIR_RECEIVED
-          ? // probably this is an incoming atomic swap
-            {
-              txAmount: totalChange,
-              txDirection: TRANSACTION_DIR_RECEIVED,
-              txAccountName: creditedAccountName
-            }
-          : {
-              txAmount: totalFundsReceived,
-              txDirection: TRANSACTION_DIR_RECEIVED,
-              txAccountName: creditedAccountName
-            };
+            : totalFundsReceived === 0 &&
+              totalChange > 0 &&
+              origAmount === totalChange &&
+              direction === TRANSACTION_DIR_RECEIVED
+              ? // probably this is an incoming atomic swap
+              {
+                txAmount: totalChange,
+                txDirection: TRANSACTION_DIR_RECEIVED,
+                txAccountName: creditedAccountName
+              }
+              : {
+                txAmount: totalFundsReceived,
+                txDirection: TRANSACTION_DIR_RECEIVED,
+                txAccountName: creditedAccountName
+              };
 
       const { isMix } = isMixTx(
         wallet.decodeRawTransaction(
@@ -837,11 +835,11 @@ export const filteredRegularTxs = createSelector(
       .filter((v) =>
         filter.search
           ? v.creditAddresses.find(
-              (address) =>
-                address.length > 1 &&
-                address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
-                  -1
-            ) != undefined
+            (address) =>
+              address.length > 1 &&
+              address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
+              -1
+          ) != undefined
           : true
       )
       .filter((v) =>
@@ -883,7 +881,7 @@ export const lastVotedTicket = createSelector(
         []
       );
 
-    return Array.isArray(lastVotedTicket) ? null : lastVotedTicket;
+    return isArray(lastVotedTicket) ? null : lastVotedTicket;
   }
 );
 
@@ -1071,21 +1069,19 @@ export const visibleAccounts = createSelector(
         accountName === "imported" || hidden
           ? accounts
           : [
-              ...accounts,
-              {
-                value: accountNumber,
-                label: `${accountName}: ${
-                  spendable / unitDivisor
+            ...accounts,
+            {
+              value: accountNumber,
+              label: `${accountName}: ${spendable / unitDivisor
                 } ${currencyDisplay}`,
-                name: accountName,
-                spendableAndUnit: `${
-                  spendable / unitDivisor
+              name: accountName,
+              spendableAndUnit: `${spendable / unitDivisor
                 } ${currencyDisplay}`,
-                spendable,
-                hidden,
-                ...data
-              }
-            ],
+              spendable,
+              hidden,
+              ...data
+            }
+          ],
       [],
       balances
     )
@@ -1099,20 +1095,18 @@ export const spendingAccounts = createSelector(
         accountNumber !== 0 && (accountName === "imported" || spendable <= 0)
           ? accounts
           : [
-              ...accounts,
-              {
-                value: accountNumber,
-                label: `${accountName}: ${
-                  spendable / unitDivisor
+            ...accounts,
+            {
+              value: accountNumber,
+              label: `${accountName}: ${spendable / unitDivisor
                 } ${currencyDisplay}`,
-                name: accountName,
-                spendableAndUnit: `${
-                  spendable / unitDivisor
+              name: accountName,
+              spendableAndUnit: `${spendable / unitDivisor
                 } ${currencyDisplay}`,
-                spendable,
-                ...data
-              }
-            ],
+              spendable,
+              ...data
+            }
+          ],
       [],
       balances
     )
@@ -1124,9 +1118,9 @@ export const buyerBalanceToMaintain = createSelector(
   (balanceToMaintain) =>
     balanceToMaintain
       ? {
-          atomValue: balanceToMaintain,
-          value: parseInt(balanceToMaintain) / UNIT_DIVISOR
-        }
+        atomValue: balanceToMaintain,
+        value: parseInt(balanceToMaintain) / UNIT_DIVISOR
+      }
       : null
 );
 export const buyerAccount = createSelector(
@@ -1534,7 +1528,7 @@ export const blockTimestampFromNow = createSelector(
     return (block) => {
       return Math.trunc(
         currentTimestamp +
-          (block - currentHeight) * chainParams.TargetTimePerBlock
+        (block - currentHeight) * chainParams.TargetTimePerBlock
       );
     };
   }
@@ -1668,7 +1662,7 @@ const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
     // or a possible dcrdata crash) or the agenda is the same for dcrwallet and dcrdata.
     // We use the information from our dcrwallet grpc request.
     if (
-      typeof agenda.getId === "function" ||
+      isFunction(agenda.getId) ||
       currentAgenda.getId() === agenda.name
     ) {
       currentAgenda.isCurrent = true;
@@ -1881,8 +1875,8 @@ export const dexAccountNumber = createSelector(
     !dexAccount
       ? null
       : balances
-          .filter(({ accountName }) => accountName === dexAccount)
-          .map(({ accountNumber }) => accountNumber)[0]
+        .filter(({ accountName }) => accountName === dexAccount)
+        .map(({ accountNumber }) => accountNumber)[0]
 );
 export const dexAccountSpendable = createSelector(
   [dexAccount, balances],
@@ -1890,8 +1884,8 @@ export const dexAccountSpendable = createSelector(
     !dexAccount
       ? null
       : balances
-          .filter(({ accountName }) => accountName === dexAccount)
-          .map(({ spendable }) => spendable)[0]
+        .filter(({ accountName }) => accountName === dexAccount)
+        .map(({ spendable }) => spendable)[0]
 );
 export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
 export const dexSelectAccountAttempt = bool(

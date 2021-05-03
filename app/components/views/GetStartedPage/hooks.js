@@ -23,6 +23,7 @@ import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import styles from "./GetStarted.module.css";
+import { isObject } from "lodash";
 
 export const useGetStarted = () => {
   const {
@@ -61,8 +62,8 @@ export const useGetStarted = () => {
       isAtPreStart: () => {
         preStartDaemon();
       },
-      isAtStartAdvancedDaemon: () => {},
-      isAtLoadingConfig: () => {},
+      isAtStartAdvancedDaemon: () => { },
+      isAtLoadingConfig: () => { },
       isAtStartSPV: () => onSendContinue(),
       isAtStartingDaemon: (_, event) => {
         const { appdata } = event;
@@ -232,7 +233,7 @@ export const useGetStarted = () => {
     }
     // If the errors is an object but not a react component, we strigfy it so we can
     // render.
-    if (typeof serviceError === "object") {
+    if (isObject(serviceError)) {
       return JSON.stringify(serviceError);
     }
     return serviceError;

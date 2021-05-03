@@ -3,7 +3,7 @@ import { spring } from "react-motion";
 import { PurchaseTicketsForm } from "shared";
 import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
-import { isNullOrUndefined } from "util";
+import { isNil } from "lodash";
 import { usePurchaseTickets } from "./hooks";
 import { MAX_POSSIBLE_FEE_INPUT } from "constants";
 
@@ -206,7 +206,7 @@ const PurchaseTickets = ({
 
   const onChangeExpiry = (expiry) => {
     const expiryError =
-      isNaN(expiry) || expiry < 0 || isNullOrUndefined(expiry) || expiry === "";
+      isNaN(expiry) || expiry < 0 || isNil(expiry) || expiry === "";
     setExpiry(expiry.replace(/[^\d.]/g, ""));
     setExpiryError(expiryError);
   };
