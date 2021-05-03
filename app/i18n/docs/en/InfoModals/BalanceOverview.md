@@ -10,4 +10,4 @@
 
 **Immature Rewards** These are regular coinbase rewards that are currently maturing (from PoW mining reward for instance).
 
-**Immature Staking Returns** This balance shows the current stake rewards and revocations that are awaiting maturity (256 blocks on mainnet)."
+**Immature Staking Rewards** This balance shows the current stake rewards and revocations that are awaiting maturity (256 blocks on mainnet)."
