@@ -8,7 +8,7 @@ import * as ca from "actions/ControlActions";
 import * as sa from "actions/SettingsActions";
 import * as wla from "actions/WalletLoaderActions";
 import { PROXYTYPE_HTTP, PROXYTYPE_PAC } from "main_dev/proxy";
-import * as conf from "config";
+import * as wl from "wallet";
 import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import {
   EXTERNALREQUEST_NETWORK_STATUS,
@@ -91,7 +91,7 @@ let mockGetHasUnpaidFee;
 let mockGetAccountMixerRunning;
 let mockPurchaseTicketsRequestAttempt;
 
-const config = conf;
+const wallet = wl;
 const selectors = sel;
 const controlActions = ca;
 const wlActions = wla;
@@ -99,7 +99,7 @@ const settingsActions = sa;
 const vspActions = vspa;
 
 beforeEach(() => {
-  mockGetGlobalCfg = config.getGlobalCfg = jest.fn(() => {
+  mockGetGlobalCfg = wallet.getGlobalCfg = jest.fn(() => {
     return {
       get: () => DEFAULT_LIGHT_THEME_NAME,
       set: () => {}

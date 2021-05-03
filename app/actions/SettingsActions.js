@@ -1,5 +1,3 @@
-// @flow
-import { getWalletCfg, getGlobalCfg } from "config";
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
@@ -35,7 +33,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
 
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   const oldAllowedExternalRequests = config.get(
     configConstants.ALLOWED_EXTERNAL_REQUESTS
   );
@@ -59,7 +57,7 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   config.set(configConstants.UI_ANIMATIONS, settings.uiAnimations);
 
   if (walletName) {
-    const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+    const walletConfig = wallet.getWalletCfg(isTestNet(getState()), walletName);
     walletConfig.set(
       configConstants.CURRENCY_DISPLAY,
       settings.currencyDisplay
@@ -115,7 +113,7 @@ export const addAllowedExternalRequest = (requestType) => (
   getState
 ) =>
   new Promise((resolve) => {
-    const config = getGlobalCfg();
+    const config = wallet.getGlobalCfg();
     const allowed = config.get(configConstants.ALLOWED_EXTERNAL_REQUESTS);
 
     if (allowed.indexOf(requestType) > -1) return resolve(true);
@@ -198,7 +196,7 @@ export const updateStateVoteSettingsChanged = (settings) => (
     daemon: { walletName }
   } = getState();
   if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
-    const config = getWalletCfg(isTestNet(getState()), walletName);
+    const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
     config.set(configConstants.ENABLE_TICKET_BUYER, settings.enableTicketBuyer);
     dispatch({ tempSettings: settings, type: SETTINGS_CHANGED });
   } else {

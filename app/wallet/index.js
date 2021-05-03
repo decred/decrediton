@@ -12,5 +12,6 @@ export * from "./service";
 export * from "./vsp";
 export * from "./version";
 export * from "./politeia";
+export * from "./config";
 
 export const TransactionType = api.TransactionDetails.TransactionType;

@@ -15,7 +15,6 @@ import {
   MODEL1_DECRED_HOMESCREEN,
   MODELT_DECRED_HOMESCREEN
 } from "constants/trezor";
-import { getWalletCfg } from "config";
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
 import {
   SIGNTX_ATTEMPT,
@@ -49,7 +48,7 @@ export const enableTrezor = () => (dispatch, getState) => {
   const walletName = selectors.getWalletName(getState());
 
   if (walletName) {
-    const config = getWalletCfg(selectors.isTestNet(getState()), walletName);
+    const config = wallet.getWalletCfg(selectors.isTestNet(getState()), walletName);
     config.set(cfgConstants.TREZOR, true);
   }
 

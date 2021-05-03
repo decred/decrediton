@@ -23,7 +23,6 @@ import {
 } from "./VSPActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
-import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
@@ -119,7 +118,7 @@ export const showPrivacy = () => (dispatch) => {
 export const toggleSpv = (isSPV) => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: isSPV }, true));
   const tempSettings = getState().settings.tempSettings;
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(cfgConstants.SHOW_SPV_CHOICE, false);
 
   await dispatch(saveSettings(tempSettings));
@@ -146,7 +145,7 @@ export const setupDisabledPrivacy = () => (dispatch, getState) => {
 };
 
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(LOCALE, selectedLanguage.language);
   config.set(cfgConstants.SET_LANGUAGE, false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
@@ -154,14 +153,14 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
 };
 
 export const finishTutorial = () => (dispatch) => {
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(cfgConstants.SHOW_TUTORIAL, false);
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
 };
 
 export const finishPrivacy = () => (dispatch) => {
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(cfgConstants.SHOW_PRIVACY, false);
   dispatch({ type: FINISH_PRIVACY });
   dispatch(goBack());
@@ -238,7 +237,7 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 export const finalShutdown = () => (dispatch, getState) => {
   const { currentBlockHeight } = getState().grpc;
   if (currentBlockHeight) {
-    setLastHeight(currentBlockHeight);
+    wallet.setLastHeight(currentBlockHeight);
   }
   dispatch({ type: SHUTDOWN_REQUESTED });
   wallet.onDaemonStopped(() => dispatch({ type: DAEMONSTOPPED }));
@@ -378,7 +377,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         selectedWallet = wallet.getSelectedWallet();
       }
       const isTestnet = network == "testnet";
-      const walletCfg = getWalletCfg(isTestnet, selectedWallet.value.wallet);
+      const walletCfg = wallet.getWalletCfg(isTestnet, selectedWallet.value.wallet);
 
       const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
       const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);

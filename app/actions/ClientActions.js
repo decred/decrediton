@@ -26,7 +26,6 @@ import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "connected-react-router";
-import { getWalletCfg, getGlobalCfg } from "config";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
 import { discoverAvailableVSPs } from "./VSPActions";
@@ -133,7 +132,7 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   const dcrdataEnabled =
     config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) >
     -1;
@@ -483,7 +482,7 @@ export function hideAccount(accountNumber) {
     if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
       updatedHiddenAccounts.push(accountNumber);
     }
-    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
@@ -504,7 +503,7 @@ export function showAccount(accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,

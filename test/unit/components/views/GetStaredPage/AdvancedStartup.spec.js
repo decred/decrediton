@@ -3,7 +3,7 @@ import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
-import * as conf from "config.js";
+import * as wal from "wallet";
 import * as da from "actions/DaemonActions";
 
 const testRemoteCredentials = {
@@ -24,7 +24,7 @@ const testConnectDaemonErrorMsg = { error: "test-connect-daemon-error-msw" };
 const testStartDaemonErrorMsg = "test-start-daemon-error-msw";
 const testDaemonDataDirectory = "test-daemon-data-directory";
 const selectors = sel;
-const config = conf;
+const wallet = wal;
 const daemonActions = da;
 
 let mockIsAdvancedDaemon;
@@ -38,12 +38,12 @@ let mockStartDaemon;
 beforeEach(() => {
   selectors.isSPV = jest.fn(() => false);
   mockIsAdvancedDaemon = selectors.isAdvancedDaemon = jest.fn(() => true);
-  mockGetRemoteCredentials = config.getRemoteCredentials = jest.fn(
+  mockGetRemoteCredentials = wallet.getRemoteCredentials = jest.fn(
     () => testEmptyRemoteCredentials
   );
-  mockSetRemoteCredentials = config.setRemoteCredentials = jest.fn(() => {});
-  mockGetAppdataPath = config.getAppdataPath = jest.fn(() => "");
-  mockSetAppdataPath = config.setAppdataPath = jest.fn(() => "");
+  mockSetRemoteCredentials = wallet.setRemoteCredentials = jest.fn(() => {});
+  mockGetAppdataPath = wallet.getAppdataPath = jest.fn(() => "");
+  mockSetAppdataPath = wallet.setAppdataPath = jest.fn(() => "");
   mockConnectDaemon = daemonActions.connectDaemon = jest.fn(() => () =>
     Promise.reject(testConnectDaemonErrorMsg)
   );

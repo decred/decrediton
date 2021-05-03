@@ -7,7 +7,7 @@ import {
   getDcrwalletGrpcKeyCert,
   getCoinjoinOutputspByAcctReq
 } from "wallet";
-import { getWalletCfg } from "config";
+import * as wallet from "wallet";
 import {
   getAcctSpendableBalance,
   getAccountsAttempt,
@@ -63,7 +63,7 @@ export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
 
 export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   const value = !walletCfg.get(SEND_FROM_UNMIXED);
   walletCfg.set(SEND_FROM_UNMIXED, value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
@@ -213,7 +213,7 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 ) => {
   const isTestnet = sel.isTestNet(getState());
   const walletName = sel.getWalletName(getState());
-  const cfg = getWalletCfg(isTestnet, walletName);
+  const cfg = wallet.getWalletCfg(isTestnet, walletName);
 
   const csppServer = CSPP_URL;
   const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;

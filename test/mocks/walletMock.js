@@ -1,3 +1,5 @@
+import MockElectronStore from "./electronStore.js";
+
 export { TRANSACTION_TYPES } from "../../app/wallet/index.js";
 
 export const getRemoteCredentials = () => null;
@@ -22,3 +24,6 @@ export const setupProxy = () => null;
 export const readFromClipboard = jest.fn(() => "");
 export const showOpenDialog = jest.fn(() => null);
 export const showSaveDialog = jest.fn(() => null);
+export const getGlobalCfg = jest.fn(() => new MockElectronStore());
+export const getWalletCfg = jest.fn(() => new MockElectronStore());
+export const updateStakePoolConfig = jest.fn(() => null);

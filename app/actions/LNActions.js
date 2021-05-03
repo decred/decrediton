@@ -1,7 +1,6 @@
 import * as ln from "wallet/ln";
 import * as sel from "selectors";
 import * as wallet from "wallet";
-import { getWalletCfg } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
@@ -897,7 +896,7 @@ const getLNWalletConfig = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   return {
     walletExists: cfg.get(cfgConstants.LN_WALLET_EXISTS),
     account: cfg.get(cfgConstants.LN_ACCOUNT)
@@ -908,7 +907,7 @@ const setLNWalletConfig = (account) => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   cfg.set(cfgConstants.LN_WALLET_EXISTS, true);
   cfg.set(cfgConstants.LN_ACCOUNT, account);
 };
