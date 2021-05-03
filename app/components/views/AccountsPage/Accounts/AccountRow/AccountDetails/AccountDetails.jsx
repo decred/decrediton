@@ -49,8 +49,8 @@ const AccountsDetails = ({
         </DataLine>
         <DataLine>
           <T
-            id="accounts.immatureStakingReturns"
-            m="Immature Staking Returns"
+            id="accounts.immatureStakingRewards"
+            m="Immature Staking Rewards"
           />
           <Balance flat amount={account.immatureStakeGeneration} />
         </DataLine>

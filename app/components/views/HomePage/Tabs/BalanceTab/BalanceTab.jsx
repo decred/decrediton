@@ -56,8 +56,8 @@ const BalanceTab = () => {
                 amount={lockedByTicketsTotalBalance}
               />
               <T
-                id="home.immatureStakingReturnsBalanceLabel"
-                m="Immature Staking Returns"
+                id="home.immatureStakingRewardsBalanceLabel"
+                m="Immature Staking Rewards"
               />
               :
               <Balance
