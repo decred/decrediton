@@ -62,8 +62,8 @@ export const useGetStarted = () => {
       isAtPreStart: () => {
         preStartDaemon();
       },
-      isAtStartAdvancedDaemon: () => { },
-      isAtLoadingConfig: () => { },
+      isAtStartAdvancedDaemon: () => {},
+      isAtLoadingConfig: () => {},
       isAtStartSPV: () => onSendContinue(),
       isAtStartingDaemon: (_, event) => {
         const { appdata } = event;

@@ -131,14 +131,12 @@ export const getBlockCount = log(
   () =>
     new Promise((resolve) => {
       ipcRenderer.once("check-daemon-response", (e, info) => {
-        const blockCount =
-          isString(info.blockCount)
-            ? parseInt(info.blockCount.trim())
-            : info.blockCount;
-        const syncHeight =
-          isString(info.syncHeight)
-            ? parseInt(info.syncHeight.trim())
-            : info.syncHeight;
+        const blockCount = isString(info.blockCount)
+          ? parseInt(info.blockCount.trim())
+          : info.blockCount;
+        const syncHeight = isString(info.syncHeight)
+          ? parseInt(info.syncHeight.trim())
+          : info.syncHeight;
         resolve({ blockCount, syncHeight });
       });
       ipcRenderer.send("check-daemon");

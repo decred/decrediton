@@ -1,5 +1,12 @@
 import { ipcRenderer } from "electron";
-import { isObject, isString, isNumber, isUndefined, isNull, isFunction } from "lodash";
+import {
+  isObject,
+  isString,
+  isNumber,
+  isUndefined,
+  isNull,
+  isFunction
+} from "lodash";
 
 export const onAppReloadRequested = (cb) =>
   ipcRenderer.on("app-reload-requested", cb);

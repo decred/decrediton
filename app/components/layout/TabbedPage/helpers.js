@@ -26,12 +26,12 @@ export const getStyles = (matchedTab) => {
 
   const element = React.isValidElement(matchedTab.tab.props.component)
     ? k(matchedTab.tab.props.component, {
-      ...matchedTab.tab.props,
-      ...matchedTab.tab.props.component.props
-    })
+        ...matchedTab.tab.props,
+        ...matchedTab.tab.props.component.props
+      })
     : // If the component props are needed, make a valid react element
-    // before send, otherwise they will be undfined.
-    h(matchedTab.tab.props.component, { ...matchedTab.tab.props }, null);
+      // before send, otherwise they will be undfined.
+      h(matchedTab.tab.props.component, { ...matchedTab.tab.props }, null);
   return [
     {
       key: matchedTab.tab.props.path,

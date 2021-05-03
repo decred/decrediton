@@ -136,7 +136,7 @@ export function getDcrdCert(dcrdCertPath) {
 export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   const currentStakePoolConfigs =
     config.has(cfgConstants.STAKEPOOLS) &&
-      isArray(config.get(cfgConstants.STAKEPOOLS))
+    isArray(config.get(cfgConstants.STAKEPOOLS))
       ? config.get(cfgConstants.STAKEPOOLS)
       : [];
 

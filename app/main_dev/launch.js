@@ -65,11 +65,11 @@ const callDEX = (func, params) => {
   const dexLibPath =
     process.env.NODE_ENV === "development" || argv.custombinpath
       ? // yarn dev || yarn start
-      path.resolve("modules/dex/libdexc/libdexc.so")
+        path.resolve("modules/dex/libdexc/libdexc.so")
       : // yarn package
-      path.resolve(
-        path.join(__dirname, "..", "..", "modules/dex/libdexc/libdexc.so")
-      );
+        path.resolve(
+          path.join(__dirname, "..", "..", "modules/dex/libdexc/libdexc.so")
+        );
   const dexLibCall = getNativeFunction(dexLibPath, "CallAlt", "int", [
     "char *",
     "char *",
@@ -166,8 +166,8 @@ export const setDcrwalletGrpcKeyCert = (grpcKeyCert) => {
     logger.log(
       "error",
       "Error getting grpc key and cert from dcrwallet, " +
-      "grpc key and cert value: " +
-      grpcKeyCert
+        "grpc key and cert value: " +
+        grpcKeyCert
     );
   }
   dcrwalletGrpcKeyCert = grpcKeyCert;
@@ -631,7 +631,7 @@ export const launchDCRWallet = (
     logger.log(
       "error",
       "The dcrwallet executable does not exist. Expected to find it at " +
-      dcrwExe
+        dcrwExe
     );
     return;
   }
@@ -821,7 +821,7 @@ export const launchDCRLnd = (
       logger.log(
         "error",
         "The dcrlnd executable does not exist. Expected to find it at " +
-        dcrlndExe
+          dcrlndExe
       );
       reject("The dcrlnd executable does not exist at " + dcrlndExe);
     }
@@ -991,11 +991,11 @@ export const registerDexCall = (appPass, addr, fee) =>
   !dex
     ? null
     : callDEX("Register", {
-      appPass,
-      url: addr,
-      fee: parseInt(fee),
-      cert: ""
-    });
+        appPass,
+        url: addr,
+        fee: parseInt(fee),
+        cert: ""
+      });
 
 export const userDexCall = () => (!dex ? null : callDEX("User", {}));
 
