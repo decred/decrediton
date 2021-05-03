@@ -51,15 +51,15 @@ const Form = ({
             <div className={styles.detailsValueColumn}>
               <Balance
                 flat
-                amount={totalSpent}
+                amount={isValid() ? totalSpent : 0}
                 classNameUnit={styles.detailsUnit}
               />
               <Balance
                 flat
-                amount={estimatedFee}
+                amount={isValid() ? estimatedFee : 0}
                 classNameUnit={styles.detailsUnit}
               />
-              <div>{`${estimatedSignedSize} Bytes`}</div>
+              <div>{`${isValid() ? estimatedSignedSize : 0} Bytes`}</div>
             </div>
           </div>
         )}

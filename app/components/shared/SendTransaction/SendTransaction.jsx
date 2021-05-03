@@ -126,13 +126,29 @@ const SendTransaction = ({
   };
 
   const onShowSendSelf = () => {
-    const newOutputs = [{ ...outputs[0], data: baseOutput().data }];
+    const newOutputs = [
+      {
+        ...outputs[0],
+        data: {
+          ...baseOutput().data,
+          amount: outputs[0].data.amount
+        }
+      }
+    ];
     setIsSendSelf(true);
     onSetOutputs(newOutputs);
   };
 
   const onShowSendOthers = () => {
-    const newOutputs = [{ ...outputs[0], data: baseOutput().data }];
+    const newOutputs = [
+      {
+        ...outputs[0],
+        data: {
+          ...baseOutput().data,
+          amount: outputs[0].data.amount
+        }
+      }
+    ];
     setIsSendSelf(false);
     onSetOutputs(newOutputs);
   };
@@ -205,11 +221,12 @@ const SendTransaction = ({
   const getOutputRows = () => {
     // if sending to another accounts from same wallet, there is no need to
     // filter accounts.
-    const filterAccounts = filterFromAccounts
-      ? filterFromAccounts
-      : isSendSelf
+    const filterAccounts = isSendSelf
       ? []
+      : filterFromAccounts
+      ? filterFromAccounts
       : notMixedAccounts;
+
     const accountsType = filterAccounts ? "visible" : "spending";
     return outputs.map((output, index) => ({
       data: (
