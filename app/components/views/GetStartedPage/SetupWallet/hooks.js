@@ -7,7 +7,7 @@ import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedT
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 import SettingAccountsPassphrase from "./SetAccountsPassphrase";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   checkAllAccountsEncrypted,
   setAccountsPass
@@ -18,9 +18,6 @@ import {
 } from "actions/VSPActions";
 import { ExternalLink } from "shared";
 import { DecredLoading } from "indicators";
-import { useState } from "react";
-import { useService } from "@xstate/react";
-import { useSelector } from "react-redux";
 import * as sel from "selectors";
 import { useSettings } from "hooks";
 
@@ -295,6 +292,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     onProcessAccounts,
     onGetVSPsPubkeys,
     onSkipProcessManaged
+    isVSPListingEnabled,
   ]);
 
   return {
