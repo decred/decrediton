@@ -106,15 +106,15 @@ export const syncVSPTicketsRequest = ({
 }) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   try {
-    var feeAcct = account;
-    var changeAcct = account;
-    const mixedAccount = sel.getMixedAccount(getState()); 
+    let feeAcct = account;
+    let changeAcct = account;
+    const mixedAccount = sel.getMixedAccount(getState());
     const changeAccount = sel.getChangeAccount(getState());
     if (mixedAccount) {
       feeAcct = mixedAccount;
     }
     if (changeAccount) {
-      changeAcct = changeAccount
+      changeAcct = changeAccount;
     }
 
     await dispatch(
