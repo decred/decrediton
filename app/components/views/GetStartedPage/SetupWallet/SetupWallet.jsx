@@ -32,7 +32,8 @@ const SetupWallet = ({
             <AnimatedLinearProgressFull
               {...{
                 text: <T id="setupwallet.progressLabel" m="Setup Wallet" />,
-                animationType: styles.setupWallet
+                animationType: styles.setupWallet,
+                hideTextBlock: true
               }}
             />
           </div>
