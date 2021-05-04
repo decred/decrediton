@@ -296,10 +296,11 @@ export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
     );
   });
 
-export const syncVSPTickets = (walletService, vspHost, vspPubkey, account) =>
+export const syncVSPTickets = (walletService, vspHost, vspPubkey, feeAcct, changeAcct) =>
   new Promise((resolve, reject) => {
     const request = new api.SyncVSPTicketsRequest();
-    request.setAccount(account);
+    request.setAccount(feeAcct);
+    request.setChangeAccount(changeAcct);
     request.setVspPubkey(vspPubkey);
     request.setVspHost("https://" + vspHost);
 
