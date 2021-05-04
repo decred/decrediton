@@ -1,0 +1,17 @@
+.loaderButtons {
+  float: left;
+  margin-bottom: 90px;
+  width: 100%;
+}
+.tutorialButton {
+  background-color: var(--info-modal-button-bg);
+  color: var(--back-button-dark-text);
+}
+.tutorialButton:hover {
+  background-color: var(--title-text-and-button-background-hovered);
+}
+@media screen and (max-width: 768px) {
+  .loaderButtons {
+    margin-bottom: 50px;
+  }
+}
