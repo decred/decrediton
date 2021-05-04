@@ -1,4 +1,4 @@
-import { showOpenDialog, showSaveDialog } from "wallet";
+import * as wallet from "wallet";
 import { useEffect } from "react";
 import { useLNPage } from "../hooks";
 
@@ -18,7 +18,7 @@ export function useWalletTab() {
   }, [updateWalletBalances]);
 
   const onBackup = async () => {
-    const { filePath } = await showSaveDialog();
+    const { filePath } = await wallet.showSaveDialog();
     if (!filePath) {
       return;
     }
@@ -27,7 +27,7 @@ export function useWalletTab() {
   };
 
   const onVerifyBackup = async () => {
-    const { filePaths } = await showOpenDialog();
+    const { filePaths } = await wallet.showOpenDialog();
     const filePath = filePaths[0];
     if (!filePath) {
       return;

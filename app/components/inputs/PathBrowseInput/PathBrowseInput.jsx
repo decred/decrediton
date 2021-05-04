@@ -1,4 +1,4 @@
-import { showOpenDialog, showSaveDialog } from "wallet";
+import * as wallet from "wallet";
 import PathInput from "../PathInput/PathInput";
 import style from "./PathBrowseInput.module.css";
 import { PathButton } from "buttons";
@@ -33,7 +33,7 @@ const PathBrowseInput = ({
       return { ...f, name: intl.formatMessage(FileBrowserFilterNames[f.key]) };
     });
 
-    const dialogFunc = save ? showSaveDialog : showOpenDialog;
+    const dialogFunc = save ? wallet.showSaveDialog : wallet.showOpenDialog;
     const opts = {
       properties: [type === "directory" ? "openDirectory" : "openFile"],
       filters: fileBrowserFilters

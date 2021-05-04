@@ -1,9 +1,4 @@
 import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
-import {
-  getVersionService,
-  getVersionResponse,
-  getDcrwalletGrpcKeyCert
-} from "wallet";
 import { push as pushHistory } from "connected-react-router";
 import * as wallet from "wallet";
 import { isTestNet } from "selectors";
@@ -22,9 +17,9 @@ export const getVersionServiceAttempt = () => (dispatch, getState) =>
       const {
         daemon: { walletName }
       } = getState();
-      const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+      const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
       try {
-        const versionService = await getVersionService(
+        const versionService = await wallet.getVersionService(
           isTestNet(getState()),
           walletName,
           address,
@@ -60,7 +55,7 @@ export const getWalletRPCVersionAttempt = (versionService) => (
       dispatch({ type: WALLETRPCVERSION_ATTEMPT });
 
       try {
-        const getWalletRPCVersionResponse = await getVersionResponse(
+        const getWalletRPCVersionResponse = await wallet.getVersionResponse(
           versionService
         );
         dispatch({

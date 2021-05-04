@@ -1,11 +1,11 @@
-import { openExternalURL } from "wallet";
+import * as wallet from "wallet";
 import { classNames } from "pi-ui";
 import styles from "./HelpLink.module.css";
 
 const HelpLink = ({ icon, onClick, href, title, subtitle, expand }) => (
   <div
     className={classNames(styles.icon, styles[icon])}
-    onClick={onClick ? onClick : () => openExternalURL(href)}>
+    onClick={onClick ? onClick : () => wallet.openExternalURL(href)}>
     <div className={styles.text}>
       <div className={styles.title}>{title}</div>
       <div className={styles.subtitle}>{subtitle}</div>

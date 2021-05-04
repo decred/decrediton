@@ -1,6 +1,4 @@
-// @flow
 import * as wallet from "wallet";
-import { onAppReloadRequested, getDcrwalletGrpcKeyCert } from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import isUndefined from "lodash/fp/isUndefined";
@@ -174,7 +172,7 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getWalletService(
       sel.isTestNet(getState()),
@@ -202,7 +200,7 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getTicketBuyerService(
       sel.isTestNet(getState()),
@@ -546,7 +544,7 @@ export const getAgendaServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getAgendaService(
       sel.isTestNet(getState()),
@@ -577,7 +575,7 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getVotingService(
       sel.isTestNet(getState()),
@@ -678,7 +676,7 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet
     .getMessageVerificationService(
@@ -700,7 +698,7 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
     );
 };
 
-export const listenForAppReloadRequest = (cb) => () => onAppReloadRequested(cb);
+export const listenForAppReloadRequest = (cb) => () => wallet.onAppReloadRequested(cb);
 
 export const showTicketList = (status) => (dispatch) =>
   dispatch(pushHistory("/tickets/mytickets/" + status));

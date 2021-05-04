@@ -1,12 +1,5 @@
 import Promise from "promise";
 import * as sel from "selectors";
-import {
-  runAccountMixerRequest,
-  cleanPrivacyLogs,
-  getAccountMixerService,
-  getDcrwalletGrpcKeyCert,
-  getCoinjoinOutputspByAcctReq
-} from "wallet";
 import * as wallet from "wallet";
 import {
   getAcctSpendableBalance,
@@ -43,9 +36,9 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   dispatch({ type: GETACCOUNTMIXERSERVICE_ATTEMPT });
-  return getAccountMixerService(
+  return wallet.getAccountMixerService(
     sel.isTestNet(getState()),
     walletName,
     address,
@@ -107,7 +100,7 @@ export const runAccountMixer = ({
           passphrase,
           [changeAccount],
           () =>
-            runAccountMixerRequest(sel.accountMixerService(getState()), {
+            wallet.runAccountMixerRequest(sel.accountMixerService(getState()), {
               mixedAccount,
               mixedAccountBranch,
               changeAccount,
@@ -156,7 +149,7 @@ export const stopAccountMixer = (cleanLogs) => {
     const { mixerStreamer } = getState().grpc;
     // clean logs if needed.
     if (cleanLogs) {
-      cleanPrivacyLogs();
+      wallet.cleanPrivacyLogs();
     }
     if (!mixerStreamer) return;
     dispatch({ type: STOPMIXER_ATTEMPT });
@@ -243,7 +236,7 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const { balances, walletService } = getState().grpc;
-    getCoinjoinOutputspByAcctReq(walletService)
+    wallet.getCoinjoinOutputspByAcctReq(walletService)
       .then((response) => {
         const coinjoinSumByAcctResp =
           response.wrappers_ && response.wrappers_[1];

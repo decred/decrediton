@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useMountEffect } from "hooks";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  log,
-  requestUIReload,
-  onCheckCanClose,
-  onShowAboutModal
-} from "wallet";
+import * as wallet from "wallet";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as cla from "actions/ClientActions";
@@ -89,17 +84,17 @@ const useApp = () => {
   };
 
   const onReloadRequested = () => {
-    log("info", "Main app received reload UI request");
-    requestUIReload();
+    wallet.log("info", "Main app received reload UI request");
+    wallet.requestUIReload();
   };
 
   const setCanCloseCheck = useCallback(
     (canClose) => {
-      onCheckCanClose(() => {
+      wallet.onCheckCanClose(() => {
         if (canClose) {
           shutdownApp();
         } else {
-          log("warn", "A process is still running, preventing shutdown");
+          wallet.log("warn", "A process is still running, preventing shutdown");
           showCantCloseModal();
         }
       });
@@ -109,7 +104,7 @@ const useApp = () => {
 
   const setModalVisibleCheck = useCallback(
     (modalVisible) => {
-      onShowAboutModal(() => {
+      wallet.onShowAboutModal(() => {
         // Ignore click if a modal is already shown
         if (modalVisible == false) {
           showAboutModalMacOS();
@@ -128,7 +123,7 @@ const useApp = () => {
     listenForAppReloadRequest(onReloadRequested);
     setCanCloseCheck(stateCanClose);
     setModalVisibleCheck(stateModalVisible);
-    log("info", "Main app container mounted");
+    wallet.log("info", "Main app container mounted");
   });
 
   // Updates can close check if given canClose value updated.

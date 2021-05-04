@@ -1,4 +1,4 @@
-import { appInfo as app } from "wallet";
+import * as wallet from "wallet";
 
 export const BOTH_CONNECTION_ERR_MESSAGE =
   "Cannot use both --testnet and --mainnet.";
@@ -21,10 +21,10 @@ export const SPV_WITH_ADVANCED_MODE =
 export const DIFF_CONNECTION_ERROR =
   "daemon and decrediton does not have the same network";
 
-export const USAGE_MESSAGE = app
-  ? `${app.name} version ${app.version}
+export const USAGE_MESSAGE = wallet.app
+  ? `${wallet.app.name} version ${wallet.app.version}
 Usage
-  $ ${app.name} [OPTIONS]
+  $ ${wallet.app.name} [OPTIONS]
 
 Options
   --help -h          Show help and exit.
@@ -44,8 +44,8 @@ Options
 `
   : null;
 
-export const VERSION_MESSAGE = app
-  ? `${app.name} version ${app.version}`
+export const VERSION_MESSAGE = wallet.app
+  ? `${wallet.app.name} version ${wallet.app.version}`
   : null;
 
 // POSITION_ERROR and MISMATCH_ERROR represent errors when creating or

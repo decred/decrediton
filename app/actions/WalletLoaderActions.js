@@ -1,12 +1,3 @@
-import {
-  getLoader,
-  createWallet,
-  openWallet,
-  closeWallet,
-  getStakePoolInfo,
-  rescanPoint,
-  getDcrwalletGrpcKeyCert
-} from "wallet";
 import * as wallet from "wallet";
 import {
   DEX_LOGOUT_ATTEMPT,
@@ -57,7 +48,7 @@ export const loaderRequest = () => (dispatch, getState) =>
       const {
         daemon: { walletName }
       } = getState();
-      const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+      const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
       const request = {
         isTestNet: isTestNet(getState()),
         walletName,
@@ -68,7 +59,7 @@ export const loaderRequest = () => (dispatch, getState) =>
       };
       dispatch({ request, type: LOADER_ATTEMPT });
       try {
-        const loader = await getLoader(request);
+        const loader = await wallet.getLoader(request);
         dispatch({ loader, type: LOADER_SUCCESS });
         return loader;
       } catch (error) {
@@ -94,7 +85,7 @@ export const getWalletSeedService = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSEEDSVC_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   return wallet
     .getSeedService(
       isTestNet(getState()),
@@ -141,7 +132,7 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
 ) =>
   new Promise((resolve, reject) => {
     dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
-    return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
+    return wallet.createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
         const {
           daemon: { walletName }
@@ -208,7 +199,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
 ) =>
   new Promise((resolve, reject) => {
     dispatch({ type: OPENWALLET_ATTEMPT });
-    return openWallet(getState().walletLoader.loader, pubPass)
+    return wallet.openWallet(getState().walletLoader.loader, pubPass)
       .then(async (response) => {
         await dispatch(getWalletServiceAttempt());
         wallet.setIsWatchingOnly(response.getWatchingOnly());
@@ -272,7 +263,7 @@ const finalCloseWallet = () => async (dispatch, getState) => {
     await dispatch(setSelectedWallet(null));
     await dispatch(stopDex());
     if (walletReady) {
-      await closeWallet(getState().walletLoader.loader);
+      await wallet.closeWallet(getState().walletLoader.loader);
     }
     await wallet.stopWallet();
     dispatch({ type: CLOSEWALLET_SUCCESS });
@@ -423,7 +414,7 @@ export function clearStakePoolConfigNewWallet() {
     const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
     config.delete(cfgConstants.STAKEPOOLS);
 
-    getStakePoolInfo().then((foundStakePoolConfigs) => {
+    wallet.getStakePoolInfo().then((foundStakePoolConfigs) => {
       if (foundStakePoolConfigs) {
         const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
         config.set(cfgConstants.STAKEPOOLS, foundStakePoolConfigs);
@@ -676,7 +667,7 @@ export const RESCANPOINT_SUCCESS = "RESCANPOINT_SUCCESS";
 
 export const rescanPointAttempt = () => (dispatch, getState) => {
   dispatch({ type: RESCANPOINT_ATTEMPT });
-  return rescanPoint(getState().walletLoader.loader)
+  return wallet.rescanPoint(getState().walletLoader.loader)
     .then((response) => {
       dispatch({ response, type: RESCANPOINT_SUCCESS });
     })
