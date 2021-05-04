@@ -3,17 +3,12 @@
   width: 100%;
   margin-bottom: 20px;
 }
-
-.launchError {
-  margin: 0 300px 20px 0;
-  color: var(--error-text-color);
-  overflow-wrap: break-word;
+.setupWallet {
+  padding-left: 56px;
+  background-image: var(--loader-animation-finalizing-setup) !important;
+  background-position: 15px 15px;
+  background-size: 30px;
 }
-
-.daemonWarning {
-  padding: 10px;
-}
-
 @media screen and (max-width: 768px) {
   .loaderBar {
     margin-bottom: 0;
@@ -22,10 +17,5 @@
     left: 0;
     display: flex;
     flex-direction: column;
-  }
-
-  .launchError {
-    margin: 0 0 20px 0;
-    width: 315px;
   }
 }

@@ -514,7 +514,10 @@ export const useGetStarted = () => {
       }
       if (key === "settingUpWallet") {
         PageComponent = h(SettingUpWalletMachine, {
-          settingUpWalletRef
+          settingUpWalletRef,
+          appVersion,
+          onShowTutorial,
+          onShowReleaseNotes
         });
       }
 

@@ -13,7 +13,8 @@ const AnimatedLinearProgressFull = ({
   error,
   text,
   animationType,
-  initialAnimationType
+  initialAnimationType,
+  hideTextBlock
 }) => {
   const {
     isSPV,
@@ -138,40 +139,42 @@ const AnimatedLinearProgressFull = ({
           </>
         )}
       </div>
-      <div>
-        {getCurrentBlockCount && !getDaemonSynced && (
-          <div className={styles.loaderBarEstimation}>
-            <T
-              id="getStarted.chainLoading.syncEstimation"
-              m="Blockchain download estimated complete: "
-            />
-            <span className={styles.bold}>
-              {finishDateEstimation && (
-                <FormattedRelative value={finishDateEstimation} />
-              )}
-              ({getCurrentBlockCount} / {getNeededBlocks})
-            </span>
-          </div>
-        )}
-        {selectedWalletSelector && syncFetchHeadersLastHeaderTime && (
-          <div className={styles.loaderBarEstimation}>
-            <HeaderTimeMsg />
-            <span className={styles.bold}>
-              <FormattedRelative value={syncFetchHeadersLastHeaderTime} />
-            </span>
-          </div>
-        )}
-        {!getDaemonSynced && lastDcrdLogLine && !selectedWalletSelector && (
-          <div className={styles.lastLogLines}>
-            <div>{lastDcrdLogLine}</div>
-          </div>
-        )}
-        {selectedWalletSelector && lastDcrwalletLogLine && (
-          <div className={styles.lastLogLines}>
-            <div>{lastDcrwalletLogLine}</div>
-          </div>
-        )}
-      </div>
+      {!hideTextBlock && (
+        <div>
+          {getCurrentBlockCount && !getDaemonSynced && (
+            <div className={styles.loaderBarEstimation}>
+              <T
+                id="getStarted.chainLoading.syncEstimation"
+                m="Blockchain download estimated complete: "
+              />
+              <span className={styles.bold}>
+                {finishDateEstimation && (
+                  <FormattedRelative value={finishDateEstimation} />
+                )}
+                ({getCurrentBlockCount} / {getNeededBlocks})
+              </span>
+            </div>
+          )}
+          {selectedWalletSelector && syncFetchHeadersLastHeaderTime && (
+            <div className={styles.loaderBarEstimation}>
+              <HeaderTimeMsg />
+              <span className={styles.bold}>
+                <FormattedRelative value={syncFetchHeadersLastHeaderTime} />
+              </span>
+            </div>
+          )}
+          {!getDaemonSynced && lastDcrdLogLine && !selectedWalletSelector && (
+            <div className={styles.lastLogLines}>
+              <div>{lastDcrdLogLine}</div>
+            </div>
+          )}
+          {selectedWalletSelector && lastDcrwalletLogLine && (
+            <div className={styles.lastLogLines}>
+              <div>{lastDcrwalletLogLine}</div>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };
