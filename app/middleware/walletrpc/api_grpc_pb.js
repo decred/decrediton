@@ -652,6 +652,28 @@ function deserialize_walletrpc_GetTicketsResponse(buffer_arg) {
   return api_pb.GetTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_GetTrackedVSPTicketsRequest(arg) {
+  if (!(arg instanceof api_pb.GetTrackedVSPTicketsRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetTrackedVSPTicketsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetTrackedVSPTicketsRequest(buffer_arg) {
+  return api_pb.GetTrackedVSPTicketsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_GetTrackedVSPTicketsResponse(arg) {
+  if (!(arg instanceof api_pb.GetTrackedVSPTicketsResponse)) {
+    throw new Error('Expected argument of type walletrpc.GetTrackedVSPTicketsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetTrackedVSPTicketsResponse(buffer_arg) {
+  return api_pb.GetTrackedVSPTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_GetTransactionRequest(arg) {
   if (!(arg instanceof api_pb.GetTransactionRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTransactionRequest');
@@ -2639,6 +2661,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_SetVspdVoteChoicesRequest,
     responseSerialize: serialize_walletrpc_SetVspdVoteChoicesResponse,
     responseDeserialize: deserialize_walletrpc_SetVspdVoteChoicesResponse,
+  },
+  getTrackedVSPTickets: {
+    path: '/walletrpc.WalletService/GetTrackedVSPTickets',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.GetTrackedVSPTicketsRequest,
+    responseType: api_pb.GetTrackedVSPTicketsResponse,
+    requestSerialize: serialize_walletrpc_GetTrackedVSPTicketsRequest,
+    requestDeserialize: deserialize_walletrpc_GetTrackedVSPTicketsRequest,
+    responseSerialize: serialize_walletrpc_GetTrackedVSPTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_GetTrackedVSPTicketsResponse,
   },
 };
 
