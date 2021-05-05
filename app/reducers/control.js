@@ -73,7 +73,12 @@ import {
   HIDE_CANTCLOSE_MODAL,
   SHOW_CANTCLOSE_MODAL,
   SAVE_LEGACY_AUTOBUYER_SETTINGS,
-  SETACCOUNTPASSPHRASE_SUCCESS
+  SETACCOUNTPASSPHRASE_SUCCESS,
+  UNLOCKANDEXECFN_ATTEMPT,
+  UNLOCKANDEXECFN_FAILED,
+  UNLOCKANDEXECFN_SUCCESS,
+  MONITORLOCKACBLEACCOUNTS_STARTED,
+  MONITORLOCKACBLEACCOUNTS_STOPPED
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -539,13 +544,42 @@ export default function control(state = {}, action) {
         getAccountExtendedKeyResponse: action.getAccountExtendedKeyResponse
       };
     case CLOSEWALLET_SUCCESS:
-      return { ...state, changeScriptByAccount: {} };
+      return {
+        ...state,
+        changeScriptByAccount: {},
+        ticketBuyerConfig: null
+      };
     case SAVE_LEGACY_AUTOBUYER_SETTINGS:
       return {
         ...state,
         legacyBalanceToMaintain: action.balanceToMaintain,
         legacyAccount: action.account,
         legacyVsp: action.vsp
+      };
+    case MONITORLOCKACBLEACCOUNTS_STARTED:
+      return {
+        ...state,
+        monitorLockableAccountsTimer: action.timer
+      };
+    case MONITORLOCKACBLEACCOUNTS_STOPPED:
+      return {
+        ...state,
+        monitorLockableAccountsTimer: null
+      };
+    case UNLOCKANDEXECFN_ATTEMPT:
+      return {
+        ...state,
+        unlockAndExecFnRunning: true
+      };
+    case UNLOCKANDEXECFN_FAILED:
+      return {
+        ...state,
+        unlockAndExecFnRunning: false
+      };
+    case UNLOCKANDEXECFN_SUCCESS:
+      return {
+        ...state,
+        unlockAndExecFnRunning: false
       };
     default:
       return state;

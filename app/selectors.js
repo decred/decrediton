@@ -11,6 +11,7 @@ import {
   map,
   apply,
   some,
+  uniq,
   createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
@@ -976,6 +977,23 @@ export const isProcessingUnmanaged = get([
 ]);
 
 export const getAvailableVSPsPubkeys = get(["vsp", "availableVSPsPubkeys"]);
+export const getVSPTrackedTickets = get(["vsp", "trackedTickets"]);
+export const getVSPTrackedTicketsCommitAccounts = createSelector(
+  [getVSPTrackedTickets],
+  (trackedTickets) => {
+    if (!trackedTickets) return [];
+    return uniq(
+      Object.values(trackedTickets)
+        .reduce((acc, v) => {
+          acc.push(...v.tickets);
+          return acc;
+        }, [])
+        .map((v) => v.commitmentAccount)
+        .sort()
+    );
+  }
+);
+export const getVSPTicketBuyerAccount = get(["vsp", "account"]);
 
 // ****************** end of vsp selectors ******************
 
@@ -1117,6 +1135,15 @@ export const spendingAccounts = createSelector(
       [],
       balances
     )
+);
+
+// unlockableAccounts returns a list of accounts which are both
+// "standard" (i.e. BIP0044, non-imported) and individually encrypted. These are
+// accounts that can be unlocked.
+export const unlockableAccounts = createSelector([balances], (balances) =>
+  balances.filter(
+    (acct) => acct.accountNumber < Math.pow(2, 31) - 1 && acct.encrypted
+  )
 );
 
 /* autobuyerSettings */

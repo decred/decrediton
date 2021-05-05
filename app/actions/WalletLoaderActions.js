@@ -18,7 +18,8 @@ import {
 import {
   rescanCancel,
   ticketBuyerCancel,
-  showCantCloseModal
+  showCantCloseModal,
+  stopMonitorLockableAccounts
 } from "./ControlActions";
 import {
   getWalletServiceAttempt,
@@ -267,6 +268,7 @@ const finalCloseWallet = () => async (dispatch, getState) => {
     await dispatch(syncCancel());
     await dispatch(rescanCancel());
     await dispatch(stopDcrlnd());
+    await dispatch(stopMonitorLockableAccounts());
     await dispatch(ticketBuyerCancel());
     await dispatch(stopAccountMixer(true));
     await dispatch(setSelectedWallet(null));

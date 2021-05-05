@@ -7,7 +7,8 @@ import isUndefined from "lodash/fp/isUndefined";
 import {
   getNextAddressAttempt,
   getPeerInfo,
-  publishUnminedTransactionsAttempt
+  publishUnminedTransactionsAttempt,
+  monitorLockableAccounts
 } from "./ControlActions";
 import {
   transactionNtfnsStart,
@@ -94,6 +95,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
 
       await dispatch(getVoteChoicesAttempt());
+      await dispatch(monitorLockableAccounts());
 
       // Start Dex if dexEnabled and NOT SPV mode
       if (dexEnabled && !sel.isSPV(getState())) {

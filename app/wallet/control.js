@@ -6,6 +6,7 @@ import {
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import { isUndefined } from "lodash";
+import { rawHashToHex } from "../helpers/byteActions";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -317,6 +318,28 @@ export const syncVSPTickets = (
       }
       resolve(response);
     });
+  });
+
+function mapTrackedVSP(vsp) {
+  return {
+    host: vsp.getHost(),
+    tickets: vsp.getTicketsList().map((ticket) => ({
+      ticketHash: rawHashToHex(ticket.getTicketHash()),
+      commitmentAddress: ticket.getCommitmentAddress(),
+      votingAddress: ticket.getVotingAddress(),
+      fee: ticket.getFee(),
+      feeHash: rawHashToHex(ticket.getFeeHash()),
+      state: ticket.getState()
+    }))
+  };
+}
+
+export const getVSPTrackedTickets = (walletService) =>
+  new Promise((ok, fail) => {
+    const request = new api.GetTrackedVSPTicketsRequest();
+    walletService.getTrackedVSPTickets(request, (err, res) =>
+      err ? fail(err) : ok(res.getVspsList().map(mapTrackedVSP))
+    );
   });
 
 export const getPeerInfo = (walletService) =>
