@@ -359,45 +359,6 @@ export const processUnmanagedTicketsStartup = (
     );
   });
 
-export const processUnmanagedTickets = (
-  walletService,
-  passphrase,
-  vspHost,
-  vspPubkey,
-  feeAccount,
-  changeAccount
-) =>
-  new Promise((resolve, reject) => {
-    const unlockReq = new api.UnlockWalletRequest();
-    unlockReq.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-    // Unlock wallet so we can call the request.
-    walletService.unlockWallet(unlockReq, (error) => {
-      if (error) {
-        reject(error);
-      }
-
-      const request = new api.ProcessUnmanagedTicketsRequest();
-      request.setVspHost("https://" + vspHost);
-      request.setVspPubkey(vspPubkey);
-      request.setFeeAccount(feeAccount);
-      request.setChangeAccount(changeAccount);
-
-      walletService.processUnmanagedTickets(request, (err, response) => {
-        // err ? fail(err) : ok(res);
-
-        const lockReq = new api.LockWalletRequest();
-
-        // Lock wallet and return response from the request.
-        walletService.lockWallet(lockReq, (error) => {
-          if (error) {
-            reject(error);
-          }
-          resolve(response);
-        });
-      });
-    });
-  });
-
 export const setVspdAgendaChoices = (
   walletService,
   vspHost,
