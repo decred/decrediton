@@ -36,7 +36,7 @@ export const getNextAddressAttempt = (accountNumber) => (dispatch, getState) =>
         resolve(res);
       })
       .catch((error) => {
-        dispatch({ error, type: GETNEXTACCOUNT_FAILED });
+        dispatch({ error, type: GETNEXTADDRESS_FAILED });
         reject(error);
       });
   });
