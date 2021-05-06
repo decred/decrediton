@@ -1026,6 +1026,7 @@ const setAccountPassphrase = (
     acct.locked = true;
     return dispatch({ type: SETACCOUNTPASSPHRASE_SUCCESS, accounts });
   } catch (error) {
+    dispatch({ type: SETACCOUNTPASSPHRASE_FAILED, error });
     throw error;
   }
 };
