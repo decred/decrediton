@@ -7,10 +7,7 @@ import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
 import * as ama from "actions/AccountMixerActions";
-import {
-  processManagedTickets,
-  processUnmanagedTickets
-} from "actions/VSPActions";
+import * as va from "actions/VSPActions";
 
 const useDaemonStartup = () => {
   const dispatch = useDispatch();
@@ -221,12 +218,12 @@ const useDaemonStartup = () => {
 
   const onProcessUnmanagedTickets = useCallback(
     (passphrase, vspHost, vspPubkey) =>
-      dispatch(processUnmanagedTickets(passphrase, vspHost, vspPubkey)),
+      dispatch(va.processUnmanagedTickets(passphrase, vspHost, vspPubkey)),
     [dispatch]
   );
 
   const onProcessManagedTickets = useCallback(
-    (passphrase) => dispatch(processManagedTickets(passphrase)),
+    (passphrase) => dispatch(va.processManagedTickets(passphrase)),
     [dispatch]
   );
 
