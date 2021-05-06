@@ -767,22 +767,23 @@ export const setVSPDVoteChoices = (passphrase) => async (
       changeAccount = sel.defaultSpendingAccount(getState()).value;
     }
 
-    await wallet.unlockWallet(walletService, passphrase);
-    await Promise.all(
-      availableVSPs.map(async (vsp) => {
-        if (vsp.pubkey) {
-          await wallet.setVspdAgendaChoices(
-            walletService,
-            vsp.host,
-            vsp.pubkey,
-            feeAccount,
-            changeAccount
-          );
-        }
-      })
+    await dispatch(
+      unlockAllAcctAndExecFn(passphrase, () =>
+        Promise.all(
+          availableVSPs.map(async (vsp) => {
+            if (vsp.pubkey) {
+              await wallet.setVspdAgendaChoices(
+                walletService,
+                vsp.host,
+                vsp.pubkey,
+                feeAccount,
+                changeAccount
+              );
+            }
+          })
+        )
+      )
     );
-
-    await wallet.lockWallet(walletService);
 
     dispatch({ type: SETVOTECHOICES_SUCCESS });
     dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
