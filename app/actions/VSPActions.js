@@ -106,13 +106,25 @@ export const syncVSPTicketsRequest = ({
 }) => async (dispatch, getState) => {
   dispatch({ type: SYNCVSPTICKETS_ATTEMPT });
   try {
+    let feeAcct = account;
+    let changeAcct = account;
+    const mixedAccount = sel.getMixedAccount(getState());
+    const changeAccount = sel.getChangeAccount(getState());
+    if (mixedAccount) {
+      feeAcct = mixedAccount;
+    }
+    if (changeAccount) {
+      changeAcct = changeAccount;
+    }
+
     await dispatch(
       unlockAllAcctAndExecFn(passphrase, () =>
         wallet.syncVSPTickets(
           getState().grpc.walletService,
           vspHost,
           vspPubkey,
-          account
+          feeAcct,
+          changeAcct
         )
       )
     );
