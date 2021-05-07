@@ -93,8 +93,6 @@ import electron from "electron";
 import { isString } from "./fp";
 import {
   OPTIONS,
-  USAGE_MESSAGE,
-  VERSION_MESSAGE,
   BOTH_CONNECTION_ERR_MESSAGE,
   MAX_LOG_LENGTH,
   SPV_CONNECT_WITHOUT_SPV,
@@ -105,6 +103,7 @@ import {
   TESTNET,
   MAINNET
 } from "constants";
+import { USAGE_MESSAGE, VERSION_MESSAGE } from "main_dev/constants";
 import {
   DAEMON_ADVANCED,
   LOCALE,
