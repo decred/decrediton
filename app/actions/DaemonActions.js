@@ -449,7 +449,9 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
       const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
       const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
-      const needsVSPdProcessManaged = walletCfg.get(cfgConstants.NEEDS_VSPD_PROCESS_TICKETS);
+      const needsVSPdProcessManaged = walletCfg.get(
+        cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
+      );
 
       const autobuyerSettings = walletCfg.get(cfgConstants.AUTOBUYER_SETTINGS);
       dispatch({

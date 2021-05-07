@@ -12,6 +12,7 @@ import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
 import { isNumber } from "fp";
+import { setNeedsVSPdProcessTickets } from "./SettingsActions";
 
 const {
   RescanRequest,
@@ -405,6 +406,11 @@ export const newPurchaseTicketsAttempt = (
     const accts = account.value !== 0 ? [account.value, 0] : [account.value];
     const purchaseTicketsResponse = await dispatch(
       unlockAcctAndExecFn(passphrase, accts, async () => {
+        // Since we're about to purchase a ticket, ensure on next startup we'll
+        // process managed tickets.
+        console.log("XXXXXXX setting needs process managed true");
+        dispatch(setNeedsVSPdProcessTickets(true));
+
         const res = await wallet.purchaseTicketsV3(
           walletService,
           account,
@@ -516,8 +522,9 @@ export const startTicketBuyerV3Attempt = (
       unlockAcctAndExecFn(
         passphrase,
         [accountNum],
-        () =>
-          wallet.startTicketAutoBuyerV3(ticketBuyerService, {
+        () => {
+          dispatch(setNeedsVSPdProcessTickets(true));
+          return wallet.startTicketAutoBuyerV3(ticketBuyerService, {
             mixedAccount,
             mixedAcctBranch,
             changeAccount,
@@ -527,7 +534,8 @@ export const startTicketBuyerV3Attempt = (
             accountNum,
             pubkey: vsp.pubkey,
             host: vsp.host
-          }),
+          });
+        },
         true
       )
     );
@@ -1253,7 +1261,9 @@ export const lockAccount = (acctNumber) => async (dispatch, getState) => {
     if (!account.encrypted) {
       throw "Account not encrypted";
     }
-    await wallet.lockAccount(sel.walletService(getState()), acctNumber);
+    const lockable = filterUnlockableAccounts([acctNumber], getState);
+    if (lockable.length === 0) return;
+    await wallet.lockAccount(sel.walletService(getState()), lockable[0]);
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     dispatch({ type: LOCKACCOUNT_FAILED, error });
@@ -1303,6 +1313,27 @@ export const monitorLockableAccounts = () => (dispatch, getState) => {
     // Don't attempt to relock if there's a function running that depends on
     // unlocked accounts.
     if (getState().control.unlockAndExecFnRunning) return;
+
+    // If there are no more tickets being tracked (meaning all were confirmed)
+    // and we didn't skip the initial ProcessManagedTickets page and the
+    // autobuyer isn't running, disable running processManagedTickets on the
+    //  next wallet execution.
+    const canDisableProcessManaged = sel.canDisableProcessManaged(getState());
+    const getRunningIndicator = sel.getRunningIndicator(getState());
+    console.log(
+      "YYYYYYY canDisableProcess:",
+      canDisableProcessManaged,
+      "running indicator",
+      getRunningIndicator
+    );
+    if (
+      newTicketAccounts.length === 0 &&
+      canDisableProcessManaged &&
+      !getRunningIndicator
+    ) {
+      console.log("XXXXXXX setting needs process managed false");
+      dispatch(setNeedsVSPdProcessTickets(false));
+    }
 
     // Attempt to relock all accounts that can now be locked.
     const lockable = filterUnlockableAccounts(toLockAccts, getState);

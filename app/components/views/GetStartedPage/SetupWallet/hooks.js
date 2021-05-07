@@ -12,7 +12,10 @@ import {
   checkAllAccountsEncrypted,
   setAccountsPass
 } from "actions/ControlActions";
-import { getVSPsPubkeys } from "actions/VSPActions";
+import {
+  getVSPsPubkeys,
+  setCanDisableProcessManaged
+} from "actions/VSPActions";
 import { ExternalLink } from "shared";
 import { DecredLoading } from "indicators";
 
@@ -65,6 +68,11 @@ export const useWalletSetup = (settingUpWalletRef) => {
   const onSendBack = useCallback(() => {
     send({ type: "BACK" });
   }, [send]);
+
+  const onSkipProcessManaged = useCallback(() => {
+    dispatch(setCanDisableProcessManaged(false));
+    send({ type: "BACK" });
+  }, [send, dispatch]);
 
   const getStateComponent = useCallback(async () => {
     const ctx = current.context;
@@ -179,7 +187,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
             onSendContinue: sendContinue,
             onSendError,
             send,
-            cancel: onSendBack,
+            cancel: onSkipProcessManaged,
             onProcessTickets: onProcessManagedTickets,
             title: (
               <T
@@ -275,7 +283,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
     current,
     onCheckAcctsPass,
     onProcessAccounts,
-    onGetVSPsPubkeys
+    onGetVSPsPubkeys,
+    onSkipProcessManaged
   ]);
 
   return {

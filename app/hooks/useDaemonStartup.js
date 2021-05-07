@@ -48,7 +48,9 @@ const useDaemonStartup = () => {
   const stakeTransactions = useSelector(sel.stakeTransactions);
   const isProcessingManaged = useSelector(sel.isProcessingManaged);
   const isProcessingUnmanaged = useSelector(sel.isProcessingUnmanaged);
-  const needsProcessManagedTickets = useSelector(sel.needsProcessManagedTickets);
+  const needsProcessManagedTickets = useSelector(
+    sel.needsProcessManagedTickets
+  );
   // end of vsp selectors
 
   // sync dcrwallet spv or rpc selectors

@@ -41,6 +41,8 @@ export default ({
     }
   }, [vsp, noVspSelection]);
 
+  console.log("LLLLLLL processing managed", isProcessingManaged);
+
   return (
     <div className={styles.content}>
       <BackButtonArea>
