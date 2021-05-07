@@ -9,11 +9,12 @@ export {
   eq,
   map,
   keyBy,
-  some
+  some,
+  uniq
 } from "lodash/fp";
-export { concat, isString, cloneDeep } from "lodash";
+export { concat, isString, isNumber, cloneDeep } from "lodash";
 
-import { isFunction } from "lodash";
+import { isArray, isFunction } from "lodash";
 import compose from "lodash/fp/compose";
 import get from "lodash/fp/get";
 
@@ -70,3 +71,11 @@ export const replace = (list, predicate, replacement) => {
   newList[idx] = rep;
   return newList;
 };
+
+export const mapArray = (arr, key) =>
+  isArray(arr)
+    ? arr.reduce((acc, v) => {
+        acc[v[key]] = v;
+        return acc;
+      }, {})
+    : {};

@@ -85,7 +85,8 @@ const initialState = {
     processUnmanagedTicketsAttempt: false,
     processUnmanagedTicketsError: null,
     processManagedTicketsAttempt: false,
-    processManagedTicketsError: null
+    processManagedTicketsError: null,
+    trackedTickets: {}
   },
   daemon: {
     networkMatch: false,
@@ -354,7 +355,8 @@ const initialState = {
     modalVisible: false,
     aboutModalMacOSVisible: false,
     cantCloseModalVisible: false,
-    changeScriptByAccount: {}
+    changeScriptByAccount: {},
+    monitorLockableAccountsTimer: null
   },
   snackbar: {
     messages: Array()
