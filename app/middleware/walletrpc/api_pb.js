@@ -45687,7 +45687,8 @@ proto.walletrpc.SyncVSPTicketsRequest.toObject = function(includeInstance, msg) 
   var f, obj = {
     vspHost: jspb.Message.getFieldWithDefault(msg, 1, ""),
     vspPubkey: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    account: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    account: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -45736,6 +45737,10 @@ proto.walletrpc.SyncVSPTicketsRequest.deserializeBinaryFromReader = function(msg
       var value = /** @type {number} */ (reader.readUint32());
       msg.setAccount(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setChangeAccount(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -45783,6 +45788,13 @@ proto.walletrpc.SyncVSPTicketsRequest.serializeBinaryToWriter = function(message
   if (f !== 0) {
     writer.writeUint32(
       3,
+      f
+    );
+  }
+  f = message.getChangeAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
       f
     );
   }
@@ -45840,6 +45852,24 @@ proto.walletrpc.SyncVSPTicketsRequest.prototype.getAccount = function() {
  */
 proto.walletrpc.SyncVSPTicketsRequest.prototype.setAccount = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 change_account = 4;
+ * @return {number}
+ */
+proto.walletrpc.SyncVSPTicketsRequest.prototype.getChangeAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.SyncVSPTicketsRequest} returns this
+ */
+proto.walletrpc.SyncVSPTicketsRequest.prototype.setChangeAccount = function(value) {
+  return jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
