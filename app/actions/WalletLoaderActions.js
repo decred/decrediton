@@ -30,7 +30,7 @@ import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
 import { TRZ_WALLET_CLOSED } from "actions/TrezorActions";
 
-const { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } = api;
+const { SyncNotificationType } = api;
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -132,7 +132,8 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
 ) =>
   new Promise((resolve, reject) => {
     dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
-    return wallet.createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
+    return wallet
+      .createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
         const {
           daemon: { walletName }
@@ -199,7 +200,8 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
 ) =>
   new Promise((resolve, reject) => {
     dispatch({ type: OPENWALLET_ATTEMPT });
-    return wallet.openWallet(getState().walletLoader.loader, pubPass)
+    return wallet
+      .openWallet(getState().walletLoader.loader, pubPass)
       .then(async (response) => {
         await dispatch(getWalletServiceAttempt());
         wallet.setIsWatchingOnly(response.getWatchingOnly());
@@ -312,23 +314,21 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
   } = getState();
 
   const credentials = wallet.getDcrdRpcCredentials();
-  const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = credentials;
+  const discoverAccts = !discoverAccountsComplete && privPass;
+  const setPrivPass = discoverAccts
+    ? new Uint8Array(Buffer.from(privPass))
+    : null;
 
-  const request = new RpcSyncRequest();
-  const cert = wallet.getDcrdCert(rpc_cert);
-  request.setNetworkAddress(rpc_host + ":" + rpc_port);
-  request.setUsername(rpc_user);
-  request.setPassword(new Uint8Array(Buffer.from(rpc_pass)));
-  request.setCertificate(new Uint8Array(cert));
-  if (!discoverAccountsComplete && privPass) {
-    request.setDiscoverAccounts(true);
-    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-  }
   return new Promise((resolve, reject) => {
     if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
     const { loader } = getState().walletLoader;
     setTimeout(async () => {
-      const rpcSyncCall = await loader.rpcSync(request);
+      const rpcSyncCall = await wallet.rpcSync(
+        loader,
+        credentials,
+        discoverAccts,
+        setPrivPass
+      );
       dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
       rpcSyncCall.on("data", async (response) => {
         const synced = await dispatch(syncConsumer(response));
@@ -504,17 +504,23 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
   const { currentSettings } = getState().settings;
   const spvConnect = currentSettings.spvConnect;
-  const request = new SpvSyncRequest();
-  for (let i = 0; spvConnect && i < spvConnect.length; i++) {
-    request.addSpvConnect(spvConnect[i]);
-  }
-  if (!discoverAccountsComplete && privPass) {
-    request.setDiscoverAccounts(true);
-    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-  }
-  return new Promise((resolve, reject) => {
+  const discoverAccts = !discoverAccountsComplete && privPass;
+  const setPrivPass = discoverAccts
+    ? new Uint8Array(Buffer.from(privPass))
+    : null;
+
+  // Disable use of async executor here because wallet.spvSync call needs to be
+  // async, but we only resolve the promise once the "synced" event is received
+  // on the data stream, so we need the "bare" promise.
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
     const { loader } = getState().walletLoader;
-    const spvSyncCall = loader.spvSync(request);
+    const spvSyncCall = await wallet.spvSync(
+      loader,
+      spvConnect,
+      discoverAccts,
+      setPrivPass
+    );
     dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
     spvSyncCall.on("data", async function (response) {
       const synced = await dispatch(syncConsumer(response));
@@ -667,7 +673,8 @@ export const RESCANPOINT_SUCCESS = "RESCANPOINT_SUCCESS";
 
 export const rescanPointAttempt = () => (dispatch, getState) => {
   dispatch({ type: RESCANPOINT_ATTEMPT });
-  return wallet.rescanPoint(getState().walletLoader.loader)
+  return wallet
+    .rescanPoint(getState().walletLoader.loader)
     .then((response) => {
       dispatch({ response, type: RESCANPOINT_SUCCESS });
     })

@@ -1077,7 +1077,7 @@ export const getNoMoreLiveTickets = get(["grpc", "noMoreLiveTickets"]);
 
 export const rescanEndBlock = currentBlockHeight;
 export const rescanStartBlock = compose(
-  (req) => (req ? req.getBeginHeight() : 0),
+  (req) => (req ? req.beginHeight : 0),
   rescanRequest
 );
 export const rescanCurrentBlock = compose(

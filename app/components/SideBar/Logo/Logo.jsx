@@ -42,8 +42,8 @@ const Logo = React.memo(
           content={
             <T
               id="sidebar.mixer.running"
-              m={`One or more of the following decrediton's features running in 
-              the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket 
+              m={`One or more of the following decrediton's features running in
+              the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket
               Attempt`}
             />
           }>

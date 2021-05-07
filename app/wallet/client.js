@@ -1,6 +1,7 @@
 import Promise from "promise";
 import { TicketTypes } from "helpers/tickets";
 import { strHashToRaw } from "../helpers/byteActions";
+import { shimStreamedResponse } from "helpers/electronRenderer";
 import {
   withLog as log,
   logOptionNoResponseData,
@@ -175,5 +176,5 @@ export const runAccountMixerRequest = (
     request.setChangeAccount(changeAccount);
     request.setCsppServer(csppServer);
     const mixer = walletService.runAccountMixer(request);
-    ok(mixer);
+    ok(shimStreamedResponse(mixer));
   });

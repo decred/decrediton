@@ -14,11 +14,7 @@ import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
 import { isNumber } from "fp";
 import { setNeedsVSPdProcessTickets } from "./SettingsActions";
 
-const {
-  RescanRequest,
-  ConstructTransactionRequest,
-  RunTicketBuyerRequest
-} = api;
+const { ConstructTransactionRequest } = api;
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -74,17 +70,12 @@ export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
 export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
 export function rescanAttempt(beginHeight, beginHash, startup) {
-  const request = new RescanRequest();
-  if (beginHeight !== null) {
-    request.setBeginHeight(beginHeight);
-  } else {
-    request.setBeginHash(new Uint8Array(Buffer.from(beginHash)));
-  }
+  const request = { beginHash, beginHeight };
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch({ request: request, type: RESCAN_ATTEMPT });
+      dispatch({ request, type: RESCAN_ATTEMPT });
       const { walletService } = getState().grpc;
-      const rescanCall = walletService.rescan(request);
+      const rescanCall = wallet.rescan(walletService, beginHeight, beginHash);
       rescanCall.on("data", function (response) {
         dispatch({
           rescanCall: rescanCall,
@@ -930,15 +921,16 @@ export const startTicketBuyerV2Attempt = (
   const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
   dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
   try {
-    const request = new RunTicketBuyerRequest();
-    request.setBalanceToMaintain(balanceToMaintain);
-    request.setAccount(account.value);
-    request.setVotingAccount(account.value);
-    request.setVotingAddress(stakepool.TicketAddress);
+    const request = {
+      balanceToMaintain,
+      account: account.value,
+      votingAccount: account.value,
+      votingAddress: stakepool.TicketAddress
+    };
     const { ticketBuyerService } = getState().grpc;
     const ticketBuyer = await dispatch(
       unlockAcctAndExecFn(passphrase, [account.value], () =>
-        ticketBuyerService.runTicketBuyer(request)
+        wallet.startTicketAutoBuyerV2(ticketBuyerService, request)
       )
     );
     ticketBuyer.on("data", function (response) {

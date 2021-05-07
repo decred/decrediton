@@ -48,7 +48,10 @@ export const enableTrezor = () => (dispatch, getState) => {
   const walletName = selectors.getWalletName(getState());
 
   if (walletName) {
-    const config = wallet.getWalletCfg(selectors.isTestNet(getState()), walletName);
+    const config = wallet.getWalletCfg(
+      selectors.isTestNet(getState()),
+      walletName
+    );
     config.set(cfgConstants.TREZOR, true);
   }
 

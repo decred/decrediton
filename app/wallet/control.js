@@ -7,6 +7,7 @@ import {
 } from "constants";
 import { isUndefined } from "lodash";
 import { rawHashToHex } from "../helpers/byteActions";
+import { shimStreamedResponse } from "helpers/electronRenderer";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -44,16 +45,15 @@ export const renameAccount = (walletService, accountNum, newName) =>
     );
   });
 
-export const rescan = (walletService, beginHeight, cb) =>
-  new Promise((ok, fail) => {
-    const request = new api.RescanRequest();
+export const rescan = (walletService, beginHeight, beginHash) => {
+  const request = new api.RescanRequest();
+  if (beginHeight !== null) {
     request.setBeginHeight(beginHeight);
-    const scan = walletService.rescan(request);
-    cb && scan.on("data", cb);
-    scan.on("end", () => ok());
-    scan.on("status", (status) => console.log("Rescan status:", status));
-    scan.on("error", fail);
-  });
+  } else {
+    request.setBeginHash(new Uint8Array(Buffer.from(beginHash)));
+  }
+  return shimStreamedResponse(walletService.rescan(request));
+};
 
 export const importPrivateKey = (
   walletService,
@@ -487,6 +487,19 @@ export const setAccountPassphrase = (
     );
   });
 
+export const startTicketAutoBuyerV2 = (
+  ticketBuyerService,
+  { balanceToMaintain, account, votingAccount, votingAddress }
+) =>
+  new Promise((ok) => {
+    const request = new api.RunTicketBuyerRequest();
+    request.setBalanceToMaintain(balanceToMaintain);
+    request.setAccount(account);
+    request.setVotingAccount(votingAccount);
+    request.setVotingAddress(votingAddress);
+    ok(shimStreamedResponse(ticketBuyerService.runTicketBuyer(request)));
+  });
+
 export const startTicketAutoBuyerV3 = (
   ticketBuyerService,
   {
@@ -528,5 +541,5 @@ export const startTicketAutoBuyerV3 = (
     request.setVotingAccount(accountNum);
 
     const mixer = ticketBuyerService.runTicketBuyer(request);
-    ok(mixer);
+    ok(shimStreamedResponse(mixer));
   });

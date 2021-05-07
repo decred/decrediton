@@ -38,14 +38,15 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
   } = getState();
   const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   dispatch({ type: GETACCOUNTMIXERSERVICE_ATTEMPT });
-  return wallet.getAccountMixerService(
-    sel.isTestNet(getState()),
-    walletName,
-    address,
-    port,
-    grpcCertAndKey,
-    grpcCertAndKey
-  )
+  return wallet
+    .getAccountMixerService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((accountMixerService) =>
       dispatch({ accountMixerService, type: GETACCOUNTMIXERSERVICE_SUCCESS })
     )
@@ -236,7 +237,8 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const { balances, walletService } = getState().grpc;
-    wallet.getCoinjoinOutputspByAcctReq(walletService)
+    wallet
+      .getCoinjoinOutputspByAcctReq(walletService)
       .then((response) => {
         const coinjoinSumByAcctResp =
           response.wrappers_ && response.wrappers_[1];

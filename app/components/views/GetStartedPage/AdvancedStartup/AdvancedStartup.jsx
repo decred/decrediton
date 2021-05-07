@@ -80,7 +80,13 @@ export const AdvancedStartupBody = ({
   };
 
   const onSubmitRemoteForm = () => {
-    wallet.setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
+    wallet.setRemoteCredentials(
+      rpc_user,
+      rpc_pass,
+      rpc_cert,
+      rpc_host,
+      rpc_port
+    );
     submitRemoteCredentials({
       rpc_user,
       rpc_pass,

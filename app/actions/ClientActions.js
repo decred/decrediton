@@ -698,7 +698,8 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
     );
 };
 
-export const listenForAppReloadRequest = (cb) => () => wallet.onAppReloadRequested(cb);
+export const listenForAppReloadRequest = (cb) => () =>
+  wallet.onAppReloadRequested(cb);
 
 export const showTicketList = (status) => (dispatch) =>
   dispatch(pushHistory("/tickets/mytickets/" + status));

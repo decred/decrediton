@@ -377,7 +377,10 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         selectedWallet = wallet.getSelectedWallet();
       }
       const isTestnet = network == "testnet";
-      const walletCfg = wallet.getWalletCfg(isTestnet, selectedWallet.value.wallet);
+      const walletCfg = wallet.getWalletCfg(
+        isTestnet,
+        selectedWallet.value.wallet
+      );
 
       const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
       const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);

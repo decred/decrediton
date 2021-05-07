@@ -20,7 +20,10 @@ export const enableDex = () => (dispatch, getState) => {
   } = getState();
 
   try {
-    const walletConfig = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
+    const walletConfig = wallet.getWalletCfg(
+      sel.isTestNet(getState()),
+      walletName
+    );
     walletConfig.set(
       configConstants.DEXWALLET_RPCUSERNAME,
       makeRandomString(12)
@@ -226,7 +229,10 @@ export const btcCreateWalletDex = (
     const {
       daemon: { walletName }
     } = getState();
-    const walletConfig = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
+    const walletConfig = wallet.getWalletCfg(
+      sel.isTestNet(getState()),
+      walletName
+    );
     walletConfig.set(configConstants.BTCWALLET_NAME, account);
     // Request current user information
     dispatch(userDex());
@@ -415,7 +421,10 @@ export const createDexAccount = (passphrase, accountName) => async (
   } = getState();
 
   try {
-    const walletConfig = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
+    const walletConfig = wallet.getWalletCfg(
+      sel.isTestNet(getState()),
+      walletName
+    );
     dispatch({ type: CREATEDEXACCOUNT_ATTEMPT });
     await dispatch(getNextAccountAttempt(passphrase, accountName));
     dispatch({ dexAccount: accountName, type: CREATEDEXACCOUNT_SUCCESS });
@@ -436,7 +445,10 @@ export const selectDexAccount = (accountName) => (dispatch, getState) => {
 
   try {
     dispatch({ type: SELECT_DEXACCOUNT_ATTEMPT });
-    const walletConfig = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
+    const walletConfig = wallet.getWalletCfg(
+      sel.isTestNet(getState()),
+      walletName
+    );
     dispatch({ dexAccount: accountName, type: SELECT_DEXACCOUNT_SUCCESS });
     walletConfig.set(configConstants.DEX_ACCOUNT, accountName);
   } catch (error) {

@@ -1,4 +1,3 @@
-
 import * as cfg from "config";
 
 export const getWalletCfg = cfg.getWalletCfg;
