@@ -18,7 +18,8 @@ import {
   SETVSPDVOTECHOICE_FAILED,
   SETVSPDVOTECHOICE_SUCCESS,
   SET_AUTOBUYER_SETTINGS,
-  GETVSPSPUBKEYS_SUCCESS
+  GETVSPSPUBKEYS_SUCCESS,
+  GETVSPTRACKEDTICKETS_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -26,6 +27,7 @@ import {
   STARTTICKETBUYERV3_FAILED,
   STOPTICKETBUYER_SUCCESS
 } from "actions/ControlActions";
+import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
 export default function vsp(state = {}, action) {
   switch (action.type) {
@@ -151,6 +153,16 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         availableVSPsPubkeys: action.availableVSPsPubkeys
+      };
+    case GETVSPTRACKEDTICKETS_SUCCESS:
+      return {
+        ...state,
+        trackedTickets: action.trackedTickets
+      };
+    case CLOSEWALLET_SUCCESS:
+      return {
+        ...state,
+        trackedTickets: {}
       };
     default:
       return state;

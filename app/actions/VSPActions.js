@@ -20,6 +20,7 @@ import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
 import { reverseRawHash } from "../helpers/byteActions";
 import shuffle from "lodash/fp/shuffle";
+import { mapArray } from "fp";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -93,6 +94,56 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) =>
         reject(err);
       });
   });
+
+export const GETVSPTRACKEDTICKETS_ATTEMPT = "GETVSPTRACKEDTICKETS_ATTEMPT";
+export const GETVSPTRACKEDTICKETS_SUCCESS = "GETVSPTRACKEDTICKETS_SUCCESS";
+export const GETVSPTRACKEDTICKETS_FAILED = "GETVSPTRACKEDTICKETS_FAILED";
+
+export const getVSPTrackedTickets = () => async (dispatch, getState) => {
+  dispatch({ type: GETVSPTRACKEDTICKETS_ATTEMPT });
+  try {
+    const walletService = sel.walletService(getState());
+    const res = await wallet.getVSPTrackedTickets(walletService);
+    const trackedTickets = mapArray(res, "host");
+
+    // Determine the account of the voting address for each tracked ticket. As
+    // an optimization, we check older versions of the trackedTickets map, and
+    // if we already determined the account, we reuse it instead of querying the
+    // wallet again.
+    const oldTrackedTickets = sel.getVSPTrackedTickets(getState());
+    for (const vspHost of Object.keys(trackedTickets)) {
+      const vspInfo = trackedTickets[vspHost];
+      const oldTickets = oldTrackedTickets[vspHost]
+        ? mapArray(oldTrackedTickets[vspHost]?.tickets, "ticketHash")
+        : {};
+      for (const ticket of vspInfo.tickets) {
+        const oldTicket = oldTickets ? oldTickets[ticket.ticketHash] : null;
+        if (oldTicket) {
+          ticket.votingAccount = oldTicket.votingAccount;
+          ticket.commitmentAccount = oldTicket.commitmentAccount;
+          continue;
+        }
+
+        // Discover the corresponding account from the wallet.
+        const voteAddrResp = await wallet.validateAddress(
+          walletService,
+          ticket.votingAddress
+        );
+        ticket.votingAccount = voteAddrResp.getAccountNumber();
+        const commitAddrResp = await wallet.validateAddress(
+          walletService,
+          ticket.commitmentAddress
+        );
+        ticket.commitmentAccount = commitAddrResp.getAccountNumber();
+      }
+    }
+
+    dispatch({ trackedTickets, type: GETVSPTRACKEDTICKETS_SUCCESS });
+  } catch (error) {
+    console.error(error);
+    dispatch({ error, type: GETVSPTRACKEDTICKETS_FAILED });
+  }
+};
 
 export const SYNCVSPTICKETS_ATTEMPT = "SYNCVSPTICKETS_ATTEMPT";
 export const SYNCVSPTICKETS_FAILED = "SYNCVSPTICKETS_FAILED";
@@ -641,19 +692,24 @@ export const processManagedTickets = (passphrase) => (dispatch, getState) =>
           changeAccount = sel.defaultSpendingAccount(getState()).value;
         }
         await dispatch(
-          unlockAllAcctAndExecFn(passphrase, () =>
-            Promise.all(
-              availableVSPsPubkeys.map(async (vsp) => {
-                await wallet.processManagedTickets(
+          unlockAllAcctAndExecFn(passphrase, async () => {
+            // Process all managed tickets on all VSPs.
+            await Promise.all(
+              availableVSPsPubkeys.map((vsp) =>
+                wallet.processManagedTickets(
                   walletService,
                   vsp.host,
                   vsp.pubkey,
                   feeAccount,
                   changeAccount
-                );
-              })
-            )
-          )
+                )
+              )
+            );
+
+            // Update the list of dcrwallet tracked VSP tickets. This figures out
+            // which accounts need to be left unlocked.
+            await dispatch(getVSPTrackedTickets());
+          })
         );
 
         // get vsp tickets fee status errored so we can resync them

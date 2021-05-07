@@ -10,7 +10,8 @@ import {
 import { walletrpc as api } from "../middleware/walletrpc/api_pb";
 import { reverseRawHash, rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
-import { updateUsedVSPs } from "./VSPActions";
+import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
+import { isNumber } from "fp";
 
 const {
   RescanRequest,
@@ -403,16 +404,22 @@ export const newPurchaseTicketsAttempt = (
     // with the VSP may occur.
     const accts = account.value !== 0 ? [account.value, 0] : [account.value];
     const purchaseTicketsResponse = await dispatch(
-      unlockAcctAndExecFn(passphrase, accts, () =>
-        wallet.purchaseTicketsV3(
+      unlockAcctAndExecFn(passphrase, accts, async () => {
+        const res = await wallet.purchaseTicketsV3(
           walletService,
           account,
           numTickets,
           !dontSignTx,
           vsp,
           csppReq
-        )
-      )
+        );
+
+        // Update the list of dcrwallet tracked VSP tickets. This figures out
+        // which accounts need to be left unlocked.
+        await dispatch(getVSPTrackedTickets());
+
+        return res;
+      })
     );
     if (dontSignTx) {
       return dispatch({
@@ -1079,6 +1086,52 @@ export const LOCKACCOUNT_ATTEMPT = "LOCKACCOUNT_ATTEMPT";
 export const LOCKACCOUNT_FAILED = "LOCKACCOUNT_FAILED";
 export const LOCKACCOUNT_SUCCESS = "LOCKACCOUNT_SUCCESS";
 
+// These events track whether unlockAcctAndExecFn is currently running.
+export const UNLOCKANDEXECFN_ATTEMPT = "UNLOCKANDEXECFN_ATTEMPT";
+export const UNLOCKANDEXECFN_FAILED = "UNLOCKANDEXECFN_FAILED";
+export const UNLOCKANDEXECFN_SUCCESS = "UNLOCKANDEXECFN_SUCCESS";
+
+// filterUnlockableAccounts returns a subset of the given array of account
+// numbers, excluding those that shouldn't be locked.
+const filterUnlockableAccounts = (accts, getState) => {
+  const accounts = sel.balances(getState());
+
+  // Track list of unlockable accounts.
+  const unlockableAccts = {};
+  const setUnlockable = (acctNb) => (unlockableAccts[parseInt(acctNb)] = true);
+
+  // Do not allow locking of the dex account, as it isn't supposed to lock.
+  const dexAccountName = sel.dexAccount(getState());
+  const dexAccount = accounts.find(
+    (acct) => acct.accountName === dexAccountName
+  );
+  dexAccount && setUnlockable(dexAccount.accountNumber);
+
+  // Do not allow locking of the mixed and change account or ticket buyer account
+  // while they are running.
+  if (sel.getRunningIndicator(getState())) {
+    const mixedAcct = sel.getMixedAccount(getState());
+    const unmixedAcct = sel.getChangeAccount(getState());
+    const ticketBuyerAccount = sel.getVSPTicketBuyerAccount(getState());
+    const legacyTicketBuyerCfg = sel.ticketBuyerConfig(getState());
+    isNumber(mixedAcct) && setUnlockable(mixedAcct);
+    isNumber(unmixedAcct) && setUnlockable(unmixedAcct);
+    isNumber(ticketBuyerAccount?.value) &&
+      setUnlockable(ticketBuyerAccount?.value);
+    isNumber(legacyTicketBuyerCfg?.account?.value) &&
+      setUnlockable(legacyTicketBuyerCfg?.account?.value);
+  }
+
+  // Do not allow locking of accounts for which there are tickets with
+  // outstanding fee payments to be done. The dcrwallet VSP client needs them
+  // unlocked to be able to do its job.
+  const ticketAcctNbs = sel.getVSPTrackedTicketsCommitAccounts(getState());
+  ticketAcctNbs.forEach(setUnlockable);
+
+  // Return the filtered set of accounts.
+  return accts.filter((acctNumber) => !unlockableAccts[acctNumber]);
+};
+
 // unlockAcctAndExecFn unlocks the account and performs some action. Locks the
 // account in case of success or error, if leaveUnlock is not informed.
 export const unlockAcctAndExecFn = (
@@ -1089,16 +1142,11 @@ export const unlockAcctAndExecFn = (
 ) => async (dispatch, getState) => {
   let res = null;
   let fnError = null;
-  dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
   const walletService = sel.walletService(getState());
-
-  // sanity checks
   const accounts = sel.balances(getState());
-  // do not allow locking of the dex account, as it isn't supposed to lock.
-  const dexAccountName = sel.dexAccount(getState());
-  const dexAccount = accounts.find(
-    (acct) => acct.accountName === dexAccountName
-  );
+
+  // Verify all accounts that will be unlocked exist and are encrypted with an
+  // individual passphrase.
   accts.forEach((acctNum) => {
     const account = accounts.find((acct) => acct.accountNumber === acctNum);
     if (!account) {
@@ -1109,28 +1157,39 @@ export const unlockAcctAndExecFn = (
     }
   });
 
-  // unlock wallet
+  // Helper function to relock the needed accounts.
+  const relockAccounts = async () => {
+    try {
+      const lockableAccts = filterUnlockableAccounts(accts, getState);
+      await Promise.all(
+        lockableAccts.map((acctNumber) =>
+          wallet.lockAccount(walletService, acctNumber)
+        )
+      );
+    } catch (error) {
+      console.error("Unable to re-lock accounts", error);
+      throw error;
+    }
+  };
+
+  // Unlock all needed accounts.
+  dispatch({ type: UNLOCKANDEXECFN_ATTEMPT });
+  dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
   try {
     await Promise.all(
-      accts.map(async (acctNumber) => {
-        await wallet.unlockAccount(walletService, passphrase, acctNumber);
-      })
+      accts.map((acctNumber) =>
+        wallet.unlockAccount(walletService, passphrase, acctNumber)
+      )
     );
     dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
-    await Promise.all(
-      // Need to try and lock all since 1 may have unlocked but not another?
-      accts.map(async (acctNumber) => {
-        if (!dexAccount || acctNumber !== dexAccount.accountNumber) {
-          try {
-            await wallet.lockAccount(walletService, parseInt(acctNumber));
-          } catch (e) {
-            console.log("account lock failed", e);
-          }
-        }
-      })
-    );
+    try {
+      await relockAccounts();
+    } catch (error) {
+      dispatch({ type: LOCKACCOUNT_FAILED, error });
+    }
     dispatch({ type: UNLOCKACCOUNT_FAILED, error });
+    dispatch({ type: UNLOCKANDEXECFN_FAILED, error });
     throw error;
   }
 
@@ -1142,34 +1201,32 @@ export const unlockAcctAndExecFn = (
   }
 
   if (leaveUnlock) {
+    if (fnError) {
+      dispatch({ type: UNLOCKANDEXECFN_FAILED, error: fnError });
+      throw fnError;
+    }
+    dispatch({ type: UNLOCKANDEXECFN_SUCCESS, leaveUnlock });
     return res;
   }
 
   // lock account
   try {
-    await Promise.all(
-      accts.map(async (acctNumber) => {
-        if (!dexAccount || acctNumber !== dexAccount.accountNumber) {
-          try {
-            await wallet.lockAccount(walletService, parseInt(acctNumber));
-          } catch (e) {
-            console.log("account lock failed", e);
-          }
-        }
-      })
-    );
+    await relockAccounts();
     dispatch({ type: LOCKACCOUNT_SUCCESS });
   } catch (error) {
     // no need to lock as unlock errored.
     dispatch({ type: LOCKACCOUNT_FAILED, error });
+    dispatch({ type: UNLOCKANDEXECFN_FAILED, error });
     throw error;
   }
 
   // return fn error in case some happened.
   if (fnError !== null) {
+    dispatch({ type: UNLOCKANDEXECFN_FAILED, error: fnError });
     throw fnError;
   }
 
+  dispatch({ type: UNLOCKANDEXECFN_SUCCESS, leaveUnlock });
   return res;
 };
 
@@ -1179,20 +1236,10 @@ export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => (
   dispatch,
   getState
 ) => {
-  dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
-  const accounts = sel.balances(getState());
-  const accountUnlocks = [];
-  accounts.forEach((acct) => {
-    // just skip if imported account.
-    if (acct.accountNumber >= Math.pow(2, 31) - 1 || !acct.encrypted) {
-      return;
-    }
-    accountUnlocks.push(acct.accountNumber);
-  });
-
-  return dispatch(
-    unlockAcctAndExecFn(passphrase, accountUnlocks, fn, leaveUnlock)
-  );
+  const unlockable = sel
+    .unlockableAccounts(getState())
+    .map((acct) => acct.accountNumber);
+  return dispatch(unlockAcctAndExecFn(passphrase, unlockable, fn, leaveUnlock));
 };
 
 export const lockAccount = (acctNumber) => async (dispatch, getState) => {
@@ -1229,4 +1276,65 @@ export const checkAllAccountsEncrypted = () => (dispatch, getState) => {
   });
 
   return allEncrypted;
+};
+
+export const MONITORLOCKACBLEACCOUNTS_STARTED =
+  "MONITORLOCKACBLEACCOUNTS_STARTED";
+export const MONITORLOCKACBLEACCOUNTS_STOPPED =
+  "MONITORLOCKACBLEACCOUNTS_STOPPED";
+
+// monitorLockableAccounts monitors when changes happen in the app state that
+// allow locking some wallet accounts.
+export const monitorLockableAccounts = () => (dispatch, getState) => {
+  const checkFunc = async () => {
+    // Check if the lst of VSP tracked ticket accounts changed and lock any
+    // accounts that are no longer needed.
+    const oldTicketAccounts = sel.getVSPTrackedTicketsCommitAccounts(
+      getState()
+    );
+    await dispatch(getVSPTrackedTickets());
+    const newTicketAccounts = sel.getVSPTrackedTicketsCommitAccounts(
+      getState()
+    );
+    const toLockAccts = oldTicketAccounts.filter(
+      (acct) => !(acct in newTicketAccounts)
+    );
+
+    // Don't attempt to relock if there's a function running that depends on
+    // unlocked accounts.
+    if (getState().control.unlockAndExecFnRunning) return;
+
+    // Attempt to relock all accounts that can now be locked.
+    const lockable = filterUnlockableAccounts(toLockAccts, getState);
+    if (lockable.length === 0) return;
+    const walletService = sel.walletService(getState());
+    dispatch({ type: LOCKACCOUNT_ATTEMPT, accounts: lockable });
+    try {
+      await Promise.all(
+        lockable.map(async (acctNumber) => {
+          try {
+            await wallet.lockAccount(walletService, acctNumber);
+          } catch (error) {
+            // Only throw locking error if it's not due to account already locked.
+            if (String(error).indexOf("account is already locked") === -1) {
+              throw error;
+            }
+          }
+        })
+      );
+      dispatch({ type: LOCKACCOUNT_SUCCESS, accounts: lockable });
+    } catch (error) {
+      console.error("Unable to re-lock accounts", error);
+      dispatch({ type: LOCKACCOUNT_FAILED, error });
+    }
+  };
+
+  const timer = setInterval(checkFunc, 30 * 1000);
+  dispatch({ timer, type: MONITORLOCKACBLEACCOUNTS_STARTED });
+};
+
+export const stopMonitorLockableAccounts = () => (dispatch, getState) => {
+  const { monitorLockableAccountsTimer } = getState().control;
+  monitorLockableAccountsTimer && clearInterval(monitorLockableAccountsTimer);
+  dispatch({ type: MONITORLOCKACBLEACCOUNTS_STOPPED });
 };
