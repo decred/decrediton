@@ -184,6 +184,10 @@ export const syncVSPTicketsRequest = ({
   } catch (error) {
     dispatch({ type: SYNCVSPTICKETS_FAILED, error });
   }
+
+  // Finally, ask the wallet to reprocess existing tickets. We do this via a
+  // setTimeout to avoid stalling the return of this function.
+  setTimeout(() => dispatch(processManagedTickets(passphrase), 500));
 };
 
 // getTicketSignature receives the tickethash and request and sign it using the
@@ -717,8 +721,6 @@ export const processManagedTickets = (passphrase) => async (
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
-    console.log("YYYYYY gonna start sleeping");
-    await new Promise((ok) => setTimeout(ok, 30000));
     dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
   } catch (error) {
     dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
