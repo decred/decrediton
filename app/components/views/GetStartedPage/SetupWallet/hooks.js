@@ -28,7 +28,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
     goToHome,
     onProcessUnmanagedTickets,
     isProcessingUnmanaged,
-    isProcessingManaged
+    isProcessingManaged,
+    needsProcessManagedTickets
   } = useDaemonStartup();
 
   const { mixedAccount } = useAccounts();
@@ -73,8 +74,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
 
     let component, hasSoloTickets;
 
-    // check if we have live tickets.
-    const hasLive = Object.keys(stakeTransactions).some((hash) => {
+    // Check if we have live, vspd-based tickets.
+    const hasLiveVSPdTickets = Object.keys(stakeTransactions).some((hash) => {
       const tx = stakeTransactions[hash];
       // check if the wallet has at least one vsp live ticket.
       if (
@@ -160,7 +161,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
         break;
       case "gettingVSPInfo":
         // if no live tickets, we can skip it.
-        if (!hasLive) {
+        if (!hasLiveVSPdTickets) {
           sendContinue();
         } else {
           component = h(DecredLoading);
@@ -170,7 +171,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
         break;
       case "processingManagedTickets":
         // if no live tickets, we can skip it.
-        if (!hasLive) {
+        if (!hasLiveVSPdTickets || !needsProcessManagedTickets) {
           sendContinue();
         } else {
           component = h(ProcessManagedTickets, {
@@ -193,7 +194,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
                 id="getstarted.processManagedTickets.description"
                 m={`Your wallet appears to have live tickets. Processing managed
                 tickets confirms with the VSPs that all of your submitted tickets
-                are currently known and paid for by the VSPs. If you've already 
+                are currently known and paid for by the VSPs. If you've already
                 confirmed your tickets then you may skip this step.`}
               />
             )
@@ -266,6 +267,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     sendContinue,
     isProcessingManaged,
     isProcessingUnmanaged,
+    needsProcessManagedTickets,
     onProcessUnmanagedTickets,
     onSendBack,
     onSendError,

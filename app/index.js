@@ -86,7 +86,8 @@ const initialState = {
     processUnmanagedTicketsError: null,
     processManagedTicketsAttempt: false,
     processManagedTicketsError: null,
-    trackedTickets: {}
+    trackedTickets: {},
+    needsProcessManagedTickets: true
   },
   daemon: {
     networkMatch: false,

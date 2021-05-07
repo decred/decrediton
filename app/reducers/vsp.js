@@ -28,6 +28,7 @@ import {
   STOPTICKETBUYER_SUCCESS
 } from "actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
+import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
 export default function vsp(state = {}, action) {
   switch (action.type) {
@@ -159,10 +160,16 @@ export default function vsp(state = {}, action) {
         ...state,
         trackedTickets: action.trackedTickets
       };
+    case WALLET_LOADER_SETTINGS:
+      return {
+      ...state,
+      needsProcessManagedTickets: action.needsVSPdProcessManaged
+    };
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
-        trackedTickets: {}
+        trackedTickets: {},
+        needsProcessManagedTickets: true
       };
     default:
       return state;
