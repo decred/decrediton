@@ -13,7 +13,7 @@
 
 .proposalList {
   margin-top: 15px;
-  margin-left: 85px;
+  margin-left: 95px;
   padding-bottom: 50px;
   display: block;
 }
@@ -24,6 +24,19 @@
   padding-bottom: 50px;
   overflow-y: auto;
   height: calc(100% - 50px);
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 860px;
+  margin-top: 22px;
+}
+
+.scrollWrapper {
+  height: calc(100% - 54px);
+  overflow: auto;
 }
 
 @media screen and (max-width: 768px) {

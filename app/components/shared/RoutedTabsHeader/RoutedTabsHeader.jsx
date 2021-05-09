@@ -13,7 +13,7 @@ export const RoutedTab = (path, link, className, activeClassName) => ({
   activeClassName
 });
 
-const RoutedTabsHeader = ({ tabs, tabsClassName, caret }) => {
+const RoutedTabsHeader = ({ tabs, tabsClassName, caret, activeCaretClassName }) => {
   const { uiAnimations, caretLeft, caretWidth, nodes } = useRoutedTabsHeader();
 
   const getAnimatedCaret = useCallback(() => {
@@ -26,12 +26,12 @@ const RoutedTabsHeader = ({ tabs, tabsClassName, caret }) => {
       <Motion style={caretStyle}>
         {(style) => (
           <div className={styles.tabCaret}>
-            <div className={styles.active} style={style} />
+            <div className={classNames(styles.active, activeCaretClassName)} style={style} />
           </div>
         )}
       </Motion>
     );
-  }, [caretLeft, caretWidth]);
+  }, [caretLeft, caretWidth, activeCaretClassName]);
 
   const getStaticCaret = useCallback(() => {
     const style = {

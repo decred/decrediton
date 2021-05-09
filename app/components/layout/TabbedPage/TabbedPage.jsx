@@ -69,7 +69,8 @@ const TabbedPage = ({
   tabsClassName,
   tabContentClassName,
   onChange,
-  caret
+  caret,
+  activeCaretClassName
 }) => {
   const location = useSelector(sel.location);
   const uiAnimations = useSelector(sel.uiAnimations);
@@ -133,6 +134,7 @@ const TabbedPage = ({
           tabs={tabHeaders}
           tabsClassName={tabsClassName}
           caret={caret}
+          activeCaretClassName={activeCaretClassName}
         />
       </div>
 

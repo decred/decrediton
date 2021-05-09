@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, useCallback } from "react";
+import { useState, useEffect, useReducer, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
@@ -6,6 +6,7 @@ import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "hooks";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
+import { useTheme, DEFAULT_DARK_THEME_NAME } from "pi-ui";
 
 const MAX_PAGE_SIZE = 20; // TODO: Get proposallistpagesize from politeia's request: /v1/policy
 
@@ -43,10 +44,36 @@ export function useProposalsTab() {
 
 export function useProposalsListItem(token) {
   const tsDate = useSelector((state) => sel.tsDate(state));
+  const isTestnet = useSelector(sel.isTestNet);
+  const { themeName } = useTheme();
+  const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
+
+  const proposals = useSelector(sel.proposals);
+  const proposalsDetails = useSelector(sel.proposalsDetails);
+  const viewedProposalDetails = useMemo(() => proposalsDetails[token], [
+    token,
+    proposalsDetails
+  ]);
+
+  const linkedProposal = useMemo(
+    () =>
+      viewedProposalDetails?.linkto &&
+      proposals.finishedVote.find(
+        (proposal) => viewedProposalDetails.linkto === proposal.token
+      ),
+    [proposals, viewedProposalDetails]
+  );
+
   const dispatch = useDispatch();
   const viewProposalDetailsHandler = () =>
     dispatch(gov.viewProposalDetails(token));
-  return { tsDate, viewProposalDetailsHandler };
+  return {
+    tsDate,
+    viewProposalDetailsHandler,
+    isTestnet,
+    isDarkTheme,
+    linkedProposal
+  };
 }
 
 export function useProposalsList(tab) {

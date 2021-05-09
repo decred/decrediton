@@ -4,7 +4,7 @@ import styles from "./Join.module.css";
 
 const DefaultSeparator = () => (
   <span
-    className={classNames(styles.separator, "margin-left-s", "margin-right-s")}>
+    className={classNames(styles.separator, "margin-left-xs", "margin-right-xs")}>
     •
   </span>
 );

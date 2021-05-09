@@ -1,8 +1,9 @@
 import AgendaOverview from "./AgendaOverview/AgendaOverview";
-import { ExternalLink } from "shared";
+import { PoliteiaLink as PiLink } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import { classNames } from "pi-ui";
+import PageHeader from "../PageHeader";
 import styles from "./VotingPrefs.module.css";
+import { Button } from "pi-ui";
 
 const VotingPrefs = ({
   stakePool,
@@ -16,29 +17,35 @@ const VotingPrefs = ({
   isLoading
 }) => (
   <>
-    <div className={classNames(styles.header, "flex-row")}>
-      <div>
-        <div className={styles.title}>
-          <T id="votingPreferences.title" m="Consensus Changes" />
-        </div>
-        <p className={styles.description}>
+    <div className={styles.headerWrapper}>
+      <PageHeader
+        title={<T id="votingPreferences.title" m="Consensus Changes" />}
+        description={
           <T
             id="votingPreferences.description"
-            m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets."
+            m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets. You can know more about Consensus Rule Voting at {link}"
+            values={{
+              link: (
+                <PiLink
+                  className={styles.proposalsLink}
+                  hrefProp="https://docs.decred.org/getting-started/user-guides/agenda-voting/">
+                  docs.decred.org
+                </PiLink>
+              )
+            }}
           />
-        </p>
-      </div>
-      <div className={styles.links}>
-        <ExternalLink
-          className={styles.infoButton}
-          href="https://docs.decred.org/getting-started/user-guides/agenda-voting/"
-        />
-        <ExternalLink
-          className={styles.dashboardButton}
-          href="https://voting.decred.org">
-          <T id="votingPreferences.dashboard" m="Voting Dashboard" />
-        </ExternalLink>
-      </div>
+        }
+        optionalButton={
+          <div>
+            <PiLink
+              className={styles.politeiaButton}
+              CustomComponent={Button}
+              href="https://voting.decred.org">
+              <T id="votingPreferences.dashboard" m="Voting Dashboard" />
+            </PiLink>
+          </div>
+        }
+      />
     </div>
     <div className={styles.agendaWrapper}>
       {allAgendas.length > 0 ? (

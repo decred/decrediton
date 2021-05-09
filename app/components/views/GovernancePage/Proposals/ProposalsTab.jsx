@@ -1,53 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
-import { Button, Tooltip, classNames } from "pi-ui";
+import { Button, Tooltip } from "pi-ui";
 import ProposalsList from "./ProposalsList/ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";
 import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
-
-const PageHeader = ({ isTestnet, onRefreshProposals }) => (
-  <div className={classNames(styles.header, "flex-row")}>
-    {/* TODO: wrapp this 'header' in a component same header is used in VotingPrefs.jsx */}
-    <div>
-      <div className={styles.title}>
-        <T id="proposals.community.title" m="Proposals" />
-      </div>
-      <div className={styles.description}>
-        <T
-          id="proposals.community.descr"
-          m="Voting on community proposals allows you to have a say on how the project treasury is spent.
-          Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}"
-          values={{
-            link: (
-              <PiLink className={styles.proposalsLink}>
-                proposals.decred.org
-              </PiLink>
-            )
-          }}
-        />
-      </div>
-    </div>
-    <div className={styles.links}>
-      <PiLink
-        className={styles.politeiaButton}
-        CustomComponent={Button}
-        path="/proposals/new"
-        isTestnet={isTestnet}>
-        <T id="proposals.community.createLink" m="Create a Proposal" />
-      </PiLink>
-      <Tooltip
-        content={
-          <T id="proposals.community.refreshProposals" m="Refresh Proposals" />
-        }
-        placement="left">
-        <div className={styles.refreshProposals} onClick={onRefreshProposals} />
-      </Tooltip>
-    </div>
-  </div>
-);
+import PageHeader from "../PageHeader";
+import { SmallButton } from "buttons";
 
 const ListLink = ({ count, children }) => (
   <>
@@ -72,19 +33,68 @@ const ProposalsTab = () => {
   }
   return (
     <TabbedPage
-      caret={<div />}
       header={
-        <PageHeader {...{ isTestnet, onRefreshProposals: compareInventory }} />
+        <PageHeader
+          title={
+            <>
+              <div>
+                <T id="proposals.community.title" m="Proposals" />
+              </div>
+              <div>
+                <Tooltip
+                  className={styles.refreshProposalsTooltip}
+                  contentClassName={styles.refreshProposalsTooltipContent}
+                  content={
+                    <T
+                      id="proposals.community.refreshProposals"
+                      m="Refresh Proposals"
+                    />
+                  }
+                  placement="right">
+                  <SmallButton
+                    className={styles.refreshProposals}
+                    onClick={compareInventory}
+                  />
+                </Tooltip>
+              </div>
+            </>
+          }
+          description={
+            <T
+              id="proposals.community.descr"
+              m="Voting on community proposals allows you to have a say on how the project treasury is spent.
+                    Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}"
+              values={{
+                link: (
+                  <PiLink className={styles.proposalsLink}>
+                    proposals.decred.org
+                  </PiLink>
+                )
+              }}
+            />
+          }
+          optionalButton={
+            <div>
+              <PiLink
+                className={styles.politeiaButton}
+                CustomComponent={Button}
+                path="/proposals/new"
+                isTestnet={isTestnet}>
+                <T id="proposals.community.createLink" m="Create a Proposal" />
+              </PiLink>
+            </div>
+          }
+        />
       }
       headerClassName={styles.tabsHeader}
       tabsClassName={styles.tabs}
-      tabContentClassName={styles.tabContent}>
+      tabContentClassName={styles.tabContent}
+      activeCaretClassName={styles.activeCaret}>
       <Tab
         path="/governance/proposals/prevote"
         component={h(ProposalsList, { tab })}
         key="preVote"
         className={styles.tab}
-        activeClassName={styles.activeTab}
         link={
           <ListLink count={preVoteCount}>
             <T id="proposals.statusLinks.preVote" m="In Discussion" />
@@ -96,7 +106,6 @@ const ProposalsTab = () => {
         component={h(ProposalsList, { tab })}
         key="activevote"
         className={styles.tab}
-        activeClassName={styles.activeTab}
         link={
           <ListLink count={activeVoteCount}>
             <T id="proposals.statusLinks.underVote" m="Voting" />
@@ -108,7 +117,6 @@ const ProposalsTab = () => {
         component={h(ProposalsList, { finishedVote: true, tab })}
         key="activevote"
         className={styles.tab}
-        activeClassName={styles.activeTab}
         link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}
       />
       <Tab
@@ -116,7 +124,6 @@ const ProposalsTab = () => {
         component={h(ProposalsList, { tab })}
         key="abandoned"
         className={styles.tab}
-        activeClassName={styles.activeTab}
         link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}
       />
     </TabbedPage>
