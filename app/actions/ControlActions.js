@@ -408,7 +408,6 @@ export const newPurchaseTicketsAttempt = (
       unlockAcctAndExecFn(passphrase, accts, async () => {
         // Since we're about to purchase a ticket, ensure on next startup we'll
         // process managed tickets.
-        console.log("XXXXXXX setting needs process managed true");
         dispatch(setNeedsVSPdProcessTickets(true));
 
         const res = await wallet.purchaseTicketsV3(
@@ -1320,18 +1319,11 @@ export const monitorLockableAccounts = () => (dispatch, getState) => {
     //  next wallet execution.
     const canDisableProcessManaged = sel.canDisableProcessManaged(getState());
     const getRunningIndicator = sel.getRunningIndicator(getState());
-    console.log(
-      "YYYYYYY canDisableProcess:",
-      canDisableProcessManaged,
-      "running indicator",
-      getRunningIndicator
-    );
     if (
       newTicketAccounts.length === 0 &&
       canDisableProcessManaged &&
       !getRunningIndicator
     ) {
-      console.log("XXXXXXX setting needs process managed false");
       dispatch(setNeedsVSPdProcessTickets(false));
     }
 
