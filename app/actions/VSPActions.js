@@ -184,6 +184,10 @@ export const syncVSPTicketsRequest = ({
   } catch (error) {
     dispatch({ type: SYNCVSPTICKETS_FAILED, error });
   }
+
+  // Finally, ask the wallet to reprocess existing tickets. We do this via a
+  // setTimeout to avoid stalling the return of this function.
+  setTimeout(() => dispatch(processManagedTickets(passphrase), 500));
 };
 
 // getTicketSignature receives the tickethash and request and sign it using the
@@ -675,68 +679,61 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 
 // processManagedTickets gets all vsp and check for tickets which still not
 // synced, and sync them.
-export const processManagedTickets = (passphrase) => (dispatch, getState) =>
-  new Promise((resolve, reject) => {
-    const asyncProcess = async () => {
-      const walletService = sel.walletService(getState());
-      const availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
-      try {
-        dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
-        let feeAccount, changeAccount;
-        const mixedAccount = sel.getMixedAccount(getState());
-        if (mixedAccount) {
-          feeAccount = mixedAccount;
-          changeAccount = sel.getChangeAccount(getState());
-        } else {
-          feeAccount = sel.defaultSpendingAccount(getState()).value;
-          changeAccount = sel.defaultSpendingAccount(getState()).value;
-        }
-        await dispatch(
-          unlockAllAcctAndExecFn(passphrase, async () => {
-            // Process all managed tickets on all VSPs.
-            await Promise.all(
-              availableVSPsPubkeys.map((vsp) =>
-                wallet.processManagedTickets(
-                  walletService,
-                  vsp.host,
-                  vsp.pubkey,
-                  feeAccount,
-                  changeAccount
-                )
-              )
-            );
-
-            // Update the list of dcrwallet tracked VSP tickets. This figures out
-            // which accounts need to be left unlocked.
-            await dispatch(getVSPTrackedTickets());
-          })
+export const processManagedTickets = (passphrase) => async (
+  dispatch,
+  getState
+) => {
+  const walletService = sel.walletService(getState());
+  const availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
+  try {
+    dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
+    let feeAccount, changeAccount;
+    const mixedAccount = sel.getMixedAccount(getState());
+    if (mixedAccount) {
+      feeAccount = mixedAccount;
+      changeAccount = sel.getChangeAccount(getState());
+    } else {
+      feeAccount = sel.defaultSpendingAccount(getState()).value;
+      changeAccount = sel.defaultSpendingAccount(getState()).value;
+    }
+    await dispatch(
+      unlockAllAcctAndExecFn(passphrase, async () => {
+        // Process all managed tickets on all VSPs.
+        await Promise.all(
+          availableVSPsPubkeys.map((vsp) =>
+            wallet.processManagedTickets(
+              walletService,
+              vsp.host,
+              vsp.pubkey,
+              feeAccount,
+              changeAccount
+            )
+          )
         );
 
-        // get vsp tickets fee status errored so we can resync them
-        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
-        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
-        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
-        dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
-        resolve(true);
-      } catch (error) {
-        dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
-        if (
-          String(error).indexOf(
-            "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
-          ) > 0
-        ) {
-          reject("Invalid private passphrase, please try again.");
-          return;
-        }
-        reject(error);
-        return;
-      }
-    };
+        // Update the list of dcrwallet tracked VSP tickets. This figures out
+        // which accounts need to be left unlocked.
+        await dispatch(getVSPTrackedTickets());
+      })
+    );
 
-    asyncProcess()
-      .then((r) => resolve(r))
-      .catch((error) => reject(error));
-  });
+    // get vsp tickets fee status errored so we can resync them
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+    dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
+  } catch (error) {
+    dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
+    if (
+      String(error).indexOf(
+        "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
+      ) > 0
+    ) {
+      throw "Invalid private passphrase, please try again.";
+    }
+    throw error;
+  }
+};
 
 export const PROCESSUNMANAGEDTICKETS_ATTEMPT =
   "PROCESSUNMANAGEDTICKETS_ATTEMPT";
@@ -880,4 +877,9 @@ export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
     type: SET_AUTOBUYER_SETTINGS,
     autobuyerSettings
   });
+};
+
+export const SET_CANDISABLEPROCESSMANAGED = "SET_CANDISABLEPROCESSMANAGED";
+export const setCanDisableProcessManaged = (value) => (dispatch) => {
+  dispatch({ type: SET_CANDISABLEPROCESSMANAGED, value });
 };

@@ -3,6 +3,7 @@ import { getWalletCfg, getGlobalCfg } from "config";
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
 import * as wallet from "wallet";
+import * as sel from "selectors";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, backToCredentials } from "actions/DaemonActions";
 import {
@@ -204,4 +205,11 @@ export const updateStateVoteSettingsChanged = (settings) => (
   } else {
     dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
   }
+};
+
+export const setNeedsVSPdProcessTickets = (value) => (dispatch, getState) => {
+  const walletName = sel.getWalletName(getState());
+  const isTestNet = sel.isTestNet(getState());
+  const walletConfig = getWalletCfg(isTestNet, walletName);
+  walletConfig.set(configConstants.NEEDS_VSPD_PROCESS_TICKETS, value);
 };

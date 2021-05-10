@@ -449,6 +449,9 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
       const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
       const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
+      const needsVSPdProcessManaged = walletCfg.get(
+        cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
+      );
 
       const autobuyerSettings = walletCfg.get(cfgConstants.AUTOBUYER_SETTINGS);
       dispatch({
@@ -491,7 +494,8 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         enableDex,
         dexAccount,
         rpcCreds,
-        btcWalletName
+        btcWalletName,
+        needsVSPdProcessManaged
       });
       selectedWallet.value.isTrezor && dispatch(enableTrezor());
       await dispatch(getVersionServiceAttempt());
