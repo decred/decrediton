@@ -917,6 +917,14 @@ export const getAvailableVSPs = get(["vsp", "availableVSPs"]);
 export const getDiscoverAvailableVSPError = get(["vsp", "availableVSPsError"]);
 
 export const isSyncingTickets = get(["vsp", "syncVSPRequestAttempt"]);
+export const needsProcessManagedTickets = get([
+  "vsp",
+  "needsProcessManagedTickets"
+]);
+export const canDisableProcessManaged = get([
+  "vsp",
+  "canDisableProcessManaged"
+]);
 
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);

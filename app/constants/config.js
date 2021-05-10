@@ -84,6 +84,7 @@ export const DEXWALLET_RPCUSERNAME = "dexwallet_rpcuser";
 export const DEXWALLET_RPCPASSWORD = "dexwallet_rpcpass";
 export const DEXWALLET_HOSTPORT = "dexwallet_host";
 export const BTCWALLET_NAME = "btcwallet_name";
+export const NEEDS_VSPD_PROCESS_TICKETS = "needs_vspd_process_tickets";
 
 export const WALLET_INITIAL_VALUE = {
   [ENABLE_TICKET_BUYER]: false,
@@ -124,7 +125,11 @@ export const WALLET_INITIAL_VALUE = {
   [AUTOBUYER_SETTINGS]: null,
   // STAKEPOOLS is a legacy code which can be deleted after stopping giving
   // support for old vsp versions.
-  [STAKEPOOLS]: []
+  [STAKEPOOLS]: [],
+
+  // Force as true to ensure wallets with tickets prior to when this config was
+  // introduced trigger a view of the "process managed tickets" page.
+  [NEEDS_VSPD_PROCESS_TICKETS]: true
 };
 
 export const INITIAL_VALUES = {

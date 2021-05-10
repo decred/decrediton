@@ -19,7 +19,8 @@ import {
   SETVSPDVOTECHOICE_SUCCESS,
   SET_AUTOBUYER_SETTINGS,
   GETVSPSPUBKEYS_SUCCESS,
-  GETVSPTRACKEDTICKETS_SUCCESS
+  GETVSPTRACKEDTICKETS_SUCCESS,
+  SET_CANDISABLEPROCESSMANAGED
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -28,6 +29,7 @@ import {
   STOPTICKETBUYER_SUCCESS
 } from "actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
+import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
 export default function vsp(state = {}, action) {
   switch (action.type) {
@@ -159,10 +161,22 @@ export default function vsp(state = {}, action) {
         ...state,
         trackedTickets: action.trackedTickets
       };
+    case SET_CANDISABLEPROCESSMANAGED:
+      return {
+        ...state,
+        canDisableProcessManaged: action.value
+      };
+    case WALLET_LOADER_SETTINGS:
+      return {
+        ...state,
+        needsProcessManagedTickets: action.needsVSPdProcessManaged,
+        canDisableProcessManaged: true
+      };
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
-        trackedTickets: {}
+        trackedTickets: {},
+        needsProcessManagedTickets: true
       };
     default:
       return state;
