@@ -88,7 +88,7 @@ import {
   inputMenu,
   selectionMenu
 } from "./main_dev/templates";
-import { readFileBackward } from "./helpers";
+import { readFileBackward } from "./helpers/files";
 import electron from "electron";
 import { isString } from "./fp";
 import {

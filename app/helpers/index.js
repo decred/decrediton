@@ -7,7 +7,6 @@ export * from "./arrays";
 export * from "./dom.js";
 export * from "./transactions";
 export * from "./msgTx";
-export * from "./files";
 export * from "./politeia";
 export * from "./scripts";
 export * from "./tickets";

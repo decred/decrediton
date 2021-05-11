@@ -35,7 +35,8 @@ import { concat, isString } from "../fp";
 import webSocket from "ws";
 import path from "path";
 import ini from "ini";
-import { makeRandomString, makeFileBackup } from "helpers";
+import { makeRandomString } from "helpers";
+import { makeFileBackup } from "helpers/files";
 import { DEX_LOCALPAGE } from "./externalRequests";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
