@@ -47,9 +47,9 @@ const Documentation = ({ name, className }) => {
   return (
     <>
       <ReactMarkdown
-        source={content}
+        children={content}
         className={classNames(styles.documentation, className)}
-        renderers={{ link: renderDocLink }}
+        components={{ a: renderDocLink }}
       />
       {unavailable}
     </>
