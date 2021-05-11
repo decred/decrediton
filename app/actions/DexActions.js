@@ -1,7 +1,6 @@
 import * as sel from "selectors";
 import * as dex from "wallet/dex";
 import * as wallet from "wallet";
-import { getWalletPath } from "main_dev/paths";
 import { addAllowedExternalRequest } from "./SettingsActions";
 import { getNextAccountAttempt } from "./ControlActions";
 import { closeWalletRequest } from "./WalletLoaderActions";
@@ -57,7 +56,7 @@ export const startDex = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = wallet.getWalletPath(isTestnet, walletName);
 
   try {
     const res = await dex.start(walletPath, isTestnet);

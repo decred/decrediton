@@ -207,6 +207,6 @@ export const updateStateVoteSettingsChanged = (settings) => (
 export const setNeedsVSPdProcessTickets = (value) => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const isTestNet = sel.isTestNet(getState());
-  const walletConfig = getWalletCfg(isTestNet, walletName);
+  const walletConfig = wallet.getWalletCfg(isTestNet, walletName);
   walletConfig.set(configConstants.NEEDS_VSPD_PROCESS_TICKETS, value);
 };

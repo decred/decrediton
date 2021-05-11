@@ -1,7 +1,6 @@
 import * as ln from "wallet/ln";
 import * as sel from "selectors";
 import * as wallet from "wallet";
-import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
 import { isNumber } from "lodash";
@@ -54,7 +53,7 @@ export const startDcrlnd = (
     daemon: { walletName }
   } = getState();
   const isTestnet = sel.isTestNet(getState());
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = wallet.getWalletPath(isTestnet, walletName);
   const walletPort = port;
   const lnCfg = dispatch(getLNWalletConfig());
 
@@ -918,7 +917,7 @@ const getScbInfo = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = wallet.getWalletPath(isTestnet, walletName);
   const scbInfo = await ln.scbInfo(walletPath, isTestnet);
   dispatch({
     scbPath: scbInfo.channelBackupPath,

@@ -1,5 +1,4 @@
 import path from "path";
-import { getWalletPath } from "main_dev/paths";
 import {
   syncCancel,
   setSelectedWallet,
@@ -392,7 +391,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
           rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
           rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
           rpcCert: path.join(
-            getWalletPath(isTestnet, selectedWallet.value.wallet),
+            wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
             "rpc.cert"
           )
         };
@@ -715,7 +714,7 @@ export const getDexLogs = () => (dispatch, getState) =>
     const {
       daemon: { walletName }
     } = getState();
-    const walletPath = getWalletPath(isTestNet(getState()), walletName);
+    const walletPath = wallet.getWalletPath(isTestNet(getState()), walletName);
     wallet
       .getDexLogs(walletPath)
       .then((logs) => resolve(logs))

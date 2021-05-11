@@ -18,7 +18,6 @@ import {
   getBestBlockHeightAttempt
 } from "./ClientActions";
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
-import { getWalletPath } from "main_dev/paths";
 import { isTestNet, trezorDevice } from "selectors";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { push as pushHistory } from "connected-react-router";
@@ -355,7 +354,7 @@ export const startRpcRequestFunc = (privPass, isRetry) => (
               );
             } else {
               dispatch({
-                error: `${status}.  You may need to edit ${getWalletPath(
+                error: `${status}.  You may need to edit ${wallet.getWalletPath(
                   isTestNet(getState()),
                   walletName
                 )} and try again`,

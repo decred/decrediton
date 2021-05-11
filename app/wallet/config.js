@@ -1,4 +1,5 @@
 import * as cfg from "config";
+import * as paths from "main_dev/paths";
 
 export const getWalletCfg = cfg.getWalletCfg;
 export const getGlobalCfg = cfg.getGlobalCfg;
@@ -11,3 +12,4 @@ export const getRemoteCredentials = cfg.getRemoteCredentials;
 export const setRemoteCredentials = cfg.setRemoteCredentials;
 export const getDaemonIsAdvanced = cfg.getDaemonIsAdvanced;
 export const getIsSpv = cfg.getIsSpv;
+export const getWalletPath = paths.getWalletPath;
