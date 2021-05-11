@@ -6,20 +6,20 @@ import {
   STSchnorrSecp256k1,
   ripemd160Size
 } from "constants";
+import { inElectronMain, inElectronPreload } from "./electron";
 const bs58 = require("bs58");
 
-let createBlakeHash;
-if (process.env.NODE_ENV === "test") {
-  // Node 10.x errors when trying to import the native blake-hash during unit
-  // test. As far as I (matheusd) can see, this only happens during test, and
-  // isn't triggered in runtime, even if the native module does run. So for the
-  // moment, I'm resorting to running the js version during tests. Ideally, this
-  // needs to be solved in the upstream blake-hash so that we can also use the
-  // native version in tests.
-  createBlakeHash = require("blake-hash/js");
+// This file is imported on all electron contexts, so we need to select the
+// correct version of the dependency. On preload and the main process, load the
+// native module directly. On the renderer process, load the preload-exported
+// version via the shim.
+let blake256;
+if (inElectronPreload || inElectronMain) {
+  blake256 = require("../wallet/crypto").blake256;
 } else {
-  createBlakeHash = require("blake-hash");
+  blake256 = require("wallet-preload-shim").walletCrypto.blake256;
 }
+
 const bs58checkBase = require("bs58check/base");
 
 export const ERR_INVALID_ADDR_EMPTY = "ERR_INVALID_ADDR_EMPTY";
@@ -41,8 +41,7 @@ export const ERR_INVALID_ADDR_CHECKSUM = "ERR_INVALID_ADDR_CHECKSUM";
 // _blake256x2 gets a buffer and calculate its checksum twice with blake256.
 const _blake256x2 = (buffer) => _blake256(_blake256(buffer));
 
-export const _blake256 = (buffer) =>
-  createBlakeHash("blake256").update(buffer).digest();
+export const _blake256 = (buffer) => blake256().update(buffer).digest();
 
 export function isValidAddress(addr, network) {
   if (!addr || !addr.trim().length) return ERR_INVALID_ADDR_EMPTY;

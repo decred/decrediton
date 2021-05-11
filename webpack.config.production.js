@@ -10,6 +10,7 @@ import merge from "webpack-merge";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import baseConfig from "./webpack.config.base";
+const webpack = require("webpack");
 
 const config = merge(baseConfig, {
   // Generate code for electron's ipc-renderer process.
@@ -47,6 +48,11 @@ const config = merge(baseConfig, {
     new HtmlWebpackPlugin({
       filename: "app.html",
       template: "app/app.development.html"
+    }),
+
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("development"),
+      "__ELECTRON_ENV": JSON.stringify("renderer")
     })
   ],
 

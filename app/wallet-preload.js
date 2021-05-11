@@ -1,11 +1,13 @@
 import * as fs from "wallet/fs";
 import * as wallet from "wallet";
+import * as walletCrypto from "wallet/crypto";
 import { contextBridge } from "electron";
 
 // Elements in this object define the public API exported by the preload script.
 const api = {
   fs: fs,
-  wallet: wallet
+  wallet: wallet,
+  walletCrypto: walletCrypto
 };
 
 try {
