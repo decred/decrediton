@@ -1,5 +1,5 @@
 import * as wallet from "wallet";
-import fs from "fs-extra";
+import * as fs from "wallet/fs";
 import * as selectors from "selectors";
 import { hexToBytes, str2utf8hex, rawToHex } from "helpers";
 import {

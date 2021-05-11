@@ -3,7 +3,7 @@ import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import { PageBody } from "layout";
 import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
-import { getAppDataDirectory } from "main_dev/paths.js";
+import * as wallet from "wallet";
 import { useFatalErrorPage } from "./hooks";
 import styles from "./FatalErrorPage.module.css";
 
@@ -44,7 +44,7 @@ function FatalErrorPage() {
               id="fatal.suggestion.diffConnection"
               m="This error typically means you have the testnet flag in your dcrd.conf file. You should check your dcrd.conf file and remove the testnet=1."
             />
-            <div>config files path:{getAppDataDirectory()}</div>
+            <div>config files path:{wallet.getAppDataDirectory()}</div>
           </>
         );
         break;

@@ -7,14 +7,6 @@ import {
   reverseRawHash,
   politeiaMarkdownIndexMd
 } from "helpers";
-import {
-  setPoliteiaPath,
-  getEligibleTickets,
-  saveEligibleTickets,
-  savePiVote,
-  getProposalWalletVote,
-  removeCachedProposals
-} from "main_dev/paths";
 import { cloneDeep } from "fp";
 import {
   PROPOSAL_VOTING_ACTIVE,
@@ -23,6 +15,15 @@ import {
   PROPOSAL_INDEX_MD_FILE
 } from "constants";
 import { unlockAcctAndExecFn } from "./ControlActions";
+
+const {
+  setPoliteiaPath,
+  getEligibleTickets,
+  saveEligibleTickets,
+  savePiVote,
+  getProposalWalletVote,
+  removeCachedProposals
+} = pi;
 
 // defaultInventory is how inventory and proposals are stored at our redux state.
 const defaultInventory = {

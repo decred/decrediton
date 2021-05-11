@@ -13,3 +13,4 @@ export const setRemoteCredentials = cfg.setRemoteCredentials;
 export const getDaemonIsAdvanced = cfg.getDaemonIsAdvanced;
 export const getIsSpv = cfg.getIsSpv;
 export const getWalletPath = paths.getWalletPath;
+export const getAppDataDirectory = paths.getAppDataDirectory;

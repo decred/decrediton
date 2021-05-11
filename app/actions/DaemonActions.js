@@ -1,4 +1,3 @@
-import path from "path";
 import {
   syncCancel,
   setSelectedWallet,
@@ -20,6 +19,7 @@ import {
   SET_REMEMBERED_VSP_HOST,
   SET_AUTOBUYER_SETTINGS
 } from "./VSPActions";
+import * as fs from "wallet/fs";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { isTestNet } from "selectors";
@@ -390,7 +390,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
           rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
           rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
           rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
-          rpcCert: path.join(
+          rpcCert: fs.joinPaths(
             wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
             "rpc.cert"
           )
