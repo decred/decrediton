@@ -10,7 +10,6 @@ import "pi-ui/dist/index.css";
 import "./style/main.css";
 import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
-import { log, getCLIOptions, getHeightSynced } from "./wallet";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import * as cfgConstants from "constants/config";
 import * as wallet from "wallet";
@@ -33,6 +32,8 @@ import SourceSansProBold from "style/fonts/SourceSansPro-Bold.ttf";
 import SourceSansProBoldItalic from "style/fonts/SourceSansPro-BoldItalic.ttf";
 import SourceCodeProRegular from "style/fonts/SourceCodePro-Regular.ttf";
 import SourceCodeProBold from "style/fonts/SourceCodePro-Bold.ttf";
+
+const { log, getCLIOptions, getHeightSynced } = wallet;
 
 const globalCfg = wallet.getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
