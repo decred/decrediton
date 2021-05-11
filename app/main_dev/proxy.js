@@ -2,10 +2,12 @@ import { getGlobalCfg } from "config";
 import { session } from "electron";
 import * as cfgConstants from "constants/config";
 
-export const PROXYTYPE_PAC = "PROXYTYPE_PAC";
-export const PROXYTYPE_HTTP = "PROXYTYPE_HTTP";
-export const PROXYTYPE_SOCKS4 = "PROXYTYPE_SOCKS4";
-export const PROXYTYPE_SOCKS5 = "PROXYTYPE_SOCKS5";
+import {
+  PROXYTYPE_PAC,
+  PROXYTYPE_HTTP,
+  PROXYTYPE_SOCKS4,
+  PROXYTYPE_SOCKS5
+} from "constants";
 
 export const setupProxy = (logger) =>
   new Promise((resolve, reject) => {

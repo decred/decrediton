@@ -7,7 +7,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as sa from "actions/SettingsActions";
 import * as wla from "actions/WalletLoaderActions";
-import { PROXYTYPE_HTTP, PROXYTYPE_PAC } from "main_dev/proxy";
+import { PROXYTYPE_HTTP, PROXYTYPE_PAC } from "constants";
 import * as wl from "wallet";
 import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import {
