@@ -6,7 +6,7 @@ import Tickets from "./LEGACY_Tickets";
 import { useLegacyPurchasePage } from "./hooks";
 import { EnableExternalRequestButton } from "buttons";
 import { ExternalLink } from "shared";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 import StakePoolsAddForm from "./LEGACY_AddForm";
 import styles from "./PurchasePage.module.css";
 

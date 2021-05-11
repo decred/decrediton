@@ -28,10 +28,7 @@ import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
 import { discoverAvailableVSPs } from "./VSPActions";
 import * as da from "../middleware/dcrdataapi";
-import {
-  EXTERNALREQUEST_DCRDATA,
-  EXTERNALREQUEST_POLITEIA
-} from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "constants";
 import {
   TESTNET,
   MAINNET,

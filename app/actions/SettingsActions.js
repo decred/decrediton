@@ -8,10 +8,7 @@ import {
   getTreasuryBalance,
   resetTreasuryBalance
 } from "actions/ClientActions";
-import {
-  EXTERNALREQUEST_DCRDATA,
-  EXTERNALREQUEST_POLITEIA
-} from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "constants";
 import {
   getTokenAndInitialBatch,
   resetInventoryAndProposals

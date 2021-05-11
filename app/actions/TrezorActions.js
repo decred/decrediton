@@ -15,7 +15,7 @@ import {
   MODEL1_DECRED_HOMESCREEN,
   MODELT_DECRED_HOMESCREEN
 } from "constants/trezor";
-import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_TREZOR_BRIDGE } from "constants";
 import {
   SIGNTX_ATTEMPT,
   SIGNTX_FAILED,

@@ -27,7 +27,7 @@ import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
-} from "main_dev/externalRequests";
+} from "constants";
 import {
   POLITEIA_URL_TESTNET,
   POLITEIA_URL_MAINNET

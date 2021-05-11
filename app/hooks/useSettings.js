@@ -5,7 +5,7 @@ import * as sa from "actions/SettingsActions";
 import * as ca from "actions/ControlActions";
 import * as wla from "actions/WalletLoaderActions";
 import * as vspa from "actions/VSPActions";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 
 const useSettings = () => {
   const dispatch = useDispatch();

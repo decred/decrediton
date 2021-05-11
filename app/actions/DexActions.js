@@ -4,7 +4,7 @@ import * as wallet from "wallet";
 import { addAllowedExternalRequest } from "./SettingsActions";
 import { getNextAccountAttempt } from "./ControlActions";
 import { closeWalletRequest } from "./WalletLoaderActions";
-import { EXTERNALREQUEST_DEX } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DEX } from "constants";
 import * as configConstants from "constants/config";
 import { makeRandomString } from "helpers";
 

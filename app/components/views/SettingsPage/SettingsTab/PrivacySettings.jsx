@@ -5,7 +5,7 @@ import {
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
-} from "main_dev/externalRequests";
+} from "constants";
 import { ChangePassphraseButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import { classNames, Checkbox } from "pi-ui";

@@ -24,7 +24,7 @@ import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { isTestNet } from "selectors";
 import axios from "axios";
-import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
 

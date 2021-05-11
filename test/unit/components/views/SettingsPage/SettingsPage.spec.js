@@ -16,7 +16,7 @@ import {
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
-} from "main_dev/externalRequests";
+} from "constants";
 import { en as enLocale } from "i18n/locales";
 import * as vspa from "actions/VSPActions";
 import { DCR, ATOMS } from "constants";

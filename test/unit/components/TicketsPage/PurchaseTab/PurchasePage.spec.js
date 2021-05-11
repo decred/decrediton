@@ -11,7 +11,7 @@ import * as sa from "actions/SettingsActions";
 import { DCR } from "constants";
 import { en as enLocale } from "i18n/locales";
 import { DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 
 const selectors = sel;
 const controlActions = ca;
