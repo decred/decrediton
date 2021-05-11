@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { SEED_WORDS } from "wallet/seed";
+import { SEED_WORDS } from "constants/seed";
 import * as wallet from "wallet";
 import { useLayoutEffect } from "react";
 // SeedWordSelect.css includes custom styling for seed word select which need

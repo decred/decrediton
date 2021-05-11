@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import ExistingSeedForm from "./Form";
-import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
+import { SEED_LENGTH, SEED_WORDS } from "constants/seed";
 import { FormattedMessage as T } from "react-intl";
 import { WORDS, HEX, POSITION_ERROR, MISMATCH_ERROR } from "constants";
 import { usePrevious } from "hooks";

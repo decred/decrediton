@@ -2,7 +2,7 @@ import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { fireEvent, createEvent } from "@testing-library/react";
-import { SEED_WORDS } from "wallet/seed";
+import { SEED_WORDS } from "constants/seed";
 import { POSITION_ERROR, MISMATCH_ERROR } from "constants";
 
 import { screen, wait } from "@testing-library/react";
