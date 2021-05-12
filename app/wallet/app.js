@@ -8,6 +8,7 @@ import {
   isNull,
   isFunction
 } from "lodash";
+import qr from "qr-image";
 
 export const onAppReloadRequested = (cb) =>
   ipcRenderer.on("app-reload-requested", cb);
@@ -162,3 +163,6 @@ export const changeMenuLocale = (locale) =>
 
 export const grpcVersionsDetermined = (versions) =>
   ipcRenderer.send("grpc-versions-determined", versions);
+
+export const genQRCodeSVG = (uri) =>
+  qr.imageSync(uri, { type: "svg", ec_level: "H" });

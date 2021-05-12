@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import qr from "qr-image";
+import * as wallet from "wallet";
 import style from "./QRCodeModal.module.css";
 
 const QRCode = ({ addr, amount }) => {
@@ -7,7 +7,7 @@ const QRCode = ({ addr, amount }) => {
   if (!isNaN(amount) && amount > 0) {
     uri += "?amount=" + amount;
   }
-  const qr_img = qr.imageSync(uri, { type: "svg", ec_level: "H" });
+  const qr_img = wallet.genQRCodeSVG(uri);
   return (
     <div
       className={style.qrCode}
