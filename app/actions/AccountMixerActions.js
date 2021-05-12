@@ -1,6 +1,6 @@
 import Promise from "promise";
 import * as sel from "selectors";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import {
   getAcctSpendableBalance,
   getAccountsAttempt,

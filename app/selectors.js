@@ -58,7 +58,7 @@ import {
   IMMATURE,
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { isFunction, isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;

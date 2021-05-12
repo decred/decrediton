@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from "react";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { Link } from "pi-ui";
 
 const PoliteiaLink = ({

@@ -16,7 +16,7 @@ import TimezoneSettings from "./TimezoneSettings";
 import { Subtitle } from "shared";
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 
 const SettingsPage = ({
   areSettingsDirty,

@@ -1,5 +1,5 @@
 // @flow
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
 import {

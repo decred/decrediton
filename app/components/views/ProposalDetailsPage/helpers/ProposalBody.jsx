@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { default as ReactMarkdown } from "react-markdown";
 import { FormattedMessage as T } from "react-intl";

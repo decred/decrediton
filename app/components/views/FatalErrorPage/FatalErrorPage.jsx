@@ -3,7 +3,7 @@ import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import { PageBody } from "layout";
 import { CopyToClipboard, ExternalLink } from "shared";
 import { DIFF_CONNECTION_ERROR } from "constants";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { useFatalErrorPage } from "./hooks";
 import styles from "./FatalErrorPage.module.css";
 

@@ -1,6 +1,6 @@
 import { isTestNet } from "selectors";
 import { equalElements } from "helpers";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, backToCredentials } from "actions/DaemonActions";

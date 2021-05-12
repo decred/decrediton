@@ -19,8 +19,7 @@ import {
   SET_REMEMBERED_VSP_HOST,
   SET_AUTOBUYER_SETTINGS
 } from "./VSPActions";
-import * as fs from "wallet/fs";
-import * as wallet from "wallet";
+import { wallet, fs } from "wallet-preload-shim";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { isTestNet } from "selectors";
 import { getJSON } from "helpers/fetch";

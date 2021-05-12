@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import PathInput from "../PathInput/PathInput";
 import style from "./PathBrowseInput.module.css";
 import { PathButton } from "buttons";

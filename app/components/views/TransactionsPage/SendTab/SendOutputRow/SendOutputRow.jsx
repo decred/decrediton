@@ -1,6 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { classNames, Tooltip, Button } from "pi-ui";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import {
   DetailedAccountsSelect,
   AddressInput,

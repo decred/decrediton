@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { classNames } from "pi-ui";
 import styles from "./HelpLink.module.css";
 

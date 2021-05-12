@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { classNames } from "pi-ui";
 import Docs from "i18n/docs";
 import { default as ReactMarkdown, uriTransformer } from "react-markdown";

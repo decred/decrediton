@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useMountEffect } from "hooks";
 import { useSelector, useDispatch } from "react-redux";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as cla from "actions/ClientActions";

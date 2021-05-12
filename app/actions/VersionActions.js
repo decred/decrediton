@@ -1,6 +1,6 @@
 import { loaderRequest, getWalletSeedService } from "./WalletLoaderActions";
 import { push as pushHistory } from "connected-react-router";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { isTestNet } from "selectors";
 
 export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";

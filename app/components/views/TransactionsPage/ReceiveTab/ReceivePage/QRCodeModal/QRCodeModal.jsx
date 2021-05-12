@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import style from "./QRCodeModal.module.css";
 
 const QRCode = ({ addr, amount }) => {
