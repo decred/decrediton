@@ -300,7 +300,7 @@ export function getSitePath(custombinpath) {
   const sitePath = custombinpath
     ? custombinpath
     : process.env.NODE_ENV === "development"
-    ? path.join(__dirname, "..", "..", "bin")
+    ? path.join(__dirname, "..", "bin")
     : path.join(process.resourcesPath, "bin");
 
   return path.join(sitePath, "site");

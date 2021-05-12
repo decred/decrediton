@@ -42,7 +42,6 @@ module.exports = {
 
     plugins: [
         new webpack.DefinePlugin({
-          "process.env.NODE_ENV": JSON.stringify("production"),
           "process.env.NODE_DEBUG": false,
           "__ELECTRON_ENV": JSON.stringify("preload")
         })
