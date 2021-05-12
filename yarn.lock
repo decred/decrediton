@@ -3320,6 +3320,13 @@ buffer@^6.0.3:
     base64-js "^1.3.1"
     ieee754 "^1.2.1"
 
+bufferutil@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-4.0.3.tgz#66724b756bed23cd7c28c4d306d7994f9943cc6b"
+  integrity sha512-yEYTwGndELGvfXsImMBLop58eaGW+YdONi1fNjTINSY98tmMmFijBG6WXgdkfuLNt4imzQNtIE+eBp1PVpMCSw==
+  dependencies:
+    node-gyp-build "^4.2.0"
+
 bufferview@~1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/bufferview/-/bufferview-1.0.1.tgz#7afd74a45f937fa422a1d338c08bbfdc76cd725d"
@@ -12255,6 +12262,13 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+utf-8-validate@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-5.0.5.tgz#dd32c2e82c72002dc9f02eb67ba6761f43456ca1"
+  integrity sha512-+pnxRYsS/axEpkrrEpzYfNZGXp0IjC/9RIxwM5gntY4Koi8SHmUGSfxfWqxZdRxrtaoVstuOzUp/rbs3JSPELQ==
+  dependencies:
+    node-gyp-build "^4.2.0"
 
 utf8-byte-length@^1.0.1:
   version "1.0.4"
