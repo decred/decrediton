@@ -1,5 +1,3 @@
-import { format } from "util";
-
 const shortDateTimeOptions = {
   year: "numeric",
   month: "short",
@@ -73,15 +71,20 @@ export function formatLocalISODate(d, timezone) {
       ? "Z"
       : tzOffsetSign + pad(tzOffsetHours, 2) + pad(tzOffsetMinutes, 2);
 
-  return format(
-    "%s-%s-%sT%s:%s:%s.%s%s",
-    d.getFullYear(),
-    pad(d.getMonth() + 1, 2),
-    pad(d.getDate(), 2),
-    pad(d.getHours(), 2),
-    pad(d.getMinutes(), 2),
-    pad(d.getSeconds(), 2),
-    pad(d.getMilliseconds(), 3),
+  return (
+    d.getFullYear() +
+    "-" +
+    pad(d.getMonth() + 1, 2) +
+    "-" +
+    pad(d.getDate(), 2) +
+    "T" +
+    pad(d.getHours(), 2) +
+    ":" +
+    pad(d.getMinutes(), 2) +
+    ":" +
+    pad(d.getSeconds(), 2) +
+    "." +
+    pad(d.getMilliseconds(), 3) +
     tz
   );
 }
