@@ -120,7 +120,7 @@ const CreateWalletsPage = () => {
         <div>
           <T
             id="dex.btcWalletConnected"
-            m="BTC Wallet has been sucessfully connected!"
+            m="BTC Wallet has been successfully connected!"
           />
         </div>
       )}
@@ -142,7 +142,7 @@ const CreateWalletsPage = () => {
         <div>
           <T
             id="dex.dcrWalletConnected"
-            m="DCR Wallet has been sucessfully connected!"
+            m="DCR Wallet has been successfully connected!"
           />
         </div>
       )}
