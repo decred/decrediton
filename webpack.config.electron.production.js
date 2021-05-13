@@ -56,7 +56,8 @@ module.exports = {
       "node_modules"
     ],
     alias: {
-      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js"))
+      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js")),
+      fetchModule: path.resolve(path.join(__dirname, "node_modules/electron-fetch/lib/index.js"))
     }
   }
 };

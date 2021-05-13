@@ -1,10 +1,7 @@
-let fetch = globalThis?.fetch;
-
-if (!fetch) {
-  // When running on the ipc-main context, use the node-fetch module since node
-  // does not provide a global fetch().
-  fetch = require("electron-fetch").default;
-}
+// fetchModule is not a real module. The webpack config for the currently
+// executing code aliases this to either the local ./fetchModule.js file or to
+// electron-fetch.
+import fetch from "fetchModule";
 
 export class FetchError extends Error {
   constructor(origURL, origConfig, res) {

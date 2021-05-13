@@ -37,6 +37,9 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+          fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js")
+        },
         modules: ["node_modules"]
     },
 

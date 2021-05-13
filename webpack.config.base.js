@@ -41,6 +41,9 @@ export default {
   resolve: {
     extensions: [ ".js", ".jsx", ".json" ],
     mainFields: [ "webpack", "browser", "web", "browserify", [ "jam", "main" ], "main" ],
+    alias: {
+      fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js")
+    },
     modules: [
       path.resolve(__dirname, "app"),
       path.resolve(__dirname, "app/components"),
