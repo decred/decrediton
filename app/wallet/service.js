@@ -293,8 +293,10 @@ export const committedTickets = withLogNoData(
 // decodeRawTransaction decodes a raw transaction into a human readable
 // object.
 export const decodeRawTransaction = (rawTx, chainParams) => {
-  if (!(rawTx instanceof Buffer)) {
-    throw new Error("rawtx requested for decoding is not a Buffer object");
+  const acceptableClass =
+    rawTx instanceof Buffer || rawTx instanceof Uint8Array;
+  if (!acceptableClass) {
+    throw new Error("rawtx requested for decoding is not an acceptable object");
   }
   if (!chainParams) {
     throw new Error("chainParams can not be undefined");
