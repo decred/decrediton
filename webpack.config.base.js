@@ -32,6 +32,8 @@ class NodePolyfillPlugin {
 export default {
   mode: "production",
 
+  target: "web",
+
   module: {
     rules: [
       // Pass code through babel.
@@ -58,7 +60,10 @@ export default {
     filename: "bundle.js",
 
     // https://github.com/webpack/webpack/issues/1114
-    libraryTarget: "commonjs2"
+    library: {
+      name: "decrediton",
+      type: "var"
+    }
   },
 
   // https://webpack.github.io/docs/configuration.html#resolve

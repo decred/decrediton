@@ -14,9 +14,6 @@ const port = process.env.PORT || 3000;
 export default merge(baseConfig, {
   mode: "development",
 
-  // Generate code for electron's ipc-renderer process.
-  target: "electron-renderer",
-
   devtool: "inline-source-map",
 
   entry: [

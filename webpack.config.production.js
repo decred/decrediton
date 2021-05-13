@@ -13,9 +13,6 @@ import baseConfig from "./webpack.config.base";
 const webpack = require("webpack");
 
 const config = merge(baseConfig, {
-  // Generate code for electron's ipc-renderer process.
-  target: "electron-renderer",
-
   devtool: "cheap-module-source-map",
 
   entry: ["@babel/polyfill", "./app/index"],
