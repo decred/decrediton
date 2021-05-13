@@ -620,6 +620,10 @@ export const viewProposalDetails = (token) => (dispatch) => {
   dispatch(pushHistory(`/proposal/details/${token}`));
 };
 
+export const viewAgendaDetails = (name) => (dispatch) => {
+  dispatch(pushHistory(`/agenda/details/${name}`));
+};
+
 export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
 export const UPDATEVOTECHOICE_SUCCESS = "UPDATEVOTECHOICE_SUCCESS";
 export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";

@@ -34,6 +34,10 @@
   transform: rotate(180deg);
 }
 
+.overview {
+  padding-left: 35px !important;
+}
+
 /* listitem */
 .listItem {
   padding: 18px 16px 6px 20px;

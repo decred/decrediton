@@ -13,7 +13,12 @@ export const RoutedTab = (path, link, className, activeClassName) => ({
   activeClassName
 });
 
-const RoutedTabsHeader = ({ tabs, tabsClassName, caret, activeCaretClassName }) => {
+const RoutedTabsHeader = ({
+  tabs,
+  tabsClassName,
+  caret,
+  activeCaretClassName
+}) => {
   const { uiAnimations, caretLeft, caretWidth, nodes } = useRoutedTabsHeader();
 
   const getAnimatedCaret = useCallback(() => {
@@ -26,7 +31,10 @@ const RoutedTabsHeader = ({ tabs, tabsClassName, caret, activeCaretClassName }) 
       <Motion style={caretStyle}>
         {(style) => (
           <div className={styles.tabCaret}>
-            <div className={classNames(styles.active, activeCaretClassName)} style={style} />
+            <div
+              className={classNames(styles.active, activeCaretClassName)}
+              style={style}
+            />
           </div>
         )}
       </Motion>

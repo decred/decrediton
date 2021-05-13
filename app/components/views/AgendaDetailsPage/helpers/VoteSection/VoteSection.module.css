@@ -1,3 +1,18 @@
+.voteSection {
+  background-color: var(--background-back-color);
+  padding: 10px 40px;
+  width: 764px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  font-weight: 600;
+}
+
 .votePreference {
   line-height: 0;
   flex-basis: 73%;
@@ -15,11 +30,13 @@
 }
 
 .yes,
+.abstain,
 .no {
   margin-top: 0 !important;
 }
 
 .yes > label,
+.abstain > label,
 .no > label {
   display: flex;
   align-items: center;
@@ -45,6 +62,16 @@
   top: 0.4rem !important;
 }
 
+.abstain > label > span:nth-child(1) {
+  border-color: var(--vote-abstain-color);
+  top: 0 !important;
+}
+
+.abstain > label > span:nth-child(2) {
+  background-color: var(--vote-abstain-color);
+  top: 0.4rem !important;
+}
+
 @media screen and (max-width: 1179px) {
   .votePreference {
     flex-basis: 70%;
@@ -52,5 +79,17 @@
 
   .voteButton {
     left: 123px;
+  }
+}
+
+@media screen and (max-width: 1179px) {
+  .voteSection {
+    width: 665px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .voteSection {
+    width: 100%;
   }
 }

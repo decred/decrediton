@@ -655,6 +655,7 @@ export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
       for (let i = 0; i < stakePools.length; i++) {
         dispatch(getVoteChoicesAttempt(stakePools[i]));
       }
+      dispatch(getVoteChoicesAttempt());
     })
     .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
 };

@@ -16,3 +16,4 @@ export { default as NoTicketsMsg } from "./NoTicketsMsg";
 export { default as Join } from "./Join";
 export { default as NotVotingMsg } from "./NotVotingMsg";
 export { default as NotTicketsMsg } from "./NoTicketsMsg";
+export { default as ProposalCard } from "./ProposalCard";

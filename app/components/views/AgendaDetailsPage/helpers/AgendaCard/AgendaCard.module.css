@@ -1,0 +1,165 @@
+.overview {
+  background-color: var(--background-back-color);
+  width: 724px;
+  padding: 20px 40px 20px 20px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.titleText {
+  font-size: 18px;
+  line-height: 23px;
+  font-weight: 600;
+  color: var(--tutorial-header) !important;
+  letter-spacing: 0em;
+}
+
+.title {
+  cursor: pointer;
+}
+
+.subTitle {
+  font-size: 16px;
+}
+
+.creator {
+  font-weight: 600;
+}
+
+.tooltipTitle {
+  width: max-content;
+  max-width: max-content !important;
+}
+
+.updatedEvent,
+.version {
+  color: var(--grey-5);
+}
+
+.token {
+  padding: 4px 10px;
+  background-color: var(--color-blue-lighter);
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.token.dark {
+  color: var(--grey-2);
+}
+
+.proposedToRfp {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--stroke-color-default);
+}
+
+.proposedToRfp a {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--overview-balance-label);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.proposedToRfp span {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--overview-balance-label);
+  text-decoration: none;
+}
+
+.voteStatusBar {
+  flex-basis: 75%;
+  margin-right: 10px;
+}
+
+.statusBarRow {
+  padding: 0 20px 20px;
+}
+
+.voteEnd {
+  align-items: flex-end;
+  flex-basis: 25%;
+  margin-top: -0.3rem;
+  color: var(--grey-5);
+  font-size: 13px;
+}
+
+.quorumTooltip {
+  white-space: nowrap;
+  font-size: var(--font-size-small);
+  color: var(--color-gray);
+}
+
+.darkQuorumTooltip {
+  color: var(--text-color);
+}
+
+.votesQuorum {
+  color: var(--text-secondary-color) !important;
+}
+
+.votesReceived {
+  color: var(--tab-text-active-color) !important;
+}
+
+.tooltipContent {
+  width: max-content;
+}
+
+.preference {
+  color: var(--main-dark-blue);
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.preference span {
+  margin-left: 10px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background-color: var(--color-blue-lighter);
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.agendaId {
+  font-size: 16px;
+  color: var(--main-dark-blue);
+  margin: 10px 0 20px 0;
+}
+
+.description {
+  font-size: 16px;
+  color: var(--main-dark-blue);
+}
+
+@media screen and (max-width: 1179px) {
+  .overview {
+    width: 634px;
+  }
+
+  .overviewInfo {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .overview {
+    width: 100%;
+  }
+
+  .votingProgress {
+    width: 315px;
+    padding-left: 20px;
+  }
+
+  .overviewVoting {
+    width: 315px;
+  }
+}

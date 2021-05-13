@@ -1,9 +1,8 @@
 import { Button, classNames } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink } from "shared";
-import { ProposalBody, VoteSection } from "./helpers";
+import { ProposalBody, VoteSection, ProposalCard } from "./helpers";
 import { useProposalDetails } from "./hooks";
-import ProposalCard from "./ProposalCard";
 import styles from "./ProposalDetails.module.css";
 import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
 

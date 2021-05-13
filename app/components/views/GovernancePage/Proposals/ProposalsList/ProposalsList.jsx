@@ -1,6 +1,6 @@
 import { PoliteiaLoading, NoProposals } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
-import ProposalsListItem from "../ProposalsListItem/ProposalsListItem";
+import ProposalsListItem from "../ProposalsListItem";
 import { useProposalsList } from "../hooks";
 import { LoadingError } from "shared";
 import styles from "./ProposalsList.module.css";
@@ -79,9 +79,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
               />
             </div>
           )}
-          <div
-            ref={ref}
-            className={styles.scrollWrapper}>
+          <div ref={ref} className={styles.scrollWrapper}>
             <InfiniteScroll
               hasMore={!noMoreProposals}
               loadMore={loadMore}

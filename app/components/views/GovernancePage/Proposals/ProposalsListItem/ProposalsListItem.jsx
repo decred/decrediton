@@ -2,7 +2,7 @@ import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
 import { classNames } from "pi-ui";
 import { useProposalsListItem } from "../hooks";
 import styles from "./ProposalsListItem.module.css";
-import ProposalCard from "../../../ProposalDetailsPage/ProposalCard";
+import ProposalCard from "../../../ProposalDetailsPage/helpers/ProposalCard";
 
 const ProposalsListItem = ({
   name,
@@ -78,7 +78,8 @@ const ProposalsListItem = ({
           proposalPath,
           isVoteActive,
           isVoteActiveOrFinished,
-          isCardClickable: true
+          isCardClickable: true,
+          className: styles.overview
         }}
       />
       <div className={classNames(styles.continueButton, "flex-centralize")}>

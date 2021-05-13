@@ -1,54 +1,79 @@
-import { useState } from "react";
-import VotingPrefs from "./Page";
 import { find, compose, eq, get } from "fp";
-import { useVotingPrefs } from "./hooks";
+import { useBlockchain } from "./hooks";
+import AgendaOverview from "./AgendaOverview";
+import { PoliteiaLink as PiLink } from "shared";
+import { FormattedMessage as T } from "react-intl";
+import PageHeader from "../PageHeader";
+import styles from "./Blockchain.module.css";
+import { Button } from "pi-ui";
 
-// TODO this agenda component needs some love.
-const VotingPrefsTab = () => {
-  const [selectedAgenda, setSelectedAgenda] = useState(null);
+const Blockchain = () => {
   const {
-    configuredStakePools,
-    defaultStakePool,
-    stakePool,
     allAgendas,
-    onUpdateVotePreference,
-    onChangeStakePool,
-    isLoading,
+    viewAgendaDetailsHandler,
     voteChoices
-  } = useVotingPrefs();
-
-  const getStakePool = () => {
-    const pool = onChangeStakePool && stakePool;
-    return pool
-      ? configuredStakePools.find(compose(eq(pool.Host), get("Host")))
-      : null;
-  };
-
+  } = useBlockchain();
   const getAgendaSelectedChoice = (agenda) =>
     get(
       ["choiceId"],
       find(compose(eq(agenda.name), get(["agendaId"])), voteChoices)
     ) || "abstain";
 
-  const onShowAgenda = (index) => setSelectedAgenda(index);
-
-  const onCloseAgenda = () => setSelectedAgenda(null);
-
   return (
-    <VotingPrefs
-      {...{
-        selectedAgenda,
-        defaultStakePool,
-        allAgendas,
-        onUpdateVotePreference,
-        getAgendaSelectedChoice,
-        onShowAgenda,
-        onCloseAgenda,
-        stakePool: getStakePool(),
-        isLoading
-      }}
-    />
+    <>
+      <div className={styles.headerWrapper}>
+        <PageHeader
+          title={<T id="votingPreferences.title" m="Consensus Changes" />}
+          description={
+            <T
+              id="votingPreferences.description"
+              m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets. You can know more about Consensus Rule Voting at {link}"
+              values={{
+                link: (
+                  <PiLink
+                    className={styles.proposalsLink}
+                    hrefProp="https://docs.decred.org/getting-started/user-guides/agenda-voting/">
+                    docs.decred.org
+                  </PiLink>
+                )
+              }}
+            />
+          }
+          optionalButton={
+            <div>
+              <PiLink
+                className={styles.politeiaButton}
+                CustomComponent={Button}
+                href="https://voting.decred.org">
+                <T id="votingPreferences.dashboard" m="Voting Dashboard" />
+              </PiLink>
+            </div>
+          }
+        />
+      </div>
+      <div className={styles.agendaWrapper}>
+        {allAgendas.length > 0 ? (
+          allAgendas.map((agenda) => (
+            <AgendaOverview
+              key={agenda.name}
+              {...{
+                agenda,
+                selectedChoice: getAgendaSelectedChoice(agenda),
+                viewAgendaDetailsHandler
+              }}
+            />
+          ))
+        ) : (
+          <div>
+            <T
+              id="votingPreferences.noAgenda"
+              m="There are currently no agendas for voting."
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
-export default VotingPrefsTab;
+export default Blockchain;

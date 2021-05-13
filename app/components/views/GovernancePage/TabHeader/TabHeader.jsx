@@ -3,8 +3,9 @@ import { DescriptionHeader } from "layout";
 import { useTreasuryInfo } from "../hooks";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./TabHeader.module.css";
+import { classNames } from "pi-ui";
 
-const TabHeader = () => {
+const TabHeader = ({ descriptionHeaderClassName }) => {
   const { treasuryBalance } = useTreasuryInfo();
   return (
     <>
@@ -12,7 +13,11 @@ const TabHeader = () => {
         description={
           <T id="governance.description" m="Governance aspects of Decred." />
         }
-        className={styles.descriptionHeader}
+        className={classNames(
+          styles.descriptionHeader,
+          styles.descriptionHeaderMain,
+          descriptionHeaderClassName
+        )}
       />
       {treasuryBalance && (
         <DescriptionHeader
@@ -31,7 +36,10 @@ const TabHeader = () => {
               }}
             />
           }
-          className={styles.descriptionHeader}
+          className={classNames(
+            styles.descriptionHeader,
+            descriptionHeaderClassName
+          )}
         />
       )}
     </>

@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import { Button, Tooltip } from "pi-ui";
-import ProposalsList from "./ProposalsList/ProposalsList";
+import ProposalsList from "./ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { PoliteiaLink as PiLink } from "shared";
 import { TabbedPage, TabbedPageTab as Tab } from "layout";

@@ -14,6 +14,7 @@ import TicketsPage from "components/views/TicketsPage/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
+import AgendaDetailsPage from "components/views/AgendaDetailsPage";
 import TrezorPage from "components/views/TrezorPage";
 import LNPage from "components/views/LNPage";
 import DexPage from "components/views/DexPage";
@@ -67,6 +68,7 @@ const Wallet = ({ setInterval }) => {
           path="/proposal/details/:token"
           component={ProposalDetailsPage}
         />
+        <Route path="/agenda/details/:name" component={AgendaDetailsPage} />
       </BlurableContainer>
     </PageBody>
   );

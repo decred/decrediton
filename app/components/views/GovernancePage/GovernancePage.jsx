@@ -1,9 +1,9 @@
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
-import ProposalsTab from "./Proposals/ProposalsTab";
-import VotingPrefsTab from "./Blockchain/Blockchain";
-import TabHeader from "./TabHeader/TabHeader";
+import ProposalsTab from "./Proposals";
+import VotingPrefsTab from "./Blockchain";
+import TabHeader from "./TabHeader";
 import { GOVERNANCE_ICON } from "constants";
 import styles from "./GovernancePage.module.css";
 

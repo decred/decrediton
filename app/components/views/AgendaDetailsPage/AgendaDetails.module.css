@@ -34,7 +34,6 @@
 
 .detailsText {
   font-family: var(--font-family-regular-semi-bold);
-  min-height: 100%;
   padding: 30px 40px;
   background-color: var(--background-back-color);
   margin: 5px 0 20px 0;
@@ -43,28 +42,10 @@
   font-size: 16px;
 }
 
-.detailsText p {
-  word-wrap: break-word;
-  margin: 10px 0;
-}
-
-.detailsText a {
-  color: var(--link-color);
-}
-
-.detailsText pre {
-  background-color: var(--proposal-text-markdown);
-  border-radius: 3px;
-  font-size: 85%;
-  line-height: 1.45;
-  overflow: auto;
-  padding: 16px;
-}
-
 .piButtonWrapper {
   display: flex;
   justify-content: flex-end;
-  width: 764px;
+  width: 740px;
 }
 
 .loadingPage {
