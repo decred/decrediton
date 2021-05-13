@@ -1,6 +1,6 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
-import * as fs from "wallet/fs";
+import { fs } from "wallet-preload-shim";
 import { isNumber, isNil, isUndefined } from "lodash";
 import { endOfDay, formatLocalISODate, isSameDate } from "helpers";
 import {
