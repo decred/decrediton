@@ -5,7 +5,7 @@ import user from "@testing-library/user-event";
 import { fireEvent, screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
-import * as vsp from "../../../../../app/wallet/vsp";
+import * as wal from "wallet";
 import * as vspa from "actions/VSPActions";
 import * as sa from "actions/SettingsActions";
 import { DCR } from "constants";
@@ -17,7 +17,7 @@ const selectors = sel;
 const controlActions = ca;
 const vspActions = vspa;
 const settingsActions = sa;
-const vspFuncs = vsp;
+const wallet = wal;
 
 const mockVspInfo = {
   data: {
@@ -138,7 +138,7 @@ beforeEach(() => {
   mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
     () => false
   );
-  vspFuncs.getVSPInfo = jest.fn(() => {
+  wallet.getVSPInfo = jest.fn(() => {
     return Promise.resolve(mockVspInfo);
   });
   mockToggleIsLegacy = vspActions.toggleIsLegacy = jest.fn(() => () => {});

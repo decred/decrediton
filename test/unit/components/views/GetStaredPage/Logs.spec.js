@@ -2,7 +2,7 @@ import Logs from "components/views/GetStartedPage/Logs/Logs";
 import { render } from "test-utils.js";
 import { screen, wait } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import * as wa from "wallet/daemon";
+import * as wa from "wallet";
 import * as sel from "selectors";
 
 const testDcrdLogString = "test-dcrd-log";

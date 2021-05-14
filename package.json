@@ -50,7 +50,8 @@
       "\\.css$": "<rootDir>/test/mocks/styleMock.js",
       "^grpc$": "<rootDir>/test/mocks/grpcMock.js",
       "^electron$": "<rootDir>/test/mocks/electronMock.js",
-      "^electron-store$": "<rootDir>/test/mocks/electronStore.js"
+      "^electron-store$": "<rootDir>/test/mocks/electronStore.js",
+      "wallet$": "<rootDir>/test/mocks/walletMock.js"
     },
     "transformIgnorePatterns": [
       "/node_modules/",
