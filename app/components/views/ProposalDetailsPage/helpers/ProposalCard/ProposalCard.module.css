@@ -1,6 +1,9 @@
 .overview {
   background-color: var(--background-back-color);
   width: 724px;
+}
+
+.overviewInfo {
   padding: 20px 40px 20px 20px;
 }
 
@@ -77,7 +80,7 @@
 }
 
 .statusBarRow {
-  padding: 0 20px 20px;
+  padding: 0 40px 20px 20px;
 }
 
 .voteEnd {
@@ -108,17 +111,27 @@
 
 @media screen and (max-width: 1179px) {
   .overview {
-    width: 634px;
+    width: 626px;
   }
 
   .overviewInfo {
     padding: 20px;
   }
+
+  .statusBarRow {
+    padding-right: 20px;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .overview {
-    width: 100%;
+    width: 315px;
+    padding: 10px !important;
+  }
+
+  .overviewInfo {
+    padding-left: 0;
+    padding-right: 10px;
   }
 
   .votingProgress {
@@ -128,5 +141,24 @@
 
   .overviewVoting {
     width: 315px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .subTitle {
+    margin-bottom: 10px;
+  }
+
+  .statusBarRow {
+    flex-direction: column;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  .voteEnd {
+    margin-top: 10px;
   }
 }

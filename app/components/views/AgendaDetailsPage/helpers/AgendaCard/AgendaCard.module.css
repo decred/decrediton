@@ -151,7 +151,8 @@
 
 @media screen and (max-width: 768px) {
   .overview {
-    width: 100%;
+    width: 315px;
+    padding: 10px !important;
   }
 
   .votingProgress {
@@ -161,5 +162,9 @@
 
   .overviewVoting {
     width: 315px;
+  }
+
+  .row {
+    flex-direction: column;
   }
 }

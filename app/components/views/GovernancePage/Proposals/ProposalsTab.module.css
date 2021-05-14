@@ -76,7 +76,7 @@
 
 @media screen and (max-width: 1179px) {
   .tabs {
-    padding-left: 35px;
+    margin-left: 55px;
   }
 
   .politeiaDisabled {
@@ -85,5 +85,14 @@
 
   .links {
     margin-left: 44px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+    margin-left: 20px;
+  }
+  .tab {
+    margin-right: 25px;
   }
 }

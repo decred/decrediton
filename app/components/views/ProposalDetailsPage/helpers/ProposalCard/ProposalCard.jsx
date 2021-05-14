@@ -39,78 +39,82 @@ const ProposalCard = ({
 }) => {
   return (
     <div className={classNames(styles.overview, className)}>
-      <div className={styles.row}>
-        <div className="flex-column">
-          {isCardClickable ? (
-            <div className={styles.titleText}>{name}</div>
-          ) : (
-            <div>
-              <Tooltip
-                content={<T id="proposal.overview.title" m="See on Politeia" />}
-                contentClassName={styles.tooltipTitle}
-                placement="right">
-                <PoliteiaLink
-                  className={styles.title}
-                  isTestnet={isTestnet}
-                  path={proposalPath}>
-                  <div className={styles.titleText}>{name}</div>
-                </PoliteiaLink>
-              </Tooltip>
-            </div>
-          )}
-          <Join className={classNames("margin-top-s", styles.subTitle)}>
-            <span className={classNames("color-primary", styles.creator)}>
-              {creator}
-            </span>
-            <Event
-              eventType={PROPOSAL_UPDATED_EVENT}
-              timestamp={timestamp}
-              tsDate={tsDate}
-              className={styles.updatedEvent}
-            />
-            <span className={styles.version}>
-              <T id="proposal.overview.version.label" m="version" /> {version}
-            </span>
-          </Join>
-        </div>
-        <div className={classNames("flex-column", "align-end")}>
-          <StatusTag
-            className={styles.statusTag}
-            {...getProposalStatusTagProps(
-              { status: proposalStatus, linkto },
-              { status: voteStatus, approved },
-              isDarkTheme
+      <div className={styles.overviewInfo}>
+        <div className={styles.row}>
+          <div className="flex-column">
+            {isCardClickable ? (
+              <div className={styles.titleText}>{name}</div>
+            ) : (
+              <div>
+                <Tooltip
+                  content={
+                    <T id="proposal.overview.title" m="See on Politeia" />
+                  }
+                  contentClassName={styles.tooltipTitle}
+                  placement="right">
+                  <PoliteiaLink
+                    className={styles.title}
+                    isTestnet={isTestnet}
+                    path={proposalPath}>
+                    <div className={styles.titleText}>{name}</div>
+                  </PoliteiaLink>
+                </Tooltip>
+              </div>
             )}
-          />
-          <div
-            className={classNames(
-              "margin-top-s",
-              styles.token,
-              isDarkTheme && styles.dark
-            )}>
-            {shortToken}
+            <Join className={classNames("margin-top-s", styles.subTitle)}>
+              <span className={classNames("color-primary", styles.creator)}>
+                {creator}
+              </span>
+              <Event
+                eventType={PROPOSAL_UPDATED_EVENT}
+                timestamp={timestamp}
+                tsDate={tsDate}
+                className={styles.updatedEvent}
+              />
+              <span className={styles.version}>
+                <T id="proposal.overview.version.label" m="version" /> {version}
+              </span>
+            </Join>
+          </div>
+          <div className={classNames("flex-column", "align-end")}>
+            <StatusTag
+              className={styles.statusTag}
+              {...getProposalStatusTagProps(
+                { status: proposalStatus, linkto },
+                { status: voteStatus, approved },
+                isDarkTheme
+              )}
+            />
+            <div
+              className={classNames(
+                "margin-top-s",
+                styles.token,
+                isDarkTheme && styles.dark
+              )}>
+              {shortToken}
+            </div>
           </div>
         </div>
+        {linkedProposal && (
+          <div className={styles.proposedToRfp}>
+            <T
+              id="proposal.overview.proposedToRfp.label"
+              m="Proposed for {linkedProposal}"
+              values={{
+                linkedProposal: isCardClickable ? (
+                  <span>{`${linkedProposal.name} (${shortRFPToken})`}</span>
+                ) : (
+                  <PoliteiaLink
+                    isTestnet={isTestnet}
+                    path={`/record/${shortRFPToken}`}>
+                    {`${linkedProposal.name} (${shortRFPToken})`}
+                  </PoliteiaLink>
+                )
+              }}
+            />
+          </div>
+        )}
       </div>
-      {linkedProposal && (
-        <div className={styles.proposedToRfp}>
-          <T
-            id="proposal.overview.proposedToRfp.label"
-            m="Proposed for {linkedProposal}"
-            values={{
-              linkedProposal: isCardClickable ? (
-                <span>{`${linkedProposal.name} (${shortRFPToken})`}</span>
-              ) : (
-                <PoliteiaLink
-                  isTestnet={isTestnet}
-                  path={`/record/${shortRFPToken}`}>
-                  {`${linkedProposal.name} (${shortRFPToken})`}
-                </PoliteiaLink>
-              )
-            }}
-          />
-        </div>
-      )}
       {isVoteActiveOrFinished && (
         <div className={classNames("flex-row", styles.statusBarRow)}>
           <StatusBar

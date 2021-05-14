@@ -83,11 +83,16 @@
   .detailsText {
     width: 665px;
   }
+  .piButtonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 665px;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .detailsText {
     padding-left: 20px;
-    width: 100%;
+    width: 355px;
   }
 }

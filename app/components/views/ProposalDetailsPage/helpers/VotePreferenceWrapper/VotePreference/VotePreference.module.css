@@ -47,7 +47,7 @@
 
 @media screen and (max-width: 1179px) {
   .votePreference {
-    flex-basis: 70%;
+    flex-basis: initial;
   }
 
   .voteButton {

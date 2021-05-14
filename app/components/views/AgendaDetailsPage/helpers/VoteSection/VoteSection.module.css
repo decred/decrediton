@@ -80,16 +80,18 @@
   .voteButton {
     left: 123px;
   }
-}
 
-@media screen and (max-width: 1179px) {
   .voteSection {
-    width: 665px;
+    width: 674px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .voteSection {
-    width: 100%;
+    width: 355px;
+    padding: 10px 10px 10px 20px;
+  }
+  .votePreference {
+    flex-basis: initial;
   }
 }

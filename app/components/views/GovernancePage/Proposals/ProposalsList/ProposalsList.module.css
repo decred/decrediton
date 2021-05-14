@@ -39,13 +39,21 @@
   overflow: auto;
 }
 
-@media screen and (max-width: 768px) {
-  .proposalList {
-    padding-bottom: 100px;
-  }
-}
 @media screen and (max-width: 1179px) {
   .proposalList {
     margin-left: 35px;
+  }
+  .filters {
+    width: 704px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .proposalList {
+    padding-bottom: 100px;
+    margin-left: 10px;
+  }
+  .filters {
+    width: 367px;
   }
 }

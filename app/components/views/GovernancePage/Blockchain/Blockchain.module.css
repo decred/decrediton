@@ -29,3 +29,15 @@
   color: var(--link-color) !important;
   cursor: pointer;
 }
+
+@media screen and (max-width: 1179px) {
+  .agendaWrapper {
+    margin-left: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .agendaWrapper {
+    margin: 20px;
+  }
+}

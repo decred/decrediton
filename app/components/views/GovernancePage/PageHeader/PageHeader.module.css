@@ -26,6 +26,7 @@
 @media screen and (max-width: 1179px) {
   .header {
     width: 696px;
+    padding-left: 55px;
   }
 
   .description {
@@ -36,6 +37,7 @@
 @media screen and (max-width: 768px) {
   .header {
     width: 338px;
+    padding-left: 20px;
   }
 
   .description {

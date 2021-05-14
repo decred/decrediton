@@ -62,13 +62,13 @@
 
 @media screen and (max-width: 1179px) {
   .detailsText {
-    width: 665px;
+    width: 674px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .detailsText {
     padding-left: 20px;
-    width: 100%;
+    width: 355px;
   }
 }
