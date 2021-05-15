@@ -8,11 +8,7 @@ import styles from "./Blockchain.module.css";
 import { Button } from "pi-ui";
 
 const Blockchain = () => {
-  const {
-    allAgendas,
-    viewAgendaDetailsHandler,
-    voteChoices
-  } = useBlockchain();
+  const { allAgendas, viewAgendaDetailsHandler, voteChoices } = useBlockchain();
   const getAgendaSelectedChoice = (agenda) =>
     get(
       ["choiceId"],

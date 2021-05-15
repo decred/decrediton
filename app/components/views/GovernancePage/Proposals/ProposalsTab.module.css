@@ -10,7 +10,7 @@
 }
 
 .tabsHeader {
-  background-color: var(--grey-3);
+  background-color: var(--governance-tab-bg);
   padding: 0;
 }
 
@@ -33,7 +33,7 @@
   padding: 6px 10px !important;
   margin: 15px 0 0 0 !important;
   color: var(--info-modal-button-text) !important;
-  background-color: var(--accent-blue) !important;
+  background-color: var(--politeia-button-bg) !important;
   border: 0 !important;
   text-decoration: none !important;
   font-weight: 600 !important;
@@ -45,6 +45,7 @@
 
 .refreshProposals {
   background-image: var(--proposals-refresh-icon);
+  background-color: var(--refresh-proposals) !important;
   margin-left: 10px;
 }
 
