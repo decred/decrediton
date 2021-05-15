@@ -1,6 +1,6 @@
 import Blockchain from "components/views/GovernancePage/Blockchain";
 import { render } from "test-utils.js";
-import { screen } from "@testing-library/react";
+import { screen, wait } from "@testing-library/react";
 import user from "@testing-library/user-event";
 
 let mockAllAgendas;
@@ -94,4 +94,80 @@ test("no agendas", () => {
   expect(
     screen.getByText(/there are currently no agendas for voting/i)
   ).toBeInTheDocument();
+});
+
+test("test agenda search and sort controls", async () => {
+  mockAllAgendas = [
+    {
+      name: "test-name-1",
+      description: "test-desc-1"
+    },
+    {
+      name: "test-name-12",
+      description: "test-desc-12"
+    },
+    {
+      name: "test-name-3",
+      description: "test-desc-3"
+    }
+  ];
+  render(<Blockchain />);
+  expect(
+    screen
+      .getAllByText(/test-desc-/i)
+      .map((element) => element.textContent.trim())
+  ).toStrictEqual(["test-desc-1", "test-desc-12", "test-desc-3"]);
+
+  const filterControl = screen.getByPlaceholderText("Filter by Name");
+
+  user.type(filterControl, "1");
+  expect(
+    screen
+      .getAllByText(/test-desc-/i)
+      .map((element) => element.textContent.trim())
+  ).toStrictEqual(["test-desc-1", "test-desc-12"]);
+
+  const eyeFilterMenu = screen.getByRole("button", { name: "EyeFilterMenu" });
+  user.click(eyeFilterMenu);
+  user.click(screen.getByText("Oldest"));
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/test-desc-/i)
+        .map((element) => element.textContent.trim())
+    ).toStrictEqual(["test-desc-12", "test-desc-1"])
+  );
+
+  user.clear(filterControl);
+  user.type(filterControl, "12");
+  expect(
+    screen
+      .getAllByText(/test-desc-/i)
+      .map((element) => element.textContent.trim())
+  ).toStrictEqual(["test-desc-12"]);
+
+  user.clear(filterControl);
+  user.type(filterControl, "4");
+  expect(screen.queryByText(/test-desc-/i)).not.toBeInTheDocument();
+  expect(
+    screen.getByText(/no agendas matched your search/i)
+  ).toBeInTheDocument();
+
+  user.clear(filterControl);
+  expect(
+    screen
+      .getAllByText(/test-desc-/i)
+      .map((element) => element.textContent.trim())
+  ).toStrictEqual(["test-desc-3", "test-desc-12", "test-desc-1"]);
+
+  // Newest first
+  user.click(eyeFilterMenu);
+  user.click(screen.getByText("Newest"));
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/test-desc-/i)
+        .map((element) => element.textContent.trim())
+    ).toStrictEqual(["test-desc-1", "test-desc-12", "test-desc-3"])
+  );
 });

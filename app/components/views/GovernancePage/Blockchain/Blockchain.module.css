@@ -30,14 +30,42 @@
   cursor: pointer;
 }
 
+.searchByNameInput {
+  display: inline-block;
+  width: 150px;
+}
+
+.searchByNameInput input::placeholder,
+.searchByNameInput input {
+  font-size: 16px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 825px;
+  margin-top: 22px;
+}
+
+.sortByTooltip {
+  width: max-content;
+}
+
 @media screen and (max-width: 1179px) {
   .agendaWrapper {
     margin-left: 35px;
+  }
+  .filters {
+    width: 704px;
   }
 }
 
 @media screen and (max-width: 768px) {
   .agendaWrapper {
     margin: 20px;
+  }
+  .filters {
+    width: 367px;
   }
 }
