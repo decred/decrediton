@@ -7,7 +7,7 @@ import TabHeader from "../../../GovernancePage/TabHeader/TabHeader";
 const Header = React.memo(function Header() {
   return (
     <StandaloneHeader
-      title={<T id="proposal.details.title" m="Governance" />}
+      title={<T id="agendas.details.title" m="Governance" />}
       description={
         <TabHeader descriptionHeaderClassName={styles.descriptionHeader} />
       }

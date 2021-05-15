@@ -6,7 +6,7 @@ const CastVoteModalButton = ({ onSubmit, newVoteChoice, isLoading }) => (
   <PassphraseModalButton
     modalTitle={
       <>
-        <T id="proposals.updateVoteChoiceModal.title" m="Confirm Your Vote" />
+        <T id="agendas.updateVoteChoiceModal.title" m="Confirm Your Vote" />
         <div className={styles.voteConfirmation}>
           <div className={styles[`${newVoteChoice}Proposal`]} />
           {newVoteChoice}

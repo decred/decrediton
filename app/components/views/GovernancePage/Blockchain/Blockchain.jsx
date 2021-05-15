@@ -105,7 +105,7 @@ const Blockchain = () => {
         <div>
           <Tooltip
             contentClassName={styles.sortByTooltip}
-            content={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+            content={<T id="agendas.sortby.tooltip" m="Sort By" />}>
             <EyeFilterMenu
               labelKey="label"
               keyField="value"
