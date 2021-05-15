@@ -84,7 +84,10 @@ const Blockchain = () => {
                 className={styles.politeiaButton}
                 CustomComponent={Button}
                 href="https://voting.decred.org">
-                <T id="votingPreferences.dashboard" m="Go to Voting Dashboard" />
+                <T
+                  id="votingPreferences.dashboard"
+                  m="Go to Voting Dashboard"
+                />
               </PiLink>
             </div>
           }
