@@ -3,6 +3,7 @@ import { useTrezor } from "hooks";
 import PinModal from "./TrezorPinModal";
 import PassPhraseModal from "./TrezorPassphraseModal";
 import WalletCreationPassPhraseModal from "./TrezorWalletCreationPassphraseModal";
+import TogglePassphraseConfirmModal from "./TrezorTogglePassphraseConfirmModal";
 import WordModal from "./TrezorWordModal";
 
 const TrezorModals = () => {
@@ -13,6 +14,7 @@ const TrezorModals = () => {
     waitingForWord,
     walletCreationMasterPubkeyAttempt,
     onCancelCurrentOperation,
+    confirmingTogglePassphrase,
     ...props
   } = useTrezor();
 
@@ -26,6 +28,8 @@ const TrezorModals = () => {
           : PassPhraseModal;
       case waitingForWord:
         return WordModal;
+      case confirmingTogglePassphrase:
+        return TogglePassphraseConfirmModal;
       default:
         return null;
     }
@@ -33,6 +37,7 @@ const TrezorModals = () => {
     waitingForPin,
     waitingForPassPhrase,
     walletCreationMasterPubkeyAttempt,
+    confirmingTogglePassphrase,
     waitingForWord
   ]);
 
@@ -44,6 +49,7 @@ const TrezorModals = () => {
         waitingForPin,
         waitingForPassPhrase,
         waitingForWord,
+        confirmingTogglePassphrase,
         walletCreationMasterPubkeyAttempt
       }}
       onCancelModal={onCancelCurrentOperation}

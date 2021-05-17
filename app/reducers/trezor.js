@@ -29,6 +29,7 @@ import {
   TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT,
   TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED,
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS,
+  TRZ_TOGGLEPASSPHRASEPROTECTION_CONFIRMED,
   TRZ_CHANGEHOMESCREEN_ATTEMPT,
   TRZ_CHANGEHOMESCREEN_FAILED,
   TRZ_CHANGEHOMESCREEN_SUCCESS,
@@ -204,12 +205,23 @@ export default function trezor(state = {}, action) {
         deviceLabel: action.deviceLabel,
         performingOperation: false
       };
+    case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+      return {
+        ...state,
+        enablePassphraseProtection: action.enablePassphraseProtection,
+        confirmingTogglePassphrase: true
+      };
+    case TRZ_TOGGLEPASSPHRASEPROTECTION_CONFIRMED:
+      return {
+        ...state,
+        performingOperation: false,
+        confirmingTogglePassphrase: false
+      };
     case SIGNTX_FAILED:
     case SIGNTX_SUCCESS:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPINPROTECTION_SUCCESS:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
-    case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_FAILED:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_CHANGELABEL_FAILED:

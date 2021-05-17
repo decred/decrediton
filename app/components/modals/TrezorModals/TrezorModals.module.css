@@ -4,6 +4,7 @@ h1 {
 
 .pinModal,
 .passphraseModal,
+.togglePassphraseConfirmModal,
 .wordModal {
   width: 500px;
   padding: 20px;
@@ -11,11 +12,13 @@ h1 {
 
 .pinModal.getStarted,
 .wordModal.getStarted,
+.togglePassphraseConfirmModal,
 .passphraseModal.getStarted {
   padding: 2em;
 }
 
 .pinModal > p,
+.togglePassphraseConfirmModal > p,
 .wordModal > p {
   margin-bottom: 10px;
 }
@@ -71,6 +74,7 @@ h1 {
 @media screen and (max-width: 375px) {
   .pinModal,
   .passphraseModal,
+  .togglePassphraseConfirmModal,
   .wordModal {
     width: 250px;
   }

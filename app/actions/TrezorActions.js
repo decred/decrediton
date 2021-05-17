@@ -240,7 +240,7 @@ function setDeviceListeners(dispatch, getState) {
             session.uiResponse({
               type: UI.RECEIVE_PASSPHRASE,
               payload: {
-                value: passphrase,
+                value: passphrase ? passphrase : "",
                 save: true
               }
             });
@@ -568,6 +568,8 @@ export const TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED =
   "TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED";
 export const TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS =
   "TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS";
+export const TRZ_TOGGLEPASSPHRASEPROTECTION_CONFIRMED =
+  "TRZ_TOGGLEPASSPHRASEPROTECTION_CONFIRMED";
 
 export const togglePassPhraseProtection = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT });
@@ -587,8 +589,7 @@ export const togglePassPhraseProtection = () => async (dispatch, getState) => {
       return res.payload;
     });
     dispatch({
-      enableProtection,
-      deviceLabel: features.label,
+      enablePassphraseProtection: enableProtection,
       type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS
     });
   } catch (error) {
