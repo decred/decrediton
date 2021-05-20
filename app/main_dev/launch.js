@@ -752,6 +752,7 @@ export const launchDCRWallet = (
         lastDcrwalletErr
       );
       reactIPC.send("error-received", false, lastDcrwalletErr);
+      mainWindow.webContents.send("dcrwallet-closed", lastDcrwalletErr);
     } else {
       logger.log("info", `dcrwallet exited with code ${code}`);
     }

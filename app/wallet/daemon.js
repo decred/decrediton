@@ -100,17 +100,47 @@ export const startWallet = log(
     new Promise((resolve, reject) => {
       let port,
         pid = "";
+      let portReceived = false,
+        pidReceived = false;
 
       // resolveCheck must be done both on the dcrwallet-port event and on the
       // return of the sendSync call because we can't be certain which will happen first
-      const resolveCheck = () => (pid && port ? resolve({ pid, port }) : null);
+      const resolveCheck = () => {
+        if (!portReceived || !pidReceived) {
+          // need to wait for both parameters
+          return null;
+        }
+        if (pid && port) {
+          resolve({ pid, port });
+        }
+
+        // Received both parameters, but one of them is invalid. Without this
+        // rejection, this error would be silent.
+        reject(
+          `Error starting wallet (pid:${pid}, port:${port}). ${
+            pid &&
+            !port &&
+            "This error typically means you have another instance of wallet running."
+          }`
+        );
+      };
 
       ipcRenderer.once("dcrwallet-port", (e, p) => {
         port = p;
+        portReceived = true;
         resolveCheck();
       });
+
+      ipcRenderer.once("dcrwallet-closed", (_, p) => {
+        // The wallet has been closed. There is no point waiting for
+        // the `dcrwallet-port` event in vain.
+        reject(`Error starting wallet: ${p}`);
+      });
+
       pid = ipcRenderer.sendSync("start-wallet", walletPath, testnet, rpcCreds);
+
       if (!pid) reject("Error starting wallet");
+      pidReceived = true;
       resolveCheck();
     }),
   "Start Wallet"
