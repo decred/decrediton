@@ -517,7 +517,9 @@ export const startTicketBuyerV3Attempt = (
 
   try {
     const accountNum = account.encrypted ? account.value : null;
-    const accountUnlocks = mixedAccount ? [accountNum, changeAccount] : [accountNum];
+    const accountUnlocks = mixedAccount
+      ? [accountNum, changeAccount]
+      : [accountNum];
     const ticketBuyer = await dispatch(
       unlockAcctAndExecFn(
         passphrase,
