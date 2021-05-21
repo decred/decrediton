@@ -517,10 +517,11 @@ export const startTicketBuyerV3Attempt = (
 
   try {
     const accountNum = account.encrypted ? account.value : null;
+    const accountUnlocks = mixedAccount ? [accountNum, changeAccount] : [accountNum];
     const ticketBuyer = await dispatch(
       unlockAcctAndExecFn(
         passphrase,
-        [accountNum],
+        accountUnlocks,
         () => {
           dispatch(setNeedsVSPdProcessTickets(true));
           return wallet.startTicketAutoBuyerV3(ticketBuyerService, {
