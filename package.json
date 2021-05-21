@@ -16,7 +16,7 @@
     "build-renderer": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress=profile --color",
     "build-trezor": "cross-env NODE_ENV=production node -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.trezor.js --progress=profile --color",
     "build": "npm run build-trezor && npm run build-main && npm run build-renderer",
-    "dexsite": "rm -rf bin/site && cp -R ./node_modules/dcrdex-assets/dexc/site bin/",
+    "dexsite": "node ./scripts/dexsite.js",
     "rebuild-natives": "node_modules/.bin/electron-rebuild",
     "rebuild-dexc": "cd modules/dex && npm run install",
     "start": "cross-env NODE_ENV=production electron ./app/ --debug --custombinpath=./bin",
