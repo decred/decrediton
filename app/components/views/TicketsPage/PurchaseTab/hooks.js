@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { useSettings } from "hooks";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
-
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
 import { listUnspentOutputs } from "actions/TransactionActions";

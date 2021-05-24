@@ -43,7 +43,7 @@ const EnableVSP = ({ onEnableVSP }) => (
   </div>
 );
 
-export function PurchasePage({
+export const PurchasePage = ({
   spvMode,
   blocksNumberToNextTicket,
   sidebarOnBottom,
@@ -75,53 +75,51 @@ export function PurchasePage({
   onEnableVSPListing,
   getRunningIndicator,
   ...props
-}) {
-  return (
-    <div className={styles.purchaseTicketArea}>
-      <StakeInfo {...{ sidebarOnBottom }} />
-      {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
-      <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets" />} />
-      {mixedAccount && changeAccount && <PrivacyInfo />}
-      {spvMode && blocksNumberToNextTicket === 2 ? (
-        <ShowWarning
-          warn={
-            <T
-              id="spv.purchase.warn"
-              m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
-            />
-          }
-        />
-      ) : (
-        <PurchaseTicketsForm
-          {...{
-            notMixedAccounts,
-            ticketPrice,
-            setAccount,
-            handleOnKeyDown,
-            availableVSPs,
-            account,
-            numTicketsToBuy,
-            onIncrementNumTickets,
-            onDecrementNumTickets,
-            onChangeNumTickets,
-            setVSP,
-            vsp,
-            vspFee,
-            setVspFee,
-            isValid,
-            onPurchaseTickets: onV3PurchaseTicket,
-            isLoading,
-            rememberedVspHost,
-            toggleRememberVspHostCheckBox,
-            onRevokeTickets,
-            getRunningIndicator,
-            toggleIsLegacy,
-            isLegacy: false
-          }}
-        />
-      )}
-      {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
-      <TicketAutoBuyer />
-    </div>
-  );
-}
+}) => (
+  <div className={styles.purchaseTicketArea}>
+    <StakeInfo {...{ sidebarOnBottom }} />
+    {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
+    <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets" />} />
+    {mixedAccount && changeAccount && <PrivacyInfo />}
+    {spvMode && blocksNumberToNextTicket === 2 ? (
+      <ShowWarning
+        warn={
+          <T
+            id="spv.purchase.warn"
+            m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
+          />
+        }
+      />
+    ) : (
+      <PurchaseTicketsForm
+        {...{
+          notMixedAccounts,
+          ticketPrice,
+          setAccount,
+          handleOnKeyDown,
+          availableVSPs,
+          account,
+          numTicketsToBuy,
+          onIncrementNumTickets,
+          onDecrementNumTickets,
+          onChangeNumTickets,
+          setVSP,
+          vsp,
+          vspFee,
+          setVspFee,
+          isValid,
+          onPurchaseTickets: onV3PurchaseTicket,
+          isLoading,
+          rememberedVspHost,
+          toggleRememberVspHostCheckBox,
+          onRevokeTickets,
+          getRunningIndicator,
+          toggleIsLegacy,
+          isLegacy: false
+        }}
+      />
+    )}
+    {isWatchingOnly && <UnsignedTickets {...{ ...props }} />}
+    <TicketAutoBuyer />
+  </div>
+);

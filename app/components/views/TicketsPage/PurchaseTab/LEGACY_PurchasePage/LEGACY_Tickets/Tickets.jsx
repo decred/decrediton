@@ -30,48 +30,46 @@ const Tickets = ({
   notMixedAccounts,
   getRunningIndicator,
   ...props
-}) => {
-  return (
-    <div className={styles.purchaseTicketArea}>
-      <StakeInfo {...{ sidebarOnBottom }} />
-      <Subtitle
-        title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
-        children={getTitleIcon()}
-        className={classNames(styles.isRow, styles.subtitle)}
-      />
-      {spvMode && blocksNumberToNextTicket === 2 ? (
-        <ShowWarning
-          warn={
-            <T
-              id="spv.purchase.warn.legacy"
-              m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
-            />
-          }
-        />
-      ) : (
-        <PurchaseTickets
-          {...{
-            ...props,
-            notMixedAccounts,
-            getRunningIndicator,
-            toggleIsLegacy
-          }}
-        />
-      )}
-      {isWatchingOnly ? (
-        <UnsignedTickets {...{ ...props }} />
-      ) : spvMode ? (
-        <div>
+}) => (
+  <div className={styles.purchaseTicketArea}>
+    <StakeInfo {...{ sidebarOnBottom }} />
+    <Subtitle
+      title={<T id="purchase.subtitle.legacy" m="Purchase Tickets" />}
+      children={getTitleIcon()}
+      className={classNames(styles.isRow, styles.subtitle)}
+    />
+    {spvMode && blocksNumberToNextTicket === 2 ? (
+      <ShowWarning
+        warn={
           <T
-            id="spv.auto.buyer.warn"
-            m="Ticket Auto Buyer not available while using SPV"
+            id="spv.purchase.warn.legacy"
+            m="Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again."
           />
-        </div>
-      ) : (
-        <TicketAutoBuyer />
-      )}
-    </div>
-  );
-};
+        }
+      />
+    ) : (
+      <PurchaseTickets
+        {...{
+          ...props,
+          notMixedAccounts,
+          getRunningIndicator,
+          toggleIsLegacy
+        }}
+      />
+    )}
+    {isWatchingOnly ? (
+      <UnsignedTickets {...{ ...props }} />
+    ) : spvMode ? (
+      <div>
+        <T
+          id="spv.auto.buyer.warn"
+          m="Ticket Auto Buyer not available while using SPV"
+        />
+      </div>
+    ) : (
+      <TicketAutoBuyer />
+    )}
+  </div>
+);
 
 export default Tickets;

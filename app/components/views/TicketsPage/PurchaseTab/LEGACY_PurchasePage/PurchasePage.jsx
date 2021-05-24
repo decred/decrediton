@@ -78,7 +78,6 @@ const PurchasePage = ({
     addCustomStakePool,
     onEnableTicketAutoBuyer,
     onDisableTicketAutoBuyer,
-    isTicketAutoBuyerEnabled,
     notMixedAccounts,
     getRunningIndicator,
     isPurchasingTickets
@@ -127,7 +126,6 @@ const PurchasePage = ({
         configuredStakePools,
         onEnableTicketAutoBuyer,
         onDisableTicketAutoBuyer,
-        isTicketAutoBuyerEnabled,
         notMixedAccounts,
         getRunningIndicator,
         ...props

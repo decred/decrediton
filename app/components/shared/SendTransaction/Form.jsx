@@ -79,10 +79,7 @@ const Form = ({
                     m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before sending a transaction."
                   />
                 }>
-                <SendTransactionButton
-                  disabled={true}
-                  buttonLabel={sendButtonLabel}
-                />
+                <SendTransactionButton disabled buttonLabel={sendButtonLabel} />
               </Tooltip>
             ) : (
               <SendTransactionButton
@@ -111,7 +108,7 @@ const Form = ({
                       {outputs.map((output, index) => (
                         <div
                           className={styles.passphraseModalAddress}
-                          key={"confirm-" + index}>
+                          key={`confirm-${index}`}>
                           {output.data.destination}
                         </div>
                       ))}

@@ -26,21 +26,6 @@
   flex-direction: column;
 }
 
-.mixerOn {
-  margin: 5px;
-  width: 16px;
-  height: 16px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: var(--menu-mixer-icon);
-  background-size: 16px 16px;
-  cursor: pointer;
-  /* XXX Need a different animation method due to performance of this
-   animation: spin 1s linear infinite; 
-  */
-}
-
 .backgroundJobTooltip {
   width: 20rem;
 }

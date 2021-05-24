@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as sba from "../../actions/SidebarActions";
 
-export function useSideBar() {
+export const useSideBar = () => {
   const [isShowingAccounts, setIsShowingAccounts] = useState(false);
-
   const accountsListRef = useRef(null);
 
   const onAccountsListWheel = useCallback(
@@ -27,7 +26,6 @@ export function useSideBar() {
   const expandSideBar = useSelector(sel.expandSideBar);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
-  const getRunningIndicator = useSelector(sel.getRunningIndicator);
   const rescanRequest = useSelector(sel.rescanRequest);
   const isSPV = useSelector(sel.isSPV);
   const peersCount = useSelector(sel.getPeersCount);
@@ -55,7 +53,6 @@ export function useSideBar() {
     expandSideBar,
     isWatchingOnly,
     sidebarOnBottom,
-    getRunningIndicator,
     rescanRequest,
     onExpandSideBar,
     onReduceSideBar,
@@ -65,4 +62,4 @@ export function useSideBar() {
     onAccountsListWheel,
     uiAnimations
   };
-}
+};

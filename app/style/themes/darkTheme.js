@@ -172,7 +172,6 @@ const darkTheme = {
   "menu-trezor": url(require("style/icons/trezorActiveDark.svg")),
   "menu-hamburger": url(require("style/icons/hamburgerDark.svg")),
   "menu-arrow": url(require("style/icons/arrowDark.svg")),
-  "menu-mixer-icon": url(require("style/icons/menuMixerDark.svg")),
   "menu-spvon-icon": url(require("style/icons/menuSpvOnDark.svg")),
   "menu-spvoff-icon": url(require("style/icons/menuSpvOffDark.svg")),
   "menu-block-synced-icon": url(require("style/icons/blockSyncedDark.svg")),
