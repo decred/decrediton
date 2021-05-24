@@ -847,7 +847,7 @@ app.on("ready", async () => {
 
   // enable remote module on windows, as decrediton will crash, otherwise, but
   // avoid it on other systems, as electron is moving away from it.
-  const enableRemoteModule =  os.platform() == "win32" ? true : false;
+  const enableRemoteModule = os.platform() == "win32" ? true : false;
 
   let windowOpts = {
     show: false,
