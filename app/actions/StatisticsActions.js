@@ -1,6 +1,6 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
-import fs from "fs";
+import { fs } from "wallet-preload-shim";
 import { isNumber, isNil, isUndefined } from "lodash";
 import { endOfDay, formatLocalISODate, isSameDate } from "helpers";
 import {
@@ -380,7 +380,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
       const seriesNames = allSeries.map((s) => s.name);
       const headerLine = csvLine(["time", ...seriesNames]);
 
-      fd = fs.openSync(csvFilename, "w", 0o600);
+      fd = fs.openWritable(csvFilename);
       fs.writeSync(fd, headerLine);
       fs.writeSync(fd, ln);
     } catch (err) {

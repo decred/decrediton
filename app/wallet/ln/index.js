@@ -4,6 +4,7 @@ import { lnrpc as pb } from "middleware/ln/rpc_pb";
 import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
+import { invoke } from "helpers/electronRenderer";
 
 export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
@@ -304,16 +305,10 @@ export const stopDaemon = (client) => {
 };
 
 export const removeDcrlnd = (walletName, testnet) =>
-  new Promise((resolve, reject) => {
-    const res = ipcRenderer.sendSync("ln-remove-dir", walletName, testnet);
-    res instanceof Error ? reject(res) : resolve(res);
-  });
+  invoke("ln-remove-dir", walletName, testnet);
 
 export const scbInfo = (walletPath, testnet) =>
-  new Promise((resolve, reject) => {
-    const res = ipcRenderer.sendSync("ln-scb-info", walletPath, testnet);
-    res instanceof Error ? reject(res) : resolve(res);
-  });
+  invoke("ln-scb-info", walletPath, testnet);
 
 export const exportBackup = (client, destPath) =>
   new Promise((resolve, reject) => {
@@ -322,6 +317,18 @@ export const exportBackup = (client, destPath) =>
       if (err) {
         reject(err);
         return;
+      }
+
+      // If this file already exists, show the confirmation modal.
+      if (fs.existsSync(destPath)) {
+        const confirmOverwrite = ipcRenderer.sendSync(
+          "confirm-file-overwrite",
+          destPath
+        );
+        if (!confirmOverwrite) {
+          reject("User canceled file overwrite");
+          return;
+        }
       }
 
       const data = resp.getMultiChanBackup().getMultiChanBackup();

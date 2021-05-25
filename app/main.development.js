@@ -118,7 +118,7 @@ import {
 
 // setPath as decrediton
 app.setPath("userData", getAppDataDirectory());
-app.allowRendererProcessReuse = false;
+app.allowRendererProcessReuse = true;
 
 // See if we can communicate with the dexc lib.
 const dexPingRes = __pingDex("__pong");
@@ -281,6 +281,28 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
+// handleEvent listens on the given channel for ipcRenderer.invoke() calls and
+// returns the result of the given function or an Error instance if the function
+// failed.
+const handleEvent = (channel, fn) => {
+  ipcMain.handle(channel, async (...args) => {
+    try {
+      return await fn(...args);
+    } catch (error) {
+      if (error instanceof Error) {
+        return error;
+      } else {
+        return new Error(err);
+      }
+    }
+  });
+};
+
+// handle is the same as handleEvent but pops off the first arg ("event" object)
+// before calling fn.
+const handle = (channel, fn) =>
+  handleEvent(channel, (event, ...args) => fn(...args));
+
 ipcMain.on("reload-allowed-external-request", (event) => {
   reloadAllowedExternalRequests();
   event.returnValue = true;
@@ -310,14 +332,13 @@ ipcMain.on("get-available-wallets", (event, network) => {
   event.returnValue = getAvailableWallets(network);
 });
 
-ipcMain.on("start-daemon", async (event, params, testnet) => {
-  const startedValues = await startDaemon(params, testnet, reactIPC);
-  event.sender.send("start-daemon-response", startedValues);
-});
+handle("start-daemon", (params, testnet) =>
+  startDaemon(params, testnet, reactIPC)
+);
 
-ipcMain.on("connect-daemon", (event, { rpcCreds }) => {
-  event.returnValue = connectRpcDaemon(mainWindow, rpcCreds);
-});
+handle("connect-daemon", ({ rpcCreds }) =>
+  connectRpcDaemon(mainWindow, rpcCreds)
+);
 
 ipcMain.on("delete-daemon", (event, appData, testnet) => {
   event.returnValue = deleteDaemon(appData, testnet);
@@ -344,9 +365,9 @@ ipcMain.on("stop-wallet", (event) => {
   event.returnValue = stopWallet();
 });
 
-ipcMain.on("start-wallet", (event, walletPath, testnet, rpcCreds) => {
+handle("start-wallet", (walletPath, testnet, rpcCreds) => {
   const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
-  event.returnValue = startWallet(
+  return startWallet(
     mainWindow,
     daemonIsAdvanced,
     testnet,
@@ -359,177 +380,31 @@ ipcMain.on("start-wallet", (event, walletPath, testnet, rpcCreds) => {
   );
 });
 
-ipcMain.on(
-  "start-dcrlnd",
-  async (
-    event,
-    walletAccount,
-    walletPort,
-    rpcCreds,
-    walletPath,
-    testnet,
-    autopilotEnabled
-  ) => {
-    try {
-      event.returnValue = await startDcrlnd(
-        walletAccount,
-        walletPort,
-        rpcCreds,
-        walletPath,
-        testnet,
-        autopilotEnabled
-      );
-    } catch (error) {
-      if (!(error instanceof Error)) {
-        event.returnValue = new Error(error);
-      } else {
-        event.returnValue = error;
-      }
-    }
-  }
-);
+handle("start-dcrlnd", startDcrlnd);
 
-ipcMain.on("stop-dcrlnd", async (event) => {
-  event.returnValue = await stopDcrlnd();
-});
+handle("stop-dcrlnd", stopDcrlnd);
 
-ipcMain.on("check-init-dex", async (event) => {
-  try {
-    event.returnValue = await checkInitDex();
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("check-init-dex", checkInitDex);
 
-ipcMain.on("init-dex", async (event, passphrase) => {
-  try {
-    event.returnValue = await initDex(passphrase);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("init-dex", initDex);
 
-ipcMain.on("login-dex", async (event, passphrase) => {
-  try {
-    event.returnValue = await loginDex(passphrase);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("login-dex", loginDex);
 
-ipcMain.on("logout-dex", async (event) => {
-  try {
-    event.returnValue = await logoutDex();
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("logout-dex", logoutDex);
 
-ipcMain.on(
-  "create-wallet-dex",
-  async (
-    event,
-    assetID,
-    passphrase,
-    appPassphrase,
-    account,
-    rpcuser,
-    rpcpass,
-    rpclisten,
-    rpccert
-  ) => {
-    try {
-      event.returnValue = await createWalletDex(
-        assetID,
-        passphrase,
-        appPassphrase,
-        account,
-        rpcuser,
-        rpcpass,
-        rpclisten,
-        rpccert
-      );
-    } catch (error) {
-      if (!(error instanceof Error)) {
-        event.returnValue = new Error(error);
-      } else {
-        event.returnValue = error;
-      }
-    }
-  }
-);
+handle("create-wallet-dex", createWalletDex);
 
-ipcMain.on("get-config-dex", async (event, addr) => {
-  try {
-    event.returnValue = await getConfigDex(addr);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("get-config-dex", getConfigDex);
 
-ipcMain.on("register-dex", async (event, appPass, addr, fee) => {
-  try {
-    event.returnValue = await registerDex(appPass, addr, fee);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("register-dex", registerDex);
 
-ipcMain.on("user-dex", async (event) => {
-  try {
-    event.returnValue = await userDex();
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("user-dex", userDex);
 
-ipcMain.on("start-dex", async (event, walletPath, testnet) => {
-  try {
-    event.returnValue = await startDex(walletPath, testnet);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("start-dex", startDex);
 
-ipcMain.on("stop-dex", async (event) => {
-  event.returnValue = await stopDex();
-});
+handle("stop-dex", stopDex);
 
-ipcMain.on("launch-dex-window", async (event, serverAddress) => {
-  event.returnValue = await createDexWindow(serverAddress);
-});
+handle("launch-dex-window", createDexWindow);
 
 function createDexWindow(serverAddress) {
   const child = new BrowserWindow({
@@ -543,88 +418,23 @@ function createDexWindow(serverAddress) {
   });
 }
 
-ipcMain.on("check-btc-config", async (event) => {
-  try {
-    event.returnValue = await getCurrentBitcoinConfig();
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
+handle("check-btc-config", getCurrentBitcoinConfig);
 
-ipcMain.on(
-  "update-btc-config",
-  async (event, rpcuser, rpcpassword, rpcbind, rpcport, testnet) => {
-    try {
-      event.returnValue = await updateDefaultBitcoinConfig(
-        rpcuser,
-        rpcpassword,
-        rpcbind,
-        rpcport,
-        testnet
-      );
-    } catch (error) {
-      if (!(error instanceof Error)) {
-        event.returnValue = new Error(error);
-      } else {
-        event.returnValue = error;
-      }
-    }
-  }
+handle("update-btc-config", updateDefaultBitcoinConfig);
+
+handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
+
+handle("ln-scb-info", lnScbInfo);
+
+handle("ln-remove-dir", removeDcrlnd);
+
+handle("check-daemon", getBlockChainInfo);
+
+handle("daemon-getinfo", getDaemonInfo);
+
+handle("clean-shutdown", () =>
+  cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID())
 );
-
-ipcMain.on("dcrlnd-creds", (event) => {
-  if (GetDcrlndPID() && GetDcrlndPID() !== -1) {
-    event.returnValue = GetDcrlndCreds();
-  } else {
-    event.returnValue = null;
-  }
-});
-
-ipcMain.on("ln-scb-info", (event, walletPath, testnet) => {
-  try {
-    event.returnValue = lnScbInfo(walletPath, testnet);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
-
-ipcMain.on("ln-remove-dir", (event, walletName, testnet) => {
-  try {
-    event.returnValue = removeDcrlnd(walletName, testnet);
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      event.returnValue = new Error(error);
-    } else {
-      event.returnValue = error;
-    }
-  }
-});
-
-ipcMain.on("check-daemon", () => {
-  getBlockChainInfo();
-});
-
-ipcMain.on("daemon-getinfo", () => {
-  getDaemonInfo();
-});
-
-ipcMain.on("clean-shutdown", async function (event) {
-  const stopped = await cleanShutdown(
-    mainWindow,
-    app,
-    GetDcrdPID(),
-    GetDcrwPID()
-  );
-  event.sender.send("clean-shutdown-finished", stopped);
-});
 
 let reactIPC;
 ipcMain.on("register-for-errors", function (event) {
@@ -762,6 +572,26 @@ ipcMain.handle("show-open-dialog", async (event, opts) => {
   return await dialog.showOpenDialog(allowedOpts);
 });
 
+ipcMain.on("confirm-file-overwrite", (event, filename) => {
+  const cfgLocale = globalCfg.get(LOCALE);
+  const locale = locales.find((value) => value.key === cfgLocale);
+  const msgTemplate = locale.messages["dialogs.confirmFileOverwrite"];
+  const msg = msgTemplate.replace("{filename}", filename);
+  const yesBtn = locale.messages["dialogs.yesButton"];
+  const cancelBtn = locale.messages["dialogs.cancelButton"];
+  const buttons = [cancelBtn, yesBtn];
+
+  const opts = {
+    message: msg,
+    type: "question",
+    buttons: buttons,
+    defaultId: buttons.indexOf(cancelBtn),
+    cancelId: buttons.indexOf(cancelBtn)
+  };
+  const res = dialog.showMessageBoxSync(mainWindow, opts);
+  event.returnValue = res === buttons.indexOf(yesBtn);
+});
+
 function setMenuLocale(locale) {
   //Removes previous listeners of "context-menu" event.
   mainWindow.webContents._events["context-menu"] = [];
@@ -839,6 +669,8 @@ app.on("ready", async () => {
   }
 
   let url = `file://${__dirname}/dist/app.html`;
+  const path = require("path"); // eslint-disable-line
+  const preloadPath = path.resolve(__dirname, "dist", "wallet-preload.js");
   if (process.env.NODE_ENV === "development") {
     // Load from the webpack dev server with hot module replacement.
     const port = process.env.PORT || 3000;
@@ -860,7 +692,8 @@ app.on("ready", async () => {
       devTools: true,
       contextIsolation: false,
       webSecurity: false,
-      enableRemoteModule
+      enableRemoteModule,
+      preload: preloadPath
     },
     icon: __dirname + "/icon.png"
   };

@@ -24,7 +24,9 @@ export const logOptionNoResponseData = (opts) => ({
 // Formats a dynamic list of log arguments
 const formatLogArgs = (msg, args) => {
   const formatArg = (arg) => {
-    if (isObject(arg) && isFunction(arg.toObject)) {
+    if (arg instanceof Error) {
+      return arg.toString();
+    } else if (isObject(arg) && isFunction(arg.toObject)) {
       // requests/responses on the grpc system have a toObejct() func
       return JSON.stringify(arg.toObject());
     } else if (isUndefined(arg)) {

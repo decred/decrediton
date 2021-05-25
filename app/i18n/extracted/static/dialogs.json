@@ -1,0 +1,14 @@
+[
+  {
+    "id": "dialogs.confirmFileOverwrite",
+    "defaultMessage": "Overwrite contents of file {filename}?"
+  },
+  {
+    "id": "dialogs.yesButton",
+    "defaultMessage": "Yes"
+  },
+  {
+    "id": "dialogs.cancelButton",
+    "defaultMessage": "Cancel"
+  }
+]

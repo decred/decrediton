@@ -3,7 +3,6 @@ import { FormattedMessage as T } from "react-intl";
 import { DescriptionHeader } from "layout";
 import { Subtitle } from "shared";
 import { InfoDocModalButton } from "buttons";
-import { ConfirmModal } from "modals";
 import BalanceHeader from "./BalanceHeader/BalanceHeader";
 import BackupInfoHeader from "./BackupInfoHeader/BackupInfoHeader";
 import BackupInfoDetails from "./BackupInfoDetails/BackupInfoDetails";
@@ -27,11 +26,8 @@ const WalletTab = () => {
     info,
     scbPath,
     scbUpdatedTime,
-    confirmFileOverwrite,
     onBackup,
-    onVerifyBackup,
-    onCancelFileOverwrite,
-    onConfirmFileOverwrite
+    onVerifyBackup
   } = useWalletTab();
 
   const { confirmedBalance, unconfirmedBalance, totalBalance } = walletBalances;
@@ -71,28 +67,6 @@ const WalletTab = () => {
           onVerifyBackup={onVerifyBackup}
         />
       </div>
-      <ConfirmModal
-        show={!!confirmFileOverwrite}
-        onCancelModal={onCancelFileOverwrite}
-        onSubmit={onConfirmFileOverwrite}
-        modalTitle={
-          <T
-            id="ln.confirmBackupOverwrite.title"
-            m="Confirm Backup Overwrite"
-          />
-        }
-        modalContent={
-          <>
-            <T
-              id="ln.confirmBackupOverwrite.content"
-              m="Really overwrite the backup file {file}? The existing backup data will be LOST."
-              values={{
-                file: <span>{confirmFileOverwrite}</span>
-              }}
-            />
-          </>
-        }
-      />
     </>
   );
 };
