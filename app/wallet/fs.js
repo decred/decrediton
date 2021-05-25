@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import { makeRandomString } from "helpers/strings";
 import { ipcRenderer } from "electron";
 
@@ -39,3 +40,7 @@ export const closeSync = (id) => {
   delete fds[id];
   return fs.closeSync(fd);
 };
+
+export const readFileSync = fs.readFileSync;
+
+export const joinPaths = path.join;

@@ -1,5 +1,3 @@
-import { app } from "electron";
-
 export const BOTH_CONNECTION_ERR_MESSAGE =
   "Cannot use both --testnet and --mainnet.";
 
@@ -20,33 +18,6 @@ export const SPV_WITH_ADVANCED_MODE =
 
 export const DIFF_CONNECTION_ERROR =
   "daemon and decrediton does not have the same network";
-
-export const USAGE_MESSAGE = app
-  ? `${app.name} version ${app.getVersion()}
-Usage
-  $ ${app.name} [OPTIONS]
-
-Options
-  --help -h          Show help and exit.
-  --version -v       Show version and exit.
-  --debug -d         Debug daemon/wallet messages.
-  --testnet          Connect to testnet.
-  --mainnet          Connect to mainnet.
-  --advanced         Start in advanced daemon mode.
-  --spv              Start in SPV mode (cannot be used at the same time as advanced daemon mode).
-  --spvconnect       Specify direct peer for SPV connection in 'host:port' or 'host' format (latter uses the default SPV port). Supports comma-separated list of peers. Always use with --spv.
-  --rpcuser          Specify RPC username for advanced daemon mode connection
-  --rpcpass          Specify RPC password
-  --rpccert          Specify RPC Certificate
-  --rpcconnect       Specify RPC connection in 'host:port' or 'host' format (latter uses the default RPC port). Note that different ports are used for RPC and SPV connections.
-  --extrawalletargs  Pass extra arguments to dcrwallet.
-  --custombinpath    Custom path for dcrd/dcrwallet/dcrctl binaries.
-`
-  : null;
-
-export const VERSION_MESSAGE = app
-  ? `${app.name} version ${app.getVersion()}`
-  : null;
 
 // POSITION_ERROR and MISMATCH_ERROR represent errors when creating or
 // restoring wallet with seed.

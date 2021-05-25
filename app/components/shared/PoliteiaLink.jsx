@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from "react";
-import { shell } from "electron";
+import * as wallet from "wallet";
 import { Link } from "pi-ui";
 
 const PoliteiaLink = ({
@@ -16,7 +16,9 @@ const PoliteiaLink = ({
       }`,
     [isTestnet, path]
   );
-  const onClickHandler = useCallback(() => shell.openExternal(href), [href]);
+  const onClickHandler = useCallback(() => wallet.openExternalURL(href), [
+    href
+  ]);
   return (
     <Link
       onClick={onClickHandler}

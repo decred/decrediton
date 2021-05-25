@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { EnableExternalRequestButton } from "buttons";
-import { EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_POLITEIA } from "constants";
 import styles from "./ProposalsTab.module.css";
 
 export default ({ getTokenAndInitialBatch }) => (

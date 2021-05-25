@@ -5,16 +5,14 @@ import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";
 import configureStore from "./store/configureStore";
-import { getGlobalCfg, getDaemonIsAdvanced, getIsSpv } from "./config";
 import locales from "./i18n/locales";
 import "pi-ui/dist/index.css";
 import "./style/main.css";
 import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
-import { log } from "./wallet";
-import { ipcRenderer } from "electron";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import * as cfgConstants from "constants/config";
+import * as wallet from "wallet";
 import { AppContainer } from "react-hot-loader";
 import {
   defaultLightTheme,
@@ -35,9 +33,11 @@ import SourceSansProBoldItalic from "style/fonts/SourceSansPro-BoldItalic.ttf";
 import SourceCodeProRegular from "style/fonts/SourceCodePro-Regular.ttf";
 import SourceCodeProBold from "style/fonts/SourceCodePro-Bold.ttf";
 
-const globalCfg = getGlobalCfg();
+const { log, getCLIOptions, getHeightSynced } = wallet;
+
+const globalCfg = wallet.getGlobalCfg();
 const locale = globalCfg.get(LOCALE);
-const cliOptions = ipcRenderer.sendSync("get-cli-options");
+const cliOptions = getCLIOptions();
 
 log("info", "Starting main react app");
 
@@ -46,14 +46,14 @@ const hasCliOption = (key) => cliOptions && cliOptions[key];
 const currentSettings = {
   locale: locale,
   daemonStartAdvanced:
-    hasCliOption("daemonStartAdvanced") || getDaemonIsAdvanced(),
+    hasCliOption("daemonStartAdvanced") || wallet.getDaemonIsAdvanced(),
   daemonStartAdvancedFromCli: !!hasCliOption("daemonStartAdvanced"),
   allowedExternalRequests: globalCfg.get(
     cfgConstants.ALLOWED_EXTERNAL_REQUESTS
   ),
   proxyType: globalCfg.get(cfgConstants.PROXY_TYPE),
   proxyLocation: globalCfg.get(cfgConstants.PROXY_LOCATION),
-  spvMode: hasCliOption("spvMode") || getIsSpv(),
+  spvMode: hasCliOption("spvMode") || wallet.getIsSpv(),
   spvModeFromCli: !!hasCliOption("spvMode"),
   spvConnect:
     hasCliOption("spvConnect") || globalCfg.get(cfgConstants.SPV_CONNECT),
@@ -100,7 +100,7 @@ const initialState = {
     setLanguage: globalCfg.get(cfgConstants.SET_LANGUAGE),
     showSpvChoice: globalCfg.get(cfgConstants.SHOW_SPV_CHOICE),
     daemonStarted: false,
-    daemonSynced: ipcRenderer.sendSync("get-height-synced"),
+    daemonSynced: getHeightSynced(),
     daemonStopped: false,
     daemonTimeout: false,
     walletReady: false,

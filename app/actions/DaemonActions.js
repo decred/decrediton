@@ -1,5 +1,3 @@
-import path from "path";
-import { getWalletPath } from "main_dev/paths";
 import {
   syncCancel,
   setSelectedWallet,
@@ -21,13 +19,12 @@ import {
   SET_REMEMBERED_VSP_HOST,
   SET_AUTOBUYER_SETTINGS
 } from "./VSPActions";
+import * as fs from "wallet/fs";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "connected-react-router";
-import { ipcRenderer } from "electron";
-import { getWalletCfg, getGlobalCfg, setLastHeight } from "config";
 import { isTestNet } from "selectors";
 import axios from "axios";
-import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
 
@@ -120,7 +117,7 @@ export const showPrivacy = () => (dispatch) => {
 export const toggleSpv = (isSPV) => async (dispatch, getState) => {
   dispatch(updateStateSettingsChanged({ spvMode: isSPV }, true));
   const tempSettings = getState().settings.tempSettings;
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(cfgConstants.SHOW_SPV_CHOICE, false);
 
   await dispatch(saveSettings(tempSettings));
@@ -147,7 +144,7 @@ export const setupDisabledPrivacy = () => (dispatch, getState) => {
 };
 
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(LOCALE, selectedLanguage.language);
   config.set(cfgConstants.SET_LANGUAGE, false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
@@ -155,14 +152,14 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
 };
 
 export const finishTutorial = () => (dispatch) => {
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(cfgConstants.SHOW_TUTORIAL, false);
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
 };
 
 export const finishPrivacy = () => (dispatch) => {
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   config.set(cfgConstants.SHOW_PRIVACY, false);
   dispatch({ type: FINISH_PRIVACY });
   dispatch(goBack());
@@ -204,15 +201,14 @@ export const startDaemon = (params) => (dispatch, getState) =>
 
 export const registerForErrors = () => (dispatch) => {
   dispatch({ type: REGISTERFORERRORS });
-  ipcRenderer.send("register-for-errors");
-  ipcRenderer.on("error-received", (event, daemon, error) => {
+  wallet.onErrorReceived((event, daemon, error) => {
     if (daemon) {
       dispatch({ error, type: DAEMON_ERROR });
     } else {
       dispatch({ error, type: WALLET_ERROR });
     }
   });
-  ipcRenderer.on("warning-received", (event, daemon, warning) => {
+  wallet.onWarningReceived((event, daemon, warning) => {
     if (daemon) {
       dispatch({ warning, type: DAEMON_WARNING });
     } else {
@@ -240,12 +236,10 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 export const finalShutdown = () => (dispatch, getState) => {
   const { currentBlockHeight } = getState().grpc;
   if (currentBlockHeight) {
-    setLastHeight(currentBlockHeight);
+    wallet.setLastHeight(currentBlockHeight);
   }
   dispatch({ type: SHUTDOWN_REQUESTED });
-  ipcRenderer.on("daemon-stopped", () => {
-    dispatch({ type: DAEMONSTOPPED });
-  });
+  wallet.onDaemonStopped(() => dispatch({ type: DAEMONSTOPPED }));
   dispatch(stopNotifcations());
   dispatch(rescanCancel());
   dispatch(syncCancel());
@@ -379,10 +373,13 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       // it probably means it is a refresh, so we get the selected wallet
       // stored in ipc memory.
       if (!selectedWallet) {
-        selectedWallet = ipcRenderer.sendSync("get-selected-wallet");
+        selectedWallet = wallet.getSelectedWallet();
       }
       const isTestnet = network == "testnet";
-      const walletCfg = getWalletCfg(isTestnet, selectedWallet.value.wallet);
+      const walletCfg = wallet.getWalletCfg(
+        isTestnet,
+        selectedWallet.value.wallet
+      );
 
       const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
       const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
@@ -393,8 +390,8 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
           rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
           rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
           rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
-          rpcCert: path.join(
-            getWalletPath(isTestnet, selectedWallet.value.wallet),
+          rpcCert: fs.joinPaths(
+            wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
             "rpc.cert"
           )
         };
@@ -579,7 +576,7 @@ export const checkNetworkMatch = () => (dispatch, getState) =>
             error: DIFF_CONNECTION_ERROR,
             type: CHECK_NETWORKMATCH_FAILED
           });
-          ipcRenderer.send("drop-dcrd");
+          wallet.dropDcrd();
           return reject(DIFF_CONNECTION_ERROR);
         }
         dispatch({ type: CHECK_NETWORKMATCH_SUCCESS });
@@ -717,7 +714,7 @@ export const getDexLogs = () => (dispatch, getState) =>
     const {
       daemon: { walletName }
     } = getState();
-    const walletPath = getWalletPath(isTestNet(getState()), walletName);
+    const walletPath = wallet.getWalletPath(isTestNet(getState()), walletName);
     wallet
       .getDexLogs(walletPath)
       .then((logs) => resolve(logs))

@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { AdvancedBody } from "./Form";
-import {
-  setAppdataPath,
-  getAppdataPath,
-  getRemoteCredentials,
-  setRemoteCredentials
-} from "config.js";
+import * as wallet from "wallet";
 
 export const AdvancedStartupBody = ({
   submitRemoteCredentials,
@@ -19,9 +14,9 @@ export const AdvancedStartupBody = ({
     rpc_cert: rpccert,
     rpc_host: rpchost,
     rpc_port: rpcport
-  } = getRemoteCredentials();
+  } = wallet.getRemoteCredentials();
 
-  const appDataPath = getAppdataPath();
+  const appDataPath = wallet.getAppdataPath();
   const [sideActive, setSideActive] = useState(true);
   const [rpc_user, setRpcUserState] = useState(rpcuser);
   const [rpc_pass, setRpcPassState] = useState(rpcpass);
@@ -85,7 +80,13 @@ export const AdvancedStartupBody = ({
   };
 
   const onSubmitRemoteForm = () => {
-    setRemoteCredentials(rpc_user, rpc_pass, rpc_cert, rpc_host, rpc_port);
+    wallet.setRemoteCredentials(
+      rpc_user,
+      rpc_pass,
+      rpc_cert,
+      rpc_host,
+      rpc_port
+    );
     submitRemoteCredentials({
       rpc_user,
       rpc_pass,
@@ -96,7 +97,7 @@ export const AdvancedStartupBody = ({
   };
 
   const onSubmitAppDataForm = () => {
-    setAppdataPath(appdata);
+    wallet.setAppdataPath(appdata);
     submitAppdata(appdata);
   };
 

@@ -1,4 +1,4 @@
-import { shell } from "electron";
+import * as wallet from "wallet";
 import { InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { default as ReactMarkdown } from "react-markdown";
 import { FormattedMessage as T } from "react-intl";
@@ -26,7 +26,7 @@ const renderInternalProposalLink = ({ children, href }) => (
         {children}
       </a>
     }
-    onSubmit={() => shell.openExternal(href)}
+    onSubmit={() => wallet.openExternalURL(href)}
   />
 );
 

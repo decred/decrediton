@@ -1,4 +1,4 @@
-import { ipcRenderer } from "electron";
+import * as wallet from "wallet";
 import { useEffect } from "react";
 import { useLNPage } from "../hooks";
 
@@ -18,7 +18,7 @@ export function useWalletTab() {
   }, [updateWalletBalances]);
 
   const onBackup = async () => {
-    const { filePath } = await ipcRenderer.invoke("show-save-dialog");
+    const { filePath } = await wallet.showSaveDialog();
     if (!filePath) {
       return;
     }
@@ -27,7 +27,7 @@ export function useWalletTab() {
   };
 
   const onVerifyBackup = async () => {
-    const { filePaths } = await ipcRenderer.invoke("show-open-dialog");
+    const { filePaths } = await wallet.showOpenDialog();
     const filePath = filePaths[0];
     if (!filePath) {
       return;

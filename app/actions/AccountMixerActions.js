@@ -1,13 +1,6 @@
 import Promise from "promise";
 import * as sel from "selectors";
-import {
-  runAccountMixerRequest,
-  cleanPrivacyLogs,
-  getAccountMixerService,
-  getDcrwalletGrpcKeyCert,
-  getCoinjoinOutputspByAcctReq
-} from "wallet";
-import { getWalletCfg } from "config";
+import * as wallet from "wallet";
 import {
   getAcctSpendableBalance,
   getAccountsAttempt,
@@ -43,16 +36,17 @@ export const getAccountMixerServiceAttempt = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   dispatch({ type: GETACCOUNTMIXERSERVICE_ATTEMPT });
-  return getAccountMixerService(
-    sel.isTestNet(getState()),
-    walletName,
-    address,
-    port,
-    grpcCertAndKey,
-    grpcCertAndKey
-  )
+  return wallet
+    .getAccountMixerService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
     .then((accountMixerService) =>
       dispatch({ accountMixerService, type: GETACCOUNTMIXERSERVICE_SUCCESS })
     )
@@ -63,7 +57,7 @@ export const TOGGLE_ALLOW_SEND_FROM_UNMIXED = "TOGGLE_ALLOW_SEND_FROM_UNMIXED";
 
 export const toggleAllowSendFromUnmixed = () => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   const value = !walletCfg.get(SEND_FROM_UNMIXED);
   walletCfg.set(SEND_FROM_UNMIXED, value);
   dispatch({ type: TOGGLE_ALLOW_SEND_FROM_UNMIXED, allow: value });
@@ -107,7 +101,7 @@ export const runAccountMixer = ({
           passphrase,
           [changeAccount],
           () =>
-            runAccountMixerRequest(sel.accountMixerService(getState()), {
+            wallet.runAccountMixerRequest(sel.accountMixerService(getState()), {
               mixedAccount,
               mixedAccountBranch,
               changeAccount,
@@ -156,7 +150,7 @@ export const stopAccountMixer = (cleanLogs) => {
     const { mixerStreamer } = getState().grpc;
     // clean logs if needed.
     if (cleanLogs) {
-      cleanPrivacyLogs();
+      wallet.cleanPrivacyLogs();
     }
     if (!mixerStreamer) return;
     dispatch({ type: STOPMIXER_ATTEMPT });
@@ -213,7 +207,7 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 ) => {
   const isTestnet = sel.isTestNet(getState());
   const walletName = sel.getWalletName(getState());
-  const cfg = getWalletCfg(isTestnet, walletName);
+  const cfg = wallet.getWalletCfg(isTestnet, walletName);
 
   const csppServer = CSPP_URL;
   const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;
@@ -243,7 +237,8 @@ export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
 export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     const { balances, walletService } = getState().grpc;
-    getCoinjoinOutputspByAcctReq(walletService)
+    wallet
+      .getCoinjoinOutputspByAcctReq(walletService)
       .then((response) => {
         const coinjoinSumByAcctResp =
           response.wrappers_ && response.wrappers_[1];

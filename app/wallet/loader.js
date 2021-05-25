@@ -2,6 +2,8 @@ import Promise from "promise";
 import { withLog as log, withLogNoData, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
+import { getDcrdCert } from "./config";
+import { shimStreamedResponse } from "helpers/electronRenderer";
 
 const {
   CreateWalletRequest,
@@ -14,7 +16,8 @@ const {
   CreateWatchingOnlyWalletRequest,
   SpvSyncRequest,
   FetchMissingCFiltersRequest,
-  RescanPointRequest
+  RescanPointRequest,
+  RpcSyncRequest
 } = api;
 
 export const getLoader = withLogNoData(
@@ -142,14 +145,38 @@ export const fetchHeaders = log(
 );
 
 export const spvSync = log(
-  (loader) =>
-    new Promise((resolve, reject) => {
-      const request = new SpvSyncRequest();
-      loader.spvSync(request, (error, response) =>
-        error ? reject(error) : resolve(response)
-      );
-    }),
+  async (loader, spvConnect, discoverAccts, setPrivPass) => {
+    const request = new SpvSyncRequest();
+    for (let i = 0; spvConnect && i < spvConnect.length; i++) {
+      request.addSpvConnect(spvConnect[i]);
+    }
+    request.setDiscoverAccounts(discoverAccts);
+    if (setPrivPass) {
+      request.setPrivatePassphrase(new Uint8Array(Buffer.from(setPrivPass)));
+    }
+    const call = await loader.spvSync(request);
+    return shimStreamedResponse(call);
+  },
   "Start SPV Sync"
+);
+
+export const rpcSync = log(
+  async (loader, rpcCreds, discoverAccts, setPrivPass) => {
+    const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = rpcCreds;
+    const request = new RpcSyncRequest();
+    const cert = getDcrdCert(rpc_cert);
+    request.setNetworkAddress(rpc_host + ":" + rpc_port);
+    request.setUsername(rpc_user);
+    request.setPassword(new Uint8Array(Buffer.from(rpc_pass)));
+    request.setCertificate(new Uint8Array(cert));
+    request.setDiscoverAccounts(discoverAccts);
+    if (setPrivPass) {
+      request.setPrivatePassphrase(new Uint8Array(Buffer.from(setPrivPass)));
+    }
+    const call = await loader.rpcSync(request);
+    return shimStreamedResponse(call);
+  },
+  "Start RPC Sync"
 );
 
 export const fetchMissingCFilters = log(

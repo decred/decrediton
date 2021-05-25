@@ -1,4 +1,4 @@
-import { shell } from "electron";
+import * as wallet from "wallet";
 import { classNames } from "pi-ui";
 import Docs from "i18n/docs";
 import { default as ReactMarkdown, uriTransformer } from "react-markdown";
@@ -11,7 +11,7 @@ import styles from "./Documentation.module.css";
 const renderDocLink = ({ href, children }) => {
   const uri = uriTransformer(href);
   return (
-    <a onClick={() => shell.openExternal(uri)} href="#">
+    <a onClick={() => wallet.openExternalURL(uri)} href="#">
       {children}
     </a>
   );

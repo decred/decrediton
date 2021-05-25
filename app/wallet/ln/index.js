@@ -4,13 +4,19 @@ import { lnrpc as pb } from "middleware/ln/rpc_pb";
 import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
-import { invoke } from "helpers/electronRenderer";
+import { invoke, shimStreamedResponse } from "helpers/electronRenderer";
 
 export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
 
 export * from "./watchtower";
+
+export const startDcrlnd = (...args) => invoke("start-dcrlnd", ...args);
+
+export const stopDcrlnd = () => invoke("stop-dcrlnd");
+
+export const dcrlndCreds = () => invoke("dcrlnd-creds");
 
 export const getInfo = (client) => {
   const request = new pb.GetInfoRequest();
@@ -190,12 +196,12 @@ export const addInvoice = (client, memo, value) => {
 
 export const subscribeToInvoices = (client) => {
   const request = new pb.InvoiceSubscription();
-  return client.subscribeInvoices(request);
+  return shimStreamedResponse(client.subscribeInvoices(request));
 };
 
 export const subscribeChannelEvents = (client) => {
   const request = new pb.ChannelEventSubscription();
-  return client.subscribeChannelEvents(request);
+  return shimStreamedResponse(client.subscribeChannelEvents(request));
 };
 
 export const decodePayReq = (client, payReq) => {
@@ -214,7 +220,7 @@ export const decodePayReq = (client, payReq) => {
 };
 
 export const createPayStream = (client) => {
-  return client.sendPayment(null);
+  return shimStreamedResponse(client.sendPayment(null));
 };
 
 export const sendPayment = (payStream, payRequest, value) => {
@@ -246,7 +252,7 @@ export const openChannel = (client, node, localAmt, pushAmt) => {
   request.setNodePubkey(new Uint8Array(Buffer.from(node, "hex")));
   request.setLocalFundingAmount(localAmt);
   request.setPushAtoms(pushAmt);
-  return client.openChannel(request);
+  return shimStreamedResponse(client.openChannel(request));
 };
 
 export const closeChannel = (client, txid, outputIdx, force) => {
@@ -258,7 +264,7 @@ export const closeChannel = (client, txid, outputIdx, force) => {
   request.setChannelPoint(chanPoint);
   request.setForce(force);
 
-  return client.closeChannel(request);
+  return shimStreamedResponse(client.closeChannel(request));
 };
 
 export const newAddress = (client) => {

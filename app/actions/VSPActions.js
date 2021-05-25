@@ -1,6 +1,3 @@
-// @flow
-import Promise from "promise";
-import { getWalletCfg, updateStakePoolConfig } from "config";
 import {
   importScriptAttempt,
   rescanAttempt,
@@ -257,7 +254,7 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) => (
   const {
     daemon: { walletName }
   } = getState();
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set(cfgConstants.STAKEPOOLS, stakePoolConfigs);
   return stakePoolConfigs;
 };
@@ -405,7 +402,7 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (
   const {
     daemon: { walletName }
   } = getState();
-  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const config = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   const voteChoicesConfig = voteChoices.getChoicesList().map((choice) => ({
     agendaId: choice.getAgendaId(),
     choiceId: choice.getChoiceId()
@@ -436,7 +433,7 @@ export const dismissBackupRedeemScript = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set(cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT, true);
   dispatch({ type: DISMISS_BACKUP_MSG_REDEEM_SCRIPT });
 };
@@ -516,7 +513,7 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const config = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   const existingPools = config.get(cfgConstants.STAKEPOOLS);
   const pool = existingPools.filter((p) => p.Host === host)[0];
   if (!pool) {
@@ -572,8 +569,8 @@ export const addCustomStakePool = (host) => async (dispatch, getState) => {
     const {
       daemon: { walletName }
     } = getState();
-    const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-    updateStakePoolConfig(config, [poolInfo]);
+    const config = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
+    wallet.updateStakePoolConfig(config, [poolInfo]);
     const currentStakePoolConfig = config.get(cfgConstants.STAKEPOOLS);
 
     dispatch({
@@ -597,8 +594,8 @@ export const discoverAvailableStakepools = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
-  updateStakePoolConfig(config, vspInfo);
+  const config = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
+  wallet.updateStakePoolConfig(config, vspInfo);
   dispatch({
     type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS,
     currentStakePoolConfig: config.get(cfgConstants.STAKEPOOLS)
@@ -612,7 +609,7 @@ export const toggleIsLegacy = (isLegacy) => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set(cfgConstants.VSP_IS_LEGACY, isLegacy);
   dispatch({
     type: TOGGLE_ISLEGACY,
@@ -624,7 +621,7 @@ export const UPDATE_USED_VSPS = "UPDATE_USED_VSPS";
 export const updateUsedVSPs = (vsp) => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const isTestNet = sel.isTestNet(getState());
-  const walletCfg = getWalletCfg(isTestNet, walletName);
+  const walletCfg = wallet.getWalletCfg(isTestNet, walletName);
   const usedVSPs = walletCfg.get(USED_VSPS);
   const isUsed = usedVSPs.find((usedVSP) => usedVSP.host === vsp.host);
   // ignore if already added.
@@ -646,7 +643,7 @@ export const setRememberedVspHost = (rememberedVspHost) => (
   const {
     daemon: { walletName }
   } = getState();
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   walletCfg.set(cfgConstants.REMEMBERED_VSP_HOST, rememberedVspHost);
 };
 
@@ -866,7 +863,7 @@ export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
   const {
     daemon: { walletName }
   } = getState();
-  const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const walletCfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   const autobuyerSettings = {
     balanceToMaintain: parseInt(balanceToMaintain.atomValue),
     account: account.name,

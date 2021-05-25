@@ -1,13 +1,9 @@
 import * as ln from "wallet/ln";
 import * as sel from "selectors";
 import * as wallet from "wallet";
-import { ipcRenderer } from "electron";
-import { getWalletCfg } from "../config";
-import { getWalletPath } from "main_dev/paths";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
 import { isNumber } from "lodash";
-import { invoke } from "helpers/electronRenderer";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -57,7 +53,7 @@ export const startDcrlnd = (
     daemon: { walletName }
   } = getState();
   const isTestnet = sel.isTestNet(getState());
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = wallet.getWalletPath(isTestnet, walletName);
   const walletPort = port;
   const lnCfg = dispatch(getLNWalletConfig());
 
@@ -87,7 +83,7 @@ export const startDcrlnd = (
     creating = true;
   }
 
-  const rpcCreds = ipcRenderer.sendSync("get-dcrd-rpc-credentials");
+  const rpcCreds = wallet.getDcrdRpcCredentials();
   const walletClientKeyCert = wallet.getDcrwalletGrpcKeyCert();
 
   let dcrlndCreds;
@@ -98,8 +94,7 @@ export const startDcrlnd = (
       stage: LNWALLET_STARTUPSTAGE_STARTDCRLND,
       type: LNWALLET_STARTUP_CHANGEDSTAGE
     });
-    const res = await invoke(
-      "start-dcrlnd",
+    const res = await ln.startDcrlnd(
       lnAccount,
       walletPort,
       rpcCreds,
@@ -118,7 +113,7 @@ export const startDcrlnd = (
   // dcrlnd is already running so if some error occurs we need to shut it down.
   const cleanup = () => {
     // Force dcrlnd to stop.
-    invoke("stop-dcrlnd");
+    ln.stopDcrlnd();
     dispatch({ type: LNWALLET_STARTUP_FAILED });
 
     if (creating) {
@@ -221,7 +216,7 @@ export const stopDcrlnd = () => (dispatch, getState) => {
     return;
   }
 
-  invoke("stop-dcrlnd");
+  ln.stopDcrlnd();
   dispatch({ type: LNWALLET_DCRLND_STOPPED });
 };
 
@@ -238,7 +233,7 @@ export const checkLnWallet = () => async (dispatch) => {
   }
 
   // Check whether the app knows of a previously running dcrlnd instance.
-  const creds = await invoke("dcrlnd-creds");
+  const creds = await ln.dcrlndCreds();
   if (!creds) {
     return;
   }
@@ -900,7 +895,7 @@ const getLNWalletConfig = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   return {
     walletExists: cfg.get(cfgConstants.LN_WALLET_EXISTS),
     account: cfg.get(cfgConstants.LN_ACCOUNT)
@@ -911,7 +906,7 @@ const setLNWalletConfig = (account) => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
   cfg.set(cfgConstants.LN_WALLET_EXISTS, true);
   cfg.set(cfgConstants.LN_ACCOUNT, account);
 };
@@ -922,7 +917,7 @@ const getScbInfo = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const walletPath = getWalletPath(isTestnet, walletName);
+  const walletPath = wallet.getWalletPath(isTestnet, walletName);
   const scbInfo = await ln.scbInfo(walletPath, isTestnet);
   dispatch({
     scbPath: scbInfo.channelBackupPath,

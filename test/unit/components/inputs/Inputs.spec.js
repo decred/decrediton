@@ -23,7 +23,7 @@ import { screen, wait } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import { useState } from "react";
 import * as sel from "selectors";
-import { ipcRenderer } from "electron";
+import * as wallet from "wallet";
 
 const inputDataTestId = "input-data-test-id";
 const testClassName = "test-class-name";
@@ -439,37 +439,37 @@ test("open file with PathBrowseInput", async () => {
   expect(screen.getByText("Select a path")).toBeInTheDocument();
 
   /* electron returns both filePaths and filePath */
-  ipcRenderer.invoke.mockReturnValueOnce({
+  wallet.showOpenDialog.mockReturnValueOnce({
     filePaths: [testFilePath],
     filePath: testFilePath
   });
   user.click(screen.getByRole("button", { name: "Select a path" }));
-  expect(ipcRenderer.invoke).toHaveBeenCalledWith("show-open-dialog", anyArg());
+  expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
   await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 
   /* electron return only filePath */
   mockOnChange.mockRestore();
   user.clear(inputTag);
-  ipcRenderer.invoke.mockReturnValueOnce({ filePath: testFilePath });
+  wallet.showOpenDialog.mockReturnValueOnce({ filePath: testFilePath });
   user.click(screen.getByRole("button", { name: "Select a path" }));
-  expect(ipcRenderer.invoke).toHaveBeenCalledWith("show-open-dialog", anyArg());
+  expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
   await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 
   /* electron does not return filePaths or filePath */
   mockOnChange.mockRestore();
   user.clear(inputTag);
-  ipcRenderer.invoke.mockReturnValueOnce({});
+  wallet.showOpenDialog.mockReturnValueOnce({});
   user.click(screen.getByRole("button", { name: "Select a path" }));
-  expect(ipcRenderer.invoke).toHaveBeenCalledWith("show-open-dialog", anyArg());
+  expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
   await wait(() => expect(mockOnChange).not.toHaveBeenCalledWith(testFilePath));
 
   /* write path into input directly*/
   const filePathManual = "t";
   mockOnChange.mockRestore();
-  ipcRenderer.invoke.mockRestore();
+  wallet.showOpenDialog.mockRestore();
   user.clear(inputTag);
   user.type(inputTag, filePathManual);
-  expect(ipcRenderer.invoke).not.toHaveBeenCalled();
+  expect(wallet.showOpenDialog).not.toHaveBeenCalled();
   await wait(() => expect(mockOnChange).toHaveBeenCalledWith(filePathManual));
 });
 
@@ -480,8 +480,8 @@ test("save directory with PathBrowseInput", async () => {
   });
   checkDefaultInput(input, inputTag);
   expect(screen.getByText("Select a path")).toBeInTheDocument();
-  ipcRenderer.invoke.mockReturnValueOnce({ filePath: testFilePath });
+  wallet.showSaveDialog.mockReturnValueOnce({ filePath: testFilePath });
   user.click(screen.getByRole("button", { name: "Select a path" }));
-  expect(ipcRenderer.invoke).toHaveBeenCalledWith("show-save-dialog", anyArg());
+  expect(wallet.showSaveDialog).toHaveBeenCalledWith(anyArg());
   await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 });

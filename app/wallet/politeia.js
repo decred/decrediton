@@ -1,6 +1,13 @@
-import Promise from "promise";
 import * as api from "../middleware/politeiaapi";
 import { withLogNoData } from "./index";
+export {
+  setPoliteiaPath,
+  getEligibleTickets,
+  saveEligibleTickets,
+  savePiVote,
+  getProposalWalletVote,
+  removeCachedProposals
+} from "main_dev/paths";
 
 const promisifyReqLogNoData = (fnName, Req) => {
   return withLogNoData(

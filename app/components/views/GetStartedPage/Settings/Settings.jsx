@@ -11,7 +11,6 @@ import TimezoneSettings from "views/SettingsPage/SettingsTab/TimezoneSettings";
 import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { GoBackMsg } from "../messages";
-import { getGlobalCfg } from "config";
 import * as configConstants from "constants/config";
 import {
   useTheme,
@@ -25,6 +24,7 @@ import settingsTabStyles from "views/SettingsPage/SettingsTab/Settings.module.cs
 import { useSettings } from "hooks";
 import { BackButton, BackButtonArea } from "../helpers";
 import styles from "./Settings.module.css";
+import * as wallet from "wallet";
 
 const SetttingsForm = ({ onSendBack }) => {
   const { setThemeName } = useTheme();
@@ -41,7 +41,7 @@ const SetttingsForm = ({ onSendBack }) => {
   } = useSettings();
 
   const saveSettingsHandler = useCallback(() => {
-    const config = getGlobalCfg();
+    const config = wallet.getGlobalCfg();
     const oldTheme = config.get(configConstants.THEME);
     if (oldTheme != tempSettings.theme) {
       setThemeName(

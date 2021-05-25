@@ -1,4 +1,3 @@
-// @flow
 import * as wallet from "wallet";
 import {
   getTicketPriceAttempt,
@@ -7,12 +6,9 @@ import {
   getBalanceUpdateAttempt
 } from "./ClientActions";
 import { newTransactionsReceived } from "./TransactionActions";
-import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { stopAccountMixer } from "./AccountMixerActions";
 import * as sel from "selectors";
 import { MIN_RELAY_FEE_ATOMS, MIN_MIX_DENOMINATION_ATOMS } from "constants";
-
-const { TransactionNotificationsRequest, AccountNotificationsRequest } = api;
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -158,10 +154,9 @@ const transactionNtfnsDataHandler = () => (dispatch, getState) => {
   };
 };
 
-export const transactionNtfnsStart = () => (dispatch, getState) => {
-  const request = new TransactionNotificationsRequest();
+export const transactionNtfnsStart = () => async (dispatch, getState) => {
   const { walletService } = getState().grpc;
-  const transactionNtfns = walletService.transactionNotifications(request);
+  const transactionNtfns = await wallet.transactionNotifications(walletService);
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
   transactionNtfns.on("data", dispatch(transactionNtfnsDataHandler()));
   transactionNtfns.on("end", () => {
@@ -177,10 +172,9 @@ export const transactionNtfnsStart = () => (dispatch, getState) => {
 export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
 export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
 
-export const accountNtfnsStart = () => (dispatch, getState) => {
-  const request = new AccountNotificationsRequest();
+export const accountNtfnsStart = () => async (dispatch, getState) => {
   const { walletService } = getState().grpc;
-  const accountNtfns = walletService.accountNotifications(request);
+  const accountNtfns = await wallet.accountNotifications(walletService);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
   accountNtfns.on("data", (data) => {
     const {

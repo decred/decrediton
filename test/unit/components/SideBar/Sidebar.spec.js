@@ -17,7 +17,7 @@ jest.mock("actions/ControlActions", () => {
   return {
     rescanAttempt: jest.fn(() => (dispatch) => {
       dispatch({
-        request: { getBeginHeight: () => {} },
+        request: { beginHeight: () => {} },
         type: RESCAN_ATTEMPT
       });
     }),
@@ -456,8 +456,8 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
   render(<SideBar />);
   expect(screen.getByText(/in the background/i).textContent)
     .toMatchInlineSnapshot(`
-    "One or more of the following decrediton's features running in 
-                  the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket 
+    "One or more of the following decrediton's features running in
+                  the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket
                   Attempt"
   `);
 

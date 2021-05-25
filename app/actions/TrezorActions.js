@@ -1,5 +1,5 @@
 import * as wallet from "wallet";
-import fs from "fs-extra";
+import * as fs from "wallet/fs";
 import * as selectors from "selectors";
 import { hexToBytes, str2utf8hex, rawToHex } from "helpers";
 import {
@@ -15,8 +15,7 @@ import {
   MODEL1_DECRED_HOMESCREEN,
   MODELT_DECRED_HOMESCREEN
 } from "constants/trezor";
-import { getWalletCfg } from "config";
-import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_TREZOR_BRIDGE } from "constants";
 import {
   SIGNTX_ATTEMPT,
   SIGNTX_FAILED,
@@ -49,7 +48,10 @@ export const enableTrezor = () => (dispatch, getState) => {
   const walletName = selectors.getWalletName(getState());
 
   if (walletName) {
-    const config = getWalletCfg(selectors.isTestNet(getState()), walletName);
+    const config = wallet.getWalletCfg(
+      selectors.isTestNet(getState()),
+      walletName
+    );
     config.set(cfgConstants.TREZOR, true);
   }
 

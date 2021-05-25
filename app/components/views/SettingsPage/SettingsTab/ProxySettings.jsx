@@ -5,7 +5,7 @@ import {
   PROXYTYPE_HTTP,
   PROXYTYPE_SOCKS4,
   PROXYTYPE_SOCKS5
-} from "main_dev/proxy";
+} from "constants";
 import styles from "./Settings.module.css";
 
 const availableProxyTypes = [

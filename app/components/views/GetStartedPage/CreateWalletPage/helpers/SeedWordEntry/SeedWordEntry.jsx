@@ -1,6 +1,6 @@
 import Select from "react-select";
-import { SEED_WORDS } from "wallet/seed";
-import { clipboard } from "electron";
+import { SEED_WORDS } from "constants/seed";
+import * as wallet from "wallet";
 import { useLayoutEffect } from "react";
 // SeedWordSelect.css includes custom styling for seed word select which need
 // to be loaded *after* ReactSelectGlobal.less, both imports should be deleted
@@ -23,7 +23,7 @@ const SeedWordEntry = ({
       if (e.which === 2) {
         e.preventDefault();
 
-        const isPasted = onPasteFromClipboard(clipboard.readText());
+        const isPasted = onPasteFromClipboard(wallet.readFromClipboard());
 
         // missing with the select options from react-select
         if (isPasted) {

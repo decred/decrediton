@@ -7,7 +7,6 @@ import {
 } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, ResetNetworkButton } from "buttons";
-import { getGlobalCfg } from "config";
 import NetworkSettings from "./NetworkSettings";
 import ProxySettings from "./ProxySettings";
 import PrivacySettings from "./PrivacySettings";
@@ -17,6 +16,7 @@ import TimezoneSettings from "./TimezoneSettings";
 import { Subtitle } from "shared";
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
+import * as wallet from "wallet";
 
 const SettingsPage = ({
   areSettingsDirty,
@@ -33,7 +33,7 @@ const SettingsPage = ({
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
-    const config = getGlobalCfg();
+    const config = wallet.getGlobalCfg();
     const oldTheme = config.get(configConstants.THEME);
     if (oldTheme != tempSettings.theme) {
       setThemeName(

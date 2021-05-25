@@ -1,6 +1,4 @@
-// @flow
 import * as wallet from "wallet";
-import { onAppReloadRequested, getDcrwalletGrpcKeyCert } from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import isUndefined from "lodash/fp/isUndefined";
@@ -26,16 +24,11 @@ import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "connected-react-router";
-import { getWalletCfg, getGlobalCfg } from "config";
-import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getTokenAndInitialBatch } from "./GovernanceActions";
 import { discoverAvailableVSPs } from "./VSPActions";
 import * as da from "../middleware/dcrdataapi";
-import {
-  EXTERNALREQUEST_DCRDATA,
-  EXTERNALREQUEST_POLITEIA
-} from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "constants";
 import {
   TESTNET,
   MAINNET,
@@ -134,7 +127,7 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
-  const config = getGlobalCfg();
+  const config = wallet.getGlobalCfg();
   const dcrdataEnabled =
     config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) >
     -1;
@@ -176,7 +169,7 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getWalletService(
       sel.isTestNet(getState()),
@@ -204,7 +197,7 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getTicketBuyerService(
       sel.isTestNet(getState()),
@@ -484,7 +477,7 @@ export function hideAccount(accountNumber) {
     if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
       updatedHiddenAccounts.push(accountNumber);
     }
-    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
@@ -505,7 +498,7 @@ export function showAccount(accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+    const cfg = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set(cfgConstants.HIDDEN_ACCOUNTS, updatedHiddenAccounts);
     dispatch({
       hiddenAccounts: updatedHiddenAccounts,
@@ -548,7 +541,7 @@ export const getAgendaServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getAgendaService(
       sel.isTestNet(getState()),
@@ -579,7 +572,7 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
     daemon: { walletName }
   } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   wallet
     .getVotingService(
       sel.isTestNet(getState()),
@@ -680,7 +673,7 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
-  const grpcCertAndKey = getDcrwalletGrpcKeyCert();
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet
     .getMessageVerificationService(
@@ -702,7 +695,8 @@ export const getMessageVerificationServiceAttempt = (dispatch, getState) => {
     );
 };
 
-export const listenForAppReloadRequest = (cb) => () => onAppReloadRequested(cb);
+export const listenForAppReloadRequest = (cb) => () =>
+  wallet.onAppReloadRequested(cb);
 
 export const showTicketList = (status) => (dispatch) =>
   dispatch(pushHistory("/tickets/mytickets/" + status));
@@ -714,8 +708,7 @@ export const goBackHistory = () => (dispatch) => dispatch(goBack());
 
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
 export const copySeedToClipboard = (mnemonic) => (dispatch) => {
-  clipboard.clear();
-  clipboard.writeText(mnemonic);
+  wallet.copyToClipboard(mnemonic);
   dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
 };
 

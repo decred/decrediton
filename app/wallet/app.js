@@ -1,4 +1,5 @@
-import { ipcRenderer } from "electron";
+import { ipcRenderer, clipboard, shell, app } from "electron";
+import { invoke } from "helpers/electronRenderer";
 import {
   isObject,
   isString,
@@ -7,9 +8,39 @@ import {
   isNull,
   isFunction
 } from "lodash";
+import qr from "qr-image";
 
 export const onAppReloadRequested = (cb) =>
   ipcRenderer.on("app-reload-requested", cb);
+
+export const requestUIReload = () => ipcRenderer.send("app-reload-ui");
+
+export const onCheckCanClose = (cb) => {
+  ipcRenderer.removeAllListeners("check-can-close");
+  ipcRenderer.on("check-can-close", cb);
+};
+
+export const onShowAboutModal = (cb) => {
+  ipcRenderer.removeAllListeners("show-about-modal");
+  ipcRenderer.on("show-about-modal", cb);
+};
+
+export const onErrorReceived = (cb) => {
+  ipcRenderer.removeAllListeners("error-received");
+  ipcRenderer.on("error-received", cb);
+};
+
+export const onWarningReceived = (cb) => {
+  ipcRenderer.removeAllListeners("warning-received");
+  ipcRenderer.on("warning-received", cb);
+};
+
+export const onDaemonStopped = (cb) => {
+  ipcRenderer.removeAllListeners("daemon-stopped");
+  ipcRenderer.on("daemon-stopped", cb);
+};
+
+export const getCLIOptions = () => ipcRenderer.sendSync("get-cli-options");
 
 export const log = (level, ...args) => {
   ipcRenderer.send("main-log", ...[level, ...args]);
@@ -89,3 +120,49 @@ export const withLogNoData = (f, msg, opts = {}) =>
 export const setupProxy = () => {
   ipcRenderer.send("setup-proxy");
 };
+
+export const copyToClipboard = (data) => {
+  clipboard.clear();
+  clipboard.writeText(data);
+};
+
+export const readFromClipboard = () => clipboard.readText();
+
+export const openExternalURL = (url) => {
+  // Allow opening external http:// sites only in development mode.
+  const regexp =
+    process.env.NODE_ENV === "development" ? /^https:\/\// : /^https?:\/\//;
+  if (!regexp.test(url)) {
+    throw new Error("Unsupported external URL " + url);
+  }
+  shell.openExternal(url);
+};
+
+export const appInfo = {
+  name: app?.name,
+  version: app?.getVersion()
+};
+
+export const showSaveDialog = (opts) => invoke("show-save-dialog", opts);
+
+export const showOpenDialog = (opts) => invoke("show-open-dialog", opts);
+
+export const getSelectedWallet = () =>
+  ipcRenderer.sendSync("get-selected-wallet");
+
+export const setSelectedWallet = (selectedWallet) =>
+  ipcRenderer.sendSync("set-selected-wallet", selectedWallet);
+
+export const getDcrdRpcCredentials = () =>
+  ipcRenderer.sendSync("get-dcrd-rpc-credentials");
+
+export const dropDcrd = () => invoke("drop-dcrd");
+
+export const changeMenuLocale = (locale) =>
+  ipcRenderer.sendSync("change-menu-locale", locale);
+
+export const grpcVersionsDetermined = (versions) =>
+  ipcRenderer.send("grpc-versions-determined", versions);
+
+export const genQRCodeSVG = (uri) =>
+  qr.imageSync(uri, { type: "svg", ec_level: "H" });

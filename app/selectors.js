@@ -27,7 +27,7 @@ import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
-} from "main_dev/externalRequests";
+} from "constants";
 import {
   POLITEIA_URL_TESTNET,
   POLITEIA_URL_MAINNET
@@ -1077,7 +1077,7 @@ export const getNoMoreLiveTickets = get(["grpc", "noMoreLiveTickets"]);
 
 export const rescanEndBlock = currentBlockHeight;
 export const rescanStartBlock = compose(
-  (req) => (req ? req.getBeginHeight() : 0),
+  (req) => (req ? req.beginHeight : 0),
   rescanRequest
 );
 export const rescanCurrentBlock = compose(

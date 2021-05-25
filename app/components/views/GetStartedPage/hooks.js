@@ -12,7 +12,6 @@ import RescanWalletBody from "./RescanWallet/RescanWallet";
 import WalletPubpassInput from "./OpenWallet/OpenWallet";
 import DiscoverAccounts from "./OpenWallet/DiscoverAccounts";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
-import { ipcRenderer } from "electron";
 import {
   OPENWALLET_INPUT,
   OPENWALLET_INPUTPRIVPASS
@@ -24,6 +23,7 @@ import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import styles from "./GetStarted.module.css";
 import { isObject } from "lodash";
+import * as wallet from "wallet";
 
 export const useGetStarted = () => {
   const {
@@ -255,7 +255,7 @@ export const useGetStarted = () => {
   // connection data is inputed and sends the first interaction with the state
   // machine, so it can start. Only one of the choises is chosen.
   const preStartDaemon = useCallback(() => {
-    const cliOptions = ipcRenderer.sendSync("get-cli-options");
+    const cliOptions = wallet.getCLIOptions();
     let rpcCliRemote;
     if (cliOptions.rpcPresent) {
       rpcCliRemote = {

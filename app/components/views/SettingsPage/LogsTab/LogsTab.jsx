@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLogging } from "./hooks";
 import Logs from "./Page";
-import {
-  getDcrdLogs,
-  getDcrwalletLogs,
-  getDecreditonLogs,
-  getDcrlndLogs
-} from "wallet";
+import * as wallet from "wallet";
 import ReactTimeout from "react-timeout";
 
 const LogsTabBody = ({ setInterval, clearInterval }) => {
@@ -35,10 +30,10 @@ const LogsTabBody = ({ setInterval, clearInterval }) => {
       decreditonLogsNew,
       rawDcrlndLogs
     ] = await Promise.all([
-      getDcrdLogs(),
-      getDcrwalletLogs(),
-      getDecreditonLogs(),
-      getDcrlndLogs()
+      wallet.getDcrdLogs(),
+      wallet.getDcrwalletLogs(),
+      wallet.getDecreditonLogs(),
+      wallet.getDcrlndLogs()
     ]);
     const dcrdLogsNew = Buffer.from(rawDcrdLogs).toString("utf8");
     const dcrwalletLogsNew = Buffer.from(rawDcrwalletLogs).toString("utf8");

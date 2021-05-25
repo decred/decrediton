@@ -2,16 +2,9 @@ import Promise from "promise";
 import { ipcRenderer } from "electron";
 import { withLog as log, logOptionNoResponseData } from "./app";
 import { isString } from "lodash";
+import { invoke } from "helpers/electronRenderer";
 
-// invoke calls ipcRenderer.invoke() with the given channel and args. If the
-// call returns an Error instance, then it throws an exception.
-const invoke = async (channel, ...args) => {
-  const res = await ipcRenderer.invoke(channel, ...args);
-  if (res instanceof Error) {
-    throw res;
-  }
-  return res;
-};
+export const getHeightSynced = () => ipcRenderer.sendSync("get-height-synced");
 
 export const checkDecreditonVersion = log(
   () => Promise.resolve(ipcRenderer.sendSync("check-version")),
