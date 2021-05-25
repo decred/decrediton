@@ -288,7 +288,7 @@ function deleteFolderRecursive(path) {
 
 export function getDefaultBitcoinDirectory() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "Bitcoin");
+    return path.join(os.homedir(), "AppData", "Roaming", "Bitcoin");
   } else if (process.platform === "darwin") {
     return path.join(os.homedir(), "Library", "Application Support", "Bitcoin");
   } else {
