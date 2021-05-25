@@ -77,7 +77,7 @@ production.
 
 The current recommended versions for the main tools are:
 
-  - Node: 10.2+
+  - Node: 14.16.1
   - Npm: 6.4+
   - Yarn: 1.12+
   - Electron: 3.0.6
