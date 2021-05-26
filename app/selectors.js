@@ -14,6 +14,7 @@ import {
   uniq,
   createSelectorEager as createSelector
 } from "./fp";
+import { isNull } from "lodash";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
 import {
   decodeVoteScript,
@@ -1158,7 +1159,7 @@ export const unlockableAccounts = createSelector([balances], (balances) =>
 export const buyerBalanceToMaintain = createSelector(
   [get(["vsp", "balanceToMaintain"])],
   (balanceToMaintain) =>
-    balanceToMaintain
+    !isNull(balanceToMaintain)
       ? {
           atomValue: balanceToMaintain,
           value: parseInt(balanceToMaintain) / UNIT_DIVISOR
