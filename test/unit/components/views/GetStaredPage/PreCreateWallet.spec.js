@@ -21,7 +21,9 @@ const testSelectedWallet = {
     isTrezor: false,
     isWatchingOnly: false,
     network: "mainnet",
-    wallet: testWalletName
+    wallet: testWalletName,
+    gapLimit: null,
+    disableCoinTypeUpgrades: false
   }
 };
 const selectors = sel;
@@ -406,6 +408,38 @@ test("test testnet logo on restore wallet view", async () => {
 
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
   user.click(screen.getByText(/continue/i));
+  await wait(() =>
+    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+  );
+});
+
+test("test disable coin type upgrades and gap limit inputs on restore wallet", async () => {
+  const testRestoreSelectedWallet = {
+    ...testSelectedWallet,
+    value: {
+      ...testSelectedWallet.value,
+      isNew: false,
+      disableCoinTypeUpgrades: true,
+      gapLimit: "1001"
+    }
+  };
+
+  await goToRestoreWalletView();
+  user.click(screen.getByText("Advanced Options"));
+  const continueButton = screen.getByText(/continue/i);
+  const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
+  user.type(walletNameInput, testWalletName);
+
+  const disableCoinTypeUpgradesSwitch = screen.getByLabelText(
+    /disable coin type upgrades/i
+  );
+  user.click(disableCoinTypeUpgradesSwitch);
+  expect(disableCoinTypeUpgradesSwitch.checked).toBe(true);
+
+  const gapLimitInput = screen.getByLabelText(/gap limit:/i);
+  user.type(gapLimitInput, testRestoreSelectedWallet.value.gapLimit);
+
+  user.click(continueButton);
   await wait(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );

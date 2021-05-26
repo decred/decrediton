@@ -21,7 +21,9 @@ const testSelectedWallet = {
     isTrezor: false,
     isWatchingOnly: false,
     network: "mainnet",
-    wallet: testWalletName
+    wallet: testWalletName,
+    gapLimit: null,
+    disableCoinTypeUpgrades: false
   }
 };
 
