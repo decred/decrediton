@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
-import { TextInput } from "inputs";
+import { TextInput, NumericInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
@@ -38,6 +38,11 @@ const messages = defineMessages({
   messageWalletDupeNameError: {
     id: "createwallet.dupeWalletName.error",
     defaultMessage: "Please choose an unused wallet name"
+  },
+  messageDisablecointypeupgrades: {
+    id: "createwallet.disablecointypeupgrades.description",
+    defaultMessage:
+      "Never upgrade from legacy to SLIP0044 coin type keys"
   }
 });
 
@@ -59,7 +64,11 @@ const CreateWalletForm = ({
   toggleTrezor,
   onShowTrezorConfig,
   isCreateNewWallet,
-  creatingWallet
+  creatingWallet,
+  disableCoinTypeUpgrades,
+  toggleDisableCoinTypeUpgrades,
+  gapLimit,
+  setGapLimit
 }) => (
   <>
     {isCreateNewWallet ? (
@@ -179,6 +188,36 @@ const CreateWalletForm = ({
                   checked={isTrezor}
                   onChange={toggleTrezor}
                 />
+              </div>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={
+                    <T
+                      id="createwallet.disableCoinTypeUpgrades.label"
+                      m="Disable coin type upgrades"
+                    />
+                  }
+                  id="disableCoinTypeUpgrades"
+                  description={intl.formatMessage(
+                    messages.messageDisablecointypeupgrades
+                  )}
+                  checked={disableCoinTypeUpgrades}
+                  onChange={toggleDisableCoinTypeUpgrades}
+                />
+              </div>
+              <div className={styles.advancedOption}>
+                <label id="gap-limit-input" className={styles.gapLimitlabel}>
+                  <T id="createwallet.gapLimit.label" m="Gap Limit" />
+                  <div className={styles.gapLimitInput}>
+                    <NumericInput
+                      value={gapLimit}
+                      ariaLabelledBy="gap-limit-input"
+                      onChange={(e) =>
+                        setGapLimit(e.target.value)
+                      }
+                    />
+                  </div>
+                </label>
               </div>
             </>
           }

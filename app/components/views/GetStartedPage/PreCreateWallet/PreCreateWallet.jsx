@@ -34,6 +34,8 @@ const PreCreateWallet = ({
   const [isTrezor, setIsTrezor] = useState(false);
   const [hasFailedAttemptName, setHasFailedAttemptName] = useState(false);
   const [hasFailedAttemptPubKey, setHasFailedAttemptPubKey] = useState(false);
+  const [disableCoinTypeUpgrades, setDisableCoinTypeUpgrades] = useState(false);
+  const [gapLimit, setGapLimit] = useState(null);
 
   const hideCreateWalletForm = useCallback(() => {
     if (isTrezor) {
@@ -77,6 +79,9 @@ const PreCreateWallet = ({
     setIsWatchingOnly(false);
   }, [isTrezor, trezorEnable, trezorDisable]);
 
+  const toggleDisableCoinTypeUpgrades = () =>
+    setDisableCoinTypeUpgrades((value) => !value);
+
   const createWallet = useCallback(() => {
     const isNew = isCreateNewWallet;
     const walletSelected = {
@@ -86,7 +91,9 @@ const PreCreateWallet = ({
         isWatchingOnly,
         isTrezor,
         isNew,
-        network: isTestNet ? "testnet" : "mainnet"
+        network: isTestNet ? "testnet" : "mainnet",
+        gapLimit,
+        disableCoinTypeUpgrades
       }
     };
 
@@ -136,7 +143,9 @@ const PreCreateWallet = ({
     trezorDevice,
     trezorGetWalletCreationMasterPubKey,
     walletMasterPubKey,
-    walletNameError
+    walletNameError,
+    gapLimit,
+    disableCoinTypeUpgrades
   ]);
 
   const onChangeCreateWalletMasterPubKey = useCallback(
@@ -179,7 +188,11 @@ const PreCreateWallet = ({
         toggleWatchOnly,
         toggleTrezor,
         onChangeCreateWalletMasterPubKey,
-        intl
+        intl,
+        disableCoinTypeUpgrades,
+        toggleDisableCoinTypeUpgrades,
+        gapLimit,
+        setGapLimit
       }}
     />
   );

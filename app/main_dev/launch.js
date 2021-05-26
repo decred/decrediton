@@ -606,7 +606,9 @@ export const launchDCRWallet = async (
   rpcUser,
   rpcPass,
   rpcListen,
-  rpcCert
+  rpcCert,
+  gapLimit,
+  disableCoinTypeUpgrades
 ) => {
   const cfg = getWalletCfg(testnet, walletPath);
   const confFile = fs.existsSync(
@@ -617,7 +619,12 @@ export const launchDCRWallet = async (
   let args = [confFile];
 
   // add needed dcrwallet flags
-  args.push("--gaplimit=" + cfg.get(cfgConstants.GAP_LIMIT));
+  if (disableCoinTypeUpgrades === true) {
+    args.push("--disablecointypeupgrades");
+  }
+  args.push(
+    `--gaplimit=${gapLimit ? gapLimit : cfg.get(cfgConstants.GAP_LIMIT)}`
+  );
   args.push("--issueclientcert");
 
   // example of debug level case needed

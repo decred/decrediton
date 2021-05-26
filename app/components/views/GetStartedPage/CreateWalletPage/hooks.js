@@ -22,8 +22,17 @@ export const useCreateWallet = () => {
     [dispatch]
   );
   const createWalletRequest = useCallback(
-    (pubpass, passPhrase, seed, isNew) =>
-      dispatch(wla.createWalletRequest(pubpass, passPhrase, seed, isNew)),
+    (pubpass, passPhrase, seed, isNew, gapLimit, disableCoinTypeUpgrades) =>
+      dispatch(
+        wla.createWalletRequest(
+          pubpass,
+          passPhrase,
+          seed,
+          isNew,
+          gapLimit,
+          disableCoinTypeUpgrades
+        )
+      ),
     [dispatch]
   );
   const isTestNet = useSelector(sel.isTestNet);

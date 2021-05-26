@@ -400,7 +400,9 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const walletStarted = await wallet.startWallet(
         selectedWallet.value.wallet,
         isTestnet,
-        rpcCreds
+        rpcCreds,
+        selectedWallet.value.gapLimit,
+        selectedWallet.value.disableCoinTypeUpgrades
       );
       const { port } = walletStarted;
       wallet.setPreviousWallet(selectedWallet);
