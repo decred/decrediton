@@ -221,7 +221,8 @@ export const constructTransaction = (
   walletService,
   accountNum,
   confirmations,
-  outputs
+  outputs,
+  change
 ) =>
   new Promise((ok, fail) => {
     const totalAmount = outputs.reduce((tot, { amount }) => tot + amount, 0);
@@ -237,6 +238,17 @@ export const constructTransaction = (
       output.setAmount(parseInt(amount));
       request.addNonChangeOutputs(output);
     });
+
+    if (change?.script) {
+      const changeDest = new api.ConstructTransactionRequest.OutputDestination();
+      changeDest.setScript(Buffer.from(change.script));
+      request.setChangeDestination(changeDest);
+    } else if (change?.address) {
+      const outputDest = new api.ConstructTransactionRequest.OutputDestination();
+      outputDest.setAddress(change.address);
+      request.setChangeDestination(outputDest);
+    }
+
     walletService.constructTransaction(request, (err, res) => {
       if (err) {
         fail(err);
@@ -260,14 +272,19 @@ export const constructSendAllTransaction = (
       return fail("Too many outputs provided for a send all request.");
     if (outputs.length === 0)
       return fail("No destination specified for send all request.");
-    outputDest.setAddress(outputs[0].destination);
+    outputDest.setAddress(outputs[0].data.destination);
     request.setSourceAccount(accountNum);
     request.setRequiredConfirmations(confirmations);
     request.setOutputSelectionAlgorithm(1);
     request.setChangeDestination(outputDest);
-    walletService.constructTransaction(request, (err, res) =>
-      err ? fail(err) : ok({ ...res, totalAmount: res.getTotalOutputAmount() })
-    );
+    walletService.constructTransaction(request, (err, res) => {
+      if (err) {
+        fail(err);
+        return;
+      }
+      res.totalAmount = res.getTotalOutputAmount();
+      ok(res);
+    });
   });
 
 export const getCoinjoinOutputspByAcctReq = (walletService) =>
