@@ -82,17 +82,10 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
 
   const onCreateWallet = useCallback(() => {
     const pubpass = ""; // Temporarily disabled?
-    const { seed, passPhrase, gapLimit, disableCoinTypeUpgrades } = current.context;
+    const { seed, passPhrase } = current.context;
 
     if (!(seed && passPhrase)) return;
-    createWalletRequest(
-      pubpass,
-      passPhrase,
-      seed,
-      newWallet,
-      gapLimit,
-      disableCoinTypeUpgrades
-    )
+    createWalletRequest(pubpass, passPhrase, seed, newWallet)
       .then(() => sendEvent({ type: "WALLET_CREATED" }))
       .catch((error) => sendParent({ type: "ERROR", error }));
     // we send a continue so we go to loading state

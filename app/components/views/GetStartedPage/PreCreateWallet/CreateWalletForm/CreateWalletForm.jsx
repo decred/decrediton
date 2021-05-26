@@ -41,8 +41,7 @@ const messages = defineMessages({
   },
   messageDisablecointypeupgrades: {
     id: "createwallet.disablecointypeupgrades.description",
-    defaultMessage:
-      "Never upgrade from legacy to SLIP0044 coin type keys"
+    defaultMessage: "Never upgrade from legacy to SLIP0044 coin type keys"
   },
   messageGapLimit: {
     id: "createwallet.gaplimit.description",
@@ -223,9 +222,9 @@ const CreateWalletForm = ({
                   onChange={(e) => setGapLimit(e.target.value)}
                 />
               </div>
-                <div className={styles.gapLimitDesc}>
-                  {intl.formatMessage(messages.messageGapLimit)}
-                </div>
+              <div className={styles.gapLimitDesc}>
+                {intl.formatMessage(messages.messageGapLimit)}
+              </div>
             </>
           }
         />
