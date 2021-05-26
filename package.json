@@ -51,7 +51,10 @@
       "^grpc$": "<rootDir>/test/mocks/grpcMock.js",
       "^electron$": "<rootDir>/test/mocks/electronMock.js",
       "^electron-store$": "<rootDir>/test/mocks/electronStore.js",
-      "wallet$": "<rootDir>/test/mocks/walletMock.js"
+      "wallet$": "<rootDir>/test/mocks/walletMock.js",
+      "^walletCrypto$": "<rootDir>/app/wallet/crypto.js",
+      "^fetchModule$": "<rootDir>/app/helpers/fetchModule.js",
+      "wallet-preload-shim$": "<rootDir>/test/mocks/walletPreloadShimMock.js"
     },
     "transformIgnorePatterns": [
       "/node_modules/",
