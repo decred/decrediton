@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
-import { TextInput, NumericInput } from "inputs";
+import { TextInput, IntegerInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
@@ -43,6 +43,11 @@ const messages = defineMessages({
     id: "createwallet.disablecointypeupgrades.description",
     defaultMessage:
       "Never upgrade from legacy to SLIP0044 coin type keys"
+  },
+  messageGapLimit: {
+    id: "createwallet.gaplimit.description",
+    defaultMessage:
+      "Allowed unused address gap between used addresses of accounts"
   }
 });
 
@@ -205,20 +210,22 @@ const CreateWalletForm = ({
                   onChange={toggleDisableCoinTypeUpgrades}
                 />
               </div>
-              <div className={styles.advancedOption}>
-                <label id="gap-limit-input" className={styles.gapLimitlabel}>
-                  <T id="createwallet.gapLimit.label" m="Gap Limit" />
-                  <div className={styles.gapLimitInput}>
-                    <NumericInput
-                      value={gapLimit}
-                      ariaLabelledBy="gap-limit-input"
-                      onChange={(e) =>
-                        setGapLimit(e.target.value)
-                      }
-                    />
-                  </div>
+              <div
+                className={classNames(styles.advancedOption, styles.gapLimit)}>
+                <label id="gap-limit-input">
+                  <T id="createwallet.gapLimit.label" m="Gap Limit" />:
                 </label>
+                <IntegerInput
+                  id="gap-limit-input"
+                  className={styles.gapLimitInput}
+                  value={gapLimit}
+                  ariaLabelledBy="gap-limit-input"
+                  onChange={(e) => setGapLimit(e.target.value)}
+                />
               </div>
+                <div className={styles.gapLimitDesc}>
+                  {intl.formatMessage(messages.messageGapLimit)}
+                </div>
             </>
           }
         />
