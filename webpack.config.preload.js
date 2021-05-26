@@ -38,7 +38,8 @@ module.exports = {
 
     resolve: {
         alias: {
-          fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js")
+          fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js"),
+          walletCrypto: path.resolve(__dirname, "app/wallet/crypto.js")
         },
         modules: ["node_modules"]
     },

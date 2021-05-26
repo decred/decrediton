@@ -11,4 +11,12 @@ if (process.env.NODE_ENV === "test") {
   createBlakeHash = require("blake-hash");
 }
 
-export const blake256 = () => createBlakeHash("blake256");
+export const blake256 = (buffer) => {
+  let b = buffer;
+  if (buffer instanceof Uint8Array) {
+    // This case happens when this function runs in the preload script with
+    // renderer provided data.
+    b = Buffer.from(buffer);
+  }
+  return createBlakeHash("blake256").update(b).digest();
+};
