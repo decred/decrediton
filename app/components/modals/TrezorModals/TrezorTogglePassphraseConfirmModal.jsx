@@ -9,16 +9,31 @@ const TrezorTogglePassphraseConfirmModal = ({
   enablePassphraseProtection,
   togglePassphraseConfirmCallback
 }) => {
-  const enable = enablePassphraseProtection ? "Enable" : "Disable";
-  const enabled = enablePassphraseProtection ? "enabled" : "disabled";
-  const ifEnabled = enablePassphraseProtection
-    ? " For your first sensitive operation, " +
-      "the device will ask for a passphrase. This pasphrase deterministically creates a " +
-      "new seed for your Trezor. If used with an already created wallet, subsequent " +
-      "actions will likely fail, as the device is now using a different account/wallet. " +
-      "As long as the device stays plugged in, further actions will reuse the first " +
-      "passed passphrase and not ask again."
-    : "";
+  const enable = enablePassphraseProtection ? (
+    <T id="trezor.togglePassphraseConfirmModal.enable" m="enabled" />
+  ) : (
+    <T id="trezor.togglePassphraseConfirmModal.disable" m="disabled" />
+  );
+  const enabled = enablePassphraseProtection ? (
+    <T id="trezor.togglePassphraseConfirmModal.enabled" m="enabled" />
+  ) : (
+    <T id="trezor.togglePassphraseConfirmModal.disabled" m="disabled" />
+  );
+  const ifEnabled = enablePassphraseProtection ? (
+    <T
+      id="trezor.togglePassphraseConfirmModal.ifEnabled"
+      m={
+        " For your first sensitive operation, " +
+        "the device will ask for a passphrase. This pasphrase deterministically creates a " +
+        "new seed for your Trezor. If used with an already created wallet, subsequent " +
+        "actions will likely fail, as the device is now using a different account/wallet. " +
+        "As long as the device stays plugged in, further actions will reuse the first " +
+        "passed passphrase and not ask again."
+      }
+    />
+  ) : (
+    ""
+  );
 
   return (
     <InfoConfirmModal

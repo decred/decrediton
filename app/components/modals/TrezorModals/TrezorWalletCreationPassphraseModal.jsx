@@ -52,10 +52,10 @@ const TrezorWalletCreationPassphraseModal = ({
     []
   );
 
-  const isValid = useMemo(
-    () => passphraseValue === passphraseConfirmValue && !!passphraseValue,
-    [passphraseValue, passphraseConfirmValue]
-  );
+  const isValid = useMemo(() => passphraseValue === passphraseConfirmValue, [
+    passphraseValue,
+    passphraseConfirmValue
+  ]);
 
   return (
     <Modal
