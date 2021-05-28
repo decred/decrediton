@@ -23,12 +23,12 @@ const TrezorTogglePassphraseConfirmModal = ({
     <T
       id="trezor.togglePassphraseConfirmModal.ifEnabled"
       m={
-        " For your first sensitive operation, " +
+        "For your first sensitive operation, " +
         "the device will ask for a passphrase. This pasphrase deterministically creates a " +
         "new seed for your Trezor. If used with an already created wallet, subsequent " +
         "actions will likely fail, as the device is now using a different account/wallet. " +
         "As long as the device stays plugged in, further actions will reuse the first " +
-        "passed passphrase and not ask again."
+        "passed passphrase and not ask again. "
       }
     />
   ) : (
@@ -61,7 +61,7 @@ const TrezorTogglePassphraseConfirmModal = ({
           <T
             id="trezor.togglePassphraseConfirmModal.content"
             m={
-              "Passphrase protection has been {enabled} for {label}.{ifEnabled} You must " +
+              "Passphrase protection has been {enabled} for {label}. {ifEnabled}You must " +
               "unplug and plug back in your Trezor in order for these changes to take " +
               "effect on the device."
             }
