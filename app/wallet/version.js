@@ -1,4 +1,3 @@
-import Promise from "promise";
 import { getVersionService as getService } from "../middleware/grpc/client";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData } from "./index";

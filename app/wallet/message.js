@@ -1,4 +1,3 @@
-import Promise from "promise";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLogNoData as log } from "./app";
 

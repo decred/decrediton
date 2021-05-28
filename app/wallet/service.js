@@ -1,4 +1,3 @@
-import Promise from "promise";
 import * as client from "middleware/grpc/client";
 import {
   withLog as log,

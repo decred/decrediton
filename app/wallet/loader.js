@@ -1,4 +1,3 @@
-import Promise from "promise";
 import { withLog as log, withLogNoData, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";

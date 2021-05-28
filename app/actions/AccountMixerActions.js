@@ -1,4 +1,3 @@
-import Promise from "promise";
 import * as sel from "selectors";
 import { wallet } from "wallet-preload-shim";
 import {

@@ -1,4 +1,3 @@
-import Promise from "promise";
 import { TicketTypes } from "helpers/tickets";
 import { strHashToRaw } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
