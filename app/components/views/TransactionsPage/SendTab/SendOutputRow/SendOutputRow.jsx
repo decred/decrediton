@@ -72,17 +72,29 @@ const getAddInputIcon = ({
   onlySendSelfAllowed
 }) =>
   isSendSelf || onlySendSelfAllowed || isSendAll ? (
-    <Button onClick={onAddOutput} className={styles.add} disabled>
-      <div />
-    </Button>
+    <Tooltip
+      contentClassName={styles.tooltipAddInput}
+      content={<T id="sendtab.addOutput" m="Add output" />}>
+      <Button onClick={onAddOutput} className={styles.add} disabled>
+        <div />
+      </Button>
+    </Tooltip>
   ) : index === 0 ? (
-    <Button onClick={onAddOutput} className={styles.add}>
-      <div />
-    </Button>
+    <Tooltip
+      contentClassName={styles.tooltipAddInput}
+      content={<T id="sendtab.addOutput" m="Add output" />}>
+      <Button onClick={onAddOutput} className={styles.add}>
+        <div />
+      </Button>
+    </Tooltip>
   ) : (
-    <Button onClick={() => onRemoveOutput(index)} className={styles.delete}>
-      <div />
-    </Button>
+    <Tooltip
+      contentClassName={styles.tooltipDeleteInput}
+      content={<T id="sendtab.deleteOutput" m="Delete output" />}>
+      <Button onClick={() => onRemoveOutput(index)} className={styles.delete}>
+        <div />
+      </Button>
+    </Tooltip>
   );
 
 const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
@@ -186,19 +198,19 @@ const SendOutputRow = ({
       )}
       <div className={styles.amountContainer}>
         <div className={styles.sendInputWrapper}>
-          <label htmlFor="amountInput">
+          <label htmlFor={`amountInput-${index}`}>
             <T id="sendtab.amount" m="Amount" />
           </label>
           {isSendAll ? (
             <Balance
-              id="amountInput"
+              id={`amountInput-${index}`}
               classNameWrapper={styles.sendAll}
               flat
               amount={sendAllAmount}
             />
           ) : (
             <DcrInput
-              id="amountInput"
+              id={`amountInput-${index}`}
               className={styles.dcrInput}
               required={true}
               showErrors={error && error.amount}
@@ -231,7 +243,7 @@ const SendOutputRow = ({
 
       <div className={styles.destinationContainer}>
         <div className={classNames(styles.sendInputWrapper, styles.address)}>
-          <label htmlFor="addressInput">
+          <label htmlFor={`addressInput-${index}`}>
             <T id="sendtab.sendTo" m="Send to" />
           </label>
           {isSendSelf ? (
@@ -240,7 +252,7 @@ const SendOutputRow = ({
             // When react-select will be replaced by the `pi-ui` component,
             // this className can be deleted.
             <ReceiveAccountsSelect
-              id="addressInput"
+              id={`addressInput-${index}`}
               className="selectWithBigFont"
               selectClassName={styles.receiveAccountSelect}
               disabled={receiveAccountsSelectDisabled}
@@ -252,7 +264,7 @@ const SendOutputRow = ({
           ) : (
             <>
               <AddressInput
-                id="addressInput"
+                id={`addressInput-${index}`}
                 required={true}
                 autoFocus={index === 0}
                 showErrors={error && error.address}
@@ -285,6 +297,7 @@ const SendOutputRow = ({
                 </Button>
               ) : (
                 <Button
+                  aria-label="Clear Address"
                   kind="secondary"
                   className={styles.clearAddressButton}
                   onClick={(e) => {

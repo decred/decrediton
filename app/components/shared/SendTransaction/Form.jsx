@@ -48,7 +48,9 @@ const Form = ({
                 <T id="send.sizeEstimation" m="Estimated Size" />:
               </div>
             </div>
-            <div className={styles.detailsValueColumn}>
+            <div
+              className={styles.detailsValueColumn}
+              data-testid="detailsValueColumn">
               <Balance
                 flat
                 amount={isValid() ? totalSpent : 0}

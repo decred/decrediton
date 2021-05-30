@@ -1,7 +1,7 @@
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
-import { default as SendTab, SendTabHeader } from "./SendTab/SendTab";
+import { SendTab, SendTabHeader } from "./SendTab";
 import {
   default as ReceiveTab,
   ReceiveTabHeader

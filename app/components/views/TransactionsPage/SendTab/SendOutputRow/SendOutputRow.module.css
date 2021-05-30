@@ -164,6 +164,13 @@
   width: 18rem;
 }
 
+.tooltipAddInput {
+  width: max-content;
+}
+.tooltipDeleteInput {
+  width: max-content;
+}
+
 .sendInputWrapper.address {
   position: relative;
   width: 100%;
@@ -177,7 +184,7 @@
   background-image: none;
 }
 .receiveAccountSelect {
-  width: 334px;
+  width: 311px;
 }
 
 .pasteButton {
@@ -220,7 +227,7 @@
     width: 360px;
   }
   .receiveAccountSelect {
-    width: 304px;
+    width: 301px;
   }
 }
 @media screen and (max-width: 768px) {
