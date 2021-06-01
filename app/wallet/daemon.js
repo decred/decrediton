@@ -89,8 +89,15 @@ export const stopWallet = log(
 );
 
 export const startWallet = log(
-  (walletPath, testnet, rpcCreds) =>
-    invoke("start-wallet", walletPath, testnet, rpcCreds),
+  (walletPath, testnet, rpcCreds, gapLimit, disableCoinTypeUpgrades) =>
+    invoke(
+      "start-wallet",
+      walletPath,
+      testnet,
+      rpcCreds,
+      gapLimit,
+      disableCoinTypeUpgrades
+    ),
   "Start Wallet"
 );
 

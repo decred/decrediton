@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
-import { TextInput } from "inputs";
+import { TextInput, IntegerInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { Collapse, ExternalLink } from "shared";
 import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
@@ -38,6 +38,15 @@ const messages = defineMessages({
   messageWalletDupeNameError: {
     id: "createwallet.dupeWalletName.error",
     defaultMessage: "Please choose an unused wallet name"
+  },
+  messageDisablecointypeupgrades: {
+    id: "createwallet.disablecointypeupgrades.description",
+    defaultMessage: "Never upgrade from legacy to SLIP0044 coin type keys"
+  },
+  messageGapLimit: {
+    id: "createwallet.gaplimit.description",
+    defaultMessage:
+      "Allowed unused address gap between used addresses of accounts"
   }
 });
 
@@ -59,7 +68,11 @@ const CreateWalletForm = ({
   toggleTrezor,
   onShowTrezorConfig,
   isCreateNewWallet,
-  creatingWallet
+  creatingWallet,
+  disableCoinTypeUpgrades,
+  toggleDisableCoinTypeUpgrades,
+  gapLimit,
+  setGapLimit
 }) => (
   <>
     {isCreateNewWallet ? (
@@ -179,6 +192,38 @@ const CreateWalletForm = ({
                   checked={isTrezor}
                   onChange={toggleTrezor}
                 />
+              </div>
+              <div className={styles.advancedOption}>
+                <Checkbox
+                  label={
+                    <T
+                      id="createwallet.disableCoinTypeUpgrades.label"
+                      m="Disable coin type upgrades"
+                    />
+                  }
+                  id="disableCoinTypeUpgrades"
+                  description={intl.formatMessage(
+                    messages.messageDisablecointypeupgrades
+                  )}
+                  checked={disableCoinTypeUpgrades}
+                  onChange={toggleDisableCoinTypeUpgrades}
+                />
+              </div>
+              <div
+                className={classNames(styles.advancedOption, styles.gapLimit)}>
+                <label id="gap-limit-input">
+                  <T id="createwallet.gapLimit.label" m="Gap Limit" />:
+                </label>
+                <IntegerInput
+                  id="gap-limit-input"
+                  className={styles.gapLimitInput}
+                  value={gapLimit}
+                  ariaLabelledBy="gap-limit-input"
+                  onChange={(e) => setGapLimit(e.target.value)}
+                />
+              </div>
+              <div className={styles.gapLimitDesc}>
+                {intl.formatMessage(messages.messageGapLimit)}
               </div>
             </>
           }

@@ -73,3 +73,21 @@
   text-align: right;
   max-width: 600px;
 }
+
+.gapLimit {
+  display: flex;
+  flex-direction: row;
+}
+
+.gapLimitInput {
+  width: 100px;
+  margin-left: 10px;
+}
+
+.gapLimitDesc {
+  margin-left: 1.1rem;
+  margin-top: 0.5rem;
+  color: var(--text-secondary-color);
+  font-size: var(--font-size-small);
+  font-style: italic;
+}

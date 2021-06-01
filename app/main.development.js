@@ -362,20 +362,25 @@ ipcMain.on("stop-wallet", (event) => {
   event.returnValue = stopWallet();
 });
 
-handle("start-wallet", (walletPath, testnet, rpcCreds) => {
-  const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
-  return startWallet(
-    mainWindow,
-    daemonIsAdvanced,
-    testnet,
-    walletPath,
-    mainWindow.webContents,
-    rpcUser,
-    rpcPass,
-    rpcListen,
-    rpcCert
-  );
-});
+handle(
+  "start-wallet",
+  (walletPath, testnet, rpcCreds, gapLimit, disableCoinTypeUpgrades) => {
+    const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
+    return startWallet(
+      mainWindow,
+      daemonIsAdvanced,
+      testnet,
+      walletPath,
+      mainWindow.webContents,
+      rpcUser,
+      rpcPass,
+      rpcListen,
+      rpcCert,
+      gapLimit,
+      disableCoinTypeUpgrades
+    );
+  }
+);
 
 handle("start-dcrlnd", startDcrlnd);
 
