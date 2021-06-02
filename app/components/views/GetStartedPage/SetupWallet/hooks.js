@@ -291,8 +291,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
     onCheckAcctsPass,
     onProcessAccounts,
     onGetVSPsPubkeys,
-    onSkipProcessManaged
-    isVSPListingEnabled,
+    onSkipProcessManaged,
+    isVSPListingEnabled
   ]);
 
   return {
