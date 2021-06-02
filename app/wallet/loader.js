@@ -3,6 +3,7 @@ import { loader as rpcLoader } from "middleware/grpc/client";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { getDcrdCert } from "./config";
 import { shimStreamedResponse } from "helpers/electronRenderer";
+import { trackClient, getClient } from "middleware/grpc/clientTracking";
 
 const {
   CreateWalletRequest,
@@ -29,7 +30,7 @@ export const getLoader = withLogNoData(
         port,
         cert,
         key,
-        (loader, error) => (error ? reject(error) : resolve(loader))
+        (loader, error) => (error ? reject(error) : resolve(trackClient(loader)))
       )
     ),
   "Get Loader"
@@ -43,7 +44,7 @@ export const startRpc = log(
       request.setUsername(rpcuser);
       request.setPassword(new Uint8Array(Buffer.from(rpcpass)));
       request.setCertificate(new Uint8Array(cert));
-      loader.startConsensusRpc(request, (error) =>
+      getClient(loader).startConsensusRpc(request, (error) =>
         error ? reject(error) : resolve()
       );
     }),
@@ -57,7 +58,7 @@ export const createWallet = log(
       const request = new CreateWalletRequest();
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
       request.setSeed(seed);
-      loader.createWallet(request, (error) =>
+      getClient(loader).createWallet(request, (error) =>
         error ? reject(error) : resolve()
       );
     }),
@@ -70,7 +71,7 @@ export const createWatchingOnlyWallet = log(
     new Promise((resolve, reject) => {
       const request = new CreateWatchingOnlyWalletRequest();
       request.setExtendedPubKey(extendedPubKey);
-      loader.createWatchingOnlyWallet(request, (error) =>
+      getClient(loader).createWatchingOnlyWallet(request, (error) =>
         error ? reject(error) : resolve()
       );
     }),
@@ -83,7 +84,7 @@ export const openWallet = log(
     new Promise((resolve, reject) => {
       const request = new OpenWalletRequest();
       request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
-      loader.openWallet(request, (error, response) =>
+      getClient(loader).openWallet(request, (error, response) =>
         error ? reject(error) : resolve(response)
       );
     }),
@@ -94,7 +95,7 @@ export const openWallet = log(
 export const closeWallet = log(
   (loader) =>
     new Promise((resolve, reject) =>
-      loader.closeWallet(new CloseWalletRequest(), (error) =>
+      getClient(loader).closeWallet(new CloseWalletRequest(), (error) =>
         error ? reject(error) : resolve()
       )
     ),
@@ -114,7 +115,7 @@ export const discoverAddresses = log(
           new Uint8Array(Buffer.from(startingBlockHash))
         );
       }
-      loader.discoverAddresses(request, (error) =>
+      getClient(loader).discoverAddresses(request, (error) =>
         error ? reject(error) : resolve()
       );
     }),
@@ -125,7 +126,7 @@ export const discoverAddresses = log(
 export const subscribeToBlockNotifications = log(
   (loader) =>
     new Promise((resolve, reject) =>
-      loader.subscribeToBlockNotifications(
+      getClient(loader).subscribeToBlockNotifications(
         new SubscribeToBlockNotificationsRequest(),
         (error) => (error ? reject(error) : resolve())
       )
@@ -136,7 +137,7 @@ export const subscribeToBlockNotifications = log(
 export const fetchHeaders = log(
   (loader) =>
     new Promise((resolve, reject) =>
-      loader.fetchHeaders(new FetchHeadersRequest(), (error, response) =>
+      getClient(loader).fetchHeaders(new FetchHeadersRequest(), (error, response) =>
         error ? reject(error) : resolve(response)
       )
     ),
@@ -153,7 +154,7 @@ export const spvSync = log(
     if (setPrivPass) {
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(setPrivPass)));
     }
-    const call = await loader.spvSync(request);
+    const call = await getClient(loader).spvSync(request);
     return shimStreamedResponse(call);
   },
   "Start SPV Sync"
@@ -172,7 +173,7 @@ export const rpcSync = log(
     if (setPrivPass) {
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(setPrivPass)));
     }
-    const call = await loader.rpcSync(request);
+    const call = await getClient(loader).rpcSync(request);
     return shimStreamedResponse(call);
   },
   "Start RPC Sync"
@@ -182,7 +183,7 @@ export const fetchMissingCFilters = log(
   (loader) =>
     new Promise((resolve, reject) => {
       const request = new FetchMissingCFiltersRequest();
-      loader.fetchMissingCFilters(request, (error, response) =>
+      getClient(loader).fetchMissingCFilters(request, (error, response) =>
         error ? reject(error) : resolve(response)
       );
     }),
@@ -193,7 +194,7 @@ export const rescanPoint = log(
   (loader) =>
     new Promise((resolve, reject) => {
       const request = new RescanPointRequest();
-      loader.rescanPoint(request, (error, response) =>
+      getClient(loader).rescanPoint(request, (error, response) =>
         error ? reject(error) : resolve(response)
       );
     }),

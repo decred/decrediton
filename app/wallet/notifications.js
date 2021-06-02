@@ -1,13 +1,14 @@
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLog as log } from "./index";
 import { shimStreamedResponse } from "helpers/electronRenderer";
+import { getClient } from "middleware/grpc/clientTracking";
 
 const { TransactionNotificationsRequest, AccountNotificationsRequest } = api;
 
 export const transactionNotifications = log(
   async (walletService) =>
     shimStreamedResponse(
-      await walletService.transactionNotifications(
+      await getClient(walletService).transactionNotifications(
         new TransactionNotificationsRequest()
       )
     ),
@@ -17,7 +18,7 @@ export const transactionNotifications = log(
 export const accountNotifications = log(
   async (walletService) =>
     shimStreamedResponse(
-      await walletService.accountNotifications(
+      await getClient(walletService).accountNotifications(
         new AccountNotificationsRequest()
       )
     ),

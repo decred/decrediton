@@ -1,5 +1,6 @@
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLogNoData as log } from "./app";
+import { getClient } from "middleware/grpc/clientTracking";
 
 const { SignMessageRequest, SignMessagesRequest, VerifyMessageRequest } = api;
 
@@ -8,7 +9,7 @@ export const signMessage = log((walletService, address, message) => {
   request.setAddress(address);
   request.setMessage(message);
   return new Promise((resolve, reject) =>
-    walletService.signMessage(request, (error, response) =>
+    getClient(walletService).signMessage(request, (error, response) => {
       error ? reject(error) : resolve(response)
     )
   );
@@ -25,7 +26,7 @@ export const signMessages = log((walletService, messages) => {
   const request = new SignMessagesRequest();
   request.setMessagesList(reqMessages);
   return new Promise((resolve, reject) =>
-    walletService.signMessages(request, (error, response) =>
+    getClient(walletService).signMessages(request, (error, response) => {
       error ? reject(error) : resolve(response)
     )
   );
@@ -38,7 +39,7 @@ export const verifyMessage = log(
     request.setMessage(message);
     request.setSignature(signature);
     return new Promise((resolve, reject) =>
-      verificationService.verifyMessage(request, (error, response) =>
+    getClient(verificationService).verifyMessage(request, (error, response) =>
         error ? reject(error) : resolve(response)
       )
     );

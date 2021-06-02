@@ -8,12 +8,13 @@ import {
   withLogNoResponseData
 } from "./app";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
+import { getClient } from "middleware/grpc/clientTracking";
 
 const promisifyReq = (fnName, Req) =>
   log(
     (service, ...args) =>
       new Promise((ok, fail) =>
-        service[fnName](new Req(), ...args, (err, res) =>
+        getClient(service)[fnName](new Req(), ...args, (err, res) =>
           err ? fail(err) : ok(res)
         )
       ),
@@ -24,7 +25,7 @@ const promisifyReqLogNoData = (fnName, Req) =>
   withLogNoData(
     (service, ...args) =>
       new Promise((ok, fail) =>
-        service[fnName](new Req(), ...args, (err, res) =>
+        getClient(service)[fnName](new Req(), ...args, (err, res) =>
           err ? fail(err) : ok(res)
         )
       ),
@@ -69,7 +70,7 @@ export const getBalance = withLogNoResponseData(
       const request = new api.BalanceRequest();
       request.setAccountNumber(accountNum);
       request.setRequiredConfirmations(requiredConfs);
-      walletService.balance(request, (err, res) => (err ? fail(err) : ok(res)));
+      getClient(walletService).balance(request, (err, res) => (err ? fail(err) : ok(res)));
     }),
   "Get Balance"
 );
@@ -79,7 +80,7 @@ export const getAccountNumber = log(
     new Promise((ok, fail) => {
       const request = new api.AccountNumberRequest();
       request.setAccountName(accountName);
-      walletService.accountNumber(request, (err, res) =>
+      getClient(walletService).accountNumber(request, (err, res) =>
         err ? fail(err) : ok(res)
       );
     }),
@@ -94,7 +95,7 @@ export const getTickets = log(
       request.setStartingBlockHeight(startHeight);
       request.setEndingBlockHeight(endHeight);
       request.setTargetTicketCount(targetCount);
-      const getTx = walletService.getTickets(request);
+      const getTx = getClient(walletService).getTickets(request);
       getTx.on("data", (res) => {
         tickets.push({
           status: TicketTypes.get(res.getTicket().getTicketStatus()),
@@ -115,7 +116,7 @@ export const getTicket = log(
     new Promise((ok, fail) => {
       const request = new api.GetTicketRequest();
       request.setTicketHash(ticketHash);
-      walletService.getTicket(request, (err, res) => {
+      getClient(walletService).getTicket(request, (err, res) => {
         if (err) {
           fail(err);
           return;
@@ -143,7 +144,7 @@ export const setAgendaVote = log(
       choice.setChoiceId(choiceId);
       choice.setAgendaId(agendaId);
       request.addChoices(choice);
-      votingService.setVoteChoices(request, (err, res) =>
+      getClient(votingService).setVoteChoices(request, (err, res) =>
         err ? fail(err) : ok(res)
       );
     }),
@@ -157,7 +158,7 @@ export const abandonTransaction = log(
       req.setTransactionHash(
         Buffer.isBuffer(txHash) ? txHash : strHashToRaw(txHash)
       );
-      walletService.abandonTransaction(req, (err) =>
+      getClient(walletService).abandonTransaction(req, (err) =>
         err ? reject(err) : resolve()
       );
     }),
@@ -174,6 +175,6 @@ export const runAccountMixerRequest = (
     request.setMixedAccountBranch(mixedAccountBranch);
     request.setChangeAccount(changeAccount);
     request.setCsppServer(csppServer);
-    const mixer = walletService.runAccountMixer(request);
+    const mixer = getClient(walletService).runAccountMixer(request);
     ok(shimStreamedResponse(mixer));
   });

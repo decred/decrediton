@@ -5,6 +5,7 @@ import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 import { invoke, shimStreamedResponse } from "helpers/electronRenderer";
+import { getClient } from "middleware/grpc/clientTracking";
 
 export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
@@ -21,7 +22,7 @@ export const dcrlndCreds = () => invoke("dcrlnd-creds");
 export const getInfo = (client) => {
   const request = new pb.GetInfoRequest();
   return new Promise((resolve, reject) =>
-    client.getInfo(request, (err, resp) =>
+    getClient(client).getInfo(request, (err, resp) =>
       err ? reject(err) : resolve(resp.toObject())
     )
   );
@@ -30,7 +31,7 @@ export const getInfo = (client) => {
 export const getNetworkInfo = (client) => {
   const request = new pb.NetworkInfoRequest();
   return new Promise((resolve, reject) =>
-    client.getNetworkInfo(request, (err, resp) =>
+    getClient(client).getNetworkInfo(request, (err, resp) =>
       err ? reject(err) : resolve(resp.toObject())
     )
   );
@@ -41,7 +42,7 @@ export const getNodeInfo = (client, nodeID) => {
   request.setPubKey(nodeID);
   request.setIncludeChannels(true);
   return new Promise((resolve, reject) =>
-    client.getNodeInfo(request, (err, resp) =>
+    getClient(client).getNodeInfo(request, (err, resp) =>
       err ? reject(err) : resolve(resp.toObject())
     )
   );
@@ -52,7 +53,7 @@ export const getRoutes = (client, nodeID, amt) => {
   request.setPubKey(nodeID);
   request.setAmt(amt);
   return new Promise((resolve, reject) =>
-    client.queryRoutes(request, (err, resp) =>
+    getClient(client).queryRoutes(request, (err, resp) =>
       err ? reject(err) : resolve(resp.toObject())
     )
   );
@@ -70,7 +71,7 @@ export const getWalletBalance = (client) => {
 export const getChannelBalance = (client) => {
   const request = new pb.ChannelBalanceRequest();
   return new Promise((resolve, reject) =>
-    client.channelBalance(request, (err, resp) =>
+    getClient(client).channelBalance(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -79,7 +80,7 @@ export const getChannelBalance = (client) => {
 export const listChannels = (client) => {
   const request = new pb.ListChannelsRequest();
   return new Promise((resolve, reject) =>
-    client.listChannels(request, (err, resp) =>
+    getClient(client).listChannels(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -88,7 +89,7 @@ export const listChannels = (client) => {
 export const listPendingChannels = (client) => {
   const request = new pb.PendingChannelsRequest();
   return new Promise((resolve, reject) =>
-    client.pendingChannels(request, (err, resp) =>
+    getClient(client).pendingChannels(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -97,7 +98,7 @@ export const listPendingChannels = (client) => {
 export const listClosedChannels = (client) => {
   const request = new pb.ClosedChannelsRequest();
   return new Promise((resolve, reject) =>
-    client.closedChannels(request, (err, resp) =>
+    getClient(client).closedChannels(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -136,7 +137,7 @@ export const listInvoices = (client, reversed) => {
   const request = new pb.ListInvoiceRequest();
   request.setReversed(reversed);
   return new Promise((resolve, reject) =>
-    client.listInvoices(request, (err, resp) => {
+    getClient(client).listInvoices(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -165,7 +166,7 @@ export const listInvoices = (client, reversed) => {
 export const listPayments = (client) => {
   const request = new pb.ListPaymentsRequest();
   return new Promise((resolve, reject) =>
-    client.listPayments(request, (err, resp) => {
+    getClient(client).listPayments(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -183,7 +184,7 @@ export const addInvoice = (client, memo, value) => {
   request.setMemo(memo);
   request.setValue(value);
   return new Promise((resolve, reject) => {
-    client.addInvoice(request, (err, resp) => {
+    getClient(client).addInvoice(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -196,19 +197,19 @@ export const addInvoice = (client, memo, value) => {
 
 export const subscribeToInvoices = (client) => {
   const request = new pb.InvoiceSubscription();
-  return shimStreamedResponse(client.subscribeInvoices(request));
+  return shimStreamedResponse(getClient(client).subscribeInvoices(request));
 };
 
 export const subscribeChannelEvents = (client) => {
   const request = new pb.ChannelEventSubscription();
-  return shimStreamedResponse(client.subscribeChannelEvents(request));
+  return shimStreamedResponse(getClient(client).subscribeChannelEvents(request));
 };
 
 export const decodePayReq = (client, payReq) => {
   const request = new pb.PayReqString();
   request.setPayReq(payReq);
   return new Promise((resolve, reject) => {
-    client.decodePayReq(request, (err, resp) => {
+    getClient(client).decodePayReq(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -241,7 +242,7 @@ export const connectPeer = (client, node, address) => {
   request.setPerm(false);
 
   return new Promise((resolve, reject) =>
-    client.connectPeer(request, (err, resp) =>
+    getClient(client).connectPeer(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -252,7 +253,7 @@ export const openChannel = (client, node, localAmt, pushAmt) => {
   request.setNodePubkey(new Uint8Array(Buffer.from(node, "hex")));
   request.setLocalFundingAmount(localAmt);
   request.setPushAtoms(pushAmt);
-  return shimStreamedResponse(client.openChannel(request));
+  return shimStreamedResponse(getClient(client).openChannel(request));
 };
 
 export const closeChannel = (client, txid, outputIdx, force) => {
@@ -264,14 +265,14 @@ export const closeChannel = (client, txid, outputIdx, force) => {
   request.setChannelPoint(chanPoint);
   request.setForce(force);
 
-  return shimStreamedResponse(client.closeChannel(request));
+  return shimStreamedResponse(getClient(client).closeChannel(request));
 };
 
 export const newAddress = (client) => {
   const request = new pb.NewAddressRequest();
   request.setType(pb.AddressType.PUBKEY_HASH);
   return new Promise((resolve, reject) =>
-    client.newAddress(request, (err, resp) =>
+    getClient(client).newAddress(request, (err, resp) =>
       err ? reject(err) : resolve(resp.getAddress())
     )
   );
@@ -282,7 +283,7 @@ export const sendCoins = (client, address, amount) => {
   request.setAddr(address);
   request.setAmount(amount);
   return new Promise((resolve, reject) =>
-    client.sendCoins(request, (err, resp) =>
+    getClient(client).sendCoins(request, (err, resp) =>
       err ? reject(err) : resolve(resp.getTxid())
     )
   );
@@ -295,7 +296,7 @@ export const unlockWallet = (wuClient, passphrase, dcrwClientKeyCert) => {
   request.setDcrwClientKeyCert(dcrwClientKeyCert);
 
   return new Promise((resolve, reject) =>
-    wuClient.unlockWallet(request, (err, resp) =>
+    getClient(wuClient).unlockWallet(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -304,7 +305,7 @@ export const unlockWallet = (wuClient, passphrase, dcrwClientKeyCert) => {
 export const stopDaemon = (client) => {
   const request = new pb.StopRequest();
   return new Promise((resolve, reject) =>
-    client.stopDaemon(request, (err, resp) =>
+    getClient(client).stopDaemon(request, (err, resp) =>
       err ? reject(err) : resolve(resp)
     )
   );
@@ -319,7 +320,7 @@ export const scbInfo = (walletPath, testnet) =>
 export const exportBackup = (client, destPath) =>
   new Promise((resolve, reject) => {
     const req = new pb.ChanBackupExportRequest();
-    client.exportAllChannelBackups(req, (err, resp) => {
+    getClient(client).exportAllChannelBackups(req, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -361,7 +362,7 @@ export const verifyBackup = (client, srcPath) =>
     multi.setMultiChanBackup(data);
     req.setMultiChanBackup(multi);
 
-    client.verifyChanBackup(req, (err, resp) =>
+    getClient(client).verifyChanBackup(req, (err, resp) =>
       err ? reject(err) : resolve(resp)
     );
   });
@@ -377,7 +378,7 @@ export const restoreBackup = (client, scbFile) =>
     }
     const req = new pb.RestoreChanBackupRequest();
     req.setMultiChanBackup(data);
-    client.restoreChannelBackups(req, (err, resp) =>
+    getClient(client).restoreChannelBackups(req, (err, resp) =>
       err ? reject(err) : resolve(resp)
     );
   });

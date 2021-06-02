@@ -1,4 +1,5 @@
 import * as client from "middleware/grpc/client";
+import { trackClient, getClient } from "middleware/grpc/clientTracking";
 import {
   withLog as log,
   withLogNoData,
@@ -30,7 +31,7 @@ import {
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>
-    fn(...args, (res, err) => (err ? fail(err) : ok(res)))
+    fn(...args, (res, err) => (err ? fail(err) : ok(trackClient(res))))
   );
 
 export const getWalletService = promisify(client.getWalletService);
@@ -50,7 +51,7 @@ export const getNextAddress = log(
       request.setAccount(accountNum);
       request.setKind(kind ? kind : 0);
       request.setGapPolicy(api.NextAddressRequest.GapPolicy.GAP_POLICY_WRAP);
-      walletService.nextAddress(request, (error, response) =>
+      getClient(walletService).nextAddress(request, (error, response) =>
         error ? reject(error) : resolve(response)
       );
     }).then((response) => ({
@@ -67,7 +68,7 @@ export const validateAddress = withLogNoData(
     new Promise((resolve, reject) => {
       const request = new api.ValidateAddressRequest();
       request.setAddress(address);
-      walletService.validateAddress(request, (error, response) =>
+      getClient(walletService).validateAddress(request, (error, response) =>
         error ? reject(error) : resolve(response)
       );
     }),
@@ -189,7 +190,7 @@ export const streamGetTransactions = withLogNoData(
       request.setEndingBlockHeight(endBlockHeight);
       request.setTargetTransactionCount(targetTransactionCount);
 
-      const getTx = walletService.getTransactions(request);
+      const getTx = getClient(walletService).getTransactions(request);
       getTx.on("data", (response) => {
         let foundMined = [];
         let foundUnmined = [];
@@ -248,7 +249,7 @@ export const getTransaction = (walletService, txHash) =>
   new Promise((resolve, reject) => {
     const request = new api.GetTransactionRequest();
     request.setTransactionHash(strHashToRaw(txHash));
-    walletService.getTransaction(request, (err, resp) => {
+    getClient(walletService).getTransaction(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -270,7 +271,7 @@ export const publishUnminedTransactions = log(
   (walletService) =>
     new Promise((resolve, reject) => {
       const req = new api.PublishUnminedTransactionsRequest();
-      walletService.publishUnminedTransactions(req, (err) =>
+      getClient(walletService).publishUnminedTransactions(req, (err) =>
         err ? reject(err) : resolve()
       );
     }),
@@ -282,7 +283,7 @@ export const committedTickets = withLogNoData(
     new Promise((resolve, reject) => {
       const req = new api.CommittedTicketsRequest();
       req.setTicketsList(ticketHashes);
-      walletService.committedTickets(req, (err, tickets) =>
+      getClient(walletService).committedTickets(req, (err, tickets) => {
         err ? reject(err) : resolve(tickets)
       );
     }),
@@ -376,7 +377,7 @@ export const listUnspentOutputs = withLogNoData(
       // at least one confirmation.
       request.setRequiredConfirmations(1);
 
-      const getOutputs = walletService.unspentOutputs(request);
+      const getOutputs = getClient(walletService).unspentOutputs(request);
       getOutputs.on("data", (response) => {
         const amount = response.getAmount();
         const txHash = reverseHash(
