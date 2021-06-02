@@ -7,7 +7,7 @@ import {
   startWalletServices,
   getStartupWalletInfo
 } from "./ClientActions";
-import { reverseRawHash, rawToHex } from "helpers/byteActions";
+import { rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
 import { isNumber } from "fp";
@@ -125,7 +125,7 @@ export const getNextAccountAttempt = (passphrase, accountName) => async (
       passphrase,
       accountName
     );
-    const accountNumber = getNextAccountResponse.getAccountNumber();
+    const accountNumber = getNextAccountResponse.accountNumber;
     await dispatch(
       setAccountPassphrase(
         sel.walletService(getState()),
@@ -242,9 +242,7 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
       signTransactionResponse: signTransactionResponse,
       type: SIGNTX_SUCCESS
     });
-    dispatch(
-      publishTransactionAttempt(signTransactionResponse.getTransaction())
-    );
+    dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
   } catch (error) {
     dispatch({ error, type: SIGNTX_FAILED });
   }
@@ -270,7 +268,11 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
       const newChangeScriptByAccount = {};
       Object.keys(changeScriptByAccount).forEach((account) => {
         const foundScript = decoded.outputs.some((out) => {
-          if (out.script.equals(changeScriptByAccount[account])) {
+          if (
+            Buffer.from(out.script).equals(
+              Buffer.from(changeScriptByAccount[account])
+            )
+          ) {
             return true;
           }
         });
@@ -280,7 +282,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
       });
 
       dispatch({
-        hash: reverseRawHash(res.getTransactionHash()),
+        hash: res.transactionHash,
         changeScriptByAccount: newChangeScriptByAccount,
         type: PUBLISHTX_SUCCESS
       });
@@ -332,7 +334,7 @@ export const purchaseTicketsAttempt = (
       const importScriptResponse = await dispatch(
         importScriptAttempt(stakepool.Script)
       );
-      if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
+      if (importScriptResponse.p2shAddress !== stakepool.TicketAddress) {
         throw new Error(
           "Trying to use a ticket address not corresponding to script"
         );
@@ -422,7 +424,7 @@ export const newPurchaseTicketsAttempt = (
     }
     // save vsp for future checking if the wallet has all tickets synced.
     dispatch(updateUsedVSPs(vsp));
-    const numBought = purchaseTicketsResponse.getTicketHashesList().length;
+    const numBought = purchaseTicketsResponse.ticketHashes.length;
     if (numBought < numTickets) {
       dispatch({
         purchaseTicketsResponse,
@@ -643,16 +645,19 @@ export const constructTransactionAttempt = (
       // Store the change address we just generated so that future changes to
       // the tx being constructed will use the same address and prevent gap
       // limit exhaustion (see above note on issue dcrwallet#1622).
-      const changeIndex = constructTxResponse.getChangeIndex();
+      const changeIndex = constructTxResponse.changeIndex;
       if (changeIndex > -1) {
-        const rawTx = Buffer.from(constructTxResponse.getUnsignedTransaction());
+        const rawTx = Buffer.from(
+          constructTxResponse.unsignedTransaction,
+          "hex"
+        );
         const decoded = wallet.decodeRawTransaction(rawTx, chainParams);
         changeScriptByAccount[account] = decoded.outputs[changeIndex].script;
       }
     }
 
     constructTxResponse.rawTx = rawToHex(
-      constructTxResponse.getUnsignedTransaction()
+      constructTxResponse.unsignedTransaction
     );
 
     dispatch({
@@ -702,22 +707,14 @@ export const validateAddress = (address) => async (dispatch, getState) => {
       sel.walletService(getState()),
       address
     );
-    const responseObj = response ? response.toObject() : {};
     return {
-      ...responseObj,
-      isValid: response.getIsValid(),
-      error: null,
-      getIsValid() {
-        return response.getIsValid();
-      }
+      ...response,
+      error: null
     };
   } catch (error) {
     return {
       isValid: false,
-      error,
-      getIsValid() {
-        return false;
-      }
+      error
     };
   }
 };
@@ -755,14 +752,19 @@ export const signMessageAttempt = (address, message, passphrase) => async (
       sel.walletService(getState()),
       address
     );
-    const accountNumber = response.getAccountNumber();
+    const accountNumber = response.accountNumber;
     const getSignMessageResponse = await dispatch(
       unlockAcctAndExecFn(passphrase, [accountNumber], () =>
         wallet.signMessage(sel.walletService(getState()), address, message)
       )
     );
+    // Originally, signatures were presented as base64 encoded, so convert
+    // from hex to base64.
+    const sig = Buffer.from(getSignMessageResponse.signature, "hex").toString(
+      "base64"
+    );
     dispatch({
-      getSignMessageSignature: getSignMessageResponse.toObject().signature,
+      getSignMessageSignature: sig,
       type: SIGNMESSAGE_SUCCESS
     });
   } catch (error) {

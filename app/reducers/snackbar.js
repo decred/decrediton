@@ -767,15 +767,13 @@ export default function snackbar(state = {}, action) {
           break;
         case PURCHASETICKETS_SUCCESS_LESS:
           values = {
-            numTickets: action.purchaseTicketsResponse.getTicketHashesList()
-              .length,
+            numTickets: action.purchaseTicketsResponse.ticketHashes.length,
             numAttempted: action.numAttempted
           };
           break;
         case PURCHASETICKETS_SUCCESS:
           values = {
-            numTickets: action.purchaseTicketsResponse.getTicketHashesList()
-              .length
+            numTickets: action.purchaseTicketsResponse.ticketHashes.length
           };
           break;
         case TRZ_TOGGLEPINPROTECTION_SUCCESS:

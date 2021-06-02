@@ -40,7 +40,7 @@ const ConfirmSeed = ({
       decodeSeed(mnemonic)
         // if successfully decoded, update the state machine's seed.
         .then((response) => {
-          setSeed(response.getDecodedSeed());
+          setSeed(response.decodedSeed);
           setError("");
         })
         .catch((e) => {

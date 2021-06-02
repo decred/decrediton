@@ -203,12 +203,12 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
       .openWallet(getState().walletLoader.loader, pubPass)
       .then(async (response) => {
         await dispatch(getWalletServiceAttempt());
-        wallet.setIsWatchingOnly(response.getWatchingOnly());
+        wallet.setIsWatchingOnly(response.watchingOnly);
         // needsPassPhrase is reset by OPENWALLET_SUCCESS, so store it here if
         // we need to ask for the passphrase before starting the sync process.
         const needsPassPhrase = getState().walletLoader.needsPassPhrase;
         dispatch({
-          isWatchingOnly: response.getWatchingOnly(),
+          isWatchingOnly: response.watchingOnly,
           type: OPENWALLET_SUCCESS
         });
 
@@ -560,7 +560,7 @@ export function syncCancel() {
 
 const syncConsumer = (response) => async (dispatch, getState) => {
   const { discoverAccountsComplete } = getState().walletLoader;
-  switch (response.getNotificationType()) {
+  switch (response.notificationType) {
     case SyncNotificationType.SYNCED: {
       await dispatch(getBestBlockHeightAttempt(startWalletServices));
       dispatch({ type: SYNC_SYNCED });
@@ -572,14 +572,14 @@ const syncConsumer = (response) => async (dispatch, getState) => {
     }
     case SyncNotificationType.PEER_CONNECTED: {
       dispatch({
-        peerCount: response.getPeerInformation().getPeerCount(),
+        peerCount: response.peerInformation.peerCount,
         type: SYNC_PEER_CONNECTED
       });
       break;
     }
     case SyncNotificationType.PEER_DISCONNECTED: {
       dispatch({
-        peerCount: response.getPeerInformation().getPeerCount(),
+        peerCount: response.peerInformation.peerCount,
         type: SYNC_PEER_DISCONNECTED
       });
       break;
@@ -589,12 +589,10 @@ const syncConsumer = (response) => async (dispatch, getState) => {
       break;
     }
     case SyncNotificationType.FETCHED_MISSING_CFILTERS_PROGRESS: {
-      const cFiltersStart = response
-        .getFetchMissingCfilters()
-        .getFetchedCfiltersStartHeight();
-      const cFiltersEnd = response
-        .getFetchMissingCfilters()
-        .getFetchedCfiltersEndHeight();
+      const cFiltersStart =
+        response.fetchMissingCfilters.fetchedCfiltersStartHeight;
+      const cFiltersEnd =
+        response.fetchMissingCfilters.fetchedCfiltersEndHeight;
       dispatch({
         cFiltersStart,
         cFiltersEnd,
@@ -613,11 +611,9 @@ const syncConsumer = (response) => async (dispatch, getState) => {
     }
     case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
       const lastFetchedHeaderTime = new Date(
-        response.getFetchHeaders().getLastHeaderTime() * 1000
+        response.fetchHeaders.lastHeaderTime * 1000
       );
-      const fetchHeadersCount = response
-        .getFetchHeaders()
-        .getFetchedHeadersCount();
+      const fetchHeadersCount = response.fetchHeaders.fetchedHeadersCount;
 
       dispatch({
         fetchHeadersCount,
@@ -655,7 +651,7 @@ const syncConsumer = (response) => async (dispatch, getState) => {
     case SyncNotificationType.RESCAN_PROGRESS: {
       dispatch({
         type: RESCAN_PROGRESS,
-        rescanResponse: response.getRescanProgress()
+        rescanResponse: response.rescanProgress
       });
       break;
     }

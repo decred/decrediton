@@ -200,8 +200,8 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
         sendContinue();
         generateSeed().then((response) => {
           // Allows verification skip in dev
-          const seed = isTestNet ? response.getSeedBytes() : null;
-          const mnemonic = response.getSeedMnemonic();
+          const seed = isTestNet ? response.seedBytes : null;
+          const mnemonic = response.seedMnemonic;
           sendEvent({ type: "SEED_GENERATED", payload: { mnemonic, seed } });
         });
         break;

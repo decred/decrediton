@@ -75,7 +75,7 @@ const SendTransaction = ({
     }
     try {
       const validated = await validateAddress(address);
-      if (!validated.getIsValid()) {
+      if (!validated.isValid) {
         error = (
           <T id="send.errors.invalidAddress" m="Please enter a valid address" />
         );

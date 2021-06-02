@@ -1,5 +1,5 @@
 import { TicketTypes } from "helpers/tickets";
-import { strHashToRaw } from "../helpers/byteActions";
+import { strHashToRaw, rawHashToHex } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import {
   withLog as log,
@@ -9,13 +9,14 @@ import {
 } from "./app";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { getClient } from "middleware/grpc/clientTracking";
+import { formatTransaction, formatUnminedTransaction } from "./service";
 
 const promisifyReq = (fnName, Req) =>
   log(
     (service, ...args) =>
       new Promise((ok, fail) =>
         getClient(service)[fnName](new Req(), ...args, (err, res) =>
-          err ? fail(err) : ok(res)
+          err ? fail(err) : ok(res.toObject())
         )
       ),
     fnName
@@ -26,7 +27,7 @@ const promisifyReqLogNoData = (fnName, Req) =>
     (service, ...args) =>
       new Promise((ok, fail) =>
         getClient(service)[fnName](new Req(), ...args, (err, res) =>
-          err ? fail(err) : ok(res)
+          err ? fail(err) : ok(res.toObject())
         )
       ),
     fnName
@@ -70,7 +71,9 @@ export const getBalance = withLogNoResponseData(
       const request = new api.BalanceRequest();
       request.setAccountNumber(accountNum);
       request.setRequiredConfirmations(requiredConfs);
-      getClient(walletService).balance(request, (err, res) => (err ? fail(err) : ok(res)));
+      getClient(walletService).balance(request, (err, res) =>
+        err ? fail(err) : ok(res.toObject())
+      );
     }),
   "Get Balance"
 );
@@ -81,11 +84,50 @@ export const getAccountNumber = log(
       const request = new api.AccountNumberRequest();
       request.setAccountName(accountName);
       getClient(walletService).accountNumber(request, (err, res) =>
-        err ? fail(err) : ok(res)
+        err ? fail(err) : ok(res.toObject())
       );
     }),
   "Get Account Number"
 );
+
+function formatTicket(res) {
+  const formatBlock = (b) => ({
+    hash: rawHashToHex(b.getHash()),
+    height: b.getHeight(),
+    timestamp: b.getTimestamp()
+  });
+
+  const r = {
+    status: TicketTypes.get(res.getTicket().getTicketStatus()),
+    block: res.getBlock() ? formatBlock(res.getBlock()) : null
+  };
+
+  if (res.getBlock()) {
+    r.ticket = formatTransaction(
+      res.getBlock(),
+      res.getTicket().getTicket(),
+      0
+    );
+  } else {
+    r.ticket = formatUnminedTransaction(res.getTicket().getTicket(), 0);
+  }
+
+  // The getTicket(s) call only returns the block for the ticket, so we format
+  // the spender tx as if it was unmined (even though it might actually be mined).
+  r.spender = formatUnminedTransaction(res.getTicket().getSpender(), 0);
+
+  r.ticket.hash = rawHashToHex(res.getTicket().getTicket().getHash());
+  r.ticket.transaction = rawHashToHex(
+    res.getTicket().getTicket().getTransaction()
+  );
+  if (res.getTicket().getSpender().getHash()) {
+    r.spender.hash = rawHashToHex(res.getTicket().getSpender().getHash());
+    r.spender.transaction = rawHashToHex(
+      res.getTicket().getSpender().getTransaction()
+    );
+  }
+  return r;
+}
 
 export const getTickets = log(
   (walletService, startHeight, endHeight, targetCount) =>
@@ -97,12 +139,7 @@ export const getTickets = log(
       request.setTargetTicketCount(targetCount);
       const getTx = getClient(walletService).getTickets(request);
       getTx.on("data", (res) => {
-        tickets.push({
-          status: TicketTypes.get(res.getTicket().getTicketStatus()),
-          ticket: res.getTicket().getTicket(),
-          spender: res.getTicket().getSpender(),
-          block: res.getBlock()
-        });
+        tickets.push(formatTicket(res));
       });
       getTx.on("end", () => ok(tickets));
       getTx.on("error", fail);
@@ -121,15 +158,7 @@ export const getTicket = log(
           fail(err);
           return;
         }
-
-        const ticket = {
-          status: TicketTypes.get(res.getTicket().getTicketStatus()),
-          ticket: res.getTicket().getTicket(),
-          spender: res.getTicket().getSpender(),
-          block: res.getBlock()
-        };
-
-        ok(ticket);
+        ok(formatTicket(res));
       });
     }),
   "Get Ticket",
@@ -145,7 +174,7 @@ export const setAgendaVote = log(
       choice.setAgendaId(agendaId);
       request.addChoices(choice);
       getClient(votingService).setVoteChoices(request, (err, res) =>
-        err ? fail(err) : ok(res)
+        err ? fail(err) : ok(res.toObject())
       );
     }),
   "Set Agenda Vote"

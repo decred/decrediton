@@ -451,10 +451,8 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       direction: tx.direction,
       fee: tx.fee,
       amount: tx.amount,
-      credits: tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0),
-      debits: tx.tx
-        .getDebitsList()
-        .reduce((s, d) => s + d.getPreviousAmount(), 0)
+      credits: tx.credits.reduce((s, c) => s + c.amount, 0),
+      debits: tx.debits.reduce((s, d) => s + d.previousAmount, 0)
     };
   };
   const tsDate = sel.tsDate(getState());
@@ -590,34 +588,32 @@ const findMaturingDeltas = (
 // closure that calcs ticket info necessary to correctly account for its delta
 // to balances, given a ticket tx
 const ticketInfo = (tx) => {
-  const debits = tx.tx.getDebitsList();
+  const debits = tx.debits;
   // changes in an sstx are the even-numbered, > 0 txouts
-  const isTicketChange = (c) => c.getIndex() > 0 && c.getIndex() % 2 === 0;
-  const change = tx.tx
-    .getCreditsList()
-    .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
+  const isTicketChange = (c) => c.index > 0 && c.index % 2 === 0;
+  const change = tx.credits.reduce(
+    (s, c) => (s + isTicketChange(c) ? c.amount : 0),
+    0
+  );
   // a ticket "belongs" to the wallet when the wallet has the private key
   // that can be used to vote/revoke the ticket (ie: if the wallet considers the
   // txout with index === 0 a credit).
   const isWalletTicket = (tx) =>
-    tx.getCreditsList().length > 0 && tx.getCreditsList()[0].getIndex() === 0;
-  const isWallet = isWalletTicket(tx.tx);
-  const debitsSum = debits.reduce((s, d) => s + d.getPreviousAmount(), 0);
+    tx.credits.length > 0 && tx.credits[0].index === 0;
+  const isWallet = isWalletTicket(tx);
+  const debitsSum = debits.reduce((s, d) => s + d.previousAmount, 0);
 
   // pool fee exists and needs to be accounted for when there are more than
   // two debits and the index of the first one is zero
   const poolFee =
-    debits.length > 1 && debits[0].getIndex() === 0
-      ? debits[0].getPreviousAmount()
-      : 0;
+    debits.length > 1 && debits[0].index === 0 ? debits[0].previousAmount : 0;
 
   // commit amount is deduced by seeing subtracting everything the wallet
   // spent from what it got back. Ideally, this would be gotten by decoding
   // appropriate stake commitment output. This is specially true if, in the
   // future, consensus rules change to break the requirement that
   // amount_in[x] == commitment_amount[x].
-  const commitAmount =
-    debitsSum - change - (isWallet ? tx.tx.getFee() : 0) - poolFee;
+  const commitAmount = debitsSum - change - (isWallet ? tx.fee : 0) - poolFee;
   const spentAmount = commitAmount + (isWallet ? tx.fee : 0) + poolFee;
   const purchaseFees = debitsSum - commitAmount;
   return { isWallet, commitAmount, spentAmount, purchaseFees, poolFee };
@@ -629,7 +625,7 @@ const voteRevokeInfo = async (tx, liveTickets, walletService, chainParams) => {
   const isVote = tx.txType === VOTE;
 
   const decodedSpender = await wallet.decodeTransactionLocal(
-    tx.tx.getTransaction(),
+    Buffer.from(tx.rawTx, "hex"),
     chainParams
   );
   const spenderInputs = decodedSpender.inputs;
@@ -665,9 +661,7 @@ const voteRevokeInfo = async (tx, liveTickets, walletService, chainParams) => {
     }
   }
   const ticketCommitAmount = ticket.commitAmount;
-  const returnAmount = tx.tx
-    .getCreditsList()
-    .reduce((s, c) => s + c.getAmount(), 0);
+  const returnAmount = tx.credits.reduce((s, c) => s + c.amount, 0);
   const stakeResult = returnAmount - ticketCommitAmount;
   return {
     wasWallet: ticket.isWallet,
@@ -1284,7 +1278,7 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
     tickets.forEach((t) => {
       if (t.status !== "voted") return;
       const daysToVote = Math.floor(
-        (t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60)
+        (t.spender.timestamp - t.ticket.timestamp) / (24 * 60 * 60)
       );
       dayBuckets[daysToVote] += 1;
     });

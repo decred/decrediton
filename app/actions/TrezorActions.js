@@ -410,13 +410,13 @@ const checkTrezorIsDcrwallet = () => async (dispatch, getState) => {
   const addr = payload.address;
 
   const addrValidResp = await wallet.validateAddress(walletService, addr);
-  if (!addrValidResp.getIsValid())
+  if (!addrValidResp.isValid)
     throw "Trezor provided an invalid address " + addr;
 
-  if (!addrValidResp.getIsMine())
+  if (!addrValidResp.isMine)
     throw "Trezor and dcrwallet not running from the same extended public key";
 
-  if (addrValidResp.getIndex() !== 0) throw "Wallet replied with wrong index.";
+  if (addrValidResp.index !== 0) throw "Wallet replied with wrong index.";
 };
 
 export const signTransactionAttemptTrezor = (
@@ -434,10 +434,10 @@ export const signTransactionAttemptTrezor = (
   debug && console.log("construct tx response", constructTxResponse);
 
   try {
-    const changeIndex = constructTxResponse.getChangeIndex();
+    const changeIndex = constructTxResponse.changeIndex;
 
     const decodedUnsigTxResp = wallet.decodeRawTransaction(
-      Buffer.from(rawUnsigTx),
+      Buffer.from(rawUnsigTx, "hex"),
       chainParams
     );
     const unsignedTx = await dispatch(
@@ -495,12 +495,11 @@ export const signMessageAttemptTrezor = (address, message) => async (
 
   try {
     const addrValidResp = await wallet.validateAddress(walletService, address);
-    if (!addrValidResp.getIsValid())
-      throw "Input has an invalid address " + address;
-    if (!addrValidResp.getIsMine())
+    if (!addrValidResp.isValid) throw "Input has an invalid address " + address;
+    if (!addrValidResp.isMine)
       throw "Trezor only supports signing with wallet addresses";
-    const addrIndex = addrValidResp.getIndex();
-    const addrBranch = addrValidResp.getIsInternal() ? 1 : 0;
+    const addrIndex = addrValidResp.index;
+    const addrBranch = addrValidResp.isInternal ? 1 : 0;
     const address_n = addressPath(
       addrIndex,
       addrBranch,

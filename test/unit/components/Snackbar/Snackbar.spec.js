@@ -38,8 +38,8 @@ import { CONNECTDAEMON_FAILURE } from "actions/DaemonActions";
 import { NEW_TRANSACTIONS_RECEIVED } from "actions/TransactionActions";
 
 const testFilename = "test-filename";
-const testGetTicketHashesList = () => ["t1"];
-const testGetTicketHashesListMulti = () => ["t1", "t2"];
+const testTicketHashes = ["t1"];
+const testTicketHashesMulti = ["t1", "t2"];
 const testHost = "test-host";
 const testTrezorDeviceLabel = "test-device-label";
 const testInvoiceMemo = "test-invoice-memo";
@@ -243,18 +243,18 @@ test.each([
   [
     {
       type: PURCHASETICKETS_SUCCESS,
-      purchaseTicketsResponse: { getTicketHashesList: testGetTicketHashesList }
+      purchaseTicketsResponse: { ticketHashes: testTicketHashes }
     },
-    `You bought  ${testGetTicketHashesList().length} ticket`
+    `You bought  ${testTicketHashes.length} ticket`
   ],
   [
     {
       type: PURCHASETICKETS_SUCCESS,
       purchaseTicketsResponse: {
-        getTicketHashesList: testGetTicketHashesListMulti
+        ticketHashes: testTicketHashesMulti
       }
     },
-    `You bought  ${testGetTicketHashesListMulti().length} tickets`
+    `You bought  ${testTicketHashesMulti.length} tickets`
   ],
   [
     { type: ADDCUSTOMSTAKEPOOL_SUCCESS, poolInfo: { Host: testHost } },

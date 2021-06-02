@@ -5,7 +5,7 @@ import {
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import { isUndefined } from "lodash";
-import { rawHashToHex } from "../helpers/byteActions";
+import { rawHashToHex, rawToHex } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import { getClient } from "middleware/grpc/clientTracking";
 
@@ -22,7 +22,7 @@ export const getNextAccount = (walletService, passphrase, name) =>
     request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccountName(name);
     getClient(walletService).nextAccount(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -31,7 +31,7 @@ export const getAccountExtendedKey = (walletService, accountNum) =>
     const request = new api.GetAccountExtendedPubKeyRequest();
     request.setAccountNumber(accountNum);
     getClient(walletService).getAccountExtendedPubKey(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -41,7 +41,7 @@ export const renameAccount = (walletService, accountNum, newName) =>
     request.setAccountNumber(accountNum);
     request.setNewName(newName);
     getClient(walletService).renameAccount(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -71,7 +71,7 @@ export const importPrivateKey = (
     request.setRescan(rescan);
     request.setScanFrom(scanFrom);
     getClient(walletService).importPrivateKey(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -83,7 +83,7 @@ export const importScript = (walletService, script) =>
     request.setScanFrom(0);
     request.setRequireRedeemable(true);
     getClient(walletService).importScript(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -96,26 +96,34 @@ export const changePassphrase = (walletService, oldPass, newPass, priv) =>
     request.setOldPassphrase(new Uint8Array(Buffer.from(oldPass)));
     request.setNewPassphrase(new Uint8Array(Buffer.from(newPass)));
     getClient(walletService).changePassphrase(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
 export const signTransaction = (walletService, rawTx) =>
   new Promise((ok, fail) => {
     const request = new api.SignTransactionRequest();
-    request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx)));
+    request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx, "hex")));
     getClient(walletService).signTransaction(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err
+        ? fail(err)
+        : ok({
+            transaction: rawToHex(res.getTransaction()),
+            unsignedInputIndexes: res.getUnsignedInputIndexesList()
+          })
     );
   });
 
 export const publishTransaction = (walletService, tx) =>
   new Promise((ok, fail) => {
     const request = new api.PublishTransactionRequest();
-    request.setSignedTransaction(new Uint8Array(Buffer.from(tx)));
+    request.setSignedTransaction(new Uint8Array(Buffer.from(tx, "hex")));
     getClient(walletService).publishTransaction(request, (err, res) => {
-      err ? fail(err) : ok(res)
-    );
+      if (err) return fail(err);
+      const resObj = res.toObject();
+      resObj.transactionHash = rawHashToHex(res.getTransactionHash());
+      ok(resObj);
+    });
   });
 
 export const purchaseTickets = (
@@ -153,7 +161,7 @@ export const purchaseTickets = (
     request.setTicketFee(ticketFee);
     request.setDontSignTx(!signTx);
     getClient(walletService).purchaseTickets(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -205,7 +213,11 @@ export const purchaseTicketsV3 = (
       if (error) {
         return reject(error);
       }
-      resolve(response);
+      const resObj = response.toObject();
+      resObj.ticketHashes = response
+        .getTicketHashesList()
+        .map((v) => rawHashToHex(v));
+      resolve(resObj);
     });
   });
 
@@ -213,7 +225,7 @@ export const revokeTickets = (walletService) =>
   new Promise((ok, fail) => {
     const request = new api.RevokeTicketsRequest();
     getClient(walletService).revokeTickets(request, (err, res) =>
-      err ? fail(err) : ok(res)
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -254,8 +266,10 @@ export const constructTransaction = (
         fail(err);
         return;
       }
-      res.totalAmount = totalAmount;
-      ok(res);
+      const resObj = res.toObject();
+      resObj.totalAmount = totalAmount;
+      resObj.unsignedTransaction = rawToHex(res.getUnsignedTransaction());
+      ok(resObj);
     });
   });
 
@@ -282,8 +296,10 @@ export const constructSendAllTransaction = (
         fail(err);
         return;
       }
-      res.totalAmount = res.getTotalOutputAmount();
-      ok(res);
+      const resObj = res.toObject();
+      resObj.totalAmount = res.getTotalOutputAmount();
+      resObj.unsignedTransaction = rawToHex(res.getUnsignedTransaction());
+      ok(resObj);
     });
   });
 
@@ -291,7 +307,7 @@ export const getCoinjoinOutputspByAcctReq = (walletService) =>
   new Promise((ok, fail) => {
     const request = new api.GetCoinjoinOutputspByAcctRequest();
     getClient(walletService).getCoinjoinOutputspByAcct(request, (err, res) =>
-      err ? fail(err) : ok({ ...res })
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -309,8 +325,14 @@ export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>
   new Promise((resolve, reject) => {
     const request = new api.GetVSPTicketsByFeeStatusRequest();
     request.setFeeStatus(FeeStatus[feeStatus]);
-    getClient(walletService).getVSPTicketsByFeeStatus(request, (error, response) =>
-      error ? reject(error) : resolve(response)
+    getClient(walletService).getVSPTicketsByFeeStatus(
+      request,
+      (error, response) =>
+        error
+          ? reject(error)
+          : resolve({
+              ticketHashes: response.getTicketsHashesList().map(rawHashToHex)
+            })
     );
   });
 
@@ -329,12 +351,15 @@ export const syncVSPTickets = (
     request.setVspHost("https://" + vspHost);
 
     // Call the request
-    getClient(walletService).syncVSPFailedTickets(request, (error, response) => {
-      if (error) {
-        reject(error);
+    getClient(walletService).syncVSPFailedTickets(
+      request,
+      (error, response) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(response.toObject());
       }
-      resolve(response);
-    });
+    );
   });
 
 function mapTrackedVSP(vsp) {
@@ -363,7 +388,7 @@ export const getPeerInfo = (walletService) =>
   new Promise((ok, fail) => {
     const request = new api.GetPeerInfoRequest();
     getClient(walletService).getPeerInfo(request, (err, res) =>
-      err ? fail(err) : ok({ ...res })
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -382,7 +407,7 @@ export const processManagedTickets = (
     request.setChangeAccount(changeAccount);
 
     getClient(walletService).processManagedTickets(request, (err, res) =>
-      err ? reject(err) : resolve(res)
+      err ? reject(err) : resolve(res.toObject())
     );
   });
 
@@ -402,7 +427,7 @@ export const processUnmanagedTicketsStartup = (
     request.setChangeAccount(changeAccount);
 
     getClient(walletService).processUnmanagedTickets(request, (err, response) =>
-      err ? reject(err) : resolve(response)
+      err ? reject(err) : resolve(response.toObject())
     );
   });
 
@@ -421,7 +446,7 @@ export const setVspdAgendaChoices = (
     request.setChangeAccount(changeAccount);
 
     getClient(walletService).setVspdVoteChoices(request, (err, res) =>
-      err ? reject(err) : resolve(res)
+      err ? reject(err) : resolve(res.toObject())
     );
   });
 
@@ -500,7 +525,7 @@ export const setAccountPassphrase = (
       );
     }
     getClient(walletService).setAccountPassphrase(request, (err, res) =>
-      err ? fail(err) : ok({ ...res })
+      err ? fail(err) : ok(res.toObject())
     );
   });
 
@@ -514,7 +539,11 @@ export const startTicketAutoBuyerV2 = (
     request.setAccount(account);
     request.setVotingAccount(votingAccount);
     request.setVotingAddress(votingAddress);
-    ok(shimStreamedResponse(getClient(ticketBuyerService).runTicketBuyer(request)));
+    ok(
+      shimStreamedResponse(
+        getClient(ticketBuyerService).runTicketBuyer(request)
+      )
+    );
   });
 
 export const startTicketAutoBuyerV3 = (

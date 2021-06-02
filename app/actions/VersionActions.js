@@ -66,7 +66,7 @@ export const getWalletRPCVersionAttempt = (versionService) => (
           version: { requiredVersion }
         } = getState();
         let versionErr = null;
-        const walletVersion = getWalletRPCVersionResponse.getVersionString();
+        const walletVersion = getWalletRPCVersionResponse.versionString;
         wallet.grpcVersionsDetermined({
           requiredVersion,
           walletVersion

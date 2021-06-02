@@ -28,6 +28,7 @@ import {
   strHashToRaw,
   rawToHex
 } from "helpers";
+import { rawHashToHex } from "../helpers/byteActions";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>
@@ -52,13 +53,9 @@ export const getNextAddress = log(
       request.setKind(kind ? kind : 0);
       request.setGapPolicy(api.NextAddressRequest.GapPolicy.GAP_POLICY_WRAP);
       getClient(walletService).nextAddress(request, (error, response) =>
-        error ? reject(error) : resolve(response)
+        error ? reject(error) : resolve(response.toObject())
       );
-    }).then((response) => ({
-      ...response,
-      publicKey: response.getPublicKey(),
-      address: response.getAddress()
-    })),
+    }),
   "Get Next Address",
   logOptionNoResponseData()
 );
@@ -69,7 +66,7 @@ export const validateAddress = withLogNoData(
       const request = new api.ValidateAddressRequest();
       request.setAddress(address);
       getClient(walletService).validateAddress(request, (error, response) =>
-        error ? reject(error) : resolve(response)
+        error ? reject(error) : resolve(response.toObject())
       );
     }),
   "Validate Address"
@@ -150,13 +147,23 @@ export function formatTransaction(block, transaction, index) {
     }
   }
 
+  const txHash = transaction.getHash()
+    ? rawHashToHex(transaction.getHash())
+    : null;
+  const rawTx = transaction.getTransaction()
+    ? rawToHex(transaction.getTransaction())
+    : null;
+  const timestamp = block.getTimestamp()
+    ? block.getTimestamp()
+    : transaction.getTimestamp();
+
   return {
-    timestamp: block.getTimestamp(),
+    timestamp,
     height: block.getHeight(),
     blockHash: block.getHash(),
     index: index,
     hash: transaction.getHash(),
-    txHash: reverseHash(Buffer.from(transaction.getHash()).toString("hex")),
+    txHash,
     tx: transaction,
     txType,
     debitsAmount: inputAmounts,
@@ -167,7 +174,9 @@ export function formatTransaction(block, transaction, index) {
     debitAccounts,
     creditAddresses,
     isStake,
-    rawTx: Buffer.from(transaction.getTransaction()).toString("hex"),
+    credits: transaction.getCreditsList().map((v) => v.toObject()),
+    debits: transaction.getDebitsList().map((v) => v.toObject()),
+    rawTx,
     direction
   };
 }
@@ -284,8 +293,15 @@ export const committedTickets = withLogNoData(
       const req = new api.CommittedTicketsRequest();
       req.setTicketsList(ticketHashes);
       getClient(walletService).committedTickets(req, (err, tickets) => {
-        err ? reject(err) : resolve(tickets)
-      );
+        if (err) return reject(err);
+        const res = {
+          ticketAddresses: tickets.getTicketaddressesList().map((v) => ({
+            ticket: rawHashToHex(v.getTicket()),
+            address: v.getAddress()
+          }))
+        };
+        resolve(res);
+      });
     }),
   "Committed Tickets"
 );
@@ -300,6 +316,10 @@ export const decodeRawTransaction = (rawTx, chainParams) => {
   }
   if (!chainParams) {
     throw new Error("chainParams can not be undefined");
+  }
+
+  if (rawTx instanceof Uint8Array) {
+    rawTx = Buffer.from(rawTx);
   }
 
   const decodedTx = decodeHelper(rawTx);

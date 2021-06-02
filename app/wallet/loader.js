@@ -30,7 +30,8 @@ export const getLoader = withLogNoData(
         port,
         cert,
         key,
-        (loader, error) => (error ? reject(error) : resolve(trackClient(loader)))
+        (loader, error) =>
+          error ? reject(error) : resolve(trackClient(loader))
       )
     ),
   "Get Loader"
@@ -57,7 +58,7 @@ export const createWallet = log(
     new Promise((resolve, reject) => {
       const request = new CreateWalletRequest();
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-      request.setSeed(seed);
+      request.setSeed(new Uint8Array(Buffer.from(seed, "hex")));
       getClient(loader).createWallet(request, (error) =>
         error ? reject(error) : resolve()
       );
@@ -85,7 +86,7 @@ export const openWallet = log(
       const request = new OpenWalletRequest();
       request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
       getClient(loader).openWallet(request, (error, response) =>
-        error ? reject(error) : resolve(response)
+        error ? reject(error) : resolve(response.toObject())
       );
     }),
   "Open Wallet",
@@ -126,7 +127,9 @@ export const discoverAddresses = log(
 export const subscribeToBlockNotifications = log(
   (loader) =>
     new Promise((resolve, reject) =>
-      getClient(loader).subscribeToBlockNotifications(
+      getClient(
+        loader
+      ).subscribeToBlockNotifications(
         new SubscribeToBlockNotificationsRequest(),
         (error) => (error ? reject(error) : resolve())
       )
@@ -137,8 +140,10 @@ export const subscribeToBlockNotifications = log(
 export const fetchHeaders = log(
   (loader) =>
     new Promise((resolve, reject) =>
-      getClient(loader).fetchHeaders(new FetchHeadersRequest(), (error, response) =>
-        error ? reject(error) : resolve(response)
+      getClient(loader).fetchHeaders(
+        new FetchHeadersRequest(),
+        (error, response) =>
+          error ? reject(error) : resolve(response.toObject())
       )
     ),
   "Fetch Headers"
@@ -184,7 +189,7 @@ export const fetchMissingCFilters = log(
     new Promise((resolve, reject) => {
       const request = new FetchMissingCFiltersRequest();
       getClient(loader).fetchMissingCFilters(request, (error, response) =>
-        error ? reject(error) : resolve(response)
+        error ? reject(error) : resolve(response.toObject())
       );
     }),
   "Fetch Missing CFilters"
@@ -195,7 +200,7 @@ export const rescanPoint = log(
     new Promise((resolve, reject) => {
       const request = new RescanPointRequest();
       getClient(loader).rescanPoint(request, (error, response) =>
-        error ? reject(error) : resolve(response)
+        error ? reject(error) : resolve(response.toObject())
       );
     }),
   "Get Rescan Point"

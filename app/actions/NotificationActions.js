@@ -121,34 +121,22 @@ const transactionNtfnsDataHandler = () => (dispatch, getState) => {
   // this is the actual function that is repeatedly called by the transaction
   // notification data stream
   return (response) => {
-    const attachedBlocks = response.getAttachedBlocksList();
-    const unminedTxList = response.getUnminedTransactionsList();
+    const attachedBlocks = response.attachedBlocks;
+    const unmined = response.unminedTransactions;
 
     // Block was mined
     if (attachedBlocks.length > 0) {
-      currentBlockTimestamp = attachedBlocks[
-        attachedBlocks.length - 1
-      ].getTimestamp();
-      currentBlockHeight = attachedBlocks[
-        attachedBlocks.length - 1
-      ].getHeight();
+      currentBlockTimestamp =
+        attachedBlocks[attachedBlocks.length - 1].timestamp;
+      currentBlockHeight = attachedBlocks[attachedBlocks.length - 1].height;
 
       const mined = [];
-      attachedBlocks.forEach((b) => {
-        b.getTransactionsList().forEach((t, i) => {
-          const tx = wallet.formatTransaction(b, t, i);
-          mined.push(tx);
-        });
-      });
+      attachedBlocks.forEach((b) =>
+        b.transactions.forEach((tx) => mined.push(tx))
+      );
 
-      const unmined = unminedTxList.map((t, i) =>
-        wallet.formatUnminedTransaction(t, i)
-      );
       addToOutstandingTxs(mined, unmined);
-    } else if (unminedTxList.length > 0) {
-      const unmined = unminedTxList.map((t, i) =>
-        wallet.formatUnminedTransaction(t, i)
-      );
+    } else if (unmined.length > 0) {
       addToOutstandingTxs([], unmined);
     }
   };
@@ -181,12 +169,12 @@ export const accountNtfnsStart = () => async (dispatch, getState) => {
       daemon: { hiddenAccounts }
     } = getState();
     const account = {
-      hidden: hiddenAccounts.indexOf(data.getAccountNumber()) > -1,
-      accountNumber: data.getAccountNumber(),
-      accountName: data.getAccountName(),
-      externalKeys: data.getExternalKeyCount(),
-      internalKeys: data.getInternalKeyCount(),
-      importedKeys: data.getImportedKeyCount()
+      hidden: hiddenAccounts.indexOf(data.accountNumber) > -1,
+      accountNumber: data.accountNumber,
+      accountName: data.accountName,
+      externalKeys: data.externalKeyCount,
+      internalKeys: data.internalKeyCount,
+      importedKeys: data.importedKeyCount
     };
     dispatch(updateAccount(account));
   });

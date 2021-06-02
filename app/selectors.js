@@ -19,7 +19,6 @@ import { appLocaleFromElectronLocale } from "./i18n/locales";
 import {
   decodeVoteScript,
   reverseHash,
-  reverseRawHash,
   isMixTx,
   dateToLocal,
   dateToUTC
@@ -59,7 +58,7 @@ import {
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import { wallet } from "wallet-preload-shim";
-import { isFunction, isArray } from "lodash";
+import { isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
 
@@ -91,7 +90,7 @@ export const versionInvalid = get(["version", "versionInvalid"]);
 export const requiredWalletRPCVersion = get(["version", "requiredVersion"]);
 export const walletRPCVersion = createSelector(
   [get(["version", "getWalletRPCVersionResponse"])],
-  (r) => (r ? r.getVersionString() : null)
+  (r) => (r ? r.versionString : null)
 );
 export const getVersionServiceError = get([
   "version",
@@ -224,13 +223,13 @@ export const createMixerAccountAttempt = get([
 
 // accounts is a selector representing accountsList from gRPC response.
 export const accounts = createSelector([getAccountsResponse], (r) =>
-  r ? r.getAccountsList() : []
+  r ? r.accountsList : []
 );
 
 export const isWatchingOnly = bool(get(["walletLoader", "isWatchingOnly"]));
 export const accountExtendedKey = createSelector(
   [get(["control", "getAccountExtendedKeyResponse"])],
-  (response) => (response ? response.getAccExtendedPubKey() : null)
+  (response) => (response ? response.accExtendedPubKey : null)
 );
 export const sortedAccounts = createSelector([balances], (balances) =>
   balances.slice().sort((a, b) => a.accountNumber - b.accountNumber)
@@ -431,114 +430,111 @@ export const ticketNormalizer = createSelector(
       } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
       const findAccount = (num) =>
-        accounts.find((account) => account.getAccountNumber() === num);
+        accounts.find((account) => account.accountNumber === num);
       const getAccountName = (num) =>
-        ((act) => (act ? act.getAccountName() : ""))(findAccount(num));
+        ((act) => (act ? act.accountName : ""))(findAccount(num));
       const txInputs = [];
       const txOutputs = [];
-      const hasSpender = spender && spender.getHash();
+      const hasSpender = spender && spender.hash;
       const isVote = status === VOTED;
       const isPending = !timestamp;
       // Some legacy vsp fees wallet will have tickets without `ticket` field
       // and only with `spender` so we use it as fallback
       const ticketTx = ticket.ticket || ticket.spender;
-      const ticketHash = reverseRawHash(ticketTx.getHash());
+      const ticketHash = ticketTx.txHash;
       const spenderTx = hasSpender ? spender : null;
-      const txBlockHash = blockHash
-        ? reverseHash(Buffer.from(blockHash).toString("hex"))
-        : null;
+      const txBlockHash = blockHash ? blockHash : null;
       const txHash = ticket.txHash;
       const txUrl = txURLBuilder(txHash);
       const txBlockUrl = blockURLBuilder(txBlockHash);
 
-      const spenderHash = hasSpender
-        ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex"))
-        : null;
-      const hasCredits = ticketTx.getCreditsList().length > 0;
+      const spenderHash = hasSpender ? spenderTx.txHash : null;
+      const hasCredits = ticketTx.credits.length > 0;
       if (spenderTx) {
-        spenderTx.getDebitsList().reduce((total, debit) => {
-          const debitedAccount = debit.getPreviousAccount();
+        spenderTx.debits.reduce((total, debit) => {
+          const debitedAccount = debit.previousAccount;
           const debitedAccountName = getAccountName(debitedAccount);
-          const amount = debit.getPreviousAmount();
+          const amount = debit.previousAmount;
           txInputs.push({
             accountName: debitedAccountName,
             amount,
-            index: debit.getIndex()
+            index: debit.index
           });
           return total + amount;
         }, 0);
-        spenderTx.getCreditsList().forEach((credit) => {
-          const amount = credit.getAmount();
-          const address = credit.getAddress();
-          const creditedAccount = credit.getAccount();
+        spenderTx.credits.forEach((credit) => {
+          const amount = credit.amount;
+          const address = credit.address;
+          const creditedAccount = credit.account;
           const creditedAccountName = getAccountName(creditedAccount);
           txOutputs.push({
             accountName: creditedAccountName,
             amount,
             address,
-            index: credit.getIndex()
+            index: credit.index
           });
         });
       } else {
-        ticketTx.getDebitsList().reduce((total, debit) => {
-          const debitedAccount = debit.getPreviousAccount();
+        ticketTx.debits.reduce((total, debit) => {
+          const debitedAccount = debit.previousAccount;
           const debitedAccountName = getAccountName(debitedAccount);
-          const amount = debit.getPreviousAmount();
+          const amount = debit.previousAmount;
           txInputs.push({
             accountName: debitedAccountName,
             amount,
-            index: debit.getIndex()
+            index: debit.index
           });
           return total + amount;
         }, 0);
 
-        ticketTx.getCreditsList().forEach((credit) => {
-          const amount = credit.getAmount();
-          const address = credit.getAddress();
-          const creditedAccount = credit.getAccount();
+        ticketTx.credits.forEach((credit) => {
+          const amount = credit.amount;
+          const address = credit.address;
+          const creditedAccount = credit.account;
           const creditedAccountName = getAccountName(creditedAccount);
           txOutputs.push({
             accountName: creditedAccountName,
             amount,
             address,
-            index: credit.getIndex()
+            index: credit.index
           });
         });
       }
 
       let ticketPrice = 0;
       if (hasCredits) {
-        ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+        ticketPrice = ticketTx.credits[0].amount;
       } else {
         // we don't have a credit when we don't have the voting rights (unimported
         // stakepool script, solo voting ticket, split ticket, etc)
         const decodedTicketTx = wallet.decodeRawTransaction(
-          Buffer.from(ticketTx.getTransaction()),
+          Buffer.from(ticketTx.rawTx, "hex"),
           chainParams
         );
         ticketPrice = decodedTicketTx.outputs[0].value;
       }
 
       // ticket tx fee is the fee for the transaction where the ticket was bought
-      const ticketTxFee = ticketTx.getFee();
+      const ticketTxFee = ticketTx.fee;
 
       // revocations have a tx fee that influences the stake rewards calc
-      const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
+      const spenderTxFee = hasSpender ? spenderTx.fee : 0;
 
       // ticket change is anything returned to the wallet on ticket purchase.
-      const isTicketChange = (c) => c.getIndex() > 0 && c.getIndex() % 2 === 0;
-      const ticketChange = ticketTx
-        .getCreditsList()
-        .reduce((s, c) => (s + isTicketChange(c) ? c.getAmount() : 0), 0);
+      const isTicketChange = (c) => c.index > 0 && c.index % 2 === 0;
+      const ticketChange = ticketTx.credits.reduce(
+        (s, c) => (s + isTicketChange(c) ? c.amount : 0),
+        0
+      );
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       let accountName = "";
-      const debitList = ticketTx.getDebitsList();
+      const debitList = ticketTx.debits;
       if (debitList.length > 0) {
-        accountName = getAccountName(debitList[0].getPreviousAccount());
+        accountName = getAccountName(debitList[0].previousAccount);
       }
       const ticketInvestment =
-        debitList.reduce((a, v) => a + v.getPreviousAmount(), 0) - ticketChange;
+        debitList.reduce((a, v) => a + v.previousAmount, 0) - ticketChange;
 
       let ticketReward,
         ticketStakeRewards,
@@ -547,9 +543,10 @@ export const ticketNormalizer = createSelector(
         voteChoices;
       if (hasSpender) {
         // everything returned to the wallet after voting/revoking
-        ticketReturnAmount = spenderTx
-          .getCreditsList()
-          .reduce((a, v) => a + v.getAmount(), 0);
+        ticketReturnAmount = spenderTx.credits.reduce(
+          (a, v) => a + v.amount,
+          0
+        );
 
         // this is liquid from applicable fees (i.e, what the wallet actually made)
         ticketReward = ticketReturnAmount - ticketInvestment;
@@ -557,28 +554,22 @@ export const ticketNormalizer = createSelector(
         ticketStakeRewards = ticketReward / ticketInvestment;
 
         const decodedSpenderTx = wallet.decodeRawTransaction(
-          Buffer.from(spenderTx.getTransaction()),
+          Buffer.from(spenderTx.rawTx, "hex"),
           chainParams
         );
 
         // Check pool fee. If there is a debit at index=0 of the ticket but not
         // a corresponding credit at the expected index on the spender, then
         // that was a pool fee.
-        const hasIndex0Debit = ticketTx
-          .getDebitsList()
-          .some((d) => d.getIndex() === 0);
-        const hasIndex0Credit = spenderTx.getCreditsList().some((c) => {
+        const hasIndex0Debit = ticketTx.debits.some((d) => d.index === 0);
+        const hasIndex0Credit = spenderTx.credits.some((c) => {
           // In votes, the first 2 outputs are voting block and vote bits
           // OP_RETURNs, so ignore those.
-          return (
-            (isVote && c.getIndex() === 2) || (!isVote && c.getIndex() === 0)
-          );
+          return (isVote && c.index === 2) || (!isVote && c.index === 0);
         });
         if (hasIndex0Debit && !hasIndex0Credit) {
-          const poolFeeDebit = ticketTx
-            .getDebitsList()
-            .find((d) => d.getIndex() === 0);
-          ticketPoolFee = poolFeeDebit.getPreviousAmount();
+          const poolFeeDebit = ticketTx.debits.find((d) => d.index === 0);
+          ticketPoolFee = poolFeeDebit.previousAmount;
         }
 
         if (isVote) {
@@ -604,8 +595,8 @@ export const ticketNormalizer = createSelector(
         ticketReturnAmount,
         voteChoices,
         spenderTxFee,
-        enterTimestamp: ticketTx.getTimestamp(),
-        leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
+        enterTimestamp: ticketTx.timestamp,
+        leaveTimestamp: hasSpender ? spenderTx.timestamp : null,
         status: ticket.status,
         rawTx,
         tx: ticketTx,
@@ -631,13 +622,12 @@ export const transactionNormalizer = createSelector(
   [accounts, txURLBuilder, blockURLBuilder, chainParams, getMixedAccountName],
   (accounts, txURLBuilder, blockURLBuilder, chainParams, mixedAccountName) => {
     const findAccount = (num) =>
-      accounts.find((account) => account.getAccountNumber() === num);
+      accounts.find((account) => account.accountNumber === num);
     const getAccountName = (num) =>
-      ((act) => (act ? act.getAccountName() : ""))(findAccount(num));
+      ((act) => (act ? act.accountName : ""))(findAccount(num));
     return (origTx) => {
       const {
         blockHash,
-        tx,
         height,
         type,
         txType,
@@ -659,48 +649,48 @@ export const transactionNormalizer = createSelector(
       let totalChange = 0;
       const txInputs = [];
       const txOutputs = [];
-      const fee = tx.getFee();
+      const fee = origTx.fee;
       let debitedAccountName, creditedAccountName;
-      const totalDebit = tx.getDebitsList().reduce((total, debit) => {
-        const debitedAccount = debit.getPreviousAccount();
+      const totalDebit = origTx.debits.reduce((total, debit) => {
+        const debitedAccount = debit.previousAccount;
         debitedAccountName = getAccountName(debitedAccount);
-        const amount = debit.getPreviousAmount();
+        const amount = debit.previousAmount;
         txInputs.push({
           accountName: debitedAccountName,
           amount,
-          index: debit.getIndex()
+          index: debit.index
         });
         return total + amount;
       }, 0);
 
       let selfTx = false;
-      tx.getCreditsList().forEach((credit) => {
-        const amount = credit.getAmount();
-        const address = credit.getAddress();
-        const creditedAccount = credit.getAccount();
+      origTx.credits.forEach((credit) => {
+        const amount = credit.amount;
+        const address = credit.address;
+        const creditedAccount = credit.account;
         const currentCreditedAccountName = getAccountName(creditedAccount);
         // If we find a self credited account which isn't a change output
         // & tx has one or more wallet inputs & no non-wallet outputs we consider
         // the transaction as self trnsaction
         if (
-          !credit.getInternal() &&
+          !credit.internal &&
           txInputs.length > 0 &&
-          tx.getCreditsList().length === outputs.length
+          origTx.credits.length === outputs.length
         ) {
           selfTx = true;
         }
         // If we find credit which is not a change, then we pick
         // it as receiver
-        if (!creditedAccountName || !credit.getInternal()) {
+        if (!creditedAccountName || !credit.internal) {
           creditedAccountName = currentCreditedAccountName;
         }
         txOutputs.push({
           accountName: currentCreditedAccountName,
           amount,
           address,
-          index: credit.getIndex()
+          index: credit.index
         });
-        credit.getInternal()
+        credit.internal
           ? (totalChange += amount)
           : (totalFundsReceived += amount);
       });
@@ -737,7 +727,7 @@ export const transactionNormalizer = createSelector(
 
       const { isMix } = isMixTx(
         wallet.decodeRawTransaction(
-          Buffer.from(tx.getTransaction()),
+          Buffer.from(origTx.rawTx, "hex"),
           chainParams
         )
       );
@@ -1082,7 +1072,7 @@ export const rescanStartBlock = compose(
   rescanRequest
 );
 export const rescanCurrentBlock = compose(
-  (res) => (res ? res.getRescannedThrough() : 0),
+  (res) => (res ? res.rescannedThrough : 0),
   rescanResponse
 );
 
@@ -1221,7 +1211,7 @@ const publishTransactionRequestAttempt = get([
   "publishTransactionRequestAttempt"
 ]);
 const totalOutputAmount = compose(
-  (r) => (r ? r.getTotalOutputAmount() : 0),
+  (r) => (r ? r.totalOutputAmount : 0),
   constructTxResponse
 );
 const totalAmount = compose(
@@ -1229,20 +1219,20 @@ const totalAmount = compose(
   constructTxResponse
 );
 const totalPreviousOutputAmount = compose(
-  (res) => (res ? res.getTotalPreviousOutputAmount() : 0),
+  (res) => (res ? res.totalPreviousOutputAmount : 0),
   constructTxResponse
 );
 
 export const publishTxResponse = get(["control", "publishTransactionResponse"]);
 
 export const estimatedSignedSize = compose(
-  (res) => (res ? res.getEstimatedSignedSize() : 0),
+  (res) => (res ? res.estimatedSignedSize : 0),
   constructTxResponse
 );
 
 export const unsignedTransaction = createSelector(
   [constructTxResponse],
-  (res) => (res ? res.getUnsignedTransaction() : null)
+  (res) => (res ? res.unsignedTransaction : null)
 );
 
 export const unsignedRawTx = createSelector(
@@ -1311,59 +1301,58 @@ export const isVerifyingMessage = get([
 export const verifyMessageError = get(["grpc", "getVerifyMessageError"]);
 export const verifyMessageResponse = get(["grpc", "getVerifyMessageResponse"]);
 export const verifyMessageSuccess = compose(
-  (r) => (r ? r.toObject() : null),
+  (r) => (r ? r : null),
   verifyMessageResponse
 );
 
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 
 export const ticketPoolSize = compose(
-  (r) => (r ? r.getPoolSize() : 0),
+  (r) => (r ? r.poolSize : 0),
   getStakeInfoResponse
 );
 export const votedTicketsCount = compose(
-  (r) => (r ? r.getVoted() : 0),
+  (r) => (r ? r.voted : 0),
   getStakeInfoResponse
 );
 export const allMempoolTicketsCount = compose(
-  (r) => (r ? r.getAllMempoolTix() : 0),
+  (r) => (r ? r.allMempoolTix : 0),
   getStakeInfoResponse
 );
 export const missedTicketsCount = compose(
-  (r) => (r ? r.getMissed() : 0),
+  (r) => (r ? r.missed : 0),
   getStakeInfoResponse
 );
 export const ownMempoolTicketsCount = compose(
-  (r) => (r ? r.getOwnMempoolTix() : 0),
+  (r) => (r ? r.ownMempoolTix : 0),
   getStakeInfoResponse
 );
 export const revokedTicketsCount = compose(
-  (r) => (r ? r.getRevoked() : 0),
+  (r) => (r ? r.revoked : 0),
   getStakeInfoResponse
 );
 export const immatureTicketsCount = compose(
-  (r) => (r ? r.getImmature() : 0),
+  (r) => (r ? r.immature : 0),
   getStakeInfoResponse
 );
 export const expiredTicketsCount = compose(
-  (r) => (r ? r.getExpired() : 0),
+  (r) => (r ? r.expired : 0),
   getStakeInfoResponse
 );
 export const liveTicketsCount = compose(
-  (r) => (r ? r.getLive() : 0),
+  (r) => (r ? r.live : 0),
   getStakeInfoResponse
 );
 export const unspentTicketsCount = compose(
-  (r) => (r ? r.getUnspent() : 0),
+  (r) => (r ? r.unspent : 0),
   getStakeInfoResponse
 );
 export const activeTicketsCount = createSelector(
   [isSPV, getStakeInfoResponse],
-  (isSPV, r) =>
-    isSPV ? r.getUnspent() + r.getImmature() : r.getLive() + r.getImmature()
+  (isSPV, r) => (isSPV ? r.unspent() + r.immature : r.live + r.immature)
 );
 export const totalSubsidy = compose(
-  (r) => (r ? r.getTotalSubsidy() : 0),
+  (r) => (r ? r.totalSubsidy : 0),
   getStakeInfoResponse
 );
 
@@ -1375,7 +1364,7 @@ export const balanceToMaintain = get(["control", "balanceToMaintain"]);
 const getTicketPriceResponse = get(["grpc", "getTicketPriceResponse"]);
 
 export const ticketPrice = compose(
-  (r) => (r ? r.getTicketPrice() : 0),
+  (r) => (r ? r.ticketPrice : 0),
   getTicketPriceResponse
 );
 
@@ -1407,13 +1396,12 @@ const purchaseTicketsResponse = get(["control", "purchaseTicketsResponse"]);
 
 export const splitTx = createSelector(
   [purchaseTicketsResponse],
-  (res) => res && Buffer.from(res.getSplitTx()).toString("hex")
+  (res) => res && Buffer.from(res.splitTx).toString("hex")
 );
 
 export const ticketsList = createSelector(
   [purchaseTicketsResponse],
-  (res) =>
-    res && res.getTicketsList().map((t) => Buffer.from(t).toString("hex"))
+  (res) => res && res.ticketsList.map((t) => Buffer.from(t).toString("hex"))
 );
 
 export const currentStakePoolConfig = get([
@@ -1684,7 +1672,7 @@ export const dcrdataEnabled = compose(
 const getAgendasResponse = get(["grpc", "getAgendasResponse"]);
 
 const currentAgenda = createSelector([getAgendasResponse], (response) =>
-  response ? response.getAgendasList()[0] : EMPTY_ARRAY
+  response ? response.agendasList[0] : EMPTY_ARRAY
 );
 
 const allAgendasNotNormalized = get(["grpc", "allAgendas"]);
@@ -1704,12 +1692,12 @@ const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
     // When agenda has getId function (this happens when dcrdata privacy is disabled
     // or a possible dcrdata crash) or the agenda is the same for dcrwallet and dcrdata.
     // We use the information from our dcrwallet grpc request.
-    if (isFunction(agenda.getId) || currentAgenda.getId() === agenda.name) {
+    if (agenda.id || currentAgenda.id === agenda.name) {
       currentAgenda.isCurrent = true;
       const agendaObj = {};
-      agendaObj.name = currentAgenda.getId();
-      agendaObj.choices = currentAgenda.getChoicesList();
-      agendaObj.description = currentAgenda.getDescription();
+      agendaObj.name = currentAgenda.id;
+      agendaObj.choices = currentAgenda.choicesList;
+      agendaObj.description = currentAgenda.description;
       agendaObj.isCurrent = true;
       agendaObj.finished = agenda.status === "finished";
       agendaObj.passed = !!agenda.activated;

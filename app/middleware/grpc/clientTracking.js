@@ -18,7 +18,10 @@ export const delClient = (id) => delete clients[id];
 // converted to a js string via String(error). This is needed due to standard
 // Error instances not copying the error code across the preload -> ipcRenderer
 // boundary.
-export const shimError = (err) => ({ toString: () => err.message, code: err.code });
+export const shimError = (err) => ({
+  toString: () => err.message,
+  code: err.code
+});
 
 // mappedRequest returns a promise that executes the given fn gRPC call and maps
 // the result using mapFn.

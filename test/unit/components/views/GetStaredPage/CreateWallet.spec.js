@@ -67,7 +67,7 @@ beforeEach(() => {
 
   mockGenerateSeed = wlActions.generateSeed = jest.fn(() => () =>
     Promise.resolve({
-      getSeedMnemonic: () => testSeedMnemonic
+      seedMnemonic: testSeedMnemonic
     })
   );
   mockCancelCreateWallet = wlActions.cancelCreateWallet = jest.fn(() => () =>
@@ -238,7 +238,7 @@ test("test typing a seed word and click on the combobox option on confirm seed v
 
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   // trigger decode again by entering saved seed word
@@ -257,8 +257,8 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
   mockGenerateSeed = wlActions.generateSeed = jest.fn(() => () =>
     Promise.resolve({
-      getSeedMnemonic: () => testSeedMnemonic,
-      getSeedBytes: () => 1
+      seedMnemonic: testSeedMnemonic,
+      seedBytes: 1
     })
   );
   await goToConfirmView();
@@ -268,7 +268,7 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
 
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
 
@@ -281,7 +281,7 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
 test("test typing a valid seed word on existing seed view", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   await goToExistingSeedView();
@@ -322,7 +322,7 @@ test("pasting invalid seed words on existing seed view", async () => {
 test("pasting valid seed words on existing seed view and receive decode error and create wallet request error", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   await goToExistingSeedView();
@@ -346,7 +346,7 @@ test("pasting valid seed words on existing seed view and receive decode error an
 test("pasting valid seed words on existing seed view and successfully create wallet", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
@@ -374,7 +374,7 @@ test("pasting valid seed words on existing seed view and successfully create wal
 test("create wallet button must be disabled if any of the inputs is invalid", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
@@ -435,7 +435,7 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   // fix, button should be enabled
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
@@ -456,7 +456,7 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   // fix, button should be enabled
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testSeedArray
+      decodedSeed: testSeedArray
     })
   );
   fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
@@ -561,7 +561,7 @@ test("test hex input tab on restore view", async () => {
   // Next tests will require some return value from the mock getDecodedSeed.
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
-      getDecodedSeed: () => testCompatibleHexSeed
+      decodedSeed: testCompatibleHexSeed
     })
   );
 

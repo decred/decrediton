@@ -1,28 +1,29 @@
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { withLogNoData as log } from "./index";
-import { getClient } from "middleware/grpc/clientTracking";
+import { mappedRequest } from "middleware/grpc/clientTracking";
+import { rawToHex } from "../helpers/byteActions";
 
 const { GenerateRandomSeedRequest, DecodeSeedRequest } = api;
 
 export const generateSeed = log(
   (seederService) =>
-    new Promise((resolve, reject) => {
-      const request = new GenerateRandomSeedRequest();
-      getClient(seederService).generateRandomSeed(request, (err, response) =>
-        err ? reject(err) : resolve(response)
-      );
-    }),
+    mappedRequest(
+      seederService,
+      "generateRandomSeed",
+      new GenerateRandomSeedRequest(),
+      (res) => ({
+        seedBytes: rawToHex(res.getSeedBytes()),
+        seedHex: res.getSeedHex(),
+        seedMnemonic: res.getSeedMnemonic()
+      })
+    ),
   "Generate Seed"
 );
 
-export const decodeSeed = log(
-  (seederService, mnemonic) =>
-    new Promise((resolve, reject) => {
-      const request = new DecodeSeedRequest();
-      request.setUserInput(mnemonic);
-      getClient(seederService).decodeSeed(request, (err, response) =>
-        err ? reject(err) : resolve(response)
-      );
-    }),
-  "Decode Seed"
-);
+export const decodeSeed = log((seederService, mnemonic) => {
+  const request = new DecodeSeedRequest();
+  request.setUserInput(mnemonic);
+  return mappedRequest(seederService, "decodeSeed", request, (res) => ({
+    decodedSeed: rawToHex(res.getDecodedSeed())
+  }));
+}, "Decode Seed");

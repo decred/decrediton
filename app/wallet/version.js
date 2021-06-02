@@ -22,8 +22,10 @@ export const getVersionService = withLogNoData(
 
 export const getVersionResponse = log((versionService) => {
   return new Promise((resolve, reject) =>
-    getClient(versionService).version(new api.VersionRequest(), (error, response) =>
-      error ? reject(error) : resolve(response)
+    getClient(versionService).version(
+      new api.VersionRequest(),
+      (error, response) =>
+        error ? reject(error) : resolve(response.toObject())
     )
   );
 }, "Get Version Response");
