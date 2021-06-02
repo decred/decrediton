@@ -4,8 +4,8 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
 import { KeyBlueButton, SmallButton } from "buttons";
-import QRCodeModal from "./QRCodeModal/QRCodeModal";
-import { classNames } from "pi-ui";
+import QRCodeModal from "./QRCodeModal";
+import { classNames, Tooltip } from "pi-ui";
 import style from "./ReceivePage.module.css";
 
 const messages = defineMessages({
@@ -115,18 +115,26 @@ const ReceivePage = ({
               </div>
             </div>
           </div>
-          <SmallButton
-            className={style.receiveContentCopyButton}
-            onClick={() => {
-              copy(nextAddress);
-              setTooltipText(false);
-              showTooltip();
-            }}
-          />
-          <SmallButton
-            className={style.receiveContentQRButton}
-            onClick={() => setModal(true)}
-          />
+          <div>
+            <Tooltip content={<T id="receiveTab.copy" m="Copy" />}>
+              <SmallButton
+                className={style.receiveContentCopyButton}
+                onClick={() => {
+                  copy(nextAddress);
+                  setTooltipText(false);
+                  showTooltip();
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip content={<T id="receiveTab.QRCode" m="QR code" />}>
+              <SmallButton
+                className={style.receiveContentQRButton}
+                onClick={() => setModal(true)}
+              />
+            </Tooltip>
+          </div>
         </div>
       </div>
       <div className={style.generateButton}>
