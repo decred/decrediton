@@ -9370,7 +9370,7 @@ performance-now@^2.1.0:
 
 "pi-ui@https://github.com/bgptr/pi-ui#fix-textinput":
   version "1.0.0"
-  resolved "https://github.com/bgptr/pi-ui#af4c4fca1e3350edf08455d4ec17c3a401d0115c"
+  resolved "https://github.com/bgptr/pi-ui#69d7570531661bad8f274484f688b6f51fd89afe"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"
