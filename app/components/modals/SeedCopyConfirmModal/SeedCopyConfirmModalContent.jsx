@@ -35,6 +35,7 @@ const SeedCopyConfirmModalContent = ({
           />
         </div>
         <TextInput
+          id="confirmInput"
           autoFocus
           value={typedConfirmationPhrase}
           onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}

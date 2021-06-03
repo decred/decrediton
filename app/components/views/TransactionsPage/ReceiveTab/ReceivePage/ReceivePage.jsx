@@ -12,6 +12,10 @@ const messages = defineMessages({
   amountPlaceholder: {
     id: "receive.amountPlaceholder",
     defaultMessage: "Amount"
+  },
+  amountLabel: {
+    id: "receive.requestedAmountLabel",
+    defaultMessage: "Requested Amount"
   }
 });
 
@@ -72,9 +76,7 @@ const ReceivePage = ({
               <DcrInput
                 newBiggerFontStyle
                 id="amountInput"
-                label={
-                  <T id="receive.requestedAmountLabel" m="Requested Amount" />
-                }
+                label={intl.formatMessage(messages.amountLabel)}
                 className={style.requestedAmountInput}
                 required={false}
                 showErrors={error && error.amount}

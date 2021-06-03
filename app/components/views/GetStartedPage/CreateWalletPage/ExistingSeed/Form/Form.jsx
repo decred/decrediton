@@ -73,6 +73,7 @@ const ExistingSeedForm = ({
       ) : (
         <SeedArea className={styles.hex}>
           <SeedHexEntry
+            id="seedHexInput"
             onChange={(e) => onChangeSeedWord(e.target.value)}
             seed={hexSeed}
           />

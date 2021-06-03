@@ -50,7 +50,7 @@ const RemoteDaemonForm = ({
       </Label>
       <Input>
         <TextInput
-          id="prc-user"
+          id="rpc-user"
           required
           value={rpc_user}
           onChange={(e) => setRpcUser(e.target.value)}
@@ -66,7 +66,7 @@ const RemoteDaemonForm = ({
       <Input>
         <PasswordInput
           required
-          id="prc-pass"
+          id="rpc-pass"
           value={rpc_pass}
           onChange={(e) => setRpcPass(e.target.value)}
           placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}

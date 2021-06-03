@@ -25,6 +25,7 @@ const ImportScriptModal = ({ onCancelModal, onSubmit, show }) => {
           <T id="importRedeemScriptModal.label" m="Script:" />
         </label>
         <TextInput
+          id="scriptInput"
           autoFocus
           required
           showErrors={hasFailedAttempt}

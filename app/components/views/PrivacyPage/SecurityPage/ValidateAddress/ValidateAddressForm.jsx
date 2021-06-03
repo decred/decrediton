@@ -83,6 +83,7 @@ const ValidateAddressForm = ({
           address && validateAddressSuccess && styles.validAddress
         )}>
         <TextInput
+          id="validateAddressInput"
           value={address}
           placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
           onChange={(e) => onChangeAddress(e.target.value)}

@@ -103,6 +103,7 @@ const CreateWalletForm = ({
       </Label>
       <Input>
         <TextInput
+          id="walletNameInput"
           required
           invalid={walletNameError}
           invalidMessage={intl.formatMessage(
@@ -143,6 +144,7 @@ const CreateWalletForm = ({
                     />
                     <div className={styles.daemonLongInput}>
                       <TextInput
+                        id="masterPubKeyInput"
                         required
                         value={walletMasterPubKey}
                         onChange={(e) =>

@@ -94,6 +94,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
           content={<AlreadySetMessage />}
           disabled={!tempSettings.spvConnectFromCli}>
           <SettingsTextInput
+            id="spvConnectInput"
             value={tempSettings.spvConnect}
             disabled={tempSettings.spvConnectFromCli}
             ariaLabelledBy="spv-connect-input"

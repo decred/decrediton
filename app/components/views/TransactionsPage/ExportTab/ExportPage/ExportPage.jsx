@@ -17,6 +17,10 @@ const messages = defineMessages({
   destinationPlaceholder: {
     id: "export.destination.placeholder",
     defaultMessage: "Choose destination..."
+  },
+  destinationLabel: {
+    id: "export.destination.label",
+    defaultMessage: "Destination"
   }
 });
 
@@ -82,10 +86,11 @@ const ExportPage = ({
           />
         </label>
         <PathBrowseInput
+          id="destinationInput"
           newBiggerFontStyle
           save
           type="file"
-          label={<T id="export.destination" m="Destination" />}
+          label={intl.formatMessage(messages.destinationLabel)}
           placeholder={intl.formatMessage(messages.destinationPlaceholder)}
           value={destinationFile}
           filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}

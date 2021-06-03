@@ -36,6 +36,7 @@ const subtitleMenu = ({
   <div className={styles.historyContainer}>
     <div className={styles.historySearchTx}>
       <TextInput
+        id="filterByAddrInput"
         type="text"
         placeholder={intl.formatMessage(messages.filterByAddrPlaceholder)}
         value={searchText}

@@ -19,6 +19,14 @@ const messages = defineMessages({
   amountPlaceholder: {
     id: "sendtab.amountPlaceholder",
     defaultMessage: "Amount"
+  },
+  amountLabel: {
+    id: "sendtab.amountLabel",
+    defaultMessage: "Amount"
+  },
+  addressLabel: {
+    id: "sendtab.addressLabel",
+    defaultMessage: "Send to"
   }
 });
 
@@ -210,7 +218,7 @@ const SendOutputRow = ({
               id={`amountInput-${index}`}
               newBiggerFontStyle
               id="amountInput"
-              label={<T id="sendtab.amount" m="Amount" />}
+              label={intl.formatMessage(messages.amountLabel)}
               className={styles.dcrInput}
               required={true}
               showErrors={error && error.amount}
@@ -267,7 +275,7 @@ const SendOutputRow = ({
               newBiggerFontStyle
               id="addressInput"
               required={true}
-              label={<T id="sendtab.sendTo" m="Send to" />}
+              label={intl.formatMessage(messages.addressLabel)}
               autoFocus={index === 0}
               showErrors={error && error.address}
               invalid={error && error.address}

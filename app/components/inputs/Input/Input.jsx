@@ -92,7 +92,7 @@ const Input = ({
         newBiggerFontStyle ? styles.newBiggerFontStyleInput : styles.input
       )}
       labelClassNames={styles.label}
-      messageClassNames={!newBiggerFontStyle && styles.message}
+      messageClassNames={!newBiggerFontStyle ? styles.message : null}
       onKeyDown={onInputKeyDown}
       data-testid={dataTestId}
       aria-labelledby={ariaLabelledBy}>

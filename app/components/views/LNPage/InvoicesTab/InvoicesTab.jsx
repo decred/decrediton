@@ -44,7 +44,7 @@ const InvoicesTab = () => {
       <div className={styles.lnAddInvoice}>
         <div className={styles.memo}>
           <T id="ln.invoicesTab.addInvoice.memo" m="Description" />
-          <TextInput value={memo} onChange={onMemoChanged} />
+          <TextInput id="descInput" value={memo} onChange={onMemoChanged} />
         </div>
         <div className={styles.value}>
           <T id="ln.invoicesTab.addInvoice.value" m="Value" />

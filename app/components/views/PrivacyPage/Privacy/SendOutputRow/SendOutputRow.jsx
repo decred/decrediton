@@ -156,6 +156,7 @@ const SendOutputRow = ({
         />
       ) : (
         <DcrInput
+          id="amountInput"
           className={classNames(styles.dcrInput)}
           required={true}
           showErrors={error && error.amount}

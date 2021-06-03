@@ -52,6 +52,7 @@ const SignMessageForm = ({
           <div className={sharedStyles.securityPageFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
+                id="addressInput"
                 required
                 value={address}
                 invalid={addressError}
@@ -74,6 +75,7 @@ const SignMessageForm = ({
           <div className={sharedStyles.securityPageFormRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
+                id="addressInput"
                 required
                 value={message}
                 invalid={messageError}

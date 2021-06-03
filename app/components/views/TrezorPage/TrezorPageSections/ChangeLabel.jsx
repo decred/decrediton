@@ -22,7 +22,11 @@ const ChangeLabel = ({ performingOperation, changeLabel }) => {
         <T id="trezor.changeLabel.description" m="New Label" />
       </div>
       <div>
-        <TextInput value={newLabel} onChange={onNewLabelChanged} />
+        <TextInput
+          id="newLabelInput"
+          value={newLabel}
+          onChange={onNewLabelChanged}
+        />
       </div>
       <div>
         <KeyBlueButton

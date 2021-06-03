@@ -22,18 +22,14 @@ const CreateWalletsPage = () => {
     btcWalletName
   } = useDex();
 
-  const {
-    walletName,
-    setWalletName,
-    onCreateWallet,
-    onBTCCreateWallet
-  } = useDexCreateWallets({
-    btcWalletName,
-    dexAccount,
-    onBTCCreateWalletDex,
-    onCreateWalletDex,
-    onCheckBTCConfig
-  });
+  const { walletName, setWalletName, onCreateWallet, onBTCCreateWallet } =
+    useDexCreateWallets({
+      btcWalletName,
+      dexAccount,
+      onBTCCreateWalletDex,
+      onCreateWalletDex,
+      onCheckBTCConfig
+    });
 
   return (
     <div className="flex-column align-start">
@@ -59,6 +55,7 @@ const CreateWalletsPage = () => {
               />
             </div>
             <TextInput
+              id="walletNameInput"
               className={classNames("margin-top-m", styles.walletNameInput)}
               required
               value={walletName}

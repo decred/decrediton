@@ -64,7 +64,11 @@ const ChannelsTab = () => {
       <div className={styles.openNewChannel}>
         <div className={styles.node}>
           <T id="ln.openChannel.node" m="Counterparty (node@ip:port)" />
-          <TextInput value={node} onChange={onNodeChanged} />
+          <TextInput
+            id="counterpartyInput"
+            value={node}
+            onChange={onNodeChanged}
+          />
         </div>
         <div>
           <T id="ln.openChannel.localAmt" m="Total Funding Amount" />

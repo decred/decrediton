@@ -282,7 +282,7 @@
     "minimist": "^1.2.3",
     "mv": "^2.1.1",
     "node-polyfill-webpack-plugin": "^1.1.0",
-    "pi-ui": "https://github.com/bgptr/pi-ui#improve-textinput",
+    "pi-ui": "https://github.com/bgptr/pi-ui#fix-textinput",
     "prop-types": "^15.7.2",
     "qr-image": "^3.2.0",
     "qrcode": "^1.4.4",
