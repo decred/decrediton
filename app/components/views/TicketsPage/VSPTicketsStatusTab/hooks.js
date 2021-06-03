@@ -3,6 +3,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ClientActions";
 import * as ta from "actions/TransactionActions";
 import * as vspa from "actions/VSPActions";
+import { useSettings } from "hooks";
 
 export const useVSPTicketsList = () => {
   // selectors
@@ -18,6 +19,7 @@ export const useVSPTicketsList = () => {
   const isSyncingTickets = useSelector(sel.isSyncingTickets);
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const availableVSPs = useSelector(sel.getAvailableVSPs);
+  const { isVSPListingEnabled } = useSettings();
 
   // actions
   const dispatch = useDispatch();
@@ -53,6 +55,6 @@ export const useVSPTicketsList = () => {
     noMoreLiveTickets,
     isSyncingTickets,
     rememberedVspHost,
-    availableVSPs
+    availableVSPs: isVSPListingEnabled ? availableVSPs : []
   };
 };
