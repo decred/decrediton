@@ -2,8 +2,8 @@ import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
 import { classNames } from "pi-ui";
 import { useProposalsListItem } from "../hooks";
 import styles from "./ProposalsListItem.module.css";
-import cardStyles from "./CardWrapper.module.css";
 import ProposalCard from "../../../ProposalDetailsPage/helpers/ProposalCard";
+import CardWrapper from "./CardWrapper";
 
 const ProposalsListItem = ({
   name,
@@ -45,10 +45,9 @@ const ProposalsListItem = ({
     isVoteActive || voteStatus === PROPOSAL_VOTING_FINISHED;
 
   return (
-    <div
+    <CardWrapper
       onClick={viewProposalDetailsHandler}
       className={classNames(
-        cardStyles.cardWrapper,
         styles[voteResult],
         !approved && styles.declined,
         finishedVote && styles.ended,
@@ -83,10 +82,7 @@ const ProposalsListItem = ({
           className: styles.overview
         }}
       />
-      <div className={classNames(cardStyles.continueButton, "flex-centralize")}>
-        <div className={cardStyles.continueArrow}></div>
-      </div>
-    </div>
+    </CardWrapper>
   );
 };
 
