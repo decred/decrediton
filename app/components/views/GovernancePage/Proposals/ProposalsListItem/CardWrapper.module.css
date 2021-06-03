@@ -33,6 +33,14 @@
   transform: rotate(180deg);
 }
 
-.overview {
-  padding-left: 35px !important;
+.cardWrapper.ended.passed {
+  border-left: 2px solid var(--vote-yes-color);
+}
+
+.cardWrapper.ended.declined {
+  border-left: 2px solid var(--vote-no-color);
+}
+
+.cardWrapper.ended .proposalName {
+  color: var(--stroke-color-hovered);
 }

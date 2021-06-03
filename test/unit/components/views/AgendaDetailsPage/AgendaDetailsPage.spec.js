@@ -27,18 +27,16 @@ jest.mock("components/views/GovernancePage/Blockchain/hooks", () => ({
 }));
 
 jest.mock("components/views/AgendaDetailsPage/hooks", () => ({
-  useAgendaDetails: () => {
-    return {
-      allAgendas: mockAllAgendas,
-      agenda: mockAllAgendas[0],
-      voteChoices: mockVoteChoices,
-      choices: mockChoices,
-      selectedChoice: mockSelectedChoice,
-      newSelectedChoice: mockSelectedChoice,
-      setNewSelectedChoice: mockSetSelectedChoice,
-      isLoading: mockIsLoading
-    };
-  }
+  useAgendaDetails: () => ({
+    allAgendas: mockAllAgendas,
+    agenda: mockAllAgendas[0],
+    voteChoices: mockVoteChoices,
+    choices: mockChoices,
+    selectedChoice: mockSelectedChoice,
+    newSelectedChoice: mockSelectedChoice,
+    setNewSelectedChoice: mockSetSelectedChoice,
+    isLoading: mockIsLoading
+  })
 }));
 
 const testAgendaCardElements = (
