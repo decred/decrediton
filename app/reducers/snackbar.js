@@ -93,6 +93,8 @@ import {
   TRZ_TOGGLEPINPROTECTION_FAILED,
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS,
   TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED,
+  TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS,
+  TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED,
   TRZ_CHANGEHOMESCREEN_SUCCESS,
   TRZ_CHANGEHOMESCREEN_FAILED,
   TRZ_CHANGELABEL_SUCCESS,
@@ -379,6 +381,14 @@ const messages = defineMessages({
   TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
     id: "trezor.passphraseProtectionSuccess.disabled",
     defaultMessage: "Passphrase protection has been disabled in Trezor {label}"
+  },
+  TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS_ENABLED: {
+    id: "trezor.passphraseOnDevice.enabled",
+    defaultMessage: "Passphrase on device has been enabled in Trezor {label}"
+  },
+  TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS_DISABLED: {
+    id: "trezor.passphraseOnDevice.disabled",
+    defaultMessage: "Passphrase on device has been disabled in Trezor {label}"
   },
   TRZ_CHANGEHOMESCREEN_SUCCESS: {
     id: "trezor.changeHomeScreen.success",
@@ -724,6 +734,7 @@ export default function snackbar(state = {}, action) {
     case TRZ_INITDEVICE_SUCCESS:
     case TRZ_UPDATEFIRMWARE_SUCCESS:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
+    case TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS:
     case TRZ_CHANGELABEL_SUCCESS:
     case TRZ_TOGGLEPINPROTECTION_SUCCESS:
     case TRZ_BACKUPDEVICE_SUCCESS:
@@ -783,6 +794,14 @@ export default function snackbar(state = {}, action) {
             ];
           values = { label: action.deviceLabel };
           break;
+        case TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS:
+          message =
+            messages[
+              "TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS_" +
+                (action.enablePassphraseOnDevice ? "ENABLED" : "DISABLED")
+            ];
+          values = { label: action.deviceLabel };
+          break;
         case TRZ_CHANGELABEL_SUCCESS:
           values = { label: action.deviceLabel };
           break;
@@ -831,6 +850,7 @@ export default function snackbar(state = {}, action) {
     case STARTTICKETBUYERV2_FAILED:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
+    case TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED:
     case TRZ_CHANGEHOMESCREEN_FAILED:
     case TRZ_CHANGELABEL_FAILED:
     case TRZ_WIPEDEVICE_FAILED:

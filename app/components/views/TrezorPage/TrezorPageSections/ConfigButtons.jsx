@@ -6,6 +6,7 @@ const ConfigButtons = ({
   performingOperation,
   togglePinProtection,
   togglePassPhraseProtection,
+  togglePassphraseOnDevice,
   changeToDecredHomeScreen
 }) => (
   <TrezorPageAccordion
@@ -25,6 +26,15 @@ const ConfigButtons = ({
         m="Toggle Passphrase Protection"
       />
     </DangerButton>
+    <KeyBlueButton
+      onClick={togglePassphraseOnDevice}
+      loading={performingOperation}
+      disabled={performingOperation}>
+      <T
+        id="trezorPage.togglePassphraseOnDeviceBtn"
+        m="Toggle Passphrase on Device"
+      />
+    </KeyBlueButton>
     <KeyBlueButton
       onClick={changeToDecredHomeScreen}
       loading={performingOperation}

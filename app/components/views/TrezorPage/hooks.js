@@ -19,6 +19,10 @@ export function useTrezorPage() {
     () => dispatch(trza.togglePassPhraseProtection()),
     [dispatch]
   );
+  const togglePassphraseOnDevice = useCallback(
+    () => dispatch(trza.togglePassphraseOnDevice()),
+    [dispatch]
+  );
   const changeToDecredHomeScreen = useCallback(
     () => dispatch(trza.changeToDecredHomeScreen()),
     [dispatch]
@@ -50,6 +54,7 @@ export function useTrezorPage() {
     connect,
     togglePinProtection,
     togglePassPhraseProtection,
+    togglePassphraseOnDevice,
     changeToDecredHomeScreen,
     changeLabel,
     wipeDevice,

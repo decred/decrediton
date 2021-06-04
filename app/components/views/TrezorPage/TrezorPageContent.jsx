@@ -32,6 +32,7 @@ const TrezorPageContent = () => {
     connect,
     togglePinProtection,
     togglePassPhraseProtection,
+    togglePassphraseOnDevice,
     changeToDecredHomeScreen,
     changeLabel,
     wipeDevice,
@@ -49,6 +50,7 @@ const TrezorPageContent = () => {
         {...{
           togglePinProtection,
           togglePassPhraseProtection,
+          togglePassphraseOnDevice,
           changeToDecredHomeScreen,
           performingOperation
         }}
