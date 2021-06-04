@@ -204,7 +204,16 @@ const SendOutputRow = ({
           </div>
         </>
       )}
-      <div className={styles.amountContainer}>
+      {isSendAll && (
+        <label htmlFor="amountInput" className={styles.amountInputLabel}>
+          <T id="sendtab.sendAllAmountLabel" m="Amount" />
+        </label>
+      )}
+      <div
+        className={classNames(
+          styles.amountContainer,
+          isSendAll && styles.sendAllContainer
+        )}>
         <div className={styles.sendInputWrapper}>
           {isSendAll ? (
             <Balance
@@ -256,7 +265,9 @@ const SendOutputRow = ({
             // When react-select will be replaced by the `pi-ui` component,
             // this className can be deleted.
             <>
-              <label htmlFor="addressInput">
+              <label
+                htmlFor="addressInput"
+                className={styles.addressInputLabel}>
                 <T id="sendtab.sendTo" m="Send to" />
               </label>
               <ReceiveAccountsSelect

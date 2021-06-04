@@ -18,7 +18,7 @@
   background-position: center center;
   background-repeat: no-repeat;
   border: none !important;
-  margin-top: 14px;
+  margin-top: 8px;
 }
 .delete {
   padding: 0 !important;
@@ -30,7 +30,7 @@
   background-repeat: no-repeat;
   background-color: var(--grey-7) !important;
   border: none !important;
-  margin-top: 14px;
+  margin-top: 8px;
 }
 .add:disabled {
   background-color: var(--small-button-disabled-bg) !important;
@@ -76,6 +76,9 @@
   margin: 0;
   align-items: center;
 }
+.amountContainer.sendAllContainer {
+  margin-bottom: 16px;
+}
 .amountContainer .sendInputWrapper {
   width: 193px;
 }
@@ -108,6 +111,12 @@
 }
 .sendInputWrapper .inputErrorsArea {
   margin-bottom: -14px;
+}
+.amountInputLabel,
+.addressInputLabel {
+  line-height: 16px;
+  font-size: 13px;
+  color: var(--grey-7) !important;
 }
 .sendIcons {
   display: flex;
@@ -148,6 +157,7 @@
 
 .receiveAccountSelect {
   width: 311px;
+  margin-bottom: 16px;
 }
 
 .addressInput {

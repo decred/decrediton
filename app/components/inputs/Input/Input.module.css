@@ -3,6 +3,7 @@
 }
 .label {
   color: var(--grey-7) !important;
+  line-height: 16px;
 }
 .input {
   font-family: var(--font-family-regular);
@@ -17,6 +18,7 @@
 }
 
 .newBiggerFontStyleInput {
+  font-family: var(--font-family-regular);
   font-size: 16px !important;
   line-height: 16px !important;
 }
