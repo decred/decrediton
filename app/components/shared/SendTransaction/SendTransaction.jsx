@@ -227,7 +227,10 @@ const SendTransaction = ({
       ? filterFromAccounts
       : notMixedAccounts;
 
-    const accountsType = filterAccounts ? "visible" : "spending";
+    const accountsType =
+      Array.isArray(filterAccounts) && filterAccounts.length > 0
+        ? "visible"
+        : "spending";
     return outputs.map((output, index) => ({
       data: (
         <SendOutputRow
