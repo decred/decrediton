@@ -96,13 +96,17 @@ const ExportPage = ({
         </label>
       </div>
       <div className={classNames(styles.exportAreaRight)}>
-        <p className={styles.exportInfoDescription}>
+        <p
+          className={styles.exportInfoDescription}
+          data-testid="export-description">
           {selectedExport.description}
         </p>
         <div>
           <T id="export.infoFieldsHeader" m="Exported Fields" />
           :&nbsp;
-          <span className={styles.exportInfoNotExpanded}>
+          <span
+            className={styles.exportInfoNotExpanded}
+            data-testid="exported-fields">
             {selectedExport.fields
               .map(({ name }) => name.charAt(0).toUpperCase() + name.slice(1))
               .join(", ")}
