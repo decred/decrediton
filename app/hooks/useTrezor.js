@@ -8,6 +8,12 @@ const useTrezor = () => {
   const waitingForPin = useSelector(sel.trezorWaitingForPin);
   const waitingForPassPhrase = useSelector(sel.trezorWaitingForPassPhrase);
   const waitingForWord = useSelector(sel.trezorWaitingForWord);
+  const confirmingTogglePassphrase = useSelector(
+    sel.trezorConfirmingTogglePassphrase
+  );
+  const enablePassphraseProtection = useSelector(
+    sel.trezorEnablePassphraseProtection
+  );
   const performingOperation = useSelector(sel.trezorPerformingOperation);
   const isGetStarted = useSelector(sel.isGetStarted);
   const device = useSelector(sel.trezorDevice);
@@ -17,6 +23,11 @@ const useTrezor = () => {
   );
 
   const dispatch = useDispatch();
+
+  const togglePassphraseConfirmCallback = useCallback(
+    () => dispatch({ type: trza.TRZ_TOGGLEPASSPHRASEPROTECTION_CONFIRMED }),
+    [dispatch]
+  );
 
   const onConnect = useCallback(() => dispatch(trza.connect()), [dispatch]);
   const onCancelCurrentOperation = useCallback(
@@ -79,6 +90,9 @@ const useTrezor = () => {
     device,
     deviceLabel,
     walletCreationMasterPubkeyAttempt,
+    enablePassphraseProtection,
+    confirmingTogglePassphrase,
+    togglePassphraseConfirmCallback,
     onConnect,
     onCancelCurrentOperation,
     onSubmitPin,

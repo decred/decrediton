@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModal } from "modals";
 import { classNames } from "pi-ui";
@@ -10,16 +9,10 @@ const TrezorPassphraseModal = ({
   onSubmitPassPhrase,
   onCancelModal
 }) => {
-  const onSubmit = useCallback(
-    (passPhrase) => {
-      onSubmitPassPhrase(passPhrase);
-    },
-    [onSubmitPassPhrase]
-  );
-
   return (
     <PassphraseModal
       show={true}
+      passphraseNotRequired={true}
       modalTitle={
         <T id="trezor.passphraseModal.title" m="Enter Trezor Passphrase" />
       }
@@ -38,7 +31,7 @@ const TrezorPassphraseModal = ({
           />
         </p>
       }
-      {...{ onCancelModal, onSubmit }}
+      {...{ onCancelModal, onSubmit: onSubmitPassPhrase }}
     />
   );
 };

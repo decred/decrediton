@@ -264,7 +264,7 @@ test.each([
     {
       type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS,
       deviceLabel: testTrezorDeviceLabel,
-      enableProtection: false
+      enablePassphraseProtection: false
     },
     `Passphrase protection has been disabled in Trezor ${testTrezorDeviceLabel}`
   ],
@@ -272,7 +272,7 @@ test.each([
     {
       type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS,
       deviceLabel: testTrezorDeviceLabel,
-      enableProtection: true
+      enablePassphraseProtection: true
     },
     `Passphrase protection has been enabled in Trezor ${testTrezorDeviceLabel}`
   ],

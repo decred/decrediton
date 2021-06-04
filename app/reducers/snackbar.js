@@ -779,7 +779,7 @@ export default function snackbar(state = {}, action) {
           message =
             messages[
               "TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_" +
-                (action.enableProtection ? "ENABLED" : "DISABLED")
+                (action.enablePassphraseProtection ? "ENABLED" : "DISABLED")
             ];
           values = { label: action.deviceLabel };
           break;
