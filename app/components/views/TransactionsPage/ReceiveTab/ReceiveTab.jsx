@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import ErrorScreen from "ErrorScreen";
-import ReceivePage from "./ReceivePage/ReceivePage";
+import ReceivePage from "./ReceivePage";
 import { DescriptionHeader } from "layout";
 import { useService } from "hooks";
 import { useReceiveTab } from "./hooks";

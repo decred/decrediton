@@ -8,7 +8,7 @@ import WalletError from "components/views/WalletError";
 import ErrorScreen from "components/ErrorScreen";
 import InvalidRPCVersion from "components/views/InvalidRPCVersion";
 import PrivacyPage from "components/views/PrivacyPage/PrivacyPage";
-import TransactionsPage from "components/views/TransactionsPage/TransactionsPage";
+import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage/TransactionPage";
 import TicketsPage from "components/views/TicketsPage/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage/TutorialsPage";
