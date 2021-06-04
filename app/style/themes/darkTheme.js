@@ -150,6 +150,12 @@ const darkTheme = {
   "stakeinfo-value": "#e9f8fe",
   "stakeinfo-border": "#608ace",
   "purchase-label": "#b7deee",
+  "governance-tab-bg": "#1F325F",
+  "governance-header-balance-bg": "var(--blue-highlight-background)",
+  "politeia-button-bg": "#7DA7D9",
+  "governance-nav-button-bg": "#283f77",
+  "refresh-proposals": "var(--politeia-button-bg)",
+  "agenda-preference": "var(--grey-2)",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",

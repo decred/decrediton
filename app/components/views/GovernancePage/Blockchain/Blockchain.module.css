@@ -1,0 +1,71 @@
+.headerWrapper {
+  background-color: var(--governance-tab-bg);
+}
+
+.agendaWrapper {
+  margin: 20px 60px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.politeiaButton {
+  font-size: 13px !important;
+  line-height: 17px !important;
+  border-radius: 5px !important;
+  padding: 6px 10px !important;
+  margin: 15px 0 0 0 !important;
+  color: var(--info-modal-button-text) !important;
+  background-color: var(--politeia-button-bg) !important;
+  border: 0 !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+}
+
+.politeiaButton:hover {
+  opacity: 0.85;
+}
+
+.proposalsLink {
+  color: var(--link-color) !important;
+  cursor: pointer;
+}
+
+.searchByNameInput {
+  display: inline-block;
+  width: 150px;
+}
+
+.searchByNameInput input::placeholder,
+.searchByNameInput input {
+  font-size: 16px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 825px;
+  margin-top: 22px;
+}
+
+.sortByTooltip {
+  width: max-content;
+}
+
+@media screen and (max-width: 1179px) {
+  .agendaWrapper {
+    margin-left: 35px;
+  }
+  .filters {
+    width: 704px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .agendaWrapper {
+    margin: 20px;
+  }
+  .filters {
+    width: 367px;
+  }
+}

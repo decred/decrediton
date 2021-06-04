@@ -13,7 +13,7 @@
 
 .proposalList {
   margin-top: 15px;
-  margin-left: 85px;
+  margin-left: 60px;
   padding-bottom: 50px;
   display: block;
 }
@@ -26,13 +26,34 @@
   height: calc(100% - 50px);
 }
 
-@media screen and (max-width: 768px) {
-  .proposalList {
-    padding-bottom: 100px;
-  }
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 825px;
+  margin-top: 22px;
 }
+
+.scrollWrapper {
+  height: calc(100% - 54px);
+  overflow: auto;
+}
+
 @media screen and (max-width: 1179px) {
   .proposalList {
     margin-left: 35px;
+  }
+  .filters {
+    width: 704px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .proposalList {
+    padding-bottom: 100px;
+    margin-left: 10px;
+  }
+  .filters {
+    width: 367px;
   }
 }

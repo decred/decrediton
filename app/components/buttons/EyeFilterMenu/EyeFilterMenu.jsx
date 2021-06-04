@@ -63,6 +63,7 @@ const EyeFilterMenu = ({
       ref={wrapperRef}>
       <div className={styles.menuButton}>
         <InvisibleButton
+          ariaLabel="EyeFilterMenu"
           className={classNames(styles.buttonIcon, styles[type])}
           onClick={toggleMenuOpen}
         />

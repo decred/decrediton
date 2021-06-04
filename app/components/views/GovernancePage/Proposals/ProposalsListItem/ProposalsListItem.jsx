@@ -1,10 +1,9 @@
-import { FormattedMessage as T } from "react-intl";
-import { VotingProgress } from "indicators";
 import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
-import { FormattedRelative } from "shared";
 import { classNames } from "pi-ui";
 import { useProposalsListItem } from "../hooks";
 import styles from "./ProposalsListItem.module.css";
+import ProposalCard from "../../../ProposalDetailsPage/helpers/ProposalCard";
+import CardWrapper from "./CardWrapper";
 
 const ProposalsListItem = ({
   name,
@@ -12,88 +11,78 @@ const ProposalsListItem = ({
   token,
   voteCounts,
   voteStatus,
-  currentVoteChoice,
-  quorumPass,
   voteResult,
   modifiedSinceLastAccess,
   votingSinceLastAccess,
   quorumMinimumVotes,
   finishedVote,
   linkto,
-  linkedfrom,
-  approved
+  approved,
+  totalVotes,
+  endTimestamp,
+  blocksLeft,
+  creator,
+  proposalStatus,
+  version
 }) => {
-  const { viewProposalDetailsHandler, tsDate } = useProposalsListItem(token);
+  const {
+    viewProposalDetailsHandler,
+    tsDate,
+    isTestnet,
+    isDarkTheme,
+    linkedProposal
+  } = useProposalsListItem(token);
   const isVoting = voteStatus === PROPOSAL_VOTING_ACTIVE;
-  const isVotingFinished = voteStatus === PROPOSAL_VOTING_FINISHED;
   const isModified =
     (!isVoting && modifiedSinceLastAccess) ||
     (isVoting && votingSinceLastAccess);
+
+  const shortToken = token.substring(0, 7);
+  const shortRFPToken = linkedProposal?.token.substring(0, 7);
+  const proposalPath = `/record/${shortToken}`;
+  const isVoteActive = voteStatus === PROPOSAL_VOTING_ACTIVE;
+  const isVoteActiveOrFinished =
+    isVoteActive || voteStatus === PROPOSAL_VOTING_FINISHED;
+
   return (
-    <div
+    <CardWrapper
       onClick={viewProposalDetailsHandler}
       className={classNames(
-        "flex-row",
-        styles.listItem,
         styles[voteResult],
         !approved && styles.declined,
         finishedVote && styles.ended,
         isModified && styles.modified
       )}>
-      <div>
-        <div className={styles.title}>
-          <div className={styles.name}>{name}</div>
-          {linkedfrom && (
-            <div className={styles.rfp}>
-              <T id="proposalItem.rfp" m="RFP" />
-            </div>
-          )}
-          {linkto && (
-            <div className={styles.rfp}>
-              <T id="proposalItem.proposedForRfp" m="Proposed for RFP" />
-            </div>
-          )}
-        </div>
-        <div className={styles.token}>{token.substring(0, 7)}</div>
-      </div>
-      <div className={styles.resultsArea}>
-        {(isVoting || isVotingFinished) && (
-          <div className={classNames("flex-row", styles.votingIndicator)}>
-            <div
-              className={classNames(
-                styles.voteChoice,
-                isVotingFinished && quorumPass && styles[voteResult],
-                isVoting && currentVoteChoice && styles[currentVoteChoice.id]
-              )}
-            />
-            <VotingProgress {...{ voteCounts, quorumMinimumVotes }} />
-          </div>
-        )}
-        {!isVotingFinished ? (
-          <div className={styles.timestamp}>
-            <T
-              id="proposalItem.lastUpdatedAt"
-              m="Last updated {reldate}"
-              values={{
-                reldate: <FormattedRelative value={tsDate(timestamp)} />
-              }}
-            />
-          </div>
-        ) : (
-          <div className={styles.voteResult}>
-            {quorumPass ? (
-              linkto && !approved && voteResult !== "declined" ? (
-                <T id="proposals.rfpRejected" m="Proposal not chosen" />
-              ) : (
-                voteResult
-              )
-            ) : (
-              <T id="proposals.quorumNotMet" m="Quorum not met" />
-            )}
-          </div>
-        )}
-      </div>
-    </div>
+      <ProposalCard
+        {...{
+          isTestnet,
+          token,
+          linkto,
+          approved,
+          totalVotes,
+          endTimestamp,
+          blocksLeft,
+          name,
+          creator,
+          timestamp,
+          tsDate,
+          version,
+          proposalStatus,
+          voteStatus,
+          isDarkTheme,
+          linkedProposal,
+          quorumMinimumVotes,
+          voteCounts,
+          shortToken,
+          shortRFPToken,
+          proposalPath,
+          isVoteActive,
+          isVoteActiveOrFinished,
+          isCardClickable: true,
+          className: styles.overview
+        }}
+      />
+    </CardWrapper>
   );
 };
 

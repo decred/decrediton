@@ -8,5 +8,6 @@
 @media screen and (max-width: 1179px) {
   .body {
     padding-left: 20px;
+    padding-right: 20px;
   }
 }

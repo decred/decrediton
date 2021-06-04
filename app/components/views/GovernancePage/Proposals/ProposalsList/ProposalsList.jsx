@@ -1,14 +1,30 @@
 import { PoliteiaLoading, NoProposals } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
-import ProposalsListItem from "../ProposalsListItem/ProposalsListItem";
+import ProposalsListItem from "../ProposalsListItem";
 import { useProposalsList } from "../hooks";
 import { LoadingError } from "shared";
 import styles from "./ProposalsList.module.css";
 import { useCallback, useLayoutEffect, useState, useEffect } from "react";
-import ProposalsFilter from "../ProposalsFilter/ProposalsFilter";
+import { EyeFilterMenu } from "buttons";
+import { FormattedMessage as T } from "react-intl";
+
+const getProposalTypes = () => [
+  {
+    key: "finishedVote",
+    label: <T id="proposals.statusLinks.allFinishedVote" m="All" />
+  },
+  {
+    key: "approvedVote",
+    label: <T id="proposals.statusLinks.approvedVote" m="Approved" />
+  },
+  {
+    key: "rejectedVote",
+    label: <T id="proposals.statusLinks.rejectedVote" m="Rejected" />
+  }
+];
 
 const ProposalsList = ({ finishedVote, tab }) => {
-  const [filterTab, setFilterTab] = useState(tab);
+  const [selectedFilter, setSelectedFilter] = useState(tab);
   const {
     getProposalError,
     inventoryError,
@@ -17,11 +33,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
     proposals,
     state,
     send
-  } = useProposalsList(filterTab);
-
-  const handleSetFilterTab = (tab) => {
-    setFilterTab(tab);
-  };
+  } = useProposalsList(selectedFilter);
 
   // This part of the code is meant to solve the situation when the window
   // is too tall, and the user can not trigger `loadMore` with scrolling.
@@ -55,37 +67,37 @@ const ProposalsList = ({ finishedVote, tab }) => {
       );
     case "success":
       return proposals &&
-        proposals[filterTab] &&
-        proposals[filterTab].length ? (
-        <div
-          ref={ref}
-          style={{
-            height: "100%",
-            overflow: "auto"
-          }}>
+        proposals[selectedFilter] &&
+        proposals[selectedFilter].length ? (
+        <>
           {tab === "finishedVote" && (
-            <ProposalsFilter
-              filterTab={filterTab}
-              setFilterTab={handleSetFilterTab}
-            />
-          )}
-          <InfiniteScroll
-            hasMore={!noMoreProposals}
-            loadMore={loadMore}
-            initialLoad={false}
-            useWindow={false}
-            threshold={300}>
-            <div className={styles.proposalList}>
-              {proposals[filterTab].map((v) => (
-                <ProposalsListItem
-                  key={v.token}
-                  {...v}
-                  finishedVote={finishedVote}
-                />
-              ))}
+            <div className={styles.filters}>
+              <EyeFilterMenu
+                options={getProposalTypes()}
+                selected={selectedFilter}
+                onChange={(type) => setSelectedFilter(type.key)}
+              />
             </div>
-          </InfiniteScroll>
-        </div>
+          )}
+          <div ref={ref} className={styles.scrollWrapper}>
+            <InfiniteScroll
+              hasMore={!noMoreProposals}
+              loadMore={loadMore}
+              initialLoad={false}
+              useWindow={false}
+              threshold={300}>
+              <div className={styles.proposalList}>
+                {proposals[selectedFilter].map((v) => (
+                  <ProposalsListItem
+                    key={v.token}
+                    {...v}
+                    finishedVote={finishedVote}
+                  />
+                ))}
+              </div>
+            </InfiniteScroll>
+          </div>
+        </>
       ) : (
         <NoProposals />
       );

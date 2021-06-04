@@ -1,3 +1,7 @@
+.overview {
+  padding-left: 15px !important;
+}
+
 .listItem {
   padding: 18px 16px 6px 20px;
   border-left: 2px solid var(--background-back-color);

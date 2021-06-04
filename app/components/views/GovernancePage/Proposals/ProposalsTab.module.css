@@ -9,61 +9,17 @@
   font-size: 9pt;
 }
 
-.header {
-  background-color: var(--disabled-background-color);
-  color: var(--modal-text);
-  padding-left: 103px;
-  padding-top: 25px;
-  padding-bottom: 15px;
-}
-
 .tabsHeader {
+  background-color: var(--governance-tab-bg);
   padding: 0;
 }
 
 .tabs {
-  position: relative;
-  width: 100%;
-  background-color: var(--tabbed-page-header-bg);
-  margin-left: 0;
-  margin-top: 0;
-  padding: 3px 100px;
-}
-
-.tab {
-  margin-right: 20px;
-}
-
-.tab a {
-  margin: 0;
-  border-radius: 5px;
-}
-
-.tab a span {
-  color: var(--tabbed-page-header-text);
-}
-
-.activeTab {
-  background-color: var(--tabbed-page-header-active-bg);
-  padding: 3px 10px 3px 10px;
+  margin: 0 0 0 95px;
 }
 
 .tabContent {
   padding: 0;
-}
-
-.title {
-  font-size: 21px;
-  line-height: 27px;
-  margin-bottom: 10px;
-  color: var(--title-text-and-button-background);
-}
-
-.description {
-  font-size: 13px;
-  line-height: 19px;
-  margin-top: 0;
-  width: 560px;
 }
 
 .links {
@@ -74,31 +30,32 @@
   font-size: 13px !important;
   line-height: 17px !important;
   border-radius: 5px !important;
-  padding: 6px 15px !important;
-  margin: 4px !important;
+  padding: 6px 10px !important;
+  margin: 15px 0 0 0 !important;
   color: var(--info-modal-button-text) !important;
-  background-color: var(--info-modal-button-bg) !important;
+  background-color: var(--politeia-button-bg) !important;
   border: 0 !important;
   text-decoration: none !important;
-  box-shadow: 0 5px 13px var(--icons-shadow);
+  font-weight: 600 !important;
 }
 
 .politeiaButton:hover {
-  background-color: var(--title-text-and-button-background-hovered) !important;
+  opacity: 0.85;
 }
 
 .refreshProposals {
-  width: 24px;
-  height: 24px;
-  border: none;
-  outline: none;
-  background-color: transparent;
   background-image: var(--proposals-refresh-icon);
-  background-size: 24px 24px;
-  cursor: pointer;
-  position: relative;
-  top: 6px;
-  left: 6px;
+  background-color: var(--refresh-proposals) !important;
+  margin-left: 10px;
+}
+
+.refreshProposalsTooltip {
+  display: flex !important;
+}
+
+.refreshProposalsTooltipContent {
+  width: max-content;
+  font-size: 16px;
 }
 
 .politeiaDisabled {
@@ -110,23 +67,33 @@
 }
 
 .proposalsLink {
-  color: var(--button-text) !important;
+  color: var(--link-color) !important;
+  cursor: pointer;
+}
+
+.activeCaret {
+  background-color: var(--grey-7) !important;
 }
 
 @media screen and (max-width: 1179px) {
   .tabs {
-    padding-left: 35px;
+    margin-left: 55px;
   }
 
   .politeiaDisabled {
     padding-left: 20px;
   }
 
-  .header {
-    padding-left: 35px;
-  }
-
   .links {
     margin-left: 44px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tabs {
+    margin-left: 20px;
+  }
+  .tab {
+    margin-right: 25px;
   }
 }

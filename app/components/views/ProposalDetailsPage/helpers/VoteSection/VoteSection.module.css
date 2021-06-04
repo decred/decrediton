@@ -1,7 +1,7 @@
 .voteSection {
   background-color: var(--background-back-color);
   padding: 10px 40px;
-  width: 740px;
+  width: 764px;
   margin-top: 5px;
   display: flex;
   flex-direction: row;
@@ -21,6 +21,6 @@
 
 @media screen and (max-width: 768px) {
   .voteSection {
-    width: 100%;
+    width: 355px;
   }
 }

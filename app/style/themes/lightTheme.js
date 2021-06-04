@@ -153,6 +153,12 @@ const lightTheme = {
   "stakeinfo-value": "var(--main-dark-blue)",
   "stakeinfo-border": "var(--grey-3)",
   "purchase-label": "var(--grey-7)",
+  "governance-tab-bg": "var(--grey-3)",
+  "governance-header-balance-bg": "var(--color-blue-lighter)",
+  "politeia-button-bg": "var(--accent-blue)",
+  "governance-nav-button-bg": "var(--grey-3)",
+  "refresh-proposals": "var(--small-button-bg)",
+  "agenda-preference": "var(--main-dark-blue)",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border

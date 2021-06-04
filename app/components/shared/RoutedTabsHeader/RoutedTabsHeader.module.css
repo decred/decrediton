@@ -12,7 +12,7 @@
 }
 
 .tab a {
-  margin: 0 5px 0 5px;
+  margin: 0;
   color: var(--grey-7);
   text-decoration: none;
   font-size: 16px;
@@ -30,13 +30,13 @@
 .tabCaret {
   position: absolute;
   bottom: 0;
-  height: 5px;
+  height: 4px;
 }
 
 .tabCaret .active {
   background-color: var(--accent-color);
   position: absolute;
-  height: 5px;
+  height: 4px;
 }
 
 @media screen and (max-width: 768px) {
