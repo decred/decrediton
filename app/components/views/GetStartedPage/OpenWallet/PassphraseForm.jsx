@@ -30,6 +30,7 @@ const PassphraseFormBase = ({
       </Label>
       <Input>
         <PasswordInput
+          id="privatePassphraseInput"
           autoFocus
           placeholder={intl.formatMessage(
             messages.privatePassphrasePlaceholder

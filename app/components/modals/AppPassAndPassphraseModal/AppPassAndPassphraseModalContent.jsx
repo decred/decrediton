@@ -20,6 +20,7 @@ const Modal = ({
     <PassphraseModalField
       label={<T id="appPassphrase.newPassphrase" m="DEX Passphrase" />}>
       <PasswordInput
+        id="appPassphraseInput"
         required
         showErrors={appPassphrase !== null && !isValid}
         placeholder=""

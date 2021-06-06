@@ -62,7 +62,11 @@ const TrezorPinModal = ({
         </div>
       </div>
       <div className={styles.passwordField}>
-        <PasswordInput value={currentPin} disabled={true} />
+        <PasswordInput
+          id="passwordFieldInput"
+          value={currentPin}
+          disabled={true}
+        />
       </div>
       <ButtonsToolbar
         {...{ onCancelModal: onCancelPinModal, onSubmit }}

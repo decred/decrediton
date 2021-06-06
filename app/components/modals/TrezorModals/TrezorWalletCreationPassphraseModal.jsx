@@ -87,6 +87,7 @@ const TrezorWalletCreationPassphraseModal = ({
           <T id="trezor.walltCreationPrivatePassphrase" m="Wallet PassPhrase" />
         }>
         <PasswordInput
+          id="passphraseValueInput"
           autoFocus
           placeholder=""
           value={passphraseValue}
@@ -103,6 +104,7 @@ const TrezorWalletCreationPassphraseModal = ({
           />
         }>
         <PasswordInput
+          id="passphraseConfirmValueInput"
           placeholder=""
           value={passphraseConfirmValue}
           onChange={(e) => onChangePassphraseConfirmValue(e.target.value)}

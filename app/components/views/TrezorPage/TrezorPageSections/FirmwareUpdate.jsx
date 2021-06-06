@@ -28,7 +28,7 @@ const FirmwareUpdate = ({
         <T id="trezorPage.updateFirmwarePah" m="Path to firmware file" />
       </p>
       <div>
-        <PathBrowseInput onChange={onChangePath} value={path} />
+        <PathBrowseInput id="fileInput" onChange={onChangePath} value={path} />
       </div>
       <DangerButton
         onClick={_updateFirmware}

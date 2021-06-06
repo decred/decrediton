@@ -55,6 +55,7 @@ const Modal = ({
       <PassphraseModalField
         label={<T id="setNewPassModal.confirm" m="Confirm" />}>
         <PasswordInput
+          id="confirmPrivPassInput"
           required
           showErrors={confirmPrivPass !== null && !isValid}
           placeholder=""

@@ -38,7 +38,11 @@ const QueryRoutes = ({
       </div>
       <div className="value">
         <T id="ln.networkTab.queryRoutes.value" m="Value" />
-        <DcrInput amount={amount} onChangeAmount={amtChanged} />
+        <DcrInput
+          id="amountInput"
+          amount={amount}
+          onChangeAmount={amtChanged}
+        />
       </div>
       <KeyBlueButton
         className={styles.queryRoutesButton}
