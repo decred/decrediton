@@ -205,7 +205,9 @@ const SendOutputRow = ({
         </>
       )}
       {isSendAll && (
-        <label htmlFor="amountInput" className={styles.amountInputLabel}>
+        <label
+          htmlFor={`amountInput-${index}`}
+          className={styles.amountInputLabel}>
           <T id="sendtab.sendAllAmountLabel" m="Amount" />
         </label>
       )}
@@ -226,7 +228,6 @@ const SendOutputRow = ({
             <DcrInput
               id={`amountInput-${index}`}
               newBiggerFontStyle
-              id="amountInput"
               label={intl.formatMessage(messages.amountLabel)}
               className={styles.dcrInput}
               required={true}
@@ -266,12 +267,12 @@ const SendOutputRow = ({
             // this className can be deleted.
             <>
               <label
-                htmlFor="addressInput"
+                htmlFor={`addressInput-${index}`}
                 className={styles.addressInputLabel}>
                 <T id="sendtab.sendTo" m="Send to" />
               </label>
               <ReceiveAccountsSelect
-                id="addressInput"
+                id={`addressInput-${index}`}
                 className="selectWithBigFont"
                 selectClassName={styles.receiveAccountSelect}
                 disabled={receiveAccountsSelectDisabled}
@@ -284,7 +285,7 @@ const SendOutputRow = ({
           ) : (
             <AddressInput
               newBiggerFontStyle
-              id="addressInput"
+              id={`addressInput-${index}`}
               required={true}
               label={intl.formatMessage(messages.addressLabel)}
               autoFocus={index === 0}
