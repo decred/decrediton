@@ -30,6 +30,10 @@
   cursor: pointer;
 }
 
+.proposalsLink:hover {
+  text-decoration: underline !important;
+}
+
 .searchByNameInput {
   display: inline-block;
   width: 150px;

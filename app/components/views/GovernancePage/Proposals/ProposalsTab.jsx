@@ -66,7 +66,9 @@ const ProposalsTab = () => {
                     Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at {link}"
               values={{
                 link: (
-                  <PiLink className={styles.proposalsLink}>
+                  <PiLink
+                    className={styles.proposalsLink}
+                    isTestnet={isTestnet}>
                     proposals.decred.org
                   </PiLink>
                 )
