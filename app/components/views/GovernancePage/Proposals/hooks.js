@@ -81,7 +81,7 @@ export function useProposalsList(tab) {
   const proposals = useSelector(sel.proposals);
   const inventory = useSelector(sel.inventory);
   const getProposalError = useSelector(sel.getProposalError);
-  const inventoryError = useSelector(sel.getTokenInventoryError);
+  const inventoryError = useSelector(sel.getVotesInventoryError);
   const dispatch = useDispatch();
   const getProposalsAndUpdateVoteStatus = (proposalBatch) =>
     dispatch(gov.getProposalsAndUpdateVoteStatus(proposalBatch));

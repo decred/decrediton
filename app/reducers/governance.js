@@ -1,50 +1,50 @@
 import {
   UPDATEVOTECHOICE_SUCCESS,
-  GETTOKEN_INVENTORY_SUCCESS,
   GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT,
   GETPROPOSAL_ATTEMPT,
   GETPROPOSAL_FAILED,
   GETPROPOSAL_SUCCESS,
   REMOVED_PROPOSALS_FROM_LIST,
-  GETTOKEN_INVENTORY_ATTEMPT,
   DISABLE_POLITEIA_SUCCESS,
   COMPARE_INVENTORY_SUCCESS,
   GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS,
   GETPROPROSAL_UPDATEVOTESTATUS_FAILED,
-  GETTOKEN_INVENTORY_FAILED
+  GETVOTES_INVENTORY_ATTEMPT,
+  GETVOTES_INVENTORY_SUCCESS,
+  GETVOTES_INVENTORY_FAILED
 } from "actions/GovernanceActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 import { WALLETREADY } from "actions/DaemonActions";
 
 export default function governance(state = {}, action) {
   switch (action.type) {
-    case GETTOKEN_INVENTORY_ATTEMPT:
+    case GETVOTES_INVENTORY_ATTEMPT:
       return {
         ...state,
         getProposalsAttempt: true,
-        getTokenInventoryError: null
+        getVotesInventoryError: null
       };
-    case GETTOKEN_INVENTORY_SUCCESS:
+    case GETVOTES_INVENTORY_SUCCESS:
       return {
         ...state,
         inventory: action.inventory,
         getProposalsAttempt: false,
-        getTokenInventoryError: null
+        getVotesInventoryError: null
+      };
+    case GETVOTES_INVENTORY_FAILED:
+      return {
+        ...state,
+        getProposalsAttempt: false,
+        getVotesInventoryError: action.error
       };
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
         getProposalsAttempt: false,
         getProposalError: null,
-        getTokenInventoryError: null,
+        getVotesInventoryError: null,
         proposals: null,
         inventory: null
-      };
-    case GETTOKEN_INVENTORY_FAILED:
-      return {
-        ...state,
-        getProposalsAttempt: false,
-        getTokenInventoryError: action.error
       };
     case GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT:
       return { ...state, getProposalsAttempt: true };

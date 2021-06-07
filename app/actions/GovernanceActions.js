@@ -116,37 +116,44 @@ const getProposalEligibleTickets = async (
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
-// updateInventoryFromApiData receives politeia data from getTokenInventory and
+// updateInventoryFromApiData receives politeia data from getVotesInventory and
 // put it in decrediton's inventory format.
-// @param data - data from getTokenInventory api.
+// @param data - data from getVotesInventory api.
 const updateInventoryFromApiData = (data) => {
   const inventory = getDefaultInventory();
-  inventory.preVote = data.pre;
-  inventory.activeVote = data.active;
-  inventory.finishedVote = [...data.approved, ...data.rejected];
-  inventory.abandonedVote = data.abandoned;
-  inventory.approvedVote = data.approved;
-  inventory.rejectedVote = data.rejected;
+  inventory.preVote = [
+    ...((data && data.vetted && data.vetted.authorized) || []),
+    ...((data && data.vetted && data.vetted.unauthorized) || [])
+  ];
+  inventory.activeVote = (data && data.vetted && data.vetted.started) || [];
+  inventory.abandonedVote =
+    (data && data.vetted && data.vetted.ineligible) || [];
+  inventory.approvedVote = (data && data.vetted && data.vetted.approved) || [];
+  inventory.rejectedVote = (data && data.vetted && data.vetted.rejected) || [];
+  inventory.finishedVote = [
+    ...inventory.approvedVote,
+    ...inventory.rejectedVote
+  ];
 
   return inventory;
 };
 
-export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
-export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
-export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
+export const GETVOTES_INVENTORY_ATTEMPT = "GETVOTES_INVENTORY_ATTEMPT";
+export const GETVOTES_INVENTORY_SUCCESS = "GETVOTES_INVENTORY_SUCCESS";
+export const GETVOTES_INVENTORY_FAILED = "GETVOTES_INVENTORY_FAILED";
 
-const getTokenInventory = () => async (dispatch, getState) => {
-  dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
+const getVotesInventory = () => async (dispatch, getState) => {
+  dispatch({ type: GETVOTES_INVENTORY_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   try {
-    const { data } = await pi.getTokenInventory({ piURL });
+    const { data } = await pi.getVotesInventory({ piURL });
     const inventory = updateInventoryFromApiData(data);
 
-    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory });
+    dispatch({ type: GETVOTES_INVENTORY_SUCCESS, inventory });
 
     return inventory;
   } catch (error) {
-    dispatch({ error, type: GETTOKEN_INVENTORY_FAILED });
+    dispatch({ error, type: GETVOTES_INVENTORY_FAILED });
     throw error;
   }
 };
@@ -169,7 +176,7 @@ export const compareInventory = () => async (dispatch, getState) => {
     const oldProposals = sel.proposals(getState());
     const newProposalsList = getDefaultInventory();
 
-    const { data } = await pi.getTokenInventory({ piURL });
+    const { data } = await pi.getVotesInventory({ piURL });
     const inventory = updateInventoryFromApiData(data);
 
     let isDifferent = false;
@@ -301,13 +308,13 @@ const getVoteOption = (
 export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   setPoliteiaPath();
   try {
-    await dispatch(getTokenInventory());
+    await dispatch(getVotesInventory());
     const inventory = sel.inventory(getState());
     // remove proposals cache which are not in the inventory activeVote
     removeCachedProposals(inventory.activeVote);
     await dispatch(getInitialBatch());
   } catch (error) {
-    dispatch({ error, type: GETTOKEN_INVENTORY_FAILED });
+    dispatch({ error, type: GETVOTES_INVENTORY_FAILED });
     throw error;
   }
 };
