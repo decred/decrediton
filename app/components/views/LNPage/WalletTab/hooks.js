@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { useEffect } from "react";
 import { useLNPage } from "../hooks";
 

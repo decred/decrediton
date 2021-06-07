@@ -1,6 +1,5 @@
-import * as ln from "wallet/ln";
 import * as sel from "selectors";
-import * as wallet from "wallet";
+import { wallet, ln } from "wallet-preload-shim";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
 import { isNumber } from "lodash";

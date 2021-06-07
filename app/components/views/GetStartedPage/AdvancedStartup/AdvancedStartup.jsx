@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AdvancedBody } from "./Form";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 
 export const AdvancedStartupBody = ({
   submitRemoteCredentials,

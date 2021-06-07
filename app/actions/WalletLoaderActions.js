@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import {
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,

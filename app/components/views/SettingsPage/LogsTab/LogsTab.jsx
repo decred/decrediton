@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLogging } from "./hooks";
 import Logs from "./Page";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import ReactTimeout from "react-timeout";
 
 const LogsTabBody = ({ setInterval, clearInterval }) => {

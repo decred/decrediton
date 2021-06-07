@@ -2,10 +2,10 @@
  * Build config for electron 'Main Process' file
  */
 
-import webpack from "webpack";
-import path from "path";
+const webpack = require("webpack");
+const path = require("path");
 
-export default {
+module.exports = {
   // Generate code for electron's ipc-main process.
   target: "electron-main",
 
@@ -46,9 +46,7 @@ export default {
 
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
-      }
+      "__ELECTRON_ENV": JSON.stringify("main")
     })
   ],
 
@@ -58,7 +56,9 @@ export default {
       "node_modules"
     ],
     alias: {
-      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js"))
+      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js")),
+      fetchModule: path.resolve(path.join(__dirname, "node_modules/electron-fetch/lib/index.js")),
+      walletCrypto: path.resolve(__dirname, "app/wallet/crypto.js")
     }
   }
 };

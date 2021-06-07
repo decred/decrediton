@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { default as ReactMarkdown } from "react-markdown";
 import { FormattedMessage as T } from "react-intl";
@@ -37,23 +37,14 @@ const renderProposalImage = ({ alt }) => <span>{alt}</span>;
 const ProposalBody = ({ body }) => (
   <>
     <ReactMarkdown
-      source={body}
-      // NEVER set to false
-      escapeHtml={true}
-      // debatable whether we wanna allow the embedded html sections to be
-      // shown. Theoretically, escapeHtml=true should suffice, but playing it
-      // safe for the moment and also setting this as true.
+      children={body}
       skipHtml={true}
-      renderers={{
-        link: renderInternalProposalLink,
-        linkReference: renderInternalProposalLink,
+      components={{
+        a: renderInternalProposalLink,
 
         // debatable whether we wanna allow inline image references in proposals
         // in decrediton.
-        imageReference: renderProposalImage,
-        image: renderProposalImage,
-
-        html: () => null
+        img: renderProposalImage
       }}
     />
   </>

@@ -5,7 +5,7 @@ import {
 } from "./ControlActions";
 import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import {
   TESTNET,
   MAINNET,

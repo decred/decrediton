@@ -23,7 +23,7 @@ import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
 import styles from "./GetStarted.module.css";
 import { isObject } from "lodash";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 
 export const useGetStarted = () => {
   const {

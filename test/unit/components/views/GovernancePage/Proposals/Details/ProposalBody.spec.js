@@ -1,5 +1,6 @@
 import { ProposalBody } from "views/ProposalDetailsPage/helpers";
-import { render } from "enzyme";
+import { render } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import fullMarkdown from "data/FullProposalMarkdown";
 
 test("ProposalBody renders simple markdown", () => {
@@ -7,14 +8,13 @@ test("ProposalBody renders simple markdown", () => {
     <ProposalBody body={"this is a *test* proposal description"} />
   );
 
-  expect(body.text()).toEqual("this is a test proposal description");
+  expect(body.container).toMatchSnapshot();
 });
 
 test("ProposalBody renders paragraphs", () => {
-  const body = render(<ProposalBody body={"First Para\n\nSecond Para"} />);
-
-  expect(body.find("p").first().text()).toEqual("First Para");
-  expect(body.find("p").last().text()).toEqual("Second Para");
+  render(<ProposalBody body={"First Para\n\nSecond Para"} />);
+  expect(screen.getByText("First Para")).toBeInTheDocument();
+  expect(screen.getByText("Second Para")).toBeInTheDocument();
 });
 
 test("ProposalBody does not render reference images", () => {
@@ -22,35 +22,35 @@ test("ProposalBody does not render reference images", () => {
     <ProposalBody body={"![Alt text][ref0]\n\n[ref0] url/to/image.jpg"} />
   );
 
-  expect(body.find("img").get()).toHaveLength(0);
+  expect(body.container.querySelector("img")).toBeNull();
 });
 
 test("ProposalBody does not render inline images", () => {
   const body = render(<ProposalBody body={"![Alt text](/path/to/img.jpg)"} />);
 
-  expect(body.find("img").get()).toHaveLength(0);
+  expect(body.container.querySelector("img")).toBeNull();
 
   const body2 = render(
     <ProposalBody body={'![Alt text](/path/to/img.jpg "Optional title")'} />
   );
 
-  expect(body2.find("img").get()).toHaveLength(0);
+  expect(body2.container.querySelector("img")).toBeNull();
 });
 
 test("ProposalBody renders full markdown", () => {
   const body = render(<ProposalBody body={fullMarkdown} />);
 
-  expect(body.find("img").get()).toHaveLength(0);
+  expect(body.container).toMatchSnapshot();
 });
 
 test("ProposalBody skips html", () => {
   const body = render(<ProposalBody body={"this <b>html</b> is blocked"} />);
 
-  expect(body.html()).toEqual("<p>this html is blocked</p>");
+  expect(body.container).toMatchSnapshot();
 });
 
 test("ProposalBody protects links", () => {
   const body = render(<ProposalBody body={"[link](http://decred.org)"} />);
 
-  expect(body.find("a").attr("href")).toEqual("#");
+  expect(body.container.querySelector("a").getAttribute("href")).toEqual("#");
 });

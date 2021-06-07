@@ -6,21 +6,9 @@ import {
   STSchnorrSecp256k1,
   ripemd160Size
 } from "constants";
-const bs58 = require("bs58");
-
-let createBlakeHash;
-if (process.env.NODE_ENV === "test") {
-  // Node 10.x errors when trying to import the native blake-hash during unit
-  // test. As far as I (matheusd) can see, this only happens during test, and
-  // isn't triggered in runtime, even if the native module does run. So for the
-  // moment, I'm resorting to running the js version during tests. Ideally, this
-  // needs to be solved in the upstream blake-hash so that we can also use the
-  // native version in tests.
-  createBlakeHash = require("blake-hash/js");
-} else {
-  createBlakeHash = require("blake-hash");
-}
-const bs58checkBase = require("bs58check/base");
+import bs58 from "bs58";
+import { blake256 } from "walletCrypto";
+import bs58checkBase from "bs58check/base";
 
 export const ERR_INVALID_ADDR_EMPTY = "ERR_INVALID_ADDR_EMPTY";
 export const ERR_INVALID_ADDR_TOOSHORT = "ERR_INVALID_ADDR_TOOSHORT";
@@ -39,10 +27,7 @@ export const ERR_INVALID_ADDR_CHECKSUM = "ERR_INVALID_ADDR_CHECKSUM";
 // 3) Checksum - https://github.com/bitcoinjs/bs58check/blob/master/test/base.js
 
 // _blake256x2 gets a buffer and calculate its checksum twice with blake256.
-const _blake256x2 = (buffer) => _blake256(_blake256(buffer));
-
-export const _blake256 = (buffer) =>
-  createBlakeHash("blake256").update(buffer).digest();
+const _blake256x2 = (buffer) => blake256(blake256(buffer));
 
 export function isValidAddress(addr, network) {
   if (!addr || !addr.trim().length) return ERR_INVALID_ADDR_EMPTY;

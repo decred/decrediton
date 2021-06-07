@@ -1,7 +1,6 @@
 import { push as pushHistory } from "connected-react-router";
 import * as sel from "selectors";
-import * as pi from "wallet/politeia";
-import * as wallet from "wallet";
+import { wallet, politeia as pi } from "wallet-preload-shim";
 import {
   hexReversedHashToArray,
   reverseRawHash,

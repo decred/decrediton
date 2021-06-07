@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import { fs } from "wallet-preload-shim";
 import { isNumber, isNil, isUndefined } from "lodash";

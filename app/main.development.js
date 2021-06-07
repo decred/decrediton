@@ -684,7 +684,7 @@ app.on("ready", async () => {
     minHeight: 299,
     height: 790,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
       devTools: true,
       contextIsolation: false,
       webSecurity: false,

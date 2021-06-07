@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { classNames } from "pi-ui";
 import Docs from "i18n/docs";
 import { default as ReactMarkdown, uriTransformer } from "react-markdown";
@@ -47,9 +47,9 @@ const Documentation = ({ name, className }) => {
   return (
     <>
       <ReactMarkdown
-        source={content}
+        children={content}
         className={classNames(styles.documentation, className)}
-        renderers={{ link: renderDocLink }}
+        components={{ a: renderDocLink }}
       />
       {unavailable}
     </>

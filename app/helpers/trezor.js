@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { sprintf } from "sprintf-js";
 import { rawToHex } from "helpers";
 

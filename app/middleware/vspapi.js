@@ -1,5 +1,4 @@
-// @flow
-import axios from "axios";
+import { getJSON, postJSON } from "helpers/fetch";
 import querystring from "querystring";
 
 const URL_BASE = "https://api.decred.org";
@@ -10,7 +9,7 @@ const LEGACY_GET = (path, apiToken) => {
       Authorization: "Bearer " + apiToken
     }
   };
-  return axios.get(path, config);
+  return getJSON(path, config);
 };
 
 const GET = (path, vspClientSig) => {
@@ -21,7 +20,7 @@ const GET = (path, vspClientSig) => {
         }
       }
     : {};
-  return axios.get(path, config);
+  return getJSON(path, config);
 };
 
 const LEGACY_POST = (path, apiToken, json) => {
@@ -30,7 +29,7 @@ const LEGACY_POST = (path, apiToken, json) => {
       Authorization: "Bearer " + apiToken
     }
   };
-  return axios.post(path, querystring.stringify(json), config);
+  return postJSON(path, querystring.stringify(json), config);
 };
 
 const POST = (path, vspClientSig, json) => {
@@ -40,7 +39,7 @@ const POST = (path, vspClientSig, json) => {
     }
   };
   // This json request is strigfied at the call which is making it.
-  return axios.post(path, json, config);
+  return postJSON(path, json, config);
 };
 
 // stakePoolInfo gets vsp info from vsps v1 and v2.

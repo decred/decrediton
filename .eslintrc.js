@@ -61,6 +61,7 @@ module.exports = {
   globals: {
     Uint8Array: true,
     React: "readonly",
-    PropTypes: "readonly"
+    PropTypes: "readonly",
+    globalThis: "readonly"
   }
 };

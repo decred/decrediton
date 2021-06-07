@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { checkUnmixedAccountBalance } from "./AccountMixerActions";

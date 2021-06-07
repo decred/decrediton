@@ -1,6 +1,6 @@
 import Select from "react-select";
 import { SEED_WORDS } from "constants/seed";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { useLayoutEffect } from "react";
 // SeedWordSelect.css includes custom styling for seed word select which need
 // to be loaded *after* ReactSelectGlobal.less, both imports should be deleted

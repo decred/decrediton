@@ -19,11 +19,10 @@ import {
   SET_REMEMBERED_VSP_HOST,
   SET_AUTOBUYER_SETTINGS
 } from "./VSPActions";
-import * as fs from "wallet/fs";
-import * as wallet from "wallet";
+import { wallet, fs } from "wallet-preload-shim";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { isTestNet } from "selectors";
-import axios from "axios";
+import { getJSON } from "helpers/fetch";
 import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
@@ -75,8 +74,7 @@ export const checkDecreditonVersion = () => (dispatch, getState) => {
   const detectedVersion = getState().daemon.appVersion;
   const releaseApiURL =
     "https://api.github.com/repos/decred/decrediton/releases";
-  axios
-    .get(releaseApiURL, { timeout: 5000 })
+  getJSON(releaseApiURL)
     .then(function (response) {
       const currentVersion = response.data[0].tag_name.split("v")[1];
       if (semverCompatible(currentVersion, detectedVersion)) {

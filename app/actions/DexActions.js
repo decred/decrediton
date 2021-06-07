@@ -1,6 +1,5 @@
 import * as sel from "selectors";
-import * as dex from "wallet/dex";
-import * as wallet from "wallet";
+import { wallet, dex } from "wallet-preload-shim";
 import { addAllowedExternalRequest } from "./SettingsActions";
 import { getNextAccountAttempt } from "./ControlActions";
 import { closeWalletRequest } from "./WalletLoaderActions";

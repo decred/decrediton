@@ -12,7 +12,7 @@ import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
 import { DCR, THEME, LOCALE, NETWORK } from "constants";
 import * as cfgConstants from "constants/config";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { AppContainer } from "react-hot-loader";
 import {
   defaultLightTheme,

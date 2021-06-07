@@ -24,7 +24,7 @@ import settingsTabStyles from "views/SettingsPage/SettingsTab/Settings.module.cs
 import { useSettings } from "hooks";
 import { BackButton, BackButtonArea } from "../helpers";
 import styles from "./Settings.module.css";
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 
 const SetttingsForm = ({ onSendBack }) => {
   const { setThemeName } = useTheme();

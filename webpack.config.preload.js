@@ -37,13 +37,17 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+          fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js"),
+          walletCrypto: path.resolve(__dirname, "app/wallet/crypto.js")
+        },
         modules: ["node_modules"]
     },
 
     plugins: [
         new webpack.DefinePlugin({
-          "process.env.NODE_ENV": JSON.stringify("production"),
-          "process.env.NODE_DEBUG": false
+          "process.env.NODE_DEBUG": false,
+          "__ELECTRON_ENV": JSON.stringify("preload")
         })
     ],
 
