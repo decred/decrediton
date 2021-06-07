@@ -1,5 +1,4 @@
 import fs from "fs-extra";
-import os from "os";
 import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
@@ -673,10 +672,6 @@ app.on("ready", async () => {
     url = `http://localhost:${port}/dist/app.html`;
   }
 
-  // enable remote module on windows, as decrediton will crash, otherwise, but
-  // avoid it on other systems, as electron is moving away from it.
-  const enableRemoteModule = os.platform() == "win32" ? true : false;
-
   let windowOpts = {
     show: false,
     minWidth: 350,
@@ -688,7 +683,7 @@ app.on("ready", async () => {
       devTools: true,
       contextIsolation: true,
       webSecurity: false,
-      enableRemoteModule,
+      enableRemoteModule: false,
       preload: preloadPath
     },
     icon: __dirname + "/icon.png"
