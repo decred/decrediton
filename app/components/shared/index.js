@@ -3,6 +3,7 @@ export { default as CopyToClipboard } from "./CopyToClipboard/CopyToClipboard";
 export { default as LinkToAccounts } from "./LinkToAccounts";
 export { default as TransitionMotionWrapper } from "./TransitionMotionWrapper";
 export { default as ExternalLink } from "./ExternalLink";
+export { default as ExternalButton } from "./ExternalButton";
 export { default as UnselectableText } from "./UnselectableText";
 export {
   default as RoutedTabsHeader,

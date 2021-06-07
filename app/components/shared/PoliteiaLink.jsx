@@ -7,17 +7,14 @@ const PoliteiaLink = ({
   path,
   className,
   isTestnet,
-  CustomComponent,
-  hrefProp
+  CustomComponent
 }) => {
   const href = useMemo(
     () =>
-      hrefProp
-        ? hrefProp
-        : `https://${isTestnet ? "test-proposals" : "proposals"}.decred.org${
-            path || ""
-          }`,
-    [isTestnet, path, hrefProp]
+      `https://${isTestnet ? "test-proposals" : "proposals"}.decred.org${
+        path || ""
+      }`,
+    [isTestnet, path]
   );
   const onClickHandler = useCallback(() => wallet.openExternalURL(href), [
     href

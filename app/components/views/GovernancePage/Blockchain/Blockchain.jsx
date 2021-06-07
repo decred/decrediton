@@ -1,11 +1,11 @@
 import { find, compose, eq, get } from "fp";
 import { useBlockchain } from "./hooks";
 import AgendaOverview from "./AgendaOverview";
-import { PoliteiaLink as PiLink } from "shared";
+import { ExternalLink, ExternalButton } from "shared";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import PageHeader from "../PageHeader";
 import styles from "./Blockchain.module.css";
-import { Button, Tooltip } from "pi-ui";
+import { Tooltip } from "pi-ui";
 import { TextInput } from "inputs";
 import { EyeFilterMenu } from "buttons";
 import { useIntl } from "react-intl";
@@ -69,26 +69,26 @@ const Blockchain = () => {
               m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets. You can know more about Consensus Rule Voting at {link}"
               values={{
                 link: (
-                  <PiLink
+                  <ExternalLink
                     className={styles.proposalsLink}
-                    hrefProp="https://docs.decred.org/getting-started/user-guides/agenda-voting/">
+                    href="https://docs.decred.org/getting-started/user-guides/agenda-voting/">
                     docs.decred.org
-                  </PiLink>
+                  </ExternalLink>
                 )
               }}
             />
           }
           optionalButton={
             <div>
-              <PiLink
+              <ExternalButton
                 className={styles.politeiaButton}
-                CustomComponent={Button}
-                href="https://voting.decred.org">
+                href="https://voting.decred.org"
+                hrefTestNet="https://voting.decred.org/testnet">
                 <T
                   id="votingPreferences.dashboard"
                   m="Go to Voting Dashboard"
                 />
-              </PiLink>
+              </ExternalButton>
             </div>
           }
         />
