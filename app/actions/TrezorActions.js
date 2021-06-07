@@ -589,10 +589,45 @@ export const togglePassPhraseProtection = () => async (dispatch, getState) => {
     });
     dispatch({
       enablePassphraseProtection: enableProtection,
+      deviceLabel: features.label,
       type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS
     });
   } catch (error) {
     dispatch({ error, type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
+  }
+};
+
+export const TRZ_TOGGLEPASSPHRASEONDEVICE_ATTEMPT =
+  "TRZ_TOGGLEPASSPHRASEONDEVICE_ATTEMPT";
+export const TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED =
+  "TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED";
+export const TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS =
+  "TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS";
+
+export const togglePassphraseOnDevice = () => async (dispatch, getState) => {
+  dispatch({ type: TRZ_TOGGLEPASSPHRASEONDEVICE_ATTEMPT });
+
+  const features = await getFeatures(dispatch, getState).catch((error) => {
+    dispatch({ error, type: TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED });
+    return;
+  });
+
+  const enableOnDevice = !features.passphrase_always_on_device;
+
+  try {
+    await deviceRun(dispatch, getState, async () => {
+      const res = await session.applySettings({
+        passphrase_always_on_device: enableOnDevice
+      });
+      return res.payload;
+    });
+    dispatch({
+      enablePassphraseOnDevice: enableOnDevice,
+      deviceLabel: features.label,
+      type: TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ error, type: TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED });
   }
 };
 
