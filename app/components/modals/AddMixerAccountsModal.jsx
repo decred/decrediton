@@ -38,6 +38,7 @@ const AddMixerAccountsModal = ({
           />
         }>
         <TextInput
+          id="mixedAccountNameInput"
           autoFocus
           required
           id="name"
@@ -55,6 +56,7 @@ const AddMixerAccountsModal = ({
           />
         }>
         <TextInput
+          id="changeAccountName"
           autoFocus
           required
           id="name"

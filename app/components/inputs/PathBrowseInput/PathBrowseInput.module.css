@@ -1,12 +1,3 @@
-.pathInputAndButton {
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px var(--stroke-color-default) solid;
-}
-.pathInputAndButton:hover {
-  border-bottom: 1px solid var(--accent-blue);
-}
-.pathInputArea {
-  width: 100%;
-  margin-right: 15px;
+.textInput {
+  padding-right: 20px;
 }

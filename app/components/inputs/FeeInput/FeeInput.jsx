@@ -1,4 +1,4 @@
-import NumericInput from "../NumericInput/NumericInput";
+import NumericInput from "../NumericInput";
 import { useFeeInput } from "./hooks.js";
 
 // FeeInput is an input that restricts values to a fee (DCR/KB or similar)

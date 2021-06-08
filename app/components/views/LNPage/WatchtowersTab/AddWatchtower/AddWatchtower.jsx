@@ -16,6 +16,7 @@ const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
             <T id="ln.watchtowersTab.Pubkey" m="Tower ID:" />
           </div>
           <TextInput
+            id="towerIdInput"
             value={pubkey}
             onChange={(e) => setPubkey(e.target.value.trim())}
           />
@@ -25,6 +26,7 @@ const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
             <T id="ln.watchtowersTab.address" m="Address:" />
           </div>
           <TextInput
+            id="addressInput"
             value={addr}
             onChange={(e) => setAddr(e.target.value.trim())}
           />

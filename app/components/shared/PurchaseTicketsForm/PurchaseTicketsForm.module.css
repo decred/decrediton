@@ -77,6 +77,10 @@
 .numTicketsToBuy {
   padding-left: 40px;
 }
+.numTicketsToBuy label {
+  color: var(--purchase-label);
+  font-size: 13px;
+}
 .inputSelectContainer {
   display: flex;
   align-self: center;

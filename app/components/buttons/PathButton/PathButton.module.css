@@ -10,7 +10,7 @@
 }
 
 .pathButton:hover {
-  background-image: var(--search-icon-hover);
+  opacity: 0.8;
 }
 
 .tooltip {

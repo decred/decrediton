@@ -19,6 +19,14 @@ const messages = defineMessages({
   amountPlaceholder: {
     id: "sendtab.amountPlaceholder",
     defaultMessage: "Amount"
+  },
+  amountLabel: {
+    id: "sendtab.amountLabel",
+    defaultMessage: "Amount"
+  },
+  addressLabel: {
+    id: "sendtab.addressLabel",
+    defaultMessage: "Send to"
   }
 });
 
@@ -196,11 +204,19 @@ const SendOutputRow = ({
           </div>
         </>
       )}
-      <div className={styles.amountContainer}>
+      {isSendAll && (
+        <label
+          htmlFor={`amountInput-${index}`}
+          className={styles.amountInputLabel}>
+          <T id="sendtab.sendAllAmountLabel" m="Amount" />
+        </label>
+      )}
+      <div
+        className={classNames(
+          styles.amountContainer,
+          isSendAll && styles.sendAllContainer
+        )}>
         <div className={styles.sendInputWrapper}>
-          <label htmlFor={`amountInput-${index}`}>
-            <T id="sendtab.amount" m="Amount" />
-          </label>
           {isSendAll ? (
             <Balance
               id={`amountInput-${index}`}
@@ -211,6 +227,8 @@ const SendOutputRow = ({
           ) : (
             <DcrInput
               id={`amountInput-${index}`}
+              newBiggerFontStyle
+              label={intl.formatMessage(messages.amountLabel)}
               className={styles.dcrInput}
               required={true}
               showErrors={error && error.amount}
@@ -218,7 +236,6 @@ const SendOutputRow = ({
               invalidMessage={error && error.amount}
               amount={amount}
               placeholder={intl.formatMessage(messages.amountPlaceholder)}
-              inputErrorsAreaClassName={styles.inputErrorArea}
               onChangeAmount={(e) =>
                 onValidateAmount({ index, atomValue: e.atomValue })
               }
@@ -243,44 +260,50 @@ const SendOutputRow = ({
 
       <div className={styles.destinationContainer}>
         <div className={classNames(styles.sendInputWrapper, styles.address)}>
-          <label htmlFor={`addressInput-${index}`}>
-            <T id="sendtab.sendTo" m="Send to" />
-          </label>
           {isSendSelf ? (
             // `selectWithBigFont` className is
             // temp solution to skinning from ReactSelectGlobal.css.
             // When react-select will be replaced by the `pi-ui` component,
             // this className can be deleted.
-            <ReceiveAccountsSelect
-              id={`addressInput-${index}`}
-              className="selectWithBigFont"
-              selectClassName={styles.receiveAccountSelect}
-              disabled={receiveAccountsSelectDisabled}
-              getAddressForSelected={true}
-              showAccountsButton={false}
-              onKeyDown={onKeyDown}
-              account={receiveAccount}
-            />
-          ) : (
             <>
-              <AddressInput
+              <label
+                htmlFor={`addressInput-${index}`}
+                className={styles.addressInputLabel}>
+                <T id="sendtab.sendTo" m="Send to" />
+              </label>
+              <ReceiveAccountsSelect
                 id={`addressInput-${index}`}
-                required={true}
-                autoFocus={index === 0}
-                showErrors={error && error.address}
-                invalid={error && error.address}
-                invalidMessage={error && error.address}
-                value={destination}
-                placeholder={intl.formatMessage(
-                  messages.destinationAddrPlaceholder
-                )}
-                className={styles.addressInput}
-                inputErrorsAreaClassName={styles.inputErrorArea}
-                onChange={(e) =>
-                  onValidateAddress({ address: e.target.value, index })
-                }
+                className="selectWithBigFont"
+                selectClassName={styles.receiveAccountSelect}
+                disabled={receiveAccountsSelectDisabled}
+                getAddressForSelected={true}
+                showAccountsButton={false}
                 onKeyDown={onKeyDown}
+                account={receiveAccount}
               />
+            </>
+          ) : (
+            <AddressInput
+              newBiggerFontStyle
+              id={`addressInput-${index}`}
+              required={true}
+              label={intl.formatMessage(messages.addressLabel)}
+              autoFocus={index === 0}
+              showErrors={error && error.address}
+              invalid={error && error.address}
+              invalidMessage={error && error.address}
+              value={destination}
+              placeholder={intl.formatMessage(
+                messages.destinationAddrPlaceholder
+              )}
+              inputClassNames={classNames(
+                styles.addressInput,
+                error && error.address && styles.error
+              )}
+              onChange={(e) =>
+                onValidateAddress({ address: e.target.value, index })
+              }
+              onKeyDown={onKeyDown}>
               {!destination ? (
                 <Button
                   kind="secondary"
@@ -307,7 +330,7 @@ const SendOutputRow = ({
                   <div />
                 </Button>
               )}
-            </>
+            </AddressInput>
           )}
         </div>
         {getAddInputIcon({

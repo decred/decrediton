@@ -45,6 +45,7 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
           <T id="settings.proxy.location" m="Proxy Location" />
         </label>
         <SettingsTextInput
+          id="proxyLocationInput"
           value={tempSettings.proxyLocation}
           ariaLabelledBy="proxy-location"
           onChange={(e) =>

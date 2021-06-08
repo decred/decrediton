@@ -1,4 +1,4 @@
-import NumericInput from "./NumericInput/NumericInput";
+import NumericInput from "./NumericInput";
 import {
   restrictToStdDecimalNumber,
   limitFractionalDigits

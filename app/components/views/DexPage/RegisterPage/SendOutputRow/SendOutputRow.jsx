@@ -76,6 +76,7 @@ const SendOutputRow = ({
         />
       ) : (
         <AddressInput
+          id="addressInput"
           required={true}
           autoFocus={index === 0}
           showErrors={error && error.address}
@@ -106,6 +107,7 @@ const SendOutputRow = ({
         />
       ) : (
         <DcrInput
+          id="amountInput"
           className={classNames(styles.dcrInput)}
           required={true}
           showErrors={error && error.amount}

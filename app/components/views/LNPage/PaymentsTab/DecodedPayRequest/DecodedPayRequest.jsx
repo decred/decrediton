@@ -19,7 +19,11 @@ const DecodedPayRequest = ({
         <Balance amount={decoded.numAtoms} />
       </div>
     ) : (
-      <DcrInput amount={sendValue} onChangeAmount={onSendValueChanged} />
+      <DcrInput
+        id="sendValueInput"
+        amount={sendValue}
+        onChangeAmount={onSendValueChanged}
+      />
     )}
     {decoded.description ? (
       <div className={styles.description}>{decoded.description}</div>

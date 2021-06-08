@@ -96,6 +96,7 @@ const Blockchain = () => {
       <div className={styles.filters}>
         <div className={styles.searchByNameInput}>
           <TextInput
+            id="searchByNameInput"
             type="text"
             placeholder={intl.formatMessage(messages.filterByNamePlaceholder)}
             value={filterByName}

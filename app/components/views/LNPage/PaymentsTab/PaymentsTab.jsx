@@ -50,7 +50,11 @@ const PaymentsTab = ({ setTimeout }) => {
       <div className={styles.lnSendPayment}>
         <div>
           <T id="ln.paymentsTab.payReq" m="Payment Request" />
-          <TextInput value={payRequest} onChange={onPayRequestChanged} />
+          <TextInput
+            id="paymentRequestId"
+            value={payRequest}
+            onChange={onPayRequestChanged}
+          />
         </div>
         {!!decodingError && (
           <div className={styles.decodingError}>{decodingError || ""}</div>

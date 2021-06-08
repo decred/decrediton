@@ -59,6 +59,7 @@ const CreateWalletsPage = () => {
               />
             </div>
             <TextInput
+              id="walletNameInput"
               className={classNames("margin-top-m", styles.walletNameInput)}
               required
               value={walletName}

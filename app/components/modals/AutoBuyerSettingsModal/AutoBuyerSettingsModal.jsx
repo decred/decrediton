@@ -28,6 +28,7 @@ const AutoBuyerSettingsModal = ({
       <label className={styles.label}>
         <T id="vsp.autobuyer.balanceToMaintain" m="Balance to Maintain" />
         <DcrInput
+          id="balanceToMaintainInput"
           amount={balanceToMaintain?.value}
           onChangeAmount={setBalanceToMaintain}
           className={styles.balanceToMaintainInput}

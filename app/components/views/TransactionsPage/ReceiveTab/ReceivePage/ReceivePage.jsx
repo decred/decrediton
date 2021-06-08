@@ -12,6 +12,10 @@ const messages = defineMessages({
   amountPlaceholder: {
     id: "receive.amountPlaceholder",
     defaultMessage: "Amount"
+  },
+  amountLabel: {
+    id: "receive.requestedAmountLabel",
+    defaultMessage: "Requested Amount"
   }
 });
 
@@ -68,12 +72,11 @@ const ReceivePage = ({
               style.inputWrapper,
               style.amountInputWrapper
             )}>
-            <label htmlFor="amountInput">
-              <T id="receive.requestedAmountLabel" m="Requested Amount" />
-            </label>
             <div className={style.receiveSelectAmountInput}>
               <DcrInput
+                newBiggerFontStyle
                 id="amountInput"
+                label={intl.formatMessage(messages.amountLabel)}
                 className={style.requestedAmountInput}
                 required={false}
                 showErrors={error && error.amount}

@@ -275,9 +275,8 @@ test("test amount input", async () => {
   user.click(sendAllButton);
   expect(queryAmountInput()).not.toBeInTheDocument();
   expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
-    mockMixedAccount.spendableAndUnit
+    `${mockMixedAccount.spendableAndUnit}100% of Account Balance`
   );
-  expect(screen.getByText(/100% of account balance/i)).toBeInTheDocument();
   expect(addOutputButton.disabled).toBe(true);
 
   // construct tx
@@ -442,19 +441,18 @@ test("`Sending from unmixed account` is allowed", async () => {
   // valid amount but the source account is empty
   const amountInput = getAmountInput();
   user.type(amountInput, `${validAmount}`);
-  expect(screen.getByText(/0% of account balance/i)).toBeInTheDocument();
 
   // changing account while sending all mode is on
   // should change the amount accordingly click on send all amount button
   user.click(getSendAllButton());
   expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
-    mockEmptyAccount.spendableAndUnit
+    `${mockEmptyAccount.spendableAndUnit}100% of Account Balance`
   );
   user.click(screen.getByText(mockEmptyAccount.name));
   user.click(screen.getByText(mockAccount2.name));
   await wait(() =>
     expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
-      mockAccount2.spendableAndUnit
+      `${mockAccount2.spendableAndUnit}100% of Account Balance`
     )
   );
 });

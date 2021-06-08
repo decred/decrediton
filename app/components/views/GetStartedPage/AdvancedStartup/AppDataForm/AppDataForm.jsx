@@ -22,6 +22,7 @@ const AppDataForm = ({
     </Label>
     <Input className={styles.input}>
       <PathBrowseInput
+        id="fileInput"
         required
         type="directory"
         value={appdata}

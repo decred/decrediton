@@ -74,6 +74,7 @@ const StakePoolsAddForm = ({
           </div>
           <div className={styles.fieldValue}>
             <TextInput
+              id="apiKeyInput"
               required
               showErrors={hasFailedAttempt}
               placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}

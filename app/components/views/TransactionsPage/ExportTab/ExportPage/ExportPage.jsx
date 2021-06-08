@@ -17,6 +17,10 @@ const messages = defineMessages({
   destinationPlaceholder: {
     id: "export.destination.placeholder",
     defaultMessage: "Choose destination..."
+  },
+  destinationLabel: {
+    id: "export.destination.label",
+    defaultMessage: "Destination"
   }
 });
 
@@ -81,19 +85,17 @@ const ExportPage = ({
             onChange={onChangeSelectedExport}
           />
         </label>
-
-        <label>
-          <T id="export.destination" m="Destination" />
-          <PathBrowseInput
-            save
-            type="file"
-            className={styles.pathBrowseInput}
-            placeholder={intl.formatMessage(messages.destinationPlaceholder)}
-            value={destinationFile}
-            filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
-            onChange={(value) => setDestinationFile(value)}
-          />
-        </label>
+        <PathBrowseInput
+          id="destinationInput"
+          newBiggerFontStyle
+          save
+          type="file"
+          label={intl.formatMessage(messages.destinationLabel)}
+          placeholder={intl.formatMessage(messages.destinationPlaceholder)}
+          value={destinationFile}
+          filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
+          onChange={(value) => setDestinationFile(value)}
+        />
       </div>
       <div className={classNames(styles.exportAreaRight)}>
         <p

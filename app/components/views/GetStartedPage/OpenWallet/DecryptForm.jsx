@@ -30,6 +30,7 @@ const OpenWalletDecryptFormBodyBase = ({
       </Label>
       <Input>
         <PasswordInput
+          id="publicPassPhraseInput"
           autoFocus
           placeholder={intl.formatMessage(messages.publicPassphrasePlaceholder)}
           value={publicPassPhrase}

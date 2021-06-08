@@ -54,6 +54,7 @@ const MiscSettings = ({
           </div>
           <div className={styles.input}>
             <NumericInput
+              id="gapLimitInput"
               value={tempSettings.gapLimit}
               ariaLabelledBy="gap-limit-input"
               onChange={(e) =>

@@ -1,10 +1,12 @@
-import FloatInput from "./FloatInput";
-import IntegerInput from "./IntegerInput";
+import FloatInput from "../FloatInput";
+import IntegerInput from "../IntegerInput";
 import { MAX_DCR_AMOUNT, UNIT_DIVISOR } from "constants";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { ATOMS } from "constants";
 import * as sel from "selectors";
+import styles from "./DcrInput.module.css";
+import { classNames } from "pi-ui";
 
 /**
  * DcrInput provides a way to receive decred amount inputs. Instead of the usual
@@ -62,6 +64,7 @@ function DcrInput({ onChangeAmount, amount, ...props }) {
   return (
     <Comp
       {...props}
+      inputClassNames={classNames(styles.input, styles[currencyDisplay])}
       unit={currencyDisplay}
       value={value}
       onChange={onChange}

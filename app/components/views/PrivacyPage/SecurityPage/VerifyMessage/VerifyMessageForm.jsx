@@ -55,6 +55,7 @@ const VerifyMessageForm = ({
           </div>
           <div className={sharedStyles.securityPageFormRowField}>
             <TextInput
+              id="addressInput"
               required
               value={address}
               invalid={addressError}
@@ -71,6 +72,7 @@ const VerifyMessageForm = ({
           </div>
           <div className={sharedStyles.securityPageFormRowField}>
             <TextInput
+              id="signatureInput"
               required
               value={signature}
               invalid={signatureError}
@@ -89,6 +91,7 @@ const VerifyMessageForm = ({
           </div>
           <div className={sharedStyles.securityPageFormRowFieldMessage}>
             <TextInput
+              id="messageInput"
               required
               value={message}
               invalid={messageError}

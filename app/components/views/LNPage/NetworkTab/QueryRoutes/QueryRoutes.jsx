@@ -34,11 +34,15 @@ const QueryRoutes = ({
     <div className={styles.queryRoutes}>
       <div className="memo">
         <T id="ln.networkTab.queryRoutes.nodeID" m="Node ID" />
-        <TextInput value={nodeID} onChange={nodeChanged} />
+        <TextInput id="nodeIDInput" value={nodeID} onChange={nodeChanged} />
       </div>
       <div className="value">
         <T id="ln.networkTab.queryRoutes.value" m="Value" />
-        <DcrInput amount={amount} onChangeAmount={amtChanged} />
+        <DcrInput
+          id="amountInput"
+          amount={amount}
+          onChangeAmount={amtChanged}
+        />
       </div>
       <KeyBlueButton
         className={styles.queryRoutesButton}

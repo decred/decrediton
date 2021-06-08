@@ -1,8 +1,8 @@
 import { wallet } from "wallet-preload-shim";
-import PathInput from "../PathInput/PathInput";
 import style from "./PathBrowseInput.module.css";
 import { PathButton } from "buttons";
 import { defineMessages, injectIntl } from "react-intl";
+import Input from "../Input";
 
 // Import this and pass one of the objects as a member of the filter prop
 // of PathBrowseInput
@@ -16,18 +16,7 @@ const FileBrowserFilterNames = defineMessages({
   all: { id: "fileBrowserTypes.all.name", defaultMessage: "All Files" }
 });
 
-const PathBrowseInput = ({
-  intl,
-  filters,
-  save,
-  type,
-  onChange,
-  required,
-  value,
-  placeholder,
-  showErrors,
-  ...props
-}) => {
+const PathBrowseInput = ({ intl, filters, save, type, onChange, ...props }) => {
   const selectDirectory = async () => {
     const fileBrowserFilters = (filters || []).map((f) => {
       return { ...f, name: intl.formatMessage(FileBrowserFilterNames[f.key]) };
@@ -54,19 +43,13 @@ const PathBrowseInput = ({
   };
 
   return (
-    <div className={style.pathInputAndButton}>
-      <div className={style.pathInputArea}>
-        <PathInput
-          required={required}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          showErrors={showErrors}
-          {...props}
-        />
-      </div>
+    <Input
+      type="text"
+      onChange={(e) => onChange(e.target.value)}
+      inputClassNames={style.textInput}
+      {...props}>
       <PathButton onClick={selectDirectory} />
-    </div>
+    </Input>
   );
 };
 

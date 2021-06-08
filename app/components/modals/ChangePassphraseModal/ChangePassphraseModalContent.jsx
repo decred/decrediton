@@ -24,6 +24,7 @@ const Modal = ({
         <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
       }>
       <PasswordInput
+        id="newPassphraseInput"
         required
         showErrors={newPassphrase !== null && !isValid}
         placeholder=""
@@ -35,6 +36,7 @@ const Modal = ({
     <PassphraseModalField
       label={<T id="changePassModal.confirm" m="Confirm" />}>
       <PasswordInput
+        id="confirmPrivPassInput"
         required
         showErrors={confirmPrivPass !== null && !isValid}
         placeholder=""

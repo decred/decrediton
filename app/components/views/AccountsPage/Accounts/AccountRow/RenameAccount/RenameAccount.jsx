@@ -29,6 +29,7 @@ const RenameAccount = ({
       </div>
       <div className={styles.renameValue}>
         <TextInput
+          id="newAccountName"
           required
           autoFocus
           key={`rename${account.accountNumber}`}

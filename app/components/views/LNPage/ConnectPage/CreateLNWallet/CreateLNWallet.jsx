@@ -114,6 +114,7 @@ const CreateLNWallet = ({
       </div>
       <div className={styles.fileInput}>
         <PathBrowseInput
+          id="fileInput"
           open
           type="file"
           value={scbFile}
