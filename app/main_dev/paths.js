@@ -94,7 +94,7 @@ export function getCertsPath(name, custombinpath) {
   const binPath = custombinpath
     ? custombinpath
     : process.env.NODE_ENV === "development"
-    ? path.join(__dirname, "..", "..", "certs")
+    ? path.join(__dirname, "..", "certs")
     : path.join(process.resourcesPath, "certs");
 
   return binPath;
