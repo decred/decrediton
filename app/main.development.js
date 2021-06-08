@@ -682,7 +682,7 @@ app.on("ready", async () => {
       nodeIntegration: false,
       devTools: true,
       contextIsolation: true,
-      webSecurity: false,
+      webSecurity: true,
       enableRemoteModule: false,
       preload: preloadPath
     },
