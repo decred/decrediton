@@ -1,4 +1,4 @@
-import * as wallet from "wallet";
+import { wallet } from "wallet-preload-shim";
 import { useNetwork } from "hooks";
 import { Link, Button } from "pi-ui";
 
