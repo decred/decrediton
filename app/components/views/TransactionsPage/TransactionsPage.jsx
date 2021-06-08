@@ -7,7 +7,7 @@ import {
   default as HistoryTab,
   HistoryTabHeader
 } from "./HistoryTab/HistoryTab";
-import { default as ExportTab, ExportTabHeader } from "./ExportTab/ExportTab";
+import { ExportTab, ExportTabHeader } from "./ExportTab";
 import { TRANSACTIONS_ICON } from "constants";
 
 const PageHeader = () => (

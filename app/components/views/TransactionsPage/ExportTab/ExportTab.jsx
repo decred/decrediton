@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ExportPage from "./ExportPage/ExportPage";
+import ExportPage from "./ExportPage";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { availableExports } from "./helpers";
