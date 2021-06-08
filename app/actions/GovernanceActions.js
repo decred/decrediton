@@ -548,14 +548,17 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     );
     // if voteAndEligibleTickets are already cached we just get them.
     // Otherwise we get them from politea server and cache.
+
+    // XXX we could skip the following eligible tickets logic if proposal is
+    // still in discussion phase.
     if (voteAndEligibleTickets) {
       walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
       currentVoteChoice = voteAndEligibleTickets.voteChoice;
       hasEligibleTickets =
         walletEligibleTickets && walletEligibleTickets.length > 0;
     } else {
-      const voteReq = await pi.getProposalVotes({ piURL, token });
-      const { startvotereply, castvotes } = voteReq.data;
+      const { data } = await pi.getProposalVotes({ piURL, token });
+      const { startvotereply, castvotes } = data;
       walletEligibleTickets = await getProposalEligibleTickets(
         proposal.token,
         startvotereply.eligibletickets,
@@ -688,7 +691,7 @@ export const updateVoteChoice = (
     });
 
     // cast vote into pi server
-    const response = await pi.castVotes({ piURL, votes });
+    const response = await pi.castBallot({ piURL, votes });
     const { error: voteCastError } =
       response.data.receipts.find(({ error }) => error) || {};
 

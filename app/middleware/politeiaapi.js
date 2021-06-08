@@ -33,8 +33,8 @@ export const getVotesInventory = ({ piURL }, cb) =>
     .catch((error) => cb(null, error));
 
 // votes must be an array of Vote()-produced objects.
-export const castVotes = ({ piURL, votes }, cb) =>
-  POST(piURL, "/v1/proposals/castvotes", { votes })
+export const castBallot = ({ piURL, votes }, cb) =>
+  POST(piURL, "/ticketvote/v1/castballot", { votes })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
