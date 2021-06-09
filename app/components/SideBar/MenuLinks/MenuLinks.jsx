@@ -25,7 +25,9 @@ const MenuLinks = () => {
         )}>
         {menuLinks.map((menuLink, index) => {
           const menuLinkLabel = () => (
-            <div className={styles.menuContent}>
+            <div
+              className={styles.menuContent}
+              data-testid={`menuLinkContent-${menuLink.icon}`}>
               <div
                 className={classNames(
                   styles.icon,
@@ -33,11 +35,7 @@ const MenuLinks = () => {
                 )}
               />
               {expandSideBar && !sidebarOnBottom && (
-                <div
-                  className={styles.menuLinkLabel}
-                  data-testid={`menuLinkLabel-${menuLink.icon}`}>
-                  {menuLink.link}
-                </div>
+                <div className={styles.menuLinkLabel}>{menuLink.link}</div>
               )}
             </div>
           );

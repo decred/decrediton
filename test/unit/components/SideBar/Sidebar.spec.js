@@ -72,15 +72,15 @@ const testBalances = [
   }
 ];
 const mockBalances = (selectors.balances = jest.fn(() => testBalances));
-const getMenuLinkByTestId = (testId, sidebarOnBottom, expandSideBar) => {
-  const menuLinkLabel = screen.getByTestId(testId);
-  let menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+const getMenuContentByTestId = (testId, sidebarOnBottom, expandSideBar) => {
+  const menuLinkContent = screen.getByTestId(testId);
+  let menuLink = menuLinkContent.parentNode.parentNode.parentNode;
   if (!sidebarOnBottom && expandSideBar) {
-    menuLink = menuLinkLabel.parentNode.parentNode;
+    menuLink = menuLinkContent.parentNode.parentNode;
   }
   return {
     menuLink,
-    menuLinkLabel
+    menuLinkContent
   };
 };
 const expectToHaveDefaultMenuLinks = (params) => {
@@ -92,19 +92,19 @@ const expectToHaveDefaultMenuLinks = (params) => {
   } = params || {};
 
   const expectToHaveMenuLink = (testId, name, className, path) => {
-    const { menuLinkLabel, menuLink } = getMenuLinkByTestId(
+    const { menuLinkContent, menuLink } = getMenuContentByTestId(
       testId,
       sidebarOnBottom,
       expandSideBar
     );
     if (!sidebarOnBottom && expandSideBar) {
-      expect(menuLinkLabel).toHaveTextContent(name);
+      expect(menuLinkContent).toHaveTextContent(name);
     }
     // check tooltip
     if (!expandSideBar) {
-      expect(menuLinkLabel.previousSibling).toHaveTextContent(name);
+      expect(menuLinkContent.previousSibling).toHaveTextContent(name);
     }
-    expect(menuLink).toHaveClass(className);
+    expect(menuLinkContent.firstChild).toHaveClass(className);
     // test clicking
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
     user.click(menuLink);
@@ -113,65 +113,64 @@ const expectToHaveDefaultMenuLinks = (params) => {
   };
 
   expectToHaveMenuLink(
-    "menuLinkLabel-overview",
+    "menuLinkContent-overview",
     "Overview",
     "overviewIcon",
     "/home"
   );
   expectToHaveMenuLink(
-    "menuLinkLabel-transactions",
+    "menuLinkContent-transactions",
     "On-chain Transactions",
     "transactionsIcon",
     "/transactions"
   );
   expectToHaveMenuLink(
-    "menuLinkLabel-governance",
+    "menuLinkContent-governance",
     "Governance",
     "governanceIcon",
     "/governance"
   );
   if (!sidebarOnBottom || expandSideBar) {
     expectToHaveMenuLink(
-      "menuLinkLabel-tickets",
+      "menuLinkContent-tickets",
       "Staking",
       "ticketsIcon",
       "/tickets"
     );
     expectToHaveMenuLink(
-      "menuLinkLabel-accounts",
+      "menuLinkContent-accounts",
       "Accounts",
       "accountsIcon",
       "/accounts"
     );
     expectToHaveMenuLink(
-      "menuLinkLabel-securitycntr",
+      "menuLinkContent-securitycntr",
       "Privacy and Security",
       "securitycntrIcon",
       "/privacy"
     );
     if (isTrezorEnabled) {
       expectToHaveMenuLink(
-        "menuLinkLabel-trezor",
+        "menuLinkContent-trezor",
         "Trezor",
         "trezorIcon",
         "/trezor"
       );
     } else {
       expect(
-        screen.queryByTestId("menuLinkLabel-trezor")
+        screen.queryByTestId("menuLinkContent-trezor")
       ).not.toBeInTheDocument();
     }
   }
-
   if (isLnEnabled) {
     expectToHaveMenuLink(
-      "menuLinkLabel-ln",
+      "menuLinkContent-ln",
       "Lightning Transactions",
       "lnIcon",
       "/ln"
     );
   } else {
-    expect(screen.queryByTestId("menuLinkLabel-ln")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("menuLinkContent-ln")).not.toBeInTheDocument();
   }
 };
 
@@ -466,11 +465,10 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
 });
 
 test("tests notification icon on the menu link", () => {
-  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting = jest.fn(
-    () => true
-  ));
+  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting =
+    jest.fn(() => true));
   render(<SideBar />);
-  const { menuLink } = getMenuLinkByTestId("menuLinkLabel-governance");
+  const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");
   expect(mockNewProposalsStartedVoting).toHaveBeenCalled();
   mockNewProposalsStartedVoting.mockRestore();
@@ -478,7 +476,7 @@ test("tests notification icon on the menu link", () => {
 
 test("tests tabbedPage location", () => {
   const { history } = render(<SideBar />);
-  const { menuLink } = getMenuLinkByTestId("menuLinkLabel-transactions");
+  const { menuLink } = getMenuContentByTestId("menuLinkContent-transactions");
   expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
   history.push("transactions/send");
   expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
@@ -486,18 +484,18 @@ test("tests tabbedPage location", () => {
 
 test("none of the menu links should be selected when clicking on the settings button", () => {
   render(<SideBar />);
-  let menuLinkLabels = screen.getAllByTestId(/menuLinkLabel-/i);
-  menuLinkLabels.map((menuLinkLabel) => {
-    const menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+  let menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
+  menuLinkContents.map((menuLinkContent) => {
+    const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
   });
-  const { menuLink } = getMenuLinkByTestId("menuLinkLabel-tickets");
+  const { menuLink } = getMenuContentByTestId("menuLinkContent-tickets");
   user.click(menuLink);
 
   // click on Staking
-  menuLinkLabels = screen.getAllByTestId(/menuLinkLabel-/i);
-  menuLinkLabels.map((menuLinkLabel) => {
-    const menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+  menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
+  menuLinkContents.map((menuLinkContent) => {
+    const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
     if (menuLink.textContent == "Staking") {
       expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
     } else {
@@ -507,9 +505,9 @@ test("none of the menu links should be selected when clicking on the settings bu
 
   // click on settings
   user.click(screen.getByRole("link", { name: "settings" }));
-  menuLinkLabels = screen.getAllByTestId(/menuLinkLabel-/i);
-  menuLinkLabels.map((menuLinkLabel) => {
-    const menuLink = menuLinkLabel.parentNode.parentNode.parentNode;
+  menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
+  menuLinkContents.map((menuLinkContent) => {
+    const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
   });
 });
