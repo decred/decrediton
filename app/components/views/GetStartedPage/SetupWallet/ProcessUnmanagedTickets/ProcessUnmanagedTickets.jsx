@@ -16,7 +16,8 @@ export default ({
   description,
   noVspSelection,
   isProcessingUnmanaged,
-  error
+  error,
+  availableVSPs
 }) => {
   const [isValid, setIsValid] = useState(false);
   const [vsp, setVSP] = useState(null);
@@ -51,7 +52,10 @@ export default ({
       <Subtitle className={styles.subtitle} title={title} />
       <div className={styles.description}>{description}</div>
       {!noVspSelection && (
-        <VSPSelect className={styles.vspSelect} {...{ onChange: setVSP }} />
+        <VSPSelect
+          className={styles.vspSelect}
+          {...{ onChange: setVSP, options: availableVSPs }}
+        />
       )}
       {error && <div className="error">{error}</div>}
       <div className={styles.buttonWrapper}>
