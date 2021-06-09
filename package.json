@@ -33,8 +33,6 @@
     "package-mac": "npm run build && ./node_modules/.bin/electron-builder build --mac",
     "package-all": "npm run build && ./node_modules/.bin/electron-builder build -mwl",
     "package-dev-linux": "npm run build && ./node_modules/.bin/electron-builder build --linux tar.gz",
-    "cleanup": "mop -v",
-    "flow": "flow",
     "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
     "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
