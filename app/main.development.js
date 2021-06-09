@@ -686,7 +686,7 @@ app.on("ready", async () => {
     webPreferences: {
       nodeIntegration: false,
       devTools: true,
-      contextIsolation: false,
+      contextIsolation: true,
       webSecurity: false,
       enableRemoteModule,
       preload: preloadPath

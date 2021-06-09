@@ -10,7 +10,7 @@ import {
 import { getVSPTicketsByFeeStatus } from "./VSPActions";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
-import { hexToBytes, strHashToRaw, rawHashToHex } from "helpers";
+import { hexToBytes, strHashToRaw } from "helpers";
 import {
   RECENT_TX_COUNT,
   BATCH_TX_COUNT,
@@ -41,13 +41,13 @@ export const toggleGetTransactions = () => (dispatch, getState) => {
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach((tx) => {
-    tx.tx.getCreditsList().forEach((credit) => {
-      if (accountsToUpdate.find(eq(credit.getAccount())) === undefined)
-        accountsToUpdate.push(credit.getAccount());
+    tx.credits.forEach((credit) => {
+      if (accountsToUpdate.find(eq(credit.account)) === undefined)
+        accountsToUpdate.push(credit.account);
     });
-    tx.tx.getDebitsList().forEach((debit) => {
-      if (accountsToUpdate.find(eq(debit.getPreviousAccount())) === undefined)
-        accountsToUpdate.push(debit.getPreviousAccount());
+    tx.debits.forEach((debit) => {
+      if (accountsToUpdate.find(eq(debit.previousAccount)) === undefined)
+        accountsToUpdate.push(debit.previousAccount);
     });
   });
   return accountsToUpdate;
@@ -58,8 +58,8 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
 export const getNewAccountAddresses = (txs) => (dispatch) => {
   const acctAddressUpdated = [];
   txs.forEach((tx) => {
-    tx.tx.getCreditsList().forEach((credit) => {
-      const acctNumber = credit.getAccount();
+    tx.credits.forEach((credit) => {
+      const acctNumber = credit.account;
       // if account address not updated yet, update it
       if (acctAddressUpdated.find(eq(acctNumber)) === undefined) {
         acctAddressUpdated.push(acctNumber);
@@ -392,7 +392,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
           // always include vote or revocation and mark ticket as voted so we
           // don't include it in the recent list
           const decodedSpender = wallet.decodeRawTransaction(
-            Buffer.from(tx.tx.getTransaction()),
+            Buffer.from(tx.rawTx, "hex"),
             chainParams
           );
           const spenderInputs = decodedSpender.inputs;
@@ -500,7 +500,7 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
   new Promise((resolve, reject) => {
     try {
       const decodedTx = wallet.decodeRawTransaction(
-        Buffer.from(tx.getTransaction()),
+        Buffer.from(tx.rawTx, "hex"),
         chainParams
       );
       const updatedOutputs = decodedTx.outputs.map(async (o) => {
@@ -514,7 +514,7 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
         return {
           address,
           value: o.value,
-          isChange: addrValidResp.getIsMine()
+          isChange: addrValidResp.isMine
         };
       });
       resolve(Promise.all(updatedOutputs));
@@ -541,7 +541,7 @@ const normalizeTx = async (walletService, chainParams, tx) => {
 
   // For regular tx we get the nonWalletoutputs so we can show them at
   // the overview.
-  const outputs = await getNonWalletOutputs(walletService, chainParams, tx.tx);
+  const outputs = await getNonWalletOutputs(walletService, chainParams, tx);
 
   return { ...tx, outputs };
 };
@@ -695,20 +695,17 @@ const getMissingStakeTxData = async (
   transaction
 ) => {
   let ticketTx, spenderTx, status;
-  const { txHash, txType, rawTx, tx } = transaction;
+  const { txHash, txType, rawTx } = transaction;
   if (txType === TICKET) {
     // This is currently a somewhat slow call in RPC mode due to having to check
     // in dcrd whether the ticket is live or not.
     const ticket = await wallet.getTicket(walletService, strHashToRaw(txHash));
     status = ticket.status;
-    const spenderHash = ticket.spender.getHash();
+    const spenderHash = ticket.spender.hash;
     if (spenderHash) {
       try {
-        const spender = await wallet.getTransaction(
-          walletService,
-          rawHashToHex(spenderHash)
-        );
-        spenderTx = spender.tx;
+        const spender = await wallet.getTransaction(walletService, spenderHash);
+        spenderTx = spender;
       } catch (error) {
         if (String(error).indexOf("NOT_FOUND") === -1) {
           // A NOT_FOUND error means the wallet hasn't recorded the spender of
@@ -719,7 +716,7 @@ const getMissingStakeTxData = async (
         }
       }
     }
-    ticketTx = tx;
+    ticketTx = transaction;
   } else {
     // vote/revoke
     const decodedSpender = wallet.decodeRawTransaction(
@@ -741,7 +738,7 @@ const getMissingStakeTxData = async (
       // tx which come from the gRPC call
       // walletService.getTransactions().getMinedTransactions().getTransactionsList()
       // at our wallet/service.js
-      ticketTx = ticket.tx;
+      ticketTx = ticket;
     } catch (error) {
       if (String(error).indexOf("NOT_FOUND") > -1) {
         // NOT_FOUND error means we have a vote/revocation tx recorded but not
@@ -753,7 +750,7 @@ const getMissingStakeTxData = async (
         throw error;
       }
     }
-    spenderTx = tx;
+    spenderTx = transaction;
   }
   return { ticket: ticketTx, spender: spenderTx, status };
 };

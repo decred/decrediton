@@ -54,7 +54,7 @@ beforeEach(() => {
   );
   mockGenerateSeed = wlActions.generateSeed = jest.fn(() => () =>
     Promise.resolve({
-      getSeedMnemonic: () => ""
+      seedMnemonic: ""
     })
   );
   selectors.maxWalletCount = jest.fn(() => 3);

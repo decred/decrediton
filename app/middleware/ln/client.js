@@ -2,6 +2,7 @@ process.env["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA";
 
 const grpc = require("@grpc/grpc-js");
 import fs from "fs";
+import { trackClient } from "middleware/grpc/clientTracking";
 
 const proto = require("./rpc_grpc_pb.js");
 const services = grpc.loadPackageDefinition(proto).lnrpc;
@@ -73,7 +74,7 @@ const getServiceClient = (clientClass) => async (
       if (err) {
         reject(err);
       } else {
-        resolve(client);
+        resolve(trackClient(client));
       }
     });
   });

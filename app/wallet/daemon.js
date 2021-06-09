@@ -1,4 +1,3 @@
-import Promise from "promise";
 import { ipcRenderer } from "electron";
 import { withLog as log, logOptionNoResponseData } from "./app";
 import { isString } from "lodash";

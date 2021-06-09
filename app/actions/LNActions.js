@@ -70,7 +70,7 @@ export const startDcrlnd = (
       } else if (acctResp.error) {
         throw acctResp.error;
       }
-      lnAccount = acctResp.getNextAccountResponse.getAccountNumber();
+      lnAccount = acctResp.getNextAccountResponse.accountNumber;
       creating = true;
     } catch (error) {
       dispatch({ error, type: LNWALLET_CREATEACCOUNT_FAILED });
@@ -333,13 +333,13 @@ const connectToLNWallet = (
     sel.walletService(getState()),
     lnWalletAddr
   );
-  if (!validResp.getIsValid()) {
+  if (!validResp.isValid) {
     throw new Error("Invalid address returned by lnwallet: " + lnWalletAddr);
   }
-  if (!validResp.getIsMine()) {
+  if (!validResp.isMine) {
     throw new Error("Wallet returned that address from lnwallet is not owned");
   }
-  const addrAccount = validResp.getAccountNumber();
+  const addrAccount = validResp.accountNumber;
   if (addrAccount != account) {
     throw new Error(
       `Wallet returned that address is not from the ln account; account=
@@ -378,7 +378,6 @@ const loadLNStartupInfo = () => (dispatch) => {
   dispatch(listLatestPayments());
   dispatch(listLatestInvoices());
   dispatch(subscribeToInvoices());
-  dispatch(createPaymentStream());
   dispatch(getScbInfo());
 };
 
@@ -402,8 +401,7 @@ export const updateLNWalletBalances = () => async (dispatch, getState) => {
     return;
   }
 
-  const resp = await ln.getWalletBalance(client);
-  const balances = resp.toObject();
+  const balances = await ln.getWalletBalance(client);
   dispatch({ balances, type: LNWALLET_BALANCE_UPDATED });
 };
 
@@ -416,8 +414,7 @@ export const updateLNChannelBalances = () => async (dispatch, getState) => {
     return;
   }
 
-  const resp = await ln.getChannelBalance(client);
-  const channelBalances = resp.toObject();
+  const channelBalances = await ln.getChannelBalance(client);
   dispatch({ channelBalances, type: LNWALLET_CHANNELBALANCE_UPDATED });
 };
 
@@ -443,16 +440,14 @@ export const updateChannelList = () => async (dispatch, getState) => {
     ln.listClosedChannels(client)
   ]);
 
-  const channels = results[0].getChannelsList().map((c) => {
-    const channel = c.toObject();
+  const channels = results[0].channels.map((channel) => {
     return {
       ...channel,
       channelPointURL: chanpointURL(channel.channelPoint)
     };
   });
 
-  const pendingOpen = results[1].getPendingOpenChannelsList().map((pc) => {
-    const extra = pc.toObject();
+  const pendingOpen = results[1].pendingOpenChannels.map((extra) => {
     return {
       ...extra,
       ...extra.channel,
@@ -461,8 +456,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
-  const pendingClose = results[1].getPendingClosingChannelsList().map((pc) => {
-    const extra = pc.toObject();
+  const pendingClose = results[1].pendingClosingChannels.map((extra) => {
     return {
       ...extra,
       ...extra.channel,
@@ -471,10 +465,8 @@ export const updateChannelList = () => async (dispatch, getState) => {
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
   });
-  const pendingForceClose = results[1]
-    .getPendingForceClosingChannelsList()
-    .map((pc) => {
-      const extra = pc.toObject();
+  const pendingForceClose = results[1].pendingForceClosingChannels.map(
+    (extra) => {
       return {
         ...extra,
         ...extra.channel,
@@ -483,22 +475,19 @@ export const updateChannelList = () => async (dispatch, getState) => {
         channelPointURL: chanpointURL(extra.channel.channelPoint),
         closingTxidURL: txURLBuilder(extra.closingTxid)
       };
-    });
-  const pendingWaitClose = results[1]
-    .getWaitingCloseChannelsList()
-    .map((pc) => {
-      const extra = pc.toObject();
-      return {
-        ...extra,
-        ...extra.channel,
-        pendingStatus: "waitclose",
-        remotePubkey: extra.channel.remoteNodePub,
-        channelPointURL: chanpointURL(extra.channel.channelPoint)
-      };
-    });
+    }
+  );
+  const pendingWaitClose = results[1].waitingCloseChannels.map((extra) => {
+    return {
+      ...extra,
+      ...extra.channel,
+      pendingStatus: "waitclose",
+      remotePubkey: extra.channel.remoteNodePub,
+      channelPointURL: chanpointURL(extra.channel.channelPoint)
+    };
+  });
 
-  const closedChannels = results[2].getChannelsList().map((c) => {
-    const channel = c.toObject();
+  const closedChannels = results[2].channels.map((channel) => {
     return {
       ...channel,
       channelPointURL: chanpointURL(channel.channelPoint),
@@ -572,8 +561,7 @@ const subscribeToInvoices = () => (dispatch, getState) => {
   if (!client) return;
 
   const sub = ln.subscribeToInvoices(client);
-  sub.on("data", (invoiceData) => {
-    const inv = ln.formatInvoice(invoiceData);
+  sub.on("data", (inv) => {
     const oldInvoices = getState().ln.invoices;
     const oldIdx = oldInvoices.findIndex((i) => i.addIndex === inv.addIndex);
     const newInvoices = [...oldInvoices];
@@ -613,9 +601,7 @@ export const subscribeChannelEvents = () => (dispatch, getState) => {
   if (!client) return;
 
   const sub = ln.subscribeChannelEvents(client);
-  sub.on("data", (eventData) => {
-    const event = eventData.toObject();
-
+  sub.on("data", (event) => {
     dispatch({ event, type: LNWALLET_CHANNEL_EVENT });
 
     // TODO: Ideally just modify the data instead of re-requesting the entire
@@ -640,21 +626,8 @@ export const LNWALLET_SENDPAYMENT_ATTEMPT = "LNWALLET_SENDPAYMENT_ATTEMPT";
 export const LNWALLET_SENDPAYMENT_SUCCESS = "LNWALLET_SENDPAYMENT_SUCCESS";
 export const LNWALLET_SENDPAYMENT_FAILED = "LNWALLET_SENDPAYMENT_FAILED";
 
-const createPaymentStream = () => (dispatch, getState) => {
-  const { client } = getState().ln;
-  let { payStream } = getState().ln;
-  if (!client) {
-    throw new Error("not connected to a ln wallet");
-  }
-
-  if (payStream) {
-    payStream.close();
-  }
-
-  payStream = ln.createPayStream(client);
-  payStream.on("data", (payData) => {
-    const pay = payData.toObject();
-
+const handlePaymentStream = (payStream) => (dispatch, getState) => {
+  payStream.on("data", (pay) => {
     // Look for outstanding payment requests send in the current wallet
     // session. If there are, notify waiting instances whether this payment
     // was completed or errored.
@@ -682,6 +655,7 @@ const createPaymentStream = () => (dispatch, getState) => {
       dispatch(listLatestPayments());
       setTimeout(() => dispatch(updateLNChannelBalances()), 1000);
       setTimeout(() => dispatch(updateChannelList()), 1000);
+      payStream.cancel();
     }
   });
   // TODO: Listen for onClose, etc
@@ -690,10 +664,7 @@ const createPaymentStream = () => (dispatch, getState) => {
 };
 
 export const sendPayment = (payReq, value) => (dispatch, getState) => {
-  const { payStream, client } = getState().ln;
-  if (!payStream) {
-    throw new Error("payment stream not created");
-  }
+  const { client } = getState().ln;
 
   return new Promise((resolve, reject) => {
     ln.decodePayReq(client, payReq)
@@ -707,7 +678,8 @@ export const sendPayment = (payReq, value) => (dispatch, getState) => {
           rhashHex,
           type: LNWALLET_SENDPAYMENT_ATTEMPT
         });
-        ln.sendPayment(payStream, payReq, value);
+        const payStream = ln.sendPayment(client, payReq, value);
+        dispatch(handlePaymentStream(payStream));
       })
       .catch((error) => {
         dispatch({ error, rhashHex: null, type: LNWALLET_SENDPAYMENT_FAILED });
@@ -763,8 +735,7 @@ export const openChannel = (node, localAmt, pushAmt) => async (
   try {
     await new Promise((resolve, reject) => {
       const chanStream = ln.openChannel(client, nodePubKey, localAmt, pushAmt);
-      chanStream.on("data", (updateData) => {
-        const update = updateData.toObject();
+      chanStream.on("data", (update) => {
         if (update.chanPending) {
           resolve();
           dispatch({ type: LNWALLET_OPENCHANNEL_CHANPENDING });
@@ -812,8 +783,7 @@ export const closeChannel = (channelPoint, force) => (dispatch, getState) => {
   };
 
   const closeStream = ln.closeChannel(client, txid, outputIdx, force);
-  closeStream.on("data", (data) => {
-    const closeData = data.toObject();
+  closeStream.on("data", (closeData) => {
     if (closeData.closePending) {
       dispatch({ type: LNWALLET_CLOSECHANNEL_CLOSEPENDING });
       dispatchUpdates();
@@ -849,13 +819,13 @@ export const fundWallet = (amount, accountNb, passphrase) => async (
       0,
       outputs
     );
-    const unsignedTx = txResp.getUnsignedTransaction();
+    const unsignedTx = txResp.unsignedTransaction;
     const signResp = await wallet.signTransaction(
       walletService,
       passphrase,
       unsignedTx
     );
-    const signedTx = signResp.getTransaction();
+    const signedTx = signResp.transaction;
     await wallet.publishTransaction(walletService, signedTx);
     dispatch({ type: LNWALLET_FUNDWALLET_SUCCESS });
     setTimeout(() => dispatch(updateLNWalletBalances(), 3000));

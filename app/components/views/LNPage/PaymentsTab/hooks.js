@@ -58,7 +58,7 @@ export function usePaymentsTab(setTimeout) {
       })
       .catch((error) => {
         setDecodedPayRequest(null);
-        setDecodingError(error);
+        setDecodingError(String(error));
       });
   }, [payRequest, decodePayRequest, checkExpired, setTimeout]);
 

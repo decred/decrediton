@@ -39,7 +39,7 @@ const SignMessage = ({ location, intl }) => {
     try {
       const resp = await onValidateAddress(address);
       setAddressError(
-        !resp.getIsValid() || !resp.isMine
+        !resp.isValid || !resp.isMine
           ? "Please enter a valid address owned by you"
           : null
       );

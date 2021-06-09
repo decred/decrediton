@@ -15,7 +15,6 @@ import {
 } from "constants";
 import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
-import { reverseRawHash } from "../helpers/byteActions";
 import shuffle from "lodash/fp/shuffle";
 import { mapArray } from "fp";
 
@@ -59,10 +58,7 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) =>
     wallet
       .getVSPTicketsByFeeStatus(getState().grpc.walletService, feeStatus)
       .then((response) => {
-        const hashesBytes = response.getTicketsHashesList();
-        const ticketsHashes = hashesBytes.map((bytesHash) =>
-          reverseRawHash(bytesHash)
-        );
+        const ticketsHashes = response.ticketHashes;
 
         // add fee status into our stake transactions map.
         const { stakeTransactions } = getState().grpc;
@@ -126,12 +122,12 @@ export const getVSPTrackedTickets = () => async (dispatch, getState) => {
           walletService,
           ticket.votingAddress
         );
-        ticket.votingAccount = voteAddrResp.getAccountNumber();
+        ticket.votingAccount = voteAddrResp.accountNumber;
         const commitAddrResp = await wallet.validateAddress(
           walletService,
           ticket.commitmentAddress
         );
-        ticket.commitmentAccount = commitAddrResp.getAccountNumber();
+        ticket.commitmentAccount = commitAddrResp.accountNumber;
       }
     }
 
@@ -360,12 +356,10 @@ export const setStakePoolInformation = (poolHost, apiKey, rescan) => async (
     const importScriptResponse = await dispatch(
       importScriptAttempt(response.data.data.Script)
     );
-    if (
-      importScriptResponse.getP2shAddress() !== response.data.data.TicketAddress
-    ) {
+    if (importScriptResponse.p2shAddress !== response.data.data.TicketAddress) {
       extraErrorData = {
         incongruentP2shAddress: true,
-        poolP2shAddress: importScriptResponse.getP2shAddress(),
+        poolP2shAddress: importScriptResponse.p2shAddress,
         scriptAddress: response.data.data.TicketAddress
       };
       throw new Error("Incongruent p2sh address returned by stakepool");
@@ -403,15 +397,15 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (
     daemon: { walletName }
   } = getState();
   const config = wallet.getWalletCfg(sel.isTestNet(getState()), walletName);
-  const voteChoicesConfig = voteChoices.getChoicesList().map((choice) => ({
-    agendaId: choice.getAgendaId(),
-    choiceId: choice.getChoiceId()
+  const voteChoicesConfig = voteChoices.choicesList.map((choice) => ({
+    agendaId: choice.agendaId,
+    choiceId: choice.choiceId
   }));
   const stakePoolConfigs = config.get(cfgConstants.STAKEPOOLS).map((config) =>
     config.Host === stakePool.Host
       ? {
           ...config,
-          VoteBits: voteChoices.getVotebits(),
+          VoteBits: voteChoices.votebits,
           VoteChoices: voteChoicesConfig
         }
       : config
@@ -446,7 +440,7 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (
     .setVoteChoices({
       apiUrl: stakePool.Host,
       apiToken: stakePool.ApiKey,
-      voteChoices: voteChoices.getVotebits()
+      voteChoices: voteChoices.votebits
     })
     .then((response) => {
       if (response.data.status == "success") {

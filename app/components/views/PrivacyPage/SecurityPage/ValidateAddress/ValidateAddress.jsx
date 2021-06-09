@@ -14,7 +14,7 @@ const ValidateAddress = () => {
     }
     try {
       const resp = await onValidateAddress(address);
-      setError(!resp.getIsValid() ? "Please enter a valid address" : null);
+      setError(!resp.isValid ? "Please enter a valid address" : null);
     } catch (e) {
       setError("Error: Address validation failed, please try again");
     }

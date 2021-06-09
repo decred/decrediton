@@ -1,11 +1,7 @@
 import { push as pushHistory } from "connected-react-router";
 import * as sel from "selectors";
 import { wallet, politeia as pi } from "wallet-preload-shim";
-import {
-  hexReversedHashToArray,
-  reverseRawHash,
-  politeiaMarkdownIndexMd
-} from "helpers";
+import { hexReversedHashToArray, politeiaMarkdownIndexMd } from "helpers";
 import { cloneDeep } from "fp";
 import {
   PROPOSAL_VOTING_ACTIVE,
@@ -105,18 +101,7 @@ const getProposalEligibleTickets = async (
       walletService,
       ticketHashesToByte(eligibleTickets)
     );
-    let tickets = commitedTicketsResp.getTicketaddressesList();
-
-    tickets = tickets.map((t) => ({
-      ticket: reverseRawHash(t.getTicket()),
-      address: t.getAddress()
-    }));
-
-    const ticketsArray = tickets.reduce((tickets, t) => {
-      tickets.push(t);
-      return tickets;
-    }, []);
-    return ticketsArray;
+    return commitedTicketsResp.ticketAddresses;
   };
 
   const eligibleTicketsObj = getEligibleTickets(token);
@@ -649,7 +634,7 @@ export const updateVoteChoice = (
     sel.walletService(getState()),
     address
   );
-  const accountNumber = response.getAccountNumber();
+  const accountNumber = response.accountNumber;
   // msg here needs to follow the same syntax as what is defined on
   // politeiavoter.
   const messages = walletEligibleTickets.map((t) => ({
@@ -683,13 +668,13 @@ export const updateVoteChoice = (
 
     const votes = [];
     const votesToCache = { token, walletEligibleTickets, voteChoice };
-    const sigs = signed.getRepliesList();
+    const sigs = signed.replies;
     walletEligibleTickets.forEach((t, i) => {
       const signature = sigs[i];
-      if (signature.getError() != "") {
-        return;
+      if (signature.error != "") {
+        throw signature.error;
       }
-      const hexSig = Buffer.from(signature.getSignature()).toString("hex");
+      const hexSig = Buffer.from(signature.signature).toString("hex");
       const votebit = voteChoice.bits.toString(16);
       const vote = { token, ticket: t.ticket, votebit, signature: hexSig };
       votes.push(vote);

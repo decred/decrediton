@@ -1,12 +1,13 @@
 import { wtclientrpc as wpb } from "middleware/ln/wtclient_pb";
 import { hexToBytes } from "helpers/byteActions.js";
+import { getClient } from "middleware/grpc/clientTracking";
 
 export const addTower = (wtClient, wtPubKey, addr) => {
   const request = new wpb.AddTowerRequest();
   request.setPubkey(hexToBytes(wtPubKey));
   request.setAddress(addr);
   return new Promise((resolve, reject) =>
-    wtClient.addTower(request, (err, resp) =>
+    getClient(wtClient).addTower(request, (err, resp) =>
       err ? reject(err) : resolve(resp.toObject())
     )
   );
@@ -15,7 +16,7 @@ export const addTower = (wtClient, wtPubKey, addr) => {
 export const listWatchtowers = (wtClient) => {
   const request = new wpb.ListTowersRequest();
   return new Promise((resolve, reject) =>
-    wtClient.listTowers(request, (err, resp) => {
+    getClient(wtClient).listTowers(request, (err, resp) => {
       if (err) {
         reject(err);
         return;
@@ -38,7 +39,7 @@ export const removeTower = (wtClient, wtPubKey) => {
   const request = new wpb.RemoveTowerRequest();
   request.setPubkey(hexToBytes(wtPubKey));
   return new Promise((resolve, reject) =>
-    wtClient.removeTower(request, (err, resp) =>
+    getClient(wtClient).removeTower(request, (err, resp) =>
       err ? reject(err) : resolve(resp.toObject())
     )
   );

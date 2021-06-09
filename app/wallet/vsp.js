@@ -1,4 +1,3 @@
-import Promise from "promise";
 import * as api from "../middleware/vspapi";
 import { withLog as log, withLogNoData } from "./index";
 import { ipcRenderer } from "electron";

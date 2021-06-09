@@ -132,7 +132,7 @@ const ExistingSeed = ({
       decodeSeed(getSeedWordsStr(updatedSeedWords))
         // if no errors happened we set the seed at our state machine
         .then((response) => {
-          setSeed(response.getDecodedSeed());
+          setSeed(response.decodedSeed);
           setError("");
         });
 

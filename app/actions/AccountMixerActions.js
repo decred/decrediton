@@ -1,4 +1,3 @@
-import Promise from "promise";
 import * as sel from "selectors";
 import { wallet } from "wallet-preload-shim";
 import {
@@ -186,8 +185,8 @@ export const createNeededAccounts = (
 
     // update accounts selectors
     dispatch(getAccountsAttempt(true));
-    const mixedNumber = mixedAccount.getNextAccountResponse.getAccountNumber();
-    const changeNumber = changeAccount.getNextAccountResponse.getAccountNumber();
+    const mixedNumber = mixedAccount.getNextAccountResponse.accountNumber;
+    const changeNumber = changeAccount.getNextAccountResponse.accountNumber;
 
     dispatch(
       setCoinjoinCfg({
@@ -250,7 +249,7 @@ export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
               return allAccts;
             }
             const coinjoinAcct = coinjoinSumByAcctResp.find(
-              (a) => a.getAccountNumber() === accountNumber
+              (a) => a.accountNumber === accountNumber
             );
             if (coinjoinAcct === undefined) {
               allAccts.push({
@@ -260,7 +259,7 @@ export const getCoinjoinOutputspByAcct = () => (dispatch, getState) =>
             } else {
               allAccts.push({
                 acctIdx: accountNumber,
-                coinjoinSum: coinjoinAcct.getCoinjoinTxsSum()
+                coinjoinSum: coinjoinAcct.coinjoinTxsSum
               });
             }
             return allAccts;

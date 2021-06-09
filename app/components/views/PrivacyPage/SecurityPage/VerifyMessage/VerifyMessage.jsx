@@ -43,9 +43,7 @@ const VerifyMessage = ({ intl }) => {
     }
     try {
       const resp = await onValidateAddress(address);
-      setAddressError(
-        !resp.getIsValid() ? "Please enter a valid address" : null
-      );
+      setAddressError(!resp.isValid ? "Please enter a valid address" : null);
     } catch (e) {
       setAddressError("Error: Address validation failed, please try again");
     }

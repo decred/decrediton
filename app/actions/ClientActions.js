@@ -225,31 +225,31 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
   const promises = accounts.map(async (account) => {
     const resp = await wallet.getBalance(
       walletService,
-      account.getAccountNumber(),
+      account.accountNumber,
       0
     );
     return {
-      accountNumber: account.getAccountNumber(),
-      accountName: account.getAccountName(),
-      externalKeys: account.getExternalKeyCount(),
-      internalKeys: account.getInternalKeyCount(),
-      importedKeys: account.getImportedKeyCount(),
-      encrypted: account.getAccountEncrypted(),
-      unlocked: account.getAccountUnlocked(),
-      hidden: !!hiddenAccounts.find(eq(account.getAccountNumber())),
+      accountNumber: account.accountNumber,
+      accountName: account.accountName,
+      externalKeys: account.externalKeyCount,
+      internalKeys: account.internalKeyCount,
+      importedKeys: account.importedKeyCount,
+      encrypted: account.accountEncrypted,
+      unlocked: account.accountUnlocked,
+      hidden: !!hiddenAccounts.find(eq(account.accountNumber)),
       HDPath:
         "m / 44' / " +
         chainParams.HDCoinType +
         "' / " +
-        account.getAccountNumber() +
+        account.accountNumber +
         "'",
-      total: resp.getTotal(),
-      spendable: resp.getSpendable(),
-      immatureReward: resp.getImmatureReward(),
-      immatureStakeGeneration: resp.getImmatureStakeGeneration(),
-      lockedByTickets: resp.getLockedByTickets(),
-      votingAuthority: resp.getVotingAuthority(),
-      unconfirmed: resp.getUnconfirmed()
+      total: resp.total,
+      spendable: resp.spendable,
+      immatureReward: resp.immatureReward,
+      immatureStakeGeneration: resp.immatureStakeGeneration,
+      lockedByTickets: resp.lockedByTickets,
+      votingAuthority: resp.votingAuthority,
+      unconfirmed: resp.unconfirmed
     };
   });
 
@@ -267,13 +267,13 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (
 ) => {
   const updatedBalance = {
     accountNumber,
-    total: getBalanceResponse.getTotal(),
-    spendable: getBalanceResponse.getSpendable(),
-    immatureReward: getBalanceResponse.getImmatureReward(),
-    immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
-    lockedByTickets: getBalanceResponse.getLockedByTickets(),
-    votingAuthority: getBalanceResponse.getVotingAuthority(),
-    unconfirmed: getBalanceResponse.getUnconfirmed()
+    total: getBalanceResponse.total,
+    spendable: getBalanceResponse.spendable,
+    immatureReward: getBalanceResponse.immatureReward,
+    immatureStakeGeneration: getBalanceResponse.immatureStakeGeneration,
+    lockedByTickets: getBalanceResponse.lockedByTickets,
+    votingAuthority: getBalanceResponse.votingAuthority,
+    unconfirmed: getBalanceResponse.unconfirmed
   };
 
   dispatch(updateAccount(updatedBalance));
@@ -320,7 +320,7 @@ export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) =>
     wallet
       .bestBlock(sel.walletService(getState()))
       .then(async (resp) => {
-        dispatch({ height: resp.getHeight(), type: GETBESTBLOCK_SUCCESS });
+        dispatch({ height: resp.height, type: GETBESTBLOCK_SUCCESS });
         if (cb) {
           await dispatch(cb());
           return resolve();
@@ -343,7 +343,7 @@ function getNetworkSuccess(getNetworkResponse) {
     const { testnet, mainnet } = getState().grpc;
     const { currentSettings } = getState().settings;
     const network = currentSettings.network;
-    const currentNetwork = getNetworkResponse.getActiveNetwork();
+    const currentNetwork = getNetworkResponse.activeNetwork;
     // XXX remove network magic numbers here
     let networkStr = "";
     if (
@@ -414,10 +414,9 @@ export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
   dispatch({ type: GETACCOUNTS_ATTEMPT });
   try {
     const response = await wallet.getAccounts(sel.walletService(getState()));
-    if (startup)
-      await dispatch(getAccountsBalances(response.getAccountsList()));
+    if (startup) await dispatch(getAccountsBalances(response.accountsList));
     dispatch({
-      accounts: response.getAccountsList(),
+      accounts: response.accountsList,
       response,
       type: GETACCOUNTS_SUCCESS
     });
@@ -515,10 +514,10 @@ export function updateBlockTimeSince() {
     const { recentBlockTimestamp } = getState().grpc;
     if (
       transactionNtfnsResponse !== null &&
-      transactionNtfnsResponse.getAttachedBlocksList().length > 0
+      transactionNtfnsResponse.attachedBlocksList.length > 0
     ) {
-      const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
-      const lastBlockTimestamp = attachedBlocks[0].getTimestamp();
+      const attachedBlocks = transactionNtfnsResponse.attachedBlocksList;
+      const lastBlockTimestamp = attachedBlocks[0].timestamp;
       if (recentBlockTimestamp != lastBlockTimestamp) {
         dispatch({
           recentBlockTimestamp: lastBlockTimestamp,
@@ -629,9 +628,9 @@ export const getVoteChoicesAttempt = (stakePool) => (dispatch, getState) => {
       if (stakePool) {
         dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
       }
-      const voteChoicesConfig = voteChoices.getChoicesList().map((choice) => ({
-        agendaId: choice.getAgendaId(),
-        choiceId: choice.getChoiceId()
+      const voteChoicesConfig = voteChoices.choicesList.map((choice) => ({
+        agendaId: choice.agendaId,
+        choiceId: choice.choiceId
       }));
       dispatch({ voteChoicesConfig, type: GETVOTECHOICES_SUCCESS });
     })
@@ -771,7 +770,7 @@ export const getAcctSpendableBalance = (acctId) => async (
     acctId,
     0
   );
-  return acct.getSpendable();
+  return acct.spendable;
 };
 
 export const MIXERACCOUNTS_SPENDABLE_BALANCE =

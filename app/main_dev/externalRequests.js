@@ -30,14 +30,6 @@ import {
 
 export const DEX_LOCALPAGE = "127.0.0.1:5760";
 
-// These are the requests allowed when the standard privacy mode is selected.
-export const STANDARD_EXTERNAL_REQUESTS = [
-  EXTERNALREQUEST_NETWORK_STATUS,
-  EXTERNALREQUEST_STAKEPOOL_LISTING,
-  EXTERNALREQUEST_UPDATE_CHECK,
-  EXTERNALREQUEST_DCRDATA
-];
-
 let allowedURLs = [];
 let allowedExternalRequests = {};
 let logger;
