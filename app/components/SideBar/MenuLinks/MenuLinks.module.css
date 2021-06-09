@@ -8,9 +8,6 @@
   overflow: visible !important;
 }
 .tab {
-  background-position: 13px 50%;
-  background-size: 22px;
-  background-repeat: no-repeat;
   height: 56px;
   min-height: 56px !important;
   margin-top: 0 !important;
@@ -18,37 +15,54 @@
   padding-left: 0 !important;
   font-size: 15px !important;
 }
-.tabs.expanded .tab span {
-  padding-left: 55px !important;
+.tab span {
+  height: inherit;
+}
+.tab.disabled {
+  cursor: not-allowed;
+}
+.menuContent {
+  display: flex;
+  flex-direction: row;
 }
 .tabs.onBottom.expanded .tab span {
   padding-left: 0 !important;
 }
-.tab.ticketsIcon {
+.icon {
+  background-position: 13px 50%;
+  background-size: 22px;
+  background-repeat: no-repeat;
+  width: 56px;
+  height: 56px;
+}
+.tab.disabled .icon{
+  opacity: 0.4;
+}
+.icon.ticketsIcon {
   background-image: var(--menu-tickets);
 }
-.tab.transactionsIcon {
+.icon.transactionsIcon {
   background-image: var(--menu-transactions);
 }
-.tab.trezorIcon {
+.icon.trezorIcon {
   background-image: var(--menu-trezor);
 }
-.tab.accountsIcon {
+.icon.accountsIcon {
   background-image: var(--menu-accounts);
 }
-.tab.securitycntrIcon {
+.icon.securitycntrIcon {
   background-image: var(--menu-privacy);
 }
-.tab.overviewIcon {
+.icon.overviewIcon {
   background-image: var(--menu-overview);
 }
-.tab.governanceIcon {
+.icon.governanceIcon {
   background-image: var(--menu-governance);
 }
-.tab.lnIcon {
+.icon.lnIcon {
   background-image: var(--menu-ln);
 }
-.tab.dexIcon {
+.icon.dexIcon {
   background-image: var(--menu-dex);
 }
 .tab.notificationIcon::before {
@@ -68,9 +82,18 @@
   background-color: var(--stroke-color-focused);
 }
 .menuLinkLabel {
-  width: 56px;
+  width: 55px;
   height: 56px;
   line-height: 56px;
+}
+.tabs.expanded .menuLinkLabel {
+  width: auto;
+  padding-right: 10px;
+}
+.tab.disabled .tooltip {
+    width: 18rem;
+    white-space: break-spaces;
+    text-align: center;
 }
 @media screen and (max-width: 768px) {
   .tabs {
@@ -79,10 +102,13 @@
   .tab {
     height: 64px;
     width: 64px;
-    background-position: 50%;
     margin-right: 0 !important;
     padding: 0 !important;
   }
+.icon {
+background-position: 50% 60%;
+    width: 64px;
+}
   .tab.notificationIcon::before {
     margin-left: 33px;
     margin-top: -14px;
