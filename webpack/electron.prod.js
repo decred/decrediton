@@ -9,6 +9,8 @@ module.exports = {
   // Generate code for electron's ipc-main process.
   target: "electron-main",
 
+  mode: "production",
+
   devtool: "source-map",
 
   entry: [ "@babel/polyfill", "./app/main.development" ],

@@ -3,16 +3,16 @@
  * production environment.
  */
 
-import path from "path";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import TerserPlugin from "terser-webpack-plugin";
-import merge from "webpack-merge";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import CopyWebpackPlugin from "copy-webpack-plugin";
-import baseConfig from "./ui.base";
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const merge = require("webpack-merge").default;
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const baseConfig = require("./ui.base");
 const webpack = require("webpack");
 
-const config = merge(baseConfig, {
+module.exports = merge(baseConfig, {
   devtool: "cheap-module-source-map",
 
   entry: ["@babel/polyfill", "./app/index"],
@@ -82,5 +82,3 @@ const config = merge(baseConfig, {
     ]
   }
 });
-
-export default config;

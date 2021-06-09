@@ -3,12 +3,12 @@
  * separate iframe in the wallet.
  */
 
-import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
-import path from "path";
-import webpack from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import CopyWebpackPlugin from "copy-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     mode: "production",

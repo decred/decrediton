@@ -2,8 +2,8 @@
  * Base webpack config. This is merged with other env-specific configs.
  */
 
-import path from "path";
-import webpack from "webpack";
+const path = require("path");
+const webpack = require("webpack");
 
 // We use this local implementation of the NodePolyfillPlugin instead of
 // importing the existing implementation from
@@ -29,7 +29,7 @@ class NodePolyfillPlugin {
   }
 }
 
-export default {
+module.exports = {
   mode: "production",
 
   target: "web",
