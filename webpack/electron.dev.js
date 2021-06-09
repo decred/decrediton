@@ -3,7 +3,7 @@
  */
 
 const merge = require("webpack-merge").default;
-const baseConfig = require("./webpack.config.electron.production.js");
+const baseConfig = require("./electron.prod.js");
 
 module.exports = merge(baseConfig, {
   mode: "development",

@@ -15,7 +15,7 @@ module.exports = {
 
   // 'main.js' in root
   output: {
-    path: path.resolve(__dirname, "app"),
+    path: path.resolve(__dirname, "../app"),
     filename: "main.js"
   },
 
@@ -56,9 +56,9 @@ module.exports = {
       "node_modules"
     ],
     alias: {
-      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js")),
-      fetchModule: path.resolve(path.join(__dirname, "node_modules/electron-fetch/lib/index.js")),
-      walletCrypto: path.resolve(__dirname, "app/wallet/crypto.js")
+      ws: path.resolve(path.join(__dirname, "../node_modules/ws/index.js")),
+      fetchModule: path.resolve(path.join(__dirname, "../node_modules/electron-fetch/lib/index.js")),
+      walletCrypto: path.resolve(__dirname, "../app/wallet/crypto.js")
     }
   }
 };

@@ -18,7 +18,7 @@ module.exports = {
 
     output: {
       filename: "wallet-preload.js",
-      path: path.join(__dirname, "app/dist"),
+      path: path.join(__dirname, "../app/dist"),
       publicPath: "./",
       library: {
         name: "_decrediton",
@@ -38,8 +38,8 @@ module.exports = {
 
     resolve: {
         alias: {
-          fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js"),
-          walletCrypto: path.resolve(__dirname, "app/wallet/crypto.js")
+          fetchModule: path.resolve(__dirname, "../app/helpers/fetchModule.js"),
+          walletCrypto: path.resolve(__dirname, "../app/wallet/crypto.js")
         },
         modules: ["node_modules"]
     },

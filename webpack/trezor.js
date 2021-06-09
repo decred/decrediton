@@ -21,7 +21,7 @@ module.exports = {
 
     output: {
       filename: "trezor-iframe.js",
-      path: path.join(__dirname, "app/dist-trezor"),
+      path: path.join(__dirname, "../app/dist-trezor"),
       publicPath: "./"
     },
 

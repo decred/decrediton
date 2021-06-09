@@ -9,7 +9,7 @@ import TerserPlugin from "terser-webpack-plugin";
 import merge from "webpack-merge";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import baseConfig from "./webpack.config.base";
+import baseConfig from "./ui.base";
 const webpack = require("webpack");
 
 const config = merge(baseConfig, {
@@ -18,7 +18,7 @@ const config = merge(baseConfig, {
   entry: ["@babel/polyfill", "./app/index"],
 
   output: {
-    path: path.join(__dirname, "app/dist"),
+    path: path.join(__dirname, "../app/dist"),
     publicPath: "../dist/"
   },
 
