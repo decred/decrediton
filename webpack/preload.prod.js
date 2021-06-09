@@ -41,7 +41,7 @@ module.exports = {
           fetchModule: path.resolve(__dirname, "../app/helpers/fetchModule.js"),
           walletCrypto: path.resolve(__dirname, "../app/wallet/crypto.js")
         },
-        modules: ["node_modules"]
+        modules: [ "app", "node_modules" ]
     },
 
     plugins: [

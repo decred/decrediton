@@ -54,10 +54,9 @@ module.exports = {
 
   resolve: {
     extensions: [ ".js", ".jsx", ".json", ".node" ],
-    modules: [
-      "node_modules"
-    ],
+    modules: [ path.resolve(__dirname, "../app"), "node_modules" ],
     alias: {
+      sbffi: path.resolve(path.join(__dirname, "../node_modules/sbffi")),
       ws: path.resolve(path.join(__dirname, "../node_modules/ws/index.js")),
       fetchModule: path.resolve(path.join(__dirname, "../node_modules/electron-fetch/lib/index.js")),
       walletCrypto: path.resolve(__dirname, "../app/wallet/crypto.js")
