@@ -11,10 +11,11 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import { spawn } from "child_process";
 import fs from "fs";
+import minimist from "minimist";
 
 import config from "./webpack/ui.dev.js";
 
-const argv = require("minimist")(process.argv.slice(2));
+const argv = minimist(process.argv.slice(2));
 
 const app = express();
 const compiler = webpack(config);

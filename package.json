@@ -11,7 +11,7 @@
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:@babel/register --require ./test/setup.js ./test/e2e.js",
     "lint": "./node_modules/.bin/eslint app --ext .js --ext .jsx && ./node_modules/.bin/eslint test --ext .js && ./node_modules/.bin/stylelint 'app/**/*.css'",
     "lint-fix": "./node_modules/.bin/eslint app --ext .js --ext .jsx --fix && ./node_modules/.bin/eslint test --ext .js --fix && ./node_modules/.bin/stylelint 'app/**/*.css' --fix",
-    "hot-server": "cross-env NODE_ENV=development node --max_old_space_size=4096 -r @babel/register server.js",
+    "hot-server": "node server.mjs",
     "build-main": "webpack --config webpack/electron.prod.js --progress=profile --color",
     "build-renderer": "webpack --config webpack/ui.prod.js --progress=profile --color",
     "build-trezor": "webpack --config webpack/trezor.js --progress=profile --color",
