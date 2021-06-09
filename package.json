@@ -25,7 +25,7 @@
     "start-hot-nosandbox": "webpack -c webpack/electron.dev.js &&  cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.js -r --no-sandbox",
     "start-preload": "webpack -c webpack/preload.dev.js --watch",
     "postinstall": "electron-builder install-app-deps && npm run rebuild-dexc && npm rum dexsite",
-    "dev": "npm run build-preload && npm run hot-server -- --start-hot",
+    "dev": "npm run hot-server -- --start-hot",
     "dev-nosandbox": "npm run hot-server -- --start-hot-nosandbox",
     "package": "npm run build && ./node_modules/.bin/electron-builder build --publish never",
     "package-win": "npm run build && ./node_modules/.bin/electron-builder build --win --x64 --ia32",

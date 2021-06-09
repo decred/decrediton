@@ -10,6 +10,7 @@ import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import { spawn } from "child_process";
+import fs from "fs";
 
 import config from "./webpack/ui.dev.js";
 
@@ -31,14 +32,26 @@ app.use(wdm);
 app.use(webpackHotMiddleware(compiler));
 
 let preloadProc;
+const sleep = (ms) => new Promise(ok => setTimeout(ok, ms));
 
-const server = app.listen(PORT, "localhost", serverError => {
+const server = app.listen(PORT, "localhost", async serverError => {
   if (serverError) {
     return console.error(serverError);
   }
 
-  // Start a webpack run to watch for changes to the preload script.
+  // Start a webpack run to watch for changes to the preload script. We wait
+  // until the preload script is compiled to proceed with the server init.
+  const preloadPath = "./app/dist/wallet-preload.js";
+  if (fs.existsSync(preloadPath)) fs.unlinkSync(preloadPath);
   preloadProc = spawn("npm", ["run", "start-preload"], { shell: true, env: process.env, stdio: "inherit" });
+  for (let i = 0; i < 60; i++) {
+    await sleep(1000);
+    if (fs.existsSync(preloadPath)) break;
+  }
+  if (!fs.existsSync(preloadPath)) {
+    throw "Preload script not created at " + preloadPath;
+  }
+
 
   if (argv["start-hot"]) {
     spawn("npm", [ "run", "start-hot" ], { shell: true, env: process.env, stdio: "inherit" })
