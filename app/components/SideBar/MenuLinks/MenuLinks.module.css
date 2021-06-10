@@ -1,9 +1,6 @@
 .tabs {
   overflow: visible !important;
 }
-.tabs.expanded {
-  overflow: auto !important;
-}
 .tabs.onBottom.expanded {
   overflow: visible !important;
 }
@@ -29,14 +26,14 @@
   padding-left: 0 !important;
 }
 .icon {
-  background-position: 13px 50%;
+  background-position: 50%;
   background-size: 22px;
   background-repeat: no-repeat;
   width: 56px;
   height: 56px;
 }
 .tab.disabled .icon {
-  opacity: 0.4;
+  opacity: 0.2;
 }
 .icon.ticketsIcon {
   background-image: var(--menu-tickets);
@@ -95,6 +92,11 @@
   white-space: break-spaces;
   text-align: center;
 }
+.tab.disabled .menuLinkLabel {
+  opacity: 0.2;
+  color: initial;
+}
+
 @media screen and (max-width: 768px) {
   .tabs {
     margin: 0 auto;
