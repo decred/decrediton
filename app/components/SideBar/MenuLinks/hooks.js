@@ -50,7 +50,7 @@ export function useMenuLinks() {
           l.tooltip = (
             <T
               id="sidebar.link.disabledDexTooltip"
-              m="SPV needs to be switched off"
+              m="DEX not available while using SPV. Please go to settings and disable SPV to access the DEX."
             />
           );
         }

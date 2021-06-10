@@ -93,8 +93,8 @@
   text-align: center;
 }
 .tab.disabled .menuLinkLabel {
-  opacity: 0.2;
-  color: initial;
+  opacity: 0.3;
+  color: var(--text-color) !important;
 }
 
 @media screen and (max-width: 768px) {

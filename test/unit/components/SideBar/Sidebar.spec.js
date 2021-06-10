@@ -186,7 +186,9 @@ const expectToHaveDefaultMenuLinks = (params) => {
         "DEX",
         "dexIcon",
         "/dex",
-        isSPV ? "SPV needs to be switched off" : "DEX",
+        isSPV
+          ? "DEX not available while using SPV. Please go to settings and disable SPV to access the DEX."
+          : "DEX",
         isSPV
       );
     }
