@@ -35,7 +35,7 @@
   width: 56px;
   height: 56px;
 }
-.tab.disabled .icon{
+.tab.disabled .icon {
   opacity: 0.4;
 }
 .icon.ticketsIcon {
@@ -91,9 +91,9 @@
   padding-right: 10px;
 }
 .tab.disabled .tooltip {
-    width: 18rem;
-    white-space: break-spaces;
-    text-align: center;
+  width: 18rem;
+  white-space: break-spaces;
+  text-align: center;
 }
 @media screen and (max-width: 768px) {
   .tabs {
@@ -105,10 +105,10 @@
     margin-right: 0 !important;
     padding: 0 !important;
   }
-.icon {
-background-position: 50% 60%;
+  .icon {
+    background-position: 50% 60%;
     width: 64px;
-}
+  }
   .tab.notificationIcon::before {
     margin-left: 33px;
     margin-top: -14px;

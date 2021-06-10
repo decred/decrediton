@@ -88,10 +88,18 @@ const expectToHaveDefaultMenuLinks = (params) => {
     sidebarOnBottom,
     isTrezorEnabled,
     isLnEnabled = true,
-    expandSideBar
+    expandSideBar,
+    isSPV = false
   } = params || {};
 
-  const expectToHaveMenuLink = (testId, name, className, path) => {
+  const expectToHaveMenuLink = (
+    testId,
+    name,
+    className,
+    path,
+    tooltip,
+    disabled
+  ) => {
     const { menuLinkContent, menuLink } = getMenuContentByTestId(
       testId,
       sidebarOnBottom,
@@ -102,64 +110,85 @@ const expectToHaveDefaultMenuLinks = (params) => {
     }
     // check tooltip
     if (!expandSideBar) {
-      expect(menuLinkContent.previousSibling).toHaveTextContent(name);
+      expect(menuLinkContent.previousSibling).toHaveTextContent(tooltip);
     }
     expect(menuLinkContent.firstChild).toHaveClass(className);
     // test clicking
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
     user.click(menuLink);
-    expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
-    expect(mockHistoryPush).toHaveBeenCalledWith(path);
+    if (disabled) {
+      expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+      expect(mockHistoryPush).not.toHaveBeenCalledWith(path);
+    } else {
+      expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+      expect(mockHistoryPush).toHaveBeenCalledWith(path);
+    }
   };
 
   expectToHaveMenuLink(
     "menuLinkContent-overview",
     "Overview",
     "overviewIcon",
-    "/home"
+    "/home",
+    "Overview"
   );
   expectToHaveMenuLink(
     "menuLinkContent-transactions",
     "On-chain Transactions",
     "transactionsIcon",
-    "/transactions"
+    "/transactions",
+    "On-chain Transactions"
   );
   expectToHaveMenuLink(
     "menuLinkContent-governance",
     "Governance",
     "governanceIcon",
-    "/governance"
+    "/governance",
+    "Governance"
   );
   if (!sidebarOnBottom || expandSideBar) {
     expectToHaveMenuLink(
       "menuLinkContent-tickets",
       "Staking",
       "ticketsIcon",
-      "/tickets"
+      "/tickets",
+      "Staking"
     );
     expectToHaveMenuLink(
       "menuLinkContent-accounts",
       "Accounts",
       "accountsIcon",
-      "/accounts"
+      "/accounts",
+      "Accounts"
     );
     expectToHaveMenuLink(
       "menuLinkContent-securitycntr",
       "Privacy and Security",
       "securitycntrIcon",
-      "/privacy"
+      "/privacy",
+      "Privacy and Security"
     );
     if (isTrezorEnabled) {
       expectToHaveMenuLink(
         "menuLinkContent-trezor",
         "Trezor",
         "trezorIcon",
-        "/trezor"
+        "/trezor",
+        "Trezor"
       );
     } else {
       expect(
         screen.queryByTestId("menuLinkContent-trezor")
       ).not.toBeInTheDocument();
+
+      expectToHaveMenuLink(
+        "menuLinkContent-dex",
+        "DEX",
+        "dexIcon",
+        "/dex",
+        isSPV ? "SPV needs to be switched off" : "DEX",
+        isSPV
+      );
     }
   }
   if (isLnEnabled) {
@@ -167,7 +196,8 @@ const expectToHaveDefaultMenuLinks = (params) => {
       "menuLinkContent-ln",
       "Lightning Transactions",
       "lnIcon",
-      "/ln"
+      "/ln",
+      "Lightning Transactions"
     );
   } else {
     expect(screen.queryByTestId("menuLinkContent-ln")).not.toBeInTheDocument();
@@ -325,6 +355,18 @@ test("renders expanded sidebar with testnet network enabled", () => {
   mockExpandSideBar.mockRestore();
 });
 
+test("renders sidebar with SPV enabled. DEX should be disabled", () => {
+  const mockIsSPV = (selectors.isSPV = jest.fn(() => true));
+
+  render(<SideBar />);
+  expectToHaveDefaultMenuLinks({
+    isSPV: true
+  });
+
+  expect(mockIsSPV).toHaveBeenCalled();
+  mockIsSPV.mockRestore();
+});
+
 test("tests rescan on the expanded sidebar", () => {
   const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => true));
 
@@ -465,8 +507,9 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
 });
 
 test("tests notification icon on the menu link", () => {
-  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting =
-    jest.fn(() => true));
+  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting = jest.fn(
+    () => true
+  ));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");
