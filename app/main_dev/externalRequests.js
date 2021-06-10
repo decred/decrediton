@@ -96,10 +96,11 @@ export const installSessionHandlers = (mainLogger) => {
 
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     const newHeaders = { ...details.responseHeaders };
+    let statusLine = details.statusLine;
+
+    const isDev = process.env.NODE_ENV === "development";
 
     if (/app\.html$/.test(details.url)) {
-      const isDev = process.env.NODE_ENV === "development";
-
       // Allow unsafe-eval in dev mode due to react-devtools requiring it.
       const defaultSrc = isDev ? "'self' 'unsafe-eval'" : "'self'";
 
@@ -121,18 +122,31 @@ export const installSessionHandlers = (mainLogger) => {
         `connect-src ${connectSrc}; `;
     }
 
-    if (
-      process.env.NODE_ENV === "development" &&
-      allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] &&
-      /^http:\/\/127.0.0.1:21325\//.test(details.url)
-    ) {
-      // For development (when accessing via the HMR server) we need to overwrite
-      // the origin, otherwise electron fails to contact trezor bridge due to
-      // CORS violation.
+    if (isDev && /^http[s]?:\/\//.test(details.url)) {
+      // In development (when accessing via the HMR server) we need to overwrite
+      // the origin, otherwise electron fails to contact external servers due
+      // to missing or wrong Access-Control-Allow-Origin when webSecurity is
+      // enabled.
+      Object.keys(newHeaders).forEach(
+        (k) =>
+          k.toLowerCase() === "access-control-allow-origin" &&
+          delete newHeaders[k]
+      );
       newHeaders["Access-Control-Allow-Origin"] = "http://localhost:3000";
+
+      // When calling a Politeia POST endpoint in dev mode, electron performs
+      // a preflight OPTIONS call. Include the "Content-Type" as an allowed
+      // header because Politeia doesn't currently does this.
+      const isPoliteia =
+        details.url.startsWith(POLITEIA_URL_TESTNET) ||
+        details.url.startsWith(POLITEIA_URL_MAINNET);
+      if (isPoliteia && details.method === "OPTIONS") {
+        statusLine = "OK";
+        newHeaders["Access-Control-Allow-Headers"] = "Content-Type";
+      }
     }
 
-    callback({ responseHeaders: newHeaders });
+    callback({ responseHeaders: newHeaders, statusLine });
   });
 };
 
