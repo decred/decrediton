@@ -1,6 +1,12 @@
 import { wallet, fs } from "wallet-preload-shim";
 import * as selectors from "selectors";
-import { hexToBytes, str2utf8hex, rawToHex } from "helpers";
+import {
+  hexToBytes,
+  str2utf8hex,
+  rawToHex,
+  rawHashToHex,
+  putUint16
+} from "helpers";
 import {
   walletTxToBtcjsTx,
   walletTxToRefTx,
@@ -24,6 +30,7 @@ import {
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
+import { blake256 } from "walletCrypto";
 
 const session = require("connect").default;
 const { TRANSPORT_EVENT, UI, UI_EVENT, DEVICE_EVENT } = require("connect");
@@ -37,6 +44,9 @@ const TRANSPORT_START = "transport-start";
 const BOOTLOADER_MODE = "bootloader";
 const testVotingKey = "PtWTXsGfk2YeqcmrRty77EsynNBtxWLLbsVEeTS8bKAGFoYF3qTNq";
 const testVotingAddr = "TsmfmUitQApgnNxQypdGd2x36djCCpDpERU";
+const SERTYPE_NOWITNESS = 1;
+const STAKE_REVOCATION = "SSRTX";
+const STAKE_GENERATION = "SSGen";
 
 let setListeners = false;
 
@@ -421,6 +431,31 @@ const checkTrezorIsDcrwallet = () => async (dispatch, getState) => {
   if (addrValidResp.index !== 0) throw "Wallet replied with wrong index.";
 };
 
+// setStakeInputTypes adds a field to input that denotes stake spends. SSRTX
+function setStakeInputTypes(inputs, refTxs) {
+  const refs = {};
+  refTxs.forEach((ref) => (refs[ref.hash] = ref.bin_outputs));
+  for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
+    const bin_outputs = refs[input.prev_hash];
+    if (bin_outputs) {
+      let s = bin_outputs[input.prev_index].script_pubkey;
+      if (s.length < 2) {
+        continue;
+      }
+      s = s.slice(0, 2);
+      switch (s) {
+        case "bc":
+          input.decred_staking_spend = STAKE_REVOCATION;
+          break;
+        case "bb":
+          input.decred_staking_spend = STAKE_GENERATION;
+          break;
+      }
+    }
+  }
+}
+
 export const signTransactionAttemptTrezor = (
   rawUnsigTx,
   changeIndexes
@@ -458,27 +493,8 @@ export const signTransactionAttemptTrezor = (
 
     // Determine if this is paying from a stakegen or revocation, which are
     // special cases.
-    for (let i = 0; i < inputs.length; i++) {
-      const input = inputs[i];
-      for (let j = 0; j < refTxs.length; j++) {
-        const ref = refTxs[j];
-        if (ref.hash && ref.hash == input.prev_hash) {
-          let s = ref.bin_outputs[input.prev_index].script_pubkey;
-          if (s.length > 1) {
-            s = s.slice(0, 2);
-            switch (s) {
-              case "bc":
-                input.decred_staking_spend = "SSRTX";
-                break;
-              case "bb":
-                input.decred_staking_spend = "SSGen";
-                break;
-            }
-          }
-          break;
-        }
-      }
-    }
+    setStakeInputTypes(inputs, refTxs);
+
     const payload = await deviceRun(dispatch, getState, async () => {
       await dispatch(checkTrezorIsDcrwallet());
 
@@ -977,6 +993,63 @@ export const TRZ_PURCHASETICKET_ATTEMPT = "TRZ_PURCHASETICKET_ATTEMPT";
 export const TRZ_PURCHASETICKET_FAILED = "TRZ_PURCHASETICKET_FAILED";
 export const TRZ_PURCHASETICKET_SUCCESS = "TRZ_PURCHASETICKET_SUCCESS";
 
+// ticketInOuts creates inputs and outputs for use with a trezor signature
+// request of a ticket.
+async function ticketInsOuts(
+  getState,
+  decodedTicket,
+  decodedInp,
+  refTxs,
+  votingAddr
+) {
+  const {
+    grpc: { walletService }
+  } = getState();
+  const chainParams = selectors.chainParams(getState());
+  const ticketOutN = decodedTicket.inputs[0].outputIndex;
+  const inAddr = decodedInp.outputs[ticketOutN].decodedScript.address;
+  let addrValidResp = await wallet.validateAddress(walletService, inAddr);
+  const inAddr_n = addressPath(
+    addrValidResp.index,
+    1,
+    WALLET_ACCOUNT,
+    chainParams.HDCoinType
+  );
+  const commitAddr = decodedTicket.outputs[1].decodedScript.address;
+  addrValidResp = await wallet.validateAddress(walletService, commitAddr);
+  const commitAddr_n = addressPath(
+    addrValidResp.index,
+    1,
+    WALLET_ACCOUNT,
+    chainParams.HDCoinType
+  );
+  const inputAmt = decodedTicket.inputs[0].valueIn.toString();
+  const ticketInput = {
+    address_n: inAddr_n,
+    prev_hash: decodedTicket.inputs[0].prevTxId,
+    prev_index: ticketOutN,
+    amount: inputAmt
+  };
+  const sstxsubmission = {
+    script_type: "PAYTOADDRESS",
+    address: votingAddr,
+    amount: decodedTicket.outputs[0].value.toString()
+  };
+  const ticketsstxcommitment = {
+    script_type: "PAYTOADDRESS",
+    address_n: commitAddr_n,
+    amount: inputAmt
+  };
+  const ticketsstxchange = {
+    script_type: "PAYTOADDRESS",
+    address: decodedTicket.outputs[2].decodedScript.address,
+    amount: "0"
+  };
+  const inputs = [ticketInput];
+  const outputs = [sstxsubmission, ticketsstxcommitment, ticketsstxchange];
+  return { inputs, outputs };
+}
+
 export const purchaseTicketsV3 = (accountNum, numTickets, vsp) => async (
   dispatch,
   getState
@@ -1036,47 +1109,13 @@ export const purchaseTicketsV3 = (accountNum, numTickets, vsp) => async (
         chainParams
       );
       refTxs.hash = decodedTicket.inputs[0].prevTxId;
-      const ticketOutN = decodedTicket.inputs[0].outputIndex;
-      const inAddr = decodedInp.outputs[ticketOutN].decodedScript.address;
-      let addrValidResp = await wallet.validateAddress(walletService, inAddr);
-      const inAddr_n = addressPath(
-        addrValidResp.index,
-        1,
-        WALLET_ACCOUNT,
-        chainParams.HDCoinType
+      const { inputs, outputs } = await ticketInsOuts(
+        getState,
+        decodedTicket,
+        decodedInp,
+        refTxs,
+        votingAddr
       );
-      const commitAddr = decodedTicket.outputs[1].decodedScript.address;
-      addrValidResp = await wallet.validateAddress(walletService, commitAddr);
-      const commitAddr_n = addressPath(
-        addrValidResp.index,
-        1,
-        WALLET_ACCOUNT,
-        chainParams.HDCoinType
-      );
-      const inputAmt = decodedTicket.inputs[0].valueIn.toString();
-      const ticketInput = {
-        address_n: inAddr_n,
-        prev_hash: decodedTicket.inputs[0].prevTxId,
-        prev_index: ticketOutN,
-        amount: inputAmt
-      };
-      const sstxsubmission = {
-        script_type: "PAYTOADDRESS",
-        address: votingAddr,
-        amount: decodedTicket.outputs[0].value.toString()
-      };
-      const ticketsstxcommitment = {
-        script_type: "PAYTOADDRESS",
-        address_n: commitAddr_n,
-        amount: inputAmt
-      };
-      const ticketsstxchange = {
-        script_type: "PAYTOADDRESS",
-        address: decodedTicket.outputs[2].decodedScript.address,
-        amount: "0"
-      };
-      const inputs = [ticketInput];
-      const outputs = [sstxsubmission, ticketsstxcommitment, ticketsstxchange];
       const payload = await deviceRun(dispatch, getState, async () => {
         const res = await session.signTransaction({
           coin: chainParams.trezorCoinName,
@@ -1131,12 +1170,16 @@ async function payVSPFee(
   } = getState();
   // Gather information about the ticket.
   const chainParams = selectors.chainParams(getState());
+  const txBytes = hexToBytes(txHex);
   const decodedTicket = await wallet.decodeTransactionLocal(
-    hexToBytes(txHex),
+    txBytes,
     chainParams
   );
   const commitmentAddr = decodedTicket.outputs[1].decodedScript.address;
-  const txid = decodedTicket.txid;
+
+  const prefix = txBytes.slice(0, decodedTicket.prefixOffset);
+  prefix.set(putUint16(SERTYPE_NOWITNESS), 2);
+  const txid = rawHashToHex(blake256(prefix));
 
   // Request fee info from the vspd.
   let req = {
