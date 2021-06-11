@@ -1,19 +1,5 @@
 import staticDefaults from "../extracted/static";
 
-// TODO: This polyfill can probably be removed after we update to a version of
-// electron with support to Intl.RelativeTimeFormat.
-import "@formatjs/intl-relativetimeformat/polyfill";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/ar";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/de";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/en";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/es";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/fr";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/it";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/ja";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/pl";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/pt";
-import "@formatjs/intl-relativetimeformat/dist/locale-data/zh";
-
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {
   number: {
