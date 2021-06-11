@@ -1,7 +1,7 @@
 export const decodedPurchasedTicketTx = {
   "version": 1,
+  "prefixOffset": 172,
   "serType": 0,
-  "txid": "ce89411b7cb68ee35167f1878025116426b0e2887ad9d39de428a0d3117c8947",
   "numInputs": 1,
   "inputs": [
     {
@@ -57,8 +57,8 @@ export const decodedPurchasedTicketTx = {
 // multiTxPrefix is a tx prefix in the format of how our decodeTxs are. We get
 // this format from wallet.decodeRawTransaction().
 export const multiTxPrefix = {
+  prefixOffset: 211,
   serType: 1, // TxSerializeNoWitness,
-  txid: "ef935c1158ffb1b3734c4b5afac60094178080c20c6eebed839bdd9cbfb707d0",
   version: 1,
   numInputs: 1,
   numOutputs: 2,
@@ -115,8 +115,8 @@ export const multiTxPrefix = {
 
 export const decodedVoteTx = {
   "version": 1,
+  "prefixOffset": 201,
   "serType": 0,
-  "txid": "aebbf9c49607dc39e58c5b490e7908feadb611f0e38e8a664ba61c4e266903ac",
   "numInputs": 2,
   "inputs": [
     {
