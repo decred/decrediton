@@ -26,7 +26,7 @@ import parseArgs from "minimist";
 import { OPTIONS, UPGD_ELECTRON8 } from "constants";
 import * as cfgConstants from "constants/config";
 import os from "os";
-import fs from "fs-extra";
+import fs from "fs";
 import { format } from "util";
 import { spawn } from "child_process";
 import isRunning from "is-running";

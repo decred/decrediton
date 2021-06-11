@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs from "fs";
 import path from "path";
 
 // readFileBackward reads a file backward and if maxSize is specified it will

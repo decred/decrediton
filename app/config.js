@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import path from "path";
@@ -317,8 +317,8 @@ export const updateDefaultBitcoinConfig = (
         !fs.existsSync(path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"))
       ) {
         // check to see if directory exists, if not make it
-        fs.pathExistsSync(getDefaultBitcoinDirectory()) ||
-          fs.mkdirsSync(getDefaultBitcoinDirectory());
+        fs.existsSync(getDefaultBitcoinDirectory()) ||
+          fs.mkdirSync(getDefaultBitcoinDirectory(), { recursive: true });
         newDefaultBitcoinConfig(
           rpcuser,
           rpcpassword,
