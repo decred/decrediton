@@ -4,7 +4,7 @@ import {
   VSP_FEE_PROCESS_PAID,
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
-import { rawHashToHex, rawToHex } from "../helpers/byteActions";
+import { rawHashToHex, rawToHex, strHashToRaw } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import { getClient } from "middleware/grpc/clientTracking";
 import { signTx as confDialogSignTx } from "./confirmationDialog";
@@ -294,7 +294,7 @@ export const revokeTickets = (walletService) =>
 export const revokeTicket = (walletService, ticketHash) =>
   new Promise((ok, fail) => {
     const request = new api.RevokeTicketRequest();
-    request.setTicketHash(ticketHash);
+    request.setTicketHash(strHashToRaw(ticketHash));
     getClient(walletService).revokeTicket(request, (err, res) =>
       err ? fail(err) : ok(res.toObject())
     );

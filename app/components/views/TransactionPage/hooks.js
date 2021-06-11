@@ -8,6 +8,7 @@ import * as ta from "actions/TransactionActions";
 import * as clia from "actions/ClientActions";
 
 export function useTransactionPage(txHash) {
+  const isSPV = useSelector(sel.isSPV);
   const regularTxs = useSelector(sel.regularTransactions);
   const stakeTxs = useSelector(sel.stakeTransactions);
   const decodedTransactions = useSelector(sel.decodedTransactions);
@@ -86,6 +87,7 @@ export function useTransactionPage(txHash) {
     currentBlockHeight,
     state,
     viewedTransaction,
-    decodedTx
+    decodedTx,
+    isSPV
   };
 }

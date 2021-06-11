@@ -178,7 +178,7 @@ const TransactionContent = ({
                     m="Revoke Ticket Confirmation"
                   />
                 }
-                modalDescriptions={
+                modalDescription={
                   <T
                     id="tickets.revokeTicketDescription"
                     m="Before continuing, please confirm that this ticket is missed or expired on dcrdata.  Any ticket that is still awaiting vote, may not be revoked and you may be left with an errored transaction that must be abandoned."

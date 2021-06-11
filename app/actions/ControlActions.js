@@ -489,7 +489,7 @@ export const REVOKETICKET_ATTEMPT = "REVOKETICKET_ATTEMPT";
 export const REVOKETICKET_FAILED = "REVOKETICKET_FAILED";
 export const REVOKETICKET_SUCCESS = "REVOKETICKET_SUCCESS";
 
-export const revokeTicketAttempt = (ticketHash, passphrase) => async (
+export const revokeTicketAttempt = (passphrase, ticketHash) => async (
   dispatch,
   getState
 ) => {
