@@ -1,9 +1,8 @@
-import * as wallet from "wallet";
+import { app } from "electron";
 
-export const USAGE_MESSAGE = wallet.app
-  ? `${wallet.app.name} version ${wallet.app.version}
+export const USAGE_MESSAGE = `${app.name} version ${app.getVersion()}
 Usage
-  $ ${wallet.app.name} [OPTIONS]
+  $ ${app.name} [OPTIONS]
 
 Options
   --help -h          Show help and exit.
@@ -20,9 +19,6 @@ Options
   --rpcconnect       Specify RPC connection in 'host:port' or 'host' format (latter uses the default RPC port). Note that different ports are used for RPC and SPV connections.
   --extrawalletargs  Pass extra arguments to dcrwallet.
   --custombinpath    Custom path for dcrd/dcrwallet/dcrctl binaries.
-`
-  : null;
+`;
 
-export const VERSION_MESSAGE = wallet.app
-  ? `${wallet.app.name} version ${wallet.app.version}`
-  : null;
+export const VERSION_MESSAGE = `${app.name} version ${app.getVersion()}`;

@@ -138,11 +138,6 @@ export const openExternalURL = (url) => {
   shell.openExternal(url);
 };
 
-export const appInfo = {
-  name: app?.name,
-  version: app?.getVersion()
-};
-
 export const showSaveDialog = (opts) => invoke("show-save-dialog", opts);
 
 export const showOpenDialog = (opts) => invoke("show-open-dialog", opts);
