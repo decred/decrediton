@@ -24,19 +24,28 @@ const MenuLinks = () => {
           sidebarOnBottom && styles.onBottom
         )}>
         {menuLinks.map((menuLink, index) => {
-          const menuLinkLabel = (text) => (
+          const menuLinkLabel = () => (
             <div
-              className={styles.menuLinkLabel}
-              data-testid={`menuLinkLabel-${menuLink.icon}`}>
-              {text}
+              className={styles.menuContent}
+              data-testid={`menuLinkContent-${menuLink.icon}`}>
+              <div
+                className={classNames(
+                  styles.icon,
+                  styles[`${menuLink.icon}Icon`]
+                )}
+              />
+              {expandSideBar && !sidebarOnBottom && (
+                <div className={styles.menuLinkLabel}>{menuLink.link}</div>
+              )}
             </div>
           );
           const label =
-            expandSideBar && !sidebarOnBottom ? (
-              menuLinkLabel(menuLink.link)
+            expandSideBar && !sidebarOnBottom && !menuLink.disabled ? (
+              menuLinkLabel()
             ) : (
               <Tooltip
-                content={menuLink.link}
+                contentClassName={styles.tooltip}
+                content={menuLink.tooltip ?? menuLink.link}
                 placement={sidebarOnBottom ? "top" : "right"}>
                 {menuLinkLabel()}
               </Tooltip>
@@ -50,10 +59,10 @@ const MenuLinks = () => {
                 key={menuLink.path}
                 className={classNames(
                   styles.tab,
-                  styles[`${menuLink.icon}Icon`],
                   expandSideBar && styles.expanded,
                   sidebarOnBottom && styles.onBottom,
-                  menuLink.notifProp && styles.notificationIcon
+                  menuLink.notifProp && styles.notificationIcon,
+                  menuLink.disabled && styles.disabled
                 )}
               />
             )

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import * as sel from "selectors";
 import { linkList, TREZOR_KEY, LN_KEY, DEX_KEY } from "./Links";
 import { useHistory } from "react-router-dom";
+import { FormattedMessage as T } from "react-intl";
 
 export function useMenuLinks() {
   const location = useSelector(sel.location);
@@ -39,8 +40,22 @@ export function useMenuLinks() {
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
     }
-    if (isSPV || isTrezor) {
+    if (isTrezor) {
       links = links.filter((l) => l.key !== DEX_KEY);
+    }
+    if (isSPV) {
+      links = links.map((l) => {
+        if (l.key === DEX_KEY) {
+          l.disabled = true;
+          l.tooltip = (
+            <T
+              id="sidebar.link.disabledDexTooltip"
+              m="DEX not available while using SPV. Please go to settings and disable SPV to access the DEX."
+            />
+          );
+        }
+        return l;
+      });
     }
 
     return links;
@@ -56,8 +71,10 @@ export function useMenuLinks() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const history = useHistory();
   const onSelectTab = (index) => {
-    setActiveTabIndex(index);
-    history.push(menuLinks[index].path);
+    if (!menuLinks[index].disabled) {
+      setActiveTabIndex(index);
+      history.push(menuLinks[index].path);
+    }
   };
 
   useEffect(() => {
