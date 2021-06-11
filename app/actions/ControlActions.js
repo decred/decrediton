@@ -485,6 +485,31 @@ export const revokeTicketsAttempt = (passphrase) => async (
   }
 };
 
+export const REVOKETICKET_ATTEMPT = "REVOKETICKET_ATTEMPT";
+export const REVOKETICKET_FAILED = "REVOKETICKET_FAILED";
+export const REVOKETICKET_SUCCESS = "REVOKETICKET_SUCCESS";
+
+export const revokeTicketAttempt = (ticketHash, passphrase) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: REVOKETICKET_ATTEMPT });
+  const walletService = sel.walletService(getState());
+  try {
+    const revokeTicketResponse = await dispatch(
+      unlockAllAcctAndExecFn(passphrase, () =>
+        wallet.revokeTicket(walletService, ticketHash)
+      )
+    );
+    dispatch({ revokeTicketResponse, type: REVOKETICKET_SUCCESS });
+    setTimeout(() => {
+      dispatch(getStakeInfoAttempt());
+    }, 4000);
+  } catch (error) {
+    dispatch({ error, type: REVOKETICKET_FAILED });
+  }
+};
+
 export const STARTTICKETBUYERV3_ATTEMPT = "STARTTICKETBUYERV3_ATTEMPT";
 export const STARTTICKETBUYERV3_FAILED = "STARTTICKETBUYERV3_FAILED";
 export const STARTTICKETBUYERV3_SUCCESS = "STARTTICKETBUYERV3_SUCCESS";

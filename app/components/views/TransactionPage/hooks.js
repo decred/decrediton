@@ -22,6 +22,11 @@ export function useTransactionPage(txHash) {
     (txHash) => dispatch(clia.abandonTransactionAttempt(txHash)),
     [dispatch]
   );
+  const onRevokeTicket = useCallback(
+    (passphrase, ticketHash) =>
+      dispatch(ca.revokeTicketAttempt(passphrase, ticketHash)),
+    [dispatch]
+  );
   const decodeRawTransactions = useCallback(
     (hexTx, txHash) => dispatch(ta.decodeRawTransaction(hexTx, txHash)),
     [dispatch]
@@ -76,6 +81,7 @@ export function useTransactionPage(txHash) {
 
   return {
     abandonTransaction,
+    onRevokeTicket,
     publishUnminedTransactions,
     currentBlockHeight,
     state,

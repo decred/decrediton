@@ -1,12 +1,13 @@
 import { Balance, CopyToClipboard, ExternalLink } from "shared";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, RevokeModalButton } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import {
   VOTE,
   TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_SENT
+  TRANSACTION_DIR_SENT,
+  TICKET
 } from "constants/decrediton";
 import styles from "./TransactionContent.module.css";
 import { classNames } from "pi-ui";
@@ -39,8 +40,10 @@ const TransactionContent = ({
   transactionDetails,
   decodedTransaction,
   abandonTransaction,
+  onRevokeTicket,
   publishUnminedTransactions,
-  currentBlockHeight
+  currentBlockHeight,
+  isSPV
 }) => {
   const {
     txHash,
@@ -71,6 +74,11 @@ const TransactionContent = ({
       .filter((v, i) => walletOutputIndices.indexOf(i) === -1)
       .map(mapNonWalletOutput);
   }
+
+  const revokeTicket = (passphrase) => {
+    onRevokeTicket(passphrase, txHash);
+  };
+
   return (
     <>
       <div className={styles.top}>
@@ -138,7 +146,7 @@ const TransactionContent = ({
           </div>
         )}
       </div>
-      {isPending && (
+      {isPending ? (
         <div className={styles.buttonContainer}>
           <div className={styles.rebroadcastBtnContainer}>
             <KeyBlueButton
@@ -158,6 +166,34 @@ const TransactionContent = ({
             </KeyBlueButton>
           </div>
         </div>
+      ) : (
+        txType == TICKET &&
+        isSPV && (
+          <div>
+            <div className={styles.revokeBtnContainer}>
+              <RevokeModalButton
+                modalTitle={
+                  <T
+                    id="tickets.revokeTicketConfirmations"
+                    m="Revoke Ticket Confirmation"
+                  />
+                }
+                modalDescriptions={
+                  <T
+                    id="tickets.revokeTicketDescription"
+                    m="Before continuing, please confirm that this ticket is missed or expired on dcrdata.  Any ticket that is still awaiting vote, may not be revoked and you may be left with an errored transaction that must be abandoned."
+                  />
+                }
+                className={styles.revokeBtn}
+                onSubmit={revokeTicket}
+                kind="secondary"
+                buttonLabel={
+                  <T id="txDetails.revokeTicket" m="Revoke Ticket" />
+                }
+              />
+            </div>
+          </div>
+        )
       )}
       <div className={styles.io}>
         <div className={styles.title}>

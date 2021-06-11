@@ -1136,6 +1136,28 @@ function deserialize_walletrpc_RescanResponse(buffer_arg) {
   return api_pb.RescanResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_RevokeTicketRequest(arg) {
+  if (!(arg instanceof api_pb.RevokeTicketRequest)) {
+    throw new Error('Expected argument of type walletrpc.RevokeTicketRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RevokeTicketRequest(buffer_arg) {
+  return api_pb.RevokeTicketRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_RevokeTicketResponse(arg) {
+  if (!(arg instanceof api_pb.RevokeTicketResponse)) {
+    throw new Error('Expected argument of type walletrpc.RevokeTicketResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RevokeTicketResponse(buffer_arg) {
+  return api_pb.RevokeTicketResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_RevokeTicketsRequest(arg) {
   if (!(arg instanceof api_pb.RevokeTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.RevokeTicketsRequest');
@@ -2430,6 +2452,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_PurchaseTicketsRequest,
     responseSerialize: serialize_walletrpc_PurchaseTicketsResponse,
     responseDeserialize: deserialize_walletrpc_PurchaseTicketsResponse,
+  },
+  revokeTicket: {
+    path: '/walletrpc.WalletService/RevokeTicket',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.RevokeTicketRequest,
+    responseType: api_pb.RevokeTicketResponse,
+    requestSerialize: serialize_walletrpc_RevokeTicketRequest,
+    requestDeserialize: deserialize_walletrpc_RevokeTicketRequest,
+    responseSerialize: serialize_walletrpc_RevokeTicketResponse,
+    responseDeserialize: deserialize_walletrpc_RevokeTicketResponse,
   },
   revokeTickets: {
     path: '/walletrpc.WalletService/RevokeTickets',
