@@ -2,8 +2,8 @@
  * Base webpack config. This is merged with other env-specific configs.
  */
 
-import path from "path";
-import webpack from "webpack";
+const path = require("path");
+const webpack = require("webpack");
 
 // We use this local implementation of the NodePolyfillPlugin instead of
 // importing the existing implementation from
@@ -29,7 +29,7 @@ class NodePolyfillPlugin {
   }
 }
 
-export default {
+module.exports = {
   mode: "production",
 
   target: "web",
@@ -56,7 +56,7 @@ export default {
   },
 
   output: {
-    path: path.join(__dirname, "app"),
+    path: path.join(__dirname, "../app"),
     filename: "bundle.js",
 
     // https://github.com/webpack/webpack/issues/1114
@@ -71,12 +71,12 @@ export default {
     extensions: [ ".js", ".jsx", ".json" ],
     mainFields: [ "webpack", "browser", "web", "browserify", [ "jam", "main" ], "main" ],
     alias: {
-      fetchModule: path.resolve(__dirname, "app/helpers/fetchModule.js"),
-      walletCrypto: path.resolve(__dirname, "app/helpers/walletCryptoModule.js")
+      fetchModule: path.resolve(__dirname, "../app/helpers/fetchModule.js"),
+      walletCrypto: path.resolve(__dirname, "../app/helpers/walletCryptoModule.js")
     },
     modules: [
-      path.resolve(__dirname, "app"),
-      path.resolve(__dirname, "app/components"),
+      path.resolve(__dirname, "../app"),
+      path.resolve(__dirname, "../app/components"),
       "node_modules"
     ]
   },

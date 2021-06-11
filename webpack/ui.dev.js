@@ -3,15 +3,15 @@
  * development environment.
  */
 
-import webpack from "webpack";
-import merge from "webpack-merge";
-import baseConfig from "./webpack.config.base";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import CopyWebpackPlugin from "copy-webpack-plugin";
+const webpack = require("webpack");
+const merge = require("webpack-merge").default;
+const baseConfig = require("./ui.base");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const port = process.env.PORT || 3000;
 
-export default merge(baseConfig, {
+module.exports = merge(baseConfig, {
   mode: "development",
 
   devtool: "inline-source-map",

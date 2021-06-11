@@ -9,13 +9,15 @@ module.exports = {
   // Generate code for electron's ipc-main process.
   target: "electron-main",
 
+  mode: "production",
+
   devtool: "source-map",
 
   entry: [ "@babel/polyfill", "./app/main.development" ],
 
   // 'main.js' in root
   output: {
-    path: path.resolve(__dirname, "app"),
+    path: path.resolve(__dirname, "../app"),
     filename: "main.js"
   },
 
@@ -52,13 +54,12 @@ module.exports = {
 
   resolve: {
     extensions: [ ".js", ".jsx", ".json", ".node" ],
-    modules: [
-      "node_modules"
-    ],
+    modules: [ path.resolve(__dirname, "../app"), "node_modules" ],
     alias: {
-      ws: path.resolve(path.join(__dirname, "node_modules/ws/index.js")),
-      fetchModule: path.resolve(path.join(__dirname, "node_modules/electron-fetch/lib/index.js")),
-      walletCrypto: path.resolve(__dirname, "app/wallet/crypto.js")
+      sbffi: path.resolve(path.join(__dirname, "../node_modules/sbffi")),
+      ws: path.resolve(path.join(__dirname, "../node_modules/ws/index.js")),
+      fetchModule: path.resolve(path.join(__dirname, "../node_modules/electron-fetch/lib/index.js")),
+      walletCrypto: path.resolve(__dirname, "../app/wallet/crypto.js")
     }
   }
 };
