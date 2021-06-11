@@ -4,7 +4,6 @@ import {
   VSP_FEE_PROCESS_PAID,
   VSP_FEE_PROCESS_ERRORED
 } from "constants";
-import { isUndefined } from "lodash";
 import { rawHashToHex, rawToHex } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import { getClient } from "middleware/grpc/clientTracking";
@@ -568,7 +567,7 @@ export const startTicketAutoBuyerV3 = (
         !changeAccount ||
         !csppServer ||
         !csppPort ||
-        isUndefined(mixedAcctBranch)
+        (mixedAcctBranch === undefined)
       ) {
         throw "missing cspp argument";
       }

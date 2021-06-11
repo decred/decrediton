@@ -1,6 +1,10 @@
-import { isString } from "lodash";
-
-// @flow
+// isPlainString returns whether s is a plain (native) string. Note this differs
+// from lodash's isString because that function also checks not just for plain
+// strings but also string-convertible objects (i.e. objects which have a
+// toString() method or function field).
+export function isPlainString(s) {
+  return typeof s === "string";
+}
 
 // This function adds spaces around text to fix an issue with double-clicking to select it
 // when it's rendered inside of a floated element. Without the spaces, double-clicking will
@@ -28,7 +32,7 @@ export function restrictToStdDecimalNumber(s) {
 // This function does **not** pad the string if less than maxFracDigits are
 // present.
 export function limitFractionalDigits(s, maxFracDigits) {
-  if (!isString(s)) return s;
+  if (!isPlainString(s)) return s;
 
   const match = s.match(/(\d+)\.(\d*)/);
   if (!match) return s;

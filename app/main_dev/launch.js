@@ -31,11 +31,10 @@ import { format } from "util";
 import { spawn } from "child_process";
 import isRunning from "is-running";
 import stringArgv from "string-argv";
-import { concat, isString } from "../fp";
 import webSocket from "ws";
 import path from "path";
 import ini from "ini";
-import { makeRandomString } from "helpers/strings";
+import { makeRandomString, isPlainString as isString } from "helpers/strings";
 import { makeFileBackup } from "helpers/files";
 import { DEX_LOCALPAGE } from "./externalRequests";
 
@@ -616,7 +615,7 @@ export const launchDCRWallet = async (
   )
     ? `--configfile=${dcrwalletConf(getWalletPath(testnet, walletPath))}`
     : "";
-  let args = [confFile];
+  const args = [confFile];
 
   // add needed dcrwallet flags
   if (disableCoinTypeUpgrades === true) {
@@ -718,7 +717,7 @@ export const launchDCRWallet = async (
 
   // Add any extra args if defined.
   if (argv.extrawalletargs !== undefined && isString(argv.extrawalletargs)) {
-    args = concat(args, stringArgv(argv.extrawalletargs));
+    args.push(...stringArgv(argv.extrawalletargs));
   }
 
   logger.log("info", `Starting ${dcrwExe} with ${args}`);

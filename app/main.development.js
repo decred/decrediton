@@ -89,7 +89,7 @@ import {
 } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/files";
 import electron from "electron";
-import { isString } from "./fp";
+import { isPlainString as isString } from "./helpers/strings";
 import {
   OPTIONS,
   BOTH_CONNECTION_ERR_MESSAGE,

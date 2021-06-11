@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
 import { withLog as log, logOptionNoResponseData } from "./app";
-import { isString } from "lodash";
+import { isPlainString as isString } from "helpers/strings";
 import { invoke } from "helpers/electronRenderer";
 
 export const getHeightSynced = () => ipcRenderer.sendSync("get-height-synced");
