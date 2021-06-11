@@ -35,7 +35,7 @@ import { concat, isString } from "../fp";
 import webSocket from "ws";
 import path from "path";
 import ini from "ini";
-import { makeRandomString } from "helpers";
+import { makeRandomString } from "helpers/strings";
 import { makeFileBackup } from "helpers/files";
 import { DEX_LOCALPAGE } from "./externalRequests";
 
