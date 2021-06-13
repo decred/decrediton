@@ -1,13 +1,19 @@
 import { push as pushHistory } from "connected-react-router";
-import * as sel from "selectors";
 import { wallet, politeia as pi } from "wallet-preload-shim";
-import { hexReversedHashToArray, politeiaMarkdownIndexMd } from "helpers";
 import { cloneDeep } from "fp";
+import * as sel from "selectors";
+import {
+  hexReversedHashToArray,
+  politeiaMarkdownIndexMd,
+  parseRawProposal
+} from "helpers";
 import {
   PROPOSAL_VOTING_ACTIVE,
   PROPOSAL_VOTING_FINISHED,
   PROPOSAL_STATUS_ABANDONED,
-  PROPOSAL_INDEX_MD_FILE
+  PROPOSAL_INDEX_MD_FILE,
+  PROPOSAL_METADATA_FILE,
+  PROPOSAL_VOTE_METADATA_FILE
 } from "constants";
 import { unlockAcctAndExecFn } from "./ControlActions";
 
@@ -257,12 +263,17 @@ const getInitialBatch = () => async (dispatch, getState) => {
   const activeVoteBatch = active.slice(0, proposallistpagesize);
   const preVoteBatch = pre.slice(0, proposallistpagesize);
   const activeAndPreVoteBatch = [...activeVoteBatch, ...preVoteBatch];
-  if (activeAndPreVoteBatch.length < proposallistpagesize) {
+  if (
+    activeAndPreVoteBatch.length &&
+    activeAndPreVoteBatch.length < proposallistpagesize
+  ) {
     await dispatch(getProposalsAndUpdateVoteStatus(activeAndPreVoteBatch));
     return;
   }
-  await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
-  await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
+  if (activeVoteBatch.length)
+    await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
+  if (preVoteBatch.length)
+    await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
 
 // getVoteOption gets the wallet vote if cached or return abstain.
@@ -329,12 +340,15 @@ export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
 
-const getProposalsBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsBatch({
+const getProposalsBatch = async (tokens, piURL) => {
+  const { data } = await pi.getProposalsBatch({
     piURL,
-    tokens: tokensBatch
+    requests: tokens.map((token) => ({
+      token,
+      filenames: [PROPOSAL_METADATA_FILE, PROPOSAL_VOTE_METADATA_FILE]
+    }))
   });
-  return requestResponse.data;
+  return data;
 };
 
 export const GET_PROPOSALS_VOTESTATUS_BATCH_ATTEMPT =
@@ -345,11 +359,11 @@ export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED =
   "GET_PROPOSALS_VOTESTATUS_BATCH_FAILED";
 
 const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsVoteStatusBatch({
+  const { data } = await pi.getProposalsVoteStatusBatch({
     piURL,
     tokens: tokensBatch
   });
-  return requestResponse.data;
+  return data;
 };
 
 export const GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT =
@@ -361,13 +375,13 @@ export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED =
 
 // getProposalsAndUpdateVoteStatus gets a proposal batch and its vote summary
 // and concat with proposals from getState.
+//
+// tokensBatch length can not exceed politeia's proposallistpagesize
+// limit; otherwise it will return ErrorStatusMaxProposalsExceededPolicy.
 export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
   dispatch,
   getState
 ) => {
-  // tokensBatch batch length can not exceed politeia's proposallistpagesize limit
-  // otherwise it will return ErrorStatusMaxProposalsExceededPolicy
-
   const findProposal = (proposals, token) =>
     proposals.find((proposal) =>
       proposal.censorshiprecord.token === token ? proposal : null
@@ -413,12 +427,12 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
   const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
 
   try {
-    const { proposals } = await getProposalsBatch(tokensBatch, piURL);
+    const { records } = await getProposalsBatch(tokensBatch, piURL);
     const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
     tokensBatch.forEach((token) => {
       const proposalSummary = summaries[token];
       const { status, approved } = proposalSummary;
-      const prop = findProposal(proposals, token);
+      const prop = parseRawProposal(records[token]);
       prop.token = token;
       prop.proposalStatus = prop.status;
 

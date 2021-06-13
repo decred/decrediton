@@ -32,15 +32,14 @@ export const getVotesInventory = ({ piURL }, cb) =>
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-// votes must be an array of Vote()-produced objects.
 export const castBallot = ({ piURL, votes }, cb) =>
   POST(piURL, "/ticketvote/v1/castballot", { votes })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
 // tokens is an array of tokens to be fetched.
-export const getProposalsBatch = ({ piURL, tokens }, cb) =>
-  POST(piURL, "/v1/proposals/batch", { tokens })
+export const getProposalsBatch = ({ piURL, requests }, cb) =>
+  POST(piURL, "/records/v1/records", { requests })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 

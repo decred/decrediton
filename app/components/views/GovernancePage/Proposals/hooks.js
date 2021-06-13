@@ -7,24 +7,24 @@ import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "hooks";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
 import { useTheme, DEFAULT_DARK_THEME_NAME } from "pi-ui";
-
-const MAX_PAGE_SIZE = 20; // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+import { PROPOSALS_MAX_PAGE_SIZE } from "constants";
 
 export function useProposalsTab() {
   // TODO: move reducers which only control local states from reducer/governance.js to here.
   const activeVoteCount = useSelector(sel.newActiveVoteProposalsCount);
   const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
   const politeiaEnabled = useSelector(sel.politeiaEnabled);
-  const compareInventory = () => dispatch(gov.compareInventory());
   const location = useSelector(sel.location);
+  const [tab, setTab] = useReducer(() => getProposalsTab(location));
+  const compareInventory = () => dispatch(gov.compareInventory());
   const isTestnet = useSelector(sel.isTestNet);
   const dispatch = useDispatch();
-  const [tab, setTab] = useReducer(() => getProposalsTab(location));
+  const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
 
   useEffect(() => {
     return () => dispatch(setLastPoliteiaAccessTime());
   }, [dispatch]);
-  const getTokenAndInitialBatch = () => dispatch(gov.getTokenAndInitialBatch());
+
   useEffect(() => {
     const tab = getProposalsTab(location);
     setTab(tab);
@@ -176,18 +176,19 @@ const onLoadMoreProposals = async (
   proposals,
   inventory,
   getProposalsAndUpdateVoteStatus,
-  proposallistpagesize = MAX_PAGE_SIZE // TODO: Get proposallistpagesize from politeia's request: /v1/policy
+  proposallistpagesize = PROPOSALS_MAX_PAGE_SIZE
 ) => {
   const proposalLength = proposals.length;
-  let proposalNumber;
+  const numOfProposals = proposals.length;
+  let pageSize;
   if (inventory.length <= proposallistpagesize) {
-    proposalNumber = inventory.length;
+    pageSize = inventory.length;
   } else {
-    proposalNumber = proposallistpagesize + proposalLength;
+    pageSize = proposallistpagesize + numOfProposals;
   }
 
-  const proposalBatch = inventory.slice(proposalLength, proposalNumber);
-  return await getProposalsAndUpdateVoteStatus(proposalBatch);
+  const batchTokens = inventory.slice(numOfProposals, pageSize);
+  return await getProposalsAndUpdateVoteStatus(batchTokens);
 };
 
 const getProposalsTab = (location) => {
