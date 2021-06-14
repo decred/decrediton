@@ -1,7 +1,7 @@
 import path from "path";
 import os from "os";
 import fs from "fs";
-import { initWalletCfg, newWalletConfigCreation } from "config";
+import { initWalletCfg, newWalletConfigCreation } from "../config";
 import { TESTNET, MAINNET } from "constants";
 
 // In all the functions below the Windows path is constructed based on

@@ -1,4 +1,4 @@
-import * as cfg from "config";
+import * as cfg from "../config";
 import * as paths from "main_dev/paths";
 
 export const getWalletCfg = (...args) => {

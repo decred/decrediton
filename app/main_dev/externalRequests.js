@@ -6,7 +6,7 @@
  * allowed by passing the appropriate url to the ipcMain message "allowURL".
  */
 import { session } from "electron";
-import { getGlobalCfg } from "config";
+import { getGlobalCfg } from "../config";
 import {
   POLITEIA_URL_TESTNET,
   POLITEIA_URL_MAINNET

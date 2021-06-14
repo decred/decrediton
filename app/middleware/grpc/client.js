@@ -2,7 +2,7 @@ process.env["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA";
 
 const grpc = require("@grpc/grpc-js");
 
-import { getWalletCert } from "config";
+import { getWalletCert } from "../../config.js";
 import { getWalletPath } from "main_dev/paths.js";
 
 const proto = require("../walletrpc/api_grpc_pb.js");

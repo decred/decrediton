@@ -7,7 +7,7 @@ import {
   newWalletConfigCreation,
   getWalletCfg,
   checkNoLegacyWalletConfig
-} from "config";
+} from "../config";
 import {
   launchDCRD,
   launchDCRWallet,

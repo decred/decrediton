@@ -8,7 +8,7 @@ import {
   getCertsPath,
   getSitePath
 } from "./paths";
-import { getWalletCfg, getGlobalCfg } from "config";
+import { getWalletCfg, getGlobalCfg } from "../config";
 import {
   createLogger,
   AddToDcrdLog,
