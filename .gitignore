@@ -18,3 +18,4 @@ app/i18n/extracted/app
 /*.node
 coverage/
 .yarncache/
+deps-graphs
