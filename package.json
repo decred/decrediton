@@ -255,7 +255,6 @@
   },
   "dependencies": {
     "@babel/eslint-parser": "^7.13.10",
-    "@formatjs/intl-relativetimeformat": "^4.5.9",
     "@formatjs/intl-utils": "^1.6.0",
     "@grpc/grpc-js": "^1.2.5",
     "@hot-loader/react-dom": "^16.13.0",
@@ -274,7 +273,6 @@
     "electron-fetch": "^1.7.3",
     "electron-store": "^7.0.2",
     "enzyme-adapter-react-16": "^1.15.2",
-    "fs-extra": "^9.1.0",
     "ini": "^2.0.0",
     "int64-buffer": "^1.0.0",
     "is-running": "^2.1.0",
@@ -316,7 +314,6 @@
     "utf-8-validate": "^5.0.5",
     "winston": "^3.3.3",
     "worker-loader": "^3.0.8",
-    "ws": "^7.4.4",
     "xstate": "^4.17.1"
   },
   "optionalDependencies": {
