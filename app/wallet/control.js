@@ -567,7 +567,7 @@ export const startTicketAutoBuyerV3 = (
         !changeAccount ||
         !csppServer ||
         !csppPort ||
-        (mixedAcctBranch === undefined)
+        mixedAcctBranch === undefined
       ) {
         throw "missing cspp argument";
       }

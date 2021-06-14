@@ -242,9 +242,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Check that wallets directory has been created, if not, make it.
-fs.existsSync(walletsDirectory) || fs.mkdirSync(walletsDirectory, { recursive: true });
-fs.existsSync(mainnetWalletsPath) || fs.mkdirSync(mainnetWalletsPath, { recursive: true });
-fs.existsSync(testnetWalletsPath) || fs.mkdirSync(testnetWalletsPath, { recursive: true });
+fs.existsSync(walletsDirectory) ||
+  fs.mkdirSync(walletsDirectory, { recursive: true });
+fs.existsSync(mainnetWalletsPath) ||
+  fs.mkdirSync(mainnetWalletsPath, { recursive: true });
+fs.existsSync(testnetWalletsPath) ||
+  fs.mkdirSync(testnetWalletsPath, { recursive: true });
 
 checkAndInitWalletCfg(true);
 checkAndInitWalletCfg(false);

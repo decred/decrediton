@@ -1,4 +1,4 @@
-import { ipcRenderer, clipboard, shell, app } from "electron";
+import { ipcRenderer, clipboard, shell } from "electron";
 import { invoke } from "helpers/electronRenderer";
 import {
   isObject,

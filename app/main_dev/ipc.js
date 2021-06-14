@@ -83,7 +83,11 @@ export const deleteDaemon = (appData, testnet) => {
   );
   try {
     if (fs.existsSync(removeDaemonDirectoryData)) {
-      fs.rmSync(removeDaemonDirectoryData, { force: true, recursive: true, maxRetries: 30 });
+      fs.rmSync(removeDaemonDirectoryData, {
+        force: true,
+        recursive: true,
+        maxRetries: 30
+      });
       logger.log("info", "removing " + removeDaemonDirectoryData);
     }
     return true;
@@ -148,7 +152,11 @@ export const removeWallet = (testnet, walletPath) => {
   const removeWalletDirectory = getWalletPath(testnet, walletPath);
   try {
     if (fs.existsSync(removeWalletDirectory)) {
-      fs.rmSync(removeWalletDirectory, { force: true, recursive: true, maxRetries: 30 });
+      fs.rmSync(removeWalletDirectory, {
+        force: true,
+        recursive: true,
+        maxRetries: 30
+      });
       return true;
     }
     return false;

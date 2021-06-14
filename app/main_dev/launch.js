@@ -1129,22 +1129,22 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
 
     return new Promise((ok, fail) => {
       let resData = "";
-      const req = https.request(`https://${url}/`, opts, res => {
-          res.on("data", chunk => resData += chunk);
-          res.on("end", () => {
-            try {
-              if (res.statusCode !== 200) {
-                throw new Error("Not ok response: " + res.statusMessage);
-              }
-              const parsedRes = JSON.parse(resData);
-              if (parsedRes.error && parsedRes.error.message) {
-                throw new Error(parsedRes.error.message);
-              }
-              ok(parsedRes.result);
-            } catch (error) {
-              fail(error);
+      const req = https.request(`https://${url}/`, opts, (res) => {
+        res.on("data", (chunk) => (resData += chunk));
+        res.on("end", () => {
+          try {
+            if (res.statusCode !== 200) {
+              throw new Error("Not ok response: " + res.statusMessage);
             }
-          });
+            const parsedRes = JSON.parse(resData);
+            if (parsedRes.error && parsedRes.error.message) {
+              throw new Error(parsedRes.error.message);
+            }
+            ok(parsedRes.result);
+          } catch (error) {
+            fail(error);
+          }
+        });
       });
       req.end(reqData);
     });
@@ -1152,7 +1152,7 @@ export const connectRpcDaemon = async (mainWindow, rpcCreds) => {
 
   // Return a promise that will resolve once we can query the dcrd instance.
   return (async () => {
-    const sleep = (ms) => new Promise(ok => setTimeout(ok, ms));
+    const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
     for (let i = 0; i < 300; i++) {
       try {
         await getDaemonInfo();

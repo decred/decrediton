@@ -127,11 +127,10 @@ export function checkAndInitWalletCfg(testnet) {
     testnet ? "testnet3" : MAINNET
   );
 
-  if (
-    !fs.existsSync(walletDirectory) &&
-    fs.existsSync(oldWalletDbPath)
-  ) {
-    fs.mkdirSync(path.join(walletDirectory, testnet ? "testnet3" : MAINNET), { recursive: true });
+  if (!fs.existsSync(walletDirectory) && fs.existsSync(oldWalletDbPath)) {
+    fs.mkdirSync(path.join(walletDirectory, testnet ? "testnet3" : MAINNET), {
+      recursive: true
+    });
     fs.copyFileSync(
       path.join(oldWalletDbPath, "wallet.db"),
       path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db")
