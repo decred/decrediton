@@ -45,6 +45,8 @@ const BOOTLOADER_MODE = "bootloader";
 const testVotingKey = "PtWTXsGfk2YeqcmrRty77EsynNBtxWLLbsVEeTS8bKAGFoYF3qTNq";
 const testVotingAddr = "TsmfmUitQApgnNxQypdGd2x36djCCpDpERU";
 const SERTYPE_NOWITNESS = 1;
+const OP_SSGEN_STR = "bb";
+const OP_SSRTX_STR = "bc";
 const STAKE_REVOCATION = "SSRTX";
 const STAKE_GENERATION = "SSGen";
 
@@ -435,23 +437,25 @@ const checkTrezorIsDcrwallet = () => async (dispatch, getState) => {
 function setStakeInputTypes(inputs, refTxs) {
   const refs = {};
   refTxs.forEach((ref) => (refs[ref.hash] = ref.bin_outputs));
+  // Search reference txs for the script that will be signed and determine if
+  // spending a stake output by comparing the first opcode to SSRTX or SSGEN
+  // opcodes.
   for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];
     const bin_outputs = refs[input.prev_hash];
-    if (bin_outputs) {
-      let s = bin_outputs[input.prev_index].script_pubkey;
-      if (s.length < 2) {
-        continue;
-      }
-      s = s.slice(0, 2);
-      switch (s) {
-        case "bc":
-          input.decred_staking_spend = STAKE_REVOCATION;
-          break;
-        case "bb":
-          input.decred_staking_spend = STAKE_GENERATION;
-          break;
-      }
+    if (!bin_outputs) continue;
+    let s = bin_outputs[input.prev_index].script_pubkey;
+    if (s.length < 2) {
+      continue;
+    }
+    s = s.slice(0, 2);
+    switch (s) {
+      case OP_SSGEN_STR:
+        input.decred_staking_spend = STAKE_GENERATION;
+        break;
+      case OP_SSRTX_STR:
+        input.decred_staking_spend = STAKE_REVOCATION;
+        break;
     }
   }
 }
