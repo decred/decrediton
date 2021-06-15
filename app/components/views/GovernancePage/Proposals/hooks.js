@@ -178,7 +178,6 @@ const onLoadMoreProposals = async (
   getProposalsAndUpdateVoteStatus,
   proposallistpagesize = PROPOSALS_MAX_PAGE_SIZE
 ) => {
-  const proposalLength = proposals.length;
   const numOfProposals = proposals.length;
   let pageSize;
   if (inventory.length <= proposallistpagesize) {
