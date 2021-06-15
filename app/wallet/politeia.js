@@ -19,9 +19,9 @@ const promisifyReqLogNoData = (fnName, Req) => {
   );
 };
 
-export const getProposal = promisifyReqLogNoData(
-  "getProposal",
-  api.getProposal
+export const getProposalDetails = promisifyReqLogNoData(
+  "getProposalDetails",
+  api.getProposalDetails
 );
 
 export const getProposalVotes = promisifyReqLogNoData(

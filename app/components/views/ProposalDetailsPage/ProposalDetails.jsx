@@ -26,7 +26,7 @@ const ProposalDetails = ({
     linkto,
     blocksLeft,
     approved,
-    body
+    description
   },
   showPurchaseTicketsPage,
   setVoteOption,
@@ -96,7 +96,7 @@ const ProposalDetails = ({
         />
       )}
       <div className={styles.detailsText}>
-        <ProposalBody body={body} />
+        <ProposalBody body={description} />
       </div>
       <div className={styles.piButtonWrapper}>
         <PoliteiaLink

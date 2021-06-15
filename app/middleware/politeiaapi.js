@@ -16,9 +16,8 @@ const GET = (piURL, path) => getJSON(`${piURL}${path}`);
 const POST = (piURL, path, payload = {}) =>
   postJSON(`${piURL}${path}`, payload);
 
-// XXX no details route anymore, we should use only records batch route.
-export const getProposal = ({ piURL, token }, cb) =>
-  GET(piURL, `/v1/proposals/${token}`)
+export const getProposalDetails = ({ piURL, token }, cb) =>
+  POST(piURL, "/records/v1/details", { token })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 

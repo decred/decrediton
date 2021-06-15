@@ -8,15 +8,6 @@ import {
 
 export const atou = (str) => decodeURIComponent(escape(window.atob(str)));
 
-// politeiaMarkdownIndexMd returns markdown text from the payload of a politeia
-// proposal file that corresponds to its index.md). This was extracted from the
-// helpers.js file of politeia. Assumes the payload has been converted from
-// base64 into bytes.
-export const politeiaMarkdownIndexMd = (payload) => {
-  const text = decodeURIComponent(escape(payload));
-  return text.substring(text.indexOf("\n") + 1);
-};
-
 // parseProposalStatuses iterate over proposal's status changes array returned
 // from BE and returns proposal's timestamps accordingly
 export const parseProposalStatuses = (sChanges) => {

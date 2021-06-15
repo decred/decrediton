@@ -2,16 +2,11 @@ import { push as pushHistory } from "connected-react-router";
 import { wallet, politeia as pi } from "wallet-preload-shim";
 import { cloneDeep } from "fp";
 import * as sel from "selectors";
-import {
-  hexReversedHashToArray,
-  politeiaMarkdownIndexMd,
-  parseRawProposal
-} from "helpers";
+import { hexReversedHashToArray, parseRawProposal } from "helpers";
 import {
   PROPOSAL_VOTING_ACTIVE,
   PROPOSAL_VOTING_FINISHED,
   PROPOSAL_STATUS_ABANDONED,
-  PROPOSAL_INDEX_MD_FILE,
   PROPOSAL_METADATA_FILE,
   PROPOSAL_VOTE_METADATA_FILE
 } from "constants";
@@ -493,26 +488,22 @@ export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
 
+const getProposalFromMap = (proposals, token) => {
+  let proposal;
+  const keys = Object.keys(proposals);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    proposal = proposals[key].find((p) => p.token === token);
+    if (proposal) return proposal;
+  }
+};
+
+const fetchProposalDetails = async (token, piURL) => {
+  const { data } = await pi.getProposalDetails({ piURL, token });
+  return data;
+};
+
 export const getProposalDetails = (token) => async (dispatch, getState) => {
-  const decodeFilePayload = (f) => {
-    switch (f.mime) {
-      case "text/plain; charset=utf-8":
-        return atob(f.payload);
-      default:
-        return f.payload;
-    }
-  };
-
-  const getProposal = (proposals, token) => {
-    let proposal;
-    const keys = Object.keys(proposals);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      proposal = proposals[key].find((p) => p.token === token);
-      if (proposal) return proposal;
-    }
-  };
-
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
@@ -522,36 +513,16 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   let currentVoteChoice;
 
   try {
-    const request = await pi.getProposal({ piURL, token });
+    const { record } = await fetchProposalDetails(token, piURL);
 
-    const { walletService } = getState().grpc;
+    const p = parseRawProposal(record);
     const proposals = getState().governance.proposals;
-    let proposal = await getProposal(proposals, token);
-
-    const p = request.data.proposal;
-    const files = p.files.map((f) => ({
-      digest: f.digest,
-      mime: f.mime,
-      name: f.name,
-      payload: decodeFilePayload(f)
-    }));
-
-    // Parse proposal's body from index.md file.
-    const { payload } = files.find(
-      ({ name }) => name === PROPOSAL_INDEX_MD_FILE
-    );
-    const body = politeiaMarkdownIndexMd(payload);
-
+    let proposal = getProposalFromMap(proposals, token);
     proposal = {
       ...proposal,
-      body,
+      ...p,
       creator: p.username,
-      token: token,
-      version: p.version,
-      name: p.name,
-      numComments: p.numcomments,
-      timestamp: p.timestamp,
-      files: files,
+      token,
       hasEligibleTickets: false
     };
 
@@ -573,6 +544,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     } else {
       const { data } = await pi.getProposalVotes({ piURL, token });
       const { startvotereply, castvotes } = data;
+      const { walletService } = getState().grpc;
       walletEligibleTickets = await getProposalEligibleTickets(
         proposal.token,
         startvotereply.eligibletickets,
@@ -599,6 +571,7 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
         savePiVote(votesToCache, token, testnet, walletName);
       }
     }
+
     // update proposal reference from proposals state
     Object.keys(proposals).forEach((key) =>
       proposals[key].find((p, i) => {
