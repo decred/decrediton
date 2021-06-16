@@ -10,7 +10,7 @@ import * as trza from "actions/TrezorActions";
 import * as ca from "actions/ControlActions";
 
 const testWalletName = "test-wallet-name";
-const invalidCharacters = "/.;:~";
+const invalidCharacters = "`!@#$%^&*()=[]{};'\"\\|,.<>/?~";
 const testWalletCreateErrorMsg = "test-error-msg";
 const usedTestWalletName = "usedTestWalletName";
 const testWalletCreationMasterPubKey = "test-wallet-creation-master-pubkey";

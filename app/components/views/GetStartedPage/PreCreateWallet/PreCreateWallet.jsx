@@ -48,8 +48,12 @@ const PreCreateWallet = ({
     (newWalletName) => {
       setHasFailedAttemptName(true);
       let nameAvailable = true;
-      // replace all special path symbols
-      newWalletName = newWalletName.replace(/[/\\.;:~]/g, "");
+      const replaceNameChars = /[`!@#$%^&*()=[\]{};'"\\|,.<>/?~]/;
+      // Replace all special path symbols except for space, _, -, :, and +.
+      newWalletName = newWalletName.replace(replaceNameChars, "");
+      // Remove leading spaces.
+      if (newWalletName.length > 0 && newWalletName[0] === " ")
+        newWalletName = newWalletName.slice(1);
       for (let i = 0; i < availableWallets.length; i++) {
         if (newWalletName == availableWallets[i].value.wallet) {
           nameAvailable = false;
