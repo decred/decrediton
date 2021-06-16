@@ -78,7 +78,9 @@ import {
   UNLOCKANDEXECFN_FAILED,
   UNLOCKANDEXECFN_SUCCESS,
   MONITORLOCKACBLEACCOUNTS_STARTED,
-  MONITORLOCKACBLEACCOUNTS_STOPPED
+  MONITORLOCKACBLEACCOUNTS_STOPPED,
+  CONFIRMATIONDIALOG_REQUESTED,
+  CONFIRMATIONDIALOG_HIDDEN
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -580,6 +582,16 @@ export default function control(state = {}, action) {
       return {
         ...state,
         unlockAndExecFnRunning: false
+      };
+    case CONFIRMATIONDIALOG_REQUESTED:
+      return {
+        ...state,
+        confirmationDialogModalVisible: true
+      };
+    case CONFIRMATIONDIALOG_HIDDEN:
+      return {
+        ...state,
+        confirmationDialogModalVisible: false
       };
     default:
       return state;

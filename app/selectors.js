@@ -1644,6 +1644,8 @@ export const aboutModalMacOSVisible = get([
 ]);
 export const cantCloseModalVisible = get(["control", "cantCloseModalVisible"]);
 
+export const confirmationDialogModalVisible = bool(get(["control", "confirmationDialogModalVisible"]));
+
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
 
