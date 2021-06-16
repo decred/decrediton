@@ -5,7 +5,8 @@ import * as sel from "selectors";
 import { hexReversedHashToArray, parseRawProposal } from "helpers";
 import {
   PROPOSAL_VOTING_ACTIVE,
-  PROPOSAL_VOTING_FINISHED,
+  PROPOSAL_VOTING_APPROVED,
+  PROPOSAL_VOTING_REJECTED,
   PROPOSAL_STATUS_ABANDONED,
   PROPOSAL_METADATA_FILE,
   PROPOSAL_VOTE_METADATA_FILE
@@ -44,20 +45,22 @@ const fillVoteSummary = (
 ) => {
   proposal.quorumPass = false;
   proposal.voteResult = "declined";
-  proposal.blocksLeft = blocksFromBestBlock(parseInt(voteSummary.endheight));
+  proposal.blocksLeft = blocksFromBestBlock(
+    parseInt(voteSummary.endblockheight)
+  );
   proposal.endTimestamp = blockTimestampFromNow(
-    parseInt(voteSummary.endheight)
+    parseInt(voteSummary.endblockheight)
   );
   proposal.voteCounts = {};
   proposal.voteOptions = [];
-  proposal.startVoteHeight = voteSummary.endheight - voteSummary.duration;
+  proposal.startVoteHeight = voteSummary.endblockheight - voteSummary.duration;
 
   let totalVotes = 0;
   if (voteSummary.results) {
-    voteSummary.results.forEach((o) => {
-      proposal.voteOptions.push(o.option);
-      proposal.voteCounts[o.option.id] = o.votesreceived;
-      totalVotes += o.votesreceived;
+    voteSummary.results.forEach(({ id, votes }) => {
+      proposal.voteOptions.push({ id });
+      proposal.voteCounts[id] = votes;
+      totalVotes += votes;
     });
   }
 
@@ -76,7 +79,10 @@ const fillVoteSummary = (
     proposal.quorumPass = true;
   }
 
-  if (proposal.voteCounts["yes"] / totalVotes > passPercentage / 100) {
+  if (
+    proposal.quorumPass &&
+    proposal.voteCounts["yes"] / totalVotes > passPercentage / 100
+  ) {
     proposal.voteResult = "passed";
   }
   proposal.totalVotes = totalVotes;
@@ -353,8 +359,8 @@ export const GET_PROPOSALS_VOTESTATUS_BATCH_SUCCESS =
 export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED =
   "GET_PROPOSALS_VOTESTATUS_BATCH_FAILED";
 
-const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
-  const { data } = await pi.getProposalsVoteStatusBatch({
+const getProposalsVoteSummaryBatch = async (tokensBatch, piURL) => {
+  const { data } = await pi.getProposalsVoteSummaryBatch({
     piURL,
     tokens: tokensBatch
   });
@@ -423,10 +429,13 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
 
   try {
     const { records } = await getProposalsBatch(tokensBatch, piURL);
-    const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
+    const { summaries } = await getProposalsVoteSummaryBatch(
+      tokensBatch,
+      piURL
+    );
     tokensBatch.forEach((token) => {
       const proposalSummary = summaries[token];
-      const { status, approved } = proposalSummary;
+      const { status } = proposalSummary;
       const prop = parseRawProposal(records[token]);
       prop.token = token;
       prop.proposalStatus = prop.status;
@@ -457,9 +466,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
           case PROPOSAL_VOTING_ACTIVE:
             proposalsUpdated.activeVote.push(prop);
             break;
-          case PROPOSAL_VOTING_FINISHED:
+          case PROPOSAL_VOTING_REJECTED:
+          case PROPOSAL_VOTING_APPROVED:
             proposalsUpdated.finishedVote.push(prop);
-            if (approved) {
+            if (status === PROPOSAL_VOTING_APPROVED) {
               proposalsUpdated.approvedVote.push(prop);
             } else {
               proposalsUpdated.rejectedVote.push(prop);
@@ -693,7 +703,7 @@ export const updateVoteChoice = (
     // update proposal vote status, so we can see our vote counting towards
     // the totals.
     const newProposal = { ...proposal };
-    const { summaries } = await getProposalsVotestatusBatch([token], piURL);
+    const { summaries } = await getProposalsVoteSummaryBatch([token], piURL);
     fillVoteSummary(
       newProposal,
       summaries[token],

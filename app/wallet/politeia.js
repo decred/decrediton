@@ -41,7 +41,7 @@ export const getProposalsBatch = promisifyReqLogNoData(
   api.getProposalsBatch
 );
 
-export const getProposalsVoteStatusBatch = promisifyReqLogNoData(
-  "getProposalsVoteStatusBatch",
-  api.getProposalsVoteStatusBatch
+export const getProposalsVoteSummaryBatch = promisifyReqLogNoData(
+  "getProposalsVoteSummaryBatch",
+  api.getProposalsVoteSummaryBatch
 );

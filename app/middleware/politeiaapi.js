@@ -42,7 +42,7 @@ export const getProposalsBatch = ({ piURL, requests }, cb) =>
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-export const getProposalsVoteStatusBatch = ({ piURL, tokens }, cb) =>
-  POST(piURL, "/v1/proposals/batchvotesummary", { tokens })
+export const getProposalsVoteSummaryBatch = ({ piURL, tokens }, cb) =>
+  POST(piURL, "/ticketvote/v1/summaries", { tokens })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
