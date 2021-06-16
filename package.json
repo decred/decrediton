@@ -274,6 +274,7 @@
     "electron-fetch": "^1.7.3",
     "electron-store": "^7.0.2",
     "enzyme-adapter-react-16": "^1.15.2",
+    "he": "^1.2.0",
     "ini": "^2.0.0",
     "int64-buffer": "^1.0.0",
     "is-running": "^2.1.0",
