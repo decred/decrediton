@@ -47,6 +47,12 @@ module.exports = merge(baseConfig, {
       template: "app/app.development.html"
     }),
 
+    new HtmlWebpackPlugin({
+      filename: "confirmation-dialog.html",
+      template: "app/staticPages/confirmation-dialog.html",
+      inject: false
+    }),
+
     new webpack.DefinePlugin({
       "__ELECTRON_ENV": JSON.stringify("renderer")
     })

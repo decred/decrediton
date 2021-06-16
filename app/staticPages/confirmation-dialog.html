@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      const ipcRenderer = require("electron").ipcRenderer;
+
+      // Setup the callback to fill the contents of the confirmation div with
+      // HTML sent by the wallet preload script.
+      ipcRenderer.on("fill-confirmation-dialog-contents", (event, { title, content, theme }) => {
+        document.getElementById("title").innerHTML = title;
+        document.getElementById("content").innerHTML = content;
+        document.getElementById("body").className = "theme-" + theme;
+      });
+
+      function reply(res) {
+        const buttons = document.getElementById("buttons").getElementsByTagName("button");
+        ipcRenderer.send("confirmation-dialog-reply", res);
+      }
+    </script>
+
+    <style>
+      /*********** General CSS *****************/
+      .root {
+        padding: 0.5em 1em 2em 1em;
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+
+      h1 {
+        font-size: 27px;
+        text-transform: capitalize;
+      }
+
+      #buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      #buttons > button {
+        border: none;
+        padding: 12px 30px 14px 30px;
+        border-radius: 5px;
+        outline: none;
+        transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+        cursor: pointer;
+      }
+
+      .btnReject {
+        background-color: transparent;
+        box-shadow: none;
+      }
+
+      .btnAccept {
+        box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
+        background-color: #2970ff;
+      }
+
+      /*********** Theme light *****************/
+
+      .theme-light .root {
+        color: #48566e;
+        background-color: white;
+      }
+
+      .theme-light .btnAccept {
+        color: white;
+      }
+
+      .theme-light .btnAccept:hover {
+        background-color: #1c4eb2;
+      }
+
+      .theme-light .btnReject {
+        color: #8997a5;
+      }
+
+      .theme-light .btnReject:hover {
+        color: #596d81;
+      }
+
+      /*********** Theme dark *****************/
+
+      .theme-dark .root {
+        color: #B7DEEE;
+        background-color: #223767;
+      }
+
+      .theme-dark .btnAccept {
+        color: #E9F8FE;
+      }
+
+      .theme-dark .btnAccept:hover {
+        background-color: #7ea9ff;
+      }
+
+      .theme-dark .btnReject {
+        color: #3C62B0;
+      }
+
+      .theme-dark .btnReject:hover {
+        color: #B7DEEE;
+      }
+    </style>
+  </head>
+
+  <body id="body">
+    <div class="root">
+      <h1 id="title">hey-o</h1>
+      <div id="content">Listen what I'm sayin'-o</div>
+      <div id="buttons">
+        <button class="btnReject" onclick="reply(false)">Reject</button>
+        <button class="btnAccept" onclick="reply(true)">Accept</button>
+      </div>
+    </div>
+    </body>
+</html>
