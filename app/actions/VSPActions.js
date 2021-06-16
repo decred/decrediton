@@ -22,30 +22,31 @@ export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
 export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
 
-export const getVSPInfo = (host) => (dispatch) =>
-  new Promise((resolve, reject) => {
-    dispatch({ type: GETVSP_ATTEMPT });
-    // 5 seconds for timeout.
-    const TIMEOUT_TIME = 5000;
-    // add https into vsp host, so we can fetch its information.
+export const getVSPInfo = (host) => async (dispatch) => {
+  // 5 seconds for timeout.
+  const TIMEOUT_TIME = 5000;
+
+  dispatch({ type: GETVSP_ATTEMPT });
+
+  try {
+    // Check if user allows access to this VSP. This might trigger a confirmation
+    // dialog.
     host = `https://${host}`;
-    wallet.allowVSPHost(host);
+    await wallet.allowVSPHost(host);
+
     const timeout = new Promise((resolve, reject) =>
       setTimeout(() => reject({ isTimeout: true, vspHost: host }), TIMEOUT_TIME)
     );
     const getInfo = wallet.getVSPInfo(host);
 
-    Promise.race([timeout, getInfo])
-      .then((info) => {
-        clearTimeout(timeout);
-        dispatch({ type: GETVSP_SUCCESS, info });
-        resolve(info.data);
-      })
-      .catch((error) => {
-        dispatch({ type: GETVSP_FAILED, error });
-        reject(error);
-      });
-  });
+    const info = await Promise.race([timeout, getInfo]);
+    dispatch({ type: GETVSP_SUCCESS, info });
+    return info.data;
+  } catch (error) {
+    dispatch({ type: GETVSP_FAILED, error });
+    throw error;
+  }
+};
 
 export const GETVSPTICKETSTATUS_ATTEMPT = "GETVSPTICKETSTATUS_ATTEMPT";
 export const GETVSPTICKETSTATUS_FAILED = "GETVSPTICKETSTATUS_FAILED";
@@ -651,13 +652,17 @@ export const getVSPsPubkeys = () => async (dispatch) => {
     dispatch({ type: GETVSPSPUBKEYS_ATTEMPT });
     const availableVSPsPubkeys = [];
     const vsps = await dispatch(discoverAvailableVSPs());
-    vsps.forEach(async (vsp) => {
-      const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-      if (pubkey) {
-        vsp.pubkey = pubkey;
-        availableVSPsPubkeys.push(vsp);
+    for (const vsp of vsps) {
+      try {
+        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
+        if (pubkey) {
+          vsp.pubkey = pubkey;
+          availableVSPsPubkeys.push(vsp);
+        }
+      } catch (error) {
+        // Skip to the next vsp.
       }
-    });
+    };
     dispatch({ type: GETVSPSPUBKEYS_SUCCESS, availableVSPsPubkeys });
   } catch (error) {
     dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
@@ -802,14 +807,16 @@ export const setVSPDVoteChoices = (passphrase) => async (
   getState
 ) => {
   const availableVSPs = await dispatch(discoverAvailableVSPs());
-  availableVSPs.map(async (vsp) => {
-    const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-    if (pubkey) {
+  for (const vsp of availableVSPs) {
+    try {
+      const { pubkey } = await dispatch(getVSPInfo(vsp.host));
       vsp.pubkey = pubkey;
-      return vsp;
+    } catch (error) {
+      // Ignore fetching info (won't set the vote choice for this vspd).
+      // TODO: this should be tracked so that users know this VSP isn't voting
+      // according to their wishes.
     }
-    return false;
-  });
+  };
   try {
     dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
     const walletService = sel.walletService(getState());
