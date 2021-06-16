@@ -19,6 +19,9 @@ import {
   TRZ_PASSPHRASE_REQUESTED,
   TRZ_PASSPHRASE_ENTERED,
   TRZ_PASSPHRASE_CANCELED,
+  TRZ_VOTINGXPRIVSEED_ATTEMPT,
+  TRZ_VOTINGXPRIVSEED_FAILED,
+  TRZ_VOTINGXPRIVSEED_SUCCESS,
   TRZ_PURCHASETICKET_ATTEMPT,
   TRZ_PURCHASETICKET_FAILED,
   TRZ_PURCHASETICKET_SUCCESS,
@@ -199,6 +202,7 @@ export default function trezor(state = {}, action) {
     case TRZ_CHANGELABEL_ATTEMPT:
     case TRZ_WIPEDEVICE_ATTEMPT:
     case TRZ_INITDEVICE_ATTEMPT:
+    case TRZ_VOTINGXPRIVSEED_ATTEMPT:
       return { ...state, performingOperation: true };
     case TRZ_RECOVERDEVICE_ATTEMPT:
       return {
@@ -259,6 +263,8 @@ export default function trezor(state = {}, action) {
     case TRZ_INITDEVICE_SUCCESS:
     case TRZ_BACKUPDEVICE_FAILED:
     case TRZ_BACKUPDEVICE_SUCCESS:
+    case TRZ_VOTINGXPRIVSEED_FAILED:
+    case TRZ_VOTINGXPRIVSEED_SUCCESS:
       return { ...state, performingOperation: false };
     case TRZ_RECOVERDEVICE_FAILED:
     case TRZ_RECOVERDEVICE_SUCCESS:

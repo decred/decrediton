@@ -56,6 +56,11 @@ const OP_TGEN_STR = "c3";
 const STAKE_REVOCATION = "SSRTX";
 const STAKE_GENERATION = "SSGen";
 const TREASURY_GENERATION = "TGen";
+// VOTING_XPRIV_KEY and VOTING_XPRIV_VALUE must never change in order to
+// have deterministic voting keys.
+const VOTING_XPRIV_KEY = "Create decred voting xpriv seed bytes?";
+const VOTING_XPRIV_VALUE =
+  "0000000000000000000000000000000000000000000000000000000000000000";
 
 let setListeners = false;
 
@@ -1008,6 +1013,47 @@ export const getWalletCreationMasterPubKey = () => async (
   } catch (error) {
     dispatch({ error, type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
     throw error;
+  }
+};
+
+export const TRZ_VOTINGXPRIVSEED_ATTEMPT = "TRZ_VOTINGXPRIVSEED_ATTEMPT";
+export const TRZ_VOTINGXPRIVSEED_FAILED = "TRZ_VOTINGXPRIVSEED_FAILED";
+export const TRZ_VOTINGXPRIVSEED_SUCCESS = "TRZ_VOTINGXPRIVSEED_SUCCESS";
+
+/* eslint-disable no-unused-vars */
+const votingXprivSeed = () => async (dispatch, getState) => {
+  /* eslint-enable no-unused-vars */
+  dispatch({ type: TRZ_VOTINGXPRIVSEED_ATTEMPT });
+
+  if (noDevice(getState)) {
+    dispatch({
+      error: "Device not connected",
+      type: TRZ_VOTINGXPRIVSEED_FAILED
+    });
+    return;
+  }
+
+  const chainParams = selectors.chainParams(getState());
+  const address_n = addressPath(0, 0, WALLET_ACCOUNT, chainParams.HDCoinType);
+
+  try {
+    const ckv = await deviceRun(dispatch, getState, async () => {
+      const res = await session.cipherKeyValue({
+        path: address_n,
+        key: VOTING_XPRIV_KEY,
+        value: VOTING_XPRIV_VALUE,
+        encrypt: true,
+        askOnEncrypt: true,
+        askOnDecrypt: true
+      });
+      return res.payload;
+    });
+    const seed = Buffer.from(ckv.value, "hex");
+    if (seed.length != 32) throw "unusable voting HD pivate key seed bytes";
+    dispatch({ type: TRZ_VOTINGXPRIVSEED_SUCCESS });
+    return seed;
+  } catch (error) {
+    dispatch({ error, type: TRZ_VOTINGXPRIVSEED_FAILED });
   }
 };
 
