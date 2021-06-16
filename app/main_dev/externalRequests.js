@@ -226,4 +226,7 @@ export const reloadAllowedExternalRequests = () => {
     []
   );
   cfgAllowedRequests.forEach((v) => allowExternalRequest(v));
+
+  const cfgAllowedVSPs = globalCfg.get(cfgConstants.ALLOWED_VSP_HOSTS, []);
+  cfgAllowedVSPs.forEach(v => allowVSPRequests(v));
 };
