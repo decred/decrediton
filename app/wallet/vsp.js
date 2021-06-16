@@ -4,6 +4,7 @@ import * as cfg from "../config";
 import * as cfgConstants from "constants/config";
 import { ipcRenderer } from "electron";
 import { reloadAllowedExternalRequests } from "./daemon";
+import { allowVSPHost as confDialogAllowVSPHost } from "./confirmationDialog";
 
 const promisifyReq = (fnName, Req) =>
   log(
@@ -93,8 +94,16 @@ export const getAllVSPs = withLogNoData(
   "getAllVspsInfo"
 );
 
-// allowVSPHost enables the external request to a specif VSP host.
+// allowVSPHost enables the external request to a specific VSP host.
 export const allowVSPHost = log(
-  (host) => Promise.resolve(ipcRenderer.sendSync("allow-vsp-host", host)),
-  "Allow StakePool Host"
+  async (host) => {
+    // TODO: only ask for confirmation if VSP host is not yet allowed.
+    await confDialogAllowVSPHost(host);
+
+    // Store that the user allowed access to this VSP and enable access in the
+    // main process.
+    addAllowedVSPsInCfg([host]);
+    ipcRenderer.sendSync("allow-vsp-host", host);
+  },
+  "Allow VSP Host"
 );
