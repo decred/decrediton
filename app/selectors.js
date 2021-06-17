@@ -425,7 +425,7 @@ export const ticketNormalizer = createSelector(
         blockHash,
         rawTx,
         isStake,
-        timestamp,
+        height,
         feeStatus
       } = ticket;
       // TODO refactor same code to be used in tickets and regular tx normalizers.
@@ -437,7 +437,7 @@ export const ticketNormalizer = createSelector(
       const txOutputs = [];
       const hasSpender = spender && spender.hash;
       const isVote = status === VOTED;
-      const isPending = !timestamp;
+      const isPending = height <= 0;
       // Some legacy vsp fees wallet will have tickets without `ticket` field
       // and only with `spender` so we use it as fallback
       const ticketTx = ticket.ticket || ticket.spender;
@@ -739,7 +739,7 @@ export const transactionNormalizer = createSelector(
         txHeight: height,
         txType,
         timestamp,
-        isPending: !timestamp,
+        isPending: height <= 0,
         txFee: fee,
         txInputs,
         txOutputs,
