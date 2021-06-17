@@ -268,7 +268,7 @@ export const getTransaction = (walletService, txHash) =>
       const block = {
         getHash: resp.getBlockHash,
         getHeight: () => -1,
-        getTimestamp: () => -1
+        getTimestamp: () => null
       };
       const index = -1; // wallet.GetTransaction doesn't return the index
       const tx = formatTransaction(block, resp.getTransaction(), index);
