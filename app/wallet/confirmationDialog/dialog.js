@@ -93,7 +93,10 @@ export const showConfirmationDialog = async (content) => {
       okPromise(res);
     });
 
-    ipcRenderer.send("fill-confirmation-dialog-contents", formatContent(content));
+    ipcRenderer.send(
+      "fill-confirmation-dialog-contents",
+      formatContent(content)
+    );
   } catch (error) {
     failPromise(error);
   }

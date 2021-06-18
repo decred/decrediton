@@ -662,7 +662,7 @@ export const getVSPsPubkeys = () => async (dispatch) => {
       } catch (error) {
         // Skip to the next vsp.
       }
-    };
+    }
     dispatch({ type: GETVSPSPUBKEYS_SUCCESS, availableVSPsPubkeys });
   } catch (error) {
     dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
@@ -816,7 +816,7 @@ export const setVSPDVoteChoices = (passphrase) => async (
       // TODO: this should be tracked so that users know this VSP isn't voting
       // according to their wishes.
     }
-  };
+  }
   try {
     dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
     const walletService = sel.walletService(getState());

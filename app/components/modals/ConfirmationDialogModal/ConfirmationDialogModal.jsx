@@ -11,10 +11,7 @@ const ConfirmationDialogModal = ({ ...props }) => {
     dispatch(ca.listenForConfirmationDialogRequests());
   }, [dispatch]);
 
-  return (
-    <Modal show={show} { ...props } >
-    </Modal>
-  );
+  return <Modal show={show} {...props}></Modal>;
 };
 
 export default ConfirmationDialogModal;

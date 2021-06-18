@@ -1327,6 +1327,6 @@ export const CONFIRMATIONDIALOG_HIDDEN = "CONFIRMATIONDIALOG_HIDDEN";
 
 export const listenForConfirmationDialogRequests = () => (dispatch) => {
   const requestedCb = () => dispatch({ type: CONFIRMATIONDIALOG_REQUESTED });
-  const hiddenCb = () => dispatch({ type: CONFIRMATIONDIALOG_HIDDEN })
+  const hiddenCb = () => dispatch({ type: CONFIRMATIONDIALOG_HIDDEN });
   wallet.onConfirmationDialogCallbacks(requestedCb, hiddenCb);
 };

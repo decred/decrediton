@@ -16,8 +16,7 @@ export const getWalletCfg = (...args) => {
 //
 // TODO: switch to an allowlist mode instead, after identifying the relevant
 // entries and move setting code to the preload layer.
-const disallowedGlobalKeys = new Map().
-  set(cfgConstants.ALLOWED_VSP_HOSTS);
+const disallowedGlobalKeys = new Map().set(cfgConstants.ALLOWED_VSP_HOSTS);
 
 export const getGlobalCfg = (...args) => {
   const c = cfg.getGlobalCfg(...args);

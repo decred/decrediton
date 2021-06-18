@@ -563,8 +563,10 @@ const setConfirmBrowserViewBounds = () => {
   const mainBounds = mainWindow.getBounds();
   const maxWidth = 540;
   const maxHeight = 380;
-  const width = mainBounds.width > maxWidth - 20 ? maxWidth : mainBounds.width - 20;
-  const height = mainBounds.height > maxHeight ? maxHeight : mainBounds.height - 20;
+  const width =
+    mainBounds.width > maxWidth - 20 ? maxWidth : mainBounds.width - 20;
+  const height =
+    mainBounds.height > maxHeight ? maxHeight : mainBounds.height - 20;
   const viewBounds = {
     x: Math.trunc((mainBounds.width - width) / 2),
     y: Math.trunc((mainBounds.height - height) / 2),
@@ -575,7 +577,10 @@ const setConfirmBrowserViewBounds = () => {
 };
 
 ipcMain.on("fill-confirmation-dialog-contents", (event, contents) => {
-  confirmBrowserView.webContents.send("fill-confirmation-dialog-contents", contents);
+  confirmBrowserView.webContents.send(
+    "fill-confirmation-dialog-contents",
+    contents
+  );
   mainWindow.setBrowserView(confirmBrowserView);
   confirmBrowserView.setBackgroundColor("#ffffffff");
   setConfirmBrowserViewBounds();
@@ -585,7 +590,10 @@ ipcMain.on("fill-confirmation-dialog-contents", (event, contents) => {
 ipcMain.on("confirmation-dialog-reply", (event, res) => {
   // Sanity check acceptance actually came from the confirmation BrowserView.
   if (event.sender.id !== confirmBrowserView.webContents.id) {
-    logger.log("error", "Confirmation reply came from incorrect sender webcontents");
+    logger.log(
+      "error",
+      "Confirmation reply came from incorrect sender webcontents"
+    );
     return;
   }
 
@@ -789,10 +797,13 @@ app.on("ready", async () => {
   confirmBrowserView.webContents.loadURL(confirmURL);
 
   // Ensure we close the confirmation modal if the main wallet UI Is reloaded.
-  mainWindow.webContents.on("did-start-navigation", (event, url, isInPlace, isMainFrame) => {
-    isMainFrame && !isInPlace && mainWindow.setBrowserView(null);
-    confirmBrowserView.webContents.reload();
-  });
+  mainWindow.webContents.on(
+    "did-start-navigation",
+    (event, url, isInPlace, isMainFrame) => {
+      isMainFrame && !isInPlace && mainWindow.setBrowserView(null);
+      confirmBrowserView.webContents.reload();
+    }
+  );
 
   // Re-center BrowserView on resizes. The events are different for linux and
   // windows/macOS.
