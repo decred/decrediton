@@ -10,11 +10,13 @@ const Transaction = () => {
   const { txHash } = useParams();
   const {
     abandonTransaction,
+    onRevokeTicket,
     publishUnminedTransactions,
     currentBlockHeight,
     state,
     viewedTransaction,
-    decodedTx
+    decodedTx,
+    isSPV
   } = useTransactionPage(txHash);
 
   if (!viewedTransaction) return null;
@@ -39,8 +41,10 @@ const Transaction = () => {
               transactionDetails: viewedTransaction,
               decodedTransaction: decodedTx,
               abandonTransaction,
+              onRevokeTicket,
               publishUnminedTransactions,
-              currentBlockHeight
+              currentBlockHeight,
+              isSPV
             }}
           />
         </StandalonePage>

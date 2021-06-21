@@ -43,7 +43,8 @@ const PurchaseTickets = ({
     onPurchaseTickets: onPurchaseTicketsProp,
     onChangeStakePool,
     onRevokeTickets,
-    onDismissBackupRedeemScript
+    onDismissBackupRedeemScript,
+    spvMode
   } = usePurchaseTickets();
 
   const getQuickBarComponent = () => {
@@ -246,7 +247,8 @@ const PurchaseTickets = ({
         notMixedAccounts,
         getRunningIndicator,
         toggleIsLegacy,
-        isLegacy: true
+        isLegacy: true,
+        spvMode
       }}
     />
   );

@@ -94,6 +94,7 @@ export function PurchasePage({
       ) : (
         <PurchaseTicketsForm
           {...{
+            spvMode,
             notMixedAccounts,
             ticketPrice,
             setAccount,

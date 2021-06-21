@@ -171,7 +171,8 @@
 }
 
 .rebroadcastBtnContainer,
-.abandonBtnContainer {
+.abandonBtnContainer,
+.revokeBtnContainer {
   width: 815px;
 }
 
@@ -185,7 +186,8 @@
   margin-top: -22px;
 }
 
-.abandonBtn {
+.abandonBtn,
+.revokeBtn {
   float: right;
   margin-top: -22px;
   margin-right: 20px;
@@ -193,14 +195,16 @@
 
 @media screen and (max-width: 1179px) {
   .rebroadcastBtnContainer,
-  .abandonBtnContainer {
+  .abandonBtnContainer,
+  .revokeBtnContainer {
     width: 770px;
   }
 }
 
 @media screen and (max-width: 1106px) {
   .rebroadcastBtnContainer,
-  .abandonBtnContainer {
+  .abandonBtnContainer,
+  .revokeBtnContainer {
     width: 670px;
   }
 
@@ -211,18 +215,19 @@
 
 @media screen and (max-width: 768px) {
   .rebroadcastBtnContainer,
-  .abandonBtnContainer {
+  .abandonBtnContainer,
+  .revokeBtnContainer {
     width: 375px;
     text-align: center;
     display: block;
     margin-top: -22px;
-
-    .rebroadcastBtn,
-    .abandonBtn {
-      float: none;
-      padding: 12px 30px 14px 48px;
-      margin-top: 0;
-    }
+  }
+  .rebroadcastBtn,
+  .abandonBtn,
+  .revokeBtn {
+    float: none;
+    padding: 12px 30px 14px 48px;
+    margin-top: 0;
   }
 }
 @media screen and (max-width: 1106px) {

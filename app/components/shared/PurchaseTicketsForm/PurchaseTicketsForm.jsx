@@ -47,6 +47,7 @@ const LegacyCheckbox = ({ isLegacy, toggleIsLegacy }) => (
 );
 
 const PurchaseTicketsForm = ({
+  spvMode,
   isValid,
   handleOnKeyDown,
   numTicketsToBuy,
@@ -291,18 +292,20 @@ const PurchaseTicketsForm = ({
             </PiUiButton>
           </Tooltip>
         ) : (
-          <RevokeModalButton
-            modalTitle={
-              <T
-                id="tickets.revokeConfirmations"
-                m="Revoke Tickets Confirmation"
-              />
-            }
-            className={styles.revokeButton}
-            onSubmit={onRevokeTickets}
-            kind="secondary"
-            buttonLabel={revokeLabel()}
-          />
+          !spvMode && (
+            <RevokeModalButton
+              modalTitle={
+                <T
+                  id="tickets.revokeConfirmations"
+                  m="Revoke Tickets Confirmation"
+                />
+              }
+              className={styles.revokeButton}
+              onSubmit={onRevokeTickets}
+              kind="secondary"
+              buttonLabel={revokeLabel()}
+            />
+          )
         )}
 
         {isWatchingOnly ? (
