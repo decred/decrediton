@@ -103,11 +103,7 @@ function formatTicket(res) {
   };
 
   if (res.getBlock()) {
-    r.ticket = formatTransaction(
-      res.getBlock(),
-      res.getTicket().getTicket(),
-      0
-    );
+    r.ticket = formatTransaction(res.getBlock(), res.getTicket().getTicket());
   } else {
     r.ticket = formatUnminedTransaction(res.getTicket().getTicket(), 0);
   }
