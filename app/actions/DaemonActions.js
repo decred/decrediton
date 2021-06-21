@@ -579,7 +579,7 @@ export const checkNetworkMatch = () => (dispatch, getState) =>
           wallet.dropDcrd();
           return reject(DIFF_CONNECTION_ERROR);
         }
-        dispatch({ type: CHECK_NETWORKMATCH_SUCCESS });
+        dispatch({ daemonInfo, type: CHECK_NETWORKMATCH_SUCCESS });
         resolve(daemonInfo);
       })
       .catch((error) => {

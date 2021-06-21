@@ -6,8 +6,7 @@
  * allowed by passing the appropriate url to the ipcMain message "allowURL".
  */
 import { session } from "electron";
-import { isRegExp } from "lodash";
-import { getGlobalCfg } from "config";
+import { getGlobalCfg } from "../config";
 import {
   POLITEIA_URL_TESTNET,
   POLITEIA_URL_MAINNET
@@ -151,7 +150,7 @@ export const installSessionHandlers = (mainLogger) => {
 };
 
 const addAllowedURL = (url) => {
-  if (!isRegExp(url)) url = new RegExp(url);
+  if (!(url instanceof RegExp)) url = new RegExp(url);
   allowedURLs.push(url);
 };
 

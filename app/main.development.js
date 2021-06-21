@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs from "fs";
 import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
@@ -89,7 +89,7 @@ import {
 } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/files";
 import electron from "electron";
-import { isString } from "./fp";
+import { isPlainString as isString } from "./helpers/strings";
 import {
   OPTIONS,
   BOTH_CONNECTION_ERR_MESSAGE,
@@ -242,9 +242,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Check that wallets directory has been created, if not, make it.
-fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
-fs.pathExistsSync(mainnetWalletsPath) || fs.mkdirsSync(mainnetWalletsPath);
-fs.pathExistsSync(testnetWalletsPath) || fs.mkdirsSync(testnetWalletsPath);
+fs.existsSync(walletsDirectory) ||
+  fs.mkdirSync(walletsDirectory, { recursive: true });
+fs.existsSync(mainnetWalletsPath) ||
+  fs.mkdirSync(mainnetWalletsPath, { recursive: true });
+fs.existsSync(testnetWalletsPath) ||
+  fs.mkdirSync(testnetWalletsPath, { recursive: true });
 
 checkAndInitWalletCfg(true);
 checkAndInitWalletCfg(false);

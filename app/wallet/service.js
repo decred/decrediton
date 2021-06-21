@@ -20,15 +20,17 @@ import {
 import {
   _blake256,
   selializeNoWitnessEncode,
-  decodeRawTransaction as decodeHelper,
-  extractPkScriptAddrs,
+  decodeRawTransaction as decodeHelper
+} from "../helpers/msgTx";
+import { extractPkScriptAddrs } from "../helpers/scripts";
+import { addrFromSStxPkScrCommitment } from "../helpers/tickets";
+import {
   hexToBytes,
-  addrFromSStxPkScrCommitment,
+  rawHashToHex,
   reverseHash,
   strHashToRaw,
   rawToHex
-} from "helpers";
-import { rawHashToHex } from "../helpers/byteActions";
+} from "../helpers/byteActions";
 
 const promisify = (fn) => (...args) =>
   new Promise((ok, fail) =>

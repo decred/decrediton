@@ -33,8 +33,7 @@ module.exports = function (api) {
         "root": [ "./app" ],
         "extensions": [ ".js" ],
         "alias": {
-          "constants": "./app/constants",
-          "config": "./app/config"
+          "constants": "./app/constants"
         }
       } ]
     ],

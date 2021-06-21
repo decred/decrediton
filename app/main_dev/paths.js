@@ -1,7 +1,7 @@
 import path from "path";
 import os from "os";
-import fs from "fs-extra";
-import { initWalletCfg, newWalletConfigCreation } from "config";
+import fs from "fs";
+import { initWalletCfg, newWalletConfigCreation } from "../config";
 import { TESTNET, MAINNET } from "constants";
 
 // In all the functions below the Windows path is constructed based on
@@ -127,19 +127,18 @@ export function checkAndInitWalletCfg(testnet) {
     testnet ? "testnet3" : MAINNET
   );
 
-  if (
-    !fs.pathExistsSync(walletDirectory) &&
-    fs.pathExistsSync(oldWalletDbPath)
-  ) {
-    fs.mkdirsSync(walletDirectory);
-    fs.copySync(
+  if (!fs.existsSync(walletDirectory) && fs.existsSync(oldWalletDbPath)) {
+    fs.mkdirSync(path.join(walletDirectory, testnet ? "testnet3" : MAINNET), {
+      recursive: true
+    });
+    fs.copyFileSync(
       path.join(oldWalletDbPath, "wallet.db"),
       path.join(walletDirectory, testnet ? "testnet3" : MAINNET, "wallet.db")
     );
 
     // copy over existing config.json if it exists
-    if (fs.pathExistsSync(getGlobalCfgPath())) {
-      fs.copySync(getGlobalCfgPath(), configJson);
+    if (fs.existsSync(getGlobalCfgPath())) {
+      fs.copyFileSync(getGlobalCfgPath(), configJson);
     }
 
     // create new configs for default mainnet wallet
@@ -156,17 +155,17 @@ export function getPoliteiaPath() {
 // setPoliteiaPath sets the politeia path which proposals are cached.
 export function setPoliteiaPath() {
   const politeiaPath = getPoliteiaPath();
-  if (fs.pathExistsSync(politeiaPath)) {
+  if (fs.existsSync(politeiaPath)) {
     return;
   }
-  fs.mkdirSync(politeiaPath, { mode: 0o700 });
+  fs.mkdirSync(politeiaPath, { recursive: true, mode: 0o700 });
 }
 
 // getProposalPathFromPoliteia gets a proposal by its token or return empty string
 // if proposal is not foud.
 function getProposalPathFromPoliteia(token) {
   const proposalPath = path.join(getPoliteiaPath(), token);
-  if (fs.pathExistsSync(proposalPath)) {
+  if (fs.existsSync(proposalPath)) {
     return proposalPath;
   }
   return "";
@@ -175,11 +174,11 @@ function getProposalPathFromPoliteia(token) {
 // setPoliteiaProposalPath mkdir if directory of proposal does not exists.
 export function setPoliteiaProposalPath(token) {
   let proposalPath = getProposalPathFromPoliteia(token);
-  if (fs.pathExistsSync(proposalPath)) {
+  if (fs.existsSync(proposalPath)) {
     return;
   }
   proposalPath = path.join(getPoliteiaPath(), token);
-  fs.mkdirSync(proposalPath, { mode: 0o700 });
+  fs.mkdirSync(proposalPath, { recursive: true, mode: 0o700 });
   return proposalPath;
 }
 
@@ -188,7 +187,7 @@ export function setPoliteiaProposalPath(token) {
 // and write a eligibletickets.json file, with { eligibleTickets: [tickets]) }
 export function saveEligibleTickets(token, eligibleTickets) {
   let proposalPath = getProposalPathFromPoliteia(token);
-  if (!fs.pathExistsSync(proposalPath)) {
+  if (!fs.existsSync(proposalPath)) {
     proposalPath = setPoliteiaProposalPath(token);
   }
   const fullPath = path.join(proposalPath, "eligibletickets.json");
@@ -203,7 +202,7 @@ export function getEligibleTickets(token) {
     return null;
   }
   const fullPath = path.join(proposalPath, "eligibletickets.json");
-  if (!fs.pathExistsSync(fullPath)) {
+  if (!fs.existsSync(fullPath)) {
     return null;
   }
   const eligibleTickets = fs.readFileSync(fullPath);
@@ -217,10 +216,10 @@ function getWalletPiPath(testnet, walletName) {
     getWalletPath(testnet, walletName),
     "politeia"
   );
-  if (fs.pathExistsSync(walletPiPath)) {
+  if (fs.existsSync(walletPiPath)) {
     return walletPiPath;
   }
-  fs.mkdirSync(walletPiPath, { mode: 0o700 });
+  fs.mkdirSync(walletPiPath, { recursive: true, mode: 0o700 });
   return walletPiPath;
 }
 
@@ -231,11 +230,11 @@ function getWalletPiPath(testnet, walletName) {
 export function savePiVote(vote, token, testnet, walletName) {
   const walletPath = getWalletPiPath(testnet, walletName);
   const proposalPath = path.join(walletPath, token);
-  if (!fs.pathExistsSync(proposalPath)) {
-    fs.mkdirSync(proposalPath, { mode: 0o700 });
+  if (!fs.existsSync(proposalPath)) {
+    fs.mkdirSync(proposalPath, { recursive: true, mode: 0o700 });
   }
   const fullPath = path.join(proposalPath, "vote.json");
-  if (!fs.pathExistsSync(fullPath)) {
+  if (!fs.existsSync(fullPath)) {
     fs.writeFile(fullPath, JSON.stringify(vote), { mode: 0o600 });
   }
 }
@@ -244,7 +243,7 @@ export function savePiVote(vote, token, testnet, walletName) {
 export function getProposalWalletVote(token, testnet, walletName) {
   const walletPath = getWalletPiPath(testnet, walletName);
   const proposalPath = path.join(walletPath, token);
-  if (!fs.pathExistsSync(proposalPath)) {
+  if (!fs.existsSync(proposalPath)) {
     return null;
   }
   const fullPath = path.join(proposalPath, "vote.json");

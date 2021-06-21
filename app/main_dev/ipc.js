@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs from "fs";
 import path from "path";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDb, getDcrdPath } from "./paths";
@@ -7,7 +7,7 @@ import {
   newWalletConfigCreation,
   getWalletCfg,
   checkNoLegacyWalletConfig
-} from "config";
+} from "../config";
 import {
   launchDCRD,
   launchDCRWallet,
@@ -58,7 +58,7 @@ export const getAvailableWallets = (network) => {
     const isTrezor = cfg.get(cfgConstants.TREZOR);
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
-    const finished = fs.pathExistsSync(walletDbFilePath);
+    const finished = fs.existsSync(walletDbFilePath);
     availableWallets.push({
       network,
       wallet,
@@ -82,8 +82,12 @@ export const deleteDaemon = (appData, testnet) => {
     testnet ? "testnet3" : MAINNET
   );
   try {
-    if (fs.pathExistsSync(removeDaemonDirectoryData)) {
-      fs.removeSync(removeDaemonDirectoryData);
+    if (fs.existsSync(removeDaemonDirectoryData)) {
+      fs.rmSync(removeDaemonDirectoryData, {
+        force: true,
+        recursive: true,
+        maxRetries: 30
+      });
       logger.log("info", "removing " + removeDaemonDirectoryData);
     }
     return true;
@@ -129,8 +133,8 @@ export const startDaemon = async (params, testnet, reactIPC) => {
 export const createWallet = (testnet, walletPath) => {
   const newWalletDirectory = getWalletPath(testnet, walletPath);
   try {
-    if (!fs.pathExistsSync(newWalletDirectory)) {
-      fs.mkdirsSync(newWalletDirectory);
+    if (!fs.existsSync(newWalletDirectory)) {
+      fs.mkdirSync(newWalletDirectory, { recursive: true });
 
       // create new configs for new wallet
       initWalletCfg(testnet, walletPath);
@@ -147,8 +151,12 @@ export const removeWallet = (testnet, walletPath) => {
   if (!walletPath) return;
   const removeWalletDirectory = getWalletPath(testnet, walletPath);
   try {
-    if (fs.pathExistsSync(removeWalletDirectory)) {
-      fs.removeSync(removeWalletDirectory);
+    if (fs.existsSync(removeWalletDirectory)) {
+      fs.rmSync(removeWalletDirectory, {
+        force: true,
+        recursive: true,
+        maxRetries: 30
+      });
       return true;
     }
     return false;
@@ -409,8 +417,8 @@ export const removeDcrlnd = (walletName, testnet) => {
   const walletPath = getWalletPath(testnet, walletName);
   const dcrlndRoot = path.join(walletPath, "dcrlnd");
   try {
-    if (fs.pathExistsSync(dcrlndRoot)) {
-      fs.removeSync(dcrlndRoot);
+    if (fs.existsSync(dcrlndRoot)) {
+      fs.rmSync(dcrlndRoot, { recursive: true, force: true, maxRetries: 30 });
       return true;
     }
     return false;

@@ -1,4 +1,4 @@
-import { ipcRenderer, clipboard, shell, app } from "electron";
+import { ipcRenderer, clipboard, shell } from "electron";
 import { invoke } from "helpers/electronRenderer";
 import {
   isObject,
@@ -136,11 +136,6 @@ export const openExternalURL = (url) => {
     throw new Error("Unsupported external URL " + url);
   }
   shell.openExternal(url);
-};
-
-export const appInfo = {
-  name: app?.name,
-  version: app?.getVersion()
 };
 
 export const showSaveDialog = (opts) => invoke("show-save-dialog", opts);

@@ -1,9 +1,8 @@
-import fs from "fs-extra";
+import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import path from "path";
 import { stakePoolInfo } from "./middleware/vspapi";
-import { isArray } from "lodash";
 import {
   getGlobalCfgPath,
   getWalletPath,
@@ -136,7 +135,7 @@ export function getDcrdCert(dcrdCertPath) {
 export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   const currentStakePoolConfigs =
     config.has(cfgConstants.STAKEPOOLS) &&
-    isArray(config.get(cfgConstants.STAKEPOOLS))
+    Array.isArray(config.get(cfgConstants.STAKEPOOLS))
       ? config.get(cfgConstants.STAKEPOOLS)
       : [];
 
@@ -318,8 +317,8 @@ export const updateDefaultBitcoinConfig = (
         !fs.existsSync(path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"))
       ) {
         // check to see if directory exists, if not make it
-        fs.pathExistsSync(getDefaultBitcoinDirectory()) ||
-          fs.mkdirsSync(getDefaultBitcoinDirectory());
+        fs.existsSync(getDefaultBitcoinDirectory()) ||
+          fs.mkdirSync(getDefaultBitcoinDirectory(), { recursive: true });
         newDefaultBitcoinConfig(
           rpcuser,
           rpcpassword,
