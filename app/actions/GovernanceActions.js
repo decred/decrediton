@@ -91,9 +91,11 @@ const fillVoteSummary = (
 const ticketHashesToByte = (hashes) =>
   hashes && hashes.map(hexReversedHashToArray);
 
-// getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
-// if the proposal directory already exists it only returns the cached information,
-// otherwise it gets the eligible tickets from politeia and caches it.
+// getProposalEligibleTickets gets the wallet eligible tickets for a specific
+// proposal.
+// if the proposal directory already exists it only returns the cached
+// information, otherwise it gets the eligible tickets from politeia and caches
+// it.
 const getProposalEligibleTickets = async (
   token,
   allEligibleTickets,
@@ -103,6 +105,7 @@ const getProposalEligibleTickets = async (
   // Aux function to get the tickets from the wallet that are eligible to vote
   // (committed tickets) for a given proposal (given a list of eligible tickets
   // returned from an activevotes call)
+  console.log({ token, allEligibleTickets, shouldCache, walletService });
   const getWalletEligibleTickets = async (eligibleTickets, walletService) => {
     const commitedTicketsResp = await wallet.committedTickets(
       walletService,
@@ -112,14 +115,16 @@ const getProposalEligibleTickets = async (
   };
 
   const eligibleTicketsObj = getEligibleTickets(token);
+  console.log({ eligibleTicketsObj });
   if (eligibleTicketsObj) {
     const { eligibleTickets } = eligibleTicketsObj;
     return await getWalletEligibleTickets(eligibleTickets, walletService);
   }
-
+  console.log({ shouldCache });
   if (shouldCache) {
     saveEligibleTickets(token, { eligibleTickets: allEligibleTickets });
   }
+  console.log(1111);
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 

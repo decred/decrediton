@@ -191,7 +191,9 @@ export function saveEligibleTickets(token, eligibleTickets) {
     proposalPath = setPoliteiaProposalPath(token);
   }
   const fullPath = path.join(proposalPath, "eligibletickets.json");
-  fs.writeFile(fullPath, JSON.stringify(eligibleTickets), { mode: 0o600 });
+  fs.writeFile(fullPath, JSON.stringify(eligibleTickets), (err) => {
+    if (err) throw err;
+  });
 }
 
 // getEligibleTickets get the eligibletickets.json from the proposal Path

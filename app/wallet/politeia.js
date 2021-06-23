@@ -9,15 +9,14 @@ export {
   removeCachedProposals
 } from "main_dev/paths";
 
-const promisifyReqLogNoData = (fnName, Req) => {
-  return withLogNoData(
+const promisifyReqLogNoData = (fnName, Req) =>
+  withLogNoData(
     (...args) =>
       new Promise((ok, fail) =>
         Req(...args, (res, err) => (err ? fail(err) : ok(res)))
       ),
     fnName
   );
-};
 
 export const getProposalDetails = promisifyReqLogNoData(
   "getProposalDetails",
