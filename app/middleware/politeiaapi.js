@@ -1,4 +1,4 @@
-import { getJSON, postJSON } from "helpers/fetch";
+import { postJSON } from "helpers/fetch";
 
 // Uncomment this and comment the following definition to test locally.
 // Also uncomment a code part at externalRequests.js, as politeia is a ssl-enabled

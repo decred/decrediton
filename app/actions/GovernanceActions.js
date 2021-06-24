@@ -688,7 +688,6 @@ export const updateVoteChoice = (
     const sigs = signed.replies;
     walletEligibleTickets.forEach((t, i) => {
       const { signature } = sigs[i];
-      if (signature.error != "") {
       if (signature.error) {
         throw signature.error;
       }
@@ -699,7 +698,6 @@ export const updateVoteChoice = (
 
     // cast vote into pi server
     const response = await pi.castBallot({ piURL, votes });
-    const { error: voteCastError } =
     const { errorcontext: voteCastError } =
       response.data.receipts.find(({ errorcontext }) => errorcontext) || {};
 
