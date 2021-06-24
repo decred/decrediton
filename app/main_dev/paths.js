@@ -237,7 +237,9 @@ export function savePiVote(vote, token, testnet, walletName) {
   }
   const fullPath = path.join(proposalPath, "vote.json");
   if (!fs.existsSync(fullPath)) {
-    fs.writeFile(fullPath, JSON.stringify(vote), { mode: 0o600 });
+    fs.writeFile(fullPath, JSON.stringify(vote), { mode: 0o600 }, (err) => {
+      if (err) throw err;
+    });
   }
 }
 
@@ -249,8 +251,16 @@ export function getProposalWalletVote(token, testnet, walletName) {
     return null;
   }
   const fullPath = path.join(proposalPath, "vote.json");
-  const vote = fs.readFileSync(fullPath);
-  return JSON.parse(vote);
+  try {
+    const vote = fs.readFileSync(fullPath);
+    return JSON.parse(vote);
+  } catch (err) {
+    if (err.message?.includes("ENOENT: no such file or directory")) {
+      return null;
+    } else {
+      throw err;
+    }
+  }
 }
 
 // removeCachedProposals gets a batch of proposal's token, makes a diff with

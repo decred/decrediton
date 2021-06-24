@@ -8,8 +8,6 @@ const VoteSection = ({
   proposalStatus,
   voteStatus,
   currentVoteChoice,
-  newVoteChoice,
-  setVoteOption,
   voteOptions,
   showPurchaseTicketsPage
 }) => {
@@ -23,8 +21,6 @@ const VoteSection = ({
           voteStatus,
           currentVoteChoice,
           viewedProposalDetails,
-          newVoteChoice,
-          setVoteOption,
           showPurchaseTicketsPage,
           voteOptions
         }}

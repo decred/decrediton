@@ -11,8 +11,6 @@ export const POLITEIA_URL_TESTNET = "https://localhost:4443";
 //export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
 
-const GET = (piURL, path) => getJSON(`${piURL}${path}`);
-
 const POST = (piURL, path, payload = {}) =>
   postJSON(`${piURL}${path}`, payload);
 
@@ -21,8 +19,13 @@ export const getProposalDetails = ({ piURL, token }, cb) =>
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-export const getProposalVotes = ({ piURL, token }, cb) =>
-  GET(piURL, `/v1/proposals/${token}/votes`)
+export const getProposalVoteDetails = ({ piURL, token }, cb) =>
+  POST(piURL, "/ticketvote/v1/details", { token })
+    .then((response) => cb(response))
+    .catch((error) => cb(null, error));
+
+export const getProposalVoteResults = ({ piURL, token }, cb) =>
+  POST(piURL, "/ticketvote/v1/results", { token })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 

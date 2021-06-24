@@ -57,8 +57,8 @@ const fillVoteSummary = (
 
   let totalVotes = 0;
   if (voteSummary.results) {
-    voteSummary.results.forEach(({ id, votes }) => {
-      proposal.voteOptions.push({ id });
+    voteSummary.results.forEach(({ id, votes, votebit: bit }) => {
+      proposal.voteOptions.push({ id, bit });
       proposal.voteCounts[id] = votes;
       totalVotes += votes;
     });
@@ -105,7 +105,6 @@ const getProposalEligibleTickets = async (
   // Aux function to get the tickets from the wallet that are eligible to vote
   // (committed tickets) for a given proposal (given a list of eligible tickets
   // returned from an activevotes call)
-  console.log({ token, allEligibleTickets, shouldCache, walletService });
   const getWalletEligibleTickets = async (eligibleTickets, walletService) => {
     const commitedTicketsResp = await wallet.committedTickets(
       walletService,
@@ -115,16 +114,13 @@ const getProposalEligibleTickets = async (
   };
 
   const eligibleTicketsObj = getEligibleTickets(token);
-  console.log({ eligibleTicketsObj });
   if (eligibleTicketsObj) {
     const { eligibleTickets } = eligibleTicketsObj;
     return await getWalletEligibleTickets(eligibleTickets, walletService);
   }
-  console.log({ shouldCache });
   if (shouldCache) {
     saveEligibleTickets(token, { eligibleTickets: allEligibleTickets });
   }
-  console.log(1111);
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
@@ -316,7 +312,7 @@ const getVoteOption = (
   const currentVoteChoice = proposal.voteOptions.find(
     (option) =>
       // votebit is all lowercase as it comes from pi api.
-      voteChoice.votebit === "" + option.bits
+      voteChoice.votebit === "" + option.bit
   );
 
   return currentVoteChoice;
@@ -557,20 +553,28 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       hasEligibleTickets =
         walletEligibleTickets && walletEligibleTickets.length > 0;
     } else {
-      const { data } = await pi.getProposalVotes({ piURL, token });
-      const { startvotereply, castvotes } = data;
+      const { data: voteDetails } = await pi.getProposalVoteDetails({
+        piURL,
+        token
+      });
+      const { vote } = voteDetails;
       const { walletService } = getState().grpc;
       walletEligibleTickets = await getProposalEligibleTickets(
         proposal.token,
-        startvotereply.eligibletickets,
+        vote.eligibletickets,
         proposal.voteStatus === PROPOSAL_VOTING_ACTIVE,
         walletService
       );
+      const { data: voteResults } = await pi.getProposalVoteResults({
+        piURL,
+        token
+      });
+      const { votes } = voteResults;
       currentVoteChoice =
         getVoteOption(
           token,
           proposal,
-          castvotes,
+          votes,
           walletEligibleTickets,
           testnet,
           walletName
@@ -622,8 +626,9 @@ export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
 export const UPDATEVOTECHOICE_SUCCESS = "UPDATEVOTECHOICE_SUCCESS";
 export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";
 
-// updateVoteChoice cast vote into pi server, if success we cache the vote information
-// updates the proposal vote summary and dispatch it with its new result.
+// updateVoteChoice cast vote into pi server, if success we cache the vote
+// information updates the proposal vote summary and dispatch it with its new
+// result.
 export const updateVoteChoice = (
   proposal,
   newVoteChoiceID,
@@ -651,7 +656,7 @@ export const updateVoteChoice = (
   // politeiavoter.
   const messages = walletEligibleTickets.map((t) => ({
     address: t.address,
-    message: `${token}${t.ticket}${voteChoice.bits.toString(16)}`
+    message: `${token}${t.ticket}${voteChoice.bit.toString(16)}`
   }));
 
   const updatePropRef = (proposals, token, newProposal) => {
@@ -682,20 +687,21 @@ export const updateVoteChoice = (
     const votesToCache = { token, walletEligibleTickets, voteChoice };
     const sigs = signed.replies;
     walletEligibleTickets.forEach((t, i) => {
-      const signature = sigs[i];
+      const { signature } = sigs[i];
       if (signature.error != "") {
+      if (signature.error) {
         throw signature.error;
       }
-      const hexSig = Buffer.from(signature.signature).toString("hex");
-      const votebit = voteChoice.bits.toString(16);
-      const vote = { token, ticket: t.ticket, votebit, signature: hexSig };
+      const votebit = voteChoice.bit.toString(16);
+      const vote = { token, ticket: t.ticket, votebit, signature };
       votes.push(vote);
     });
 
     // cast vote into pi server
     const response = await pi.castBallot({ piURL, votes });
     const { error: voteCastError } =
-      response.data.receipts.find(({ error }) => error) || {};
+    const { errorcontext: voteCastError } =
+      response.data.receipts.find(({ errorcontext }) => errorcontext) || {};
 
     if (voteCastError) {
       throw voteCastError;

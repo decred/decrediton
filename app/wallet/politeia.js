@@ -23,9 +23,14 @@ export const getProposalDetails = promisifyReqLogNoData(
   api.getProposalDetails
 );
 
-export const getProposalVotes = promisifyReqLogNoData(
-  "getProposalVotes",
-  api.getProposalVotes
+export const getProposalVoteDetails = promisifyReqLogNoData(
+  "getProposalVoteDetails",
+  api.getProposalVoteDetails
+);
+
+export const getProposalVoteResults = promisifyReqLogNoData(
+  "getProposalVoteResults",
+  api.getProposalVoteResults
 );
 
 export const getVotesInventory = promisifyReqLogNoData(

@@ -21,8 +21,6 @@ const VoteInfo = memo(
     hasTickets,
     currentVoteChoice,
     viewedProposalDetails,
-    newVoteChoice,
-    setVoteOption,
     showPurchaseTicketsPage,
     voteOptions
   }) => {
@@ -55,8 +53,6 @@ const VoteInfo = memo(
           {...{
             viewedProposalDetails,
             voteOptions,
-            setVoteOption,
-            newVoteChoice,
             eligibleTicketCount,
             currentVoteChoice,
             votingComplete: false

@@ -4,7 +4,12 @@ import { PoliteiaLink } from "shared";
 import { ProposalBody, VoteSection, ProposalCard } from "./helpers";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
-import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED , PROPOSAL_VOTING_APPROVED, PROPOSAL_VOTING_REJECTED} from "constants";
+import {
+  PROPOSAL_VOTING_ACTIVE,
+  PROPOSAL_VOTING_FINISHED,
+  PROPOSAL_VOTING_APPROVED,
+  PROPOSAL_VOTING_REJECTED
+} from "constants";
 
 const ProposalDetails = ({
   viewedProposalDetails,
@@ -29,8 +34,6 @@ const ProposalDetails = ({
     description
   },
   showPurchaseTicketsPage,
-  setVoteOption,
-  newVoteChoice,
   goBackHistory,
   linkedProposal,
   isDarkTheme
@@ -41,7 +44,8 @@ const ProposalDetails = ({
   const proposalPath = `/record/${shortToken}`;
   const isVoteActive = voteStatus === PROPOSAL_VOTING_ACTIVE;
   const isVoteActiveOrFinished =
-    isVoteActive || voteStatus === PROPOSAL_VOTING_FINISHED ||
+    isVoteActive ||
+    voteStatus === PROPOSAL_VOTING_FINISHED ||
     voteStatus === PROPOSAL_VOTING_APPROVED ||
     voteStatus === PROPOSAL_VOTING_REJECTED;
 
@@ -90,8 +94,6 @@ const ProposalDetails = ({
             proposalStatus,
             voteStatus,
             currentVoteChoice,
-            newVoteChoice,
-            setVoteOption,
             voteOptions,
             showPurchaseTicketsPage
           }}
