@@ -236,6 +236,18 @@
   .abandonBtnContainer {
     height: 72px;
   }
+  .rebroadcastBtn,
+  .abandonBtn {
+    float: none;
+    margin-top: 0;
+  }
+  .abandonBtn {
+    margin: 0;
+  }
+
+  .abandonBtnContainer {
+    height: 72px;
+  }
   .overview {
     flex-direction: column;
     padding-left: 42px;

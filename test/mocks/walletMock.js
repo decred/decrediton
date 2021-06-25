@@ -1,4 +1,5 @@
 import MockElectronStore from "./electronStore.js";
+import { decodeRawTransaction as drt } from "../../app/wallet/service.js";
 
 export { TRANSACTION_TYPES } from "../../app/wallet/index.js";
 
@@ -35,3 +36,5 @@ export const getDcrdLastLogLine = jest.fn(() =>
 );
 export const getAvailableWallets = jest.fn(() => []);
 export const getPreviousWallet = jest.fn(() => null);
+
+export const decodeRawTransaction = jest.fn((...args) => drt(...args));

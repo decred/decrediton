@@ -58,6 +58,15 @@
 .vote {
   background-image: var(--ticket-voted-icon);
 }
+.missed {
+  background-image: var(--ticket-missed-icon);
+}
+.unmined {
+  background-image: var(--ticket-unmined-icon);
+}
+.immature {
+  background-image: var(--ticket-immature-icon);
+}
 .revocation {
   background-image: var(--ticket-revoked-icon);
 }
