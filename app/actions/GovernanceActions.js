@@ -5,6 +5,7 @@ import * as sel from "selectors";
 import { hexReversedHashToArray, parseRawProposal } from "helpers";
 import {
   PROPOSAL_VOTING_ACTIVE,
+  PROPOSAL_VOTING_FINISHED,
   PROPOSAL_VOTING_APPROVED,
   PROPOSAL_VOTING_REJECTED,
   PROPOSAL_STATUS_ABANDONED,
@@ -537,57 +538,67 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
       hasEligibleTickets: false
     };
 
-    const voteAndEligibleTickets = getProposalWalletVote(
-      token,
-      testnet,
-      walletName
-    );
-    // if voteAndEligibleTickets are already cached we just get them.
+    // If proposal vote is active or finished prepare vote & eligible tickets
+    // info.
+    // Also, if voteAndEligibleTickets are already cached we just get them.
     // Otherwise we get them from politea server and cache.
+    const isProposalVoteActive = proposal.voteStatus === PROPOSAL_VOTING_ACTIVE;
+    const isProposalVoteFinished =
+      proposal.voteStatus === PROPOSAL_VOTING_FINISHED ||
+      proposal.voteStatus === PROPOSAL_VOTING_REJECTED ||
+      proposal.voteStatus === PROPOSAL_VOTING_APPROVED;
+    const isVoteActiveOrFinished =
+      isProposalVoteActive || isProposalVoteFinished;
 
-    // XXX we could skip the following eligible tickets logic if proposal is
-    // still in discussion phase.
-    if (voteAndEligibleTickets) {
-      walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
-      currentVoteChoice = voteAndEligibleTickets.voteChoice;
-      hasEligibleTickets =
-        walletEligibleTickets && walletEligibleTickets.length > 0;
-    } else {
-      const { data: voteDetails } = await pi.getProposalVoteDetails({
-        piURL,
-        token
-      });
-      const { vote } = voteDetails;
-      const { walletService } = getState().grpc;
-      walletEligibleTickets = await getProposalEligibleTickets(
-        proposal.token,
-        vote.eligibletickets,
-        proposal.voteStatus === PROPOSAL_VOTING_ACTIVE,
-        walletService
+    if (isVoteActiveOrFinished) {
+      const voteAndEligibleTickets = getProposalWalletVote(
+        token,
+        testnet,
+        walletName
       );
-      const { data: voteResults } = await pi.getProposalVoteResults({
-        piURL,
-        token
-      });
-      const { votes } = voteResults;
-      currentVoteChoice =
-        getVoteOption(
-          token,
-          proposal,
-          votes,
-          walletEligibleTickets,
-          testnet,
-          walletName
-        ) || "abstain";
-      hasEligibleTickets =
-        walletEligibleTickets && walletEligibleTickets.length > 0;
-      if (currentVoteChoice !== "abstain") {
-        const votesToCache = {
-          token,
-          walletEligibleTickets,
-          voteChoice: currentVoteChoice
-        };
-        savePiVote(votesToCache, token, testnet, walletName);
+
+      if (voteAndEligibleTickets) {
+        walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
+        currentVoteChoice = voteAndEligibleTickets.voteChoice;
+        hasEligibleTickets =
+          walletEligibleTickets && walletEligibleTickets.length > 0;
+      } else {
+        const { data: voteDetails } = await pi.getProposalVoteDetails({
+          piURL,
+          token
+        });
+        const { vote } = voteDetails;
+        const { walletService } = getState().grpc;
+        walletEligibleTickets = await getProposalEligibleTickets(
+          proposal.token,
+          vote.eligibletickets,
+          isProposalVoteActive,
+          walletService
+        );
+        const { data: voteResults } = await pi.getProposalVoteResults({
+          piURL,
+          token
+        });
+        const { votes } = voteResults;
+        currentVoteChoice =
+          getVoteOption(
+            token,
+            proposal,
+            votes,
+            walletEligibleTickets,
+            testnet,
+            walletName
+          ) || "abstain";
+        hasEligibleTickets =
+          walletEligibleTickets && walletEligibleTickets.length > 0;
+        if (currentVoteChoice !== "abstain") {
+          const votesToCache = {
+            token,
+            walletEligibleTickets,
+            voteChoice: currentVoteChoice
+          };
+          savePiVote(votesToCache, token, testnet, walletName);
+        }
       }
     }
 
