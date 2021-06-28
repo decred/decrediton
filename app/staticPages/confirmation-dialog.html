@@ -13,7 +13,6 @@
       });
 
       function reply(res) {
-        const buttons = document.getElementById("buttons").getElementsByTagName("button");
         ipcRenderer.send("confirmation-dialog-reply", res);
       }
     </script>
