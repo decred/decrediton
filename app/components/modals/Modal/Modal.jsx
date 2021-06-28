@@ -16,6 +16,7 @@ const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
   } = useModal(onCancelModal);
 
   const domNode = document.getElementById("modal-portal");
+  if (!domNode) return null; // modal-portal not mounted yet.
 
   const innerView = (
     <div

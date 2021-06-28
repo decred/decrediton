@@ -358,7 +358,8 @@ const initialState = {
     aboutModalMacOSVisible: false,
     cantCloseModalVisible: false,
     changeScriptByAccount: {},
-    monitorLockableAccountsTimer: null
+    monitorLockableAccountsTimer: null,
+    confirmationDialogModalVisible: false
   },
   snackbar: {
     messages: Array()

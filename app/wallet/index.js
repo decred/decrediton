@@ -14,4 +14,8 @@ export * from "./version";
 export * from "./politeia";
 export * from "./config";
 
+// These exports are named explicitly to ensure the UI isn't given
+// indiscriminate access to the confirmation dialog visibility functions.
+export { onConfirmationDialogCallbacks } from "./confirmationDialog";
+
 export const TransactionType = api.TransactionDetails.TransactionType;

@@ -97,6 +97,12 @@ module.exports = merge(baseConfig, {
     new HtmlWebpackPlugin({
       filename: "app.html",
       template: "app/app.development.html"
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: "confirmation-dialog.html",
+      template: "app/staticPages/confirmation-dialog.html",
+      inject: false
     })
   ]
 });

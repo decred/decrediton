@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import parseArgs from "minimist";
-import { app, BrowserWindow, Menu, dialog } from "electron";
+import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
 import {
   getCurrentBitcoinConfig,
   updateDefaultBitcoinConfig,
@@ -144,6 +144,7 @@ if (err !== null) {
 
 let menu;
 let mainWindow = null;
+let confirmBrowserView;
 let previousWallet = null;
 
 const globalCfg = initGlobalCfg();
@@ -558,6 +559,48 @@ ipcMain.on("get-cli-options", (event) => {
   event.returnValue = cliOptions;
 });
 
+const setConfirmBrowserViewBounds = () => {
+  const mainBounds = mainWindow.getBounds();
+  const maxWidth = 540;
+  const maxHeight = 380;
+  const width =
+    mainBounds.width > maxWidth - 20 ? maxWidth : mainBounds.width - 20;
+  const height =
+    mainBounds.height > maxHeight ? maxHeight : mainBounds.height - 20;
+  const viewBounds = {
+    x: Math.trunc((mainBounds.width - width) / 2),
+    y: Math.trunc((mainBounds.height - height) / 2),
+    width,
+    height
+  };
+  confirmBrowserView.setBounds(viewBounds);
+};
+
+ipcMain.on("fill-confirmation-dialog-contents", (event, contents) => {
+  confirmBrowserView.webContents.send(
+    "fill-confirmation-dialog-contents",
+    contents
+  );
+  mainWindow.setBrowserView(confirmBrowserView);
+  confirmBrowserView.setBackgroundColor("#ffffffff");
+  setConfirmBrowserViewBounds();
+  if (debug) confirmBrowserView.webContents.openDevTools();
+});
+
+ipcMain.on("confirmation-dialog-reply", (event, res) => {
+  // Sanity check acceptance actually came from the confirmation BrowserView.
+  if (event.sender.id !== confirmBrowserView.webContents.id) {
+    logger.log(
+      "error",
+      "Confirmation reply came from incorrect sender webcontents"
+    );
+    return;
+  }
+
+  mainWindow.setBrowserView(null);
+  mainWindow.webContents.send("confirmation-webframe-reply", res);
+});
+
 ipcMain.handle("show-save-dialog", async () => {
   return await dialog.showSaveDialog();
 });
@@ -667,12 +710,14 @@ app.on("ready", async () => {
   }
 
   let url = `file://${__dirname}/dist/app.html`;
+  let confirmURL = `file://${__dirname}/dist/confirmation-dialog.html`;
   const path = require("path"); // eslint-disable-line
   const preloadPath = path.resolve(__dirname, "dist", "wallet-preload.js");
   if (process.env.NODE_ENV === "development") {
     // Load from the webpack dev server with hot module replacement.
     const port = process.env.PORT || 3000;
     url = `http://localhost:${port}/dist/app.html`;
+    confirmURL = `http://localhost:${port}/dist/confirmation-dialog.html`;
   }
 
   let windowOpts = {
@@ -740,6 +785,30 @@ app.on("ready", async () => {
   });
 
   if (stopSecondInstance) return;
+
+  // Load (but not yet display) the confirmation modal BrowserView.
+  confirmBrowserView = new BrowserView({
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      devTools: debug
+    }
+  });
+  confirmBrowserView.webContents.loadURL(confirmURL);
+
+  // Ensure we close the confirmation modal if the main wallet UI Is reloaded.
+  mainWindow.webContents.on(
+    "did-start-navigation",
+    (event, url, isInPlace, isMainFrame) => {
+      isMainFrame && !isInPlace && mainWindow.setBrowserView(null);
+      confirmBrowserView.webContents.reload();
+    }
+  );
+
+  // Re-center BrowserView on resizes. The events are different for linux and
+  // windows/macOS.
+  mainWindow.on("resized", setConfirmBrowserViewBounds);
+  mainWindow.on("resize", setConfirmBrowserViewBounds);
 
   setMenuLocale(locale);
 });
