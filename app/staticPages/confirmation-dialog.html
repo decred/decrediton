@@ -54,6 +54,27 @@
         background-color: #2970ff;
       }
 
+      .seed, .hex-seed {
+        font-family: 'Source Code Pro', monospace;
+        margin-bottom: 20px;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-app-region: no-drag;
+        cursor: default;
+      }
+
+      .hex-seed {
+        word-break: break-word;
+      }
+
+      .seed {
+        font-size: 1.7ex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        column-gap: 10px;
+      }
+
       /*********** Theme light *****************/
 
       .theme-light .root {
