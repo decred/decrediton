@@ -93,11 +93,16 @@ export const getAllVSPs = withLogNoData(async () => {
 
 // allowVSPHost enables the external request to a specific VSP host.
 export const allowVSPHost = log(async (host) => {
-  // TODO: only ask for confirmation if VSP host is not yet allowed.
-  await confDialogAllowVSPHost(host);
+  // Ask for confirmation if VSP host is not yet allowed.
+  const c = cfg.getGlobalCfg();
+  const allowedHosts = c.get(cfgConstants.ALLOWED_VSP_HOSTS);
+  if (allowedHosts.indexOf(host) === -1) {
+    await confDialogAllowVSPHost(host);
 
-  // Store that the user allowed access to this VSP and enable access in the
-  // main process.
-  addAllowedVSPsInCfg([host]);
+    // Store that the user allowed access to this VSP and enable access in the
+    // main process.
+    addAllowedVSPsInCfg([host]);
+  }
+
   ipcRenderer.sendSync("allow-vsp-host", host);
 }, "Allow VSP Host");
