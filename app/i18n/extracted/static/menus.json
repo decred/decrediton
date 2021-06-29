@@ -24,6 +24,10 @@
     "defaultMessage": "Toggle Developer Tools"
   },
   {
+    "id": "appMenu.developerToolsConfWindow",
+    "defaultMessage": "Toggle Developer Tools for Confirmation Window"
+  },
+  {
     "id": "appMenu.showWalletLog",
     "defaultMessage": "Show Wallet Log Files"
   },
