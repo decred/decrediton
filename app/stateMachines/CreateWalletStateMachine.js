@@ -131,6 +131,16 @@ export const CreateWalletMachine = Machine({
     },
     loading: {
       on: {
+        ERROR: {
+          target: "walletCreated",
+          actions: [
+            assign({ completed: true }),
+            sendParent((ctx, event) => ({
+              type: event.type,
+              passPhrase: ctx.passPhrase
+            }))
+          ]
+        },
         WALLET_CREATED: {
           target: "walletCreated",
           actions: [

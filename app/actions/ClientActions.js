@@ -77,6 +77,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(refreshStakepoolPurchaseInformation());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
+      await dispatch(getDecodeMessageServiceAttempt());
       await dispatch(getStakepoolStats());
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
@@ -585,6 +586,34 @@ export const getVotingServiceAttempt = () => (dispatch, getState) => {
       dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS })
     )
     .catch((error) => dispatch({ error, type: GETVOTINGSERVICE_FAILED }));
+};
+
+export const GETDECODEMSGSERVICE_ATTEMPT = "GETDECODEMSGSERVICE_ATTEMPT";
+export const GETDECODEMSGSERVICE_FAILED = "GETDECODEMSGSERVICE_FAILED";
+export const GETDECODEMSGSERVICE_SUCCESS = "GETDECODEMSGSERVICE_SUCCESS";
+
+export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
+  const {
+    grpc: { address, port }
+  } = getState();
+  const {
+    daemon: { walletName }
+  } = getState();
+  dispatch({ type: GETDECODEMSGSERVICE_ATTEMPT });
+  const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
+  wallet
+    .getDecodeMessageService(
+      sel.isTestNet(getState()),
+      walletName,
+      address,
+      port,
+      grpcCertAndKey,
+      grpcCertAndKey
+    )
+    .then((decodeMessageService) =>
+      dispatch({ decodeMessageService, type: GETDECODEMSGSERVICE_SUCCESS })
+    )
+    .catch((error) => dispatch({ error, type: GETDECODEMSGSERVICE_FAILED }));
 };
 
 export const GETAGENDAS_ATTEMPT = "GETAGENDAS_ATTEMPT";

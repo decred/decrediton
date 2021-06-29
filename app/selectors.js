@@ -204,6 +204,7 @@ export const walletService = get(["grpc", "walletService"]);
 export const agendaService = get(["grpc", "agendaService"]);
 export const votingService = get(["grpc", "votingService"]);
 export const accountMixerService = get(["grpc", "accountMixerService"]);
+export const decodeMessageService = get(["grpc", "decodeMessageService"]);
 
 // TODO review selectors that are not being used anymore.
 export const getBalanceRequestAttempt = get([

@@ -234,7 +234,11 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
   try {
     const signTransactionResponse = await dispatch(
       unlockAcctAndExecFn(passphrase, [acctNumber], () =>
-        wallet.signTransaction(sel.walletService(getState()), rawTx, acctNumber)
+        wallet.signTransaction(
+          sel.walletService(getState()),
+          sel.decodeMessageService(getState()),
+          rawTx
+        )
       )
     );
 

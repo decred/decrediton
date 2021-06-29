@@ -55,7 +55,10 @@ import {
   ABANDONTRANSACTION_ATTEMPT,
   ABANDONTRANSACTION_SUCCESS,
   ABANDONTRANSACTION_FAILED,
-  MIXERACCOUNTS_SPENDABLE_BALANCE
+  MIXERACCOUNTS_SPENDABLE_BALANCE,
+  GETDECODEMSGSERVICE_ATTEMPT,
+  GETDECODEMSGSERVICE_FAILED,
+  GETDECODEMSGSERVICE_SUCCESS
 } from "../actions/ClientActions";
 import { DAEMONSYNCED, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -504,6 +507,24 @@ export default function grpc(state = {}, action) {
         ...state,
         getVotingServiceRequestAttempt: false,
         votingService: action.votingService
+      };
+    case GETDECODEMSGSERVICE_ATTEMPT:
+      return {
+        ...state,
+        getDecodeMessageServiceError: null,
+        getDecodeMessageServiceAttempt: true
+      };
+    case GETDECODEMSGSERVICE_FAILED:
+      return {
+        ...state,
+        getDecodeMessageServiceError: String(action.error),
+        getDecodeMessageServiceAttempt: false
+      };
+    case GETDECODEMSGSERVICE_SUCCESS:
+      return {
+        ...state,
+        getDecodeMessageServiceAttempt: false,
+        decodeMessageService: action.decodeMessageService
       };
     case SIGNMESSAGE_ATTEMPT:
       return {

@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, createElement as h } from "react";
 import { useService } from "@xstate/react";
-import { sendParent } from "xstate";
 import { withRouter } from "react-router";
 import { injectIntl } from "react-intl";
 import CreateWallet from "./CreateWallet";
@@ -87,7 +86,7 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     if (!(seed && passPhrase)) return;
     createWalletRequest(pubpass, passPhrase, seed, newWallet)
       .then(() => sendEvent({ type: "WALLET_CREATED" }))
-      .catch((error) => sendParent({ type: "ERROR", error }));
+      .catch((error) => sendEvent({ type: "ERROR", error }));
     // we send a continue so we go to loading state
     sendContinue();
   }, [

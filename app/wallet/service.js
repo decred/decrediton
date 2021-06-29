@@ -46,6 +46,9 @@ export const getMessageVerificationService = promisify(
 );
 export const getSeedService = promisify(client.getSeedService);
 export const getAccountMixerService = promisify(client.getAccountMixerService);
+export const getDecodeMessageService = promisify(
+  client.getDecodeMessageService
+);
 
 export const getNextAddress = log(
   (walletService, accountNum, kind) =>

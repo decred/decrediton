@@ -4,6 +4,8 @@ import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { getDcrdCert } from "./config";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import { trackClient, getClient } from "middleware/grpc/clientTracking";
+import { seed as confDialogShowSeed } from "./confirmationDialog";
+import { encodeMnemonic } from "helpers/seed";
 
 const {
   CreateWalletRequest,
@@ -54,15 +56,26 @@ export const startRpc = log(
 );
 
 export const createWallet = log(
-  (loader, pubPass, privPass, seed) =>
-    new Promise((resolve, reject) => {
-      const request = new CreateWalletRequest();
-      request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-      request.setSeed(new Uint8Array(Buffer.from(seed, "hex")));
+  async (loader, pubPass, privPass, seed) => {
+    // Show seed confirmation dialog via BrowserView. If the passed hex seed has
+    // exactly 64 chars (i.e. 256 bit seed) convert it to a standard 33-word
+    // decred seed for conference.
+    let words = seed;
+    if (seed.length === 64) {
+      words = await encodeMnemonic(seed);
+    }
+    await confDialogShowSeed(words);
+
+    const request = new CreateWalletRequest();
+    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+    request.setSeed(new Uint8Array(Buffer.from(seed, "hex")));
+
+    return await new Promise((resolve, reject) => {
       getClient(loader).createWallet(request, (error) =>
         error ? reject(error) : resolve()
       );
-    }),
+    });
+  },
   "Create Wallet",
   logOptionNoArgs()
 );

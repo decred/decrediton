@@ -64,3 +64,6 @@ export const getMessageVerificationService = getServiceClient(
 export const getAccountMixerService = getServiceClient(
   services.AccountMixerService
 );
+export const getDecodeMessageService = getServiceClient(
+  services.DecodeMessageService
+);

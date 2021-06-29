@@ -20,7 +20,7 @@ const FailedPayment = ({ payment, paymentError, tsDate }) => (
       <div className={styles.rhash}>{payment.paymentHash}</div>
     </div>
     <div></div>
-    <div class={styles.paymentError}>{paymentError}</div>
+    <div className={styles.paymentError}>{paymentError}</div>
   </div>
 );
 
