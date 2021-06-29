@@ -42,24 +42,21 @@
   font-size: 16px;
 }
 .passphraseModal {
-  width: 415px;
+    display: grid;
+    grid-template-columns: max-content auto;
 }
 .passphraseModalLabel {
-  float: left;
-  width: 65%;
   margin-top: 5px;
 }
 .passphraseModalAddress {
   margin-left: 20px;
   margin-top: 5px;
   font-weight: 600;
-  float: right;
 }
 .passphraseModalBalance {
   margin-left: 20px;
   font-weight: 600;
   margin-top: 5px;
-  float: right;
 }
 .error {
   color: var(--error-text-color);
