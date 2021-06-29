@@ -122,7 +122,7 @@ const darwinTemplate = (mainWindow, locale) => [
   }
 ];
 
-const regularTemplate = (mainWindow, locale) => [
+const regularTemplate = (mainWindow, confirmBrowserView, locale) => [
   {
     label: locale.messages["appMenu.file"],
     submenu: [
@@ -158,18 +158,24 @@ const regularTemplate = (mainWindow, locale) => [
         click() {
           mainWindow.toggleDevTools();
         }
+      },
+      {
+        label: locale.messages["appMenu.developerToolsConfWindow"],
+        click() {
+          confirmBrowserView.webContents.toggleDevTools();
+        }
       }
     ]
   }
 ];
 
-export const initTemplate = (mainWindow, locale) => {
+export const initTemplate = (mainWindow, confirmBrowserView, locale) => {
   let template;
 
   if (process.platform === "darwin") {
     template = darwinTemplate(mainWindow, locale);
   } else {
-    template = regularTemplate(mainWindow, locale);
+    template = regularTemplate(mainWindow, confirmBrowserView, locale);
   }
 
   return template;

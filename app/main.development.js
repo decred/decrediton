@@ -584,7 +584,6 @@ ipcMain.on("fill-confirmation-dialog-contents", (event, contents) => {
   mainWindow.setBrowserView(confirmBrowserView);
   confirmBrowserView.setBackgroundColor("#ffffffff");
   setConfirmBrowserViewBounds();
-  if (debug) confirmBrowserView.webContents.openDevTools();
 });
 
 ipcMain.on("confirmation-dialog-reply", (event, res) => {
@@ -668,7 +667,7 @@ function setMenuLocale(locale) {
     }
   });
 
-  const template = initTemplate(mainWindow, locale);
+  const template = initTemplate(mainWindow, confirmBrowserView, locale);
 
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
