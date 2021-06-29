@@ -27,3 +27,11 @@ export const showSaveDialog = jest.fn(() => null);
 export const getGlobalCfg = jest.fn(() => new MockElectronStore());
 export const getWalletCfg = jest.fn(() => new MockElectronStore());
 export const updateStakePoolConfig = jest.fn(() => null);
+export const getDcrwalletLastLogLine = jest.fn(() =>
+  Promise.resolve("last dcrwallet log line")
+);
+export const getDcrdLastLogLine = jest.fn(() =>
+  Promise.resolve("last dcrd log line")
+);
+export const getAvailableWallets = jest.fn(() => []);
+export const getPreviousWallet = jest.fn(() => null);
