@@ -20,6 +20,10 @@ const formatContent = (content) => {
   if (!locale) {
     locale = locales.find((value) => value.key === "en");
   }
+  const dcrFormat = new Intl.NumberFormat(undefined, {
+    useGrouping: true,
+    maximumFractionDigits: 8
+  });
 
   const fmt = (id, defaultMsg) => {
     let msg = defaultMsg;
@@ -27,15 +31,23 @@ const formatContent = (content) => {
     return msg;
   };
 
-  const formattedContent = content.content.reduce((acc, v) => {
+  const fmtReduce = (acc, v) => {
     if (typeof v === "string") {
       return acc + v;
+    }
+    if (v instanceof Array) {
+      return acc + v.reduce(fmtReduce, "");
     }
     if (typeof v === "object" && v.id && v.m) {
       return acc + fmt(v.id, v.m);
     }
+    if (typeof v === "object" && v.atoms) {
+      return acc + dcrFormat.format(v.atoms / 1e8) + " DCR";
+    }
     return acc;
-  }, "");
+  };
+
+  const formattedContent = content.content.reduce(fmtReduce, "");
 
   return {
     title: fmt(content.title.id, content.title.m),

@@ -7,6 +7,8 @@ import {
 import { rawHashToHex, rawToHex } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import { getClient } from "middleware/grpc/clientTracking";
+import { signTx as confDialogSignTx } from "./confirmationDialog";
+import { validateAddress } from "./service";
 
 const hexToBytes = (hex) => {
   const bytes = [];
@@ -99,10 +101,70 @@ export const changePassphrase = (walletService, oldPass, newPass, priv) =>
     );
   });
 
-export const signTransaction = (walletService, rawTx) =>
+const decodeTxInWallet = (decodeMsgService, rawTx) =>
   new Promise((ok, fail) => {
-    const request = new api.SignTransactionRequest();
-    request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx, "hex")));
+    const req = new api.DecodeRawTransactionRequest();
+    req.setSerializedTransaction(rawTx);
+    getClient(decodeMsgService).decodeRawTransaction(req, (err, res) =>
+      err ? fail(err) : ok(res.toObject().transaction)
+    );
+  });
+
+export const signTransaction = async (
+  walletService,
+  decodeMsgService,
+  rawTxHex
+) => {
+  // Decode the transaction via the wallet to find out the address.
+  const rawTx = new Uint8Array(Buffer.from(rawTxHex, "hex"));
+  const tx = await decodeTxInWallet(decodeMsgService, rawTx);
+
+  // Sum the total output amount and identify which outputs are not standard
+  // wallet addresses.
+  let totalOutAmount = 0;
+  let fee = tx.inputsList.reduce((acc, v) => acc + v.amountIn, 0);
+  const outputs = [];
+  for (const out of tx.outputsList) {
+    const newOutput = {
+      address: "[unrecognized script]",
+      amount: out.value
+    };
+    fee -= out.value;
+
+    if (out.addressesList.length > 1) {
+      // Multiple addresses means it's a multisig. So show all.
+      newOutput.address = out.addressesList.join(", ");
+    } else if (out.addressesList.length == 1) {
+      // A single address. Check whether it's a standard BIP0044 address from the
+      // wallet and ignore if it is (means this is a change address or an in-wallet
+      // transfer).
+      newOutput.address = out.addressesList[0];
+      const addrResp = await validateAddress(
+        walletService,
+        out.addressesList[0]
+      );
+      const importedAccountsStart = 2 ** 31 - 1;
+      if (
+        addrResp.isValid &&
+        addrResp.isMine &&
+        addrResp.accountNumber < importedAccountsStart
+      ) {
+        // Non-imported address from the wallet. Don't need to show it.
+        continue;
+      }
+    }
+
+    outputs.push(newOutput);
+    totalOutAmount += out.value;
+  }
+  totalOutAmount += fee;
+
+  // Ask for final confirmation via out-of-process dialog.\
+  await confDialogSignTx(totalOutAmount, outputs);
+
+  const request = new api.SignTransactionRequest();
+  request.setSerializedTransaction(rawTx);
+  return await new Promise((ok, fail) =>
     getClient(walletService).signTransaction(request, (err, res) =>
       err
         ? fail(err)
@@ -110,8 +172,9 @@ export const signTransaction = (walletService, rawTx) =>
             transaction: rawToHex(res.getTransaction()),
             unsignedInputIndexes: res.getUnsignedInputIndexesList()
           })
-    );
-  });
+    )
+  );
+};
 
 export const publishTransaction = (walletService, tx) =>
   new Promise((ok, fail) => {
