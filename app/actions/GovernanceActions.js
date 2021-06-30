@@ -612,7 +612,9 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
             votingSinceLastAccess: false,
             walletEligibleTickets,
             hasEligibleTickets,
-            eligibleTicketCount: walletEligibleTickets.length,
+            eligibleTicketCount: walletEligibleTickets
+              ? walletEligibleTickets.length
+              : 0,
             currentVoteChoice
           };
           return (proposals[key][i] = { ...proposal });
