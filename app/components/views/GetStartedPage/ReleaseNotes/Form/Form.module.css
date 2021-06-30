@@ -80,7 +80,7 @@
   background-image: var(--release-image-v160);
 }
 
-@media screen and (max-width: 1140px) {
+@media screen and (max-width: 1180px) {
   .image {
     flex: 1;
     margin-top: 14px;
@@ -92,7 +92,7 @@
   }
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 1000px) {
   .text {
     max-width: inherit;
     margin-left: 15px;
