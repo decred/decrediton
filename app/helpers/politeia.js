@@ -6,11 +6,11 @@ import {
   PROPOSAL_VOTE_METADATA_FILE
 } from "constants";
 
-export const atou = (str) => decodeURIComponent(escape(window.atob(str)));
+const atou = (str) => decodeURIComponent(escape(window.atob(str)));
 
 // parseProposalStatuses iterate over proposal's status changes array returned
 // from BE and returns proposal's timestamps accordingly
-export const parseProposalStatuses = (sChanges) => {
+const parseProposalStatuses = (sChanges) => {
   let publishedat = 0,
     abandonedat = 0;
 
@@ -30,7 +30,7 @@ export const parseProposalStatuses = (sChanges) => {
 //
 // censored proposals won't have metadata, in this case this function will
 // return an empty object
-export const parseProposalMetadata = (proposal = {}) => {
+const parseProposalMetadata = (proposal = {}) => {
   const metadata =
     proposal.files &&
     proposal.files.find((f) => f.name === PROPOSAL_METADATA_FILE);
@@ -42,7 +42,7 @@ export const parseProposalMetadata = (proposal = {}) => {
 //
 // censored proposals won't have metadata, in this case this function will
 // return an empty object
-export const parseVoteMetadata = (proposal = {}) => {
+const parseVoteMetadata = (proposal = {}) => {
   const metadata =
     proposal.files &&
     proposal.files.find((f) => f.name === PROPOSAL_VOTE_METADATA_FILE);
@@ -51,7 +51,7 @@ export const parseVoteMetadata = (proposal = {}) => {
 
 // This function extracts the content of index.md's payload which includes the
 // propsoal description.
-export const getTextFromIndexMd = (file = {}) => {
+const getTextFromIndexMd = (file = {}) => {
   if (!file.payload) return "";
   return atou(file.payload);
 };
@@ -61,7 +61,7 @@ export const getTextFromIndexMd = (file = {}) => {
 //
 // censored proposals won't have metadata, in this case this function will
 // return an empty object
-export const parseProposalIndexFile = (proposal = {}) => {
+const parseProposalIndexFile = (proposal = {}) => {
   const index =
     proposal.files &&
     proposal.files.find((f) => f.name === PROPOSAL_INDEX_MD_FILE);
