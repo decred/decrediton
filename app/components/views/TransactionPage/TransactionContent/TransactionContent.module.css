@@ -196,36 +196,9 @@
   .abandonBtnContainer {
     width: 770px;
   }
-}
-
-@media screen and (max-width: 1106px) {
-  .rebroadcastBtnContainer,
   .abandonBtnContainer {
     width: 670px;
   }
-
-  .abandonBtnContainer {
-    width: 670px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .rebroadcastBtnContainer,
-  .abandonBtnContainer {
-    width: 375px;
-    text-align: center;
-    display: block;
-    margin-top: -22px;
-
-    .rebroadcastBtn,
-    .abandonBtn {
-      float: none;
-      padding: 12px 30px 14px 48px;
-      margin-top: 0;
-    }
-  }
-}
-@media screen and (max-width: 1106px) {
   .overview {
     width: 633px;
   }
@@ -238,7 +211,31 @@
     width: 511px;
   }
 }
+
 @media screen and (max-width: 768px) {
+  .buttonContainer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .rebroadcastBtnContainer,
+  .abandonBtnContainer {
+    width: 375px;
+    text-align: center;
+    display: block;
+    margin-top: -22px;
+  }
+  .rebroadcastBtn,
+  .abandonBtn {
+    float: none;
+    margin-top: 0;
+  }
+  .abandonBtn {
+    margin: 0;
+  }
+
+  .abandonBtnContainer {
+    height: 72px;
+  }
   .overview {
     flex-direction: column;
     padding-left: 42px;
