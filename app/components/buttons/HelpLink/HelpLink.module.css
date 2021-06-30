@@ -93,7 +93,7 @@
   background-image: var(--help-forum);
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .icon {
     margin-right: 10px;
     margin-bottom: 10px;

@@ -39,7 +39,7 @@
   background-color: transparent;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .tabbedPageHeader {
     padding-left: 20px;
   }

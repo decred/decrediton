@@ -75,7 +75,7 @@
   background-color: var(--grey-7) !important;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .tabs {
     margin-left: 55px;
   }

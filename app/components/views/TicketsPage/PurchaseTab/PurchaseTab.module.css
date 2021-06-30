@@ -46,7 +46,7 @@
   justify-content: space-between;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .purchaseTicketArea {
     width: 667px;
   }

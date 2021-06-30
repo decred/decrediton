@@ -189,7 +189,7 @@
   opacity: 0.85;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .amountContainer .sendInputWrapper {
     width: 185px;
   }

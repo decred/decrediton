@@ -26,7 +26,7 @@
   width: 10.5rem;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .historyPageContent {
     width: 667px;
   }

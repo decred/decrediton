@@ -15,7 +15,7 @@
   background-color: var(--vote-no-color);
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .votingProgressIndicator {
     width: 120px;
   }

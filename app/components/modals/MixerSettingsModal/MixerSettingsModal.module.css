@@ -32,7 +32,7 @@
   float: right;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .mixerSettings {
     width: 594px !important;
   }
