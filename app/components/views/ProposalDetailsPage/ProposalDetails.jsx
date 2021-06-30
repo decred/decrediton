@@ -14,7 +14,7 @@ import {
 const ProposalDetails = ({
   viewedProposalDetails,
   viewedProposalDetails: {
-    creator,
+    username,
     timestamp,
     endTimestamp,
     currentVoteChoice,
@@ -67,7 +67,7 @@ const ProposalDetails = ({
             endTimestamp,
             blocksLeft,
             name,
-            creator,
+            username,
             timestamp,
             tsDate,
             version,

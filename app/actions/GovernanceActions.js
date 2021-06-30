@@ -533,7 +533,6 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
     proposal = {
       ...proposal,
       ...p,
-      creator: p.username,
       token,
       hasEligibleTickets: false
     };

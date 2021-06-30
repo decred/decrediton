@@ -21,7 +21,7 @@ const ProposalsListItem = ({
   totalVotes,
   endTimestamp,
   blocksLeft,
-  creator,
+  username,
   proposalStatus,
   version
 }) => {
@@ -63,7 +63,7 @@ const ProposalsListItem = ({
           endTimestamp,
           blocksLeft,
           name,
-          creator,
+          username,
           timestamp,
           tsDate,
           version,
