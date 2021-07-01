@@ -85,13 +85,13 @@
   color: var(--input-color-hover);
 }
 
-@media screen and (max-width: 955px) {
+@media screen and (max-width: 1000px) {
   .about {
     width: inherit;
   }
 }
 
-@media screen and (max-width: 588px) {
+@media screen and (max-width: 560px) {
   .about {
     width: 455px !important;
     height: 290px;
@@ -104,12 +104,14 @@
   }
   .about .icon {
     margin-top: 20px;
+    margin-left: 20px;
     height: 66px;
     width: 66px;
     background-size: 59px;
     border-radius: 23px;
   }
   .about .bottomArea {
-    width: 413px;
+    width: 453px;
+    padding: 0 20px 20px 20px;
   }
 }
