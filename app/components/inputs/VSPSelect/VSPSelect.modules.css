@@ -20,7 +20,7 @@
   transition: 0.1s all ease;
 }
 
-@media screen and (max-width: 765px) {
+@media screen and (max-width: 768px) {
   .tooltip {
     width: 150px;
     padding: 0 10px 0 0;
