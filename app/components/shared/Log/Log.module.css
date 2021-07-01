@@ -77,9 +77,3 @@ textarea {
     padding-left: 20px;
   }
 }
-
-@media screen and (max-width: 375px) {
-  .logArea {
-    width: 100%;
-  }
-}

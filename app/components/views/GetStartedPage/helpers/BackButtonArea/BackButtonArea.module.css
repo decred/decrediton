@@ -6,7 +6,7 @@
   line-height: 14px;
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 560px) {
   .backButtonArea {
     right: 59px;
   }
