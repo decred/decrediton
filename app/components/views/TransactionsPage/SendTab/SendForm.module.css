@@ -42,8 +42,8 @@
   font-size: 16px;
 }
 .passphraseModal {
-    display: grid;
-    grid-template-columns: max-content auto;
+  display: grid;
+  grid-template-columns: max-content auto;
 }
 .passphraseModalLabel {
   margin-top: 5px;

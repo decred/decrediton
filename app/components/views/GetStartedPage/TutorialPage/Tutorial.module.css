@@ -90,26 +90,21 @@ video {
 }
 
 @media screen and (max-width: 768px) {
-  .tutorial .mainText {
-    max-height: 650px;
-  }
-
   .tutorialMainToolbar {
     justify-content: space-between;
     flex-wrap: nowrap;
   }
 
   .skipButton {
-    margin-top: 0 !important;
+    margin: 0 0 0 30px !important;
     height: inherit;
     width: 26px;
     padding: 0;
   }
 
   .nextButton {
-    margin-left: 10px !important;
     padding: 5px 20px 6px 20px;
-    margin-top: 0px !important;
+    margin: 0 30px 0 10px !important;
   }
 
   .stepIndicator {
@@ -127,6 +122,7 @@ video {
     margin: 0;
   }
   .tutorial .mainText {
+    max-height: 650px;
     padding-right: 0;
     padding-bottom: 0;
     margin-bottom: 0;
@@ -134,10 +130,6 @@ video {
   }
   .tutorial {
     flex-direction: column;
-  }
-
-  .mainText {
-    max-height: inherit;
   }
 
   h1 {
@@ -166,14 +158,6 @@ video {
     padding: 0;
     width: 100%;
     box-shadow: 0px -5px 21px 0px var(--onboard-toolbar-shadow);
-  }
-
-  .nextButton {
-    margin: 0 30px 0 0;
-  }
-
-  .skipButton {
-    margin: 0 0 0 30px;
   }
 }
 
