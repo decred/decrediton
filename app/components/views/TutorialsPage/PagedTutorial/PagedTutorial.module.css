@@ -4,8 +4,10 @@
   background-repeat: no-repeat;
   background-size: 12px;
   background-image: var(--x-grey);
-  float: right;
   padding: 0;
+  position: absolute;
+  top: 60px;
+  right: 60px;
 }
 
 .title {
@@ -25,9 +27,10 @@
   color: var(--new-wallet-label);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .closeButton {
-    margin-right: 20px;
+    top: 30px;
+    right: 30px;
   }
 
   .title,
