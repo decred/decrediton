@@ -338,9 +338,9 @@ test("pasting valid seed words on existing seed view and receive decode error an
   user.click(screen.getByText(/create wallet/i));
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockCreateWalletRequest).toHaveBeenCalled();
-  await wait(() =>
-    expect(screen.getByTestId("decred-loading")).not.toHaveClass("hidden")
-  );
+
+  // A check needs to be added here after
+  // https://github.com/decred/decrediton/issues/3524 is fixed.
 });
 
 test("pasting valid seed words on existing seed view and successfully create wallet", async () => {
