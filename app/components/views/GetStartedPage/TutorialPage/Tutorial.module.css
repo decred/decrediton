@@ -77,7 +77,19 @@ video {
   width: 34px;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 1000px) {
+  .tutorial .main {
+    top: 88px;
+    left: 21px;
+    padding-top: 5vh;
+  }
+  .tutorial .main-text {
+    column-count: 1;
+    padding-right: 55px;
+  }
+}
+
+@media screen and (max-width: 768px) {
   .tutorial .mainText {
     max-height: 650px;
   }
@@ -114,37 +126,12 @@ video {
   .step.checked {
     margin: 0;
   }
-}
-@media screen and (max-width: 916px) {
-  .tutorial .main {
-    top: 88px;
-    left: 21px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .tutorial .main {
-    padding-top: 10vh;
-  }
-  .tutorial .main-text {
-    column-count: 1;
-    padding-right: 55px;
-  }
-}
-
-@media screen and (max-width: 541px) {
-  .main {
-    top: 8px;
-  }
   .tutorial .mainText {
     padding-right: 0;
     padding-bottom: 0;
     margin-bottom: 0;
     min-height: inherit;
   }
-}
-
-@media screen and (max-width: 500px) {
   .tutorial {
     flex-direction: column;
   }
@@ -158,19 +145,15 @@ video {
   }
 
   .side {
-    height: 42vh;
+    height: 48vh;
     width: 100%;
   }
 
-  video {
-    height: 336px;
-  }
-
-  .main {
+  .tutorial .main {
     top: 25px;
     width: inherit;
     padding: 30px;
-    height: 42vh;
+    height: 48vh;
   }
 
   .mainToolbar {
@@ -194,14 +177,7 @@ video {
   }
 }
 
-@media (max-height: 700px) {
-  .main {
-    padding-top: 10vh;
-    height: 89vh;
-  }
-}
-
-@media (max-height: 460px) {
+@media (max-height: 560px) {
   .mainToolbar {
     height: 80px;
   }
