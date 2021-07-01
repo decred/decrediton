@@ -1,4 +1,4 @@
-@media screen and (max-width: 978px) {
+@media screen and (max-width: 1000px) {
   .wide {
     justify-content: flex-start;
     margin-left: 0;
@@ -11,19 +11,40 @@
 
   .icon {
     background-size: 114px;
-    width: 114;
+    width: 114px;
     height: 114px;
   }
 
   .textContainer {
     margin: 0 20px;
   }
-}
 
-@media screen and (max-width: 710px) {
   .wide {
-    flex-direction: column;
     margin: 0;
     padding: 0;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .wide {
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .icon {
+    background-size: 40px;
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+  }
+
+  .option {
+    min-width: 355px;
+  }
+
+  .textContainer {
+    margin: 20px;
+  }
+}
+
