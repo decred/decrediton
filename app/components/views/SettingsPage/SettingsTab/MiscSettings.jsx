@@ -42,14 +42,14 @@ const MiscSettings = ({
       {walletReady && (
         <div className={styles.row}>
           <div className={styles.label}>
-            <InfoDocFieldModalButton
-              document="GapLimitInfo"
-              modalClassName={styles.hasWarning}
-              double
-              draggable
-            />
             <label id="gap-limit-input" className={styles.label}>
               <T id="settings.gapLimit.label" m="Gap Limit" />
+              <InfoDocFieldModalButton
+                document="GapLimitInfo"
+                modalClassName={styles.hasWarning}
+                double
+                draggable
+              />
             </label>
           </div>
           <div className={styles.input}>

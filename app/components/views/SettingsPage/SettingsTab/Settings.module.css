@@ -40,6 +40,7 @@
 .rowChecklist {
   flex-wrap: wrap;
   justify-content: flex-start;
+  flex-direction: column;
 }
 
 .rowChecklist .label {
@@ -165,6 +166,10 @@
   padding: 0px 4px 1px 10px;
 }
 
+.settingsTextInput {
+  width: 150px !important;
+}
+
 .inputError {
   width: 290px;
   float: right;
@@ -227,7 +232,7 @@
   background-color: var(--input-color);
 }
 
-@media screen and (min-width: 1680px) and (max-width: 1919px) {
+@media screen and (min-width: 1680px) and (max-width: 1920px) {
   .wrapper {
     width: 1240px;
   }
@@ -267,7 +272,7 @@
     width: 1240px;
   }
 }
-@media screen and (min-width: 1440px) and (max-width: 1679px) {
+@media screen and (min-width: 1400px) and (max-width: 1680px) {
   .wrapper {
     flex-direction: column;
   }
@@ -294,8 +299,8 @@
     order: 2;
   }
 
-  .group .wrapper .column {
-    width: 419px;
+  .columnWrapper .column {
+    width: 420px;
   }
 
   .group .wrapper .column.timezone .columnContent .row {
@@ -313,7 +318,7 @@
   }
 }
 
-@media screen and (max-width: 1539px) {
+@media screen and (max-width: 1400px) {
   .wrapper {
     flex-direction: column;
   }
@@ -417,6 +422,8 @@
     padding-right: 35px;
   }
 
+  .wrapper .group .columnWrapper .column:nth-of-type(1),
+  .wrapper .group .columnWrapper .column:nth-of-type(3),
   .wrapper .group .columnWrapper .column {
     width: 100%;
   }
@@ -441,10 +448,3 @@
   }
 }
 
-@media screen and (max-width: 676px) {
-  .app-modal.about-modal,
-  .app-modal-reduced-bar.about-modal,
-  .app-modal-standalone.about-modal {
-    margin-left: 9px;
-  }
-}

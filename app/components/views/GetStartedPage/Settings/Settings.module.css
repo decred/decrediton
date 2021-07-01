@@ -5,28 +5,21 @@
   right: initial;
 }
 
-@media screen and (max-width: 1919px) {
+@media screen and (max-width: 1920px) {
   .backButtonArea {
     left: 1230px;
   }
 }
 
-@media screen and (max-width: 1679px) {
+@media screen and (max-width: 1680px) {
   .backButtonArea {
     left: 988px;
   }
 }
 
-@media screen and (max-width: 1439px) {
+@media screen and (max-width: 1400px) {
   .backButtonArea {
     left: 726px;
-  }
-}
-
-@media screen and (max-width: 1180px) {
-  .backButtonArea {
-    left: 636px;
-    top: 112px;
   }
 }
 
