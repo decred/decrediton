@@ -62,7 +62,7 @@
     column-count: 1;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 560px) {
   .confirmSeedCopy {
     max-height: 60%;
   }

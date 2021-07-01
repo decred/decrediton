@@ -35,8 +35,3 @@
   font-size: 13px;
   line-height: 17px;
 }
-@media screen and (max-width: 420px) {
-  .confirm {
-    max-height: 60%;
-  }
-}
