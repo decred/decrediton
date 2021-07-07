@@ -29,7 +29,8 @@ const SettingsPage = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  walletReady
+  walletReady,
+  onDiscoverUsage
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
@@ -94,7 +95,8 @@ const SettingsPage = ({
                     tempSettings,
                     currencies,
                     walletReady,
-                    onChangeTempSettings
+                    onChangeTempSettings,
+                    onDiscoverUsage
                   }}
                 />
               </div>
