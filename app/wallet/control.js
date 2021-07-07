@@ -660,3 +660,12 @@ export const startTicketAutoBuyerV3 = (
     const mixer = getClient(ticketBuyerService).runTicketBuyer(request);
     ok(shimStreamedResponse(mixer));
   });
+
+export const discoverUsage = (walletService, gapLimit) =>
+  new Promise((ok, fail) => {
+    const request = new api.DiscoverUsageRequest();
+    request.setGapLimit(gapLimit);
+    getClient(walletService).discoverUsage(request, (err, res) =>
+      err ? fail(err) : ok(res.toObject())
+    );
+  });

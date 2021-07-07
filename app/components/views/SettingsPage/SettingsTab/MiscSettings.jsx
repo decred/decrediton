@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput, NumericInput } from "inputs";
-import { InfoDocFieldModalButton } from "buttons";
+import { SettingsInput } from "inputs";
+import { DiscoverUsageButton } from "buttons";
 import styles from "./Settings.module.css";
 import { classNames } from "pi-ui";
 
@@ -14,7 +14,8 @@ const MiscSettings = ({
   tempSettings,
   currencies,
   onChangeTempSettings,
-  walletReady
+  walletReady,
+  onDiscoverUsage
 }) => (
   <div className={styles.misc}>
     <div className={styles.columnTitle}>
@@ -42,27 +43,21 @@ const MiscSettings = ({
 
       {walletReady && (
         <div className={styles.row}>
-          <div className={classNames(styles.label, styles.gapLimitLabel)}>
-            <label id="gap-limit-input" className={styles.label}>
-              <T id="settings.gapLimit.label" m="Gap Limit" />
-            </label>
-            <InfoDocFieldModalButton
-              document="GapLimitInfo"
-              modalClassName={styles.hasWarning}
-              double
-              draggable
-            />
-          </div>
-          <div className={styles.input}>
-            <NumericInput
-              id="gapLimitInput"
-              value={tempSettings.gapLimit}
-              ariaLabelledBy="gap-limit-input"
-              onChange={(e) =>
-                onChangeTempSettings({ gapLimit: e.target.value })
-              }
-            />
-          </div>
+          <DiscoverUsageButton
+            modalTitle={
+              <T id="settings.discoverUsage" m="Discover Address Usage" />
+            }
+            buttonLabel={
+              <T id="settings.discoverUsageBtn" m="Discover Address Usage" />
+            }
+            modalContent={
+              <T
+                id="settings.discoverUsageContent"
+                m="In some rare circumstances, addresses may not be discovered with the default gap limit of 20.  It's recommended to only use this functionality after trying other options and discussing with Support staff.  And be aware that raising the gap limit above 100 will lead to excessive loading times to complete this request."
+              />
+            }
+            onSubmit={onDiscoverUsage}
+          />
         </div>
       )}
     </div>

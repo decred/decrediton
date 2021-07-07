@@ -15,7 +15,8 @@ export const SettingsTab = () => {
     networks,
     areSettingsDirty,
     needNetworkReset,
-    walletReady
+    walletReady,
+    onDiscoverUsage
   } = useSettings();
   const { walletService } = useService();
 
@@ -38,7 +39,8 @@ export const SettingsTab = () => {
         networks,
         areSettingsDirty,
         needNetworkReset,
-        walletReady
+        walletReady,
+        onDiscoverUsage
       }}
     />
   );
