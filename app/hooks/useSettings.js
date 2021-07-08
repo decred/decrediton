@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as sa from "actions/SettingsActions";
@@ -66,6 +66,53 @@ const useSettings = () => {
 
   const toggleTheme = useCallback(() => dispatch(sa.toggleTheme()), [dispatch]);
 
+  const settingGapLimit = useSelector(sel.gapLimit);
+  const [gapLimit, setGapLimit] = useState(settingGapLimit);
+
+  const onDiscoverUsage = useCallback(
+    () => {
+      if (isValid) {
+        dispatch(ca.discoverUsageAttempt(gapLimit));
+        resetDiscoverState();
+      }
+    },
+    [dispatch, gapLimit]
+  );
+
+  const [isDiscoverModalVisible, setIsDiscoverModalVisible] = useState(false);
+  const showDiscoverModal = () => setIsDiscoverModalVisible(true);
+  const hideDiscoverModal = () => {
+    resetDiscoverState();
+    setIsDiscoverModalVisible(false);
+  };
+  // we use this bool flag so the error does not show before trying.
+  const [clicked, setClicked] = useState(false);
+  const resetDiscoverState = () => {
+    console.log("reset?");
+    setGapLimit(settingGapLimit);
+    setClicked(false);
+  };
+  const [isValid, setIsValid] = useState(null);
+
+  useEffect(() => {
+    console.log("useEffect", gapLimit);
+    setIsValid(checkIsValid(gapLimit));
+  }, [gapLimit]);
+
+  const checkIsValid = (gapLimit) => {
+    let isValid = true;
+    if (gapLimit) {
+      if (isNaN(gapLimit) ) {
+        console.log("checkIsValid?", isNaN(gapLimit), gapLimit);
+        isValid = false;
+      }
+    } else {
+      console.log("checkIsValid? null", gapLimit);
+      isValid = false;
+    }
+    return isValid;
+  };
+
   return {
     currencies,
     networks,
@@ -83,7 +130,15 @@ const useSettings = () => {
     onCloseWallet,
     onAddAllowedRequestType,
     toggleTheme,
-    isVSPListingEnabled
+    isVSPListingEnabled,
+    onDiscoverUsage,
+    gapLimit,
+    setGapLimit,
+    isValid,
+    clicked,
+    isDiscoverModalVisible,
+    showDiscoverModal,
+    hideDiscoverModal
   };
 };
 

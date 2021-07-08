@@ -1,40 +1,49 @@
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import Modal from "../Modal";
 import styles from "./DiscoverUsageModal.module.css";
-import { NumericInput } from "inputs";
-import { useEffect, useState, useCallback } from "react";
+import { SettingsTextInput } from "inputs";
 import { PiUiButton, InvisiblePiUiButton } from "buttons";
+
+const messages = defineMessages({
+  gapLimit: {
+    id: "settings.GapLimit.placeholder",
+    defaultMessage: "Gap Limit"
+  }
+});
 
 const DiscoverUsageModal = ({
   onCancelModal,
   onSubmit,
-  modalContent,
-  modalTitle
+  show,
+  gapLimit,
+  setGapLimit,
+  isValid,
+  intl
 }) => {
-  const [gapLimit, setGapLimit] = useState(null);
-  const [isValid, setIsValid] = useState();
-
-  useEffect(() => {
-    setIsValid(!!gapLimit);
-  }, [gapLimit]);
-
+  console.log(gapLimit.value);
   return (
-    <Modal className={styles.modal}>
-      <div className={styles.header}>
-        <div className={styles.headerTitle}>{modalTitle}</div>
+    <Modal className={styles.modal} {...{ show }}>
+      <div className={styles.title}>
+          <T id="settings.discoverUsage" m="Discover Address Usage" />
       </div>
-      <div>{modalContent}</div>
+      <div className={styles.content}>
+        <T
+          id="settings.discoverUsageContent"
+          m="In some rare circumstances, addresses may not be discovered with the default gap limit of 20.  It's recommended to only use this functionality after trying other options and discussing with Support staff.  And be aware that raising the gap limit above 100 will lead to excessive loading times to complete this request."
+        />
+      </div>
       <div className={styles.infoCloseButtonTop} onClick={onCancelModal} />
       <label className={styles.label}>
         <T id="discoverUsage.gapLimitLbl" m="Gap Limit" />
-        <NumericInput
-          id="gapLimitInput"
-          amount={gapLimit?.value}
-          onChangeAmount={setGapLimit}
-          className={styles.gapLimitInput}
-        />
       </label>
-      {clicked && isValid === false && (
+      <SettingsTextInput
+        id="gapLimitInput"
+        value={gapLimit}
+        placeholder={intl.formatMessage(messages.gapLimit)}
+        onChange={setGapLimit}
+        className={styles.gapLimitInput}
+      />
+      {isValid === false && (
         <div className={styles.error}>
           <T id="discoverUsage.startErr" m="Fill all fields." />
         </div>
@@ -43,7 +52,7 @@ const DiscoverUsageModal = ({
         <InvisiblePiUiButton onClick={onCancelModal}>
           <T id="discoverUsage.cancel" m="Cancel" />
         </InvisiblePiUiButton>
-        <PiUiButton onClick={() => onSubmit(gapLimit)}>
+        <PiUiButton disabled={!isValid} onClick={() => onSubmit(gapLimit)}>
           <T id="discoverUsage.save" m="Discover Address Usage" />
         </PiUiButton>
       </div>
@@ -51,4 +60,4 @@ const DiscoverUsageModal = ({
   );
 };
 
-export default DiscoverUsageModal;
+export default injectIntl(DiscoverUsageModal);
