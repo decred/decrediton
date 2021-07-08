@@ -1,8 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput } from "inputs";
-import { DiscoverUsageButton } from "buttons";
 import styles from "./Settings.module.css";
-import { classNames } from "pi-ui";
+import { DiscoverUsageModal } from "modals";
+import { KeyBlueButton } from "buttons";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -15,7 +15,14 @@ const MiscSettings = ({
   currencies,
   onChangeTempSettings,
   walletReady,
-  onDiscoverUsage
+  onDiscoverUsage,
+  gapLimit,
+  setGapLimit,
+  isValid,
+  clicked,
+  isDiscoverModalVisible,
+  showDiscoverModal,
+  hideDiscoverModal
 }) => (
   <div className={styles.misc}>
     <div className={styles.columnTitle}>
@@ -43,20 +50,19 @@ const MiscSettings = ({
 
       {walletReady && (
         <div className={styles.row}>
-          <DiscoverUsageButton
-            modalTitle={
-              <T id="settings.discoverUsage" m="Discover Address Usage" />
-            }
-            buttonLabel={
-              <T id="settings.discoverUsageBtn" m="Discover Address Usage" />
-            }
-            modalContent={
-              <T
-                id="settings.discoverUsageContent"
-                m="In some rare circumstances, addresses may not be discovered with the default gap limit of 20.  It's recommended to only use this functionality after trying other options and discussing with Support staff.  And be aware that raising the gap limit above 100 will lead to excessive loading times to complete this request."
-              />
-            }
-            onSubmit={onDiscoverUsage}
+          <KeyBlueButton onClick={showDiscoverModal}>
+            <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
+          </KeyBlueButton>
+          <DiscoverUsageModal
+            {...{
+              show: isDiscoverModalVisible,
+              onSubmit: onDiscoverUsage,
+              onCancelModal: hideDiscoverModal,
+              gapLimit,
+              setGapLimit,
+              isValid,
+              clicked
+            }}
           />
         </div>
       )}

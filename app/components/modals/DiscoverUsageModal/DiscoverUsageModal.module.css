@@ -12,6 +12,12 @@
   color: var(--stroke-color-hovered);
   margin-bottom: 20px;
 }
+.content {
+  font-size: 14px;
+  line-height: 15px;
+  color: var(--stroke-color-hovered);
+  margin-bottom: 20px;
+}
 .infoCloseButtonTop {
   position: absolute;
   top: 20px;
@@ -42,14 +48,11 @@
   line-height: 16px;
   color: var(--stroke-color-hovered);
 }
-.accountSelectInput {
-  width: 332px;
-  margin-bottom: 25px;
-}
-.balanceToMaintainInput {
+.gapLimitInput {
   margin-bottom: 20px;
+  width: 100px;
 }
-.balanceToMaintainInput input {
+.gapLimitInput input {
   font-size: 16px;
 }
 
