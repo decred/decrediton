@@ -52,8 +52,9 @@ const HistoryTab = () => {
 
   const [searchText, setSearchText] = useState(search);
   const [selectedTxTypeKeys, setSelectedTxTypeKeys] = useState(selTxTypeKeys);
-  const [selectedSortOrderKey, setSelectedSortOrderKey] =
-    useState(listDirection);
+  const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(
+    listDirection
+  );
   const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
 
   const loadMoreThreshold = 250 + Math.max(0, window.innerHeight - 765);
