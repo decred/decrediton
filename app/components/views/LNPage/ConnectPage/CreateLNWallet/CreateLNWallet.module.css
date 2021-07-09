@@ -5,7 +5,12 @@
 .connectOpt {
   flex-wrap: wrap;
   display: flex;
-  padding-top: 18px;
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+}
+
+.connectOptWrapper {
+  padding-bottom: 5px;
 }
 
 .label {
@@ -18,11 +23,8 @@
 .accountSelection {
   display: grid;
   grid-row-gap: 10px;
-  justify-items: right;
-}
-
-.accountList {
-  width: 210px;
+  justify-items: left;
+  margin-bottom: 5px;
 }
 
 .existingAccountWarning {

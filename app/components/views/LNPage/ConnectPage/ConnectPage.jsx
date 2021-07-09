@@ -103,7 +103,7 @@ const ConnectPage = () => {
                 onAccountOptionClick={onAccountOptionClick}
               />
             )}
-            <div className={classNames(styles.connectOpt, styles.checkbox)}>
+            <div className={styles.connectOpt}>
               <Checkbox
                 id="enableAutopilot"
                 label={
