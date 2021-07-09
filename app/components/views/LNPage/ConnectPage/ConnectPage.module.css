@@ -1,18 +1,16 @@
 .connectOpts {
-  background-color: var(--background-back-color);
-  padding: 30px 40px;
-  margin-bottom: 20px;
-}
-
-.checkbox {
-  max-width: 420px;
+  display: flex;
+  flex-direction: column;
 }
 
 .connectOpt {
   flex-wrap: wrap;
   display: flex;
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
 }
 
 .buttonContrainer {
+  margin-top: 20px;
   text-align: right;
 }
