@@ -18,12 +18,14 @@
 
 .sortByTooltip {
   font-size: 14px;
-  width: 4.5rem;
+  line-height: 15px;
+  width: max-content;
 }
 
 .typeTooltip {
   font-size: 14px;
-  width: 10.5rem;
+  line-height: 15px;
+  width: max-content;
 }
 
 @media screen and (max-width: 1179px) {
