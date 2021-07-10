@@ -59,10 +59,7 @@
   margin-right: 11px;
 }
 
-.pathBrowseInput input {
-  width: 350px;
-}
-
+.pathBrowseInput input,
 .receiveSelectAccountSelectInput {
   width: 350px;
 }
@@ -72,4 +69,21 @@
 }
 .receiveSelectAccountSelect a {
   margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .pathBrowseInput input,
+  .receiveSelectAccountSelectInput {
+    width: 288px;
+  }
+  .textToggle {
+    font-size: 13px;
+    height: 62px;
+  }
+  .connectOpt {
+    padding: 20px;
+  }
+  .connectOpt.fileInputOpt {
+    padding: 30px 20px 20px 20px;
+  }
 }

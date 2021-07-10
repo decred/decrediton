@@ -1,6 +1,10 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { PiUiPassphraseModalButton, KeyBlueButton, ToggleSwitch } from "buttons";
+import {
+  PiUiPassphraseModalButton,
+  KeyBlueButton,
+  ToggleSwitch
+} from "buttons";
 import { Documentation } from "shared";
 import { Tooltip } from "pi-ui";
 import {
