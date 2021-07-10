@@ -1,8 +1,8 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { PassphraseModalButton, KeyBlueButton, ToggleSwitch } from "buttons";
+import { PiUiPassphraseModalButton, KeyBlueButton, ToggleSwitch } from "buttons";
 import { Documentation } from "shared";
-import { Tooltip, Checkbox } from "pi-ui";
+import { Tooltip } from "pi-ui";
 import {
   LNWALLET_STARTUPSTAGE_STARTDCRLND,
   LNWALLET_STARTUPSTAGE_CONNECT,
@@ -150,7 +150,7 @@ const ConnectPage = () => {
                     m="Unlock LN Wallet"
                   />
                 }>
-                <PassphraseModalButton
+                <PiUiPassphraseModalButton
                   modalTitle={
                     <T
                       id="ln.connectPage.unlockWalletModal"
@@ -168,7 +168,7 @@ const ConnectPage = () => {
                 />
               </Tooltip>
             ) : (
-              <PassphraseModalButton
+              <PiUiPassphraseModalButton
                 modalTitle={
                   <T id="ln.connectPage.running" m="Unlock LN Wallet" />
                 }
