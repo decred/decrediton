@@ -139,6 +139,7 @@ const darkTheme = {
   "grey-3": "#E6EAED",
   "grey-5": "#3c62b0",
   "grey-7": "#608ace",
+  orange: "#ED6D47",
   "main-dark-blue": "#e9f8fe0",
   "light-blue": "#D4F0FD",
   "small-button-shadow": "rgba(0, 0, 0, 0.12)",

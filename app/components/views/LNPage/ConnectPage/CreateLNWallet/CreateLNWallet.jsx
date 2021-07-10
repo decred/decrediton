@@ -70,16 +70,33 @@ const CreateLNWallet = ({
       <AnimatedContainer show={accountOption !== NEW_ACCOUNT}>
         <div className={styles.connectOptWrapper}>
           <div className={styles.connectOpt}>
+            {
+              // `selectWithBigFont` className is
+              // temp solution to skinning from ReactSelectGlobal.css.
+              // When react-select will be replaced by the `pi-ui` component,
+              // this className can be deleted.
+            }
             <ReceiveAccountsSelect
+              className={classNames(
+                styles.receiveSelectAccountSelect,
+                "selectWithBigFont"
+              )}
+              selectClassName={styles.receiveSelectAccountSelectInput}
               account={account.value}
               onChange={onChangeAccount}
               showAccountsButton={false}
               hideSpendable={false}
             />
             <div className={styles.existingAccountWarning}>
+              <strong>
+                <T
+                  id="ln.connectPage.useExistingAccountWarningAttention"
+                  m={"Attention: "}
+                />
+              </strong>
               <T
                 id="ln.connectPage.useExistingAccountWarning"
-                m={`Attention: note that a running LN wallet maintains unencrypted keys
+                m={`note that a running LN wallet maintains unencrypted keys
 in memory while it's running and also takes control of all funds of the
 given account. It's recommended to have an account dedicated to LN
 operations and only transfer the funds you intend to use in LN to it.`}
