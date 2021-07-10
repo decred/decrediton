@@ -123,6 +123,7 @@ export const InvisiblePassphraseModalButton = mbb(
   InvisibleButton
 );
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
+export const PiUiPassphraseModalButton = mbb(null, PassphraseModal, PiUiButton);
 export const SetNewPassphraseModalButton = mbb(
   null,
   SetNewPassphraseModal,
