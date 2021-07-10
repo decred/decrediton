@@ -45,3 +45,20 @@
 .autopilotSwitch {
   margin: 0 20px 0 0;
 }
+
+@media screen and (max-width: 1180px) {
+  .buttonContrainer,
+  .connectOpts {
+    width: 667px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .buttonContrainer,
+  .connectOpts {
+    width: 355px;
+  }
+  .connectOpt {
+    padding: 30px 20px;
+  }
+}
