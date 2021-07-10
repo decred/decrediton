@@ -2,11 +2,7 @@ import { createElement as h, useState, useCallback } from "react";
 import { TransitionMotion } from "react-motion";
 import { spring } from "react-motion";
 
-const AnimatedContainer = ({
-  show,
-  children,
-  childrenClassName
-}) => {
+const AnimatedContainer = ({ show, children, childrenClassName }) => {
   const [childHeight, setChildHeight] = useState(0);
   const childRef = useCallback(
     (node) => {
@@ -81,11 +77,7 @@ const AnimatedContainer = ({
       })
     );
 
-  return (
-    <>
-      {h(TransitionMotion, tmProps, childrenMotion)}
-    </>
-  );
+  return <>{h(TransitionMotion, tmProps, childrenMotion)}</>;
 };
 
 export default AnimatedContainer;

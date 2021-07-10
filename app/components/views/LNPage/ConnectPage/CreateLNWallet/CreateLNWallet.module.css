@@ -9,6 +9,10 @@
   padding: 30px 40px;
 }
 
+.connectOpt.fileInputOpt {
+  padding: 30px 40px 20px 40px;
+}
+
 .connectOptWrapper {
   padding-bottom: 5px;
 }
@@ -35,8 +39,9 @@
 }
 
 .fileInput {
-  padding-right: 10px;
-  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .textToggle {
@@ -48,4 +53,12 @@
 
 .textToggleChild {
   padding: 11px 30px 13px 30px;
+}
+
+.pathBrowseInput {
+  margin-right: 11px;
+}
+
+.pathBrowseInput input {
+  width: 350px;
 }
