@@ -1,4 +1,4 @@
-import { classNames } from "pi-ui";
+import { classNames, Icon } from "pi-ui";
 export { default as EyeFilterMenu } from "./EyeFilterMenu/EyeFilterMenu";
 export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenu/EyeFilterMenuWithSlider/EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink/HelpLink";
@@ -90,6 +90,12 @@ const PoliteiaLinkButton = ({ children, onClick }) => (
   <span onClick={onClick}>{children}</span>
 );
 
+const InfoButton = ({ className, onClick }) => (
+  <span onClick={onClick} className={className}>
+    <Icon type="info" width="18" height="18" />
+  </span>
+);
+
 export const HelpLinkInfoModal = mbb(
   null,
   DocumentationInfoModal,
@@ -100,6 +106,11 @@ export const InfoModalButton = mbb(styles.infoModalButton, InfoModal);
 export const InfoDocModalButton = mbb(
   styles.infoModalButton,
   DocumentationInfoModal
+);
+export const PiUiInfoDocModalButton = mbb(
+  styles.button,
+  DocumentationInfoModal,
+  InfoButton
 );
 export const InfoDocFieldModalButton = mbb(
   styles.infoFieldModalButton,

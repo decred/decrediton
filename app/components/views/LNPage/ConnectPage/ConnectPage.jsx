@@ -2,7 +2,7 @@ import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import { Documentation } from "shared";
-import { Tooltip, Checkbox, classNames } from "pi-ui";
+import { Tooltip, Checkbox } from "pi-ui";
 import {
   LNWALLET_STARTUPSTAGE_STARTDCRLND,
   LNWALLET_STARTUPSTAGE_CONNECT,
@@ -76,7 +76,8 @@ const ConnectPage = () => {
     onChangeEnableAutopilot,
     onAccountOptionClick,
     onAcceptCreationWarning,
-    runningIndicator
+    runningIndicator,
+    intl
   } = useConnectPage();
 
   return (
@@ -101,6 +102,7 @@ const ConnectPage = () => {
                 setScbFile={setScbFile}
                 onChangeAccount={onChangeAccount}
                 onAccountOptionClick={onAccountOptionClick}
+                intl={intl}
               />
             )}
             <div className={styles.connectOpt}>
