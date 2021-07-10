@@ -35,10 +35,12 @@ const CreateLNWallet = ({
       <div className={styles.accountSelection}>
         <div>
           <TextToggle
-            leftText={<T id="ln.connectPage.createAccount" m="Create new" />}
-            rightText={<T id="ln.connectPage.useAccount" m="Use existing" />}
+            leftText={<T id="ln.connectPage.createAccount" m="Create New Wallet account" />}
+            rightText={<T id="ln.connectPage.useAccount" m="Use Existing Wallet Account" />}
             activeButton={accountOption}
             toggleAction={onAccountOptionClick}
+            className={styles.textToggle}
+            childClassName={styles.textToggleChild}
           />
         </div>
       </div>

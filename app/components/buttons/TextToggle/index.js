@@ -1,7 +1,14 @@
 import { useState } from "react";
 import Toggle from "./Toggle";
 
-const TextToggle = ({ activeButton, leftText, rightText, toggleAction }) => {
+const TextToggle = ({
+  activeButton,
+  leftText,
+  rightText,
+  toggleAction,
+  className,
+  childClassName
+}) => {
   const [active, setActive] = useState(activeButton);
 
   const onClick = (active) => {
@@ -9,7 +16,18 @@ const TextToggle = ({ activeButton, leftText, rightText, toggleAction }) => {
     toggleAction(active);
   };
 
-  return <Toggle {...{ leftText, rightText, activeButton: active, onClick }} />;
+  return (
+    <Toggle
+      {...{
+        leftText,
+        rightText,
+        activeButton: active,
+        onClick,
+        className,
+        childClassName
+      }}
+    />
+  );
 };
 
 export default TextToggle;

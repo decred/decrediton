@@ -159,6 +159,7 @@ const lightTheme = {
   "governance-nav-button-bg": "var(--grey-3)",
   "refresh-proposals": "var(--small-button-bg)",
   "agenda-preference": "var(--main-dark-blue)",
+  "text-toggle-bg": "var(--grey-3)",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border
