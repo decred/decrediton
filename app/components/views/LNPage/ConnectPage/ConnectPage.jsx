@@ -1,6 +1,6 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { PassphraseModalButton, KeyBlueButton } from "buttons";
+import { PassphraseModalButton, KeyBlueButton, ToggleSwitch } from "buttons";
 import { Documentation } from "shared";
 import { Tooltip, Checkbox } from "pi-ui";
 import {
@@ -106,23 +106,39 @@ const ConnectPage = () => {
               />
             )}
             <div className={styles.connectOpt}>
-              <Checkbox
-                id="enableAutopilot"
-                label={
+              <div className={styles.apsContainer}>
+                <ToggleSwitch
+                  id="enableAutopilot"
+                  className={styles.autopilotSwitch}
+                  onClick={onChangeEnableAutopilot}
+                  enabled={autopilotEnabled}
+                  tooltipClassName={styles.autopilotTooltipClassName}
+                  enabledText={
+                    <T
+                      id="ln.connectPage.autopilot.enabled"
+                      m="Disable automatic channel creation"
+                    />
+                  }
+                  notEnabledText={
+                    <T
+                      id="ln.connectPage.autopilot.not.enabled"
+                      m="Enable automatic channel creation"
+                    />
+                  }
+                />
+                <label htmlFor="enableAutopilot">
                   <T
-                    id="ln.connectPage.enableAutopilot"
-                    m="Enable Automatic Channel Creation"
+                    id="ln.connectPage.automaticChannelCreation"
+                    m="Automatic Channel Creation"
                   />
-                }
-                description={
-                  <T
-                    id="ln.connectPage.enableAutopilotDescr"
-                    m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
-                  />
-                }
-                checked={autopilotEnabled}
-                onChange={onChangeEnableAutopilot}
-              />
+                </label>
+              </div>
+              <div className={styles.autopilotDesc}>
+                <T
+                  id="ln.connectPage.enableAutopilotDescr"
+                  m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
+                />
+              </div>
             </div>
           </div>
           <div className={styles.buttonContrainer}>

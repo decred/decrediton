@@ -92,7 +92,7 @@ const PoliteiaLinkButton = ({ children, onClick }) => (
 
 const InfoButton = ({ className, onClick }) => (
   <span onClick={onClick} className={className}>
-    <Icon type="info" width="18" height="18" />
+    <Icon type="info" width={18} height={18} />
   </span>
 );
 
