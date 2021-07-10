@@ -38,3 +38,14 @@
   padding-right: 10px;
   margin-top: 8px;
 }
+
+.textToggle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  height: 44px;
+}
+
+.textToggleChild {
+  padding: 11px 30px 13px 30px;
+}
