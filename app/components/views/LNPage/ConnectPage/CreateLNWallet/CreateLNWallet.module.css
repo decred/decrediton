@@ -32,10 +32,10 @@
 }
 
 .existingAccountWarning {
-  color: var(--error-text-color);
-  font-size: 11px;
-  line-height: 15px;
-  margin-top: 5px;
+  color: var(--orange);
+  font-size: 13px;
+  line-height: 16px;
+  margin-top: 10px;
 }
 
 .fileInput {
@@ -61,4 +61,15 @@
 
 .pathBrowseInput input {
   width: 350px;
+}
+
+.receiveSelectAccountSelectInput {
+  width: 350px;
+}
+
+.receiveSelectAccountSelect {
+  align-items: flex-end;
+}
+.receiveSelectAccountSelect a {
+  margin-left: 10px;
 }

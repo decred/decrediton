@@ -142,6 +142,7 @@ const lightTheme = {
   "grey-5": "#8997A5",
   "grey-6": "#596D81",
   "grey-7": "#3D5873",
+  orange: "#ED6D47",
   "light-blue": "#D4F0FD",
   "main-dark-blue": "#091440",
   "small-button-shadow": "rgba(0, 0, 0, 0.12)",
