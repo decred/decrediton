@@ -157,6 +157,7 @@ const darkTheme = {
   "refresh-proposals": "var(--politeia-button-bg)",
   "agenda-preference": "var(--grey-2)",
   "text-toggle-bg": "#1B2B54",
+  "ln-autopilot-switch-desc": "#3C62B0",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",
