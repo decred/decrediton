@@ -17,9 +17,7 @@ import {
 import styles from "./ConnectPage.module.css";
 import { LN_ICON } from "constants";
 import { useConnectPage } from "./hooks";
-import CreateLNWallet, {
-  CreateLNWalletHeader
-} from "./CreateLNWallet/CreateLNWallet";
+import {CreateLNWallet, CreateLNWalletHeader} from "./CreateLNWallet";
 
 const stageMsgs = {
   [LNWALLET_STARTUPSTAGE_STARTDCRLND]: (

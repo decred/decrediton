@@ -1,7 +1,7 @@
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
-import ConnectPage from "./ConnectPage/ConnectPage";
+import { ConnectPage }  from "./ConnectPage";
 import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
 import ChannelsTab, { ChannelsTabHeader } from "./ChannelsTab/ChannelsTab";
 import InvoicesTab, { InvoicesTabHeader } from "./InvoicesTab/InvoicesTab";
