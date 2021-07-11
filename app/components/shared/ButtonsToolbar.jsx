@@ -1,6 +1,5 @@
-import { KeyBlueButton, InvisibleButton } from "buttons";
+import { PiUiButton, InvisiblePiUiButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import style from "./shared.module.css";
 
 const ButtonsToolbar = ({
   onSubmit,
@@ -11,12 +10,11 @@ const ButtonsToolbar = ({
   loading
 }) => (
   <div className={className}>
-    <InvisibleButton
-      className={style.passphraseCloseButton}
+    <InvisiblePiUiButton
       onClick={onCancelModal}>
       <T id="passphraseModal.btnCancel" m="Cancel" />
-    </InvisibleButton>
-    <KeyBlueButton
+    </InvisiblePiUiButton>
+    <PiUiButton
       loading={loading}
       disabled={
         // if isValid is not passed as props, we never validate it.
@@ -28,7 +26,7 @@ const ButtonsToolbar = ({
       ) : (
         <T id="passphraseModal.continue" m="Continue" />
       )}
-    </KeyBlueButton>
+    </PiUiButton>
   </div>
 );
 
