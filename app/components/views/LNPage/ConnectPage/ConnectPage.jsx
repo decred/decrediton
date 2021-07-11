@@ -146,10 +146,11 @@ const ConnectPage = () => {
           <div className={styles.buttonContrainer}>
             {runningIndicator ? (
               <Tooltip
+                contentClassName={styles.disabledTooltip}
                 content={
                   <T
-                    id="ln.connectPage.unlockWalletModal"
-                    m="Unlock LN Wallet"
+                    id="ln.connectPage.disabled.unlockWalletModal"
+                    m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before unlock LN Wallet."
                   />
                 }>
                 <PiUiPassphraseModalButton

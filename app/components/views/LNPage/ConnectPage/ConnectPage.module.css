@@ -46,6 +46,11 @@
   margin: 0 20px 0 0;
 }
 
+.disabledTooltip {
+  width: 17rem;
+  text-align: center;
+}
+
 @media screen and (max-width: 1180px) {
   .buttonContrainer,
   .connectOpts {
