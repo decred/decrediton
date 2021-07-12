@@ -15,15 +15,7 @@ export const SettingsTab = () => {
     networks,
     areSettingsDirty,
     needNetworkReset,
-    walletReady,
-    onDiscoverUsage,
-    gapLimit,
-    setGapLimit,
-    isValid,
-    clicked,
-    isDiscoverModalVisible,
-    showDiscoverModal,
-    hideDiscoverModal
+    walletReady
   } = useSettings();
   const { walletService } = useService();
 
@@ -46,15 +38,7 @@ export const SettingsTab = () => {
         networks,
         areSettingsDirty,
         needNetworkReset,
-        walletReady,
-        onDiscoverUsage,
-        gapLimit,
-        setGapLimit,
-        isValid,
-        clicked,
-        isDiscoverModalVisible,
-        showDiscoverModal,
-        hideDiscoverModal
+        walletReady
       }}
     />
   );
