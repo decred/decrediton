@@ -1,9 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
+import { useIntl } from "react-intl";
 
 export const useSetNewPassphraseModal = ({ onCancelModal, onSubmit }) => {
   const [confirmPrivPass, setConfirmPrivPass] = useState(null);
   const [passphrase, setPassphrase] = useState(null);
   const [isValid, setIsValid] = useState(null);
+  const intl = useIntl();
 
   const resetState = useCallback(() => {
     setPassphrase(null);
@@ -35,6 +37,7 @@ export const useSetNewPassphraseModal = ({ onCancelModal, onSubmit }) => {
     setPassphrase,
     isValid,
     onSubmitCallback,
-    setConfirmPrivPass
+    setConfirmPrivPass,
+    intl
   };
 };
