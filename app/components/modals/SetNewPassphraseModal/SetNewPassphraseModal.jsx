@@ -9,7 +9,8 @@ const SetNewPassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
     setPassphrase,
     isValid,
     onSubmitCallback,
-    setConfirmPrivPass
+    setConfirmPrivPass,
+    intl
   } = useSetNewPassphraseModal({ onCancelModal, onSubmit });
 
   return (
@@ -22,7 +23,8 @@ const SetNewPassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
         setPassphrase,
         isValid,
         onSubmit: onSubmitCallback,
-        setConfirmPrivPass
+        setConfirmPrivPass,
+        intl
       }}
     />
   );

@@ -1,9 +1,28 @@
 import DefaultModal from "../../Modal";
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, defineMessages } from "react-intl";
 import styles from "./SetNewPassModalContent.module.css";
 import { classNames } from "pi-ui";
-import { PasswordInput, PassphraseModalField } from "inputs";
+import { PasswordInput } from "inputs";
 import { ButtonsToolbar } from "shared";
+
+const messages = defineMessages({
+  newPassphraseLabelText: {
+    id: "setNewPassphraseModal.newPassphrase",
+    defaultMessage: "New Passphrase"
+  },
+  newPassphraseplaceholderText: {
+    id: "setNewPassphraseModal.newPassphrasePlaceholder",
+    defaultMessage: "Write your New Passphrase"
+  },
+  confirmPassphraseLabelText: {
+    id: "setNewPassphraseModal.confirm",
+    defaultMessage: "Confirm"
+  },
+  confirmPassphraseplaceholderText: {
+    id: "setNewPassphraseModal.confirmPassphrasePlaceholder",
+    defaultMessage: "Confirm your Passphrase"
+  }
+});
 
 const Modal = ({
   modalClassName,
@@ -18,7 +37,8 @@ const Modal = ({
   confirmPrivPass,
   onTriggerPassphraseModalSubmit,
   isValid,
-  setConfirmPrivPass
+  setConfirmPrivPass,
+  intl
 }) => (
   <DefaultModal
     className={classNames(styles.passphrase, modalClassName)}
@@ -37,33 +57,33 @@ const Modal = ({
       <div className={styles.geaderDescription}>{modalDescription}</div>
     </div>
     <div className={styles.content}>
-      <PassphraseModalField
-        label={
-          <T id="setNewPassphraseModal.privatePassphrase" m="New Passphrase" />
-        }>
-        <PasswordInput
-          autoFocus={true}
-          required
-          id="passphrase"
-          placeholder=""
-          value={passphrase}
-          onChange={(e) => setPassphrase(e.target.value)}
-          onKeyDownSubmit={onSubmit}
-          showErrors={passphrase !== null && !passphrase}
-        />
-      </PassphraseModalField>
-      <PassphraseModalField
-        label={<T id="setNewPassModal.confirm" m="Confirm" />}>
-        <PasswordInput
-          id="confirmPrivPassInput"
-          required
-          showErrors={confirmPrivPass !== null && !isValid}
-          placeholder=""
-          value={confirmPrivPass}
-          onChange={(e) => setConfirmPrivPass(e.target.value)}
-          onKeyDownSubmit={onTriggerPassphraseModalSubmit}
-        />
-      </PassphraseModalField>
+      <PasswordInput
+        newBiggerFontStyle
+        autoFocus={true}
+        required
+        id="passphrase"
+        placeholder=""
+        value={passphrase}
+        onChange={(e) => setPassphrase(e.target.value)}
+        onKeyDownSubmit={onSubmit}
+        showErrors={passphrase !== null && !passphrase}
+        label={intl.formatMessage(messages.newPassphraseLabelText)}
+        placeholder={intl.formatMessage(messages.newPassphraseplaceholderText)}
+      />
+      <PasswordInput
+        newBiggerFontStyle
+        id="confirmPrivPassInput"
+        required
+        showErrors={confirmPrivPass !== null && !isValid}
+        placeholder=""
+        value={confirmPrivPass}
+        onChange={(e) => setConfirmPrivPass(e.target.value)}
+        onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+        label={intl.formatMessage(messages.confirmPassphraseLabelText)}
+        placeholder={intl.formatMessage(
+          messages.confirmPassphraseplaceholderText
+        )}
+      />
     </div>
     <div className={styles.toolbar}>
       <ButtonsToolbar {...{ onCancelModal, onSubmit, isValid, submitLabel }} />
