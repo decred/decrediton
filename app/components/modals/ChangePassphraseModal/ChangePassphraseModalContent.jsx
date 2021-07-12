@@ -32,41 +32,39 @@ const Modal = ({
   error,
   intl,
   ...props
-}) => {
-  return (
-    <PassphraseModal
-      {...{
-        ...props,
-        onSubmit,
-        parentIsValid: isValid
-      }}>
-      <PasswordInput
-        newBiggerFontStyle
-        id="newPassphraseInput"
-        required
-        showErrors={newPassphrase !== null && !isValid}
-        value={newPassphrase}
-        onChange={(e) => setNewPassphrase(e.target.value)}
-        onKeyDownSubmit={onTriggerPassphraseModalSubmit}
-        label={intl.formatMessage(messages.newPassphraseLabelText)}
-        placeholder={intl.formatMessage(messages.newPassphraseplaceholderText)}
-      />
-      <PasswordInput
-        newBiggerFontStyle
-        id="confirmPrivPassInput"
-        required
-        showErrors={confirmPrivPass !== null && !isValid}
-        label={intl.formatMessage(messages.confirmPassphraseLabelText)}
-        placeholder={intl.formatMessage(
-          messages.confirmPassphraseplaceholderText
-        )}
-        value={confirmPrivPass}
-        onChange={(e) => setConfirmPrivPass(e.target.value)}
-        onKeyDownSubmit={onTriggerPassphraseModalSubmit}
-      />
-      {error && <div className="error">{error}</div>}
-    </PassphraseModal>
-  );
-};
+}) => (
+  <PassphraseModal
+    {...{
+      ...props,
+      onSubmit,
+      parentIsValid: isValid
+    }}>
+    <PasswordInput
+      newBiggerFontStyle
+      id="newPassphraseInput"
+      required
+      showErrors={newPassphrase !== null && !isValid}
+      value={newPassphrase}
+      onChange={(e) => setNewPassphrase(e.target.value)}
+      onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+      label={intl.formatMessage(messages.newPassphraseLabelText)}
+      placeholder={intl.formatMessage(messages.newPassphraseplaceholderText)}
+    />
+    <PasswordInput
+      newBiggerFontStyle
+      id="confirmPrivPassInput"
+      required
+      showErrors={confirmPrivPass !== null && !isValid}
+      label={intl.formatMessage(messages.confirmPassphraseLabelText)}
+      placeholder={intl.formatMessage(
+        messages.confirmPassphraseplaceholderText
+      )}
+      value={confirmPrivPass}
+      onChange={(e) => setConfirmPrivPass(e.target.value)}
+      onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+    />
+    {error && <div className="error">{error}</div>}
+  </PassphraseModal>
+);
 
 export default Modal;
