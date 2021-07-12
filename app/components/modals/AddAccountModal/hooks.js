@@ -1,8 +1,10 @@
 import { useState, useCallback, useMemo } from "react";
+import { useIntl } from "react-intl";
 
 function useAddAccountModal(onCancelModal, onSubmit) {
   const [name, setName] = useState("");
   const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
+  const intl = useIntl();
 
   const resetState = useCallback(() => {
     setName("");
@@ -40,7 +42,8 @@ function useAddAccountModal(onCancelModal, onSubmit) {
     validationFailed,
     setNameCallback,
     onSubmitCallback,
-    isValid
+    isValid,
+    intl
   };
 }
 
