@@ -1,6 +1,25 @@
-import { FormattedMessage as T } from "react-intl";
-import { PasswordInput, PassphraseModalField } from "inputs";
+import { PasswordInput } from "inputs";
 import { PassphraseModal } from "modals";
+import { FormattedMessage as T, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  newPassphraseLabelText: {
+    id: "changePassModal.newPassphrase",
+    defaultMessage: "New Private Passphrase"
+  },
+  newPassphraseplaceholderText: {
+    id: "changePassModal.newPassphrasePlaceholder",
+    defaultMessage: "Write your New Private Passphrase"
+  },
+  confirmPassphraseLabelText: {
+    id: "changePassModal.confirm",
+    defaultMessage: "Confirm"
+  },
+  confirmPassphraseplaceholderText: {
+    id: "changePassModal.confirmPassphrasePlaceholder",
+    defaultMessage: "Confirm your Private Passphrase"
+  }
+});
 
 const Modal = ({
   newPassphrase,
@@ -11,42 +30,43 @@ const Modal = ({
   onSubmit,
   onTriggerPassphraseModalSubmit,
   error,
+  intl,
   ...props
-}) => (
-  <PassphraseModal
-    {...{
-      ...props,
-      onSubmit,
-      parentIsValid: isValid
-    }}>
-    <PassphraseModalField
-      label={
-        <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
-      }>
+}) => {
+  return (
+    <PassphraseModal
+      {...{
+        ...props,
+        onSubmit,
+        parentIsValid: isValid
+      }}>
       <PasswordInput
+        newBiggerFontStyle
         id="newPassphraseInput"
         required
         showErrors={newPassphrase !== null && !isValid}
-        placeholder=""
         value={newPassphrase}
         onChange={(e) => setNewPassphrase(e.target.value)}
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+        label={intl.formatMessage(messages.newPassphraseLabelText)}
+        placeholder={intl.formatMessage(messages.newPassphraseplaceholderText)}
       />
-    </PassphraseModalField>
-    <PassphraseModalField
-      label={<T id="changePassModal.confirm" m="Confirm" />}>
       <PasswordInput
+        newBiggerFontStyle
         id="confirmPrivPassInput"
         required
         showErrors={confirmPrivPass !== null && !isValid}
-        placeholder=""
+        label={intl.formatMessage(messages.confirmPassphraseLabelText)}
+        placeholder={intl.formatMessage(
+          messages.confirmPassphraseplaceholderText
+        )}
         value={confirmPrivPass}
         onChange={(e) => setConfirmPrivPass(e.target.value)}
         onKeyDownSubmit={onTriggerPassphraseModalSubmit}
       />
-    </PassphraseModalField>
-    {error && <div className="error">{error}</div>}
-  </PassphraseModal>
-);
+      {error && <div className="error">{error}</div>}
+    </PassphraseModal>
+  );
+};
 
 export default Modal;
