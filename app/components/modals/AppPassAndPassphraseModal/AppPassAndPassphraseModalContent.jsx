@@ -1,6 +1,17 @@
-import { FormattedMessage as T } from "react-intl";
-import { PasswordInput, PassphraseModalField } from "inputs";
+import { FormattedMessage as T, defineMessages } from "react-intl";
+import { PasswordInput } from "inputs";
 import { PassphraseModal } from "modals";
+
+const messages = defineMessages({
+  dexPassphraseLabelText: {
+    id: "appPassphrase.newPassphrase",
+    defaultMessage: "DEX Passphrase"
+  },
+  dexPassphraseplaceholderText: {
+    id: "appPassphrase.newPassphrasePlaceholder",
+    defaultMessage: "Write your DEX Passphrase"
+  }
+});
 
 const Modal = ({
   appPassphrase,
@@ -9,6 +20,7 @@ const Modal = ({
   onSubmit,
   onTriggerPassphraseModalSubmit,
   error,
+  intl,
   ...props
 }) => (
   <PassphraseModal
@@ -17,18 +29,18 @@ const Modal = ({
       onSubmit,
       parentIsValid: isValid
     }}>
-    <PassphraseModalField
-      label={<T id="appPassphrase.newPassphrase" m="DEX Passphrase" />}>
-      <PasswordInput
-        id="appPassphraseInput"
-        required
-        showErrors={appPassphrase !== null && !isValid}
-        placeholder=""
-        value={appPassphrase}
-        onChange={(e) => setAppPassphrase(e.target.value)}
-        onKeyDownSubmit={onTriggerPassphraseModalSubmit}
-      />
-    </PassphraseModalField>
+    <PasswordInput
+      newBiggerFontStyle
+      id="appPassphraseInput"
+      required
+      showErrors={appPassphrase !== null && !isValid}
+      placeholder=""
+      value={appPassphrase}
+      onChange={(e) => setAppPassphrase(e.target.value)}
+      onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+      label={intl.formatMessage(messages.dexPassphraseLabelText)}
+      placeholder={intl.formatMessage(messages.dexPassphraseplaceholderText)}
+    />
     {error && <div className="error">{error}</div>}
   </PassphraseModal>
 );
