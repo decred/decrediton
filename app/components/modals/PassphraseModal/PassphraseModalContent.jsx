@@ -39,6 +39,7 @@ const Modal = ({
   <DefaultModal
     className={classNames(styles.passphrase, modalClassName)}
     {...{ show, onCancelModal }}>
+    <div className={styles.closeButtonTop} onClick={onCancelModal} />
     <div className={styles.header}>
       <div className={styles.headerTitle}>
         {modalTitle ? (
