@@ -70,25 +70,27 @@ const useSettings = () => {
   const [gapLimit, setGapLimit] = useState(settingGapLimit);
   const [isValid, setIsValid] = useState(null);
 
+  const hideDiscoverModal = useCallback(() => {
+    resetDiscoverState();
+    setIsDiscoverModalVisible(false);
+  }, [resetDiscoverState, setIsDiscoverModalVisible]);
+
+  const resetDiscoverState = useCallback(() => {
+    setGapLimit(settingGapLimit);
+    setClicked(false);
+  }, [setGapLimit, setClicked, settingGapLimit]);
+
   const onDiscoverUsage = useCallback(() => {
     if (isValid) {
       dispatch(ca.discoverUsageAttempt(gapLimit));
       hideDiscoverModal();
     }
-  }, [dispatch, isValid, gapLimit]);
+  }, [dispatch, hideDiscoverModal, isValid, gapLimit]);
 
   const [isDiscoverModalVisible, setIsDiscoverModalVisible] = useState(false);
   const showDiscoverModal = () => setIsDiscoverModalVisible(true);
-  const hideDiscoverModal = () => {
-    resetDiscoverState();
-    setIsDiscoverModalVisible(false);
-  };
   // we use this bool flag so the error does not show before trying.
   const [clicked, setClicked] = useState(false);
-  const resetDiscoverState = () => {
-    setGapLimit(settingGapLimit);
-    setClicked(false);
-  };
 
   useEffect(() => {
     setIsValid(checkIsValid(gapLimit));
