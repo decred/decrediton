@@ -68,16 +68,14 @@ const useSettings = () => {
 
   const settingGapLimit = useSelector(sel.gapLimit);
   const [gapLimit, setGapLimit] = useState(settingGapLimit);
+  const [isValid, setIsValid] = useState(null);
 
-  const onDiscoverUsage = useCallback(
-    () => {
-      if (isValid) {
-        dispatch(ca.discoverUsageAttempt(gapLimit));
-        resetDiscoverState();
-      }
-    },
-    [dispatch, gapLimit]
-  );
+  const onDiscoverUsage = useCallback(() => {
+    if (isValid) {
+      dispatch(ca.discoverUsageAttempt(gapLimit));
+      hideDiscoverModal();
+    }
+  }, [dispatch, isValid, gapLimit]);
 
   const [isDiscoverModalVisible, setIsDiscoverModalVisible] = useState(false);
   const showDiscoverModal = () => setIsDiscoverModalVisible(true);
@@ -88,26 +86,21 @@ const useSettings = () => {
   // we use this bool flag so the error does not show before trying.
   const [clicked, setClicked] = useState(false);
   const resetDiscoverState = () => {
-    console.log("reset?");
     setGapLimit(settingGapLimit);
     setClicked(false);
   };
-  const [isValid, setIsValid] = useState(null);
 
   useEffect(() => {
-    console.log("useEffect", gapLimit);
     setIsValid(checkIsValid(gapLimit));
   }, [gapLimit]);
 
   const checkIsValid = (gapLimit) => {
     let isValid = true;
     if (gapLimit) {
-      if (isNaN(gapLimit) ) {
-        console.log("checkIsValid?", isNaN(gapLimit), gapLimit);
+      if (isNaN(gapLimit)) {
         isValid = false;
       }
     } else {
-      console.log("checkIsValid? null", gapLimit);
       isValid = false;
     }
     return isValid;

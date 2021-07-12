@@ -29,15 +29,7 @@ const SettingsPage = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  walletReady,
-  onDiscoverUsage,
-  gapLimit,
-  setGapLimit,
-  isValid,
-  clicked,
-  isDiscoverModalVisible,
-  showDiscoverModal,
-  hideDiscoverModal
+  walletReady
 }) => {
   const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
@@ -102,15 +94,7 @@ const SettingsPage = ({
                     tempSettings,
                     currencies,
                     walletReady,
-                    onChangeTempSettings,
-                    onDiscoverUsage,
-                    gapLimit,
-                    setGapLimit,
-                    isValid,
-                    clicked,
-                    isDiscoverModalVisible,
-                    showDiscoverModal,
-                    hideDiscoverModal
+                    onChangeTempSettings
                   }}
                 />
               </div>

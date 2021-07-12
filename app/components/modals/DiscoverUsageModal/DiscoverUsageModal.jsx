@@ -1,7 +1,7 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import Modal from "../Modal";
 import styles from "./DiscoverUsageModal.module.css";
-import { SettingsTextInput } from "inputs";
+import { IntegerInput } from "inputs";
 import { PiUiButton, InvisiblePiUiButton } from "buttons";
 
 const messages = defineMessages({
@@ -20,11 +20,10 @@ const DiscoverUsageModal = ({
   isValid,
   intl
 }) => {
-  console.log(gapLimit.value);
   return (
     <Modal className={styles.modal} {...{ show }}>
       <div className={styles.title}>
-          <T id="settings.discoverUsage" m="Discover Address Usage" />
+        <T id="settings.discoverUsage" m="Discover Address Usage" />
       </div>
       <div className={styles.content}>
         <T
@@ -36,11 +35,11 @@ const DiscoverUsageModal = ({
       <label className={styles.label}>
         <T id="discoverUsage.gapLimitLbl" m="Gap Limit" />
       </label>
-      <SettingsTextInput
+      <IntegerInput
         id="gapLimitInput"
         value={gapLimit}
         placeholder={intl.formatMessage(messages.gapLimit)}
-        onChange={setGapLimit}
+        onChange={(e) => setGapLimit(e.target.value)}
         className={styles.gapLimitInput}
       />
       {isValid === false && (
