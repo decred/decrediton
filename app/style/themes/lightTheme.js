@@ -309,7 +309,8 @@ const lightTheme = {
   "self-transaction-icon": url(require("style/icons/sentToSelfTx.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixer.svg")),
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
-  "right-arrow": url(require("style/icons/rightArrow.svg")),
+  "right-arrow": url(require("style/icons/rightArrow.svg"))
+  "lock-checkmark": url(require("style/icons/lockCheckmark.svg"))
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
   "plus-icon": url(require("style/icons/plusIcon.svg"))

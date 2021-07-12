@@ -321,7 +321,8 @@ const darkTheme = {
   "self-transaction-icon": url(require("style/icons/sentToSelfTxDark.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg")),
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
-  "right-arrow": url(require("style/icons/rightArrowDark.svg")),
+  "right-arrow": url(require("style/icons/rightArrowDark.svg"))
+  "lock-checkmark": url(require("style/icons/lockCheckmark.svg"))
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
   "plus-icon": url(require("style/icons/plusIcon.svg"))
