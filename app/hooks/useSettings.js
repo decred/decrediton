@@ -70,15 +70,15 @@ const useSettings = () => {
   const [gapLimit, setGapLimit] = useState(settingGapLimit);
   const [isValid, setIsValid] = useState(null);
 
-  const hideDiscoverModal = useCallback(() => {
-    resetDiscoverState();
-    setIsDiscoverModalVisible(false);
-  }, [resetDiscoverState, setIsDiscoverModalVisible]);
-
   const resetDiscoverState = useCallback(() => {
     setGapLimit(settingGapLimit);
     setClicked(false);
   }, [setGapLimit, setClicked, settingGapLimit]);
+
+  const hideDiscoverModal = useCallback(() => {
+    resetDiscoverState();
+    setIsDiscoverModalVisible(false);
+  }, [resetDiscoverState, setIsDiscoverModalVisible]);
 
   const onDiscoverUsage = useCallback(() => {
     if (isValid) {
