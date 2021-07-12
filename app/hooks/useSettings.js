@@ -101,11 +101,10 @@ const useSettings = () => {
     }
     return isValid;
   };
-  
+
   useEffect(() => {
     setIsValid(checkIsValid(gapLimit));
   }, [gapLimit]);
-
 
   return {
     currencies,
