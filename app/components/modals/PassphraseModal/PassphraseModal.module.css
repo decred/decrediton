@@ -19,7 +19,7 @@
   font-size: 28px;
   line-height: 35px;
   text-align: left;
-  background-image: var(--password);
+  background-image: var(--lock-checkmark);
   background-size: 30px 30px;
   background-repeat: no-repeat;
   color: var(--grey-7);
