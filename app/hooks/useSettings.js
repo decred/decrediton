@@ -69,6 +69,9 @@ const useSettings = () => {
   const settingGapLimit = useSelector(sel.gapLimit);
   const [gapLimit, setGapLimit] = useState(settingGapLimit);
   const [isValid, setIsValid] = useState(null);
+  const [clicked, setClicked] = useState(false);
+  const [isDiscoverModalVisible, setIsDiscoverModalVisible] = useState(false);
+  const showDiscoverModal = () => setIsDiscoverModalVisible(true);
 
   const resetDiscoverState = useCallback(() => {
     setGapLimit(settingGapLimit);
@@ -87,15 +90,6 @@ const useSettings = () => {
     }
   }, [dispatch, hideDiscoverModal, isValid, gapLimit]);
 
-  const [isDiscoverModalVisible, setIsDiscoverModalVisible] = useState(false);
-  const showDiscoverModal = () => setIsDiscoverModalVisible(true);
-  // we use this bool flag so the error does not show before trying.
-  const [clicked, setClicked] = useState(false);
-
-  useEffect(() => {
-    setIsValid(checkIsValid(gapLimit));
-  }, [gapLimit]);
-
   const checkIsValid = (gapLimit) => {
     let isValid = true;
     if (gapLimit) {
@@ -107,6 +101,11 @@ const useSettings = () => {
     }
     return isValid;
   };
+  
+  useEffect(() => {
+    setIsValid(checkIsValid(gapLimit));
+  }, [gapLimit]);
+
 
   return {
     currencies,
