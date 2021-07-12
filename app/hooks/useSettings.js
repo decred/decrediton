@@ -90,21 +90,16 @@ const useSettings = () => {
     }
   }, [dispatch, hideDiscoverModal, isValid, gapLimit]);
 
-  const checkIsValid = (gapLimit) => {
-    let isValid = true;
-    if (gapLimit) {
-      if (isNaN(gapLimit)) {
-        isValid = false;
-      }
-    } else {
-      isValid = false;
+  const checkIsValid = useCallback(() => {
+    if (!gapLimit || (gapLimit && isNaN(gapLimit))) {
+      return false;
     }
-    return isValid;
-  };
+    return true;
+  }, [gapLimit]);
 
   useEffect(() => {
-    setIsValid(checkIsValid(gapLimit));
-  }, [gapLimit]);
+    setIsValid(checkIsValid());
+  }, [setIsValid, checkIsValid]);
 
   return {
     currencies,
