@@ -305,7 +305,9 @@ const lightTheme = {
   ),
   "self-transaction-icon": url(require("style/icons/sentToSelfTx.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixer.svg")),
-  "lock-checkmark": url(require("style/icons/lockCheckmark.svg"))
+  "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
+  eye: url(require("style/icons/eye.svg")),
+  "eye-disabled": url(require("style/icons/eyeDisabled.svg"))
 };
 
 export default lightTheme;

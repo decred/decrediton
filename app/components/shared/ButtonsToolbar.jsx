@@ -9,8 +9,7 @@ const ButtonsToolbar = ({
   className
 }) => (
   <div className={className}>
-    <InvisiblePiUiButton
-      onClick={onCancelModal}>
+    <InvisiblePiUiButton onClick={onCancelModal}>
       <T id="passphraseModal.btnCancel" m="Cancel" />
     </InvisiblePiUiButton>
     <PiUiButton
