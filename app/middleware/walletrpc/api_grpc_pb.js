@@ -113,6 +113,28 @@ function deserialize_walletrpc_AccountsResponse(buffer_arg) {
   return api_pb.AccountsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_AddressRequest(arg) {
+  if (!(arg instanceof api_pb.AddressRequest)) {
+    throw new Error('Expected argument of type walletrpc.AddressRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AddressRequest(buffer_arg) {
+  return api_pb.AddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_AddressResponse(arg) {
+  if (!(arg instanceof api_pb.AddressResponse)) {
+    throw new Error('Expected argument of type walletrpc.AddressResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AddressResponse(buffer_arg) {
+  return api_pb.AddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_AgendasRequest(arg) {
   if (!(arg instanceof api_pb.AgendasRequest)) {
     throw new Error('Expected argument of type walletrpc.AgendasRequest');
@@ -463,6 +485,28 @@ function serialize_walletrpc_DiscoverUsageResponse(arg) {
 
 function deserialize_walletrpc_DiscoverUsageResponse(buffer_arg) {
   return api_pb.DiscoverUsageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DumpPrivateKeyRequest(arg) {
+  if (!(arg instanceof api_pb.DumpPrivateKeyRequest)) {
+    throw new Error('Expected argument of type walletrpc.DumpPrivateKeyRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DumpPrivateKeyRequest(buffer_arg) {
+  return api_pb.DumpPrivateKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DumpPrivateKeyResponse(arg) {
+  if (!(arg instanceof api_pb.DumpPrivateKeyResponse)) {
+    throw new Error('Expected argument of type walletrpc.DumpPrivateKeyResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DumpPrivateKeyResponse(buffer_arg) {
+  return api_pb.DumpPrivateKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_FundTransactionRequest(arg) {
@@ -2198,6 +2242,17 @@ ping: {
     responseSerialize: serialize_walletrpc_AccountsResponse,
     responseDeserialize: deserialize_walletrpc_AccountsResponse,
   },
+  address: {
+    path: '/walletrpc.WalletService/Address',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.AddressRequest,
+    responseType: api_pb.AddressResponse,
+    requestSerialize: serialize_walletrpc_AddressRequest,
+    requestDeserialize: deserialize_walletrpc_AddressRequest,
+    responseSerialize: serialize_walletrpc_AddressResponse,
+    responseDeserialize: deserialize_walletrpc_AddressResponse,
+  },
   balance: {
     path: '/walletrpc.WalletService/Balance',
     requestStream: false,
@@ -2351,6 +2406,17 @@ ping: {
     requestDeserialize: deserialize_walletrpc_GetPeerInfoRequest,
     responseSerialize: serialize_walletrpc_GetPeerInfoResponse,
     responseDeserialize: deserialize_walletrpc_GetPeerInfoResponse,
+  },
+  dumpPrivateKey: {
+    path: '/walletrpc.WalletService/DumpPrivateKey',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.DumpPrivateKeyRequest,
+    responseType: api_pb.DumpPrivateKeyResponse,
+    requestSerialize: serialize_walletrpc_DumpPrivateKeyRequest,
+    requestDeserialize: deserialize_walletrpc_DumpPrivateKeyRequest,
+    responseSerialize: serialize_walletrpc_DumpPrivateKeyResponse,
+    responseDeserialize: deserialize_walletrpc_DumpPrivateKeyResponse,
   },
   // Notifications
 transactionNotifications: {

@@ -215,6 +215,23 @@ export const setTreasuryPolicy = log(
   "Set Treasury Policy"
 );
 
+export const importVotingAccountFromSeed = log(
+  (walletService, seed, name, passphrase, rescan, scanFrom) =>
+    new Promise((ok, fail) => {
+      const request = new api.ImportVotingAccountFromSeedRequest();
+      request.setSeed(seed);
+      request.setName(name);
+      request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+      request.setRescan(rescan);
+      request.setScanFrom(scanFrom);
+      getClient(walletService).importVotingAccountFromSeed(
+        request,
+        (err, res) => (err ? fail(err) : ok(res.toObject()))
+      );
+    }),
+  "Import Voting Account From Seed"
+);
+
 export const abandonTransaction = log(
   (walletService, txHash) =>
     new Promise((resolve, reject) => {

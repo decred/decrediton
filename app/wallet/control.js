@@ -234,7 +234,8 @@ export const purchaseTicketsV3 = (
   numTickets,
   signTx,
   vsp,
-  csppReq
+  csppReq,
+  votingAcct
 ) =>
   new Promise((resolve, reject) => {
     const request = new api.PurchaseTicketsRequest();
@@ -272,6 +273,10 @@ export const purchaseTicketsV3 = (
     const { pubkey, host } = vsp;
     request.setVspPubkey(pubkey);
     request.setVspHost("https://" + host);
+    if (votingAcct) {
+      request.setUseVotingAccount(true);
+      request.setVotingAccount(votingAcct);
+    }
     getClient(walletService).purchaseTickets(request, (error, response) => {
       if (error) {
         return reject(error);

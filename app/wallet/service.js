@@ -429,3 +429,29 @@ export const listUnspentOutputs = withLogNoData(
   "Get Unspent Outputs"
 );
 withLogNoData;
+
+export const address = withLogNoData(
+  (walletService, account, branch, index) =>
+    new Promise((resolve, reject) => {
+      const request = new api.AddressRequest();
+      request.setAccount(account);
+      request.setKind(branch);
+      request.setIndex(index);
+      getClient(walletService).address(request, (error, response) =>
+        error ? reject(error) : resolve(response.toObject())
+      );
+    }),
+  "Address"
+);
+
+export const dumpPrivateKey = withLogNoData(
+  (walletService, addr) =>
+    new Promise((resolve, reject) => {
+      const request = new api.DumpPrivateKeyRequest();
+      request.setAddress(addr);
+      getClient(walletService).dumpPrivateKey(request, (error, response) =>
+        error ? reject(error) : resolve(response.toObject())
+      );
+    }),
+  "Dump Private Key"
+);
