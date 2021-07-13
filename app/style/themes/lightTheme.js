@@ -142,6 +142,7 @@ const lightTheme = {
   "grey-5": "#8997A5",
   "grey-6": "#596D81",
   "grey-7": "#3D5873",
+  orange: "#ED6D47",
   "light-blue": "#D4F0FD",
   "main-dark-blue": "#091440",
   "small-button-shadow": "rgba(0, 0, 0, 0.12)",
@@ -159,6 +160,8 @@ const lightTheme = {
   "governance-nav-button-bg": "var(--grey-3)",
   "refresh-proposals": "var(--small-button-bg)",
   "agenda-preference": "var(--main-dark-blue)",
+  "text-toggle-bg": "var(--grey-3)",
+  "ln-autopilot-switch-desc": "var(--grey-5)",
 
   // override pi-ui's tab colors
   "tab-default-color": "transparent", // default border

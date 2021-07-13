@@ -139,6 +139,7 @@ const darkTheme = {
   "grey-3": "#E6EAED",
   "grey-5": "#3c62b0",
   "grey-7": "#608ace",
+  orange: "#ED6D47",
   "main-dark-blue": "#e9f8fe0",
   "light-blue": "#D4F0FD",
   "small-button-shadow": "rgba(0, 0, 0, 0.12)",
@@ -156,6 +157,8 @@ const darkTheme = {
   "governance-nav-button-bg": "#283f77",
   "refresh-proposals": "var(--politeia-button-bg)",
   "agenda-preference": "var(--grey-2)",
+  "text-toggle-bg": "#1B2B54",
+  "ln-autopilot-switch-desc": "#3C62B0",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",
