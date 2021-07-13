@@ -208,6 +208,9 @@ export const allowVSPRequests = (stakePoolHost) => {
   if (allowedExternalRequests[reqType]) return;
 
   addAllowedURL(stakePoolHost + "/api/v3/vspinfo");
+  addAllowedURL(stakePoolHost + "/api/v3/feeaddress");
+  addAllowedURL(stakePoolHost + "/api/v3/payfee");
+  addAllowedURL(stakePoolHost + "/api/v3/setaltsig");
   addAllowedURL(stakePoolHost + "/api/ticketstatus");
 };
 

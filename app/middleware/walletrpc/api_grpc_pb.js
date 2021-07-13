@@ -113,6 +113,28 @@ function deserialize_walletrpc_AccountsResponse(buffer_arg) {
   return api_pb.AccountsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_AddressRequest(arg) {
+  if (!(arg instanceof api_pb.AddressRequest)) {
+    throw new Error('Expected argument of type walletrpc.AddressRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AddressRequest(buffer_arg) {
+  return api_pb.AddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_AddressResponse(arg) {
+  if (!(arg instanceof api_pb.AddressResponse)) {
+    throw new Error('Expected argument of type walletrpc.AddressResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AddressResponse(buffer_arg) {
+  return api_pb.AddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_AgendasRequest(arg) {
   if (!(arg instanceof api_pb.AgendasRequest)) {
     throw new Error('Expected argument of type walletrpc.AgendasRequest');
@@ -441,6 +463,50 @@ function serialize_walletrpc_DecodeSeedResponse(arg) {
 
 function deserialize_walletrpc_DecodeSeedResponse(buffer_arg) {
   return api_pb.DecodeSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DiscoverUsageRequest(arg) {
+  if (!(arg instanceof api_pb.DiscoverUsageRequest)) {
+    throw new Error('Expected argument of type walletrpc.DiscoverUsageRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DiscoverUsageRequest(buffer_arg) {
+  return api_pb.DiscoverUsageRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DiscoverUsageResponse(arg) {
+  if (!(arg instanceof api_pb.DiscoverUsageResponse)) {
+    throw new Error('Expected argument of type walletrpc.DiscoverUsageResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DiscoverUsageResponse(buffer_arg) {
+  return api_pb.DiscoverUsageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DumpPrivateKeyRequest(arg) {
+  if (!(arg instanceof api_pb.DumpPrivateKeyRequest)) {
+    throw new Error('Expected argument of type walletrpc.DumpPrivateKeyRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DumpPrivateKeyRequest(buffer_arg) {
+  return api_pb.DumpPrivateKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DumpPrivateKeyResponse(arg) {
+  if (!(arg instanceof api_pb.DumpPrivateKeyResponse)) {
+    throw new Error('Expected argument of type walletrpc.DumpPrivateKeyResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DumpPrivateKeyResponse(buffer_arg) {
+  return api_pb.DumpPrivateKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_FundTransactionRequest(arg) {
@@ -782,6 +848,28 @@ function serialize_walletrpc_ImportScriptResponse(arg) {
 
 function deserialize_walletrpc_ImportScriptResponse(buffer_arg) {
   return api_pb.ImportScriptResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_ImportVotingAccountFromSeedRequest(arg) {
+  if (!(arg instanceof api_pb.ImportVotingAccountFromSeedRequest)) {
+    throw new Error('Expected argument of type walletrpc.ImportVotingAccountFromSeedRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_ImportVotingAccountFromSeedRequest(buffer_arg) {
+  return api_pb.ImportVotingAccountFromSeedRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_ImportVotingAccountFromSeedResponse(arg) {
+  if (!(arg instanceof api_pb.ImportVotingAccountFromSeedResponse)) {
+    throw new Error('Expected argument of type walletrpc.ImportVotingAccountFromSeedResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_ImportVotingAccountFromSeedResponse(buffer_arg) {
+  return api_pb.ImportVotingAccountFromSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_LoadActiveDataFiltersRequest(arg) {
@@ -2066,6 +2154,17 @@ ping: {
     responseSerialize: serialize_walletrpc_AccountsResponse,
     responseDeserialize: deserialize_walletrpc_AccountsResponse,
   },
+  address: {
+    path: '/walletrpc.WalletService/Address',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.AddressRequest,
+    responseType: api_pb.AddressResponse,
+    requestSerialize: serialize_walletrpc_AddressRequest,
+    requestDeserialize: deserialize_walletrpc_AddressRequest,
+    responseSerialize: serialize_walletrpc_AddressResponse,
+    responseDeserialize: deserialize_walletrpc_AddressResponse,
+  },
   balance: {
     path: '/walletrpc.WalletService/Balance',
     requestStream: false,
@@ -2220,6 +2319,17 @@ ping: {
     responseSerialize: serialize_walletrpc_GetPeerInfoResponse,
     responseDeserialize: deserialize_walletrpc_GetPeerInfoResponse,
   },
+  dumpPrivateKey: {
+    path: '/walletrpc.WalletService/DumpPrivateKey',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.DumpPrivateKeyRequest,
+    responseType: api_pb.DumpPrivateKeyResponse,
+    requestSerialize: serialize_walletrpc_DumpPrivateKeyRequest,
+    requestDeserialize: deserialize_walletrpc_DumpPrivateKeyRequest,
+    responseSerialize: serialize_walletrpc_DumpPrivateKeyResponse,
+    responseDeserialize: deserialize_walletrpc_DumpPrivateKeyResponse,
+  },
   // Notifications
 transactionNotifications: {
     path: '/walletrpc.WalletService/TransactionNotifications',
@@ -2320,6 +2430,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_ImportPrivateKeyRequest,
     responseSerialize: serialize_walletrpc_ImportPrivateKeyResponse,
     responseDeserialize: deserialize_walletrpc_ImportPrivateKeyResponse,
+  },
+  importVotingAccountFromSeed: {
+    path: '/walletrpc.WalletService/ImportVotingAccountFromSeed',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.ImportVotingAccountFromSeedRequest,
+    responseType: api_pb.ImportVotingAccountFromSeedResponse,
+    requestSerialize: serialize_walletrpc_ImportVotingAccountFromSeedRequest,
+    requestDeserialize: deserialize_walletrpc_ImportVotingAccountFromSeedRequest,
+    responseSerialize: serialize_walletrpc_ImportVotingAccountFromSeedResponse,
+    responseDeserialize: deserialize_walletrpc_ImportVotingAccountFromSeedResponse,
   },
   importScript: {
     path: '/walletrpc.WalletService/ImportScript',
@@ -2672,6 +2793,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_GetTrackedVSPTicketsRequest,
     responseSerialize: serialize_walletrpc_GetTrackedVSPTicketsResponse,
     responseDeserialize: deserialize_walletrpc_GetTrackedVSPTicketsResponse,
+  },
+  discoverUsage: {
+    path: '/walletrpc.WalletService/DiscoverUsage',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.DiscoverUsageRequest,
+    responseType: api_pb.DiscoverUsageResponse,
+    requestSerialize: serialize_walletrpc_DiscoverUsageRequest,
+    requestDeserialize: deserialize_walletrpc_DiscoverUsageRequest,
+    responseSerialize: serialize_walletrpc_DiscoverUsageResponse,
+    responseDeserialize: deserialize_walletrpc_DiscoverUsageResponse,
   },
 };
 

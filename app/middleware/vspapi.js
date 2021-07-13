@@ -174,8 +174,32 @@ export function getVSPInfo(host, cb) {
     .catch((error) => cb(null, error, host));
 }
 
+// getFeeAddress gets a ticket`s fee address.
+export function getFeeAddress({ host, sig, req }, cb) {
+  console.log(req);
+  POST(host + "/api/v3/feeaddress", sig, req)
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}
+
+// payFee infomrs of a ticket`s fee payment.
+export function payFee({ host, sig, req }, cb) {
+  console.log(req);
+  POST(host + "/api/v3/payfee", sig, req)
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}
+
 export function getTicketStatus({ host, vspClientSig, request }, cb) {
   POST(host + "/api/ticketstatus", vspClientSig, request)
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}
+
+// setAltSig sets an alternate signature address for a ticket.
+export function setAltSig({ host, sig, req }, cb) {
+  console.log(req);
+  POST(host + "/api/v3/setaltsig", sig, req)
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }

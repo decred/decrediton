@@ -49,10 +49,16 @@ export const getStakePoolInfo = promisifyReqLogNoData(
   api.stakePoolInfo
 );
 export const getVSPInfo = promisifyReqLogNoData("getVSPInfo", api.getVSPInfo);
+export const getVSPFeeAddress = promisifyReqLogNoData(
+  "getFeeAddress",
+  api.getFeeAddress
+);
+export const payVSPFee = promisifyReqLogNoData("getFeeAddress", api.payFee);
 export const getVSPTicketStatus = promisifyReqLogNoData(
   "getVSPTicketStatusInfo",
   api.getTicketStatus
 );
+export const setAltSig = promisifyReq("setAltSig", api.setAltSig);
 
 // addAllowedVSPsInCfg modifies the config file to allow the given VSP hosts
 // to be accessed. Returns true if the list of allowed hosts changed.

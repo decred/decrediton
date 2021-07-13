@@ -233,7 +233,8 @@ export const purchaseTicketsV3 = (
   numTickets,
   signTx,
   vsp,
-  csppReq
+  csppReq,
+  votingAcct
 ) =>
   new Promise((resolve, reject) => {
     const request = new api.PurchaseTicketsRequest();
@@ -271,6 +272,10 @@ export const purchaseTicketsV3 = (
     const { pubkey, host } = vsp;
     request.setVspPubkey(pubkey);
     request.setVspHost("https://" + host);
+    if (votingAcct) {
+      request.setUseVotingAccount(true);
+      request.setVotingAccount(votingAcct);
+    }
     getClient(walletService).purchaseTickets(request, (error, response) => {
       if (error) {
         return reject(error);
@@ -279,6 +284,8 @@ export const purchaseTicketsV3 = (
       resObj.ticketHashes = response
         .getTicketHashesList()
         .map((v) => rawHashToHex(v));
+      resObj.splitTx = Buffer.from(response.getSplitTx());
+      resObj.ticketsList = response.getTicketsList().map((v) => Buffer.from(v));
       resolve(resObj);
     });
   });
@@ -650,4 +657,13 @@ export const startTicketAutoBuyerV3 = (
 
     const mixer = getClient(ticketBuyerService).runTicketBuyer(request);
     ok(shimStreamedResponse(mixer));
+  });
+
+export const discoverUsage = (walletService, gapLimit) =>
+  new Promise((ok, fail) => {
+    const request = new api.DiscoverUsageRequest();
+    request.setGapLimit(gapLimit);
+    getClient(walletService).discoverUsage(request, (err, res) =>
+      err ? fail(err) : ok(res.toObject())
+    );
   });

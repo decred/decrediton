@@ -1,5 +1,6 @@
 export const decodedPurchasedTicketTx = {
   "version": 1,
+  "prefixOffset": 172,
   "serType": 0,
   "numInputs": 1,
   "inputs": [
@@ -56,6 +57,7 @@ export const decodedPurchasedTicketTx = {
 // multiTxPrefix is a tx prefix in the format of how our decodeTxs are. We get
 // this format from wallet.decodeRawTransaction().
 export const multiTxPrefix = {
+  prefixOffset: 211,
   serType: 1, // TxSerializeNoWitness,
   version: 1,
   numInputs: 1,
@@ -113,6 +115,7 @@ export const multiTxPrefix = {
 
 export const decodedVoteTx = {
   "version": 1,
+  "prefixOffset": 201,
   "serType": 0,
   "numInputs": 2,
   "inputs": [

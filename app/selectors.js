@@ -336,6 +336,7 @@ export const firstBlockTime = compose(
   isMainNet
 );
 export const currencies = () => [{ name: DCR }, { name: ATOMS }];
+export const gapLimit = get(["settings", "currentSettings", "gapLimit"]);
 export const needNetworkReset = get(["settings", "needNetworkReset"]);
 export const currencyDisplay = get([
   "settings",
@@ -1651,6 +1652,7 @@ export const confirmationDialogModalVisible = bool(
 
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
+export const isPurchasingTicketsTrezor = get(["trezor", "purchasingTickets"]);
 
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isChangePassPhraseDisabled = isWatchingOnly;
