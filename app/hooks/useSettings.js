@@ -66,6 +66,8 @@ const useSettings = () => {
 
   const toggleTheme = useCallback(() => dispatch(sa.toggleTheme()), [dispatch]);
 
+  const discoverUsageAttempt = useSelector(sel.discoverUsageAttempt);
+  const rescanRunning = useSelector(sel.rescanRequest);
   const settingGapLimit = useSelector(sel.gapLimit);
   const [gapLimit, setGapLimit] = useState(settingGapLimit);
   const [isValid, setIsValid] = useState(null);
@@ -126,7 +128,9 @@ const useSettings = () => {
     clicked,
     isDiscoverModalVisible,
     showDiscoverModal,
-    hideDiscoverModal
+    hideDiscoverModal,
+    discoverUsageAttempt,
+    rescanRunning
   };
 };
 

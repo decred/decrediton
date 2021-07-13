@@ -83,7 +83,10 @@ import {
   MONITORLOCKACBLEACCOUNTS_STARTED,
   MONITORLOCKACBLEACCOUNTS_STOPPED,
   CONFIRMATIONDIALOG_REQUESTED,
-  CONFIRMATIONDIALOG_HIDDEN
+  CONFIRMATIONDIALOG_HIDDEN,
+  DISCOVERUSAGE_SUCCESS,
+  DISCOVERUSAGE_ATTEMPT,
+  DISCOVERUSAGE_FAILED
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -614,6 +617,21 @@ export default function control(state = {}, action) {
       return {
         ...state,
         confirmationDialogModalVisible: false
+      };
+    case DISCOVERUSAGE_ATTEMPT:
+      return {
+        ...state,
+        discoverUsageAttempt: true
+      };
+    case DISCOVERUSAGE_FAILED:
+      return {
+        ...state,
+        discoverUsageAttempt: false
+      };
+    case DISCOVERUSAGE_SUCCESS:
+      return {
+        ...state,
+        discoverUsageAttempt: false
       };
     default:
       return state;

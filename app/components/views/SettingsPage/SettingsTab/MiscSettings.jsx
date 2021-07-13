@@ -25,7 +25,9 @@ const MiscSettings = ({
     clicked,
     isDiscoverModalVisible,
     showDiscoverModal,
-    hideDiscoverModal
+    hideDiscoverModal,
+    discoverUsageAttempt,
+    rescanRunning
   } = useSettings();
   return (
     <div className={styles.misc}>
@@ -54,7 +56,10 @@ const MiscSettings = ({
 
         {walletReady && (
           <div className={styles.row}>
-            <KeyBlueButton onClick={showDiscoverModal}>
+            <KeyBlueButton
+              onClick={showDiscoverModal}
+              loading={discoverUsageAttempt || rescanRunning}
+              disabled={discoverUsageAttempt || rescanRunning}>
               <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
             </KeyBlueButton>
             <DiscoverUsageModal

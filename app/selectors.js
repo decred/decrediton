@@ -171,6 +171,8 @@ export const getChangeAccountSpendableBalance = get([
   "changeAccountSpendableBalance"
 ]);
 
+export const discoverUsageAttempt = get(["control", "discoverUsageAttempt"]);
+
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
   map(
