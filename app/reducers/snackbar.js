@@ -47,7 +47,9 @@ import {
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
   STARTTICKETBUYERV3_FAILED,
-  SETACCOUNTSPASSPHRASE_FAILED
+  SETACCOUNTSPASSPHRASE_FAILED,
+  DISCOVERUSAGE_FAILED,
+  DISCOVERUSAGE_SUCCESS
 } from "actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS,
@@ -668,6 +670,15 @@ const messages = defineMessages({
   SETACCOUNTSPASSPHRASE_FAILED: {
     id: "setupWallet.processAccounts.failed",
     defaultMessage: "{originalError}"
+  },
+  DISCOVERUSAGE_FAILED: {
+    id: "discoverAddress.failed",
+    defaultMessage: "{originalError}"
+  },
+  DISCOVERUSAGE_SUCCESS: {
+    id: "discoverAddress.success",
+    defaultMessage:
+      "You have successfully discovered address usage.  Rescan now commencing."
   }
 });
 
@@ -754,6 +765,7 @@ export default function snackbar(state = {}, action) {
     case CREATEMIXERACCOUNTS_SUCCESS:
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
+    case DISCOVERUSAGE_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -900,6 +912,7 @@ export default function snackbar(state = {}, action) {
     case DEX_USER_FAILED:
     case STARTTICKETBUYERV3_FAILED:
     case SETACCOUNTSPASSPHRASE_FAILED:
+    case DISCOVERUSAGE_FAILED:
       type = "Error";
       if (
         action.error &&

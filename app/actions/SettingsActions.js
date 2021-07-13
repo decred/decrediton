@@ -59,7 +59,6 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
       configConstants.CURRENCY_DISPLAY,
       settings.currencyDisplay
     );
-    walletConfig.set(configConstants.GAP_LIMIT, settings.gapLimit);
   }
 
   if (

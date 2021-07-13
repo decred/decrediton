@@ -1,8 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput, NumericInput } from "inputs";
-import { InfoDocFieldModalButton } from "buttons";
+import { SettingsInput } from "inputs";
 import styles from "./Settings.module.css";
-import { classNames } from "pi-ui";
+import { DiscoverUsageModal } from "modals";
+import { KeyBlueButton } from "buttons";
+import { useSettings } from "hooks";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -15,59 +16,69 @@ const MiscSettings = ({
   currencies,
   onChangeTempSettings,
   walletReady
-}) => (
-  <div className={styles.misc}>
-    <div className={styles.columnTitle}>
-      <T id="settings.misc.title" m="Misc" />
-    </div>
-    <div className={styles.columnContent}>
-      {walletReady && (
-        <div className={styles.row}>
-          <label id="displayed-units-input" className={styles.label}>
-            <T id="settings.displayedUnits" m="Displayed Units" />
-          </label>
-          <SettingsInput
-            className={styles.input}
-            value={tempSettings.currencyDisplay}
-            onChange={(newCurrency) =>
-              onChangeTempSettings({ currencyDisplay: newCurrency.name })
-            }
-            ariaLabelledBy="displayed-units-input"
-            valueKey="name"
-            labelKey="name"
-            options={currencies}
-          />
-        </div>
-      )}
-
-      {walletReady && (
-        <div className={styles.row}>
-          <div className={classNames(styles.label, styles.gapLimitLabel)}>
-            <label id="gap-limit-input" className={styles.label}>
-              <T id="settings.gapLimit.label" m="Gap Limit" />
+}) => {
+  const {
+    onDiscoverUsage,
+    gapLimit,
+    setGapLimit,
+    isValid,
+    clicked,
+    isDiscoverModalVisible,
+    showDiscoverModal,
+    hideDiscoverModal,
+    discoverUsageAttempt,
+    rescanRunning
+  } = useSettings();
+  return (
+    <div className={styles.misc}>
+      <div className={styles.columnTitle}>
+        <T id="settings.misc.title" m="Misc" />
+      </div>
+      <div className={styles.columnContent}>
+        {walletReady && (
+          <div className={styles.row}>
+            <label id="displayed-units-input" className={styles.label}>
+              <T id="settings.displayedUnits" m="Displayed Units" />
             </label>
-            <InfoDocFieldModalButton
-              document="GapLimitInfo"
-              modalClassName={styles.hasWarning}
-              double
-              draggable
-            />
-          </div>
-          <div className={styles.input}>
-            <NumericInput
-              id="gapLimitInput"
-              value={tempSettings.gapLimit}
-              ariaLabelledBy="gap-limit-input"
-              onChange={(e) =>
-                onChangeTempSettings({ gapLimit: e.target.value })
+            <SettingsInput
+              className={styles.input}
+              value={tempSettings.currencyDisplay}
+              onChange={(newCurrency) =>
+                onChangeTempSettings({ currencyDisplay: newCurrency.name })
               }
+              ariaLabelledBy="displayed-units-input"
+              valueKey="name"
+              labelKey="name"
+              options={currencies}
             />
           </div>
-        </div>
-      )}
+        )}
+
+        {walletReady && (
+          <div className={styles.row}>
+            <KeyBlueButton
+              onClick={showDiscoverModal}
+              loading={discoverUsageAttempt || rescanRunning}
+              disabled={discoverUsageAttempt || rescanRunning}>
+              <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
+            </KeyBlueButton>
+            <DiscoverUsageModal
+              {...{
+                show: isDiscoverModalVisible,
+                onSubmit: onDiscoverUsage,
+                onCancelModal: hideDiscoverModal,
+                gapLimit,
+                setGapLimit,
+                isValid,
+                clicked
+              }}
+            />
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 MiscSettings.propTypes = propTypes;
 

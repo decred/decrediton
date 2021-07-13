@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as sa from "actions/SettingsActions";
@@ -66,6 +66,43 @@ const useSettings = () => {
 
   const toggleTheme = useCallback(() => dispatch(sa.toggleTheme()), [dispatch]);
 
+  const discoverUsageAttempt = useSelector(sel.discoverUsageAttempt);
+  const rescanRunning = useSelector(sel.rescanRequest);
+  const settingGapLimit = useSelector(sel.gapLimit);
+  const [gapLimit, setGapLimit] = useState(settingGapLimit);
+  const [isValid, setIsValid] = useState(null);
+  const [clicked, setClicked] = useState(false);
+  const [isDiscoverModalVisible, setIsDiscoverModalVisible] = useState(false);
+  const showDiscoverModal = () => setIsDiscoverModalVisible(true);
+
+  const resetDiscoverState = useCallback(() => {
+    setGapLimit(settingGapLimit);
+    setClicked(false);
+  }, [setGapLimit, setClicked, settingGapLimit]);
+
+  const hideDiscoverModal = useCallback(() => {
+    resetDiscoverState();
+    setIsDiscoverModalVisible(false);
+  }, [resetDiscoverState, setIsDiscoverModalVisible]);
+
+  const onDiscoverUsage = useCallback(() => {
+    if (isValid) {
+      dispatch(ca.discoverUsageAttempt(gapLimit));
+      hideDiscoverModal();
+    }
+  }, [dispatch, hideDiscoverModal, isValid, gapLimit]);
+
+  const checkIsValid = useCallback(() => {
+    if (!gapLimit || (gapLimit && isNaN(gapLimit))) {
+      return false;
+    }
+    return true;
+  }, [gapLimit]);
+
+  useEffect(() => {
+    setIsValid(checkIsValid());
+  }, [setIsValid, checkIsValid]);
+
   return {
     currencies,
     networks,
@@ -83,7 +120,17 @@ const useSettings = () => {
     onCloseWallet,
     onAddAllowedRequestType,
     toggleTheme,
-    isVSPListingEnabled
+    isVSPListingEnabled,
+    onDiscoverUsage,
+    gapLimit,
+    setGapLimit,
+    isValid,
+    clicked,
+    isDiscoverModalVisible,
+    showDiscoverModal,
+    hideDiscoverModal,
+    discoverUsageAttempt,
+    rescanRunning
   };
 };
 
