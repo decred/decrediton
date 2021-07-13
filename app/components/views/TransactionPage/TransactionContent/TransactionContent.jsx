@@ -139,7 +139,7 @@ const TransactionContent = ({
         )}
       </div>
       {isPending && (
-        <div>
+        <div className={styles.buttonContainer}>
           <div className={styles.rebroadcastBtnContainer}>
             <KeyBlueButton
               className={styles.rebroadcastBtn}

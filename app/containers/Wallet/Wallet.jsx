@@ -9,7 +9,7 @@ import ErrorScreen from "components/ErrorScreen";
 import InvalidRPCVersion from "components/views/InvalidRPCVersion";
 import PrivacyPage from "components/views/PrivacyPage/PrivacyPage";
 import TransactionsPage from "components/views/TransactionsPage";
-import TransactionPage from "components/views/TransactionPage/TransactionPage";
+import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage/GovernancePage";

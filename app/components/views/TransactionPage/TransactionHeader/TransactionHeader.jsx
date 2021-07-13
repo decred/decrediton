@@ -6,7 +6,11 @@ import {
   TICKET_FEE,
   REGULAR,
   TICKET,
+  LIVE,
   VOTE,
+  MISSED,
+  UNMINED,
+  IMMATURE,
   REVOCATION,
   COINBASE,
   MIXED,
@@ -16,9 +20,12 @@ import {
   IN_ICON,
   TICKET_ICON,
   VOTE_ICON,
+  MISSED_ICON,
   REVOCATION_ICON,
   MIXED_ICON,
-  SELF_ICON
+  SELF_ICON,
+  UNMINED_ICON,
+  IMMATURE_ICON
 } from "constants/decrediton";
 import { SlateGrayButton } from "buttons";
 import { StandaloneHeader } from "layout";
@@ -31,7 +38,11 @@ const messages = defineMessages({
   [TICKET]: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
   [VOTE]: { id: "txDetails.type.vote", defaultMessage: "Vote" },
   [REVOCATION]: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
-  [COINBASE]: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" }
+  [COINBASE]: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" },
+  [MISSED]: { id: "txDetails.type.missed", defaultMessage: "Missed" },
+  [UNMINED]: { id: "txDetails.type.unmined", defaultMessage: "Unmined" },
+  [IMMATURE]: { id: "txDetails.type.immature", defaultMessage: "Immature" },
+  [LIVE]: { id: "txDetails.type.live", defaultMessage: "Live" }
 });
 
 const headerIcons = {
@@ -41,19 +52,35 @@ const headerIcons = {
   [COINBASE]: IN_ICON,
   [TICKET]: TICKET_ICON,
   [VOTE]: VOTE_ICON,
+  [IMMATURE]: IMMATURE_ICON,
+  [UNMINED]: UNMINED_ICON,
+  [MISSED]: MISSED_ICON,
   [REVOCATION]: REVOCATION_ICON,
   [MIXED]: MIXED_ICON,
   [SELFTRANSFER]: SELF_ICON
 };
 
 // If it is a regular tx we use txDirection instead
-const icon = ({ txType, txDirection }) =>
-  txType === REGULAR ? headerIcons[txDirection] : headerIcons[txType];
+const icon = ({ txType, txDirection, status }) =>
+  txType === REGULAR
+    ? headerIcons[txDirection]
+    : headerIcons[
+        [MISSED, UNMINED, IMMATURE].includes(status) ? status : txType
+      ];
 
-const title = ({ txType, txAmount, txDirection, ticketReward, intl }) => {
+const title = ({
+  txType,
+  txAmount,
+  txDirection,
+  ticketReward,
+  intl,
+  status
+}) => {
   let titleComp;
   txType !== REGULAR
-    ? (titleComp = intl.formatMessage(messages[txType]))
+    ? (titleComp = [MISSED, UNMINED, IMMATURE, LIVE].includes(status)
+        ? intl.formatMessage(messages[status])
+        : intl.formatMessage(messages[txType]))
     : (titleComp = (
         <Balance
           title
@@ -198,7 +225,8 @@ const TransactionHeader = ({
   intl,
   txInputs,
   mixedTx,
-  selfTx
+  selfTx,
+  status
 }) => {
   const dispatch = useDispatch();
   const tsDate = useSelector(sel.tsDate);
@@ -206,8 +234,15 @@ const TransactionHeader = ({
   const iconTxType = mixedTx ? MIXED : selfTx ? SELFTRANSFER : txType;
   return (
     <StandaloneHeader
-      title={title({ txType, txAmount, txDirection, ticketReward, intl })}
-      iconType={icon({ txType: iconTxType, txDirection })}
+      title={title({
+        txType,
+        txAmount,
+        txDirection,
+        ticketReward,
+        intl,
+        status
+      })}
+      iconType={icon({ txType: iconTxType, txDirection, status })}
       description={subtitle({
         txType,
         isPending,
@@ -218,7 +253,8 @@ const TransactionHeader = ({
         ticketReward,
         txDirection,
         tsDate,
-        txInputs
+        txInputs,
+        status
       })}
       actionButton={backBtn({ goBack })}
     />
