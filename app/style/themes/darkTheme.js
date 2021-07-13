@@ -317,9 +317,9 @@ const darkTheme = {
   ),
   "self-transaction-icon": url(require("style/icons/sentToSelfTxDark.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg")),
-  "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
-  eye: url(require("style/icons/eye.svg")),
-  "eye-disabled": url(require("style/icons/eyeDisabled.svg"))
+  "lock-checkmark": url(require("style/icons/lockCheckmarkDark.svg")),
+  eye: url(require("style/icons/eyeDark.svg")),
+  "eye-disabled": url(require("style/icons/eyeDisabledDark.svg"))
 };
 
 export default darkTheme;
