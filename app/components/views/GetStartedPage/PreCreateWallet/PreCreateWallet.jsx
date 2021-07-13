@@ -48,8 +48,20 @@ const PreCreateWallet = ({
     (newWalletName) => {
       setHasFailedAttemptName(true);
       let nameAvailable = true;
-      // replace all special path symbols
-      newWalletName = newWalletName.replace(/[/\\.;:~]/g, "");
+      // Users should be able to (at least in principle) use any wallet name
+      // they so choose. However, certain special chars need to be explicitly
+      // filtered due to us directly using the wallet name as part of the path
+      // to the wallet's files. The list of chars that need to be filtered out
+      // are:
+      //
+      // Filesystem related chars: /\.:
+      // Escaped when stored in dcrwallet.conf ini files: ;#[]
+      // Specially handled by dcrwallet: $%~
+      const replaceNameChars = /[/\\.:;#[\]$%~]/;
+      newWalletName = newWalletName.replace(replaceNameChars, "");
+      // Remove leading spaces.
+      if (newWalletName.length > 0 && newWalletName[0] === " ")
+        newWalletName = newWalletName.slice(1);
       for (let i = 0; i < availableWallets.length; i++) {
         if (newWalletName == availableWallets[i].value.wallet) {
           nameAvailable = false;
