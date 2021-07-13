@@ -39,7 +39,7 @@
   overflow: auto;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .proposalList {
     margin-left: 35px;
   }

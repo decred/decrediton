@@ -68,7 +68,7 @@
   align-self: flex-end;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .quickBar {
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 9px;

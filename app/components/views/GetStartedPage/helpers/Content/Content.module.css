@@ -4,14 +4,14 @@
   padding-top: 106px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1180px) {
   .content {
-    padding: 86px 0 0 0;
+    padding: 56px 0 0 0;
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 768px) {
   .content {
-    padding: 64px 0 0 0;
+    padding: 40px 0 0 0;
   }
 }

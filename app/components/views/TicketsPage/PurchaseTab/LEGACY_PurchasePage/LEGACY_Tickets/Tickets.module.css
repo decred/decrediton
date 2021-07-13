@@ -28,7 +28,7 @@
   align-self: flex-end;
   margin-right: 10px;
 }
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .purchaseTicketArea {
     width: 667px;
   }

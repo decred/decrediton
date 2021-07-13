@@ -105,7 +105,7 @@
   background-color: var(--vote-no-color);
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .listItem {
     width: 700px;
   }

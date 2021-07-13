@@ -3,7 +3,7 @@
   padding: 40px 60px 30px 60px;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .header {
     padding-left: 20px;
   }

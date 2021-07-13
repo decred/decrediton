@@ -90,7 +90,7 @@
 .recharts-tooltip-cursor {
   fill: var(--chart-cursor-color);
 }
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .meteredTicksArea {
     margin-left: 60px;
   }

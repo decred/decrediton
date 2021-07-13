@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, NumericInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
 import styles from "./Settings.module.css";
+import { classNames } from "pi-ui";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -41,16 +42,16 @@ const MiscSettings = ({
 
       {walletReady && (
         <div className={styles.row}>
-          <div className={styles.label}>
+          <div className={classNames(styles.label, styles.gapLimitLabel)}>
+            <label id="gap-limit-input" className={styles.label}>
+              <T id="settings.gapLimit.label" m="Gap Limit" />
+            </label>
             <InfoDocFieldModalButton
               document="GapLimitInfo"
               modalClassName={styles.hasWarning}
               double
               draggable
             />
-            <label id="gap-limit-input" className={styles.label}>
-              <T id="settings.gapLimit.label" m="Gap Limit" />
-            </label>
           </div>
           <div className={styles.input}>
             <NumericInput

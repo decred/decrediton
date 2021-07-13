@@ -2,3 +2,9 @@
   column-count: 2;
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 560px) {
+  .infoDocumentation:not(.constitution) {
+    column-count: 1;
+  }
+}

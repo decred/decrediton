@@ -308,7 +308,7 @@
   display: none !important;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .info {
     grid-template-columns: 0.5fr 3.5fr 10fr 2.5fr;
   }

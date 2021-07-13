@@ -1,0 +1,19 @@
+.backButtonArea {
+  position: absolute;
+  top: 66px;
+  right: 0;
+}
+
+@media screen and (max-width: 1180px) {
+  .backButtonArea {
+    left: 622px;
+    right: initial;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .backButtonArea {
+    top: 30px;
+    left: 342px;
+  }
+}

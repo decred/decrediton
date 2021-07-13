@@ -26,7 +26,6 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
         <label id="proxy-type-input" className={styles.label}>
           <T id="settings.proxy.type" m="Proxy Type" />
         </label>
-        <div className={styles.label}></div>
         <SettingsInput
           className={styles.input}
           value={tempSettings.proxyType}
@@ -45,6 +44,7 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
           <T id="settings.proxy.location" m="Proxy Location" />
         </label>
         <SettingsTextInput
+          className={styles.settingsTextInput}
           id="proxyLocationInput"
           value={tempSettings.proxyLocation}
           ariaLabelledBy="proxy-location"

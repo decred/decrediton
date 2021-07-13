@@ -38,7 +38,7 @@
   height: 44px;
   float: right;
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 560px) {
   .passphrase {
     max-height: 60%;
   }

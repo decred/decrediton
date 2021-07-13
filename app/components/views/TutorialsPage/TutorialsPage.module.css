@@ -4,8 +4,8 @@
   color: var(--title-text-and-button-background);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .walletTutorial {
-    padding: 30px 0;
+    padding: 30px 20px 30px 0;
   }
 }

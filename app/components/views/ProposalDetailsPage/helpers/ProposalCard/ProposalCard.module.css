@@ -109,7 +109,7 @@
   color: var(--tab-text-active-color) !important;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .overview {
     width: 626px;
   }

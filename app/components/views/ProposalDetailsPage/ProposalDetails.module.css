@@ -79,7 +79,7 @@
   font-weight: var(--font-weight-semi-bold) !important;
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .detailsText {
     width: 665px;
   }

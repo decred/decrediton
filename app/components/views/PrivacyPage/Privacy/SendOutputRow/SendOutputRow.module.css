@@ -115,7 +115,7 @@
 .tooltipSendToSelf {
   width: 18rem;
 }
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .sendOutputContainer {
     grid-template-columns: max-content 240px minmax(max-content, 1fr) 240px;
     padding: 7px 0 26px 0;

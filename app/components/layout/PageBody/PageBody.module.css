@@ -43,6 +43,7 @@
     height: calc(100% - 40px);
   }
 
+  .pageBody.getstarted.testnetBody::before,
   .pageBody.getstarted::before {
     background-image: var(--small-logo);
     background-size: 30px;

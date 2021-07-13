@@ -90,12 +90,14 @@
   align-self: flex-end;
 }
 @media screen and (max-width: 768px) {
+  .info,
   .info.double {
-    width: 300px !important;
+    width: 400px !important;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 560px) {
+  .info,
   .info.double {
-    width: 250px !important;
+    width: 300px !important;
   }
 }

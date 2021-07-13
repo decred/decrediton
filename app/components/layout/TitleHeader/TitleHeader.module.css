@@ -1,5 +1,5 @@
 .container {
-  width: 750px;
+  width: 740px;
   position: relative;
   justify-content: space-between;
   align-items: center;
@@ -81,9 +81,9 @@
   margin-left: auto;
 }
 
-@media screen and (max-width: 1106px) {
+@media screen and (max-width: 1180px) {
   .container {
-    width: 649px;
+    width: 667px;
   }
 }
 

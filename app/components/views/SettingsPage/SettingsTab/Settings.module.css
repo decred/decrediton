@@ -40,6 +40,7 @@
 .rowChecklist {
   flex-wrap: wrap;
   justify-content: flex-start;
+  flex-direction: column;
 }
 
 .rowChecklist .label {
@@ -104,6 +105,20 @@
   width: 116px;
 }
 
+.wrapper .label button {
+  margin-right: 0;
+}
+.wrapper .label.gapLimitLabel {
+  display: flex;
+  justify-content: flex-end;
+}
+.wrapper .label.gapLimitLabel label {
+  margin-right: 0;
+}
+.wrapper .label.gapLimitLabel button {
+  width: 24px;
+}
+
 .wrapper .label .infoLabel,
 .wrapper .label .infoFieldModalButton {
   display: inline;
@@ -163,6 +178,10 @@
   min-width: 136px;
   height: 23px;
   padding: 0px 4px 1px 10px;
+}
+
+.settingsTextInput {
+  width: 150px !important;
 }
 
 .inputError {
@@ -227,7 +246,7 @@
   background-color: var(--input-color);
 }
 
-@media screen and (min-width: 1680px) and (max-width: 1919px) {
+@media screen and (min-width: 1680px) and (max-width: 1920px) {
   .wrapper {
     width: 1240px;
   }
@@ -267,7 +286,7 @@
     width: 1240px;
   }
 }
-@media screen and (min-width: 1440px) and (max-width: 1679px) {
+@media screen and (min-width: 1400px) and (max-width: 1680px) {
   .wrapper {
     flex-direction: column;
   }
@@ -294,8 +313,8 @@
     order: 2;
   }
 
-  .group .wrapper .column {
-    width: 419px;
+  .columnWrapper .column {
+    width: 420px;
   }
 
   .group .wrapper .column.timezone .columnContent .row {
@@ -313,7 +332,7 @@
   }
 }
 
-@media screen and (max-width: 1539px) {
+@media screen and (max-width: 1400px) {
   .wrapper {
     flex-direction: column;
   }
@@ -354,7 +373,7 @@
   }
 }
 
-@media screen and (max-width: 1179px) {
+@media screen and (max-width: 1180px) {
   .group {
     width: 649px;
   }
@@ -417,6 +436,8 @@
     padding-right: 35px;
   }
 
+  .wrapper .group .columnWrapper .column:nth-of-type(1),
+  .wrapper .group .columnWrapper .column:nth-of-type(3),
   .wrapper .group .columnWrapper .column {
     width: 100%;
   }
@@ -438,13 +459,5 @@
   .saveButtonWrapper {
     width: 355px;
     text-align: center;
-  }
-}
-
-@media screen and (max-width: 676px) {
-  .app-modal.about-modal,
-  .app-modal-reduced-bar.about-modal,
-  .app-modal-standalone.about-modal {
-    margin-left: 9px;
   }
 }
