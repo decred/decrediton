@@ -1,6 +1,6 @@
 import { PasswordInput } from "inputs";
 import { PassphraseModal } from "modals";
-import { FormattedMessage as T, defineMessages } from "react-intl";
+import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
   newPassphraseLabelText: {
