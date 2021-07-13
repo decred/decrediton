@@ -707,7 +707,8 @@ const messages = defineMessages({
   },
   DISCOVERUSAGE_SUCCESS: {
     id: "discoverAddress.success",
-    defaultMessage: "You have successfully discovered address usage.  Rescan now commencing."
+    defaultMessage:
+      "You have successfully discovered address usage.  Rescan now commencing."
   }
 });
 
