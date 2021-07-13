@@ -1,13 +1,16 @@
 import { push as pushHistory } from "connected-react-router";
-import * as sel from "selectors";
 import { wallet, politeia as pi } from "wallet-preload-shim";
-import { hexReversedHashToArray, politeiaMarkdownIndexMd } from "helpers";
 import { cloneDeep } from "fp";
+import * as sel from "selectors";
+import { hexReversedHashToArray, parseRawProposal } from "helpers";
 import {
   PROPOSAL_VOTING_ACTIVE,
   PROPOSAL_VOTING_FINISHED,
+  PROPOSAL_VOTING_APPROVED,
+  PROPOSAL_VOTING_REJECTED,
   PROPOSAL_STATUS_ABANDONED,
-  PROPOSAL_INDEX_MD_FILE
+  PROPOSAL_METADATA_FILE,
+  PROPOSAL_VOTE_METADATA_FILE
 } from "constants";
 import { unlockAcctAndExecFn } from "./ControlActions";
 
@@ -43,20 +46,22 @@ const fillVoteSummary = (
 ) => {
   proposal.quorumPass = false;
   proposal.voteResult = "declined";
-  proposal.blocksLeft = blocksFromBestBlock(parseInt(voteSummary.endheight));
+  proposal.blocksLeft = blocksFromBestBlock(
+    parseInt(voteSummary.endblockheight)
+  );
   proposal.endTimestamp = blockTimestampFromNow(
-    parseInt(voteSummary.endheight)
+    parseInt(voteSummary.endblockheight)
   );
   proposal.voteCounts = {};
   proposal.voteOptions = [];
-  proposal.startVoteHeight = voteSummary.endheight - voteSummary.duration;
+  proposal.startVoteHeight = voteSummary.endblockheight - voteSummary.duration;
 
   let totalVotes = 0;
   if (voteSummary.results) {
-    voteSummary.results.forEach((o) => {
-      proposal.voteOptions.push(o.option);
-      proposal.voteCounts[o.option.id] = o.votesreceived;
-      totalVotes += o.votesreceived;
+    voteSummary.results.forEach(({ id, votes, votebit: bit }) => {
+      proposal.voteOptions.push({ id, bit });
+      proposal.voteCounts[id] = votes;
+      totalVotes += votes;
     });
   }
 
@@ -75,7 +80,10 @@ const fillVoteSummary = (
     proposal.quorumPass = true;
   }
 
-  if (proposal.voteCounts["yes"] / totalVotes > passPercentage / 100) {
+  if (
+    proposal.quorumPass &&
+    proposal.voteCounts["yes"] / totalVotes > passPercentage / 100
+  ) {
     proposal.voteResult = "passed";
   }
   proposal.totalVotes = totalVotes;
@@ -84,9 +92,11 @@ const fillVoteSummary = (
 const ticketHashesToByte = (hashes) =>
   hashes && hashes.map(hexReversedHashToArray);
 
-// getProposalEligibleTickets gets the wallet eligible tickets from a specific proposal.
-// if the proposal directory already exists it only returns the cached information,
-// otherwise it gets the eligible tickets from politeia and caches it.
+// getProposalEligibleTickets gets the wallet eligible tickets for a specific
+// proposal.
+// if the proposal directory already exists it only returns the cached
+// information, otherwise it gets the eligible tickets from politeia and caches
+// it.
 const getProposalEligibleTickets = async (
   token,
   allEligibleTickets,
@@ -109,44 +119,50 @@ const getProposalEligibleTickets = async (
     const { eligibleTickets } = eligibleTicketsObj;
     return await getWalletEligibleTickets(eligibleTickets, walletService);
   }
-
   if (shouldCache) {
     saveEligibleTickets(token, { eligibleTickets: allEligibleTickets });
   }
   return await getWalletEligibleTickets(allEligibleTickets, walletService);
 };
 
-// updateInventoryFromApiData receives politeia data from getTokenInventory and
+// updateInventoryFromApiData receives politeia data from getVotesInventory and
 // put it in decrediton's inventory format.
-// @param data - data from getTokenInventory api.
+// @param data - data from getVotesInventory api.
 const updateInventoryFromApiData = (data) => {
   const inventory = getDefaultInventory();
-  inventory.preVote = data.pre;
-  inventory.activeVote = data.active;
-  inventory.finishedVote = [...data.approved, ...data.rejected];
-  inventory.abandonedVote = data.abandoned;
-  inventory.approvedVote = data.approved;
-  inventory.rejectedVote = data.rejected;
+  inventory.preVote = [
+    ...((data && data.vetted && data.vetted.authorized) || []),
+    ...((data && data.vetted && data.vetted.unauthorized) || [])
+  ];
+  inventory.activeVote = (data && data.vetted && data.vetted.started) || [];
+  inventory.abandonedVote =
+    (data && data.vetted && data.vetted.ineligible) || [];
+  inventory.approvedVote = (data && data.vetted && data.vetted.approved) || [];
+  inventory.rejectedVote = (data && data.vetted && data.vetted.rejected) || [];
+  inventory.finishedVote = [
+    ...inventory.approvedVote,
+    ...inventory.rejectedVote
+  ];
 
   return inventory;
 };
 
-export const GETTOKEN_INVENTORY_ATTEMPT = "GETTOKEN_INVENTORY_ATTEMPT";
-export const GETTOKEN_INVENTORY_SUCCESS = "GETTOKEN_INVENTORY_SUCCESS";
-export const GETTOKEN_INVENTORY_FAILED = "GETTOKEN_INVENTORY_FAILED";
+export const GETVOTES_INVENTORY_ATTEMPT = "GETVOTES_INVENTORY_ATTEMPT";
+export const GETVOTES_INVENTORY_SUCCESS = "GETVOTES_INVENTORY_SUCCESS";
+export const GETVOTES_INVENTORY_FAILED = "GETVOTES_INVENTORY_FAILED";
 
-const getTokenInventory = () => async (dispatch, getState) => {
-  dispatch({ type: GETTOKEN_INVENTORY_ATTEMPT });
+const getVotesInventory = () => async (dispatch, getState) => {
+  dispatch({ type: GETVOTES_INVENTORY_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   try {
-    const { data } = await pi.getTokenInventory({ piURL });
+    const { data } = await pi.getVotesInventory({ piURL });
     const inventory = updateInventoryFromApiData(data);
 
-    dispatch({ type: GETTOKEN_INVENTORY_SUCCESS, inventory });
+    dispatch({ type: GETVOTES_INVENTORY_SUCCESS, inventory });
 
     return inventory;
   } catch (error) {
-    dispatch({ error, type: GETTOKEN_INVENTORY_FAILED });
+    dispatch({ error, type: GETVOTES_INVENTORY_FAILED });
     throw error;
   }
 };
@@ -169,7 +185,7 @@ export const compareInventory = () => async (dispatch, getState) => {
     const oldProposals = sel.proposals(getState());
     const newProposalsList = getDefaultInventory();
 
-    const { data } = await pi.getTokenInventory({ piURL });
+    const { data } = await pi.getVotesInventory({ piURL });
     const inventory = updateInventoryFromApiData(data);
 
     let isDifferent = false;
@@ -250,12 +266,17 @@ const getInitialBatch = () => async (dispatch, getState) => {
   const activeVoteBatch = active.slice(0, proposallistpagesize);
   const preVoteBatch = pre.slice(0, proposallistpagesize);
   const activeAndPreVoteBatch = [...activeVoteBatch, ...preVoteBatch];
-  if (activeAndPreVoteBatch.length < proposallistpagesize) {
+  if (
+    activeAndPreVoteBatch.length &&
+    activeAndPreVoteBatch.length < proposallistpagesize
+  ) {
     await dispatch(getProposalsAndUpdateVoteStatus(activeAndPreVoteBatch));
     return;
   }
-  await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
-  await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
+  if (activeVoteBatch.length)
+    await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
+  if (preVoteBatch.length)
+    await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
 };
 
 // getVoteOption gets the wallet vote if cached or return abstain.
@@ -292,7 +313,7 @@ const getVoteOption = (
   const currentVoteChoice = proposal.voteOptions.find(
     (option) =>
       // votebit is all lowercase as it comes from pi api.
-      voteChoice.votebit === "" + option.bits
+      voteChoice.votebit === "" + option.bit
   );
 
   return currentVoteChoice;
@@ -301,13 +322,13 @@ const getVoteOption = (
 export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   setPoliteiaPath();
   try {
-    await dispatch(getTokenInventory());
+    await dispatch(getVotesInventory());
     const inventory = sel.inventory(getState());
     // remove proposals cache which are not in the inventory activeVote
     removeCachedProposals(inventory.activeVote);
     await dispatch(getInitialBatch());
   } catch (error) {
-    dispatch({ error, type: GETTOKEN_INVENTORY_FAILED });
+    dispatch({ error, type: GETVOTES_INVENTORY_FAILED });
     throw error;
   }
 };
@@ -322,12 +343,15 @@ export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
 export const GET_PROPOSAL_BATCH_SUCCESS = "GET_PROPOSAL_BATCH_SUCCESS";
 export const GET_PROPOSAL_BATCH_FAILED = "GET_PROPOSAL_BATCH_FAILED";
 
-const getProposalsBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsBatch({
+const getProposalsBatch = async (tokens, piURL) => {
+  const { data } = await pi.getProposalsBatch({
     piURL,
-    tokens: tokensBatch
+    requests: tokens.map((token) => ({
+      token,
+      filenames: [PROPOSAL_METADATA_FILE, PROPOSAL_VOTE_METADATA_FILE]
+    }))
   });
-  return requestResponse.data;
+  return data;
 };
 
 export const GET_PROPOSALS_VOTESTATUS_BATCH_ATTEMPT =
@@ -337,12 +361,12 @@ export const GET_PROPOSALS_VOTESTATUS_BATCH_SUCCESS =
 export const GET_PROPOSALS_VOTESTATUS_BATCH_FAILED =
   "GET_PROPOSALS_VOTESTATUS_BATCH_FAILED";
 
-const getProposalsVotestatusBatch = async (tokensBatch, piURL) => {
-  const requestResponse = await pi.getProposalsVoteStatusBatch({
+const getProposalsVoteSummaryBatch = async (tokensBatch, piURL) => {
+  const { data } = await pi.getProposalsVoteSummaryBatch({
     piURL,
     tokens: tokensBatch
   });
-  return requestResponse.data;
+  return data;
 };
 
 export const GETPROPROSAL_UPDATEVOTESTATUS_ATTEMPT =
@@ -354,13 +378,13 @@ export const GETPROPROSAL_UPDATEVOTESTATUS_FAILED =
 
 // getProposalsAndUpdateVoteStatus gets a proposal batch and its vote summary
 // and concat with proposals from getState.
+//
+// tokensBatch length can not exceed politeia's proposallistpagesize
+// limit; otherwise it will return ErrorStatusMaxProposalsExceededPolicy.
 export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
   dispatch,
   getState
 ) => {
-  // tokensBatch batch length can not exceed politeia's proposallistpagesize limit
-  // otherwise it will return ErrorStatusMaxProposalsExceededPolicy
-
   const findProposal = (proposals, token) =>
     proposals.find((proposal) =>
       proposal.censorshiprecord.token === token ? proposal : null
@@ -406,12 +430,15 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
   const lastPoliteiaAccessBlock = sel.lastPoliteiaAccessBlock(getState());
 
   try {
-    const { proposals } = await getProposalsBatch(tokensBatch, piURL);
-    const { summaries } = await getProposalsVotestatusBatch(tokensBatch, piURL);
+    const { records } = await getProposalsBatch(tokensBatch, piURL);
+    const { summaries } = await getProposalsVoteSummaryBatch(
+      tokensBatch,
+      piURL
+    );
     tokensBatch.forEach((token) => {
       const proposalSummary = summaries[token];
-      const { status, approved } = proposalSummary;
-      const prop = findProposal(proposals, token);
+      const { status } = proposalSummary;
+      const prop = parseRawProposal(records[token]);
       prop.token = token;
       prop.proposalStatus = prop.status;
 
@@ -441,9 +468,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
           case PROPOSAL_VOTING_ACTIVE:
             proposalsUpdated.activeVote.push(prop);
             break;
-          case PROPOSAL_VOTING_FINISHED:
+          case PROPOSAL_VOTING_REJECTED:
+          case PROPOSAL_VOTING_APPROVED:
             proposalsUpdated.finishedVote.push(prop);
-            if (approved) {
+            if (status === PROPOSAL_VOTING_APPROVED) {
               proposalsUpdated.approvedVote.push(prop);
             } else {
               proposalsUpdated.rejectedVote.push(prop);
@@ -472,26 +500,22 @@ export const GETPROPOSAL_ATTEMPT = "GETPROPOSAL_ATTEMPT";
 export const GETPROPOSAL_FAILED = "GETPROPOSAL_FAILED";
 export const GETPROPOSAL_SUCCESS = "GETPROPOSAL_SUCCESS";
 
+const getProposalFromMap = (proposals, token) => {
+  let proposal;
+  const keys = Object.keys(proposals);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    proposal = proposals[key].find((p) => p.token === token);
+    if (proposal) return proposal;
+  }
+};
+
+const fetchProposalDetails = async (token, piURL) => {
+  const { data } = await pi.getProposalDetails({ piURL, token });
+  return data;
+};
+
 export const getProposalDetails = (token) => async (dispatch, getState) => {
-  const decodeFilePayload = (f) => {
-    switch (f.mime) {
-      case "text/plain; charset=utf-8":
-        return atob(f.payload);
-      default:
-        return f.payload;
-    }
-  };
-
-  const getProposal = (proposals, token) => {
-    let proposal;
-    const keys = Object.keys(proposals);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      proposal = proposals[key].find((p) => p.token === token);
-      if (proposal) return proposal;
-    }
-  };
-
   dispatch({ type: GETPROPOSAL_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   const walletName = sel.getWalletName(getState());
@@ -501,80 +525,82 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
   let currentVoteChoice;
 
   try {
-    const request = await pi.getProposal({ piURL, token });
+    const { record } = await fetchProposalDetails(token, piURL);
 
-    const { walletService } = getState().grpc;
+    const p = parseRawProposal(record);
     const proposals = getState().governance.proposals;
-    let proposal = await getProposal(proposals, token);
-
-    const p = request.data.proposal;
-    const files = p.files.map((f) => ({
-      digest: f.digest,
-      mime: f.mime,
-      name: f.name,
-      payload: decodeFilePayload(f)
-    }));
-
-    // Parse proposal's body from index.md file.
-    const { payload } = files.find(
-      ({ name }) => name === PROPOSAL_INDEX_MD_FILE
-    );
-    const body = politeiaMarkdownIndexMd(payload);
-
+    let proposal = getProposalFromMap(proposals, token);
     proposal = {
       ...proposal,
-      body,
-      creator: p.username,
-      token: token,
-      version: p.version,
-      name: p.name,
-      numComments: p.numcomments,
-      timestamp: p.timestamp,
-      files: files,
+      ...p,
+      token,
       hasEligibleTickets: false
     };
 
-    const voteAndEligibleTickets = getProposalWalletVote(
-      token,
-      testnet,
-      walletName
-    );
-    // if voteAndEligibleTickets are already cached we just get them.
+    // If proposal vote is active or finished prepare vote & eligible tickets
+    // info.
+    // Also, if voteAndEligibleTickets are already cached we just get them.
     // Otherwise we get them from politea server and cache.
-    if (voteAndEligibleTickets) {
-      walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
-      currentVoteChoice = voteAndEligibleTickets.voteChoice;
-      hasEligibleTickets =
-        walletEligibleTickets && walletEligibleTickets.length > 0;
-    } else {
-      const voteReq = await pi.getProposalVotes({ piURL, token });
-      const { startvotereply, castvotes } = voteReq.data;
-      walletEligibleTickets = await getProposalEligibleTickets(
-        proposal.token,
-        startvotereply.eligibletickets,
-        proposal.voteStatus === PROPOSAL_VOTING_ACTIVE,
-        walletService
+    const isProposalVoteActive = proposal.voteStatus === PROPOSAL_VOTING_ACTIVE;
+    const isProposalVoteFinished =
+      proposal.voteStatus === PROPOSAL_VOTING_FINISHED ||
+      proposal.voteStatus === PROPOSAL_VOTING_REJECTED ||
+      proposal.voteStatus === PROPOSAL_VOTING_APPROVED;
+    const isVoteActiveOrFinished =
+      isProposalVoteActive || isProposalVoteFinished;
+
+    if (isVoteActiveOrFinished) {
+      const voteAndEligibleTickets = getProposalWalletVote(
+        token,
+        testnet,
+        walletName
       );
-      currentVoteChoice =
-        getVoteOption(
-          token,
-          proposal,
-          castvotes,
-          walletEligibleTickets,
-          testnet,
-          walletName
-        ) || "abstain";
-      hasEligibleTickets =
-        walletEligibleTickets && walletEligibleTickets.length > 0;
-      if (currentVoteChoice !== "abstain") {
-        const votesToCache = {
-          token,
-          walletEligibleTickets,
-          voteChoice: currentVoteChoice
-        };
-        savePiVote(votesToCache, token, testnet, walletName);
+
+      if (voteAndEligibleTickets) {
+        walletEligibleTickets = voteAndEligibleTickets.walletEligibleTickets;
+        currentVoteChoice = voteAndEligibleTickets.voteChoice;
+        hasEligibleTickets =
+          walletEligibleTickets && walletEligibleTickets.length > 0;
+      } else {
+        const { data: voteDetails } = await pi.getProposalVoteDetails({
+          piURL,
+          token
+        });
+        const { vote } = voteDetails;
+        const { walletService } = getState().grpc;
+        walletEligibleTickets = await getProposalEligibleTickets(
+          proposal.token,
+          vote.eligibletickets,
+          isProposalVoteActive,
+          walletService
+        );
+        const { data: voteResults } = await pi.getProposalVoteResults({
+          piURL,
+          token
+        });
+        const { votes } = voteResults;
+        currentVoteChoice =
+          getVoteOption(
+            token,
+            proposal,
+            votes,
+            walletEligibleTickets,
+            testnet,
+            walletName
+          ) || "abstain";
+        hasEligibleTickets =
+          walletEligibleTickets && walletEligibleTickets.length > 0;
+        if (currentVoteChoice !== "abstain") {
+          const votesToCache = {
+            token,
+            walletEligibleTickets,
+            voteChoice: currentVoteChoice
+          };
+          savePiVote(votesToCache, token, testnet, walletName);
+        }
       }
     }
+
     // update proposal reference from proposals state
     Object.keys(proposals).forEach((key) =>
       proposals[key].find((p, i) => {
@@ -585,7 +611,9 @@ export const getProposalDetails = (token) => async (dispatch, getState) => {
             votingSinceLastAccess: false,
             walletEligibleTickets,
             hasEligibleTickets,
-            eligibleTicketCount: walletEligibleTickets.length,
+            eligibleTicketCount: walletEligibleTickets
+              ? walletEligibleTickets.length
+              : 0,
             currentVoteChoice
           };
           return (proposals[key][i] = { ...proposal });
@@ -610,8 +638,9 @@ export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
 export const UPDATEVOTECHOICE_SUCCESS = "UPDATEVOTECHOICE_SUCCESS";
 export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";
 
-// updateVoteChoice cast vote into pi server, if success we cache the vote information
-// updates the proposal vote summary and dispatch it with its new result.
+// updateVoteChoice cast vote into pi server, if success we cache the vote
+// information updates the proposal vote summary and dispatch it with its new
+// result.
 export const updateVoteChoice = (
   proposal,
   newVoteChoiceID,
@@ -639,7 +668,7 @@ export const updateVoteChoice = (
   // politeiavoter.
   const messages = walletEligibleTickets.map((t) => ({
     address: t.address,
-    message: `${token}${t.ticket}${voteChoice.bits.toString(16)}`
+    message: `${token}${t.ticket}${voteChoice.bit.toString(16)}`
   }));
 
   const updatePropRef = (proposals, token, newProposal) => {
@@ -670,20 +699,19 @@ export const updateVoteChoice = (
     const votesToCache = { token, walletEligibleTickets, voteChoice };
     const sigs = signed.replies;
     walletEligibleTickets.forEach((t, i) => {
-      const signature = sigs[i];
-      if (signature.error != "") {
+      const { signature } = sigs[i];
+      if (signature.error) {
         throw signature.error;
       }
-      const hexSig = Buffer.from(signature.signature).toString("hex");
-      const votebit = voteChoice.bits.toString(16);
-      const vote = { token, ticket: t.ticket, votebit, signature: hexSig };
+      const votebit = voteChoice.bit.toString(16);
+      const vote = { token, ticket: t.ticket, votebit, signature };
       votes.push(vote);
     });
 
     // cast vote into pi server
-    const response = await pi.castVotes({ piURL, votes });
-    const { error: voteCastError } =
-      response.data.receipts.find(({ error }) => error) || {};
+    const response = await pi.castBallot({ piURL, votes });
+    const { errorcontext: voteCastError } =
+      response.data.receipts.find(({ errorcontext }) => errorcontext) || {};
 
     if (voteCastError) {
       throw voteCastError;
@@ -696,7 +724,7 @@ export const updateVoteChoice = (
     // update proposal vote status, so we can see our vote counting towards
     // the totals.
     const newProposal = { ...proposal };
-    const { summaries } = await getProposalsVotestatusBatch([token], piURL);
+    const { summaries } = await getProposalsVoteSummaryBatch([token], piURL);
     fillVoteSummary(
       newProposal,
       summaries[token],

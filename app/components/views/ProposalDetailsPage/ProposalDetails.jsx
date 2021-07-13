@@ -4,12 +4,17 @@ import { PoliteiaLink } from "shared";
 import { ProposalBody, VoteSection, ProposalCard } from "./helpers";
 import { useProposalDetails } from "./hooks";
 import styles from "./ProposalDetails.module.css";
-import { PROPOSAL_VOTING_ACTIVE, PROPOSAL_VOTING_FINISHED } from "constants";
+import {
+  PROPOSAL_VOTING_ACTIVE,
+  PROPOSAL_VOTING_FINISHED,
+  PROPOSAL_VOTING_APPROVED,
+  PROPOSAL_VOTING_REJECTED
+} from "constants";
 
 const ProposalDetails = ({
   viewedProposalDetails,
   viewedProposalDetails: {
-    creator,
+    username,
     timestamp,
     endTimestamp,
     currentVoteChoice,
@@ -26,11 +31,9 @@ const ProposalDetails = ({
     linkto,
     blocksLeft,
     approved,
-    body
+    description
   },
   showPurchaseTicketsPage,
-  setVoteOption,
-  newVoteChoice,
   goBackHistory,
   linkedProposal,
   isDarkTheme
@@ -41,7 +44,10 @@ const ProposalDetails = ({
   const proposalPath = `/record/${shortToken}`;
   const isVoteActive = voteStatus === PROPOSAL_VOTING_ACTIVE;
   const isVoteActiveOrFinished =
-    isVoteActive || voteStatus === PROPOSAL_VOTING_FINISHED;
+    isVoteActive ||
+    voteStatus === PROPOSAL_VOTING_FINISHED ||
+    voteStatus === PROPOSAL_VOTING_APPROVED ||
+    voteStatus === PROPOSAL_VOTING_REJECTED;
 
   return (
     <div>
@@ -61,7 +67,7 @@ const ProposalDetails = ({
             endTimestamp,
             blocksLeft,
             name,
-            creator,
+            username,
             timestamp,
             tsDate,
             version,
@@ -88,15 +94,13 @@ const ProposalDetails = ({
             proposalStatus,
             voteStatus,
             currentVoteChoice,
-            newVoteChoice,
-            setVoteOption,
             voteOptions,
             showPurchaseTicketsPage
           }}
         />
       )}
       <div className={styles.detailsText}>
-        <ProposalBody body={body} />
+        <ProposalBody body={description} />
       </div>
       <div className={styles.piButtonWrapper}>
         <PoliteiaLink

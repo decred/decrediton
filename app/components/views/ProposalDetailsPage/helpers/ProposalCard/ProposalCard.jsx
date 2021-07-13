@@ -19,7 +19,7 @@ const ProposalCard = ({
   endTimestamp,
   blocksLeft,
   name,
-  creator,
+  username,
   timestamp,
   tsDate,
   version,
@@ -59,8 +59,8 @@ const ProposalCard = ({
             </div>
           )}
           <Join className={classNames("margin-top-s", styles.subTitle)}>
-            <span className={classNames("color-primary", styles.creator)}>
-              {creator}
+            <span className={classNames("color-primary", styles.username)}>
+              {username}
             </span>
             <Event
               eventType={PROPOSAL_UPDATED_EVENT}

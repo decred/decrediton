@@ -1,4 +1,4 @@
-import { getJSON, postJSON } from "helpers/fetch";
+import { postJSON } from "helpers/fetch";
 
 // Uncomment this and comment the following definition to test locally.
 // Also uncomment a code part at externalRequests.js, as politeia is a ssl-enabled
@@ -11,38 +11,41 @@ import { getJSON, postJSON } from "helpers/fetch";
 export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
 export const POLITEIA_URL_MAINNET = "https://proposals.decred.org/api";
 
-const GET = (piURL, path) => getJSON(`${piURL}${path}`);
+const POST = (piURL, path, payload = {}) =>
+  postJSON(`${piURL}${path}`, payload);
 
-const POST = (piURL, path, payload) => postJSON(`${piURL}${path}`, payload);
-
-export const getProposal = ({ piURL, token }, cb) =>
-  GET(piURL, `/v1/proposals/${token}`)
+export const getProposalDetails = ({ piURL, token }, cb) =>
+  POST(piURL, "/records/v1/details", { token })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-export const getProposalVotes = ({ piURL, token }, cb) =>
-  GET(piURL, `/v1/proposals/${token}/votes`)
+export const getProposalVoteDetails = ({ piURL, token }, cb) =>
+  POST(piURL, "/ticketvote/v1/details", { token })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-export const getTokenInventory = ({ piURL }, cb) =>
-  GET(piURL, "/v1/proposals/tokeninventory")
+export const getProposalVoteResults = ({ piURL, token }, cb) =>
+  POST(piURL, "/ticketvote/v1/results", { token })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-// votes must be an array of Vote()-produced objects.
-export const castVotes = ({ piURL, votes }, cb) =>
-  POST(piURL, "/v1/proposals/castvotes", { votes })
+export const getVotesInventory = ({ piURL }, cb) =>
+  POST(piURL, "/ticketvote/v1/inventory")
+    .then((response) => cb(response))
+    .catch((error) => cb(null, error));
+
+export const castBallot = ({ piURL, votes }, cb) =>
+  POST(piURL, "/ticketvote/v1/castballot", { votes })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
 // tokens is an array of tokens to be fetched.
-export const getProposalsBatch = ({ piURL, tokens }, cb) =>
-  POST(piURL, "/v1/proposals/batch", { tokens })
+export const getProposalsBatch = ({ piURL, requests }, cb) =>
+  POST(piURL, "/records/v1/records", { requests })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));
 
-export const getProposalsVoteStatusBatch = ({ piURL, tokens }, cb) =>
-  POST(piURL, "/v1/proposals/batchvotesummary", { tokens })
+export const getProposalsVoteSummaryBatch = ({ piURL, tokens }, cb) =>
+  POST(piURL, "/ticketvote/v1/summaries", { tokens })
     .then((response) => cb(response))
     .catch((error) => cb(null, error));

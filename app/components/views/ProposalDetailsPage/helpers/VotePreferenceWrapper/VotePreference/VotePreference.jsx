@@ -31,7 +31,7 @@ const VotePreference = React.memo(
             value: o.id
           }))}
           onChange={(option) => setVoteOption(option.value)}
-          value={newVoteChoice || currentVoteChoice.id}
+          value={newVoteChoice || currentVoteChoice?.id}
           disabled={votingComplete || votedSuccessfully}
           optionsClassName={voteOptions.map((o) => styles[o.id])}
         />

@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useState, useCallback, useMemo } from "react";
 import { useMachine } from "@xstate/react";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
-import * as gov from "actions/GovernanceActions";
+import { updateVoteChoice } from "actions/GovernanceActions";
 import { isString, isObject } from "lodash";
 
 const getError = (error) => {
@@ -21,11 +21,7 @@ export const useVotePreference = (viewedProposalDetails) => {
   const dispatch = useDispatch();
   const onUpdateVoteChoice = (privatePassphrase) =>
     dispatch(
-      gov.updateVoteChoice(
-        viewedProposalDetails,
-        newVoteChoice,
-        privatePassphrase
-      )
+      updateVoteChoice(viewedProposalDetails, newVoteChoice, privatePassphrase)
     );
   const [state, send] = useMachine(fetchMachine, {
     actions: {

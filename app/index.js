@@ -10,7 +10,13 @@ import "pi-ui/dist/index.css";
 import "./style/main.css";
 import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
-import { DCR, THEME, LOCALE, NETWORK } from "constants";
+import {
+  DCR,
+  THEME,
+  LOCALE,
+  NETWORK,
+  PROPOSALS_MAX_PAGE_SIZE
+} from "constants";
 import * as cfgConstants from "constants/config";
 import { wallet } from "wallet-preload-shim";
 import { AppContainer } from "react-hot-loader";
@@ -379,11 +385,17 @@ const initialState = {
   governance: {
     getProposalsAttempt: false,
     inventory: null,
-    proposals: null,
+    proposals: {
+      abandonedVote: [],
+      activeVote: [],
+      approvedVote: [],
+      finishedVote: [],
+      preVote: [],
+      rejectedVote: []
+    },
     proposalsDetails: {},
     getProposalError: null,
-    // TODO: Get proposallistpagesize from politeia's request: /v1/policy
-    proposallistpagesize: 20
+    proposallistpagesize: PROPOSALS_MAX_PAGE_SIZE
   },
   trezor: {
     enabled: false,

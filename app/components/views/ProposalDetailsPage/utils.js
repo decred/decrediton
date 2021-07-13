@@ -4,7 +4,8 @@ import {
   PROPOSAL_VOTING_NOT_AUTHORIZED,
   PROPOSAL_VOTING_AUTHORIZED,
   PROPOSAL_VOTING_ACTIVE,
-  PROPOSAL_VOTING_FINISHED
+  PROPOSAL_VOTING_REJECTED,
+  PROPOSAL_VOTING_APPROVED
 } from "constants";
 
 /**
@@ -48,8 +49,8 @@ export const isApprovedProposal = (proposal, voteSummary) => {
   if (!proposal || !voteSummary || !isPublicProposal(proposal)) {
     return false;
   }
-  const { approved } = voteSummary;
-  return approved;
+  const { status } = voteSummary;
+  return status === PROPOSAL_VOTING_APPROVED;
 };
 
 export const getProposalStatusTagProps = (
@@ -74,15 +75,13 @@ export const getProposalStatusTagProps = (
         };
       case PROPOSAL_VOTING_ACTIVE:
         return { type: "bluePending", text: "Active" };
-      case PROPOSAL_VOTING_FINISHED:
-        if (isApprovedProposal(proposal, voteSummary)) {
-          return { type: "greenCheck", text: "Finished" };
-        } else {
-          return {
-            type: isDarkTheme ? "blueNegative" : "grayNegative",
-            text: "Finished"
-          };
-        }
+      case PROPOSAL_VOTING_APPROVED:
+        return { type: "greenCheck", text: "Approved" };
+      case PROPOSAL_VOTING_REJECTED:
+        return {
+          type: isDarkTheme ? "blueNegative" : "grayNegative",
+          text: "Rejected"
+        };
       default:
         break;
     }

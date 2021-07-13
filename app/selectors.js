@@ -1759,9 +1759,9 @@ export const newProposalsStartedVoting = compose(
 );
 
 export const getProposalError = get(["governance", "getProposalError"]);
-export const getTokenInventoryError = get([
+export const getVotesInventoryError = get([
   "governance",
-  "getTokenInventoryError"
+  "getVotesInventoryError"
 ]);
 export const proposalsDetails = get(["governance", "proposalsDetails"]);
 export const lastPoliteiaAccessBlock = get([
