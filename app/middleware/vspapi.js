@@ -203,3 +203,11 @@ export function getTicketStatus({ host, vspClientSig, request }, cb) {
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }
+
+// setAltSig sets an alternate signature address for a ticket.
+export function setAltSig({ host, sig, req }, cb) {
+  console.log(req);
+  POST(host + "/api/v3/setaltsignaddr", sig, req)
+    .then((resp) => cb(resp, null, host))
+    .catch((error) => cb(null, error, host));
+}

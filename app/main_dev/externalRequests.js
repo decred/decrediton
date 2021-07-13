@@ -229,6 +229,7 @@ export const allowVSPRequests = (stakePoolHost) => {
   addAllowedURL(stakePoolHost + "/api/v3/ticketstatus");
   addAllowedURL(stakePoolHost + "/api/v3/feeaddress");
   addAllowedURL(stakePoolHost + "/api/v3/payfee");
+  addAllowedURL(stakePoolHost + "/api/v3/setaltsignaddr");
   addAllowedURL(stakePoolHost + "/api/ticketstatus");
   allowedExternalRequests[reqType] = true;
 };

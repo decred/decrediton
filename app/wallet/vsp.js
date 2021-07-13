@@ -58,6 +58,7 @@ export const getVSPTicketStatus = promisifyReqLogNoData(
   "getVSPTicketStatus",
   api.getVSPTicketStatus
 );
+export const setAltSig = promisifyReq("setAltSig", api.setAltSig);
 
 // addAllowedVSPsInCfg modifies the config file to allow the given VSP hosts
 // to be accessed. Returns true if the list of allowed hosts changed.

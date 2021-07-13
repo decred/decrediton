@@ -47,8 +47,6 @@ const NOBACKUP = "no-backup";
 const TRANSPORT_ERROR = "transport-error";
 const TRANSPORT_START = "transport-start";
 const BOOTLOADER_MODE = "bootloader";
-const testVotingKey = "PtWTXsGfk2YeqcmrRty77EsynNBtxWLLbsVEeTS8bKAGFoYF3qTNq";
-const testVotingAddr = "TsmfmUitQApgnNxQypdGd2x36djCCpDpERU";
 const SERTYPE_NOWITNESS = 1;
 const OP_SSGEN_STR = "bb";
 const OP_SSRTX_STR = "bc";
@@ -61,6 +59,8 @@ const TREASURY_GENERATION = "TGen";
 const VOTING_XPRIV_KEY = "Create decred voting xpriv seed bytes?";
 const VOTING_XPRIV_VALUE =
   "0000000000000000000000000000000000000000000000000000000000000000";
+const VOTING_ACCT_PREFIX = "trezor_voting_account_";
+const VOTING_ACCT_TEST_PASS = "password";
 
 let setListeners = false;
 
@@ -1020,9 +1020,7 @@ export const TRZ_VOTINGXPRIVSEED_ATTEMPT = "TRZ_VOTINGXPRIVSEED_ATTEMPT";
 export const TRZ_VOTINGXPRIVSEED_FAILED = "TRZ_VOTINGXPRIVSEED_FAILED";
 export const TRZ_VOTINGXPRIVSEED_SUCCESS = "TRZ_VOTINGXPRIVSEED_SUCCESS";
 
-/* eslint-disable no-unused-vars */
 const votingXprivSeed = () => async (dispatch, getState) => {
-  /* eslint-enable no-unused-vars */
   dispatch({ type: TRZ_VOTINGXPRIVSEED_ATTEMPT });
 
   if (noDevice(getState)) {
@@ -1143,19 +1141,64 @@ export const purchaseTicketsV3 = (accountNum, numTickets, vsp) => async (
     // added.
     if (chainParams.trezorCoinName != "Decred Testnet")
       throw "can only be used on testnet";
-    // TODO: Fill this with deterministic crypto magic.
-    const votingKey = testVotingKey;
-    const votingAddr = testVotingAddr;
-    // TODO: Add cspp purchasing?.
-    const res = await wallet.purchaseTicketsV3(
+    // Check that the voting account is imported.
+    const address_n = addressPath(0, 0, WALLET_ACCOUNT, chainParams.HDCoinType);
+    const payload = await deviceRun(dispatch, getState, async () => {
+      const res = await session.getAddress({
+        path: address_n,
+        coin: chainParams.trezorCoinName,
+        showOnTrezor: false
+      });
+      return res.payload;
+    });
+    const addr = payload.address;
+    const votingAcctName = VOTING_ACCT_PREFIX + addr;
+
+    let res = await wallet.getAccounts(walletService);
+    const accts = res.accountsList;
+    let votingAcctN = null;
+    for (let i = 0; i < accts.length; i++) {
+      if (accts[i].accountName === votingAcctName) {
+        votingAcctN = accts[i].accountNumber;
+        break;
+      }
+    }
+    if (!votingAcctN) {
+      // TODO: Display in UI!
+      console.log("Attempting to add account", votingAcctName);
+      console.log(
+        "Please confirm on your trezor the phrase:",
+        VOTING_XPRIV_KEY
+      );
+      const seed = await votingXprivSeed()(dispatch, getState);
+      res = await wallet.importVotingAccountFromSeed(
+        walletService,
+        seed,
+        votingAcctName,
+        VOTING_ACCT_TEST_PASS,
+        true,
+        0
+      );
+      votingAcctN = res.account;
+    }
+
+    await wallet.unlockAccount(
+      walletService,
+      VOTING_ACCT_TEST_PASS,
+      votingAcctN
+    );
+
+    res = await wallet.purchaseTicketsV3(
       walletService,
       accountNum,
       numTickets,
       false,
       vsp,
-      {}
+      {},
+      votingAcctN
     );
     const splitTx = res.splitTx;
+    const tickets = res.ticketsList;
     const decodedInp = await wallet.decodeTransactionLocal(
       splitTx,
       chainParams
@@ -1170,12 +1213,24 @@ export const purchaseTicketsV3 = (accountNum, numTickets, vsp) => async (
     )(dispatch, getState);
     if (!signedSplitTx) throw "failed to sign splittx";
     const refTxs = await walletTxToRefTx(walletService, decodedInp);
-
-    for (const ticket of res.ticketsList) {
+    for (const ticket of tickets) {
       const decodedTicket = await wallet.decodeTransactionLocal(
         ticket,
         chainParams
       );
+      const votingAddr = decodedTicket.outputs[0].decodedScript.address;
+      // Get address's index.
+      const addrValidResp = await wallet.validateAddress(
+        walletService,
+        votingAddr
+      );
+      const addrIdx = addrValidResp.index;
+      // The signing address is the external account with the same index.
+      res = await wallet.address(walletService, votingAcctN, 0, addrIdx);
+      const signingAddr = res.address;
+      res = await wallet.dumpPrivateKey(walletService, votingAddr);
+      const votingKey = res.privateKeyWif;
+
       refTxs.hash = decodedTicket.inputs[0].prevTxId;
       const { inputs, outputs } = await ticketInsOuts(
         getState,
@@ -1202,12 +1257,24 @@ export const purchaseTicketsV3 = (accountNum, numTickets, vsp) => async (
         "waiting 5 seconds for the ticket to propogate throughout the network"
       );
       await new Promise((r) => setTimeout(r, 5000));
+
       const host = "https://" + vsp.host;
+      // Set alternate signature address for the ticket.
+      await setAltSig(
+        host,
+        signedRaw,
+        signedSplitTx,
+        signingAddr,
+        dispatch,
+        getState
+      );
+
       await payVSPFee(
         host,
         signedRaw,
         signedSplitTx,
         votingKey,
+        signingAddr,
         accountNum.value,
         true,
         dispatch,
@@ -1220,6 +1287,44 @@ export const purchaseTicketsV3 = (accountNum, numTickets, vsp) => async (
   }
 };
 
+async function setAltSig(
+  host,
+  txHex,
+  parentTxHex,
+  signingAddr,
+  dispatch,
+  getState
+) {
+  // Gather information about the ticket.
+  const chainParams = selectors.chainParams(getState());
+  const txBytes = hexToBytes(txHex);
+  const decodedTicket = await wallet.decodeTransactionLocal(
+    txBytes,
+    chainParams
+  );
+  const commitmentAddr = decodedTicket.outputs[1].decodedScript.address;
+
+  const prefix = txBytes.slice(0, decodedTicket.prefixOffset);
+  prefix.set(putUint16(SERTYPE_NOWITNESS), 2);
+  const txid = rawHashToHex(blake256(prefix));
+
+  const req = {
+    timestamp: +new Date(),
+    tickethash: txid,
+    tickethex: txHex,
+    parenthex: parentTxHex,
+    altsignaddress: signingAddr
+  };
+  const jsonStr = JSON.stringify(req);
+  const sig = await signMessageAttemptTrezor(commitmentAddr, jsonStr)(
+    dispatch,
+    getState
+  );
+  if (!sig) throw "unable to sign fee address message";
+  wallet.allowVSPHost(host);
+  await wallet.setAltSig({ host, sig, req });
+}
+
 // payVSPFee attempts to contact a vst about a ticket and pay the fee if
 // necessary. It will search transacitons for a suitable fee transaction before
 // attempting to pay if newTicket is false.
@@ -1228,6 +1333,7 @@ async function payVSPFee(
   txHex,
   parentTxHex,
   votingKey,
+  signingAddr,
   accountNum,
   newTicket,
   dispatch,
@@ -1243,7 +1349,6 @@ async function payVSPFee(
     txBytes,
     chainParams
   );
-  const commitmentAddr = decodedTicket.outputs[1].decodedScript.address;
 
   const prefix = txBytes.slice(0, decodedTicket.prefixOffset);
   prefix.set(putUint16(SERTYPE_NOWITNESS), 2);
@@ -1257,11 +1362,8 @@ async function payVSPFee(
     parenthex: parentTxHex
   };
   let jsonStr = JSON.stringify(req);
-  let sig = await signMessageAttemptTrezor(commitmentAddr, jsonStr)(
-    dispatch,
-    getState
-  );
-  if (!sig) throw "unable to sign fee address message";
+  let sigRes = await wallet.signMessage(walletService, signingAddr, jsonStr);
+  let sig = Buffer.from(sigRes.signature, "hex").toString("base64");
   wallet.allowVSPHost(host);
   // This will throw becuase of http.status 400 if already paid.
   // TODO: Investigate whether other fee payment errors will cause this to
@@ -1340,11 +1442,8 @@ async function payVSPFee(
     votechoices: voteChoices
   };
   jsonStr = JSON.stringify(req);
-  sig = await signMessageAttemptTrezor(commitmentAddr, jsonStr)(
-    dispatch,
-    getState
-  );
-  if (!sig) throw "unable to sign fee tx message";
+  sigRes = await wallet.signMessage(walletService, signingAddr, jsonStr);
+  sig = Buffer.from(sigRes.signature, "hex").toString("base64");
   wallet.allowVSPHost(host);
   await wallet.payVSPFee({ host, sig, req });
 }
