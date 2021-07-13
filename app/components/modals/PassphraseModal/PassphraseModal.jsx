@@ -1,6 +1,7 @@
 import Modal from "./PassphraseModalContent";
 import { useState, useCallback } from "react";
 import { useEffect } from "react";
+import { useIntl } from "react-intl";
 
 const PassphraseModal = ({
   onCancelModal,
@@ -40,6 +41,7 @@ const PassphraseModal = ({
     [passPhrase, parentIsValid, passphraseNotRequired]
   );
 
+  const intl = useIntl();
   return (
     <Modal
       {...props}
@@ -48,7 +50,9 @@ const PassphraseModal = ({
         onCancelModal: onCancelModalCallback,
         setPassPhrase,
         isValid,
-        onSubmit: onSubmitCallback
+        onSubmit: onSubmitCallback,
+        passphraseNotRequired,
+        intl
       }}
     />
   );

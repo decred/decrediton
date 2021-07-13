@@ -9,7 +9,8 @@ const AddAccountModal = ({ onCancelModal, onSubmit, ...props }) => {
     validationFailed,
     setNameCallback,
     onSubmitCallback,
-    isValid
+    isValid,
+    intl
   } = useAddAccountModal(onCancelModal, onSubmit);
 
   return (
@@ -22,7 +23,8 @@ const AddAccountModal = ({ onCancelModal, onSubmit, ...props }) => {
         validationFailed,
         setName: setNameCallback,
         onSubmit: onSubmitCallback,
-        isValid
+        isValid,
+        intl
       }}
     />
   );

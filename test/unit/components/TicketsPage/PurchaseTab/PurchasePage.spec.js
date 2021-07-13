@@ -190,7 +190,7 @@ test("render PurchasePage", async () => {
 
   const purchaseButton = screen.getByText("Purchase");
   user.click(purchaseButton);
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockPurchaseTicketsAttempt).toHaveBeenCalledWith(
     mockPassphrase,
@@ -242,7 +242,7 @@ test("render PurchasePage", async () => {
   user.click(screen.getByText("Cancel"));
   // try again
   user.click(screen.getByText("Revoke"));
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
 });
@@ -300,7 +300,7 @@ test("test autobuyer", async () => {
   user.click(screen.getByText("Cancel"));
   // try again
   user.click(screen.getByTestId("toggleSwitch"));
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerV3Attempt).toHaveBeenCalledWith(
     mockPassphrase,

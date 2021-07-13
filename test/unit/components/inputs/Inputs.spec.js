@@ -223,6 +223,16 @@ test("render passphraseModalField", () => {
 test("render default PasswordInput", () => {
   const { input, inputTag } = renderInput(PasswordInput);
   checkDefaultInput(input, inputTag, "password");
+  expect(inputTag.type).toBe("password");
+  const togglePasswordVisibilityButton = screen.getByRole("button", {
+    name: "Toggle Passsword Visibility"
+  });
+
+  user.click(togglePasswordVisibilityButton);
+  expect(inputTag.type).toBe("text");
+
+  user.click(togglePasswordVisibilityButton);
+  expect(inputTag.type).toBe("password");
 });
 
 test("render default SeedHexEntry", () => {

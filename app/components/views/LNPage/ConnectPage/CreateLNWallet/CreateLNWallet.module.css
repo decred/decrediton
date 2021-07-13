@@ -5,7 +5,16 @@
 .connectOpt {
   flex-wrap: wrap;
   display: flex;
-  padding-top: 18px;
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+}
+
+.connectOpt.fileInputOpt {
+  padding: 30px 40px 20px 40px;
+}
+
+.connectOptWrapper {
+  padding-bottom: 5px;
 }
 
 .label {
@@ -18,21 +27,63 @@
 .accountSelection {
   display: grid;
   grid-row-gap: 10px;
-  justify-items: right;
-}
-
-.accountList {
-  width: 210px;
+  justify-items: left;
+  margin-bottom: 5px;
 }
 
 .existingAccountWarning {
-  color: var(--error-text-color);
-  font-size: 11px;
-  line-height: 15px;
-  margin-top: 5px;
+  color: var(--orange);
+  font-size: 13px;
+  line-height: 16px;
+  margin-top: 10px;
 }
 
 .fileInput {
-  padding-right: 10px;
-  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.textToggle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  height: 44px;
+}
+
+.textToggleChild {
+  padding: 11px 30px 13px 30px;
+}
+
+.pathBrowseInput {
+  margin-right: 11px;
+}
+
+.pathBrowseInput input,
+.receiveSelectAccountSelectInput {
+  width: 350px;
+}
+
+.receiveSelectAccountSelect {
+  align-items: flex-end;
+}
+.receiveSelectAccountSelect a {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .pathBrowseInput input,
+  .receiveSelectAccountSelectInput {
+    width: 288px;
+  }
+  .textToggle {
+    font-size: 13px;
+    height: 62px;
+  }
+  .connectOpt {
+    padding: 20px;
+  }
+  .connectOpt.fileInputOpt {
+    padding: 30px 20px 20px 20px;
+  }
 }
