@@ -14,7 +14,11 @@ export function useSendTransactionButton() {
     dispatch(ca.signTransactionAttempt(passphrase, rawTx, acct));
   };
   const onAttemptSignTransactionTrezor = (rawUnsigTx, constructTxResponse) =>
-    dispatch(tza.signTransactionAttemptTrezor(rawUnsigTx, constructTxResponse));
+    dispatch(
+      tza.signTransactionAttemptTrezor(rawUnsigTx, [
+        constructTxResponse.changeIndex
+      ])
+    );
 
   return {
     unsignedTransaction,

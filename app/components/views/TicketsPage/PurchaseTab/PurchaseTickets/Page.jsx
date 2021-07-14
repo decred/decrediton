@@ -74,6 +74,7 @@ export function PurchasePage({
   isVSPListingEnabled,
   onEnableVSPListing,
   getRunningIndicator,
+  isPurchasingTicketsTrezor,
   ...props
 }) {
   return (
@@ -116,7 +117,9 @@ export function PurchasePage({
             onRevokeTickets,
             getRunningIndicator,
             toggleIsLegacy,
-            isLegacy: false
+            isLegacy: false,
+            isPurchasingTicketsTrezor,
+            isWatchingOnly
           }}
         />
       )}

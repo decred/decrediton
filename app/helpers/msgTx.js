@@ -268,6 +268,7 @@ export function decodeRawTransaction(rawTx) {
     position += 4;
     tx.expiry = rawTx.readUInt32LE(position);
     position += 4;
+    tx.prefixOffset = position;
   }
 
   if (tx.serType !== SERTYPE_NOWITNESS) {
