@@ -19,6 +19,12 @@ import {
   TRZ_PASSPHRASE_REQUESTED,
   TRZ_PASSPHRASE_ENTERED,
   TRZ_PASSPHRASE_CANCELED,
+  TRZ_VOTINGXPRIVSEED_ATTEMPT,
+  TRZ_VOTINGXPRIVSEED_FAILED,
+  TRZ_VOTINGXPRIVSEED_SUCCESS,
+  TRZ_PURCHASETICKET_ATTEMPT,
+  TRZ_PURCHASETICKET_FAILED,
+  TRZ_PURCHASETICKET_SUCCESS,
   TRZ_WORD_REQUESTED,
   TRZ_WORD_ENTERED,
   TRZ_WORD_CANCELED,
@@ -196,6 +202,7 @@ export default function trezor(state = {}, action) {
     case TRZ_WIPEDEVICE_ATTEMPT:
     case TRZ_RECOVERDEVICE_ATTEMPT:
     case TRZ_INITDEVICE_ATTEMPT:
+    case TRZ_VOTINGXPRIVSEED_ATTEMPT:
       return { ...state, performingOperation: true };
     case TRZ_UPDATEFIRMWARE_ATTEMPT:
       return {
@@ -229,6 +236,12 @@ export default function trezor(state = {}, action) {
         performingOperation: false,
         deviceLabel: action.deviceLabel
       };
+    case TRZ_PURCHASETICKET_ATTEMPT:
+      return {
+        ...state,
+        performingOperation: true,
+        purchasingTickets: true
+      };
     case SIGNTX_FAILED:
     case SIGNTX_SUCCESS:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
@@ -246,6 +259,8 @@ export default function trezor(state = {}, action) {
     case TRZ_INITDEVICE_SUCCESS:
     case TRZ_BACKUPDEVICE_FAILED:
     case TRZ_BACKUPDEVICE_SUCCESS:
+    case TRZ_VOTINGXPRIVSEED_FAILED:
+    case TRZ_VOTINGXPRIVSEED_SUCCESS:
       return { ...state, performingOperation: false };
     case TRZ_UPDATEFIRMWARE_FAILED:
     case TRZ_UPDATEFIRMWARE_SUCCESS:
@@ -253,6 +268,13 @@ export default function trezor(state = {}, action) {
         ...state,
         performingOperation: false,
         performingUpdate: false
+      };
+    case TRZ_PURCHASETICKET_FAILED:
+    case TRZ_PURCHASETICKET_SUCCESS:
+      return {
+        ...state,
+        performingOperation: false,
+        purchasingTickets: false
       };
     case CLOSEWALLET_SUCCESS:
       return { ...state, enabled: false };
