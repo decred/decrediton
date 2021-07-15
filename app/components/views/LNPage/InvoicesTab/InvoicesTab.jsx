@@ -5,16 +5,19 @@ import { DescriptionHeader } from "layout";
 import { TextInput, DcrInput } from "inputs";
 import styles from "./InvoicesTab.module.css";
 import InvoiceRow from "./InvoiceRow/InvoiceRow";
-import BalanceHeader from "../BalanceHeader/BalanceHeader";
+import BalancesHeader from "../BalancesHeader";
 import { useInvoicesTab } from "./hooks";
 
 export const InvoicesTabHeader = () => (
   <DescriptionHeader
     description={
-      <T
-        id="ln.description.invoices"
-        m="Invoices (payment requests) created by this LN wallet."
-      />
+      <>
+        <T
+          id="ln.description.receive"
+          m="Generate a Lightning Invoice to receive DCR funds over the Lightning Network."
+        />
+        <BalancesHeader />
+      </>
     }
   />
 );
@@ -30,14 +33,12 @@ const InvoicesTab = () => {
     lastError,
     onValueChanged,
     onMemoChanged,
-    onAddInvoice,
-    channelBalances
+    onAddInvoice
   } = useInvoicesTab();
 
   return (
     <div className={styles.container}>
       <Subtitle title={<T id="ln.invoicesTab.balanceHeader" m="Balance" />} />
-      <BalanceHeader channelBalances={channelBalances} />
       <Subtitle
         title={<T id="ln.invoicesTab.addInvoiceHeader" m="Add Invoice" />}
       />

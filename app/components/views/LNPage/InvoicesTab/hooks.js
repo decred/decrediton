@@ -1,6 +1,4 @@
 import { useState } from "react";
-import * as sel from "selectors";
-import { useSelector } from "react-redux";
 import { useLNPage } from "../hooks";
 
 export function useInvoicesTab() {
@@ -37,8 +35,6 @@ export function useInvoicesTab() {
       });
   };
 
-  const channelBalances = useSelector(sel.lnChannelBalances);
-
   return {
     invoices,
     tsDate,
@@ -50,7 +46,6 @@ export function useInvoicesTab() {
     lastError,
     onValueChanged,
     onMemoChanged,
-    onAddInvoice,
-    channelBalances
+    onAddInvoice
   };
 }
