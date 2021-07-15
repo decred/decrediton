@@ -4,7 +4,7 @@ import { Switch, Redirect } from "react-router-dom";
 import { ConnectPage } from "./ConnectPage";
 import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
 import ChannelsTab, { ChannelsTabHeader } from "./ChannelsTab/ChannelsTab";
-import InvoicesTab, { InvoicesTabHeader } from "./InvoicesTab/InvoicesTab";
+import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
 import PaymentsTab, { PaymentsTabHeader } from "./PaymentsTab/PaymentsTab";
 import WatchtowersTab, {
   WatchtowersTabHeader
@@ -39,8 +39,8 @@ const LNActivePage = () => (
     />
     <Tab
       path="/ln/invoices"
-      component={InvoicesTab}
-      header={InvoicesTabHeader}
+      component={ReceiveTab}
+      header={ReceiveTabHeader}
       link={<T id="ln.tab.invoices" m="Invoices" />}
     />
     <Tab

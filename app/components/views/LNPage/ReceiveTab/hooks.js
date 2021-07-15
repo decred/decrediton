@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLNPage } from "../hooks";
 
-export function useInvoicesTab() {
+export function useReceiveTab() {
   const [atomValue, setAtomValue] = useState(0);
   const [memo, setMemo] = useState("");
   const [lastPayRequest, setLastPayRequest] = useState("");

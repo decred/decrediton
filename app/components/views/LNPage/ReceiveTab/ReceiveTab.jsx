@@ -3,12 +3,12 @@ import { CopyToClipboard, Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { DescriptionHeader } from "layout";
 import { TextInput, DcrInput } from "inputs";
-import styles from "./InvoicesTab.module.css";
+import styles from "./ReceiveTab.module.css";
 import InvoiceRow from "./InvoiceRow/InvoiceRow";
 import BalancesHeader from "../BalancesHeader";
-import { useInvoicesTab } from "./hooks";
+import { useReceiveTab } from "./hooks";
 
-export const InvoicesTabHeader = () => (
+export const ReceiveTabHeader = () => (
   <DescriptionHeader
     description={
       <>
@@ -22,7 +22,7 @@ export const InvoicesTabHeader = () => (
   />
 );
 
-const InvoicesTab = () => {
+const ReceiveTab = () => {
   const {
     invoices,
     tsDate,
@@ -34,7 +34,7 @@ const InvoicesTab = () => {
     onValueChanged,
     onMemoChanged,
     onAddInvoice
-  } = useInvoicesTab();
+  } = useReceiveTab();
 
   return (
     <div className={styles.container}>
@@ -91,4 +91,4 @@ const InvoicesTab = () => {
   );
 };
 
-export default InvoicesTab;
+export default ReceiveTab;
