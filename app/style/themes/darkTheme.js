@@ -316,7 +316,8 @@ const darkTheme = {
     require("style/icons/decentralizedLoopAnimationDark.gif")
   ),
   "self-transaction-icon": url(require("style/icons/sentToSelfTxDark.svg")),
-  "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg"))
+  "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg")),
+  "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg"))
 };
 
 export default darkTheme;

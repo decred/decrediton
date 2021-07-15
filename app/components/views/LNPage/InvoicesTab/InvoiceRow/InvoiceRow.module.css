@@ -1,37 +1,51 @@
 .lnInvoice {
-  margin-top: 1em;
-  background-color: var(--background-back-color);
-  padding: 1em 1em 1em 3em;
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr;
-  min-height: 40px;
+  background-color: var(--background-back-color);
+  padding: 15px 50px 13px 0;
+  grid-template-columns: 422px auto max-content;
+  min-height: 63px;
+  align-items: center;
+  background-image: var(--arrow-right-gray-icon);
+  background-position: right 26px center;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--disabled-background-color);
+  background-color: var(--background-back-color);
+  cursor: pointer;
 }
 
-.statusExpired {
-  border-left: 10px solid var(--vote-no-color);
-}
-
-.statusSettled {
-  border-left: 10px solid var(--accent-color);
-}
-
-.statusOpen {
-  border-left: 10px solid var(--blue-highlight-background);
+.lnInvoice:hover {
+  background-image: var(--arrow-right-blue-icon);
+  background-color: var(--tx-history-background-hover);
 }
 
 .value {
-  font-size: 32px;
+  padding-left: 57px;
+  background-image: var(--ln-invoice-icon);
+  background-size: 22px 22px;
+  background-position: 20px center;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--main-dark-blue);
 }
 
-.memo {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 18em;
+.value .balance {
+  display: inline;
 }
 
-.rhash {
+.value .rhash {
+  font-size: 13px;
+  line-height: 16px;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 18em;
-  color: var(--stroke-color-default);
+  color: var(--grey-5);
+  max-width: 267px;
+}
+
+.date {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: right;
+  color: var(--main-dark-blue);
 }

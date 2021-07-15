@@ -1,3 +1,7 @@
+.container {
+  width: 764px;
+}
+
 .lnAddInvoice {
   display: grid;
   grid-template-columns: 23fr 8fr 50px;

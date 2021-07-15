@@ -1,21 +1,25 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
-import { classNames } from "pi-ui";
+import { StatusTag } from "pi-ui";
 import styles from "./InvoiceRow.module.css";
 
 const InvoiceRow = ({ invoice, tsDate }) => (
-  <div
-    className={classNames(
-      styles.lnInvoice,
-      invoice.status === "expired"
-        ? styles.statusExpired
-        : invoice.status === "settled"
-        ? styles.statusSettled
-        : styles.statusOpen
-    )}>
+  <div className={styles.lnInvoice}>
     <div>
       <div className={styles.value}>
-        <Balance amount={invoice.value} />
+        <T
+          id="ln.invoicesTab.invoice.value"
+          m="Invoice for +{balance}"
+          values={{
+            balance: (
+              <Balance
+                amount={invoice.value}
+                classNameWrapper={styles.balance}
+              />
+            )
+          }}
+        />
+        <div className={styles.rhash}>{invoice.rHashHex}</div>
       </div>
       {!!(invoice.amtPaidAtoms && invoice.amtPaidAtoms !== invoice.value) && (
         <div>
@@ -23,27 +27,23 @@ const InvoiceRow = ({ invoice, tsDate }) => (
         </div>
       )}
     </div>
-    <div>
-      <div className={styles.memo}>{invoice.memo}</div>
-      <div className={styles.rhash}>{invoice.rHashHex}</div>
-    </div>
-    <div>
-      <div>
-        <T
-          id="ln.invoicesTab.invoice.creationDate"
-          m="{creationDate, date, medium} {creationDate, time, short}"
-          values={{ creationDate: tsDate(invoice.creationDate) }}
-        />
-      </div>
-      {!!invoice.settleDate && (
-        <div>
-          <T
-            id="ln.invoicesTab.invoice.settleDate"
-            m="{settleDate, date, medium} {settleDate, time, short}"
-            values={{ settleDate: tsDate(invoice.settleDate) }}
-          />
-        </div>
+    <div className={styles.status}>
+      {invoice.status === "settled" ? (
+        <StatusTag type="greenCheck" text="Received" />
+      ) : invoice.status === "expired" ? (
+        <StatusTag type="grayNegative" text="Expired" />
+      ) : invoice.status === "canceled" ? (
+        <StatusTag type="orangeNegativeCircled" text="Canceled" />
+      ) : (
+        <StatusTag type="bluePending" text="Not Paid Yet" />
       )}
+    </div>
+    <div className={styles.date}>
+      <T
+        id="ln.invoicesTab.invoice.creationDate"
+        m="{creationDate, date, medium} {creationDate, time, short}"
+        values={{ creationDate: tsDate(invoice.creationDate) }}
+      />
     </div>
   </div>
 );

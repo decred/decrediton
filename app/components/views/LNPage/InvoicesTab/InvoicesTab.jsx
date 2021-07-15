@@ -35,7 +35,7 @@ const InvoicesTab = () => {
   } = useInvoicesTab();
 
   return (
-    <>
+    <div className={styles.container}>
       <Subtitle title={<T id="ln.invoicesTab.balanceHeader" m="Balance" />} />
       <BalanceHeader channelBalances={channelBalances} />
       <Subtitle
@@ -86,7 +86,7 @@ const InvoicesTab = () => {
           <InvoiceRow key={inv.addIndex} invoice={inv} tsDate={tsDate} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

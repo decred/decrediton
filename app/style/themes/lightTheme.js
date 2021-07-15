@@ -304,7 +304,8 @@ const lightTheme = {
     require("style/icons/decentralizedLoopAnimation.gif")
   ),
   "self-transaction-icon": url(require("style/icons/sentToSelfTx.svg")),
-  "proposals-refresh-icon": url(require("style/icons/menuMixer.svg"))
+  "proposals-refresh-icon": url(require("style/icons/menuMixer.svg")),
+  "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg"))
 };
 
 export default lightTheme;
