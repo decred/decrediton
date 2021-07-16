@@ -3,17 +3,28 @@
 }
 
 .lnAddInvoice {
-  display: grid;
-  grid-template-columns: 23fr 8fr 50px;
-  grid-column-gap: 20px;
   background-color: var(--background-back-color);
   padding: 30px 40px;
-  margin-bottom: 4em;
 }
 
-.invoiceButton {
-  font-size: 30px;
-  padding: 12px;
+.lnAddInvoice .invoiceForm {
+  display: flex;
+  justify-content: space-between;
+}
+
+.amountInput {
+  max-width: 182px;
+}
+.amountInput input {
+  width: 182px;
+}
+
+.descInput {
+  margin: 0 !important;
+}
+
+.descInput input {
+  width: 402px;
 }
 
 .lastPayRequest {
@@ -29,11 +40,16 @@
 
 .lastError {
   color: var(--error-red);
-  padding: 1em 2em;
-  grid-column: 1 / 3;
+  padding: 1em 0 0 0;
 }
 
 .memo {
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0 30px 0;
 }

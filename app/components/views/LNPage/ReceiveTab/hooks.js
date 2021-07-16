@@ -1,5 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { defineMessages } from "react-intl";
 import { useLNPage } from "../hooks";
+import { useIntl } from "react-intl";
+import * as sel from "selectors";
+import { useSelector } from "react-redux";
+
+const messages = defineMessages({
+  capacityError: {
+    id: "ln.receiveTab.capacityError",
+    defaultMessage: "Cannot request more than total Receive capacity"
+  }
+});
 
 export function useReceiveTab() {
   const [atomValue, setAtomValue] = useState(0);
@@ -7,6 +18,9 @@ export function useReceiveTab() {
   const [lastPayRequest, setLastPayRequest] = useState("");
   const [value, setValue] = useState();
   const [lastError, setLastError] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [amountError, setAmountError] = useState("");
+  const intl = useIntl();
 
   const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
 
@@ -35,6 +49,20 @@ export function useReceiveTab() {
       });
   };
 
+  const { maxInboundAmount } = useSelector(sel.lnChannelBalances);
+
+  useEffect(() => {
+    setAmountError("");
+    if (isNaN(atomValue) || atomValue <= 0) {
+      setIsFormValid(false);
+    } else if (atomValue > maxInboundAmount) {
+      setAmountError(intl.formatMessage(messages.capacityError));
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [atomValue, maxInboundAmount, intl]);
+
   return {
     invoices,
     tsDate,
@@ -46,6 +74,9 @@ export function useReceiveTab() {
     lastError,
     onValueChanged,
     onMemoChanged,
-    onAddInvoice
+    onAddInvoice,
+    isFormValid,
+    amountError,
+    intl
   };
 }
