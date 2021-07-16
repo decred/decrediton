@@ -3,6 +3,11 @@ import { wallet, ln } from "wallet-preload-shim";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
 import { isNumber } from "lodash";
+import {
+  INVOICE_STATUS_SETTLED,
+  INVOICE_STATUS_EXPIRED,
+  INVOICE_STATUS_CANCELED
+} from "constants";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -555,6 +560,7 @@ export const addInvoice = (memo, value) => async (dispatch, getState) => {
 export const LNWALLET_INVOICE_SETTLED = "LNWALLET_INVOICE_SETTLED";
 export const LNWALLET_INVOICE_OPENED = "LNWALLET_INVOICE_OPENED";
 export const LNWALLET_INVOICE_EXPIRED = "LNWALLET_INVOICE_EXPIRED";
+export const LNWALLET_INVOICE_CANCELED = "LNWALLET_INVOICE_CANCELED";
 
 const subscribeToInvoices = () => (dispatch, getState) => {
   const client = getState().ln.client;
@@ -572,12 +578,14 @@ const subscribeToInvoices = () => (dispatch, getState) => {
     }
 
     let type = LNWALLET_INVOICE_OPENED;
-    if (inv.status === ln.INVOICE_STATUS_SETTLED) {
+    if (inv.status === INVOICE_STATUS_SETTLED) {
       type = LNWALLET_INVOICE_SETTLED;
-    } else if (inv.status === ln.INVOICE_STATUS_EXPIRED) {
+    } else if (inv.status === INVOICE_STATUS_EXPIRED) {
       // This doesn't really work. on STATUS_OPEN we need to setup a
       // timer to change the status to EXPIRED.
       type = LNWALLET_INVOICE_EXPIRED;
+    } else if (inv.status === INVOICE_STATUS_CANCELED) {
+      type = LNWALLET_INVOICE_CANCELED;
     }
 
     dispatch({ invoice: inv, invoices: newInvoices, type });

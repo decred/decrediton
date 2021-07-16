@@ -12,6 +12,13 @@ import {
   shimError
 } from "middleware/grpc/clientTracking";
 
+import {
+  INVOICE_STATUS_OPEN,
+  INVOICE_STATUS_SETTLED,
+  INVOICE_STATUS_EXPIRED,
+  INVOICE_STATUS_CANCELED
+} from "constants";
+
 export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
@@ -92,10 +99,6 @@ export const listClosedChannels = (client) =>
     })
   );
 
-export const INVOICE_STATUS_OPEN = "open";
-export const INVOICE_STATUS_SETTLED = "settled";
-export const INVOICE_STATUS_EXPIRED = "expired";
-
 const formatInvoice = (invoiceData) => {
   const inv = invoiceData.toObject();
   if (inv.paymentRequest.indexOf("[ERROR]") === 0) return null;
@@ -103,6 +106,10 @@ const formatInvoice = (invoiceData) => {
 
   if (inv.state === pb.Invoice.InvoiceState.SETTLED) {
     status = INVOICE_STATUS_SETTLED;
+  } else if (inv.state === pb.Invoice.InvoiceState.CANCELED) {
+    status = INVOICE_STATUS_CANCELED;
+  } else if (inv.state === pb.Invoice.InvoiceState.EXPIRED) {
+    status = INVOICE_STATUS_EXPIRED;
   } else if (inv.state === pb.Invoice.InvoiceState.OPEN) {
     const expiryTS = inv.creationDate + inv.expiry;
     if (new Date().getTime() / 1000 > expiryTS) {

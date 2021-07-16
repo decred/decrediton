@@ -145,3 +145,9 @@ export const PROXYTYPE_PAC = "PROXYTYPE_PAC";
 export const PROXYTYPE_HTTP = "PROXYTYPE_HTTP";
 export const PROXYTYPE_SOCKS4 = "PROXYTYPE_SOCKS4";
 export const PROXYTYPE_SOCKS5 = "PROXYTYPE_SOCKS5";
+
+// ln invoice status
+export const INVOICE_STATUS_OPEN = "open";
+export const INVOICE_STATUS_SETTLED = "settled";
+export const INVOICE_STATUS_EXPIRED = "expired";
+export const INVOICE_STATUS_CANCELED = "canceled";

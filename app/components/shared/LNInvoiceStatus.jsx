@@ -1,6 +1,11 @@
 import { StatusTag } from "pi-ui";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
+import {
+  INVOICE_STATUS_SETTLED,
+  INVOICE_STATUS_EXPIRED,
+  INVOICE_STATUS_CANCELED
+} from "constants";
 
 const messages = defineMessages({
   received: {
@@ -21,16 +26,16 @@ const messages = defineMessages({
   }
 });
 
-const LNInvoiceStatus = (status) => {
+const LNInvoiceStatus = ({ status }) => {
   const intl = useIntl();
-  return status === "settled" ? (
+  return status === INVOICE_STATUS_SETTLED ? (
     <StatusTag type="greenCheck" text={intl.formatMessage(messages.received)} />
-  ) : status === "expired" ? (
+  ) : status === INVOICE_STATUS_EXPIRED ? (
     <StatusTag
       type="grayNegative"
       text={intl.formatMessage(messages.expired)}
     />
-  ) : status === "canceled" ? (
+  ) : status === INVOICE_STATUS_CANCELED ? (
     <StatusTag
       type="orangeNegativeCircled"
       text={intl.formatMessage(messages.canceled)}
