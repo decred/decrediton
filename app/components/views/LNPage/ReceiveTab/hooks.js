@@ -20,6 +20,7 @@ export function useReceiveTab() {
   const [lastError, setLastError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [amountError, setAmountError] = useState("");
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
   const intl = useIntl();
 
   const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
@@ -77,6 +78,8 @@ export function useReceiveTab() {
     onAddInvoice,
     isFormValid,
     amountError,
+    selectedInvoice,
+    setSelectedInvoice,
     intl
   };
 }

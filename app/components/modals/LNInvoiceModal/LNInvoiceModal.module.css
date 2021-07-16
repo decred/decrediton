@@ -1,0 +1,67 @@
+.modal {
+  background-image: none;
+  padding: 30px 40px;
+  width: 764px;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  min-height: 335px;
+  max-height: calc(100% - 130px);
+  display: flex;
+  flex-direction: column;
+}
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.title {
+  font-size: 28px;
+  color: var(--grey-7);
+  line-height: 35px;
+}
+.date {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+}
+.dataGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+  align-items: center;
+  grid-row-gap: 5px;
+  margin: 19px 0 30px 0;
+}
+.dataGrid label {
+  color: var(--grey-7);
+}
+.amount {
+  font-size: 16px;
+  line-height: 22px;
+}
+.cancelInvoiceWrapper {
+  border-left: 1px solid var(--grey-3);
+  padding-left: 25px;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column: -1;
+}
+.cancelInvoice {
+  background-color: var(--grey-7) !important;
+  border-color: var(--grey-7) !important;
+}
+.requestCodeLabel {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+  margin-bottom: 10px;
+}

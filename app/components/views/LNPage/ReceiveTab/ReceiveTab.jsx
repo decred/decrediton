@@ -3,10 +3,11 @@ import { CopyToClipboard, Subtitle } from "shared";
 import { DescriptionHeader } from "layout";
 import { TextInput, DcrInput } from "inputs";
 import styles from "./ReceiveTab.module.css";
-import InvoiceRow from "./InvoiceRow/InvoiceRow";
+import InvoiceRow from "./InvoiceRow";
 import BalancesHeader from "../BalancesHeader";
 import { useReceiveTab } from "./hooks";
 import { PiUiButton } from "buttons";
+import { LNInvoiceModal } from "modals";
 
 const messages = defineMessages({
   requestedAmountLabel: {
@@ -55,7 +56,9 @@ const ReceiveTab = () => {
     onAddInvoice,
     intl,
     amountError,
-    isFormValid
+    isFormValid,
+    selectedInvoice,
+    setSelectedInvoice
   } = useReceiveTab();
 
   return (
@@ -73,9 +76,9 @@ const ReceiveTab = () => {
             placeholder={intl.formatMessage(
               messages.requestedAmountPlaceholder
             )}
-          showErrors={amountError && amountError}
-          invalid={amountError && amountError}
-          invalidMessage={amountError && amountError}
+            showErrors={amountError && amountError}
+            invalid={amountError && amountError}
+            invalidMessage={amountError && amountError}
           />
           <TextInput
             newBiggerFontStyle
@@ -101,7 +104,9 @@ const ReceiveTab = () => {
         )}
       </div>
       <div className={styles.buttonContainer}>
-        <PiUiButton onClick={onAddInvoice} disabled={addInvoiceAttempt || !isFormValid}>
+        <PiUiButton
+          onClick={onAddInvoice}
+          disabled={addInvoiceAttempt || !isFormValid}>
           <T id="ln.receiveTab.createInvoice" m="Create Invoice" />
         </PiUiButton>
       </div>
@@ -113,10 +118,24 @@ const ReceiveTab = () => {
         />
       )}
       <div>
-        {invoices.map((inv) => (
-          <InvoiceRow key={inv.addIndex} invoice={inv} tsDate={tsDate} />
+        {invoices.map((invoice) => (
+          <InvoiceRow
+            key={invoice.addIndex}
+            invoice={invoice}
+            tsDate={tsDate}
+            onClick={() => setSelectedInvoice(invoice)}
+          />
         ))}
       </div>
+      {selectedInvoice && (
+        <LNInvoiceModal
+          show={!!selectedInvoice}
+          onCancelModal={() => setSelectedInvoice(null)}
+          onCancelInvoice={() => console.log(selectedInvoice.paymentRequest)}
+          invoice={selectedInvoice}
+          tsDate={tsDate}
+        />
+      )}
     </div>
   );
 };

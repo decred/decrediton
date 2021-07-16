@@ -1,10 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
-import { StatusTag } from "pi-ui";
+import { Balance, LNInvoiceStatus } from "shared";
 import styles from "./InvoiceRow.module.css";
 
-const InvoiceRow = ({ invoice, tsDate }) => (
-  <div className={styles.lnInvoice}>
+const InvoiceRow = ({ invoice, tsDate, onClick }) => (
+  <div className={styles.lnInvoice} onClick={onClick}>
     <div>
       <div className={styles.value}>
         <T
@@ -28,15 +27,7 @@ const InvoiceRow = ({ invoice, tsDate }) => (
       )}
     </div>
     <div className={styles.status}>
-      {invoice.status === "settled" ? (
-        <StatusTag type="greenCheck" text="Received" />
-      ) : invoice.status === "expired" ? (
-        <StatusTag type="grayNegative" text="Expired" />
-      ) : invoice.status === "canceled" ? (
-        <StatusTag type="orangeNegativeCircled" text="Canceled" />
-      ) : (
-        <StatusTag type="bluePending" text="Not Paid Yet" />
-      )}
+      <LNInvoiceStatus status={invoice.status}/>
     </div>
     <div className={styles.date}>
       <T
