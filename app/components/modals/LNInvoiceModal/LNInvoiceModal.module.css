@@ -71,3 +71,39 @@
   color: var(--grey-7);
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 355px;
+    padding: 30px 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .dataGrid {
+    grid-template-columns: 2fr;
+  }
+  .cancelInvoiceWrapper {
+    grid-column: 2;
+    grid-row-start: initial;
+    grid-row-end: initial;
+    padding-left: 0;
+    border: none;
+    margin-top: 10px;
+  }
+  .dataGrid label {
+    grid-column: 1;
+  }
+  .amount {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .status {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .date {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}

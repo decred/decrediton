@@ -48,3 +48,16 @@
   text-align: right;
   color: var(--main-dark-blue);
 }
+
+@media screen and (max-width: 768px) {
+  .value .rhash {
+    max-width: 242px;
+  }
+  .lnInvoice {
+    grid-template-columns: 1fr;
+    grid-row-gap: 5px;
+  }
+  .status {
+    margin-left: 55px;
+  }
+}

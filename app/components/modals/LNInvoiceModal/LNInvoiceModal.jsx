@@ -36,7 +36,7 @@ const LNInvoiceModal = ({
           <T id="ln.invoiceModal.expirationTime" m="Expiration Time" />
         </label>
         <Balance amount={invoice?.value} classNameWrapper={styles.amount} />
-        <div>
+        <div className={styles.status}>
           <LNInvoiceStatus status={invoice?.status} />
         </div>
         <div className={styles.date}>

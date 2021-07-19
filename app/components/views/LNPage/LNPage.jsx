@@ -41,7 +41,7 @@ const LNActivePage = () => (
       path="/ln/invoices"
       component={ReceiveTab}
       header={ReceiveTabHeader}
-      link={<T id="ln.tab.invoices" m="Invoices" />}
+      link={<T id="ln.tab.receive" m="Receive" />}
     />
     <Tab
       path="/ln/payments"
