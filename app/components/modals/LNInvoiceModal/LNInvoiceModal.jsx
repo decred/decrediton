@@ -18,7 +18,7 @@ const LNInvoiceModal = ({
     cancelInvoiceAttempt || invoice?.status !== INVOICE_STATUS_OPEN;
   return (
     <Modal className={styles.modal} {...{ show, onCancelModal }}>
-      <div className={styles.closeButton} onClick={onCancelModal} />
+      <div className={styles.closeButton} onClick={onCancelModal} data-testid="lninvoice-close-button"/>
       <div className={styles.title}>
         <T id="ln.invoiceModal.title" m="Lightning Payment Request" />
       </div>

@@ -47,7 +47,7 @@ export function useReceiveTab() {
     addInvoice(memo, atomValue)
       .then(() => {
         setMemo("");
-        setValue(0);
+        setValue("");
       })
       .catch((error) => {
         setLastError(error);
