@@ -3696,11 +3696,11 @@ msgid "Improve the anonymity of your Decred.\nFunds in {unmixedAccount} are sent
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
+#. Under Review
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/AgendaOverview/ProgressIndicator.json

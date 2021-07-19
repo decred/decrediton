@@ -748,7 +748,7 @@
   "proposals.statusLinks.abandoned": "Abandonada",
   "proposals.statusLinks.allFinishedVote": "Todos",
   "proposals.statusLinks.approvedVote": "Approvado",
-  "proposals.statusLinks.preVote": "Em discussão",
+  "proposals.statusLinks.underReview": "Em Revisão",
   "proposals.statusLinks.rejectedVote": "Rejeitado",
   "proposals.statusLinks.underVote": "Em voto",
   "proposals.statusLinks.voted": "Votação encerrada",

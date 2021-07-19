@@ -3873,13 +3873,13 @@ msgstr ""
 "تحسين إخفاء هوية الديكريد الخاصة بك.\n"
 "يتم إرسال الأموال في {unmixedAccount} إلى {mixedAccount} بمجرد خلطه."
 
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
+#. Under Review
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
-msgstr "قيد المناقشة"
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
+msgstr "قيد المراجعة"
 
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:

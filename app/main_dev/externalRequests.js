@@ -49,17 +49,20 @@ export const installSessionHandlers = (mainLogger) => {
   // to allow electron to accept the self-signed cert as valid.
   // This MUST NOT go enabled into production, as it's a possible security
   // vulnerability, so any PRs enabling this by default will be rejected.
-  // if (process.env.NODE_ENV === "development") {
-  //   const app = require("electron").app;
-  //   app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
-  //     if (url.match(/^https:\/\/localhost:4443\/.*$/)) {
-  //       event.preventDefault();
-  //       callback(true);
-  //     } else {
-  //       callback(false);
-  //     }
-  //   });
-  // }
+  if (process.env.NODE_ENV === "development") {
+    const app = require("electron").app;
+    app.on(
+      "certificate-error",
+      (event, webContents, url, error, certificate, callback) => {
+        if (url.match(/^https:\/\/localhost:4443\/.*$/)) {
+          event.preventDefault();
+          callback(true);
+        } else {
+          callback(false);
+        }
+      }
+    );
+  }
 
   // TODO: check if this filtering is working even when multiple windows are
   // created (relevant to multi-wallet usage)

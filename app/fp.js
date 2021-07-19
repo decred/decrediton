@@ -10,7 +10,8 @@ export {
   map,
   keyBy,
   some,
-  uniq
+  uniq,
+  difference
 } from "lodash/fp";
 export { concat, isString, isNumber, cloneDeep } from "lodash";
 

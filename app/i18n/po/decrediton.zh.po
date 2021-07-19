@@ -3838,12 +3838,12 @@ msgstr ""
 "提高你的匿名性。\n"
 "{unmixedAccount}中的资金在混合后会被发送到{mixedAccount}。"
 
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
+#. Under Review
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
 msgstr "讨论中"
 
 #. [agenda.card.inProgressIndicator]

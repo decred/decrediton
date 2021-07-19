@@ -25,7 +25,8 @@ const ProposalsTab = () => {
     isTestnet,
     tab,
     getTokenAndInitialBatch,
-    compareInventory
+    resetInventoryAndProposals,
+    tabStatuses
   } = useProposalsTab();
 
   if (!politeiaEnabled) {
@@ -53,7 +54,7 @@ const ProposalsTab = () => {
                   placement="right">
                   <SmallButton
                     className={styles.refreshProposals}
-                    onClick={compareInventory}
+                    onClick={resetInventoryAndProposals}
                   />
                 </Tooltip>
               </div>
@@ -93,37 +94,26 @@ const ProposalsTab = () => {
       tabContentClassName={styles.tabContent}
       activeCaretClassName={styles.activeCaret}>
       <Tab
-        path="/governance/proposals/prevote"
-        component={h(ProposalsList, { tab })}
-        key="preVote"
+        path="/governance/proposals/review"
+        component={h(ProposalsList, { tab, tabStatuses })}
+        key="underReview"
         className={styles.tab}
         link={
-          <ListLink count={preVoteCount}>
-            <T id="proposals.statusLinks.preVote" m="In Discussion" />
-          </ListLink>
-        }
-      />
-      <Tab
-        path="/governance/proposals/activevote"
-        component={h(ProposalsList, { tab })}
-        key="activevote"
-        className={styles.tab}
-        link={
-          <ListLink count={activeVoteCount}>
-            <T id="proposals.statusLinks.underVote" m="Voting" />
+          <ListLink count={preVoteCount + activeVoteCount}>
+            <T id="proposals.statusLinks.underReview" m="Under Review" />
           </ListLink>
         }
       />
       <Tab
         path="/governance/proposals/voted"
-        component={h(ProposalsList, { finishedVote: true, tab })}
+        component={h(ProposalsList, { finishedVote: true, tab, tabStatuses })}
         key="activevote"
         className={styles.tab}
         link={<T id="proposals.statusLinks.voted" m="Finished Voting" />}
       />
       <Tab
         path="/governance/proposals/abandoned"
-        component={h(ProposalsList, { tab })}
+        component={h(ProposalsList, { tab, tabStatuses })}
         key="abandoned"
         className={styles.tab}
         link={<T id="proposals.statusLinks.abandoned" m="Abandoned" />}

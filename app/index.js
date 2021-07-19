@@ -391,7 +391,9 @@ const initialState = {
       approvedVote: [],
       finishedVote: [],
       preVote: [],
-      rejectedVote: []
+      rejectedVote: [],
+      unauthorizedVote: [],
+      authorizedVote: []
     },
     proposalsDetails: {},
     getProposalError: null,

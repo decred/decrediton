@@ -21,7 +21,7 @@ export default () => (
       <Redirect
         from="/governance/proposals"
         exact
-        to="/governance/proposals/prevote"
+        to="/governance/proposals/review"
       />
     </Switch>
 

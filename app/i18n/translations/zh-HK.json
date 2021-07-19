@@ -747,7 +747,7 @@
   "proposals.statusLinks.abandoned": "被放棄",
   "proposals.statusLinks.allFinishedVote": "全部",
   "proposals.statusLinks.approvedVote": "已通過",
-  "proposals.statusLinks.preVote": "討論中",
+  "proposals.statusLinks.underReview": "討論中",
   "proposals.statusLinks.rejectedVote": "已否決",
   "proposals.statusLinks.underVote": "投票中",
   "proposals.statusLinks.voted": "完成投票",

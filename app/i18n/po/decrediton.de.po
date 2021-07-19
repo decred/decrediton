@@ -3916,13 +3916,13 @@ msgstr ""
 "Verbessern Sie die Anonymität Ihrer DCR.\n"
 "Gelder in {unmixedAccount} werden nach dem Mischen an {mixedAccount} gesendet."
 
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
+#. Under Review
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
-msgstr "Unter Diskussion"
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
+msgstr "In Überarbeitung"
 
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:

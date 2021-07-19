@@ -757,7 +757,7 @@
   "proposals.statusLinks.abandoned": "مهجورة",
   "proposals.statusLinks.allFinishedVote": "الكل",
   "proposals.statusLinks.approvedVote": "مقبول",
-  "proposals.statusLinks.preVote": "قيد المناقشة",
+  "proposals.statusLinks.underReview": "قيد المراجعة",
   "proposals.statusLinks.rejectedVote": "مرفوض",
   "proposals.statusLinks.underVote": "التصويت",
   "proposals.statusLinks.voted": "انتهى التصويت",

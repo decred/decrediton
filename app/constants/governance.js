@@ -5,9 +5,11 @@ export const PROPOSAL_VOTING_ACTIVE = 3;
 export const PROPOSAL_VOTING_FINISHED = 4;
 export const PROPOSAL_VOTING_APPROVED = 5;
 export const PROPOSAL_VOTING_REJECTED = 6;
+export const PROPOSAL_VOTING_INELIGIBLE = 7;
 
 // Proposal statuses.
 export const PROPOSAL_STATUS_PUBLIC = 2;
+export const PROPOSAL_STATUS_CENSORED = 3;
 export const PROPOSAL_STATUS_ABANDONED = 4;
 
 // Proposal markdown index file name.
@@ -17,3 +19,4 @@ export const PROPOSAL_VOTE_METADATA_FILE = "votemetadata.json";
 
 // XXX get from politeia's API.
 export const PROPOSALS_MAX_PAGE_SIZE = 5;
+export const INVENTORY_MAX_PAGE_SIZE = 20;

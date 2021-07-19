@@ -757,7 +757,7 @@
   "proposals.statusLinks.abandoned": "放棄された",
   "proposals.statusLinks.allFinishedVote": "すべて",
   "proposals.statusLinks.approvedVote": "承認済み",
-  "proposals.statusLinks.preVote": "",
+  "proposals.statusLinks.underReview": "改訂中",
   "proposals.statusLinks.rejectedVote": "",
   "proposals.statusLinks.underVote": "",
   "proposals.statusLinks.voted": "",

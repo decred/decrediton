@@ -3824,13 +3824,13 @@ msgid ""
 "Funds in {unmixedAccount} are sent to {mixedAccount} once mixed."
 msgstr ""
 
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
+#. Under Review
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
-msgstr ""
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
+msgstr "改訂中"
 
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:

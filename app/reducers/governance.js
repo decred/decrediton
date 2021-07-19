@@ -5,7 +5,7 @@ import {
   GETPROPOSAL_FAILED,
   GETPROPOSAL_SUCCESS,
   REMOVED_PROPOSALS_FROM_LIST,
-  DISABLE_POLITEIA_SUCCESS,
+  RESET_POLITEIA_SUCCESS,
   COMPARE_INVENTORY_SUCCESS,
   GETPROPROSAL_UPDATEVOTESTATUS_SUCCESS,
   GETPROPROSAL_UPDATEVOTESTATUS_FAILED,
@@ -94,7 +94,7 @@ export default function governance(state = {}, action) {
         lastPoliteiaAccessTime: action.lastPoliteiaAccessTime,
         lastPoliteiaAccessBlock: action.lastPoliteiaAccessBlock
       };
-    case DISABLE_POLITEIA_SUCCESS:
+    case RESET_POLITEIA_SUCCESS:
       return {
         ...state,
         inventory: [],
@@ -102,7 +102,11 @@ export default function governance(state = {}, action) {
           activeVote: [],
           abandonedVote: [],
           preVote: [],
-          finishedVote: []
+          finishedVote: [],
+          authorizedVote: [],
+          rejectedVote: [],
+          unauthorizedVote: [],
+          approvedVote: []
         }
       };
     case COMPARE_INVENTORY_SUCCESS:

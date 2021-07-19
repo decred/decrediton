@@ -3902,13 +3902,13 @@ msgstr ""
 "Migliora l'anonimità dei tuoi Decred.\n"
 "Una volta miscelati, i fondi in {unmixedAccount} vengono inviati a {mixedAccount}."
 
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
+#. Under Review
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
-msgstr "In discussione"
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
+msgstr "In revisione"
 
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:

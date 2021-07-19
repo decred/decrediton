@@ -4,7 +4,13 @@ import ProposalsListItem from "../ProposalsListItem";
 import { useProposalsList } from "../hooks";
 import { LoadingError } from "shared";
 import styles from "./ProposalsList.module.css";
-import { useCallback, useLayoutEffect, useState, useEffect } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useState,
+  useEffect,
+  useMemo
+} from "react";
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 
@@ -23,7 +29,7 @@ const getProposalTypes = () => [
   }
 ];
 
-const ProposalsList = ({ finishedVote, tab }) => {
+const ProposalsList = ({ finishedVote, tab, tabStatuses }) => {
   const [selectedFilter, setSelectedFilter] = useState(tab);
   const {
     getProposalError,
@@ -56,6 +62,12 @@ const ProposalsList = ({ finishedVote, tab }) => {
     }
   }, [isScrollable, noMoreProposals, node, loadMore]);
 
+  const proposalsList = useMemo(
+    () =>
+      tabStatuses.reduce((acc, status) => [...acc, ...proposals[status]], []),
+    [tabStatuses, proposals]
+  );
+
   switch (state.value) {
     case "idle":
       return <NoProposals />;
@@ -66,9 +78,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
         </div>
       );
     case "success":
-      return proposals &&
-        proposals[selectedFilter] &&
-        proposals[selectedFilter].length ? (
+      return proposals && proposalsList && proposalsList.length ? (
         <>
           {tab === "finishedVote" && (
             <div className={styles.filters}>
@@ -87,7 +97,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
               useWindow={false}
               threshold={300}>
               <div className={styles.proposalList}>
-                {proposals[selectedFilter].map((v) => (
+                {proposalsList.map((v) => (
                   <ProposalsListItem
                     key={v.token}
                     {...v}

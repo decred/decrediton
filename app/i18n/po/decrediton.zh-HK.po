@@ -3802,12 +3802,12 @@ msgstr ""
 "加強你的DCR的匿名性。\n"
 "一旦完成混幣， {unmixedAccount} 裡的款項將發送到 {mixedAccount} 。"
 
-#. [proposals.statusLinks.preVote]
+#. [proposals.statusLinks.underReview]
 #. defaultMessage is:
-#. In Discussion
+#. Under Review
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/ProposalsTab.json
-msgctxt "proposals.statusLinks.preVote"
-msgid "In Discussion"
+msgctxt "proposals.statusLinks.underReview"
+msgid "Under Review"
 msgstr "討論中"
 
 #. [agenda.card.inProgressIndicator]

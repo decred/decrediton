@@ -1,14 +1,17 @@
 import { push as pushHistory } from "connected-react-router";
 import { wallet, politeia as pi } from "wallet-preload-shim";
-import { cloneDeep } from "fp";
+import { cloneDeep, uniq } from "fp";
 import * as sel from "selectors";
 import { hexReversedHashToArray, parseRawProposal } from "helpers";
 import {
+  PROPOSAL_VOTING_NOT_AUTHORIZED,
+  PROPOSAL_VOTING_AUTHORIZED,
   PROPOSAL_VOTING_ACTIVE,
   PROPOSAL_VOTING_FINISHED,
   PROPOSAL_VOTING_APPROVED,
   PROPOSAL_VOTING_REJECTED,
   PROPOSAL_STATUS_ABANDONED,
+  PROPOSAL_STATUS_CENSORED,
   PROPOSAL_METADATA_FILE,
   PROPOSAL_VOTE_METADATA_FILE
 } from "constants";
@@ -30,7 +33,9 @@ const defaultInventory = {
   finishedVote: [],
   preVote: [],
   approvedVote: [],
-  rejectedVote: []
+  rejectedVote: [],
+  unauthorizedVote: [],
+  authorizedVote: []
 };
 
 // getDefaultInventory gets the inventory default's state.
@@ -128,17 +133,37 @@ const getProposalEligibleTickets = async (
 // updateInventoryFromApiData receives politeia data from getVotesInventory and
 // put it in decrediton's inventory format.
 // @param data - data from getVotesInventory api.
-const updateInventoryFromApiData = (data) => {
+const updateInventoryFromApiData = (data, oldInventory = {}) => {
   const inventory = getDefaultInventory();
-  inventory.preVote = [
-    ...((data && data.vetted && data.vetted.authorized) || []),
+
+  inventory.authorizedVote = uniq([
+    ...(oldInventory.authorizedVote || []),
+    ...((data && data.vetted && data.vetted.authorized) || [])
+  ]);
+  inventory.unauthorizedVote = uniq([
+    ...(oldInventory.unauthorizedVote || []),
     ...((data && data.vetted && data.vetted.unauthorized) || [])
+  ]);
+  inventory.activeVote = uniq([
+    ...(oldInventory.activeVote || []),
+    ...((data && data.vetted && data.vetted.started) || [])
+  ]);
+  inventory.abandonedVote = uniq([
+    ...(oldInventory.abandonedVote || []),
+    ...((data && data.vetted && data.vetted.ineligible) || [])
+  ]);
+  inventory.approvedVote = uniq([
+    ...(oldInventory.approvedVote || []),
+    ...((data && data.vetted && data.vetted.approved) || [])
+  ]);
+  inventory.rejectedVote = uniq([
+    ...(oldInventory.rejectedVote || []),
+    ...((data && data.vetted && data.vetted.rejected) || [])
+  ]);
+  inventory.preVote = [
+    ...inventory.authorizedVote,
+    ...inventory.unauthorizedVote
   ];
-  inventory.activeVote = (data && data.vetted && data.vetted.started) || [];
-  inventory.abandonedVote =
-    (data && data.vetted && data.vetted.ineligible) || [];
-  inventory.approvedVote = (data && data.vetted && data.vetted.approved) || [];
-  inventory.rejectedVote = (data && data.vetted && data.vetted.rejected) || [];
   inventory.finishedVote = [
     ...inventory.approvedVote,
     ...inventory.rejectedVote
@@ -151,12 +176,16 @@ export const GETVOTES_INVENTORY_ATTEMPT = "GETVOTES_INVENTORY_ATTEMPT";
 export const GETVOTES_INVENTORY_SUCCESS = "GETVOTES_INVENTORY_SUCCESS";
 export const GETVOTES_INVENTORY_FAILED = "GETVOTES_INVENTORY_FAILED";
 
-const getVotesInventory = () => async (dispatch, getState) => {
+export const getVotesInventory = (status, page) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: GETVOTES_INVENTORY_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
+  const oldInventory = sel.inventory(getState()) || {};
   try {
-    const { data } = await pi.getVotesInventory({ piURL });
-    const inventory = updateInventoryFromApiData(data);
+    const { data } = await pi.getVotesInventory({ piURL, status, page });
+    const inventory = updateInventoryFromApiData(data, oldInventory);
 
     dispatch({ type: GETVOTES_INVENTORY_SUCCESS, inventory });
 
@@ -258,25 +287,38 @@ export const compareInventory = () => async (dispatch, getState) => {
 // getInitialBatch Gets the first pre and active proposals batch
 const getInitialBatch = () => async (dispatch, getState) => {
   const inventory = sel.inventory(getState());
-  if (!inventory || (!inventory.activeVote && !inventory.preVote)) return;
+  if (
+    !inventory ||
+    (!inventory.activeVote &&
+      !inventory.authorizedVote &&
+      !inventory.unauthorizedVote)
+  )
+    return;
 
   const proposallistpagesize = sel.proposallistpagesize(getState());
-  const { activeVote: active, preVote: pre } = inventory;
+  const {
+    activeVote: active,
+    unauthorizedVote: unauthorized,
+    authorizedVote: authorized
+  } = inventory;
 
   const activeVoteBatch = active.slice(0, proposallistpagesize);
-  const preVoteBatch = pre.slice(0, proposallistpagesize);
-  const activeAndPreVoteBatch = [...activeVoteBatch, ...preVoteBatch];
-  if (
-    activeAndPreVoteBatch.length &&
-    activeAndPreVoteBatch.length < proposallistpagesize
-  ) {
+  const unauthorizedVoteBatch = unauthorized.slice(0, proposallistpagesize);
+  const authorizedVoteBatch = authorized.slice(0, proposallistpagesize);
+  const activeAndPreVoteBatch = [
+    ...activeVoteBatch,
+    ...authorizedVoteBatch,
+    ...unauthorizedVoteBatch
+  ];
+  if (activeAndPreVoteBatch.length <= proposallistpagesize) {
     await dispatch(getProposalsAndUpdateVoteStatus(activeAndPreVoteBatch));
-    return;
   }
   if (activeVoteBatch.length)
     await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
-  if (preVoteBatch.length)
-    await dispatch(getProposalsAndUpdateVoteStatus(preVoteBatch));
+  if (authorizedVoteBatch.length)
+    await dispatch(getProposalsAndUpdateVoteStatus(authorizedVoteBatch));
+  if (unauthorizedVoteBatch.length)
+    await dispatch(getProposalsAndUpdateVoteStatus(unauthorizedVoteBatch));
 };
 
 // getVoteOption gets the wallet vote if cached or return abstain.
@@ -333,10 +375,10 @@ export const getTokenAndInitialBatch = () => async (dispatch, getState) => {
   }
 };
 
-export const DISABLE_POLITEIA_SUCCESS = "DISABLE_POLITEIA_SUCCESS";
+export const RESET_POLITEIA_SUCCESS = "RESET_POLITEIA_SUCCESS";
 
 export const resetInventoryAndProposals = () => (dispatch) => {
-  dispatch({ type: DISABLE_POLITEIA_SUCCESS });
+  dispatch({ type: RESET_POLITEIA_SUCCESS });
 };
 
 export const GET_PROPOSAL_BATCH_ATTEMPT = "GET_PROPOSAL_BATCH_ATTEMPT";
@@ -461,7 +503,10 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
       }
 
       // if proposal is not abandoned we check its votestatus
-      if (prop.proposalStatus === PROPOSAL_STATUS_ABANDONED) {
+      if (
+        prop.proposalStatus === PROPOSAL_STATUS_ABANDONED ||
+        prop.proposalStatus === PROPOSAL_STATUS_CENSORED
+      ) {
         proposalsUpdated.abandonedVote.push(prop);
       } else {
         switch (status) {
@@ -469,13 +514,20 @@ export const getProposalsAndUpdateVoteStatus = (tokensBatch) => async (
             proposalsUpdated.activeVote.push(prop);
             break;
           case PROPOSAL_VOTING_REJECTED:
-          case PROPOSAL_VOTING_APPROVED:
+            proposalsUpdated.rejectedVote.push(prop);
             proposalsUpdated.finishedVote.push(prop);
-            if (status === PROPOSAL_VOTING_APPROVED) {
-              proposalsUpdated.approvedVote.push(prop);
-            } else {
-              proposalsUpdated.rejectedVote.push(prop);
-            }
+            break;
+          case PROPOSAL_VOTING_APPROVED:
+            proposalsUpdated.approvedVote.push(prop);
+            proposalsUpdated.finishedVote.push(prop);
+            break;
+          case PROPOSAL_VOTING_AUTHORIZED:
+            proposalsUpdated.authorizedVote.push(prop);
+            proposalsUpdated.preVote.push(prop);
+            break;
+          case PROPOSAL_VOTING_NOT_AUTHORIZED:
+            proposalsUpdated.unauthorizedVote.push(prop);
+            proposalsUpdated.preVote.push(prop);
             break;
           default:
             proposalsUpdated.preVote.push(prop);
