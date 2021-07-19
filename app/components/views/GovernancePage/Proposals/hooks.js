@@ -192,6 +192,8 @@ export function useProposalsList(tab) {
       return;
     }
     if (noInventoryFetched) {
+      setCurrentPage(1);
+      setStatusIndex(0);
       send("RESET");
       return;
     }
@@ -207,7 +209,7 @@ export function useProposalsList(tab) {
       setStatusIndex(0);
       return;
     }
-    if (hasAnotherStatus) {
+    if (hasAnotherStatus && !unfetchedTokens.length) {
       setStatusIndex(statusIndex + 1);
     }
     if (previous.getProposalError != getProposalError) {
@@ -222,7 +224,8 @@ export function useProposalsList(tab) {
     inventoryError,
     hasAnotherStatus,
     statusIndex,
-    noInventoryFetched
+    noInventoryFetched,
+    unfetchedTokens
   ]);
 
   const loadMore = useCallback(() => send("FETCH"), [send]);

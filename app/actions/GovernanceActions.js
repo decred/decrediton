@@ -219,23 +219,11 @@ const getInitialBatch = () => async (dispatch, getState) => {
     authorizedVote: authorized
   } = inventory;
 
-  const activeVoteBatch = active.slice(0, proposallistpagesize);
-  const unauthorizedVoteBatch = unauthorized.slice(0, proposallistpagesize);
-  const authorizedVoteBatch = authorized.slice(0, proposallistpagesize);
-  const activeAndPreVoteBatch = [
-    ...activeVoteBatch,
-    ...authorizedVoteBatch,
-    ...unauthorizedVoteBatch
-  ];
-  if (activeAndPreVoteBatch.length <= proposallistpagesize) {
-    await dispatch(getProposalsAndUpdateVoteStatus(activeAndPreVoteBatch));
-  }
-  if (activeVoteBatch.length)
-    await dispatch(getProposalsAndUpdateVoteStatus(activeVoteBatch));
-  if (authorizedVoteBatch.length)
-    await dispatch(getProposalsAndUpdateVoteStatus(authorizedVoteBatch));
-  if (unauthorizedVoteBatch.length)
-    await dispatch(getProposalsAndUpdateVoteStatus(unauthorizedVoteBatch));
+  const initialTokens = [...active, ...authorized, ...unauthorized].slice(
+    0,
+    proposallistpagesize
+  );
+  await dispatch(getProposalsAndUpdateVoteStatus(initialTokens));
 };
 
 // getVoteOption gets the wallet vote if cached or return abstain.
