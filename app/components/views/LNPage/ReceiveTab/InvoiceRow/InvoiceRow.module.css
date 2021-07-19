@@ -10,7 +10,6 @@
   background-size: 5px;
   background-repeat: no-repeat;
   border-bottom: 1px solid var(--disabled-background-color);
-  background-color: var(--background-back-color);
   cursor: pointer;
 }
 
