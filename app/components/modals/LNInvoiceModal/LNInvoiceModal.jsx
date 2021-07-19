@@ -4,7 +4,7 @@ import { CopyableText, classNames } from "pi-ui";
 import styles from "./LNInvoiceModal.module.css";
 import { Balance, LNInvoiceStatus, FormattedRelative } from "shared";
 import { PiUiButton } from "buttons";
-import { INVOICE_STATUS_OPEN } from "constants";
+import { INVOICE_STATUS_OPEN, INVOICE_STATUS_SETTLED } from "constants";
 
 const LNInvoiceModal = ({
   show,
@@ -33,7 +33,11 @@ const LNInvoiceModal = ({
           <T id="ln.invoiceModal.date" m="Date" />
         </label>
         <label>
-          <T id="ln.invoiceModal.expirationTime" m="Expiration Time" />
+          {invoice.status === INVOICE_STATUS_SETTLED ? (
+            <T id="ln.invoiceModal.settleDateLabel" m="Settle Date" />
+          ) : (
+            <T id="ln.invoiceModal.expirationTime" m="Expiration Time" />
+          )}
         </label>
         <Balance amount={invoice?.value} classNameWrapper={styles.amount} />
         <div className={styles.status}>
@@ -46,14 +50,24 @@ const LNInvoiceModal = ({
             values={{ creationDate: tsDate(invoice?.creationDate) }}
           />
         </div>
-        {invoice?.creationDate + invoice?.expiry < Date.now() / 1000 ? (
-          <T id="ln.invoicesModal.expired" m="Expired " />
+        {invoice.status === INVOICE_STATUS_SETTLED ? (
+          <T
+            id="ln.invoicesModal.settleDate"
+            m="{settleDate, date, medium} {settleDate, time, short}"
+            values={{ settleDate: tsDate(invoice?.settleDate) }}
+          />
         ) : (
-          <T id="ln.invoicesModal.expires" m="Expires " />
+          <>
+            {invoice?.creationDate + invoice?.expiry < Date.now() / 1000 ? (
+              <T id="ln.invoicesModal.expired" m="Expired " />
+            ) : (
+              <T id="ln.invoicesModal.expires" m="Expires " />
+            )}
+            <FormattedRelative
+              value={tsDate(invoice?.creationDate + invoice?.expiry)}
+            />
+          </>
         )}
-        <FormattedRelative
-          value={tsDate(invoice?.creationDate + invoice?.expiry)}
-        />
         <div className={styles.cancelInvoiceWrapper}>
           <PiUiButton
             className={classNames(
