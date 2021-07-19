@@ -290,7 +290,7 @@ const connectToLNWallet = (
   // Attempt to connect to the lnrpc service of the wallet. Since the underlying
   // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
   // need to try a few times until we get a proper connection.
-  let lnClient, wtClient;
+  let lnClient, wtClient, inClient;
   let lastError;
   for (let i = 0; i < sleepCount; i++) {
     try {
@@ -306,7 +306,12 @@ const connectToLNWallet = (
         certPath,
         macaroonPath
       );
-
+      inClient = await ln.getLNInvoiceClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
       // Force a getInfo call to ensure we're connected and the server provides
       // the Lightning service.
       await ln.getInfo(lnClient);
@@ -352,7 +357,7 @@ const connectToLNWallet = (
     );
   }
 
-  dispatch({ lnClient, wtClient, type: LNWALLET_CONNECT_SUCCESS });
+  dispatch({ lnClient, wtClient, inClient, type: LNWALLET_CONNECT_SUCCESS });
 
   return { client: lnClient, wtClient };
 };
@@ -554,6 +559,24 @@ export const addInvoice = (memo, value) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ error, type: LNWALLET_ADDINVOICE_FAILED });
     throw error;
+  }
+};
+
+export const LNWALLET_CANCELINVOICE_ATTEMPT = "LNWALLET_CANCELINVOICE_ATTEMPT";
+export const LNWALLET_CANCELINVOICE_SUCCESS = "LNWALLET_CANCELINVOICE_SUCCESS";
+export const LNWALLET_CANCELINVOICE_FAILED = "LNWALLET_CANCELINVOICE_FAILED";
+
+export const cancelInvoice = (paymentHash) => async (dispatch, getState) => {
+  const inClient = getState().ln.inClient;
+  if (!inClient) return;
+
+  dispatch({ type: LNWALLET_CANCELINVOICE_ATTEMPT });
+  try {
+    await ln.cancelInvoice(inClient, paymentHash);
+    dispatch(listLatestInvoices());
+    dispatch({ type: LNWALLET_CANCELINVOICE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_CANCELINVOICE_FAILED });
   }
 };
 

@@ -2,6 +2,7 @@ import * as client from "middleware/ln/client";
 import fs from "fs";
 import { lnrpc as pb } from "middleware/ln/rpc_pb";
 import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
+import { invoicesrpc as inpb } from "middleware/ln/invoices_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 import { invoke, shimStreamedResponse } from "helpers/electronRenderer";
@@ -22,6 +23,7 @@ import {
 export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
+export const getLNInvoiceClient = client.getLNInvoiceClient;
 
 export * from "./watchtower";
 
@@ -179,6 +181,12 @@ export const addInvoice = (client, memo, value) => {
   request.setMemo(memo);
   request.setValue(value);
   return simpleRequest(client, "addInvoice", request);
+};
+
+export const cancelInvoice = (inClient, paymentHash) => {
+  const request = new inpb.CancelInvoiceMsg();
+  request.setPaymentHash(paymentHash);
+  return simpleRequest(inClient, "cancelInvoice", request);
 };
 
 export const subscribeToInvoices = (client) => {

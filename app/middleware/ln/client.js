@@ -10,6 +10,9 @@ const services = grpc.loadPackageDefinition(proto).lnrpc;
 const wuProto = require("./walletunlocker_grpc_pb.js");
 const wuServices = grpc.loadPackageDefinition(wuProto).lnrpc;
 
+const inProto = require("./invoices_grpc_pb.js");
+const inServices = grpc.loadPackageDefinition(inProto).invoicesrpc;
+
 const wtProto = require("./wtclient_grpc_pb.js");
 const wtServices = grpc.loadPackageDefinition(wtProto).wtclientrpc;
 
@@ -87,3 +90,4 @@ export const getWatchtowerClient = getServiceClient(
 export const getWalletUnlockerClient = getServiceClient(
   wuServices.WalletUnlocker
 );
+export const getLNInvoiceClient = getServiceClient(inServices.Invoices);

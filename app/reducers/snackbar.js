@@ -155,7 +155,9 @@ import {
   LNWALLET_ADDWATCHTOWER_FAILED,
   LNWALLET_REMOVEWATCHTOWER_SUCCESS,
   LNWALLET_REMOVEWATCHTOWER_FAILED,
-  LNWALLET_LISTWATCHTOWERS_FAILED
+  LNWALLET_LISTWATCHTOWERS_FAILED,
+  LNWALLET_CANCELINVOICE_SUCCESS,
+  LNWALLET_CANCELINVOICE_FAILED
 } from "actions/LNActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
@@ -559,6 +561,14 @@ const messages = defineMessages({
     id: "ln.ntf.listWatchtowerFailed",
     defaultMessage: "Failed to list watchtowers: {originalError}"
   },
+  LNWALLET_CANCELINVOICE_SUCCESS: {
+    id: "ln.ntf.cancelInvoiceSuccess",
+    defaultMessage: "Invoice successfully canceled!"
+  },
+  LNWALLET_CANCELINVOICE_FAILED: {
+    id: "ln.ntf.cancelInvoiceFailed",
+    defaultMessage: "Failed to cancel invoice: {originalError}"
+  },
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
     defaultMessage:
@@ -750,6 +760,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_VERIFYBACKUP_SUCCESS:
     case LNWALLET_ADDWATCHTOWER_SUCCESS:
     case LNWALLET_REMOVEWATCHTOWER_SUCCESS:
+    case LNWALLET_CANCELINVOICE_SUCCESS:
     case UPDATEVOTECHOICE_SUCCESS:
     case CREATEMIXERACCOUNTS_SUCCESS:
     case SYNCVSPTICKETS_SUCCESS:
@@ -878,6 +889,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_ADDWATCHTOWER_FAILED:
     case LNWALLET_REMOVEWATCHTOWER_FAILED:
     case LNWALLET_LISTWATCHTOWERS_FAILED:
+    case LNWALLET_CANCELINVOICE_FAILED:
     case RUNACCOUNTMIXER_FAILED:
     case SYNCVSPTICKETS_FAILED:
     case PROCESSMANAGEDTICKETS_FAILED:

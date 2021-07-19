@@ -27,7 +27,7 @@ const InvoiceRow = ({ invoice, tsDate, onClick }) => (
       )}
     </div>
     <div className={styles.status}>
-      <LNInvoiceStatus status={invoice.status}/>
+      <LNInvoiceStatus status={invoice.status} />
     </div>
     <div className={styles.date}>
       <T

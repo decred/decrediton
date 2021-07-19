@@ -15,7 +15,6 @@ const messages = defineMessages({
 export function useReceiveTab() {
   const [atomValue, setAtomValue] = useState(0);
   const [memo, setMemo] = useState("");
-  const [lastPayRequest, setLastPayRequest] = useState("");
   const [value, setValue] = useState();
   const [lastError, setLastError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
@@ -23,7 +22,14 @@ export function useReceiveTab() {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const intl = useIntl();
 
-  const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
+  const {
+    invoices,
+    tsDate,
+    addInvoiceAttempt,
+    cancelInvoiceAttempt,
+    addInvoice,
+    cancelInvoice
+  } = useLNPage();
 
   const onValueChanged = ({ atomValue }) => setAtomValue(atomValue);
 
@@ -37,17 +43,22 @@ export function useReceiveTab() {
   };
 
   const onAddInvoice = () => {
-    setLastPayRequest("");
     setLastError(null);
     addInvoice(memo, atomValue)
-      .then((payReq) => {
+      .then(() => {
         setMemo("");
         setValue(0);
-        setLastPayRequest(payReq.paymentRequest);
       })
       .catch((error) => {
         setLastError(error);
       });
+  };
+
+  const onCancelInvoice = ({ rHash }) => {
+    cancelInvoice(rHash).then(() =>
+      // close the modal
+      setSelectedInvoice(null)
+    );
   };
 
   const { maxInboundAmount } = useSelector(sel.lnChannelBalances);
@@ -71,7 +82,8 @@ export function useReceiveTab() {
     atomValue,
     memo,
     addInvoiceAttempt,
-    lastPayRequest,
+    onCancelInvoice,
+    cancelInvoiceAttempt,
     lastError,
     onValueChanged,
     onMemoChanged,

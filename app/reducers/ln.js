@@ -13,6 +13,9 @@ import {
   LNWALLET_ADDINVOICE_ATTEMPT,
   LNWALLET_ADDINVOICE_SUCCESS,
   LNWALLET_ADDINVOICE_FAILED,
+  LNWALLET_CANCELINVOICE_ATTEMPT,
+  LNWALLET_CANCELINVOICE_SUCCESS,
+  LNWALLET_CANCELINVOICE_FAILED,
   LNWALLET_INVOICE_SETTLED,
   LNWALLET_INVOICE_OPENED,
   LNWALLET_INVOICE_EXPIRED,
@@ -57,6 +60,7 @@ export default function ln(state = {}, action) {
         active: false,
         client: null,
         wtClient: null,
+        inClient: null,
         startupStage: null
       };
     case LNWALLET_STARTUP_FAILED:
@@ -91,7 +95,8 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         client: action.lnClient,
-        wtClient: action.wtClient
+        wtClient: action.wtClient,
+        inClient: action.inClient
       };
     case LNWALLET_BALANCE_UPDATED:
       return {
@@ -134,6 +139,21 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         addInvoiceAttempt: false
+      };
+    case LNWALLET_CANCELINVOICE_ATTEMPT:
+      return {
+        ...state,
+        cancelInvoiceAttempt: true
+      };
+    case LNWALLET_CANCELINVOICE_SUCCESS:
+      return {
+        ...state,
+        cancelInvoiceAttempt: false
+      };
+    case LNWALLET_CANCELINVOICE_FAILED:
+      return {
+        ...state,
+        cancelInvoiceAttempt: false
       };
     case LNWALLET_INVOICE_SETTLED:
     case LNWALLET_INVOICE_OPENED:
@@ -187,6 +207,7 @@ export default function ln(state = {}, action) {
         exists: false,
         client: null,
         wtClient: null,
+        inClient: null,
         channels: [],
         pendingChannels: [],
         closedChannels: [],

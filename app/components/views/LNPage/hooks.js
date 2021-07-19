@@ -18,6 +18,7 @@ export function useLNPage() {
   const failedPayments = useSelector(sel.lnFailedPayments);
   const tsDate = useSelector(sel.tsDate);
   const addInvoiceAttempt = useSelector(sel.lnAddInvoiceAttempt);
+  const cancelInvoiceAttempt = useSelector(sel.lnCancelInvoiceAttempt);
   const info = useSelector(sel.lnInfo);
   const defaultAccount = useSelector(sel.defaultSpendingAccount);
   const lightningWalletExists = useSelector(sel.lnWalletExists);
@@ -34,6 +35,10 @@ export function useLNPage() {
   );
   const addInvoice = useCallback(
     (memo, value) => dispatch(lna.addInvoice(memo, value)),
+    [dispatch]
+  );
+  const cancelInvoice = useCallback(
+    (paymentHash) => dispatch(lna.cancelInvoice(paymentHash)),
     [dispatch]
   );
   const decodePayRequest = useCallback(
@@ -91,6 +96,7 @@ export function useLNPage() {
     failedPayments,
     tsDate,
     addInvoiceAttempt,
+    cancelInvoiceAttempt,
     info,
     defaultAccount,
     lightningWalletExists,
@@ -99,6 +105,7 @@ export function useLNPage() {
     scbUpdatedTime,
     updateWalletBalances,
     addInvoice,
+    cancelInvoice,
     decodePayRequest,
     sendPayment,
     openChannel,

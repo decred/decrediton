@@ -59,6 +59,12 @@
   background-color: var(--grey-7) !important;
   border-color: var(--grey-7) !important;
 }
+.cancelInvoice:hover {
+  opacity: 0.85;
+}
+.cancelInvoice.disabled {
+  opacity: 0.5;
+}
 .requestCodeLabel {
   font-size: 13px;
   line-height: 16px;

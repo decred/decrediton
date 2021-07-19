@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { CopyToClipboard, Subtitle } from "shared";
+import { Subtitle } from "shared";
 import { DescriptionHeader } from "layout";
 import { TextInput, DcrInput } from "inputs";
 import styles from "./ReceiveTab.module.css";
@@ -49,11 +49,12 @@ const ReceiveTab = () => {
     value,
     memo,
     addInvoiceAttempt,
-    lastPayRequest,
+    cancelInvoiceAttempt,
     lastError,
     onValueChanged,
     onMemoChanged,
     onAddInvoice,
+    onCancelInvoice,
     intl,
     amountError,
     isFormValid,
@@ -90,15 +91,6 @@ const ReceiveTab = () => {
             placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
           />
         </div>
-        {!!lastPayRequest && (
-          <>
-            <div className={styles.lastPayRequest}>{lastPayRequest}</div>
-            <CopyToClipboard
-              className={styles.clipboardBox}
-              textToCopy={lastPayRequest}
-            />
-          </>
-        )}
         {!!lastError && (
           <div className={styles.lastError}>{`${lastError}`}</div>
         )}
@@ -131,7 +123,8 @@ const ReceiveTab = () => {
         <LNInvoiceModal
           show={!!selectedInvoice}
           onCancelModal={() => setSelectedInvoice(null)}
-          onCancelInvoice={() => console.log(selectedInvoice.paymentRequest)}
+          onCancelInvoice={() => onCancelInvoice(selectedInvoice)}
+          cancelInvoiceAttempt={cancelInvoiceAttempt}
           invoice={selectedInvoice}
           tsDate={tsDate}
         />

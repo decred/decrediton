@@ -447,6 +447,7 @@ const initialState = {
     outstandingPayments: {}, // map paymentHash => payment data
     failedPayments: Array(),
     addInvoiceAttempt: false,
+    cancelInvoiceAttempt: false,
     sendPaymentAttempt: false,
     scbPath: "",
     scbUpdatedTime: 0,
