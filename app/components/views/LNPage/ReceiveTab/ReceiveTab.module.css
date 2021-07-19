@@ -38,11 +38,6 @@
   padding-top: 2em;
 }
 
-.lastError {
-  color: var(--error-red);
-  padding: 1em 0 0 0;
-}
-
 .memo {
   text-overflow: ellipsis;
   overflow: hidden;

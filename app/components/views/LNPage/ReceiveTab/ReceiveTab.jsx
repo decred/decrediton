@@ -50,7 +50,6 @@ const ReceiveTab = () => {
     memo,
     addInvoiceAttempt,
     cancelInvoiceAttempt,
-    lastError,
     onValueChanged,
     onMemoChanged,
     onAddInvoice,
@@ -91,9 +90,6 @@ const ReceiveTab = () => {
             placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
           />
         </div>
-        {!!lastError && (
-          <div className={styles.lastError}>{`${lastError}`}</div>
-        )}
       </div>
       <div className={styles.buttonContainer}>
         <PiUiButton

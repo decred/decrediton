@@ -16,7 +16,6 @@ export function useReceiveTab() {
   const [atomValue, setAtomValue] = useState(0);
   const [memo, setMemo] = useState("");
   const [value, setValue] = useState();
-  const [lastError, setLastError] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [amountError, setAmountError] = useState("");
   const [selectedInvoice, setSelectedInvoice] = useState(null);
@@ -43,15 +42,10 @@ export function useReceiveTab() {
   };
 
   const onAddInvoice = () => {
-    setLastError(null);
-    addInvoice(memo, atomValue)
-      .then(() => {
-        setMemo("");
-        setValue("");
-      })
-      .catch((error) => {
-        setLastError(error);
-      });
+    addInvoice(memo, atomValue).then(() => {
+      setMemo("");
+      setValue("");
+    });
   };
 
   const onCancelInvoice = ({ rHash }) => {
@@ -84,7 +78,6 @@ export function useReceiveTab() {
     addInvoiceAttempt,
     onCancelInvoice,
     cancelInvoiceAttempt,
-    lastError,
     onValueChanged,
     onMemoChanged,
     onAddInvoice,
