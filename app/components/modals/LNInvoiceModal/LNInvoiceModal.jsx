@@ -75,7 +75,8 @@ const LNInvoiceModal = ({
         <div className={styles.cancelInvoiceWrapper}>
           <PiUiButton
             className={classNames(
-              styles.cancelInvoice && isCancelButtonDisabled && styles.disabled
+              styles.cancelInvoice,
+              isCancelButtonDisabled && styles.disabled
             )}
             onClick={onCancelInvoice}
             disabled={isCancelButtonDisabled}>

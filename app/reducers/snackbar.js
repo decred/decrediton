@@ -567,13 +567,13 @@ const messages = defineMessages({
     id: "ln.ntf.cancelInvoiceSuccess",
     defaultMessage: "Invoice successfully canceled!"
   },
+  LNWALLET_ADDINVOICE_SUCCESS: {
+    id: "ln.ntf.addInvoiceSuccess",
+    defaultMessage: "Successfully added invoice!"
+  },
   LNWALLET_CANCELINVOICE_FAILED: {
     id: "ln.ntf.cancelInvoiceFailed",
     defaultMessage: "Failed to cancel invoice: {originalError}"
-  },
-  LNWALLET_ADDINVOICE_FAILED_SUCCESS: {
-    id: "ln.ntf.addInvoiceSuccess",
-    defaultMessage: "Invoice successfully created!"
   },
   LNWALLET_ADDINVOICE_FAILED: {
     id: "ln.ntf.addInvoiceFailed",
