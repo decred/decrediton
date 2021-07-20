@@ -811,9 +811,14 @@ app.on("ready", async () => {
   setMenuLocale(locale);
 });
 
-app.on("before-quit", (event) => {
+app.on("before-quit", async (event) => {
   logger.log("info", "Caught before-quit. Set decrediton as was closed");
   event.preventDefault();
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
+  try {
+    await logger.close();
+  } catch (error) {
+    console.error("Error closing log file:", error);
+  }
   app.exit(0);
 });
