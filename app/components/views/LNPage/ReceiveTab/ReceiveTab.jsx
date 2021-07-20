@@ -6,8 +6,10 @@ import styles from "./ReceiveTab.module.css";
 import InvoiceRow from "./InvoiceRow";
 import BalancesHeader from "../BalancesHeader";
 import { useReceiveTab } from "./hooks";
-import { PiUiButton } from "buttons";
+import { PiUiButton, EyeFilterMenu } from "buttons";
 import { LNInvoiceModal } from "modals";
+import { getSortTypes, getInvoiceTypes } from "./helpers";
+import { Tooltip } from "pi-ui";
 
 const messages = defineMessages({
   requestedAmountLabel: {
@@ -25,6 +27,10 @@ const messages = defineMessages({
   descriptionPlaceholder: {
     id: "ln.receiveTab.descriptionPlaceholder",
     defaultMessage: "Message for Recepient"
+  },
+  filterByHashPlaceholder: {
+    id: "ln.receiveTab.filterByHashPlaceholder",
+    defaultMessage: "Filter by Payment Hash"
   }
 });
 
@@ -40,6 +46,54 @@ export const ReceiveTabHeader = () => (
       </>
     }
   />
+);
+
+const subtitleMenu = ({
+  sortTypes,
+  invoiceTypes,
+  listDirection,
+  selectedInvoiceType,
+  searchText,
+  intl,
+  onChangeSelectedType,
+  onChangeSortType,
+  onChangeSearchText
+}) => (
+  <div className={styles.filterContainer}>
+    <div className={styles.invoiceSearch}>
+      <TextInput
+        newBiggerFontStyle
+        className={styles.searchInput}
+        id="filterByHashInput"
+        type="text"
+        placeholder={intl.formatMessage(messages.filterByHashPlaceholder)}
+        value={searchText}
+        onChange={(e) => onChangeSearchText(e.target.value)}
+      />
+    </div>
+    <Tooltip
+      contentClassName={styles.sortByTooltip}
+      content={<T id="ln.receiveTab.sortby.tooltip" m="Sort By" />}>
+      <EyeFilterMenu
+        labelKey="label"
+        keyField="value"
+        Transaction
+        options={sortTypes}
+        selected={listDirection}
+        onChange={onChangeSortType}
+        type="sortBy"
+      />
+    </Tooltip>
+    <Tooltip
+      contentClassName={styles.typeTooltip}
+      content={<T id="ln.receiveTab.invoiceTypes.tooltip" m="Invoice Type" />}>
+      <EyeFilterMenu
+        options={invoiceTypes}
+        selected={selectedInvoiceType}
+        onChange={onChangeSelectedType}
+      />
+    </Tooltip>
+  </div>
 );
 
 const ReceiveTab = () => {
@@ -58,7 +112,13 @@ const ReceiveTab = () => {
     amountError,
     isFormValid,
     selectedInvoice,
-    setSelectedInvoice
+    setSelectedInvoice,
+    searchText,
+    listDirection,
+    selectedInvoiceType,
+    onChangeSelectedType,
+    onChangeSortType,
+    onChangeSearchText
   } = useReceiveTab();
 
   return (
@@ -98,23 +158,33 @@ const ReceiveTab = () => {
           <T id="ln.receiveTab.createInvoice" m="Create Invoice" />
         </PiUiButton>
       </div>
+      <Subtitle
+        className={styles.invoiceHistorySubtitle}
+        title={<T id="ln.receiveTab.lightingInvoices" m="Lightning Invoices" />}
+        children={subtitleMenu({
+          sortTypes: getSortTypes(),
+          invoiceTypes: getInvoiceTypes(),
+          listDirection,
+          selectedInvoiceType,
+          searchText,
+          intl,
+          onChangeSelectedType,
+          onChangeSortType,
+          onChangeSearchText
+        })}
+      />
       {invoices && invoices.length > 0 && (
-        <Subtitle
-          title={
-            <T id="ln.receiveTab.lightingInvoices" m="Lightning Invoices" />
-          }
-        />
+        <div>
+          {invoices.map((invoice) => (
+            <InvoiceRow
+              key={invoice.addIndex}
+              invoice={invoice}
+              tsDate={tsDate}
+              onClick={() => setSelectedInvoice(invoice)}
+            />
+          ))}
+        </div>
       )}
-      <div>
-        {invoices.map((invoice) => (
-          <InvoiceRow
-            key={invoice.addIndex}
-            invoice={invoice}
-            tsDate={tsDate}
-            onClick={() => setSelectedInvoice(invoice)}
-          />
-        ))}
-      </div>
       {selectedInvoice && (
         <LNInvoiceModal
           show={!!selectedInvoice}

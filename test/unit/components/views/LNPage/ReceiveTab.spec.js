@@ -18,7 +18,7 @@ const mockLnChannelBalance = {
 const mockInvoices = [
   {
     memo: "mock-memo-1",
-    rHash: "ALuFr8IGXdZIbkXZHSFMlRa2wlwWyVoYkdE+xxoYnwU=",
+    rHash: "mock-rhash-1",
     value: 10000000,
     valueMAtoms: 10000000000,
     settled: false,
@@ -46,8 +46,8 @@ const mockInvoices = [
   },
   {
     memo: "mock-memo-2",
-    rPreimage: "CLDXye08g4TWgSvr/i2EvrF6/zfuHe44OhhGnyT6YGI=",
-    rHash: "LvZEJJZAa9KiXP4pKWhsYTN8y/c8tXDjJeB14QZp20M=",
+    rPreimage: "mock-rpreimage-2",
+    rHash: "mock-rhash-21",
     value: 1000,
     valueMAtoms: 1000000,
     settled: true,
@@ -73,8 +73,8 @@ const mockInvoices = [
   },
   {
     memo: "mock-memo-3",
-    rPreimage: "qTHeMvwnQ6PFYOUcnE0ZyRSODK6kiaS9RMcuL/I59G8=",
-    rHash: "vLLxviVQ04phaHrJTgquA79L7DSXXmBfe8CKt+YKT1g=",
+    rPreimage: "mock-ppreimage-3",
+    rHash: "mock-rhash-22",
     value: 1000,
     valueMAtoms: 1000000,
     settled: false,
@@ -123,9 +123,9 @@ test("test invoice list and modal ", async () => {
       .getAllByText(/Invoice for +/i)
       .map((node) => node.parentElement.textContent)
   ).toStrictEqual([
-    `Invoice for +0.10000 DCR${mockInvoices[0].rHashHex}`,
-    `Invoice for +0.00001 DCR${mockInvoices[1].rHashHex}`,
-    `Invoice for +0.00001 DCR${mockInvoices[2].rHashHex}`
+    `Invoice for +0.10000 DCR${mockInvoices[0].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[1].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`
   ]);
 
   expect(screen.getByText("Jul 19, 2021 4:56 PM")).toBeInTheDocument();
@@ -201,4 +201,104 @@ test("test add invoice form ", async () => {
   );
   await wait(() => expect(descInput.value).toBe(""));
   expect(amountInput.value).toBe("");
+});
+
+test("test filter control", async () => {
+  render(<ReceiveTab />);
+
+  expect(
+    screen
+      .getAllByText(/Invoice for +/i)
+      .map((node) => node.parentElement.textContent)
+  ).toStrictEqual([
+    `Invoice for +0.10000 DCR${mockInvoices[0].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[1].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`
+  ]);
+
+  const filterMenuButton = screen.getAllByRole("button", {
+    name: "EyeFilterMenu"
+  })[1];
+
+  user.click(filterMenuButton);
+  user.click(screen.getAllByText("Canceled")[0]);
+
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/Invoice for +/i)
+        .map((node) => node.parentElement.textContent)
+    ).toStrictEqual([`Invoice for +0.00001 DCR${mockInvoices[2].rHash}`])
+  );
+});
+
+test("test sort control", async () => {
+  render(<ReceiveTab />);
+
+  expect(
+    screen
+      .getAllByText(/Invoice for +/i)
+      .map((node) => node.parentElement.textContent)
+  ).toStrictEqual([
+    `Invoice for +0.10000 DCR${mockInvoices[0].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[1].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`
+  ]);
+
+  const sortMenuButton = screen.getAllByRole("button", {
+    name: "EyeFilterMenu"
+  })[0];
+
+  user.click(sortMenuButton);
+  user.click(screen.getByText("Oldest"));
+
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/Invoice for +/i)
+        .map((node) => node.parentElement.textContent)
+    ).toStrictEqual([
+      `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`,
+      `Invoice for +0.00001 DCR${mockInvoices[1].rHash}`,
+      `Invoice for +0.10000 DCR${mockInvoices[0].rHash}`
+    ])
+  );
+});
+
+test("test search control", async () => {
+  render(<ReceiveTab />);
+
+  expect(
+    screen
+      .getAllByText(/Invoice for +/i)
+      .map((node) => node.parentElement.textContent)
+  ).toStrictEqual([
+    `Invoice for +0.10000 DCR${mockInvoices[0].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[1].rHash}`,
+    `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`
+  ]);
+
+  const searchInput = screen.getByPlaceholderText("Filter by Payment Hash");
+  user.type(searchInput, "mock-rhash-2");
+
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/Invoice for +/i)
+        .map((node) => node.parentElement.textContent)
+    ).toStrictEqual([
+      `Invoice for +0.00001 DCR${mockInvoices[1].rHash}`,
+      `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`
+    ])
+  );
+
+  user.type(searchInput, "mock-rhash-22");
+
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/Invoice for +/i)
+        .map((node) => node.parentElement.textContent)
+    ).toStrictEqual([`Invoice for +0.00001 DCR${mockInvoices[2].rHash}`])
+  );
 });

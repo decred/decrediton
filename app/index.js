@@ -453,7 +453,12 @@ const initialState = {
     scbUpdatedTime: 0,
     nodeInfo: null,
     getNodeInfoAttempt: false,
-    towersList: []
+    towersList: [],
+    invoiceFilter: {
+      search: null, // The freeform text in the Search box
+      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+      type: null // desired invoice type (code).
+    }
   },
   dex: {
     dexOrdersOpen: false,

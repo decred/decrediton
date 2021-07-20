@@ -1861,7 +1861,7 @@ export const lnCancelInvoiceAttempt = get(["ln", "cancelInvoiceAttempt"]);
 export const lnSCBPath = get(["ln", "scbPath"]);
 export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
 export const lnTowersList = get(["ln", "towersList"]);
-
+export const lnInvoiceFilter = get(["ln", "invoiceFilter"]);
 // end of ln selectors
 
 // start of dex selectors

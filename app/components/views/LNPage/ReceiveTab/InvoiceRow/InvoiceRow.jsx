@@ -18,7 +18,7 @@ const InvoiceRow = ({ invoice, tsDate, onClick }) => (
             )
           }}
         />
-        <div className={styles.rhash}>{invoice.rHashHex}</div>
+        <div className={styles.rhash}>{invoice.rHash}</div>
       </div>
       {!!(invoice.amtPaidAtoms && invoice.amtPaidAtoms !== invoice.value) && (
         <div>

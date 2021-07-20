@@ -1065,3 +1065,13 @@ export const removeWatchtower = (wtPubKey) => async (dispatch, getState) => {
     dispatch({ error, type: LNWALLET_REMOVEWATCHTOWER_FAILED });
   }
 };
+
+export const LNWALLET_CHANGE_INVOICE_FILTER = "LNWALLET_CHANGE_INVOICE_FILTER";
+export const changeInvoiceFilter = (newFilter) => (dispatch) =>
+  new Promise((resolve) => {
+    dispatch({
+      invoiceFilter: newFilter,
+      type: LNWALLET_CHANGE_INVOICE_FILTER
+    });
+    resolve();
+  });

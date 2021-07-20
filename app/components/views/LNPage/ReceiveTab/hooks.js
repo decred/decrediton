@@ -3,7 +3,9 @@ import { defineMessages } from "react-intl";
 import { useLNPage } from "../hooks";
 import { useIntl } from "react-intl";
 import * as sel from "selectors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
+import * as lna from "actions/LNActions";
 
 const messages = defineMessages({
   capacityError: {
@@ -13,6 +15,7 @@ const messages = defineMessages({
 });
 
 export function useReceiveTab() {
+  const cancelInvoiceAttempt = useSelector(sel.lnCancelInvoiceAttempt);
   const [atomValue, setAtomValue] = useState(0);
   const [memo, setMemo] = useState("");
   const [value, setValue] = useState();
@@ -21,14 +24,7 @@ export function useReceiveTab() {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const intl = useIntl();
 
-  const {
-    invoices,
-    tsDate,
-    addInvoiceAttempt,
-    cancelInvoiceAttempt,
-    addInvoice,
-    cancelInvoice
-  } = useLNPage();
+  const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
 
   const onValueChanged = ({ atomValue }) => setAtomValue(atomValue);
 
@@ -69,8 +65,93 @@ export function useReceiveTab() {
     }
   }, [atomValue, maxInboundAmount, intl]);
 
+  const invoiceFilter = useSelector(sel.lnInvoiceFilter);
+
+  const filteredLNInvoices = invoices
+    .filter(
+      (invoice) =>
+        !invoiceFilter ||
+        !invoiceFilter.type ||
+        invoiceFilter.type === "all" ||
+        invoiceFilter.type === invoice.status
+    )
+    .filter(
+      (invoice) =>
+        !invoiceFilter ||
+        !invoiceFilter.search ||
+        invoice.rHash
+          .toLowerCase()
+          .indexOf(invoiceFilter.search.toLowerCase()) !== -1
+    )
+    .sort((a, b) => {
+      if (invoiceFilter && invoiceFilter.listDirection == "asc") {
+        if (a.creationDate > b.creationDate) {
+          return 1;
+        }
+        if (a.creationDate < b.creationDate) {
+          return -1;
+        }
+      } else {
+        if (a.creationDate < b.creationDate) {
+          return 1;
+        }
+        if (a.creationDate > b.creationDate) {
+          return -1;
+        }
+      }
+
+      return 0;
+    });
+
+  const dispatch = useDispatch();
+
+  const onChangeInvoiceFilter = useCallback(
+    (newFilter) => dispatch(lna.changeInvoiceFilter(newFilter)),
+    [dispatch]
+  );
+
+  const cancelInvoice = useCallback(
+    (paymentHash) => dispatch(lna.cancelInvoice(paymentHash)),
+    [dispatch]
+  );
+
+  const searchText = invoiceFilter?.search ?? "";
+  const listDirection = invoiceFilter?.listDirection;
+  const selectedInvoiceType = invoiceFilter?.type;
+
+  const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
+
+  const onChangeSelectedType = (type) => {
+    onChangeFilter(type.value);
+  };
+
+  const onChangeSortType = (type) => {
+    onChangeFilter({ listDirection: type.value });
+  };
+
+  const onChangeSearchText = (searchText) => {
+    onChangeFilter({ search: searchText });
+  };
+
+  const onChangeFilter = (value) => {
+    return new Promise((resolve) => {
+      if (isChangingFilterTimer) {
+        clearTimeout(isChangingFilterTimer);
+      }
+      const changeFilter = (newFilterOpt) => {
+        const newFilter = { ...invoiceFilter, ...newFilterOpt };
+        clearTimeout(isChangingFilterTimer);
+        onChangeInvoiceFilter(newFilter);
+        return newFilter;
+      };
+      setIsChangingFilterTimer(
+        setTimeout(() => resolve(changeFilter(value)), 100)
+      );
+    });
+  };
+
   return {
-    invoices,
+    invoices: filteredLNInvoices,
     tsDate,
     value,
     atomValue,
@@ -85,6 +166,13 @@ export function useReceiveTab() {
     amountError,
     selectedInvoice,
     setSelectedInvoice,
-    intl
+    intl,
+    searchText,
+    listDirection,
+    selectedInvoiceType,
+    onChangeSelectedType,
+    onChangeSortType,
+    onChangeSearchText,
+    onChangeInvoiceFilter
   };
 }

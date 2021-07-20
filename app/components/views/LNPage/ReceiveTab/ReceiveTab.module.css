@@ -49,10 +49,32 @@
   margin: 20px 0 30px 0;
 }
 
-@media screen and (max-width: 1180px) {
-  .container {
-    width: 667px;
-  }
+.filterContainer {
+  margin-left: auto;
+}
+
+.invoiceSearch {
+  display: inline-block;
+}
+
+.sortByTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.typeTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.searchInput input {
+  width: 180px;
+}
+
+.invoiceHistorySubtitle {
+  display: flex;
+  flex-direction: row;
+  width: initial;
 }
 
 @media screen and (max-width: 768px) {
@@ -70,5 +92,13 @@
 
   .container {
     width: 355px;
+  }
+
+  .filterContainer {
+    margin: 15px 0 0 0;
+  }
+
+  .invoiceSearch {
+    width: 255px;
   }
 }
