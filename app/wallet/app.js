@@ -42,8 +42,16 @@ export const onDaemonStopped = (cb) => {
 
 export const getCLIOptions = () => ipcRenderer.sendSync("get-cli-options");
 
-export const log = (level, ...args) => {
-  ipcRenderer.send("main-log", ...[level, ...args]);
+const escapeLogMsg = (msg) =>
+  msg.replace(/[^\x20-\x7E]/g, (s) =>
+    s
+      .split("")
+      .map((c) => "\\u{" + c.charCodeAt(0).toString(16) + "}")
+      .join("")
+  );
+
+export const log = (level, msg) => {
+  ipcRenderer.send("main-log", level, escapeLogMsg(msg));
 };
 
 export const logOptionNoArgs = (opts) => ({ ...opts, noArguments: true });
@@ -63,16 +71,16 @@ const formatLogArgs = (msg, args) => {
     } else if (isUndefined(arg)) {
       return "[undefined]";
     } else if (isString(arg) || isNumber(arg) || isNull(arg)) {
-      return arg;
+      return String(arg);
     } else {
       return JSON.stringify(arg);
     }
   };
 
-  const logMsg = args.reduce((a) => a + "%s ", "%s ");
-  const logArgs = [msg, ...args.map(formatArg)];
+  const logArgs = args.map(formatArg);
+  const logMsg = msg + " " + logArgs.join(" ");
 
-  return { logMsg, logArgs };
+  return { logMsg };
 };
 
 // Higher Order Function that wraps the promise-generating function f with log
@@ -81,27 +89,27 @@ export const withLog = (f, msg, opts = {}) => (...args) => {
   if (opts.noArguments) {
     log("info", msg);
   } else {
-    const { logMsg, logArgs } = formatLogArgs(msg, args);
-    log("info", logMsg, ...logArgs);
+    const { logMsg } = formatLogArgs(msg, args);
+    log("info", logMsg);
   }
 
   return new Promise((resolve, reject) => {
     f(...args)
       .then((...res) => {
         if (res.length === 1 && res[0] === undefined) {
-          log("debug", "%s returned without data", msg);
+          log("debug", `${msg} returned without data`);
         } else if (opts.noResponseData) {
           log("debug", `${msg} returned [response data omitted]`);
         } else {
-          const { logMsg, logArgs } = formatLogArgs(`${msg} returned `, res);
-          log("debug", logMsg, ...logArgs);
+          const { logMsg } = formatLogArgs(`${msg} returned `, res);
+          log("debug", logMsg);
         }
 
         resolve(...res);
       })
       .catch((err) => {
-        const { logMsg, logArgs } = formatLogArgs(`${msg} errored `, [err]);
-        log("error", logMsg, ...logArgs);
+        const { logMsg } = formatLogArgs(`${msg} errored `, [err]);
+        log("error", logMsg);
 
         reject(err);
       });
