@@ -77,6 +77,10 @@
   width: initial;
 }
 
+.empty {
+  text-align: center;
+}
+
 @media screen and (max-width: 768px) {
   .lnAddInvoice {
     padding: 30px 20px;
@@ -100,5 +104,9 @@
 
   .invoiceSearch {
     width: 255px;
+  }
+  .invoiceHistorySubtitle {
+    flex-direction: column;
+    margin-bottom: 0;
   }
 }

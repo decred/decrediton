@@ -173,7 +173,7 @@ const ReceiveTab = () => {
           onChangeSearchText
         })}
       />
-      {invoices && invoices.length > 0 && (
+      {invoices && invoices.length > 0 ? (
         <div>
           {invoices.map((invoice) => (
             <InvoiceRow
@@ -183,6 +183,10 @@ const ReceiveTab = () => {
               onClick={() => setSelectedInvoice(invoice)}
             />
           ))}
+        </div>
+      ) : (
+        <div className={styles.empty}>
+          <T id="ln.receiveTab.emptyInvoiceList" m="No invoices found" />
         </div>
       )}
       {selectedInvoice && (

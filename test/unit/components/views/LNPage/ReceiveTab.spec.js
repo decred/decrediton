@@ -128,10 +128,6 @@ test("test invoice list and modal ", async () => {
     `Invoice for +0.00001 DCR${mockInvoices[2].rHash}`
   ]);
 
-  expect(screen.getByText("Jul 19, 2021 4:56 PM")).toBeInTheDocument();
-  expect(screen.getByText("Jul 19, 2021 4:55 PM")).toBeInTheDocument();
-  expect(screen.getByText("Jul 19, 2021 4:05 PM")).toBeInTheDocument();
-
   // click on the first (open) invoice and check modal
   user.click(screen.getByText("Not Paid Yet"));
   expect(screen.getAllByText("Not Paid Yet").length).toBe(2);
@@ -230,6 +226,14 @@ test("test filter control", async () => {
         .map((node) => node.parentElement.textContent)
     ).toStrictEqual([`Invoice for +0.00001 DCR${mockInvoices[2].rHash}`])
   );
+
+  user.click(filterMenuButton);
+  user.click(screen.getAllByText("Expired")[0]);
+
+  await wait(() =>
+    expect(screen.queryByText(/Invoice for +/i)).not.toBeInTheDocument()
+  );
+  expect(screen.getByText(/no invoices found/i)).toBeInTheDocument();
 });
 
 test("test sort control", async () => {
@@ -301,4 +305,11 @@ test("test search control", async () => {
         .map((node) => node.parentElement.textContent)
     ).toStrictEqual([`Invoice for +0.00001 DCR${mockInvoices[2].rHash}`])
   );
+
+  user.type(searchInput, "mock-rhash-22-12");
+
+  await wait(() =>
+    expect(screen.queryByText(/Invoice for +/i)).not.toBeInTheDocument()
+  );
+  expect(screen.getByText(/no invoices found/i)).toBeInTheDocument();
 });
