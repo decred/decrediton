@@ -262,7 +262,7 @@ logger.log(
 );
 
 process.on("uncaughtException", (err) => {
-  logger.log("error", "UNCAUGHT EXCEPTION: " + err);
+  logger.log("error", `UNCAUGHT EXCEPTION: ${err}`);
   throw err;
 });
 

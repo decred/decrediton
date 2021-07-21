@@ -78,7 +78,8 @@ const formatLogArgs = (msg, args) => {
   };
 
   const logArgs = args.map(formatArg);
-  const logMsg = msg + " " + logArgs.join(" ");
+  const argsStr = logArgs.join(" ");
+  const logMsg = `${msg} ${argsStr}`;
 
   return { logMsg };
 };

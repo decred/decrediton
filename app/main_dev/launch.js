@@ -700,7 +700,7 @@ export const launchDCRWallet = async (
           e &&
           e.code &&
           e.code != "EOF" &&
-          logger.log("error", "tx stream error: " + e)
+          logger.log("error", `tx stream error: ${e}`)
       );
       dcrwTxStream.on("close", () =>
         logger.log("info", "dcrwallet tx stream closed")
@@ -872,7 +872,7 @@ export const launchDCRLnd = (
       if (!lastDcrdErr || lastDcrdErr === "") {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
       }
-      logger.log("error", "dcrd closed due to an error: " + lastDcrdErr);
+      logger.log("error", `dcrd closed due to an error: ${lastDcrdErr}`);
       return reject(lastDcrdErr);
     }
     */
