@@ -44,6 +44,9 @@ const logLevelsPrintable = {
   silly: "TRC"
 };
 
+export const getLogFileName = () =>
+  path.join(getAppDataDirectory(), "decrediton.log");
+
 class Logger {
   constructor(debug) {
     this.debug = debug;
@@ -64,9 +67,7 @@ class Logger {
     };
     this.drained = true;
     this.buffer = [];
-    this.logFile = fs.createWriteStream(
-      path.join(getAppDataDirectory(), "decrediton.log")
-    );
+    this.logFile = fs.createWriteStream(getLogFileName());
     this.logFile.on("drain", this.dequeue);
   }
 
