@@ -3,8 +3,8 @@ import { Balance } from "shared";
 import { CopyableText } from "pi-ui";
 import { DcrInput } from "inputs";
 import styles from "./DecodedPayRequest.module.css";
-import ExpiryTime from "./ExpiryTime/ExpiryTime";
-import EmptyDescription from "./EmptyDescription/EmptyDescription";
+import ExpiryTime from "./ExpiryTime";
+import EmptyDescription from "./EmptyDescription";
 
 const DecodedPayRequest = ({
   decoded,

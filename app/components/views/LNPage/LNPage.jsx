@@ -5,7 +5,7 @@ import { ConnectPage } from "./ConnectPage";
 import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
 import ChannelsTab, { ChannelsTabHeader } from "./ChannelsTab/ChannelsTab";
 import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
-import PaymentsTab, { PaymentsTabHeader } from "./PaymentsTab/PaymentsTab";
+import SendTab, { SendTabHeader } from "./SendTab";
 import WatchtowersTab, {
   WatchtowersTabHeader
 } from "./WatchtowersTab/WatchtowersTab";
@@ -38,16 +38,16 @@ const LNActivePage = () => (
       link={<T id="ln.tab.channels" m="Channels" />}
     />
     <Tab
+      path="/ln/payments"
+      component={SendTab}
+      header={SendTabHeader}
+      link={<T id="ln.tab.send" m="Send" />}
+    />
+    <Tab
       path="/ln/invoices"
       component={ReceiveTab}
       header={ReceiveTabHeader}
       link={<T id="ln.tab.receive" m="Receive" />}
-    />
-    <Tab
-      path="/ln/payments"
-      component={PaymentsTab}
-      header={PaymentsTabHeader}
-      link={<T id="ln.tab.payments" m="Payments" />}
     />
     <Tab
       path="/ln/network"

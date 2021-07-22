@@ -1,18 +1,18 @@
-import { usePaymentsTab } from "./hooks";
+import { useSendTab } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton } from "buttons";
 import { TextInput } from "inputs";
-import styles from "./PaymentsTab.module.css";
+import styles from "./SendTab.module.css";
 import { Subtitle, Balance, VerticalAccordion } from "shared";
 import { DescriptionHeader } from "layout";
 import ReactTimeout from "react-timeout";
 import BalanceHeader from "../BalanceHeader/BalanceHeader";
-import DecodedPayRequest from "./DecodedPayRequest/DecodedPayRequest";
-import OutstandingPayment from "./OutstandingPayment/OutstandingPayment";
-import FailedPayment from "./FailedPayment/FailedPayment";
-import Payment from "./Payment/Payment";
+import DecodedPayRequest from "./DecodedPayRequest";
+import OutstandingPayment from "./OutstandingPayment";
+import FailedPayment from "./FailedPayment";
+import Payment from "./Payment";
 
-export const PaymentsTabHeader = () => (
+export const SendTabHeader = () => (
   <DescriptionHeader
     description={
       <T id="ln.description.payments" m="Payments sent from this LN wallet." />
@@ -20,7 +20,7 @@ export const PaymentsTabHeader = () => (
   />
 );
 
-const PaymentsTab = ({ setTimeout }) => {
+const SendTab = ({ setTimeout }) => {
   const {
     payments,
     outstandingPayments,
@@ -38,7 +38,7 @@ const PaymentsTab = ({ setTimeout }) => {
     selectedPaymentDetails,
     onToggleShowDetails,
     channelBalances
-  } = usePaymentsTab(setTimeout);
+  } = useSendTab(setTimeout);
 
   return (
     <>
@@ -158,4 +158,4 @@ const PaymentsTab = ({ setTimeout }) => {
   );
 };
 
-export default ReactTimeout(PaymentsTab);
+export default ReactTimeout(SendTab);

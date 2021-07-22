@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useLNPage } from "../hooks";
 
-export function usePaymentsTab(setTimeout) {
+export function useSendTab(setTimeout) {
   const [sendValueAtom, setSendValueAtom] = useState(0);
   const [payRequest, setPayRequest] = useState("");
   const [decodedPayRequest, setDecodedPayRequest] = useState(null);
