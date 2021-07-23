@@ -222,3 +222,8 @@ test("test disabled submit button", () => {
   user.click(getSubmitButton());
   expect(mockStartDcrlnd).not.toHaveBeenCalled();
 });
+
+test.only("test warning view", () => {
+  render(<ConnectPage />);
+  screen.debug();
+});

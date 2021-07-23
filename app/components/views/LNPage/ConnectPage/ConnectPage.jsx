@@ -1,7 +1,9 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { PiUiPassphraseModalButton, KeyBlueButton } from "buttons";
-import { Documentation } from "shared";
+import {
+  PiUiPassphraseModalButton,
+  ToggleSwitch
+} from "buttons";
 import { Tooltip } from "pi-ui";
 import {
   LNWALLET_STARTUPSTAGE_STARTDCRLND,
@@ -14,6 +16,7 @@ import styles from "./ConnectPage.module.css";
 import { LN_ICON } from "constants";
 import { useConnectPage } from "./hooks";
 import { CreateLNWallet, CreateLNWalletHeader } from "./CreateLNWallet";
+import CreationWarning from "./CreationWarning";
 import { AutopilotSwitch } from "./AutopilotSwitch";
 import { LinearProgressSmall } from "indicators";
 
@@ -46,18 +49,6 @@ const ConnectPageHeader = () => (
     }
     iconType={LN_ICON}
   />
-);
-
-const LNCreationWarning = ({ onAcceptCreationWarning }) => (
-  <>
-    <Documentation name="LNWalletCreationWarning" />
-    <KeyBlueButton onClick={onAcceptCreationWarning}>
-      <T
-        id="ln.createWalletWarning.okBtn"
-        m="I understand and accept the risks"
-      />
-    </KeyBlueButton>
-  </>
 );
 
 const ConnectPage = () => {
@@ -94,7 +85,7 @@ const ConnectPage = () => {
         )
       }>
       {displayCreationWarning ? (
-        <LNCreationWarning onAcceptCreationWarning={onAcceptCreationWarning} />
+        <CreationWarning onAcceptCreationWarning={onAcceptCreationWarning} />
       ) : (
         <div>
           <div className={styles.connectOpts}>
