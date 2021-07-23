@@ -85,3 +85,15 @@
 .listWrapper {
   margin-top: 30px;
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 355px;
+  }
+  .lnSendPayment {
+    padding: 30px 20px;
+  }
+  .arrow {
+    margin: 0 36px;
+  }
+}
