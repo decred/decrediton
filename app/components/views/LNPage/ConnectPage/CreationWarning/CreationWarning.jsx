@@ -24,20 +24,9 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
   );
 
   return (
-    <div className={styles.container}>
-      <Subtitle
-        className={styles.header}
-        title={<T id="ln.creationWarning.title" m="Before You continue..." />}>
-        <KeyBlueButton
-          onClick={onAcceptCreationWarning}
-          disabled={!isAcceptCreationWarningButtonEnabled}>
-          <T
-            id="ln.createWalletWarning.okBtn"
-            m="I understand and accept the risks"
-          />
-        </KeyBlueButton>
-      </Subtitle>
-      <div className={styles.desc}>
+    <>
+      <Documentation name="LNWalletCreationWarning" />
+      <KeyBlueButton onClick={onAcceptCreationWarning}>
         <T
           id="ln.creationWarning.desc"
           m="Please understand that Lightning Network is still a work in progress and should be used with caution. In particular:"
