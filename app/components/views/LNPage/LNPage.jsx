@@ -5,7 +5,7 @@ import { ConnectPage } from "./ConnectPage";
 import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
 import ChannelsTab, { ChannelsTabHeader } from "./ChannelsTab/ChannelsTab";
 import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
-import SendTab, { SendTabHeader } from "./SendTab";
+import { SendTab, SendTabHeader } from "./SendTab";
 import WatchtowersTab, {
   WatchtowersTabHeader
 } from "./WatchtowersTab/WatchtowersTab";

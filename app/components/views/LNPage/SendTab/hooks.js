@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useLNPage } from "../hooks";
+import { useIntl } from "react-intl";
 
 export function useSendTab(setTimeout) {
   const [sendValueAtom, setSendValueAtom] = useState(0);
@@ -10,6 +11,7 @@ export function useSendTab(setTimeout) {
   const [sending, setSendValue] = useState();
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const [selectedPaymentDetails, setSelectedPaymentDetails] = useState(null);
+  const intl = useIntl();
 
   const {
     payments,
@@ -62,8 +64,8 @@ export function useSendTab(setTimeout) {
       });
   }, [payRequest, decodePayRequest, checkExpired, setTimeout]);
 
-  const onPayRequestChanged = (e) => {
-    setPayRequest((e.target.value || "").trim());
+  const onPayRequestChanged = (payRequest) => {
+    setPayRequest(payRequest.trim());
     setDecodedPayRequest(null);
     setExpired(false);
   };
@@ -99,6 +101,7 @@ export function useSendTab(setTimeout) {
     isShowingDetails,
     selectedPaymentDetails,
     onToggleShowDetails,
+    intl,
     channelBalances
   };
 }

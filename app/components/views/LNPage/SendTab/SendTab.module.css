@@ -1,8 +1,11 @@
+.container {
+  width: 764px;
+}
+
 .lnSendPayment {
   background-color: var(--background-back-color);
   padding: 30px 40px;
-  margin-bottom: 4em;
-  min-height: 18em;
+  margin-bottom: 20px;
 }
 
 .decodingError {
@@ -38,4 +41,47 @@
 .paymentRouteGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
+}
+
+.addressInput {
+  padding-right: 22px;
+}
+.addressInput.error {
+  padding-right: 39px;
+}
+.addressInput.success {
+  padding-right: 39px;
+}
+.pasteButton {
+  font-family: var(--font-family-regular);
+  padding: 3px 10px !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  transition: none !important;
+}
+.clearAddressButton {
+  width: 14px;
+  background-image: var(--indicator-invalid-icon);
+  height: 16px;
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  background-size: 21px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--background-back-color) !important;
+}
+.clearAddressButton:hover {
+  opacity: 0.85;
+}
+.clearAddressButton.success {
+  margin-right: 20px;
+}
+
+.buttonContainer {
+  text-align: right;
+}
+
+.listWrapper {
+  margin-top: 30px;
 }

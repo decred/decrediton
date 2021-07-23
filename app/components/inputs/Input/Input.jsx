@@ -81,7 +81,7 @@ const Input = ({
         placeholder
       }}
       type={type ?? "text"}
-      success={showSuccess && successMessage}
+      success={showSuccess ? successMessage : ""}
       value={value ?? ""}
       onChange={(e) => onChange?.(e)}
       onFocus={(e) => onFocus?.(e)}

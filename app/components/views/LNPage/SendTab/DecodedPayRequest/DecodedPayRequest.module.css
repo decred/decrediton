@@ -1,32 +1,47 @@
 .decodedPayreq {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-column-gap: 10px;
+  margin-top: 23px;
+  display: flex;
+  flex-direction: row;
 }
 
-.numAtoms {
-  font-size: 32px;
-  align-self: center;
+.amountContainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.description {
-  max-width: 100%;
+.amount {
+  font-size: 20px;
+  line-height: 25px;
+  color: var(--main-dark-blue);
+}
+
+.destinationContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.destination {
+  max-width: 113px;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 20px;
+  line-height: 25px;
+  color: var(--main-dark-blue);
 }
 
-.destDetails {
-  grid-column: 1 / 4;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  margin-top: 1em;
-  color: var(--stroke-color-hovered);
+.decodedPayreq label {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--grey-7);
+  display: block;
+  margin-bottom: 5px;
 }
 
-.copyableText span {
-  font-size: 14px;
-  background: none;
-  padding: 0;
+.arrow {
+  background-image: var(--right-arrow);
+  background-repeat: no-repeat;
+  width: 43px;
+  height: 35px;
+  margin: 0 50px;
 }
