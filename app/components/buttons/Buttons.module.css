@@ -49,3 +49,11 @@
   background-image: var(--x-grey);
   padding: 0px;
 }
+
+.button {
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.8;
+}

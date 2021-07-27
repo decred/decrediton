@@ -1,8 +1,12 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { PassphraseModalButton, KeyBlueButton } from "buttons";
+import {
+  PiUiPassphraseModalButton,
+  KeyBlueButton,
+  ToggleSwitch
+} from "buttons";
 import { Documentation } from "shared";
-import { Tooltip, Checkbox, classNames } from "pi-ui";
+import { Tooltip } from "pi-ui";
 import {
   LNWALLET_STARTUPSTAGE_STARTDCRLND,
   LNWALLET_STARTUPSTAGE_CONNECT,
@@ -13,9 +17,7 @@ import {
 import styles from "./ConnectPage.module.css";
 import { LN_ICON } from "constants";
 import { useConnectPage } from "./hooks";
-import CreateLNWallet, {
-  CreateLNWalletHeader
-} from "./CreateLNWallet/CreateLNWallet";
+import { CreateLNWallet, CreateLNWalletHeader } from "./CreateLNWallet";
 
 const stageMsgs = {
   [LNWALLET_STARTUPSTAGE_STARTDCRLND]: (
@@ -76,7 +78,8 @@ const ConnectPage = () => {
     onChangeEnableAutopilot,
     onAccountOptionClick,
     onAcceptCreationWarning,
-    runningIndicator
+    runningIndicator,
+    intl
   } = useConnectPage();
 
   return (
@@ -101,38 +104,56 @@ const ConnectPage = () => {
                 setScbFile={setScbFile}
                 onChangeAccount={onChangeAccount}
                 onAccountOptionClick={onAccountOptionClick}
+                intl={intl}
               />
             )}
-            <div className={classNames(styles.connectOpt, styles.checkbox)}>
-              <Checkbox
-                id="enableAutopilot"
-                label={
+            <div className={styles.connectOpt}>
+              <div className={styles.apsContainer}>
+                <ToggleSwitch
+                  id="enableAutopilot"
+                  className={styles.autopilotSwitch}
+                  onClick={onChangeEnableAutopilot}
+                  enabled={autopilotEnabled}
+                  tooltipClassName={styles.autopilotTooltipClassName}
+                  enabledText={
+                    <T
+                      id="ln.connectPage.autopilot.enabled"
+                      m="Disable automatic channel creation"
+                    />
+                  }
+                  notEnabledText={
+                    <T
+                      id="ln.connectPage.autopilot.not.enabled"
+                      m="Enable automatic channel creation"
+                    />
+                  }
+                />
+                <label htmlFor="enableAutopilot">
                   <T
-                    id="ln.connectPage.enableAutopilot"
-                    m="Enable Automatic Channel Creation"
+                    id="ln.connectPage.automaticChannelCreation"
+                    m="Automatic Channel Creation"
                   />
-                }
-                description={
-                  <T
-                    id="ln.connectPage.enableAutopilotDescr"
-                    m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
-                  />
-                }
-                checked={autopilotEnabled}
-                onChange={onChangeEnableAutopilot}
-              />
+                </label>
+              </div>
+              <div className={styles.autopilotDesc}>
+                <T
+                  id="ln.connectPage.enableAutopilotDescr"
+                  m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
+                />
+              </div>
             </div>
           </div>
           <div className={styles.buttonContrainer}>
             {runningIndicator ? (
               <Tooltip
+                contentClassName={styles.disabledTooltip}
                 content={
                   <T
-                    id="ln.connectPage.unlockWalletModal"
-                    m="Unlock LN Wallet"
+                    id="ln.connectPage.disabled.unlockWalletModal"
+                    m="Privacy Mixer, Autobuyer or Purchase Ticket Attempt running, please shut them off before unlock LN Wallet."
                   />
                 }>
-                <PassphraseModalButton
+                <PiUiPassphraseModalButton
                   modalTitle={
                     <T
                       id="ln.connectPage.unlockWalletModal"
@@ -150,7 +171,7 @@ const ConnectPage = () => {
                 />
               </Tooltip>
             ) : (
-              <PassphraseModalButton
+              <PiUiPassphraseModalButton
                 modalTitle={
                   <T id="ln.connectPage.running" m="Unlock LN Wallet" />
                 }

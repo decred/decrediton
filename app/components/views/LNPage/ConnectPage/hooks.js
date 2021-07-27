@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CREATE_LN_ACCOUNT } from "actions/LNActions";
 import { useLNPage } from "../hooks";
+import { useIntl } from "react-intl";
 
 // The below constant MUST match what TextToggle expects/uses.
 const NEW_ACCOUNT = "left";
@@ -52,6 +53,8 @@ export function useConnectPage() {
     setDisplayCreationWarning(false);
   };
 
+  const intl = useIntl();
+
   return {
     lightningWalletExists,
     startAttempt,
@@ -67,6 +70,7 @@ export function useConnectPage() {
     onChangeEnableAutopilot,
     onAccountOptionClick,
     onAcceptCreationWarning,
-    runningIndicator
+    runningIndicator,
+    intl
   };
 }
