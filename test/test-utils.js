@@ -42,11 +42,17 @@ const themes = {
 
 function render(ui, renderOptions) {
   const history = createMemoryHistory();
-  const currentSettings = {
+  let currentSettings = {
     locale: locale.key,
     theme: DEFAULT_LIGHT_THEME_NAME,
     allowedExternalRequests: []
   };
+  if (
+    renderOptions &&
+    Object.prototype.hasOwnProperty.call(renderOptions, "currentSettings")
+  ) {
+    currentSettings = { ...currentSettings, ...renderOptions.currentSettings };
+  }
   const Wrapper = ({ children }) => {
     let initialState = {
       settings: {
