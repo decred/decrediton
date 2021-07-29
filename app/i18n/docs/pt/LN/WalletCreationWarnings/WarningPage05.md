@@ -1,0 +1,1 @@
+A conta correspondente usada para operações da LN é mantida _destrancada_ enquanto a carteira LN está em execução, portanto fundos dessa conta estão sob risco por qualquer um que tenha acesso remoto ou físico ao computador.
