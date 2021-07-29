@@ -1,9 +1,8 @@
-import winston from "winston";
 import path from "path";
 import { MAX_LOG_LENGTH } from "constants";
 import { getAppDataDirectory } from "./paths";
 import os from "os";
-import logform from "logform";
+import fs from "fs";
 
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
@@ -45,47 +44,93 @@ const logLevelsPrintable = {
   silly: "TRC"
 };
 
-const logFormatter = (opts) => {
-  const lvl = logLevelsPrintable[opts.level] || "UNK";
-  const time = opts.timestamp;
-  const msg = opts.message;
-  const subsys = "DCTN";
-  return `${time} [${lvl}] ${subsys}: ${msg}`;
-};
+export const getLogFileName = () =>
+  path.join(getAppDataDirectory(), "decrediton.log");
+
+class Logger {
+  constructor(debug) {
+    this.debug = debug;
+    this.logLevels = {
+      error: 0,
+      warn: 1,
+      info: 2,
+      verbose: 3,
+      debug: 3,
+      silly: 3
+    };
+    this.colorCodes = {
+      [-1]: "\u001b[39m",
+      0: "\u001b[91m",
+      1: "\u001b[35m",
+      2: "\u001b[32m",
+      3: "\u001b[34m"
+    };
+    this.drained = true;
+    this.buffer = [];
+    this.logFile = fs.createWriteStream(getLogFileName());
+    this.logFile.on("drain", this.dequeue);
+  }
+
+  dequeue() {
+    if (this.buffer.length === 0) {
+      this.drained = true;
+      return;
+    }
+
+    // Keep writing data to the file until we either write all available data or
+    // the file becomes busy for writes (in which case this function will be
+    // called again once the file can be written to again).
+    let drained = true;
+    while (this.buffer.length() > 0 && drained) {
+      const data = this.buffer.shift();
+      this.drained = this.logFile.write(data);
+      drained = this.drained;
+    }
+  }
+
+  queue(data) {
+    if (this.drained) {
+      // Fast path: file is not busy, so write directly.
+      this.drained = this.logFile.write(data);
+    } else {
+      // Slow path: file is busy, so enqueue data to be written as possible.
+      this.buffer.push(data);
+    }
+  }
+
+  log(level, msg) {
+    const levelLower = level.toLowerCase();
+    const logLevel = this.logLevels[levelLower] || 3;
+
+    const subsys = "DCTN";
+    const lvl = logLevelsPrintable[levelLower] || "UNK";
+    const data = `${logTimestamp()} [${lvl}] ${subsys}: ${msg}`;
+
+    // Log to file only if msg is of level INFO or lower.
+    if (logLevel <= 2) {
+      this.queue(data + "\n");
+    }
+
+    // Log to console if debug is set and level is DEBUG or lower.
+    if (this.debug && logLevel <= 3) {
+      console.log(this.colorCodes[logLevel] + data + this.colorCodes[-1]);
+    }
+  }
+
+  close() {
+    return new Promise((ok) => {
+      this.logFile.once("finish", ok);
+      this.logFile.end();
+    });
+  }
+}
 
 // createLogger creates the main app logger. This stores all logs into the
 // decrediton app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
-  if (logger) return logger;
-
-  const { combine, timestamp, printf, colorize, splat } = logform.format;
-
-  logger = new winston.createLogger({
-    transports: [
-      new winston.transports.File({
-        filename: path.join(getAppDataDirectory(), "decrediton.log"),
-        format: combine(
-          timestamp({ format: logTimestamp }),
-          splat(),
-          printf(logFormatter)
-        )
-      })
-    ]
-  });
-
-  if (debug) {
-    logger.add(
-      new winston.transports.Console({
-        level: "debug",
-        format: combine(
-          timestamp({ format: logTimestamp }),
-          splat(),
-          printf(logFormatter),
-          colorize({ all: true })
-        )
-      })
-    );
+  if (!logger) {
+    logger = new Logger(debug);
   }
 
   return logger;

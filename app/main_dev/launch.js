@@ -418,7 +418,7 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
         if (!lastDcrdErr || lastDcrdErr === "") {
           lastDcrdErr = lastPanicLine(GetDcrdLogs());
         }
-        logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
+        logger.log("error", "dcrd closed due to an error: " + lastDcrdErr);
         reactIPC.send("error-received", true, lastDcrdErr);
         reject(lastDcrdErr);
       }
@@ -654,7 +654,7 @@ export const launchDCRWallet = async (
 
   const notifyGrpcPort = (port) => {
     dcrwPort = port;
-    logger.log("info", "wallet grpc running on port %d", port);
+    logger.log("info", `wallet grpc running on port ${port}`);
     portResolve(dcrwPort);
   };
 
@@ -700,7 +700,7 @@ export const launchDCRWallet = async (
           e &&
           e.code &&
           e.code != "EOF" &&
-          logger.log("error", "tx stream error", e)
+          logger.log("error", `tx stream error: ${e}`)
       );
       dcrwTxStream.on("close", () =>
         logger.log("info", "dcrwallet tx stream closed")
@@ -765,8 +765,7 @@ export const launchDCRWallet = async (
       }
       logger.log(
         "error",
-        "dcrwallet closed due to an error: ",
-        lastDcrwalletErr
+        "dcrwallet closed due to an error: " + lastDcrwalletErr
       );
       reactIPC.send("error-received", false, lastDcrwalletErr);
     } else {
@@ -873,7 +872,7 @@ export const launchDCRLnd = (
       if (!lastDcrdErr || lastDcrdErr === "") {
         lastDcrdErr = lastPanicLine(GetDcrdLogs());
       }
-      logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
+      logger.log("error", `dcrd closed due to an error: ${lastDcrdErr}`);
       return reject(lastDcrdErr);
     }
     */

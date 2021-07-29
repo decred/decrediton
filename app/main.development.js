@@ -19,7 +19,8 @@ import {
   GetDcrwalletLogs,
   GetDcrlndLogs,
   getPrivacyLogs,
-  cleanPrivacyLogs
+  cleanPrivacyLogs,
+  getLogFileName
 } from "./main_dev/logging";
 import {
   getWalletsDirectoryPath,
@@ -256,14 +257,13 @@ checkAndInitWalletCfg(false);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log(
   "info",
-  "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
-  app.getVersion(),
-  process.versions.electron,
-  process.versions.chrome
+  `Versions: Decrediton: ${app.getVersion()}, ` +
+    `Electron: ${process.versions.electron}, ` +
+    `Chrome: ${process.versions.chrome}`
 );
 
 process.on("uncaughtException", (err) => {
-  logger.log("error", "UNCAUGHT EXCEPTION", err);
+  logger.log("error", `UNCAUGHT EXCEPTION: ${err}`);
   throw err;
 });
 
@@ -466,11 +466,7 @@ ipcMain.on("get-dcrlnd-logs", (event) => {
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
-  const logTransport = logger.transports.find((transport) => {
-    return transport.filename === "decrediton.log";
-  });
-  const logFileName = logTransport.dirname + "/" + logTransport.filename;
-  readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
+  readFileBackward(getLogFileName(), MAX_LOG_LENGTH, (err, data) => {
     if (err) {
       logger.log("error", "Error reading log: " + err);
       return (event.returnValue = null);
@@ -812,9 +808,14 @@ app.on("ready", async () => {
   setMenuLocale(locale);
 });
 
-app.on("before-quit", (event) => {
+app.on("before-quit", async (event) => {
   logger.log("info", "Caught before-quit. Set decrediton as was closed");
   event.preventDefault();
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
+  try {
+    await logger.close();
+  } catch (error) {
+    console.error("Error closing log file:", error);
+  }
   app.exit(0);
 });
