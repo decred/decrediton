@@ -76,114 +76,102 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
   );
 
   return (
-    <>
-      {/* <Documentation name="LNWalletCreationWarning" /> */}
-      {/* <KeyBlueButton onClick={onAcceptCreationWarning}> */}
-      {/*   <T */}
-      {/*     id="ln.createWalletWarning.okBtn" */}
-      {/*     m="I understand and accept the risks" */}
-      {/*   /> */}
-      {/* </KeyBlueButton> */}
-
-      <div className={styles.container}>
-        <Subtitle
-          className={styles.header}
-          title={
-            <T id="ln.creationWarning.title" m="Before You continue..." />
-          }>
-          <KeyBlueButton
-            onClick={onAcceptCreationWarning}
-            disabled={!isAcceptCreationWarningButtonEnabled}>
-            <T
-              id="ln.createWalletWarning.okBtn"
-              m="I understand and accept the risks"
-            />
-          </KeyBlueButton>
-        </Subtitle>
-        <div className={styles.desc}>
+    <div className={styles.container}>
+      <Subtitle
+        className={styles.header}
+        title={<T id="ln.creationWarning.title" m="Before You continue..." />}>
+        <KeyBlueButton
+          onClick={onAcceptCreationWarning}
+          disabled={!isAcceptCreationWarningButtonEnabled}>
           <T
-            id="ln.creationWarning.desc"
-            m="Please understand that Lightning Network is still work in progress and should be used with caution. In particular:"
+            id="ln.createWalletWarning.okBtn"
+            m="I understand and accept the risks"
           />
-        </div>
-        <div className={styles.tabsContainer}>
-          <button
-            aria-label="Previous"
-            className={classNames(
-              styles.tabButton,
-              "flex-centralize",
-              styles.previous,
-              previousArrowDisabled && styles.disabled
-            )}
-            onClick={onPreviousTab}>
-            <div className={styles.icon} />
-          </button>
-          <Tabs
-            className={styles.tabs}
-            activeTabIndex={activeTabIndex}
-            onSelectTab={onSelectTabs}>
-            {tabLabels.map((_, i) => (
-              <Tab
-                key={i}
-                label={
-                  <TabLabelContent
-                    tabRef={tabRefs.current[i]}
-                    index={i}
-                    activeTabIndex={activeTabIndex}
-                    checked={checkedTabs[i]}
+        </KeyBlueButton>
+      </Subtitle>
+      <div className={styles.desc}>
+        <T
+          id="ln.creationWarning.desc"
+          m="Please understand that Lightning Network is still work in progress and should be used with caution. In particular:"
+        />
+      </div>
+      <div className={styles.tabsContainer}>
+        <button
+          aria-label="Previous"
+          className={classNames(
+            styles.tabButton,
+            "flex-centralize",
+            styles.previous,
+            previousArrowDisabled && styles.disabled
+          )}
+          onClick={onPreviousTab}>
+          <div className={styles.icon} />
+        </button>
+        <Tabs
+          className={styles.tabs}
+          activeTabIndex={activeTabIndex}
+          onSelectTab={onSelectTabs}>
+          {tabLabels.map((_, i) => (
+            <Tab
+              key={i}
+              label={
+                <TabLabelContent
+                  tabRef={tabRefs.current[i]}
+                  index={i}
+                  activeTabIndex={activeTabIndex}
+                  checked={checkedTabs[i]}
+                />
+              }
+              className={styles.tab}>
+              <div className={styles.tabContent}>
+                <div className={styles.tabContentWrapper}>
+                  <div className={styles.stepIndicator}>{`${parseInt(i) + 1}/${
+                    tabLabels.length
+                  }`}</div>
+                  <div className={styles.tabTitle}>{tabLabels[i]}</div>
+                  <Documentation
+                    name={tabDocs[i]}
+                    className={styles.tabDesc}
+                    unavailableAlertClassName={styles.unavailableAlert}
                   />
-                }
-                className={styles.tab}>
-                <div className={styles.tabContent}>
-                  <div className={styles.tabContentWrapper}>
-                    <div className={styles.stepIndicator}>{`${
-                      parseInt(i) + 1
-                    }/${tabLabels.length}`}</div>
-                    <div className={styles.tabTitle}>{tabLabels[i]}</div>
-                    <Documentation
-                      name={tabDocs[i]}
-                      className={styles.tabDesc}
-                      unavailableAlertClassName={styles.unavailableAlert}
+                  <div className={styles.bottomGrid}>
+                    <button
+                      aria-label="Previous arrow"
+                      className={classNames(
+                        styles.arrow,
+                        previousArrowDisabled && styles.disabled
+                      )}
+                      onClick={onPreviousTab}
                     />
-                    <div className={styles.bottomGrid}>
-                      <button
-                        aria-label="Previous arrow"
-                        className={classNames(
-                          styles.arrow,
-                          previousArrowDisabled && styles.disabled
-                        )}
-                        onClick={onPreviousTab}
-                      />
-                      <div className={styles.image} />
-                      <button
-                        aria-label="Next arrow"
-                        className={classNames(
-                          styles.arrow,
-                          styles.next,
-                          nextArrowDisabled && styles.disabled
-                        )}
-                        onClick={onNextTab}
-                      />
-                    </div>
+                    <div className={styles.image} />
+                    <button
+                      aria-label="Next arrow"
+                      className={classNames(
+                        styles.arrow,
+                        styles.next,
+                        nextArrowDisabled && styles.disabled
+                      )}
+                      onClick={onNextTab}
+                    />
                   </div>
                 </div>
-              </Tab>
-            ))}
-          </Tabs>
-          <button
-            aria-label="Next"
-            className={classNames(
-              styles.tabButton,
-              "flex-centralize",
-              styles.next,
-              nextArrowDisabled && styles.disabled
-            )}
-            onClick={onNextTab}>
-            <div className={styles.icon} />
-          </button>
-        </div>
+              </div>
+            </Tab>
+          ))}
+        </Tabs>
+        <button
+          aria-label="Next"
+          className={classNames(
+            styles.tabButton,
+            "flex-centralize",
+            styles.next,
+            nextArrowDisabled && styles.disabled
+          )}
+          onClick={onNextTab}>
+          <div className={styles.icon} />
+        </button>
       </div>
-    </>
+    </div>
   );
 };
 
