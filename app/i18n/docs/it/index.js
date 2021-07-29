@@ -17,6 +17,11 @@ export { default as TicketAutoBuyerInfo } from "./InfoModals/TicketAutoBuyer.md"
 export { default as VerifyMessageInfo } from "./InfoModals/VerifyMessage.md";
 
 export { default as LNBackupInfo } from "./LN/BackupInfo.md";
+export { default as LNWalletCreationWarningPage01 } from "./LN/WalletCreationWarnings/WarningPage01.md";
+export { default as LNWalletCreationWarningPage02 } from "./LN/WalletCreationWarnings/WarningPage02.md";
+export { default as LNWalletCreationWarningPage03 } from "./LN/WalletCreationWarnings/WarningPage03.md";
+export { default as LNWalletCreationWarningPage04 } from "./LN/WalletCreationWarnings/WarningPage04.md";
+export { default as LNWalletCreationWarningPage05 } from "./LN/WalletCreationWarnings/WarningPage05.md";
 
 export { default as ReleaseNote1_3_0 } from "./ReleaseNotes/v1.3.0.md";
 export { default as ReleaseNote1_3_1 } from "./ReleaseNotes/v1.3.1.md";
