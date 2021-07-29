@@ -1,1 +1,1 @@
-Verstehen Sie, dass eine böswillige Gegenpartei Gelder aus _episodischen_ Wallets stehlen kann, es sei denn, sie benutzt einen [Wachturm] (https://docs.decred.org/lightning-network/watchtowers/) Service.
+Verstehen Sie, dass eine böswillige Gegenpartei Gelder aus _episodischen_ Wallets stehlen kann, es sei denn, sie benutzt einen [Wachturm](https://docs.decred.org/lightning-network/watchtowers/) Service.
