@@ -1,0 +1,1 @@
+LN fue implementada asumiendo que los nodos (carteras) están conectadas la mayor parte del tiempo, así que carteras _episódicas_ (que se mantienen online durante poco tiempo) pueden ver degradada su habilidad para enviar y recibir pagos.
