@@ -160,6 +160,7 @@ const lightTheme = {
   "agenda-preference": "var(--main-dark-blue)",
   "text-toggle-bg": "var(--grey-3)",
   "ln-autopilot-switch-desc": "var(--grey-5)",
+  "ln-nav-button-bg": "var(--grey-3)",
   "ln-close-channel-button-bg": "var(--grey-7)",
   "ln-close-channel-button-text": "#fff",
 
@@ -320,7 +321,11 @@ const lightTheme = {
   "self-transaction-icon": url(require("style/icons/sentToSelfTx.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixer.svg")),
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
-  "right-arrow": url(require("style/icons/rightArrow.svg")),
+  "right-arrow": url(require("style/icons/rightArrow.svg"))
+  "blue-checkmark": url(require("style/icons/blueCheckmark.svg")),
+  "ln-wallet-creation-warning-arrow": url(
+    require("style/icons/LNWalletCreationWarningArrow.svg")
+  )
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
   eye: url(require("style/icons/eye.svg")),
   "eye-disabled": url(require("style/icons/eyeDisabled.svg")),

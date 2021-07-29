@@ -1,0 +1,1 @@
+The wallet account used for LN operations remains _unlocked_ while the LN wallet is running, so funds from that account are at risk from anyone with remote or physical access to your computer. It is recommended to use a separate account (or better yet, a separate _wallet_) with a small amount of funds to minimize the risk.
