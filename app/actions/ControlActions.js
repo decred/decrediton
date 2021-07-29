@@ -526,6 +526,7 @@ export const discoverUsageAttempt = (gapLimit) => async (
       gapLimit
     );
     dispatch({ discoverUsageResponse, type: DISCOVERUSAGE_SUCCESS });
+    await wallet.loadActiveDataFilters(walletService);
     dispatch(rescanAttempt(0));
   } catch (error) {
     dispatch({ error, type: DISCOVERUSAGE_FAILED });
