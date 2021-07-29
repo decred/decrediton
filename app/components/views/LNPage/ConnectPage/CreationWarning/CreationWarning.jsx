@@ -143,6 +143,7 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
                     <Documentation
                       name={tabDocs[i]}
                       className={styles.tabDesc}
+                      unavailableAlertClassName={styles.unavailableAlert}
                     />
                     <div className={styles.bottomGrid}>
                       <button

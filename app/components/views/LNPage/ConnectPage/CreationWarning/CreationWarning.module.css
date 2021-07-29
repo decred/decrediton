@@ -131,6 +131,11 @@
   max-width: initial;
 }
 
+.unavailableAlert {
+  padding: 0 182px 10px 182px;
+  text-align: center;
+}
+
 .tabTitle {
   font-size: 18px;
   line-height: 23px;

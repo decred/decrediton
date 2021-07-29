@@ -17,8 +17,9 @@ const renderDocLink = ({ href, children }) => {
   );
 };
 
-const DocUnavailableMsg = ({ name }) => (
-  <div className={styles.unavailableAlert}>
+const DocUnavailableMsg = ({ name, unavailableAlertClassName }) => (
+  <div
+    className={classNames(styles.unavailableAlert, unavailableAlertClassName)}>
     <T
       id="docs.unavailable"
       m="Document '{name}' is unavailable in the current language. Please request it in the community channels."
@@ -27,7 +28,7 @@ const DocUnavailableMsg = ({ name }) => (
   </div>
 );
 
-const Documentation = ({ name, className }) => {
+const Documentation = ({ name, className, unavailableAlertClassName }) => {
   const { currentLocaleName } = useLocale();
   const split = (currentLocaleName || "").split("-");
   const baseLang = split[0];
@@ -40,7 +41,12 @@ const Documentation = ({ name, className }) => {
   else if (Docs[baseLang] && Docs[baseLang][name])
     content = Docs[baseLang][name];
   else {
-    unavailable = <DocUnavailableMsg name={name} />;
+    unavailable = (
+      <DocUnavailableMsg
+        name={name}
+        unavailableAlertClassName={unavailableAlertClassName}
+      />
+    );
     content = Docs["en"][name] || "";
   }
 
