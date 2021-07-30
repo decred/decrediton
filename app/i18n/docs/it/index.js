@@ -39,7 +39,6 @@ export { default as TicketLifecycleTutorialPage05 } from "./TicketLifecycleTutor
 export { default as TicketLifecycleTutorialPage06 } from "./TicketLifecycleTutorial/Page06.md";
 
 export { default as LNForceCloseChannelWarning } from "./Warnings/LNForceCloseChannel.md";
-export { default as LNWalletCreationWarning } from "./Warnings/LNWalletCreation.md";
 export { default as MixerIntroduction } from "./Warnings/MixerIntroduction.md";
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwareUpdate.md";
