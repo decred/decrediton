@@ -159,6 +159,8 @@ const darkTheme = {
   "text-toggle-bg": "#1B2B54",
   "ln-autopilot-switch-desc": "#3C62B0",
   "ln-nav-button-bg": "#283f77",
+  "ln-active-tab-bg": "#7DA7D9",
+  "ln-active-tab-color": "#0E152F",
   "ln-close-channel-button-bg": "#7DA7D9",
   "ln-close-channel-button-text": "#0E152F",
 
@@ -337,7 +339,7 @@ const darkTheme = {
   "right-arrow": url(require("style/icons/rightArrowDark.svg"))
   "blue-checkmark": url(require("style/icons/blueCheckmark.svg")),
   "ln-wallet-creation-warning-arrow": url(
-    require("style/icons/LNWalletCreationWarningArrow.svg")
+    require("style/icons/LNWalletCreationWarningArrowDark.svg")
   )
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
   eye: url(require("style/icons/eyeDark.svg")),

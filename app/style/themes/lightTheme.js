@@ -161,6 +161,8 @@ const lightTheme = {
   "text-toggle-bg": "var(--grey-3)",
   "ln-autopilot-switch-desc": "var(--grey-5)",
   "ln-nav-button-bg": "var(--grey-3)",
+  "ln-active-tab-bg": "#e6eaed",
+  "ln-active-tab-color": "var(--main-dark-blue)",
   "ln-close-channel-button-bg": "var(--grey-7)",
   "ln-close-channel-button-text": "#fff",
 

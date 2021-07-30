@@ -35,12 +35,17 @@
   font-size: 13px;
   line-height: 16px;
   color: var(--main-dark-blue);
-  background-color: white;
+  background-color: var(--background-back-color);
   height: 36px;
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 164px;
+}
+
+.tab:hover,
+.tab:hover .tabLabelContent {
+  color: var(--main-dark-blue) !important;
 }
 
 .tabLabelContent strong {
@@ -61,7 +66,8 @@
 }
 
 .tabLabelContent.active {
-  background-color: #e6eaed;
+  background-color: var(--ln-active-tab-bg);
+  color: var(--ln-active-tab-color);
 }
 
 .tabsContainer {
@@ -88,8 +94,16 @@
   background-repeat: no-repeat;
   transform: rotate(90deg);
 }
+.tabsContainer .tabButton.previous:hover .icon {
+  background-image: var(--arrow-left-white);
+  transform: rotate(0deg);
+}
 .tabsContainer .tabButton.previous .icon {
   transform: rotate(-90deg);
+}
+.tabsContainer .tabButton.next:hover .icon {
+  background-image: var(--arrow-left-white);
+  transform: rotate(180deg);
 }
 .tabsContainer .tabButton.next .icon {
   transform: rotate(90deg);
@@ -109,6 +123,16 @@
 }
 .tabsContainer .tabButton.disabled:hover {
   background-color: var(--ln-nav-button-bg);
+  color: var(--main-dark-blue);
+}
+.tabsContainer .tabButton.disabled.previous:hover .icon {
+  background-image: var(--menu-arrow-up);
+  transform: rotate(-90deg);
+}
+
+.tabsContainer .tabButton.disabled.next:hover .icon {
+  background-image: var(--menu-arrow-up);
+  transform: rotate(90deg);
 }
 
 .tabContent {
@@ -118,7 +142,7 @@
 .tabContentWrapper {
   position: relative;
   padding: 30px 0;
-  background-color: white;
+  background-color: var(--background-back-color);
   width: 764px;
 }
 
