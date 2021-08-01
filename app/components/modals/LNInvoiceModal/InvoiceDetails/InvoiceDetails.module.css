@@ -1,0 +1,43 @@
+.detailsHeader {
+  cursor: pointer;
+  margin: 20px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--grey-2);
+}
+.detailsHeader .arrow {
+  background-image: var(--arrow-right-gray-icon);
+  background-position: 0 center;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  width: 8px;
+  height: 8px;
+  margin-left: 5px;
+}
+
+.detailsHeader:hover .arrow {
+  background-image: var(--arrow-right-blue-icon);
+}
+
+.detailsHeader.active .arrow {
+  transform: rotate(90deg);
+  background-position: 2px center;
+}
+
+.detailsGrid {
+  display: grid;
+  padding: 10px;
+  grid-template-columns: 1fr 3fr;
+}
+
+.detailsGrid .value {
+  color: var(--main-dark-blue);
+}
+
+.htlcsGrid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}

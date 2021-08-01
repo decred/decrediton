@@ -105,20 +105,20 @@ const formatInvoice = (invoiceData) => {
   const inv = invoiceData.toObject();
   if (inv.paymentRequest.indexOf("[ERROR]") === 0) return null;
   let status = "";
+  const expiryTS = inv.creationDate + inv.expiry;
+  const isExpired = new Date().getTime() / 1000 > expiryTS;
 
   if (inv.state === pb.Invoice.InvoiceState.SETTLED) {
     status = INVOICE_STATUS_SETTLED;
   } else if (inv.state === pb.Invoice.InvoiceState.CANCELED) {
-    status = INVOICE_STATUS_CANCELED;
+    // Show temporarily canceled status until the expiry time.
+    // (status is canceled and it has not expired yet).
+    // After the expiry time, it become expired.
+    status = isExpired ? INVOICE_STATUS_EXPIRED : INVOICE_STATUS_CANCELED;
   } else if (inv.state === pb.Invoice.InvoiceState.EXPIRED) {
     status = INVOICE_STATUS_EXPIRED;
   } else if (inv.state === pb.Invoice.InvoiceState.OPEN) {
-    const expiryTS = inv.creationDate + inv.expiry;
-    if (new Date().getTime() / 1000 > expiryTS) {
-      status = INVOICE_STATUS_EXPIRED;
-    } else {
-      status = INVOICE_STATUS_OPEN;
-    }
+    status = isExpired ? INVOICE_STATUS_EXPIRED : INVOICE_STATUS_OPEN;
   }
 
   const rHashHex = Buffer.from(inv.rHash, "base64").toString("hex");

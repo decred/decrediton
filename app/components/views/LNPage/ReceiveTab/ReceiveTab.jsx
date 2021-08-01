@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   requestedAmountPlaceholder: {
     id: "ln.receiveTab.requestedAmountPlaceholder",
-    defaultMessage: "Amount"
+    defaultMessage: "0.00000000"
   },
   descriptionLabel: {
     id: "ln.receiveTab.descriptionLabel",

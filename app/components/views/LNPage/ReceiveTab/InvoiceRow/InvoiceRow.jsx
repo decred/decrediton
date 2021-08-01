@@ -8,7 +8,7 @@ const InvoiceRow = ({ invoice, tsDate, onClick }) => (
       <div className={styles.value}>
         <T
           id="ln.invoicesTab.invoice.value"
-          m="Invoice for +{balance}"
+          m="Invoice for {balance}"
           values={{
             balance: (
               <Balance

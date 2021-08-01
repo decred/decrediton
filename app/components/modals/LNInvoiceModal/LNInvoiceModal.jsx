@@ -4,7 +4,13 @@ import { CopyableText, classNames } from "pi-ui";
 import styles from "./LNInvoiceModal.module.css";
 import { Balance, LNInvoiceStatus, FormattedRelative } from "shared";
 import { PiUiButton } from "buttons";
-import { INVOICE_STATUS_OPEN, INVOICE_STATUS_SETTLED } from "constants";
+import {
+  INVOICE_STATUS_OPEN,
+  INVOICE_STATUS_SETTLED,
+  INVOICE_STATUS_CANCELED,
+  INVOICE_STATUS_EXPIRED
+} from "constants";
+import InvoiceDetails from "./InvoiceDetails";
 
 const LNInvoiceModal = ({
   show,
@@ -90,9 +96,18 @@ const LNInvoiceModal = ({
           m="Lightning Payment Request Code (Send this to Payer)"
         />
       </div>
-      <CopyableText tooltipPlacement="top" id="paymentRequest" truncate={false}>
-        {invoice?.paymentRequest}
-      </CopyableText>
+      {invoice?.status === INVOICE_STATUS_CANCELED ||
+      invoice?.status === INVOICE_STATUS_EXPIRED ? (
+        <div className={styles.paymentRequest}>{invoice?.paymentRequest}</div>
+      ) : (
+        <CopyableText
+          tooltipPlacement="top"
+          id="paymentRequest"
+          truncate={false}>
+          {invoice?.paymentRequest}
+        </CopyableText>
+      )}
+      <InvoiceDetails {...{ invoice, tsDate }} />
     </Modal>
   );
 };

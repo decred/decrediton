@@ -38,7 +38,7 @@ export function useReceiveTab() {
   };
 
   const onAddInvoice = () => {
-    addInvoice(memo, atomValue).then(() => {
+    addInvoice(memo, isNaN(atomValue) ? 0 : atomValue).then(() => {
       setMemo("");
       setValue("");
     });
@@ -55,7 +55,7 @@ export function useReceiveTab() {
 
   useEffect(() => {
     setAmountError("");
-    if (isNaN(atomValue) || atomValue <= 0) {
+    if (atomValue < 0) {
       setIsFormValid(false);
     } else if (atomValue > maxInboundAmount) {
       setAmountError(intl.formatMessage(messages.capacityError));
