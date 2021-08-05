@@ -2,7 +2,12 @@ import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
 import { CopyableText, classNames } from "pi-ui";
 import styles from "./LNInvoiceModal.module.css";
-import { Balance, LNInvoiceStatus, FormattedRelative } from "shared";
+import {
+  Balance,
+  LNInvoiceStatus,
+  FormattedRelative,
+  DetailsTable
+} from "shared";
 import { PiUiButton } from "buttons";
 import {
   INVOICE_STATUS_OPEN,
@@ -10,7 +15,7 @@ import {
   INVOICE_STATUS_CANCELED,
   INVOICE_STATUS_EXPIRED
 } from "constants";
-import InvoiceDetails from "./InvoiceDetails";
+import { getInvoiceDetails } from "./helpers";
 
 const LNInvoiceModal = ({
   show,
@@ -22,6 +27,7 @@ const LNInvoiceModal = ({
 }) => {
   const isCancelButtonDisabled =
     cancelInvoiceAttempt || invoice?.status !== INVOICE_STATUS_OPEN;
+
   return (
     <Modal className={styles.modal} {...{ show, onCancelModal }}>
       <div
@@ -107,7 +113,12 @@ const LNInvoiceModal = ({
           {invoice?.paymentRequest}
         </CopyableText>
       )}
-      <InvoiceDetails {...{ invoice, tsDate }} className={styles.details}/>
+      <DetailsTable
+        data={getInvoiceDetails(invoice, tsDate)}
+        className={styles.details}
+        title={<T id="ln.invoicesModal.details" m="Details" />}
+        expandable
+      />
     </Modal>
   );
 };

@@ -32,3 +32,4 @@ export { default as TicketAutoBuyerForm } from "./TicketAutoBuyerForm";
 export { default as PurchaseTicketsForm } from "./PurchaseTicketsForm";
 export { default as AnimatedContainer } from "./AnimatedContainer";
 export { default as LNInvoiceStatus } from "./LNInvoiceStatus";
+export { default as DetailsTable } from "./DetailsTable";
