@@ -81,6 +81,10 @@
   line-height: var(--spacing-2);
 }
 
+.details {
+  margin: 20px 0 0 0;
+}
+
 @media screen and (max-width: 768px) {
   .modal {
     width: 355px;

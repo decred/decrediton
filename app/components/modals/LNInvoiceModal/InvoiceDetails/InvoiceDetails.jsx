@@ -3,23 +3,23 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
 import styles from "./InvoiceDetails.module.css";
 
-const InvoiceDetails = ({ invoice, tsDate }) => {
+const InvoiceDetails = ({ invoice, tsDate, className }) => {
   const [showDetails, setShowDetails] = useState(false);
   const toggleDetailsVisibility = () => setShowDetails((b) => !b);
 
   return (
-    <>
+    <div className={className}>
       <div
         onClick={toggleDetailsVisibility}
         className={classNames(
-          styles.detailsHeader,
+          styles.header,
           showDetails && styles.active
         )}>
         <T id="ln.invoicesModal.details" m="Details" />
         <div className={styles.arrow} />
       </div>
       {showDetails && (
-        <div className={styles.detailsGrid}>
+        <div className={styles.grid}>
           <label>
             <T id="ln.invoicesModal.hash" m="Hash" />
           </label>
@@ -33,7 +33,7 @@ const InvoiceDetails = ({ invoice, tsDate }) => {
               <label>
                 <T id="ln.invoicesModal.htlc" m="HTLC" /> {index}
               </label>
-              <div className={styles.htlcsGrid}>
+              <div className={styles.secondaryGrid}>
                 <label>
                   <T id="ln.invoicesModal.htlc.state" m="State" />
                 </label>
@@ -87,7 +87,7 @@ const InvoiceDetails = ({ invoice, tsDate }) => {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

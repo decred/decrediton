@@ -107,7 +107,7 @@ const LNInvoiceModal = ({
           {invoice?.paymentRequest}
         </CopyableText>
       )}
-      <InvoiceDetails {...{ invoice, tsDate }} />
+      <InvoiceDetails {...{ invoice, tsDate }} className={styles.details}/>
     </Modal>
   );
 };
