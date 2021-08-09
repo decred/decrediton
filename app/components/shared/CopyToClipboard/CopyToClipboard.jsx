@@ -5,7 +5,7 @@ import styles from "./CopyToClipboard.module.css";
 import { classNames } from "pi-ui";
 import { useState } from "react";
 
-const CopyToClipboard = ({ textToCopy, className }) => {
+const CopyToClipboard = ({ textToCopy, ButtonComponent, className }) => {
   const [isSuccessHidden, setIsSuccessHidden] = useState(true);
 
   const onClick = () => {
@@ -16,6 +16,9 @@ const CopyToClipboard = ({ textToCopy, className }) => {
     if (!isSuccessHidden) setIsSuccessHidden(true);
   };
 
+  const DefaultButtonComponent = (props) => <button {...props} />;
+  const CopyButton = ButtonComponent || DefaultButtonComponent;
+
   return (
     <div className={classNames(styles.box, className && className)}>
       <div
@@ -25,7 +28,7 @@ const CopyToClipboard = ({ textToCopy, className }) => {
         )}>
         <T id="clipboard.copied" m="Copied" />
       </div>
-      <button
+      <CopyButton
         className={styles.icon}
         onClick={onClick}
         onMouseLeave={onMouseLeave}

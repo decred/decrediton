@@ -38,14 +38,23 @@
 
 .grid label {
   border-bottom: 1px solid var(--grey-2);
-  padding: 10px 0 10px 25px;
+  padding: 0 0 0 25px;
+  height: 40px;
   color: var(--grey-6);
+  display: flex;
+  align-items: center;
 }
 
 .grid .value {
   border-bottom: 1px solid var(--grey-2);
   color: var(--main-dark-blue);
-  padding: 10px 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.grid .value > div {
+  margin-right: 10px;
+  display: inline;
 }
 
 .secondaryGrid {
