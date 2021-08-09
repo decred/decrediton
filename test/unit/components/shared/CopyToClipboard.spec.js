@@ -34,3 +34,31 @@ test("test CopyToClipboard", () => {
   fireEvent.mouseOut(copyIcon);
   expect(copied.className).toMatch("hidden");
 });
+
+test("test CopyToClipboard with custom ButtonComponent", () => {
+  const CustomButtonComponent = (props) => <button {...props}>Custom</button>;
+
+  render(
+    <CopyToClipboard
+      textToCopy={testTextToCopy}
+      className={testClassName}
+      ButtonComponent={CustomButtonComponent}
+    />
+  );
+
+  expect(screen.getByText("Custom")).toBeInTheDocument();
+
+  // success indicator should be hidden initially
+  const copied = screen.getByText("Copied");
+  expect(copied.className).toMatch("hidden");
+  const copyIcon = screen.getByRole("button", { name: "Copy" });
+
+  // success indicator should appear after successful copy
+  user.click(copyIcon);
+  expect(mockCopy).toHaveBeenCalledWith(testTextToCopy);
+  expect(copied.className).not.toMatch("hidden");
+
+  // success indicator should disappear after mouseLeave event
+  fireEvent.mouseOut(copyIcon);
+  expect(copied.className).toMatch("hidden");
+});

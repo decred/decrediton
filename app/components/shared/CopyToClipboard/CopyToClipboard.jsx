@@ -16,9 +16,6 @@ const CopyToClipboard = ({ textToCopy, ButtonComponent, className }) => {
     if (!isSuccessHidden) setIsSuccessHidden(true);
   };
 
-  const DefaultButtonComponent = (props) => <button {...props} />;
-  const CopyButton = ButtonComponent || DefaultButtonComponent;
-
   return (
     <div className={classNames(styles.box, className && className)}>
       <div
@@ -28,12 +25,21 @@ const CopyToClipboard = ({ textToCopy, ButtonComponent, className }) => {
         )}>
         <T id="clipboard.copied" m="Copied" />
       </div>
-      <CopyButton
-        className={styles.icon}
-        onClick={onClick}
-        onMouseLeave={onMouseLeave}
-        aria-label="Copy"
-      />
+      {ButtonComponent ? (
+        <ButtonComponent
+          className={styles.icon}
+          onClick={onClick}
+          onMouseLeave={onMouseLeave}
+          aria-label="Copy"
+        />
+      ) : (
+        <button
+          className={styles.icon}
+          onClick={onClick}
+          onMouseLeave={onMouseLeave}
+          aria-label="Copy"
+        />
+      )}
     </div>
   );
 };
