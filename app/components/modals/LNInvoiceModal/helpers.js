@@ -1,13 +1,13 @@
 import { FormattedMessage as T } from "react-intl";
 import { SmallButton } from "buttons";
-import { CopyToClipboard } from "shared";
+import { CopyToClipboard, TruncatedText } from "shared";
 export const getInvoiceDetails = (invoice, tsDate) => {
   const details = [
     {
       label: <T id="ln.invoicesModal.hash" m="Hash" />,
       value: (
         <>
-          <span>{invoice?.rHashHex}</span>
+          <TruncatedText text={invoice?.rHashHex} max={40} showTooltip />
           <CopyToClipboard
             textToCopy={invoice?.rHashHex}
             ButtonComponent={SmallButton}

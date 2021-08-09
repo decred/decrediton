@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, LNInvoiceStatus } from "shared";
+import { Balance, LNInvoiceStatus, TruncatedText } from "shared";
 import styles from "./InvoiceRow.module.css";
 
 const InvoiceRow = ({ invoice, tsDate, onClick }) => (
@@ -18,7 +18,9 @@ const InvoiceRow = ({ invoice, tsDate, onClick }) => (
             )
           }}
         />
-        <div className={styles.rhash}>{invoice.rHashHex}</div>
+        <div className={styles.rhash}>
+          <TruncatedText text={invoice.rHashHex} max={40} />
+        </div>
       </div>
       {!!(invoice.amtPaidAtoms && invoice.amtPaidAtoms !== invoice.value) && (
         <div>

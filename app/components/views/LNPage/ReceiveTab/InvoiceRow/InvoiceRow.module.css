@@ -36,8 +36,6 @@
 .value .rhash {
   font-size: 13px;
   line-height: 16px;
-  text-overflow: ellipsis;
-  overflow: hidden;
   color: var(--grey-5);
   max-width: 267px;
 }
