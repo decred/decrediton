@@ -3,7 +3,7 @@ export const getInvoiceDetails = (invoice, tsDate) => {
   const details = [
     {
       label: <T id="ln.invoicesModal.hash" m="Hash" />,
-      value: invoice?.rHash
+      value: invoice?.rHashHex
     },
 
     {
