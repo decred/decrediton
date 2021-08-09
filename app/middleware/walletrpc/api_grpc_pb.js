@@ -443,6 +443,28 @@ function deserialize_walletrpc_DecodeSeedResponse(buffer_arg) {
   return api_pb.DecodeSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_DiscoverUsageRequest(arg) {
+  if (!(arg instanceof api_pb.DiscoverUsageRequest)) {
+    throw new Error('Expected argument of type walletrpc.DiscoverUsageRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DiscoverUsageRequest(buffer_arg) {
+  return api_pb.DiscoverUsageRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DiscoverUsageResponse(arg) {
+  if (!(arg instanceof api_pb.DiscoverUsageResponse)) {
+    throw new Error('Expected argument of type walletrpc.DiscoverUsageResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DiscoverUsageResponse(buffer_arg) {
+  return api_pb.DiscoverUsageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_FundTransactionRequest(arg) {
   if (!(arg instanceof api_pb.FundTransactionRequest)) {
     throw new Error('Expected argument of type walletrpc.FundTransactionRequest');
@@ -2705,6 +2727,17 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_GetTrackedVSPTicketsRequest,
     responseSerialize: serialize_walletrpc_GetTrackedVSPTicketsResponse,
     responseDeserialize: deserialize_walletrpc_GetTrackedVSPTicketsResponse,
+  },
+  discoverUsage: {
+    path: '/walletrpc.WalletService/DiscoverUsage',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.DiscoverUsageRequest,
+    responseType: api_pb.DiscoverUsageResponse,
+    requestSerialize: serialize_walletrpc_DiscoverUsageRequest,
+    requestDeserialize: deserialize_walletrpc_DiscoverUsageRequest,
+    responseSerialize: serialize_walletrpc_DiscoverUsageResponse,
+    responseDeserialize: deserialize_walletrpc_DiscoverUsageResponse,
   },
 };
 
