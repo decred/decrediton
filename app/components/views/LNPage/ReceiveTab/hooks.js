@@ -79,7 +79,7 @@ export function useReceiveTab() {
       (invoice) =>
         !invoiceFilter ||
         !invoiceFilter.search ||
-        invoice.rHash
+        invoice.rHashHex
           .toLowerCase()
           .indexOf(invoiceFilter.search.toLowerCase()) !== -1
     )
