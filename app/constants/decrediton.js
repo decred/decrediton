@@ -151,3 +151,8 @@ export const INVOICE_STATUS_OPEN = "open";
 export const INVOICE_STATUS_SETTLED = "settled";
 export const INVOICE_STATUS_EXPIRED = "expired";
 export const INVOICE_STATUS_CANCELED = "canceled";
+
+// ln payment status
+export const PAYMENT_STATUS_CONFIRMED = "confirmed";
+export const PAYMENT_STATUS_FAILED = "failed";
+export const PAYMENT_STATUS_PENDING = "pending";

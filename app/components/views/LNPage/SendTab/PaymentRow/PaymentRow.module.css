@@ -1,0 +1,63 @@
+.payment {
+  display: grid;
+  background-color: var(--background-back-color);
+  padding: 15px 50px 13px 0;
+  grid-template-columns: 422px auto max-content;
+  min-height: 63px;
+  align-items: center;
+  background-image: var(--arrow-right-gray-icon);
+  background-position: right 26px center;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid var(--disabled-background-color);
+  cursor: pointer;
+}
+
+.payment:hover {
+  background-image: var(--arrow-right-blue-icon);
+  background-color: var(--tx-history-background-hover);
+}
+
+.value {
+  padding-left: 57px;
+  background-image: var(--ln-invoice-icon);
+  background-size: 22px 22px;
+  background-position: 20px center;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--main-dark-blue);
+}
+
+.value .balance {
+  display: inline;
+}
+
+.value .paymentHash {
+  font-size: 13px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--grey-5);
+  max-width: 267px;
+}
+
+.date {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: right;
+  color: var(--main-dark-blue);
+}
+
+@media screen and (max-width: 768px) {
+  .value .paymentHash {
+    max-width: 242px;
+  }
+  .lnInvoice {
+    grid-template-columns: 1fr;
+    grid-row-gap: 5px;
+  }
+  .status {
+    margin-left: 55px;
+  }
+}
