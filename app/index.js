@@ -447,12 +447,18 @@ const initialState = {
     outstandingPayments: {}, // map paymentHash => payment data
     failedPayments: Array(),
     addInvoiceAttempt: false,
+    cancelInvoiceAttempt: false,
     sendPaymentAttempt: false,
     scbPath: "",
     scbUpdatedTime: 0,
     nodeInfo: null,
     getNodeInfoAttempt: false,
-    towersList: []
+    towersList: [],
+    invoiceFilter: {
+      search: null, // The freeform text in the Search box
+      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+      type: null // desired invoice type (code).
+    }
   },
   dex: {
     dexOrdersOpen: false,

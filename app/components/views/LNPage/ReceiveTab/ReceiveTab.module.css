@@ -1,0 +1,112 @@
+.container {
+  width: 764px;
+}
+
+.lnAddInvoice {
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+}
+
+.lnAddInvoice .invoiceForm {
+  display: flex;
+  justify-content: space-between;
+}
+
+.amountInput {
+  max-width: 182px;
+}
+.amountInput input {
+  width: 182px;
+}
+
+.descInput {
+  margin: 0 !important;
+}
+
+.descInput input {
+  width: 402px;
+}
+
+.lastPayRequest {
+  word-break: break-all;
+  grid-column: 1 / 3;
+  padding: 30px 40px;
+  color: var(--stroke-color-hovered);
+}
+
+.clipboardBox {
+  padding-top: 2em;
+}
+
+.memo {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0 30px 0;
+}
+
+.filterContainer {
+  margin-left: auto;
+}
+
+.invoiceSearch {
+  display: inline-block;
+}
+
+.sortByTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.typeTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.searchInput input {
+  width: 180px;
+}
+
+.invoiceHistorySubtitle {
+  display: flex;
+  flex-direction: row;
+  width: initial;
+}
+
+.empty {
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .lnAddInvoice {
+    padding: 30px 20px;
+  }
+
+  .descInput input {
+    width: 302px;
+  }
+
+  .invoiceForm {
+    flex-direction: column;
+  }
+
+  .container {
+    width: 355px;
+  }
+
+  .filterContainer {
+    margin: 15px 0 0 0;
+  }
+
+  .invoiceSearch {
+    width: 255px;
+  }
+  .invoiceHistorySubtitle {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+}

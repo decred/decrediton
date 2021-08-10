@@ -3,6 +3,11 @@ import { wallet, ln } from "wallet-preload-shim";
 import { getNextAccountAttempt } from "./ControlActions";
 import * as cfgConstants from "constants/config";
 import { isNumber } from "lodash";
+import {
+  INVOICE_STATUS_SETTLED,
+  INVOICE_STATUS_EXPIRED,
+  INVOICE_STATUS_CANCELED
+} from "constants";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -285,7 +290,7 @@ const connectToLNWallet = (
   // Attempt to connect to the lnrpc service of the wallet. Since the underlying
   // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
   // need to try a few times until we get a proper connection.
-  let lnClient, wtClient;
+  let lnClient, wtClient, inClient;
   let lastError;
   for (let i = 0; i < sleepCount; i++) {
     try {
@@ -301,7 +306,12 @@ const connectToLNWallet = (
         certPath,
         macaroonPath
       );
-
+      inClient = await ln.getLNInvoiceClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
       // Force a getInfo call to ensure we're connected and the server provides
       // the Lightning service.
       await ln.getInfo(lnClient);
@@ -347,7 +357,7 @@ const connectToLNWallet = (
     );
   }
 
-  dispatch({ lnClient, wtClient, type: LNWALLET_CONNECT_SUCCESS });
+  dispatch({ lnClient, wtClient, inClient, type: LNWALLET_CONNECT_SUCCESS });
 
   return { client: lnClient, wtClient };
 };
@@ -552,9 +562,28 @@ export const addInvoice = (memo, value) => async (dispatch, getState) => {
   }
 };
 
+export const LNWALLET_CANCELINVOICE_ATTEMPT = "LNWALLET_CANCELINVOICE_ATTEMPT";
+export const LNWALLET_CANCELINVOICE_SUCCESS = "LNWALLET_CANCELINVOICE_SUCCESS";
+export const LNWALLET_CANCELINVOICE_FAILED = "LNWALLET_CANCELINVOICE_FAILED";
+
+export const cancelInvoice = (paymentHash) => async (dispatch, getState) => {
+  const inClient = getState().ln.inClient;
+  if (!inClient) return;
+
+  dispatch({ type: LNWALLET_CANCELINVOICE_ATTEMPT });
+  try {
+    await ln.cancelInvoice(inClient, paymentHash);
+    dispatch(listLatestInvoices());
+    dispatch({ type: LNWALLET_CANCELINVOICE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_CANCELINVOICE_FAILED });
+  }
+};
+
 export const LNWALLET_INVOICE_SETTLED = "LNWALLET_INVOICE_SETTLED";
 export const LNWALLET_INVOICE_OPENED = "LNWALLET_INVOICE_OPENED";
 export const LNWALLET_INVOICE_EXPIRED = "LNWALLET_INVOICE_EXPIRED";
+export const LNWALLET_INVOICE_CANCELED = "LNWALLET_INVOICE_CANCELED";
 
 const subscribeToInvoices = () => (dispatch, getState) => {
   const client = getState().ln.client;
@@ -572,12 +601,14 @@ const subscribeToInvoices = () => (dispatch, getState) => {
     }
 
     let type = LNWALLET_INVOICE_OPENED;
-    if (inv.status === ln.INVOICE_STATUS_SETTLED) {
+    if (inv.status === INVOICE_STATUS_SETTLED) {
       type = LNWALLET_INVOICE_SETTLED;
-    } else if (inv.status === ln.INVOICE_STATUS_EXPIRED) {
+    } else if (inv.status === INVOICE_STATUS_EXPIRED) {
       // This doesn't really work. on STATUS_OPEN we need to setup a
       // timer to change the status to EXPIRED.
       type = LNWALLET_INVOICE_EXPIRED;
+    } else if (inv.status === INVOICE_STATUS_CANCELED) {
+      type = LNWALLET_INVOICE_CANCELED;
     }
 
     dispatch({ invoice: inv, invoices: newInvoices, type });
@@ -1034,3 +1065,13 @@ export const removeWatchtower = (wtPubKey) => async (dispatch, getState) => {
     dispatch({ error, type: LNWALLET_REMOVEWATCHTOWER_FAILED });
   }
 };
+
+export const LNWALLET_CHANGE_INVOICE_FILTER = "LNWALLET_CHANGE_INVOICE_FILTER";
+export const changeInvoiceFilter = (newFilter) => (dispatch) =>
+  new Promise((resolve) => {
+    dispatch({
+      invoiceFilter: newFilter,
+      type: LNWALLET_CHANGE_INVOICE_FILTER
+    });
+    resolve();
+  });

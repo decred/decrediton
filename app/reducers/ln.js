@@ -13,9 +13,13 @@ import {
   LNWALLET_ADDINVOICE_ATTEMPT,
   LNWALLET_ADDINVOICE_SUCCESS,
   LNWALLET_ADDINVOICE_FAILED,
+  LNWALLET_CANCELINVOICE_ATTEMPT,
+  LNWALLET_CANCELINVOICE_SUCCESS,
+  LNWALLET_CANCELINVOICE_FAILED,
   LNWALLET_INVOICE_SETTLED,
   LNWALLET_INVOICE_OPENED,
   LNWALLET_INVOICE_EXPIRED,
+  LNWALLET_INVOICE_CANCELED,
   LNWALLET_PAYSTREAM_CREATED,
   LNWALLET_SENDPAYMENT_ATTEMPT,
   LNWALLET_SENDPAYMENT_SUCCESS,
@@ -32,7 +36,8 @@ import {
   LNWALLET_GETROUTESINFO_ATTEMPT,
   LNWALLET_GETROUTESINFO_SUCCESS,
   LNWALLET_GETROUTESINFO_FAILED,
-  LNWALLET_LISTWATCHTOWERS_SUCCESS
+  LNWALLET_LISTWATCHTOWERS_SUCCESS,
+  LNWALLET_CHANGE_INVOICE_FILTER
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -56,6 +61,7 @@ export default function ln(state = {}, action) {
         active: false,
         client: null,
         wtClient: null,
+        inClient: null,
         startupStage: null
       };
     case LNWALLET_STARTUP_FAILED:
@@ -90,7 +96,8 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         client: action.lnClient,
-        wtClient: action.wtClient
+        wtClient: action.wtClient,
+        inClient: action.inClient
       };
     case LNWALLET_BALANCE_UPDATED:
       return {
@@ -134,9 +141,25 @@ export default function ln(state = {}, action) {
         ...state,
         addInvoiceAttempt: false
       };
+    case LNWALLET_CANCELINVOICE_ATTEMPT:
+      return {
+        ...state,
+        cancelInvoiceAttempt: true
+      };
+    case LNWALLET_CANCELINVOICE_SUCCESS:
+      return {
+        ...state,
+        cancelInvoiceAttempt: false
+      };
+    case LNWALLET_CANCELINVOICE_FAILED:
+      return {
+        ...state,
+        cancelInvoiceAttempt: false
+      };
     case LNWALLET_INVOICE_SETTLED:
     case LNWALLET_INVOICE_OPENED:
     case LNWALLET_INVOICE_EXPIRED:
+    case LNWALLET_INVOICE_CANCELED:
       return {
         ...state,
         invoices: action.invoices
@@ -185,6 +208,7 @@ export default function ln(state = {}, action) {
         exists: false,
         client: null,
         wtClient: null,
+        inClient: null,
         channels: [],
         pendingChannels: [],
         closedChannels: [],
@@ -281,6 +305,11 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         towersList: action.towersList
+      };
+    case LNWALLET_CHANGE_INVOICE_FILTER:
+      return {
+        ...state,
+        invoiceFilter: action.invoiceFilter
       };
 
     default:

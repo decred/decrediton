@@ -2,6 +2,7 @@ import * as client from "middleware/ln/client";
 import fs from "fs";
 import { lnrpc as pb } from "middleware/ln/rpc_pb";
 import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
+import { invoicesrpc as inpb } from "middleware/ln/invoices_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 import { invoke, shimStreamedResponse } from "helpers/electronRenderer";
@@ -12,9 +13,17 @@ import {
   shimError
 } from "middleware/grpc/clientTracking";
 
+import {
+  INVOICE_STATUS_OPEN,
+  INVOICE_STATUS_SETTLED,
+  INVOICE_STATUS_EXPIRED,
+  INVOICE_STATUS_CANCELED
+} from "constants";
+
 export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
+export const getLNInvoiceClient = client.getLNInvoiceClient;
 
 export * from "./watchtower";
 
@@ -92,24 +101,24 @@ export const listClosedChannels = (client) =>
     })
   );
 
-export const INVOICE_STATUS_OPEN = "open";
-export const INVOICE_STATUS_SETTLED = "settled";
-export const INVOICE_STATUS_EXPIRED = "expired";
-
 const formatInvoice = (invoiceData) => {
   const inv = invoiceData.toObject();
   if (inv.paymentRequest.indexOf("[ERROR]") === 0) return null;
   let status = "";
+  const expiryTS = inv.creationDate + inv.expiry;
+  const isExpired = new Date().getTime() / 1000 > expiryTS;
 
   if (inv.state === pb.Invoice.InvoiceState.SETTLED) {
     status = INVOICE_STATUS_SETTLED;
+  } else if (inv.state === pb.Invoice.InvoiceState.CANCELED) {
+    // Show temporarily canceled status until the expiry time.
+    // (status is canceled and it has not expired yet).
+    // After the expiry time, it become expired.
+    status = isExpired ? INVOICE_STATUS_EXPIRED : INVOICE_STATUS_CANCELED;
+  } else if (inv.state === pb.Invoice.InvoiceState.EXPIRED) {
+    status = INVOICE_STATUS_EXPIRED;
   } else if (inv.state === pb.Invoice.InvoiceState.OPEN) {
-    const expiryTS = inv.creationDate + inv.expiry;
-    if (new Date().getTime() / 1000 > expiryTS) {
-      status = INVOICE_STATUS_EXPIRED;
-    } else {
-      status = INVOICE_STATUS_OPEN;
-    }
+    status = isExpired ? INVOICE_STATUS_EXPIRED : INVOICE_STATUS_OPEN;
   }
 
   const rHashHex = Buffer.from(inv.rHash, "base64").toString("hex");
@@ -172,6 +181,12 @@ export const addInvoice = (client, memo, value) => {
   request.setMemo(memo);
   request.setValue(value);
   return simpleRequest(client, "addInvoice", request);
+};
+
+export const cancelInvoice = (inClient, paymentHash) => {
+  const request = new inpb.CancelInvoiceMsg();
+  request.setPaymentHash(paymentHash);
+  return simpleRequest(inClient, "cancelInvoice", request);
 };
 
 export const subscribeToInvoices = (client) => {

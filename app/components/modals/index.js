@@ -20,3 +20,4 @@ export { default as AutoBuyerSettingsModal } from "./AutoBuyerSettingsModal";
 export { default as SetNewPassphraseModal } from "./SetNewPassphraseModal/SetNewPassphraseModal";
 export { default as AppPassAndPassphraseModal } from "./AppPassAndPassphraseModal/AppPassAndPassphraseModal";
 export { default as ConfirmationDialogModal } from "./ConfirmationDialogModal";
+export { default as LNInvoiceModal } from "./LNInvoiceModal";

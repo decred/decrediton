@@ -1,0 +1,80 @@
+.header {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  background-color: var(--grey-2);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--main-dark-blue);
+}
+.header .arrow {
+  background-image: var(--arrow-right-gray-icon);
+  background-position: 0 center;
+  background-size: 5px;
+  background-repeat: no-repeat;
+  width: 8px;
+  height: 8px;
+  margin-left: 5px;
+  transform: rotate(90deg);
+}
+
+.header:hover .arrow {
+  background-image: var(--arrow-right-blue-icon);
+}
+
+.header.active .arrow {
+  transform: rotate(-90deg);
+  background-position: 2px center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  font-size: 16px;
+}
+
+.grid label {
+  border-bottom: 1px solid var(--grey-2);
+  padding: 0 0 0 25px;
+  height: 40px;
+  color: var(--grey-6);
+  display: flex;
+  align-items: center;
+}
+
+.grid .value {
+  border-bottom: 1px solid var(--grey-2);
+  color: var(--main-dark-blue);
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.grid .value > div {
+  margin-right: 10px;
+  display: inline;
+}
+
+.secondaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.grid .secondaryGrid label,
+.grid .secondaryGrid .value {
+  padding: 5px 0;
+  border: none;
+}
+
+.grid .secondaryGrid label:first-of-type,
+.grid .secondaryGrid .value:first-of-type {
+  padding-top: 10px;
+}
+
+.grid .secondaryGrid label:last-of-type,
+.grid .secondaryGrid .value:last-of-type {
+  border-bottom: 1px solid var(--grey-2);
+  padding-bottom: 10px;
+}
