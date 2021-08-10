@@ -13,7 +13,7 @@ const mockData = [
     value: <div>value-1</div>
   },
   {
-    label: "label-for-secondary-grid",
+    label: "label-for-secondary-grid-0",
     value: [
       {
         label: "label-sec-0",
@@ -22,6 +22,28 @@ const mockData = [
       {
         label: "label-sec-1",
         value: "value-sec-1"
+      }
+    ]
+  },
+  {
+    label: "label-for-secondary-grid-1",
+    value: [
+      {
+        label: "label-sec-11",
+        value: "value-sec-11"
+      },
+      {
+        label: "label-for-secondary-grid-12",
+        value: [
+          {
+            label: "label-sec-121",
+            value: "value-sec-121"
+          },
+          {
+            label: "label-sec-122",
+            value: "value-sec-122"
+          }
+        ]
       }
     ]
   }
@@ -71,6 +93,21 @@ test("check expandable table", () => {
   ).toBeInTheDocument();
   expect(screen.getByText(mockData[2].value[0].value)).toBeInTheDocument();
   expect(screen.getByText(mockData[2].value[1].value)).toBeInTheDocument();
+
+  // secondary grid in a secondary grid
+  expect(screen.getByText(`${mockData[3].label}:`)).toBeInTheDocument();
+  expect(
+    screen.getByText(`${mockData[3].value[0].label}:`)
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(`${mockData[3].value[1].label}:`)
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(mockData[3].value[1].value[0].value)
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(mockData[3].value[1].value[1].value)
+  ).toBeInTheDocument();
 
   //close details
   user.click(title);

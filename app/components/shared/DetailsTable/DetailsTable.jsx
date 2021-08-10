@@ -1,6 +1,50 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { classNames } from "pi-ui";
 import styles from "./DetailsTable.module.css";
+import { SmallButton } from "buttons";
+import { CopyToClipboard, TruncatedText } from "shared";
+
+const ValueField = ({ data }) => {
+  const { value, copyable, truncate  } = data;
+  const truncatedText = truncate ? (
+    <TruncatedText text={value} max={truncate} showTooltip />
+  ) : (
+    value
+  );
+  return (
+    <div className={classNames(styles.value, copyable && styles.copyable)}>
+      {copyable ? (
+        <>
+          <div className={styles.copyableText}>{truncatedText}</div>
+          <CopyToClipboard textToCopy={value} ButtonComponent={SmallButton} />
+        </>
+      ) : (
+        truncatedText
+      )}
+    </div>
+  );
+};
+
+const SubTable = ({ data }) => (
+  <>
+    <label>{data.label}:</label>
+    <div className={styles.secondaryGrid}>
+      {data.value.map((node, subIndex) => (
+        <Row key={subIndex + Math.random()} data={node} />
+      ))}
+    </div>
+  </>
+);
+
+const Row = ({ data }) =>
+  !Array.isArray(data.value) ? (
+    <>
+      <label>{data.label}:</label>
+      <ValueField data={data} />
+    </>
+  ) : (
+    <SubTable data={data} />
+  );
 
 const DetailsTable = ({
   data,
@@ -26,31 +70,9 @@ const DetailsTable = ({
       </div>
       {showDetails && (
         <div className={styles.grid}>
-          {data?.map(({ label, value }, index) => {
-            return !Array.isArray(value) ? (
-              <Fragment key={index + Math.random()}>
-                <label>{label}:</label>
-                <div className={styles.value}>{value}</div>
-              </Fragment>
-            ) : (
-              <Fragment key={index + Math.random()}>
-                <label>{label}:</label>
-                <div className={styles.secondaryGrid}>
-                  {value.map(
-                    (
-                      { label: secondaryLabel, value: secondaryValue },
-                      secondaryIndex
-                    ) => (
-                      <Fragment key={secondaryIndex + Math.random()}>
-                        <label>{secondaryLabel}:</label>
-                        <div className={styles.value}>{secondaryValue}</div>
-                      </Fragment>
-                    )
-                  )}
-                </div>
-              </Fragment>
-            );
-          })}
+          {data?.map((node, index) => (
+            <Row key={index + Math.random()} data={node} />
+          ))}
         </div>
       )}
     </div>
