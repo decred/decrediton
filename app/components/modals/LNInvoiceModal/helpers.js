@@ -5,7 +5,7 @@ export const getInvoiceDetails = (invoice, tsDate) => {
       label: <T id="ln.invoicesModal.hash" m="Hash" />,
       value: invoice?.rHashHex,
       copyable: true,
-      truncated: true
+      truncate: 40
     },
     {
       label: <T id="ln.invoicesModal.desc" m="Description" />,

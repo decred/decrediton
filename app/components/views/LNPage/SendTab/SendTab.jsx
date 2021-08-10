@@ -132,6 +132,10 @@ const SendTab = ({ setTimeout }) => {
           </KeyBlueButton>
         </div>
       )}
+      <Subtitle
+        className={styles.invoiceHistorySubtitle}
+        title={<T id="ln.sendTab.lightingPayments" m="Lightning Payments" />}
+      />
       {payments && payments.length > 0 ? (
         <div>
           {payments.map((payment) => (

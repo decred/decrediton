@@ -1,19 +1,12 @@
 import { FormattedMessage as T } from "react-intl";
-import { SmallButton } from "buttons";
-import { CopyToClipboard, TruncatedText } from "shared";
-export const getPaymentDetails = (payment, tsDate) => {
+import { Balance } from "shared";
+export const getPaymentDetails = (payment) => {
   const details = [
     {
       label: <T id="ln.paymentModal.hash" m="Hash" />,
-      value: (
-        <>
-          <TruncatedText text={payment?.paymentHash} max={40} showTooltip />
-          <CopyToClipboard
-            textToCopy={payment?.paymentHash}
-            ButtonComponent={SmallButton}
-          />
-        </>
-      )
+      value: payment?.paymentHash,
+      copyable: true,
+      truncate: 40
     }
   ];
 
@@ -26,49 +19,43 @@ export const getPaymentDetails = (payment, tsDate) => {
       ),
       value: [
         {
-          label: <T id="ln.paymentModal.htlc.state" m="State" />,
-          value: htlc.state
+          label: <T id="ln.paymentModal.htlc.status" m="Status" />,
+          value: htlc.status
         },
         {
-          label: <T id="ln.paymentModal.htlc.chanId" m="Channel id" />,
-          value: htlc.chanId
+          label: <T id="ln.paymentModal.htlc.totalAmt" m="Total Amount" />,
+          value: <Balance amount={htlc.route.totalAmt} />
         },
         {
-          label: <T id="ln.paymentModal.htlc.acceptHeight" m="Accept Height" />,
-
-          value: htlc.acceptHeight
-        },
-        {
-          label: (
-            <T id="ln.paymentModal.htlc.acceptTimeLabel" m="Accept Time" />
-          ),
-          value: (
-            <T
-              id="ln.paymentModal.htlc.acceptTime"
-              m="{acceptTime, date, medium} {acceptTime, time, short}"
-              values={{ acceptTime: tsDate(htlc.acceptTime) }}
-            />
-          )
-        },
-        {
-          label: <T id="ln.paymentModal.htlc.expiryHeight" m="Expiry Height" />,
-
-          value: htlc.expiryHeight
-        },
-        {
-          label: (
-            <T id="ln.paymentModal.htlc.resolveTimeLabel" m="Resolve Time" />
-          ),
-          value: (
-            <T
-              id="ln.paymentModal.htlc.resolveTime"
-              m="{resolveTime, date, medium} {resolveTime, time, short}"
-              values={{ resolveTime: tsDate(htlc.resolveTime) }}
-            />
-          )
+          label: <T id="ln.paymentModal.htlc.totalFees" m="Total Fees" />,
+          value: <Balance amount={htlc.route.totalFees} />
         }
       ]
     };
+    // hopList
+    htlc.route?.hopsList?.forEach((hop, hopIndex) => {
+      const hopResponse = {
+        label: (
+          <>
+            <T id="ln.paymentModal.routeHop" m="Hop" /> {hopIndex}
+          </>
+        ),
+        value: [
+          {
+            label: <T id="ln.paymentModal.htlc.hop.fee" m="Fee" />,
+            value: <Balance amount={hop.fee} />
+          },
+          {
+            label: <T id="ln.paymentModal.htlc.hop.pubkey" m="PubKey" />,
+            value: hop.pubKey,
+            copyable: true,
+            truncate: 20
+          }
+        ]
+      };
+      response.value.push(hopResponse);
+    });
+
     details.push(response);
   });
 
