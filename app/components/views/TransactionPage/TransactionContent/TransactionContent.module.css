@@ -171,7 +171,8 @@
 }
 
 .rebroadcastBtnContainer,
-.abandonBtnContainer {
+.abandonBtnContainer,
+.revokeBtnContainer {
   width: 815px;
 }
 
@@ -185,7 +186,8 @@
   margin-top: -22px;
 }
 
-.abandonBtn {
+.abandonBtn,
+.revokeBtn {
   float: right;
   margin-top: -22px;
   margin-right: 20px;
@@ -193,7 +195,7 @@
 
 @media screen and (max-width: 1180px) {
   .rebroadcastBtnContainer,
-  .abandonBtnContainer {
+  .revokeBtnContainer {
     width: 770px;
   }
   .abandonBtnContainer {
@@ -218,7 +220,8 @@
     flex-direction: column-reverse;
   }
   .rebroadcastBtnContainer,
-  .abandonBtnContainer {
+  .abandonBtnContainer,
+  .revokeBtnContainer {
     width: 375px;
     text-align: center;
     display: block;

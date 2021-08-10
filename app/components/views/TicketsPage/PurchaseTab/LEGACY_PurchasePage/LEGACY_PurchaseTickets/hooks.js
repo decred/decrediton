@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { MIN_RELAY_FEE } from "constants";
 
 export const usePurchaseTickets = () => {
+  const spvMode = useSelector(sel.isSPV);
   const ticketPrice = useSelector(sel.ticketPrice);
   const configuredStakePools = useSelector(sel.configuredStakePools);
   const numTicketsToBuyValue = useSelector(sel.numTicketsToBuy);
@@ -64,6 +65,7 @@ export const usePurchaseTickets = () => {
     dispatch(spa.dismissBackupRedeemScript());
 
   return {
+    spvMode,
     ticketPrice,
     configuredStakePools,
     numTicketsToBuy,

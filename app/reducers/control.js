@@ -41,6 +41,9 @@ import {
   REVOKETICKETS_ATTEMPT,
   REVOKETICKETS_FAILED,
   REVOKETICKETS_SUCCESS,
+  REVOKETICKET_ATTEMPT,
+  REVOKETICKET_FAILED,
+  REVOKETICKET_SUCCESS,
   GETTICKETBUYERCONFIG_ATTEMPT,
   GETTICKETBUYERCONFIG_FAILED,
   GETTICKETBUYERCONFIG_SUCCESS,
@@ -368,6 +371,25 @@ export default function control(state = {}, action) {
         revokeTicketsError: null,
         revokeTicketsRequestAttempt: false,
         revokeTicketsResponse: action.revokeTicketsResponse
+      };
+    case REVOKETICKET_ATTEMPT:
+      return {
+        ...state,
+        revokeTicketError: null,
+        revokeTicketRequestAttempt: true
+      };
+    case REVOKETICKET_FAILED:
+      return {
+        ...state,
+        revokeTicketError: String(action.error),
+        revokeTicketRequestAttempt: false
+      };
+    case REVOKETICKET_SUCCESS:
+      return {
+        ...state,
+        revokeTicketError: null,
+        revokeTicketRequestAttempt: false,
+        revokeTicketResponse: action.revokeTicketResponse
       };
     case GETTICKETBUYERCONFIG_ATTEMPT:
       return {
