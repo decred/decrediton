@@ -21,3 +21,4 @@ export { default as SetNewPassphraseModal } from "./SetNewPassphraseModal/SetNew
 export { default as AppPassAndPassphraseModal } from "./AppPassAndPassphraseModal/AppPassAndPassphraseModal";
 export { default as ConfirmationDialogModal } from "./ConfirmationDialogModal";
 export { default as LNInvoiceModal } from "./LNInvoiceModal";
+export { default as LNPaymentModal } from "./LNPaymentModal";

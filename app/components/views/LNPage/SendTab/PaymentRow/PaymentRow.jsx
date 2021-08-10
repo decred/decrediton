@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance, LNPaymentStatus } from "shared";
+import { Balance, LNPaymentStatus, TruncatedText } from "shared";
 import styles from "./PaymentRow.module.css";
 
 const PaymentRow = ({ payment, tsDate, onClick }) => (
@@ -18,7 +18,9 @@ const PaymentRow = ({ payment, tsDate, onClick }) => (
             )
           }}
         />
-        <div className={styles.paymentHash}>{payment.paymentHash}</div>
+        <div className={styles.paymentHash}>
+          <TruncatedText text={payment.paymentHash} max={40} />
+        </div>
       </div>
     </div>
     <div className={styles.status}>

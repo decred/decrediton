@@ -11,6 +11,7 @@ export function useSendTab(setTimeout) {
   const [sending, setSendValue] = useState();
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const [selectedPaymentDetails, setSelectedPaymentDetails] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState(null);
   const intl = useIntl();
 
   const {
@@ -102,6 +103,8 @@ export function useSendTab(setTimeout) {
     selectedPaymentDetails,
     onToggleShowDetails,
     intl,
+    selectedPayment,
+    setSelectedPayment,
     channelBalances
   };
 }

@@ -19,7 +19,57 @@ const mockLnChannelBalance = {
 };
 
 const mockOutstandingPayments = {};
-const mockPayments = [];
+const mockPayments = [
+  {
+    paymentHash: "mock-payment-hash-0",
+    value: 20000000,
+    creationDate: 1627810765,
+    fee: 0,
+    paymentPreimage: "mock-preimage-0",
+    valueAtoms: 20000000,
+    valueMAtoms: 20000000000,
+    paymentRequest: "mock-payment-request-0",
+    status: 2,
+    feeAtoms: 0,
+    feeMAtoms: 0,
+    creationTimeNs: 1627810765912116500,
+    htlcsList: [
+      {
+        status: 1,
+        route: {
+          totalTimeLock: 738888,
+          totalFees: 0,
+          totalAmt: 20000000,
+          hopsList: [
+            {
+              chanId: "810928308391837696",
+              chanCapacity: 200000000,
+              amtToForward: 20000000,
+              fee: 0,
+              expiry: 738888,
+              amtToForwardMAtoms: 20000000000,
+              feeMAtoms: 0,
+              pubKey: "mock-pubkey-0",
+              tlvPayload: true,
+              mppRecord: {
+                paymentAddr: "mock-payment-address-0",
+                totalAmtMAtoms: 20000000000
+              },
+              customRecordsMap: []
+            }
+          ],
+          totalFeesMAtoms: 0,
+          totalAmtMAtoms: 20000000000
+        },
+        attemptTimeNs: 1627810765956084200,
+        resolveTimeNs: 1627810766343210800,
+        preimage: "mock-preimage-htlc-0"
+      }
+    ],
+    paymentIndex: 4,
+    failureReason: 0
+  }
+];
 const mockReqCode = "mock-req-code";
 const mockValidDecodedPayRequest = {
   destination: "mock-destination",
@@ -131,4 +181,10 @@ test("test paste and clear button", async () => {
 
   user.click(getClearButton());
   await wait(() => expect(getReqCodeInput().value).toBe(""));
+});
+
+test("test payments list", () => {
+  render(<SendTab />);
+
+  screen.debug();
 });

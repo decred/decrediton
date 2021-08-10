@@ -53,7 +53,7 @@
   .value .paymentHash {
     max-width: 242px;
   }
-  .lnInvoice {
+  .payment {
     grid-template-columns: 1fr;
     grid-row-gap: 5px;
   }

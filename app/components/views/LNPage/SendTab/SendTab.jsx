@@ -13,6 +13,8 @@ import Payment from "./Payment";
 import BalancesHeader from "../BalancesHeader";
 import { Button, classNames } from "pi-ui";
 import { wallet } from "wallet-preload-shim";
+import PaymentRow from "./PaymentRow";
+import { LNPaymentModal } from "modals";
 
 const messages = defineMessages({
   payReqInputLabel: {
@@ -59,6 +61,8 @@ const SendTab = ({ setTimeout }) => {
     isShowingDetails,
     selectedPaymentDetails,
     onToggleShowDetails,
+    selectedPayment,
+    setSelectedPayment,
     intl
   } = useSendTab(setTimeout);
 
@@ -127,6 +131,30 @@ const SendTab = ({ setTimeout }) => {
             <T id="ln.paymentsTab.sendBtn" m="Send" />
           </KeyBlueButton>
         </div>
+      )}
+      {payments && payments.length > 0 ? (
+        <div>
+          {payments.map((payment) => (
+            <PaymentRow
+              key={payment.paymentIndex}
+              payment={payment}
+              tsDate={tsDate}
+              onClick={() => setSelectedPayment(payment)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.empty}>
+          <T id="ln.sendTab.emptyPaymentList" m="No payment found" />
+        </div>
+      )}
+      {selectedPayment && (
+        <LNPaymentModal
+          show={!!selectedPayment}
+          onCancelModal={() => setSelectedPayment(null)}
+          payment={selectedPayment}
+          tsDate={tsDate}
+        />
       )}
       {Object.keys(outstandingPayments).length > 0 && (
         <div className={styles.listWrapper}>
