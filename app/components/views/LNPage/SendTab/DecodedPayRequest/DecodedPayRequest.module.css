@@ -21,9 +21,6 @@
 }
 
 .destination {
-  max-width: 113px;
-  text-overflow: ellipsis;
-  overflow: hidden;
   font-size: 20px;
   line-height: 25px;
   color: var(--main-dark-blue);

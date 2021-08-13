@@ -18,7 +18,51 @@ const mockLnChannelBalance = {
   maxOutboundAmount: 97997360
 };
 
-const mockOutstandingPayments = {};
+const mockOutstandingPayments = {
+  "mock-outstanding-payment-hash-0": {
+    decoded: {
+      destination: "mock-destination-0",
+      paymentHash: "mock-outstanding-payment-hash-0",
+      numAtoms: 1000000,
+      timestamp: 1628688648,
+      expiry: 3600,
+      description: "mock-outstanding-desc-0",
+      descriptionHash: "",
+      fallbackAddr: "",
+      cltvExpiry: 80,
+      routeHintsList: [],
+      paymentAddr: "mock-payment-address-0",
+      numMAtoms: 1000000000,
+      featuresMap: [
+        [
+          15,
+          {
+            name: "payment-addr",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          17,
+          {
+            name: "multi-path-payments",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          9,
+          {
+            name: "tlv-onion",
+            isRequired: false,
+            isKnown: true
+          }
+        ]
+      ]
+    }
+  }
+};
+
 const mockPayments = [
   {
     paymentHash: "mock-payment-hash-0",
@@ -70,6 +114,52 @@ const mockPayments = [
     failureReason: 0
   }
 ];
+const mockFailedPayment = [
+  {
+    paymentError: "mock-payment-error",
+    decoded: {
+      destination: "mock-destination",
+      paymentHash: "mock-payment-hash",
+      numAtoms: 10,
+      timestamp: 1628512835,
+      expiry: 3600,
+      description: "mock-failed-desc",
+      descriptionHash: "",
+      fallbackAddr: "",
+      cltvExpiry: 80,
+      routeHintsList: [],
+      paymentAddr: "mock-payment-address",
+      numMAtoms: 10000,
+      featuresMap: [
+        [
+          15,
+          {
+            name: "payment-addr",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          17,
+          {
+            name: "multi-path-payments",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          9,
+          {
+            name: "tlv-onion",
+            isRequired: false,
+            isKnown: true
+          }
+        ]
+      ]
+    }
+  }
+];
+
 const mockReqCode = "mock-req-code";
 const mockValidDecodedPayRequest = {
   destination: "mock-destination",
@@ -119,6 +209,7 @@ beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
   selectors.lnChannelBalances = jest.fn(() => mockLnChannelBalance);
   selectors.lnOutstandingPayments = jest.fn(() => mockOutstandingPayments);
+  selectors.lnFailedPayments = jest.fn(() => mockFailedPayment);
   selectors.lnPayments = jest.fn(() => mockPayments);
   mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(() => () =>
     Promise.resolve(mockValidDecodedPayRequest)
@@ -148,7 +239,7 @@ test("test send form with valid lightning request", async () => {
     "Amount0.01000 DCR"
   );
   expect(screen.getByText("Destination").parentNode.textContent).toMatch(
-    `Destination${mockValidDecodedPayRequest.destination}`
+    "Destinationmock-...ation"
   );
 
   user.click(getSendButton());
@@ -183,8 +274,109 @@ test("test paste and clear button", async () => {
   await wait(() => expect(getReqCodeInput().value).toBe(""));
 });
 
-test("test payments list", () => {
+test("test payment list and modal ", async () => {
   render(<SendTab />);
 
-  screen.debug();
+  expect(
+    screen
+      .getAllByText(/Sent payment/i)
+      .map((node) => node.parentElement.textContent)
+  ).toStrictEqual([
+    `Sent Payment 0.01000 DCR${mockOutstandingPayments["mock-outstanding-payment-hash-0"].decoded.paymentHash}`,
+    `Sent Payment 0.0000001 DCR${mockFailedPayment[0].decoded.paymentHash}`,
+    `Sent Payment 0.20000 DCR${mockPayments[0].paymentHash}`
+  ]);
+
+  // click on the first (outstanding) payment and check modal
+  user.click(screen.getByText("Pending"));
+  expect(screen.getAllByText("Pending").length).toBe(2);
+  //modal has been closed
+  user.click(screen.getByTestId("lnpayment-close-button"));
+  await wait(() =>
+    expect(screen.queryByText("Lightning Payment")).not.toBeInTheDocument()
+  );
+
+  // click on the second (failed) payment and check modal
+  user.click(screen.getByText("Failed"));
+  expect(screen.getAllByText("Failed").length).toBe(2);
+  expect(
+    screen.getByText(mockFailedPayment[0].decoded.paymentHash)
+  ).toBeInTheDocument();
+  user.click(screen.getByTestId("lnpayment-close-button"));
+  expect(screen.queryByText("Lightning Payment")).not.toBeInTheDocument();
+
+  // click on the second (confirmed) payment and check modal
+  user.click(screen.getByText("Confirmed"));
+  expect(screen.getAllByText("Confirmed").length).toBe(2);
+  expect(screen.getByText(mockPayments[0].paymentHash)).toBeInTheDocument();
+  user.click(screen.getByTestId("lnpayment-close-button"));
+  expect(screen.queryByText("Lightning Payment")).not.toBeInTheDocument();
+});
+
+test("test sort control", async () => {
+  render(<SendTab />);
+
+  expect(
+    screen
+      .getAllByText(/Sent Payment/i)
+      .map((node) => node.parentElement.textContent)
+  ).toStrictEqual([
+    `Sent Payment 0.01000 DCR${mockOutstandingPayments["mock-outstanding-payment-hash-0"].decoded.paymentHash}`,
+    `Sent Payment 0.0000001 DCR${mockFailedPayment[0].decoded.paymentHash}`,
+    `Sent Payment 0.20000 DCR${mockPayments[0].paymentHash}`
+  ]);
+
+  const sortMenuButton = screen.getAllByRole("button", {
+    name: "EyeFilterMenu"
+  })[0];
+
+  user.click(sortMenuButton);
+  user.click(screen.getByText("Oldest"));
+
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/Sent Payment/i)
+        .map((node) => node.parentElement.textContent)
+    ).toStrictEqual([
+      `Sent Payment 0.20000 DCR${mockPayments[0].paymentHash}`,
+      `Sent Payment 0.0000001 DCR${mockFailedPayment[0].decoded.paymentHash}`,
+      `Sent Payment 0.01000 DCR${mockOutstandingPayments["mock-outstanding-payment-hash-0"].decoded.paymentHash}`
+    ])
+  );
+});
+
+test("test search control", async () => {
+  render(<SendTab />);
+
+  expect(
+    screen
+      .getAllByText(/Sent Payment/i)
+      .map((node) => node.parentElement.textContent)
+  ).toStrictEqual([
+    `Sent Payment 0.01000 DCR${mockOutstandingPayments["mock-outstanding-payment-hash-0"].decoded.paymentHash}`,
+    `Sent Payment 0.0000001 DCR${mockFailedPayment[0].decoded.paymentHash}`,
+    `Sent Payment 0.20000 DCR${mockPayments[0].paymentHash}`
+  ]);
+
+  const searchInput = screen.getByPlaceholderText("Filter by Payment Hash");
+  user.type(searchInput, "payment-hash-0");
+
+  await wait(() =>
+    expect(
+      screen
+        .getAllByText(/Sent Payment/i)
+        .map((node) => node.parentElement.textContent)
+    ).toStrictEqual([
+      `Sent Payment 0.01000 DCR${mockOutstandingPayments["mock-outstanding-payment-hash-0"].decoded.paymentHash}`,
+      `Sent Payment 0.20000 DCR${mockPayments[0].paymentHash}`
+    ])
+  );
+
+  user.type(searchInput, "mock-hash-22-12");
+
+  await wait(() =>
+    expect(screen.queryByText(/Sent Payment/i)).not.toBeInTheDocument()
+  );
+  expect(screen.getByText(/no payment found/i)).toBeInTheDocument();
 });

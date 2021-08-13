@@ -5,7 +5,7 @@ import { SmallButton } from "buttons";
 import { CopyToClipboard, TruncatedText } from "shared";
 
 const ValueField = ({ data }) => {
-  const { value, copyable, truncate  } = data;
+  const { value, copyable, truncate } = data;
   const truncatedText = truncate ? (
     <TruncatedText text={value} max={truncate} showTooltip />
   ) : (

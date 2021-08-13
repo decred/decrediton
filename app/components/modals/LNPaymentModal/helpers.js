@@ -10,6 +10,21 @@ export const getPaymentDetails = (payment) => {
     }
   ];
 
+  if (payment?.description) {
+    details.push({
+      label: <T id="ln.paymentModal.desc" m="Description" />,
+      value: payment.description
+    });
+  }
+
+  if (payment?.destination) {
+    details.push({
+      label: <T id="ln.paymentModal.destination" m="Destination" />,
+      value: payment.destination,
+      truncate: 40
+    });
+  }
+
   payment?.htlcsList?.forEach((htlc, index) => {
     const response = {
       label: (

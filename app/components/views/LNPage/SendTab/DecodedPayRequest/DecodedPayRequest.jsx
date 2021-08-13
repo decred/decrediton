@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
+import { Balance, TruncatedText } from "shared";
 import { DcrInput } from "inputs";
 import styles from "./DecodedPayRequest.module.css";
 
@@ -24,7 +24,9 @@ const DecodedPayRequest = ({ decoded, sendValue, onSendValueChanged }) => (
       <label>
         <T id="ln.paymentsTab.destLabel" m="Destination" />
       </label>
-      <div className={styles.destination}>{decoded.destination}</div>
+      <div className={styles.destination}>
+        <TruncatedText text={decoded.destination} max={10} />
+      </div>
     </div>
   </div>
 );

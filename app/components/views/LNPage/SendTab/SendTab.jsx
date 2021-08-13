@@ -1,20 +1,18 @@
 import { useSendTab } from "./hooks";
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, EyeFilterMenu } from "buttons";
 import { TextInput } from "inputs";
 import styles from "./SendTab.module.css";
-import { Subtitle, Balance, VerticalAccordion } from "shared";
+import { Subtitle } from "shared";
 import { DescriptionHeader } from "layout";
 import ReactTimeout from "react-timeout";
 import DecodedPayRequest from "./DecodedPayRequest";
-import OutstandingPayment from "./OutstandingPayment";
-import FailedPayment from "./FailedPayment";
-import Payment from "./Payment";
 import BalancesHeader from "../BalancesHeader";
-import { Button, classNames } from "pi-ui";
+import { Button, classNames, Tooltip } from "pi-ui";
 import { wallet } from "wallet-preload-shim";
 import PaymentRow from "./PaymentRow";
 import { LNPaymentModal } from "modals";
+import { getSortTypes, getPaymentTypes } from "./helpers";
 
 const messages = defineMessages({
   payReqInputLabel: {
@@ -28,6 +26,10 @@ const messages = defineMessages({
   payReqDecodeSuccessMsg: {
     id: "ln.paymentsTab.payReqDecodeSuccessMsg",
     defaultMessage: "Valid Lightning Request"
+  },
+  filterByHashPlaceholder: {
+    id: "ln.paymentsTab.filterByHashPlaceholder",
+    defaultMessage: "Filter by Payment Hash"
   }
 });
 
@@ -45,11 +47,57 @@ export const SendTabHeader = () => (
   />
 );
 
+const subtitleMenu = ({
+  sortTypes,
+  paymentTypes,
+  listDirection,
+  selectedPaymentType,
+  searchText,
+  intl,
+  onChangeSelectedType,
+  onChangeSortType,
+  onChangeSearchText
+}) => (
+  <div className={styles.filterContainer}>
+    <div className={styles.paymentSearch}>
+      <TextInput
+        newBiggerFontStyle
+        className={styles.searchInput}
+        id="filterByHashInput"
+        type="text"
+        placeholder={intl.formatMessage(messages.filterByHashPlaceholder)}
+        value={searchText}
+        onChange={(e) => onChangeSearchText(e.target.value)}
+      />
+    </div>
+    <Tooltip
+      contentClassName={styles.sortByTooltip}
+      content={<T id="ln.paymentsTab.sortby.tooltip" m="Sort By" />}>
+      <EyeFilterMenu
+        labelKey="label"
+        keyField="value"
+        Transaction
+        options={sortTypes}
+        selected={listDirection}
+        onChange={onChangeSortType}
+        type="sortBy"
+      />
+    </Tooltip>
+    <Tooltip
+      contentClassName={styles.typeTooltip}
+      content={<T id="ln.paymentsTab.paymentTypes.tooltip" m="Payment Type" />}>
+      <EyeFilterMenu
+        options={paymentTypes}
+        selected={selectedPaymentType}
+        onChange={onChangeSelectedType}
+      />
+    </Tooltip>
+  </div>
+);
+
 const SendTab = ({ setTimeout }) => {
   const {
     payments,
-    outstandingPayments,
-    failedPayments,
     tsDate,
     payRequest,
     decodedPayRequest,
@@ -58,12 +106,15 @@ const SendTab = ({ setTimeout }) => {
     onPayRequestChanged,
     onSendPayment,
     onSendValueChanged,
-    isShowingDetails,
-    selectedPaymentDetails,
-    onToggleShowDetails,
     selectedPayment,
     setSelectedPayment,
-    intl
+    intl,
+    searchText,
+    listDirection,
+    selectedPaymentType,
+    onChangeSelectedType,
+    onChangeSortType,
+    onChangeSearchText
   } = useSendTab(setTimeout);
 
   return (
@@ -133,14 +184,27 @@ const SendTab = ({ setTimeout }) => {
         </div>
       )}
       <Subtitle
-        className={styles.invoiceHistorySubtitle}
-        title={<T id="ln.sendTab.lightingPayments" m="Lightning Payments" />}
+        className={styles.paymentHistorySubtitle}
+        title={
+          <T id="ln.paymentsTab.lightingPayments" m="Lightning Payments" />
+        }
+        children={subtitleMenu({
+          sortTypes: getSortTypes(),
+          paymentTypes: getPaymentTypes(),
+          listDirection,
+          selectedPaymentType,
+          searchText,
+          intl,
+          onChangeSelectedType,
+          onChangeSortType,
+          onChangeSearchText
+        })}
       />
       {payments && payments.length > 0 ? (
         <div>
           {payments.map((payment) => (
             <PaymentRow
-              key={payment.paymentIndex}
+              key={`row-${payment.paymentHash}`}
               payment={payment}
               tsDate={tsDate}
               onClick={() => setSelectedPayment(payment)}
@@ -149,7 +213,7 @@ const SendTab = ({ setTimeout }) => {
         </div>
       ) : (
         <div className={styles.empty}>
-          <T id="ln.sendTab.emptyPaymentList" m="No payment found" />
+          <T id="ln.paymentsTab.emptyPaymentList" m="No payment found" />
         </div>
       )}
       {selectedPayment && (
@@ -159,94 +223,6 @@ const SendTab = ({ setTimeout }) => {
           payment={selectedPayment}
           tsDate={tsDate}
         />
-      )}
-      {Object.keys(outstandingPayments).length > 0 && (
-        <div className={styles.listWrapper}>
-          <Subtitle
-            title={<T id="ln.paymentsTab.outstanding" m="Ongoing Payments" />}
-          />
-          <div className={styles.lnPaymentsList}>
-            {Object.keys(outstandingPayments).map((ph) => (
-              <OutstandingPayment
-                payment={outstandingPayments[ph].decoded}
-                key={`outstanding-${ph}`}
-                tsDate={tsDate}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-      {failedPayments.length > 0 && (
-        <div className={styles.listWrapper}>
-          <Subtitle
-            title={<T id="ln.paymentsTag.failed" m="Failed Payments" />}
-          />
-          <div className={styles.lnPaymentsList}>
-            {failedPayments.map((p) => (
-              <FailedPayment
-                payment={p.decoded}
-                paymentError={p.paymentError}
-                key={`failed-${p.decoded.paymentHash}`}
-                tsDate={tsDate}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-      {payments.length > 0 && (
-        <div className={styles.listWrapper}>
-          <Subtitle
-            title={<T id="ln.paymentsTab.latestPayments" m="Latest Payments" />}
-          />
-          <div className={styles.lnPaymentsList}>
-            {payments.map((p) => (
-              <VerticalAccordion
-                key={`accordion-${p.paymentHash}`}
-                arrowClassName={styles.verticalAccordionArrow}
-                header={<Payment payment={p} tsDate={tsDate} />}
-                onToggleAccordion={() => onToggleShowDetails(p.paymentHash)}
-                show={
-                  p.paymentHash === selectedPaymentDetails && isShowingDetails
-                }>
-                <div className={styles.paymentDetails}>
-                  <span>PayReq</span>
-                  <div>
-                    <b>{p.paymentRequest}</b>
-                  </div>
-                  {p.htlcsList.map((htlc, i) => (
-                    <div key={`htlc-${i}`} className={styles.htlc}>
-                      <span>HTLC {i}</span>
-                      <hr />
-                      <div className={styles.paymentDetailsGrid}>
-                        <span>Status</span>
-                        <span>{htlc.status}</span>
-                        <span>Total Amount</span>
-                        <Balance amount={htlc.route.totalAmt} />
-                        <span>Total fees</span>
-                        <Balance amount={htlc.route.totalFees} />
-                      </div>
-                      <span>Route</span>
-                      <div className={styles.paymentRouteGrid}>
-                        <span>Hop</span>
-                        <span>Fee</span>
-                        <span>PubKey</span>
-                        {htlc.route.hopsList.map((hop, i) => (
-                          <React.Fragment key={`hop-${+i}`}>
-                            <span>{i}</span>
-                            <span>
-                              <Balance amount={hop.fee} />
-                            </span>
-                            <span>{hop.pubKey}</span>
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </VerticalAccordion>
-            ))}
-          </div>
-        </div>
       )}
     </div>
   );

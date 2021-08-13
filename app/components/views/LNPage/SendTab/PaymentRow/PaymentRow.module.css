@@ -20,7 +20,7 @@
 
 .value {
   padding-left: 57px;
-  background-image: var(--ln-invoice-icon);
+  background-image: var(--minus-small-icon);
   background-size: 22px 22px;
   background-position: 20px center;
   background-repeat: no-repeat;
@@ -36,10 +36,7 @@
 .value .paymentHash {
   font-size: 13px;
   line-height: 16px;
-  text-overflow: ellipsis;
-  overflow: hidden;
   color: var(--grey-5);
-  max-width: 267px;
 }
 
 .date {

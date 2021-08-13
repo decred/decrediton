@@ -1,6 +1,6 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import { CopyableText } from "pi-ui";
+import { CopyableText, Message } from "pi-ui";
 import styles from "./LNPaymentModal.module.css";
 import { Balance, LNPaymentStatus, DetailsTable } from "shared";
 import { getPaymentDetails } from "./helpers";
@@ -10,7 +10,7 @@ const LNPaymentModal = ({ show, onCancelModal, tsDate, payment }) => (
     <div
       className={styles.closeButton}
       onClick={onCancelModal}
-      data-testid="lninvoice-close-button"
+      data-testid="lnpayment-close-button"
     />
     <div className={styles.title}>
       <T id="ln.paymentModal.title" m="Lightning Payment" />
@@ -41,15 +41,25 @@ const LNPaymentModal = ({ show, onCancelModal, tsDate, payment }) => (
       </div>
       <Balance amount={payment?.fee} classNameWrapper={styles.amount} />
     </div>
-    <div className={styles.requestCodeLabel}>
-      <T
-        id="ln.paymentModal.requestCodeLabel"
-        m="Lightning Payment Request Code"
-      />
-    </div>
-    <CopyableText tooltipPlacement="top" id="paymentRequest" truncate={false}>
-      {payment?.paymentRequest}
-    </CopyableText>
+    {payment?.paymentRequest && (
+      <>
+        <div className={styles.requestCodeLabel}>
+          <T
+            id="ln.paymentModal.requestCodeLabel"
+            m="Lightning Payment Request Code"
+          />
+        </div>
+        <CopyableText
+          tooltipPlacement="top"
+          id="paymentRequest"
+          truncate={false}>
+          {payment.paymentRequest}
+        </CopyableText>
+      </>
+    )}
+    {payment.paymentError && (
+      <Message kind="error">{payment.paymentError}</Message>
+    )}
     <DetailsTable
       data={getPaymentDetails(payment, tsDate)}
       className={styles.details}
