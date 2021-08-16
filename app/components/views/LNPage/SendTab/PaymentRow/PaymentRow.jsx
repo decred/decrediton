@@ -28,7 +28,7 @@ const PaymentRow = ({ payment, tsDate, onClick }) => (
     </div>
     <div className={styles.date}>
       <T
-        id="ln.invoicesTab.invoice.creationDate"
+        id="ln.sendTab.invoice.creationDate"
         m="{creationDate, date, medium} {creationDate, time, short}"
         values={{ creationDate: tsDate(payment.creationDate) }}
       />
