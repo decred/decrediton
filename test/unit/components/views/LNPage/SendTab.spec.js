@@ -161,15 +161,16 @@ const mockFailedPayment = [
 ];
 
 const mockReqCode = "mock-req-code";
+const now = Math.floor(Date.now() / 1000);
 const mockValidDecodedPayRequest = {
   destination: "mock-destination",
   paymentHash: "mock-payment-hash",
   numAtoms: 1000000,
-  timestamp: 1626958864,
+  timestamp: now,
   expiry: 3600,
   description: "mock-description",
   descriptionHash: "",
-  fallbackAddr: "",
+  fallbackAddr: "mock-fallbackAddr",
   cltvExpiry: 80,
   routeHintsList: [],
   paymentAddr: "mock-payment-address",
@@ -202,6 +203,12 @@ const mockValidDecodedPayRequest = {
   ]
 };
 
+const mockExpiredDecodedPayRequest = {
+  ...mockValidDecodedPayRequest,
+  timestamp: now - 8000,
+  fallbackAddr: ""
+};
+
 let mockDecodePayRequest;
 let mockSendPayment;
 
@@ -222,6 +229,7 @@ beforeEach(() => {
 const getReqCodeInput = () =>
   screen.getByLabelText("Lightning Payment Request Code");
 const getSendButton = () => screen.getByRole("button", { name: "Send" });
+const querySendButton = () => screen.queryByRole("button", { name: "Send" });
 const getPasteButton = () => screen.getByRole("button", { name: "Paste" });
 const getClearButton = () =>
   screen.getByRole("button", { name: "Clear Address" });
@@ -241,9 +249,69 @@ test("test send form with valid lightning request", async () => {
   expect(screen.getByText("Destination").parentNode.textContent).toMatch(
     "Destinationmock-...ation"
   );
+  expect(screen.getByText("Expiry").parentNode.textContent).toMatch(
+    "ExpiryExpires in 1 hour"
+  );
+  expect(screen.getByText("Description:").parentNode.textContent).toMatch(
+    `Description:${mockValidDecodedPayRequest.description}`
+  );
+  expect(screen.getByText("Payment Hash:").parentNode.textContent).toMatch(
+    `Payment Hash:${mockValidDecodedPayRequest.paymentHash}`
+  );
+
+  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+  // open details
+  const details = screen.getByText("Details");
+  user.click(details);
+
+  expect(screen.getByText("Ctlv Expiry:").parentNode.textContent).toMatch(
+    `Ctlv Expiry:${mockValidDecodedPayRequest.cltvExpiry}`
+  );
+  expect(screen.getByText("Fallback Address:").parentNode.textContent).toMatch(
+    `Fallback Address:${mockValidDecodedPayRequest.fallbackAddr}`
+  );
+  expect(screen.getByText("Payment Address:").parentNode.textContent).toMatch(
+    `Payment Address:${mockValidDecodedPayRequest.paymentAddr}`
+  );
+
+  // close details
+  user.click(details);
+  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
 
   user.click(getSendButton());
   expect(mockSendPayment).toHaveBeenCalledWith(mockReqCode, 0);
+});
+
+test("test send form with expired lightning request (with empty fallbackAddr)", async () => {
+  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(() => () =>
+    Promise.resolve(mockExpiredDecodedPayRequest)
+  );
+  render(<SendTab />);
+
+  const reqCodeInput = getReqCodeInput();
+  user.type(reqCodeInput, mockReqCode);
+  await wait(() =>
+    expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode)
+  );
+  expect(screen.getByText("Invoice expired")).toBeInTheDocument();
+  expect(screen.getByText("Expiry").parentNode.textContent).toMatch(
+    "ExpiryExpired 1 hour ago"
+  );
+
+  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+  // open details
+  const details = screen.getByText("Details");
+  user.click(details);
+
+  expect(screen.getByText("Fallback Address:").parentNode.textContent).toMatch(
+    "Fallback Address:(empty fallback address)"
+  );
+
+  // close details
+  user.click(details);
+  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+
+  expect(querySendButton()).not.toBeInTheDocument();
 });
 
 test("test send form with invalid lightning request", async () => {

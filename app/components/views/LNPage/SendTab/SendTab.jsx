@@ -30,6 +30,10 @@ const messages = defineMessages({
   filterByHashPlaceholder: {
     id: "ln.paymentsTab.filterByHashPlaceholder",
     defaultMessage: "Filter by Payment Hash"
+  },
+  expiredErrorMsg: {
+    id: "ln.paymentsTab.expiredErrorMsg",
+    defaultMessage: "Invoice expired"
   }
 });
 
@@ -102,6 +106,7 @@ const SendTab = ({ setTimeout }) => {
     payRequest,
     decodedPayRequest,
     decodingError,
+    expired,
     sendValue,
     onPayRequestChanged,
     onSendPayment,
@@ -135,10 +140,16 @@ const SendTab = ({ setTimeout }) => {
           )}
           onChange={(e) => onPayRequestChanged(e.target.value)}
           successMessage={intl.formatMessage(messages.payReqDecodeSuccessMsg)}
-          showSuccess={!!decodedPayRequest}
-          showErrors={!!decodingError}
-          invalid={!!decodingError}
-          invalidMessage={!!decodingError && decodingError}>
+          showSuccess={!!decodedPayRequest && !expired}
+          showErrors={!!decodingError || expired}
+          invalid={!!decodingError || expired}
+          invalidMessage={
+            decodingError
+              ? decodingError
+              : expired
+              ? intl.formatMessage(messages.expiredErrorMsg)
+              : null
+          }>
           {!payRequest ? (
             <Button
               kind="secondary"
@@ -156,7 +167,7 @@ const SendTab = ({ setTimeout }) => {
               kind="secondary"
               className={classNames(
                 styles.clearAddressButton,
-                !!decodedPayRequest && styles.success
+                !!decodedPayRequest && !expired && styles.success
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -170,13 +181,15 @@ const SendTab = ({ setTimeout }) => {
           <>
             <DecodedPayRequest
               decoded={decodedPayRequest}
+              tsDate={tsDate}
+              expired={expired}
               sendValue={sendValue}
               onSendValueChanged={onSendValueChanged}
             />
           </>
         )}
       </div>
-      {!!decodedPayRequest && (
+      {!!decodedPayRequest && !expired && (
         <div className={styles.buttonContainer}>
           <KeyBlueButton onClick={onSendPayment}>
             <T id="ln.paymentsTab.sendBtn" m="Send" />

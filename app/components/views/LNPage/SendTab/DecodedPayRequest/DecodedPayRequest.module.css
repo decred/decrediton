@@ -1,6 +1,11 @@
 .decodedPayreq {
   margin-top: 23px;
   display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
   flex-direction: row;
 }
 
@@ -11,7 +16,7 @@
 
 .amount {
   font-size: 20px;
-  line-height: 25px;
+  line-height: 27px;
   color: var(--main-dark-blue);
 }
 
@@ -22,11 +27,17 @@
 
 .destination {
   font-size: 20px;
-  line-height: 25px;
+  line-height: 16px;
   color: var(--main-dark-blue);
+  display: flex;
+  align-items: center;
 }
 
-.decodedPayreq label {
+.decodedPayreq .amountContainer label,
+.decodedPayreq .expiryContainer label,
+.decodedPayreq .descriptionContainer label,
+.decodedPayreq .paymentHashContainer label,
+.decodedPayreq .destinationContainer label {
   font-size: 13px;
   font-weight: 400;
   line-height: 16px;
@@ -41,4 +52,41 @@
   width: 43px;
   height: 35px;
   margin: 0 50px;
+}
+
+.destinationText {
+  margin-right: 10px;
+}
+
+.expiryContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  justify-content: flex-start;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  line-height: 16px;
+}
+
+.descriptionContainer label {
+  padding-right: 10px;
+}
+
+.paymentHashContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  line-height: 16px;
+}
+
+.paymentHashContainer label {
+  padding-right: 10px;
+}
+
+.details {
+  margin-top: 30px;
 }
