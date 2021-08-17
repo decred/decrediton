@@ -35,8 +35,7 @@
 
 .decodedPayreq .amountContainer label,
 .decodedPayreq .expiryContainer label,
-.decodedPayreq .descriptionContainer label,
-.decodedPayreq .paymentHashContainer label,
+.dataGrid label,
 .decodedPayreq .destinationContainer label {
   font-size: 13px;
   font-weight: 400;
@@ -65,25 +64,15 @@
   justify-content: flex-start;
 }
 
-.descriptionContainer {
-  display: flex;
-  flex-direction: row;
+.dataGrid {
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-row-gap: 5px;
   margin-top: 15px;
   line-height: 16px;
 }
 
-.descriptionContainer label {
-  padding-right: 10px;
-}
-
-.paymentHashContainer {
-  display: flex;
-  flex-direction: row;
-  margin-top: 5px;
-  line-height: 16px;
-}
-
-.paymentHashContainer label {
+.dataGrid label {
   padding-right: 10px;
 }
 

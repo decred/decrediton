@@ -80,7 +80,7 @@ const DecodedPayRequest = ({
         )}
       </div>
     </div>
-    <div className={styles.descriptionContainer}>
+    <div className={styles.dataGrid}>
       <label>
         <T id="ln.paymentsTab.descLabel" m="Description" />:
       </label>
@@ -89,9 +89,6 @@ const DecodedPayRequest = ({
       ) : (
         <T id="ln.paymentsTab.emptyDescr" m="(empty description)" />
       )}
-    </div>
-
-    <div className={styles.paymentHashContainer}>
       <label>
         <T id="ln.paymentsTab.paymentHashLabel" m="Payment Hash" />:
       </label>
