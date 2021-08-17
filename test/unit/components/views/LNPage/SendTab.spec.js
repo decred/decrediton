@@ -174,6 +174,7 @@ const mockValidDecodedPayRequest = {
   cltvExpiry: 80,
   routeHintsList: [],
   paymentAddr: "mock-payment-address",
+  paymentAddrHex: "9a8724fa96b299e9edfa16ac",
   numMAtoms: 1000000000,
   featuresMap: [
     [
@@ -271,7 +272,7 @@ test("test send form with valid lightning request", async () => {
     `Fallback Address:${mockValidDecodedPayRequest.fallbackAddr}`
   );
   expect(screen.getByText("Payment Address:").parentNode.textContent).toMatch(
-    `Payment Address:${mockValidDecodedPayRequest.paymentAddr}`
+    `Payment Address:${mockValidDecodedPayRequest.paymentAddrHex}`
   );
 
   // close details

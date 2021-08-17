@@ -20,7 +20,7 @@ export const getDecodedPayRequestDetails = (decoded) => {
       label: (
         <T id="ln.decodedPayRequestDetails.paymentAddr" m="Payment Address" />
       ),
-      value: decoded.paymentAddr,
+      value: decoded.paymentAddrHex,
       truncate: 40
     }
   ];

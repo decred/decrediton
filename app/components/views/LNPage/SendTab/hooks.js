@@ -126,6 +126,9 @@ export function useSendTab(setTimeout) {
         if (!expired) {
           setTimeout(checkExpired, timeToExpire + 1000);
         }
+        resp.paymentAddrHex = Buffer.from(resp.paymentHash, "base64").toString(
+          "hex"
+        );
         setDecodedPayRequest(resp);
         setDecodingError(null);
         setExpired(expired);

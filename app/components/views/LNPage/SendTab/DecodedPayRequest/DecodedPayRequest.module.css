@@ -70,12 +70,24 @@
   grid-row-gap: 5px;
   margin-top: 15px;
   line-height: 16px;
+  align-items: center;
 }
 
 .dataGrid label {
   padding-right: 10px;
+  margin: 0;
 }
 
 .details {
   margin-top: 30px;
+}
+
+.paymentHashContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.paymentHash {
+  padding-right: 10px;
 }

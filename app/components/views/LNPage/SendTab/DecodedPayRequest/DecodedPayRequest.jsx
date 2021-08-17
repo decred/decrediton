@@ -92,7 +92,13 @@ const DecodedPayRequest = ({
       <label>
         <T id="ln.paymentsTab.paymentHashLabel" m="Payment Hash" />:
       </label>
-      {decoded.paymentHash}
+      <div className={styles.paymentHashContainer}>
+        <span className={styles.paymentHash}>{decoded.paymentHash}</span>
+        <CopyToClipboard
+          textToCopy={decoded.paymentHash}
+          ButtonComponent={SmallButton}
+        />
+      </div>
     </div>
 
     <DetailsTable
