@@ -128,6 +128,7 @@ const SendTab = ({ setTimeout }) => {
       <div className={styles.lnSendPayment}>
         <TextInput
           newBiggerFontStyle
+          hideIcons
           className={styles.payReqInput}
           id="paymentRequestId"
           label={intl.formatMessage(messages.payReqInputLabel)}
@@ -135,7 +136,7 @@ const SendTab = ({ setTimeout }) => {
           value={payRequest}
           inputClassNames={classNames(
             styles.addressInput,
-            decodingError && styles.error,
+            (decodingError || expired) && styles.error,
             !!decodedPayRequest && styles.success
           )}
           onChange={(e) => onPayRequestChanged(e.target.value)}

@@ -10,6 +10,7 @@ import { DcrInput } from "inputs";
 import { SmallButton } from "buttons";
 import styles from "./DecodedPayRequest.module.css";
 import { getDecodedPayRequestDetails } from "./helpers";
+import { classNames } from "pi-ui";
 
 const DecodedPayRequest = ({
   decoded,
@@ -20,7 +21,7 @@ const DecodedPayRequest = ({
 }) => (
   <div className={styles.decodedPayreq}>
     <div className={styles.row}>
-      <div className={styles.amountContainer}>
+      <div className={styles.propContainer}>
         <label>
           <T id="ln.paymentsTab.amountLabel" m="Amount" />
         </label>
@@ -35,7 +36,7 @@ const DecodedPayRequest = ({
         )}
       </div>
       <div className={styles.arrow} />
-      <div className={styles.destinationContainer}>
+      <div className={styles.propContainer}>
         <label>
           <T id="ln.paymentsTab.destLabel" m="Destination" />
         </label>
@@ -49,9 +50,9 @@ const DecodedPayRequest = ({
           />
         </div>
       </div>
-      <div className={styles.expiryContainer}>
+      <div className={classNames(styles.propContainer, styles.expiryContainer)}>
         <label>
-          <T id="ln.paymentsTab.expiryLabel" m="Expiry" />
+          <T id="ln.paymentsTab.expiryLabel" m="Expiration Time" />
         </label>
         {expired ? (
           <T
@@ -80,19 +81,23 @@ const DecodedPayRequest = ({
         )}
       </div>
     </div>
-    <div className={styles.dataGrid}>
+    <div
+      className={classNames(styles.propContainer, styles.descriptionContainer)}>
       <label>
-        <T id="ln.paymentsTab.descLabel" m="Description" />:
+        <T id="ln.paymentsTab.descLabel" m="Description" />
       </label>
       {decoded.description ? (
         <div>{decoded.description}</div>
       ) : (
         <T id="ln.paymentsTab.emptyDescr" m="(empty description)" />
       )}
+    </div>
+    <div
+      className={classNames(styles.propContainer, styles.paymentHashContainer)}>
       <label>
-        <T id="ln.paymentsTab.paymentHashLabel" m="Payment Hash" />:
+        <T id="ln.paymentsTab.paymentHashLabel" m="Payment Hash" />
       </label>
-      <div className={styles.paymentHashContainer}>
+      <div className={styles.paymentHashWrapper}>
         <span className={styles.paymentHash}>{decoded.paymentHash}</span>
         <CopyToClipboard
           textToCopy={decoded.paymentHash}

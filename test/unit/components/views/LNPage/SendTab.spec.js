@@ -250,14 +250,14 @@ test("test send form with valid lightning request", async () => {
   expect(screen.getByText("Destination").parentNode.textContent).toMatch(
     "Destinationmock-...ation"
   );
-  expect(screen.getByText("Expiry").parentNode.textContent).toMatch(
-    "ExpiryExpires in 1 hour"
+  expect(screen.getByText("Expiration Time").parentNode.textContent).toMatch(
+    "Expiration TimeExpires in 1 hour"
   );
-  expect(screen.getByText("Description:").parentNode.textContent).toMatch(
-    `Description:${mockValidDecodedPayRequest.description}`
+  expect(screen.getByText("Description").parentNode.textContent).toMatch(
+    `Description${mockValidDecodedPayRequest.description}`
   );
-  expect(screen.getByText("Payment Hash:").parentNode.textContent).toMatch(
-    `Payment Hash:${mockValidDecodedPayRequest.paymentHash}`
+  expect(screen.getByText("Payment Hash").parentNode.textContent).toMatch(
+    `Payment Hash${mockValidDecodedPayRequest.paymentHash}`
   );
 
   expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
@@ -295,8 +295,8 @@ test("test send form with expired lightning request (with empty fallbackAddr)", 
     expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode)
   );
   expect(screen.getByText("Invoice expired")).toBeInTheDocument();
-  expect(screen.getByText("Expiry").parentNode.textContent).toMatch(
-    "ExpiryExpired 1 hour ago"
+  expect(screen.getByText("Expiration Time").parentNode.textContent).toMatch(
+    "Expiration TimeExpired 1 hour ago"
   );
 
   expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();

@@ -18,6 +18,7 @@
 }
 .addressInput.error {
   padding-right: 39px;
+  color: var(--color-orange);
 }
 .addressInput.success {
   padding-right: 39px;
@@ -30,7 +31,7 @@
   transition: none !important;
 }
 .clearAddressButton {
-  width: 14px;
+  width: 26px;
   background-image: var(--indicator-invalid-icon);
   height: 16px;
   border: none !important;
@@ -43,9 +44,6 @@
 }
 .clearAddressButton:hover {
   opacity: 0.85;
-}
-.clearAddressButton.success {
-  margin-right: 20px;
 }
 
 .buttonContainer {

@@ -1,8 +1,8 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import { CopyableText, Message } from "pi-ui";
+import { Message } from "pi-ui";
 import styles from "./LNPaymentModal.module.css";
-import { Balance, LNPaymentStatus, DetailsTable } from "shared";
+import { Balance, LNPaymentStatus, DetailsTable, CopyableText } from "shared";
 import { getPaymentDetails } from "./helpers";
 
 const LNPaymentModal = ({ show, onCancelModal, tsDate, payment }) => (

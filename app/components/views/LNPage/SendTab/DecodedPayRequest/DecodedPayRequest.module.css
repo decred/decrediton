@@ -9,20 +9,15 @@
   flex-direction: row;
 }
 
-.amountContainer {
+.propContainer {
   display: flex;
   flex-direction: column;
 }
 
 .amount {
   font-size: 20px;
-  line-height: 27px;
+  line-height: 30px;
   color: var(--main-dark-blue);
-}
-
-.destinationContainer {
-  display: flex;
-  flex-direction: column;
 }
 
 .destination {
@@ -33,10 +28,7 @@
   align-items: center;
 }
 
-.decodedPayreq .amountContainer label,
-.decodedPayreq .expiryContainer label,
-.dataGrid label,
-.decodedPayreq .destinationContainer label {
+.decodedPayreq .propContainer label {
   font-size: 13px;
   font-weight: 400;
   line-height: 16px;
@@ -58,31 +50,16 @@
 }
 
 .expiryContainer {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  justify-content: flex-start;
-}
-
-.dataGrid {
-  display: grid;
-  grid-template-columns: max-content auto;
-  grid-row-gap: 5px;
-  margin-top: 15px;
-  line-height: 16px;
-  align-items: center;
-}
-
-.dataGrid label {
-  padding-right: 10px;
-  margin: 0;
+  margin-left: 45px;
+  padding-left: 40px;
+  border-left: 1px solid var(--grey-3);
 }
 
 .details {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
-.paymentHashContainer {
+.paymentHashWrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,4 +67,17 @@
 
 .paymentHash {
   padding-right: 10px;
+}
+
+.descriptionContainer {
+  margin-top: 30px;
+}
+
+.paymentHashContainer {
+  margin-top: 20px;
+}
+
+.descriptionContainer label,
+.paymentHashContainer label {
+  margin-bottom: 10px;
 }
