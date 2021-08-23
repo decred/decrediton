@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 export const getDecodedPayRequestDetails = (decoded) => {
   const details = [
     {
-      label: <T id="ln.decodedPayRequestDetails.ctlvExpiry" m="Ctlv Expiry" />,
+      label: <T id="ln.decodedPayRequestDetails.cltvExpiry" m="CLTV Expiry" />,
       value: decoded.cltvExpiry
     },
     {

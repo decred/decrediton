@@ -260,13 +260,13 @@ test("test send form with valid lightning request", async () => {
     `Payment Hash${mockValidDecodedPayRequest.paymentHash}`
   );
 
-  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+  expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
   // open details
   const details = screen.getByText("Details");
   user.click(details);
 
-  expect(screen.getByText("Ctlv Expiry:").parentNode.textContent).toMatch(
-    `Ctlv Expiry:${mockValidDecodedPayRequest.cltvExpiry}`
+  expect(screen.getByText("CLTV Expiry:").parentNode.textContent).toMatch(
+    `CLTV Expiry:${mockValidDecodedPayRequest.cltvExpiry}`
   );
   expect(screen.getByText("Fallback Address:").parentNode.textContent).toMatch(
     `Fallback Address:${mockValidDecodedPayRequest.fallbackAddr}`
@@ -277,7 +277,7 @@ test("test send form with valid lightning request", async () => {
 
   // close details
   user.click(details);
-  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+  expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
 
   user.click(getSendButton());
   expect(mockSendPayment).toHaveBeenCalledWith(mockReqCode, 0);
@@ -299,7 +299,7 @@ test("test send form with expired lightning request (with empty fallbackAddr)", 
     "Expiration TimeExpired 1 hour ago"
   );
 
-  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+  expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
   // open details
   const details = screen.getByText("Details");
   user.click(details);
@@ -310,7 +310,7 @@ test("test send form with expired lightning request (with empty fallbackAddr)", 
 
   // close details
   user.click(details);
-  expect(screen.queryByText("Ctlv Expiry:")).not.toBeInTheDocument();
+  expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
 
   expect(querySendButton()).not.toBeInTheDocument();
 });
