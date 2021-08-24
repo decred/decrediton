@@ -305,7 +305,8 @@ const lightTheme = {
   ),
   "self-transaction-icon": url(require("style/icons/sentToSelfTx.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixer.svg")),
-  "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg"))
+  "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
+  "right-arrow": url(require("style/icons/rightArrow.svg"))
 };
 
 export default lightTheme;

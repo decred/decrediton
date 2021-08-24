@@ -1,0 +1,96 @@
+.modal {
+  background-image: none;
+  padding: 30px 40px;
+  width: 764px;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  max-height: calc(100% - 130px);
+  display: flex;
+  flex-direction: column;
+}
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.title {
+  font-size: 28px;
+  color: var(--grey-7);
+  line-height: 35px;
+}
+.date {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+}
+.dataGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+  align-items: center;
+  grid-row-gap: 5px;
+  margin: 19px 0 30px 0;
+}
+.dataGrid label {
+  color: var(--grey-7);
+}
+.amount {
+  font-size: 16px;
+  line-height: 22px;
+}
+.requestCodeLabel {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+  margin-bottom: 10px;
+}
+.paymentRequest {
+  padding: 0.3rem 1rem;
+  word-break: break-all;
+  background-color: var(--copyable-text-background-color);
+  border-radius: 0.4rem;
+  color: var(--text-color);
+  font-size: var(--font-size-normal);
+  line-height: var(--spacing-2);
+}
+
+.details {
+  margin: 20px 0 0 0;
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 355px;
+    padding: 30px 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .dataGrid {
+    grid-template-columns: 2fr;
+  }
+  .dataGrid label {
+    grid-column: 1;
+  }
+  .amount {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .status {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .date {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}

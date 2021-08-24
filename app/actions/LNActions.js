@@ -1075,3 +1075,13 @@ export const changeInvoiceFilter = (newFilter) => (dispatch) =>
     });
     resolve();
   });
+
+export const LNWALLET_CHANGE_PAYMENT_FILTER = "LNWALLET_CHANGE_PAYMENT_FILTER";
+export const changePaymentFilter = (newFilter) => (dispatch) =>
+  new Promise((resolve) => {
+    dispatch({
+      paymentFilter: newFilter,
+      type: LNWALLET_CHANGE_PAYMENT_FILTER
+    });
+    resolve();
+  });

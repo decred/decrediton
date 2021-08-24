@@ -30,5 +30,15 @@
 
 .input:not(:focus),
 .newBiggerFontStyleInput:not(:focus) {
-  border-bottom: 1px var(--select-stroke-color) solid !important;
+  border-bottom: 1px var(--select-stroke-color) solid;
+}
+
+.wrapper.hideIcons > div > svg {
+  display: none;
+}
+.wrapper.hideIcons > div > div {
+  right: 0 !important;
+}
+.wrapper.hideIcons input {
+  padding-right: 26px !important;
 }

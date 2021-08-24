@@ -25,6 +25,7 @@ const Input = ({
   onChange,
   showErrors,
   showSuccess,
+  hideIcons,
   invalidMessage,
   successMessage,
   requiredMessage,
@@ -81,12 +82,16 @@ const Input = ({
         placeholder
       }}
       type={type ?? "text"}
-      success={showSuccess && successMessage}
+      success={showSuccess ? successMessage : ""}
       value={value ?? ""}
       onChange={(e) => onChange?.(e)}
       onFocus={(e) => onFocus?.(e)}
       onBlur={(e) => onBlur?.(e)}
-      wrapperClassNames={classNames(className, styles.wrapper)}
+      wrapperClassNames={classNames(
+        className,
+        styles.wrapper,
+        hideIcons && styles.hideIcons
+      )}
       inputClassNames={classNames(
         inputClassNames,
         newBiggerFontStyle ? styles.newBiggerFontStyleInput : styles.input

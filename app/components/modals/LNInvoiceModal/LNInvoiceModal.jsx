@@ -1,12 +1,13 @@
 import Modal from "../Modal";
 import { FormattedMessage as T } from "react-intl";
-import { CopyableText, classNames } from "pi-ui";
+import { classNames } from "pi-ui";
 import styles from "./LNInvoiceModal.module.css";
 import {
   Balance,
   LNInvoiceStatus,
   FormattedRelative,
-  DetailsTable
+  DetailsTable,
+  CopyableText
 } from "shared";
 import { PiUiButton } from "buttons";
 import {

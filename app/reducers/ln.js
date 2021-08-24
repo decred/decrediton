@@ -37,7 +37,8 @@ import {
   LNWALLET_GETROUTESINFO_SUCCESS,
   LNWALLET_GETROUTESINFO_FAILED,
   LNWALLET_LISTWATCHTOWERS_SUCCESS,
-  LNWALLET_CHANGE_INVOICE_FILTER
+  LNWALLET_CHANGE_INVOICE_FILTER,
+  LNWALLET_CHANGE_PAYMENT_FILTER
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -310,6 +311,11 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         invoiceFilter: action.invoiceFilter
+      };
+    case LNWALLET_CHANGE_PAYMENT_FILTER:
+      return {
+        ...state,
+        paymentFilter: action.paymentFilter
       };
 
     default:

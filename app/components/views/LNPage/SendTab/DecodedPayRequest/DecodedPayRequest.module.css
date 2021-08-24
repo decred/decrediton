@@ -1,0 +1,83 @@
+.decodedPayreq {
+  margin-top: 23px;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.propContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.amount {
+  font-size: 20px;
+  line-height: 30px;
+  color: var(--main-dark-blue);
+}
+
+.destination {
+  font-size: 20px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+  display: flex;
+  align-items: center;
+}
+
+.decodedPayreq .propContainer label {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--grey-7);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.arrow {
+  background-image: var(--right-arrow);
+  background-repeat: no-repeat;
+  width: 43px;
+  height: 35px;
+  margin: 0 50px;
+}
+
+.destinationText {
+  margin-right: 10px;
+}
+
+.expiryContainer {
+  margin-left: 45px;
+  padding-left: 40px;
+  border-left: 1px solid var(--grey-3);
+}
+
+.details {
+  margin-top: 20px;
+}
+
+.paymentHashWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.paymentHash {
+  padding-right: 10px;
+}
+
+.descriptionContainer {
+  margin-top: 30px;
+}
+
+.paymentHashContainer {
+  margin-top: 20px;
+}
+
+.descriptionContainer label,
+.paymentHashContainer label {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,96 @@
+.container {
+  width: 764px;
+}
+
+.lnSendPayment {
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+  margin-bottom: 20px;
+}
+
+.decodingError {
+  margin-top: 2em;
+  color: var(--error-red);
+}
+
+.addressInput {
+  padding-right: 22px;
+}
+.addressInput.error {
+  padding-right: 39px;
+  color: var(--color-orange);
+}
+.addressInput.success {
+  padding-right: 39px;
+}
+.pasteButton {
+  font-family: var(--font-family-regular);
+  padding: 3px 10px !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  transition: none !important;
+}
+.clearAddressButton {
+  width: 26px;
+  background-image: var(--indicator-invalid-icon);
+  height: 16px;
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  background-size: 21px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--background-back-color) !important;
+}
+.clearAddressButton:hover {
+  opacity: 0.85;
+}
+
+.buttonContainer {
+  text-align: right;
+}
+
+.filterContainer {
+  margin-left: auto;
+}
+
+.paymentSearch {
+  display: inline-block;
+}
+
+.sortByTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.typeTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.searchInput input {
+  width: 180px;
+}
+
+.paymentHistorySubtitle {
+  display: flex;
+  flex-direction: row;
+  width: initial;
+  margin-top: 40px;
+}
+
+.empty {
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 355px;
+  }
+  .lnSendPayment {
+    padding: 30px 20px;
+  }
+  .arrow {
+    margin: 0 36px;
+  }
+}

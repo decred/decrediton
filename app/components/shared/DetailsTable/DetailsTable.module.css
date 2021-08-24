@@ -38,23 +38,27 @@
 
 .grid label {
   border-bottom: 1px solid var(--grey-2);
-  padding: 0 0 0 25px;
-  height: 40px;
+  padding: 10px 0 10px 25px;
   color: var(--grey-6);
-  display: flex;
-  align-items: center;
 }
 
 .grid .value {
   border-bottom: 1px solid var(--grey-2);
   color: var(--main-dark-blue);
-  height: 40px;
+  padding: 10px 0;
+}
+
+.grid .value.copyable {
+  padding: 0;
   display: flex;
   align-items: center;
+  line-height: 16px;
 }
-.grid .value > div {
+
+.grid .value.copyable .copyableText {
+  display: flex;
+  align-items: center;
   margin-right: 10px;
-  display: inline;
 }
 
 .secondaryGrid {
@@ -68,8 +72,8 @@
   border: none;
 }
 
-.grid .secondaryGrid label:first-of-type,
-.grid .secondaryGrid .value:first-of-type {
+.grid .secondaryGrid:first-of-type label:first-of-type,
+.grid .secondaryGrid:first-of-type .value:first-of-type {
   padding-top: 10px;
 }
 

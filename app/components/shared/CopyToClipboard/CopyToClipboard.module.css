@@ -20,6 +20,7 @@
 }
 .success {
   font-size: 12px;
+  line-height: 16px;
   color: var(--background-back-color);
   background-color: var(--accent-color);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);

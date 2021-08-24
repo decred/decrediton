@@ -458,6 +458,11 @@ const initialState = {
       search: null, // The freeform text in the Search box
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       type: null // desired invoice type (code).
+    },
+    paymentFilter: {
+      search: null, // The freeform text in the Search box
+      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+      type: null // desired payment type (code).
     }
   },
   dex: {
