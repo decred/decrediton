@@ -336,7 +336,7 @@ const darkTheme = {
   "self-transaction-icon": url(require("style/icons/sentToSelfTxDark.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg")),
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
-  "right-arrow": url(require("style/icons/rightArrowDark.svg"))
+  "right-arrow": url(require("style/icons/rightArrowDark.svg")),
   "blue-checkmark": url(require("style/icons/blueCheckmark.svg")),
   "ln-wallet-creation-warning-arrow": url(
     require("style/icons/LNWalletCreationWarningArrowDark.svg")
