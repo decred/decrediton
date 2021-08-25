@@ -309,8 +309,8 @@ const lightTheme = {
   "self-transaction-icon": url(require("style/icons/sentToSelfTx.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixer.svg")),
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
-  "right-arrow": url(require("style/icons/rightArrow.svg"))
-  "lock-checkmark": url(require("style/icons/lockCheckmark.svg"))
+  "right-arrow": url(require("style/icons/rightArrow.svg")),
+  "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
   eye: url(require("style/icons/eye.svg")),
   "eye-disabled": url(require("style/icons/eyeDisabled.svg"))
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
