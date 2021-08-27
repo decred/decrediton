@@ -327,6 +327,16 @@ export const createWallet = (selectedWallet) => (dispatch, getState) =>
           type: WALLETCREATED
         });
         dispatch(setSelectedWallet(selectedWallet));
+        if (
+          selectedWallet.value.gapLimit &&
+          selectedWallet.value.gapLimit > 0
+        ) {
+          const walletCfg = wallet.getWalletCfg(
+            network == TESTNET,
+            selectedWallet.value.wallet
+          );
+          walletCfg.set(cfgConstants.GAP_LIMIT, selectedWallet.value.gapLimit);
+        }
         resolve(selectedWallet);
       } catch (err) {
         dispatch({ type: CREATE_WALLET_ERROR });

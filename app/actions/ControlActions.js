@@ -510,6 +510,29 @@ export const revokeTicketAttempt = (passphrase, ticketHash) => async (
   }
 };
 
+export const DISCOVERUSAGE_ATTEMPT = "DISCOVERUSAGE_ATTEMPT";
+export const DISCOVERUSAGE_FAILED = "DISCOVERUSAGE_FAILED";
+export const DISCOVERUSAGE_SUCCESS = "DISCOVERUSAGE_SUCCESS";
+
+export const discoverUsageAttempt = (gapLimit) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: DISCOVERUSAGE_ATTEMPT });
+  const walletService = sel.walletService(getState());
+  try {
+    const discoverUsageResponse = await wallet.discoverUsage(
+      walletService,
+      gapLimit
+    );
+    dispatch({ discoverUsageResponse, type: DISCOVERUSAGE_SUCCESS });
+    await wallet.loadActiveDataFilters(walletService);
+    dispatch(rescanAttempt(0));
+  } catch (error) {
+    dispatch({ error, type: DISCOVERUSAGE_FAILED });
+  }
+};
+
 export const STARTTICKETBUYERV3_ATTEMPT = "STARTTICKETBUYERV3_ATTEMPT";
 export const STARTTICKETBUYERV3_FAILED = "STARTTICKETBUYERV3_FAILED";
 export const STARTTICKETBUYERV3_SUCCESS = "STARTTICKETBUYERV3_SUCCESS";

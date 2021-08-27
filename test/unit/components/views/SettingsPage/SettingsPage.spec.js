@@ -50,7 +50,6 @@ const testThemeLabel = "Dark";
 const testDefaultCurrencyDisplay = DCR;
 const testCurrencyDisplay = ATOMS;
 const testDefaultGapLimit = "20";
-const testGapLimit = "30";
 const testDefaultTimezone = "utc";
 const testDefaultAllowedExternalRequests = [
   EXTERNALREQUEST_NETWORK_STATUS,
@@ -420,13 +419,6 @@ test.each([
     testDefaultProxyLocation,
     testProxyLocation,
     { proxyLocation: testProxyLocation },
-    false
-  ],
-  [
-    "Gap Limit",
-    testDefaultGapLimit,
-    testGapLimit,
-    { gapLimit: testGapLimit },
     false
   ]
 ])("change '%s' TextInput from '%s' to '%s' expeced %s", testTextFieldInput);

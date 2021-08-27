@@ -171,6 +171,8 @@ export const getChangeAccountSpendableBalance = get([
   "changeAccountSpendableBalance"
 ]);
 
+export const discoverUsageAttempt = get(["control", "discoverUsageAttempt"]);
+
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
   map(
@@ -336,6 +338,7 @@ export const firstBlockTime = compose(
   isMainNet
 );
 export const currencies = () => [{ name: DCR }, { name: ATOMS }];
+export const gapLimit = get(["settings", "currentSettings", "gapLimit"]);
 export const needNetworkReset = get(["settings", "needNetworkReset"]);
 export const currencyDisplay = get([
   "settings",

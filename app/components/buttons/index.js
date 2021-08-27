@@ -52,7 +52,8 @@ import {
   AboutModal,
   CantCloseModals,
   SetNewPassphraseModal,
-  AppPassAndPassphraseModal
+  AppPassAndPassphraseModal,
+  DiscoverUsageModal
 } from "modals";
 
 import styles from "./Buttons.module.css";
@@ -116,6 +117,7 @@ export const InfoDocFieldModalButton = mbb(
   styles.infoFieldModalButton,
   DocumentationInfoModal
 );
+export const DiscoverUsageButton = mbb(null, DiscoverUsageModal);
 export const ChangePassphraseButton = mbb(null, ChangePassphraseModal);
 export const InvisiblePassphraseModalButton = mbb(
   null,
