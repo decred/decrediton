@@ -1,16 +1,5 @@
-.channelsContent {
-  margin-top: 2em;
-}
-
-.headerWrapper {
-  position: relative;
-}
-
-.closeChannelBtn {
-  position: absolute;
-  z-index: 10;
-  right: 10px;
-  top: 10px;
+.container {
+  width: 764px;
 }
 
 .openNewChannel {
@@ -27,8 +16,111 @@
   grid-column: 1 / 3;
 }
 
-.openButton {
-  max-width: 8em;
-  margin-top: 2em;
-  grid-column-start: 1;
+.cardWrapper {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.cardWrapper:hover {
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.16));
+}
+
+.continueButton {
+  width: 40px;
+  background-color: var(--governance-nav-button-bg);
+  cursor: pointer;
+}
+
+.cardWrapper:hover .continueButton {
+  background-color: var(--grey-5);
+}
+
+.cardWrapper.channelActive {
+  border-left: 3px solid var(--accent-blue);
+}
+
+.cardWrapper.channelInactive {
+  border-left: 3px solid var(--grey-7);
+}
+
+.continueArrow {
+  height: 10px;
+  width: 10px;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 5px;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+}
+
+.cardWrapper:hover .continueArrow {
+  background-image: var(--arrow-left-white);
+  background-position: 50% 0;
+  transform: rotate(180deg);
+}
+
+.modalChanelCard {
+  padding: 22px 0 30px 0;
+}
+
+.modalDetailsHeader {
+  padding: 16px 25px;
+}
+
+.modalDetailsGrid {
+  grid-template-columns: 1fr 2fr;
+}
+
+.modalCloseButton {
+  background-color: var(--ln-close-channel-button-bg) !important;
+  color: var(--ln-close-channel-button-text) !important;
+}
+
+.modalCloseButton:hover {
+  opacity: 0.85;
+}
+
+.filterContainer {
+  margin-left: auto;
+}
+
+.channelSearch {
+  display: inline-block;
+}
+
+.sortByTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.typeTooltip {
+  font-size: 14px;
+  width: max-content;
+}
+
+.searchInput input {
+  width: 180px;
+}
+
+.channelHistorySubtitle {
+  display: flex;
+  flex-direction: row;
+  width: initial;
+  margin-top: 40px;
+}
+
+.empty {
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0 30px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 355px;
+  }
 }

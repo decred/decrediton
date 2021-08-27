@@ -38,7 +38,9 @@ import {
   LNWALLET_GETROUTESINFO_FAILED,
   LNWALLET_LISTWATCHTOWERS_SUCCESS,
   LNWALLET_CHANGE_INVOICE_FILTER,
-  LNWALLET_CHANGE_PAYMENT_FILTER
+  LNWALLET_CHANGE_PAYMENT_FILTER,
+  LNWALLET_CHANGE_CHANNEL_FILTER,
+  LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -242,7 +244,8 @@ export default function ln(state = {}, action) {
           maxInboundAmount: 0,
           maxOutboundAmount: 0
         },
-        towersList: []
+        towersList: [],
+        recentlyOpenedChannelNodePubKey: null
       };
     case LNWALLET_CHECKED:
       return {
@@ -316,6 +319,16 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         paymentFilter: action.paymentFilter
+      };
+    case LNWALLET_CHANGE_CHANNEL_FILTER:
+      return {
+        ...state,
+        channelFilter: action.channelFilter
+      };
+    case LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY:
+      return {
+        ...state,
+        recentlyOpenedChannelNodePubKey: action.nodePubKey
       };
 
     default:

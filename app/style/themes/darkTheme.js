@@ -159,6 +159,8 @@ const darkTheme = {
   "agenda-preference": "var(--grey-2)",
   "text-toggle-bg": "#1B2B54",
   "ln-autopilot-switch-desc": "#3C62B0",
+  "ln-close-channel-button-bg": "#7DA7D9",
+  "ln-close-channel-button-text": "#0E152F",
 
   // override pi-ui's toggle default dark background
   "toggle-bar-color": "var(--background-copy-color)",
@@ -318,7 +320,9 @@ const darkTheme = {
   "self-transaction-icon": url(require("style/icons/sentToSelfTxDark.svg")),
   "proposals-refresh-icon": url(require("style/icons/menuMixerDark.svg")),
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
-  "right-arrow": url(require("style/icons/rightArrowDark.svg"))
+  "right-arrow": url(require("style/icons/rightArrowDark.svg")),
+  "lightning-icon": url(require("style/icons/lightningIcon.svg")),
+  "lookup-icon": url(require("style/icons/lookupIcon.svg"))
 };
 
 export default darkTheme;

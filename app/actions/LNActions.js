@@ -6,8 +6,12 @@ import { isNumber } from "lodash";
 import {
   INVOICE_STATUS_SETTLED,
   INVOICE_STATUS_EXPIRED,
-  INVOICE_STATUS_CANCELED
+  INVOICE_STATUS_CANCELED,
+  CHANNEL_STATUS_ACTIVE,
+  CHANNEL_STATUS_PENDING,
+  CHANNEL_STATUS_CLOSED
 } from "constants";
+import { push as pushHistory } from "connected-react-router";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -453,7 +457,8 @@ export const updateChannelList = () => async (dispatch, getState) => {
   const channels = results[0].channels.map((channel) => {
     return {
       ...channel,
-      channelPointURL: chanpointURL(channel.channelPoint)
+      channelPointURL: chanpointURL(channel.channelPoint),
+      status: CHANNEL_STATUS_ACTIVE
     };
   });
 
@@ -462,6 +467,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra,
       ...extra.channel,
       pendingStatus: "open",
+      status: CHANNEL_STATUS_PENDING,
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
@@ -471,6 +477,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra,
       ...extra.channel,
       pendingStatus: "close",
+      status: CHANNEL_STATUS_PENDING,
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
@@ -481,6 +488,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
         ...extra,
         ...extra.channel,
         pendingStatus: "forceclose",
+        status: CHANNEL_STATUS_PENDING,
         remotePubkey: extra.channel.remoteNodePub,
         channelPointURL: chanpointURL(extra.channel.channelPoint),
         closingTxidURL: txURLBuilder(extra.closingTxid)
@@ -492,6 +500,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra,
       ...extra.channel,
       pendingStatus: "waitclose",
+      status: CHANNEL_STATUS_PENDING,
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
@@ -501,7 +510,8 @@ export const updateChannelList = () => async (dispatch, getState) => {
     return {
       ...channel,
       channelPointURL: chanpointURL(channel.channelPoint),
-      closingTxidURL: txURLBuilder(channel.closingTxHash)
+      closingTxidURL: txURLBuilder(channel.closingTxHash),
+      status: CHANNEL_STATUS_CLOSED
     };
   });
 
@@ -723,6 +733,8 @@ export const LNWALLET_OPENCHANNEL_CHANPENDING =
   "LNWALLET_OPENCHANNEL_CHANPENDING";
 export const LNWALLET_OPENCHANNEL_CHANOPEN = "LNWALLET_OPENCHANNEL_CHANOPEN";
 export const LNWALLET_OPENCHANNEL_FAILED = "LNWALLET_OPENCHANNEL_FAILED";
+export const LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY =
+  "LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY";
 
 export const openChannel = (node, localAmt, pushAmt) => async (
   dispatch,
@@ -771,6 +783,10 @@ export const openChannel = (node, localAmt, pushAmt) => async (
           resolve();
           dispatch({ type: LNWALLET_OPENCHANNEL_CHANPENDING });
           dispatchUpdates();
+          dispatch({
+            type: LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY,
+            nodePubKey: nodePubKey
+          });
         }
         if (update.chanOpen) {
           dispatch({ type: LNWALLET_OPENCHANNEL_CHANOPEN });
@@ -788,6 +804,13 @@ export const openChannel = (node, localAmt, pushAmt) => async (
     dispatch({ error, type: LNWALLET_OPENCHANNEL_FAILED });
     throw error;
   }
+};
+
+export const clearRecentlyOpenedChannelNodePubkey = () => (dispatch) => {
+  dispatch({
+    type: LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY,
+    nodePubKey: null
+  });
 };
 
 export const LNWALLET_CLOSECHANNEL_CLOSEPENDING =
@@ -1085,3 +1108,16 @@ export const changePaymentFilter = (newFilter) => (dispatch) =>
     });
     resolve();
   });
+
+export const LNWALLET_CHANGE_CHANNEL_FILTER = "LNWALLET_CHANGE_CHANNEL_FILTER";
+export const changeChannelFilter = (newFilter) => (dispatch) =>
+  new Promise((resolve) => {
+    dispatch({
+      channelFilter: newFilter,
+      type: LNWALLET_CHANGE_CHANNEL_FILTER
+    });
+    resolve();
+  });
+
+export const viewChannelDetails = (channelPoint) => (dispatch) =>
+  dispatch(pushHistory(`/ln/channel/${channelPoint}`));

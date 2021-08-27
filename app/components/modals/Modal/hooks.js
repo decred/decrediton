@@ -26,6 +26,7 @@ export function useModal(onCancelModal) {
 
   const mouseUp = useCallback(
     (event) => {
+      event.stopImmediatePropagation();
       const el = modalRef.current;
       if (eventOutsideElement(el, event.target)) {
         onCancelModal?.();

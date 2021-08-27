@@ -167,11 +167,7 @@ export const CloseWalletModalButton = mbb(
   CantCloseModals,
   InvisibleButton
 );
-export const CloseChannelModalButton = mbb(
-  styles.goBackIconButton,
-  ConfirmModal,
-  InvisibleButton
-);
+export const CloseChannelModalButton = mbb(null, ConfirmModal, PiUiButton);
 export const QRModalButton = mbb(null, QRModal, InvisibleButton);
 export const InvisibleConfirmPoliteiaModalButton = mbb(
   null,

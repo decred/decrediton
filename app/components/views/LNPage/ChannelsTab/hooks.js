@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLNPage } from "../hooks";
+import * as lna from "actions/LNActions";
+import * as sel from "selectors";
+import { useIntl } from "react-intl";
 
 export function useChannelsTab() {
   const [node, setNode] = useState("");
-  const [localAmtAtoms, setLocalAmtAtoms] = useState(0);
-  const [pushAmtAtoms, setPushAmtAtoms] = useState(0);
+  const [localAmtAtoms, setLocalAmtAtoms] = useState(null);
+  const [pushAmtAtoms, setPushAmtAtoms] = useState(null);
   const [canOpen, setCanOpen] = useState(false);
   const [opening, setOpening] = useState(false);
-  const [detailedChannel, setDetailedChannel] = useState();
+  const recentlyOpenedChannelNodePubKey = useSelector(
+    sel.lnRecentlyOpenedChannelNodePubKey
+  );
+  const intl = useIntl();
+  const channelFilter = useSelector(sel.lnChannelFilter);
 
   const {
-    walletBalances,
-    channelBalances,
     channels,
     pendingChannels,
     closedChannels,
@@ -19,6 +25,35 @@ export function useChannelsTab() {
     openChannel,
     closeChannel
   } = useLNPage();
+
+  const filteredChannels = useMemo(() => {
+    return [...pendingChannels, ...channels, ...closedChannels]
+      .filter(
+        (channel) =>
+          !channelFilter ||
+          !channelFilter.type ||
+          channelFilter.type === "all" ||
+          channelFilter.type === channel.status
+      )
+      .filter(
+        (channel) =>
+          !channelFilter ||
+          !channelFilter.search ||
+          channel.channelPoint
+            .toLowerCase()
+            .indexOf(channelFilter.search.toLowerCase()) !== -1
+      );
+  }, [channels, pendingChannels, closedChannels, channelFilter]);
+
+  const recentlyOpenedChannel = useMemo(
+    () =>
+      recentlyOpenedChannelNodePubKey
+        ? [...channels, ...pendingChannels].find(
+            (c) => c.remotePubkey === recentlyOpenedChannelNodePubKey
+          )
+        : null,
+    [channels, pendingChannels, recentlyOpenedChannelNodePubKey]
+  );
 
   const onNodeChanged = (e) => {
     const _canOpen = e.target.value && localAmtAtoms > 0;
@@ -45,8 +80,8 @@ export function useChannelsTab() {
       .then(() => {
         setOpening(false);
         setNode("");
-        setLocalAmtAtoms(0);
-        setPushAmtAtoms(0);
+        setLocalAmtAtoms(null);
+        setPushAmtAtoms(null);
         setCanOpen(false);
       })
       .catch(() => setOpening(false));
@@ -55,32 +90,68 @@ export function useChannelsTab() {
   const onCloseChannel = (channel) =>
     closeChannel(channel.channelPoint, !channel.active);
 
-  const onToggleChannelDetails = (channel) => {
-    if (detailedChannel === channel) {
-      setDetailedChannel(null);
-    } else {
-      setDetailedChannel(channel);
-    }
+  const dispatch = useDispatch();
+  const viewChannelDetailsHandler = (channelPoint) =>
+    dispatch(lna.viewChannelDetails(channelPoint));
+
+  const closeRecentlyOpenedChannelModal = () =>
+    dispatch(lna.clearRecentlyOpenedChannelNodePubkey());
+
+  const onChangeChannelFilter = useCallback(
+    (newFilter) => dispatch(lna.changeChannelFilter(newFilter)),
+    [dispatch]
+  );
+
+  const searchText = channelFilter?.search ?? "";
+  const selectedChannelType = channelFilter?.type;
+
+  const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
+
+  const onChangeSelectedType = (type) => {
+    onChangeFilter(type.value);
+  };
+
+  const onChangeSearchText = (searchText) => {
+    onChangeFilter({ search: searchText });
+  };
+
+  const onChangeFilter = (value) => {
+    return new Promise((resolve) => {
+      if (isChangingFilterTimer) {
+        clearTimeout(isChangingFilterTimer);
+      }
+      const changeFilter = (newFilterOpt) => {
+        const newFilter = { ...channelFilter, ...newFilterOpt };
+        clearTimeout(isChangingFilterTimer);
+        onChangeChannelFilter(newFilter);
+        return newFilter;
+      };
+      setIsChangingFilterTimer(
+        setTimeout(() => resolve(changeFilter(value)), 100)
+      );
+    });
   };
 
   return {
-    walletBalances,
-    channelBalances,
-    channels,
-    pendingChannels,
-    closedChannels,
+    channels: filteredChannels,
     node,
     localAmtAtoms,
     pushAmtAtoms,
     opening,
     canOpen,
-    detailedChannel,
     isMainNet,
+    intl,
+    recentlyOpenedChannel,
     onNodeChanged,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,
     onCloseChannel,
-    onToggleChannelDetails
+    viewChannelDetailsHandler,
+    closeRecentlyOpenedChannelModal,
+    searchText,
+    selectedChannelType,
+    onChangeSelectedType,
+    onChangeSearchText
   };
 }

@@ -1,172 +1,254 @@
-import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
-import { Subtitle, VerticalAccordion } from "shared";
-import { KeyBlueButton, CloseChannelModalButton } from "buttons";
+import { FormattedMessage as T, defineMessages } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
+import { Subtitle } from "shared";
+import { PiUiButton, EyeFilterMenu, CloseChannelModalButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
 import { DescriptionHeader } from "layout";
 import styles from "./ChannelsTab.module.css";
 import { useChannelsTab } from "./hooks";
-import BalanceHeader from "./BalanceHeader/BalanceHeader";
-import OpenChannel, {
-  CloseChannelModalContent
-} from "./OpenChannel/OpenChannel";
-import PendingChannel from "./PendingChannel/PendingChannel";
-import ClosedChannel from "./ClosedChannel/ClosedChannel";
-import OpenChannelDetails from "./OpenChannelDetails/OpenChannelDetails";
-import PendingChannelDetails from "./PendingChannelDetails/PendingChannelDetails";
-import ClosedChannelDetails from "./ClosedChannelDetails/ClosedChannelDetails";
+import {
+  ChannelCard,
+  CloseChannelModalContent,
+  getChannelDetails
+} from "../ChannelDetailsPage/helpers";
+import BalancesHeader from "../BalancesHeader";
+import { LNChannelModal } from "modals";
+import { DetailsTable } from "shared";
+import { getChannelTypes } from "./helpers";
+
+const messages = defineMessages({
+  filterByHashPlaceholder: {
+    id: "ln.channelsTab.filterByChannelPointPlaceholder",
+    defaultMessage: "Filter by Channel Point"
+  },
+  counterpartyNodeInputLabel: {
+    id: "ln.channelsTab.counterpartyNode",
+    defaultMessage: "Counterparty Node"
+  },
+  counterpartyNodeInputPlaceholder: {
+    id: "ln.channelsTab.counterpartyNodePlaceholder",
+    defaultMessage: "NodePubKey@ip:port"
+  },
+  localAmtInputLabel: {
+    id: "ln.channelsTab.localAmt",
+    defaultMessage: "Amount to Commit"
+  },
+  localAmtInputPlaceholder: {
+    id: "ln.channelsTab.localAmtPlaceholder",
+    defaultMessage: "Amount of DCR to commit to channel"
+  },
+  pushAmountInputLabel: {
+    id: "ln.channelsTab.pushAmount",
+    defaultMessage: "Push Amount (optional)"
+  },
+  pushAmountInputPlaceholder: {
+    id: "ln.channelsTab.pushAmountPlaceholder",
+    defaultMessage: "Amount of DCR to push to channel"
+  }
+});
 
 export const ChannelsTabHeader = () => (
   <DescriptionHeader
     description={
-      <T
-        id="ln.description.channels"
-        m="Open and pending channels of this LN Wallet"
-      />
+      <>
+        <T
+          id="ln.channels.description.channels"
+          m="Open and pending channels of this LN Wallet"
+        />
+        <BalancesHeader />
+      </>
     }
   />
 );
 
+const subtitleMenu = ({
+  channelTypes,
+  selectedChannelType,
+  searchText,
+  intl,
+  onChangeSelectedType,
+  onChangeSearchText
+}) => (
+  <div className={styles.filterContainer}>
+    <div className={styles.channelSearch}>
+      <TextInput
+        newBiggerFontStyle
+        className={styles.searchInput}
+        id="filterByHashInput"
+        type="text"
+        placeholder={intl.formatMessage(messages.filterByHashPlaceholder)}
+        value={searchText}
+        onChange={(e) => onChangeSearchText(e.target.value)}
+      />
+    </div>
+    <Tooltip
+      contentClassName={styles.typeTooltip}
+      content={<T id="ln.channelsTab.channelTypes.tooltip" m="Channel Type" />}>
+      <EyeFilterMenu
+        options={channelTypes}
+        selected={selectedChannelType}
+        onChange={onChangeSelectedType}
+      />
+    </Tooltip>
+  </div>
+);
+
 const ChannelsTab = () => {
   const {
-    walletBalances,
-    channelBalances,
     channels,
-    pendingChannels,
-    closedChannels,
     node,
     localAmtAtoms,
     pushAmtAtoms,
     opening,
     canOpen,
-    detailedChannel,
     isMainNet,
+    recentlyOpenedChannel,
+    intl,
     onNodeChanged,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,
     onCloseChannel,
-    onToggleChannelDetails
+    viewChannelDetailsHandler,
+    closeRecentlyOpenedChannelModal,
+    searchText,
+    selectedChannelType,
+    onChangeSelectedType,
+    onChangeSearchText
   } = useChannelsTab();
 
   return (
-    <>
-      <Subtitle title={<T id="ln.channelsTab.balance" m="Balance" />} />
-      <BalanceHeader
-        walletBalance={walletBalances.confirmedBalance}
-        totalBandwidth={
-          channelBalances.maxInboundAmount + channelBalances.maxOutboundAmount
-        }
-      />
+    <div className={styles.container}>
       <Subtitle
-        title={<T id="ln.channelsTab.openChannel" m="Open Channel" />}
+        title={<T id="ln.channelsTab.createAChannel" m="Create a Channel" />}
       />
       <div className={styles.openNewChannel}>
         <div className={styles.node}>
-          <T id="ln.openChannel.node" m="Counterparty (node@ip:port)" />
           <TextInput
+            newBiggerFontStyle
+            className={styles.counterpartyInput}
             id="counterpartyInput"
             value={node}
             onChange={onNodeChanged}
+            placeholder={intl.formatMessage(
+              messages.counterpartyNodeInputPlaceholder
+            )}
+            label={intl.formatMessage(messages.counterpartyNodeInputLabel)}
           />
         </div>
         <div>
-          <T id="ln.openChannel.localAmt" m="Total Funding Amount" />
           <DcrInput
+            newBiggerFontStyle
             id="localAmtAtomsInput"
             amount={localAmtAtoms}
             onChangeAmount={onLocalAmtChanged}
+            placeholder={intl.formatMessage(messages.localAmtInputPlaceholder)}
+            label={intl.formatMessage(messages.localAmtInputLabel)}
           />
         </div>
         {!isMainNet && (
           <div>
-            <T id="ln.openChannel.pushAmt" m="Push Amount (optional)" />
             <DcrInput
+              newBiggerFontStyle
               id="pushAmtAtomsInput"
               amount={pushAmtAtoms}
               onChangeAmount={onPushAmtChanged}
+              placeholder={intl.formatMessage(
+                messages.pushAmountInputPlaceholder
+              )}
+              label={intl.formatMessage(messages.pushAmountInputLabel)}
             />
           </div>
         )}
-        <KeyBlueButton
-          className={styles.openButton}
+      </div>
+
+      <div className={styles.buttonContainer}>
+        <PiUiButton
           onClick={onOpenChannel}
           loading={opening}
           disabled={opening || !canOpen}>
-          <T id="ln.openChannel.openBtn" m="Open" />
-        </KeyBlueButton>
+          <T id="ln.openChannel.createChannelBt" m="Create Channel" />
+        </PiUiButton>
       </div>
-      <div className={styles.channelsContent}>
-        {pendingChannels.length > 0 && (
-          <Subtitle
-            title={<T id="ln.channelsTab.pendingList" m="Pending Channels" />}
-          />
-        )}
-        {pendingChannels.map((c) => (
-          <VerticalAccordion
+
+      <Subtitle
+        className={styles.channelHistorySubtitle}
+        title={<T id="ln.channelsTab.manageChannels" m="Manage Channels" />}
+        children={subtitleMenu({
+          channelTypes: getChannelTypes(),
+          selectedChannelType,
+          searchText,
+          intl,
+          onChangeSelectedType,
+          onChangeSearchText
+        })}
+      />
+      {channels.length > 0 ? (
+        channels.map((c) => (
+          <div
+            className={classNames(
+              styles.cardWrapper,
+              c.active ? styles.channelActive : styles.channelInactive
+            )}
             key={c.channelPoint}
-            height={180}
-            onToggleAccordion={() => onToggleChannelDetails(c)}
-            show={c === detailedChannel}
-            header={<PendingChannel channel={c} />}>
-            <PendingChannelDetails channel={c} />
-          </VerticalAccordion>
-        ))}
-      </div>
-      <div className={styles.channelsContent}>
-        {channels.length > 0 && (
-          <Subtitle
-            title={<T id="ln.channelsTab.channelList" m="Open Channels" />}
-          />
-        )}
-        {channels.map((c) => (
-          <div className={styles.headerWrapper} key={c.channelPoint}>
-            <Tooltip
-              className={styles.closeChannelBtn}
-              content={
-                <T id="ln.channelsTab.closeChannelBtn" m="Close the channel" />
-              }>
+            onClick={() => viewChannelDetailsHandler(c.channelPoint)}>
+            <ChannelCard channel={c} />
+            <div
+              className={classNames(styles.continueButton, "flex-centralize")}>
+              <div className={styles.continueArrow}></div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className={styles.empty}>
+          <T id="ln.channelsTab.emptyChannelList" m="No channel found" />
+        </div>
+      )}
+
+      {recentlyOpenedChannel && (
+        <LNChannelModal
+          show={!!recentlyOpenedChannel}
+          onCancelModal={() => closeRecentlyOpenedChannelModal(null)}
+          detailsTable={
+            <DetailsTable
+              data={getChannelDetails(recentlyOpenedChannel)}
+              headerClassName={styles.modalDetailsHeader}
+              gridClassName={styles.modalDetailsGrid}
+              title={<T id="ln.channelModal.props" m="Properties" />}
+            />
+          }
+          channelCard={
+            <ChannelCard
+              channel={recentlyOpenedChannel}
+              className={styles.modalChanelCard}
+            />
+          }
+          closeButton={
+            recentlyOpenedChannel.active && (
               <CloseChannelModalButton
+                className={styles.modalCloseButton}
                 modalTitle={
                   <T
-                    id="ln.channelsTab.closeChannelModalTitle"
+                    id="ln.channelModal.closeChannelModalTitle"
                     m="Close Channel"
                   />
                 }
-                modalContent={<CloseChannelModalContent channel={c} />}
-                onSubmit={() => onCloseChannel(c)}
+                modalContent={
+                  <CloseChannelModalContent channel={recentlyOpenedChannel} />
+                }
+                buttonLabel={
+                  <T
+                    id="ln.channelModal.closeChannelButton"
+                    m="Close Channel"
+                  />
+                }
+                onSubmit={() => onCloseChannel(recentlyOpenedChannel)}
               />
-            </Tooltip>
-            <VerticalAccordion
-              height={280}
-              onToggleAccordion={() => onToggleChannelDetails(c)}
-              show={c === detailedChannel}
-              header={
-                <OpenChannel channel={c} onCloseChannel={onCloseChannel} />
-              }>
-              <OpenChannelDetails channel={c} />
-            </VerticalAccordion>
-          </div>
-        ))}
-      </div>
-      <div className={styles.channelsContent}>
-        {closedChannels.length > 0 && (
-          <Subtitle
-            title={<T id="ln.channelsTab.closedList" m="Closed Channels" />}
-          />
-        )}
-        {closedChannels.map((c) => (
-          <VerticalAccordion
-            key={c.channelPoint}
-            height={180}
-            onToggleAccordion={() => onToggleChannelDetails(c)}
-            show={c === detailedChannel}
-            header={<ClosedChannel channel={c} />}>
-            <ClosedChannelDetails channel={c} />
-          </VerticalAccordion>
-        ))}
-      </div>
-    </>
+            )
+          }
+        />
+      )}
+    </div>
   );
 };
 

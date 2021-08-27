@@ -7,14 +7,27 @@ const clicker = (isTestNet, href, hrefTestNet) => () => {
   wallet.openExternalURL(url);
 };
 
-const ExternalButton = ({ className, size, href, children, hrefTestNet }) => {
+const ExternalButton = ({
+  className,
+  size,
+  href,
+  children,
+  hrefTestNet,
+  ButtonComponent
+}) => {
   const { isTestNet } = useNetwork();
   return (
     <Link
       onClick={clicker(isTestNet, href, hrefTestNet)}
       className={className}
       size={size ? size : "md"}
-      customComponent={(props) => <Button {...props}>{children}</Button>}
+      customComponent={(props) =>
+        ButtonComponent ? (
+          <ButtonComponent {...props}>{children}</ButtonComponent>
+        ) : (
+          <Button {...props}>{children}</Button>
+        )
+      }
     />
   );
 };

@@ -157,3 +157,8 @@ export const INVOICE_STATUS_CANCELED = "canceled";
 export const PAYMENT_STATUS_CONFIRMED = "confirmed";
 export const PAYMENT_STATUS_FAILED = "failed";
 export const PAYMENT_STATUS_PENDING = "pending";
+
+// ln channel status
+export const CHANNEL_STATUS_ACTIVE = "active";
+export const CHANNEL_STATUS_PENDING = "pending";
+export const CHANNEL_STATUS_CLOSED = "closed";

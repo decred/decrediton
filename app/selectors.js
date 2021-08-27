@@ -1866,6 +1866,12 @@ export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
 export const lnTowersList = get(["ln", "towersList"]);
 export const lnInvoiceFilter = get(["ln", "invoiceFilter"]);
 export const lnPaymentFilter = get(["ln", "paymentFilter"]);
+export const lnChannelFilter = get(["ln", "channelFilter"]);
+export const lnRecentlyOpenedChannelNodePubKey = get([
+  "ln",
+  "recentlyOpenedChannelNodePubKey"
+]);
+
 // end of ln selectors
 
 // start of dex selectors

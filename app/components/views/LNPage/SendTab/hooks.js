@@ -222,7 +222,6 @@ export function useSendTab(setTimeout) {
     selectedPaymentType,
     onChangeSelectedType,
     onChangeSortType,
-    onChangeSearchText,
-    onChangePaymentFilter
+    onChangeSearchText
   };
 }
