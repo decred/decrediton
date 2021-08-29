@@ -5,7 +5,12 @@ import { screen, wait, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
 import { DCR } from "constants";
-import { mockChannels, mockPendingChannels, mockClosedChannels } from "./mocks";
+import {
+  mockChannels,
+  mockPendingChannels,
+  mockClosedChannels,
+  mockDescribeGraph
+} from "./mocks";
 
 const selectors = sel;
 const lnActions = lna;
@@ -24,12 +29,13 @@ beforeEach(() => {
   );
   mockOpenChannel = lnActions.openChannel = jest.fn(() => (dispatch) => {
     dispatch({
-      type: lna.LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY,
-      nodePubKey: mockChannels[0].remotePubkey
+      type: lna.LNWALLET_RECENTLY_OPENEDCHANNEL,
+      channelPoint: mockChannels[0].channelPoint
     });
     return Promise.resolve();
   });
   mockCloseChannel = lnActions.closeChannel = jest.fn(() => () => {});
+  selectors.lnDescribeGraph = jest.fn(() => mockDescribeGraph);
 });
 
 test("test channel list", () => {

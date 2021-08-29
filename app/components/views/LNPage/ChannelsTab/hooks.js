@@ -11,8 +11,8 @@ export function useChannelsTab() {
   const [pushAmtAtoms, setPushAmtAtoms] = useState(null);
   const [canOpen, setCanOpen] = useState(false);
   const [opening, setOpening] = useState(false);
-  const recentlyOpenedChannelNodePubKey = useSelector(
-    sel.lnRecentlyOpenedChannelNodePubKey
+  const recentlyOpenedChannelChannelPoint = useSelector(
+    sel.lnRecentlyOpenedChannel
   );
   const intl = useIntl();
   const channelFilter = useSelector(sel.lnChannelFilter);
@@ -23,8 +23,28 @@ export function useChannelsTab() {
     closedChannels,
     isMainNet,
     openChannel,
-    closeChannel
+    closeChannel,
+    describeGraph
   } = useLNPage();
+
+  const recentNodes = useMemo(
+    () =>
+      [
+        ...new Set(
+          [...pendingChannels, ...channels, ...closedChannels].map(
+            (c) => c.remotePubkey
+          )
+        )
+      ].map((pubKey) => {
+        const nodeDetails = describeGraph?.nodeList?.find(
+          (node) => node.pubKey === pubKey
+        );
+        if (nodeDetails) {
+          return { pubKey: pubKey, alias: nodeDetails.alias };
+        }
+      }),
+    [channels, pendingChannels, closedChannels, describeGraph]
+  );
 
   const filteredChannels = useMemo(() => {
     return [...pendingChannels, ...channels, ...closedChannels]
@@ -47,18 +67,24 @@ export function useChannelsTab() {
 
   const recentlyOpenedChannel = useMemo(
     () =>
-      recentlyOpenedChannelNodePubKey
+      recentlyOpenedChannelChannelPoint
         ? [...channels, ...pendingChannels].find(
-            (c) => c.remotePubkey === recentlyOpenedChannelNodePubKey
+            (c) => c.channelPoint === recentlyOpenedChannelChannelPoint
           )
         : null,
-    [channels, pendingChannels, recentlyOpenedChannelNodePubKey]
+    [channels, pendingChannels, recentlyOpenedChannelChannelPoint]
   );
 
-  const onNodeChanged = (e) => {
-    const _canOpen = e.target.value && localAmtAtoms > 0;
-    setNode((e.target.value || "").trim());
+  const onNodeChanged = (value) => {
+    const node = (value || "").trim();
+    const _canOpen = node && localAmtAtoms > 0;
+    setNode(node);
     setCanOpen(_canOpen);
+  };
+
+  const onNodePasted = (value) => {
+    onNodeChanged(value);
+    // TODO: validateNode
   };
 
   const onLocalAmtChanged = ({ atomValue }) => {
@@ -142,7 +168,9 @@ export function useChannelsTab() {
     isMainNet,
     intl,
     recentlyOpenedChannel,
+    recentNodes,
     onNodeChanged,
+    onNodePasted,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,

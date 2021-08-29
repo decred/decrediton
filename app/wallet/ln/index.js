@@ -349,3 +349,16 @@ export const restoreBackup = (client, scbFile) =>
       err ? reject(shimError(err)) : resolve(resp.toObject())
     );
   });
+
+export const describeGraph = (client) => {
+  const request = new pb.ChannelGraphRequest();
+  return new Promise((resolve, reject) =>
+    getClient(client).describeGraph(request, (err, resp) => {
+      if (err) {
+        reject(shimError(err));
+        return;
+      }
+      resolve({ nodeList: resp.getNodesList().map((p) => p.toObject()) });
+    })
+  );
+};

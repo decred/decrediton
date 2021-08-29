@@ -1867,10 +1867,8 @@ export const lnTowersList = get(["ln", "towersList"]);
 export const lnInvoiceFilter = get(["ln", "invoiceFilter"]);
 export const lnPaymentFilter = get(["ln", "paymentFilter"]);
 export const lnChannelFilter = get(["ln", "channelFilter"]);
-export const lnRecentlyOpenedChannelNodePubKey = get([
-  "ln",
-  "recentlyOpenedChannelNodePubKey"
-]);
+export const lnRecentlyOpenedChannel = get(["ln", "recentlyOpenedChannel"]);
+export const lnDescribeGraph = get(["ln", "describeGraph"]);
 
 // end of ln selectors
 

@@ -111,3 +111,11 @@ export const mockLnChannelBalance = {
   maxInboundAmount: 97999000,
   maxOutboundAmount: 97997360
 };
+
+export const mockDescribeGraph = {
+  nodeList: [
+    { pubKey: mockChannels[0].remotePubkey, alias: "mock-alias-0" },
+    { pubKey: mockPendingChannels[0].remotePubkey, alias: "mock-alias-1" },
+    { pubKey: mockClosedChannels[0].remotePubkey, alias: "mock-alias-2" }
+  ]
+};

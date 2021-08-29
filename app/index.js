@@ -468,7 +468,8 @@ const initialState = {
       search: null, // The freeform text in the Search box
       type: null // desired channel type (code).
     },
-    recentlyOpenedChannelNodePubKey: null
+    recentlyOpenedChannel: null,
+    describeGraph: Array()
   },
   dex: {
     dexOrdersOpen: false,

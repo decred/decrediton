@@ -3,17 +3,94 @@
 }
 
 .openNewChannel {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  display: flex;
+  flex-direction: row;
   background-color: var(--background-back-color);
   padding: 30px 40px;
-  min-height: 10em;
 }
 
-.node {
-  grid-column: 1 / 3;
+.pushAmtAtomsInput,
+.localAmtAtomsInput {
+  margin-top: 10px !important;
+}
+
+.counterparty {
+  margin-top: 20px !important;
+}
+
+.counterpartyInput {
+  padding-right: 30px;
+}
+.counterpartyInput.error {
+  padding-right: 39px;
+  color: var(--color-orange);
+}
+.counterpartyInput.success {
+  padding-right: 39px;
+}
+
+.recentNodesContainer {
+  width: 270px;
+  max-width: 270px;
+  margin-left: 25px;
+  padding-left: 30px;
+  border-left: 1px solid var(--grey-3);
+}
+
+.title {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.recentNodesContainer > ul {
+  margin-top: 20px;
+}
+
+.recentNodesContainer > ul > li {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--main-dark-blue);
+  margin: 0 0 15px 0;
+  padding: 0 0 0 17px;
+  background-image: var(--arrow-right-gray-icon);
+  background-repeat: no-repeat;
+  background-size: 5px;
+  background-position: 0;
+  white-space: nowrap;
+}
+
+.recentNodesContainer > ul > li:hover {
+  color: var(--accent-blue);
+  text-decoration: underline;
+  background-image: var(--arrow-right-blue-icon);
+  cursor: pointer;
+}
+
+.pasteButton {
+  font-family: var(--font-family-regular);
+  padding: 3px 10px !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  transition: none !important;
+}
+
+.clearAddressButton {
+  width: 26px;
+  background-image: var(--indicator-invalid-icon);
+  height: 16px;
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  background-size: 21px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--background-back-color) !important;
+}
+
+.clearAddressButton:hover {
+  opacity: 0.85;
 }
 
 .cardWrapper {

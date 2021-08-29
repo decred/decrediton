@@ -393,6 +393,7 @@ const loadLNStartupInfo = () => (dispatch) => {
   dispatch(listLatestInvoices());
   dispatch(subscribeToInvoices());
   dispatch(getScbInfo());
+  dispatch(getDescribeGraph());
 };
 
 export const LNWALLET_INFO_UPDATED = "LNWALLET_INFO_UDPATED";
@@ -733,8 +734,8 @@ export const LNWALLET_OPENCHANNEL_CHANPENDING =
   "LNWALLET_OPENCHANNEL_CHANPENDING";
 export const LNWALLET_OPENCHANNEL_CHANOPEN = "LNWALLET_OPENCHANNEL_CHANOPEN";
 export const LNWALLET_OPENCHANNEL_FAILED = "LNWALLET_OPENCHANNEL_FAILED";
-export const LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY =
-  "LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY";
+export const LNWALLET_RECENTLY_OPENEDCHANNEL =
+  "LNWALLET_RECENTLY_OPENEDCHANNEL";
 
 export const openChannel = (node, localAmt, pushAmt) => async (
   dispatch,
@@ -783,9 +784,14 @@ export const openChannel = (node, localAmt, pushAmt) => async (
           resolve();
           dispatch({ type: LNWALLET_OPENCHANNEL_CHANPENDING });
           dispatchUpdates();
+          const txId = Buffer.from(update.chanPending.txid, "base64")
+            .reverse()
+            .toString("hex");
+          const channelPoint = `${txId}:${update.chanPending.outputIndex}`;
+
           dispatch({
-            type: LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY,
-            nodePubKey: nodePubKey
+            type: LNWALLET_RECENTLY_OPENEDCHANNEL,
+            channelPoint: channelPoint
           });
         }
         if (update.chanOpen) {
@@ -808,8 +814,8 @@ export const openChannel = (node, localAmt, pushAmt) => async (
 
 export const clearRecentlyOpenedChannelNodePubkey = () => (dispatch) => {
   dispatch({
-    type: LNWALLET_RECENTLY_OPENEDCHANNEL_NODEPUBKEY,
-    nodePubKey: null
+    type: LNWALLET_RECENTLY_OPENEDCHANNEL,
+    channelPoint: null
   });
 };
 
@@ -1121,3 +1127,12 @@ export const changeChannelFilter = (newFilter) => (dispatch) =>
 
 export const viewChannelDetails = (channelPoint) => (dispatch) =>
   dispatch(pushHistory(`/ln/channel/${channelPoint}`));
+
+export const LNWALLET_DESCRIBEGRAPH_UPDATED = "LNWALLET_DESCRIBEGRAPH_UPDATED";
+export const getDescribeGraph = () => async (dispatch, getState) => {
+  const client = getState().ln.client;
+  if (!client) return;
+
+  const describeGraph = await ln.describeGraph(client);
+  dispatch({ describeGraph, type: LNWALLET_DESCRIBEGRAPH_UPDATED });
+};

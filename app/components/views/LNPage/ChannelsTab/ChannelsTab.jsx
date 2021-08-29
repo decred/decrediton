@@ -1,9 +1,10 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames, Tooltip, Button } from "pi-ui";
 import { Subtitle } from "shared";
 import { PiUiButton, EyeFilterMenu, CloseChannelModalButton } from "buttons";
 import { TextInput, DcrInput } from "inputs";
 import { DescriptionHeader } from "layout";
+import { wallet } from "wallet-preload-shim";
 import styles from "./ChannelsTab.module.css";
 import { useChannelsTab } from "./hooks";
 import {
@@ -103,8 +104,10 @@ const ChannelsTab = () => {
     canOpen,
     isMainNet,
     recentlyOpenedChannel,
+    recentNodes,
     intl,
     onNodeChanged,
+    onNodePasted,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,
@@ -123,34 +126,62 @@ const ChannelsTab = () => {
         title={<T id="ln.channelsTab.createAChannel" m="Create a Channel" />}
       />
       <div className={styles.openNewChannel}>
-        <div className={styles.node}>
+        <div>
+          <div className={styles.title}>
+            <T
+              id="ln.openChannel.connectTo"
+              m="Connect to a Counterparty Node to create a channel and start using Lightning Network."
+            />
+          </div>
           <TextInput
             newBiggerFontStyle
-            className={styles.counterpartyInput}
+            className={styles.counterparty}
             id="counterpartyInput"
             value={node}
-            onChange={onNodeChanged}
+            inputClassNames={classNames(styles.counterpartyInput)}
+            onChange={(e) => onNodeChanged(e.target.value)}
             placeholder={intl.formatMessage(
               messages.counterpartyNodeInputPlaceholder
             )}
-            label={intl.formatMessage(messages.counterpartyNodeInputLabel)}
-          />
-        </div>
-        <div>
+            label={intl.formatMessage(messages.counterpartyNodeInputLabel)}>
+            {!node ? (
+              <Button
+                kind="secondary"
+                size="sm"
+                className={styles.pasteButton}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNodePasted(wallet.readFromClipboard());
+                }}>
+                Paste
+              </Button>
+            ) : (
+              <Button
+                aria-label="Clear Address"
+                kind="secondary"
+                className={classNames(styles.clearAddressButton)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNodeChanged("");
+                }}>
+                <div />
+              </Button>
+            )}
+          </TextInput>
           <DcrInput
             newBiggerFontStyle
             id="localAmtAtomsInput"
+            className={styles.localAmtAtomsInput}
             amount={localAmtAtoms}
             onChangeAmount={onLocalAmtChanged}
             placeholder={intl.formatMessage(messages.localAmtInputPlaceholder)}
             label={intl.formatMessage(messages.localAmtInputLabel)}
           />
-        </div>
-        {!isMainNet && (
-          <div>
+          {!isMainNet && (
             <DcrInput
               newBiggerFontStyle
               id="pushAmtAtomsInput"
+              className={styles.pushAmtAtomsInput}
               amount={pushAmtAtoms}
               onChangeAmount={onPushAmtChanged}
               placeholder={intl.formatMessage(
@@ -158,8 +189,20 @@ const ChannelsTab = () => {
               )}
               label={intl.formatMessage(messages.pushAmountInputLabel)}
             />
+          )}
+        </div>
+        <div className={styles.recentNodesContainer}>
+          <div className={styles.title}>
+            <T id="ln.openChannel.recentNodes" m="Recent Nodes" />
           </div>
-        )}
+          <ul>
+            {recentNodes?.map((node) => (
+              <li onClick={() => onNodeChanged(node.pubKey)} key={node.pubKey}>
+                {node.alias}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className={styles.buttonContainer}>
