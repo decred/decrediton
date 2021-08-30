@@ -6,14 +6,16 @@ import * as txTypes from "constants/decrediton";
 import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,
-  VSP_FEE_PROCESS_ERRORED
+  VSP_FEE_PROCESS_ERRORED,
+  VSP_FEE_PROCESS_CONFIRMED
 } from "constants";
 import { useMountEffect } from "hooks";
 
 const labels = {
   vspFeeStarted: <T id="vsp.ticket.vsp.fee.started" m="Unpaid Fee" />,
   vspFeePaid: <T id="vsp.ticket.vsp.fee.paid" m="Paid Fee" />,
-  vspFeeErrored: <T id="vsp.ticket.vsp.fee.errored" m="Fee Error" />
+  vspFeeErrored: <T id="vsp.ticket.vsp.fee.errored" m="Fee Error" />,
+  vspFeeConfirmed: <T id="vsp.ticket.vsp.fee.confirmed" m="Confirmed Fee" />
 };
 
 const ticketTypes = [
@@ -41,7 +43,12 @@ const ticketTypes = [
     key: VSP_FEE_PROCESS_ERRORED,
     value: { vspFeeStatus: VSP_FEE_PROCESS_ERRORED },
     label: labels["vspFeeErrored"]
-  }
+  },
+  {
+    key: VSP_FEE_PROCESS_CONFIRMED,
+    value: { vspFeeStatus: VSP_FEE_PROCESS_CONFIRMED },
+    label: labels["vspFeeConfirmed"]
+  },
 ];
 
 const selectTicketTypeFromFilter = (filter) => {
@@ -88,6 +95,7 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED);
     getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID);
     getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED);
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED);
   });
 
   useEffect(() => {

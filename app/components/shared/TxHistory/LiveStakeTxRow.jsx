@@ -8,13 +8,15 @@ import styles from "./TxHistory.module.css";
 import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,
-  VSP_FEE_PROCESS_ERRORED
+  VSP_FEE_PROCESS_ERRORED,
+  VSP_FEE_PROCESS_CONFIRMED
 } from "constants";
 
 const feeStatusToStringMap = {
   [VSP_FEE_PROCESS_STARTED]: <T id="vsp.ticket.started" m="Processing" />,
   [VSP_FEE_PROCESS_PAID]: <T id="vsp.ticket.paid" m="Paid" />,
-  [VSP_FEE_PROCESS_ERRORED]: <T id="vsp.ticket.error" m="Error" />
+  [VSP_FEE_PROCESS_ERRORED]: <T id="vsp.ticket.error" m="Error" />,
+  [VSP_FEE_PROCESS_CONFIRMED]: <T id="vsp.ticket.confirmed" m="Confirmed" />
 };
 
 const OLD_VSP = "OLD_VSP";

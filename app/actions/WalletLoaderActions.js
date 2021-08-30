@@ -529,7 +529,7 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     });
     spvSyncCall.on("end", function (data) {
       // It never gets here but log if it does.
-      console.log(data);
+      console.log("sync end", data);
     });
     spvSyncCall.on("error", function (status) {
       status = status + "";

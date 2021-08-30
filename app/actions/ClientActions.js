@@ -34,7 +34,8 @@ import {
   MAINNET,
   VSP_FEE_PROCESS_ERRORED,
   VSP_FEE_PROCESS_STARTED,
-  VSP_FEE_PROCESS_PAID
+  VSP_FEE_PROCESS_PAID,
+  VSP_FEE_PROCESS_CONFIRMED
 } from "constants";
 import * as cfgConstants from "constants/config";
 
@@ -87,6 +88,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
       await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+      await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED));
 
       await dispatch(getVoteChoicesAttempt());
       await dispatch(monitorLockableAccounts());

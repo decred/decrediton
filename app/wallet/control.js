@@ -2,7 +2,8 @@ import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import {
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,
-  VSP_FEE_PROCESS_ERRORED
+  VSP_FEE_PROCESS_ERRORED,
+  VSP_FEE_PROCESS_CONFIRMED
 } from "constants";
 import { rawHashToHex, rawToHex, strHashToRaw } from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
@@ -389,7 +390,9 @@ const FeeStatus = {
   [VSP_FEE_PROCESS_PAID]:
     api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_PAID,
   [VSP_FEE_PROCESS_ERRORED]:
-    api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED
+    api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED,
+  [VSP_FEE_PROCESS_CONFIRMED]:
+    api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_CONFIRMED,
 };
 
 export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>

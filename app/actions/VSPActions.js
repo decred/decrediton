@@ -11,7 +11,8 @@ import {
   MAINNET,
   VSP_FEE_PROCESS_ERRORED,
   VSP_FEE_PROCESS_STARTED,
-  VSP_FEE_PROCESS_PAID
+  VSP_FEE_PROCESS_PAID,
+  VSP_FEE_PROCESS_CONFIRMED
 } from "constants";
 import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
@@ -717,6 +718,7 @@ export const processManagedTickets = (passphrase) => async (
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
     await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+    await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED));
     dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
   } catch (error) {
     dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
@@ -784,6 +786,7 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
         await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED));
         await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED));
         await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID));
+        await dispatch(getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED));
         dispatch({ type: PROCESSUNMANAGEDTICKETS_SUCCESS });
         return null;
       } catch (error) {
