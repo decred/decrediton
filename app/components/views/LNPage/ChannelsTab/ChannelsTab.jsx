@@ -1,7 +1,12 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames, Tooltip, Button } from "pi-ui";
 import { Subtitle } from "shared";
-import { PiUiButton, EyeFilterMenu, CloseChannelModalButton } from "buttons";
+import {
+  PiUiButton,
+  EyeFilterMenu,
+  CloseChannelModalButton,
+  SearchForNodesButton
+} from "buttons";
 import { TextInput, DcrInput } from "inputs";
 import { DescriptionHeader } from "layout";
 import { wallet } from "wallet-preload-shim";
@@ -133,41 +138,48 @@ const ChannelsTab = () => {
               m="Connect to a Counterparty Node to create a channel and start using Lightning Network."
             />
           </div>
-          <TextInput
-            newBiggerFontStyle
-            className={styles.counterparty}
-            id="counterpartyInput"
-            value={node}
-            inputClassNames={classNames(styles.counterpartyInput)}
-            onChange={(e) => onNodeChanged(e.target.value)}
-            placeholder={intl.formatMessage(
-              messages.counterpartyNodeInputPlaceholder
-            )}
-            label={intl.formatMessage(messages.counterpartyNodeInputLabel)}>
-            {!node ? (
-              <Button
-                kind="secondary"
-                size="sm"
-                className={styles.pasteButton}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNodePasted(wallet.readFromClipboard());
-                }}>
-                Paste
-              </Button>
-            ) : (
-              <Button
-                aria-label="Clear Address"
-                kind="secondary"
-                className={classNames(styles.clearAddressButton)}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNodeChanged("");
-                }}>
-                <div />
-              </Button>
-            )}
-          </TextInput>
+          <div className={styles.counterpartyWrapper}>
+            <TextInput
+              newBiggerFontStyle
+              className={styles.counterparty}
+              id="counterpartyInput"
+              value={node}
+              inputClassNames={classNames(styles.counterpartyInput)}
+              onChange={(e) => onNodeChanged(e.target.value)}
+              placeholder={intl.formatMessage(
+                messages.counterpartyNodeInputPlaceholder
+              )}
+              label={intl.formatMessage(messages.counterpartyNodeInputLabel)}>
+              {!node ? (
+                <Button
+                  kind="secondary"
+                  size="sm"
+                  className={styles.pasteButton}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNodePasted(wallet.readFromClipboard());
+                  }}>
+                  Paste
+                </Button>
+              ) : (
+                <Button
+                  aria-label="Clear Address"
+                  kind="secondary"
+                  className={classNames(styles.clearAddressButton)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNodeChanged("");
+                  }}>
+                  <div />
+                </Button>
+              )}
+            </TextInput>
+            <SearchForNodesButton
+              className={styles.searchBt}
+              onSubmit={onNodeChanged}
+              recentNodes={recentNodes}
+            />
+          </div>
           <DcrInput
             newBiggerFontStyle
             id="localAmtAtomsInput"
@@ -196,11 +208,17 @@ const ChannelsTab = () => {
             <T id="ln.openChannel.recentNodes" m="Recent Nodes" />
           </div>
           <ul>
-            {recentNodes?.map((node) => (
-              <li onClick={() => onNodeChanged(node.pubKey)} key={node.pubKey}>
-                {node.alias}
-              </li>
-            ))}
+            {recentNodes && recentNodes.length > 0 ? (
+              recentNodes.slice(0, isMainNet ? 4 : 6).map((node) => (
+                <li
+                  onClick={() => onNodeChanged(node.pubKey)}
+                  key={node.pubKey}>
+                  {node.alias}
+                </li>
+              ))
+            ) : (
+              <T id="ln.openChannel.emptyRecentNodes" m="No nodes yet" />
+            )}
           </ul>
         </div>
       </div>

@@ -1,0 +1,90 @@
+.modal {
+  background-image: none;
+  padding: 30px 40px;
+  width: 764px;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  min-height: 550px;
+  max-height: calc(100% - 130px);
+  display: flex;
+  flex-direction: column;
+}
+.modalHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.title {
+  font-size: 28px;
+  color: var(--grey-7);
+  line-height: 35px;
+}
+
+.listsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 327px;
+}
+
+.listTitle {
+  font-size: 18px;
+  line-height: 23px;
+  margin-bottom: 15px;
+}
+
+.searchInput {
+  padding-right: 30px;
+  width: 684px !important;
+}
+.searchInput.error {
+  padding-right: 39px;
+  color: var(--color-orange);
+}
+.searchInput.success {
+  padding-right: 39px;
+}
+
+.pasteButton {
+  font-family: var(--font-family-regular);
+  padding: 3px 10px !important;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  transition: none !important;
+}
+
+.clearAddressButton {
+  width: 26px;
+  background-image: var(--indicator-invalid-icon);
+  height: 16px;
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  background-size: 21px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--background-back-color) !important;
+}
+
+.clearAddressButton:hover {
+  opacity: 0.85;
+}

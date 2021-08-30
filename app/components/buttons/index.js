@@ -15,6 +15,7 @@ export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
 export { default as ListUTXOsButton } from "./ListUTXOsButton";
 export { default as PiUiButton } from "./PiUiButton";
 export { default as InvisiblePiUiButton } from "./InvisiblePiUiButton";
+export { default as SearchForNodesButton } from "./SearchForNodesButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";

@@ -1,0 +1,14 @@
+.button {
+  padding: 0 !important;
+  width: 24px;
+  height: 24px;
+  border: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button svg {
+  width: 13px;
+  height: 13px;
+}

@@ -310,7 +310,8 @@ const lightTheme = {
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
   "right-arrow": url(require("style/icons/rightArrow.svg")),
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
-  "lookup-icon": url(require("style/icons/lookupIcon.svg"))
+  "lookup-icon": url(require("style/icons/lookupIcon.svg")),
+  "plus-icon": url(require("style/icons/plusIcon.svg"))
 };
 
 export default lightTheme;

@@ -4,6 +4,7 @@ import user from "@testing-library/user-event";
 import { screen, wait, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
+import * as wl from "wallet";
 import { DCR } from "constants";
 import {
   mockChannels,
@@ -14,6 +15,7 @@ import {
 
 const selectors = sel;
 const lnActions = lna;
+const wallet = wl;
 
 let mockViewChannelDetails;
 let mockOpenChannel;
@@ -143,6 +145,19 @@ const getCreateChannelButton = () =>
 const getCancelChannelButton = () =>
   screen.getByRole("button", { name: "Close Channel" });
 const getConfirmButton = () => screen.getByText("Confirm");
+const getPasteButton = () => screen.getByRole("button", { name: "Paste" });
+const getClearButton = () =>
+  screen.getByRole("button", { name: "Clear Address" });
+const getSearchButton = () => screen.getByTestId("searchForNodesButton");
+const getSearchForNodeModalTitle = () => screen.getByText("Search For Nodes");
+const querySearchForNodeModalTitle = () =>
+  screen.queryByText("Search For Nodes");
+const getSearchResultsTitle = () => screen.getByText(/search results \(/i);
+const getSearchInput = () =>
+  screen.getByLabelText("Search the Network or Paste Public Key");
+const getSearchPasteBt = () => screen.getByText("Paste NodePubKey@ip:port");
+const getSearchClearBt = () =>
+  screen.getByRole("button", { name: "Clear NodePubKey" });
 
 test("test create form and receintly created modal", async () => {
   render(<ChannelsTab />);
@@ -274,4 +289,93 @@ test("test failing channel create form", async () => {
   expect(getAmountToCommitInput().value).toBe(`${mockAmount}`);
 
   expect(screen.queryByText("Channel Created")).not.toBeInTheDocument();
+});
+
+test("test paste and clear button", async () => {
+  render(<ChannelsTab />);
+
+  const mockPastedNodePubKey = "mockPastedNodePubKey";
+  wallet.readFromClipboard.mockImplementation(() => mockPastedNodePubKey);
+
+  user.click(getPasteButton());
+  await wait(() => expect(getNodeInput().value).toBe(mockPastedNodePubKey));
+
+  user.click(getClearButton());
+  await wait(() => expect(getNodeInput().value).toBe(""));
+});
+
+test("test recent node list", () => {
+  render(<ChannelsTab />);
+
+  expect(screen.getByText("Recent Nodes").nextSibling.textContent).toBe(
+    "mock-alias-1mock-alias-0mock-alias-2"
+  );
+  user.click(screen.getByText("mock-alias-1"));
+  expect(getNodeInput().value).toBe(mockPendingChannels[0].remotePubkey);
+});
+
+test("test empty recent node and channel list", () => {
+  selectors.lnPendingChannels = jest.fn(() => []);
+  selectors.lnClosedChannels = jest.fn(() => []);
+  selectors.lnChannels = jest.fn(() => []);
+  render(<ChannelsTab />);
+
+  expect(screen.getByText("Recent Nodes").nextSibling.textContent).toBe(
+    "No nodes yet"
+  );
+
+  expect(screen.getByText("No channel found")).toBeInTheDocument();
+
+  user.click(getSearchButton());
+  expect(getSearchForNodeModalTitle()).toBeInTheDocument();
+
+  expect(screen.getAllByText("No nodes yet").length).toBe(2);
+});
+
+test("test search for node modal", async () => {
+  render(<ChannelsTab />);
+
+  user.click(getSearchButton());
+  expect(getSearchForNodeModalTitle()).toBeInTheDocument();
+
+  // simple close
+  user.click(screen.getByTestId("closeSearchForNodesModalBt"));
+  expect(querySearchForNodeModalTitle()).not.toBeInTheDocument();
+
+  // reopen
+  user.click(getSearchButton());
+
+  // test recent nodes
+  expect(screen.getAllByText("Recent Nodes")[1].nextSibling.textContent).toBe(
+    "mock-alias-1mock...ub-0mock-alias-0mock...ey-0mock-alias-2mock...ey-0"
+  );
+  user.click(screen.getByText("mock...ub-0").parentElement.nextSibling);
+  expect(querySearchForNodeModalTitle()).not.toBeInTheDocument();
+  expect(getNodeInput().value).toBe(mockPendingChannels[0].remotePubkey);
+
+  // reopen and the search result list is empty
+  user.click(getSearchButton());
+  expect(getSearchResultsTitle().parentElement.textContent).toBe(
+    "Search Results (0)No matching nodes found"
+  );
+
+  // test paste button
+  const mockPastedAlias = "channel";
+  wallet.readFromClipboard.mockImplementation(() => mockPastedAlias);
+
+  user.click(getSearchPasteBt());
+  await wait(() => expect(getSearchInput().value).toBe(mockPastedAlias));
+  expect(getSearchResultsTitle().parentElement.textContent).toBe(
+    "Search Results (2)mock-alias-1mock...ub-0mock-alias-2mock...ey-0"
+  );
+  user.click(getSearchClearBt());
+  await wait(() => expect(getSearchInput().value).toBe(""));
+
+  // type alias
+  user.type(getSearchInput(), "mock-alias-0"); // alias of the first open channel's node
+  expect(getSearchResultsTitle().parentElement.textContent).toBe(
+    "Search Results (1)mock-alias-0mock...ey-0"
+  );
+
+  screen.debug();
 });

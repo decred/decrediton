@@ -55,7 +55,7 @@ export const mockPendingChannels = [
   {
     status: "pending",
     channel: {
-      remoteNodePub: "mock-pending-channel-remove-node-pub-0",
+      remoteNodePub: "mock-pending-channel-remote-node-pub-0",
       channelPoint: "cpp-0",
       capacity: 200000000,
       localBalance: 99996360,
@@ -79,7 +79,7 @@ export const mockPendingChannels = [
     initiator: 1,
     commitmentType: 1,
     pendingStatus: "open",
-    remotePubkey: "mock-pending-channel-remove-node-pub-0",
+    remotePubkey: "mock-pending-channel-remote-node-pub-0",
     channelPointURL: "mock-pending-channel-channel-point-url-0"
   }
 ];
