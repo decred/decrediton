@@ -392,7 +392,7 @@ const FeeStatus = {
   [VSP_FEE_PROCESS_ERRORED]:
     api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_ERRORED,
   [VSP_FEE_PROCESS_CONFIRMED]:
-    api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_CONFIRMED,
+    api.GetVSPTicketsByFeeStatusRequest.FeeStatus.VSP_FEE_PROCESS_CONFIRMED
 };
 
 export const getVSPTicketsByFeeStatus = (walletService, feeStatus) =>

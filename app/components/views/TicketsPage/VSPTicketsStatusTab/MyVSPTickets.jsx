@@ -48,7 +48,7 @@ const ticketTypes = [
     key: VSP_FEE_PROCESS_CONFIRMED,
     value: { vspFeeStatus: VSP_FEE_PROCESS_CONFIRMED },
     label: labels["vspFeeConfirmed"]
-  },
+  }
 ];
 
 const selectTicketTypeFromFilter = (filter) => {
