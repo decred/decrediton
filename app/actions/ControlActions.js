@@ -209,12 +209,36 @@ export const changePassphraseAttempt = (oldPass, newPass, priv) => (
   dispatch({ type: CHANGEPASSPHRASE_ATTEMPT });
   return wallet
     .changePassphrase(sel.walletService(getState()), oldPass, newPass, priv)
-    .then((res) =>
+    .then(async (res) => {
+      if (priv) {
+        const oldAccounts = sel.balances(getState());
+        await Promise.all(
+          oldAccounts.map(async (acct) => {
+            // just skip if imported account.
+            if (acct.accountNumber === Math.pow(2, 31) - 1) {
+              return acct;
+            }
+            // we set the account passphrase as the wallet passphrase to avoid the user
+            // ending with multiple passphrases.
+
+            await dispatch(
+              setAccountPassphrase(
+                sel.walletService(getState()),
+                acct.accountNumber,
+                oldPass,
+                newPass,
+                null
+              )
+            );
+            return acct;
+          })
+        );
+      }
       dispatch({
         changePassphraseResponse: res,
         type: CHANGEPASSPHRASE_SUCCESS
-      })
-    )
+      });
+    })
     .catch((error) => dispatch({ error, type: CHANGEPASSPHRASE_FAILED }));
 };
 
