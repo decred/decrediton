@@ -507,18 +507,29 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
         Buffer.from(tx.rawTx, "hex"),
         chainParams
       );
+      // Some transactions with a lot of outputs for mining payments
+      // etc cause crashes in decrediton due to this repeated request for
+      // validate address.  Since this is merely for display purposes we will
+      //  we limit the amount of outputs to 10.
+      const nonWalletLimit = 10;
+      let count = 0;
       const updatedOutputs = decodedTx.outputs.map(async (o) => {
         const address = o.decodedScript.address;
-        // Validate address so we can check if it is our own.
-        // If that is the case it is a change output.
-        const addrValidResp = await wallet.validateAddress(
-          walletService,
-          address
-        );
+        let isMine = false;
+        if (count < nonWalletLimit) {
+          // Validate address so we can check if it is our own.
+          // If that is the case it is a change output.
+          const addrValidResp = await wallet.validateAddress(
+            walletService,
+            address
+          );
+          isMine = addrValidResp.isMine;
+          count += 1;
+        }
         return {
           address,
           value: o.value,
-          isChange: addrValidResp.isMine
+          isChange: isMine
         };
       });
       resolve(Promise.all(updatedOutputs));
