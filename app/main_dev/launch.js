@@ -907,7 +907,7 @@ export const launchDCRLnd = (
 const Mainnet = 0;
 const Testnet = 1;
 
-export const launchDex = (walletPath, testnet) => {
+export const launchDex = (walletPath, testnet, locale) => {
   if (dex) {
     return;
   }
@@ -920,13 +920,17 @@ export const launchDex = (walletPath, testnet) => {
     net: !testnet ? Mainnet : Testnet,
     logLevel: 1, // LogLevelDebug
     logPath: logPath,
-    logFilename: logFilename
+    logFilename: logFilename,
+    lang: locale
   });
   const serverAddress = DEX_LOCALPAGE;
   const sitePath = getSitePath(argv.custombinpath);
   callDEX("startServer", {
     sitedir: sitePath,
-    webaddr: serverAddress
+    webaddr: serverAddress,
+    // The webserver matches lang, converts to a BCP 47 lang tag (default
+    // en-US), and uses html templates in a localized_html/{lang tag} folder.
+    lang: locale
   });
   dex = true;
   return serverAddress;
