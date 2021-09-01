@@ -215,7 +215,7 @@ export const changePassphraseAttempt = (oldPass, newPass, priv) => (
         await Promise.all(
           oldAccounts.map(async (acct) => {
             // just skip if imported account.
-            if (acct.accountNumber === Math.pow(2, 31) - 1) {
+            if (acct.accountNumber >= Math.pow(2, 31) - 1) {
               return acct;
             }
             // we set the account passphrase as the wallet passphrase to avoid the user
