@@ -101,6 +101,7 @@ export const MENU_LINKS_PER_ROW = 4;
 export const VSP_FEE_PROCESS_STARTED = 0;
 export const VSP_FEE_PROCESS_PAID = 1;
 export const VSP_FEE_PROCESS_ERRORED = 2;
+export const VSP_FEE_PROCESS_CONFIRMED = 3;
 
 // TitleHeader icon types
 export const ACCOUNTS_ICON = "accounts";

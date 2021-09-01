@@ -18,6 +18,7 @@ import {
   VSP_FEE_PROCESS_ERRORED,
   VSP_FEE_PROCESS_STARTED,
   VSP_FEE_PROCESS_PAID,
+  VSP_FEE_PROCESS_CONFIRMED,
   TICKET,
   VOTE,
   VOTED,
@@ -150,6 +151,9 @@ export const newTransactionsReceived = (
   );
   vspHashes[VSP_FEE_PROCESS_PAID] = await dispatch(
     getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID)
+  );
+  vspHashes[VSP_FEE_PROCESS_CONFIRMED] = await dispatch(
+    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED)
   );
 
   // add feeStatus into unmined txs. With that there is no need to add into

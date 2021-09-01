@@ -46523,7 +46523,8 @@ proto.walletrpc.GetVSPTicketsByFeeStatusRequest.serializeBinaryToWriter = functi
 proto.walletrpc.GetVSPTicketsByFeeStatusRequest.FeeStatus = {
   VSP_FEE_PROCESS_STARTED: 0,
   VSP_FEE_PROCESS_PAID: 1,
-  VSP_FEE_PROCESS_ERRORED: 2
+  VSP_FEE_PROCESS_ERRORED: 2,
+  VSP_FEE_PROCESS_CONFIRMED: 3
 };
 
 /**
