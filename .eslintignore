@@ -19,3 +19,5 @@ app/middleware/ln/wtclient_grpc_pb.js
 app/middleware/ln/wtclient_pb.js
 app/middleware/ln/invoices_grpc_pb.js
 app/middleware/ln/invoices_pb.js
+app/middleware/ln/autopilot_grpc_pb.js
+app/middleware/ln/autopilot_pb.js

@@ -1,0 +1,35 @@
+.container {
+  flex-wrap: wrap;
+  display: flex;
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  height: 20px;
+  align-items: center;
+}
+
+.apsContainer label {
+  color: var(--main-dark-blue);
+  font-size: 16px;
+  line-height: 20px;
+  align-items: center;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--ln-autopilot-switch-desc);
+}
+
+.switch {
+  margin: 0 20px 0 0;
+}
+
+.tooltipClassName {
+  width: 15rem;
+}

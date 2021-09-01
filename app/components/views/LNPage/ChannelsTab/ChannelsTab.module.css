@@ -7,6 +7,7 @@
   flex-direction: row;
   background-color: var(--background-back-color);
   padding: 30px 40px;
+  margin-top: 5px;
 }
 
 .pushAmtAtomsInput,

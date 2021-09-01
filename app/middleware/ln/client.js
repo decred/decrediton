@@ -16,6 +16,9 @@ const inServices = grpc.loadPackageDefinition(inProto).invoicesrpc;
 const wtProto = require("./wtclient_grpc_pb.js");
 const wtServices = grpc.loadPackageDefinition(wtProto).wtclientrpc;
 
+const apProto = require("./autopilot_grpc_pb.js");
+const apServices = grpc.loadPackageDefinition(apProto).autopilotrpc;
+
 const getServiceClient = (clientClass) => async (
   address,
   port,
@@ -91,3 +94,4 @@ export const getWalletUnlockerClient = getServiceClient(
   wuServices.WalletUnlocker
 );
 export const getLNInvoiceClient = getServiceClient(inServices.Invoices);
+export const getLNAutopilotClient = getServiceClient(apServices.Autopilot);

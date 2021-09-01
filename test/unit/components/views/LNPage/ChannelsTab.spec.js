@@ -20,6 +20,7 @@ const wallet = wl;
 let mockViewChannelDetails;
 let mockOpenChannel;
 let mockCloseChannel;
+let mockModifyAutopilotStatus;
 
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
@@ -38,6 +39,9 @@ beforeEach(() => {
   });
   mockCloseChannel = lnActions.closeChannel = jest.fn(() => () => {});
   selectors.lnDescribeGraph = jest.fn(() => mockDescribeGraph);
+  mockModifyAutopilotStatus = lnActions.modifyAutopilotStatus = jest.fn(
+    () => () => {}
+  );
 });
 
 test("test channel list", () => {
@@ -158,6 +162,7 @@ const getSearchInput = () =>
 const getSearchPasteBt = () => screen.getByText("Paste NodePubKey@ip:port");
 const getSearchClearBt = () =>
   screen.getByRole("button", { name: "Clear NodePubKey" });
+const getAuotPilotToggleSwitch = () => screen.getByTestId("toggleSwitch");
 
 test("test create form and receintly created modal", async () => {
   render(<ChannelsTab />);
@@ -378,4 +383,11 @@ test("test search for node modal", async () => {
   );
 
   screen.debug();
+});
+
+test("test automatic channel creation", () => {
+  render(<ChannelsTab />);
+
+  user.click(getAuotPilotToggleSwitch());
+  expect(mockModifyAutopilotStatus).toHaveBeenCalledWith(true);
 });

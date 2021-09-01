@@ -294,7 +294,7 @@ const connectToLNWallet = (
   // Attempt to connect to the lnrpc service of the wallet. Since the underlying
   // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
   // need to try a few times until we get a proper connection.
-  let lnClient, wtClient, inClient;
+  let lnClient, wtClient, inClient, apClient;
   let lastError;
   for (let i = 0; i < sleepCount; i++) {
     try {
@@ -311,6 +311,12 @@ const connectToLNWallet = (
         macaroonPath
       );
       inClient = await ln.getLNInvoiceClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
+      apClient = await ln.getLNAutopilotClient(
         address,
         port,
         certPath,
@@ -361,7 +367,13 @@ const connectToLNWallet = (
     );
   }
 
-  dispatch({ lnClient, wtClient, inClient, type: LNWALLET_CONNECT_SUCCESS });
+  dispatch({
+    lnClient,
+    wtClient,
+    inClient,
+    apClient,
+    type: LNWALLET_CONNECT_SUCCESS
+  });
 
   return { client: lnClient, wtClient };
 };
@@ -394,6 +406,7 @@ const loadLNStartupInfo = () => (dispatch) => {
   dispatch(subscribeToInvoices());
   dispatch(getScbInfo());
   dispatch(getDescribeGraph());
+  dispatch(getAutopilotStatus());
 };
 
 export const LNWALLET_INFO_UPDATED = "LNWALLET_INFO_UDPATED";
@@ -1135,4 +1148,48 @@ export const getDescribeGraph = () => async (dispatch, getState) => {
 
   const describeGraph = await ln.describeGraph(client);
   dispatch({ describeGraph, type: LNWALLET_DESCRIBEGRAPH_UPDATED });
+};
+
+export const LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT =
+  "LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT";
+export const LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS =
+  "LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS";
+export const LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED =
+  "LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED";
+
+export const modifyAutopilotStatus = (enable) => async (dispatch, getState) => {
+  const apClient = getState().ln.apClient;
+  if (!apClient) return;
+
+  dispatch({ type: LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT });
+  try {
+    await ln.modifyAutopilotStatus(apClient, enable);
+    await dispatch(getAutopilotStatus());
+    dispatch({ type: LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED });
+  }
+};
+
+export const LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT =
+  "LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT";
+export const LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS =
+  "LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS";
+export const LNWALLET_GET_AUTOPILOT_STATUS_FAILED =
+  "LNWALLET_GET_AUTOPILOT_STATUS_FAILED";
+
+export const getAutopilotStatus = () => async (dispatch, getState) => {
+  const apClient = getState().ln.apClient;
+  if (!apClient) return;
+
+  dispatch({ type: LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT });
+  try {
+    const resp = await ln.getAutopilotStatus(apClient);
+    dispatch({
+      active: resp.active,
+      type: LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_GET_AUTOPILOT_STATUS_FAILED });
+  }
 };

@@ -163,7 +163,9 @@ import {
   LNWALLET_CANCELINVOICE_SUCCESS,
   LNWALLET_CANCELINVOICE_FAILED,
   LNWALLET_ADDINVOICE_SUCCESS,
-  LNWALLET_ADDINVOICE_FAILED
+  LNWALLET_ADDINVOICE_FAILED,
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS,
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED
 } from "actions/LNActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
@@ -579,6 +581,10 @@ const messages = defineMessages({
     id: "ln.ntf.cancelInvoiceSuccess",
     defaultMessage: "Invoice successfully canceled!"
   },
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS: {
+    id: "ln.ntf.autopilotStatusModifySuccess",
+    defaultMessage: "Autopilot has been successfully modified!"
+  },
   LNWALLET_ADDINVOICE_SUCCESS: {
     id: "ln.ntf.addInvoiceSuccess",
     defaultMessage: "Successfully added invoice!"
@@ -590,6 +596,10 @@ const messages = defineMessages({
   LNWALLET_ADDINVOICE_FAILED: {
     id: "ln.ntf.addInvoiceFailed",
     defaultMessage: "Failed to create invoice: {originalError}"
+  },
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED: {
+    id: "ln.ntf.autopilotStatusModifyFailed",
+    defaultMessage: "Failed to modify autopilot status: {originalError}"
   },
   UPDATEVOTECHOICE_SUCCESS: {
     id: "governance.ntf.updateVoteChoiceSuccess",
@@ -794,6 +804,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_REMOVEWATCHTOWER_SUCCESS:
     case LNWALLET_CANCELINVOICE_SUCCESS:
     case LNWALLET_ADDINVOICE_SUCCESS:
+    case LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS:
     case UPDATEVOTECHOICE_SUCCESS:
     case CREATEMIXERACCOUNTS_SUCCESS:
     case SYNCVSPTICKETS_SUCCESS:
@@ -926,6 +937,7 @@ export default function snackbar(state = {}, action) {
     case LNWALLET_LISTWATCHTOWERS_FAILED:
     case LNWALLET_CANCELINVOICE_FAILED:
     case LNWALLET_ADDINVOICE_FAILED:
+    case LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED:
     case RUNACCOUNTMIXER_FAILED:
     case SYNCVSPTICKETS_FAILED:
     case PROCESSMANAGEDTICKETS_FAILED:

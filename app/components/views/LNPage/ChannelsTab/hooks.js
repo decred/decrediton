@@ -17,6 +17,8 @@ export function useChannelsTab() {
   const intl = useIntl();
   const channelFilter = useSelector(sel.lnChannelFilter);
 
+  const autopilotEnabled = useSelector(sel.lnAutopilotEnabled);
+
   const {
     channels,
     pendingChannels,
@@ -158,6 +160,9 @@ export function useChannelsTab() {
     });
   };
 
+  const onAutopilotChanged = () =>
+    dispatch(lna.modifyAutopilotStatus(!autopilotEnabled));
+
   return {
     channels: filteredChannels,
     node,
@@ -168,6 +173,8 @@ export function useChannelsTab() {
     isMainNet,
     intl,
     recentlyOpenedChannel,
+    autopilotEnabled,
+    onAutopilotChanged,
     recentNodes,
     onNodeChanged,
     onNodePasted,

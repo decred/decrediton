@@ -469,7 +469,10 @@ const initialState = {
       type: null // desired channel type (code).
     },
     recentlyOpenedChannel: null,
-    describeGraph: Array()
+    describeGraph: Array(),
+    modifyAutopilotStatusAttempt: false,
+    getAutopilotStatusAttempt: false,
+    autopilotEnabled: false
   },
   dex: {
     dexOrdersOpen: false,

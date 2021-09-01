@@ -1,10 +1,6 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import {
-  PiUiPassphraseModalButton,
-  KeyBlueButton,
-  ToggleSwitch
-} from "buttons";
+import { PiUiPassphraseModalButton, KeyBlueButton } from "buttons";
 import { Documentation } from "shared";
 import { Tooltip } from "pi-ui";
 import {
@@ -18,6 +14,7 @@ import styles from "./ConnectPage.module.css";
 import { LN_ICON } from "constants";
 import { useConnectPage } from "./hooks";
 import { CreateLNWallet, CreateLNWalletHeader } from "./CreateLNWallet";
+import { AutopilotSwitch } from "./AutopilotSwitch";
 
 const stageMsgs = {
   [LNWALLET_STARTUPSTAGE_STARTDCRLND]: (
@@ -107,41 +104,10 @@ const ConnectPage = () => {
                 intl={intl}
               />
             )}
-            <div className={styles.connectOpt}>
-              <div className={styles.apsContainer}>
-                <ToggleSwitch
-                  id="enableAutopilot"
-                  className={styles.autopilotSwitch}
-                  onClick={onChangeEnableAutopilot}
-                  enabled={autopilotEnabled}
-                  tooltipClassName={styles.autopilotTooltipClassName}
-                  enabledText={
-                    <T
-                      id="ln.connectPage.autopilot.enabled"
-                      m="Disable automatic channel creation"
-                    />
-                  }
-                  notEnabledText={
-                    <T
-                      id="ln.connectPage.autopilot.not.enabled"
-                      m="Enable automatic channel creation"
-                    />
-                  }
-                />
-                <label htmlFor="enableAutopilot">
-                  <T
-                    id="ln.connectPage.automaticChannelCreation"
-                    m="Automatic Channel Creation"
-                  />
-                </label>
-              </div>
-              <div className={styles.autopilotDesc}>
-                <T
-                  id="ln.connectPage.enableAutopilotDescr"
-                  m="This enables the 'autopilot' feature, which tries to automatically open channels using up to 60% of the account's spendable funds."
-                />
-              </div>
-            </div>
+            <AutopilotSwitch
+              onChange={onChangeEnableAutopilot}
+              autopilotEnabled={autopilotEnabled}
+            />
           </div>
           <div className={styles.buttonContrainer}>
             {runningIndicator ? (

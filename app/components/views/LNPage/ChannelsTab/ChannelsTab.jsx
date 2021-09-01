@@ -21,6 +21,7 @@ import BalancesHeader from "../BalancesHeader";
 import { LNChannelModal } from "modals";
 import { DetailsTable } from "shared";
 import { getChannelTypes } from "./helpers";
+import { AutopilotSwitch } from "../ConnectPage/AutopilotSwitch";
 
 const messages = defineMessages({
   filterByHashPlaceholder: {
@@ -110,6 +111,8 @@ const ChannelsTab = () => {
     isMainNet,
     recentlyOpenedChannel,
     recentNodes,
+    autopilotEnabled,
+    onAutopilotChanged,
     intl,
     onNodeChanged,
     onNodePasted,
@@ -129,6 +132,10 @@ const ChannelsTab = () => {
     <div className={styles.container}>
       <Subtitle
         title={<T id="ln.channelsTab.createAChannel" m="Create a Channel" />}
+      />
+      <AutopilotSwitch
+        onChange={onAutopilotChanged}
+        autopilotEnabled={autopilotEnabled}
       />
       <div className={styles.openNewChannel}>
         <div>

@@ -41,7 +41,13 @@ import {
   LNWALLET_CHANGE_PAYMENT_FILTER,
   LNWALLET_CHANGE_CHANNEL_FILTER,
   LNWALLET_RECENTLY_OPENEDCHANNEL,
-  LNWALLET_DESCRIBEGRAPH_UPDATED
+  LNWALLET_DESCRIBEGRAPH_UPDATED,
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT,
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS,
+  LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED,
+  LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT,
+  LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS,
+  LNWALLET_GET_AUTOPILOT_STATUS_FAILED
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -66,6 +72,7 @@ export default function ln(state = {}, action) {
         client: null,
         wtClient: null,
         inClient: null,
+        apClient: null,
         startupStage: null
       };
     case LNWALLET_STARTUP_FAILED:
@@ -101,7 +108,8 @@ export default function ln(state = {}, action) {
         ...state,
         client: action.lnClient,
         wtClient: action.wtClient,
-        inClient: action.inClient
+        inClient: action.inClient,
+        apClient: action.apClient
       };
     case LNWALLET_BALANCE_UPDATED:
       return {
@@ -213,6 +221,7 @@ export default function ln(state = {}, action) {
         client: null,
         wtClient: null,
         inClient: null,
+        apClient: null,
         channels: [],
         pendingChannels: [],
         closedChannels: [],
@@ -336,7 +345,37 @@ export default function ln(state = {}, action) {
         ...state,
         describeGraph: action.describeGraph
       };
-
+    case LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT:
+      return {
+        ...state,
+        modifyAutopilotStatusAttempt: true
+      };
+    case LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS:
+      return {
+        ...state,
+        modifyAutopilotStatusAttempt: false
+      };
+    case LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED:
+      return {
+        ...state,
+        modifyAutopilotStatusAttempt: false
+      };
+    case LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT:
+      return {
+        ...state,
+        getAutopilotStatusAttempt: true
+      };
+    case LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS:
+      return {
+        ...state,
+        getAutopilotStatusAttempt: false,
+        autopilotEnabled: action.active
+      };
+    case LNWALLET_GET_AUTOPILOT_STATUS_FAILED:
+      return {
+        ...state,
+        getAutopilotStatusAttempt: false
+      };
     default:
       return state;
   }
