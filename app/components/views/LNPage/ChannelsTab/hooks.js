@@ -1,9 +1,26 @@
+import { defineMessages } from "react-intl";
 import { useState, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLNPage } from "../hooks";
 import * as lna from "actions/LNActions";
 import * as sel from "selectors";
 import { useIntl } from "react-intl";
+import secp256k1 from "secp256k1";
+
+const messages = defineMessages({
+  invalidNodeFormat: {
+    id: "ln.channelsTab.invalidNodeFormat",
+    defaultMessage: "More than one @ in the node address"
+  },
+  invalidNodeAddressFormat: {
+    id: "ln.channelsTab.invalidNodeAddressFormat",
+    defaultMessage: "More than one : in the node address"
+  },
+  invalidNodeId: {
+    id: "ln.channelsTab.invalidNodeId",
+    defaultMessage: "Invalid Node Id"
+  }
+});
 
 export function useChannelsTab() {
   const [node, setNode] = useState("");
@@ -16,8 +33,9 @@ export function useChannelsTab() {
   );
   const intl = useIntl();
   const channelFilter = useSelector(sel.lnChannelFilter);
-
   const autopilotEnabled = useSelector(sel.lnAutopilotEnabled);
+  const [nodeErrorMsg, setNodeErrorMsg] = useState(null);
+  const [nodeShowSuccess, setNodeShowSuccess] = useState(false);
 
   const {
     channels,
@@ -79,14 +97,39 @@ export function useChannelsTab() {
 
   const onNodeChanged = (value) => {
     const node = (value || "").trim();
-    const _canOpen = node && localAmtAtoms > 0;
+    const isNodeValid = validateNode(node);
+    const _canOpen = node && localAmtAtoms > 0 && isNodeValid;
     setNode(node);
     setCanOpen(_canOpen);
   };
 
-  const onNodePasted = (value) => {
-    onNodeChanged(value);
-    // TODO: validateNode
+  const validateNode = (node) => {
+    setNodeErrorMsg(null);
+    setNodeShowSuccess(false);
+    const split = node.split("@");
+    if (split.length > 2) {
+      setNodeErrorMsg(intl.formatMessage(messages.invalidNodeFormat));
+      return false;
+    }
+
+    let nodePubKey;
+    if (split.length == 2) {
+      nodePubKey = split[0];
+      const addressSplit = split[1].split(":");
+      if (addressSplit.length > 2) {
+        setNodeErrorMsg(intl.formatMessage(messages.invalidNodeAddressFormat));
+        return false;
+      }
+    } else {
+      nodePubKey = node;
+    }
+    if (!secp256k1.publicKeyVerify(Buffer.from(nodePubKey, "hex"))) {
+      setNodeErrorMsg(intl.formatMessage(messages.invalidNodeId));
+      return false;
+    }
+
+    setNodeShowSuccess(true);
+    return true;
   };
 
   const onLocalAmtChanged = ({ atomValue }) => {
@@ -174,10 +217,11 @@ export function useChannelsTab() {
     intl,
     recentlyOpenedChannel,
     autopilotEnabled,
+    nodeShowSuccess,
+    nodeErrorMsg,
     onAutopilotChanged,
     recentNodes,
     onNodeChanged,
-    onNodePasted,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,

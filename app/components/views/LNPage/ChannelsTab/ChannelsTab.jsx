@@ -51,6 +51,10 @@ const messages = defineMessages({
   pushAmountInputPlaceholder: {
     id: "ln.channelsTab.pushAmountPlaceholder",
     defaultMessage: "Amount of DCR to push to channel"
+  },
+  nodeSuccessMsg: {
+    id: "ln.channelsTab.nodeSuccessMsg",
+    defaultMessage: "Valid PubKey"
   }
 });
 
@@ -112,10 +116,11 @@ const ChannelsTab = () => {
     recentlyOpenedChannel,
     recentNodes,
     autopilotEnabled,
+    nodeShowSuccess,
+    nodeErrorMsg,
     onAutopilotChanged,
     intl,
     onNodeChanged,
-    onNodePasted,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,
@@ -148,6 +153,7 @@ const ChannelsTab = () => {
           <div className={styles.counterpartyWrapper}>
             <TextInput
               newBiggerFontStyle
+              hideIcons
               className={styles.counterparty}
               id="counterpartyInput"
               value={node}
@@ -156,7 +162,12 @@ const ChannelsTab = () => {
               placeholder={intl.formatMessage(
                 messages.counterpartyNodeInputPlaceholder
               )}
-              label={intl.formatMessage(messages.counterpartyNodeInputLabel)}>
+              label={intl.formatMessage(messages.counterpartyNodeInputLabel)}
+              successMessage={intl.formatMessage(messages.nodeSuccessMsg)}
+              showSuccess={nodeShowSuccess}
+              showErrors={!!nodeErrorMsg}
+              invalid={!!nodeErrorMsg}
+              invalidMessage={nodeErrorMsg}>
               {!node ? (
                 <Button
                   kind="secondary"
@@ -164,7 +175,7 @@ const ChannelsTab = () => {
                   className={styles.pasteButton}
                   onClick={(e) => {
                     e.preventDefault();
-                    onNodePasted(wallet.readFromClipboard());
+                    onNodeChanged(wallet.readFromClipboard());
                   }}>
                   Paste
                 </Button>

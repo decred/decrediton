@@ -391,3 +391,68 @@ test("test automatic channel creation", () => {
   user.click(getAuotPilotToggleSwitch());
   expect(mockModifyAutopilotStatus).toHaveBeenCalledWith(true);
 });
+
+test("test node validation", () => {
+  render(<ChannelsTab />);
+
+  const mockAmount = 12;
+  const createChannelBt = getCreateChannelButton();
+  const nodeInput = getNodeInput();
+
+  user.type(getAmountToCommitInput(), `${mockAmount}`);
+
+  // mock invalid node id
+  fireEvent.change(nodeInput, {
+    target: { value: "invalid-mock-id" }
+  });
+  expect(createChannelBt.disabled).toBe(true);
+  expect(screen.getByText("Invalid Node Id")).toBeInTheDocument();
+
+  // mock invalid formatted node
+  fireEvent.change(nodeInput, {
+    target: { value: "invalid-mock-id@address@address" }
+  });
+  expect(createChannelBt.disabled).toBe(true);
+  expect(
+    screen.getByText("More than one @ in the node address")
+  ).toBeInTheDocument();
+
+  // mock invalid formatted node address
+  fireEvent.change(nodeInput, {
+    target: { value: "invalid-mock-id@address:port:port" }
+  });
+  expect(createChannelBt.disabled).toBe(true);
+  expect(
+    screen.getByText("More than one : in the node address")
+  ).toBeInTheDocument();
+
+  // mock valid node
+  fireEvent.change(nodeInput, {
+    target: {
+      value:
+        "03d144f7f011fead4642d2f170a0575d3c3bfe4e86889915f013cb520db01ca48d"
+    }
+  });
+  expect(createChannelBt.disabled).toBe(false);
+  expect(screen.getByText("Valid PubKey")).toBeInTheDocument();
+
+  // mock valid node with domain
+  fireEvent.change(nodeInput, {
+    target: {
+      value:
+        "03d144f7f011fead4642d2f170a0575d3c3bfe4e86889915f013cb520db01ca48d@domain"
+    }
+  });
+  expect(createChannelBt.disabled).toBe(false);
+  expect(screen.getByText("Valid PubKey")).toBeInTheDocument();
+
+  // mock valid node with ip and port
+  fireEvent.change(nodeInput, {
+    target: {
+      value:
+        "03d144f7f011fead4642d2f170a0575d3c3bfe4e86889915f013cb520db01ca48d@127.0.0.1:88"
+    }
+  });
+  expect(createChannelBt.disabled).toBe(false);
+  expect(screen.getByText("Valid PubKey")).toBeInTheDocument();
+});
