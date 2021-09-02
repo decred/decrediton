@@ -154,6 +154,8 @@ export function useChannelsTab() {
         setLocalAmtAtoms(null);
         setPushAmtAtoms(null);
         setCanOpen(false);
+        setNodeErrorMsg(null);
+        setNodeShowSuccess(false);
       })
       .catch(() => setOpening(false));
   };
