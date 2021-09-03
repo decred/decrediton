@@ -1845,6 +1845,7 @@ export const getHasTicketFeeError = createSelector(
       : false;
   }
 );
+export const restoredFromSeed = get(["dex", "restoredFromSeed"]);
 export const dexOrdersOpen = get(["dex", "openOrder"]);
 export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
@@ -1934,6 +1935,8 @@ export const dexBTCWalletRunning = compose(
 
 export const dexAddr = get(["dex", "addr"]);
 export const dexConfig = get(["dex", "config"]);
+export const alreadyPaid = get(["dex", "alreadyPaid"]);
+export const getConfigAttempt = get(["dex", "getConfigAttempt"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
 export const dexAccountNumber = createSelector(
   [dexAccount, balances],

@@ -29,6 +29,9 @@ import {
   DEX_GETCONFIG_ATTEMPT,
   DEX_GETCONFIG_FAILED,
   DEX_GETCONFIG_SUCCESS,
+  DEX_PREREGISTER_ATTEMPT,
+  DEX_PREREGISTER_FAILED,
+  DEX_PREREGISTER_SUCCESS,
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
@@ -189,7 +192,8 @@ export default function ln(state = {}, action) {
         initAttempt: false,
         dexInit: true,
         loggedIn: true,
-        registerError: null
+        registerError: null,
+        restoredFromSeed: action.fromSeed
       };
     case DEX_LAUNCH_WINDOW_ATTEMPT:
       return {
@@ -253,6 +257,27 @@ export default function ln(state = {}, action) {
         config: action.config,
         addr: action.addr,
         getConfigError: null
+      };
+    case DEX_PREREGISTER_ATTEMPT:
+      return {
+        ...state,
+        getConfigAttempt: true,
+        addr: null,
+        getConfigError: null
+      };
+    case DEX_PREREGISTER_FAILED:
+      return {
+        ...state,
+        getConfigAttempt: false,
+        getConfigError: action.error
+      };
+    case DEX_PREREGISTER_SUCCESS:
+      return {
+        ...state,
+        getConfigAttempt: false,
+        addr: action.addr,
+        getConfigError: null,
+        alreadyPaid: action.alreadyPaid
       };
     case CREATEDEXACCOUNT_ATTEMPT:
       return {

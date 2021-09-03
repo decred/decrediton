@@ -938,8 +938,8 @@ export const launchDex = (walletPath, testnet, locale) => {
 
 export const initCheckDex = () => (!dex ? null : callDEX("IsInitialized", {}));
 
-export const initDexCall = (passphrase) =>
-  !dex ? null : callDEX("Init", { pass: passphrase });
+export const initDexCall = (passphrase, seed) =>
+  !dex ? null : callDEX("Init", { pass: passphrase, seed: seed });
 
 export const loginDexCall = (passphrase) =>
   !dex ? null : callDEX("Login", { pass: passphrase });
@@ -1007,6 +1007,9 @@ export const createWalletDexCall = (
 
 export const getDexConfigCall = (addr) =>
   !dex ? null : callDEX("DexConfig", { addr });
+
+export const preRegisterCall = (appPass, addr) =>
+  !dex ? null : callDEX("PreRegister", { appPass, addr });
 
 export const registerDexCall = (appPass, addr, fee) =>
   !dex

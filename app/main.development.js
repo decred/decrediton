@@ -78,6 +78,7 @@ import {
   loginDex,
   logoutDex,
   getConfigDex,
+  preRegister,
   registerDex
 } from "./main_dev/ipc";
 import {
@@ -400,6 +401,8 @@ handle("logout-dex", logoutDex);
 handle("create-wallet-dex", createWalletDex);
 
 handle("get-config-dex", getConfigDex);
+
+handle("preregister-dex", preRegister);
 
 handle("register-dex", registerDex);
 
