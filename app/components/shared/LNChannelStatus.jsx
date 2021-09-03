@@ -21,9 +21,9 @@ const messages = defineMessages({
 const LNChannelStatus = ({ channel }) => {
   const intl = useIntl();
   return channel.status === CHANNEL_STATUS_ACTIVE ? (
-    <StatusTag type="bluePending" text={intl.formatMessage(messages.open)} />
+    <StatusTag type="greenCheck" text={intl.formatMessage(messages.open)} />
   ) : channel.status === CHANNEL_STATUS_PENDING ? (
-    <StatusTag type="yellowTime" text={intl.formatMessage(messages.pending)} />
+    <StatusTag type="bluePending" text={intl.formatMessage(messages.pending)} />
   ) : (
     <StatusTag type="grayNegative" text={intl.formatMessage(messages.closed)} />
   );

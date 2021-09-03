@@ -115,11 +115,11 @@
   background-color: var(--grey-5);
 }
 
-.cardWrapper.channelActive {
+.cardWrapper.channelBlueBorder {
   border-left: 3px solid var(--accent-blue);
 }
 
-.cardWrapper.channelInactive {
+.cardWrapper.channelGrayBorder {
   border-left: 3px solid var(--grey-7);
 }
 
@@ -153,6 +153,7 @@
 .modalCloseButton {
   background-color: var(--ln-close-channel-button-bg) !important;
   color: var(--ln-close-channel-button-text) !important;
+  border-color: var(--ln-close-channel-button-bg) !important;
 }
 
 .modalCloseButton:hover {

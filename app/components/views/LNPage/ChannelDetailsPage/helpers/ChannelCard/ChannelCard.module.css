@@ -31,13 +31,33 @@
 }
 
 .peerBalances {
-  text-align: right;
-  padding-top: 10px;
+  display: flex;
 }
 
-.peerBalances > div > div {
-  display: inline;
-  margin-left: 10px;
+.peerBalances > div {
+  display: flex;
+  margin-right: 50px;
+}
+
+.peerBalances .peerLabel {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-5);
+  margin-right: 10px;
+}
+
+.peerBalances .peerBalance {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+}
+
+.peerBalances .peerBalanceSecondary {
+  color: var(--grey-5);
+}
+
+.peerBalances .peerBalanceUnit {
+  color: var(--main-dark-blue);
 }
 
 .footer {

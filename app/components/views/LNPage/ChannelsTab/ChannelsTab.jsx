@@ -267,7 +267,9 @@ const ChannelsTab = () => {
           <div
             className={classNames(
               styles.cardWrapper,
-              c.active ? styles.channelActive : styles.channelInactive
+              c.localBalance >= c.remoteBalance
+                ? styles.channelBlueBorder
+                : styles.channelGrayBorder
             )}
             key={c.channelPoint}
             onClick={() => viewChannelDetailsHandler(c.channelPoint)}>

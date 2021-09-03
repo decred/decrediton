@@ -21,15 +21,32 @@ const ChannelCard = ({ channel, className }) => (
     {channel.status === CHANNEL_STATUS_CLOSED ? (
       <div className={styles.peerBalances}>
         <div>
-          <T id="ln.channelsTab.closedChannel.settledBalance" m="Settled" />
-          <Balance amount={channel.settledBalance} />
+          <div className={styles.peerLabel}>
+            <T id="ln.channelsTab.closedChannel.settledBalance" m="Settled" />:
+          </div>
+          <Balance
+            flat
+            amount={channel.settledBalance}
+            classNameWrapper={styles.peerBalance}
+            classNameSecondary={styles.peerBalanceSecondary}
+            classNameUnit={styles.peerBalanceUnit}
+          />
         </div>
         <div>
-          <T
-            id="ln.channelsTab.closedChannel.timeLockedBalance"
-            m="Timelocked"
+          <div className={styles.peerLabel}>
+            <T
+              id="ln.channelsTab.closedChannel.timeLockedBalance"
+              m="Timelocked"
+            />
+            :
+          </div>
+          <Balance
+            flat
+            amount={channel.timeLockedBalance}
+            classNameWrapper={styles.peerBalance}
+            classNameSecondary={styles.peerBalanceSecondary}
+            classNameUnit={styles.peerBalanceUnit}
           />
-          <Balance amount={channel.timeLockedBalance} />
         </div>
       </div>
     ) : (

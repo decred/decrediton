@@ -55,6 +55,7 @@
 .closeButton {
   background-color: var(--ln-close-channel-button-bg) !important;
   color: var(--ln-close-channel-button-text) !important;
+  border-color: var(--ln-close-channel-button-text) !important;
 }
 
 .closeButton:hover {
