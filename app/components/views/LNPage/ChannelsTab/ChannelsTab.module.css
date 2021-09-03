@@ -29,7 +29,7 @@
 
 .recentNodesContainer {
   width: 300px;
-  max-width: 270px;
+  max-width: 260px;
   margin-left: 25px;
   padding-left: 30px;
   border-left: 1px solid var(--grey-3);

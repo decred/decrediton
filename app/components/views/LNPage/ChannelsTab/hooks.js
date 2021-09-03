@@ -59,9 +59,7 @@ export function useChannelsTab() {
         const nodeDetails = describeGraph?.nodeList?.find(
           (node) => node.pubKey === pubKey
         );
-        if (nodeDetails) {
-          return { pubKey: pubKey, alias: nodeDetails.alias };
-        }
+        return { pubKey: pubKey, alias: nodeDetails?.alias || pubKey };
       }),
     [channels, pendingChannels, closedChannels, describeGraph]
   );
