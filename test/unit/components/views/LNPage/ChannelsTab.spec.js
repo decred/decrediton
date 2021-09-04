@@ -52,7 +52,7 @@ test("test channel list", () => {
   expect(mockViewChannelDetails).toHaveBeenCalledWith(
     mockChannels[0].channelPoint
   );
-  expect(screen.getByText("Open").previousSibling.alt).toBe("bluePending");
+  expect(screen.getByText("Open").previousSibling.alt).toBe("greenCheck");
   expect(
     screen.getByText("Open").parentNode.parentNode.parentNode.textContent
   ).toBe("2.00000 DCRcpa-0Open Local:0.7899636 DCR Remote:1.21000 DCRCapacity");
@@ -62,7 +62,7 @@ test("test channel list", () => {
   expect(mockViewChannelDetails).toHaveBeenCalledWith(
     mockPendingChannels[0].channelPoint
   );
-  expect(screen.getByText("Pending").previousSibling.alt).toBe("yellowTime");
+  expect(screen.getByText("Pending").previousSibling.alt).toBe("bluePending");
   expect(
     screen.getByText("Pending").parentNode.parentNode.parentNode.textContent
   ).toBe(
@@ -75,9 +75,11 @@ test("test channel list", () => {
     mockClosedChannels[0].channelPoint
   );
   expect(screen.getByText("Closed").previousSibling.alt).toBe("grayNegative");
-  expect(screen.getByText("Settled").textContent).toBe("Settled0.47381162 DCR");
-  expect(screen.getByText("Timelocked").textContent).toBe(
-    "Timelocked0.00000 DCR"
+  expect(screen.getByText("Settled:").parentElement.textContent).toBe(
+    "Settled:0.47381162 DCR"
+  );
+  expect(screen.getByText("Timelocked:").parentElement.textContent).toBe(
+    "Timelocked:0.00000 DCR"
   );
 });
 
@@ -381,8 +383,6 @@ test("test search for node modal", async () => {
   expect(getSearchResultsTitle().parentElement.textContent).toBe(
     "Search Results (1)mock-alias-0mock...ey-0"
   );
-
-  screen.debug();
 });
 
 test("test automatic channel creation", () => {

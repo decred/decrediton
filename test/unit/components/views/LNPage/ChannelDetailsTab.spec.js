@@ -47,7 +47,7 @@ test("open channel details", async () => {
   mockChannelPoint = mockChannels[0].channelPoint;
   render(<ChannelDetailsPage />);
 
-  expect(screen.getByText("Open").previousSibling.alt).toBe("bluePending");
+  expect(screen.getByText("Open").previousSibling.alt).toBe("greenCheck");
   expect(
     screen.getByText("Open").parentNode.parentNode.parentNode.textContent
   ).toBe("2.00000 DCRcpa-0Open Local:0.7899636 DCR Remote:1.21000 DCRCapacity");
@@ -113,7 +113,7 @@ test("pending channel details", () => {
   mockChannelPoint = mockPendingChannels[0].channelPoint;
   render(<ChannelDetailsPage />);
 
-  expect(screen.getByText("Pending").previousSibling.alt).toBe("yellowTime");
+  expect(screen.getByText("Pending").previousSibling.alt).toBe("bluePending");
   expect(
     screen.getByText("Pending").parentNode.parentNode.parentNode.textContent
   ).toBe(
@@ -149,9 +149,11 @@ test("closed channel details", () => {
   render(<ChannelDetailsPage />);
 
   expect(screen.getByText("Closed").previousSibling.alt).toBe("grayNegative");
-  expect(screen.getByText("Settled").textContent).toBe("Settled0.47381162 DCR");
-  expect(screen.getByText("Timelocked").textContent).toBe(
-    "Timelocked0.00000 DCR"
+  expect(screen.getByText("Settled:").parentElement.textContent).toBe(
+    "Settled:0.47381162 DCR"
+  );
+  expect(screen.getByText("Timelocked:").parentElement.textContent).toBe(
+    "Timelocked:0.00000 DCR"
   );
 
   expect(screen.getByText("Channel ID:").nextSibling.textContent).toBe(
