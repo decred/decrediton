@@ -115,6 +115,7 @@ const ChannelsTab = () => {
     isMainNet,
     recentlyOpenedChannel,
     recentNodes,
+    hideSearchBt,
     autopilotEnabled,
     nodeShowSuccess,
     nodeErrorMsg,
@@ -150,7 +151,11 @@ const ChannelsTab = () => {
               m="Connect to a Counterparty Node to create a channel and start using Lightning Network."
             />
           </div>
-          <div className={styles.counterpartyWrapper}>
+          <div
+            className={classNames(
+              styles.counterpartyWrapper,
+              hideSearchBt && styles.hideSearchBt
+            )}>
             <TextInput
               newBiggerFontStyle
               hideIcons
@@ -192,11 +197,13 @@ const ChannelsTab = () => {
                 </Button>
               )}
             </TextInput>
-            <SearchForNodesButton
-              className={styles.searchBt}
-              onSubmit={onNodeChanged}
-              recentNodes={recentNodes}
-            />
+            {!hideSearchBt && (
+              <SearchForNodesButton
+                className={styles.searchBt}
+                onSubmit={onNodeChanged}
+                recentNodes={recentNodes}
+              />
+            )}
           </div>
           <DcrInput
             newBiggerFontStyle

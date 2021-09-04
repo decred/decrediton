@@ -197,6 +197,10 @@
   margin-top: 9px;
 }
 
+.counterpartyWrapper.hideSearchBt .counterpartyInput {
+  width: 398px !important;
+}
+
 .counterpartyWrapper {
   display: flex;
   flex-direction: row;

@@ -64,6 +64,8 @@ export function useChannelsTab() {
     [channels, pendingChannels, closedChannels, describeGraph]
   );
 
+  const hideSearchBt = describeGraph?.nodeList?.length <= 1 ?? true;
+
   const filteredChannels = useMemo(() => {
     return [...pendingChannels, ...channels, ...closedChannels]
       .filter(
@@ -221,6 +223,7 @@ export function useChannelsTab() {
     nodeErrorMsg,
     onAutopilotChanged,
     recentNodes,
+    hideSearchBt,
     onNodeChanged,
     onLocalAmtChanged,
     onPushAmtChanged,
