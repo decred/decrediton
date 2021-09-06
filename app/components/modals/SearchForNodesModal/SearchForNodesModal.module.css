@@ -1,11 +1,11 @@
 .modal {
   background-image: none;
   padding: 30px 40px;
-  width: 764px;
+  width: 655px;
   overflow-x: hidden;
-  position: relative;
+  position: absolute;
+  top: 118px;
   margin: 0;
-  min-height: 550px;
   max-height: calc(100% - 130px);
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  width: 327px;
+  width: 575px;
 }
 
 .listTitle {
@@ -54,7 +54,7 @@
 
 .searchInput {
   padding-right: 30px;
-  width: 684px !important;
+  width: 575px !important;
 }
 .searchInput.error {
   padding-right: 39px;

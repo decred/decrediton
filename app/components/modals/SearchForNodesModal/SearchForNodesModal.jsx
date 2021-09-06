@@ -78,60 +78,56 @@ const SearchForNodesModal = ({
         )}
       </TextInput>
       <div className={styles.listsContainer}>
-        <div className={styles.list}>
-          <div className={styles.listTitle}>
-            <T
-              id="ln.searchForNodesModal.searchResults"
-              m="Search Results ({count})"
-              values={{
-                count: searchResults?.length || 0
-              }}
-            />
-          </div>
-          <ul>
-            {searchResults && searchResults.length > 0 ? (
-              searchResults
-                .slice(0, maxListSize)
-                .map((node) => (
-                  <NodeListElement
-                    alias={node.alias}
-                    pubKey={node.pubKey}
-                    key={node.pubKey}
-                    onNodeSelected={onNodeSelected}
-                  />
-                ))
-            ) : (
+        {node ? (
+          <div className={styles.list}>
+            <div className={styles.listTitle}>
               <T
-                id="ln.searchForNodesModal.emptySearchResult"
-                m="No matching nodes found"
+                id="ln.searchForNodesModal.searchResults"
+                m="Search Results ({count})"
+                values={{
+                  count: searchResults?.length || 0
+                }}
               />
-            )}
-          </ul>
-        </div>
-        <div className={styles.list}>
-          <div className={styles.listTitle}>
-            <T id="ln.searchForNodesModal.recentNodes" m="Recent Nodes" />
+            </div>
+            <ul>
+              {searchResults && searchResults.length > 0 ? (
+                searchResults
+                  .slice(0, maxListSize)
+                  .map((node) => (
+                    <NodeListElement
+                      alias={node.alias}
+                      pubKey={node.pubKey}
+                      key={node.pubKey}
+                      onNodeSelected={onNodeSelected}
+                    />
+                  ))
+              ) : (
+                <T
+                  id="ln.searchForNodesModal.emptySearchResult"
+                  m="No matching nodes found"
+                />
+              )}
+            </ul>
           </div>
-          <ul>
-            {recentnodes && recentnodes.length > 0 ? (
-              recentnodes
-                .slice(0, maxListSize)
-                .map((node) => (
-                  <NodeListElement
-                    alias={node.alias}
-                    pubKey={node.pubKey}
-                    key={node.pubKey}
-                    onNodeSelected={onNodeSelected}
-                  />
-                ))
-            ) : (
-              <T
-                id="ln.searchForNodesModal.emptyRecentNodes"
-                m="No nodes yet"
-              />
-            )}
-          </ul>
-        </div>
+        ) : recentnodes && recentnodes.length > 0 ? (
+          <div className={styles.list}>
+            <div className={styles.listTitle}>
+              <T id="ln.searchForNodesModal.recentNodes" m="Recent Nodes" />
+            </div>
+            <ul>
+              {recentnodes.slice(0, maxListSize).map((node) => (
+                <NodeListElement
+                  alias={node.alias}
+                  pubKey={node.pubKey}
+                  key={node.pubKey}
+                  onNodeSelected={onNodeSelected}
+                />
+              ))}
+            </ul>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </Modal>
   );

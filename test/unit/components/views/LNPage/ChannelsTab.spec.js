@@ -332,11 +332,6 @@ test("test empty recent node and channel list", () => {
   );
 
   expect(screen.getByText("No channel found")).toBeInTheDocument();
-
-  user.click(getSearchButton());
-  expect(getSearchForNodeModalTitle()).toBeInTheDocument();
-
-  expect(screen.getAllByText("No nodes yet").length).toBe(2);
 });
 
 test("test search for node modal", async () => {
@@ -360,11 +355,8 @@ test("test search for node modal", async () => {
   expect(querySearchForNodeModalTitle()).not.toBeInTheDocument();
   expect(getNodeInput().value).toBe(mockPendingChannels[0].remotePubkey);
 
-  // reopen and the search result list is empty
+  // reopen
   user.click(getSearchButton());
-  expect(getSearchResultsTitle().parentElement.textContent).toBe(
-    "Search Results (0)No matching nodes found"
-  );
 
   // test paste button
   const mockPastedAlias = "channel";
@@ -382,6 +374,11 @@ test("test search for node modal", async () => {
   user.type(getSearchInput(), "mock-alias-0"); // alias of the first open channel's node
   expect(getSearchResultsTitle().parentElement.textContent).toBe(
     "Search Results (1)mock-alias-0mock...ey-0"
+  );
+
+  user.type(getSearchInput(), "notvalidaliasorpubkey");
+  expect(getSearchResultsTitle().parentElement.textContent).toBe(
+    "Search Results (0)No matching nodes found"
   );
 });
 
