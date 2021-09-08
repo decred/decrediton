@@ -110,7 +110,7 @@ const OverviewTab = () => {
         </div>
       ) : (
         <div className={styles.empty}>
-          <T id="ln.receiveTab.emptyInvoiceList" m="No activities yet" />
+          <T id="ln.overviewTab.emptyInvoiceList" m="No activities yet" />
         </div>
       )}
 
@@ -143,7 +143,9 @@ const OverviewTab = () => {
               data={getChannelDetails(selectedChannel)}
               headerClassName={styles.modalDetailsHeader}
               gridClassName={styles.modalDetailsGrid}
-              title={<T id="ln.channelModal.props" m="Properties" />}
+              title={
+                <T id="ln.overviewTab.channelModal.props" m="Properties" />
+              }
             />
           }
           channelCard={
@@ -158,7 +160,7 @@ const OverviewTab = () => {
                 className={styles.modalCloseButton}
                 modalTitle={
                   <T
-                    id="ln.channelModal.closeChannelModalTitle"
+                    id="ln.overviewTab.channelModal.closeChannelModalTitle"
                     m="Close Channel"
                   />
                 }
@@ -167,7 +169,7 @@ const OverviewTab = () => {
                 }
                 buttonLabel={
                   <T
-                    id="ln.channelModal.closeChannelButton"
+                    id="ln.overviewTab.channelModal.closeChannelButton"
                     m="Close Channel"
                   />
                 }
