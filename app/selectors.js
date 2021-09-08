@@ -1883,6 +1883,7 @@ export const lnChannelFilter = get(["ln", "channelFilter"]);
 export const lnRecentlyOpenedChannel = get(["ln", "recentlyOpenedChannel"]);
 export const lnDescribeGraph = get(["ln", "describeGraph"]);
 export const lnAutopilotEnabled = get(["ln", "autopilotEnabled"]);
+export const lnTransactions = get(["ln", "transactions"]);
 
 // end of ln selectors
 

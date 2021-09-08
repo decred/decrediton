@@ -47,7 +47,10 @@ import {
   LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED,
   LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT,
   LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS,
-  LNWALLET_GET_AUTOPILOT_STATUS_FAILED
+  LNWALLET_GET_AUTOPILOT_STATUS_FAILED,
+  LNWALLET_GETTRANSACTIONS_ATTEMPT,
+  LNWALLET_GETTRANSACTIONS_SUCCESS,
+  LNWALLET_GETTRANSACTIONS_FAILED
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -375,6 +378,22 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         getAutopilotStatusAttempt: false
+      };
+    case LNWALLET_GETTRANSACTIONS_ATTEMPT:
+      return {
+        ...state,
+        getTransactionsAttempt: true
+      };
+    case LNWALLET_GETTRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        getTransactionsAttempt: false,
+        transactions: action.transactions
+      };
+    case LNWALLET_GETTRANSACTIONS_FAILED:
+      return {
+        ...state,
+        getTransactionsAttempt: false
       };
     default:
       return state;

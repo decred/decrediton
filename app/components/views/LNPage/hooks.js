@@ -26,6 +26,7 @@ export function useLNPage() {
   const scbUpdatedTime = useSelector(sel.lnSCBUpdatedTime);
   const runningIndicator = useSelector(sel.getRunningIndicator);
   const describeGraph = useSelector(sel.lnDescribeGraph);
+  const transactions = useSelector(sel.lnTransactions);
 
   const dispatch = useDispatch();
 
@@ -77,6 +78,11 @@ export function useLNPage() {
     dispatch
   ]);
 
+  const cancelInvoice = useCallback(
+    (paymentHash) => dispatch(lna.cancelInvoice(paymentHash)),
+    [dispatch]
+  );
+
   return {
     lnActive,
     startupStage,
@@ -110,6 +116,8 @@ export function useLNPage() {
     exportBackup,
     verifyBackup,
     runningIndicator,
-    describeGraph
+    describeGraph,
+    transactions,
+    cancelInvoice
   };
 }

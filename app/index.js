@@ -473,7 +473,9 @@ const initialState = {
     describeGraph: Array(),
     modifyAutopilotStatusAttempt: false,
     getAutopilotStatusAttempt: false,
-    autopilotEnabled: false
+    autopilotEnabled: false,
+    getTransactionsAttempt: false,
+    transactions: Array()
   },
   dex: {
     dexOrdersOpen: false,

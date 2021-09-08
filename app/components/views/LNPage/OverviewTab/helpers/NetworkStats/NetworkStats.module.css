@@ -1,0 +1,49 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) max-content;
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+  margin-bottom: 30px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  background-size: 27px;
+  padding-left: 25px;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+  height: 30px;
+  align-items: center;
+}
+
+.item.nodes {
+  background-image: var(--ln-nodes-icon);
+}
+
+.item.channels {
+  background-image: var(--ln-channels-icon);
+}
+
+.item.capacity {
+  background-image: var(--ln-network-capacity-icon);
+  background-size: 22px;
+  justify-content: flex-end;
+}
+
+.label {
+  margin: 0 10px 0 8px;
+}
+
+.value {
+  font-weight: 600;
+}
+
+.balance,
+.balanceSecondary,
+.balanceUnit {
+  color: var(--main-dark-blue);
+}

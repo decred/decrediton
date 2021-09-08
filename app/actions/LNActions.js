@@ -407,6 +407,7 @@ const loadLNStartupInfo = () => (dispatch) => {
   dispatch(getScbInfo());
   dispatch(getDescribeGraph());
   dispatch(getAutopilotStatus());
+  dispatch(getTransactions(0, -1)); // endHeight set to -1 which includes unconfirmed transactions
 };
 
 export const LNWALLET_INFO_UPDATED = "LNWALLET_INFO_UDPATED";
@@ -1192,4 +1193,31 @@ export const getAutopilotStatus = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ error, type: LNWALLET_GET_AUTOPILOT_STATUS_FAILED });
   }
+};
+
+export const LNWALLET_GETTRANSACTIONS_ATTEMPT =
+  "LNWALLET_GETTRANSACTIONS_ATTEMPT";
+export const LNWALLET_GETTRANSACTIONS_SUCCESS =
+  "LNWALLET_GETTRANSACTIONS_SUCCESS";
+export const LNWALLET_GETTRANSACTIONS_FAILED =
+  "LNWALLET_GETTRANSACTIONS_FAILED";
+
+export const getTransactions = (startHeight, endHeight) => (
+  dispatch,
+  getState
+) => {
+  const { client } = getState().ln;
+  if (!client) return;
+
+  dispatch({ type: LNWALLET_GETTRANSACTIONS_ATTEMPT });
+  ln.getTransactions(client, startHeight, endHeight)
+    .then((transactions) => {
+      dispatch({
+        transactions,
+        type: LNWALLET_GETTRANSACTIONS_SUCCESS
+      });
+    })
+    .catch((error) => {
+      dispatch({ error, type: LNWALLET_GETTRANSACTIONS_FAILED });
+    });
 };

@@ -6,6 +6,7 @@ import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
 import { ChannelsTab, ChannelsTabHeader } from "./ChannelsTab";
 import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
 import { SendTab, SendTabHeader } from "./SendTab";
+import { OverviewTab, OverviewTabHeader } from "./OverviewTab";
 import WatchtowersTab, {
   WatchtowersTabHeader
 } from "./WatchtowersTab/WatchtowersTab";
@@ -23,13 +24,13 @@ const LNPageHeader = () => (
 const LNActivePage = () => (
   <TabbedPage header={<LNPageHeader />}>
     <Switch>
-      <Redirect from="/ln" exact to="/ln/wallet" />
+      <Redirect from="/ln" exact to="/ln/overview" />
     </Switch>
     <Tab
-      path="/ln/wallet"
-      component={WalletTab}
-      header={WalletTabHeader}
-      link={<T id="ln.tab.wallet" m="Wallet" />}
+      path="/ln/overview"
+      component={OverviewTab}
+      header={OverviewTabHeader}
+      link={<T id="ln.tab.overview" m="Overview" />}
     />
     <Tab
       path="/ln/channels"
@@ -48,6 +49,12 @@ const LNActivePage = () => (
       component={ReceiveTab}
       header={ReceiveTabHeader}
       link={<T id="ln.tab.receive" m="Receive" />}
+    />
+    <Tab
+      path="/ln/wallet"
+      component={WalletTab}
+      header={WalletTabHeader}
+      link={<T id="ln.tab.wallet" m="Wallet" />}
     />
     <Tab
       path="/ln/network"

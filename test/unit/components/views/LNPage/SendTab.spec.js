@@ -6,153 +6,16 @@ import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
 import * as wl from "wallet";
-import { mockLnChannelBalance } from "./mocks";
+import {
+  mockLnChannelBalance,
+  mockFailedPayment,
+  mockPayments,
+  mockOutstandingPayments
+} from "./mocks";
 
 const selectors = sel;
 const lnActions = lna;
 const wallet = wl;
-
-const mockOutstandingPayments = {
-  "mock-outstanding-payment-hash-0": {
-    decoded: {
-      destination: "mock-destination-0",
-      paymentHash: "mock-outstanding-payment-hash-0",
-      numAtoms: 1000000,
-      timestamp: 1628688648,
-      expiry: 3600,
-      description: "mock-outstanding-desc-0",
-      descriptionHash: "",
-      fallbackAddr: "",
-      cltvExpiry: 80,
-      routeHintsList: [],
-      paymentAddr: "mock-payment-address-0",
-      numMAtoms: 1000000000,
-      featuresMap: [
-        [
-          15,
-          {
-            name: "payment-addr",
-            isRequired: false,
-            isKnown: true
-          }
-        ],
-        [
-          17,
-          {
-            name: "multi-path-payments",
-            isRequired: false,
-            isKnown: true
-          }
-        ],
-        [
-          9,
-          {
-            name: "tlv-onion",
-            isRequired: false,
-            isKnown: true
-          }
-        ]
-      ]
-    }
-  }
-};
-
-const mockPayments = [
-  {
-    paymentHash: "mock-payment-hash-0",
-    value: 20000000,
-    creationDate: 1627810765,
-    fee: 0,
-    paymentPreimage: "mock-preimage-0",
-    valueAtoms: 20000000,
-    valueMAtoms: 20000000000,
-    paymentRequest: "mock-payment-request-0",
-    status: 2,
-    feeAtoms: 0,
-    feeMAtoms: 0,
-    creationTimeNs: 1627810765912116500,
-    htlcsList: [
-      {
-        status: 1,
-        route: {
-          totalTimeLock: 738888,
-          totalFees: 0,
-          totalAmt: 20000000,
-          hopsList: [
-            {
-              chanId: "810928308391837696",
-              chanCapacity: 200000000,
-              amtToForward: 20000000,
-              fee: 0,
-              expiry: 738888,
-              amtToForwardMAtoms: 20000000000,
-              feeMAtoms: 0,
-              pubKey: "mock-pubkey-0",
-              tlvPayload: true,
-              mppRecord: {
-                paymentAddr: "mock-payment-address-0",
-                totalAmtMAtoms: 20000000000
-              },
-              customRecordsMap: []
-            }
-          ],
-          totalFeesMAtoms: 0,
-          totalAmtMAtoms: 20000000000
-        },
-        attemptTimeNs: 1627810765956084200,
-        resolveTimeNs: 1627810766343210800,
-        preimage: "mock-preimage-htlc-0"
-      }
-    ],
-    paymentIndex: 4,
-    failureReason: 0
-  }
-];
-const mockFailedPayment = [
-  {
-    paymentError: "mock-payment-error",
-    decoded: {
-      destination: "mock-destination",
-      paymentHash: "mock-payment-hash",
-      numAtoms: 10,
-      timestamp: 1628512835,
-      expiry: 3600,
-      description: "mock-failed-desc",
-      descriptionHash: "",
-      fallbackAddr: "",
-      cltvExpiry: 80,
-      routeHintsList: [],
-      paymentAddr: "mock-payment-address",
-      numMAtoms: 10000,
-      featuresMap: [
-        [
-          15,
-          {
-            name: "payment-addr",
-            isRequired: false,
-            isKnown: true
-          }
-        ],
-        [
-          17,
-          {
-            name: "multi-path-payments",
-            isRequired: false,
-            isKnown: true
-          }
-        ],
-        [
-          9,
-          {
-            name: "tlv-onion",
-            isRequired: false,
-            isKnown: true
-          }
-        ]
-      ]
-    }
-  }
-];
 
 const mockReqCode = "mock-req-code";
 const now = Math.floor(Date.now() / 1000);

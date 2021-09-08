@@ -311,7 +311,23 @@ const lightTheme = {
   "right-arrow": url(require("style/icons/rightArrow.svg")),
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
-  "plus-icon": url(require("style/icons/plusIcon.svg"))
+  "plus-icon": url(require("style/icons/plusIcon.svg")),
+  "ln-confirmed-balance-icon": url(
+    require("style/icons/LNConfirmedBalanceIcon.svg")
+  ),
+  "ln-unconfirmed-balance-icon": url(
+    require("style/icons/LNUnconfirmedBalanceIcon.svg")
+  ),
+  "ln-total-account-balance-icon": url(
+    require("style/icons/LNTotalAccountBalanceIcon.svg")
+  ),
+  "ln-open-channels-icon": url(require("style/icons/LNOpenChannelsIcon.svg")),
+  "ln-capacity-icon": url(require("style/icons/LNCapacityIcon.svg")),
+  "ln-nodes-icon": url(require("style/icons/LNNodesIcon.svg")),
+  "ln-channels-icon": url(require("style/icons/LNChannelsIcon.svg")),
+  "ln-network-capacity-icon": url(
+    require("style/icons/LNNetworkCapacityIcon.svg")
+  )
 };
 
 export default lightTheme;

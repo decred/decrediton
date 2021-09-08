@@ -384,3 +384,18 @@ export const getAutopilotStatus = (client) => {
     })
   );
 };
+
+export const getTransactions = (client, startHeight, endHeight) => {
+  const request = new pb.GetTransactionsRequest();
+  request.setStartHeight(startHeight);
+  request.setEndHeight(endHeight);
+  return new Promise((resolve, reject) =>
+    getClient(client).getTransactions(request, (err, resp) => {
+      if (err) {
+        reject(shimError(err));
+        return;
+      }
+      resolve(resp.getTransactionsList().map((p) => p.toObject()));
+    })
+  );
+};

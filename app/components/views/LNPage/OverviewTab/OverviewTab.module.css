@@ -1,0 +1,31 @@
+.container {
+  width: 764px;
+}
+
+.modalChanelCard {
+  padding: 22px 0 30px 0;
+}
+
+.modalDetailsHeader {
+  padding: 16px 25px;
+}
+
+.modalDetailsGrid {
+  grid-template-columns: 1fr 2fr;
+}
+
+.modalCloseButton {
+  background-color: var(--ln-close-channel-button-bg) !important;
+  color: var(--ln-close-channel-button-text) !important;
+  border-color: var(--ln-close-channel-button-bg) !important;
+}
+
+.modalCloseButton:hover {
+  opacity: 0.85;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 355px;
+  }
+}

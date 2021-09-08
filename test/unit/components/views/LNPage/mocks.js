@@ -119,3 +119,232 @@ export const mockDescribeGraph = {
     { pubKey: mockClosedChannels[0].remotePubkey, alias: "mock-alias-2" }
   ]
 };
+
+export const mockOutstandingPayments = {
+  "mock-outstanding-payment-hash-0": {
+    decoded: {
+      destination: "mock-destination-0",
+      paymentHash: "mock-outstanding-payment-hash-0",
+      numAtoms: 1000000,
+      timestamp: 1628688648,
+      expiry: 3600,
+      description: "mock-outstanding-desc-0",
+      descriptionHash: "",
+      fallbackAddr: "",
+      cltvExpiry: 80,
+      routeHintsList: [],
+      paymentAddr: "mock-payment-address-0",
+      numMAtoms: 1000000000,
+      featuresMap: [
+        [
+          15,
+          {
+            name: "payment-addr",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          17,
+          {
+            name: "multi-path-payments",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          9,
+          {
+            name: "tlv-onion",
+            isRequired: false,
+            isKnown: true
+          }
+        ]
+      ]
+    }
+  }
+};
+
+export const mockPayments = [
+  {
+    paymentHash: "mock-payment-hash-0",
+    value: 20000000,
+    creationDate: 1627810765,
+    fee: 0,
+    paymentPreimage: "mock-preimage-0",
+    valueAtoms: 20000000,
+    valueMAtoms: 20000000000,
+    paymentRequest: "mock-payment-request-0",
+    status: 2,
+    feeAtoms: 0,
+    feeMAtoms: 0,
+    creationTimeNs: 1627810765912116500,
+    htlcsList: [
+      {
+        status: 1,
+        route: {
+          totalTimeLock: 738888,
+          totalFees: 0,
+          totalAmt: 20000000,
+          hopsList: [
+            {
+              chanId: "810928308391837696",
+              chanCapacity: 200000000,
+              amtToForward: 20000000,
+              fee: 0,
+              expiry: 738888,
+              amtToForwardMAtoms: 20000000000,
+              feeMAtoms: 0,
+              pubKey: "mock-pubkey-0",
+              tlvPayload: true,
+              mppRecord: {
+                paymentAddr: "mock-payment-address-0",
+                totalAmtMAtoms: 20000000000
+              },
+              customRecordsMap: []
+            }
+          ],
+          totalFeesMAtoms: 0,
+          totalAmtMAtoms: 20000000000
+        },
+        attemptTimeNs: 1627810765956084200,
+        resolveTimeNs: 1627810766343210800,
+        preimage: "mock-preimage-htlc-0"
+      }
+    ],
+    paymentIndex: 4,
+    failureReason: 0
+  }
+];
+
+export const mockFailedPayment = [
+  {
+    paymentError: "mock-payment-error",
+    decoded: {
+      destination: "mock-destination",
+      paymentHash: "mock-payment-hash",
+      numAtoms: 10,
+      timestamp: 1628512835,
+      expiry: 3600,
+      description: "mock-failed-desc",
+      descriptionHash: "",
+      fallbackAddr: "",
+      cltvExpiry: 80,
+      routeHintsList: [],
+      paymentAddr: "mock-payment-address",
+      numMAtoms: 10000,
+      featuresMap: [
+        [
+          15,
+          {
+            name: "payment-addr",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          17,
+          {
+            name: "multi-path-payments",
+            isRequired: false,
+            isKnown: true
+          }
+        ],
+        [
+          9,
+          {
+            name: "tlv-onion",
+            isRequired: false,
+            isKnown: true
+          }
+        ]
+      ]
+    }
+  }
+];
+
+export const mockInvoices = [
+  {
+    memo: "mock-memo-1",
+    rHash: "mock-rhash-1",
+    value: 10000000,
+    valueMAtoms: 10000000000,
+    settled: false,
+    creationDate: 1626706566,
+    settleDate: 0,
+    paymentRequest: "mock-payment-request1",
+    descriptionHash: "",
+    expiry: 3600,
+    fallbackAddr: "",
+    cltvExpiry: 80,
+    routeHintsList: [],
+    pb_private: false,
+    addIndex: 28,
+    settleIndex: 0,
+    amtPaid: 0,
+    amtPaidAtoms: 0,
+    amtPaidMAtoms: 0,
+    state: 0,
+    htlcsList: [],
+    ignoreMaxInboundAmt: false,
+    featuresMap: [],
+    isKeysend: false,
+    status: "open",
+    rHashHex: "mock-rhash-hex-1"
+  },
+  {
+    memo: "mock-memo-2",
+    rPreimage: "mock-rpreimage-2",
+    rHash: "mock-rhash-21",
+    value: 1000,
+    valueMAtoms: 1000000,
+    settled: true,
+    creationDate: 1626706536,
+    settleDate: 1626706576,
+    paymentRequest: "mock-payment-request2",
+    descriptionHash: "",
+    expiry: 3600,
+    fallbackAddr: "",
+    cltvExpiry: 80,
+    routeHintsList: [],
+    pb_private: false,
+    addIndex: 27,
+    settleIndex: 1,
+    amtPaid: 1000000,
+    amtPaidAtoms: 1000,
+    amtPaidMAtoms: 1000000,
+    state: 1,
+    ignoreMaxInboundAmt: false,
+    isKeysend: false,
+    status: "settled",
+    rHashHex: "mock-rhash-hex-21"
+  },
+  {
+    memo: "mock-memo-3",
+    rPreimage: "mock-ppreimage-3",
+    rHash: "mock-rhash-22",
+    value: 1000,
+    valueMAtoms: 1000000,
+    settled: false,
+    creationDate: 1626703527,
+    settleDate: 0,
+    paymentRequest: "mock-payment-request3",
+    descriptionHash: "",
+    expiry: 3600,
+    fallbackAddr: "",
+    cltvExpiry: 80,
+    routeHintsList: [],
+    pb_private: false,
+    addIndex: 26,
+    settleIndex: 0,
+    amtPaid: 0,
+    amtPaidAtoms: 0,
+    amtPaidMAtoms: 0,
+    state: 2,
+    htlcsList: [],
+    ignoreMaxInboundAmt: false,
+    isKeysend: false,
+    status: "canceled",
+    rHashHex: "mock-rhash-hex-22"
+  }
+];
