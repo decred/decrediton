@@ -325,20 +325,22 @@ const darkTheme = {
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
   "plus-icon": url(require("style/icons/plusIcon.svg")),
   "ln-confirmed-balance-icon": url(
-    require("style/icons/LNConfirmedBalanceIcon.svg")
+    require("style/icons/LNConfirmedBalanceIconDark.svg")
   ),
   "ln-unconfirmed-balance-icon": url(
-    require("style/icons/LNUnconfirmedBalanceIcon.svg")
+    require("style/icons/LNUnconfirmedBalanceIconDark.svg")
   ),
   "ln-total-account-balance-icon": url(
-    require("style/icons/LNTotalAccountBalanceIcon.svg")
+    require("style/icons/LNTotalAccountBalanceIconDark.svg")
   ),
-  "ln-open-channels-icon": url(require("style/icons/LNOpenChannelsIcon.svg")),
-  "ln-capacity-icon": url(require("style/icons/LNCapacityIcon.svg")),
-  "ln-nodes-icon": url(require("style/icons/LNNodesIcon.svg")),
-  "ln-channels-icon": url(require("style/icons/LNChannelsIcon.svg")),
+  "ln-open-channels-icon": url(
+    require("style/icons/LNOpenChannelsIconDark.svg")
+  ),
+  "ln-capacity-icon": url(require("style/icons/LNCapacityIconDark.svg")),
+  "ln-nodes-icon": url(require("style/icons/LNNodesIconDark.svg")),
+  "ln-channels-icon": url(require("style/icons/LNChannelsIconDark.svg")),
   "ln-network-capacity-icon": url(
-    require("style/icons/LNNetworkCapacityIcon.svg")
+    require("style/icons/LNNetworkCapacityIconDark.svg")
   )
 };
 
