@@ -74,3 +74,21 @@
   width: 1px;
   background-color: var(--grey-3);
 }
+
+@media screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 10px;
+    padding: 30px 20px;
+  }
+
+  .border {
+    display: none;
+  }
+
+  .item,
+  .item.openChannels,
+  .item.capacity {
+    margin: 0;
+  }
+}
