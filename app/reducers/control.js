@@ -2,6 +2,9 @@ import {
   GETNEXTADDRESS_ATTEMPT,
   GETNEXTADDRESS_FAILED,
   GETNEXTADDRESS_SUCCESS,
+  GETNEXTCHANGEADDRESS_ATTEMPT,
+  GETNEXTCHANGEADDRESS_FAILED,
+  GETNEXTCHANGEADDRESS_SUCCESS,
   RENAMEACCOUNT_ATTEMPT,
   RENAMEACCOUNT_FAILED,
   RENAMEACCOUNT_SUCCESS,
@@ -117,6 +120,25 @@ export default function control(state = {}, action) {
         getNextAddressError: "",
         getNextAddressRequestAttempt: false,
         getNextAddressResponse: action.getNextAddressResponse
+      };
+    case GETNEXTCHANGEADDRESS_ATTEMPT:
+      return {
+        ...state,
+        getNextChangeAddressError: null,
+        getNextChangeAddressRequestAttempt: true
+      };
+    case GETNEXTCHANGEADDRESS_FAILED:
+      return {
+        ...state,
+        getNextChangeAddressError: String(action.error),
+        getNextChangeAddressRequestAttempt: false
+      };
+    case GETNEXTCHANGEADDRESS_SUCCESS:
+      return {
+        ...state,
+        getNextChangeAddressError: "",
+        getNextChangeAddressRequestAttempt: false,
+        getNextChangeAddressResponse: action.getNextChangeAddressResponse
       };
     case RENAMEACCOUNT_ATTEMPT:
       return {

@@ -36,6 +36,30 @@ export const getNextAddressAttempt = (accountNumber) => (dispatch, getState) =>
       });
   });
 
+export const GETNEXTCHANGEADDRESS_ATTEMPT = "GETNEXTCHANGEADDRESS_ATTEMPT";
+export const GETNEXTCHANGEADDRESS_FAILED = "GETNEXTCHANGEADDRESS_FAILED";
+export const GETNEXTCHANGEADDRESS_SUCCESS = "GETNEXTCHANGEADDRESS_SUCCESS";
+
+export const getNextChangeAddressAttempt = () => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    const changeAccount = sel.getChangeAccount(getState());
+    dispatch({ type: GETNEXTCHANGEADDRESS_ATTEMPT });
+    return wallet
+      .getNextAddress(sel.walletService(getState()), changeAccount)
+      .then((res) => {
+        res.accountNumber = changeAccount;
+        dispatch({
+          getNextChangeAddressResponse: res,
+          type: GETNEXTCHANGEADDRESS_SUCCESS
+        });
+        resolve(res);
+      })
+      .catch((error) => {
+        dispatch({ error, type: GETNEXTCHANGEADDRESS_FAILED });
+        reject(error);
+      });
+  });
+
 export const RENAMEACCOUNT_ATTEMPT = "RENAMEACCOUNT_ATTEMPT";
 export const RENAMEACCOUNT_FAILED = "RENAMEACCOUNT_FAILED";
 export const RENAMEACCOUNT_SUCCESS = "RENAMEACCOUNT_SUCCESS";
@@ -668,7 +692,8 @@ export const constructTransactionAttempt = (
             dispatch({ error, type: CONSTRUCTTX_FAILED });
           };
         }
-        const newChangeAddress = sel.nextAddress(getState());
+        await dispatch(getNextChangeAddressAttempt());
+        const newChangeAddress = sel.nextChangeAddress(getState());
         change = { address: newChangeAddress };
       }
     }
@@ -679,6 +704,7 @@ export const constructTransactionAttempt = (
 
   dispatch({ type: CONSTRUCTTX_ATTEMPT, constructTxRequestAttempt: true });
   try {
+    console.log("there?", change);
     const constructFunc = all
       ? wallet.constructSendAllTransaction
       : wallet.constructTransaction;
