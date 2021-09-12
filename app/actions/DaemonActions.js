@@ -319,7 +319,15 @@ export const createWallet = (selectedWallet) => (dispatch, getState) =>
           selectedWallet.value.wallet,
           network == TESTNET
         );
-        await dispatch(startWallet(selectedWallet));
+        try {
+          await dispatch(startWallet(selectedWallet));
+        } catch (error) {
+          // This error message happens if we start creating a wallet. As its
+          // wallet.db file still not created.
+          if (!error.message.includes("missing database file")) {
+            throw error;
+          }
+        }
         dispatch({
           isWatchingOnly: selectedWallet.value.isWatchingOnly,
           createNewWallet: selectedWallet.value.isNew,
