@@ -704,7 +704,6 @@ export const constructTransactionAttempt = (
 
   dispatch({ type: CONSTRUCTTX_ATTEMPT, constructTxRequestAttempt: true });
   try {
-    console.log("there?", change);
     const constructFunc = all
       ? wallet.constructSendAllTransaction
       : wallet.constructTransaction;
