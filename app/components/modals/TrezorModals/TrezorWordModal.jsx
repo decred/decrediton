@@ -19,7 +19,12 @@ const getSeedWords = (input, callback) => {
   });
 };
 
-const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
+const TrezorWordModal = ({
+  isGetStarted,
+  onCancelModal,
+  onSubmitWord,
+  waitingForWord
+}) => {
   const [word, setWord] = useState("");
   const [value, setValue] = useState(null);
 
@@ -88,11 +93,16 @@ const TrezorWordModal = ({ isGetStarted, onCancelModal, onSubmitWord }) => {
             />
           }
           onInputKeyDown={onSelectKeyDown}
+          disabled={!waitingForWord}
         />
       </div>
 
       <ButtonsToolbar
-        {...{ onCancelModal: onCancelWordModal, onSubmit }}
+        {...{
+          onCancelModal: onCancelWordModal,
+          onSubmit,
+          loading: !waitingForWord
+        }}
         className={styles.buttons}
       />
     </Modal>

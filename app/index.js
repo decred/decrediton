@@ -408,6 +408,7 @@ const initialState = {
     waitingForPin: false,
     waitingForPassPhrase: false,
     waitingForWord: false,
+    performingRecoverDevice: false,
     confirmingTogglePassphrase: false,
     enablePassphraseProtection: false,
     pinCallBack: null,

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTrezor } from "hooks";
 import PinModal from "./TrezorPinModal";
 import PassPhraseModal from "./TrezorPassphraseModal";
@@ -15,8 +15,27 @@ const TrezorModals = () => {
     walletCreationMasterPubkeyAttempt,
     onCancelCurrentOperation,
     confirmingTogglePassphrase,
+    performingRecoverDevice,
     ...props
   } = useTrezor();
+
+  const [
+    wordAlreadyHasBeenRequested,
+    setWordAlreadyHasBeenRequested
+  ] = useState(false);
+  useEffect(() => {
+    if (waitingForWord) {
+      setWordAlreadyHasBeenRequested(true);
+    }
+    if (!performingRecoverDevice) {
+      setWordAlreadyHasBeenRequested(false);
+    }
+  }, [waitingForWord, performingRecoverDevice, onCancelCurrentOperation]);
+
+  const onCancelModal = () => {
+    onCancelCurrentOperation();
+    setWordAlreadyHasBeenRequested(false);
+  };
 
   const Component = useMemo(() => {
     switch (true) {
@@ -26,8 +45,10 @@ const TrezorModals = () => {
         return walletCreationMasterPubkeyAttempt
           ? WalletCreationPassPhraseModal
           : PassPhraseModal;
-      case waitingForWord:
-        return WordModal;
+      case performingRecoverDevice:
+        // show the `WordModal` just after the user confirms the restore
+        // process, and the first word is requested
+        return wordAlreadyHasBeenRequested && WordModal;
       case confirmingTogglePassphrase:
         return TogglePassphraseConfirmModal;
       default:
@@ -38,7 +59,8 @@ const TrezorModals = () => {
     waitingForPassPhrase,
     walletCreationMasterPubkeyAttempt,
     confirmingTogglePassphrase,
-    waitingForWord
+    performingRecoverDevice,
+    wordAlreadyHasBeenRequested
   ]);
 
   return Component && isTrezor ? (
@@ -52,7 +74,7 @@ const TrezorModals = () => {
         confirmingTogglePassphrase,
         walletCreationMasterPubkeyAttempt
       }}
-      onCancelModal={onCancelCurrentOperation}
+      onCancelModal={onCancelModal}
     />
   ) : null;
 };

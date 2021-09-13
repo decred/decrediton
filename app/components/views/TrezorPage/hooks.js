@@ -7,6 +7,9 @@ export function useTrezorPage() {
   const isPerformingUpdate = useSelector(sel.isPerformingTrezorUpdate);
   const device = useSelector(sel.trezorDevice);
   const performingOperation = useSelector(sel.trezorPerformingOperation);
+  const performingRecoverDevice = useSelector(
+    sel.trezorPerformingRecoverDevice
+  );
 
   const dispatch = useDispatch();
 
@@ -50,6 +53,7 @@ export function useTrezorPage() {
   return {
     isPerformingUpdate,
     performingOperation,
+    performingRecoverDevice,
     device,
     connect,
     togglePinProtection,

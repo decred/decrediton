@@ -30,6 +30,7 @@ const TrezorPageContent = () => {
     performingOperation,
     device,
     connect,
+    performingRecoverDevice,
     togglePinProtection,
     togglePassPhraseProtection,
     togglePassphraseOnDevice,
@@ -42,6 +43,8 @@ const TrezorPageContent = () => {
     updateFirmware
   } = useTrezorPage();
 
+  const loading = performingOperation || performingRecoverDevice;
+
   return !device ? (
     <NoDevicePage onConnect={connect} />
   ) : (
@@ -52,21 +55,25 @@ const TrezorPageContent = () => {
           togglePassPhraseProtection,
           togglePassphraseOnDevice,
           changeToDecredHomeScreen,
-          performingOperation
+          performingOperation: loading
         }}
       />
-      <ChangeLabel {...{ changeLabel, performingOperation }} />
+      <ChangeLabel {...{ changeLabel, performingOperation: loading }} />
       <RecoveryButtons
         {...{
           wipeDevice,
           recoverDevice,
           initDevice,
           backupDevice,
-          performingOperation
+          performingOperation: loading
         }}
       />
       <FirmwareUpdate
-        {...{ updateFirmware, performingOperation, isPerformingUpdate }}
+        {...{
+          updateFirmware,
+          performingOperation: loading,
+          isPerformingUpdate
+        }}
       />
     </>
   );

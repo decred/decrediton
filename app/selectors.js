@@ -1791,6 +1791,10 @@ export const trezorWaitingForPassPhrase = get([
   "waitingForPassPhrase"
 ]);
 export const trezorWaitingForWord = get(["trezor", "waitingForWord"]);
+export const trezorPerformingRecoverDevice = get([
+  "trezor",
+  "performingRecoverDevice"
+]);
 export const trezorConfirmingTogglePassphrase = get([
   "trezor",
   "confirmingTogglePassphrase"
