@@ -26,7 +26,8 @@ export function useOverviewTab() {
     tsDate,
     walletBalances,
     cancelInvoice,
-    closeChannel
+    closeChannel,
+    recentNodes
   } = useLNPage();
 
   const channelsCapacity = channels.reduce(
@@ -118,6 +119,16 @@ export function useOverviewTab() {
     payments
   ]);
 
+  const onNodeSelected = (value) => {
+    const pubKey = (value || "").trim();
+    if (pubKey) {
+      // sleep a bit to wait until the modal is closed
+      new Promise((r) => setTimeout(r, 1)).then(() =>
+        dispatch(lna.goToChannelsTab(pubKey))
+      );
+    }
+  };
+
   return {
     recentActivity,
     tsDate,
@@ -133,6 +144,8 @@ export function useOverviewTab() {
     setSelectedPayment,
     selectedChannel,
     setSelectedChannel,
-    onCloseChannel
+    onCloseChannel,
+    onNodeSelected,
+    recentNodes
   };
 }

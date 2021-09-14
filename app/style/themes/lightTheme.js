@@ -327,7 +327,8 @@ const lightTheme = {
   "ln-channels-icon": url(require("style/icons/LNChannelsIcon.svg")),
   "ln-network-capacity-icon": url(
     require("style/icons/LNNetworkCapacityIcon.svg")
-  )
+  ),
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
 };
 
 export default lightTheme;

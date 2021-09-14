@@ -1221,3 +1221,6 @@ export const getTransactions = (startHeight, endHeight) => (
       dispatch({ error, type: LNWALLET_GETTRANSACTIONS_FAILED });
     });
 };
+
+export const goToChannelsTab = (pubKey) => (dispatch) =>
+  dispatch(pushHistory(`/ln/channels?pubKey=${pubKey}`));

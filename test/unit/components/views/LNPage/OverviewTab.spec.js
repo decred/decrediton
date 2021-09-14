@@ -13,7 +13,8 @@ import {
   mockFailedPayment,
   mockPayments,
   mockOutstandingPayments,
-  mockInvoices
+  mockInvoices,
+  mockDescribeGraph
 } from "./mocks";
 
 const selectors = sel;
@@ -21,6 +22,7 @@ const lnActions = lna;
 
 let mockCloseChannel;
 let mockCancelInvoice;
+let mockGoToChannelsTab;
 
 const mockWalletBalance = {
   totalBalance: 632619804,
@@ -67,11 +69,13 @@ beforeEach(() => {
   selectors.lnWalletBalances = jest.fn(() => mockWalletBalance);
   selectors.lnNetwork = jest.fn(() => mockNetworkInfo);
   selectors.lnTransactions = jest.fn(() => mockTransactions);
+  selectors.lnDescribeGraph = jest.fn(() => mockDescribeGraph);
 
   mockCancelInvoice = lnActions.cancelInvoice = jest.fn(() => () =>
     Promise.resolve()
   );
   lnActions.getNetworkInfo = jest.fn(() => () => {});
+  mockGoToChannelsTab = lnActions.goToChannelsTab = jest.fn(() => () => {});
 });
 
 test("test account overview and net stats", () => {
@@ -179,4 +183,23 @@ test("test no activities yet", () => {
   selectors.lnTransactions = jest.fn(() => []);
   render(<OverviewTab />);
   expect(screen.getByText("No activities yet")).toBeInTheDocument();
+});
+
+test("test search for nodes button", async () => {
+  render(<OverviewTab />);
+  const searchForNodesButton = screen.getByTestId("searchForNodesButton");
+  user.click(searchForNodesButton);
+
+  // click one of recent nodes
+  expect(screen.getByText("Recent Nodes").nextSibling.textContent).toBe(
+    "mock-alias-1mock...ub-0mock-alias-0mock...ey-0mock-alias-2mock...ey-0"
+  );
+  user.click(screen.getByText("mock...ub-0").parentElement.nextSibling);
+  expect(screen.queryByText("Search For Nodes")).not.toBeInTheDocument();
+
+  await wait(() =>
+    expect(mockGoToChannelsTab).toHaveBeenCalledWith(
+      mockPendingChannels[0].remotePubkey
+    )
+  );
 });

@@ -341,7 +341,8 @@ const darkTheme = {
   "ln-channels-icon": url(require("style/icons/LNChannelsIconDark.svg")),
   "ln-network-capacity-icon": url(
     require("style/icons/LNNetworkCapacityIconDark.svg")
-  )
+  ),
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
 };
 
 export default darkTheme;

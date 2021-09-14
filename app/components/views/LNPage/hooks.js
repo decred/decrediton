@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import * as lna from "actions/LNActions";
 import * as sel from "selectors";
 
@@ -27,6 +27,23 @@ export function useLNPage() {
   const runningIndicator = useSelector(sel.getRunningIndicator);
   const describeGraph = useSelector(sel.lnDescribeGraph);
   const transactions = useSelector(sel.lnTransactions);
+
+  const recentNodes = useMemo(
+    () =>
+      [
+        ...new Set(
+          [...pendingChannels, ...channels, ...closedChannels].map(
+            (c) => c.remotePubkey
+          )
+        )
+      ].map((pubKey) => {
+        const nodeDetails = describeGraph?.nodeList?.find(
+          (node) => node.pubKey === pubKey
+        );
+        return { pubKey: pubKey, alias: nodeDetails?.alias || pubKey };
+      }),
+    [channels, pendingChannels, closedChannels, describeGraph]
+  );
 
   const dispatch = useDispatch();
 
@@ -104,6 +121,7 @@ export function useLNPage() {
     isMainNet,
     scbPath,
     scbUpdatedTime,
+    recentNodes,
     updateWalletBalances,
     addInvoice,
     decodePayRequest,

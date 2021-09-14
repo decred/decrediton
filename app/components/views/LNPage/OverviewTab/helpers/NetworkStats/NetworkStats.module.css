@@ -48,6 +48,29 @@
   color: var(--main-dark-blue);
 }
 
+.nodeWrapper {
+  display: flex;
+  align-items: center;
+}
+.searchNodeButton {
+  background-color: initial !important;
+  border: none !important;
+  box-shadow: 0px 2px 8px var(--small-button-shadow);
+  margin-left: 10px;
+}
+.searchNodeButton:hover {
+  opacity: 0.85;
+}
+
+.searchNodeButtonIcon {
+  background-image: var(--ln-nodes-eye-icon);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 17px;
+  width: 24px;
+  height: 24px;
+}
+
 @media screen and (max-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

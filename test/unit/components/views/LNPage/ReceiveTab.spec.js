@@ -5,7 +5,13 @@ import { screen, wait } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
-import { mockLnChannelBalance, mockInvoices } from "./mocks";
+import {
+  mockLnChannelBalance,
+  mockInvoices,
+  mockChannels,
+  mockPendingChannels,
+  mockClosedChannels
+} from "./mocks";
 
 const selectors = sel;
 const lnActions = lna;
@@ -14,6 +20,9 @@ let mockCancelInvoice;
 let mockAddInvoice;
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
+  selectors.lnPendingChannels = jest.fn(() => mockPendingChannels);
+  selectors.lnClosedChannels = jest.fn(() => mockClosedChannels);
+  selectors.lnChannels = jest.fn(() => mockChannels);
   selectors.lnChannelBalances = jest.fn(() => mockLnChannelBalance);
   selectors.lnInvoices = jest.fn(() => mockInvoices);
   mockCancelInvoice = lnActions.cancelInvoice = jest.fn(() => () =>

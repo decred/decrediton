@@ -7,6 +7,9 @@ import * as sel from "selectors";
 import * as lna from "actions/LNActions";
 import * as wl from "wallet";
 import {
+  mockChannels,
+  mockPendingChannels,
+  mockClosedChannels,
   mockLnChannelBalance,
   mockFailedPayment,
   mockPayments,
@@ -72,6 +75,9 @@ let mockSendPayment;
 
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
+  selectors.lnPendingChannels = jest.fn(() => mockPendingChannels);
+  selectors.lnClosedChannels = jest.fn(() => mockClosedChannels);
+  selectors.lnChannels = jest.fn(() => mockChannels);
   selectors.lnChannelBalances = jest.fn(() => mockLnChannelBalance);
   selectors.lnOutstandingPayments = jest.fn(() => mockOutstandingPayments);
   selectors.lnFailedPayments = jest.fn(() => mockFailedPayment);

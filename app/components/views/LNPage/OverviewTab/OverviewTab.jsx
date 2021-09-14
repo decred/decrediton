@@ -50,7 +50,9 @@ const OverviewTab = () => {
     setSelectedPayment,
     selectedChannel,
     setSelectedChannel,
-    onCloseChannel
+    onCloseChannel,
+    onNodeSelected,
+    recentNodes
   } = useOverviewTab();
 
   return (
@@ -68,7 +70,7 @@ const OverviewTab = () => {
           <Subtitle
             title={<T id="ln.overviewTab.networkStats" m="Network Stats" />}
           />
-          <NetworkStats {...{ network }} />
+          <NetworkStats {...{ network, onNodeSelected, recentNodes }} />
         </>
       )}
       <Subtitle
