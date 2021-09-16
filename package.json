@@ -5,8 +5,8 @@
   "description": "Decrediton based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "main.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest",
-    "test-watch": "./node_modules/.bin/jest --watch",
+    "test": "TZ=UTC cross-env NODE_ENV=test jest",
+    "test-watch": "TZ=UTC ./node_modules/.bin/jest --watch",
     "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --watch",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 mocha --retries 2 --compilers js:@babel/register --require ./test/setup.js ./test/e2e.js",
     "lint": "./node_modules/.bin/eslint app --ext .js --ext .jsx && ./node_modules/.bin/eslint test --ext .js && ./node_modules/.bin/stylelint 'app/**/*.css'",

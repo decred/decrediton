@@ -147,13 +147,14 @@ test("test infos", () => {
 });
 
 test("test backup", async () => {
+  expect(process.env.TZ).toBe("UTC");
   render(<AdvancedTab />);
   expect(screen.getByText(mockLnInfo.identityPubkey)).toBeInTheDocument();
   expect(
     screen.getByText(`SCB backup file location: ${mockLnSCBPath}`)
   ).toBeInTheDocument();
   expect(
-    screen.getByText("Last Updated: 3/4/1975 1:51 PM")
+    screen.getByText("Last Updated: 3/4/1975 12:51 PM")
   ).toBeInTheDocument();
 
   const mockFilePath = "mockFilePath";
@@ -212,7 +213,7 @@ test("test query node", () => {
   expect(
     screen.getByText(mockNodeInfo.node.alias).parentElement.textContent
   ).toMatchInlineSnapshot(
-    '"PubKey012121212121111111110101021001201201020120102102012010210201201201Aliasmock-node-aliasTotal Capacity107.8484888 DCRLast UpdateSep 9, 2021 1:16:37 AM"'
+    '"PubKey012121212121111111110101021001201201020120102102012010210201201201Aliasmock-node-aliasTotal Capacity107.8484888 DCRLast UpdateSep 8, 2021 11:16:37 PM"'
   );
 
   // first channel
@@ -220,7 +221,7 @@ test("test query node", () => {
     screen.getByText(mockNodeInfo.channelsList[0].chanPoint).parentElement
       .parentElement.parentElement.parentElement.textContent
   ).toMatchInlineSnapshot(
-    '"Capacity10.00000 DCRChannel Pointmock-chanPoint-0Last UpdateSep 9, 2021 10:02:21 PMCounterpartymock-node-1-pub-1Copy to clipboardPolicyNodeCounterpartyChan DisabledfalsefalseTimelock Delta8080Min HTLC0.00001 DCR0.00001 DCRMax HTLC9.90000 DCR9.90000 DCRLast UpdateSep 7, 2021 5:16:37 PMSep 9, 2021 10:02:21 PM"'
+    '"Capacity10.00000 DCRChannel Pointmock-chanPoint-0Last UpdateSep 9, 2021 8:02:21 PMCounterpartymock-node-1-pub-1Copy to clipboardPolicyNodeCounterpartyChan DisabledfalsefalseTimelock Delta8080Min HTLC0.00001 DCR0.00001 DCRMax HTLC9.90000 DCR9.90000 DCRLast UpdateSep 7, 2021 3:16:37 PMSep 9, 2021 8:02:21 PM"'
   );
 
   // second channel
@@ -228,6 +229,6 @@ test("test query node", () => {
     screen.getByText(mockNodeInfo.channelsList[1].chanPoint).parentElement
       .parentElement.parentElement.parentElement.textContent
   ).toMatchInlineSnapshot(
-    '"Capacity1.00000 DCRChannel Pointmock-chanPoint-1Last UpdateSep 7, 2021 5:16:37 PMCounterpartymock-node-2-pub-1Copy to clipboardPolicyNodeCounterpartyChan DisabledtruefalseTimelock Delta8080Min HTLC0.00001 DCR0.00001 DCRMax HTLC0.99000 DCR0.99000 DCRLast UpdateSep 7, 2021 5:16:37 PMMar 21, 2020 11:42:26 PM"'
+    '"Capacity1.00000 DCRChannel Pointmock-chanPoint-1Last UpdateSep 7, 2021 3:16:37 PMCounterpartymock-node-2-pub-1Copy to clipboardPolicyNodeCounterpartyChan DisabledtruefalseTimelock Delta8080Min HTLC0.00001 DCR0.00001 DCRMax HTLC0.99000 DCR0.99000 DCRLast UpdateSep 7, 2021 3:16:37 PMMar 21, 2020 10:42:26 PM"'
   );
 });
