@@ -348,3 +348,17 @@ export const mockInvoices = [
     rHashHex: "mock-rhash-hex-22"
   }
 ];
+
+export const mockNetworkInfo = {
+  graphDiameter: 0,
+  avgOutDegree: 2.342857142857143,
+  maxOutDegree: 29,
+  numNodes: 35,
+  numChannels: 41,
+  totalNetworkCapacity: 15084830016,
+  avgChannelSize: 367922683.31707317,
+  minChannelSize: 100000,
+  maxChannelSize: 1073741823,
+  medianChannelSizeSat: 200000000,
+  numZombieChans: 2
+};

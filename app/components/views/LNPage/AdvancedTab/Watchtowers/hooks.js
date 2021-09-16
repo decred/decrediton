@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as lna from "actions/LNActions";
 
-export function useWatchtowersTab() {
+export function useWatchtowers() {
   const dispatch = useDispatch();
   const addWatchtower = (wtPubKey, addr) =>
     dispatch(lna.addWatchtower(wtPubKey, addr));

@@ -25,10 +25,15 @@ export function useOverviewTab() {
     payments,
     tsDate,
     walletBalances,
+    updateWalletBalances,
     cancelInvoice,
     closeChannel,
     recentNodes
   } = useLNPage();
+
+  useEffect(() => {
+    setTimeout(() => updateWalletBalances(), 1000);
+  }, [updateWalletBalances]);
 
   const channelsCapacity = channels.reduce(
     (acc, currVal) => acc + currVal.capacity,

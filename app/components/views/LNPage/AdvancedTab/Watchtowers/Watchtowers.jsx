@@ -1,37 +1,20 @@
 import { FormattedMessage as T } from "react-intl";
 import { classNames, CopyableText, Tooltip } from "pi-ui";
-import { useWatchtowersTab } from "./hooks";
-import styles from "./WatchtowersTab.module.css";
+import { useWatchtowers } from "./hooks";
+import styles from "./Watchtowers.module.css";
 import { Subtitle } from "shared";
-import AddWatchtower from "./AddWatchtower/AddWatchtower";
-import { DescriptionHeader } from "layout";
+import AddWatchtower from "./AddWatchtower";
 
-export const WatchtowersTabHeader = () => (
-  <DescriptionHeader
-    description={
-      <T
-        id="ln.description.watchtowers"
-        m="Manage connection to watchtowers."
-      />
-    }
-  />
-);
-
-const WatchtowersTab = () => {
+const Watchtowers = () => {
   const {
     addWatchtower,
     removeWatchtower,
     listWatchtowers,
     towersList
-  } = useWatchtowersTab();
+  } = useWatchtowers();
 
   return (
     <>
-      <Subtitle
-        title={
-          <T id="ln.watchtowersTab.addWatchtowerHeader" m="Add Watchtower" />
-        }
-      />
       <AddWatchtower
         addWatchtower={addWatchtower}
         listWatchtowers={listWatchtowers}
@@ -92,4 +75,4 @@ const WatchtowersTab = () => {
   );
 };
 
-export default WatchtowersTab;
+export default Watchtowers;

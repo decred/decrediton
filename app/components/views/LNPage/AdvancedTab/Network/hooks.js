@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as lna from "actions/LNActions";
 
-export function useNetworkTab() {
+export function useNetwork() {
   const dispatch = useDispatch();
   const network = useSelector(sel.lnNetwork);
   const nodeInfo = useSelector(sel.lnNodeInfo);

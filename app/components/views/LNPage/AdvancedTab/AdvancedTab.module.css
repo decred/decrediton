@@ -1,3 +1,7 @@
+.container {
+  width: 764px;
+}
+
 .nodeInfos {
   margin-top: 1em;
   background-color: var(--background-back-color);
@@ -33,20 +37,6 @@
   border: 1px var(--input-copy-hover-color) solid;
 }
 
-.copyableText svg {
-  color: var(--tab-text-active-hover);
-  padding: 7px;
-  box-shadow: 0 3px 5px var(--icons-shadow);
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0 15px 2px 15px;
-  transition: background-color 0.5s;
-}
-
-.copyableText svg:hover {
-  background-color: var(--background-copy-color);
-}
-
 .copyableText > div > div:nth-child(1) {
   position: absolute;
   top: 35px;
@@ -62,7 +52,7 @@
   background-repeat: no-repeat;
   background-size: 45px;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding: 30px 40px 30px 95px;
 }
 
@@ -110,5 +100,9 @@
 }
 
 .lastItem {
+  margin-bottom: 40px;
+}
+
+.networkTitle {
   margin-bottom: 40px;
 }

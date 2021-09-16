@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle, Balance } from "shared";
-import Channel from "./Channel/Channel";
+import Channel from "./Channel";
 import styles from "./NodeInfo.module.css";
 
 const NodeInfo = ({ nodeInfo, tsDate, chanpointURL }) => (

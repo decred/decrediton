@@ -1,30 +1,15 @@
-import { useNetworkTab } from "./hooks";
+import { useNetwork } from "./hooks";
 import { useState } from "react";
 import { SimpleLoading } from "indicators";
-import NodeInfo from "./NodeInfo/NodeInfo";
-import RoutesInfo from "./RoutesInfo/RoutesInfo";
-import NodeInfoError from "./NodeInfoError/NodeInfoError";
-import NetworkInfo from "./NetworkInfo/NetworkInfo";
-import QueryNode from "./QueryNode/QueryNode";
-import QueryRoutes from "./QueryRoutes/QueryRoutes";
-import Tabs from "./Tabs/Tabs";
-import { DescriptionHeader } from "layout";
-import { FormattedMessage as T } from "react-intl";
+import NodeInfo from "./NodeInfo";
+import RoutesInfo from "./RoutesInfo";
+import NodeInfoError from "./NodeInfoError";
+import QueryNode from "./QueryNode";
+import QueryRoutes from "./QueryRoutes";
+import Tabs from "./Tabs";
 
-export const NetworkTabHeader = () => (
-  <DescriptionHeader
-    description={
-      <T
-        id="ln.description.network"
-        m="General information about the current state of Decred's LN."
-      />
-    }
-  />
-);
-
-const NetworkTab = () => {
+const Network = () => {
   const {
-    network,
     nodeInfo,
     routesInfo,
     tsDate,
@@ -33,7 +18,7 @@ const NetworkTab = () => {
     getRoutesInfoAttempt,
     getRoutesInfo,
     chanpointURL
-  } = useNetworkTab();
+  } = useNetwork();
 
   const [activeTab, setActiveTab] = useState(0);
   const [nodeID, setNodeID] = useState("");
@@ -42,7 +27,6 @@ const NetworkTab = () => {
 
   return (
     <>
-      {!!network && <NetworkInfo network={network} />}
       <Tabs active={activeTab} set={setActiveTab} />
       {activeTab === 0 ? (
         <QueryNode getNodeInfo={getNodeInfo} />
@@ -76,4 +60,4 @@ const NetworkTab = () => {
   );
 };
 
-export default NetworkTab;
+export default Network;

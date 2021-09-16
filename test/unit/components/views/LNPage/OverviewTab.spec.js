@@ -14,7 +14,8 @@ import {
   mockPayments,
   mockOutstandingPayments,
   mockInvoices,
-  mockDescribeGraph
+  mockDescribeGraph,
+  mockNetworkInfo
 } from "./mocks";
 
 const selectors = sel;
@@ -28,19 +29,6 @@ const mockWalletBalance = {
   totalBalance: 632619804,
   confirmedBalance: 432619804,
   unconfirmedBalance: 232619804
-};
-const mockNetworkInfo = {
-  graphDiameter: 0,
-  avgOutDegree: 2.342857142857143,
-  maxOutDegree: 29,
-  numNodes: 35,
-  numChannels: 41,
-  totalNetworkCapacity: 15084830016,
-  avgChannelSize: 367922683.31707317,
-  minChannelSize: 100000,
-  maxChannelSize: 1073741823,
-  medianChannelSizeSat: 200000000,
-  numZombieChans: 2
 };
 const mockTransactions = [
   // channel funding

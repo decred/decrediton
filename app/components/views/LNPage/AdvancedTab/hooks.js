@@ -1,21 +1,14 @@
 import { wallet } from "wallet-preload-shim";
-import { useEffect } from "react";
 import { useLNPage } from "../hooks";
 
-export function useWalletTab() {
+export function useAdvancedTab() {
   const {
-    updateWalletBalances,
     exportBackup,
     verifyBackup,
-    walletBalances,
     info,
     scbPath,
     scbUpdatedTime
   } = useLNPage();
-
-  useEffect(() => {
-    setTimeout(() => updateWalletBalances(), 1000);
-  }, [updateWalletBalances]);
 
   const onBackup = async () => {
     const { filePath } = await wallet.showSaveDialog();
@@ -37,7 +30,6 @@ export function useWalletTab() {
   };
 
   return {
-    walletBalances,
     info,
     scbPath,
     scbUpdatedTime,

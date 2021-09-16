@@ -12,9 +12,11 @@ const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
     <div className={styles.addWatchtower}>
       <div className={styles.addWatchtowerContent}>
         <div className={styles.addWatchtowerNest}>
-          <div className={styles.addWatchtowerNestPrefix}>
+          <label
+            className={styles.addWatchtowerNestPrefix}
+            htmlFor="towerIdInput">
             <T id="ln.watchtowersTab.Pubkey" m="Tower ID:" />
-          </div>
+          </label>
           <TextInput
             id="towerIdInput"
             value={pubkey}
@@ -22,9 +24,11 @@ const AddWatchtower = ({ addWatchtower, listWatchtowers }) => {
           />
         </div>
         <div className={styles.addWatchtowerNest}>
-          <div className={styles.addWatchtowerNestPrefix}>
+          <label
+            className={styles.addWatchtowerNestPrefix}
+            htmlFor="addressInput">
             <T id="ln.watchtowersTab.address" m="Address:" />
-          </div>
+          </label>
           <TextInput
             id="addressInput"
             value={addr}

@@ -16,7 +16,9 @@ const QueryNode = ({ getNodeInfo }) => {
 
   return (
     <div className={styles.queryNode}>
-      <T id="ln.networkTab.queryNodeId" m="Node ID" />
+      <label htmlFor="nodeIDInput">
+        <T id="ln.networkTab.queryNodeId" m="Node ID" />
+      </label>
       <TextInput id="nodeIDInput" value={node} onChange={nodeChanged} />
     </div>
   );
