@@ -25,6 +25,7 @@ import {
   REVOKED
 } from "constants";
 import { getNextAddressAttempt } from "./ControlActions";
+import { MaxNonWalletOutputs } from "constants";
 
 const { TransactionDetails } = api;
 
@@ -511,9 +512,8 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
       // etc cause crashes in decrediton due to this repeated request for
       // validate address.  Since this is merely for display purposes we will
       //  we limit the amount of outputs to 10.
-      const nonWalletLimit = 10;
       let updatedOutputs = [];
-      if (decodedTx.outputs.length > nonWalletLimit) {
+      if (decodedTx.outputs.length > MaxNonWalletOutputs) {
         updatedOutputs = decodedTx.outputs.map((o) => {
           const address = o.decodedScript.address;
           return {

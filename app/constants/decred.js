@@ -131,3 +131,8 @@ export const ripemd160Size = 20;
 // for an SStx tx.
 // 20 bytes P2SH/P2PKH + 8 byte amount + 4 byte fee range limits
 export const SStxPKHMinOutSize = 32;
+
+// Due processing issues we only validate addresses for transactions that have
+// less than 10 non wallet outputs.  We also limit listing addresses on
+// the transaction details when over this amount.
+export const MaxNonWalletOutputs = 10;
