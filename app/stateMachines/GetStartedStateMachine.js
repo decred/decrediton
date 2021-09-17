@@ -15,6 +15,7 @@ export const getStartedMachine = Machine({
     selectedWallet: null,
     appdata: null,
     error: null,
+    availableWalletsError: null,
     isCreateNewWallet: null,
     isSPV: null,
     isAdvancedDaemon: null
@@ -64,6 +65,22 @@ export const getStartedMachine = Machine({
             },
             CHOOSE_WALLET: {
               target: "choosingWallet",
+              actions: assign({
+                isAdvancedDaemon: (context, event) =>
+                  event.isAdvancedDaemon
+                    ? !!event.isAdvancedDaemon
+                    : context.isAdvancedDaemon,
+                isSPV: (context, event) =>
+                  event.isSPV ? !!event.isSPV : context.isSPV,
+                selectedWallet: (context, event) =>
+                  event.selectedWallet
+                    ? event.selectedWallet
+                    : context.selectedWallet,
+                error: (context, event) => event.error
+              })
+            },
+            SUBMIT_CHOOSE_WALLET: {
+              target: "startingWallet",
               actions: assign({
                 isAdvancedDaemon: (context, event) =>
                   event.isAdvancedDaemon
@@ -190,6 +207,7 @@ export const getStartedMachine = Machine({
             CREATE_WALLET: {
               target: "preCreateWallet",
               actions: assign({
+                error: () => "",
                 isCreateNewWallet: (context, event) =>
                   !isUndefined(event.isNew)
                     ? event.isNew
@@ -199,7 +217,15 @@ export const getStartedMachine = Machine({
             ERROR: {
               target: "choosingWallet",
               actions: assign({
-                error: (_, event) => event.error
+                error: (_, event) => event.error && event.error,
+                availableWalletsError: () => ""
+              })
+            },
+            AVAILABLE_WALLET_ERROR: {
+              target: "choosingWallet",
+              actions: assign({
+                error: () => "",
+                availableWalletsError: (_, event) => event.error && event.error
               })
             }
           }
@@ -300,13 +326,14 @@ export const getStartedMachine = Machine({
         WALLET_CREATED: {
           target: "startMachine.preStart",
           actions: assign({
+            error: () => "",
             passPhrase: (context, event) => event.passPhrase
           })
         },
         ERROR: {
-          target: "startMachine.preCreateWallet",
+          target: "startMachine.choosingWallet",
           actions: assign({
-            error: (context, event) => event.error && event.error
+            error: (_, event) => event.error && event.error
           })
         }
       }

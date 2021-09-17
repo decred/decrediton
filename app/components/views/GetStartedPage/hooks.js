@@ -53,7 +53,8 @@ export const useGetStarted = () => {
     appVersion,
     syncAttemptRequest,
     onGetDcrdLogs,
-    daemonWarning
+    daemonWarning,
+    stopUnfinishedWallet
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
@@ -131,19 +132,20 @@ export const useGetStarted = () => {
             send({ type: "ERROR_SYNCING_DAEMON", payload: { error } })
           );
       },
-      isAtChoosingWallet: (_, event) => {
-        const { selectedWallet, error } = event;
+      isAtChoosingWallet: (ctx, event) => {
+        const { selectedWallet } = event;
+        const { availableWalletsError } = ctx;
         if (selectedWallet) {
           return submitChosenWallet(selectedWallet);
         }
-        // if there is an error, we return as retrying getting available
-        // wallets will probably cause an infinite loop.
-        if (error) {
+        // if there is an availableWalletsError, we return as retrying
+        // getting available wallets will probably cause an infinite loop.
+        if (availableWalletsError) {
           return;
         }
         onGetAvailableWallets()
           .then((w) => send({ type: "CHOOSE_WALLET", payload: { w } }))
-          .catch((error) => onSendError(error));
+          .catch((error) => send({ type: "AVAILABLE_WALLET_ERROR", error }));
       },
       isAtStartWallet: (context) => {
         const { selectedWallet } = context;
@@ -168,6 +170,13 @@ export const useGetStarted = () => {
             }
           })
           .catch((error) => {
+            if (
+              !selectedWallet.finished &&
+              error.message.includes("missing database file")
+            ) {
+              stopUnfinishedWallet().then(() => send({ type: "ERROR", error }));
+            }
+
             // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
             // private passphrase to discover accounts and the user typed a wrong
             // one.
@@ -250,6 +259,11 @@ export const useGetStarted = () => {
     () => state && state.context && getError(state.context.error),
     [state, getError]
   );
+  const availableWalletsError = useMemo(
+    () =>
+      state && state.context && getError(state.context.availableWalletsError),
+    [state, getError]
+  );
 
   // preStartDaemon gets data from cli to connect with remote dcrd if rpc
   // connection data is inputed and sends the first interaction with the state
@@ -275,12 +289,23 @@ export const useGetStarted = () => {
     // a refresh (common when in dev mode).
     if (getDaemonSynced || isSPV) {
       const selectedWallet = getSelectedWallet();
-      return send({
-        type: "CHOOSE_WALLET",
-        selectedWallet,
-        isSPV,
-        isAdvancedDaemon
-      });
+      // if the wallet is already selected,
+      // no need to show the wallet selection screen
+      if (selectedWallet) {
+        return send({
+          type: "SUBMIT_CHOOSE_WALLET",
+          selectedWallet,
+          isSPV,
+          isAdvancedDaemon
+        });
+      } else {
+        return send({
+          type: "CHOOSE_WALLET",
+          selectedWallet,
+          isSPV,
+          isAdvancedDaemon
+        });
+      }
     }
     send({ type: "START_SPV", isSPV });
     send({
@@ -486,6 +511,7 @@ export const useGetStarted = () => {
           submitRemoteCredentials,
           submitAppdata,
           error,
+          availableWalletsError,
           isSPV,
           onShowReleaseNotes,
           onShowTutorial,
@@ -551,6 +577,7 @@ export const useGetStarted = () => {
       onSendDiscoverAccountsPassInput,
       onSendSetPassphrase,
       error,
+      availableWalletsError,
       daemonWarning
     ]
   );

@@ -7,6 +7,7 @@ export default ({
   StateComponent,
   getDaemonSynced,
   error,
+  availableWalletsError,
   text,
   getCurrentBlockCount,
   animationType,
@@ -44,6 +45,11 @@ export default ({
     {error && (
       <div className={classNames(styles.error, styles.launchError)}>
         {error}
+      </div>
+    )}
+    {availableWalletsError && (
+      <div className={classNames(styles.error, styles.launchError)}>
+        {availableWalletsError}
       </div>
     )}
     {daemonWarning && (

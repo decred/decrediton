@@ -319,7 +319,10 @@ test("pasting invalid seed words on existing seed view", async () => {
   await wait(() => screen.getByText(/Error: seed is not valid./i));
 });
 
-test("pasting valid seed words on existing seed view and receive decode error and create wallet request error", async () => {
+test("pasting valid seed words on existing seed view and receive create wallet request error", async () => {
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
+    Promise.reject(testCreateWalletRequestErrorMsg)
+  );
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
       decodedSeed: testSeedArray
@@ -339,8 +342,10 @@ test("pasting valid seed words on existing seed view and receive decode error an
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockCreateWalletRequest).toHaveBeenCalled();
 
-  // A check needs to be added here after
-  // https://github.com/decred/decrediton/issues/3524 is fixed.
+  // expect to jump back to the wallet choose view, and display
+  // the error msg received from createWalletRequest
+  await wait(() => screen.getByText(testCreateWalletRequestErrorMsg));
+  screen.getByText(/choose a wallet to open/i);
 });
 
 test("pasting valid seed words on existing seed view and successfully create wallet", async () => {

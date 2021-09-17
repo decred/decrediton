@@ -86,7 +86,10 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     if (!(seed && passPhrase)) return;
     createWalletRequest(pubpass, passPhrase, seed, newWallet)
       .then(() => sendEvent({ type: "WALLET_CREATED" }))
-      .catch((error) => sendEvent({ type: "ERROR", error }));
+      .catch(async (error) => {
+        await cancelCreateWallet();
+        sendEvent({ type: "ERROR", payload: { error } });
+      });
     // we send a continue so we go to loading state
     sendContinue();
   }, [
@@ -94,7 +97,8 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     current.context,
     newWallet,
     sendContinue,
-    sendEvent
+    sendEvent,
+    cancelCreateWallet
   ]);
 
   const onCreateWatchOnly = useCallback(() => {

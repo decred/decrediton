@@ -320,7 +320,9 @@ test("trezor device is connected", async () => {
   };
 
   mockCreateWatchOnlyWalletRequest = wlActions.createWatchOnlyWalletRequest = jest.fn(
-    () => () => Promise.resolve(true)
+    () => () => {
+      return new Promise((resolve) => setTimeout(() => resolve(), 1));
+    }
   );
   mockCreateWallet = daemonActions.createWallet = jest.fn(() => () => {
     return Promise.resolve(testRestoreSelectedWallet);
@@ -354,16 +356,14 @@ test("trezor device is connected", async () => {
   expect(mockEnableTrezor).toHaveBeenCalled();
 
   user.click(continueButton);
+  await wait(() => expect(screen.getByTestId("decred-loading")));
   expect(mockGetWalletCreationMasterPubKey).toHaveBeenCalled();
   await wait(() =>
-    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
+    expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
+      testWalletCreationMasterPubKey,
+      ""
+    )
   );
-  expect(mockAlertNoConnectedDevice).not.toHaveBeenCalled();
-
-  // This is wrong: after creating the wallet the wallet selection screen
-  // shouldn't be flashing. This needs to be fixed when addressing
-  // https://github.com/decred/decrediton/issues/3524
-  expect(screen.getByText("Launch Wallet")).toBeInTheDocument();
 });
 
 test("trezor has to auto-disable when step back from restore view", async () => {

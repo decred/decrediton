@@ -219,11 +219,6 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
         resolve(true);
       })
       .catch(async (error) => {
-        // This error message happens if we start creating a wallet. As its
-        // wallet.db file still not created.
-        if (error.message.includes("missing database file")) {
-          resolve();
-        }
         // This error message happens after creating a new wallet as we already
         // started it on creation. So we just ignore it.
         if (error.message.includes("wallet already")) {
@@ -698,4 +693,14 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
     currentBlockHeight,
     timestamp
   });
+};
+
+export const STOP_UNFINISHED_WALLET_FAILED = "STOP_UNFINISHED_WALLET_FAILED";
+export const stopUnfinishedWallet = () => async (dispatch) => {
+  try {
+    await wallet.stopWallet();
+    dispatch(setSelectedWallet(null));
+  } catch (err) {
+    dispatch({ error: err, type: STOP_UNFINISHED_WALLET_FAILED });
+  }
 };
