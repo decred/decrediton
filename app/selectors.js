@@ -1189,6 +1189,15 @@ export const defaultSpendingAccount = createSelector(
     accounts.find(compose(eq(mixedAccount || 0), get("value")))
 );
 
+const getNextChangeAddressResponse = get([
+  "control",
+  "getNextChangeAddressResponse"
+]);
+export const nextChangeAddress = compose(
+  get("address"),
+  getNextChangeAddressResponse
+);
+
 export const defaultSpendingAccountDisregardMixedAccount = createSelector(
   [visibleAccounts],
   (accounts) => accounts.find(compose(eq(0), get("value")))
