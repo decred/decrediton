@@ -512,26 +512,31 @@ const getNonWalletOutputs = (walletService, chainParams, tx) =>
       // validate address.  Since this is merely for display purposes we will
       //  we limit the amount of outputs to 10.
       const nonWalletLimit = 10;
-      let count = 0;
-      const updatedOutputs = decodedTx.outputs.map(async (o) => {
-        const address = o.decodedScript.address;
-        let isMine = false;
-        if (count < nonWalletLimit) {
+      let updatedOutputs = [];
+      if (decodedTx.outputs.length > nonWalletLimit) {
+        updatedOutputs = decodedTx.outputs.map((o) => {
+          const address = o.decodedScript.address;
+          return {
+            address,
+            value: o.value
+          };
+        });
+      } else {
+        updatedOutputs = decodedTx.outputs.map(async (o) => {
+          const address = o.decodedScript.address;
           // Validate address so we can check if it is our own.
           // If that is the case it is a change output.
           const addrValidResp = await wallet.validateAddress(
             walletService,
             address
           );
-          isMine = addrValidResp.isMine;
-          count += 1;
-        }
-        return {
-          address,
-          value: o.value,
-          isChange: isMine
-        };
-      });
+          return {
+            address,
+            value: o.value,
+            isChange: addrValidResp.isMine
+          };
+        });
+      }
       resolve(Promise.all(updatedOutputs));
     } catch (e) {
       reject(e);
