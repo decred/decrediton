@@ -21,6 +21,9 @@ const useTrezor = () => {
   const walletCreationMasterPubkeyAttempt = useSelector(
     sel.trezorWalletCreationMasterPubkeyAttempt
   );
+  const performingRecoverDevice = useSelector(
+    sel.trezorPerformingRecoverDevice
+  );
 
   const dispatch = useDispatch();
 
@@ -93,6 +96,7 @@ const useTrezor = () => {
     enablePassphraseProtection,
     confirmingTogglePassphrase,
     togglePassphraseConfirmCallback,
+    performingRecoverDevice,
     onConnect,
     onCancelCurrentOperation,
     onSubmitPin,

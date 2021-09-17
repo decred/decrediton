@@ -7,7 +7,8 @@ const ButtonsToolbar = ({
   onCancelModal,
   submitLabel,
   isValid,
-  className
+  className,
+  loading
 }) => (
   <div className={className}>
     <InvisibleButton
@@ -16,9 +17,10 @@ const ButtonsToolbar = ({
       <T id="passphraseModal.btnCancel" m="Cancel" />
     </InvisibleButton>
     <KeyBlueButton
+      loading={loading}
       disabled={
         // if isValid is not passed as props, we never validate it.
-        isValid === undefined ? false : !isValid
+        (isValid === undefined ? false : !isValid) || loading
       }
       onClick={onSubmit}>
       {submitLabel ? (

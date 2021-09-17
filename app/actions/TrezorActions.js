@@ -267,6 +267,9 @@ function setDeviceListeners(dispatch, getState) {
       case UI.REQUEST_WORD: {
         console.log("word requested, waiting two seconds to respond");
         await new Promise((r) => setTimeout(r, 2000));
+        const {
+          trezor: { performingRecoverDevice }
+        } = getState();
         const wordCallBack = (canceled, word) => {
           if (canceled) {
             session.cancel();
@@ -277,7 +280,12 @@ function setDeviceListeners(dispatch, getState) {
             });
           }
         };
-        dispatch({ wordCallBack, type: TRZ_WORD_REQUESTED });
+        // During sleep, the restore process may have been canceled.
+        if (performingRecoverDevice) {
+          dispatch({ wordCallBack, type: TRZ_WORD_REQUESTED });
+        } else {
+          session?.cancel();
+        }
         break;
       }
 
