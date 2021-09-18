@@ -6,6 +6,7 @@ import * as lna from "actions/LNActions";
 import * as sel from "selectors";
 import { useIntl } from "react-intl";
 import secp256k1 from "secp256k1";
+import elliptic from "elliptic";
 
 const messages = defineMessages({
   invalidNodeFormat: {
@@ -103,6 +104,10 @@ export function useChannelsTab() {
     setCanOpen(_canOpen);
   };
 
+  const isHexValid = (pubkey) => {
+    return pubkey.length % 2 == 0 && /^[0-9a-fA-F]*$/.test(pubkey);
+  };
+
   const validateNode = (node) => {
     setNodeErrorMsg(null);
     setNodeShowSuccess(false);
@@ -123,7 +128,22 @@ export function useChannelsTab() {
     } else {
       nodePubKey = node;
     }
-    if (!secp256k1.publicKeyVerify(Buffer.from(nodePubKey, "hex"))) {
+
+    let isPubKeyValid;
+    try {
+      if (!isHexValid(nodePubKey)) {
+        throw new Error("pubkey is not a valid hex");
+      }
+      const pubKeyBuffer = new Uint8Array(Buffer.from(nodePubKey, "hex"));
+      isPubKeyValid = secp256k1.publicKeyVerify(pubKeyBuffer);
+      // check if pubkey is on the curve
+      const curve = new elliptic.ec("secp256k1");
+      curve.keyFromPublic(pubKeyBuffer);
+    } catch (error) {
+      isPubKeyValid = false;
+    }
+
+    if (!isPubKeyValid) {
       setNodeErrorMsg(intl.formatMessage(messages.invalidNodeId));
       return false;
     }
