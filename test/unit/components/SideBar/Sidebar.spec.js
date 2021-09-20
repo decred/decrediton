@@ -499,7 +499,7 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
   render(<SideBar />);
   expect(screen.getByText(/in the background/i).textContent)
     .toMatchInlineSnapshot(`
-    "One or more of the following decrediton's features running in
+    "One or more of the following Decrediton features is running in
                   the background: Privacy Mixer, Ticket Auto Buyer, Purchase Ticket
                   Attempt"
   `);
