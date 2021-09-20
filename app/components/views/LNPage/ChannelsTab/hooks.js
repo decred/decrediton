@@ -134,7 +134,7 @@ export function useChannelsTab() {
       if (!isHexValid(nodePubKey)) {
         throw new Error("pubkey is not a valid hex");
       }
-      const pubKeyBuffer = new Uint8Array(Buffer.from(nodePubKey, "hex"));
+      const pubKeyBuffer = Buffer.from(nodePubKey, "hex");
       isPubKeyValid = secp256k1.publicKeyVerify(pubKeyBuffer);
       // check if pubkey is on the curve
       const curve = new elliptic.ec("secp256k1");
