@@ -11,6 +11,7 @@ import {
 } from "constants/decrediton";
 import styles from "./TransactionContent.module.css";
 import { classNames } from "pi-ui";
+import { MaxNonWalletOutputs } from "constants";
 
 const { DecodedTransaction } = api;
 
@@ -129,9 +130,16 @@ const TransactionContent = ({
               {txOutputs.map(({ address }, i) => (
                 <div key={i}>{addSpacingAroundText(address)}</div>
               ))}
-              {nonWalletOutputs.map(({ address }, i) => (
-                <div key={i}>{addSpacingAroundText(address)}</div>
-              ))}
+              {nonWalletOutputs.length > MaxNonWalletOutputs ? (
+                <T
+                  id="txDetails.tooManyNonWalletOutputsAddresses"
+                  m="Please use the txid link above to see all non-wallet addresses on dcrdata."
+                />
+              ) : (
+                nonWalletOutputs.map(({ address }, i) => (
+                  <div key={i}>{addSpacingAroundText(address)}</div>
+                ))
+              )}
             </div>
           </div>
         )}
@@ -275,14 +283,24 @@ const TransactionContent = ({
                 }>
                 <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
               </div>
-              {nonWalletOutputs.map(({ address, amount }, idx) => (
-                <div key={idx} className={styles.row}>
-                  <div className={classNames(styles.address, styles.nonWallet)}>
-                    {addSpacingAroundText(address)}
-                  </div>
-                  <div className={styles.amount}>{amount}</div>
+              {nonWalletOutputs.length > MaxNonWalletOutputs ? (
+                <div className={styles.row}>
+                  <T
+                    id="txDetails.tooManyNonWalletOutputs"
+                    m="Please use the txid link above to see all non-wallet outputs on dcrdata."
+                  />
                 </div>
-              ))}
+              ) : (
+                nonWalletOutputs.map(({ address, amount }, idx) => (
+                  <div key={idx} className={styles.row}>
+                    <div
+                      className={classNames(styles.address, styles.nonWallet)}>
+                      {addSpacingAroundText(address)}
+                    </div>
+                    <div className={styles.amount}>{amount}</div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
