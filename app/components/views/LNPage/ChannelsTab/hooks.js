@@ -1,29 +1,155 @@
-import { useState } from "react";
+import { defineMessages } from "react-intl";
+import { useState, useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLNPage } from "../hooks";
+import * as lna from "actions/LNActions";
+import * as sel from "selectors";
+import { useIntl } from "react-intl";
+import secp256k1 from "secp256k1";
+import elliptic from "elliptic";
+
+const messages = defineMessages({
+  invalidNodeFormat: {
+    id: "ln.channelsTab.invalidNodeFormat",
+    defaultMessage: "More than one @ in the node address"
+  },
+  invalidNodeAddressFormat: {
+    id: "ln.channelsTab.invalidNodeAddressFormat",
+    defaultMessage: "More than one : in the node address"
+  },
+  invalidNodeId: {
+    id: "ln.channelsTab.invalidNodeId",
+    defaultMessage: "Invalid Node Id"
+  }
+});
 
 export function useChannelsTab() {
   const [node, setNode] = useState("");
-  const [localAmtAtoms, setLocalAmtAtoms] = useState(0);
-  const [pushAmtAtoms, setPushAmtAtoms] = useState(0);
+  const [localAmtAtoms, setLocalAmtAtoms] = useState(null);
+  const [pushAmtAtoms, setPushAmtAtoms] = useState(null);
   const [canOpen, setCanOpen] = useState(false);
   const [opening, setOpening] = useState(false);
-  const [detailedChannel, setDetailedChannel] = useState();
+  const recentlyOpenedChannelChannelPoint = useSelector(
+    sel.lnRecentlyOpenedChannel
+  );
+  const intl = useIntl();
+  const channelFilter = useSelector(sel.lnChannelFilter);
+  const autopilotEnabled = useSelector(sel.lnAutopilotEnabled);
+  const [nodeErrorMsg, setNodeErrorMsg] = useState(null);
+  const [nodeShowSuccess, setNodeShowSuccess] = useState(false);
 
   const {
-    walletBalances,
-    channelBalances,
     channels,
     pendingChannels,
     closedChannels,
     isMainNet,
     openChannel,
-    closeChannel
+    closeChannel,
+    describeGraph
   } = useLNPage();
 
-  const onNodeChanged = (e) => {
-    const _canOpen = e.target.value && localAmtAtoms > 0;
-    setNode((e.target.value || "").trim());
+  const recentNodes = useMemo(
+    () =>
+      [
+        ...new Set(
+          [...pendingChannels, ...channels, ...closedChannels].map(
+            (c) => c.remotePubkey
+          )
+        )
+      ].map((pubKey) => {
+        const nodeDetails = describeGraph?.nodeList?.find(
+          (node) => node.pubKey === pubKey
+        );
+        return { pubKey: pubKey, alias: nodeDetails?.alias || pubKey };
+      }),
+    [channels, pendingChannels, closedChannels, describeGraph]
+  );
+
+  const hideSearchBt = describeGraph?.nodeList?.length <= 1 ?? true;
+
+  const filteredChannels = useMemo(() => {
+    return [...pendingChannels, ...channels, ...closedChannels]
+      .filter(
+        (channel) =>
+          !channelFilter ||
+          !channelFilter.type ||
+          channelFilter.type === "all" ||
+          channelFilter.type === channel.status
+      )
+      .filter(
+        (channel) =>
+          !channelFilter ||
+          !channelFilter.search ||
+          channel.channelPoint
+            .toLowerCase()
+            .indexOf(channelFilter.search.toLowerCase()) !== -1
+      );
+  }, [channels, pendingChannels, closedChannels, channelFilter]);
+
+  const recentlyOpenedChannel = useMemo(
+    () =>
+      recentlyOpenedChannelChannelPoint
+        ? [...channels, ...pendingChannels].find(
+            (c) => c.channelPoint === recentlyOpenedChannelChannelPoint
+          )
+        : null,
+    [channels, pendingChannels, recentlyOpenedChannelChannelPoint]
+  );
+
+  const onNodeChanged = (value) => {
+    const node = (value || "").trim();
+    const isNodeValid = validateNode(node);
+    const _canOpen = node && localAmtAtoms > 0 && isNodeValid;
+    setNode(node);
     setCanOpen(_canOpen);
+  };
+
+  const isHexValid = (pubkey) => {
+    return pubkey.length % 2 == 0 && /^[0-9a-fA-F]*$/.test(pubkey);
+  };
+
+  const validateNode = (node) => {
+    setNodeErrorMsg(null);
+    setNodeShowSuccess(false);
+    const split = node.split("@");
+    if (split.length > 2) {
+      setNodeErrorMsg(intl.formatMessage(messages.invalidNodeFormat));
+      return false;
+    }
+
+    let nodePubKey;
+    if (split.length == 2) {
+      nodePubKey = split[0];
+      const addressSplit = split[1].split(":");
+      if (addressSplit.length > 2) {
+        setNodeErrorMsg(intl.formatMessage(messages.invalidNodeAddressFormat));
+        return false;
+      }
+    } else {
+      nodePubKey = node;
+    }
+
+    let isPubKeyValid;
+    try {
+      if (!isHexValid(nodePubKey)) {
+        throw new Error("pubkey is not a valid hex");
+      }
+      const pubKeyBuffer = Buffer.from(nodePubKey, "hex");
+      isPubKeyValid = secp256k1.publicKeyVerify(pubKeyBuffer);
+      // check if pubkey is on the curve
+      const curve = new elliptic.ec("secp256k1");
+      curve.keyFromPublic(pubKeyBuffer);
+    } catch (error) {
+      isPubKeyValid = false;
+    }
+
+    if (!isPubKeyValid) {
+      setNodeErrorMsg(intl.formatMessage(messages.invalidNodeId));
+      return false;
+    }
+
+    setNodeShowSuccess(true);
+    return true;
   };
 
   const onLocalAmtChanged = ({ atomValue }) => {
@@ -45,9 +171,11 @@ export function useChannelsTab() {
       .then(() => {
         setOpening(false);
         setNode("");
-        setLocalAmtAtoms(0);
-        setPushAmtAtoms(0);
+        setLocalAmtAtoms(null);
+        setPushAmtAtoms(null);
         setCanOpen(false);
+        setNodeErrorMsg(null);
+        setNodeShowSuccess(false);
       })
       .catch(() => setOpening(false));
   };
@@ -55,32 +183,77 @@ export function useChannelsTab() {
   const onCloseChannel = (channel) =>
     closeChannel(channel.channelPoint, !channel.active);
 
-  const onToggleChannelDetails = (channel) => {
-    if (detailedChannel === channel) {
-      setDetailedChannel(null);
-    } else {
-      setDetailedChannel(channel);
-    }
+  const dispatch = useDispatch();
+  const viewChannelDetailsHandler = (channelPoint) =>
+    dispatch(lna.viewChannelDetails(channelPoint));
+
+  const closeRecentlyOpenedChannelModal = () =>
+    dispatch(lna.clearRecentlyOpenedChannelNodePubkey());
+
+  const onChangeChannelFilter = useCallback(
+    (newFilter) => dispatch(lna.changeChannelFilter(newFilter)),
+    [dispatch]
+  );
+
+  const searchText = channelFilter?.search ?? "";
+  const selectedChannelType = channelFilter?.type;
+
+  const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
+
+  const onChangeSelectedType = (type) => {
+    onChangeFilter(type.value);
   };
 
+  const onChangeSearchText = (searchText) => {
+    onChangeFilter({ search: searchText });
+  };
+
+  const onChangeFilter = (value) => {
+    return new Promise((resolve) => {
+      if (isChangingFilterTimer) {
+        clearTimeout(isChangingFilterTimer);
+      }
+      const changeFilter = (newFilterOpt) => {
+        const newFilter = { ...channelFilter, ...newFilterOpt };
+        clearTimeout(isChangingFilterTimer);
+        onChangeChannelFilter(newFilter);
+        return newFilter;
+      };
+      setIsChangingFilterTimer(
+        setTimeout(() => resolve(changeFilter(value)), 100)
+      );
+    });
+  };
+
+  const onAutopilotChanged = () =>
+    dispatch(lna.modifyAutopilotStatus(!autopilotEnabled));
+
   return {
-    walletBalances,
-    channelBalances,
-    channels,
-    pendingChannels,
-    closedChannels,
+    channels: filteredChannels,
     node,
     localAmtAtoms,
     pushAmtAtoms,
     opening,
     canOpen,
-    detailedChannel,
     isMainNet,
+    intl,
+    recentlyOpenedChannel,
+    autopilotEnabled,
+    nodeShowSuccess,
+    nodeErrorMsg,
+    onAutopilotChanged,
+    recentNodes,
+    hideSearchBt,
     onNodeChanged,
     onLocalAmtChanged,
     onPushAmtChanged,
     onOpenChannel,
     onCloseChannel,
-    onToggleChannelDetails
+    viewChannelDetailsHandler,
+    closeRecentlyOpenedChannelModal,
+    searchText,
+    selectedChannelType,
+    onChangeSelectedType,
+    onChangeSearchText
   };
 }

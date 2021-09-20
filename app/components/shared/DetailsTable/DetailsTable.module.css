@@ -1,5 +1,4 @@
 .header {
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,6 +29,10 @@
   background-position: 2px center;
 }
 
+.header.expandable {
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -48,6 +51,7 @@
   padding: 10px 0;
 }
 
+.grid .value.href,
 .grid .value.copyable {
   padding: 0;
   display: flex;
@@ -81,4 +85,17 @@
 .grid .secondaryGrid .value:last-of-type {
   border-bottom: 1px solid var(--grey-2);
   padding-bottom: 10px;
+}
+
+.link {
+  color: var(--accent-blue);
+}
+
+.linkButton {
+  background-image: var(--lookup-icon);
+  margin-left: 10px;
+}
+
+.tooltipClassName {
+  color: var(--main-dark-blue);
 }

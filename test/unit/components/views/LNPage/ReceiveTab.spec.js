@@ -5,16 +5,11 @@ import { screen, wait } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
+import { mockLnChannelBalance } from "./mocks";
 
 const selectors = sel;
 const lnActions = lna;
 
-const mockLnChannelBalance = {
-  balance: 99997360,
-  pendingOpenBalance: 0,
-  maxInboundAmount: 97999000,
-  maxOutboundAmount: 97997360
-};
 const mockInvoices = [
   {
     memo: "mock-memo-1",

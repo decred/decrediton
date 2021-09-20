@@ -6,8 +6,12 @@ import { isNumber } from "lodash";
 import {
   INVOICE_STATUS_SETTLED,
   INVOICE_STATUS_EXPIRED,
-  INVOICE_STATUS_CANCELED
+  INVOICE_STATUS_CANCELED,
+  CHANNEL_STATUS_ACTIVE,
+  CHANNEL_STATUS_PENDING,
+  CHANNEL_STATUS_CLOSED
 } from "constants";
+import { push as pushHistory } from "connected-react-router";
 
 export const CLOSETYPE_COOPERATIVE_CLOSE = 0;
 export const CLOSETYPE_LOCAL_FORCE_CLOSE = 1;
@@ -290,7 +294,7 @@ const connectToLNWallet = (
   // Attempt to connect to the lnrpc service of the wallet. Since the underlying
   // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
   // need to try a few times until we get a proper connection.
-  let lnClient, wtClient, inClient;
+  let lnClient, wtClient, inClient, apClient;
   let lastError;
   for (let i = 0; i < sleepCount; i++) {
     try {
@@ -307,6 +311,12 @@ const connectToLNWallet = (
         macaroonPath
       );
       inClient = await ln.getLNInvoiceClient(
+        address,
+        port,
+        certPath,
+        macaroonPath
+      );
+      apClient = await ln.getLNAutopilotClient(
         address,
         port,
         certPath,
@@ -357,7 +367,13 @@ const connectToLNWallet = (
     );
   }
 
-  dispatch({ lnClient, wtClient, inClient, type: LNWALLET_CONNECT_SUCCESS });
+  dispatch({
+    lnClient,
+    wtClient,
+    inClient,
+    apClient,
+    type: LNWALLET_CONNECT_SUCCESS
+  });
 
   return { client: lnClient, wtClient };
 };
@@ -389,6 +405,8 @@ const loadLNStartupInfo = () => (dispatch) => {
   dispatch(listLatestInvoices());
   dispatch(subscribeToInvoices());
   dispatch(getScbInfo());
+  dispatch(getDescribeGraph());
+  dispatch(getAutopilotStatus());
 };
 
 export const LNWALLET_INFO_UPDATED = "LNWALLET_INFO_UDPATED";
@@ -453,7 +471,8 @@ export const updateChannelList = () => async (dispatch, getState) => {
   const channels = results[0].channels.map((channel) => {
     return {
       ...channel,
-      channelPointURL: chanpointURL(channel.channelPoint)
+      channelPointURL: chanpointURL(channel.channelPoint),
+      status: CHANNEL_STATUS_ACTIVE
     };
   });
 
@@ -462,6 +481,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra,
       ...extra.channel,
       pendingStatus: "open",
+      status: CHANNEL_STATUS_PENDING,
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
@@ -471,6 +491,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra,
       ...extra.channel,
       pendingStatus: "close",
+      status: CHANNEL_STATUS_PENDING,
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
@@ -481,6 +502,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
         ...extra,
         ...extra.channel,
         pendingStatus: "forceclose",
+        status: CHANNEL_STATUS_PENDING,
         remotePubkey: extra.channel.remoteNodePub,
         channelPointURL: chanpointURL(extra.channel.channelPoint),
         closingTxidURL: txURLBuilder(extra.closingTxid)
@@ -492,6 +514,7 @@ export const updateChannelList = () => async (dispatch, getState) => {
       ...extra,
       ...extra.channel,
       pendingStatus: "waitclose",
+      status: CHANNEL_STATUS_PENDING,
       remotePubkey: extra.channel.remoteNodePub,
       channelPointURL: chanpointURL(extra.channel.channelPoint)
     };
@@ -501,7 +524,8 @@ export const updateChannelList = () => async (dispatch, getState) => {
     return {
       ...channel,
       channelPointURL: chanpointURL(channel.channelPoint),
-      closingTxidURL: txURLBuilder(channel.closingTxHash)
+      closingTxidURL: txURLBuilder(channel.closingTxHash),
+      status: CHANNEL_STATUS_CLOSED
     };
   });
 
@@ -723,6 +747,8 @@ export const LNWALLET_OPENCHANNEL_CHANPENDING =
   "LNWALLET_OPENCHANNEL_CHANPENDING";
 export const LNWALLET_OPENCHANNEL_CHANOPEN = "LNWALLET_OPENCHANNEL_CHANOPEN";
 export const LNWALLET_OPENCHANNEL_FAILED = "LNWALLET_OPENCHANNEL_FAILED";
+export const LNWALLET_RECENTLY_OPENEDCHANNEL =
+  "LNWALLET_RECENTLY_OPENEDCHANNEL";
 
 export const openChannel = (node, localAmt, pushAmt) => async (
   dispatch,
@@ -771,6 +797,15 @@ export const openChannel = (node, localAmt, pushAmt) => async (
           resolve();
           dispatch({ type: LNWALLET_OPENCHANNEL_CHANPENDING });
           dispatchUpdates();
+          const txId = Buffer.from(update.chanPending.txid, "base64")
+            .reverse()
+            .toString("hex");
+          const channelPoint = `${txId}:${update.chanPending.outputIndex}`;
+
+          dispatch({
+            type: LNWALLET_RECENTLY_OPENEDCHANNEL,
+            channelPoint: channelPoint
+          });
         }
         if (update.chanOpen) {
           dispatch({ type: LNWALLET_OPENCHANNEL_CHANOPEN });
@@ -788,6 +823,13 @@ export const openChannel = (node, localAmt, pushAmt) => async (
     dispatch({ error, type: LNWALLET_OPENCHANNEL_FAILED });
     throw error;
   }
+};
+
+export const clearRecentlyOpenedChannelNodePubkey = () => (dispatch) => {
+  dispatch({
+    type: LNWALLET_RECENTLY_OPENEDCHANNEL,
+    channelPoint: null
+  });
 };
 
 export const LNWALLET_CLOSECHANNEL_CLOSEPENDING =
@@ -1085,3 +1127,69 @@ export const changePaymentFilter = (newFilter) => (dispatch) =>
     });
     resolve();
   });
+
+export const LNWALLET_CHANGE_CHANNEL_FILTER = "LNWALLET_CHANGE_CHANNEL_FILTER";
+export const changeChannelFilter = (newFilter) => (dispatch) =>
+  new Promise((resolve) => {
+    dispatch({
+      channelFilter: newFilter,
+      type: LNWALLET_CHANGE_CHANNEL_FILTER
+    });
+    resolve();
+  });
+
+export const viewChannelDetails = (channelPoint) => (dispatch) =>
+  dispatch(pushHistory(`/ln/channel/${channelPoint}`));
+
+export const LNWALLET_DESCRIBEGRAPH_UPDATED = "LNWALLET_DESCRIBEGRAPH_UPDATED";
+export const getDescribeGraph = () => async (dispatch, getState) => {
+  const client = getState().ln.client;
+  if (!client) return;
+
+  const describeGraph = await ln.describeGraph(client);
+  dispatch({ describeGraph, type: LNWALLET_DESCRIBEGRAPH_UPDATED });
+};
+
+export const LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT =
+  "LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT";
+export const LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS =
+  "LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS";
+export const LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED =
+  "LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED";
+
+export const modifyAutopilotStatus = (enable) => async (dispatch, getState) => {
+  const apClient = getState().ln.apClient;
+  if (!apClient) return;
+
+  dispatch({ type: LNWALLET_MODIFY_AUTOPILOT_STATUS_ATTEMPT });
+  try {
+    await ln.modifyAutopilotStatus(apClient, enable);
+    await dispatch(getAutopilotStatus());
+    dispatch({ type: LNWALLET_MODIFY_AUTOPILOT_STATUS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_MODIFY_AUTOPILOT_STATUS_FAILED });
+  }
+};
+
+export const LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT =
+  "LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT";
+export const LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS =
+  "LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS";
+export const LNWALLET_GET_AUTOPILOT_STATUS_FAILED =
+  "LNWALLET_GET_AUTOPILOT_STATUS_FAILED";
+
+export const getAutopilotStatus = () => async (dispatch, getState) => {
+  const apClient = getState().ln.apClient;
+  if (!apClient) return;
+
+  dispatch({ type: LNWALLET_GET_AUTOPILOT_STATUS_ATTEMPT });
+  try {
+    const resp = await ln.getAutopilotStatus(apClient);
+    dispatch({
+      active: resp.active,
+      type: LNWALLET_GET_AUTOPILOT_STATUS_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ error, type: LNWALLET_GET_AUTOPILOT_STATUS_FAILED });
+  }
+};

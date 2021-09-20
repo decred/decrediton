@@ -1,6 +1,6 @@
 import { Tooltip } from "pi-ui";
 
-const TruncatedText = ({ text, max, showTooltip }) => {
+const TruncatedText = ({ text, max, showTooltip, tooltipClassName }) => {
   if (max === undefined || max === null || max <= 0) {
     return text;
   }
@@ -14,7 +14,9 @@ const TruncatedText = ({ text, max, showTooltip }) => {
     const truncated =
       text.substr(0, middle - left) + "..." + text.substr(middle + right);
     return showTooltip ? (
-      <Tooltip content={text}>{truncated}</Tooltip>
+      <Tooltip content={text} contentClassName={tooltipClassName}>
+        {truncated}
+      </Tooltip>
     ) : (
       truncated
     );

@@ -25,6 +25,7 @@ export function useLNPage() {
   const scbPath = useSelector(sel.lnSCBPath);
   const scbUpdatedTime = useSelector(sel.lnSCBUpdatedTime);
   const runningIndicator = useSelector(sel.getRunningIndicator);
+  const describeGraph = useSelector(sel.lnDescribeGraph);
 
   const dispatch = useDispatch();
 
@@ -108,6 +109,7 @@ export function useLNPage() {
     startDcrlnd,
     exportBackup,
     verifyBackup,
-    runningIndicator
+    runningIndicator,
+    describeGraph
   };
 }

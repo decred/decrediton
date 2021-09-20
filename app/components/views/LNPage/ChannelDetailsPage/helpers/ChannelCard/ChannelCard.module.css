@@ -1,0 +1,81 @@
+.channel {
+  background-color: var(--background-back-color);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 20px 40px;
+  width: 100%;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 14px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.capacity {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--main-dark-blue);
+}
+
+.capacitySecondary {
+  color: var(--grey-5);
+}
+
+.channelStatusWrapper {
+  display: flex;
+  margin-top: 0.5em;
+}
+
+.peerBalances {
+  display: flex;
+}
+
+.peerBalances > div {
+  display: flex;
+  margin-right: 50px;
+}
+
+.peerBalances .peerLabel {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-5);
+  margin-right: 10px;
+}
+
+.peerBalances .peerBalance {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+}
+
+.peerBalances .peerBalanceSecondary {
+  color: var(--grey-5);
+}
+
+.peerBalances .peerBalanceUnit {
+  color: var(--main-dark-blue);
+}
+
+.footer {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+}
+
+.marker {
+  width: 35px;
+  height: 35px;
+  background-image: var(--lightning-icon);
+  background-repeat: no-repeat;
+  background-size: 15px 23px;
+  background-position: center;
+  max-width: 35px;
+  margin-top: -13px;
+  background-color: var(--background-back-color);
+}

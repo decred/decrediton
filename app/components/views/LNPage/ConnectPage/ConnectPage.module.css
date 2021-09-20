@@ -17,35 +17,6 @@
   width: 764px;
 }
 
-.autopilotTooltipClassName {
-  width: 15rem;
-}
-
-.apsContainer {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-  height: 20px;
-  align-items: center;
-}
-
-.apsContainer label {
-  color: var(--main-dark-blue);
-  font-size: 16px;
-  line-height: 20px;
-  align-items: center;
-}
-
-.autopilotDesc {
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--ln-autopilot-switch-desc);
-}
-
-.autopilotSwitch {
-  margin: 0 20px 0 0;
-}
-
 .disabledTooltip {
   width: 17rem;
   text-align: center;

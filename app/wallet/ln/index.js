@@ -3,6 +3,7 @@ import fs from "fs";
 import { lnrpc as pb } from "middleware/ln/rpc_pb";
 import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
 import { invoicesrpc as inpb } from "middleware/ln/invoices_pb";
+import { autopilotrpc as appb } from "middleware/ln/autopilot_pb";
 import { strHashToRaw } from "helpers/byteActions";
 import { ipcRenderer } from "electron";
 import { invoke, shimStreamedResponse } from "helpers/electronRenderer";
@@ -24,6 +25,7 @@ export const getLightningClient = client.getLightningClient;
 export const getWatchtowerClient = client.getWatchtowerClient;
 export const getWalletUnlockerClient = client.getWalletUnlockerClient;
 export const getLNInvoiceClient = client.getLNInvoiceClient;
+export const getLNAutopilotClient = client.getLNAutopilotClient;
 
 export * from "./watchtower";
 
@@ -349,3 +351,36 @@ export const restoreBackup = (client, scbFile) =>
       err ? reject(shimError(err)) : resolve(resp.toObject())
     );
   });
+
+export const describeGraph = (client) => {
+  const request = new pb.ChannelGraphRequest();
+  return new Promise((resolve, reject) =>
+    getClient(client).describeGraph(request, (err, resp) => {
+      if (err) {
+        reject(shimError(err));
+        return;
+      }
+      resolve({ nodeList: resp.getNodesList().map((p) => p.toObject()) });
+    })
+  );
+};
+
+export const modifyAutopilotStatus = (client, enable) => {
+  const request = new appb.ModifyStatusRequest();
+  request.setEnable(enable);
+  return simpleRequest(client, "modifyStatus", request);
+};
+
+export const getAutopilotStatus = (client) => {
+  const request = new appb.StatusRequest();
+
+  return new Promise((resolve, reject) =>
+    getClient(client).status(request, (err, resp) => {
+      if (err) {
+        reject(shimError(err));
+        return;
+      }
+      resolve({ active: resp.getActive() });
+    })
+  );
+};

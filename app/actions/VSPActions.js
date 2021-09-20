@@ -380,7 +380,11 @@ export const setStakePoolInformation = (poolHost, apiKey, rescan) => async (
     });
     rescan && dispatch(rescanAttempt(0));
   } catch (error) {
-    dispatch({ error, ...extraErrorData, type: UPDATESTAKEPOOLCONFIG_FAILED });
+    dispatch({
+      error,
+      ...extraErrorData,
+      type: UPDATESTAKEPOOLCONFIG_FAILED
+    });
     throw error;
   }
 };

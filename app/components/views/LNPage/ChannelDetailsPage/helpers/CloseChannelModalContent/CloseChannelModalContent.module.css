@@ -1,0 +1,13 @@
+.modalChaninfo {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.capacity {
+  font-size: 32px;
+  padding-top: 10px;
+}
+
+.node {
+  grid-column: 1 / 3;
+}

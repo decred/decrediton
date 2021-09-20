@@ -464,7 +464,16 @@ const initialState = {
       search: null, // The freeform text in the Search box
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       type: null // desired payment type (code).
-    }
+    },
+    channelFilter: {
+      search: null, // The freeform text in the Search box
+      type: null // desired channel type (code).
+    },
+    recentlyOpenedChannel: null,
+    describeGraph: Array(),
+    modifyAutopilotStatusAttempt: false,
+    getAutopilotStatusAttempt: false,
+    autopilotEnabled: false
   },
   dex: {
     dexOrdersOpen: false,

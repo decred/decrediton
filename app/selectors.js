@@ -1879,6 +1879,11 @@ export const lnSCBUpdatedTime = get(["ln", "scbUpdatedTime"]);
 export const lnTowersList = get(["ln", "towersList"]);
 export const lnInvoiceFilter = get(["ln", "invoiceFilter"]);
 export const lnPaymentFilter = get(["ln", "paymentFilter"]);
+export const lnChannelFilter = get(["ln", "channelFilter"]);
+export const lnRecentlyOpenedChannel = get(["ln", "recentlyOpenedChannel"]);
+export const lnDescribeGraph = get(["ln", "describeGraph"]);
+export const lnAutopilotEnabled = get(["ln", "autopilotEnabled"]);
+
 // end of ln selectors
 
 // start of dex selectors

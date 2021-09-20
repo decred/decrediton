@@ -2,24 +2,51 @@ import { useState } from "react";
 import { classNames } from "pi-ui";
 import styles from "./DetailsTable.module.css";
 import { SmallButton } from "buttons";
-import { CopyToClipboard, TruncatedText } from "shared";
+import {
+  CopyToClipboard,
+  TruncatedText,
+  ExternalLink,
+  ExternalButton
+} from "shared";
 
 const ValueField = ({ data }) => {
-  const { value, copyable, truncate } = data;
-  const truncatedText = truncate ? (
-    <TruncatedText text={value} max={truncate} showTooltip />
+  const { value, copyable, truncate, href } = data;
+  const text = truncate ? (
+    <TruncatedText
+      text={value}
+      max={truncate}
+      showTooltip
+      tooltipClassName={styles.tooltipClassName}
+    />
   ) : (
     value
   );
+
   return (
-    <div className={classNames(styles.value, copyable && styles.copyable)}>
+    <div
+      className={classNames(
+        styles.value,
+        copyable && styles.copyable,
+        href && styles.href
+      )}>
       {copyable ? (
         <>
-          <div className={styles.copyableText}>{truncatedText}</div>
+          <div className={styles.copyableText}>{text}</div>
           <CopyToClipboard textToCopy={value} ButtonComponent={SmallButton} />
         </>
+      ) : href ? (
+        <>
+          <ExternalLink href={href} className={styles.link}>
+            {text}
+          </ExternalLink>
+          <ExternalButton
+            className={styles.linkButton}
+            href={href}
+            ButtonComponent={SmallButton}
+          />
+        </>
       ) : (
-        truncatedText
+        text
       )}
     </div>
   );
@@ -51,25 +78,27 @@ const DetailsTable = ({
   title,
   expandable,
   className,
-  headerClassName
+  headerClassName,
+  gridClassName
 }) => {
   const [showDetails, setShowDetails] = useState(!expandable);
-  const toggleDetailsVisibility = () => setShowDetails((b) => !b);
+  const toggleDetailsVisibility = () => expandable && setShowDetails((b) => !b);
 
   return (
     <div className={className}>
       <div
-        onClick={expandable && toggleDetailsVisibility}
+        onClick={toggleDetailsVisibility}
         className={classNames(
           styles.header,
           headerClassName,
-          showDetails && styles.active
+          showDetails && styles.active,
+          expandable && styles.expandable
         )}>
         {title}
         {expandable && <div className={styles.arrow} />}
       </div>
       {showDetails && (
-        <div className={styles.grid}>
+        <div className={classNames(styles.grid, gridClassName)}>
           {data?.map((node, index) => (
             <Row key={index + Math.random()} data={node} />
           ))}
@@ -77,6 +106,10 @@ const DetailsTable = ({
       )}
     </div>
   );
+};
+
+DetailsTable.defaultProps = {
+  expandable: false
 };
 
 export default DetailsTable;

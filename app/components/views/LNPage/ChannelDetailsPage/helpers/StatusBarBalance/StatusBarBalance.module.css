@@ -1,0 +1,11 @@
+.statusBarBalance {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 23px;
+  color: var(--main-dark-blue);
+}
+
+.statusBarDetailsUnit {
+  font-weight: 400;
+  color: var(--main-dark-blue);
+}

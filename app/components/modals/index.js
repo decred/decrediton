@@ -22,4 +22,6 @@ export { default as AppPassAndPassphraseModal } from "./AppPassAndPassphraseModa
 export { default as ConfirmationDialogModal } from "./ConfirmationDialogModal";
 export { default as LNInvoiceModal } from "./LNInvoiceModal";
 export { default as LNPaymentModal } from "./LNPaymentModal";
+export { default as LNChannelModal } from "./LNChannelModal";
 export { default as DiscoverUsageModal } from "./DiscoverUsageModal";
+export { default as SearchForNodesModal } from "./SearchForNodesModal";

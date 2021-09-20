@@ -15,6 +15,7 @@ export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
 export { default as ListUTXOsButton } from "./ListUTXOsButton";
 export { default as PiUiButton } from "./PiUiButton";
 export { default as InvisiblePiUiButton } from "./InvisiblePiUiButton";
+export { default as SearchForNodesButton } from "./SearchForNodesButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
@@ -167,11 +168,7 @@ export const CloseWalletModalButton = mbb(
   CantCloseModals,
   InvisibleButton
 );
-export const CloseChannelModalButton = mbb(
-  styles.goBackIconButton,
-  ConfirmModal,
-  InvisibleButton
-);
+export const CloseChannelModalButton = mbb(null, ConfirmModal, PiUiButton);
 export const QRModalButton = mbb(null, QRModal, InvisibleButton);
 export const InvisibleConfirmPoliteiaModalButton = mbb(
   null,
