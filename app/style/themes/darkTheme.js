@@ -340,7 +340,7 @@ const darkTheme = {
   "blue-checkmark": url(require("style/icons/blueCheckmark.svg")),
   "ln-wallet-creation-warning-arrow": url(
     require("style/icons/LNWalletCreationWarningArrowDark.svg")
-  )
+  ),
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
   eye: url(require("style/icons/eyeDark.svg")),
   "eye-disabled": url(require("style/icons/eyeDisabledDark.svg")),

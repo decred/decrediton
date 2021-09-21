@@ -327,7 +327,7 @@ const lightTheme = {
   "blue-checkmark": url(require("style/icons/blueCheckmark.svg")),
   "ln-wallet-creation-warning-arrow": url(
     require("style/icons/LNWalletCreationWarningArrow.svg")
-  )
+  ),
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
   eye: url(require("style/icons/eye.svg")),
   "eye-disabled": url(require("style/icons/eyeDisabled.svg")),
