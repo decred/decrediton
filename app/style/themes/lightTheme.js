@@ -312,7 +312,7 @@ const lightTheme = {
   "right-arrow": url(require("style/icons/rightArrow.svg")),
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
   eye: url(require("style/icons/eye.svg")),
-  "eye-disabled": url(require("style/icons/eyeDisabled.svg"))
+  "eye-disabled": url(require("style/icons/eyeDisabled.svg")),
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
   "plus-icon": url(require("style/icons/plusIcon.svg"))
