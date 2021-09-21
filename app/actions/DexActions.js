@@ -106,7 +106,6 @@ export const initDex = (passphrase, seed) => async (dispatch, getState) => {
   }
   try {
     await dex.init(passphrase, seed);
-    console.log(seed);
     dispatch({ type: DEX_INIT_SUCCESS, fromSeed: seed });
     // Request current user information
     dispatch(userDex());

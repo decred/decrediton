@@ -288,7 +288,7 @@ func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
 
 // When restoring from seed with init/InitializeClient, it may be desirable to
 // first attempt DEX account discovery without commiting to a fee payment. This
-// check with the given DEX server if our account (a public key) is already
+// checks with the given DEX server if our account (a public key) is already
 // registered. If it is, this creates the account in Core, returns true, and the
 // caller should NOT call register. If it returns false, the user should be
 // prompted to pay the registration fee as normal using the register method.
