@@ -146,6 +146,8 @@ export const useGetStarted = () => {
         onGetAvailableWallets()
           .then((w) => send({ type: "CHOOSE_WALLET", payload: { w } }))
           .catch((error) => send({ type: "AVAILABLE_WALLET_ERROR", error }));
+
+        setShowNavLinks(true);
       },
       isAtStartWallet: (context) => {
         const { selectedWallet } = context;
