@@ -46,3 +46,9 @@
   float: right;
   background-color: var(--toggle-switch-knob-bg);
 }
+
+.spinner {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+}

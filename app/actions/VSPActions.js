@@ -16,7 +16,7 @@ import {
 } from "constants";
 import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
-import shuffle from "lodash/fp/shuffle";
+import { shuffle } from "helpers";
 import { mapArray } from "fp";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
@@ -872,10 +872,11 @@ export const setVSPDVoteChoices = (passphrase) => async (
 };
 
 export const SET_AUTOBUYER_SETTINGS = "SET_AUTOBUYER_SETTINGS";
-export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
-  dispatch,
-  getState
-) => {
+export const saveAutoBuyerSettings = (
+  balanceToMaintain,
+  account,
+  maxFeePercentage
+) => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
@@ -883,7 +884,7 @@ export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
   const autobuyerSettings = {
     balanceToMaintain: parseInt(balanceToMaintain.atomValue),
     account: account.name,
-    vsp
+    maxFeePercentage: parseInt(maxFeePercentage)
   };
   walletCfg.set(cfgConstants.AUTOBUYER_SETTINGS, autobuyerSettings);
   dispatch({
@@ -895,4 +896,39 @@ export const saveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => (
 export const SET_CANDISABLEPROCESSMANAGED = "SET_CANDISABLEPROCESSMANAGED";
 export const setCanDisableProcessManaged = (value) => (dispatch) => {
   dispatch({ type: SET_CANDISABLEPROCESSMANAGED, value });
+};
+
+export const getRandomVSP = (maxFeePercentage) => async (
+  dispatch,
+  getState
+) => {
+  const availableVSPs = sel.getAvailableVSPs(getState());
+  if (availableVSPs.length == 0) {
+    throw new Error("The available VSPs list is empty.");
+  }
+  const filteredVSPs = availableVSPs.filter(
+    (vsp) => vsp.vspData.feepercentage <= parseFloat(maxFeePercentage)
+  );
+  if (filteredVSPs.length == 0) {
+    throw new Error("Max fee is too low.");
+  }
+
+  const shuffledArray = shuffle(filteredVSPs);
+  let randomVSP;
+  do {
+    randomVSP = shuffledArray.pop();
+    if (randomVSP?.pubkey == null) {
+      try {
+        const { pubkey } = await dispatch(getVSPInfo(randomVSP.host));
+        randomVSP.pubkey = pubkey;
+      } catch (error) {
+        // Skip to the next vsp.
+      }
+    }
+  } while (randomVSP?.pubkey == null && shuffledArray.length > 0);
+
+  if (randomVSP?.pubkey == null) {
+    throw new Error("Fetching VSP info failed.");
+  }
+  return randomVSP;
 };

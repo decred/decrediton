@@ -7,7 +7,8 @@ const AutoBuyerSwitch = ({
   disabled,
   className,
   tooltipClassName,
-  disabledText
+  disabledText,
+  loading
 }) => (
   <ToggleSwitch
     enabled={enabled}
@@ -22,6 +23,7 @@ const AutoBuyerSwitch = ({
         <T id="autobuyer.disabledText" m="Auto buyer is disabled" />
       )
     }
+    loading={loading}
   />
 );
 
