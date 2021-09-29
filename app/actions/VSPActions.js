@@ -284,8 +284,12 @@ export const REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED =
 
 // refreshStakepoolPurchaseInformation is used during wallet startup to grab
 // fresh information (eg: latest pool fee) from all configured stakepools.
-export const refreshStakepoolPurchaseInformation = () => (dispatch, getState) =>
-  Promise.all(
+export const refreshStakepoolPurchaseInformation = () => (
+  dispatch,
+  getState
+) => {
+  const isLegacy = sel.getIsLegacy(getState());
+  return Promise.all(
     sel.configuredStakePools(getState()).map(({ Host, ApiKey }) => {
       wallet.allowStakePoolHost(Host);
       wallet
@@ -295,15 +299,19 @@ export const refreshStakepoolPurchaseInformation = () => (dispatch, getState) =>
             ? dispatch(updateSavedConfig(response.data.data, Host))
             : null
         )
-        .catch((error) =>
-          dispatch({
-            error,
-            host: Host,
-            type: REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
-          })
-        );
+        .catch((error) => {
+          // not give an error in legacy mode
+          if (isLegacy) {
+            dispatch({
+              error,
+              host: Host,
+              type: REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
+            });
+          }
+        });
     })
   );
+};
 
 // setStakePoolInformation links a new stakepool to the wallet. This
 // will contact the given stakepool, link it with an address from the wallet in
