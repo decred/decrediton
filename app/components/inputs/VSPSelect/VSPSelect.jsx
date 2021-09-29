@@ -116,6 +116,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
     return (
       <Creatable
         options={vspList}
+        clearable={false}
         placeholder={intl.formatMessage(messages.placeholder)}
         onChange={(option) => handleOnChange(option, isRetry)}
         value={selectedOption}
