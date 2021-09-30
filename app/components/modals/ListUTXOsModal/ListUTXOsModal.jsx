@@ -3,7 +3,7 @@ import Modal from "../Modal";
 import styles from "./ListUTXOsModal.module.css";
 import { Table } from "pi-ui";
 import { useListUtxo } from "./hooks";
-import { Balance } from "shared";
+import { Balance, CopyToClipboard } from "shared";
 import { AccountsSelect } from "inputs";
 
 const messages = defineMessages({
@@ -22,8 +22,17 @@ const ListUTXOsModal = ({ onCancelModal, show }) => {
 
   const data =
     unspentOutputs?.map((utxo) => {
+      const utxoValue = `${utxo.txHash}:${utxo.outpointIndex}`;
       return {
-        UTXO: `${utxo.txHash}:${utxo.outpointIndex}`,
+        UTXO: (
+          <div className={styles.utxoValue}>
+            <span>{utxoValue}</span>
+            <CopyToClipboard
+              textToCopy={utxoValue}
+              className={styles.copyIcon}
+            />
+          </div>
+        ),
         Value: (
           <Balance
             amount={utxo.amount}

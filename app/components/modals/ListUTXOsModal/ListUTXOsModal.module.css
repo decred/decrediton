@@ -61,6 +61,7 @@
 .tableHeader tr th:first-child,
 .tableBody tr td:first-child {
   width: 35em;
+  overflow: inherit;
 }
 
 .tableWrapper {
@@ -70,4 +71,12 @@
 .tableHeader tr th,
 .tableWrapper::-webkit-scrollbar {
   background-color: var(--grey-2);
+}
+.utxoValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.utxoValue .copyIcon {
+  margin-left: 5px;
 }
