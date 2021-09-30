@@ -7,6 +7,10 @@
   line-height: 30px;
   padding: 0 0 0 10px;
   margin: -10px;
+  display: inline-flex !important;
+}
+
+.optionWrapper {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

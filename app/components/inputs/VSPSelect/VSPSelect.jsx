@@ -60,7 +60,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
               />
             </div>
           }>
-          {vsp.host}
+          <div className={styles.optionWrapper}>{vsp.host}</div>
         </Tooltip>
       ),
       value: vsp
