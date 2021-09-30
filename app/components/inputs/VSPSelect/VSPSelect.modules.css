@@ -7,6 +7,9 @@
   line-height: 30px;
   padding: 0 0 0 10px;
   margin: -10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .error {
