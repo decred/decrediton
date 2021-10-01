@@ -934,6 +934,7 @@ export const getIsLegacy = get(["vsp", "isLegacy"]);
 export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
 const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
+export const isGetVSPAttempt = get(["vsp", "getVSPAttempt"]);
 
 // getVSPTickets is a selector for getting an object with feeStatus as keys
 // and an array of tickets which have this feeStatus.
@@ -1163,9 +1164,9 @@ export const buyerBalanceToMaintain = createSelector(
 export const buyerAccount = createSelector(
   [get(["vsp", "account"]), visibleAccounts],
   (buyerAccountName, visibleAccounts) =>
-    visibleAccounts.filter(({ name }) => name === buyerAccountName)[0]
+    visibleAccounts.find(({ name }) => name === buyerAccountName)
 );
-export const buyerVSP = get(["vsp", "vsp"]);
+export const buyerMaxFeePercentage = get(["vsp", "maxFeePercentage"]);
 
 const getNextAddressResponse = get(["control", "getNextAddressResponse"]);
 const nextAddressAccountNumber = compose(

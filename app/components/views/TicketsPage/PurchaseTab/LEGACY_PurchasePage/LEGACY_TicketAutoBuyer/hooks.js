@@ -57,11 +57,13 @@ export const useTicketAutoBuyer = () => {
     return vsp ? configuredVsps.find(compose(eq(vsp.Host), get("Host"))) : null;
   };
 
-  const onClick = () => {
-    setIsValid(checkIsValid(vsp, balanceToMaintain, account));
-    if (!isValid) {
+  const onValidate = () => {
+    const isSettingsValid = checkIsValid(vsp, balanceToMaintain, account);
+    setIsValid(isSettingsValid);
+    if (!isSettingsValid) {
       setIsSettingsModalVisible(true);
     }
+    return isSettingsValid;
   };
 
   useEffect(
@@ -101,7 +103,7 @@ export const useTicketAutoBuyer = () => {
     [dispatch]
   );
 
-  const onSaveAutoBuyerSettings = (balanceToMaintain, account, vsp) => {
+  const onSaveAutoBuyerSettings = ({ balanceToMaintain, account, vsp }) => {
     setIsValid(checkIsValid(vsp, balanceToMaintain, account));
     if (!isValid) {
       setClicked(true);
@@ -132,7 +134,7 @@ export const useTicketAutoBuyer = () => {
     isSettingsModalVisible,
     showSettingsModal,
     hideSettingsModal,
-    onClick,
+    onValidate,
     onStartAutoBuyer,
     onStopAutoBuyer,
     onSaveAutoBuyerSettings,

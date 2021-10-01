@@ -12,12 +12,14 @@ import { DCR } from "constants";
 import { en as enLocale } from "i18n/locales";
 import { DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
+import * as arrs from "../../../../../app/helpers/arrays";
 
 const selectors = sel;
 const controlActions = ca;
 const vspActions = vspa;
 const settingsActions = sa;
 const wallet = wal;
+const arrays = arrs;
 
 const mockVspInfo = {
   data: {
@@ -145,6 +147,7 @@ beforeEach(() => {
   mockSetRememberedVspHost = vspActions.setRememberedVspHost = jest.fn(
     () => () => {}
   );
+  arrays.shuffle = jest.fn((arr) => arr);
 });
 
 test("render PurchasePage", async () => {
@@ -247,59 +250,75 @@ test("render PurchasePage", async () => {
   expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
 });
 
-test("test autobuyer", async () => {
-  render(<TicketAutoBuyer />, initialState);
-  const settingsButton = screen.getByRole("button", {
+const getSettingsButton = () =>
+  screen.getByRole("button", {
     name: "Ticket Autobuyer Settings"
   });
-  user.click(screen.getByTestId("toggleSwitch"));
-  const saveButton = screen.getByRole("button", { name: "Save" });
-  user.click(saveButton);
-  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+const getSaveButton = () => screen.getByRole("button", { name: "Save" });
+const getToggleSwitch = () => screen.getByTestId("toggleSwitch");
+const getMaxFeeInput = () => screen.getByLabelText("Maximum Fee");
+const getSettingsModalTitle = () =>
+  screen.getByText("Automatic ticket purchases");
+const getFillAllFieldsErrorMsg = () => screen.getByText("Fill all fields.");
+
+test("test autobuyer", async () => {
+  render(<TicketAutoBuyer />, initialState);
+  const settingsButton = getSettingsButton();
+  const toggleSwitch = getToggleSwitch();
+  user.click(toggleSwitch);
+  await wait(() => getSettingsModalTitle());
+
+  user.click(getSaveButton());
+  await wait(() => screen.getByText("Fill all fields."));
   const mockBalanceToMaintain = 14;
   user.type(
     screen.getByLabelText(/Balance to Maintain/i),
     `${mockBalanceToMaintain}`
   );
-
-  user.click(saveButton);
-  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
-  // set stakepool
-  user.click(screen.getByText("Select VSP..."));
-  user.click(screen.getByText(mockAvailableVsps[1].host));
-  await wait(() =>
-    expect(screen.queryByText("Loading")).not.toBeInTheDocument()
-  );
-  user.click(saveButton);
-  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+  user.click(getSaveButton());
+  expect(getFillAllFieldsErrorMsg()).toBeInTheDocument();
 
   // set account
   user.click(screen.getByText("Select account"));
   user.click(screen.getByText(mockMixedAccount.name));
   selectors.buyerAccount = jest.fn(() => mockMixedAccount);
-  user.click(saveButton);
+
+  user.click(getSaveButton());
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+
+  const validMaxFeeInput = "10";
+  user.type(getMaxFeeInput(), validMaxFeeInput);
+  user.click(getSaveButton());
+  await wait(() =>
+    expect(
+      screen.queryByText("Automatic ticket purchases")
+    ).not.toBeInTheDocument()
+  );
 
   // check settings
   user.click(settingsButton);
   expect(screen.getByLabelText(/Balance to Maintain/i).value).toBe(
     `${mockBalanceToMaintain}`
   );
-  expect(screen.getByText(mockAvailableVsps[1].host)).toBeInTheDocument();
   expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
+  expect(getMaxFeeInput().value).toBe(validMaxFeeInput);
   user.click(screen.getByRole("button", { name: "Cancel" }));
+  await wait(() =>
+    expect(
+      screen.queryByText("Automatic ticket purchases")
+    ).not.toBeInTheDocument()
+  );
 
-  user.click(screen.getByTestId("toggleSwitch"));
   // clicking again on switch should open the confirmation modal
-  user.click(screen.getByTestId("toggleSwitch"));
-  expect(
-    screen.getByText(/start ticket buyer confirmation/i)
-  ).toBeInTheDocument();
+  user.click(toggleSwitch);
+  await wait(() => screen.getByText(/start ticket buyer confirmation/i));
+
   expect(screen.getByText(mockAvailableVsps[1].host)).toBeInTheDocument();
-  expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument();
-  // cancel first
+  expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument(); // cancel first
   user.click(screen.getByText("Cancel"));
   // try again
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(toggleSwitch);
+  await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerV3Attempt).toHaveBeenCalledWith(
@@ -307,6 +326,7 @@ test("test autobuyer", async () => {
     mockMixedAccount,
     mockBalanceToMaintain * 100000000,
     {
+      ...mockAvailableVsps[1],
       host: mockAvailableVsps[1].host,
       pubkey: mockVspInfo.data.pubkey
     }

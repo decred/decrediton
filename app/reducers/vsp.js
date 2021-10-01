@@ -20,7 +20,10 @@ import {
   SET_AUTOBUYER_SETTINGS,
   GETVSPSPUBKEYS_SUCCESS,
   GETVSPTRACKEDTICKETS_SUCCESS,
-  SET_CANDISABLEPROCESSMANAGED
+  SET_CANDISABLEPROCESSMANAGED,
+  GETVSP_ATTEMPT,
+  GETVSP_FAILED,
+  GETVSP_SUCCESS
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -53,7 +56,7 @@ export default function vsp(state = {}, action) {
         ticketBuyerCall: action.ticketBuyerCall,
         vsp: action.vsp,
         balanceToMaintain: action.balanceToMaintain,
-        account: action.account
+        account: action.account.name
       };
     case STARTTICKETBUYERV3_FAILED:
       return { ...state, ticketAutoBuyerRunning: false };
@@ -149,7 +152,7 @@ export default function vsp(state = {}, action) {
         ...state,
         balanceToMaintain: action.autobuyerSettings?.balanceToMaintain,
         account: action.autobuyerSettings?.account,
-        vsp: action.autobuyerSettings?.vsp
+        maxFeePercentage: action.autobuyerSettings?.maxFeePercentage
       };
     case GETVSPSPUBKEYS_SUCCESS:
       return {
@@ -177,6 +180,21 @@ export default function vsp(state = {}, action) {
         ...state,
         trackedTickets: {},
         needsProcessManagedTickets: true
+      };
+    case GETVSP_ATTEMPT:
+      return {
+        ...state,
+        getVSPAttempt: true
+      };
+    case GETVSP_FAILED:
+      return {
+        ...state,
+        getVSPAttempt: false
+      };
+    case GETVSP_SUCCESS:
+      return {
+        ...state,
+        getVSPAttempt: false
       };
     default:
       return state;

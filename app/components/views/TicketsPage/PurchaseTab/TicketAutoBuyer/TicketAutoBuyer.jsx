@@ -1,6 +1,5 @@
 import { TicketAutoBuyerForm } from "shared";
 import { useTicketAutoBuyer } from "./hooks";
-import { VSPSelect } from "inputs";
 
 function TicketAutoBuyer() {
   const {
@@ -8,27 +7,25 @@ function TicketAutoBuyer() {
     setBalanceToMaintain,
     account,
     setAccount,
-    vsp,
-    setVsp,
-    availableVSPs,
     isRunning,
+    isGetVSPAttempt,
+    isValidationInProgress,
     notMixedAccounts,
     getRunningIndicator,
     clicked,
     isValid,
+    errorMsg,
     isSettingsModalVisible,
     showSettingsModal,
     hideSettingsModal,
-    onClick,
+    onValidate,
     onStartAutoBuyer,
     onStopAutoBuyer,
     onSaveAutoBuyerSettings,
-    vspHost
+    vspHost,
+    maxFeePercentage,
+    setMaxFeePercentage
   } = useTicketAutoBuyer();
-
-  const VSPSelectControl = (
-    <VSPSelect options={availableVSPs} value={vsp} onChange={setVsp} />
-  );
 
   return (
     <TicketAutoBuyerForm
@@ -36,13 +33,15 @@ function TicketAutoBuyer() {
         onStartAutoBuyer,
         onStopAutoBuyer,
         isRunning,
+        isGetVSPAttempt,
+        isValidationInProgress,
         balanceToMaintain,
         setBalanceToMaintain,
         account,
         setAccount,
-        vsp,
         isValid,
-        onClick,
+        errorMsg,
+        onValidate,
         clicked,
         notMixedAccounts,
         getRunningIndicator,
@@ -50,7 +49,8 @@ function TicketAutoBuyer() {
         isSettingsModalVisible,
         showSettingsModal,
         hideSettingsModal,
-        VSPSelectControl,
+        maxFeePercentage,
+        setMaxFeePercentage,
         vspHost
       }}
     />

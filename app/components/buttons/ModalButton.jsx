@@ -26,6 +26,7 @@ const ModalButton = ({
   onSubmit,
   onShow,
   onClick,
+  onValidate,
   ...props
 }) => {
   const [show, setShow] = useState(!!showModal);
@@ -44,10 +45,14 @@ const ModalButton = ({
     onSubmit?.(...args);
   };
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     onClick?.();
+    let isModalValid = isValid;
+    if (onValidate) {
+      isModalValid = await onValidate();
+    }
     // isValid can be not passed, so we ignore it.
-    if (isValid !== undefined && !isValid) {
+    if (isModalValid !== undefined && !isModalValid) {
       return;
     }
     onShowModal();

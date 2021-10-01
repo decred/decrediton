@@ -73,7 +73,7 @@ function render(ui, renderOptions) {
     ) {
       initialState = { ...initialState, ...renderOptions.initialState };
     }
-    const store = configureStore(initialState, history);
+    const store = createStore(initialState);
     const ContainerApp = () => {
       return (
         <IntlProvider
@@ -113,5 +113,8 @@ function render(ui, renderOptions) {
   };
 }
 
+const createStore = (initialState, history) =>
+  configureStore(initialState, history ?? createMemoryHistory());
+
 export * from "@testing-library/react";
-export { render };
+export { render, createStore };

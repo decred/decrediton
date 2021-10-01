@@ -8,6 +8,8 @@ const TicketAutoBuyerForm = ({
   onStartAutoBuyer,
   onStopAutoBuyer,
   isRunning,
+  isGetVSPAttempt,
+  isValidationInProgress,
   balanceToMaintain,
   setBalanceToMaintain,
   account,
@@ -15,15 +17,18 @@ const TicketAutoBuyerForm = ({
   vsp,
   vspHost,
   isValid,
+  errorMsg,
   clicked,
-  onClick,
+  onValidate,
   notMixedAccounts,
   getRunningIndicator,
   onSaveAutoBuyerSettings,
   isSettingsModalVisible,
   showSettingsModal,
   hideSettingsModal,
-  VSPSelectControl
+  VSPSelectControl,
+  maxFeePercentage,
+  setMaxFeePercentage
 }) => (
   <>
     <div className={styles.wrapper}>
@@ -89,9 +94,13 @@ const TicketAutoBuyerForm = ({
                 </div>
               </div>
             }
+            loading={
+              !isSettingsModalVisible &&
+              isValidationInProgress &&
+              isGetVSPAttempt
+            }
             onSubmit={onStartAutoBuyer}
-            onClick={onClick}
-            isValid={!!isValid}
+            onValidate={onValidate}
           />
         )}
       </div>
@@ -100,7 +109,7 @@ const TicketAutoBuyerForm = ({
       </div>
       <button
         aria-label="Ticket Autobuyer Settings"
-        disabled={isRunning}
+        disabled={isRunning || isGetVSPAttempt}
         className={styles.settingsButton}
         onClick={showSettingsModal}
       />
@@ -113,11 +122,15 @@ const TicketAutoBuyerForm = ({
           setBalanceToMaintain,
           account,
           setAccount,
+          isGetVSPAttempt,
           vsp,
           notMixedAccounts,
           isValid,
+          errorMsg,
           clicked,
-          VSPSelectControl
+          VSPSelectControl,
+          maxFeePercentage,
+          setMaxFeePercentage
         }}
       />
     </div>

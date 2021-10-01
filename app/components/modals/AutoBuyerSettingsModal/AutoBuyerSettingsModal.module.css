@@ -28,7 +28,6 @@
   opacity: 0.7;
 }
 .error {
-  margin-top: 20px;
   color: var(--error-text-color);
 }
 .buttons {
@@ -44,15 +43,13 @@
 }
 .accountSelectInput {
   width: 100%;
-  margin-bottom: 25px;
-}
-.balanceToMaintainInput {
-  margin-bottom: 10px;
 }
 .balanceToMaintainInput input {
   font-size: 16px;
 }
-
+.maxFeePercentage input {
+  font-size: 16px;
+}
 @media screen and (max-width: 1180px) {
   .modal {
     width: 421px;

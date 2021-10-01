@@ -1,26 +1,30 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
 
 export const useTicketAutoBuyer = () => {
-  const availableVSPs = useSelector(sel.getAvailableVSPs);
   const isRunning = useSelector(sel.getTicketAutoBuyerRunning);
+  const isGetVSPAttempt = useSelector(sel.isGetVSPAttempt);
 
   const buyerBalanceToMaintain = useSelector(sel.buyerBalanceToMaintain);
   const buyerAccount = useSelector(sel.buyerAccount);
-  const buyerVSP = useSelector(sel.buyerVSP);
+  const buyerMaxFeePercentage = useSelector(sel.buyerMaxFeePercentage);
 
   const [balanceToMaintain, setBalanceToMaintain] = useState(
     buyerBalanceToMaintain
   );
   const [account, setAccount] = useState(buyerAccount);
-  const [vsp, setVsp] = useState(buyerVSP);
+  const [vsp, setVsp] = useState(null);
+  const [maxFeePercentage, setMaxFeePercentage] = useState(
+    buyerMaxFeePercentage
+  );
 
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
   // isValid check if we can show the modal to start the auto buyer.
   const [isValid, setIsValid] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
   const showSettingsModal = () => setIsSettingsModalVisible(true);
@@ -52,28 +56,29 @@ export const useTicketAutoBuyer = () => {
     return isValid && balanceToMaintain?.atomValue >= 0 && !!account;
   };
 
-  const onClick = () => {
-    setIsValid(checkIsValid(vsp, balanceToMaintain, account));
-    if (!isValid) {
+  const [isValidationInProgress, setIsValidationInProgress] = useState(false);
+  const onValidate = async () => {
+    setIsValidationInProgress(true);
+    const randomVSP = await getRandomVSP(maxFeePercentage);
+    const isSettingsValid = checkIsValid(randomVSP, balanceToMaintain, account);
+    setIsValid(isSettingsValid);
+    if (!isSettingsValid) {
       setIsSettingsModalVisible(true);
+    } else {
+      setVsp(randomVSP);
     }
+    setIsValidationInProgress(false);
+    return isSettingsValid;
   };
 
-  useEffect(
-    // we pass those values as parameter, so we don't need to add checkIsValid
-    // into the dependecy array.
-    () => {
-      setIsValid(checkIsValid(vsp, balanceToMaintain, account));
-    },
-    [vsp, balanceToMaintain, account]
-  );
   const getRunningIndicator = useSelector(sel.getRunningIndicator);
 
   const resetSettingsState = () => {
     setBalanceToMaintain(buyerBalanceToMaintain);
     setAccount(buyerAccount);
-    setVsp(buyerVSP);
+    setMaxFeePercentage(buyerMaxFeePercentage);
     setClicked(false);
+    setErrorMsg(null);
   };
   const vspHost = vsp && vsp.host;
 
@@ -95,41 +100,60 @@ export const useTicketAutoBuyer = () => {
     dispatch
   ]);
 
-  const onSaveAutoBuyerSettings = (balanceToMaintain, account, vsp) => {
-    setIsValid(checkIsValid(vsp, balanceToMaintain, account));
-    if (!isValid) {
+  const getRandomVSP = async (maxFeePercentage) => {
+    let randomVSP;
+    if (maxFeePercentage) {
+      try {
+        setIsValid(true);
+        randomVSP = await dispatch(vspa.getRandomVSP(maxFeePercentage));
+      } catch (error) {
+        setErrorMsg(error.message);
+      }
+    }
+    return randomVSP;
+  };
+
+  const onSaveAutoBuyerSettings = async ({
+    balanceToMaintain,
+    account,
+    maxFeePercentage
+  }) => {
+    setErrorMsg(null);
+    const randomVSP = await getRandomVSP(maxFeePercentage);
+    const isSettingsValid = checkIsValid(randomVSP, balanceToMaintain, account);
+    setIsValid(isSettingsValid);
+    if (!isSettingsValid) {
       setClicked(true);
     } else {
       dispatch(
-        vspa.saveAutoBuyerSettings({
-          balanceToMaintain,
-          account,
-          vsp
-        })
+        vspa.saveAutoBuyerSettings(balanceToMaintain, account, maxFeePercentage)
       );
       setIsSettingsModalVisible(false);
     }
   };
+
   return {
     balanceToMaintain,
     setBalanceToMaintain,
     account,
     setAccount,
-    vsp,
-    setVsp,
-    availableVSPs,
     isRunning,
+    isGetVSPAttempt,
+    isValidationInProgress,
     notMixedAccounts,
     getRunningIndicator,
     clicked,
     isValid,
+    errorMsg,
     isSettingsModalVisible,
     showSettingsModal,
     hideSettingsModal,
-    onClick,
+    onValidate,
     onStartAutoBuyer,
     onStopAutoBuyer,
     onSaveAutoBuyerSettings,
-    vspHost
+    vspHost,
+    maxFeePercentage,
+    setMaxFeePercentage
   };
 };

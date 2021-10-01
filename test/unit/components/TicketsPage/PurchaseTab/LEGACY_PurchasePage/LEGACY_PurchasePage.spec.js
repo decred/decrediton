@@ -2,7 +2,7 @@ import Purchase from "../../../../../../app/components/views/TicketsPage/Purchas
 import TicketAutoBuyer from "../../../../../../app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, act, fireEvent } from "@testing-library/react";
+import { screen, act, fireEvent, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as spa from "actions/VSPActions";
@@ -396,12 +396,16 @@ test("render LEGACY_PurchasePage", () => {
   expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
 });
 
-test("test legacy autobuyer", () => {
+const getSettingsModalTitle = () =>
+  screen.getByText("Automatic ticket purchases");
+
+test("test legacy autobuyer", async () => {
   render(<TicketAutoBuyer />, initialState);
   const settingsButton = screen.getByRole("button", {
     name: "Ticket Autobuyer Settings"
   });
   user.click(screen.getByTestId("toggleSwitch"));
+  await wait(() => getSettingsModalTitle());
   const saveButton = screen.getByRole("button", { name: "Save" });
   user.click(saveButton);
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
@@ -440,6 +444,7 @@ test("test legacy autobuyer", () => {
 
   // clicking again on switch should open the confirmation modal
   user.click(screen.getByTestId("toggleSwitch"));
+  await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   expect(
     screen.getByText(/start ticket buyer confirmation/i)
   ).toBeInTheDocument();
@@ -451,6 +456,7 @@ test("test legacy autobuyer", () => {
   user.click(screen.getByText("Cancel"));
   // try again
   user.click(screen.getByTestId("toggleSwitch"));
+  await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerV2Attempt).toHaveBeenCalledWith(
