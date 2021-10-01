@@ -166,7 +166,8 @@ const darkTheme = {
   "toggle-bar-color": "var(--background-copy-color)",
 
   // override pi-ui's tab colors
-  "tab-default-color": "transparent", // default border
+  "tab-default-color": "var(--sidebar-color)", // default border
+  "tab-default-background": "var(--sidebar-color)",
   "tab-active-background": "var(--background-back-color)",
   "tab-text-active-color": "var(--input-color-default)",
   "tab-text-color": "var(--sidebar-menu-link)",
