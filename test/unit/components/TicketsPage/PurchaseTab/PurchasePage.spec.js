@@ -319,7 +319,7 @@ test("test autobuyer", async () => {
   // try again
   user.click(screen.getByTestId("toggleSwitch"));
   await wait(() => screen.getByText(/start ticket buyer confirmation/i));
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerV3Attempt).toHaveBeenCalledWith(
     mockPassphrase,
