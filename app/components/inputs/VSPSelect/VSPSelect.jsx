@@ -60,7 +60,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
               />
             </div>
           }>
-          {vsp.host}
+          <div className={styles.optionWrapper}>{vsp.host}</div>
         </Tooltip>
       ),
       value: vsp
@@ -116,6 +116,7 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
     return (
       <Creatable
         options={vspList}
+        clearable={!!newOption}
         placeholder={intl.formatMessage(messages.placeholder)}
         onChange={(option) => handleOnChange(option, isRetry)}
         value={selectedOption}

@@ -3,10 +3,17 @@
 }
 
 .tooltip {
-  width: 180px;
+  width: calc(100% + 20px);
   line-height: 30px;
   padding: 0 0 0 10px;
   margin: -10px;
+  display: inline-flex !important;
+}
+
+.optionWrapper {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .error {
@@ -18,11 +25,4 @@
   line-height: 20px;
   width: 95px;
   transition: 0.1s all ease;
-}
-
-@media screen and (max-width: 768px) {
-  .tooltip {
-    width: 150px;
-    padding: 0 10px 0 0;
-  }
 }
