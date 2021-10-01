@@ -68,7 +68,7 @@ export function useMenuLinks() {
     });
   }, [notifProps]);
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(-1);
   const history = useHistory();
   const onSelectTab = (index) => {
     if (!menuLinks[index].disabled) {

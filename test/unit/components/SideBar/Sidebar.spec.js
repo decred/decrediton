@@ -2,7 +2,7 @@ import SideBar from "components/SideBar/SideBar";
 import { render } from "test-utils.js";
 import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
-import { screen } from "@testing-library/react";
+import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import {
   rescanAttempt as mockRescanAttempt,
@@ -40,7 +40,7 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
-const defaultMenuLinkBorderColor = "border-color: transparent";
+const defaultMenuLinkBorderColor = "border-color: rgba(249, 250, 250, 1)"; //sidebar-color
 const activeMenuLinkBorderColor = "border-color: rgba(46, 216, 163, 1)";
 const testCurrentBlockHeight = 12;
 const testBalances = [
@@ -83,7 +83,7 @@ const getMenuContentByTestId = (testId, sidebarOnBottom, expandSideBar) => {
     menuLinkContent
   };
 };
-const expectToHaveDefaultMenuLinks = (params) => {
+const expectToHaveDefaultMenuLinks = async (params) => {
   const {
     sidebarOnBottom,
     isTrezorEnabled,
@@ -92,7 +92,7 @@ const expectToHaveDefaultMenuLinks = (params) => {
     isSPV = false
   } = params || {};
 
-  const expectToHaveMenuLink = (
+  const expectToHaveMenuLink = async (
     testId,
     name,
     className,
@@ -117,29 +117,31 @@ const expectToHaveDefaultMenuLinks = (params) => {
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
     user.click(menuLink);
     if (disabled) {
-      expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+      await wait(() =>
+        expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor)
+      );
       expect(mockHistoryPush).not.toHaveBeenCalledWith(path);
     } else {
-      expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+      await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
       expect(mockHistoryPush).toHaveBeenCalledWith(path);
     }
   };
 
-  expectToHaveMenuLink(
+  await expectToHaveMenuLink(
     "menuLinkContent-overview",
     "Overview",
     "overviewIcon",
     "/home",
     "Overview"
   );
-  expectToHaveMenuLink(
+  await expectToHaveMenuLink(
     "menuLinkContent-transactions",
     "On-chain Transactions",
     "transactionsIcon",
     "/transactions",
     "On-chain Transactions"
   );
-  expectToHaveMenuLink(
+  await expectToHaveMenuLink(
     "menuLinkContent-governance",
     "Governance",
     "governanceIcon",
@@ -147,21 +149,21 @@ const expectToHaveDefaultMenuLinks = (params) => {
     "Governance"
   );
   if (!sidebarOnBottom || expandSideBar) {
-    expectToHaveMenuLink(
+    await expectToHaveMenuLink(
       "menuLinkContent-tickets",
       "Staking",
       "ticketsIcon",
       "/tickets",
       "Staking"
     );
-    expectToHaveMenuLink(
+    await expectToHaveMenuLink(
       "menuLinkContent-accounts",
       "Accounts",
       "accountsIcon",
       "/accounts",
       "Accounts"
     );
-    expectToHaveMenuLink(
+    await expectToHaveMenuLink(
       "menuLinkContent-securitycntr",
       "Privacy and Security",
       "securitycntrIcon",
@@ -169,7 +171,7 @@ const expectToHaveDefaultMenuLinks = (params) => {
       "Privacy and Security"
     );
     if (isTrezorEnabled) {
-      expectToHaveMenuLink(
+      await expectToHaveMenuLink(
         "menuLinkContent-trezor",
         "Trezor",
         "trezorIcon",
@@ -181,7 +183,7 @@ const expectToHaveDefaultMenuLinks = (params) => {
         screen.queryByTestId("menuLinkContent-trezor")
       ).not.toBeInTheDocument();
 
-      expectToHaveMenuLink(
+      await expectToHaveMenuLink(
         "menuLinkContent-dex",
         "DEX",
         "dexIcon",
@@ -194,7 +196,7 @@ const expectToHaveDefaultMenuLinks = (params) => {
     }
   }
   if (isLnEnabled) {
-    expectToHaveMenuLink(
+    await expectToHaveMenuLink(
       "menuLinkContent-ln",
       "Lightning Transactions",
       "lnIcon",
@@ -369,7 +371,7 @@ test("renders sidebar with SPV enabled. DEX should be disabled", () => {
   mockIsSPV.mockRestore();
 });
 
-test("tests rescan on the expanded sidebar", () => {
+test("tests rescan on the expanded sidebar", async () => {
   const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => true));
 
   render(<SideBar />, {
@@ -381,7 +383,9 @@ test("tests rescan on the expanded sidebar", () => {
     }
   });
 
-  expect(screen.getByText(/seconds ago/i)).toBeInTheDocument();
+  await wait(() =>
+    expect(screen.getByText(/seconds ago/i)).toBeInTheDocument()
+  );
   expect(
     screen.getByRole("button", {
       name: /^rescan$/i
@@ -519,12 +523,12 @@ test("tests notification icon on the menu link", () => {
   mockNewProposalsStartedVoting.mockRestore();
 });
 
-test("tests tabbedPage location", () => {
+test("tests tabbedPage location", async () => {
   const { history } = render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-transactions");
   expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
   history.push("transactions/send");
-  expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+  await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
 });
 
 test("none of the menu links should be selected when clicking on the settings button", () => {
@@ -539,12 +543,14 @@ test("none of the menu links should be selected when clicking on the settings bu
 
   // click on Staking
   menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
-  menuLinkContents.map((menuLinkContent) => {
+  menuLinkContents.forEach(async (menuLinkContent) => {
     const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
     if (menuLink.textContent == "Staking") {
-      expect(menuLink).toHaveStyle(activeMenuLinkBorderColor);
+      await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
     } else {
-      expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+      await wait(() =>
+        expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor)
+      );
     }
   });
 
