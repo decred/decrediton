@@ -18,6 +18,7 @@ import {
   CreateDexAcctPageHeader
 } from "./CreateDexAcctPage";
 import ErrorHeader from "./ErrorHeader";
+import { useIntl } from "react-intl";
 
 export const useDex = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export const useDex = () => {
   const btcConfigUpdateNeeded = useSelector(sel.btcConfigUpdateNeeded);
   const btcWalletName = useSelector(sel.btcWalletName);
   const mixedAccount = useSelector(sel.getMixedAccount);
+  const intl = useIntl();
 
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
@@ -215,6 +217,7 @@ export const useDex = () => {
     btcWalletName,
     Page,
     Header,
-    mixedAccount
+    mixedAccount,
+    intl
   };
 };

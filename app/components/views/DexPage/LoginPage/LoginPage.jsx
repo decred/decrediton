@@ -1,14 +1,21 @@
 import { useDex } from "../hooks";
 import { PassphraseModalButton } from "buttons";
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  dexPassphraseLabelText: {
+    id: "dex.loginDexPassphrase",
+    defaultMessage: "DEX Passphrase"
+  }
+});
 
 const LoginPage = () => {
-  const { onLoginDex, loginAttempt } = useDex();
+  const { onLoginDex, loginAttempt, intl } = useDex();
 
   return (
     <PassphraseModalButton
       disabled={loginAttempt}
-      passphraseLabel={<T id="dex.loginDexPassphrase" m="DEX Passphrase" />}
+      passphraseLabel={intl.formatMessage(messages.dexPassphraseLabelText)}
       modalTitle={<T id="dex.loginPassphrase" m="Enter DEX Passphrase" />}
       loading={loginAttempt}
       onSubmit={onLoginDex}

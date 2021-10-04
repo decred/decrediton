@@ -1,12 +1,14 @@
 import Modal from "./ChangePassphraseModalContent";
 import { useEffect, useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
+import { useIntl } from "react-intl";
 
 const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   const [newPassphrase, setNewPassphrase] = useState(null);
   const [confirmPrivPass, setConfirmPrivPass] = useState(null);
   const [isValid, setIsValid] = useState(false);
   const [error, setIsError] = useState("");
+  const intl = useIntl();
 
   const resetState = useCallback(() => {
     setNewPassphrase(null);
@@ -63,7 +65,8 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
         onSubmit: onSubmitCallback,
         setNewPassphrase,
         setConfirmPrivPass,
-        error
+        error,
+        intl
       }}
     />
   );

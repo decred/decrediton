@@ -571,9 +571,9 @@ test("test update private passphrase", () => {
   const continueButton = screen.getByText("Continue");
   expect(continueButton.disabled).toBe(true);
   // test 'This Field is required' error message
-  testPassphraseInputRequiedErrorMsg("Private Passphrase:");
-  testPassphraseInputRequiedErrorMsg("New Private Passphrase:");
-  testPassphraseInputRequiedErrorMsg("Confirm:");
+  testPassphraseInputRequiedErrorMsg("Private Passphrase");
+  testPassphraseInputRequiedErrorMsg("New Private Passphrase");
+  testPassphraseInputRequiedErrorMsg("Confirm");
   expect(continueButton.disabled).toBe(true);
 
   // fill input fields

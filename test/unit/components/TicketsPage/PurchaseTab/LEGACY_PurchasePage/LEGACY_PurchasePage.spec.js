@@ -307,7 +307,7 @@ test("render LEGACY_PurchasePage", () => {
 
   const purchaseButton = screen.getByText("Purchase");
   user.click(purchaseButton);
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockPurchaseTicketsAttempt).toHaveBeenCalledWith(
     mockPassphrase,
@@ -391,7 +391,7 @@ test("render LEGACY_PurchasePage", () => {
   user.click(screen.getByText("Cancel"));
   // try again
   user.click(screen.getByText("Revoke"));
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
 });
@@ -457,7 +457,7 @@ test("test legacy autobuyer", async () => {
   // try again
   user.click(screen.getByTestId("toggleSwitch"));
   await wait(() => screen.getByText(/start ticket buyer confirmation/i));
-  user.type(screen.getByLabelText("Private Passphrase:"), mockPassphrase);
+  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerV2Attempt).toHaveBeenCalledWith(
     mockPassphrase,
