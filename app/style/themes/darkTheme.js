@@ -324,7 +324,26 @@ const darkTheme = {
   "right-arrow": url(require("style/icons/rightArrowDark.svg")),
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
-  "plus-icon": url(require("style/icons/plusIcon.svg"))
+  "plus-icon": url(require("style/icons/plusIcon.svg")),
+  "ln-confirmed-balance-icon": url(
+    require("style/icons/LNConfirmedBalanceIconDark.svg")
+  ),
+  "ln-unconfirmed-balance-icon": url(
+    require("style/icons/LNUnconfirmedBalanceIconDark.svg")
+  ),
+  "ln-total-account-balance-icon": url(
+    require("style/icons/LNTotalAccountBalanceIconDark.svg")
+  ),
+  "ln-open-channels-icon": url(
+    require("style/icons/LNOpenChannelsIconDark.svg")
+  ),
+  "ln-capacity-icon": url(require("style/icons/LNCapacityIconDark.svg")),
+  "ln-nodes-icon": url(require("style/icons/LNNodesIconDark.svg")),
+  "ln-channels-icon": url(require("style/icons/LNChannelsIconDark.svg")),
+  "ln-network-capacity-icon": url(
+    require("style/icons/LNNetworkCapacityIconDark.svg")
+  ),
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
 };
 
 export default darkTheme;

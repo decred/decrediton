@@ -1,0 +1,108 @@
+.container {
+  width: 764px;
+}
+
+.nodeInfos {
+  margin-top: 1em;
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+}
+
+.nodeAlias {
+  margin-top: 5px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.copyableText {
+  margin-top: 10px;
+}
+
+.copyableText span {
+  background-color: var(--background-address-copy-color);
+  border-radius: 5px;
+  vertical-align: middle;
+  width: 750px;
+  color: var(--input-color-default);
+  font-size: 19px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 30px;
+  position: relative;
+  border: 1px transparent solid;
+  transition: border-color 1s;
+}
+
+.copyableText span:hover {
+  border: 1px var(--input-copy-hover-color) solid;
+}
+
+.copyableText > div > div:nth-child(1) {
+  position: absolute;
+  top: 35px;
+  left: -20px;
+  text-align: center;
+  transform: none;
+}
+
+.backupPanel {
+  background-image: var(--backup-icon);
+  background-color: var(--background-back-color);
+  background-position: 40px 30px;
+  background-repeat: no-repeat;
+  background-size: 45px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding: 30px 40px 30px 95px;
+}
+
+.backupSubtitle {
+  margin-left: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.backupInfoBtn {
+  margin-right: 2px;
+}
+
+.balanceHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -5px 35px -5px;
+}
+
+.balanceTile {
+  padding: 30px;
+  background-color: var(--background-back-color);
+  max-width: 400px;
+  flex: 1 1 0;
+  margin: 0 5px 10px 5px;
+}
+
+.balanceValue {
+  font-size: 32px;
+}
+
+.hasFunds {
+  border-bottom: 10px solid var(--color-primary);
+}
+
+.unconfirmed {
+  border-bottom: 10px solid var(--selected_wallet-label);
+}
+
+.zeroFunds {
+  border-bottom: 10px solid var(--error-red);
+}
+
+.lastItem {
+  margin-bottom: 40px;
+}
+
+.networkTitle {
+  margin-bottom: 40px;
+}

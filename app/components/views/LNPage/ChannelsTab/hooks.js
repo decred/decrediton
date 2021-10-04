@@ -1,5 +1,5 @@
 import { defineMessages } from "react-intl";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLNPage } from "../hooks";
 import * as lna from "actions/LNActions";
@@ -38,6 +38,14 @@ export function useChannelsTab() {
   const [nodeErrorMsg, setNodeErrorMsg] = useState(null);
   const [nodeShowSuccess, setNodeShowSuccess] = useState(false);
 
+  const location = useSelector(sel.location);
+  useEffect(() => {
+    const pubKey = location.query.pubKey;
+    if (pubKey && pubKey != "") {
+      setNode(pubKey);
+    }
+  }, [location]);
+
   const {
     channels,
     pendingChannels,
@@ -45,25 +53,9 @@ export function useChannelsTab() {
     isMainNet,
     openChannel,
     closeChannel,
-    describeGraph
+    describeGraph,
+    recentNodes
   } = useLNPage();
-
-  const recentNodes = useMemo(
-    () =>
-      [
-        ...new Set(
-          [...pendingChannels, ...channels, ...closedChannels].map(
-            (c) => c.remotePubkey
-          )
-        )
-      ].map((pubKey) => {
-        const nodeDetails = describeGraph?.nodeList?.find(
-          (node) => node.pubKey === pubKey
-        );
-        return { pubKey: pubKey, alias: nodeDetails?.alias || pubKey };
-      }),
-    [channels, pendingChannels, closedChannels, describeGraph]
-  );
 
   const hideSearchBt = describeGraph?.nodeList?.length <= 1 ?? true;
 

@@ -1,0 +1,94 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, max-content) 1px repeat(2, max-content);
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+  margin-bottom: 30px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-right: 42px;
+}
+
+.item .icon {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 22px;
+  height: 34px;
+}
+
+.item.confirmedBalance .icon {
+  background-image: var(--ln-confirmed-balance-icon);
+}
+
+.item.unconfirmedBalance .icon {
+  background-image: var(--ln-unconfirmed-balance-icon);
+}
+
+.item.totalAccountBalance .icon {
+  background-image: var(--ln-total-account-balance-icon);
+}
+
+.item.openChannels {
+  margin-left: 42px;
+}
+.item.openChannels .icon {
+  background-image: var(--ln-open-channels-icon);
+  background-size: 29px;
+}
+
+.item.capacity {
+  margin-right: 0;
+}
+
+.item.capacity .icon {
+  background-image: var(--ln-capacity-icon);
+}
+
+.label {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: var(--grey-7);
+  margin: 5px 0 10px 0;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23px;
+  text-align: center;
+  color: var(--main-dark-blue);
+}
+
+.balance,
+.balanceSecondary,
+.balanceUnit {
+  color: var(--main-dark-blue);
+}
+
+.border {
+  height: 100%;
+  width: 1px;
+  background-color: var(--grey-3);
+}
+
+@media screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 10px;
+    padding: 30px 20px;
+  }
+
+  .border {
+    display: none;
+  }
+
+  .item,
+  .item.openChannels,
+  .item.capacity {
+    margin: 0;
+  }
+}

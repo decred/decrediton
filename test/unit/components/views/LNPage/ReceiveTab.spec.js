@@ -5,101 +5,24 @@ import { screen, wait } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
-import { mockLnChannelBalance } from "./mocks";
+import {
+  mockLnChannelBalance,
+  mockInvoices,
+  mockChannels,
+  mockPendingChannels,
+  mockClosedChannels
+} from "./mocks";
 
 const selectors = sel;
 const lnActions = lna;
-
-const mockInvoices = [
-  {
-    memo: "mock-memo-1",
-    rHash: "mock-rhash-1",
-    value: 10000000,
-    valueMAtoms: 10000000000,
-    settled: false,
-    creationDate: 1626706566,
-    settleDate: 0,
-    paymentRequest: "mock-payment-request1",
-    descriptionHash: "",
-    expiry: 3600,
-    fallbackAddr: "",
-    cltvExpiry: 80,
-    routeHintsList: [],
-    pb_private: false,
-    addIndex: 28,
-    settleIndex: 0,
-    amtPaid: 0,
-    amtPaidAtoms: 0,
-    amtPaidMAtoms: 0,
-    state: 0,
-    htlcsList: [],
-    ignoreMaxInboundAmt: false,
-    featuresMap: [],
-    isKeysend: false,
-    status: "open",
-    rHashHex: "mock-rhash-hex-1"
-  },
-  {
-    memo: "mock-memo-2",
-    rPreimage: "mock-rpreimage-2",
-    rHash: "mock-rhash-21",
-    value: 1000,
-    valueMAtoms: 1000000,
-    settled: true,
-    creationDate: 1626706536,
-    settleDate: 1626706576,
-    paymentRequest: "mock-payment-request2",
-    descriptionHash: "",
-    expiry: 3600,
-    fallbackAddr: "",
-    cltvExpiry: 80,
-    routeHintsList: [],
-    pb_private: false,
-    addIndex: 27,
-    settleIndex: 1,
-    amtPaid: 1000000,
-    amtPaidAtoms: 1000,
-    amtPaidMAtoms: 1000000,
-    state: 1,
-    ignoreMaxInboundAmt: false,
-    isKeysend: false,
-    status: "settled",
-    rHashHex: "mock-rhash-hex-21"
-  },
-  {
-    memo: "mock-memo-3",
-    rPreimage: "mock-ppreimage-3",
-    rHash: "mock-rhash-22",
-    value: 1000,
-    valueMAtoms: 1000000,
-    settled: false,
-    creationDate: 1626703527,
-    settleDate: 0,
-    paymentRequest: "mock-payment-request3",
-    descriptionHash: "",
-    expiry: 3600,
-    fallbackAddr: "",
-    cltvExpiry: 80,
-    routeHintsList: [],
-    pb_private: false,
-    addIndex: 26,
-    settleIndex: 0,
-    amtPaid: 0,
-    amtPaidAtoms: 0,
-    amtPaidMAtoms: 0,
-    state: 2,
-    htlcsList: [],
-    ignoreMaxInboundAmt: false,
-    isKeysend: false,
-    status: "canceled",
-    rHashHex: "mock-rhash-hex-22"
-  }
-];
 
 let mockCancelInvoice;
 let mockAddInvoice;
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
+  selectors.lnPendingChannels = jest.fn(() => mockPendingChannels);
+  selectors.lnClosedChannels = jest.fn(() => mockClosedChannels);
+  selectors.lnChannels = jest.fn(() => mockChannels);
   selectors.lnChannelBalances = jest.fn(() => mockLnChannelBalance);
   selectors.lnInvoices = jest.fn(() => mockInvoices);
   mockCancelInvoice = lnActions.cancelInvoice = jest.fn(() => () =>

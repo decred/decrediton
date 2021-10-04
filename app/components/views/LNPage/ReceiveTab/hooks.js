@@ -24,7 +24,13 @@ export function useReceiveTab() {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const intl = useIntl();
 
-  const { invoices, tsDate, addInvoiceAttempt, addInvoice } = useLNPage();
+  const {
+    invoices,
+    tsDate,
+    addInvoiceAttempt,
+    addInvoice,
+    cancelInvoice
+  } = useLNPage();
 
   const onValueChanged = ({ atomValue }) => setAtomValue(atomValue);
 
@@ -107,11 +113,6 @@ export function useReceiveTab() {
 
   const onChangeInvoiceFilter = useCallback(
     (newFilter) => dispatch(lna.changeInvoiceFilter(newFilter)),
-    [dispatch]
-  );
-
-  const cancelInvoice = useCallback(
-    (paymentHash) => dispatch(lna.cancelInvoice(paymentHash)),
     [dispatch]
   );
 

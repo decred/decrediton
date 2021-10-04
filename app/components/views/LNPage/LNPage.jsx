@@ -2,14 +2,11 @@ import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { Switch, Redirect } from "react-router-dom";
 import { ConnectPage } from "./ConnectPage";
-import WalletTab, { WalletTabHeader } from "./WalletTab/WalletTab";
+import { AdvancedTab, AdvancedTabHeader } from "./AdvancedTab";
 import { ChannelsTab, ChannelsTabHeader } from "./ChannelsTab";
 import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
 import { SendTab, SendTabHeader } from "./SendTab";
-import WatchtowersTab, {
-  WatchtowersTabHeader
-} from "./WatchtowersTab/WatchtowersTab";
-import NetworkTab, { NetworkTabHeader } from "./NetworkTab/NetworkTab";
+import { OverviewTab, OverviewTabHeader } from "./OverviewTab";
 import { LN_ICON } from "constants";
 import { useLNPage } from "./hooks";
 
@@ -23,13 +20,13 @@ const LNPageHeader = () => (
 const LNActivePage = () => (
   <TabbedPage header={<LNPageHeader />}>
     <Switch>
-      <Redirect from="/ln" exact to="/ln/wallet" />
+      <Redirect from="/ln" exact to="/ln/overview" />
     </Switch>
     <Tab
-      path="/ln/wallet"
-      component={WalletTab}
-      header={WalletTabHeader}
-      link={<T id="ln.tab.wallet" m="Wallet" />}
+      path="/ln/overview"
+      component={OverviewTab}
+      header={OverviewTabHeader}
+      link={<T id="ln.tab.overview" m="Overview" />}
     />
     <Tab
       path="/ln/channels"
@@ -50,16 +47,10 @@ const LNActivePage = () => (
       link={<T id="ln.tab.receive" m="Receive" />}
     />
     <Tab
-      path="/ln/network"
-      component={NetworkTab}
-      header={NetworkTabHeader}
-      link={<T id="ln.tab.network" m="Network" />}
-    />
-    <Tab
-      path="/ln/watchtowers"
-      component={WatchtowersTab}
-      header={WatchtowersTabHeader}
-      link={<T id="ln.tab.watchtowers" m="Watchtowers" />}
+      path="/ln/advanced"
+      component={AdvancedTab}
+      header={AdvancedTabHeader}
+      link={<T id="ln.tab.advanced" m="Advanced" />}
     />
   </TabbedPage>
 );

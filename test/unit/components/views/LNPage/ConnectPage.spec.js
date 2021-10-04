@@ -7,6 +7,7 @@ import * as ca from "actions/ControlActions";
 import * as lna from "actions/LNActions";
 import { DCR } from "constants";
 const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
+import { mockChannels, mockPendingChannels, mockClosedChannels } from "./mocks";
 
 const mockMixedAccountValue = 6;
 const mockDefaultAccount = {
@@ -56,6 +57,9 @@ const controlActions = ca;
 let mockStartDcrlnd;
 
 beforeEach(() => {
+  selectors.lnPendingChannels = jest.fn(() => mockPendingChannels);
+  selectors.lnClosedChannels = jest.fn(() => mockClosedChannels);
+  selectors.lnChannels = jest.fn(() => mockChannels);
   selectors.lnWalletExists = jest.fn(() => false);
   selectors.defaultSpendingAccount = jest.fn(() => mockDefaultAccount);
   selectors.visibleAccounts = jest.fn(() => mockVisibleAccounts);
