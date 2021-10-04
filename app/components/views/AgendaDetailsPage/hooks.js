@@ -20,7 +20,7 @@ export const useAgendaDetails = () => {
   const choices = useMemo(
     () =>
       agendaChoices.map((choice) => ({
-        choiceId: choice.getId()
+        choiceId: choice.id
       })),
     [agendaChoices]
   );
