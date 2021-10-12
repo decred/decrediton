@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Decrediton Translator</title>
+    <meta charset="utf-8">
+
+    <style>
+      #error {
+        color: red;
+        padding: 2em;
+      }
+
+      #translation_ui {
+        display: none;
+        grid-template-columns: 2fr 4fr;
+      }
+
+      #string_list {
+        border: 1px solid #ccc;
+        margin: 10px;
+        padding-right: 0.5em;
+        padding-top: 1em;
+      }
+
+      #string_list li {
+        cursor: pointer;
+        user-select: none;
+        margin-bottom: 1em;
+      }
+
+      #string_list li:hover {
+        cursor: pointer;
+        color: blue;
+      }
+
+      #string_list li span {
+        display: block;
+        color: #888;
+        font-size: 60%;
+      }
+
+      #string_list li.selected {
+        color: #ff8051;
+      }
+
+      #original_str, #prev_original_str {
+        margin: 10px 0px;
+        border: 1px solid #ccc;
+        padding: 1em 1em 2em 1em;
+      }
+
+      #prev_original_str::after {
+        display: block;
+        position: absolute;
+        font-size: 60%;
+        color: #888;
+        content: "Previous Original String";
+        margin-top: 10px;
+      }
+
+      #original_str::after {
+        display: block;
+        position: absolute;
+        font-size: 60%;
+        color: #888;
+        content: "Original String";
+        margin-top: 10px;
+      }
+
+      #buttons {
+        margin: 10px 0px;
+      }
+
+      #translated_str {
+        width: 100%;
+        font-size: 150%;
+      }
+
+      #translated {
+        margin-right: 5px;
+      }
+
+      #deleted_entries {
+        grid-column: 2/-1;
+      }
+
+      #deleted_entries > div {
+        margin-bottom: 1em;
+      }
+
+      #deleted_entries > div:hover {
+        color: blue;
+        cursor: pointer;
+      }
+
+      #deleted_entries > div > div:nth-child(2) {
+        font-size: 60%;
+        color: #888;
+      }
+
+    </style>
+
+    <script>
+      // Global state of the app.
+      let state = {
+        original: {},
+        translated: {},
+        selectedKey: "",
+        seenKeys: [],
+        prevOriginal: {},
+        changedEntries: [],
+        deletedEntries: [],
+      };
+
+      function updateState(delta) {
+        state = { ...state, ...delta };
+      }
+
+      function elID(id) {
+        return document.getElementById(id);
+      }
+
+      function newEl(parent, tagname) {
+        const el = document.createElement(tagname);
+        parent.appendChild(el);
+        return el;
+      }
+
+      function prepareTranslatedFile() {
+        const translated = state.translated;
+        let data = Object.keys(translated).sort().map(k => `    "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
+        let json = `{\n${data}\n}\n`;
+        const file = new Blob([json], {type: "application/octet-stream"});
+        const url = URL.createObjectURL(file);
+
+        const downBtn = elID("down_translation_btn");
+        downBtn.href = url;
+        downBtn.download = "custom-translation.json";
+      }
+
+      function saveTranslation() {
+        if (state.selectedKey) {
+          // Save last translation.
+          state.translated[state.selectedKey] = elID("translated_str").value;
+
+          prepareTranslatedFile();
+        }
+      }
+
+      function changeToKey(newkey) {
+        saveTranslation();
+        let v = state.translated[newkey] ? state.translated[newkey] : "";
+        elID("translated_str").value = v;
+        updateState({ selectedKey: newkey });
+        refreshUI();
+      }
+
+      function refreshUI() {
+        const filterVal = document.querySelector('input[name="filter"]:checked').value;
+
+        const stringsEl = elID("string_list");
+        stringsEl.innerHTML = "";
+
+
+        Object.keys(state.original).map(k => {
+          if (filterVal === "untranslated" && state.translated[k]) {
+            return;
+          }
+          if (filterVal === "changed" && state.changedEntries.indexOf(k) == -1) {
+            return;
+          }
+          const li = newEl(stringsEl, "li");
+          li.innerText = state.original[k];
+          newEl(li, "span").innerText = k;
+
+          if (k === state.selectedKey) {
+            li.classList.add("selected");
+          }
+
+          li.onclick = () => changeToKey(k);
+        });
+
+        const origStr = state.original[state.selectedKey] ? state.original[state.selectedKey] : "";
+        elID("original_str").innerText = origStr;
+
+        const prevStr = state.prevOriginal[state.selectedKey] ? state.prevOriginal[state.selectedKey] : "";
+        elID("prev_original_str").innerText = prevStr;
+        elID("prev_original_str").hidden = (prevStr == "") || (origStr == prevStr);
+      }
+
+      function nextKey() {
+        let gotPrev = false;
+        let keys = Object.keys(state.original);
+        const filterVal = document.querySelector('input[name="filter"]:checked').value;
+        for (let i = 0; i < keys.length; i++) {
+          const k = keys[i];
+          if (filterVal === "untranslated" && state.translated[k] != "") {
+            continue;
+          }
+
+          if (gotPrev) {
+            changeToKey(k);
+            return;
+          } else if (k === state.selectedKey) {
+            gotPrev = true;
+          }
+        };
+
+        if (gotPrev) {
+          // gotPrev but not the next one, so reached the end of the list.
+          saveTranslation();
+          state.selectedKey = "";
+          refreshUI();
+        }
+      }
+
+
+      function textAreaKeyDown(event) {
+        if (event.keyCode === 9) {
+          event.preventDefault();
+          let v = this.value;
+          let s = this.selectionStart;
+          let e = this.selectionEnd;
+          this.value = v.substring(0, s) + '    ' + v.substring(e);
+          this.selectionStart = this.selectionEnd = s+1;
+          return false;
+        }
+        if (event.keyCode === 13 && event.ctrlKey) {
+          event.preventDefault();
+          nextKey();
+          return false;
+        }
+        if (event.key === "g" && event.ctrlKey) {
+          event.preventDefault()
+          copyOriginal();
+          return false;
+        }
+      }
+
+      function copyOriginal() {
+        let originalStr = state.original[state.selectedKey];
+        elID("translated_str").value = originalStr;
+      }
+
+      async function dotry(f, ...args) {
+        try {
+          await f(...args);
+        } catch (error) {
+          const el = elID("error")
+          el.innerText = "Caught exception: " + String(error);
+          el.hidden = false;
+          throw error;
+        }
+      }
+
+      function readFile(id) {
+        return new Promise((ok) => {
+          const el = elID(id);
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const data = JSON.parse(e.target.result);
+            ok(data);
+          }
+          reader.readAsText(el.files[0]);
+        })
+      }
+
+      async function startTranslation() {
+        const prevOrig = await readFile("prevoriginal_file");
+        const orig = await readFile("original_file");
+        const translated = await readFile("lang_file");
+
+        // Figure out all changed entries between prevOrig and orig.
+        const changedEntries = [];
+        const deletedEntries = [];
+        Object.keys(prevOrig).forEach((k) => {
+          if ((orig[k] === undefined) && (translated[k] !== undefined)) deletedEntries.push(k)
+          else if (orig[k] !== prevOrig[k]) changedEntries.push(k);
+        });
+
+
+        updateState({ original: orig, translated: translated,
+          prevOriginal: prevOrig, changedEntries });
+        prepareTranslatedFile();
+
+
+        // Update div with previously translated entries that were removed.
+        const delEntriesEl = elID("deleted_entries");
+        deletedEntries.forEach((k) => {
+          const container = newEl(delEntriesEl, "div");
+          const txtEl = newEl(container, "div");
+          txtEl.innerText = translated[k];
+          txtEl.onclick = () => elID("translated_str").value = txtEl.innerText;
+          newEl(container, "div").innerText = k;
+        });
+
+        refreshUI();
+
+        elID("load_files").hidden = true;
+        elID("translation_ui").style.display = "grid";
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="error" hidden="true"></div>
+
+    <div id="load_files">
+      <div>Load the "previous_original.json" file: <input id="prevoriginal_file" type="file"></div>
+      <div>Load the "original.json" file: <input id="original_file" type="file"></div>
+      <div>Load the "[language].json" file: <input id="lang_file" type="file"></div>
+      <div><button onclick="dotry(startTranslation)">Start</button></div>
+    </div>
+
+    <div id="translation_ui">
+      <div>
+        <div>
+          <input type="radio" name="filter" value="all" checked="checked" onclick="dotry(refreshUI)">All
+          <input type="radio" name="filter" value="untranslated" onclick="dotry(refreshUI)">Untranslated
+          <input type="radio" name="filter" value="changed" checked="checked" onclick="dotry(refreshUI)">Changed
+        </div>
+
+        <ul id="string_list">
+        </ul>
+      </div>
+
+      <div>
+        <div id="prev_original_str"></div>
+        <div id="original_str"></div>
+
+        <div id="buttons">
+          <button onclick="nextKey()" alt="Next String (ctrl+enter)">></button>
+          <button onclick="copyOriginal()" alt="Copy original (ctrl+g)">\/</button>
+          <a id="down_translation_btn" onclick="saveTranslation()" href="#">Save Translation</a>
+        </div>
+
+        <div style="font-size: 60%; color: #888">
+          ctrl+&lt;enter&gt;: save string & goto next<br>
+          ctrl+g: copy original string
+        </div>
+
+        <div style="margin-right: 5px;">
+          <textarea rows="10" id="translated_str" onkeydown="textAreaKeyDown.apply(this, [event])"></textarea>
+        </div>
+      </div>
+
+      <hr style="grid-column: 1/-1; height: 1px; width: 100%">
+
+      <h2 style="grid-column: 2/-1">Deleted Entries</h2>
+      <div id="deleted_entries">
+      </div>
+    </div>
+  </body>
+</html>

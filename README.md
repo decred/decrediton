@@ -80,7 +80,6 @@ The current recommended versions for the main tools are:
   - Node: 14.16.1
   - Npm: 6.4+
   - Yarn: 1.12+
-  - Electron: 3.0.6
 
 To ease node version management, install all top-level tools (node/npm/yarn) using [nvm](https://github.com/nvm-sh/nvm).
 
@@ -116,7 +115,7 @@ yarn dev
 
 ### Requirements for DEX Development Usage
 
-The building of the dex module requires Go to be installed.  
+The building of the dex module requires Go to be installed.
 
 ### Keeping up with dcrd/dcrwallet changes
 
@@ -176,7 +175,7 @@ When generating the TLS keypairs for the rpc endpoint you should use the P-256 c
 
 ## Platform-specific instructions
 
-### macOS 
+### macOS
 
 To start decrediton from command-line (assuming it is installed in `/Applications`):
 

@@ -110,6 +110,11 @@ import {
   DISABLE_HARDWARE_ACCEL
 } from "constants/config";
 import {
+  loadCustomTranslation,
+  getCustomTranslationMessages,
+  currentLocalePlusCustomMsgs
+} from "./main_dev/customTranslation";
+import {
   default as devtoolsInstaller,
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS
@@ -441,6 +446,11 @@ handle("clean-shutdown", () =>
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID())
 );
 
+ipcMain.on(
+  "custom-translation-msgs",
+  (event) => (event.returnValue = getCustomTranslationMessages())
+);
+
 ipcMain.on("app-reload-ui", () => {
   mainWindow.reload();
 });
@@ -632,6 +642,14 @@ function setMenuLocale(locale) {
   //Removes previous listeners of "context-menu" event.
   mainWindow.webContents._events["context-menu"] = [];
 
+  // Merge locale messages with the english one, so any missing entries revert
+  // to english.
+  locale = { ...locale };
+  locale.messages = {
+    ...locales.find((v) => v.key == "en").messages,
+    ...locale.messages
+  };
+
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
     const inptMenu = inputMenu(
@@ -663,7 +681,18 @@ function setMenuLocale(locale) {
     }
   });
 
-  const template = initTemplate(mainWindow, confirmBrowserView, locale);
+  const loadCustomI18n = async () => {
+    await loadCustomTranslation();
+    setMenuLocale(currentLocalePlusCustomMsgs());
+    mainWindow.reload();
+  };
+
+  const template = initTemplate(
+    mainWindow,
+    confirmBrowserView,
+    loadCustomI18n,
+    locale
+  );
 
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);

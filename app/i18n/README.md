@@ -1,6 +1,8 @@
 # Decrediton i18n & l12n
 
-This file explains the general layout of how internationalization (i18n) and localization (l12n) work in Decrediton.
+This file explains the general layout of how internationalization (i18n) and localization (l12n) work in Decrediton. This file is intended for **developers**.
+
+**Community translators** should read [community_translators.md](community_translators.md).
 
 ## During Coding
 
