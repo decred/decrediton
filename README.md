@@ -116,7 +116,7 @@ yarn dev
 
 ### Requirements for DEX Development Usage
 
-The building of the dex module requires Go to be installed.  
+The building of the dex module requires Go to be installed.
 
 ### Keeping up with dcrd/dcrwallet changes
 
@@ -176,7 +176,7 @@ When generating the TLS keypairs for the rpc endpoint you should use the P-256 c
 
 ## Platform-specific instructions
 
-### macOS 
+### macOS
 
 To start decrediton from command-line (assuming it is installed in `/Applications`):
 
@@ -238,6 +238,8 @@ The end result for module compilation should be the following files:
 *Note*: `yarn start` does _not_ currently correctly load the win32ipc module, so
 testing with yarn build/start will fail to correctly unload dcrd/dcrwallet when
 closing.
+
+When using git bash, `cmd.exe` or Powershell, you might need to install [MingW-w64](https://www.mingw-w64.org/) to get access to gcc and be able to compile libdex. After installing it, ensure `gcc` and `python` are accessible in console (add the appropriate binary paths to the `%PATH%` environment variable).
 
 
 ### Raspberry Pi & Other Platforms
