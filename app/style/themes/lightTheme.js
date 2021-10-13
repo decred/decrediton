@@ -164,6 +164,7 @@ const lightTheme = {
   "ln-active-tab-color": "var(--main-dark-blue)",
   "ln-close-channel-button-bg": "var(--grey-7)",
   "ln-close-channel-button-text": "#fff",
+  "trezor-pin-bt-border": "#C4CBD2",
 
   // override pi-ui's tab colors
   "tab-default-color": "var(--sidebar-color)", // default border
