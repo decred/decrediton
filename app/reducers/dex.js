@@ -45,10 +45,7 @@ import {
   CHECK_BTC_CONFIG_FAILED,
   CHECK_BTC_CONFIG_SUCCESS,
   CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
-  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
-  UPDATE_BTC_CONFIG_ATTEMPT,
-  UPDATE_BTC_CONFIG_FAILED,
-  UPDATE_BTC_CONFIG_SUCCESS
+  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL
 } from "../actions/DexActions";
 
 export default function ln(state = {}, action) {
@@ -372,26 +369,6 @@ export default function ln(state = {}, action) {
         ...state,
         checkBtcConfigAttempt: false,
         btcInstallNeeded: true
-      };
-    case UPDATE_BTC_CONFIG_ATTEMPT:
-      return {
-        ...state,
-        updateBtcConfigAttempt: true,
-        updateBtcConfigError: null,
-        btcConfig: null
-      };
-    case UPDATE_BTC_CONFIG_FAILED:
-      return {
-        ...state,
-        updateBtcConfigAttempt: false,
-        updateBtcConfigError: action.error
-      };
-    case UPDATE_BTC_CONFIG_SUCCESS:
-      return {
-        ...state,
-        updateBtcConfigAttempt: false,
-        updateBtcConfigError: null,
-        btcConfig: action.btcConfig
       };
     default:
       return state;

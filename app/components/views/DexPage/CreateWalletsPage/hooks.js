@@ -6,16 +6,18 @@ export const useDexCreateWallets = ({
   dexAccount,
   onBTCCreateWalletDex,
   onCreateWalletDex,
-  onCheckBTCConfig
+  onCheckBTCConfig,
+  onNewBTCConfig
 }) => {
   const [walletName, setWalletName] = useState(btcWalletName);
+  const [bitcoinDirectory, setBitcoinDirectory] = useState("");
 
   const resetState = useCallback(() => {
     setWalletName(btcWalletName);
   }, [btcWalletName]);
 
   useMountEffect(() => {
-    onCheckBTCConfig();
+    onCheckBTCConfig(bitcoinDirectory);
   });
 
   const onCreateWallet = (passphrase, args) => {
@@ -30,5 +32,10 @@ export const useDexCreateWallets = ({
     resetState();
   };
 
-  return { walletName, setWalletName, onCreateWallet, onBTCCreateWallet };
+  const onNewBTCConfigDex = () => {
+    onNewBTCConfig(bitcoinDirectory);
+    resetState();
+  };
+
+  return { walletName, setWalletName, onCreateWallet, onBTCCreateWallet, onNewBTCConfigDex, setBitcoinDirectory };
 };

@@ -263,8 +263,10 @@ export function checkNoLegacyWalletConfig(testnet, walletPath, noLegacyRpc) {
   }
 }
 
-export const getCurrentBitcoinConfig = () => {
-  const btcConfPath = path.join(getDefaultBitcoinDirectory(), "bitcoin.conf");
+export const getCurrentBitcoinConfig = (bitcoinDirectory) => {
+  // if bitcoinDirectory is empty then just use the default
+  const confDir = bitcoinDirectory ? bitcoinDirectory : getDefaultBitcoinDirectory()
+  const btcConfPath = path.join(confDir, "bitcoin.conf");
   return ini.parse(fs.readFileSync(btcConfPath, "utf8"));
 };
 
@@ -273,9 +275,12 @@ export function newDefaultBitcoinConfig(
   rpcpassword,
   rpcbind,
   rpcport,
-  testnet
+  testnet,
+  bitcoinDirectory
 ) {
-  if (!fs.existsSync(path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"))) {
+  // if bitcoinDirectory is empty then just use the default
+  const confDir = bitcoinDirectory ? bitcoinDirectory : getDefaultBitcoinDirectory()
+  if (!fs.existsSync(path.join(confDir, "bitcoin.conf"))) {
     let bitcoinConf = {};
     if (testnet) {
       bitcoinConf = {
@@ -297,103 +302,9 @@ export function newDefaultBitcoinConfig(
       };
     }
     fs.writeFileSync(
-      path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
+      path.join(confDir, "bitcoin.conf"),
       ini.stringify(bitcoinConf)
     );
   }
 }
 
-export const updateDefaultBitcoinConfig = (
-  rpcuser,
-  rpcpassword,
-  rpcbind,
-  rpcport,
-  testnet
-) =>
-  new Promise((resolve, reject) => {
-    try {
-      // Check if default file exists, if not create a new one with args given.
-      if (
-        !fs.existsSync(path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"))
-      ) {
-        // check to see if directory exists, if not make it
-        fs.existsSync(getDefaultBitcoinDirectory()) ||
-          fs.mkdirSync(getDefaultBitcoinDirectory(), { recursive: true });
-        newDefaultBitcoinConfig(
-          rpcuser,
-          rpcpassword,
-          rpcbind,
-          rpcport,
-          testnet
-        );
-      } else {
-        let fileContents;
-        let needUser = true;
-        let needPassword = true;
-        let needBind = true;
-        let needPort = true;
-        fileContents = getCurrentBitcoinConfig();
-        fileContents = Object.fromEntries(
-          Object.entries(fileContents).map(([key, value]) => {
-            // Check if any fields that are needed are currently used, if so keep those values
-            if (key == "rpcuser") {
-              needUser = false;
-              if (value !== "") rpcuser = value;
-            }
-            if (key == "rpcpassword") {
-              needPassword = false;
-              if (value !== "") rpcpassword = value;
-            }
-            if (key == "rpcbind") {
-              needBind = false;
-              if (value !== "") rpcbind = value;
-            }
-            if (key == "rpcport") {
-              needPort = false;
-              if (value !== "") rpcport = value;
-            }
-            if (key == "test") {
-              if (!testnet) {
-                return null;
-              }
-            }
-            return [key, value];
-          })
-        );
-        // Set Fields in Config if they weren't found.
-        if (needUser) fileContents.rpcuser = rpcuser;
-
-        if (needPassword) fileContents.rpcpassword = rpcpassword;
-
-        fileContents.server = 1;
-
-        if (testnet) {
-          if (!fileContents.test) {
-            fileContents.test = {};
-          }
-          if (needBind) fileContents.test.rpcbind = rpcbind;
-
-          if (needPort) fileContents.test.rpcport = rpcport;
-        } else {
-          if (fileContents.test) {
-            delete fileContents.test;
-          }
-          if (needBind) fileContents.rpcbind = rpcbind;
-
-          if (needPort) fileContents.rpcport = rpcport;
-        }
-
-        fs.writeFileSync(
-          path.join(getDefaultBitcoinDirectory(), "bitcoin.conf"),
-          ini.stringify(fileContents)
-        );
-      }
-      if (testnet) {
-        resolve({ rpcuser, rpcpassword, test: { rpcbind, rpcport } });
-      } else {
-        resolve({ rpcuser, rpcpassword, rpcbind, rpcport });
-      }
-    } catch (e) {
-      reject(e);
-    }
-  });

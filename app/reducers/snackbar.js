@@ -686,11 +686,6 @@ const messages = defineMessages({
     defaultMessage:
       "Failed to check an existing BTC Config file: {originalError}"
   },
-  UPDATE_BTC_CONFIG_FAILED: {
-    id: "dex.updateBTCConfig.failed",
-    defaultMessage:
-      "Failed to update an existing BTC Config file: {originalError}"
-  },
   CREATEDEXACCOUNT_FAILED: {
     id: "dex.createDEXAccount.failed",
     defaultMessage: "Failed to create an account for DEX: {originalError}"

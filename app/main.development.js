@@ -4,7 +4,7 @@ import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
 import {
   getCurrentBitcoinConfig,
-  updateDefaultBitcoinConfig,
+  newDefaultBitcoinConfig,
   initGlobalCfg,
   validateGlobalCfgFile
 } from "./config";
@@ -433,7 +433,7 @@ function createDexWindow(serverAddress) {
 
 handle("check-btc-config", getCurrentBitcoinConfig);
 
-handle("update-btc-config", updateDefaultBitcoinConfig);
+handle("new-btc-config", newDefaultBitcoinConfig);
 
 handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
 

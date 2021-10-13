@@ -376,10 +376,10 @@ export const CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED =
 export const CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL =
   "CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL";
 
-export const checkBTCConfig = () => async (dispatch, getState) => {
+export const checkBTCConfig = (bitcoinDirectory) => async (dispatch, getState) => {
   dispatch({ type: CHECK_BTC_CONFIG_ATTEMPT });
   try {
-    const res = await dex.checkBTCConfig();
+    const res = await dex.checkBTCConfig(bitcoinDirectory);
     if (
       res.rpcuser &&
       res.rpcpassword &&
@@ -396,12 +396,10 @@ export const checkBTCConfig = () => async (dispatch, getState) => {
       dispatch({ type: CHECK_BTC_CONFIG_SUCCESS, btcConfig: res });
     } else {
       dispatch({ type: CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED });
-      dispatch(updateBTCConfig());
     }
   } catch (error) {
     if (String(error).indexOf("no such file or directory") > -1) {
       dispatch({ type: CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL });
-      dispatch(updateBTCConfig());
     } else {
       dispatch({ type: CHECK_BTC_CONFIG_FAILED, error });
     }
@@ -409,28 +407,29 @@ export const checkBTCConfig = () => async (dispatch, getState) => {
   return;
 };
 
-export const UPDATE_BTC_CONFIG_ATTEMPT = "UPDATE_BTC_CONFIG_ATTEMPT";
-export const UPDATE_BTC_CONFIG_SUCCESS = "UPDATE_BTC_CONFIG_SUCCESS";
-export const UPDATE_BTC_CONFIG_FAILED = "UPDATE_BTC_CONFIG_FAILED";
+export const NEW_BTC_CONFIG_ATTEMPT = "NEW_BTC_CONFIG_ATTEMPT";
+export const NEW_BTC_CONFIG_SUCCESS = "NEW_BTC_CONFIG_SUCCESS";
+export const NEW_BTC_CONFIG_FAILED = "NEW_BTC_CONFIG_FAILED";
 
-export const updateBTCConfig = () => async (dispatch, getState) => {
-  dispatch({ type: UPDATE_BTC_CONFIG_ATTEMPT });
+export const newBTCConfig = (bitcoinDirectory) => async (dispatch, getState) => {
+  dispatch({ type: NEW_BTC_CONFIG_ATTEMPT });
   try {
     const rpcuser = makeRandomString(12);
     const rpcpassword = makeRandomString(12);
     const rpcbind = "127.0.0.1";
     const rpcport = sel.isTestNet(getState()) ? "18332" : "8332";
     const testnet = sel.isTestNet(getState());
-    const res = await dex.updateBTCConfig(
+    const res = await dex.newBTCConfig(
       rpcuser,
       rpcpassword,
       rpcbind,
       rpcport,
-      testnet
+      testnet,
+      bitcoinDirectory
     );
-    dispatch({ type: UPDATE_BTC_CONFIG_SUCCESS, btcConfig: res });
+    dispatch({ type: NEW_BTC_CONFIG_SUCCESS, btcConfig: res });
   } catch (error) {
-    dispatch({ type: UPDATE_BTC_CONFIG_FAILED, error });
+    dispatch({ type: NEW_BTC_CONFIG_FAILED, error });
     return;
   }
 };

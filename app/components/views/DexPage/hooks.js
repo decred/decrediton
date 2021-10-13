@@ -122,7 +122,7 @@ export const useDex = () => {
     dispatch
   ]);
 
-  const onUpdateBTCConfig = useCallback(() => dispatch(da.updateBTCConfig()), [
+  const onNewBTCConfig = useCallback(() => dispatch(da.newBTCConfig()), [
     dispatch
   ]);
 
@@ -226,6 +226,7 @@ export const useDex = () => {
     dexEnableError,
     btcConfig,
     onCheckBTCConfig,
+    onNewBTCConfig,
     btcInstallNeeded,
     btcConfigUpdateNeeded,
     onUpdateBTCConfig,
