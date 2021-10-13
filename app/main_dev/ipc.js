@@ -242,7 +242,7 @@ export const startDcrlnd = async (
   }
 };
 
-export const startDex = async (walletPath, testnet) => {
+export const startDex = async (walletPath, testnet, locale) => {
   if (GetDexPID()) {
     logger.log(
       "info",
@@ -253,7 +253,7 @@ export const startDex = async (walletPath, testnet) => {
   }
 
   try {
-    const started = await launchDex(walletPath, testnet);
+    const started = await launchDex(walletPath, testnet, locale);
     return started;
   } catch (e) {
     logger.log("error", `error launching dex: ${e}`);

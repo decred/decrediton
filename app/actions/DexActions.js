@@ -52,13 +52,14 @@ export const DEX_STARTUP_SUCCESS = "DEX_STARTUP_SUCCESS";
 export const startDex = () => async (dispatch, getState) => {
   dispatch({ type: DEX_STARTUP_ATTEMPT });
   const isTestnet = sel.isTestNet(getState());
+  const locale = sel.currentLocaleName(getState());
   const {
     daemon: { walletName }
   } = getState();
   const walletPath = wallet.getWalletPath(isTestnet, walletName);
 
   try {
-    const res = await dex.start(walletPath, isTestnet);
+    const res = await dex.start(walletPath, isTestnet, locale);
     dispatch({ type: DEX_STARTUP_SUCCESS, serverAddress: res });
     dispatch(dexCheckInit());
   } catch (error) {
@@ -282,16 +283,19 @@ export const DEX_REGISTER_ATTEMPT = "DEX_REGISTER_ATTEMPT";
 export const DEX_REGISTER_SUCCESS = "DEX_REGISTER_SUCCESS";
 export const DEX_REGISTER_FAILED = "DEX_REGISTER_FAILED";
 
+// NOTE: dex accepts fees in multiple assets, as indicated by server in
+// config.regFees object. See the dcrdex/client/core.Exchange struct. This
+// function registers with Decred.
 export const registerDex = (appPass) => async (dispatch, getState) => {
   dispatch({ type: DEX_REGISTER_ATTEMPT });
   if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_REGISTER_FAILED, error: "Dex isn't acteive" });
+    dispatch({ type: DEX_REGISTER_FAILED, error: "Dex isn't active" });
     return;
   }
   const {
     dex: { config, addr }
   } = getState();
-  if (config.feeAsset.id != 42) {
+  if (!config.regFees.dcr || config.regFees.dcr.id != 42) {
     throw "unexpected fee payment type, expected to be paid in DCR";
   }
   const fee = config.feeAsset.amount;

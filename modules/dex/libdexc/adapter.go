@@ -92,6 +92,7 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		DBPath      string      `json:"dbPath"`
 		Net         dex.Network `json:"net"`
 		LogLevel    slog.Level  `json:"logLevel"`
+		Language    string      `json:"lang"`
 	})
 	if err := json.Unmarshal(raw, form); err != nil {
 		return err
@@ -112,9 +113,10 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 
 	c.ctx, c.kill = context.WithCancel(context.Background())
 	ccore, err := core.New(&core.Config{
-		DBPath: form.DBPath,
-		Net:    form.Net,
-		Logger: logger,
+		DBPath:   form.DBPath,
+		Net:      form.Net,
+		Logger:   logger,
+		Language: form.Language,
 	})
 	if err != nil {
 		return fmt.Errorf("error creating client core: %v", err)
@@ -137,13 +139,22 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 		return "", fmt.Errorf("already initialized")
 	}
 	form := new(struct {
-		WebAddr string `json:"webaddr"`
-		SiteDir string `json:"sitedir"`
+		WebAddr  string `json:"webaddr"`
+		SiteDir  string `json:"sitedir"`
+		Language string `json:"lang"`
 	})
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	webSrv, err := webserver.New(c.core, form.WebAddr, form.SiteDir, c.logMaker.Logger("SRVR"), false, false)
+	webSrv, err := webserver.New(&webserver.Config{
+		Core:          c.core,
+		Addr:          form.WebAddr,
+		CustomSiteDir: form.SiteDir,
+		Language:      form.Language,
+		Logger:        c.logMaker.Logger("SRVR"),
+		ReloadHTML:    false,
+		HttpProf:      false,
+	})
 	if err != nil {
 		return "", fmt.Errorf("Error creating web server: %v", err)
 	}
@@ -197,16 +208,17 @@ func (c *CoreAdapter) run(callData *CallData) (string, error) {
 func (c *CoreAdapter) init(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		Pass string `json:"pass"`
+		// Seed string `json:"seed"` (TODO)
 	})
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
 
-	return "", c.core.InitializeClient([]byte(form.Pass))
+	return "", c.core.InitializeClient([]byte(form.Pass), nil)
 }
 
 func (c *CoreAdapter) isInitialized(json.RawMessage) (string, error) {
-	return replyWithErrorCheck(c.core.IsInitialized())
+	return reply(c.core.IsInitialized())
 }
 
 func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
@@ -263,6 +275,26 @@ func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
 		return "", err
 	}
 	return replyWithErrorCheck(c.core.Register(form))
+}
+
+// When restoring from seed with init/InitializeClient, it may be desirable to
+// first attempt DEX account discovery without commiting to a fee payment. This
+// check with the given DEX server if our account (a public key) is already
+// registered. If it is, this creates the account in Core, returns true, and the
+// caller should NOT call register. If it returns false, the user should be
+// prompted to pay the registration fee as normal using the register method.
+func (c *CoreAdapter) discoverAcct(raw json.RawMessage) (string, error) {
+	form := new(struct {
+		Addr  string `json:"addr"` // DEX host
+		AppPW string `json:"appPass"`
+		Cert  string `json:"cert"` // Not required if there is an entry for the server in the dcrdex/client/core/certs.go
+	})
+	if err := json.Unmarshal(raw, form); err != nil {
+		return "", err
+	}
+	_, alreadyRegistered, err := c.core.DiscoverAccount(form.Addr, []byte(form.AppPW), []byte(form.Cert))
+	// If alreadyRegistered == true, skip register. It's ready to go.
+	return replyWithErrorCheck(alreadyRegistered, err)
 }
 
 func (c *CoreAdapter) login(raw json.RawMessage) (string, error) {
