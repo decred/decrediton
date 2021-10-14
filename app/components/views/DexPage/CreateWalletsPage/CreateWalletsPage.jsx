@@ -97,48 +97,48 @@ const CreateWalletsPage = () => {
           </>
         ) : (
           <div>
-            {!btcConfigUpdateNeeded && !btcInstallNeeded &&
-            <div
-              className={classNames(
-                "margin-top-s",
-                styles.btcConfigNeededArea
-              )}>
-              <Checkbox
-                label={
-                  <T
-                    id="dex.btcWalletLocation.label"
-                    m="You have a non-default bitcoin directory"
-                  />
-                }
-                id="hasDexSeed"
-                description={
-                  <T
-                    id="dex.btcWalletLocation.description"
-                    m="If you have a non-default bitcoin location, please check the box and indentify the location."
-                  />
-                }
-                checked={hasNonDefault}
-                onChange={toggleHasNonDefault}
-              />
-              {hasNonDefault && (
-                <Input className="margin-top-m">
-                  <PathBrowseInput
-                    id="btcDirectory"
-                    required
-                    type="directory"
-                    value={bitcoinDirectory}
-                    onChange={(value) => setBitcoinDirectory(value)}
-                    placeholder="Bitcoin Directory"
-                  />
-                </Input>
-              )}
-              <KeyBlueButton
-                className="margin-top-m"
-                onClick={onCheckBTCConfigDex}>
-                <T id="dex.findBTCConfigButton" m="Find bitcoin conf" />
-              </KeyBlueButton>
-            </div>
-            }
+            {!btcConfigUpdateNeeded && !btcInstallNeeded && (
+              <div
+                className={classNames(
+                  "margin-top-s",
+                  styles.btcConfigNeededArea
+                )}>
+                <Checkbox
+                  label={
+                    <T
+                      id="dex.btcWalletLocation.label"
+                      m="You have a non-default bitcoin directory"
+                    />
+                  }
+                  id="hasDexSeed"
+                  description={
+                    <T
+                      id="dex.btcWalletLocation.description"
+                      m="If you have a non-default bitcoin location, please check the box and indentify the location."
+                    />
+                  }
+                  checked={hasNonDefault}
+                  onChange={toggleHasNonDefault}
+                />
+                {hasNonDefault && (
+                  <Input className="margin-top-m">
+                    <PathBrowseInput
+                      id="btcDirectory"
+                      required
+                      type="directory"
+                      value={bitcoinDirectory}
+                      onChange={(value) => setBitcoinDirectory(value)}
+                      placeholder="Bitcoin Directory"
+                    />
+                  </Input>
+                )}
+                <KeyBlueButton
+                  className="margin-top-m"
+                  onClick={onCheckBTCConfigDex}>
+                  <T id="dex.findBTCConfigButton" m="Find bitcoin conf" />
+                </KeyBlueButton>
+              </div>
+            )}
             {btcConfigUpdateNeeded && (
               <div className="margin-top-m">
                 <T
