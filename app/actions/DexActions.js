@@ -380,7 +380,6 @@ export const checkBTCConfig = (bitcoinDirectory) => async (
   dispatch,
   getState
 ) => {
-  console.log("action", bitcoinDirectory);
   dispatch({ type: CHECK_BTC_CONFIG_ATTEMPT });
   try {
     const res = await dex.checkBTCConfig(bitcoinDirectory);

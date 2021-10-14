@@ -96,43 +96,50 @@ const CreateWalletsPage = () => {
             />
           </>
         ) : (
-          <div
-            className={classNames("margin-top-s", styles.btcConfigNeededArea)}>
-            <Checkbox
-              label={
-                <T
-                  id="dex.btcWalletLocation.label"
-                  m="You have a non-default bitcoin directory"
-                />
-              }
-              id="hasDexSeed"
-              description={
-                <T
-                  id="dex.btcWalletLocation.description"
-                  m="If you have a non-default bitcoin location, please check the box and indentify the location."
-                />
-              }
-              checked={hasNonDefault}
-              onChange={toggleHasNonDefault}
-            />
-            {hasNonDefault && (
-              <Input className="margin-top-m">
-                <PathBrowseInput
-                  id="btcDirectory"
-                  required
-                  type="directory"
-                  value={bitcoinDirectory}
-                  onChange={(value) => setBitcoinDirectory(value)}
-                  placeholder="Bitcoin Directory"
-                />
-              </Input>
-            )}
-            <KeyBlueButton
-              className="margin-top-m"
-              onClick={onCheckBTCConfigDex}>
-              <T id="dex.checkBTCConfigButtonTryAgain" m="Check again" />
-            </KeyBlueButton>
-            {btcConfigUpdateNeeded ? (
+          <div>
+            {!btcConfigUpdateNeeded && !btcInstallNeeded &&
+            <div
+              className={classNames(
+                "margin-top-s",
+                styles.btcConfigNeededArea
+              )}>
+              <Checkbox
+                label={
+                  <T
+                    id="dex.btcWalletLocation.label"
+                    m="You have a non-default bitcoin directory"
+                  />
+                }
+                id="hasDexSeed"
+                description={
+                  <T
+                    id="dex.btcWalletLocation.description"
+                    m="If you have a non-default bitcoin location, please check the box and indentify the location."
+                  />
+                }
+                checked={hasNonDefault}
+                onChange={toggleHasNonDefault}
+              />
+              {hasNonDefault && (
+                <Input className="margin-top-m">
+                  <PathBrowseInput
+                    id="btcDirectory"
+                    required
+                    type="directory"
+                    value={bitcoinDirectory}
+                    onChange={(value) => setBitcoinDirectory(value)}
+                    placeholder="Bitcoin Directory"
+                  />
+                </Input>
+              )}
+              <KeyBlueButton
+                className="margin-top-m"
+                onClick={onCheckBTCConfigDex}>
+                <T id="dex.findBTCConfigButton" m="Find bitcoin conf" />
+              </KeyBlueButton>
+            </div>
+            }
+            {btcConfigUpdateNeeded && (
               <div className="margin-top-m">
                 <T
                   id="dex.updateBTCConfig"
@@ -145,10 +152,11 @@ const CreateWalletsPage = () => {
                 <KeyBlueButton
                   className="margin-top-m"
                   onClick={onCheckBTCConfigDex}>
-                  <T id="dex.checkBTCConfigButtonTryAgain" m="Check again" />
+                  <T id="dex.checkBTCConfigButtonTryAgain" m="Try again" />
                 </KeyBlueButton>
               </div>
-            ) : btcInstallNeeded ? (
+            )}
+            {btcInstallNeeded && (
               <div>
                 <div className="margin-top-s">
                   <T
@@ -166,18 +174,6 @@ const CreateWalletsPage = () => {
                   className="margin-top-m"
                   onClick={onNewBTCConfigDex}>
                   <T id="dex.updateBTCConfigButton" m="Create BTC Config" />
-                </KeyBlueButton>
-              </div>
-            ) : (
-              <div className="margin-top-m">
-                <T
-                  id="dex.btcConfigError"
-                  m="Something has gone wrong and we are unable to obtain your bitcoin.conf, please try again."
-                />
-                <KeyBlueButton
-                  className="margin-top-m"
-                  onClick={onCheckBTCConfigDex}>
-                  <T id="dex.checkBTCConfigButton" m="Check BTC Config" />
                 </KeyBlueButton>
               </div>
             )}

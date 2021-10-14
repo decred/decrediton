@@ -269,7 +269,6 @@ export const getCurrentBitcoinConfig = (bitcoinDirectory) => {
     ? bitcoinDirectory
     : getDefaultBitcoinDirectory();
 
-  console.log("dev", bitcoinDirectory);
   const btcConfPath = path.join(confDir, "bitcoin.conf");
   return ini.parse(fs.readFileSync(btcConfPath, "utf8"));
 };

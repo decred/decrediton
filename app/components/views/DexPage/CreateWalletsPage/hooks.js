@@ -21,9 +21,7 @@ export const useDexCreateWallets = ({
     setWalletName(btcWalletName);
   }, [btcWalletName]);
 
-  useMountEffect(() => {
-    onCheckBTCConfig(bitcoinDirectory);
-  });
+  useMountEffect(() => {});
 
   const onCreateWallet = (passphrase, args) => {
     const { appPassphrase } = args;

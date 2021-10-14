@@ -123,9 +123,10 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onNewBTCConfig = useCallback(() => dispatch(da.newBTCConfig()), [
-    dispatch
-  ]);
+  const onNewBTCConfig = useCallback(
+    (bitcoinDirectory) => dispatch(da.newBTCConfig(bitcoinDirectory)),
+    [dispatch]
+  );
 
   const { Page, Header } = useMemo(() => {
     let page, header;
