@@ -376,7 +376,11 @@ export const CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED =
 export const CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL =
   "CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL";
 
-export const checkBTCConfig = (bitcoinDirectory) => async (dispatch, getState) => {
+export const checkBTCConfig = (bitcoinDirectory) => async (
+  dispatch,
+  getState
+) => {
+  console.log("action", bitcoinDirectory);
   dispatch({ type: CHECK_BTC_CONFIG_ATTEMPT });
   try {
     const res = await dex.checkBTCConfig(bitcoinDirectory);
@@ -411,7 +415,10 @@ export const NEW_BTC_CONFIG_ATTEMPT = "NEW_BTC_CONFIG_ATTEMPT";
 export const NEW_BTC_CONFIG_SUCCESS = "NEW_BTC_CONFIG_SUCCESS";
 export const NEW_BTC_CONFIG_FAILED = "NEW_BTC_CONFIG_FAILED";
 
-export const newBTCConfig = (bitcoinDirectory) => async (dispatch, getState) => {
+export const newBTCConfig = (bitcoinDirectory) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: NEW_BTC_CONFIG_ATTEMPT });
   try {
     const rpcuser = makeRandomString(12);

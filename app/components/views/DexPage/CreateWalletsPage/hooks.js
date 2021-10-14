@@ -9,8 +9,13 @@ export const useDexCreateWallets = ({
   onCheckBTCConfig,
   onNewBTCConfig
 }) => {
+  const [hasNonDefault, setHasNonDefault] = useState(false);
   const [walletName, setWalletName] = useState(btcWalletName);
   const [bitcoinDirectory, setBitcoinDirectory] = useState("");
+
+  const toggleHasNonDefault = useCallback(() => {
+    setHasNonDefault(!hasNonDefault);
+  }, [hasNonDefault]);
 
   const resetState = useCallback(() => {
     setWalletName(btcWalletName);
@@ -32,10 +37,24 @@ export const useDexCreateWallets = ({
     resetState();
   };
 
+  const onCheckBTCConfigDex = () => {
+    onCheckBTCConfig(bitcoinDirectory);
+  };
   const onNewBTCConfigDex = () => {
     onNewBTCConfig(bitcoinDirectory);
     resetState();
   };
 
-  return { walletName, setWalletName, onCreateWallet, onBTCCreateWallet, onNewBTCConfigDex, setBitcoinDirectory };
+  return {
+    walletName,
+    setWalletName,
+    onCreateWallet,
+    onBTCCreateWallet,
+    onCheckBTCConfigDex,
+    onNewBTCConfigDex,
+    bitcoinDirectory,
+    setBitcoinDirectory,
+    hasNonDefault,
+    toggleHasNonDefault
+  };
 };

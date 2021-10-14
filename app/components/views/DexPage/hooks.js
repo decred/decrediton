@@ -118,9 +118,10 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onCheckBTCConfig = useCallback(() => dispatch(da.checkBTCConfig()), [
-    dispatch
-  ]);
+  const onCheckBTCConfig = useCallback(
+    (bitcoinDirectory) => dispatch(da.checkBTCConfig(bitcoinDirectory)),
+    [dispatch]
+  );
 
   const onNewBTCConfig = useCallback(() => dispatch(da.newBTCConfig()), [
     dispatch
@@ -229,7 +230,6 @@ export const useDex = () => {
     onNewBTCConfig,
     btcInstallNeeded,
     btcConfigUpdateNeeded,
-    onUpdateBTCConfig,
     btcWalletName,
     Page,
     Header,

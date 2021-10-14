@@ -265,7 +265,11 @@ export function checkNoLegacyWalletConfig(testnet, walletPath, noLegacyRpc) {
 
 export const getCurrentBitcoinConfig = (bitcoinDirectory) => {
   // if bitcoinDirectory is empty then just use the default
-  const confDir = bitcoinDirectory ? bitcoinDirectory : getDefaultBitcoinDirectory()
+  const confDir = bitcoinDirectory
+    ? bitcoinDirectory
+    : getDefaultBitcoinDirectory();
+
+  console.log("dev", bitcoinDirectory);
   const btcConfPath = path.join(confDir, "bitcoin.conf");
   return ini.parse(fs.readFileSync(btcConfPath, "utf8"));
 };
@@ -279,7 +283,9 @@ export function newDefaultBitcoinConfig(
   bitcoinDirectory
 ) {
   // if bitcoinDirectory is empty then just use the default
-  const confDir = bitcoinDirectory ? bitcoinDirectory : getDefaultBitcoinDirectory()
+  const confDir = bitcoinDirectory
+    ? bitcoinDirectory
+    : getDefaultBitcoinDirectory();
   if (!fs.existsSync(path.join(confDir, "bitcoin.conf"))) {
     let bitcoinConf = {};
     if (testnet) {
@@ -307,4 +313,3 @@ export function newDefaultBitcoinConfig(
     );
   }
 }
-
