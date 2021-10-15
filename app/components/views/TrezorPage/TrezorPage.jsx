@@ -2,6 +2,7 @@ import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { TREZOR_ICON } from "constants";
 import TrezorPageContent from "./TrezorPageContent";
+import TrezorPageSection from "./TrezorPageSection";
 
 const TrezorPageHeader = () => (
   <StandaloneHeader
@@ -15,7 +16,7 @@ const TrezorPageHeader = () => (
 
 const TrezorPage = () => (
   <StandalonePage header={<TrezorPageHeader />}>
-    <TrezorPageContent />
+    <TrezorPageContent ContainerComponent={TrezorPageSection} />
   </StandalonePage>
 );
 

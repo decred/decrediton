@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Page from "./Page";
 import { useTrezorPage } from "views/TrezorPage/hooks";
 import TrezorPageContent from "views/TrezorPage/TrezorPageContent";
+import TrezorPageAccordion from "views/TrezorPage/TrezorPageAccordion";
 
 const TrezorConfig = ({ onSendBack }) => {
   const { enableTrezor } = useTrezorPage();
@@ -12,7 +13,7 @@ const TrezorConfig = ({ onSendBack }) => {
 
   return (
     <Page onSendBack={onSendBack}>
-      <TrezorPageContent />
+      <TrezorPageContent ContainerComponent={TrezorPageAccordion} />
     </Page>
   );
 };

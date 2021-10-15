@@ -422,7 +422,13 @@ const initialState = {
     pinMessage: null,
     passPhraseMessage: null,
     wordCallBack: null,
-    walletCreationMasterPubkeyAttempt: false
+    walletCreationMasterPubkeyAttempt: false,
+    pinProtection: undefined,
+    passphraseProtection: undefined,
+    passphraseOnDeviceProtection: undefined,
+    performingTogglePinProtection: false,
+    performingTogglePassphraseProtection: false,
+    performingTogglePassphraseOnDeviceProtection: false
   },
   ln: {
     enabled: globalCfg.get(cfgConstants.LN_ENABLED),

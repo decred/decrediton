@@ -342,7 +342,7 @@ test("trezor device is connected", async () => {
 
   // go to trezor config view when device is connected
   user.click(screen.queryByText(/setup device/i));
-  await wait(() => screen.getByText(/config trezor/i));
+  await wait(() => screen.getByText("Security"));
   // go back
   user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() => screen.getByText("Wallet Name"));

@@ -2,9 +2,13 @@ import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput } from "inputs";
 import { KeyBlueButton } from "buttons";
-import TrezorPageAccordion from "../TrezorPageAccordion";
 
-const ChangeLabel = ({ performingOperation, changeLabel }) => {
+const ChangeLabel = ({
+  ContainerComponent,
+  performingOperation,
+  changeLabel,
+  changeToDecredHomeScreen
+}) => {
   const [newLabel, setNewLabel] = useState("");
 
   const changeLabelClicked = () => {
@@ -16,7 +20,7 @@ const ChangeLabel = ({ performingOperation, changeLabel }) => {
   };
 
   return (
-    <TrezorPageAccordion
+    <ContainerComponent
       label={<T id="trezor.changeLabel.header" m="Change Label" />}>
       <div>
         <T id="trezor.changeLabel.description" m="New Label" />
@@ -35,8 +39,14 @@ const ChangeLabel = ({ performingOperation, changeLabel }) => {
           loading={performingOperation}>
           <T id="trezor.changeLabel.changeButton" m="Change" />
         </KeyBlueButton>
+        <KeyBlueButton
+          onClick={changeToDecredHomeScreen}
+          loading={performingOperation}
+          disabled={performingOperation}>
+          <T id="trezorPage.changeHomeScreen" m="Change Home Screen" />
+        </KeyBlueButton>
       </div>
-    </TrezorPageAccordion>
+    </ContainerComponent>
   );
 };
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import TrezorPageAccordion from "../TrezorPageAccordion";
 import { FormattedMessage as T } from "react-intl";
 import { DangerButton } from "buttons";
 import { Documentation } from "shared";
 import { PathBrowseInput } from "inputs";
 
 const FirmwareUpdate = ({
+  ContainerComponent,
   updateFirmware,
   performingOperation,
   isPerformingUpdate
@@ -21,7 +21,7 @@ const FirmwareUpdate = ({
   };
 
   return (
-    <TrezorPageAccordion
+    <ContainerComponent
       label={<T id="trezor.firmwareUpdate.header" m="Firmware Update" />}>
       <Documentation name="TrezorFirmwareUpdateWarning" />
       <p>
@@ -36,7 +36,7 @@ const FirmwareUpdate = ({
         disabled={performingOperation || isPerformingUpdate}>
         <T id="trezorPage.updateFirmwareBtn" m="Update Firmware" />
       </DangerButton>
-    </TrezorPageAccordion>
+    </ContainerComponent>
   );
 };
 

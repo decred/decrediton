@@ -1,16 +1,14 @@
 .accordion {
-  border-bottom: 1px solid var(--trezor-line-color);
-  border-radius: 4px;
-  padding: 1.5em 1em 1em;
+  padding: 20px 45px 20px 40px;
   background-color: var(--background-back-color);
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
-.accordionChildren > div,
-.accordionChildren > p {
-  margin: 10px;
+
+.accordionChildren {
+  padding: 15px 0;
 }
+
 .accordion .verticalAccordionHeader {
-  font-size: 22px;
-  margin-left: 10px;
-  margin-bottom: 0.5em;
+  font-size: 18px;
+  line-height: 23px;
 }

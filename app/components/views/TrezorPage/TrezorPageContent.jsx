@@ -2,7 +2,7 @@ import { useTrezorPage } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import {
   ChangeLabel,
-  ConfigButtons,
+  SecuritySection,
   FirmwareUpdate,
   RecoveryButtons
 } from "./TrezorPageSections";
@@ -24,11 +24,17 @@ const NoDevicePage = ({ onConnect }) => (
   </>
 );
 
-const TrezorPageContent = () => {
+const TrezorPageContent = ({ ContainerComponent }) => {
   const {
     isPerformingUpdate,
     performingOperation,
     device,
+    performingTogglePinProtection,
+    performingTogglePassphraseProtection,
+    performingTogglePassphraseOnDeviceProtection,
+    pinProtection,
+    passphraseProtection,
+    passphraseOnDeviceProtection,
     connect,
     performingRecoverDevice,
     togglePinProtection,
@@ -49,8 +55,15 @@ const TrezorPageContent = () => {
     <NoDevicePage onConnect={connect} />
   ) : (
     <>
-      <ConfigButtons
+      <SecuritySection
         {...{
+          ContainerComponent,
+          performingTogglePinProtection,
+          performingTogglePassphraseProtection,
+          performingTogglePassphraseOnDeviceProtection,
+          pinProtection,
+          passphraseProtection,
+          passphraseOnDeviceProtection,
           togglePinProtection,
           togglePassPhraseProtection,
           togglePassphraseOnDevice,
@@ -58,9 +71,17 @@ const TrezorPageContent = () => {
           performingOperation: loading
         }}
       />
-      <ChangeLabel {...{ changeLabel, performingOperation: loading }} />
+      <ChangeLabel
+        {...{
+          ContainerComponent,
+          changeLabel,
+          changeToDecredHomeScreen,
+          performingOperation: loading
+        }}
+      />
       <RecoveryButtons
         {...{
+          ContainerComponent,
           wipeDevice,
           recoverDevice,
           initDevice,
@@ -70,6 +91,7 @@ const TrezorPageContent = () => {
       />
       <FirmwareUpdate
         {...{
+          ContainerComponent,
           updateFirmware,
           performingOperation: loading,
           isPerformingUpdate
