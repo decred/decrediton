@@ -1,4 +1,4 @@
-# Communitity Translators
+# Community Translators
 
 Decrediton translations are handled by the various localized communities. Please note that translations are only accepted from **well-known** community members.
 
@@ -21,18 +21,18 @@ Basic UI translation can be done once an RC (release candidate) version of Decre
 
 Translators have to fulfill the following requirements:
 
-- Create a [Github](https://github.com) account
+- Create a [GitHub](https://github.com) account
 - Install [git software](https://guides.github.com/introduction/git-handbook/)
 - Download the latest released Decrediton RC version
-- Follow the [#decrediton](https://matrix.to/#/#decrediton:decred.org) matrix chat room for announcements
+- Follow the [#translations](https://matrix.to/#/#translations:decred.org) matrix chat room for announcements regarding Decrediton translation work
 
-Do note this document does not attempt to explain how git or Github works, so at least some basic knowledge about those is expected. See the links above for some starting points.
+Do note this document does not attempt to explain how git or GitHub works, so at least some basic knowledge about those is expected. See the links above for some starting points.
 
 To generate a new translation file for inclusion in the next release, follow the following procedure.
 
 ### Check out the most recent Decrediton source:
 
-To setup the repository for the first time, fork it in the Github interface, then clone it:
+To setup the repository for the first time, fork it in the GitHub interface, then clone it:
 
 ```shell
 $ git clone git@github.com:<github-username>/decrediton
@@ -76,7 +76,7 @@ Use the translation UI to fill any missing strings. The UI should be pretty self
 During the translation process, the progress can be checked by saving the translation file somewhere and then loading it into Decrediton,
 using the `View -> Load Custom Translation` menu item.
 
-After translating all strings, replace the existing `lang.json` file in the Decrediton repository when all strings have been properly translated.
+After translating all strings, replace the existing `<lang>.json` file in the Decrediton repository when all strings have been properly translated.
 
 ### Submit the Translation
 
@@ -120,6 +120,6 @@ Testing the docs with the build environment setup is easy: just start Decrediton
 
 ### Submit the Translation
 
-This follows the same process as the basic translation flow and is a standard Github PR flow. Commit and push the translation to a branch in your forked copy of the repo, and then open a PR so that it can be included in the release.
+This follows the same process as the basic translation flow and is a standard GitHub PR flow. Commit and push the translation to a branch in your forked copy of the repo, and then open a PR so that it can be included in the release.
 
 Translators are **strongly** recommended to join the Decrediton dev channel in Matrix, so that they are up to speed in any last minute changes to the release and can be contacted in a timely fashion.
