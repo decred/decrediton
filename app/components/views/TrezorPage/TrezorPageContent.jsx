@@ -35,6 +35,8 @@ const TrezorPageContent = ({ ContainerComponent }) => {
     pinProtection,
     passphraseProtection,
     passphraseOnDeviceProtection,
+    deviceLabel,
+    intl,
     connect,
     performingRecoverDevice,
     togglePinProtection,
@@ -74,6 +76,8 @@ const TrezorPageContent = ({ ContainerComponent }) => {
       <ChangeLabel
         {...{
           ContainerComponent,
+          deviceLabel,
+          intl,
           changeLabel,
           changeToDecredHomeScreen,
           performingOperation: loading

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect } from "react";
 import * as sel from "selectors";
 import * as trza from "actions/TrezorActions";
+import { useIntl } from "react-intl";
 
 export function useTrezorPage() {
   const isPerformingUpdate = useSelector(sel.isPerformingTrezorUpdate);
@@ -24,6 +25,9 @@ export function useTrezorPage() {
   const performingRecoverDevice = useSelector(
     sel.trezorPerformingRecoverDevice
   );
+  const deviceLabel = useSelector(sel.trezorLabel);
+  const intl = useIntl();
+
   const dispatch = useDispatch();
 
   const connect = useCallback(() => dispatch(trza.connect()), [dispatch]);
@@ -84,6 +88,8 @@ export function useTrezorPage() {
     pinProtection,
     passphraseProtection,
     passphraseOnDeviceProtection,
+    deviceLabel,
+    intl,
     connect,
     togglePinProtection,
     togglePassPhraseProtection,

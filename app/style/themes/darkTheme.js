@@ -367,7 +367,9 @@ const darkTheme = {
   "ln-network-capacity-icon": url(
     require("style/icons/LNNetworkCapacityIconDark.svg")
   ),
-  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
+  "tz-decred-logo": url(require("style/icons/tzDecredLogo.svg")),
+  "tz-decred-logo-bt-bg": "var(--politeia-button-bg)"
 };
 
 export default darkTheme;

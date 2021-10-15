@@ -428,7 +428,8 @@ const initialState = {
     passphraseOnDeviceProtection: undefined,
     performingTogglePinProtection: false,
     performingTogglePassphraseProtection: false,
-    performingTogglePassphraseOnDeviceProtection: false
+    performingTogglePassphraseOnDeviceProtection: false,
+    deviceLabel: undefined
   },
   ln: {
     enabled: globalCfg.get(cfgConstants.LN_ENABLED),

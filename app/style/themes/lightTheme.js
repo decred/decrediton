@@ -354,7 +354,9 @@ const lightTheme = {
   "ln-network-capacity-icon": url(
     require("style/icons/LNNetworkCapacityIcon.svg")
   ),
-  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
+  "tz-decred-logo": url(require("style/icons/tzDecredLogo.svg")),
+  "tz-decred-logo-bt-bg": "var(--small-button-bg)"
 };
 
 export default lightTheme;

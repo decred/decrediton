@@ -1,0 +1,49 @@
+.changeToDecredHomeScreen {
+  background-image: var(--tz-decred-logo);
+  background-color: var(--tz-decred-logo-bt-bg) !important;
+  background-size: 15px;
+  margin-right: 10px !important;
+}
+
+.changeToDecredHomeScreen:disabled {
+  cursor: default;
+}
+
+.changeToDecredHomeScreen.loading {
+  background-image: none;
+}
+
+.changeToDecredHomeScreen.loading > div {
+  margin-top: 4px;
+  border-color: var(--grey-5);
+  border-top-color: var(--grey-7);
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.label {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--main-dark-blue);
+}
+
+.changeLabelWrapper {
+  margin-top: 15px;
+}
+
+.newLabelInput {
+  width: 274px;
+}
+
+.newLabelInput input:disabled {
+  opacity: 0.5;
+}
+
+.newLabelButton {
+  height: 29px;
+  font-size: 13px;
+  line-height: 16.34px;
+  padding: 6px 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
