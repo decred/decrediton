@@ -4,7 +4,7 @@ import {
   ChangeLabel,
   SecuritySection,
   FirmwareUpdate,
-  RecoveryButtons
+  DeviceSetupSection
 } from "./TrezorPageSections";
 import { InvisibleButton } from "buttons";
 
@@ -83,7 +83,7 @@ const TrezorPageContent = ({ ContainerComponent }) => {
           performingOperation: loading
         }}
       />
-      <RecoveryButtons
+      <DeviceSetupSection
         {...{
           ContainerComponent,
           wipeDevice,

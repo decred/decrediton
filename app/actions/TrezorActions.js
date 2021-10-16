@@ -784,7 +784,7 @@ export const TRZ_BACKUPDEVICE_SUCCESS = "TRZ_BACKUPDEVICE_SUCCESS";
 export const backupDevice = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_BACKUPDEVICE_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
+  const features = await dispatch(getFeatures()).catch((error) => {
     dispatch({ error, type: TRZ_BACKUPDEVICE_FAILED });
     return;
   });
@@ -907,7 +907,10 @@ export const getWalletCreationMasterPubKey = () => async (
 
   try {
     // Check that the firmware running in this trezor has the seed constant fix.
-    const features = await getFeatures(dispatch, getState);
+    const features = await dispatch(getFeatures()).catch((error) => {
+      dispatch({ error, type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
+      return;
+    });
     const versionLessThan = (wantMajor, wantMinor) =>
       features.major_version < wantMajor ||
       (features.major_version == wantMajor &&

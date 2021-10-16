@@ -195,7 +195,7 @@ const lightTheme = {
 
   "launcher-link-color": "#536076",
   "alert-icon-bg-color": "#feb8a5",
-
+  "tz-decred-logo-bt-bg": "var(--small-button-bg)",
   /* icons */
   "menu-settings": url(require("style/icons/menuSettings.svg")),
   "menu-accounts": url(require("style/icons/accounts-active.png")),
@@ -356,7 +356,10 @@ const lightTheme = {
   ),
   "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
   "tz-decred-logo": url(require("style/icons/tzDecredLogo.svg")),
-  "tz-decred-logo-bt-bg": "var(--small-button-bg)"
+  "tz-wipe-device": url(require("style/icons/tzWipeDevice.svg")),
+  "tz-recover-device": url(require("style/icons/tzRecoverDevice.svg")),
+  "tz-init-device": url(require("style/icons/tzInitDevice.svg")),
+  "tz-backup-device": url(require("style/icons/tzBackupDevice.svg"))
 };
 
 export default lightTheme;

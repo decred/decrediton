@@ -86,3 +86,9 @@ export { default as IdentityPage01 } from "./Tutorials/IdentityPage01.md";
 export { default as IdentityPage02 } from "./Tutorials/IdentityPage02.md";
 export { default as IdentityPage03 } from "./Tutorials/IdentityPage03.md";
 export { default as IdentityPage04 } from "./Tutorials/IdentityPage04.md";
+
+export { default as TrezorDeviceSetup } from "./Trezor/DeviceSetup.md";
+export { default as TrezorBackupDevice } from "./Trezor/BackupDevice.md";
+export { default as TrezorInitDevice } from "./Trezor/InitDevice.md";
+export { default as TrezorRecoverDevice } from "./Trezor/RecoverDevice.md";
+export { default as TrezorWipeDevice } from "./Trezor/WipeDevice.md";

@@ -191,6 +191,10 @@ const darkTheme = {
   "seedword-button-text": "var(--info-modal-button-text)",
   "seedword-button-invalid-bg": "#f0b3a1",
 
+  "tz-decred-logo-bt-bg": "var(--small-button-bg)",
+
+  "button-icon-color-1": "#99C1E3",
+  "button-icon-color-2": "#436EC3",
   "launcher-link-color": "var(--disabled-color",
 
   "alert-icon-bg-color": "#feb8a5",
@@ -369,7 +373,10 @@ const darkTheme = {
   ),
   "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
   "tz-decred-logo": url(require("style/icons/tzDecredLogo.svg")),
-  "tz-decred-logo-bt-bg": "var(--politeia-button-bg)"
+  "tz-wipe-device": url(require("style/icons/tzWipeDevice.svg")),
+  "tz-recover-device": url(require("style/icons/tzRecoverDevice.svg")),
+  "tz-init-device": url(require("style/icons/tzInitDevice.svg")),
+  "tz-backup-device": url(require("style/icons/tzBackupDevice.svg"))
 };
 
 export default darkTheme;
