@@ -10,7 +10,7 @@ const DeviceSetupRow = ({
   performingOperation,
   buttonLabel
 }) => (
-  <div className="flex-row">
+  <div className={styles.deviceSetupRow}>
     <div className={classNames(styles.icon, styles[docName])} />
     <div className="flex-column">
       <div className={styles.title}>{title}</div>

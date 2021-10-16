@@ -10,3 +10,9 @@
   background-color: var(--background-back-color);
   margin-bottom: 30px;
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 30px 20px;
+  }
+}

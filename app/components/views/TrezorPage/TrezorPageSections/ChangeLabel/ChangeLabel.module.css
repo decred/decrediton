@@ -31,7 +31,7 @@
   margin-top: 15px;
 }
 
-.newLabelInput {
+.newLabelInput input {
   width: 274px;
 }
 
@@ -46,4 +46,10 @@
   padding: 6px 10px;
   margin-left: 10px;
   margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .newLabelInput input {
+    width: 208px;
+  }
 }

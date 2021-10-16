@@ -1,3 +1,8 @@
+.deviceSetupRow {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+}
+
 .title {
   font-size: 19px;
   font-weight: 600;
@@ -38,4 +43,15 @@
   line-height: 16.34px;
   padding: 6px 10px;
   margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .deviceSetupRow {
+    display: grid;
+    grid-template-columns: min-content auto;
+  }
+
+  .button {
+    grid-column: 1/3;
+  }
 }

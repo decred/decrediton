@@ -7,6 +7,7 @@ import {
   DeviceSetupSection
 } from "./TrezorPageSections";
 import { InvisibleButton } from "buttons";
+import styles from "./TrezorPageContent.module.css";
 
 const NoDevicePage = ({ onConnect }) => (
   <>
@@ -56,7 +57,7 @@ const TrezorPageContent = ({ ContainerComponent }) => {
   return !device ? (
     <NoDevicePage onConnect={connect} />
   ) : (
-    <>
+    <div className={styles.container}>
       <SecuritySection
         {...{
           ContainerComponent,
@@ -102,7 +103,7 @@ const TrezorPageContent = ({ ContainerComponent }) => {
           isPerformingUpdate
         }}
       />
-    </>
+    </div>
   );
 };
 
