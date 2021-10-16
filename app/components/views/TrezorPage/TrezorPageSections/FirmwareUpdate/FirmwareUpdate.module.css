@@ -1,0 +1,36 @@
+.documentation {
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: var(--main-dark-blue);
+}
+
+.documentation strong {
+  font-style: normal;
+}
+
+.documentation em {
+  color: var(--orange);
+  font-style: normal;
+}
+
+.pathBrowseInput {
+  margin-right: 11px;
+}
+
+.newLabelInput {
+  width: 274px;
+}
+
+.pathBrowseInput input:disabled {
+  opacity: 0.5;
+}
+
+.updateFirmwareButton {
+  height: 29px;
+  font-size: 13px;
+  line-height: 16.34px;
+  padding: 6px 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+}

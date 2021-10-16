@@ -96,6 +96,7 @@ const TrezorPageContent = ({ ContainerComponent }) => {
       <FirmwareUpdate
         {...{
           ContainerComponent,
+          intl,
           updateFirmware,
           performingOperation: loading,
           isPerformingUpdate

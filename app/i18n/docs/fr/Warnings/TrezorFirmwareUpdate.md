@@ -1,4 +1,4 @@
-**Attention !** Utilisez uniquement le microprogramme officiel distribué par SatoshiLabs (fabricant
+**_Attention !_** Utilisez uniquement le microprogramme officiel distribué par SatoshiLabs (fabricant
 de Trezor) ou par d’autres sources extrêmement fiables. L’utilisation d’un microprogramme non standard
 ou provenant d’une société ou d’un individu douteux peut entraîner la **perte
 ou le vol de fonds**.
