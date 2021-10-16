@@ -1,29 +1,12 @@
 import { useTrezorPage } from "./hooks";
-import { FormattedMessage as T } from "react-intl";
 import {
   ChangeLabel,
   SecuritySection,
   FirmwareUpdate,
   DeviceSetupSection
 } from "./TrezorPageSections";
-import { InvisibleButton } from "buttons";
 import styles from "./TrezorPageContent.module.css";
-
-const NoDevicePage = ({ onConnect }) => (
-  <>
-    <div>
-      <T
-        id="trezor.noDevice.message"
-        m="No Trezor device detected. Connect the device and check if Trezor bridge is installed and running."
-      />
-    </div>
-    <div>
-      <InvisibleButton onClick={onConnect}>
-        <T id="trezor.noDevice.btnConnect" m="Connect to Trezor" />
-      </InvisibleButton>
-    </div>
-  </>
-);
+import NoDevicePage from "./NoDevicePage";
 
 const TrezorPageContent = ({ ContainerComponent }) => {
   const {
@@ -55,7 +38,9 @@ const TrezorPageContent = ({ ContainerComponent }) => {
   const loading = performingOperation || performingRecoverDevice;
 
   return !device ? (
-    <NoDevicePage onConnect={connect} />
+    <div className={styles.container}>
+      <NoDevicePage onConnect={connect} />
+    </div>
   ) : (
     <div className={styles.container}>
       <SecuritySection
