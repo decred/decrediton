@@ -2,7 +2,6 @@ import { FormattedMessage as T } from "react-intl";
 
 export const LN_KEY = "ln";
 export const DEX_KEY = "dex";
-export const TREZOR_KEY = "trezor";
 
 export const linkList = [
   {
@@ -52,13 +51,6 @@ export const linkList = [
     link: <T id="sidebar.link.accounts" m="Accounts" />,
     icon: "accounts",
     ariaLabel: "Accounts"
-  },
-  {
-    path: "/trezor",
-    link: <T id="sidebar.link.trezor" m="Trezor" />,
-    icon: TREZOR_KEY,
-    key: TREZOR_KEY,
-    ariaLabel: "Trezor"
   },
   {
     path: "/dex",

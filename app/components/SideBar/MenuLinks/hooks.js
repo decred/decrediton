@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import { linkList, TREZOR_KEY, LN_KEY, DEX_KEY } from "./Links";
+import { linkList, LN_KEY, DEX_KEY } from "./Links";
 import { useHistory } from "react-router-dom";
 import { cloneDeep } from "fp";
 

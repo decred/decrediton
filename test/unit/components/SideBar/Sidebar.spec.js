@@ -170,19 +170,11 @@ const expectToHaveDefaultMenuLinks = async (params) => {
       "/privacy",
       "Privacy and Security"
     );
-    if (isTrezorEnabled) {
-      await expectToHaveMenuLink(
-        "menuLinkContent-trezor",
-        "Trezor",
-        "trezorIcon",
-        "/trezor",
-        "Trezor"
-      );
-    } else {
-      expect(
-        screen.queryByTestId("menuLinkContent-trezor")
-      ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("menuLinkContent-trezor")
+    ).not.toBeInTheDocument();
 
+    if (!isTrezorEnabled) {
       await expectToHaveMenuLink(
         "menuLinkContent-dex",
         "DEX",
@@ -313,7 +305,7 @@ test("renders sidebar on the bottom", () => {
   mockSidebarOnBottom.mockRestore();
 });
 
-test("renders sidebar with trezor enabled", () => {
+test("renders sidebar with trezor enabled, should not find trezor menu, it have been moved to a separate tab under settings", () => {
   const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
   render(<SideBar />);
   expectToHaveDefaultMenuLinks({
