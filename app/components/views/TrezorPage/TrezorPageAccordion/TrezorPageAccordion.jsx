@@ -16,7 +16,9 @@ const TrezorPageAccordion = ({ children, label }) => {
       onToggleAccordion={onToggleAccordion}
       headerClassName={styles.verticalAccordionHeader}
       className={styles.accordion}
-      childrenClassName={styles.accordionChildren}>
+      childrenClassName={styles.accordionChildren}
+      arrowClassName={styles.accordionArrow}
+      activeArrowClassName={styles.activeAccordionArrow}>
       {children}
     </VerticalAccordion>
   );

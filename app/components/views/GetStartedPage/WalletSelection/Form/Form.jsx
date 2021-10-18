@@ -25,6 +25,7 @@ import {
 const WalletSelectionForm = ({
   availableWallets,
   showCreateWalletForm,
+  showCreateTrezorBackedWalletForm,
   onRemoveWallet,
   onToggleEditWallet,
   editWallets,

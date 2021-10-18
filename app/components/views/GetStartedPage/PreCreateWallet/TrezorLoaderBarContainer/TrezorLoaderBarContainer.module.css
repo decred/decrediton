@@ -1,0 +1,38 @@
+.loaderBarContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 25px center;
+  background-image: var(--tz-create-bt);
+}
+
+.loaderBar div {
+  border-radius: 0;
+}
+
+.loaderBar,
+.loaderBar > div {
+  height: 60px;
+}
+
+.deviceStatus {
+  font-size: 13px;
+  line-height: 16px;
+  padding-left: 55px;
+}
+
+.deviceLabel {
+  font-weight: 600;
+  color: var(--main-dark-blue);
+}
+
+.connected {
+  color: var(--accent-blue);
+}

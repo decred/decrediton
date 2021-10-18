@@ -359,7 +359,8 @@ const lightTheme = {
   "tz-wipe-device": url(require("style/icons/tzWipeDevice.svg")),
   "tz-recover-device": url(require("style/icons/tzRecoverDevice.svg")),
   "tz-init-device": url(require("style/icons/tzInitDevice.svg")),
-  "tz-backup-device": url(require("style/icons/tzBackupDevice.svg"))
+  "tz-backup-device": url(require("style/icons/tzBackupDevice.svg")),
+  "tz-create-bt": url(require("style/icons/tzCreateBt.svg"))
 };
 
 export default lightTheme;

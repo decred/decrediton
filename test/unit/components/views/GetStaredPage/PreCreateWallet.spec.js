@@ -37,7 +37,6 @@ let mockGenerateSeed;
 let mockEnableTrezor;
 let mockDisableTrezor;
 let mockValidateMasterPubKey;
-let mockAlertNoConnectedDevice;
 let mockTrezorDevice;
 let mockGetWalletCreationMasterPubKey;
 let mockIsTestNet;
@@ -73,9 +72,6 @@ beforeEach(() => {
   mockGetWalletCreationMasterPubKey = trezorActions.getWalletCreationMasterPubKey = jest.fn(
     () => () => Promise.resolve(testWalletCreationMasterPubKey)
   );
-  mockAlertNoConnectedDevice = trezorActions.alertNoConnectedDevice = jest.fn(
-    () => () => {}
-  );
   mockValidateMasterPubKey = controlActions.validateMasterPubKey = jest.fn(
     () => () => {
       return { isValid: false, error: "" };
@@ -110,7 +106,7 @@ test("test when createWallet has been rejected", async () => {
   await goToCreateNewWalletView();
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
-  user.click(screen.getByText(/continue/i));
+  user.click(screen.getByText(/creating/i));
   await wait(() => screen.getByText(testWalletCreateErrorMsg));
   expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
 
@@ -125,7 +121,7 @@ test("daemon response success through createWallet function and createWalletPage
   await goToCreateNewWalletView();
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
-  user.click(screen.getByText(/continue/i));
+  user.click(screen.getByText(/creating/i));
   await wait(() => screen.getByText(/copy seed words to clipboard/i));
   expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
   expect(mockGenerateSeed).toHaveBeenCalled();
@@ -134,7 +130,7 @@ test("daemon response success through createWallet function and createWalletPage
 test("test wallet name input on creating new wallet view", async () => {
   await goToCreateNewWalletView();
 
-  const continueButton = screen.getByText(/continue/i);
+  const continueButton = screen.getByText(/creating/i);
   const walletNameInput = screen.getByPlaceholderText(/choose a name/i);
 
   user.click(continueButton);
@@ -265,36 +261,11 @@ test("test watch only control on restore wallet", async () => {
   );
 }, 30000);
 
-test("test trezor switch toggling and setup device page", async () => {
-  await goToRestoreWalletView();
-
-  const continueButton = screen.getByText(/continue/i);
-  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
-  user.click(screen.getByText("Advanced Options"));
-
-  // toggle Trezor switch
-  const trezorSwitch = screen.getByLabelText(/trezor/i);
-  const watchOnlySwitch = screen.getByLabelText(/watch only/i);
-  user.click(trezorSwitch);
-  expect(mockEnableTrezor).toHaveBeenCalled();
-  expect(trezorSwitch.checked).toBe(true);
-
-  // it has to disable Watch only switch and hide master pub key option
-  expect(screen.queryByText(/master pub key/i)).not.toBeInTheDocument();
-  expect(watchOnlySwitch.checked).toBe(false);
-
-  mockCreateWallet.mockClear();
-  user.click(continueButton);
-  expect(mockAlertNoConnectedDevice).toHaveBeenCalled();
-  expect(mockCreateWallet).not.toHaveBeenCalled();
-
-  // switch off Trezor switch
-  user.click(trezorSwitch);
-  expect(mockDisableTrezor).toHaveBeenCalled();
-  expect(trezorSwitch.checked).toBe(false);
-
-  // go to trezor config view when device is not connected
-  user.click(screen.queryByText(/setup device/i));
+test("test create trezor-backed wallet page (trezor device is NOT connected)", async () => {
+  await goToGetStartedView();
+  user.click(
+    screen.getByText("Create a Trezor-backed Wallet").nextElementSibling
+  );
   await wait(() => screen.getByText(/no trezor is detected/i));
   expect(
     screen.getByText(/no trezor is detected/i).textContent
@@ -305,11 +276,11 @@ test("test trezor switch toggling and setup device page", async () => {
   expect(mockTrezorConnect).toHaveBeenCalled();
 
   // go back
-  user.click(screen.getByText(/go back/i).nextElementSibling);
-  await wait(() => screen.getByText("Wallet Name"));
+  user.click(screen.getByText("Back"));
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
 
-test("trezor device is connected", async () => {
+test("test create trezor-backed wallet page (trezor device is connected)", async () => {
   mockTrezorDevice = selectors.trezorDevice = jest.fn(() => {
     return { connected: true };
   });
@@ -328,32 +299,41 @@ test("trezor device is connected", async () => {
     return Promise.resolve(testRestoreSelectedWallet);
   });
 
+  const mockDeviceLabel = "mock-device-label";
+
   render(<GetStartedPage />, {
     initialState: {
-      trezor: { device: { connected: true } }
+      trezor: {
+        device: "mock-device",
+        connected: true,
+        deviceLabel: mockDeviceLabel
+      }
     }
   });
-  await wait(() => screen.getByText(/welcome to decrediton/i));
-  user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText("Wallet Name"));
-  user.click(screen.getByText("Advanced Options"));
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  user.click(
+    screen.getByText("Create a Trezor-backed Wallet").nextElementSibling
+  );
 
+  await wait(() => screen.getByText("Wallet Name"));
+  expect(mockEnableTrezor).toHaveBeenCalled();
+
+  expect(screen.getByText(`${mockDeviceLabel} Trezor`)).toBeInTheDocument();
+  expect(screen.getByText("Connected")).toBeInTheDocument();
   expect(mockTrezorDevice).toHaveBeenCalled();
 
   // go to trezor config view when device is connected
-  user.click(screen.queryByText(/setup device/i));
+  user.click(screen.getByText("Device Setup"));
   await wait(() => screen.getByText("Security"));
   // go back
-  user.click(screen.getByText(/go back/i).nextElementSibling);
+  user.click(screen.getByText("Create a Wallet"));
   await wait(() => screen.getByText("Wallet Name"));
 
-  const continueButton = screen.getByText(/continue/i);
-  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
-  user.click(screen.getByText("Advanced Options"));
-  // toggle Trezor switch
-  const trezorSwitch = screen.getByLabelText(/trezor/i);
-  user.click(trezorSwitch);
-  expect(mockEnableTrezor).toHaveBeenCalled();
+  const continueButton = screen.getByText("Create Wallet");
+  user.type(
+    screen.getByPlaceholderText("Choose a name for your Trezor Wallet"),
+    testWalletName
+  );
 
   user.click(continueButton);
   await wait(() => expect(screen.getByTestId("decred-loading")));
@@ -366,16 +346,27 @@ test("trezor device is connected", async () => {
   );
 });
 
-test("trezor has to auto-disable when step back from restore view", async () => {
+test("trezor has to auto-disable when step back from create trezor-backed wallet view", async () => {
   mockTrezorDevice = selectors.trezorDevice = jest.fn(() => {
     return { connected: true };
   });
-  await goToRestoreWalletView();
-  user.click(screen.getByText("Advanced Options"));
-  // toggle Trezor switch
-  const trezorSwitch = screen.getByLabelText(/trezor/i);
-  user.click(trezorSwitch);
+  render(<GetStartedPage />, {
+    initialState: {
+      trezor: {
+        device: "mock-device",
+        connected: true
+      }
+    }
+  });
+  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  user.click(
+    screen.getByText("Create a Trezor-backed Wallet").nextElementSibling
+  );
+
+  await wait(() => screen.getByText("Wallet Name"));
   expect(mockEnableTrezor).toHaveBeenCalled();
+  // did not receive deviceLabel
+  expect(screen.getByText("New DCR Trezor")).toBeInTheDocument();
 
   user.click(screen.getByText(/cancel/i));
   await wait(() => screen.getByText(/welcome to decrediton/i));
@@ -395,7 +386,7 @@ test("test testnet logo on creating new wallet view", async () => {
   );
 
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
-  user.click(screen.getByText(/continue/i));
+  user.click(screen.getByText(/creating/i));
   await wait(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );

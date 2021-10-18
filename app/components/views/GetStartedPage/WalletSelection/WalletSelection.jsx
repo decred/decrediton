@@ -26,6 +26,15 @@ const WalletSelectionBody = ({
     [onSendCreateWallet]
   );
 
+  const showCreateTrezorBackedWalletForm = useCallback(() => {
+    onSendCreateWallet(false, true);
+  }, [onSendCreateWallet]);
+
+  const onChangeAvailableWallets = useCallback(
+    (selectedWallet) => setSelectedWallet(selectedWallet),
+    [setSelectedWallet]
+  );
+
   return (
     <WalletSelectionForm
       {...{
@@ -38,7 +47,8 @@ const WalletSelectionBody = ({
         creatingWallet,
         onToggleEditWallet,
         showCreateWalletForm,
-        onShowOnboardingTutorial
+        showCreateTrezorBackedWalletForm,
+        onChangeAvailableWallets
       }}
     />
   );

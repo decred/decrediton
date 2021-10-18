@@ -21,11 +21,7 @@ const CreateWalletForm = ({
   toggleWatchOnly,
   onChangeCreateWalletMasterPubKey,
   masterPubKeyError,
-  isTrezor,
-  toggleTrezor,
-  onShowTrezorConfig,
   isCreateNewWallet,
-  creatingWallet,
   disableCoinTypeUpgrades,
   toggleDisableCoinTypeUpgrades,
   gapLimit,
@@ -129,38 +125,6 @@ const CreateWalletForm = ({
               <div className={styles.advancedOption}>
                 <Checkbox
                   label={
-                    <>
-                      <T id="createwallet.isTrezor.label" m="Trezor" />
-                      <span
-                        className={styles.trezorWallet}
-                        onClick={onShowTrezorConfig}>
-                        <T
-                          id="createWallet.isTrezor.setupLink"
-                          m="(setup device)"
-                        />
-                      </span>
-                    </>
-                  }
-                  id="trezor"
-                  description={intl.formatMessage(
-                    messages.messageWalletTrezorDescription,
-                    {
-                      link: (
-                        <ExternalLink
-                          className={styles.trezorDocs}
-                          href="https://docs.decred.org/wallets/decrediton/trezor/">
-                          docs.decred.org
-                        </ExternalLink>
-                      )
-                    }
-                  )}
-                  checked={isTrezor}
-                  onChange={toggleTrezor}
-                />
-              </div>
-              <div className={styles.advancedOption}>
-                <Checkbox
-                  label={
                     <T
                       id="createwallet.disableCoinTypeUpgrades.label"
                       m="Disable coin type upgrades"
@@ -200,7 +164,7 @@ const CreateWalletForm = ({
         <T id="advancedStartup.cancel" m="Cancel" />
       </InvisibleButton>
       <KeyBlueButton onClick={createWallet}>
-        {creatingWallet ? (
+        {isCreateNewWallet ? (
           <T id="wallet.creating.button" m="Creating" />
         ) : (
           <T id="wallet.create.button" m="Continue" />

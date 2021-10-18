@@ -17,7 +17,6 @@ export const getStartedMachine = Machine({
     error: null,
     availableWalletsError: null,
     isCreateNewWallet: null,
-    isRestoreNewWallet: null,
     isSPV: null,
     isAdvancedDaemon: null
   },
@@ -213,7 +212,8 @@ export const getStartedMachine = Machine({
                 isRestoreNewWallet: (context, event) =>
                   !isUndefined(event.isNew)
                     ? !event.isNew
-                    : context.isRestoreNewWallet
+                    : context.isRestoreNewWallet,
+		isTrezor: (context, event) => event.isTrezor
               })
             },
             ERROR: {
@@ -371,7 +371,6 @@ export const getStartedMachine = Machine({
                   SetupWalletConfigMachine.withContext({
                     selectedWallet: ctx.selectedWallet,
                     isCreateNewWallet: ctx.isCreateNewWallet,
-                    isRestoreNewWallet: ctx.isRestoreNewWallet,
                     isWatchingOnly: ctx.selectedWallet.isWatchingOnly,
                     isTrezor: ctx.selectedWallet.isTrezor,
                     passPhrase: ctx.passPhrase

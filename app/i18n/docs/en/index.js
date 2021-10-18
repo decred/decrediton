@@ -91,3 +91,5 @@ export { default as TrezorBackupDevice } from "./Trezor/BackupDevice.md";
 export { default as TrezorInitDevice } from "./Trezor/InitDevice.md";
 export { default as TrezorRecoverDevice } from "./Trezor/RecoverDevice.md";
 export { default as TrezorWipeDevice } from "./Trezor/WipeDevice.md";
+export { default as PreCreateTrezorWallet1 } from "./Trezor/PreCreateTrezorWallet1.md";
+export { default as PreCreateTrezorWallet2 } from "./Trezor/PreCreateTrezorWallet2.md";

@@ -98,7 +98,7 @@ const goToCopySeedView = async () => {
   await wait(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
-  user.click(screen.getByText(/continue/i));
+  user.click(screen.getByText(/creating/i));
   await wait(() => screen.getByText(/copy seed words to clipboard/i));
 };
 
