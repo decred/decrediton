@@ -195,6 +195,7 @@
 }
 
 .createTrezorBackedWalletBt {
+  background-color: var(--background-back-color) !important;
   background-image: var(--tz-create-bt);
   background-size: 11px;
   margin-left: 10px !important;
