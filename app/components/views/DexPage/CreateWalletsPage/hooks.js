@@ -1,4 +1,3 @@
-import { useMountEffect } from "hooks";
 import { useState, useCallback } from "react";
 
 export const useDexCreateWallets = ({
@@ -20,8 +19,6 @@ export const useDexCreateWallets = ({
   const resetState = useCallback(() => {
     setWalletName(btcWalletName);
   }, [btcWalletName]);
-
-  useMountEffect(() => {});
 
   const onCreateWallet = (passphrase, args) => {
     const { appPassphrase } = args;
