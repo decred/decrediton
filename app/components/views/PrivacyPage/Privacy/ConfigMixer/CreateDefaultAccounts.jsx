@@ -31,7 +31,7 @@ const CreateDefaultAccounts = ({
         )
       }}
     />
-    <div>
+    <div className="margin-top-m">
       <WatchOnlyWarnNotification isActive={isCreateAccountDisabled}>
         <PassphraseModalButton
           {...{

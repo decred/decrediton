@@ -336,6 +336,7 @@ const PurchaseTicketsForm = ({
               />
             }
             disabled={!isValid}
+            modalClassName={styles.passphraseModal}
             onSubmit={onPurchaseTickets}
             buttonLabel={purchaseLabel()}
           />
