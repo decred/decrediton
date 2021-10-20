@@ -20,6 +20,9 @@
 }
 
 .inputPrivatePassword {
-  width: 288px;
   padding-bottom: 3px;
+}
+
+.inputPrivatePassword input {
+  width: 190px;
 }

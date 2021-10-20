@@ -1,6 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { PassphraseModalField, VSPSelect, AccountsSelect } from "inputs";
+import { VSPSelect, AccountsSelect } from "inputs";
 import { PassphraseModal } from "modals";
+import styles from "./SyncVSPFailedTickets.module.css";
+import { classNames } from "pi-ui";
 
 const SyncVSPFailedTickets = ({
   account,
@@ -14,18 +16,22 @@ const SyncVSPFailedTickets = ({
   options
 }) => (
   <PassphraseModal {...{ show, onSubmit, onCancelModal, ...props }}>
-    <PassphraseModalField label={<T id="syncVsp.vsp" m="VSP Select" />}>
+    <label className={classNames(styles.label, "selectWithBigFont")}>
+      <T id="syncVsp.vsp" m="VSP Select" />
       <VSPSelect
         className="stakepool-purchase-ticket-input-select"
         {...{ account, onChange: setVSP, value, options }}
       />
-    </PassphraseModalField>
-    <PassphraseModalField label={<T id="syncVsp.account" m="Account" />}>
-      <AccountsSelect
-        className="stakepool-purchase-ticket-input-select"
-        {...{ account, onChange: setAccount }}
-      />
-    </PassphraseModalField>
+    </label>
+    <div className={classNames("margin-top-m", "margin-bottom-s")}>
+      <label className={classNames(styles.label, "selectWithBigFont")}>
+        <T id="syncVsp.account" m="Account" />
+        <AccountsSelect
+          selectClassName={styles.accountSelectInput}
+          {...{ account, onChange: setAccount }}
+        />
+      </label>
+    </div>
   </PassphraseModal>
 );
 

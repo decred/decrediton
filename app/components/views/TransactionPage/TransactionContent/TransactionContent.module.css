@@ -55,6 +55,7 @@
 .value {
   word-wrap: break-word;
   display: flex;
+  line-height: 17px;
 }
 .value > a {
   color: var(--input-color-default);

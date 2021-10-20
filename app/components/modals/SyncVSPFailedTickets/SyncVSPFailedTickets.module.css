@@ -1,21 +1,9 @@
-.inputSelect {
-  font-size: 16px;
-  text-align: left;
-  width: 220px;
-  margin-right: 6px;
-  margin-left: 6px;
-  margin-top: 3px;
+.label {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--stroke-color-hovered);
 }
 
-@media screen and (max-width: 1180px) {
-  .inputSelect {
-    width: 220px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .inputSelect {
-    margin-left: 10px;
-    align-self: flex-end;
-  }
+.accountSelectInput {
+  width: 100%;
 }
