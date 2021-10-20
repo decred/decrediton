@@ -1,7 +1,7 @@
 const versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
-const darwinTemplate = (mainWindow, locale) => [
+const darwinTemplate = (mainWindow, loadCustomTranslation, locale) => [
   {
     label: locale.messages["appMenu.decrediton"],
     submenu: [
@@ -122,7 +122,12 @@ const darwinTemplate = (mainWindow, locale) => [
   }
 ];
 
-const regularTemplate = (mainWindow, confirmBrowserView, locale) => [
+const regularTemplate = (
+  mainWindow,
+  confirmBrowserView,
+  loadCustomTranslation,
+  locale
+) => [
   {
     label: locale.messages["appMenu.file"],
     submenu: [
@@ -164,18 +169,35 @@ const regularTemplate = (mainWindow, confirmBrowserView, locale) => [
         click() {
           confirmBrowserView.webContents.toggleDevTools();
         }
+      },
+      {
+        label: locale.messages["appMenu.loadCustomTranslation"],
+        accelerator: "",
+        click() {
+          loadCustomTranslation();
+        }
       }
     ]
   }
 ];
 
-export const initTemplate = (mainWindow, confirmBrowserView, locale) => {
+export const initTemplate = (
+  mainWindow,
+  confirmBrowserView,
+  loadCustomTranslation,
+  locale
+) => {
   let template;
 
   if (process.platform === "darwin") {
-    template = darwinTemplate(mainWindow, locale);
+    template = darwinTemplate(mainWindow, loadCustomTranslation, locale);
   } else {
-    template = regularTemplate(mainWindow, confirmBrowserView, locale);
+    template = regularTemplate(
+      mainWindow,
+      confirmBrowserView,
+      loadCustomTranslation,
+      locale
+    );
   }
 
   return template;

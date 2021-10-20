@@ -80,7 +80,6 @@ The current recommended versions for the main tools are:
   - Node: 14.16.1
   - Npm: 6.4+
   - Yarn: 1.12+
-  - Electron: 3.0.6
 
 To ease node version management, install all top-level tools (node/npm/yarn) using [nvm](https://github.com/nvm-sh/nvm).
 

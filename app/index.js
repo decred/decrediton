@@ -49,6 +49,14 @@ log("info", "Starting main react app");
 
 const hasCliOption = (key) => cliOptions && cliOptions[key];
 
+// Apply translated strings from custom translation file if it was loaded for
+// this locale.
+const customLocaleMsgs = wallet.getCustomTranslationMessages();
+const currLocale = locales.find((value) => value.key === locale);
+if (currLocale && customLocaleMsgs) {
+  currLocale.messages = customLocaleMsgs;
+}
+
 const currentSettings = {
   locale: locale,
   daemonStartAdvanced:
