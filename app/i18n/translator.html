@@ -128,7 +128,7 @@
 
       function prepareTranslatedFile() {
         const translated = state.translated;
-        let data = Object.keys(translated).sort().map(k => `    "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
+        let data = Object.keys(translated).sort().map(k => `  "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
         let json = `{\n${data}\n}\n`;
         const file = new Blob([json], {type: "application/octet-stream"});
         const url = URL.createObjectURL(file);
