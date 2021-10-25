@@ -181,7 +181,7 @@ const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
-      isWatchingOnly: wallet.watchingOnly,
+      isWatchingOnly: wallet.isWatchingOnly,
       lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null
     }),
     wallets
@@ -978,6 +978,10 @@ export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
 export const isProcessingUnmanaged = get([
   "vsp",
   "processUnmanagedTicketsAttempt"
+]);
+export const isSettingAccountsPassphrase = get([
+  "control",
+  "settingAccountsPassphrase"
 ]);
 
 export const getAvailableVSPsPubkeys = get(["vsp", "availableVSPsPubkeys"]);

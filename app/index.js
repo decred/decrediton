@@ -373,7 +373,8 @@ const initialState = {
     cantCloseModalVisible: false,
     changeScriptByAccount: {},
     monitorLockableAccountsTimer: null,
-    confirmationDialogModalVisible: false
+    confirmationDialogModalVisible: false,
+    settingAccountsPassphrase: false
   },
   snackbar: {
     messages: Array()
