@@ -203,6 +203,11 @@
             continue;
           }
 
+          // When on Changed view, skip to next key considered "changed".
+          if (filterVal === "changed" && state.changedEntries.indexOf(k) == -1) {
+            continue;
+          }
+
           if (gotPrev) {
             changeToKey(k);
             return;
