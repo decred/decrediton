@@ -355,7 +355,8 @@ export const getStartedMachine = Machine({
                     selectedWallet: ctx.selectedWallet,
                     isCreateNewWallet: ctx.isCreateNewWallet,
                     isWatchingOnly: ctx.selectedWallet.isWatchingOnly,
-                    isTrezor: ctx.selectedWallet.isTrezor
+                    isTrezor: ctx.selectedWallet.isTrezor,
+                    passPhrase: ctx.passPhrase
                   })
                 );
               } catch (e) {

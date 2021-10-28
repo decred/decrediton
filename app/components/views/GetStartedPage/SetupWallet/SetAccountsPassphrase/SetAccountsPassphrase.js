@@ -4,22 +4,12 @@ import { PassphraseModalButton } from "buttons";
 import styles from "./SettingAccountsPassphrase.module.css";
 
 const SetAccountsPassphrase = ({
-  send,
-  onProcessAccounts,
+  onSubmitAccountsPassphrase,
   title,
   description,
   error,
   isProcessingManaged
 }) => {
-  const onSubmitContinue = (passphrase) => {
-    // send a continue so we can go to the loading state
-    onProcessAccounts(passphrase)
-      .then(() => send({ type: "CONTINUE" }))
-      .catch((error) => {
-        send({ type: "ERROR", error });
-      });
-    return;
-  };
   return (
     <div className={styles.content}>
       <Subtitle className={styles.subtitle} title={title} />
@@ -30,7 +20,7 @@ const SetAccountsPassphrase = ({
         <PassphraseModalButton
           modalTitle={<T id="process.settingPassAccts.title" m="Passphrase" />}
           modalClassName={styles.passphraseModal}
-          onSubmit={onSubmitContinue}
+          onSubmit={onSubmitAccountsPassphrase}
           buttonLabel={<T id="process.settingPassAccts.button" m="Continue" />}
           disabled={isProcessingManaged}
           loading={isProcessingManaged}
