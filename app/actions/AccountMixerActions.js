@@ -1,3 +1,4 @@
+import { FormattedMessage as T } from "react-intl";
 import * as sel from "selectors";
 import { wallet } from "wallet-preload-shim";
 import {
@@ -75,7 +76,12 @@ export const checkUnmixedAccountBalance = (changeAccount) => async (
   const spendableBal = await dispatch(getAcctSpendableBalance(changeAccount));
   if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
     dispatch({
-      error: "Insufficient unmixed account balance",
+      error: (
+        <T
+          id="accountMixer.insufficientUnmixedAccountBalance"
+          m="Insufficient unmixed account balance"
+        />
+      ),
       type: RUNACCOUNTMIXER_NOBALANCE
     });
   } else {
