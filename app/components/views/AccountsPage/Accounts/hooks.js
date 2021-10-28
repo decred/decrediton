@@ -15,7 +15,9 @@ export function useAccounts() {
   const renameAccountRequestAttempt = useSelector(
     sel.renameAccountRequestAttempt
   );
-  const isLoading = nextAccountRequestAttempt || renameAccountRequestAttempt;
+  const isLoading = !!(
+    nextAccountRequestAttempt || renameAccountRequestAttempt
+  );
   const accountExtendedKey = useSelector(sel.accountExtendedKey);
   const walletName = useSelector(sel.getWalletName);
   const hasTickets = useSelector(sel.hasTickets);

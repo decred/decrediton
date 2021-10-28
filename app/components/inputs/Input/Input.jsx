@@ -44,7 +44,8 @@ const Input = ({
   autoFocus,
   dataTestId,
   ariaLabelledBy,
-  newBiggerFontStyle
+  newBiggerFontStyle,
+  maxLength
 }) => {
   const onInputKeyDown = (e) => {
     e.keyCode === 13 && onKeyDownSubmit?.(e);
@@ -100,6 +101,7 @@ const Input = ({
       messageClassNames={!newBiggerFontStyle ? styles.message : null}
       onKeyDown={onInputKeyDown}
       data-testid={dataTestId}
+      maxLength={maxLength}
       aria-labelledby={ariaLabelledBy}>
       {unit && (
         <span
