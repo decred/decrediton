@@ -121,7 +121,7 @@ const darkTheme = {
   "seedword-select-border-default-hover-text-color": "#7DA7D9",
   "txdetails-top-bg": "#1F325F",
   "trezor-line-color": "#608ACE",
-  "proposal-text-markdown": "#f6f8fa",
+  "proposal-text-markdown": "var(--background-container)",
   "background-address-copy-color": "#2F4D8C",
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#2F4D8C",
