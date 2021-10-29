@@ -1,28 +1,30 @@
-import { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { injectIntl } from "react-intl";
 import { useSignMessage } from "./hooks";
-import { useValidateAddress } from "../ValidateAddress/hooks";
 import SignMessageForm from "./SignMessageForm";
 import Signature from "./Signature";
 import { useMountEffect } from "hooks";
 
-const SignMessage = ({ location, intl }) => {
+const SignMessage = ({ location }) => {
   const {
+    intl,
     walletService,
     signMessageSignature,
     isSigningMessage,
     isSignMessageDisabled,
     isTrezor,
+    address,
+    setAddress,
+    message,
+    setMessage,
+    addressError,
+    setAddressError,
+    messageError,
+    setMessageError,
     onSignMessageAttempt,
     onSignMessageAttemptTrezor,
-    onSignMessageCleanStore
+    onSignMessageCleanStore,
+    onValidateAddress
   } = useSignMessage();
-  const { onValidateAddress } = useValidateAddress();
-  const [address, setAddress] = useState("");
-  const [message, setMessage] = useState("");
-  const [addressError, setAddressError] = useState(null);
-  const [messageError, setMessageError] = useState(null);
 
   useMountEffect(() => {
     if (!walletService) {
@@ -89,4 +91,4 @@ const SignMessage = ({ location, intl }) => {
   );
 };
 
-export default withRouter(injectIntl(SignMessage));
+export default withRouter(SignMessage);

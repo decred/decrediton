@@ -1,4 +1,4 @@
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Subtitle } from "shared";
 import { TextInput } from "inputs";
 import { classNames } from "pi-ui";
@@ -101,4 +101,4 @@ const ValidateAddressForm = ({
   </>
 );
 
-export default injectIntl(ValidateAddressForm);
+export default ValidateAddressForm;

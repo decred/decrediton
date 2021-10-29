@@ -1,26 +1,31 @@
-import { useEffect, useState } from "react";
-import { injectIntl } from "react-intl";
+import { useEffect } from "react";
 import VerifyMessageForm from "./VerifyMessageForm";
 import { useVerifyMessage } from "./hooks";
-import { useValidateAddress } from "../ValidateAddress/hooks";
 import { useMountEffect } from "hooks";
 
-const VerifyMessage = ({ intl }) => {
+const VerifyMessage = () => {
   const {
+    intl,
+    address,
+    setAddress,
+    addressError,
+    setAddressError,
+    message,
+    setMessage,
+    messageError,
+    setMessageError,
+    signature,
+    setSignature,
+    signatureError,
+    setSignatureError,
     verifyMessageSuccess,
     verifyMessageError,
     isVerifyingMessage,
     onVerifyMessageAttempt,
     onVerifyMessageCleanStore,
-    onGetMessageVerificationServiceAttempt
+    onGetMessageVerificationServiceAttempt,
+    onValidateAddress
   } = useVerifyMessage();
-  const { onValidateAddress } = useValidateAddress();
-  const [address, setAddress] = useState("");
-  const [addressError, setAddressError] = useState(null);
-  const [message, setMessage] = useState("");
-  const [messageError, setMessageError] = useState(null);
-  const [signature, setSignature] = useState("");
-  const [signatureError, setSignatureError] = useState(null);
 
   useMountEffect(() => {
     onGetMessageVerificationServiceAttempt();
@@ -35,7 +40,7 @@ const VerifyMessage = ({ intl }) => {
     ) {
       setSignatureError("Invalid Signature");
     }
-  }, [verifyMessageSuccess, verifyMessageError]);
+  }, [verifyMessageSuccess, verifyMessageError, setSignatureError]);
 
   const onChangeAddress = async (address) => {
     setAddress(address);
@@ -96,4 +101,4 @@ const VerifyMessage = ({ intl }) => {
   );
 };
 
-export default injectIntl(VerifyMessage);
+export default VerifyMessage;

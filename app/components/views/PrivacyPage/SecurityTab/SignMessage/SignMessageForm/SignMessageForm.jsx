@@ -3,7 +3,7 @@ import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { Button } from "pi-ui";
 import { TextInput } from "inputs";
 import { WatchOnlyWarnNotification } from "shared";
-import sharedStyles from "../SecurityTab.module.css";
+import styles from "./SignMessageForm.module.css";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -38,18 +38,18 @@ const SignMessageForm = ({
     isSignMessageDisabled;
   return (
     <>
-      <div className={sharedStyles.securityPageForm}>
-        <div className={sharedStyles.buttonRight}>
+      <div className={styles.form}>
+        <div className={styles.buttonRight}>
           <InfoDocModalButton document="SignMessageInfo" draggable />
         </div>
-        <div className={sharedStyles.securityPageFormRow}>
-          <div className={sharedStyles.securityPageFormRowLabel}>
+        <div className={styles.formRow}>
+          <div className={styles.formRowLabel}>
             <T
               id="securitycenter.signMessage.field.address.label"
               m="Address"
             />
           </div>
-          <div className={sharedStyles.securityPageFormRowField}>
+          <div className={styles.formRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
                 id="addressInput"
@@ -65,14 +65,14 @@ const SignMessageForm = ({
             </WatchOnlyWarnNotification>
           </div>
         </div>
-        <div className={sharedStyles.securityPageFormRow}>
-          <div className={sharedStyles.securityPageFormRowLabel}>
+        <div className={styles.formRow}>
+          <div className={styles.formRowLabel}>
             <T
               id="securitycenter.signMessage.field.message.label"
               m="Message"
             />
           </div>
-          <div className={sharedStyles.securityPageFormRowField}>
+          <div className={styles.formRowField}>
             <WatchOnlyWarnNotification isActive={isSignMessageDisabled}>
               <TextInput
                 id="addressInput"

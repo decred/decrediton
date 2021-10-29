@@ -3,7 +3,7 @@ import ValidateAddressForm from "./ValidateAddressForm";
 import { useValidateAddress } from "./hooks";
 
 const ValidateAddress = () => {
-  const { onValidateAddress, validateAddressSuccess } = useValidateAddress();
+  const { intl, onValidateAddress, validateAddressSuccess } = useValidateAddress();
   const [address, setAddress] = useState("");
   const [error, setError] = useState(null);
 
@@ -23,6 +23,7 @@ const ValidateAddress = () => {
   return (
     <ValidateAddressForm
       {...{
+        intl,
         address,
         error,
         validateAddressSuccess,
