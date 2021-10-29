@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { injectIntl } from "react-intl";
 import { useSignMessage } from "./hooks";
 import { useValidateAddress } from "../ValidateAddress/hooks";
 import SignMessageForm from "./SignMessageForm";
 import Signature from "./Signature";
+import { useMountEffect } from "hooks";
 
 const SignMessage = ({ location, intl }) => {
   const {
@@ -23,12 +24,12 @@ const SignMessage = ({ location, intl }) => {
   const [addressError, setAddressError] = useState(null);
   const [messageError, setMessageError] = useState(null);
 
-  useEffect(() => {
+  useMountEffect(() => {
     if (!walletService) {
       location.push("/error");
     }
     return () => onSignMessageCleanStore();
-  }, [walletService, location, onSignMessageCleanStore]);
+  });
 
   const onChangeAddress = async (address) => {
     setAddress(address);

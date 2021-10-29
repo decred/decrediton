@@ -1,10 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
-import {
-  AccountsSelect,
-  DcrInput,
-  ReceiveAccountsSelect
-} from "inputs";
+import { AccountsSelect, DcrInput, ReceiveAccountsSelect } from "inputs";
 import { Balance } from "shared";
 import styles from "./SendOutputRow.module.css";
 

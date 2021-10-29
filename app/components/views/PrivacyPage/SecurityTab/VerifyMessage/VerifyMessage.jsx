@@ -3,6 +3,7 @@ import { injectIntl } from "react-intl";
 import VerifyMessageForm from "./VerifyMessageForm";
 import { useVerifyMessage } from "./hooks";
 import { useValidateAddress } from "../ValidateAddress/hooks";
+import { useMountEffect } from "hooks";
 
 const VerifyMessage = ({ intl }) => {
   const {
@@ -21,10 +22,10 @@ const VerifyMessage = ({ intl }) => {
   const [signature, setSignature] = useState("");
   const [signatureError, setSignatureError] = useState(null);
 
-  useEffect(() => {
+  useMountEffect(() => {
     onGetMessageVerificationServiceAttempt();
     return () => onVerifyMessageCleanStore();
-  }, [onGetMessageVerificationServiceAttempt, onVerifyMessageCleanStore]);
+  });
 
   useEffect(() => {
     setSignatureError(null);
