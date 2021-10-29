@@ -2,7 +2,6 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { Button } from "pi-ui";
 import { InfoDocModalButton } from "buttons";
-import sharedStyles from "../SecurityTab.module.css";
 import styles from "./VerifyMessageForm.module.css";
 
 const messages = defineMessages({
@@ -45,15 +44,15 @@ const VerifyMessageForm = ({
   const isValid = verifyMessageSuccess && verifyMessageSuccess.valid;
   return (
     <>
-      <div className={sharedStyles.securityPageForm}>
-        <div className={sharedStyles.buttonRight}>
+      <div className={styles.form}>
+        <div className={styles.buttonRight}>
           <InfoDocModalButton document="VerifyMessageInfo" />
         </div>
-        <div className={sharedStyles.securityPageFormRow}>
-          <div className={sharedStyles.securityPageFormRowLabel}>
+        <div className={styles.formRow}>
+          <div className={styles.formRowLabel}>
             <T id="securitycenter.verify.field.address.label" m="Address" />
           </div>
-          <div className={sharedStyles.securityPageFormRowField}>
+          <div className={styles.formRowField}>
             <TextInput
               id="addressInput"
               required
@@ -66,11 +65,11 @@ const VerifyMessageForm = ({
             />
           </div>
         </div>
-        <div className={sharedStyles.securityPageFormRow}>
-          <div className={sharedStyles.securityPageFormRowLabel}>
+        <div className={styles.formRow}>
+          <div className={styles.formRowLabel}>
             <T id="securitycenter.verify.field.signature.label" m="Signature" />
           </div>
-          <div className={sharedStyles.securityPageFormRowField}>
+          <div className={styles.formRowField}>
             <TextInput
               id="signatureInput"
               required
@@ -85,11 +84,11 @@ const VerifyMessageForm = ({
             />
           </div>
         </div>
-        <div className={sharedStyles.securityPageFormRow}>
-          <div className={sharedStyles.securityPageFormRowLabel}>
+        <div className={styles.formRow}>
+          <div className={styles.formRowLabel}>
             <T id="securitycenter.verify.field.message.label" m="Message" />
           </div>
-          <div className={sharedStyles.securityPageFormRowFieldMessage}>
+          <div className={styles.formRowFieldMessage}>
             <TextInput
               id="messageInput"
               required

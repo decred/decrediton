@@ -1,13 +1,13 @@
-import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import SignMessage from "./SignMessage";
 import ValidateAddressTab from "./ValidateAddress";
 import VerifyMessageTab from "./VerifyMessage";
 import { classNames } from "pi-ui";
 import styles from "./SecurityTab.module.css";
+import { useSecurityTab } from "./hooks";
 
-export default () => {
-  const [sideActive, setSideActive] = useState(true);
+const SecurityTab = () => {
+  const { sideActive, setSideActive } = useSecurityTab();
   return (
     <>
       <>
@@ -39,3 +39,5 @@ export default () => {
     </>
   );
 };
+
+export default SecurityTab;
