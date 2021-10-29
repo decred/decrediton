@@ -1,9 +1,9 @@
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import SecurityTab from "./SecurityPage";
+import SecurityTab from "./SecurityTab";
 import PrivacyTab from "./PrivacyTab";
 import { usePrivacyPage } from "./hooks";
-import style from "./Privacy/Privacy.module.css";
+import style from "./PrivacyTab/PrivacyTab.module.css";
 import { SECURITY_ICON } from "constants";
 
 export const PrivacyTabHeader = () => {

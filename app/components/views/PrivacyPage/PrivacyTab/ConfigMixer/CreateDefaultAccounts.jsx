@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
-import style from "../Privacy.module.css";
+import style from "../PrivacyTab.module.css";
 
 const CreateDefaultAccounts = ({
   onSubmit,

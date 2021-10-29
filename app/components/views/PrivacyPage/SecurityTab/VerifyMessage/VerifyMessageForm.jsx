@@ -2,7 +2,7 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 import { Button } from "pi-ui";
 import { InfoDocModalButton } from "buttons";
-import sharedStyles from "../SecurityPage.module.css";
+import sharedStyles from "../SecurityTab.module.css";
 import styles from "./VerifyMessageForm.module.css";
 
 const messages = defineMessages({

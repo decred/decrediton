@@ -4,7 +4,7 @@ import SignMessage from "./SignMessage";
 import ValidateAddressTab from "./ValidateAddress";
 import VerifyMessageTab from "./VerifyMessage";
 import { classNames } from "pi-ui";
-import styles from "./SecurityPage.module.css";
+import styles from "./SecurityTab.module.css";
 
 export default () => {
   const [sideActive, setSideActive] = useState(true);

@@ -3,7 +3,7 @@ import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { Button } from "pi-ui";
 import { TextInput } from "inputs";
 import { WatchOnlyWarnNotification } from "shared";
-import sharedStyles from "../SecurityPage.module.css";
+import sharedStyles from "../SecurityTab.module.css";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
