@@ -10,7 +10,7 @@ import {
 } from "buttons";
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
-import style from "./Privacy.module.css";
+import style from "./PrivacyTab.module.css";
 import styles from "./SendForm.module.css";
 import { useService } from "hooks";
 import SendOutputRow from "./SendOutputRow";
@@ -170,6 +170,7 @@ const PrivacyContent = ({
           />
         }
         id="privacyCheckbox"
+        data-testid="privacyCheckbox"
         checked={allowSendFromUnmixed}
         onChange={onChangeCheckbox}
       />

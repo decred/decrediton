@@ -43,7 +43,7 @@ const AddMixerAccountsModal = ({
         id="mixedAccountNameInput"
         autoFocus
         required
-        id="name"
+        id="mixedAccountName"
         type="text"
         label={intl.formatMessage(messages.mixedAccountNameLabel)}
         placeholder={intl.formatMessage(messages.mixedAccountName)}
@@ -55,7 +55,7 @@ const AddMixerAccountsModal = ({
         id="changeAccountName"
         autoFocus
         required
-        id="name"
+        id="unmixedAccountName"
         type="text"
         label={intl.formatMessage(messages.changeAccountNameLabel)}
         placeholder={intl.formatMessage(messages.changeAccountName)}

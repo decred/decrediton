@@ -2,7 +2,6 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
 import {
   AccountsSelect,
-  AddressInput,
   DcrInput,
   ReceiveAccountsSelect
 } from "inputs";
@@ -72,10 +71,8 @@ const getSendAllFundsIcon = ({
 
 const SendOutputRow = ({
   index,
-  destination,
   amount,
   onValidateAmount,
-  onValidateAddress,
   isSendAll,
   onKeyDown,
   sendAllAmount,
@@ -83,7 +80,6 @@ const SendOutputRow = ({
   intl,
   onShowSendAll,
   onHideSendAll,
-  isSendSelf,
   outputs,
   onChangeAccount,
   account,
@@ -115,32 +111,15 @@ const SendOutputRow = ({
       <T id="send.to" m="To" />:
     </label>
     <div className={styles.sendInputWrapper}>
-      {isSendSelf ? (
-        <ReceiveAccountsSelect
-          disabled={receiveAccountsSelectDisabled}
-          getAddressForSelected={true}
-          showAccountsButton={false}
-          onKeyDown={onKeyDown}
-          account={receiveAccount}
-        />
-      ) : (
-        <AddressInput
-          id="addressInput"
-          required={true}
-          autoFocus={index === 0}
-          showErrors={error && error.address}
-          invalid={error && error.address}
-          invalidMessage={error && error.address}
-          value={destination}
-          placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
-          onChange={(e) =>
-            onValidateAddress({ address: e.target.value, index })
-          }
-          onKeyDown={onKeyDown}
-        />
-      )}
+      <ReceiveAccountsSelect
+        disabled={receiveAccountsSelectDisabled}
+        getAddressForSelected={true}
+        showAccountsButton={false}
+        onKeyDown={onKeyDown}
+        account={receiveAccount}
+      />
     </div>
-    <label>
+    <label htmlFor="amountInput">
       <T id="send.amount" m="Amount" />:
     </label>
     <div

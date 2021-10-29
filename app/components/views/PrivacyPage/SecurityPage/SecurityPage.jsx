@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
-import SignMessage from "./SignMessage/SignMessage";
-import { default as ValidateAddressTab } from "./ValidateAddress/ValidateAddress";
-import { default as VerifyMessageTab } from "./VerifyMessage/VerifyMessage";
+import SignMessage from "./SignMessage";
+import ValidateAddressTab from "./ValidateAddress";
+import VerifyMessageTab from "./VerifyMessage";
 import { classNames } from "pi-ui";
 import styles from "./SecurityPage.module.css";
 

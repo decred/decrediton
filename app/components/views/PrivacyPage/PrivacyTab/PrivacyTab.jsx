@@ -1,5 +1,5 @@
 import PrivacyContent from "./PrivacyContent";
-import ConfigMixer from "./ConfigMixer/ConfigMixer";
+import ConfigMixer from "./ConfigMixer";
 import { usePrivacy } from "./hooks";
 import { useMountEffect } from "hooks";
 import { useState } from "react";
@@ -30,7 +30,7 @@ const Privacy = ({ setInterval }) => {
   const [showingSendUnmixModal, showModal] = useState(false);
   const onToggleSendFromUnmixed = () => {
     if (showingSendUnmixModal) {
-      toggleAllowSendFromUnmixed();
+      toggleAllowSendFromUnmixed(true);
       showModal(false);
     }
   };
