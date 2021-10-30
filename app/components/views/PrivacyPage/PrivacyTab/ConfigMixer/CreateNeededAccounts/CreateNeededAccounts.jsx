@@ -3,7 +3,7 @@ import { PassphraseModalButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import { AddMixerAccountsModal } from "modals";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
-import style from "../PrivacyTab.module.css";
+import styles from "./CreateNeededAccounts.module.css";
 
 const CreateNeededAccounts = ({
   onSubmit,
@@ -25,7 +25,7 @@ const CreateNeededAccounts = ({
           mixed: MIXED_ACCOUNT,
           change: CHANGE_ACCOUNT,
           boldMessage: (
-            <span className={style.bold}>
+            <span className={styles.bold}>
               <T
                 id="privacy.create.needed.undone.message"
                 m="This action can not be undone"

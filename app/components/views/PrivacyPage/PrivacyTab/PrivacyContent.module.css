@@ -155,7 +155,7 @@
 }
 @media screen and (max-width: 1180px) {
   .privacyContent {
-    width: 634px;
+    width: 667px;
   }
 }
 
@@ -164,10 +164,19 @@
     width: 355px;
     margin-left: 0;
   }
+  .mixerArea {
+    padding: 30px 20px;
+  }
+  .sendToUnmixedAccount {
+    padding: 30px 20px 0 20px;
+  }
   .mixerArea .balanceRow.isRow {
     flex-direction: column;
   }
   .balanceRow {
     align-items: flex-start;
+  }
+  .mixerSettingsIconButton {
+    right: 20px;
   }
 }

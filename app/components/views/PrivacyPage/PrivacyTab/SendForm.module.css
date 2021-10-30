@@ -54,15 +54,22 @@
   text-align: center;
 }
 
+@media screen and (max-width: 1180px) {
+  .sendButtonArea {
+    bottom: 50px;
+    right: 33px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .isRow.sendArea {
     flex-direction: column;
     height: auto;
   }
   .sendButtonArea {
-    width: 334px;
+    width: 352px;
     position: relative;
     text-align: right;
-    margin-top: 20px;
+    margin-top: 30px;
   }
 }

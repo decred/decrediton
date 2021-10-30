@@ -10,8 +10,8 @@ import {
 } from "buttons";
 import { classNames, Checkbox } from "pi-ui";
 import { SendFromUnmixedAccountModal } from "modals";
-import style from "./PrivacyTab.module.css";
-import styles from "./SendForm.module.css";
+import styles from "./PrivacyContent.module.css";
+import sendFormStyles from "./SendForm.module.css";
 import { useService } from "hooks";
 import SendOutputRow from "./SendOutputRow";
 
@@ -39,22 +39,22 @@ const PrivacyContent = ({
   const { walletService } = useService();
 
   return (
-    <div className={style.privacyContent}>
+    <div className={styles.privacyContent}>
       <Subtitle
         title={<T id="privacy.coinMixer" m="Coin Mixer" />}
-        className={classNames(style.isRow)}
+        className={classNames(styles.isRow)}
         children={
-          <div className={classNames(style.contentTitleButtonsArea)}>
+          <div className={classNames(styles.contentTitleButtonsArea)}>
             <InfoDocModalButton document="MixerIntroduction" draggable />
           </div>
         }
       />
-      <div className={style.mixerArea}>
+      <div className={styles.mixerArea}>
         <div
           className={classNames(
-            style.mixerStatus,
-            style.isRow,
-            accountMixerRunning && style.running
+            styles.mixerStatus,
+            styles.isRow,
+            accountMixerRunning && styles.running
           )}>
           {accountMixerRunning ? (
             <T id="privacy.mixersIsRunning" m="Mixer is running" />
@@ -62,14 +62,14 @@ const PrivacyContent = ({
             <T id="privacy.mixerIsNotRunning" m="Mixer is not running" />
           )}
         </div>
-        <div className={classNames(style.isRow, style.balanceRow)}>
+        <div className={classNames(styles.isRow, styles.balanceRow)}>
           <div
             className={classNames(
-              style.balanceContainer,
-              style.unmixedAccount,
-              isMixerDisabled && style.balanceError
+              styles.balanceContainer,
+              styles.unmixedAccount,
+              isMixerDisabled && styles.balanceError
             )}>
-            {isMixerDisabled && <div className={style.alertIcon} />}
+            {isMixerDisabled && <div className={styles.alertIcon} />}
             <Balance amount={changeAccountSpendableBalance} />
             <label>
               <T id="privacy.label.unmixed.balance" m="Unmixed Balance" />
@@ -77,25 +77,28 @@ const PrivacyContent = ({
           </div>
           <div
             className={classNames(
-              style.privacyArrows,
-              accountMixerRunning && style.running
+              styles.privacyArrows,
+              accountMixerRunning && styles.running
             )}
           />
           <div
-            className={classNames(style.balanceContainer, style.mixedAccount)}>
+            className={classNames(
+              styles.balanceContainer,
+              styles.mixedAccount
+            )}>
             <Balance amount={mixedAccountSpendableBalance} />
             <label>
               <T id="privacy.label.mixed.balance" m="Mixed Balance" />
             </label>
           </div>
-          <div className={style.startButtonContrainer}>
+          <div className={styles.startButtonContrainer}>
             {accountMixerRunning ? (
               <DangerButton onClick={stopAccountMixer}>
                 <T id="privacy.stop.mixer" m="Stop Mixer" />
               </DangerButton>
             ) : getRunningIndicator ? (
               <Tooltip
-                contentClassName={style.disabledTooltip}
+                contentClassName={styles.disabledTooltip}
                 content={
                   <T
                     id="mixer.start.running"
@@ -103,7 +106,7 @@ const PrivacyContent = ({
                   />
                 }>
                 <MixerPassphraseModalSwitch
-                  className={style.startMixerButton}
+                  className={styles.startMixerButton}
                   disabled={true}
                   buttonLabel={<T id="privacy.start.mixer" m="Start Mixer" />}
                 />
@@ -122,7 +125,7 @@ const PrivacyContent = ({
                   />
                 }
                 disabled={isMixerDisabled}
-                className={style.startMixerButton}
+                className={styles.startMixerButton}
                 onSubmit={(passaphrase) => {
                   onShowLog();
                   onStartMixerAttempt(passaphrase);
@@ -131,9 +134,9 @@ const PrivacyContent = ({
             )}
           </div>
         </div>
-        <MixerSettingsIconButton className={style.mixerSettingsIconButton} />
+        <MixerSettingsIconButton className={styles.mixerSettingsIconButton} />
         {accountMixerError && (
-          <div className={style.error}>{accountMixerError}</div>
+          <div className={styles.error}>{accountMixerError}</div>
         )}
       </div>
       <SendFromUnmixedAccountModal
@@ -142,8 +145,8 @@ const PrivacyContent = ({
         onCancelModal={() => showModal(false)}
       />
       {walletService && (
-        <div className={style.sendToUnmixedAccount}>
-          <div className={style.title}>
+        <div className={styles.sendToUnmixedAccount}>
+          <div className={styles.title}>
             <T
               id="privacy.sendToUnmixedAccount.title"
               m="Send to Unmixed Account"
@@ -151,7 +154,7 @@ const PrivacyContent = ({
           </div>
           <SendTransaction
             onlySendSelfAllowed={true}
-            styles={styles}
+            styles={sendFormStyles}
             receiveAccountsSelectDisabled={true}
             hideDetails={true}
             sendButtonLabel={<T id="send.sendToSelfBtn" m="Send to Self" />}
