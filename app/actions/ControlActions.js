@@ -296,6 +296,18 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
     });
     dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
   } catch (error) {
+    if (sel.isTestNet(getState()) === true) {
+      wallet.log(
+        "warn",
+        "Sign Transaction Failed: " +
+          JSON.stringify({
+            error: error.message,
+            passphrase,
+            rawTx,
+            acctNumber
+          })
+      );
+    }
     dispatch({ error, type: SIGNTX_FAILED });
   }
 };
