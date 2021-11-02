@@ -86,12 +86,31 @@
       }
 
       #translated_str {
-        width: 100%;
+        min-width: calc(100% - 2em);
+        min-height: 10rem;
         font-size: 150%;
+        padding: 1em 1em 2em 1em;
+      }
+
+      #translated_str:focus {
+        outline: none;
       }
 
       #translated {
-        margin-right: 5px;
+        position: relative;
+      }
+
+      #translated::after {
+        display: block;
+        position: absolute;
+        font-size: 60%;
+        color: #888;
+        content: "Translated String";
+        bottom: 4pt;
+        left: 2em;
+        right: 1rem;
+        background-color: white;
+        padding: 1rem 0;
       }
 
       #deleted_entries {
@@ -404,7 +423,7 @@
           ctrl+g: copy original string
         </div>
 
-        <div style="margin-right: 5px">
+        <div id="translated">
           <textarea
             rows="10"
             id="translated_str"
