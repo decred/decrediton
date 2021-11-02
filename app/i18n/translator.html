@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Decrediton Translator</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
 
     <style>
       #error {
@@ -45,7 +45,8 @@
         color: #ff8051;
       }
 
-      #original_str, #prev_original_str {
+      #original_str,
+      #prev_original_str {
         margin: 10px 0px;
         border: 1px solid #ccc;
         padding: 1em 1em 2em 1em;
@@ -99,7 +100,6 @@
         font-size: 60%;
         color: #888;
       }
-
     </style>
 
     <script>
@@ -111,7 +111,7 @@
         seenKeys: [],
         prevOriginal: {},
         changedEntries: [],
-        deletedEntries: [],
+        deletedEntries: []
       };
 
       function updateState(delta) {
@@ -132,7 +132,7 @@
         const translated = state.translated;
         let data = Object.keys(translated).sort().map(k => `  "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
         let json = `{\n${data}\n}\n`;
-        const file = new Blob([json], {type: "application/octet-stream"});
+        const file = new Blob([json], { type: "application/octet-stream" });
         const url = URL.createObjectURL(file);
 
         const downBtn = elID("down_translation_btn");
@@ -158,17 +158,20 @@
       }
 
       function refreshUI() {
-        const filterVal = document.querySelector('input[name="filter"]:checked').value;
+        const filterVal = document.querySelector('input[name="filter"]:checked')
+          .value;
 
         const stringsEl = elID("string_list");
         stringsEl.innerHTML = "";
 
-
-        Object.keys(state.original).map(k => {
+        Object.keys(state.original).map((k) => {
           if (filterVal === "untranslated" && state.translated[k]) {
             return;
           }
-          if (filterVal === "changed" && state.changedEntries.indexOf(k) == -1) {
+          if (
+            filterVal === "changed" &&
+            state.changedEntries.indexOf(k) == -1
+          ) {
             return;
           }
           const li = newEl(stringsEl, "li");
@@ -182,18 +185,23 @@
           li.onclick = () => changeToKey(k);
         });
 
-        const origStr = state.original[state.selectedKey] ? state.original[state.selectedKey] : "";
+        const origStr = state.original[state.selectedKey]
+          ? state.original[state.selectedKey]
+          : "";
         elID("original_str").innerText = origStr;
 
-        const prevStr = state.prevOriginal[state.selectedKey] ? state.prevOriginal[state.selectedKey] : "";
+        const prevStr = state.prevOriginal[state.selectedKey]
+          ? state.prevOriginal[state.selectedKey]
+          : "";
         elID("prev_original_str").innerText = prevStr;
-        elID("prev_original_str").hidden = (prevStr == "") || (origStr == prevStr);
+        elID("prev_original_str").hidden = prevStr == "" || origStr == prevStr;
       }
 
       function nextKey() {
         let gotPrev = false;
         let keys = Object.keys(state.original);
-        const filterVal = document.querySelector('input[name="filter"]:checked').value;
+        const filterVal = document.querySelector('input[name="filter"]:checked')
+          .value;
         for (let i = 0; i < keys.length; i++) {
           const k = keys[i];
           // When on Untranslated view, skip to next key considered
@@ -214,7 +222,7 @@
           } else if (k === state.selectedKey) {
             gotPrev = true;
           }
-        };
+        }
 
         if (gotPrev) {
           // gotPrev but not the next one, so reached the end of the list.
@@ -224,15 +232,14 @@
         }
       }
 
-
       function textAreaKeyDown(event) {
         if (event.keyCode === 9) {
           event.preventDefault();
           let v = this.value;
           let s = this.selectionStart;
           let e = this.selectionEnd;
-          this.value = v.substring(0, s) + '    ' + v.substring(e);
-          this.selectionStart = this.selectionEnd = s+1;
+          this.value = v.substring(0, s) + "    " + v.substring(e);
+          this.selectionStart = this.selectionEnd = s + 1;
           return false;
         }
         if (event.keyCode === 13 && event.ctrlKey) {
@@ -241,7 +248,7 @@
           return false;
         }
         if (event.key === "g" && event.ctrlKey) {
-          event.preventDefault()
+          event.preventDefault();
           copyOriginal();
           return false;
         }
@@ -256,7 +263,7 @@
         try {
           await f(...args);
         } catch (error) {
-          const el = elID("error")
+          const el = elID("error");
           el.innerText = "Caught exception: " + String(error);
           el.hidden = false;
           throw error;
@@ -267,12 +274,12 @@
         return new Promise((ok) => {
           const el = elID(id);
           const reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             const data = JSON.parse(e.target.result);
             ok(data);
-          }
+          };
           reader.readAsText(el.files[0]);
-        })
+        });
       }
 
       async function startTranslation() {
@@ -284,15 +291,18 @@
         const changedEntries = [];
         const deletedEntries = [];
         Object.keys(prevOrig).forEach((k) => {
-          if ((orig[k] === undefined) && (translated[k] !== undefined)) deletedEntries.push(k)
+          if (orig[k] === undefined && translated[k] !== undefined)
+            deletedEntries.push(k);
           else if (orig[k] !== prevOrig[k]) changedEntries.push(k);
         });
 
-
-        updateState({ original: orig, translated: translated,
-          prevOriginal: prevOrig, changedEntries });
+        updateState({
+          original: orig,
+          translated: translated,
+          prevOriginal: prevOrig,
+          changedEntries
+        });
         prepareTranslatedFile();
-
 
         // Update div with previously translated entries that were removed.
         const delEntriesEl = elID("deleted_entries");
@@ -300,7 +310,8 @@
           const container = newEl(delEntriesEl, "div");
           const txtEl = newEl(container, "div");
           txtEl.innerText = translated[k];
-          txtEl.onclick = () => elID("translated_str").value = txtEl.innerText;
+          txtEl.onclick = () =>
+            (elID("translated_str").value = txtEl.innerText);
           newEl(container, "div").innerText = k;
         });
 
@@ -316,22 +327,45 @@
     <div id="error" hidden="true"></div>
 
     <div id="load_files">
-      <div>Load the "previous_original.json" file: <input id="prevoriginal_file" type="file"></div>
-      <div>Load the "original.json" file: <input id="original_file" type="file"></div>
-      <div>Load the "[language].json" file: <input id="lang_file" type="file"></div>
+      <div>
+        Load the "previous_original.json" file:
+        <input id="prevoriginal_file" type="file" />
+      </div>
+      <div>
+        Load the "original.json" file: <input id="original_file" type="file" />
+      </div>
+      <div>
+        Load the "[language].json" file: <input id="lang_file" type="file" />
+      </div>
       <div><button onclick="dotry(startTranslation)">Start</button></div>
     </div>
 
     <div id="translation_ui">
       <div>
         <div>
-          <input type="radio" name="filter" value="all" checked="checked" onclick="dotry(refreshUI)">All
-          <input type="radio" name="filter" value="untranslated" onclick="dotry(refreshUI)">Untranslated
-          <input type="radio" name="filter" value="changed" checked="checked" onclick="dotry(refreshUI)">Changed
+          <input
+            type="radio"
+            name="filter"
+            value="all"
+            checked="checked"
+            onclick="dotry(refreshUI)"
+          />All
+          <input
+            type="radio"
+            name="filter"
+            value="untranslated"
+            onclick="dotry(refreshUI)"
+          />Untranslated
+          <input
+            type="radio"
+            name="filter"
+            value="changed"
+            checked="checked"
+            onclick="dotry(refreshUI)"
+          />Changed
         </div>
 
-        <ul id="string_list">
-        </ul>
+        <ul id="string_list"></ul>
       </div>
 
       <div>
@@ -340,25 +374,32 @@
 
         <div id="buttons">
           <button onclick="nextKey()" alt="Next String (ctrl+enter)">></button>
-          <button onclick="copyOriginal()" alt="Copy original (ctrl+g)">\/</button>
-          <a id="down_translation_btn" onclick="saveTranslation()" href="#">Save Translation</a>
+          <button onclick="copyOriginal()" alt="Copy original (ctrl+g)">
+            \/
+          </button>
+          <a id="down_translation_btn" onclick="saveTranslation()" href="#"
+            >Save Translation</a
+          >
         </div>
 
         <div style="font-size: 60%; color: #888">
-          ctrl+&lt;enter&gt;: save string & goto next<br>
+          ctrl+&lt;enter&gt;: save string & goto next<br />
           ctrl+g: copy original string
         </div>
 
-        <div style="margin-right: 5px;">
-          <textarea rows="10" id="translated_str" onkeydown="textAreaKeyDown.apply(this, [event])"></textarea>
+        <div style="margin-right: 5px">
+          <textarea
+            rows="10"
+            id="translated_str"
+            onkeydown="textAreaKeyDown.apply(this, [event])"
+          ></textarea>
         </div>
       </div>
 
-      <hr style="grid-column: 1/-1; height: 1px; width: 100%">
+      <hr style="grid-column: 1/-1; height: 1px; width: 100%" />
 
       <h2 style="grid-column: 2/-1">Deleted Entries</h2>
-      <div id="deleted_entries">
-      </div>
+      <div id="deleted_entries"></div>
     </div>
   </body>
 </html>
