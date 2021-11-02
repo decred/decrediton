@@ -45,6 +45,12 @@
         color: #ff8051;
       }
 
+      #key_str {
+        color: #888;
+        font-size: 60%;
+        padding-top: 0.6rem;
+      }
+
       #original_str,
       #prev_original_str {
         margin: 10px 0px;
@@ -204,6 +210,7 @@
         } else {
           elID("prev_original_str").classList.remove("inactive");
         }
+        elID("key_str").innerText = state.selectedKey;
       }
 
       function nextKey() {
@@ -378,6 +385,7 @@
       </div>
 
       <div>
+        <div id="key_str"></div>
         <div id="prev_original_str"></div>
         <div id="original_str"></div>
 
