@@ -61,6 +61,11 @@
         margin-top: 10px;
       }
 
+      #prev_original_str.inactive {
+        background-color: lightgrey;
+        color: grey;
+      }
+
       #original_str::after {
         display: block;
         position: absolute;
@@ -194,7 +199,11 @@
           ? state.prevOriginal[state.selectedKey]
           : "";
         elID("prev_original_str").innerText = prevStr;
-        elID("prev_original_str").hidden = prevStr == "" || origStr == prevStr;
+        if (prevStr == "" || origStr == prevStr) {
+          elID("prev_original_str").classList.add("inactive");
+        } else {
+          elID("prev_original_str").classList.remove("inactive");
+        }
       }
 
       function nextKey() {
