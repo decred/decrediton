@@ -245,6 +245,13 @@
           if (filterVal === "untranslated" && state.translated[k]) {
             continue;
           }
+          // When on Changed view, skip to next key considered "changed".
+          if (
+            filterVal === "changed" &&
+            state.changedEntries.indexOf(k) == -1
+          ) {
+            continue;
+          }
 
           // When on Changed view, skip to next key considered "changed".
           if (filterVal === "changed" && state.changedEntries.indexOf(k) == -1) {
@@ -263,7 +270,29 @@
           // gotPrev but not the next one, so reached the end of the list.
           saveTranslation();
           state.selectedKey = "";
-          refreshUI();
+          jumpToFirstKey();
+        }
+      }
+
+      function jumpToFirstKey() {
+        let keys = Object.keys(state.original);
+        const filterVal = document.querySelector('input[name="filter"]:checked')
+          .value;
+        for (let i = 0; i < keys.length; i++) {
+          const k = keys[i];
+          if (filterVal === "untranslated" && state.translated[k]) {
+            continue;
+          }
+          // When on Changed view, skip to next key considered "changed".
+          if (
+            filterVal === "changed" &&
+            state.changedEntries.indexOf(k) == -1
+          ) {
+            continue;
+          }
+
+          changeToKey(k);
+          return;
         }
       }
 
