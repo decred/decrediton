@@ -92,7 +92,6 @@ let mockStartTicketBuyerV3Attempt;
 let mockGetTicketAutoBuyerRunning;
 let mockTicketBuyerCancel;
 let mockGetRunningIndicator;
-let mockToggleIsLegacy;
 let mockSetRememberedVspHost;
 let mockAddAllowedExternalRequest;
 
@@ -143,7 +142,6 @@ beforeEach(() => {
   wallet.getVSPInfo = jest.fn(() => {
     return Promise.resolve(mockVspInfo);
   });
-  mockToggleIsLegacy = vspActions.toggleIsLegacy = jest.fn(() => () => {});
   mockSetRememberedVspHost = vspActions.setRememberedVspHost = jest.fn(
     () => () => {}
   );
@@ -159,12 +157,11 @@ test("render PurchasePage", async () => {
     screen.getByText(/Purchasing mixed tickets can take some time/i)
   ).toBeInTheDocument();
 
-  // check Use Legacy VSP checkbox
+  // check if Use Legacy VSP checkbox is hidden
   expect(
-    screen.getByText(/use a VSP which has not updated to vspd/i)
-  ).toBeInTheDocument(); //tooltip
-  user.click(screen.getByLabelText("Use Legacy VSP"));
-  expect(mockToggleIsLegacy).toHaveBeenCalledWith(true);
+    screen.queryByText(/use a VSP which has not updated to vspd/i)
+  ).not.toBeInTheDocument(); // tooltip
+  expect(screen.queryByLabelText("Use Legacy VSP")).not.toBeInTheDocument();
 
   // set stakepool
   user.click(screen.getByText("Select VSP..."));

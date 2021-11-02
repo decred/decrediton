@@ -148,7 +148,6 @@ let mockIsTicketAutoBuyerEnabled;
 let mockTicketBuyerV2Cancel;
 let mockGetRunningIndicator;
 let mockAddCustomStakePool;
-let mockToggleIsLegacy;
 
 beforeEach(() => {
   selectors.getIsLegacy = jest.fn(() => true);
@@ -195,18 +194,16 @@ beforeEach(() => {
   mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
     () => false
   );
-  mockToggleIsLegacy = spActions.toggleIsLegacy = jest.fn(() => () => {});
 });
 
 test("render LEGACY_PurchasePage", () => {
   render(<Purchase />, initialState);
 
-  // check Use Legacy VSP checkbox
+  // check if Use Legacy VSP checkbox is hidden
   expect(
     screen.queryByText(/use a VSP which has not updated to vspd/i)
   ).not.toBeInTheDocument(); // tooltip
-  user.click(screen.getByLabelText("Use Legacy VSP"));
-  expect(mockToggleIsLegacy).toHaveBeenCalledWith(false);
+  expect(screen.queryByLabelText("Use Legacy VSP")).not.toBeInTheDocument();
 
   expect(
     screen.getByText("Current VSP").nextElementSibling.textContent
