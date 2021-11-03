@@ -217,22 +217,30 @@
         }
         updateState(delta);
         refreshUI();
-        const selectedEntry = document.querySelector('li[class="selected"]');
-        if (!isScrolledIntoView(selectedEntry))
-          selectedEntry.scrollIntoView({
-            block: "end",
-            inline: "nearest"
-          });
+        scrollSelectedEntryIntoViewIfNeeded();
       }
 
-      function isScrolledIntoView(el) {
+      function onFilterChange() {
+        dotry(refreshUI);
+        scrollSelectedEntryIntoViewIfNeeded();
+      }
+
+      function scrollSelectedEntryIntoViewIfNeeded() {
+        const el = document.querySelector('li[class="selected"]');
         const stringList = elID("string_list");
         const { top, bottom, height } = el.getBoundingClientRect();
         const stringListRect = stringList.getBoundingClientRect();
 
-        return top <= stringListRect.top
-          ? stringListRect.top - top <= height
-          : bottom - stringListRect.bottom <= height;
+        const isScrolledIntoView =
+          top <= stringListRect.top
+            ? stringListRect.top - top <= height
+            : bottom - stringListRect.bottom <= height;
+
+        if (!isScrolledIntoView)
+          el.scrollIntoView({
+            block: "end",
+            inline: "nearest"
+          });
       }
 
       function jumpToPreviousKey() {
@@ -529,26 +537,26 @@
             name="filter"
             value="all"
             checked="checked"
-            onclick="dotry(refreshUI)"
+            onclick="onFilterChange()"
           />All
           <input
             type="radio"
             name="filter"
             value="untranslated"
-            onclick="dotry(refreshUI)"
+            onclick="onFilterChange()"
           />Untranslated
           <input
             type="radio"
             name="filter"
             value="changed"
             checked="checked"
-            onclick="dotry(refreshUI)"
+            onclick="onFilterChange()"
           />Changed
           <input
             type="radio"
             name="filter"
             value="deleted"
-            onclick="dotry(refreshUI)"
+            onclick="onFilterChange()"
           />Deleted
         </div>
 
