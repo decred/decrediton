@@ -67,6 +67,7 @@
         margin-top: 10px;
       }
 
+      #original_str.inactive,
       #prev_original_str.inactive {
         background-color: lightgrey;
         color: grey;
@@ -113,22 +114,8 @@
         padding: 1rem 0;
       }
 
-      #deleted_entries {
-        grid-column: 2/-1;
-      }
-
-      #deleted_entries > div {
-        margin-bottom: 1em;
-      }
-
-      #deleted_entries > div:hover {
-        color: blue;
-        cursor: pointer;
-      }
-
-      #deleted_entries > div > div:nth-child(2) {
-        font-size: 60%;
-        color: #888;
+      #translated.disabled::after {
+        background-color: transparent;
       }
     </style>
 
@@ -138,6 +125,7 @@
         original: {},
         translated: {},
         selectedKey: "",
+        previousKeys: [],
         seenKeys: [],
         prevOriginal: {},
         changedEntries: [],
@@ -170,50 +158,124 @@
         downBtn.download = "custom-translation.json";
       }
 
+      function isEntryDeleted(key) {
+        return (
+          state.original[state.selectedKey] === undefined &&
+          state.translated[state.selectedKey] !== undefined
+        );
+      }
+
       function saveTranslation() {
         if (state.selectedKey) {
+          const isDeleted = isEntryDeleted(state.selectedKey);
           // Save last translation.
-          state.translated[state.selectedKey] = elID("translated_str").value;
-
+          if (!isDeleted) {
+            state.translated[state.selectedKey] = elID("translated_str").value;
+          }
           prepareTranslatedFile();
         }
+      }
+
+      function getFilterVal() {
+        return document.querySelector('input[name="filter"]:checked').value;
+      }
+
+      function setFilterVal(value) {
+        document.querySelector(`input[value="${value}"]`).checked = true;
       }
 
       function changeToKey(newkey) {
         saveTranslation();
         let v = state.translated[newkey] ? state.translated[newkey] : "";
         elID("translated_str").value = v;
-        updateState({ selectedKey: newkey });
+        const filterVal = getFilterVal();
+        let delta = {
+          selectedKey: newkey,
+          selectedFilterVal: filterVal
+        };
+        if (state.selectedKey && state.selectedKey != newkey) {
+          const previousKeys = [...state.previousKeys];
+          previousKeys?.push({
+            selectedKey: state.selectedKey,
+            filterVal: state.selectedFilterVal
+          });
+          delta = { ...delta, previousKeys };
+        }
+        updateState(delta);
         refreshUI();
       }
 
-      function refreshUI() {
-        const filterVal = document.querySelector('input[name="filter"]:checked')
-          .value;
+      function jumpToPreviousKey() {
+        if (state.previousKeys.length > 0) {
+          const previousKeys = [...state.previousKeys];
+          const previousKey = previousKeys.pop();
+          if (previousKey) {
+            updateState({
+              previousKeys: previousKeys,
+              selectedKey: "" // prevent from save to previousKeys
+            });
+            setFilterVal(previousKey.filterVal);
+            changeToKey(previousKey.selectedKey);
+          }
+        }
+      }
 
+      function refreshUI() {
+        const filterVal = getFilterVal();
         const stringsEl = elID("string_list");
         stringsEl.innerHTML = "";
 
-        Object.keys(state.original).map((k) => {
-          if (filterVal === "untranslated" && state.translated[k]) {
-            return;
-          }
-          if (
-            filterVal === "changed" &&
-            state.changedEntries.indexOf(k) == -1
-          ) {
-            return;
-          }
-          const li = newEl(stringsEl, "li");
-          li.innerText = state.original[k];
-          newEl(li, "span").innerText = k;
+        if (filterVal === "deleted") {
+          Object.keys(state.deletedEntries).map((k) => {
+            const li = newEl(stringsEl, "li");
+            li.innerText = state.deletedEntries[k];
+            newEl(li, "span").innerText = "";
 
-          if (k === state.selectedKey) {
-            li.classList.add("selected");
-          }
+            if (state.deletedEntries[k] === state.selectedKey) {
+              li.classList.add("selected");
+              selectedEntry = k;
+            }
 
-          li.onclick = () => changeToKey(k);
-        });
+            li.onclick = () => changeToKey(state.deletedEntries[k]);
+          });
+        } else {
+          Object.keys(state.original).map((k) => {
+            if (filterVal === "untranslated" && state.translated[k]) {
+              return;
+            }
+            if (
+              filterVal === "changed" &&
+              state.changedEntries.indexOf(k) == -1
+            ) {
+              return;
+            }
+            if (
+              filterVal === "deleted" &&
+              state.deletedEntries.indexOf(k) == -1
+            ) {
+              return;
+            }
+            const li = newEl(stringsEl, "li");
+            li.innerText = state.original[k];
+            newEl(li, "span").innerText = k;
+
+            if (k === state.selectedKey) {
+              li.classList.add("selected");
+            }
+
+            li.onclick = () => changeToKey(k);
+          });
+        }
+
+        const isDeleted = isEntryDeleted(state.selectedKey);
+
+        if (isDeleted) {
+          elID("original_str").classList.add("inactive");
+          elID("translated").classList.add("disabled");
+        } else {
+          elID("original_str").classList.remove("inactive");
+          elID("translated").classList.remove("disabled");
+        }
 
         const origStr = state.original[state.selectedKey]
           ? state.original[state.selectedKey]
@@ -230,13 +292,18 @@
           elID("prev_original_str").classList.remove("inactive");
         }
         elID("key_str").innerText = state.selectedKey;
+
+        elID("prev_bt").innerText = isDeleted ? "previous" : "save & previous";
+        elID("prev_bt").disabled = state.previousKeys.length <= 0;
+        elID("copy_bt").disabled = isDeleted || origStr === "";
+        elID("next_bt").disabled = isDeleted;
+        elID("translated_str").disabled = isDeleted;
       }
 
       function nextKey() {
         let gotPrev = false;
         let keys = Object.keys(state.original);
-        const filterVal = document.querySelector('input[name="filter"]:checked')
-          .value;
+        const filterVal = getFilterVal();
         for (let i = 0; i < keys.length; i++) {
           const k = keys[i];
           // When on Untranslated view, skip to next key considered
@@ -276,8 +343,7 @@
 
       function jumpToFirstKey() {
         let keys = Object.keys(state.original);
-        const filterVal = document.querySelector('input[name="filter"]:checked')
-          .value;
+        const filterVal = getFilterVal();
         for (let i = 0; i < keys.length; i++) {
           const k = keys[i];
           if (filterVal === "untranslated" && state.translated[k]) {
@@ -364,20 +430,10 @@
           original: orig,
           translated: translated,
           prevOriginal: prevOrig,
-          changedEntries
+          changedEntries,
+          deletedEntries
         });
         prepareTranslatedFile();
-
-        // Update div with previously translated entries that were removed.
-        const delEntriesEl = elID("deleted_entries");
-        deletedEntries.forEach((k) => {
-          const container = newEl(delEntriesEl, "div");
-          const txtEl = newEl(container, "div");
-          txtEl.innerText = translated[k];
-          txtEl.onclick = () =>
-            (elID("translated_str").value = txtEl.innerText);
-          newEl(container, "div").innerText = k;
-        });
 
         refreshUI();
 
@@ -427,6 +483,12 @@
             checked="checked"
             onclick="dotry(refreshUI)"
           />Changed
+          <input
+            type="radio"
+            name="filter"
+            value="deleted"
+            onclick="dotry(refreshUI)"
+          />Deleted
         </div>
 
         <ul id="string_list"></ul>
@@ -438,10 +500,25 @@
         <div id="original_str"></div>
 
         <div id="buttons">
-          <button onclick="copyOriginal()" title="Copy original (ctrl+g)">
+          <button
+            onclick="jumpToPreviousKey()"
+            title="Previous String"
+            id="prev_bt"
+          >
+            save & previous
+          </button>
+          <button
+            onclick="copyOriginal()"
+            title="Copy original (ctrl+g)"
+            id="copy_bt"
+          >
             copy original
           </button>
-          <button onclick="nextKey()" title="Next String (ctrl+enter)">
+          <button
+            onclick="nextKey()"
+            title="Next String (ctrl+enter)"
+            id="next_bt"
+          >
             save & next
           </button>
           <a id="down_translation_btn" onclick="saveTranslation()" href="#"
@@ -462,11 +539,6 @@
           ></textarea>
         </div>
       </div>
-
-      <hr style="grid-column: 1/-1; height: 1px; width: 100%" />
-
-      <h2 style="grid-column: 2/-1">Deleted Entries</h2>
-      <div id="deleted_entries"></div>
     </div>
   </body>
 </html>
