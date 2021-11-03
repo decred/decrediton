@@ -227,6 +227,9 @@
 
       function scrollSelectedEntryIntoViewIfNeeded() {
         const el = document.querySelector('li[class="selected"]');
+        if (!el) {
+          return;
+        }
         const stringList = elID("string_list");
         const { top, bottom, height } = el.getBoundingClientRect();
         const stringListRect = stringList.getBoundingClientRect();
@@ -323,9 +326,13 @@
           ? state.prevOriginal[state.selectedKey]
           : "";
 
-        var d = dmp.diff_main(prevStr, origStr);
-        dmp.diff_cleanupEfficiency(d);
-        elID("original_str").innerHTML = dmp.diff_prettyHtml(d);
+        if (origStr !== "" && prevStr !== "") {
+          var d = dmp.diff_main(prevStr, origStr);
+          dmp.diff_cleanupEfficiency(d);
+          elID("original_str").innerHTML = dmp.diff_prettyHtml(d);
+        } else {
+          elID("original_str").innerHTML = origStr;
+        }
         elID("prev_original_str").innerText = prevStr;
         if (prevStr === "" || origStr === prevStr) {
           elID("prev_original_str").classList.add("inactive");
