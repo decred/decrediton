@@ -98,15 +98,15 @@ export const DEX_INIT_ATTEMPT = "DEX_INIT_ATTEMPT";
 export const DEX_INIT_SUCCESS = "DEX_INIT_SUCCESS";
 export const DEX_INIT_FAILED = "DEX_INIT_FAILED";
 
-export const initDex = (passphrase) => async (dispatch, getState) => {
+export const initDex = (passphrase, seed) => async (dispatch, getState) => {
   dispatch({ type: DEX_INIT_ATTEMPT });
   if (!sel.dexActive(getState())) {
     dispatch({ type: DEX_INIT_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    await dex.init(passphrase);
-    dispatch({ type: DEX_INIT_SUCCESS });
+    await dex.init(passphrase, seed);
+    dispatch({ type: DEX_INIT_SUCCESS, fromSeed: seed });
     // Request current user information
     dispatch(userDex());
   } catch (error) {
@@ -256,6 +256,31 @@ export const userDex = () => async (dispatch, getState) => {
     dispatch({ type: DEX_USER_SUCCESS, user });
   } catch (error) {
     dispatch({ type: DEX_USER_FAILED, error });
+    return;
+  }
+};
+
+export const DEX_PREREGISTER_ATTEMPT = "DEX_PREREGISTER_ATTEMPT";
+export const DEX_PREREGISTER_SUCCESS = "DEX_PREREGISTER_SUCCESS";
+export const DEX_PREREGISTER_FAILED = "DEX_PREREGISTER_FAILED";
+
+export const preRegisterDex = (appPass, addr) => async (dispatch, getState) => {
+  dispatch({ type: DEX_PREREGISTER_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_PREREGISTER_FAILED, error: "Dex isn't active" });
+    return;
+  }
+  try {
+    const alreadyPaid = await dex.preRegister(appPass, addr);
+    // If it's not already paid it returns the config that is used to pay the
+    // required fee.
+    if (typeof alreadyPaid == "boolean") {
+      dispatch({ type: DEX_PREREGISTER_SUCCESS, alreadyPaid, addr });
+    } else {
+      dispatch({ type: DEX_GETCONFIG_SUCCESS, config: alreadyPaid, addr });
+    }
+  } catch (error) {
+    dispatch({ type: DEX_PREREGISTER_FAILED, error });
     return;
   }
 };

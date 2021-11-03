@@ -9,6 +9,7 @@ export const logout = invocable("logout-dex");
 export const createWallet = invocable("create-wallet-dex");
 export const user = invocable("user-dex");
 export const getConfig = invocable("get-config-dex");
+export const preRegister = invocable("preregister-dex");
 export const register = invocable("register-dex");
 export const launchWindow = invocable("launch-dex-window");
 export const checkBTCConfig = invocable("check-btc-config");

@@ -57,6 +57,8 @@ export const useDex = () => {
   const btcWalletName = useSelector(sel.btcWalletName);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const intl = useIntl();
+  const restoredFromSeed = useSelector(sel.restoredFromSeed);
+  const alreadyPaid = useSelector(sel.alreadyPaid);
 
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
@@ -65,6 +67,11 @@ export const useDex = () => {
 
   const onInitDex = useCallback(
     (passphrase) => dispatch(da.initDex(passphrase)),
+    [dispatch]
+  );
+
+  const onInitDexWithSeed = useCallback(
+    (passphrase, seed) => dispatch(da.initDex(passphrase, seed)),
     [dispatch]
   );
 
@@ -101,6 +108,11 @@ export const useDex = () => {
 
   const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
 
+  const onPreregister = useCallback(
+    (passphrase, address) => dispatch(da.preRegisterDex(passphrase, address)),
+    [dispatch]
+  );
+
   const onGetConfig = useCallback(
     (address) => dispatch(da.getConfigDex(address)),
     [dispatch]
@@ -125,7 +137,7 @@ export const useDex = () => {
           page = <LoginPage />;
           header = <LoginPageHeader />;
         } else if (
-          dexRegistered &&
+          (dexRegistered || alreadyPaid) &&
           dexDCRWalletRunning &&
           dexBTCWalletRunning
         ) {
@@ -165,7 +177,8 @@ export const useDex = () => {
     dexRegistered,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
-    dexAccount
+    dexAccount,
+    alreadyPaid
   ]);
 
   return {
@@ -173,6 +186,7 @@ export const useDex = () => {
     dexActive,
     dexInit,
     onInitDex,
+    onInitDexWithSeed,
     initDexAttempt,
     onRegisterDex,
     onGetDexLogs,
@@ -191,6 +205,7 @@ export const useDex = () => {
     onEnableDex,
     enableDexAttempt,
     onGetConfig,
+    onPreregister,
     user,
     onLaunchDexWindow,
     onBTCCreateWalletDex,
@@ -218,6 +233,8 @@ export const useDex = () => {
     Page,
     Header,
     mixedAccount,
-    intl
+    intl,
+    restoredFromSeed,
+    alreadyPaid
   };
 };

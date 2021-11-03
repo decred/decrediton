@@ -23,6 +23,7 @@ import {
   initDexCall,
   createWalletDexCall,
   getDexConfigCall,
+  preRegisterCall,
   registerDexCall,
   userDexCall,
   loginDexCall,
@@ -276,14 +277,14 @@ export const checkInitDex = async () => {
   }
 };
 
-export const initDex = async (passphrase) => {
+export const initDex = async (passphrase, seed) => {
   if (!GetDexPID()) {
     logger.log("info", "Skipping init since dex is not runnning");
     return false;
   }
 
   try {
-    const init = await initDexCall(passphrase);
+    const init = await initDexCall(passphrase, seed);
     return init;
   } catch (e) {
     logger.log("error", `error init dex: ${e}`);
@@ -365,6 +366,22 @@ export const getConfigDex = async (addr) => {
     return getDexConfig;
   } catch (e) {
     logger.log("error", `error get config dex: ${e}`);
+    return e;
+  }
+};
+
+export const preRegister = async (appPass, addr) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping preregister since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const registered = await preRegisterCall(appPass, addr);
+    console.log("registered already?", registered);
+    return registered;
+  } catch (e) {
+    logger.log("error", `error preregister dex: ${e}`);
     return e;
   }
 };
