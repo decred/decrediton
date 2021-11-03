@@ -150,7 +150,8 @@
         return el;
       }
 
-      function prepareTranslatedFile() {
+      function downloadTranslatedFile() {
+        saveTranslation();
         const translated = state.translated;
         let data = Object.keys(translated).sort().map(k => `  "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
         let json = `{\n${data}\n}\n`;
@@ -176,7 +177,6 @@
           if (!isDeleted) {
             state.translated[state.selectedKey] = elID("translated_str").value;
           }
-          prepareTranslatedFile();
         }
       }
 
@@ -482,7 +482,6 @@
           changedEntries,
           deletedEntries
         });
-        prepareTranslatedFile();
 
         refreshUI();
 
@@ -578,8 +577,11 @@
           >
             save & next
           </button>
-          <a id="down_translation_btn" onclick="saveTranslation()" href="#"
-            >Save Translation</a
+          <a
+            id="down_translation_btn"
+            onclick="downloadTranslatedFile()"
+            href="#"
+            >Download Translation</a
           >
         </div>
 
