@@ -188,8 +188,10 @@
         document.querySelector(`input[value="${value}"]`).checked = true;
       }
 
-      function changeToKey(newkey) {
-        saveTranslation();
+      function changeToKey(newkey, save) {
+        if (save) {
+          saveTranslation();
+        }
         let v = state.translated[newkey] ? state.translated[newkey] : "";
         elID("translated_str").value = v;
         const filterVal = getFilterVal();
@@ -235,7 +237,7 @@
               selectedKey: "" // prevent from save to previousKeys
             });
             setFilterVal(previousKey.filterVal);
-            changeToKey(previousKey.selectedKey);
+            changeToKey(previousKey.selectedKey, true);
           }
         }
       }
@@ -354,7 +356,7 @@
           }
 
           if (gotPrev) {
-            changeToKey(k);
+            changeToKey(k, true);
             return;
           } else if (k === state.selectedKey) {
             gotPrev = true;
@@ -385,7 +387,7 @@
             continue;
           }
 
-          changeToKey(k);
+          changeToKey(k, true);
           return;
         }
       }
