@@ -47,6 +47,7 @@ import {
   CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
   CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL
 } from "../actions/DexActions";
+import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
 export default function ln(state = {}, action) {
   switch (action.type) {
@@ -369,6 +370,26 @@ export default function ln(state = {}, action) {
         ...state,
         checkBtcConfigAttempt: false,
         btcInstallNeeded: true
+      };
+    case CLOSEWALLET_SUCCESS:
+      return {
+        ...state,
+        checkBtcConfigAttempt: false,
+        btcConfigUpdateNeeded: false,
+        btcInstallNeeded: false,
+        btcConfig: null,
+        checkBtcConfigError: null,
+        openOrder: false,
+        logoutError: null,
+        dexSelectAccountAttempt: false,
+        dexSelectAccountError: null,
+        dexAccount: null,
+        getConfigAttempt: false,
+        addr: null,
+        getConfigError: null,
+        alreadyPaid: false,
+        config: null,
+        addr: null
       };
     default:
       return state;
