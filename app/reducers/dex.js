@@ -388,8 +388,7 @@ export default function ln(state = {}, action) {
         addr: null,
         getConfigError: null,
         alreadyPaid: false,
-        config: null,
-        addr: null
+        config: null
       };
     default:
       return state;
