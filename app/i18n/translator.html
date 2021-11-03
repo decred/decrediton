@@ -3,6 +3,12 @@
   <head>
     <title>Decrediton Translator</title>
     <meta charset="utf-8" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"
+      integrity="sha512-5YZxUisfaneUbwv58nPp10qwt6DefHuJ+iAfvPoABZAYwLg4WGJHITaLpyyxJdrljfc0ggUoWc87Z0lfoDS84Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
 
     <style>
       .posRelative {
@@ -135,6 +141,8 @@
         changedEntries: [],
         deletedEntries: []
       };
+
+      const dmp = new diff_match_patch();
 
       function updateState(delta) {
         state = { ...state, ...delta };
@@ -302,11 +310,14 @@
         const origStr = state.original[state.selectedKey]
           ? state.original[state.selectedKey]
           : "";
-        elID("original_str").innerText = origStr;
 
         const prevStr = state.prevOriginal[state.selectedKey]
           ? state.prevOriginal[state.selectedKey]
           : "";
+
+        var d = dmp.diff_main(prevStr, origStr);
+        dmp.diff_cleanupEfficiency(d);
+        elID("original_str").innerHTML = dmp.diff_prettyHtml(d);
         elID("prev_original_str").innerText = prevStr;
         if (prevStr === "" || origStr === prevStr) {
           elID("prev_original_str").classList.add("inactive");
