@@ -267,13 +267,13 @@
             }
             if (
               filterVal === "changed" &&
-              state.changedEntries.indexOf(k) == -1
+              state.changedEntries.indexOf(k) === -1
             ) {
               return;
             }
             if (
               filterVal === "deleted" &&
-              state.deletedEntries.indexOf(k) == -1
+              state.deletedEntries.indexOf(k) === -1
             ) {
               return;
             }
@@ -308,7 +308,7 @@
           ? state.prevOriginal[state.selectedKey]
           : "";
         elID("prev_original_str").innerText = prevStr;
-        if (prevStr == "" || origStr == prevStr) {
+        if (prevStr === "" || origStr === prevStr) {
           elID("prev_original_str").classList.add("inactive");
         } else {
           elID("prev_original_str").classList.remove("inactive");
@@ -345,7 +345,7 @@
           // When on Changed view, skip to next key considered "changed".
           if (
             filterVal === "changed" &&
-            state.changedEntries.indexOf(k) == -1
+            state.changedEntries.indexOf(k) === -1
           ) {
             continue;
           }
@@ -382,7 +382,7 @@
           // When on Changed view, skip to next key considered "changed".
           if (
             filterVal === "changed" &&
-            state.changedEntries.indexOf(k) == -1
+            state.changedEntries.indexOf(k) === -1
           ) {
             continue;
           }
