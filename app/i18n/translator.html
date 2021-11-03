@@ -20,8 +20,8 @@
         margin: 10px;
         padding-right: 0.5em;
         padding-top: 1em;
-        overflow: hidden scroll;
-        height: 34em;
+        overflow-y: auto;
+        height: calc(100vh - 75px);
       }
 
       #string_list li {
@@ -203,6 +203,22 @@
         }
         updateState(delta);
         refreshUI();
+        const selectedEntry = document.querySelector('li[class="selected"]');
+        if (!isScrolledIntoView(selectedEntry))
+          selectedEntry.scrollIntoView({
+            block: "end",
+            inline: "nearest"
+          });
+      }
+
+      function isScrolledIntoView(el) {
+        const stringList = elID("string_list");
+        const { top, bottom, height } = el.getBoundingClientRect();
+        const stringListRect = stringList.getBoundingClientRect();
+
+        return top <= stringListRect.top
+          ? stringListRect.top - top <= height
+          : bottom - stringListRect.bottom <= height;
       }
 
       function jumpToPreviousKey() {
@@ -269,7 +285,7 @@
 
         const isDeleted = isEntryDeleted(state.selectedKey);
 
-        if (isDeleted) {
+        if (isDeleted || state.selectedKey === "") {
           elID("original_str").classList.add("inactive");
           elID("translated").classList.add("disabled");
         } else {
@@ -296,14 +312,22 @@
         elID("prev_bt").innerText = isDeleted ? "previous" : "save & previous";
         elID("prev_bt").disabled = state.previousKeys.length <= 0;
         elID("copy_bt").disabled = isDeleted || origStr === "";
-        elID("next_bt").disabled = isDeleted;
-        elID("translated_str").disabled = isDeleted;
+        elID("next_bt").disabled = isDeleted || state.selectedKey === "";
+        elID("translated_str").disabled = isDeleted || state.selectedKey === "";
       }
 
       function nextKey() {
         let gotPrev = false;
         let keys = Object.keys(state.original);
-        const filterVal = getFilterVal();
+        let filterVal = getFilterVal();
+        const { filterVal: previousFilterVal } =
+          state.previousKeys.length > 0 &&
+          state.previousKeys[state.previousKeys.length - 1];
+        if (previousFilterVal !== undefined && filterVal != previousFilterVal) {
+          filterVal = previousFilterVal;
+          setFilterVal(filterVal);
+        }
+
         for (let i = 0; i < keys.length; i++) {
           const k = keys[i];
           // When on Untranslated view, skip to next key considered
