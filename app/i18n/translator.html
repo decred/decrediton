@@ -5,6 +5,9 @@
     <meta charset="utf-8" />
 
     <style>
+      .posRelative {
+        position: relative;
+      }
       #error {
         color: red;
         padding: 2em;
@@ -58,13 +61,13 @@
         padding: 1em 1em 2em 1em;
       }
 
-      #prev_original_str::after {
+      #prev_original_str_label {
         display: block;
         position: absolute;
         font-size: 60%;
         color: #888;
-        content: "Previous Original String";
-        margin-top: 10px;
+        bottom: 1em;
+        left: 1em;
       }
 
       #original_str.inactive,
@@ -73,13 +76,14 @@
         color: grey;
       }
 
-      #original_str::after {
+      #original_str_label {
         display: block;
         position: absolute;
         font-size: 60%;
         color: #888;
-        content: "Original String";
         margin-top: 10px;
+        bottom: 1em;
+        left: 1em;
       }
 
       #buttons {
@@ -436,10 +440,31 @@
         });
       }
 
+      function readVersion(obj, label, filename) {
+        if (obj?.meta?.version) {
+          elID(label).innerText = `String in ${obj.meta.version}`;
+          return true;
+        } else {
+          const el = elID("error");
+          el.innerText += `Warning: could not find version meta data in ${filename}.\n`;
+          el.hidden = false;
+        }
+        return false;
+      }
+
       async function startTranslation() {
         const prevOrig = await readFile("prevoriginal_file");
         const orig = await readFile("original_file");
         const translated = await readFile("lang_file");
+
+        if (
+          readVersion(prevOrig, "prev_original_str_label", "prevoriginal_file")
+        ) {
+          delete prevOrig.meta;
+        }
+        if (readVersion(orig, "original_str_label", "original_file")) {
+          delete orig.meta;
+        }
 
         // Figure out all changed entries between prevOrig and orig.
         const changedEntries = [];
@@ -520,8 +545,16 @@
 
       <div>
         <div id="key_str"></div>
-        <div id="prev_original_str"></div>
-        <div id="original_str"></div>
+        <div class="posRelative">
+          <div id="prev_original_str"></div>
+          <label id="prev_original_str_label">Previous Original String</label>
+        </div>
+        <div class="posRelative">
+          <div id="original_str"></div>
+          <label htmlFor="original_str" id="original_str_label"
+            >Original String</label
+          >
+        </div>
 
         <div id="buttons">
           <button

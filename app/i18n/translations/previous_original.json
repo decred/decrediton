@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "version": "v1.6.3"
+  },
   "aboutModal.decrediton": "Decrediton",
   "aboutModal.licensing": "Licensing information",
   "aboutModal.paragraph1": "A cross platform GUI Wallet for Decred written in node.js using Electron",
