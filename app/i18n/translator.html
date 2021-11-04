@@ -127,6 +127,12 @@
       #translated.disabled::after {
         background-color: transparent;
       }
+
+      #toggle_diff_bt {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
     </style>
 
     <script>
@@ -139,7 +145,8 @@
         seenKeys: [],
         prevOriginal: {},
         changedEntries: [],
-        deletedEntries: []
+        deletedEntries: [],
+        showDiff: true
       };
 
       const dmp = new diff_match_patch();
@@ -326,7 +333,7 @@
           ? state.prevOriginal[state.selectedKey]
           : "";
 
-        if (origStr !== "" && prevStr !== "") {
+        if (state.showDiff && origStr !== "" && prevStr !== "") {
           var d = dmp.diff_main(prevStr, origStr);
           dmp.diff_cleanupEfficiency(d);
           elID("original_str").innerHTML = dmp.diff_prettyHtml(d);
@@ -335,9 +342,11 @@
         }
         elID("prev_original_str").innerText = prevStr;
         if (prevStr === "" || origStr === prevStr) {
+          elID("toggle_diff_bt").disabled = true;
           elID("prev_original_str").classList.add("inactive");
         } else {
           elID("prev_original_str").classList.remove("inactive");
+          elID("toggle_diff_bt").disabled = false;
         }
         elID("key_str").innerText = state.selectedKey;
 
@@ -346,6 +355,9 @@
         elID("copy_bt").disabled = isDeleted || origStr === "";
         elID("next_bt").disabled = isDeleted || state.selectedKey === "";
         elID("translated_str").disabled = isDeleted || state.selectedKey === "";
+        elID("toggle_diff_bt").innerText = state.showDiff
+          ? "Hide diff"
+          : "Show diff";
       }
 
       function nextKey() {
@@ -480,6 +492,13 @@
         return false;
       }
 
+      function toggleDiff() {
+        updateState({
+          showDiff: !state.showDiff
+        });
+        refreshUI();
+      }
+
       async function startTranslation() {
         const prevOrig = await readFile("prevoriginal_file");
         const orig = await readFile("original_file");
@@ -581,6 +600,7 @@
           <label htmlFor="original_str" id="original_str_label"
             >Original String</label
           >
+          <button id="toggle_diff_bt" onclick="toggleDiff()">Hide diff</button>
         </div>
 
         <div id="buttons">
