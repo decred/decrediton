@@ -214,11 +214,11 @@
           selectedKey: newkey,
           selectedFilterVal: filterVal
         };
-        if (state.selectedKey && state.selectedKey != newkey) {
+        if (newkey != state.selectedKey) {
           const previousKeys = [...state.previousKeys];
           previousKeys?.push({
-            selectedKey: state.selectedKey,
-            filterVal: state.selectedFilterVal
+            selectedKey: newkey,
+            filterVal: filterVal
           });
           delta = { ...delta, previousKeys };
         }
@@ -254,17 +254,17 @@
       }
 
       function jumpToPreviousKey() {
-        if (state.previousKeys.length > 0) {
-          const previousKeys = [...state.previousKeys];
-          const previousKey = previousKeys.pop();
-          if (previousKey) {
-            updateState({
-              previousKeys: previousKeys,
-              selectedKey: "" // prevent from save to previousKeys
-            });
-            setFilterVal(previousKey.filterVal);
-            changeToKey(previousKey.selectedKey, true);
-          }
+        // the last element in state.previousKeys is the selected key
+        const previousKey =
+          state.previousKeys.length > 1 &&
+          state.previousKeys[state.previousKeys.length - 2];
+        if (previousKey) {
+          // remove selected and previous key
+          updateState({
+            previousKeys: [...state.previousKeys].slice(0, -2)
+          });
+          setFilterVal(previousKey.filterVal);
+          changeToKey(previousKey.selectedKey, true);
         }
       }
 
@@ -351,13 +351,17 @@
         elID("key_str").innerText = state.selectedKey;
 
         elID("prev_bt").innerText = isDeleted ? "previous" : "save & previous";
-        elID("prev_bt").disabled = state.previousKeys.length <= 0;
+        elID("prev_bt").disabled = state.previousKeys.length <= 1;
         elID("copy_bt").disabled = isDeleted || origStr === "";
         elID("next_bt").disabled = isDeleted || state.selectedKey === "";
         elID("translated_str").disabled = isDeleted || state.selectedKey === "";
         elID("toggle_diff_bt").innerText = state.showDiff
           ? "Hide diff"
           : "Show diff";
+      }
+
+      function getIndexOfSelectedKey(keys) {
+        return Math.max(0, keys.indexOf(state.selectedKey));
       }
 
       function nextKey() {
@@ -372,7 +376,7 @@
           setFilterVal(filterVal);
         }
 
-        for (let i = 0; i < keys.length; i++) {
+        for (let i = getIndexOfSelectedKey(keys); i < keys.length; i++) {
           const k = keys[i];
           // When on Untranslated view, skip to next key considered
           // "untranslated", i.e. undefined (new key) or "" (existing key with
