@@ -41,13 +41,23 @@ const TxHistory = ({ transactions = [], limit, overview, tsDate, history }) => {
         let rowType = tx.status || tx.txType;
         rowType = rowType.toLowerCase();
         // If it is a regular tx we use its direction to show a proper icon.
-        if (rowType === txTypes.REGULAR) rowType = tx.txDirection;
+        if (rowType === txTypes.REGULAR) {
+          rowType = tx.txDirection;
+        } else {
+          rowType = [
+            txTypes.MISSED,
+            txTypes.UNMINED,
+            txTypes.IMMATURE
+          ].includes(tx.status)
+            ? tx.status
+            : tx.txType;
+        }
         if (tx.mixedTx) rowType = txTypes.MIXED;
         if (tx.selfTx) rowType = txTypes.SELFTRANSFER;
 
         // gets the proper component to show, based on it rowType
         const Component = TxRowByType[rowType];
-        const key = tx.spenderHash ? tx.spenderHash : tx.txHash;
+        const key = `${tx.spenderHash}-${tx.txHash}`;
 
         const txOutputAddresses =
           tx.outputs &&
