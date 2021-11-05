@@ -930,7 +930,7 @@ export const legacyBuyerBalanceToMaintain = get([
 ]);
 export const legacyBuyerAccount = get(["control", "legacyAccount"]);
 export const getHasVSPTicketsError = get(["vsp", "hasVSPTicketsError"]);
-export const getIsLegacy = get(["vsp", "isLegacy"]);
+export const getIsLegacy = () => false; // hide legacy purchase
 export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
 const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
