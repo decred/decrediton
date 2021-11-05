@@ -179,10 +179,7 @@
       }
 
       function isEntryDeleted(key) {
-        return (
-          state.original[state.selectedKey] === undefined &&
-          state.translated[state.selectedKey] !== undefined
-        );
+        return state.deletedEntries.indexOf(key) !== -1;
       }
 
       function saveTranslation() {
