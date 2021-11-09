@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
-import { Button, Tooltip } from "pi-ui";
+import { Button, Tooltip, useTheme, getThemeProperty } from "pi-ui";
 import ProposalsList from "./ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { PoliteiaLink as PiLink } from "shared";
@@ -125,6 +125,8 @@ const ProposalsTab = () => {
     />
   );
 
+  const { theme } = useTheme();
+
   return (
     <TabbedPage
       header={header}
@@ -133,11 +135,22 @@ const ProposalsTab = () => {
       tabsClassName={styles.tabs}
       tabContentClassName={styles.tabContent}
       themes={{
-        tabDefaultBackgroundColor:
-          "tab-default-background-tabbedpage-proposals",
-        tabActiveBackgroundColor: "tab-active-background-tabbedpage-proposals",
-        tabDefaultBorderColor: "tab-default-border-tabbedpage-proposals",
-        tabActiveBorderColor: "tab-active-border-tabbedpage-proposals"
+        "tab-default-background": getThemeProperty(
+          theme,
+          "tab-default-background-tabbedpage-proposals"
+        ),
+        "tab-active-background": getThemeProperty(
+          theme,
+          "tab-active-background-tabbedpage-proposals"
+        ),
+        "tab-default-color": getThemeProperty(
+          theme,
+          "tab-default-border-tabbedpage-proposals"
+        ),
+        "tab-active-color": getThemeProperty(
+          theme,
+          "tab-active-border-tabbedpage-proposals"
+        )
       }}
     />
   );

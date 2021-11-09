@@ -2,7 +2,7 @@ import ErrorScreen from "ErrorScreen";
 import SettingsPage from "./Settings";
 import { useSettings, useService } from "hooks";
 
-export const SettingsTab = () => {
+export const SettingsTab = ({ setThemeName }) => {
   const {
     tempSettings,
     onSaveSettings,
@@ -38,7 +38,8 @@ export const SettingsTab = () => {
         networks,
         areSettingsDirty,
         needNetworkReset,
-        walletReady
+        walletReady,
+        setThemeName
       }}
     />
   );

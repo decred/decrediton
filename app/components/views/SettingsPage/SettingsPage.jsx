@@ -8,6 +8,7 @@ import { SettingsTab } from "./SettingsTab/SettingsTab";
 import { useSettings } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
+import { useTheme } from "pi-ui";
 
 const closeWalletModalContent = (walletName) => (
   <T
@@ -49,35 +50,35 @@ const SettingsPageHeader = () => {
   );
 };
 
-const tabs = [
-  {
-    path: "/settings/settings",
-    content: SettingsTab,
-    header: SettingsTabHeader,
-    label: <T id="settings.tab.settings" m="Settings" />
-  },
-  {
-    path: "/settings/links",
-    content: LinksTab,
-    header: SettingsTabHeader,
-    label: <T id="settings.tab.sources" m="Sources" />
-  },
-  {
-    path: "/settings/tutorials",
-    content: TutorialsTab,
-    header: SettingsTabHeader,
-    label: <T id="settings.tab.tutorials" m="Tutorials" />
-  },
-  {
-    path: "/settings/logs",
-    content: LogsTab,
-    header: SettingsTabHeader,
-    label: <T id="settings.tab.logs" m="Logs" />
-  }
-];
-
-const SettingsPage = () => (
-  <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />
-);
+const SettingsPage = () => {
+  const { setThemeName } = useTheme();
+  const tabs = [
+    {
+      path: "/settings/settings",
+      content: <SettingsTab setThemeName={setThemeName} />,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.settings" m="Settings" />
+    },
+    {
+      path: "/settings/links",
+      content: LinksTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.sources" m="Sources" />
+    },
+    {
+      path: "/settings/tutorials",
+      content: TutorialsTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.tutorials" m="Tutorials" />
+    },
+    {
+      path: "/settings/logs",
+      content: LogsTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.logs" m="Logs" />
+    }
+  ];
+  return <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />;
+};
 
 export default SettingsPage;

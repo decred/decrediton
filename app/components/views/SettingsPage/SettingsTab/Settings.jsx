@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import {
-  useTheme,
   classNames,
   DEFAULT_DARK_THEME_NAME,
   DEFAULT_LIGHT_THEME_NAME
@@ -29,9 +28,9 @@ const SettingsPage = ({
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
   needNetworkReset,
-  walletReady
+  walletReady,
+  setThemeName
 }) => {
-  const { setThemeName } = useTheme();
   const saveSettingsHandler = useCallback(() => {
     const config = wallet.getGlobalCfg();
     const oldTheme = config.get(configConstants.THEME);

@@ -9859,7 +9859,7 @@ performance-now@^2.1.0:
 
 "pi-ui@https://github.com/bgptr/pi-ui#tabs-animation":
   version "1.0.0"
-  resolved "https://github.com/bgptr/pi-ui#c48cb2f8d4a7a58a23704c1509d838492f35092b"
+  resolved "https://github.com/bgptr/pi-ui#7f4e17bf834dab39fdb800fcaf67793c33861e90"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"
