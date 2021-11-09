@@ -31,10 +31,9 @@
   background-position: center 30px;
 }
 .noProposals {
-  margin-top: 20px;
-  margin-left: 38px;
+  margin-left: 78px;
   font-size: 120%;
-  padding: 1em;
+  padding: 20px 1em 1em 1em;
 }
 .noMoreTransactionsIndicator {
   padding: 17px 18px 18px;
@@ -44,8 +43,17 @@
   margin-top: 2em;
   background-color: var(--background-back-color);
 }
+
+@media screen and (max-width: 1180px) {
+  .noProposals {
+    margin-left: 40px;
+  }
+}
 @media screen and (max-width: 768px) {
   .noMoreTicketsIndicator {
     width: 315px;
+  }
+  .noProposals {
+    margin-left: 0;
   }
 }

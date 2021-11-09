@@ -1,12 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import { Switch, Redirect } from "react-router-dom";
 import { CloseWalletModalButton } from "buttons";
-import {
-  TabbedPage,
-  TabbedPageTab as Tab,
-  TitleHeader,
-  DescriptionHeader
-} from "layout";
+import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import { LinksTab } from "./LinksTab";
 import { LogsTab } from "./LogsTab/LogsTab";
 import { TutorialsTab } from "./TutorialsTab/TutorialsTab";
@@ -23,18 +17,16 @@ const closeWalletModalContent = (walletName) => (
   />
 );
 
-export const SettingsTabHeader = () => {
-  return (
-    <DescriptionHeader
-      description={
-        <T
-          id="settings.description"
-          m="Changing network settings requires a restart"
-        />
-      }
-    />
-  );
-};
+export const SettingsTabHeader = () => (
+  <DescriptionHeader
+    description={
+      <T
+        id="settings.description"
+        m="Changing network settings requires a restart"
+      />
+    }
+  />
+);
 
 const SettingsPageHeader = () => {
   const { onCloseWallet, walletName } = useSettings();
@@ -57,38 +49,35 @@ const SettingsPageHeader = () => {
   );
 };
 
-const SettingsPage = () => {
-  return (
-    <TabbedPage header={<SettingsPageHeader />}>
-      <Switch>
-        <Redirect from="/settings" exact to="/settings/settings" />
-      </Switch>
-      <Tab
-        path="/settings/settings"
-        component={SettingsTab}
-        header={SettingsTabHeader}
-        link={<T id="settings.tab.settings" m="Settings" />}
-      />
-      <Tab
-        path="/settings/links"
-        component={LinksTab}
-        header={SettingsTabHeader}
-        link={<T id="settings.tab.sources" m="Sources" />}
-      />
-      <Tab
-        path="/settings/tutorials"
-        component={TutorialsTab}
-        header={SettingsTabHeader}
-        link={<T id="settings.tab.tutorials" m="Tutorials" />}
-      />
-      <Tab
-        path="/settings/logs"
-        component={LogsTab}
-        header={SettingsTabHeader}
-        link={<T id="settings.tab.logs" m="Logs" />}
-      />
-    </TabbedPage>
-  );
-};
+const tabs = [
+  {
+    path: "/settings/settings",
+    content: SettingsTab,
+    header: SettingsTabHeader,
+    label: <T id="settings.tab.settings" m="Settings" />
+  },
+  {
+    path: "/settings/links",
+    content: LinksTab,
+    header: SettingsTabHeader,
+    label: <T id="settings.tab.sources" m="Sources" />
+  },
+  {
+    path: "/settings/tutorials",
+    content: TutorialsTab,
+    header: SettingsTabHeader,
+    label: <T id="settings.tab.tutorials" m="Tutorials" />
+  },
+  {
+    path: "/settings/logs",
+    content: LogsTab,
+    header: SettingsTabHeader,
+    label: <T id="settings.tab.logs" m="Logs" />
+  }
+];
+
+const SettingsPage = () => (
+  <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />
+);
 
 export default SettingsPage;

@@ -6,6 +6,7 @@ import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
+import * as ta from "actions/TransactionActions";
 import { DCR } from "constants";
 import { fireEvent } from "@testing-library/react";
 import copy from "clipboard-copy";
@@ -64,6 +65,24 @@ const mockSpendingAccounts = [
 ];
 const mockNextAddress = "TsiTfsjizPgzBrPxovheccayb4UbLRmQAqY";
 
+const mockUnspentOutputs = [
+  {
+    amount: 1073741824,
+    outpointIndex: 14,
+    txHash: "49233f396974f8e31eb16342c806eeae9b340843d0b169301cd5ffb0b67de73c"
+  },
+  {
+    amount: 4294967296,
+    outpointIndex: 2,
+    txHash: "300cfbc8f5c4f92c64c6504a067481a5d68758ab2917d780b313551fd39c32da"
+  },
+  {
+    amount: 4294967296,
+    outpointIndex: 6,
+    txHash: "300cfbc8f5c4f92c64c6504a067481a5d68758ab2917d780b313551fd39c32da"
+  }
+];
+
 let mockIsTestNet;
 let mockIsMainNet;
 let mockWalletService;
@@ -73,6 +92,7 @@ let mockGenQRCodeSVG;
 const selectors = sel;
 const controlActions = ca;
 const wallet = wl;
+const transactionActions = ta;
 
 beforeEach(() => {
   mockCopy = copy.mockImplementation(() => true);
@@ -90,6 +110,10 @@ beforeEach(() => {
   selectors.nextAddress = jest.fn(() => mockNextAddress);
   selectors.nextAddressAccount = jest.fn(() => mockDefaultAccount);
   selectors.currencyDisplay = jest.fn(() => DCR);
+
+  transactionActions.listUnspentOutputs = jest.fn(() => () =>
+    Promise.resolve(mockUnspentOutputs)
+  );
   mockGenQRCodeSVG = wallet.genQRCodeSVG = jest.fn(() => {});
   mockGetNextAddressAttempt = controlActions.getNextAddressAttempt = jest.fn(
     () => (dispatch) => {

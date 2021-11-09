@@ -43,6 +43,7 @@ export function usePrivacy() {
     sel.defaultSpendingAccountDisregardMixedAccount,
     shallowEqual
   );
+  const isCreateAccountDisabled = useSelector(sel.isWatchingOnly);
   useMountEffect(() => {
     getMixerAcctsSpendableBalances();
   });
@@ -95,6 +96,7 @@ export function usePrivacy() {
     mixedAccountSpendableBalance,
     changeAccountSpendableBalance,
     defaultSpendingAccountDisregardMixedAccount,
+    isCreateAccountDisabled,
     getRunningIndicator
   };
 }

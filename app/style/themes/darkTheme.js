@@ -172,6 +172,16 @@ const darkTheme = {
   "tab-text-active-color": "var(--input-color-default)",
   "tab-text-color": "var(--sidebar-menu-link)",
 
+  // tabbed page defaults
+  "tab-default-background-tabbedpage": "var(--background-back-color)",
+  "tab-default-border-tabbedpage": "var(--background-back-color)",
+
+  // proposals tabs
+  "tab-default-background-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-active-background-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-default-border-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-active-border-tabbedpage-proposals": "var(--grey-7)",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettingsDark.svg")),
   "menu-accounts": url(require("style/icons/accountsActiveDark.svg")),
