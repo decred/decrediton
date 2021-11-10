@@ -5,17 +5,11 @@ import {
   cloneElement as k
 } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  classNames,
-  Tabs,
-  Tab,
-  useTheme,
-  getThemeProperty,
-  ThemeProvider
-} from "pi-ui";
+import { classNames, Tabs, Tab } from "pi-ui";
 import styles from "./TabbedPage.module.css";
 import * as sel from "selectors";
 import { useSelector } from "react-redux";
+import DefaultThemesWithCustomTabsProvider from "./DefaultThemesWithCustomTabsProvider";
 
 const TabbedPage = ({
   tabs,
@@ -46,24 +40,6 @@ const TabbedPage = ({
 
   const SecondaryHeader = tabs[activeTabIndex].header;
 
-  const { theme } = useTheme();
-  const themeName = "tabbedPageCustomThemeName";
-
-  const customThemes = {
-    [themeName]: {
-      ...theme,
-      "tab-default-background": getThemeProperty(
-        theme,
-        "tab-default-background-tabbedpage"
-      ),
-      "tab-default-color": getThemeProperty(
-        theme,
-        "tab-default-border-tabbedpage"
-      ),
-      ...themes
-    }
-  };
-
   return (
     <div className={styles.wrapper}>
       <div className={classNames(styles.tabbedPageHeader, headerClassName)}>
@@ -72,7 +48,7 @@ const TabbedPage = ({
       </div>
 
       <div className={styles.tabbedPageBody}>
-        <ThemeProvider themes={customThemes} defaultThemeName={themeName}>
+        <DefaultThemesWithCustomTabsProvider themes={themes}>
           <Tabs
             onSelectTab={onSelectTab}
             activeTabIndex={activeTabIndex}
@@ -100,7 +76,7 @@ const TabbedPage = ({
                 );
               })}
           </Tabs>
-        </ThemeProvider>
+        </DefaultThemesWithCustomTabsProvider>
       </div>
     </div>
   );
