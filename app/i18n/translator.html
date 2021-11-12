@@ -20,6 +20,8 @@
         margin: 10px;
         padding-right: 0.5em;
         padding-top: 1em;
+        overflow: hidden scroll;
+        height: 34em;
       }
 
       #string_list li {
@@ -128,7 +130,7 @@
 
       function prepareTranslatedFile() {
         const translated = state.translated;
-        let data = Object.keys(translated).sort().map(k => `    "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
+        let data = Object.keys(translated).sort().map(k => `  "${k}": ${JSON.stringify(translated[k])}`).join(",\n");
         let json = `{\n${data}\n}\n`;
         const file = new Blob([json], {type: "application/octet-stream"});
         const url = URL.createObjectURL(file);
@@ -194,7 +196,15 @@
         const filterVal = document.querySelector('input[name="filter"]:checked').value;
         for (let i = 0; i < keys.length; i++) {
           const k = keys[i];
-          if (filterVal === "untranslated" && state.translated[k] != "") {
+          // When on Untranslated view, skip to next key considered
+          // "untranslated", i.e. undefined (new key) or "" (existing key with
+          // empty translation).
+          if (filterVal === "untranslated" && state.translated[k]) {
+            continue;
+          }
+
+          // When on Changed view, skip to next key considered "changed".
+          if (filterVal === "changed" && state.changedEntries.indexOf(k) == -1) {
             continue;
           }
 
