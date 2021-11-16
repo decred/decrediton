@@ -182,6 +182,11 @@ const lightTheme = {
   "tab-default-border-tabbedpage-proposals": "var(--governance-tab-bg)",
   "tab-active-border-tabbedpage-proposals": "var(--grey-7)",
 
+  "seedword-label-bg": "#fff",
+  "seedword-label-border": "#e6eaed",
+  "seedword-label-text": "var(--grey-5)",
+  "seedword-button-text": "var(--main-dark-blue)",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettings.svg")),
   "menu-accounts": url(require("style/icons/accounts-active.png")),

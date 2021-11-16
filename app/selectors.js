@@ -81,6 +81,7 @@ export const getSyncAttemptRequest = get([
 ]);
 
 // general startup selector
+export const pageBodyScrollHandler = get(["control", "pageBodyScrollHandler"]);
 export const setLanguage = get(["daemon", "setLanguage"]);
 export const showTutorial = get(["daemon", "tutorial"]);
 export const showPrivacy = get(["daemon", "showPrivacy"]);

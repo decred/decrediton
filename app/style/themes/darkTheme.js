@@ -182,6 +182,11 @@ const darkTheme = {
   "tab-default-border-tabbedpage-proposals": "var(--governance-tab-bg)",
   "tab-active-border-tabbedpage-proposals": "var(--grey-7)",
 
+  "seedword-label-bg": "#223767",
+  "seedword-label-border": "#223767",
+  "seedword-label-text": "#3262b0",
+  "seedword-button-text": "var(--info-modal-button-text)",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettingsDark.svg")),
   "menu-accounts": url(require("style/icons/accountsActiveDark.svg")),
@@ -333,8 +338,8 @@ const darkTheme = {
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
   "right-arrow": url(require("style/icons/rightArrowDark.svg")),
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
-  eye: url(require("style/icons/eye.svg")),
-  "eye-disabled": url(require("style/icons/eyeDisabled.svg")),
+  eye: url(require("style/icons/eyeDark.svg")),
+  "eye-disabled": url(require("style/icons/eyeDisabledDark.svg")),
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
   "plus-icon": url(require("style/icons/plusIcon.svg")),

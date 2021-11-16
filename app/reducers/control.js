@@ -93,6 +93,7 @@ import {
   SETACCOUNTSPASSPHRASE_ATTEMPT,
   SETACCOUNTSPASSPHRASE_SUCCESS,
   SETACCOUNTSPASSPHRASE_FAILED
+  SET_PAGEBODY_SCROLLHANDLER
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -672,6 +673,11 @@ export default function control(state = {}, action) {
       return {
         ...state,
         settingAccountsPassphrase: false
+      };
+    case SET_PAGEBODY_SCROLLHANDLER:
+      return {
+        ...state,
+        pageBodyScrollHandler: action.scrollHandler
       };
     default:
       return state;

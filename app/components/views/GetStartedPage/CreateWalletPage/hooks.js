@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as wla from "actions/WalletLoaderActions";
 import * as sel from "selectors";
+import * as ca from "actions/ControlActions";
 
 export const useCreateWallet = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ export const useCreateWallet = () => {
     [dispatch]
   );
   const isTestNet = useSelector(sel.isTestNet);
+  const setPageBodyScrollHandler = useCallback(
+    (scrollHandler) => dispatch(ca.setPageBodyScrollHandler(scrollHandler)),
+    [dispatch]
+  );
 
   return {
     decodeSeed,
@@ -43,6 +48,7 @@ export const useCreateWallet = () => {
     generateSeed,
     createWatchOnlyWalletRequest,
     createWalletRequest,
-    isTestNet
+    isTestNet,
+    setPageBodyScrollHandler
   };
 };

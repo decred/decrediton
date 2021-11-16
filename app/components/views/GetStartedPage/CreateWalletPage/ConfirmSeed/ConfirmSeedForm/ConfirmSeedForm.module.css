@@ -1,0 +1,101 @@
+.container {
+  width: 580px;
+  margin-left: 300px;
+  margin-top: -80px;
+}
+.container.posBtBarToBottom {
+  padding-bottom: 80px;
+}
+
+.title {
+  font-size: 28px;
+  line-height: 35px;
+  color: var(--grey-6);
+  margin-bottom: 10px;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+  margin-bottom: 20px;
+}
+
+.buttonBarContainer {
+  background-color: var(--background-container);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.container.posBtBarToBottom .buttonBarContainer {
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-left: 340px;
+  margin: 0;
+}
+
+.buttonBar {
+  margin-top: 0 !important;
+  width: 580px;
+}
+
+.backButton {
+  font-size: 16px;
+  font-weight: 400 !important;
+  line-height: 20px;
+  color: var(--grey-5);
+}
+
+.primaryButton {
+  font-size: 16px;
+  font-weight: 600 !important;
+  line-height: 20px;
+  float: left;
+  box-shadow: none;
+}
+
+.primaryButton:disabled {
+  color: var(--grey-5);
+}
+
+.passphraseInfo {
+  margin: 40px 0 20px 0;
+  max-width: 100%;
+  padding-right: 10px;
+}
+
+.passphraseInfo h1 {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 35px;
+  color: var(--grey-6);
+  margin-bottom: 10px;
+}
+
+.passphraseInfo p {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--main-dark-blue);
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin-left: 0;
+    margin-top: -50px;
+    width: 355px;
+  }
+
+  .buttonBarContainer {
+    padding-left: 111px;
+  }
+
+  .container.posBtBarToBottom .buttonBarContainer {
+    padding-left: 132px;
+  }
+}

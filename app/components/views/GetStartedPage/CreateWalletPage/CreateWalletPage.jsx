@@ -17,7 +17,8 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     generateSeed,
     createWatchOnlyWalletRequest,
     createWalletRequest,
-    isTestNet
+    isTestNet,
+    setPageBodyScrollHandler
   } = useCreateWallet();
   const [current, send] = useService(createWalletRef);
   const [StateComponent, setStateComponent] = useState(null);
@@ -136,7 +137,9 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
           isValid,
           decodeSeed,
           setSeed,
-          setError
+          setError,
+          setPageBodyScrollHandler,
+          error
         });
         break;
       case "writeSeed":
@@ -177,7 +180,8 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     sendContinue,
     setError,
     setPassPhrase,
-    setSeed
+    setSeed,
+    setPageBodyScrollHandler
   ]);
 
   useEffect(() => {

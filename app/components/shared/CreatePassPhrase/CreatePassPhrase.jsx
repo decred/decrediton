@@ -1,7 +1,9 @@
 import PassPhraseInputs from "./PassPhraseInputs";
 import { useState, useEffect, useCallback } from "react";
+import { useIntl } from "react-intl";
 
 const CreatePassPhrase = ({ onChange, onSubmit, ...props }) => {
+  const intl = useIntl();
   const [passPhrase, setPassPhrase] = useState("");
   const [passPhraseVerification, setPassPhraseVerification] = useState("");
   const [hasFailedAttempt, setHasFailedAttempt] = useState(false);
@@ -31,6 +33,7 @@ const CreatePassPhrase = ({ onChange, onSubmit, ...props }) => {
     <PassPhraseInputs
       {...{
         ...props,
+        intl,
         hasFailedAttempt,
         passPhrase,
         passPhraseVerification,

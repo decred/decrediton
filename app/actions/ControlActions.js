@@ -1443,3 +1443,7 @@ export const listenForConfirmationDialogRequests = () => (dispatch) => {
   const hiddenCb = () => dispatch({ type: CONFIRMATIONDIALOG_HIDDEN });
   wallet.onConfirmationDialogCallbacks(requestedCb, hiddenCb);
 };
+
+export const SET_PAGEBODY_SCROLLHANDLER = "SET_PAGEBODY_SCROLLHANDLER";
+export const setPageBodyScrollHandler = (scrollHandler) => (dispatch) =>
+  dispatch({ scrollHandler, type: SET_PAGEBODY_SCROLLHANDLER });

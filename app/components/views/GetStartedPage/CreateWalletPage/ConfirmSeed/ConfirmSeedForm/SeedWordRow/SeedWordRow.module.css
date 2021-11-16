@@ -1,0 +1,49 @@
+.seedWordsForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.seedWordsForm label {
+  font-size: 13px;
+  line-height: 14px;
+  background: var(--seedword-label-bg);
+  border: 1px solid var(--seedword-label-border);
+  border-radius: 53px;
+  padding: 3px 14px;
+  margin-bottom: 10px;
+  color: var(--seedword-label-text);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttonContainer button {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
+  border: 1px solid var(--grey-7);
+  box-sizing: border-box;
+  border-radius: 3px;
+  width: 180px;
+  height: 23px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.buttonContainer button:disabled {
+  color: var(--seedword-button-text);
+  background: var(--light-blue);
+  border: 1px solid var(--accent-blue);
+  cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+  .buttonContainer button {
+    width: 110px;
+  }
+}

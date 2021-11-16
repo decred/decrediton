@@ -4,6 +4,10 @@ import user from "@testing-library/user-event";
 import { fireEvent, createEvent } from "@testing-library/react";
 import { SEED_WORDS } from "constants/seed";
 import { POSITION_ERROR, MISMATCH_ERROR } from "constants";
+import {
+  getSeedWordsArr,
+  verifySeedWordsArr
+} from "components/views/GetStartedPage/CreateWalletPage/ConfirmSeed/utils.js";
 
 import { screen, wait } from "@testing-library/react";
 import * as sel from "selectors";
@@ -44,7 +48,6 @@ const wallet = wl;
 
 const testSeedArray = SEED_WORDS.slice(0, 33);
 const testSeedMnemonic = testSeedArray.join(" ");
-const invalidSeedWord = SEED_WORDS[SEED_WORDS.length - 1];
 const testTooShortHexSeed = "a".repeat(31);
 const testShortHexSeed = "b".repeat(32);
 const testCompatibleHexSeed = "c".repeat(64);
@@ -78,7 +81,7 @@ beforeEach(() => {
     () => () => true
   );
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({ details: "DECODE_ERROR" })
+    Promise.reject({ toString: () => "DECODE_ERROR" })
   );
   mockClipboardReadText = wallet.readFromClipboard.mockImplementation(
     () => testSeedMnemonic
@@ -101,7 +104,7 @@ const goToCopySeedView = async () => {
 const goToConfirmView = async () => {
   await goToCopySeedView();
   user.click(screen.getByText(/continue/i));
-  await wait(() => screen.getByText("Confirm Seed Key"));
+  await wait(() => screen.getByText("Seed phrase verification"));
 };
 
 const goToRestoreView = async () => {
@@ -121,10 +124,10 @@ const goToExistingSeedView = async () => {
 const testPrivatePassphraseInputs = async () => {
   const testPassword = "test-password";
   const privatePassphraseInput = screen.getByPlaceholderText(
-    "Private Passphrase"
+    "Write your Private Passphrase"
   );
   const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
-    "Confirm Private Passphrase"
+    "Confirm your Private Passphrase"
   );
   fireEvent.change(privatePassphraseInput, {
     target: { value: testPassword }
@@ -137,6 +140,7 @@ const testPrivatePassphraseInputs = async () => {
   fireEvent.change(repeatPrivatePassphraseInput, {
     target: { value: testPassword }
   });
+  expect(screen.getByText("Repeated correctly"));
 };
 
 const firePasteEvent = (combobox, text) => {
@@ -157,12 +161,6 @@ const fillSeedWordEntryUsingSpaceKey = (combobox, word) => {
 const clearSeedWordEntryUsing = (combobox) => {
   user.click(combobox);
   fireEvent.keyDown(combobox, { key: "backspace", keyCode: 8 });
-};
-
-const fillSeedWordEntryByCLickingOnOption = (combobox, word) => {
-  user.click(combobox);
-  user.type(combobox, word);
-  user.click(screen.getByRole("option", { name: word }));
 };
 
 test("test copy seed view", async () => {
@@ -201,56 +199,73 @@ test("test copy seed view", async () => {
   expect(mockCopySeedToClipboard).toHaveBeenCalledWith(testSeedMnemonic);
 });
 
-test("test typing a seed word and click on the combobox option on confirm seed view", async () => {
+const clickOnSeedButton = async (i, clickToTheFake) => {
+  const word = testSeedArray[i];
+  const buttons = screen.getByText(`Word #${i + 1}`).nextElementSibling
+    .children;
+  let foundTheButton = false;
+  let index = 0;
+  while (!foundTheButton && buttons[index] !== undefined) {
+    if (!clickToTheFake) {
+      if (buttons[index].textContent === word) {
+        foundTheButton = true;
+        user.click(buttons[index]);
+        await wait(() => expect(buttons[index].disabled).toBeTruthy());
+      } else {
+        index++;
+      }
+    } else if (buttons[index].textContent !== word) {
+      foundTheButton = true;
+      user.click(buttons[index]);
+      await wait(() => expect(buttons[index].disabled).toBeTruthy());
+    } else {
+      index++;
+    }
+
+    expect(buttons[index] !== undefined).toBeTruthy();
+  }
+};
+
+test("test confim seed view", async () => {
   await goToConfirmView();
 
   const createWalletButton = screen.getByText(/create wallet/i);
-  expect(createWalletButton.disabled).toBe(true);
+  expect(createWalletButton.disabled).toBeTruthy();
 
-  const comboboxArray = screen.getAllByRole("combobox");
-  let savedInvalidCombobox = null;
-  let savedValidSeedWord;
-  for (let i = 0; i < comboboxArray.length; i++) {
-    const combobox = comboboxArray[i];
-    const seedWordIndex = parseInt(
-      combobox.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.previousSibling.textContent.replace(
-        ".",
-        ""
-      )
-    );
-    const word = testSeedArray[seedWordIndex - 1];
-    if (savedInvalidCombobox === null) {
-      // type one invalid seed word
-      savedInvalidCombobox = combobox;
-      savedValidSeedWord = word;
-      fillSeedWordEntryUsingSpaceKey(combobox, invalidSeedWord);
+  for (let i = 0; i < testSeedArray.length; i++) {
+    if (i < testSeedArray.length - 1) {
+      await clickOnSeedButton(i, false);
     } else {
-      fillSeedWordEntryUsingSpaceKey(combobox, word);
+      // click to the right word except the last one
+      await clickOnSeedButton(i, true);
     }
+    expect(mockDecodeSeed).not.toHaveBeenCalled();
   }
-  expect(mockDecodeSeed).not.toHaveBeenCalled();
-
-  // fix invalid seed word
-  fillSeedWordEntryByCLickingOnOption(savedInvalidCombobox, savedValidSeedWord);
-  expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
-
+  expect(createWalletButton.disabled).toBeTruthy();
   await testPrivatePassphraseInputs();
+  expect(createWalletButton.disabled).toBeTruthy();
+  expect(
+    screen.getByText("*Please confirm the missing words")
+  ).toBeInTheDocument();
 
+  // fix invalid seed word, decode with error
+  await clickOnSeedButton(testSeedArray.length - 1, false);
+  expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
+  expect(createWalletButton.disabled).toBeTruthy();
+
+  // fix invalid seed word, decode with success
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
       decodedSeed: testSeedArray
     })
   );
-  // trigger decode again by entering saved seed word
-  fillSeedWordEntryUsingSpaceKey(
-    savedInvalidCombobox,
-    savedValidSeedWord + " "
-  );
+  await clickOnSeedButton(testSeedArray.length - 1, true);
+  await clickOnSeedButton(testSeedArray.length - 1, false);
   expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
+  expect(createWalletButton.disabled).toBeFalsy();
 
-  await wait(() => expect(createWalletButton.disabled).toBe(false));
   user.click(createWalletButton);
-  expect(mockCreateWallet).toHaveBeenCalled();
+  await wait(() => expect(mockCreateWallet).toHaveBeenCalled());
 });
 
 test("test confirm seed view in testnet mode (allows verification skip in dev)", async () => {
@@ -311,7 +326,7 @@ test("pasting just 32 seed words on existing seed view", async () => {
 
 test("pasting invalid seed words on existing seed view", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({ details: MISMATCH_ERROR })
+    Promise.reject({ toString: () => MISMATCH_ERROR })
   );
   await goToExistingSeedView();
 
@@ -398,10 +413,10 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   expect(screen.getByText(/create wallet/i).disabled).toBe(false);
 
   const privatePassphraseInput = screen.getByPlaceholderText(
-    "Private Passphrase"
+    "Write your Private Passphrase"
   );
   const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
-    "Confirm Private Passphrase"
+    "Confirm your Private Passphrase"
   );
 
   // differentiate passphrases
@@ -485,7 +500,7 @@ test("test POSITION_ERROR handling on restore view", async () => {
 
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.reject({
-      details: `is ${POSITION_ERROR} 2, check for missing words`
+      toString: () => `is ${POSITION_ERROR} 2, check for missing words`
     })
   );
   fillSeedWordEntryUsingSpaceKey(comboboxArray[2], testSeedArray[2]);
@@ -675,10 +690,10 @@ test("test cancel button on copy seed view", async () => {
   );
 });
 
-test("test cancel button on confirm view", async () => {
+test("test back button on confirm view", async () => {
   await goToConfirmView();
 
-  user.click(screen.getByText("Cancel"));
+  user.click(screen.getByText("Back"));
   await wait(() => screen.getByText(/copy seed words to clipboard/i));
 });
 
@@ -700,9 +715,39 @@ test("test go back button on copy seed view", async () => {
   );
 });
 
-test("test go back button on confirm seed view", async () => {
-  await goToConfirmView();
+test("test getSeedWords and verifySeedWordsArr function", () => {
+  const testSeedArray = testSeedMnemonic.split(" ");
+  const seedWordsArr = getSeedWordsArr(testSeedMnemonic);
+  expect(testSeedArray.length === 33).toBeTruthy();
+  expect(seedWordsArr.length === 33).toBeTruthy();
 
-  user.click(screen.getByText(/go back/i).nextElementSibling);
-  await wait(() => screen.getByText(/copy seed words to clipboard/i));
+  seedWordsArr.map((obj, i) => {
+    expect(obj.word === testSeedArray[i]).toBeTruthy();
+    expect(obj.wordsToShow.includes(obj.word)).toBeTruthy();
+    expect(obj.wordsToShow.length === 3).toBeTruthy();
+
+    const trueWords = [];
+    const fakeWords = [];
+    obj.wordsToShow.map((w) => {
+      if (w === obj.word) {
+        trueWords.push(w);
+      } else {
+        fakeWords.push(w);
+      }
+    });
+    expect(trueWords.length === 1).toBeTruthy();
+    expect(fakeWords.length === 2).toBeTruthy();
+  });
+
+  const validSeedWordArr = seedWordsArr.map((obj) => {
+    return { ...obj, selected: obj.wordsToShow.indexOf(obj.word) };
+  });
+
+  expect(verifySeedWordsArr(testSeedMnemonic, validSeedWordArr)).toBeTruthy();
+
+  validSeedWordArr[0].selected =
+    validSeedWordArr[0].wordsToShow.indexOf(validSeedWordArr[0].word) === 0
+      ? 1
+      : 0;
+  expect(verifySeedWordsArr(testSeedMnemonic, validSeedWordArr)).toBeFalsy();
 });

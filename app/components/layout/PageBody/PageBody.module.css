@@ -9,7 +9,6 @@
   display: block;
   background-color: var(--background-container);
   z-index: 3;
-  height: calc(100% - 60px);
   overflow-x: hidden;
   color: var(--title-text-and-button-background);
 }
@@ -38,20 +37,11 @@
 
   .pageBody.getstarted {
     padding: 20px !important;
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 40px);
   }
 
   .pageBody.getstarted.testnetBody::before,
   .pageBody.getstarted::before {
     background-image: var(--small-logo);
     background-size: 30px;
-  }
-}
-
-@media screen and (max-height: 746px) {
-  .pageBody.getstarted {
-    height: calc(100% - 60px);
   }
 }
