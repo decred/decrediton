@@ -5,7 +5,7 @@ const SeedWordRow = ({ wordsToShow, selected, index, onSeedButtonClick }) => (
   <div className={styles.seedWordsForm}>
     <label>
       <T
-        id="confirmSeed.label"
+        id="confirmSeed.word.label"
         m="Word #{index}"
         values={{
           index: index + 1
