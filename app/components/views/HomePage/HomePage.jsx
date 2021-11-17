@@ -6,11 +6,9 @@ import { useService } from "hooks";
 import { useHomePage } from "./hooks";
 import { Balance, TabsHeader } from "shared";
 import { StandalonePage } from "layout";
-import RecentTransactions from "./RecentTransactions/RecentTransactions";
-import RecentTickets from "./RecentTickets/RecentTickets";
-import BalanceTab from "./Tabs/BalanceTab/BalanceTab";
-import TicketsTab from "./Tabs/TicketsTab/TicketsTab";
-import TransactionsTab from "./Tabs/TransactionsTab/TransactionsTab";
+import RecentTransactions from "./RecentTransactions";
+import RecentTickets from "./RecentTickets";
+import { BalanceTab, TicketsTab, TransactionsTab } from "./Tabs";
 import styles from "./HomePage.module.css";
 
 const ROWS_NUMBER_ON_TABLE = 5;
