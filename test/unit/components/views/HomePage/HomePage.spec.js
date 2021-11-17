@@ -123,14 +123,14 @@ test("test HomePage with an immature ticket", async () => {
   user.click(screen.getByText("Tickets"));
   await wait(() => screen.getByText(/voted ticket/i));
   expect(
-    screen.getByText(/active ticket/i).parentNode.parentNode.textContent
+    screen.getByText(/active and locked ticket/i).parentNode.textContent
   ).toMatchInlineSnapshot(
-    '"1 active ticketWith a total value of 60.62799897 DCR6 voted ticketsEarned 0.26327053 DCR in staking rewards"'
+    '"1 active and locked ticketWith a total value of 60.62799897 DCR"'
   );
   expect(
-    screen.getByText(/voted tickets/i).parentNode.parentNode.textContent
+    screen.getByText(/voted tickets/i).parentNode.textContent
   ).toMatchInlineSnapshot(
-    '"1 active ticketWith a total value of 60.62799897 DCR6 voted ticketsEarned 0.26327053 DCR in staking rewards"'
+    '"6 voted ticketsEarned 0.26327053 DCR in staking rewards"'
   );
 
   // go to Transactions tab
