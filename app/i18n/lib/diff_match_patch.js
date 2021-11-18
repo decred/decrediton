@@ -114,7 +114,7 @@ diff_match_patch.prototype.diff_main = function (
   }
   var deadline = opt_deadline;
 
-  // Check fr null inputs.
+  // Check for null inputs.
   if (text1 == null || text2 == null) {
     throw new Error("Null input. (diff_main)");
   }
@@ -2401,4 +2401,3 @@ this["DIFF_DELETE"] = DIFF_DELETE;
 this["DIFF_INSERT"] = DIFF_INSERT;
 /** @suppress {globalThis} */
 this["DIFF_EQUAL"] = DIFF_EQUAL;
-o;
