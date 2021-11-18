@@ -166,7 +166,7 @@
         return el;
       }
 
-      function downloadTranslatedFile() {
+      function exportTranslatedFile() {
         saveTranslation();
         const translated = state.translated;
         let data = Object.keys(translated)
@@ -177,7 +177,7 @@
         const file = new Blob([json], { type: "application/octet-stream" });
         const url = URL.createObjectURL(file);
 
-        const downBtn = elID("down_translation_btn");
+        const downBtn = elID("export_translation_btn");
         downBtn.href = url;
         downBtn.download = "custom-translation.json";
       }
@@ -248,18 +248,14 @@
 
       function getPreviousKey() {
         let gotPrev = false;
-        let filterVal = getFilterVal();
+        filterVal = state.selectedFilterVal;
+        if (!filterVal) {
+          return false;
+        }
         let keys =
           filterVal === "deleted"
             ? state.deletedEntries
             : Object.keys(state.original);
-        if (
-          state.selectedFilterVal !== undefined &&
-          filterVal !== state.selectedFilterVal
-        ) {
-          filterVal = state.selectedFilterVal;
-          setFilterVal(filterVal);
-        }
 
         for (let i = getIndexOfSelectedKey(keys); i >= 0; i--) {
           const k = keys[i];
@@ -287,6 +283,14 @@
       }
 
       function previousKey() {
+        let filterVal = getFilterVal();
+        if (
+          state.selectedFilterVal !== undefined &&
+          filterVal !== state.selectedFilterVal
+        ) {
+          filterVal = state.selectedFilterVal;
+          setFilterVal(filterVal);
+        }
         const previousKey = getPreviousKey();
         if (previousKey !== false) {
           changeToKey(previousKey, true);
@@ -648,8 +652,8 @@
             save & next
           </button>
           <a
-            id="down_translation_btn"
-            onclick="downloadTranslatedFile()"
+            id="export_translation_btn"
+            onclick="exportTranslatedFile()"
             href="#"
             >export translation</a
           >
