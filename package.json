@@ -67,7 +67,8 @@
       "app/middleware/ln/invoices_pb.js",
       "app/middleware/ln/autopilot_grpc_pb.js",
       "app/middleware/ln/autopilot_pb.js",
-      "app/middleware/ln/google/"
+      "app/middleware/ln/google/",
+      "app/i18n/lib/"
     ],
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
@@ -107,7 +108,8 @@
       "<rootDir>/app/middleware/ln/google/",
       "<rootDir>/bin/",
       "<rootDir>/app/dist/",
-      "<rootDir>/app/dist-trezor/"
+      "<rootDir>/app/dist-trezor/",
+      "<rootDir>/app/i18n/lib/"
     ]
   },
   "build": {
