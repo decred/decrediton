@@ -136,7 +136,7 @@
         original: {},
         translated: {},
         selectedKey: "",
-        previousKeys: [],
+        selectedFilterVal: "",
         seenKeys: [],
         prevOriginal: {},
         changedEntries: [],
@@ -204,20 +204,10 @@
         }
         let v = state.translated[newkey] ? state.translated[newkey] : "";
         elID("translated_str").value = v;
-        const filterVal = getFilterVal();
-        let delta = {
+        updateState({
           selectedKey: newkey,
-          selectedFilterVal: filterVal
-        };
-        if (newkey != state.selectedKey) {
-          const previousKeys = [...state.previousKeys];
-          previousKeys?.push({
-            selectedKey: newkey,
-            filterVal: filterVal
-          });
-          delta = { ...delta, previousKeys };
-        }
-        updateState(delta);
+          selectedFilterVal: getFilterVal()
+        });
         refreshUI();
         scrollSelectedEntryIntoViewIfNeeded();
       }
@@ -248,18 +238,43 @@
           });
       }
 
-      function jumpToPreviousKey() {
-        // the last element in state.previousKeys is the selected key
-        const previousKey =
-          state.previousKeys.length > 1 &&
-          state.previousKeys[state.previousKeys.length - 2];
-        if (previousKey) {
-          // remove selected and previous key
-          updateState({
-            previousKeys: [...state.previousKeys].slice(0, -2)
-          });
-          setFilterVal(previousKey.filterVal);
-          changeToKey(previousKey.selectedKey, true);
+      function previousKey() {
+        let gotPrev = false;
+        let filterVal = getFilterVal();
+        let keys =
+          filterVal === "deleted"
+            ? state.deletedEntries
+            : Object.keys(state.original);
+        if (
+          state.selectedFilterVal !== undefined &&
+          filterVal !== state.selectedFilterVal
+        ) {
+          filterVal = state.selectedFilterVal;
+          setFilterVal(filterVal);
+        }
+
+        for (let i = getIndexOfSelectedKey(keys); i >= 0; i--) {
+          const k = keys[i];
+          // When on Untranslated view, skip to next key considered
+          // "untranslated", i.e. undefined (new key) or "" (existing key with
+          // empty translation).
+          if (filterVal === "untranslated" && state.translated[k]) {
+            continue;
+          }
+          // When on Changed view, skip to next key considered "changed".
+          if (
+            filterVal === "changed" &&
+            state.changedEntries.indexOf(k) === -1
+          ) {
+            continue;
+          }
+
+          if (gotPrev) {
+            changeToKey(k, true);
+            return;
+          } else if (k === state.selectedKey) {
+            gotPrev = true;
+          }
         }
       }
 
@@ -289,12 +304,6 @@
             if (
               filterVal === "changed" &&
               state.changedEntries.indexOf(k) === -1
-            ) {
-              return;
-            }
-            if (
-              filterVal === "deleted" &&
-              state.deletedEntries.indexOf(k) === -1
             ) {
               return;
             }
@@ -346,9 +355,9 @@
         elID("key_str").innerText = state.selectedKey;
 
         elID("prev_bt").innerText = isDeleted ? "previous" : "save & previous";
-        elID("prev_bt").disabled = state.previousKeys.length <= 1;
+        //elID("prev_bt").disabled = state.previousKeys.length <= 1; // TODO
         elID("copy_bt").disabled = isDeleted || origStr === "";
-        elID("next_bt").disabled = isDeleted || state.selectedKey === "";
+        elID("next_bt").innerText = isDeleted ? "next" : "save & next";
         elID("translated_str").disabled = isDeleted || state.selectedKey === "";
         elID("toggle_diff_bt").innerText = state.showDiff
           ? "Hide diff"
@@ -361,13 +370,16 @@
 
       function nextKey() {
         let gotPrev = false;
-        let keys = Object.keys(state.original);
         let filterVal = getFilterVal();
-        const { filterVal: previousFilterVal } =
-          state.previousKeys.length > 0 &&
-          state.previousKeys[state.previousKeys.length - 1];
-        if (previousFilterVal !== undefined && filterVal != previousFilterVal) {
-          filterVal = previousFilterVal;
+        let keys =
+          filterVal === "deleted"
+            ? state.deletedEntries
+            : Object.keys(state.original);
+        if (
+          state.selectedFilterVal !== undefined &&
+          filterVal !== state.selectedFilterVal
+        ) {
+          filterVal = state.selectedFilterVal;
           setFilterVal(filterVal);
         }
 
@@ -383,14 +395,6 @@
           if (
             filterVal === "changed" &&
             state.changedEntries.indexOf(k) === -1
-          ) {
-            continue;
-          }
-
-          // When on Changed view, skip to next key considered "changed".
-          if (
-            filterVal === "changed" &&
-            state.changedEntries.indexOf(k) == -1
           ) {
             continue;
           }
@@ -412,8 +416,11 @@
       }
 
       function jumpToFirstKey() {
-        let keys = Object.keys(state.original);
         const filterVal = getFilterVal();
+        let keys =
+          filterVal === "deleted"
+            ? state.deletedEntries
+            : Object.keys(state.original);
         for (let i = 0; i < keys.length; i++) {
           const k = keys[i];
           if (filterVal === "untranslated" && state.translated[k]) {
@@ -606,11 +613,7 @@
         </div>
 
         <div id="buttons">
-          <button
-            onclick="jumpToPreviousKey()"
-            title="Previous String"
-            id="prev_bt"
-          >
+          <button onclick="previousKey()" title="Previous String" id="prev_bt">
             save & previous
           </button>
           <button
