@@ -225,6 +225,7 @@ const clickOnSeedButton = async (i, clickToTheFake) => {
 
     expect(buttons[index] !== undefined).toBeTruthy();
   }
+  return buttons[index];
 };
 
 test("test confim seed view", async () => {
@@ -235,11 +236,13 @@ test("test confim seed view", async () => {
 
   for (let i = 0; i < testSeedArray.length; i++) {
     if (i < testSeedArray.length - 1) {
-      await clickOnSeedButton(i, false);
+      const button = await clickOnSeedButton(i, false);
       expect(screen.getByText("*Please enter all words")).toBeInTheDocument();
+      expect(button.className).not.toMatch("invalid");
     } else {
       // click to the right word except the last one
-      await clickOnSeedButton(i, true);
+      const button = await clickOnSeedButton(i, true);
+      expect(button.className).toMatch("invalid");
     }
     expect(mockDecodeSeed).not.toHaveBeenCalled();
   }

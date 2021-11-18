@@ -15,7 +15,8 @@ export const ConfirmSeedForm = ({
   sendBack,
   setPassPhrase,
   posBtBarToBottom,
-  error
+  error,
+  allWordsHaveBeenSelected
 }) => (
   <div
     className={classNames(
@@ -40,7 +41,8 @@ export const ConfirmSeedForm = ({
             wordsToShow,
             selected,
             index,
-            onSeedButtonClick
+            onSeedButtonClick,
+            showError: allWordsHaveBeenSelected
           }}
           key={`word-${index}`}
         />
@@ -72,7 +74,8 @@ ConfirmSeedForm.propTypes = {
   sendBack: PropTypes.func.isRequired,
   setPassPhrase: PropTypes.func.isRequired,
   posBtBarToBottom: PropTypes.bool.isRequired,
-  error: PropTypes.string
+  error: PropTypes.string,
+  allWordsHaveBeenSelected: PropTypes.bool.isRequired
 };
 
 export default ConfirmSeedForm;

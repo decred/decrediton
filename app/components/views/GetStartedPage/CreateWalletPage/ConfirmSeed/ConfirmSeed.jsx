@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ConfirmSeedForm from "./ConfirmSeedForm";
 import {
   getSeedWordsArr,
@@ -24,6 +24,10 @@ const ConfirmSeed = ({
   const [seedWords, setSeedWords] = useState(() => getSeedWordsArr(mnemonic));
   const [posBtBarToBottom, setPosBtBarToBottom] = useState(true);
   const intl = useIntl();
+  const allWordsHaveBeenSelected = useMemo(
+    () => selectedSeedWordsCount(seedWords) === seedWords.length,
+    [seedWords]
+  );
 
   useMountEffect(() => {
     setPageBodyScrollHandler((e) =>
@@ -73,7 +77,8 @@ const ConfirmSeed = ({
         isValid,
         setPassPhrase,
         posBtBarToBottom,
-        error
+        error,
+        allWordsHaveBeenSelected
       }}
     />
   );

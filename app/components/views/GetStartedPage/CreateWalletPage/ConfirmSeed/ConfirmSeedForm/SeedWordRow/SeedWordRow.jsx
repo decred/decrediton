@@ -7,7 +7,8 @@ const SeedWordRow = ({
   wordsToShow,
   selected,
   index,
-  onSeedButtonClick
+  onSeedButtonClick,
+  showError
 }) => (
   <div className={styles.seedWordsForm}>
     <label>
@@ -26,7 +27,9 @@ const SeedWordRow = ({
         return (
           <button
             disabled={selected === wordToShowIndex}
-            className={classNames(isSelectedWordInvalid && styles.invalid)}
+            className={classNames(
+              isSelectedWordInvalid && showError && styles.invalid
+            )}
             key={`${index}-${wordToShowIndex}`}
             onClick={() => onSeedButtonClick(index, wordToShowIndex)}>
             {wordToShow}
@@ -42,7 +45,8 @@ SeedWordRow.propTypes = {
   wordsToShow: PropTypes.array.isRequired,
   selected: PropTypes.number,
   index: PropTypes.number.isRequired,
-  onSeedButtonClick: PropTypes.func.isRequired
+  onSeedButtonClick: PropTypes.func.isRequired,
+  showError: PropTypes.bool.isRequired
 };
 
 export default SeedWordRow;
