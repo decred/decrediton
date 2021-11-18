@@ -33,7 +33,7 @@ const EyeFilterMenuWithSliderMenu = ({
       const minValue =
         currencyDisplay === DCR ? minFilterValue / unitDivisor : minFilterValue;
       setMinAmount(minValue);
-      if (minValue > min) {
+      if (minValue < min) {
         setMin(minValue);
       }
     }
