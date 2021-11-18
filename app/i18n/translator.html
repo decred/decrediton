@@ -26,6 +26,7 @@
         padding-top: 1em;
         overflow-y: auto;
         height: calc(100vh - 75px);
+        width: 20em;
       }
 
       #string_list li {
@@ -42,17 +43,23 @@
       #string_list li span {
         display: block;
         color: #888;
-        font-size: 60%;
+        font-size: 80%;
+        padding-top: 2px;
       }
 
+      #string_list li.deleted.selected,
       #string_list li.selected {
         color: #ff8051;
       }
 
+      #string_list li.deleted {
+        color: #888;
+      }
+
       #key_str {
         color: #888;
-        font-size: 60%;
-        padding-top: 0.6rem;
+        font-size: 80%;
+        padding-top: 0.4rem;
       }
 
       #original_str,
@@ -65,10 +72,10 @@
       #prev_original_str_label {
         display: block;
         position: absolute;
-        font-size: 60%;
+        font-size: 80%;
         color: #888;
-        bottom: 1em;
-        left: 1em;
+        bottom: 0.5em;
+        left: 0.7em;
       }
 
       #original_str.inactive,
@@ -80,11 +87,11 @@
       #original_str_label {
         display: block;
         position: absolute;
-        font-size: 60%;
+        font-size: 80%;
         color: #888;
         margin-top: 10px;
-        bottom: 1em;
-        left: 1em;
+        bottom: 0.5em;
+        left: 0.7em;
       }
 
       #buttons {
@@ -109,14 +116,14 @@
       #translated::after {
         display: block;
         position: absolute;
-        font-size: 60%;
+        font-size: 80%;
         color: #888;
         content: "Translated String";
         bottom: 4pt;
-        left: 2em;
+        left: 0.7em;
         right: 1rem;
         background-color: white;
-        padding: 1rem 0;
+        padding: 0.5rem 0;
       }
 
       #translated.disabled::after {
@@ -286,6 +293,7 @@
           Object.keys(state.deletedEntries).map((k) => {
             const li = newEl(stringsEl, "li");
             li.innerText = state.deletedEntries[k];
+            li.classList.add("deleted");
             newEl(li, "span").innerText = "";
 
             if (state.deletedEntries[k] === state.selectedKey) {
@@ -359,8 +367,8 @@
         elID("next_bt").innerText = isDeleted ? "next" : "save & next";
         elID("translated_str").disabled = isDeleted || state.selectedKey === "";
         elID("toggle_diff_bt").innerText = state.showDiff
-          ? "Hide diff"
-          : "Show diff";
+          ? "hide diff"
+          : "show diff";
       }
 
       function getIndexOfSelectedKey(keys) {
@@ -633,11 +641,11 @@
             id="down_translation_btn"
             onclick="downloadTranslatedFile()"
             href="#"
-            >Download Translation</a
+            >export translation</a
           >
         </div>
 
-        <div style="font-size: 60%; color: #888">
+        <div style="font-size: 80%; color: #888">
           ctrl+&lt;enter&gt;: save string & goto next<br />
           ctrl+g: copy original string
         </div>
