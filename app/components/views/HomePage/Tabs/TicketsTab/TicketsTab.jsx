@@ -30,7 +30,7 @@ const TicketsTab = () => {
             )}>
             <T
               id="home.activeTicketsCount"
-              m="{count, plural, one {{fmtCount} active ticket} other {{fmtCount} active tickets}}"
+              m="{count, plural, one {{fmtCount} active and locked ticket} other {{fmtCount} active and locked tickets}}"
               values={{
                 count: activeTicketsCount,
                 fmtCount: <span className="count">{activeTicketsCount}</span>
