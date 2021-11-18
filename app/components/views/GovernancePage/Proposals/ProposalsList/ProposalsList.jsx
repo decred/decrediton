@@ -79,7 +79,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
               />
             </div>
           )}
-          <div ref={ref} className={styles.scrollWrapper}>
+          <div ref={ref}>
             <InfiniteScroll
               hasMore={!noMoreProposals}
               loadMore={loadMore}

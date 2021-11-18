@@ -5,7 +5,7 @@ import { useMountEffect } from "hooks";
 import { useState } from "react";
 import ReactTimeout from "react-timeout";
 
-const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
+const Privacy = ({ setInterval }) => {
   const {
     stopAccountMixer,
     accountMixerRunning,
@@ -22,7 +22,8 @@ const Privacy = ({ isCreateAccountDisabled, setInterval }) => {
     defaultSpendingAccountDisregardMixedAccount,
     mixedAccountSpendableBalance,
     changeAccountSpendableBalance,
-    getRunningIndicator
+    getRunningIndicator,
+    isCreateAccountDisabled
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");

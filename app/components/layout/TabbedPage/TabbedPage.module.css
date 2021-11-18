@@ -8,7 +8,7 @@
   overflow: hidden;
   position: relative;
   background-color: var(--background-container);
-  height: inherit;
+  height: 100%;
 }
 
 .tabbedPageHeader {
@@ -19,24 +19,23 @@
   flex-direction: column;
 }
 
+.tabs {
+  background-color: var(--background-back-color);
+  padding: 40px 60px 0 96px;
+  position: relative;
+  display: flex;
+}
+
 .tabContent {
-  position: absolute;
-  overflow-x: hidden;
-  right: 0;
-  top: 0;
+  background-color: var(--background-container);
+  top: 71px;
   bottom: 0;
   left: 0;
+  right: 0;
+  height: calc(100% - 66px);
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 30px 80px 30px 60px;
-  background-color: var(--background-container);
-}
-
-.tabContent:not(.visible)::-webkit-scrollbar {
-  width: 5px;
-  background-color: transparent;
-}
-
-.tabContent:not(.visible)::-webkit-scrollbar-thumb {
-  background-color: transparent;
 }
 
 @media screen and (max-width: 1180px) {
@@ -45,6 +44,10 @@
   }
   .tabContent {
     padding: 30px 20px 30px 20px;
+  }
+  .tabs {
+    margin-left: 0;
+    padding-left: 55px;
   }
 }
 
@@ -55,5 +58,11 @@
 
   .tabContent {
     padding: 15px 10px 80px 10px;
+    top: 45px;
+  }
+
+  .tabs {
+    padding: 15px 0 0 20px;
+    overflow: hidden !important;
   }
 }

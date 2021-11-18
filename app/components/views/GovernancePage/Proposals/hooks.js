@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMachine } from "stateMachines/FetchStateMachine";
 import { useMachine } from "@xstate/react";
@@ -15,7 +15,7 @@ export function useProposalsTab() {
   const preVoteCount = useSelector(sel.newPreVoteProposalsCount);
   const politeiaEnabled = useSelector(sel.politeiaEnabled);
   const location = useSelector(sel.location);
-  const [tab, setTab] = useReducer(() => getProposalsTab(location));
+  const tab = getProposalsTab(location);
   const compareInventory = () => dispatch(gov.compareInventory());
   const isTestnet = useSelector(sel.isTestNet);
   const dispatch = useDispatch();
@@ -24,11 +24,6 @@ export function useProposalsTab() {
   useEffect(() => {
     return () => dispatch(setLastPoliteiaAccessTime());
   }, [dispatch]);
-
-  useEffect(() => {
-    const tab = getProposalsTab(location);
-    setTab(tab);
-  }, [location]);
 
   return {
     activeVoteCount,

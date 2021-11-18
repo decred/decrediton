@@ -1,3 +1,7 @@
 .tabContent {
   padding: 0;
 }
+
+.tabContent > div {
+  height: 100%;
+}

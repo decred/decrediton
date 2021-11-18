@@ -12,7 +12,7 @@
 }
 
 .proposalList {
-  margin-top: 15px;
+  padding-top: 15px;
   margin-left: 60px;
   padding-bottom: 50px;
   display: block;
@@ -31,12 +31,7 @@
   flex-direction: row;
   justify-content: flex-end;
   width: 825px;
-  margin-top: 22px;
-}
-
-.scrollWrapper {
-  height: calc(100% - 54px);
-  overflow: auto;
+  padding-top: 22px;
 }
 
 @media screen and (max-width: 1180px) {
