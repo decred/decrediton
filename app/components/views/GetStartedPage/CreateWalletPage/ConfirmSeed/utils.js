@@ -18,3 +18,6 @@ export const verifySeedWordsArr = (mnemonic, seedWordsArr) =>
   seedWordsArr
     .map((wordObj) => wordObj.wordsToShow[wordObj.selected])
     .join(" ") === mnemonic;
+
+export const selectedSeedWordsCount = (seedWordsArr) =>
+  seedWordsArr.filter((wordObj) => wordObj.selected >= 0).length;

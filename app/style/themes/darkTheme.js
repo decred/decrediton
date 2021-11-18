@@ -186,6 +186,7 @@ const darkTheme = {
   "seedword-label-border": "#223767",
   "seedword-label-text": "#3262b0",
   "seedword-button-text": "var(--info-modal-button-text)",
+  "seedword-button-invalid-bg": "#f0b3a1",
 
   /* icons */
   "menu-settings": url(require("style/icons/menuSettingsDark.svg")),

@@ -6,7 +6,8 @@ import { SEED_WORDS } from "constants/seed";
 import { POSITION_ERROR, MISMATCH_ERROR } from "constants";
 import {
   getSeedWordsArr,
-  verifySeedWordsArr
+  verifySeedWordsArr,
+  selectedSeedWordsCount
 } from "components/views/GetStartedPage/CreateWalletPage/ConfirmSeed/utils.js";
 
 import { screen, wait } from "@testing-library/react";
@@ -235,6 +236,7 @@ test("test confim seed view", async () => {
   for (let i = 0; i < testSeedArray.length; i++) {
     if (i < testSeedArray.length - 1) {
       await clickOnSeedButton(i, false);
+      expect(screen.getByText("*Please enter all words")).toBeInTheDocument();
     } else {
       // click to the right word except the last one
       await clickOnSeedButton(i, true);
@@ -245,7 +247,7 @@ test("test confim seed view", async () => {
   await testPrivatePassphraseInputs();
   expect(createWalletButton.disabled).toBeTruthy();
   expect(
-    screen.getByText("*Please confirm the missing words")
+    screen.getByText("*Please select the correct word in each row")
   ).toBeInTheDocument();
 
   // fix invalid seed word, decode with error
@@ -739,9 +741,14 @@ test("test getSeedWords and verifySeedWordsArr function", () => {
     expect(fakeWords.length === 2).toBeTruthy();
   });
 
-  const validSeedWordArr = seedWordsArr.map((obj) => {
-    return { ...obj, selected: obj.wordsToShow.indexOf(obj.word) };
-  });
+  const validSeedWordArr = [...seedWordsArr];
+
+  for (let i = 0; i < validSeedWordArr.length; i++) {
+    validSeedWordArr[i].selected = validSeedWordArr[i].wordsToShow.indexOf(
+      validSeedWordArr[i].word
+    );
+    expect(selectedSeedWordsCount(validSeedWordArr)).toBe(i + 1);
+  }
 
   expect(verifySeedWordsArr(testSeedMnemonic, validSeedWordArr)).toBeTruthy();
 

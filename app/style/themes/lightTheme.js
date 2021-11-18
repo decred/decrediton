@@ -186,6 +186,7 @@ const lightTheme = {
   "seedword-label-border": "#e6eaed",
   "seedword-label-text": "var(--grey-5)",
   "seedword-button-text": "var(--main-dark-blue)",
+  "seedword-button-invalid-bg": "#f0b3a1",
 
   /* icons */
   "menu-settings": url(require("style/icons/menuSettings.svg")),

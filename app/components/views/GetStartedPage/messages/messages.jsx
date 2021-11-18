@@ -60,9 +60,13 @@ export const messages = defineMessages({
     id: "getStarted.discoverAddresses.passphrasePlaceholder",
     defaultMessage: "Private Passphrase"
   },
-  confirmSeedMissingWordError: {
-    id: "getStarted.confirmSeed.missingWordError",
-    defaultMessage: "*Please confirm the missing words"
+  confirmSeedWrongWordError: {
+    id: "getStarted.confirmSeed.wrongWordError",
+    defaultMessage: "*Please select the correct word in each row"
+  },
+  confirmSeedEnterAllWordsError: {
+    id: "getStarted.confirmSeed.enterAllWords",
+    defaultMessage: "*Please enter all words"
   }
 });
 

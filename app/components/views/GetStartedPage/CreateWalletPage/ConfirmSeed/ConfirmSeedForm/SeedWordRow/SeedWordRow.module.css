@@ -42,6 +42,11 @@
   cursor: default;
 }
 
+.buttonContainer button.invalid {
+  border: 1px solid var(--orange);
+  background: var(--seedword-button-invalid-bg);
+}
+
 @media screen and (max-width: 768px) {
   .buttonContainer button {
     width: 110px;

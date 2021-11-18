@@ -33,9 +33,10 @@ export const ConfirmSeedForm = ({
       />
     </div>
     <div>
-      {seedWords.map(({ wordsToShow, selected }, index) => (
+      {seedWords.map(({ word, wordsToShow, selected }, index) => (
         <SeedWordRow
           {...{
+            word,
             wordsToShow,
             selected,
             index,

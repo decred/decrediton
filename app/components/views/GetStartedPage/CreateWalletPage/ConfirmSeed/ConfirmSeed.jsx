@@ -1,6 +1,10 @@
 import { useState } from "react";
 import ConfirmSeedForm from "./ConfirmSeedForm";
-import { getSeedWordsArr, verifySeedWordsArr } from "./utils";
+import {
+  getSeedWordsArr,
+  verifySeedWordsArr,
+  selectedSeedWordsCount
+} from "./utils";
 import { useMountEffect } from "hooks";
 import { messages } from "../../messages";
 import { useIntl } from "react-intl";
@@ -51,7 +55,11 @@ const ConfirmSeed = ({
         });
     } else {
       setSeed([]);
-      setError(intl.formatMessage(messages.confirmSeedMissingWordError));
+      setError(
+        selectedSeedWordsCount(updatedSeedWords) === seedWords.length
+          ? intl.formatMessage(messages.confirmSeedWrongWordError)
+          : intl.formatMessage(messages.confirmSeedEnterAllWordsError)
+      );
     }
   };
 
