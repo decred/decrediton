@@ -1363,7 +1363,7 @@ export const unspentTicketsCount = compose(
 );
 export const activeTicketsCount = createSelector(
   [isSPV, getStakeInfoResponse],
-  (isSPV, r) => (isSPV ? r.unspent() + r.immature : r.live + r.immature)
+  (isSPV, r) => (isSPV ? r.unspent + r.immature : r.live + r.immature)
 );
 export const totalSubsidy = compose(
   (r) => (r ? r.totalSubsidy : 0),
