@@ -9,6 +9,9 @@
       .posRelative {
         position: relative;
       }
+      .hidden {
+        display: hidden;
+      }
       #error {
         color: red;
         padding: 2em;
@@ -19,7 +22,7 @@
         grid-template-columns: 2fr 4fr;
       }
 
-      #string_list {
+      .string_list {
         border: 1px solid #ccc;
         margin: 10px;
         padding-right: 0.5em;
@@ -29,30 +32,30 @@
         width: 20em;
       }
 
-      #string_list li {
+      .string_list li {
         cursor: pointer;
         user-select: none;
         margin-bottom: 1em;
       }
 
-      #string_list li:hover {
+      .string_list li:hover {
         cursor: pointer;
         color: blue;
       }
 
-      #string_list li span {
+      .string_list li span {
         display: block;
         color: #888;
         font-size: 80%;
         padding-top: 2px;
       }
 
-      #string_list li.deleted.selected,
-      #string_list li.selected {
+      .string_list li.deleted.selected,
+      .string_list li.selected {
         color: #ff8051;
       }
 
-      #string_list li.deleted {
+      .string_list li.deleted {
         color: #888;
       }
 
@@ -191,7 +194,17 @@
           const isDeleted = isEntryDeleted(state.selectedKey);
           // Save last translation.
           if (!isDeleted) {
-            state.translated[state.selectedKey] = elID("translated_str").value;
+            const newValue = elID("translated_str").value;
+            state.translated[state.selectedKey] = newValue;
+
+            // update untranslated list if necessary
+            const el = elID(`li-untranslated-${state.selectedKey}`);
+            if (newValue !== "" && el) {
+              el.remove();
+            } else if (newValue === "" && !el) {
+              const stringList = elID("string_list_untranslated");
+              stringList.innerHTML = "";
+            }
           }
         }
       }
@@ -206,15 +219,25 @@
         }
       }
 
+      function getSelectedEl() {
+        return document.querySelector('li[class*="selected"]');
+      }
+
       function changeToKey(newkey, save) {
         if (save) {
           saveTranslation();
         }
         let v = state.translated[newkey] ? state.translated[newkey] : "";
+        const filterVal = getFilterVal();
         elID("translated_str").value = v;
+        const selectedEl = getSelectedEl();
+        if (selectedEl) {
+          selectedEl.classList.remove("selected");
+        }
+        elID(`li-${filterVal}-${newkey}`).classList.add("selected");
         updateState({
           selectedKey: newkey,
-          selectedFilterVal: getFilterVal()
+          selectedFilterVal: filterVal
         });
         refreshUI();
         scrollSelectedEntryIntoViewIfNeeded();
@@ -222,16 +245,19 @@
 
       function onFilterChange() {
         dotry(refreshUI);
-        scrollSelectedEntryIntoViewIfNeeded();
       }
 
       function scrollSelectedEntryIntoViewIfNeeded() {
-        const el = document.querySelector('li[class="selected"]');
-        if (!el) {
+        const filterVal = getFilterVal();
+        if (!filterVal) {
           return;
         }
-        const stringList = elID("string_list");
-        const { top, bottom, height } = el.getBoundingClientRect();
+        const selectedEl = getSelectedEl();
+        if (!selectedEl) {
+          return;
+        }
+        const stringList = elID(`string_list_${filterVal}`);
+        const { top, bottom, height } = selectedEl.getBoundingClientRect();
         const stringListRect = stringList.getBoundingClientRect();
 
         const isScrolledIntoView =
@@ -240,107 +266,72 @@
             : bottom - stringListRect.bottom <= height;
 
         if (!isScrolledIntoView)
-          el.scrollIntoView({
+          selectedEl.scrollIntoView({
             block: "end",
             inline: "nearest"
           });
       }
 
-      function getPreviousKey() {
-        let gotPrev = false;
-        filterVal = state.selectedFilterVal;
-        if (!filterVal) {
-          return false;
+      function switchList(filterVal) {
+        const stringListContrainers = elID("string_list_contrainer").children;
+        for (i = 0; i < stringListContrainers.length; i++) {
+          const listEl = stringListContrainers[i];
+          listEl.hidden = !listEl.id.includes(filterVal);
         }
-        let keys =
-          filterVal === "deleted"
-            ? state.deletedEntries
-            : Object.keys(state.original);
-
-        for (let i = getIndexOfSelectedKey(keys); i >= 0; i--) {
-          const k = keys[i];
-          // When on Untranslated view, skip to next key considered
-          // "untranslated", i.e. undefined (new key) or "" (existing key with
-          // empty translation).
-          if (filterVal === "untranslated" && state.translated[k]) {
-            continue;
-          }
-          // When on Changed view, skip to next key considered "changed".
-          if (
-            filterVal === "changed" &&
-            state.changedEntries.indexOf(k) === -1
-          ) {
-            continue;
-          }
-
-          if (gotPrev) {
-            return k;
-          } else if (k === state.selectedKey) {
-            gotPrev = true;
-          }
-        }
-        return false;
       }
 
-      function previousKey() {
-        let filterVal = getFilterVal();
-        if (
-          state.selectedFilterVal !== undefined &&
-          filterVal !== state.selectedFilterVal
-        ) {
-          filterVal = state.selectedFilterVal;
-          setFilterVal(filterVal);
+      function renderList(filterVal) {
+        const stringsEl = elID(`string_list_${filterVal}`);
+        if (stringsEl.innerHTML === "") {
+          if (filterVal === "deleted") {
+            Object.keys(state.deletedEntries).map((k) => {
+              const li = newEl(stringsEl, "li");
+              li.innerText = state.deletedEntries[k];
+              li.classList.add("deleted");
+              li.id = `li-${filterVal}-${state.deletedEntries[k]}`;
+              li.dataset.key = `${state.deletedEntries[k]}`;
+              newEl(li, "span").innerText = "";
+
+              if (state.deletedEntries[k] === state.selectedKey) {
+                li.classList.add("selected");
+                selectedEntry = k;
+              }
+
+              li.onclick = () => changeToKey(state.deletedEntries[k]);
+            });
+          } else {
+            Object.keys(state.original).map((k) => {
+              if (filterVal === "untranslated" && state.translated[k]) {
+                return;
+              }
+              if (
+                filterVal === "changed" &&
+                state.changedEntries.indexOf(k) === -1
+              ) {
+                return;
+              }
+              const li = newEl(stringsEl, "li");
+              li.innerText = state.original[k];
+              li.id = `li-${filterVal}-${k}`;
+              li.dataset.key = k;
+              newEl(li, "span").innerText = k;
+
+              if (k === state.selectedKey) {
+                li.classList.add("selected");
+              }
+
+              li.onclick = () => changeToKey(k);
+            });
+          }
         }
-        const previousKey = getPreviousKey();
-        if (previousKey !== false) {
-          changeToKey(previousKey, true);
-        }
+        switchList(filterVal);
       }
 
       function refreshUI() {
         const filterVal = getFilterVal();
-        const stringsEl = elID("string_list");
-        stringsEl.innerHTML = "";
-
-        if (filterVal === "deleted") {
-          Object.keys(state.deletedEntries).map((k) => {
-            const li = newEl(stringsEl, "li");
-            li.innerText = state.deletedEntries[k];
-            li.classList.add("deleted");
-            newEl(li, "span").innerText = "";
-
-            if (state.deletedEntries[k] === state.selectedKey) {
-              li.classList.add("selected");
-              selectedEntry = k;
-            }
-
-            li.onclick = () => changeToKey(state.deletedEntries[k]);
-          });
-        } else {
-          Object.keys(state.original).map((k) => {
-            if (filterVal === "untranslated" && state.translated[k]) {
-              return;
-            }
-            if (
-              filterVal === "changed" &&
-              state.changedEntries.indexOf(k) === -1
-            ) {
-              return;
-            }
-            const li = newEl(stringsEl, "li");
-            li.innerText = state.original[k];
-            newEl(li, "span").innerText = k;
-
-            if (k === state.selectedKey) {
-              li.classList.add("selected");
-            }
-
-            li.onclick = () => changeToKey(k);
-          });
-        }
+        renderList(filterVal);
 
         const isDeleted = isEntryDeleted(state.selectedKey);
-        const previousKey = getPreviousKey();
 
         if (isDeleted || state.selectedKey === "") {
           elID("original_str").classList.add("inactive");
@@ -376,26 +367,20 @@
         elID("key_str").innerText = state.selectedKey;
 
         elID("prev_bt").innerText = isDeleted ? "previous" : "save & previous";
-        elID("prev_bt").disabled = previousKey === false;
+        elID("prev_bt").disabled =
+          getPreviousEl() === null || state.selectedKey === "";
         elID("copy_bt").disabled = isDeleted || origStr === "";
         elID("next_bt").innerText = isDeleted ? "next" : "save & next";
+        elID("next_bt").disabled = state.selectedKey === "";
         elID("translated_str").disabled = isDeleted || state.selectedKey === "";
         elID("toggle_diff_bt").innerText = state.showDiff
           ? "hide diff"
           : "show diff";
+        elID("toggle_diff_bt").disabled = isDeleted || state.selectedKey === "";
       }
 
-      function getIndexOfSelectedKey(keys) {
-        return Math.max(0, keys.indexOf(state.selectedKey));
-      }
-
-      function nextKey() {
-        let gotPrev = false;
+      function jumpBackToSelectedList() {
         let filterVal = getFilterVal();
-        let keys =
-          filterVal === "deleted"
-            ? state.deletedEntries
-            : Object.keys(state.original);
         if (
           state.selectedFilterVal !== undefined &&
           filterVal !== state.selectedFilterVal
@@ -403,60 +388,39 @@
           filterVal = state.selectedFilterVal;
           setFilterVal(filterVal);
         }
+      }
 
-        for (let i = getIndexOfSelectedKey(keys); i < keys.length; i++) {
-          const k = keys[i];
-          // When on Untranslated view, skip to next key considered
-          // "untranslated", i.e. undefined (new key) or "" (existing key with
-          // empty translation).
-          if (filterVal === "untranslated" && state.translated[k]) {
-            continue;
-          }
-          // When on Changed view, skip to next key considered "changed".
-          if (
-            filterVal === "changed" &&
-            state.changedEntries.indexOf(k) === -1
-          ) {
-            continue;
-          }
-
-          if (gotPrev) {
-            changeToKey(k, true);
-            return;
-          } else if (k === state.selectedKey) {
-            gotPrev = true;
-          }
+      function getPreviousEl() {
+        const selectedEl = getSelectedEl();
+        if (!selectedEl) {
+          return;
         }
 
-        if (gotPrev) {
-          // gotPrev but not the next one, so reached the end of the list.
-          saveTranslation();
-          state.selectedKey = "";
-          jumpToFirstKey();
+        return selectedEl.previousElementSibling;
+      }
+
+      function previousKey() {
+        jumpBackToSelectedList();
+
+        const previousEl = getPreviousEl();
+
+        if (previousEl) {
+          changeToKey(previousEl.dataset.key, true);
         }
       }
 
-      function jumpToFirstKey() {
-        const filterVal = getFilterVal();
-        let keys =
-          filterVal === "deleted"
-            ? state.deletedEntries
-            : Object.keys(state.original);
-        for (let i = 0; i < keys.length; i++) {
-          const k = keys[i];
-          if (filterVal === "untranslated" && state.translated[k]) {
-            continue;
-          }
-          // When on Changed view, skip to next key considered "changed".
-          if (
-            filterVal === "changed" &&
-            state.changedEntries.indexOf(k) === -1
-          ) {
-            continue;
-          }
+      function nextKey() {
+        jumpBackToSelectedList();
 
-          changeToKey(k, true);
+        const selectedEl = getSelectedEl();
+        if (!selectedEl) {
           return;
+        }
+
+        if (selectedEl.nextElementSibling) {
+          changeToKey(selectedEl.nextElementSibling.dataset.key, true);
+        } else {
+          changeToKey(selectedEl.parentElement.firstChild.dataset.key, true);
         }
       }
 
@@ -616,7 +580,12 @@
           />Deleted
         </div>
 
-        <ul id="string_list"></ul>
+        <div id="string_list_contrainer">
+          <ul id="string_list_all" class="string_list"></ul>
+          <ul id="string_list_untranslated" class="string_list"></ul>
+          <ul id="string_list_changed" class="string_list"></ul>
+          <ul id="string_list_deleted" class="string_list"></ul>
+        </div>
       </div>
 
       <div>
