@@ -310,5 +310,7 @@ export function newDefaultBitcoinConfig(
       path.join(confDir, "bitcoin.conf"),
       ini.stringify(bitcoinConf)
     );
+    return bitcoinConf;
   }
+  return null;
 }

@@ -43,7 +43,6 @@ const CreateWalletsPage = () => {
     onCheckBTCConfig,
     onNewBTCConfig
   });
-
   return (
     <div className="flex-column align-start">
       {!dexBTCWalletRunning ? (

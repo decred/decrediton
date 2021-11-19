@@ -15,7 +15,9 @@ import {
   CHECK_BTC_CONFIG_FAILED,
   CREATEDEXACCOUNT_FAILED,
   DEX_LOGOUT_FAILED,
-  DEX_USER_FAILED
+  DEX_USER_FAILED,
+  NEW_BTC_CONFIG_FAILED,
+  NEW_BTC_CONFIG_SUCCESS
 } from "actions/DexActions";
 import {
   PUBLISHTX_FAILED,
@@ -713,6 +715,15 @@ const messages = defineMessages({
     id: "discoverAddress.success",
     defaultMessage:
       "You have successfully discovered address usage.  Rescan now commencing."
+  },
+  NEW_BTC_CONFIG_FAILED: {
+    id: "newBTCConfig.failed",
+    defaultMessage: "{originalError}"
+  },
+  NEW_BTC_CONFIG_SUCCESS: {
+    id: "newBTCConfig.success",
+    defaultMessage:
+      "You have successfully created a default bitcoin config.  Please restart your Bitcoin Core wallet for this config to be used as expected."
   }
 });
 
@@ -804,6 +815,7 @@ export default function snackbar(state = {}, action) {
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
+    case NEW_BTC_CONFIG_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -954,6 +966,7 @@ export default function snackbar(state = {}, action) {
     case STARTTICKETBUYERV3_FAILED:
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
+    case NEW_BTC_CONFIG_FAILED:
       type = "Error";
       if (
         action.error &&

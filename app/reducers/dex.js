@@ -45,7 +45,10 @@ import {
   CHECK_BTC_CONFIG_FAILED,
   CHECK_BTC_CONFIG_SUCCESS,
   CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
-  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL
+  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
+  NEW_BTC_CONFIG_ATTEMPT,
+  NEW_BTC_CONFIG_SUCCESS,
+  NEW_BTC_CONFIG_FAILED
 } from "../actions/DexActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -370,6 +373,27 @@ export default function ln(state = {}, action) {
         ...state,
         checkBtcConfigAttempt: false,
         btcInstallNeeded: true
+      };
+    case NEW_BTC_CONFIG_ATTEMPT:
+      return {
+        ...state,
+        newBTCConfigAttempt: true,
+        newBTCConfigError: null
+      };
+    case NEW_BTC_CONFIG_FAILED:
+      return {
+        ...state,
+        newBTCConfigAttempt: false,
+        newBTCConfigError: action.error
+      };
+    case NEW_BTC_CONFIG_SUCCESS:
+      return {
+        ...state,
+        newBTCConfigAttempt: false,
+        newBTCConfigError: null,
+        btcInstallNeeded: false,
+        btcConfigUpdateNeeded: false,
+        btcConfig: action.btcConfig
       };
     case CLOSEWALLET_SUCCESS:
       return {
