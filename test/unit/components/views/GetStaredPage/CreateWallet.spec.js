@@ -250,7 +250,9 @@ test("test confim seed view", async () => {
   await testPrivatePassphraseInputs();
   expect(createWalletButton.disabled).toBeTruthy();
   expect(
-    screen.getByText("*Please select the correct word in each row")
+    screen.getByText(
+      "Some words from the seed are incorrect. Please, choose the right ones to continue."
+    )
   ).toBeInTheDocument();
 
   // fix invalid seed word, decode with error

@@ -62,7 +62,8 @@ export const messages = defineMessages({
   },
   confirmSeedWrongWordError: {
     id: "getStarted.confirmSeed.wrongWordError",
-    defaultMessage: "*Please select the correct word in each row"
+    defaultMessage:
+      "Some words from the seed are incorrect. Please, choose the right ones to continue."
   },
   confirmSeedEnterAllWordsError: {
     id: "getStarted.confirmSeed.enterAllWords",

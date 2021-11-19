@@ -5,6 +5,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 
 export const useCreateWallet = () => {
+  const pageBodyTopRef = useSelector(sel.pageBodyTopRef);
   const dispatch = useDispatch();
   const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [
     dispatch
@@ -49,6 +50,7 @@ export const useCreateWallet = () => {
     createWatchOnlyWalletRequest,
     createWalletRequest,
     isTestNet,
-    setPageBodyScrollHandler
+    setPageBodyScrollHandler,
+    pageBodyTopRef
   };
 };

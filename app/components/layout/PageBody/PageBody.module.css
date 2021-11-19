@@ -5,6 +5,7 @@
 }
 
 .pageBody.getstarted {
+  position: relative;
   padding: 40px;
   display: block;
   background-color: var(--background-container);
@@ -28,6 +29,12 @@
 
 .pageBody.getstarted.testnetBody::before {
   background-image: var(--testnet-logo);
+}
+
+.pageBodyTop {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @media screen and (max-width: 768px) {

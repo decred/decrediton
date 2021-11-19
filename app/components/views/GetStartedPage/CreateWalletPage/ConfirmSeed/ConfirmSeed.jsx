@@ -19,6 +19,7 @@ const ConfirmSeed = ({
   decodeSeed,
   setError,
   setPageBodyScrollHandler,
+  pageBodyTopRef,
   error
 }) => {
   const [seedWords, setSeedWords] = useState(() => getSeedWordsArr(mnemonic));
@@ -28,6 +29,7 @@ const ConfirmSeed = ({
     () => selectedSeedWordsCount(seedWords) === seedWords.length,
     [seedWords]
   );
+  const [topError, setTopError] = useState(null);
 
   useMountEffect(() => {
     setPageBodyScrollHandler((e) =>
@@ -59,11 +61,16 @@ const ConfirmSeed = ({
         });
     } else {
       setSeed([]);
-      setError(
-        selectedSeedWordsCount(updatedSeedWords) === seedWords.length
-          ? intl.formatMessage(messages.confirmSeedWrongWordError)
-          : intl.formatMessage(messages.confirmSeedEnterAllWordsError)
-      );
+      if (selectedSeedWordsCount(updatedSeedWords) === seedWords.length) {
+        setTopError(intl.formatMessage(messages.confirmSeedWrongWordError));
+        setError("");
+        if (pageBodyTopRef.current.scrollIntoView) {
+          pageBodyTopRef.current.scrollIntoView();
+        }
+      } else {
+        setError(intl.formatMessage(messages.confirmSeedEnterAllWordsError));
+        setTopError("");
+      }
     }
   };
 
@@ -78,7 +85,8 @@ const ConfirmSeed = ({
         setPassPhrase,
         posBtBarToBottom,
         error,
-        allWordsHaveBeenSelected
+        allWordsHaveBeenSelected,
+        topError
       }}
     />
   );

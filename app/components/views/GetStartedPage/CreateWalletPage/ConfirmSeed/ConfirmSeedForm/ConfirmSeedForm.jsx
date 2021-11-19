@@ -1,4 +1,4 @@
-import { classNames } from "pi-ui";
+import { classNames, Icon } from "pi-ui";
 import { CreatePassPhrase } from "shared";
 import { CreateWalletMsg, BackMsg } from "../../../messages";
 import { ButtonsBar, SeedError } from "../../helpers";
@@ -16,7 +16,8 @@ export const ConfirmSeedForm = ({
   setPassPhrase,
   posBtBarToBottom,
   error,
-  allWordsHaveBeenSelected
+  allWordsHaveBeenSelected,
+  topError
 }) => (
   <div
     className={classNames(
@@ -33,6 +34,17 @@ export const ConfirmSeedForm = ({
         Please, confirm your seed by selecting the correct word in each row."
       />
     </div>
+    {topError && (
+      <SeedError className={styles.topError}>
+        <Icon
+          type="alert"
+          backgroundColor="#ed6d47"
+          iconColor="#feb8a5"
+          size="lg"
+        />
+        {topError}
+      </SeedError>
+    )}
     <div>
       {seedWords.map(({ word, wordsToShow, selected }, index) => (
         <SeedWordRow
@@ -75,7 +87,8 @@ ConfirmSeedForm.propTypes = {
   setPassPhrase: PropTypes.func.isRequired,
   posBtBarToBottom: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  allWordsHaveBeenSelected: PropTypes.bool.isRequired
+  allWordsHaveBeenSelected: PropTypes.bool.isRequired,
+  topError: PropTypes.string
 };
 
 export default ConfirmSeedForm;

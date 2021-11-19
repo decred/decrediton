@@ -3,7 +3,7 @@ import styles from "./PageBody.module.css";
 import { usePageBody } from "./hooks";
 
 const PageBody = ({ className, getStarted, children, isTestNet, ...props }) => {
-  const { pageBodyScrollHandler } = usePageBody();
+  const { pageBodyScrollHandler, pageBodyTopRef } = usePageBody();
   return (
     <div
       {...props}
@@ -14,6 +14,7 @@ const PageBody = ({ className, getStarted, children, isTestNet, ...props }) => {
         isTestNet && styles.testnetBody,
         className
       )}>
+      <div ref={pageBodyTopRef} className={styles.pageBodyTop} />
       {children}
     </div>
   );

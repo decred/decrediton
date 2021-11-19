@@ -84,6 +84,16 @@
   color: var(--main-dark-blue);
 }
 
+.topError {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.topError svg {
+  margin-right: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     margin-left: 0;

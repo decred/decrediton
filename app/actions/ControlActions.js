@@ -1447,3 +1447,7 @@ export const listenForConfirmationDialogRequests = () => (dispatch) => {
 export const SET_PAGEBODY_SCROLLHANDLER = "SET_PAGEBODY_SCROLLHANDLER";
 export const setPageBodyScrollHandler = (scrollHandler) => (dispatch) =>
   dispatch({ scrollHandler, type: SET_PAGEBODY_SCROLLHANDLER });
+
+export const SET_PAGEBODY_TOP_REF = "SET_PAGEBODY_TOP_REF";
+export const setPageBodyRef = (ref) => (dispatch) =>
+  dispatch({ ref, type: SET_PAGEBODY_TOP_REF });
