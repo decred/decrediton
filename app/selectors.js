@@ -1903,6 +1903,9 @@ export const initDexAttempt = bool(get(["dex", "initAttempt"]));
 export const checkInitDexAttempt = bool(get(["dex", "dexCheckInitAttempt"]));
 export const registerDexAttempt = bool(get(["dex", "registerAttempt"]));
 export const createWalletDexAttempt = bool(get(["dex", "createWalletAttempt"]));
+export const btcCreateWalletDexAttempt = bool(
+  get(["dex", "btcCreateWalletAttempt"])
+);
 export const loginDexAttempt = bool(get(["dex", "loginAttempt"]));
 export const dexUser = get(["dex", "user"]);
 

@@ -48,7 +48,10 @@ import {
   CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
   NEW_BTC_CONFIG_ATTEMPT,
   NEW_BTC_CONFIG_SUCCESS,
-  NEW_BTC_CONFIG_FAILED
+  NEW_BTC_CONFIG_FAILED,
+  BTC_CREATEWALLET_FAILED,
+  BTC_CREATEWALLET_ATTEMPT,
+  BTC_CREATEWALLET_SUCCESS
 } from "../actions/DexActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -154,6 +157,25 @@ export default function ln(state = {}, action) {
         ...state,
         createWalletAttempt: false,
         createWalletError: null
+      };
+
+    case BTC_CREATEWALLET_ATTEMPT:
+      return {
+        ...state,
+        btcCreateWalletAttempt: true,
+        btcCreateWalletError: null
+      };
+    case BTC_CREATEWALLET_FAILED:
+      return {
+        ...state,
+        btcCreateWalletAttempt: false,
+        btcCreateWalletError: action.error
+      };
+    case BTC_CREATEWALLET_SUCCESS:
+      return {
+        ...state,
+        btcCreateWalletAttempt: false,
+        btcCreateWalletError: null
       };
     case DEX_USER_ATTEMPT:
       return {

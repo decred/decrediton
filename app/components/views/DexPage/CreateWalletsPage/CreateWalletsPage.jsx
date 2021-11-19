@@ -13,6 +13,7 @@ const CreateWalletsPage = () => {
     onCreateWalletDex,
     createWalletDexAttempt,
     onBTCCreateWalletDex,
+    btcCreateWalletDexAttempt,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
     dexAccount,
@@ -83,7 +84,7 @@ const CreateWalletsPage = () => {
                 />
               }
               modalTitle={<T id="dex.createBTCWallet" m="Connect BTC Wallet" />}
-              loading={createWalletDexAttempt}
+              loading={btcCreateWalletDexAttempt}
               onSubmit={onBTCCreateWallet}
               buttonLabel={
                 <T

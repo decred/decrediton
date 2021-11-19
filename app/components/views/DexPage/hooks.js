@@ -28,6 +28,7 @@ export const useDex = () => {
   const initDexAttempt = useSelector(sel.initDexAttempt);
   const registerDexAttempt = useSelector(sel.registerDexAttempt);
   const createWalletDexAttempt = useSelector(sel.createWalletDexAttempt);
+  const btcCreateWalletDexAttempt = useSelector(sel.btcCreateWalletDexAttempt);
   const loginDexAttempt = useSelector(sel.loginDexAttempt);
   const loggedIn = useSelector(sel.loggedInDex);
   const dexAddr = useSelector(sel.dexAddr);
@@ -182,7 +183,6 @@ export const useDex = () => {
     dexAccount,
     alreadyPaid
   ]);
-
   return {
     dexEnabled,
     dexActive,
@@ -195,6 +195,8 @@ export const useDex = () => {
     registerDexAttempt,
     onCreateWalletDex,
     createWalletDexAttempt,
+    onBTCCreateWalletDex,
+    btcCreateWalletDexAttempt,
     onLoginDex,
     loginDexAttempt,
     loggedIn,
@@ -210,7 +212,6 @@ export const useDex = () => {
     onPreregister,
     user,
     onLaunchDexWindow,
-    onBTCCreateWalletDex,
     onCreateDexAccount,
     onSelectDexAccount,
     dexAccount,
