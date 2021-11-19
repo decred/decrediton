@@ -119,7 +119,7 @@ export const usePreCreateWallet = ({
     // creatingWallet state.
     onSendContinue();
     if (isTrezor) {
-      walletSelected.watchingOnly = true;
+      walletSelected.isWatchingOnly = true;
       return trezorGetWalletCreationMasterPubKey().then((walletMasterPubKey) =>
         onCreateWallet(walletSelected).then(() =>
           onShowCreateWallet({
