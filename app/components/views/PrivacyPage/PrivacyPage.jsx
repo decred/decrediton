@@ -1,9 +1,9 @@
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import SecurityTab from "./SecurityPage/SecurityPage";
-import PrivacyTab from "./Privacy/Privacy";
+import SecurityTab from "./SecurityTab";
+import PrivacyTab from "./PrivacyTab";
 import { usePrivacyPage } from "./hooks";
-import style from "./Privacy/Privacy.module.css";
+import styles from "./PrivacyPage.module.css";
 import { SECURITY_ICON } from "constants";
 
 export const PrivacyTabHeader = () => {
@@ -18,10 +18,10 @@ export const PrivacyTabHeader = () => {
         }
         values={{
           unmixedAccount: (
-            <span className={style.highlighted}>{changeAccountName}</span>
+            <span className={styles.highlighted}>{changeAccountName}</span>
           ),
           mixedAccount: (
-            <span className={style.highlighted}>{mixedAccountName}</span>
+            <span className={styles.highlighted}>{mixedAccountName}</span>
           )
         }}
       />

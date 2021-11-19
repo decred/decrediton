@@ -801,7 +801,7 @@ export const getAcctSpendableBalance = (acctId) => async (
     acctId,
     0
   );
-  return acct.spendable;
+  return acct?.spendable;
 };
 
 export const MIXERACCOUNTS_SPENDABLE_BALANCE =
