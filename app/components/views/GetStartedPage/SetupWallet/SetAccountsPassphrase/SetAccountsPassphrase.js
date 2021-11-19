@@ -2,14 +2,16 @@ import { Subtitle } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton } from "buttons";
 import styles from "./SettingAccountsPassphrase.module.css";
+import { useDaemonStartup } from "hooks";
 
 const SetAccountsPassphrase = ({
   onSubmitAccountsPassphrase,
   title,
   description,
-  error,
-  isProcessingManaged
+  error
 }) => {
+  const { isSettingAccountsPassphrase } = useDaemonStartup();
+
   return (
     <div className={styles.content}>
       <Subtitle className={styles.subtitle} title={title} />
@@ -22,8 +24,8 @@ const SetAccountsPassphrase = ({
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitAccountsPassphrase}
           buttonLabel={<T id="process.settingPassAccts.button" m="Continue" />}
-          disabled={isProcessingManaged}
-          loading={isProcessingManaged}
+          disabled={isSettingAccountsPassphrase}
+          loading={isSettingAccountsPassphrase}
         />
       </div>
     </div>

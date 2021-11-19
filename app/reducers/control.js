@@ -89,7 +89,10 @@ import {
   CONFIRMATIONDIALOG_HIDDEN,
   DISCOVERUSAGE_SUCCESS,
   DISCOVERUSAGE_ATTEMPT,
-  DISCOVERUSAGE_FAILED
+  DISCOVERUSAGE_FAILED,
+  SETACCOUNTSPASSPHRASE_ATTEMPT,
+  SETACCOUNTSPASSPHRASE_SUCCESS,
+  SETACCOUNTSPASSPHRASE_FAILED
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -654,6 +657,21 @@ export default function control(state = {}, action) {
       return {
         ...state,
         discoverUsageAttempt: false
+      };
+    case SETACCOUNTSPASSPHRASE_ATTEMPT:
+      return {
+        ...state,
+        settingAccountsPassphrase: true
+      };
+    case SETACCOUNTSPASSPHRASE_SUCCESS:
+      return {
+        ...state,
+        settingAccountsPassphrase: false
+      };
+    case SETACCOUNTSPASSPHRASE_FAILED:
+      return {
+        ...state,
+        settingAccountsPassphrase: false
       };
     default:
       return state;

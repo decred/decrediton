@@ -41,6 +41,9 @@ const useDaemonStartup = () => {
   const isTrezor = useSelector(sel.isTrezor);
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
   const daemonWarning = useSelector(sel.daemonWarning);
+  const isSettingAccountsPassphrase = useSelector(
+    sel.isSettingAccountsPassphrase
+  );
   // end of daemon selectors
 
   // vsp selectors
@@ -313,7 +316,8 @@ const useDaemonStartup = () => {
     isProcessingManaged,
     isProcessingUnmanaged,
     needsProcessManagedTickets,
-    stopUnfinishedWallet
+    stopUnfinishedWallet,
+    isSettingAccountsPassphrase
   };
 };
 
