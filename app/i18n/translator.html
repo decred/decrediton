@@ -202,6 +202,9 @@
             if (newValue !== "" && el) {
               el.remove();
             } else if (newValue === "" && !el) {
+              // The user cleared a previously translated translation.
+              // We clear the untranslated list DOM and rerender
+              // it in the next refreshGUI.
               const stringList = elID("string_list_untranslated");
               stringList.innerHTML = "";
             }
@@ -379,7 +382,7 @@
         elID("toggle_diff_bt").disabled = isDeleted || state.selectedKey === "";
       }
 
-      function jumpBackToSelectedList() {
+      function jumpToSelectedList() {
         let filterVal = getFilterVal();
         if (
           state.selectedFilterVal !== undefined &&
@@ -400,7 +403,7 @@
       }
 
       function previousKey() {
-        jumpBackToSelectedList();
+        jumpToSelectedList();
 
         const previousEl = getPreviousEl();
 
@@ -410,7 +413,7 @@
       }
 
       function nextKey() {
-        jumpBackToSelectedList();
+        jumpToSelectedList();
 
         const selectedEl = getSelectedEl();
         if (!selectedEl) {
