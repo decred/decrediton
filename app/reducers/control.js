@@ -92,7 +92,9 @@ import {
   DISCOVERUSAGE_FAILED,
   SETACCOUNTSPASSPHRASE_ATTEMPT,
   SETACCOUNTSPASSPHRASE_SUCCESS,
-  SETACCOUNTSPASSPHRASE_FAILED
+  SETACCOUNTSPASSPHRASE_FAILED,
+  SET_PAGEBODY_SCROLLHANDLER,
+  SET_PAGEBODY_TOP_REF
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -672,6 +674,16 @@ export default function control(state = {}, action) {
       return {
         ...state,
         settingAccountsPassphrase: false
+      };
+    case SET_PAGEBODY_SCROLLHANDLER:
+      return {
+        ...state,
+        pageBodyScrollHandler: action.scrollHandler
+      };
+    case SET_PAGEBODY_TOP_REF:
+      return {
+        ...state,
+        pageBodyTopRef: action.ref
       };
     default:
       return state;

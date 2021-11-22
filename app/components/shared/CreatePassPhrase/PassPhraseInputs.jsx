@@ -1,17 +1,14 @@
-import { injectIntl, defineMessages } from "react-intl";
+import { defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import { InfoDocFieldModalButton } from "buttons";
-import { classNames } from "pi-ui";
-import styles from "./CreatePassPhrase.module.css";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
     id: "createWallet.passphrasePlaceholder",
-    defaultMessage: "Private Passphrase"
+    defaultMessage: "Write your Private Passphrase"
   },
   verifyPassphrasePlaceholder: {
     id: "createWallet.verifyPassphrasePlaceholder",
-    defaultMessage: "Confirm Private Passphrase"
+    defaultMessage: "Confirm your Private Passphrase"
   },
   passPhraseLabel: {
     id: "createWallet.passhraseInput.label",
@@ -28,10 +25,15 @@ const messages = defineMessages({
   passPhraseVerificationError: {
     id: "createWallet.passphraseInput.errors.noMatch",
     defaultMessage: "*Passphrases do not match"
+  },
+  passPhraseVerificationSuccess: {
+    id: "createWallet.passphraseInput.match",
+    defaultMessage: "Repeated correctly"
   }
 });
 
 const PassPhraseInputs = ({
+  intl,
   passPhraseLabel,
   passPhraseVerificationLabel,
   blankPassPhraseError,
@@ -40,65 +42,57 @@ const PassPhraseInputs = ({
   passPhraseVerification,
   setPassPhrase,
   setPassPhraseVerification,
-  intl,
   onKeyDown,
   hasFailedAttempt,
   isValid
 }) => (
   <>
-    <div className={classNames("flex-row", styles.passphraseRow)}>
-      <div
-        className={classNames(
-          "flex-row",
-          styles.confirmSeedLabel,
-          styles.passphraseRow
-        )}>
-        <InfoDocFieldModalButton document="PassphraseInfo" />
-        <div>
-          {passPhraseLabel ?? intl.formatMessage(messages.passPhraseLabel)}
-        </div>
-      </div>
-      <form>
-        <PasswordInput
-          required
-          id="passPhrase"
-          className={styles.inputPrivatePassword}
-          placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
-          value={passPhrase}
-          onKeyDown={onKeyDown}
-          onChange={(e) => setPassPhrase(e.target.value)}
-          showErrors={hasFailedAttempt}
-          requiredMessage={
-            blankPassPhraseError ??
-            intl.formatMessage(messages.blankPassPhraseError)
-          }
-        />
-      </form>
-    </div>
-    <div className={classNames("flex-row", styles.passphraseRow)}>
-      <div
-        className={classNames(styles.confirmSeedLabel, styles.passphraseRow)}>
-        {passPhraseVerificationLabel ??
-          intl.formatMessage(messages.passPhraseVerificationLabel)}
-      </div>
-      <form>
-        <PasswordInput
-          id="passPhraseVerification"
-          className={styles.inputPrivatePassword}
-          invalid={!isValid}
-          invalidMessage={
-            passPhraseVerificationError ??
-            intl.formatMessage(messages.passPhraseVerificationError)
-          }
-          placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
-          value={passPhraseVerification}
-          onKeyDown={onKeyDown}
-          onChange={(e) => setPassPhraseVerification(e.target.value)}
-          showErrors={true}
-        />
-      </form>
-    </div>
+    <form>
+      <PasswordInput
+        newBiggerFontStyle
+        required
+        hideIcons
+        id="passPhrase"
+        label={passPhraseLabel ?? intl.formatMessage(messages.passPhraseLabel)}
+        placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
+        value={passPhrase}
+        onKeyDown={onKeyDown}
+        onChange={(e) => setPassPhrase(e.target.value)}
+        showErrors={hasFailedAttempt}
+        showSuccess={isValid}
+        successMessage=" "
+        requiredMessage={
+          blankPassPhraseError ??
+          intl.formatMessage(messages.blankPassPhraseError)
+        }
+      />
+    </form>
+    <form>
+      <PasswordInput
+        newBiggerFontStyle
+        hideIcons
+        id="passPhraseVerification"
+        invalid={!isValid}
+        invalidMessage={
+          passPhraseVerificationError ??
+          intl.formatMessage(messages.passPhraseVerificationError)
+        }
+        label={
+          passPhraseVerificationLabel ??
+          intl.formatMessage(messages.passPhraseVerificationLabel)
+        }
+        placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
+        value={passPhraseVerification}
+        onKeyDown={onKeyDown}
+        onChange={(e) => setPassPhraseVerification(e.target.value)}
+        successMessage={intl.formatMessage(
+          messages.passPhraseVerificationSuccess
+        )}
+        showSuccess={isValid}
+        showErrors={!isValid}
+      />
+    </form>
   </>
 );
 
-export default injectIntl(PassPhraseInputs);
+export default PassPhraseInputs;

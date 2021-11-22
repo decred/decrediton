@@ -20,10 +20,10 @@ test("test CreatePassPhrase component", () => {
   );
 
   const privatePassphraseInput = screen.getByPlaceholderText(
-    "Private Passphrase"
+    "Write your Private Passphrase"
   );
   const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
-    "Confirm Private Passphrase"
+    "Confirm your Private Passphrase"
   );
 
   expect(screen.queryByText(pleaseEnterErrorMsg)).not.toBeInTheDocument();

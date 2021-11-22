@@ -17,13 +17,13 @@ import {
 } from "../../helpers";
 import { BackButton } from "../../../helpers";
 import styles from "./Form.module.css";
+import { Documentation } from "shared";
 
 const ExistingSeedForm = ({
   onChangeSeedWord,
   seedWords,
   handleOnPaste,
   hexSeed,
-  isCreatingWallet,
   seedType,
   pasteFromClipboard,
   handleToggle,
@@ -105,11 +105,13 @@ const ExistingSeedForm = ({
       </SeedError>
     )}
     {error && <SeedError>{error}</SeedError>}
-    <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
+    <div className={styles.passphraseContainer}>
+      <Documentation name="PassphraseInfo" className={styles.passphraseInfo} />
+      <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
+    </div>
     <ButtonsBar
       disabled={!isValid}
       message={<CreateWalletMsg />}
-      loading={isCreatingWallet}
       onClick={onCreateWallet}
       onBackClick={sendBack}
     />

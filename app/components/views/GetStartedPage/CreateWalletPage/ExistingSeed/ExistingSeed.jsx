@@ -54,7 +54,7 @@ const ExistingSeed = ({
 
   const onError = useCallback(
     (seedError) => {
-      const seedErrorStr = seedError.details || "";
+      const seedErrorStr = seedError.toString() || "";
 
       const populatedSeedWords = seedWords.filter(
         (seedWord) => seedWord.word && seedWord.word.length > 0
