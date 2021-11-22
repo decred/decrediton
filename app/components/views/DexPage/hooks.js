@@ -28,6 +28,7 @@ export const useDex = () => {
   const initDexAttempt = useSelector(sel.initDexAttempt);
   const registerDexAttempt = useSelector(sel.registerDexAttempt);
   const createWalletDexAttempt = useSelector(sel.createWalletDexAttempt);
+  const btcCreateWalletDexAttempt = useSelector(sel.btcCreateWalletDexAttempt);
   const loginDexAttempt = useSelector(sel.loginDexAttempt);
   const loggedIn = useSelector(sel.loggedInDex);
   const dexAddr = useSelector(sel.dexAddr);
@@ -118,13 +119,15 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onCheckBTCConfig = useCallback(() => dispatch(da.checkBTCConfig()), [
-    dispatch
-  ]);
+  const onCheckBTCConfig = useCallback(
+    (bitcoinDirectory) => dispatch(da.checkBTCConfig(bitcoinDirectory)),
+    [dispatch]
+  );
 
-  const onUpdateBTCConfig = useCallback(() => dispatch(da.updateBTCConfig()), [
-    dispatch
-  ]);
+  const onNewBTCConfig = useCallback(
+    (bitcoinDirectory) => dispatch(da.newBTCConfig(bitcoinDirectory)),
+    [dispatch]
+  );
 
   const { Page, Header } = useMemo(() => {
     let page, header;
@@ -180,7 +183,6 @@ export const useDex = () => {
     dexAccount,
     alreadyPaid
   ]);
-
   return {
     dexEnabled,
     dexActive,
@@ -193,6 +195,8 @@ export const useDex = () => {
     registerDexAttempt,
     onCreateWalletDex,
     createWalletDexAttempt,
+    onBTCCreateWalletDex,
+    btcCreateWalletDexAttempt,
     onLoginDex,
     loginDexAttempt,
     loggedIn,
@@ -208,7 +212,6 @@ export const useDex = () => {
     onPreregister,
     user,
     onLaunchDexWindow,
-    onBTCCreateWalletDex,
     onCreateDexAccount,
     onSelectDexAccount,
     dexAccount,
@@ -226,9 +229,9 @@ export const useDex = () => {
     dexEnableError,
     btcConfig,
     onCheckBTCConfig,
+    onNewBTCConfig,
     btcInstallNeeded,
     btcConfigUpdateNeeded,
-    onUpdateBTCConfig,
     btcWalletName,
     Page,
     Header,

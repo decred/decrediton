@@ -1,6 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
-import { classNames } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
 import { useDex } from "../hooks";
+import { PathBrowseInput } from "inputs";
+import { Input } from "../../GetStartedPage/helpers";
 import { useDexCreateWallets } from "./hooks";
 import { AppPassAndPassphraseModalButton, KeyBlueButton } from "buttons";
 import { TextInput } from "inputs";
@@ -11,12 +13,13 @@ const CreateWalletsPage = () => {
     onCreateWalletDex,
     createWalletDexAttempt,
     onBTCCreateWalletDex,
+    btcCreateWalletDexAttempt,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
     dexAccount,
     btcConfig,
+    onNewBTCConfig,
     onCheckBTCConfig,
-    onUpdateBTCConfig,
     btcConfigUpdateNeeded,
     btcInstallNeeded,
     btcWalletName
@@ -26,15 +29,21 @@ const CreateWalletsPage = () => {
     walletName,
     setWalletName,
     onCreateWallet,
-    onBTCCreateWallet
+    onBTCCreateWallet,
+    onCheckBTCConfigDex,
+    onNewBTCConfigDex,
+    bitcoinDirectory,
+    setBitcoinDirectory,
+    hasNonDefault,
+    toggleHasNonDefault
   } = useDexCreateWallets({
     btcWalletName,
     dexAccount,
     onBTCCreateWalletDex,
     onCreateWalletDex,
-    onCheckBTCConfig
+    onCheckBTCConfig,
+    onNewBTCConfig
   });
-
   return (
     <div className="flex-column align-start">
       {!dexBTCWalletRunning ? (
@@ -75,7 +84,7 @@ const CreateWalletsPage = () => {
                 />
               }
               modalTitle={<T id="dex.createBTCWallet" m="Connect BTC Wallet" />}
-              loading={createWalletDexAttempt}
+              loading={btcCreateWalletDexAttempt}
               onSubmit={onBTCCreateWallet}
               buttonLabel={
                 <T
@@ -86,35 +95,88 @@ const CreateWalletsPage = () => {
               passphraseNotRequired
             />
           </>
-        ) : btcConfigUpdateNeeded ? (
-          <div>
-            <T
-              id="dex.updateBTCConfig"
-              m="You must update your bitcoin.conf to properly communicate with the DEX."
-            />
-            <KeyBlueButton onClick={onUpdateBTCConfig}>
-              <T id="dex.updateBTCConfigButton" m="Update BTC Config" />
-            </KeyBlueButton>
-          </div>
-        ) : btcInstallNeeded ? (
-          <div>
-            <T
-              id="dex.checkBTCConfig"
-              m="You must confirm your Bitcoin.conf is properly set up for connecting to DEX. If you have not yet installed a bitcoin wallet, please go to bitcoin.org for further instructions."
-            />
-            <KeyBlueButton onClick={onCheckBTCConfig}>
-              <T id="dex.checkBTCConfigButton" m="Check BTC Config" />
-            </KeyBlueButton>
-          </div>
         ) : (
           <div>
-            <T
-              id="dex.btcConfigError"
-              m="Something has gone wrong and we are unable to obtain your bitcoin.conf, please try again."
-            />
-            <KeyBlueButton onClick={onCheckBTCConfig}>
-              <T id="dex.checkBTCConfigButton" m="Check BTC Config" />
-            </KeyBlueButton>
+            {!btcConfigUpdateNeeded && !btcInstallNeeded && (
+              <div
+                className={classNames(
+                  "margin-top-s",
+                  styles.btcConfigNeededArea
+                )}>
+                <Checkbox
+                  label={
+                    <T
+                      id="dex.btcWalletLocation.label"
+                      m="You have a non-default bitcoin directory"
+                    />
+                  }
+                  id="hasDexSeed"
+                  description={
+                    <T
+                      id="dex.btcWalletLocation.description"
+                      m="If you have a non-default bitcoin location, please check the box and indentify the location."
+                    />
+                  }
+                  checked={hasNonDefault}
+                  onChange={toggleHasNonDefault}
+                />
+                {hasNonDefault && (
+                  <Input className="margin-top-m">
+                    <PathBrowseInput
+                      id="btcDirectory"
+                      required
+                      type="directory"
+                      value={bitcoinDirectory}
+                      onChange={(value) => setBitcoinDirectory(value)}
+                      placeholder="Bitcoin Directory"
+                    />
+                  </Input>
+                )}
+                <KeyBlueButton
+                  className="margin-top-m"
+                  onClick={onCheckBTCConfigDex}>
+                  <T id="dex.findBTCConfigButton" m="Find bitcoin conf" />
+                </KeyBlueButton>
+              </div>
+            )}
+            {btcConfigUpdateNeeded && (
+              <div className="margin-top-m">
+                <T
+                  id="dex.updateBTCConfig"
+                  m="You must update your bitcoin.conf to properly communicate with the DEX."
+                />
+                <T
+                  id="dex.neededFieldsInConfig"
+                  m="The following fields are required in the bitcoin.conf rpcuser, rpcpassword, rpcbind, rpcport. You must also set 'server=1' to start the wallet listening for connections.  If you have any trouble with these instructions, please go to the support channel on chat.decred.org for further assistance."
+                />
+                <KeyBlueButton
+                  className="margin-top-m"
+                  onClick={onCheckBTCConfigDex}>
+                  <T id="dex.checkBTCConfigButtonTryAgain" m="Try again" />
+                </KeyBlueButton>
+              </div>
+            )}
+            {btcInstallNeeded && (
+              <div>
+                <div className="margin-top-s">
+                  <T
+                    id="dex.checkBTCConfig"
+                    m="You must confirm your bitcoin.conf is properly set up for connecting to DEX. If you have not yet installed a bitcoin wallet, please go to bitcoin.org for further instructions."
+                  />
+                </div>
+                <div className="margin-top-s">
+                  <T
+                    id="dex.checkBTCConfigInstalled"
+                    m="If you have already installed bitcoin.conf, but have not created a bitcoin.conf file, we can create one for you with the button below."
+                  />
+                </div>
+                <KeyBlueButton
+                  className="margin-top-m"
+                  onClick={onNewBTCConfigDex}>
+                  <T id="dex.updateBTCConfigButton" m="Create BTC Config" />
+                </KeyBlueButton>
+              </div>
+            )}
           </div>
         )
       ) : (
