@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
+import { Tooltip, Paginator } from "pi-ui";
 import InfiniteScroll from "react-infinite-scroller";
 import {
   LoadingMoreTicketsIndicator,
@@ -9,7 +9,6 @@ import {
 import { TxHistory, Subtitle } from "shared";
 import { EyeFilterMenu, QRModalButton } from "buttons";
 import styles from "./MyTicketsTab.module.css";
-import ReactPaginate from "react-paginate";
 
 const subtitleMenu = ({
   sortTypes,
@@ -71,16 +70,9 @@ const subtitleMenu = ({
           onClick={prepareQRs}
           pages={
             QRs.length > 1 && (
-              <ReactPaginate
-                containerClassName={styles.qrsPaginator}
-                pageClassName={styles.qrPage}
-                activeClassName={styles.qrPageActive}
-                previousLabel={"<"}
-                nextLabel={">"}
-                breakLabel={"..."}
+              <Paginator
+                className={styles.qrsPaginator}
                 pageCount={QRs.length}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
                 onPageChange={onQRPageClick}
               />
             )
