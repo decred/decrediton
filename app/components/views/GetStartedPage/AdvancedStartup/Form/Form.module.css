@@ -10,14 +10,11 @@
 .toggleWrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 240px;
   clear: left;
 }
 
 .toggleLabel {
-  margin-left: 0.1rem;
-  margin-top: 0.1rem;
+  margin-left: 1rem;
 }
 
 .togglable {

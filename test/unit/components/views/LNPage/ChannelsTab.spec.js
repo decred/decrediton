@@ -164,7 +164,7 @@ const getSearchInput = () =>
 const getSearchPasteBt = () => screen.getByText("Paste NodePubKey@ip:port");
 const getSearchClearBt = () =>
   screen.getByRole("button", { name: "Clear NodePubKey" });
-const getAuotPilotToggleSwitch = () => screen.getByTestId("toggleSwitch");
+const getAuotPilotToggleSwitch = () => screen.getByTestId("switch");
 
 test("test create form and receintly created modal", async () => {
   render(<ChannelsTab />);

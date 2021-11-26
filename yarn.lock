@@ -9904,7 +9904,7 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"pi-ui@https://github.com/decred/pi-ui":
+"pi-ui@https://github.com/bgptr/pi-ui#toggle":
   version "1.0.0"
   resolved "https://github.com/decred/pi-ui#d531580971d6001db317cfd4ab6150dd009dfb64"
   dependencies:

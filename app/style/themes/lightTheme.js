@@ -104,8 +104,6 @@ const lightTheme = {
   "display-wallet-bg":
     "linear-gradient(225deg, var(--white-border), var(--display-wallet-gradient-right))",
   "select-border": "#e7eaed",
-  "toggle-switch-bg": "#d1d5db",
-  "toggle-switch-knob-bg": "#8997a5",
   "transaction-account-name-bg": "#E9F8FE",
   "account-row-hover": "#f0f4f4",
   "chart-cursor-color": "#e9f8fe",

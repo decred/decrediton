@@ -252,7 +252,7 @@ const getSettingsButton = () =>
     name: "Ticket Autobuyer Settings"
   });
 const getSaveButton = () => screen.getByRole("button", { name: "Save" });
-const getToggleSwitch = () => screen.getByTestId("toggleSwitch");
+const getToggleSwitch = () => screen.getByTestId("switch");
 const getMaxFeeInput = () => screen.getByLabelText("Maximum Fee");
 const getSettingsModalTitle = () =>
   screen.getByText("Automatic ticket purchases");
@@ -314,7 +314,7 @@ test("test autobuyer", async () => {
   expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument(); // cancel first
   user.click(screen.getByText("Cancel"));
   // try again
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(getToggleSwitch());
   await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
@@ -337,7 +337,7 @@ test("test autobuyer (autobuyer is runnning)", () => {
   render(<TicketAutoBuyer />, initialState);
   expect(mockGetTicketAutoBuyerRunning).toHaveBeenCalled();
   expect(screen.getByText(/turn off auto buyer/i)).toBeInTheDocument();
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(getToggleSwitch());
   expect(mockTicketBuyerCancel).toHaveBeenCalled();
 });
 
@@ -347,7 +347,7 @@ test("test legacy autobuyer (a process is runnning)", () => {
   expect(
     screen.getByText(/privacy mixer or purchase ticket attempt running/i)
   ).toBeInTheDocument();
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(getToggleSwitch());
 
   expect(
     screen.queryByText(/start ticket buyer confirmation/i)

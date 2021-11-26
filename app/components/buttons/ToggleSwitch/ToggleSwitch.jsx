@@ -1,5 +1,5 @@
 import styles from "./ToggleSwitch.module.css";
-import { Spinner, Tooltip, classNames } from "pi-ui";
+import { Spinner, Tooltip, Toggle, classNames } from "pi-ui";
 
 // enabled shows the switch as on or off.
 // disabled unable to trigger the onClick method.
@@ -26,17 +26,14 @@ const ToggleSwitch = ({
         content={
           disabled ? disabledText : enabled ? enabledText : notEnabledText
         }>
-        <div className={classNames(styles.toggleSwitch, className)}>
-          <div
-            data-testid="toggleSwitch"
-            className={enabled ? styles.enabled : styles.disabled}
-            onClick={!disabled ? onClick : undefined}>
-            <div
-              className={
-                enabled ? styles.knobEnabled : styles.knobDisabled
-              }></div>
-          </div>
-        </div>
+        <Toggle
+          {...{
+            onToggle: onClick,
+            toggled: enabled,
+            disabled,
+            className
+          }}
+        />
       </Tooltip>
     )}
   </>
