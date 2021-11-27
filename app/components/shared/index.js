@@ -33,3 +33,4 @@ export { default as LNChannelStatus } from "./LNChannelStatus";
 export { default as DetailsTable } from "./DetailsTable";
 export { default as TruncatedText } from "./TruncatedText";
 export { default as CopyableText } from "./CopyableText";
+export { default as BalanceDisplay } from "./BalanceDisplay";

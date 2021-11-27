@@ -5,7 +5,7 @@ import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
 import { KeyBlueButton, SmallButton } from "buttons";
 import QRCodeModal from "./QRCodeModal";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames, Tooltip, TextHighlighted } from "pi-ui";
 import style from "./ReceivePage.module.css";
 
 const messages = defineMessages({
@@ -91,11 +91,9 @@ const ReceivePage = ({
         </div>
 
         <div className={style.line}>
-          <div
-            className={classNames(
-              style.receiveContentNestQR,
-              tooltip && style.border
-            )}>
+          <TextHighlighted
+            truncate={false}
+            className={classNames(style.receiveContentNestQR)}>
             {nextAddress}
             <div
               className={classNames(
@@ -117,7 +115,7 @@ const ReceivePage = ({
                 )}
               </div>
             </div>
-          </div>
+          </TextHighlighted>
           <div>
             <Tooltip content={<T id="receiveTab.copy" m="Copy" />}>
               <SmallButton

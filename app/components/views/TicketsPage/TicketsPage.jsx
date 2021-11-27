@@ -1,11 +1,10 @@
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
+import { BalanceDisplay } from "shared";
 import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
 import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
-import styles from "./TicketsPage.module.css";
 import { TICKET_ICON } from "constants";
 import { useTicketsPage } from "./hooks";
 
@@ -25,13 +24,7 @@ const TabHeader = () => {
           id="tickets.description"
           m="Current Price: {ticketPrice}"
           values={{
-            ticketPrice: (
-              <Balance
-                flat
-                amount={ticketPrice}
-                classNameWrapper={styles.smallBalance}
-              />
-            )
+            ticketPrice: <BalanceDisplay amount={ticketPrice} />
           }}
         />
       }

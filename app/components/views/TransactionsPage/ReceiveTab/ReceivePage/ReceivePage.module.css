@@ -46,27 +46,11 @@
 }
 .receiveContentNestQR {
   margin-right: 10px;
-  background-color: var(--background-address-copy-color);
-  border-radius: 5px;
-  vertical-align: middle;
-  height: 40px;
-  width: 616px;
+  width: 100%;
   color: var(--main-dark-blue);
-  font-size: 16px;
-  font-weight: 400;
-  text-align: center;
-  line-height: 40px;
+  text-align: center !important;
   position: relative;
-  border: 1px transparent solid;
-  transition: border-color 1s;
-}
-
-.receiveContentNestQR:hover {
-  border-color: var(--input-copy-hover-color);
-}
-
-.border {
-  border-color: var(--input-copy-hover-color);
+  padding: 1rem !important;
 }
 
 .receiveContentNestCopyQR {
