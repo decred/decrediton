@@ -44,11 +44,11 @@
   margin: 15px 23px 30px;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .daemonLongInput {
-  padding-left: 20px;
+  padding-left: 10px;
   width: 350px;
 }
 
