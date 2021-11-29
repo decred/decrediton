@@ -43,7 +43,7 @@ const CreateDefaultAccounts = ({
             isValid
           }}
           loading={createMixerAccountAttempt}
-          disabled={isCreateAccountDisabled || createMixerAccountAttempt}
+          isDisabled={isCreateAccountDisabled || createMixerAccountAttempt}
           modalTitle={
             <T
               id="accounts.defaultAccountConfirmations"
