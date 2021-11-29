@@ -234,6 +234,7 @@ func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		AssetID uint32            `json:"assetID"`
 		Config  map[string]string `json:"config"`
+		Type    string            `json:"type"`
 		Pass    string            `json:"pass"`
 		AppPW   string            `json:"appPass"`
 	})
@@ -242,8 +243,11 @@ func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
 	}
 	return "", c.core.ReconfigureWallet([]byte(form.AppPW),
 		[]byte(form.Pass),
-		form.AssetID,
-		form.Config,
+		&core.WalletForm{
+			AssetID: form.AssetID,
+			Config:  form.Config,
+			Type:    form.Type,
+		},
 	)
 }
 
@@ -251,6 +255,7 @@ func (c *CoreAdapter) createWallet(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		AssetID uint32            `json:"assetID"`
 		Config  map[string]string `json:"config"`
+		Type    string            `json:"type"`
 		Pass    string            `json:"pass"`
 		AppPW   string            `json:"appPass"`
 	})
@@ -260,6 +265,7 @@ func (c *CoreAdapter) createWallet(raw json.RawMessage) (string, error) {
 	return "", c.core.CreateWallet([]byte(form.AppPW), []byte(form.Pass), &core.WalletForm{
 		AssetID: form.AssetID,
 		Config:  form.Config,
+		Type:    form.Type,
 	})
 }
 

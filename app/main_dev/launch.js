@@ -948,6 +948,7 @@ export const logoutDexCall = () => (!dex ? null : callDEX("Logout", {}));
 
 export const createWalletDexCall = (
   assetID,
+  walletType,
   passphrase,
   appPassphrase,
   account,
@@ -990,7 +991,8 @@ export const createWalletDexCall = (
       pass: passphrase ? passphrase : null,
       appPass: appPassphrase,
       config,
-      assetID
+      assetID,
+      type: walletType
     });
   } catch (error) {
     if (String(error).indexOf("wallet already exists") > -1) {
@@ -998,7 +1000,8 @@ export const createWalletDexCall = (
         pass: pw,
         appPass: appPassphrase,
         config,
-        assetID
+        assetID,
+        type: walletType
       });
     }
     throw error;

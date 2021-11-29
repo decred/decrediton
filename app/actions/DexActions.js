@@ -167,8 +167,10 @@ export const createWalletDex = (
     const rpclisten = rpcCreds.rpcListen;
     const rpccert = rpcCreds.rpcCert;
     const assetID = 42;
+    const walletType = "dcrwalletRPC";
     await dex.createWallet(
       assetID,
+      walletType,
       passphrase,
       appPassphrase,
       account,
@@ -212,8 +214,10 @@ export const btcCreateWalletDex = (
       ? btcConfig.test.rpcbind + ":" + btcConfig.test.rpcport
       : btcConfig.rpcbind + ":" + btcConfig.rpcport;
     const assetID = 0;
+    const walletType = "bitcoindRPC"; // "SPV" for the native/built-in spv btcwallet
     await dex.createWallet(
       assetID,
+      walletType,
       passphrase,
       appPassphrase,
       account,
