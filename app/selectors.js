@@ -840,7 +840,8 @@ export const filteredRegularTxs = createSelector(
                 address.length > 1 &&
                 address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
                   -1
-            ) != undefined
+            ) != undefined ||
+            v.txHash.toLowerCase().includes(filter.search.toLowerCase())
           : true
       )
       .filter((v) =>

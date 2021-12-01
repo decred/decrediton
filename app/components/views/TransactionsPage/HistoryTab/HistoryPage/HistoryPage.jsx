@@ -12,9 +12,9 @@ import {
 import styles from "./HistoryPage.module.css";
 
 const messages = defineMessages({
-  filterByAddrPlaceholder: {
-    id: "txhistory.filterByAddrPlaceholder",
-    defaultMessage: "Filter by Address"
+  filterByAddrOrHashPlaceholder: {
+    id: "txhistory.filterByAddrOrHashPlaceholder",
+    defaultMessage: "Filter by Address or Hash"
   }
 });
 
@@ -36,9 +36,9 @@ const subtitleMenu = ({
   <div className={styles.historyContainer}>
     <div className={styles.historySearchTx}>
       <TextInput
-        id="filterByAddrInput"
+        id="filterByAddrOrHashInput"
         type="text"
-        placeholder={intl.formatMessage(messages.filterByAddrPlaceholder)}
+        placeholder={intl.formatMessage(messages.filterByAddrOrHashPlaceholder)}
         value={searchText}
         onChange={(e) => onChangeSearchText(e.target.value)}
       />
