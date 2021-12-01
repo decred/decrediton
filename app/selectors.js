@@ -865,6 +865,11 @@ export const filteredStakeTxs = createSelector(
   (transactions, filter) => {
     const filteredTxs = Object.keys(transactions)
       .map((hash) => transactions[hash])
+      .filter((v) =>
+        filter.search
+          ? v.txHash.toLowerCase().includes(filter.search.toLowerCase())
+          : true
+      )
       .filter((v) => (filter.status ? filter.status === v.status : true));
 
     return filteredTxs;

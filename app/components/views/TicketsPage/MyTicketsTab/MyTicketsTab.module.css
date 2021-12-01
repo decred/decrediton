@@ -10,11 +10,10 @@
 }
 
 .ticketsButtons {
-  text-align: right;
-  margin-right: 20px;
   margin-left: auto;
   display: flex;
-  align-items: center;
+  line-height: 1.2rem;
+  padding-top: 0.5rem;
 }
 
 .subtitle {

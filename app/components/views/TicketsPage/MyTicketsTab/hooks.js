@@ -6,8 +6,10 @@ import * as ta from "actions/TransactionActions";
 import { UNMINED, IMMATURE, LIVE } from "constants";
 import { isEqual } from "lodash";
 import QRCode from "qrcode";
+import { useIntl } from "react-intl";
 
 export const useTicketsList = () => {
+  const intl = useIntl();
   const dispatch = useDispatch();
 
   // selectors
@@ -76,6 +78,7 @@ export const useTicketsList = () => {
   }, [tickets, qrHashes]);
 
   return {
+    intl,
     tickets,
     tsDate,
     noMoreTickets,

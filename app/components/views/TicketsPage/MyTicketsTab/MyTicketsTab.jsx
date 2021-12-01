@@ -92,6 +92,7 @@ const selectTicketTypeFromFilter = (filter) => {
 
 const MyTickets = ({ toggleIsLegacy }) => {
   const {
+    intl,
     tickets,
     tsDate,
     noMoreTickets,
@@ -113,6 +114,7 @@ const MyTickets = ({ toggleIsLegacy }) => {
   const [selectedSortOrderKey, setSortOrderKey] = useState(
     ticketsFilter.listDirection
   );
+  const [searchText, setSearchText] = useState(ticketsFilter.search);
 
   const onChangeFilter = (filter) => {
     const newFilter = { ...ticketsFilter, ...filter };
@@ -129,11 +131,18 @@ const MyTickets = ({ toggleIsLegacy }) => {
     setSortOrderKey(type.value);
   };
 
+  const onChangeSearchText = (searchText) => {
+    onChangeFilter({ search: searchText });
+    setSearchText(searchText);
+  };
   const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
 
   return (
     <TicketListPage
       {...{
+        intl,
+        searchText,
+        onChangeSearchText,
         selectedTicketTypeKey,
         selectedSortOrderKey,
         loadMoreThreshold,
