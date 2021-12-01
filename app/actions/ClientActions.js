@@ -51,6 +51,10 @@ export const goToError = () => (dispatch) => {
   dispatch(pushHistory("/error"));
 };
 
+export const goToAccounts = () => (dispatch) => {
+  dispatch(pushHistory("/accounts"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";

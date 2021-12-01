@@ -3,20 +3,7 @@
   display: inline-block;
 }
 .icon {
-  display: inline-block;
-  width: 20px;
-  height: 18px;
-  background-image: var(--copy-to-clipboard-icon);
-  background-position: 0 0;
-  background-size: 20px auto;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  background-color: initial;
-  border: none;
-  outline: 0;
-}
-.icon:hover {
-  opacity: 0.8;
+  margin-left: 1rem;
 }
 .success {
   font-size: 12px;

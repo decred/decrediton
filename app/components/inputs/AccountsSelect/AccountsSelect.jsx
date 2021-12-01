@@ -1,8 +1,9 @@
 import Select from "react-select";
 import { useAccountsSelect } from "./hooks";
-import { Balance, LinkToAccounts } from "shared";
+import { Balance } from "shared";
 import styles from "./AccountsSelect.module.css";
 import { classNames } from "pi-ui";
+import LinkToAccounts from "./LinkToAccounts";
 
 const AccountsSelect = ({
   accountsType,

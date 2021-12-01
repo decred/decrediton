@@ -1,7 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import { PageBody } from "layout";
-import { CopyToClipboard, ExternalLink } from "shared";
+import { ExternalLink } from "shared";
+import { CopyToClipboardButton } from "buttons";
 import { DIFF_CONNECTION_ERROR } from "constants";
 import { wallet } from "wallet-preload-shim";
 import { useFatalErrorPage } from "./hooks";
@@ -112,7 +113,7 @@ function FatalErrorPage() {
                   <T id="fatal.daemon.title" m="Daemon Error" />
                 </div>
                 <textarea rows="10" value={daemonError} disabled />
-                <CopyToClipboard textToCopy={daemonError} />
+                <CopyToClipboardButton textToCopy={daemonError} />
               </>
             )}
             {walletError && (
@@ -120,7 +121,7 @@ function FatalErrorPage() {
                 <div className={styles.error}>
                   <T id="fatal.wallet.title" m="Wallet Error" />
                 </div>
-                <CopyToClipboard textToCopy={walletError} />
+                <CopyToClipboardButton textToCopy={walletError} />
                 <textarea rows="10" value={walletError} disabled />
               </>
             )}

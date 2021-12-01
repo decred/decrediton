@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
-import { Button, Tooltip, useTheme, getThemeProperty } from "pi-ui";
+import { Button, ButtonIcon, Tooltip, useTheme, getThemeProperty } from "pi-ui";
 import ProposalsList from "./ProposalsList";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 import { PoliteiaLink as PiLink } from "shared";
@@ -8,7 +8,6 @@ import { TabbedPage } from "layout";
 import { useProposalsTab } from "./hooks";
 import styles from "./ProposalsTab.module.css";
 import PageHeader from "../PageHeader";
-import { SmallButton } from "buttons";
 
 const ListLink = ({ count, children }) => (
   <>
@@ -71,6 +70,9 @@ const ProposalsTab = () => {
     }
   ];
 
+  const { theme } = useTheme();
+  const iconColor = getThemeProperty(theme, "grey-7");
+
   const header = (
     <PageHeader
       title={
@@ -89,7 +91,9 @@ const ProposalsTab = () => {
                 />
               }
               placement="right">
-              <SmallButton
+              <ButtonIcon
+                type="refresh"
+                iconColor={iconColor}
                 className={styles.refreshProposals}
                 onClick={compareInventory}
               />
@@ -124,8 +128,6 @@ const ProposalsTab = () => {
       }
     />
   );
-
-  const { theme } = useTheme();
 
   return (
     <TabbedPage

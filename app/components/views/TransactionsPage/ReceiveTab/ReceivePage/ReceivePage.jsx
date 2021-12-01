@@ -3,9 +3,15 @@ import copy from "clipboard-copy";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
 import { Subtitle } from "shared";
-import { KeyBlueButton, SmallButton } from "buttons";
+import { KeyBlueButton } from "buttons";
 import QRCodeModal from "./QRCodeModal";
-import { classNames, Tooltip, TextHighlighted } from "pi-ui";
+import {
+  classNames,
+  Tooltip,
+  ButtonIcon,
+  useTheme,
+  getThemeProperty
+} from "pi-ui";
 import style from "./ReceivePage.module.css";
 
 const messages = defineMessages({
@@ -40,6 +46,8 @@ const ReceivePage = ({
       setTooltip(false);
     }, 1000);
   }
+  const { theme } = useTheme();
+  const iconColor = getThemeProperty(theme, "accent-blue");
 
   return (
     <>
@@ -118,8 +126,10 @@ const ReceivePage = ({
           </TextHighlighted>
           <div>
             <Tooltip content={<T id="receiveTab.copy" m="Copy" />}>
-              <SmallButton
+              <ButtonIcon
+                type="copyToClipboard"
                 className={style.receiveContentCopyButton}
+                iconBackgroundColor={iconColor}
                 onClick={() => {
                   copy(nextAddress);
                   setTooltipText(false);
@@ -130,8 +140,9 @@ const ReceivePage = ({
           </div>
           <div>
             <Tooltip content={<T id="receiveTab.QRCode" m="QR code" />}>
-              <SmallButton
-                className={style.receiveContentQRButton}
+              <ButtonIcon
+                type="qr"
+                iconColor={iconColor}
                 onClick={() => setModal(true)}
               />
             </Tooltip>

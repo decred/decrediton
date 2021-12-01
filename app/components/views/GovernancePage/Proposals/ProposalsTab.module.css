@@ -53,8 +53,6 @@
 }
 
 .refreshProposals {
-  background-image: var(--proposals-refresh-icon);
-  background-color: var(--refresh-proposals) !important;
   margin-left: 10px;
 }
 

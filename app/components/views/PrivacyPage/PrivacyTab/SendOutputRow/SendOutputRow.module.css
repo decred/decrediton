@@ -36,33 +36,6 @@
   align-self: center;
 }
 
-.sendIconWrapper.add {
-  width: 20px;
-  height: 20px;
-  background-image: var(--add-icon);
-  background-size: 6px;
-  background-color: var(--account-pubkey-text);
-  box-shadow: 0px 3px 8px var(--icons-shadow);
-  border-radius: 5px;
-}
-
-.sendIconWrapper.add.disabled {
-  background-image: var(--add-icon);
-  background-color: var(--disabled-background-color-lighter);
-  cursor: not-allowed;
-}
-
-.sendIconWrapper.delete {
-  width: 20px;
-  height: 20px;
-  background-image: var(--delete-icon);
-  background-size: 10px;
-}
-
-.sendIconWrapper.delete:hover {
-  opacity: 0.7;
-}
-
 .sendIconWrapper.walletIcon {
   background-image: var(--send-all-default);
 }

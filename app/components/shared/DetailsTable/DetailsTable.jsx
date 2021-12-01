@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { classNames } from "pi-ui";
+import { classNames, ButtonIcon } from "pi-ui";
 import styles from "./DetailsTable.module.css";
-import { SmallButton } from "buttons";
-import {
-  CopyToClipboard,
-  TruncatedText,
-  ExternalLink,
-  ExternalButton
-} from "shared";
+import { TruncatedText, ExternalLink, ExternalButton } from "shared";
+import { CopyToClipboardButton } from "buttons";
 
 const ValueField = ({ data }) => {
   const { value, copyable, truncate, href } = data;
@@ -32,7 +27,7 @@ const ValueField = ({ data }) => {
       {copyable ? (
         <>
           <div className={styles.copyableText}>{text}</div>
-          <CopyToClipboard textToCopy={value} ButtonComponent={SmallButton} />
+          <CopyToClipboardButton textToCopy={value} />
         </>
       ) : href ? (
         <>
@@ -40,9 +35,10 @@ const ValueField = ({ data }) => {
             {text}
           </ExternalLink>
           <ExternalButton
+            type="searchBlock"
             className={styles.linkButton}
             href={href}
-            ButtonComponent={SmallButton}
+            ButtonComponent={ButtonIcon}
           />
         </>
       ) : (

@@ -3,7 +3,8 @@ import Modal from "../Modal";
 import styles from "./ListUTXOsModal.module.css";
 import { Table } from "pi-ui";
 import { useListUtxo } from "./hooks";
-import { Balance, CopyToClipboard } from "shared";
+import { Balance } from "shared";
+import { CopyToClipboardButton } from "buttons";
 import { AccountsSelect } from "inputs";
 
 const messages = defineMessages({
@@ -27,7 +28,7 @@ const ListUTXOsModal = ({ onCancelModal, show }) => {
         UTXO: (
           <div className={styles.utxoValue}>
             <span>{utxoValue}</span>
-            <CopyToClipboard
+            <CopyToClipboardButton
               textToCopy={utxoValue}
               className={styles.copyIcon}
             />
