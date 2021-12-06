@@ -279,7 +279,7 @@
     "connect": "https://github.com/JoeGruffins/npm-extended-dcr#093a27dd6b0309351a2e53c705fe4710becd0368",
     "connected-react-router": "^6.8.0",
     "copy-webpack-plugin": "^8.1.0",
-    "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.2.0",
+    "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.4.0-beta1",
     "dex": "./modules/dex",
     "dom-helpers": "^3.4.0",
     "electron-devtools-installer": "^3.1.1",
