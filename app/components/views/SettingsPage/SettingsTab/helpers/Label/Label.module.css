@@ -1,0 +1,10 @@
+.label {
+  display: inline-block;
+  margin-right: 14px;
+  text-align: right;
+  width: 116px;
+}
+
+.label button {
+  margin-right: 0;
+}

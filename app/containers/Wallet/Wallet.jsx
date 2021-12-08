@@ -2,7 +2,7 @@ import ReactTimeout from "react-timeout";
 import { Route } from "react-router-dom";
 import { StaticSwitch } from "shared";
 import HomePage from "components/views/HomePage/";
-import SettingsPage from "components/views/SettingsPage/SettingsPage";
+import SettingsPage from "components/views/SettingsPage";
 import AccountsPage from "components/views/AccountsPage";
 import WalletError from "components/views/WalletError";
 import ErrorScreen from "components/ErrorScreen";

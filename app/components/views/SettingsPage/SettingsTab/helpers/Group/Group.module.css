@@ -1,0 +1,37 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 37px;
+  width: 720px;
+}
+
+@media screen and (min-width: 1680px) and (max-width: 1920px) {
+  .group {
+    width: 600px;
+  }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1680px) {
+  .group {
+    width: 1000px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .group {
+    width: 739px;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .group {
+    width: 649px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .group {
+    width: 355px;
+    margin-bottom: 27px;
+  }
+}

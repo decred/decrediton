@@ -2,12 +2,8 @@ import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "pi-ui";
 import { SettingsInput, SettingsTextInput } from "inputs";
 import { TESTNET, MAINNET } from "constants";
-import styles from "./Settings.module.css";
-
-const propTypes = {
-  tempSettings: PropTypes.object.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
-};
+import styles from "./NetworkSettings.module.css";
+import { Row, Label, ColumnTitle } from "../../helpers";
 
 const AlreadySetMessage = () => (
   <T
@@ -19,15 +15,13 @@ const AlreadySetMessage = () => (
 // Do **not** add stuff that depends on the wallet here, as this is also used
 // for startup config.
 const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
-  <div>
-    <div className={styles.columnTitle}>
-      <T id="settings.network.title" m="Network" />
-    </div>
-    <div className={styles.columnContent}>
-      <div className={styles.row}>
-        <label id="network-input" className={styles.label}>
+  <>
+    <ColumnTitle title={<T id="settings.network.title" m="Network" />} />
+    <div>
+      <Row>
+        <Label id="network-input">
           <T id="settings.network" m="Network" />
-        </label>
+        </Label>
         <Tooltip
           content={<AlreadySetMessage />}
           disabled={!tempSettings.networkFromCli}>
@@ -53,12 +47,12 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             ]}
           />
         </Tooltip>
-      </div>
+      </Row>
 
-      <div className={styles.row}>
-        <label id="spv-input" className={styles.label}>
+      <Row>
+        <Label id="spv-input">
           <T id="settings.SPV" m="SPV" />
-        </label>
+        </Label>
         <Tooltip
           content={<AlreadySetMessage />}
           disabled={!tempSettings.spvModeFromCli}>
@@ -84,12 +78,12 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             ]}
           />
         </Tooltip>
-      </div>
+      </Row>
 
-      <div className={styles.row}>
-        <label id="spv-connect-input" className={styles.label}>
+      <Row>
+        <Label id="spv-connect-input">
           <T id="settings.SPVConnect" m="SPV Connect" />
-        </label>
+        </Label>
         <Tooltip
           content={<AlreadySetMessage />}
           disabled={!tempSettings.spvConnectFromCli}>
@@ -104,12 +98,12 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             }
           />
         </Tooltip>
-      </div>
+      </Row>
 
-      <div className={styles.row}>
-        <label id="adv-damon-startup-input" className={styles.label}>
+      <Row>
+        <Label id="adv-damon-startup-input">
           <T id="settings.advancedDaemon.label" m="Adv. Daemon Startup" />
-        </label>
+        </Label>
         <Tooltip
           content={<AlreadySetMessage />}
           disabled={!tempSettings.daemonStartAdvancedFromCli}>
@@ -139,11 +133,14 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             ]}
           />
         </Tooltip>
-      </div>
+      </Row>
     </div>
-  </div>
+  </>
 );
 
-NetworkSettings.propTypes = propTypes;
+NetworkSettings.propTypes = {
+  tempSettings: PropTypes.object.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
+};
 
 export default NetworkSettings;

@@ -1,1 +1,1 @@
-export * from "./LinksTab";
+export { default } from "./LinksTab";

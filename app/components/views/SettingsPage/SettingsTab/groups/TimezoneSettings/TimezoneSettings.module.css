@@ -1,0 +1,11 @@
+.timezoneOption {
+  margin: 0 0 1rem 0 !important;
+}
+
+.timezoneOption > label > span:nth-child(1) {
+  border-color: var(--input-color);
+}
+
+.timezoneOption > label > span:nth-child(2) {
+  background-color: var(--input-color);
+}

@@ -1,15 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelectInput } from "inputs";
 import { InfoDocFieldModalButton } from "buttons";
-import { classNames } from "pi-ui";
-import styles from "./Settings.module.css";
+import styles from "./UISettings.module.css";
 import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
-
-const propTypes = {
-  tempSettings: PropTypes.object.isRequired,
-  locales: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
-};
+import { Row, Label, ColumnTitle } from "../../helpers";
 
 const availableUIThemeTypes = [
   {
@@ -23,15 +17,13 @@ const availableUIThemeTypes = [
 ];
 
 const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
-  <div>
-    <div className={styles.columnTitle}>
-      <T id="settings.ui.title" m="UI" />
-    </div>
-    <div className={styles.columnContent}>
-      <div className={styles.row}>
-        <label id="theme-input" className={styles.label}>
+  <>
+    <ColumnTitle title={<T id="settings.ui.title" m="UI" />} />
+    <div>
+      <Row>
+        <Label id="theme-input">
           <T id="settings.uitheme.type" m="Tonality" />
-        </label>
+        </Label>
         <SettingsInput
           className={styles.input}
           value={tempSettings.theme}
@@ -43,12 +35,12 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
           labelKey="name"
           options={availableUIThemeTypes}
         />
-      </div>
+      </Row>
 
-      <div className={styles.row}>
-        <label id="locale-input" className={styles.label}>
+      <Row>
+        <Label id="locale-input">
           <T id="settings.locale" m="Locale" />
-        </label>
+        </Label>
         <LanguageSelectInput
           className={styles.input}
           value={tempSettings.locale}
@@ -60,17 +52,17 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
           labelKey="description"
           options={locales}
         />
-      </div>
+      </Row>
 
-      <div className={styles.row}>
-        <div className={styles.label}>
+      <Row>
+        <Label id="ui-animation" className={styles.label}>
           <T id="settings.uiAnimations.label" m="UI Animations" />
           <InfoDocFieldModalButton
             document="UIAnimationsInfo"
-            modalClassName={classNames(styles.hasWarning, styles.uiAnimations)}
+            modalClassName={styles.hasWarning}
             draggable
           />
-        </div>
+        </Label>
         <SettingsInput
           className={styles.input}
           value={tempSettings.uiAnimations ? "true" : "false"}
@@ -94,11 +86,15 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
             }
           ]}
         />
-      </div>
+      </Row>
     </div>
-  </div>
+  </>
 );
 
-UISettings.propTypes = propTypes;
+UISettings.propTypes = {
+  tempSettings: PropTypes.object.isRequired,
+  locales: PropTypes.array.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
+};
 
 export default UISettings;
