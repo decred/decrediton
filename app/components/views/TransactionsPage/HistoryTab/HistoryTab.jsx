@@ -3,12 +3,11 @@ import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./HistoryPage/HistoryPage";
 import { FormattedMessage as T } from "react-intl";
 import { DescriptionHeader } from "layout";
-import { Balance } from "shared";
+import { BalanceDisplay } from "shared";
 import { DCR } from "constants";
 import { useService } from "hooks";
 import { useHistoryTab } from "./hooks";
 import { selectedTxTypesFromFilter, getSortTypes, getTxTypes } from "./helpers";
-import styles from "./HistoryTab.module.css";
 
 export const HistoryTabHeader = () => {
   const { totalBalance } = useHistoryTab();
@@ -19,13 +18,7 @@ export const HistoryTabHeader = () => {
           id="transactions.description.history"
           m="Total Balance: {totalBalance}"
           values={{
-            totalBalance: (
-              <Balance
-                flat
-                amount={totalBalance}
-                classNameWrapper={styles.smallBalance}
-              />
-            )
+            totalBalance: <BalanceDisplay amount={totalBalance} />
           }}
         />
       }

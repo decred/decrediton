@@ -39,26 +39,17 @@
   background-color: var(--background-back-color);
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding: 20px;
   box-shadow: 0px 5px 21px var(--icons-shadow);
   margin-bottom: 20px;
 }
 
 .modalAddress {
-  margin-right: 15px;
-  background-color: var(--background-address-copy-color);
-  border-radius: 5px;
-  vertical-align: middle;
-  height: 40px;
-  width: 316px;
-  color: var(--input-color-default);
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
-  line-height: 40px;
+  font-size: 1.3rem !important;
+  text-align: center !important;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
+  padding: 1rem !important;
 }
 
 .modalLabel {
@@ -72,7 +63,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
 }
 
 .modalSecond {
