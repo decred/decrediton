@@ -10,7 +10,8 @@ import {
   Tooltip,
   ButtonIcon,
   useTheme,
-  getThemeProperty
+  getThemeProperty,
+  TextHighlighted
 } from "pi-ui";
 import style from "./ReceivePage.module.css";
 
