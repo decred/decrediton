@@ -70,13 +70,9 @@ test("test remote daemon form", async () => {
   );
 
   //test toggle control
-  user.click(
-    screen.getByText(/different local daemon location/i).previousSibling
-  );
+  user.click(screen.getByTestId("switch"));
   expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
-  user.click(
-    screen.getByText(/different local daemon location/i).previousSibling
-  );
+  user.click(screen.getByTestId("switch"));
 
   const rpcUsernameInput = screen.getByPlaceholderText(/rpc username/i);
   const rpcPasswordInput = screen.getByPlaceholderText(/rpc password/i);
@@ -132,7 +128,7 @@ test("test local daemon form", async () => {
   user.click(
     screen.getByText(/different local daemon location/i).previousSibling
   );
-  expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
+  user.click(screen.getByTestId("switch"));
   const daemonDataDirectoryInput = screen.getByPlaceholderText(
     "Daemon Data Directory"
   );
