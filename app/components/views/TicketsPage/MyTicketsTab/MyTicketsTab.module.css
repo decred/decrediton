@@ -79,27 +79,12 @@
 }
 
 .qrsPaginator {
-  list-style-type: none;
-  display: flex;
   justify-content: space-between;
   margin-top: 15px;
 }
 
-.qrsPaginator > li {
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.qrsPaginator > li > a {
-  outline: none;
-}
-
-.qrPageActive {
-  background-color: var(--transaction-account-name-bg);
+.qrsPaginator button {
+  padding: 0 !important;
 }
 
 @media screen and (max-width: 768px) {
