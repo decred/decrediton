@@ -103,8 +103,6 @@ const darkTheme = {
   "loader-bg": "#223767",
   "display-wallet-bg": "#152042",
   "select-border": "#608ACE",
-  "toggle-switch-bg": "#7DA7D9",
-  "toggle-switch-knob-bg": "#E9F8FE",
   "transaction-account-name-bg": "#2F4D8C",
   "account-row-hover": "#1F325F",
   "chart-cursor-color": "#36579E",
@@ -161,9 +159,6 @@ const darkTheme = {
   "ln-autopilot-switch-desc": "#3C62B0",
   "ln-close-channel-button-bg": "#7DA7D9",
   "ln-close-channel-button-text": "#0E152F",
-
-  // override pi-ui's toggle default dark background
-  "toggle-bar-color": "var(--background-copy-color)",
 
   // override pi-ui's tab colors
   "tab-default-color": "var(--sidebar-color)", // default border

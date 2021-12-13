@@ -125,10 +125,8 @@ test("test local daemon form", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
-  user.click(
-    screen.getByText(/different local daemon location/i).previousSibling
-  );
   user.click(screen.getByTestId("switch"));
+  expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
   const daemonDataDirectoryInput = screen.getByPlaceholderText(
     "Daemon Data Directory"
   );
