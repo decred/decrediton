@@ -46,7 +46,7 @@ const CreateNeededAccounts = ({
           parentIsValid: isValid
         }}
         loading={createMixerAccountAttempt}
-        disabled={isCreateAccountDisabled || createMixerAccountAttempt}
+        isDisabled={isCreateAccountDisabled || createMixerAccountAttempt}
         modalTitle={
           <T id="accounts.createNeededAcc" m="Create Needed Accounts" />
         }

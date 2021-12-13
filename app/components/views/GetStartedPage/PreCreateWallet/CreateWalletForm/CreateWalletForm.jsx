@@ -142,6 +142,7 @@ const CreateWalletForm = ({
                       id="createwallet.walletmasterpubkey.label"
                       m="Master Pub Key"
                     />
+                    :
                     <div className={styles.daemonLongInput}>
                       <TextInput
                         id="masterPubKeyInput"

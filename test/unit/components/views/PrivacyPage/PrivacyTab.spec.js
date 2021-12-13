@@ -9,11 +9,13 @@ import * as sel from "selectors";
 import * as act from "actions/AccountMixerActions";
 import * as wl from "wallet";
 import * as ca from "actions/ControlActions";
+import * as sa from "actions/SnackbarActions";
 
 const selectors = sel;
 const wallet = wl;
 const controlActions = ca;
 const accountMixerActions = act;
+const snackbarActions = sa;
 
 const mockDefaultAccount = {
   hidden: false,
@@ -76,6 +78,7 @@ let mockStopAccountMixer;
 let mockToggleAllowSendFromUnmixed;
 let mockConstructTransactionAttempt;
 let mockGetPrivacyLogs;
+let mockDispatchSingleMessage;
 
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
@@ -128,6 +131,9 @@ beforeEach(() => {
   );
   controlActions.getNextAddressAttempt = jest.fn(() => () => {});
   mockConstructTransactionAttempt = controlActions.constructTransactionAttempt = jest.fn(
+    () => () => {}
+  );
+  mockDispatchSingleMessage = snackbarActions.dispatchSingleMessage = jest.fn(
     () => () => {}
   );
 });
@@ -373,4 +379,23 @@ test("check logs", async () => {
   await wait(() =>
     expect(screen.queryByText(mockLogLine)).not.toBeInTheDocument()
   );
+});
+
+test("privacy configuration have to be disabled in watching only (already have mixed or unmixed account)", () => {
+  selectors.getMixedAccount = jest.fn(() => null);
+  selectors.getChangeAccount = jest.fn(() => null);
+  selectors.isWatchingOnly = jest.fn(() => true);
+  render(<PrivacyTab />);
+  user.click(getCreateNeededAccountsButton());
+  expect(mockDispatchSingleMessage).toHaveBeenCalledTimes(1);
+});
+
+test("privacy configuration have to be disabled in watching only ", () => {
+  selectors.getMixedAccount = jest.fn(() => null);
+  selectors.getChangeAccount = jest.fn(() => null);
+  selectors.isWatchingOnly = jest.fn(() => true);
+  selectors.balances = jest.fn(() => []);
+  render(<PrivacyTab />);
+  user.click(getCreateDefaultAccountsButton());
+  expect(mockDispatchSingleMessage).toHaveBeenCalledTimes(1);
 });
