@@ -164,6 +164,7 @@ const darkTheme = {
   "ln-close-channel-button-bg": "#7DA7D9",
   "ln-close-channel-button-text": "#0E152F",
   "trezor-pin-bt-border": "#C4CBD2",
+  "decred-logo-icon-color": "var(--input-color-default)",
 
   // override pi-ui's tab colors
   "tab-default-color": "var(--sidebar-color)", // default border
@@ -190,8 +191,6 @@ const darkTheme = {
   "seedword-label-text": "#3262b0",
   "seedword-button-text": "var(--info-modal-button-text)",
   "seedword-button-invalid-bg": "#f0b3a1",
-
-  "tz-decred-logo-bt-bg": "var(--small-button-bg)",
 
   "button-icon-color-1": "#99C1E3",
   "button-icon-color-2": "#436EC3",
@@ -372,7 +371,6 @@ const darkTheme = {
     require("style/icons/LNNetworkCapacityIconDark.svg")
   ),
   "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
-  "tz-decred-logo": url(require("style/icons/tzDecredLogo.svg")),
   "tz-wipe-device": url(require("style/icons/tzWipeDevice.svg")),
   "tz-recover-device": url(require("style/icons/tzRecoverDevice.svg")),
   "tz-init-device": url(require("style/icons/tzInitDevice.svg")),

@@ -1,24 +1,5 @@
 .changeToDecredHomeScreen {
-  background-image: var(--tz-decred-logo);
-  background-color: var(--tz-decred-logo-bt-bg) !important;
-  background-size: 15px;
   margin-right: 10px !important;
-}
-
-.changeToDecredHomeScreen:disabled {
-  cursor: default;
-}
-
-.changeToDecredHomeScreen.loading {
-  background-image: none;
-}
-
-.changeToDecredHomeScreen.loading > div {
-  margin-top: 4px;
-  border-color: var(--grey-5);
-  border-top-color: var(--grey-7);
-  width: 1.5rem;
-  height: 1.5rem;
 }
 
 .label {

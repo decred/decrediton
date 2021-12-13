@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { KeyBlueButton, SmallButton } from "buttons";
+import { KeyBlueButton } from "buttons";
 import styles from "./ChangeLabel.module.css";
-import { classNames } from "pi-ui";
+import { classNames, ButtonIcon, useTheme, getThemeProperty } from "pi-ui";
 
 const messages = defineMessages({
   changeLabelPlaceholder: {
@@ -34,12 +34,17 @@ const ChangeLabel = ({
     setNewLabel(e.target.value);
   };
 
+  const { theme } = useTheme();
+  const iconColor = getThemeProperty(theme, "decred-logo-icon-color");
+
   return (
     <ContainerComponent
       label={<T id="trezor.changeLabel.header" m="Label and Homescreen" />}>
       <div className={classNames("flex-row", "align-center")}>
-        <SmallButton
+        <ButtonIcon
+          type="decredLogo"
           id="changeToDecredHomeScreen"
+          iconColor={iconColor}
           className={classNames(
             styles.changeToDecredHomeScreen,
             performingOperation && styles.loading
