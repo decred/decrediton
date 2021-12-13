@@ -238,12 +238,8 @@
   margin: 0 0 1rem 0 !important;
 }
 
-.timezoneOption > label > span:nth-child(1) {
-  border-color: var(--input-color);
-}
-
-.timezoneOption > label > span:nth-child(2) {
-  background-color: var(--input-color);
+.timezoneOption label {
+  color: var(--input-color-default);
 }
 
 @media screen and (min-width: 1680px) and (max-width: 1920px) {
@@ -328,7 +324,7 @@
 
   .timezone {
     margin-left: 20px;
-    width: 200px;
+    width: 21rem;
   }
 }
 
