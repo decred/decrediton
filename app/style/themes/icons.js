@@ -5,8 +5,6 @@ const icons = {
   "chat-bubbles": url(require("style/icons/chatBubbles.svg")),
   "ticket-voted-grey-icon": url(require("style/icons/votingGrey.svg")),
   "account-rename-icon": url(require("style/icons/account-rename.svg")),
-  "accounts-button-icon": url(require("style/icons/accountInButton.svg")),
-  "add-icon": url(require("style/icons/add.svg")),
   "agenda-card-kebab-disabled": url(
     require("style/icons/tickets-agenda-card-kebab-disabled.svg")
   ),
@@ -43,7 +41,6 @@ const icons = {
   "contextbutton-eye-disabled-icon": url(
     require("style/icons/contextbutton-eye-disabled.svg")
   ),
-  "delete-icon": url(require("style/icons/delete.svg")),
   "decred-macos-1024-logo": url(
     require("style/icons/decred-macos-1024-logo.png")
   ),
@@ -176,8 +173,6 @@ const icons = {
   "ticket-unmined": url(require("style/icons/ticketUnmined.svg")),
   "ticket-voted": url(require("style/icons/ticketVoted.svg")),
   "delete-vsp": url(require("style/icons/deleteVSP.svg")),
-  "view-qr-icon": url(require("style/icons/showQR.svg")),
-  "share-icon": url(require("style/icons/share.svg")),
   "decred-logo": url(require("style/icons/dcrLogoShare.svg")),
   "search-icon-hover": url(require("style/icons/search-hover.svg")),
   "animated-alert-icon": url(require("style/icons/animated_alert_icon.gif")),

@@ -221,9 +221,6 @@ const lightTheme = {
     require("style/icons/onboarding-checkcircle.svg")
   ),
   "x-grey": url(require("style/icons/x-grey.svg")),
-  "copy-to-clipboard-icon": url(
-    require("style/icons/copy-to-clipboard-blue.svg")
-  ),
   "stakey-privacy-standard": url(require("style/icons/privacyStandard.svg")),
   "stakey-privacy-disabled": url(require("style/icons/privacyDisabled.svg")),
   "stakey-privacy-custom": url(require("style/icons/privacyCustom.svg")),

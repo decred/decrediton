@@ -183,6 +183,9 @@ const darkTheme = {
   "seedword-button-text": "var(--info-modal-button-text)",
   "seedword-button-invalid-bg": "#f0b3a1",
 
+  "button-icon-color-1": "#99C1E3",
+  "button-icon-color-2": "#436EC3",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettingsDark.svg")),
   "menu-accounts": url(require("style/icons/accountsActiveDark.svg")),
@@ -220,9 +223,6 @@ const darkTheme = {
     require("style/icons/onboardingCheckcircleDark.svg")
   ),
   "x-grey": url(require("style/icons/xGreyDark.svg")),
-  "copy-to-clipboard-icon": url(
-    require("style/icons/copyToClipboardBlueDark.svg")
-  ),
   "stakey-privacy-standard": url(
     require("style/icons/privacyStandardDark.svg")
   ),

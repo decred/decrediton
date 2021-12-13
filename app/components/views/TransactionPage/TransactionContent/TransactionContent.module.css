@@ -194,6 +194,10 @@
   margin-right: 20px;
 }
 
+.receiveContentNestCopyToClipboardIcon {
+  margin-left: 1rem;
+}
+
 @media screen and (max-width: 1180px) {
   .rebroadcastBtnContainer,
   .revokeBtnContainer {
@@ -279,14 +283,5 @@
   }
   .details .topRow.rowTransaction .value .valueRawTx {
     width: 335px;
-  }
-  .details
-    .topRow.rowTransaction
-    .value
-    .clipboardBox.receiveContentNestCopyToClipboardIcon {
-    position: absolute;
-    top: -28px;
-    right: 5px;
-    margin: 0;
   }
 }

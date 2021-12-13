@@ -13,7 +13,8 @@ const ExternalButton = ({
   href,
   children,
   hrefTestNet,
-  ButtonComponent
+  ButtonComponent,
+  type
 }) => {
   const { isTestNet } = useNetwork();
   return (
@@ -23,7 +24,7 @@ const ExternalButton = ({
       size={size ? size : "md"}
       customComponent={(props) =>
         ButtonComponent ? (
-          <ButtonComponent {...props}>{children}</ButtonComponent>
+          <ButtonComponent {...{ type, ...props }}>{children}</ButtonComponent>
         ) : (
           <Button {...props}>{children}</Button>
         )

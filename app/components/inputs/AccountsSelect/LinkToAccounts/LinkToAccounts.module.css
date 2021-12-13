@@ -1,0 +1,6 @@
+.icon {
+  display: inline-block;
+  background-color: var(--input-color) !important;
+  vertical-align: middle;
+  margin-left: 1rem;
+}

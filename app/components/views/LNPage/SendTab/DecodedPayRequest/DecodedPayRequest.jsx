@@ -2,12 +2,11 @@ import { FormattedMessage as T } from "react-intl";
 import {
   Balance,
   TruncatedText,
-  CopyToClipboard,
   FormattedRelative,
   DetailsTable
 } from "shared";
+import { CopyToClipboardButton } from "buttons";
 import { DcrInput } from "inputs";
-import { SmallButton } from "buttons";
 import styles from "./DecodedPayRequest.module.css";
 import { getDecodedPayRequestDetails } from "./helpers";
 import { classNames } from "pi-ui";
@@ -44,10 +43,7 @@ const DecodedPayRequest = ({
           <div className={styles.destinationText}>
             <TruncatedText text={decoded.destination} max={10} />
           </div>
-          <CopyToClipboard
-            textToCopy={decoded.destination}
-            ButtonComponent={SmallButton}
-          />
+          <CopyToClipboardButton textToCopy={decoded.destination} />
         </div>
       </div>
       <div className={classNames(styles.propContainer, styles.expiryContainer)}>
@@ -99,10 +95,7 @@ const DecodedPayRequest = ({
       </label>
       <div className={styles.paymentHashWrapper}>
         <span className={styles.paymentHash}>{decoded.paymentHash}</span>
-        <CopyToClipboard
-          textToCopy={decoded.paymentHash}
-          ButtonComponent={SmallButton}
-        />
+        <CopyToClipboardButton textToCopy={decoded.paymentHash} />
       </div>
     </div>
 
