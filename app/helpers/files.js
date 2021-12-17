@@ -52,11 +52,7 @@ export function makeFileBackup(file, directory) {
     fs.mkdirSync(directory);
   }
   // copy it to directory specified
-  try {
-    fs.copyFileSync(file, `${directory}/${fileName}`);
-  } catch (err) {
-    throw err;
-  }
+  fs.copyFileSync(file, `${directory}/${fileName}`);
 
   return true;
 }
