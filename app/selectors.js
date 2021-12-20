@@ -840,7 +840,8 @@ export const filteredRegularTxs = createSelector(
                 address.length > 1 &&
                 address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
                   -1
-            ) != undefined
+            ) != undefined ||
+            v.txHash.toLowerCase().includes(filter.search.toLowerCase())
           : true
       )
       .filter((v) =>
@@ -864,6 +865,11 @@ export const filteredStakeTxs = createSelector(
   (transactions, filter) => {
     const filteredTxs = Object.keys(transactions)
       .map((hash) => transactions[hash])
+      .filter((v) =>
+        filter.search
+          ? v.txHash.toLowerCase().includes(filter.search.toLowerCase())
+          : true
+      )
       .filter((v) => (filter.status ? filter.status === v.status : true));
 
     return filteredTxs;

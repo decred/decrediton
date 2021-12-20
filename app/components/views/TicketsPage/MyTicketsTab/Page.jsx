@@ -1,4 +1,4 @@
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Tooltip, Paginator } from "pi-ui";
 import InfiniteScroll from "react-infinite-scroller";
 import {
@@ -9,8 +9,19 @@ import {
 import { TxHistory, Subtitle } from "shared";
 import { EyeFilterMenu, QRModalButton } from "buttons";
 import styles from "./MyTicketsTab.module.css";
+import { TextInput } from "inputs";
+
+const messages = defineMessages({
+  filterByHashPlaceholder: {
+    id: "txhistory.filterByHashPlaceholder",
+    defaultMessage: "Filter by Hash"
+  }
+});
 
 const subtitleMenu = ({
+  intl,
+  searchText,
+  onChangeSearchText,
   sortTypes,
   ticketTypes,
   selectedSortOrderKey,
@@ -24,6 +35,13 @@ const subtitleMenu = ({
   prepareQRs
 }) => (
   <div className={styles.ticketsButtons}>
+    <TextInput
+      id="filterByHashInput"
+      type="text"
+      placeholder={intl.formatMessage(messages.filterByHashPlaceholder)}
+      value={searchText}
+      onChange={(e) => onChangeSearchText(e.target.value)}
+    />
     <Tooltip
       contentClassName={styles.sortByTooltip}
       content={<T id="tickets.sortby.tooltip" m="Sort By" />}>
@@ -84,6 +102,9 @@ const subtitleMenu = ({
 );
 
 const TicketListPage = ({
+  intl,
+  searchText,
+  onChangeSearchText,
   tickets,
   noMoreTickets,
   getTickets,
@@ -112,6 +133,9 @@ const TicketListPage = ({
         title={<T id="mytickets.subtitle" m="My Tickets" />}
         className={styles.subtitle}
         children={subtitleMenu({
+          intl,
+          searchText,
+          onChangeSearchText,
           sortTypes,
           ticketTypes,
           selectedSortOrderKey,
