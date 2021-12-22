@@ -9,3 +9,4 @@
 /app/middleware/walletrpc/*_pb.js
 /app/main.js
 /test/data
+/app/i18n/lib
