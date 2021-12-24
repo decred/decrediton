@@ -18,8 +18,8 @@ cloud.google.com/go/storage v1.0.0/go.mod h1:IhtSnM/ZTZV8YYJWCY8RULGVqBDmpoyjwiy
 cloud.google.com/go/storage v1.5.0/go.mod h1:tpKbwo567HUNpVclU5sGELwQWBDZ8gh0ZeosJ0Rtdos=
 collectd.org v0.3.0/go.mod h1:A/8DzQBkF6abtvrT2j/AU/4tiBgJWYyh0y/oB/4MlWE=
 decred.org/cspp/v2 v2.0.0-20211122173608-ee00e4952d5f/go.mod h1:USyJS44Kqxz2wT/VaNsf9iTAONegO/qKXRdLg1nvrWI=
-decred.org/dcrdex v0.0.0-20211217203335-620a0258b8cd h1:0Z5YLl10Smy3HbhWFB2clEed/QC0xudo1oam1NuQlF8=
-decred.org/dcrdex v0.0.0-20211217203335-620a0258b8cd/go.mod h1:8tXM3igbHUkEu4YJd1q7Czwmfh9xf0oA3dSdrUi/Bqs=
+decred.org/dcrdex v0.4.0-rc1 h1:WE2dSSS+G6lchWC1T1A7wCZSr8fOS6DSwr8fod8bZk0=
+decred.org/dcrdex v0.4.0-rc1/go.mod h1:8tXM3igbHUkEu4YJd1q7Czwmfh9xf0oA3dSdrUi/Bqs=
 decred.org/dcrwallet/v2 v2.0.0-20211206163037-9537363becbb h1:vio6o+nzszBrdj2Yi3/gifDa5ocfy49A9SqYPlbUjXo=
 decred.org/dcrwallet/v2 v2.0.0-20211206163037-9537363becbb/go.mod h1:rbFJaCuXCfDhYoI5ZdeZr8TmF4A4Sb1zE7jQAwtaFMo=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
