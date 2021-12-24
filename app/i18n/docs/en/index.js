@@ -50,3 +50,4 @@ export { default as LNWalletCreationWarningPage02 } from "./LN/WalletCreationWar
 export { default as LNWalletCreationWarningPage03 } from "./LN/WalletCreationWarnings/WarningPage03.md";
 export { default as LNWalletCreationWarningPage04 } from "./LN/WalletCreationWarnings/WarningPage04.md";
 export { default as LNWalletCreationWarningPage05 } from "./LN/WalletCreationWarnings/WarningPage05.md";
+export { default as LNWalletCreationWarningPage06 } from "./LN/WalletCreationWarnings/WarningPage06.md";

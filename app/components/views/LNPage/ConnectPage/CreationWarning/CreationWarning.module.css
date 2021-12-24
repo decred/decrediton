@@ -151,7 +151,7 @@
   line-height: 20px;
   text-align: center;
   color: var(--main-dark-blue);
-  padding: 0 182px;
+  padding: 0 10rem;
   max-width: initial;
 }
 
@@ -167,6 +167,7 @@
   color: var(--main-dark-blue);
   margin-bottom: 10px;
   font-weight: 600;
+  padding: 0 10rem;
 }
 
 .stepIndicator {
@@ -180,14 +181,40 @@
 
 .tabContent .bottomGrid {
   display: grid;
-  grid-template-columns: 1fr 400px 1fr;
+  grid-template-columns: 1fr 500px 1fr;
   align-items: center;
   justify-items: center;
 }
 .tabContent .bottomGrid .image {
-  width: 400px;
+  width: 580px;
   height: 400px;
-  background-color: #c4c4c4;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.slideImage1 {
+  background-image: var(--ln-slide1);
+}
+
+.slideImage2 {
+  background-image: var(--ln-slide2);
+}
+
+.slideImage3 {
+  background-image: var(--ln-slide3);
+}
+
+.slideImage4 {
+  background-image: var(--ln-slide4);
+}
+
+.slideImage5 {
+  background-image: var(--ln-slide5);
+}
+
+.slideImage6 {
+  background-image: var(--ln-slide6);
 }
 
 .tabContent .arrow {
@@ -212,7 +239,22 @@
 }
 
 @media screen and (max-width: 768px) {
-  .container {
-    width: 355px;
+  .container,
+  .tabContentWrapper {
+    width: 35.5rem;
+  }
+
+  .tabContent .bottomGrid {
+    grid-template-columns: 1fr 25rem 1fr;
+  }
+
+  .tabContent .bottomGrid .image {
+    width: 25rem;
+    height: 20rem;
+  }
+
+  .tabTitle,
+  .tabDesc {
+    padding: 0 5rem;
   }
 }

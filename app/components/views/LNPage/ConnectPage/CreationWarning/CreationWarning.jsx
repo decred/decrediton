@@ -8,6 +8,7 @@ import { Tabs, Tab, classNames } from "pi-ui";
 
 const tabLabels = [
   <T id="ln.creationWarning.tab.label1" m="Backup" />,
+  <T id="ln.creationWarning.tab.label6" m="LN is a 2nd layer network" />,
   <T id="ln.creationWarning.tab.label2" m="Staying Online" />,
   <T id="ln.creationWarning.tab.label3" m="Watchtower Service" />,
   <T id="ln.creationWarning.tab.label4" m="Channels and Confirmations" />,
@@ -16,10 +17,47 @@ const tabLabels = [
 
 const tabDocs = [
   "LNWalletCreationWarningPage01",
+  "LNWalletCreationWarningPage06",
   "LNWalletCreationWarningPage02",
   "LNWalletCreationWarningPage03",
   "LNWalletCreationWarningPage04",
   "LNWalletCreationWarningPage05"
+];
+
+const tabTitles = [
+  <T
+    id="ln.creationWarning.tab.title1"
+    m="Backup data is needed in addition to seed key"
+  />,
+  <T
+    id="ln.creationWarning.tab.title6"
+    m="LN is a 2nd layer network on top of the DCR blockchain, designed to facilitate micropayments more efficiently"
+  />,
+  <T
+    id="ln.creationWarning.tab.title2"
+    m="Its preferred to keep wallet online most of the time"
+  />,
+  <T
+    id="ln.creationWarning.tab.title3"
+    m="Episodic wallets should use watchtower service for safety"
+  />,
+  <T
+    id="ln.creationWarning.tab.title4"
+    m="Sending and Reciving amounts are limited to what is available in your published channels"
+  />,
+  <T
+    id="ln.creationWarning.tab.title5"
+    m="Minimize risk by using a seperate wallet for LN"
+  />
+];
+
+const tabImages = [
+  styles.slideImage1,
+  styles.slideImage2,
+  styles.slideImage3,
+  styles.slideImage4,
+  styles.slideImage5,
+  styles.slideImage6
 ];
 
 const TabLabelContent = ({ index, activeTabIndex, checked, tabRef }) => (
@@ -128,7 +166,7 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
                   <div className={styles.stepIndicator}>{`${parseInt(i) + 1}/${
                     tabLabels.length
                   }`}</div>
-                  <div className={styles.tabTitle}>{tabLabels[i]}</div>
+                  <div className={styles.tabTitle}>{tabTitles[i]}</div>
                   <Documentation
                     name={tabDocs[i]}
                     className={styles.tabDesc}
@@ -143,7 +181,7 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
                       )}
                       onClick={onPreviousTab}
                     />
-                    <div className={styles.image} />
+                    <div className={classNames(styles.image, tabImages[i])} />
                     <button
                       aria-label="Next arrow"
                       className={classNames(

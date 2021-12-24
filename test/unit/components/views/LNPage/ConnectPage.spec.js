@@ -261,14 +261,16 @@ test("test warning view", () => {
   const tab3 = screen.getByTestId("tab-2");
   const tab4 = screen.getByTestId("tab-3");
   const tab5 = screen.getByTestId("tab-4");
+  const tab6 = screen.getByTestId("tab-5");
 
   // initial state
   expect(understandButton.disabled).toBe(true);
-  expect(tab1.textContent).toBe("1/5Backup");
-  expect(tab2.textContent).toBe("2/5Staying Online");
-  expect(tab3.textContent).toBe("3/5Watchtower Service");
-  expect(tab4.textContent).toBe("4/5Channels and Confirmations");
-  expect(tab5.textContent).toBe("5/5Unlocked During Operations");
+  expect(tab1.textContent).toBe("1/6Backup");
+  expect(tab2.textContent).toBe("2/6LN is a 2nd layer network");
+  expect(tab3.textContent).toBe("3/6Staying Online");
+  expect(tab4.textContent).toBe("4/6Watchtower Service");
+  expect(tab5.textContent).toBe("5/6Channels and Confirmations");
+  expect(tab6.textContent).toBe("6/6Unlocked During Operations");
   expect(previousButton.className).toMatch("disabled");
   expect(previousArrowButton.className).toMatch("disabled");
 
@@ -282,6 +284,8 @@ test("test warning view", () => {
   tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
 
   // clicking on previousButton in vain
   user.click(previousButton);
@@ -295,6 +299,8 @@ test("test warning view", () => {
   tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
 
   // clicking on previousArrowButton in vain
   user.click(previousArrowButton);
@@ -308,6 +314,8 @@ test("test warning view", () => {
   tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
 
   // move on to the second tab
   user.click(nextButton);
@@ -321,6 +329,8 @@ test("test warning view", () => {
   tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(true);
@@ -337,6 +347,8 @@ test("test warning view", () => {
   tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(true);
@@ -353,6 +365,26 @@ test("test warning view", () => {
   tabShouldBeChecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(true);
+
+  // move on to the fifth tab
+  user.click(nextButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeActive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(true);
@@ -367,14 +399,15 @@ test("test warning view", () => {
   tabShouldBeChecked(tab3);
   tabShouldBeInactive(tab4);
   tabShouldBeChecked(tab4);
-  tabShouldBeActive(tab5);
+  tabShouldBeInactive(tab5);
   tabShouldBeChecked(tab5);
+  tabShouldBeActive(tab6);
+  tabShouldBeChecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(false);
   expect(nextButton.className).toMatch("disabled");
   expect(nextArrowButton.className).toMatch("disabled");
-
   // clicking on nextButton in vain
   user.click(nextButton);
   tabShouldBeInactive(tab1);
@@ -385,8 +418,10 @@ test("test warning view", () => {
   tabShouldBeChecked(tab3);
   tabShouldBeInactive(tab4);
   tabShouldBeChecked(tab4);
-  tabShouldBeActive(tab5);
+  tabShouldBeInactive(tab5);
   tabShouldBeChecked(tab5);
+  tabShouldBeActive(tab6);
+  tabShouldBeChecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(false);
@@ -403,16 +438,38 @@ test("test warning view", () => {
   tabShouldBeChecked(tab3);
   tabShouldBeInactive(tab4);
   tabShouldBeChecked(tab4);
-  tabShouldBeActive(tab5);
+  tabShouldBeInactive(tab5);
   tabShouldBeChecked(tab5);
+  tabShouldBeActive(tab6);
+  tabShouldBeChecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(false);
   expect(nextButton.className).toMatch("disabled");
   expect(nextArrowButton.className).toMatch("disabled");
 
-  // move back to the fourth tab
+  // move back to the fifth tab
   user.click(previousButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeActive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeChecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(false);
+  expect(nextButton.className).not.toMatch("disabled");
+  expect(nextArrowButton.className).not.toMatch("disabled");
+
+  // move back to the fourth tab clicking on the arrow button
+  user.click(previousArrowButton);
   tabShouldBeInactive(tab1);
   tabShouldBeChecked(tab1);
   tabShouldBeInactive(tab2);
@@ -423,24 +480,8 @@ test("test warning view", () => {
   tabShouldBeChecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeChecked(tab5);
-  expect(previousButton.className).not.toMatch("disabled");
-  expect(previousArrowButton.className).not.toMatch("disabled");
-  expect(understandButton.disabled).toBe(false);
-  expect(nextButton.className).not.toMatch("disabled");
-  expect(nextArrowButton.className).not.toMatch("disabled");
-
-  // move back to the third tab clicking on the arrow button
-  user.click(previousArrowButton);
-  tabShouldBeInactive(tab1);
-  tabShouldBeChecked(tab1);
-  tabShouldBeInactive(tab2);
-  tabShouldBeChecked(tab2);
-  tabShouldBeActive(tab3);
-  tabShouldBeChecked(tab3);
-  tabShouldBeInactive(tab4);
-  tabShouldBeChecked(tab4);
-  tabShouldBeInactive(tab5);
-  tabShouldBeChecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeChecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");
   expect(previousArrowButton.className).not.toMatch("disabled");
   expect(understandButton.disabled).toBe(false);
