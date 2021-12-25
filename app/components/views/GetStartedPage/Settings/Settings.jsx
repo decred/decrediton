@@ -22,7 +22,7 @@ import {
   Group,
   ColumnWrapper,
   Column
-} from "views/SettingsPage/SettingsTab//helpers";
+} from "views/SettingsPage/helpers";
 import { useSettings } from "hooks";
 import { BackButton, BackButtonArea } from "../helpers";
 import styles from "./Settings.module.css";
@@ -76,6 +76,7 @@ const SetttingsForm = ({ onSendBack }) => {
               <Column>
                 <NetworkSettings
                   {...{
+                    intl,
                     tempSettings,
                     onChangeTempSettings
                   }}

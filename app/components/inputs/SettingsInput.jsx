@@ -1,6 +1,5 @@
 import Select from "react-select";
 import { injectIntl } from "react-intl";
-import { useState } from "react";
 
 const SettingsInput = ({
   className,
@@ -12,8 +11,6 @@ const SettingsInput = ({
   ariaLabelledBy,
   onChange
 }) => {
-  const [inputValue, setInputValue] = useState(value ?? null);
-
   const selectKeyDown = (e) => {
     switch (e.keyCode) {
       case 8:
@@ -24,7 +21,6 @@ const SettingsInput = ({
   };
 
   const onChangeSelect = (value) => {
-    setInputValue(value);
     onChange?.(value);
   };
 
@@ -33,7 +29,7 @@ const SettingsInput = ({
       <Select
         clearable={false}
         multi={false}
-        value={inputValue}
+        value={value}
         valueKey={valueKey}
         labelKey={labelKey}
         options={options}

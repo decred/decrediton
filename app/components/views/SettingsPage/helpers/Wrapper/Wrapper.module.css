@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 150rem;
+  flex-direction: row;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1920px) {
+  .wrapper {
+    width: 76.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    width: 35.5rem;
+  }
+}

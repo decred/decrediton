@@ -4,14 +4,10 @@ import styles from "./MiscSettings.module.css";
 import { DiscoverUsageModal } from "modals";
 import { KeyBlueButton } from "buttons";
 import { useSettings } from "hooks";
-import { Row, Label, ColumnTitle } from "../../helpers";
+import { Label, Box } from "../../../helpers";
+import { classNames } from "pi-ui";
 
-const MiscSettings = ({
-  tempSettings,
-  currencies,
-  onChangeTempSettings,
-  walletReady
-}) => {
+const MiscSettings = ({ tempSettings, currencies, onChangeTempSettings }) => {
   const {
     onDiscoverUsage,
     gapLimit,
@@ -26,59 +22,54 @@ const MiscSettings = ({
   } = useSettings();
 
   return (
-    <>
-      <ColumnTitle title={<T id="settings.misc.title" m="Misc" />} />
+    <Box className={styles.box}>
       <div>
-        {walletReady && (
-          <Row>
-            <Label id="displayed-units-input">
-              <T id="settings.displayedUnits" m="Displayed Units" />
-            </Label>
-            <SettingsInput
-              className={styles.input}
-              value={tempSettings.currencyDisplay}
-              onChange={(newCurrency) =>
-                onChangeTempSettings({ currencyDisplay: newCurrency.name })
-              }
-              ariaLabelledBy="displayed-units-input"
-              valueKey="name"
-              labelKey="name"
-              options={currencies}
-            />
-          </Row>
-        )}
-
-        {walletReady && (
-          <Row>
-            <KeyBlueButton
-              onClick={showDiscoverModal}
-              loading={discoverUsageAttempt || rescanRunning}
-              disabled={discoverUsageAttempt || rescanRunning}>
-              <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
-            </KeyBlueButton>
-            <DiscoverUsageModal
-              {...{
-                show: isDiscoverModalVisible,
-                onSubmit: onDiscoverUsage,
-                onCancelModal: hideDiscoverModal,
-                gapLimit,
-                setGapLimit,
-                isValid,
-                clicked
-              }}
-            />
-          </Row>
-        )}
+        <Label id="displayed-units-input">
+          <T id="settings.displayedUnits" m="Displayed Units" />
+        </Label>
+        <SettingsInput
+          className={classNames(styles.input, "selectWithBigFont")}
+          value={tempSettings.currencyDisplay}
+          onChange={(newCurrency) =>
+            onChangeTempSettings({ currencyDisplay: newCurrency.name })
+          }
+          ariaLabelledBy="displayed-units-input"
+          valueKey="name"
+          labelKey="name"
+          options={currencies}
+        />
       </div>
-    </>
+      <div>
+        <Label id="address-usage">
+          <T id="settings.addressUsage" m="Address Usage" />
+        </Label>
+        <KeyBlueButton
+          className={styles.discoverUsageButton}
+          onClick={showDiscoverModal}
+          loading={discoverUsageAttempt || rescanRunning}
+          disabled={discoverUsageAttempt || rescanRunning}>
+          <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
+        </KeyBlueButton>
+        <DiscoverUsageModal
+          {...{
+            show: isDiscoverModalVisible,
+            onSubmit: onDiscoverUsage,
+            onCancelModal: hideDiscoverModal,
+            gapLimit,
+            setGapLimit,
+            isValid,
+            clicked
+          }}
+        />
+      </div>
+    </Box>
   );
 };
 
 MiscSettings.propTypes = {
   tempSettings: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired,
-  walletReady: PropTypes.bool.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 export default MiscSettings;

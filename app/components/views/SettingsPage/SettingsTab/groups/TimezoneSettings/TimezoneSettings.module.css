@@ -1,7 +1,27 @@
-.timezoneOption {
-  margin: 0 0 1rem 0 !important;
+.box {
+  min-height: 19rem;
 }
 
-.timezoneOption label {
-  color: var(--input-color-default);
+.timezoneOption1 {
+  margin: 0 0 4rem 0 !important;
+  padding-left: 0 !important;
+}
+.timezoneOption2 {
+  margin: 0 !important;
+  padding-left: 0 !important;
+}
+
+.timezoneOption1 > div,
+.timezoneOption2 > div {
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  color: var(--grey-5);
+  font-style: normal;
+}
+
+.timezoneOption1 label,
+.timezoneOption2 label {
+  color: var(--main-dark-blue);
+  font-size: 1.6rem;
+  line-height: 2rem;
 }

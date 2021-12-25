@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { RadioButtonGroup } from "pi-ui";
 import styles from "./TimezoneSettings.module.css";
-import { ColumnTitle } from "../../helpers";
+import { Box } from "../../../helpers";
 
 const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
   const update = (value) => onChangeTempSettings({ timezone: value });
@@ -30,16 +30,15 @@ const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
   ];
 
   return (
-    <>
-      <ColumnTitle title={<T id="settings.timezone.title" m="Timezone" />} />
+    <Box className={styles.box}>
       <RadioButtonGroup
         options={timezoneOptions}
         onChange={(option) => update(option.value)}
         value={tempSettings.timezone}
         vertical
-        optionsClassName={styles.timezoneOption}
+        optionsClassName={[styles.timezoneOption1, styles.timezoneOption2]}
       />
-    </>
+    </Box>
   );
 };
 

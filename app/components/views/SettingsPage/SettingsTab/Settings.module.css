@@ -1,13 +1,3 @@
-.privacy,
-.security,
-.timezone {
-  float: left;
-}
-
-.general {
-  order: 3;
-}
-
 .saveButtonWrapper {
   width: 1481px;
   text-align: right;
@@ -18,6 +8,14 @@
   margin-right: 0;
 }
 
+.subtitle {
+  width: initial;
+}
+
+.twoColumns {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 @media screen and (min-width: 1680px) and (max-width: 1920px) {
   .saveButtonWrapper {
     width: 1240px;
@@ -25,32 +23,12 @@
 }
 
 @media screen and (min-width: 1400px) and (max-width: 1680px) {
-  .privacy {
-    order: 3;
-  }
-
-  .general {
-    order: 2;
-  }
-
   .saveButtonWrapper {
     width: 1000px;
-  }
-
-  .timezone {
-    margin-left: 20px;
   }
 }
 
 @media screen and (max-width: 1400px) {
-  .privacy {
-    order: 3;
-  }
-
-  .general {
-    order: 2;
-  }
-
   .saveButtonWrapper {
     width: 740px;
   }
@@ -63,12 +41,12 @@
 }
 
 @media screen and (max-width: 768px) {
-  .timezone {
-    order: 3;
-  }
-
   .saveButtonWrapper {
     width: 355px;
     text-align: center;
+  }
+
+  .twoColumns {
+    grid-template-columns: 1fr;
   }
 }

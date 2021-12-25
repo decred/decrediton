@@ -1,11 +1,28 @@
-.input {
-  display: inline-block;
-  vertical-align: middle;
-  width: 150px;
-  min-width: 150px;
-  margin-right: 0;
+.box {
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: repeat(2, 1fr);
 }
 
+.input,
 .settingsTextInput {
-  width: 150px !important;
+  width: 31rem !important;
+}
+
+@media screen and (max-width: 1920px) {
+  .input,
+  .settingsTextInput {
+    width: 32.7rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    grid-template-columns: 1fr;
+  }
+
+  .input,
+  .settingsTextInput {
+    width: 31rem !important;
+  }
 }

@@ -1,8 +1,6 @@
-import { useState } from "react";
 import Select from "react-select";
 import { injectIntl } from "react-intl";
 import { classNames } from "pi-ui";
-import { useMountEffect } from "hooks";
 import styles from "./LanguageSelectInput.module.css";
 
 const LanguageSelectInput = ({
@@ -14,14 +12,6 @@ const LanguageSelectInput = ({
   options,
   ariaLabelledBy
 }) => {
-  const [stateValue, setValue] = useState(null);
-
-  useMountEffect(() => {
-    if (value) {
-      setValue(value);
-    }
-  });
-
   const selectKeyDown = (e) => {
     switch (e.keyCode) {
       case 8:
@@ -39,7 +29,6 @@ const LanguageSelectInput = ({
   );
 
   const onChangeSelect = (value) => {
-    setValue(value);
     onChange?.(value);
   };
 
@@ -48,7 +37,7 @@ const LanguageSelectInput = ({
       <Select
         clearable={false}
         multi={false}
-        value={stateValue}
+        value={value}
         valueKey={valueKey}
         labelKey={labelKey}
         options={options}

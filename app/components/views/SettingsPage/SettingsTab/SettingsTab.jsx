@@ -15,7 +15,8 @@ const SettingsTab = ({ setThemeName }) => {
     networks,
     areSettingsDirty,
     needNetworkReset,
-    walletReady
+    walletReady,
+    resetSettingsState
   } = useSettings();
   const { walletService } = useService();
 
@@ -39,7 +40,8 @@ const SettingsTab = ({ setThemeName }) => {
         areSettingsDirty,
         needNetworkReset,
         walletReady,
-        setThemeName
+        setThemeName,
+        resetSettingsState
       }}
     />
   );

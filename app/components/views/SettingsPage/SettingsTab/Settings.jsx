@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, ResetNetworkButton } from "buttons";
@@ -8,13 +8,15 @@ import {
   PrivacySettings,
   UISettings,
   MiscSettings,
-  TimezoneSettings
+  TimezoneSettings,
+  PrivatePassphraseSettings
 } from "./groups";
 import { Subtitle } from "shared";
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 import { wallet } from "wallet-preload-shim";
-import { Wrapper, Group, ColumnWrapper, Column } from "./helpers";
+import { Wrapper, Group, GroupWrapper } from "../helpers";
+import { ConfirmModal } from "modals";
 
 const SettingsPage = ({
   areSettingsDirty,
@@ -28,7 +30,8 @@ const SettingsPage = ({
   changePassphraseRequestAttempt,
   needNetworkReset,
   walletReady,
-  setThemeName
+  setThemeName,
+  resetSettingsState
 }) => {
   const saveSettingsHandler = useCallback(() => {
     const config = wallet.getGlobalCfg();
@@ -43,87 +46,154 @@ const SettingsPage = ({
     onSaveSettings(tempSettings);
   }, [onSaveSettings, tempSettings, setThemeName]);
 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  useEffect(() => {
+    if (areSettingsDirty) {
+      if (needNetworkReset) {
+        setShowConfirmModal(true);
+      } else {
+        saveSettingsHandler();
+      }
+    }
+  }, [areSettingsDirty]);
+
   return (
     <>
       <Wrapper>
-        <Group>
-          <Subtitle
-            title={
-              <T
-                id="settings.getstartpage.group-title.connectivity"
-                m="Connectivity"
+        <GroupWrapper>
+          <Group>
+            <Subtitle
+              className={styles.subtitle}
+              title={
+                <T id="settings.getstartpage.group-title.network" m="Network" />
+              }
+            />
+            <NetworkSettings
+              {...{
+                tempSettings,
+                onChangeTempSettings
+              }}
+            />
+          </Group>
+        </GroupWrapper>
+
+        <GroupWrapper>
+          <Group>
+            <Subtitle
+              className={styles.subtitle}
+              title={
+                <T id="settings.getstartpage.group-title.proxy" m="Proxy" />
+              }
+            />
+            <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+          </Group>
+        </GroupWrapper>
+
+        <GroupWrapper className={styles.twoColumns}>
+          <Group>
+            <Subtitle
+              className={styles.subtitle}
+              title={
+                <T
+                  id="settings.getstartpage.group-title.timezone"
+                  m="Timezone"
+                />
+              }
+            />
+            <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
+          </Group>
+
+          {walletReady && (
+            <Group>
+              <Subtitle
+                className={styles.subtitle}
+                title={
+                  <T id="settings.getstartpage.group-title.misc" m="Misc" />
+                }
               />
-            }
-          />
-          <ColumnWrapper>
-            <Column>
-              <NetworkSettings
+              <MiscSettings
                 {...{
                   tempSettings,
+                  currencies,
                   onChangeTempSettings
                 }}
               />
-            </Column>
-            <Column>
-              <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-            </Column>
-          </ColumnWrapper>
-        </Group>
+            </Group>
+          )}
+        </GroupWrapper>
 
-        <Group className={styles.general}>
-          <Subtitle
-            title={
-              <T id="settings.getstartpage.group-title.general" m="General" />
-            }
-          />
-          <ColumnWrapper>
-            <Column>
-              <UISettings
-                {...{ tempSettings, locales, onChangeTempSettings }}
+        <GroupWrapper>
+          <Group>
+            <Subtitle
+              className={styles.subtitle}
+              title={<T id="settings.getstartpage.group-title.ui" m="UI" />}
+            />
+            <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
+          </Group>
+        </GroupWrapper>
+
+        {walletReady && (
+          <GroupWrapper>
+            <Group>
+              <Subtitle
+                className={styles.subtitle}
+                title={
+                  <T
+                    id="settings.getstartpage.group-title.privatePassphrase"
+                    m="Private Passphrase"
+                  />
+                }
               />
-            </Column>
-            <Column className={styles.timezone}>
-              <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-            </Column>
-            {walletReady && (
-              <Column>
-                <MiscSettings
-                  {...{
-                    tempSettings,
-                    currencies,
-                    walletReady,
-                    onChangeTempSettings
-                  }}
+              <PrivatePassphraseSettings
+                {...{
+                  onAttemptChangePassphrase,
+                  isChangePassPhraseDisabled,
+                  changePassphraseRequestAttempt
+                }}
+              />
+            </Group>
+          </GroupWrapper>
+        )}
+
+        <GroupWrapper>
+          <Group>
+            <Subtitle
+              className={styles.subtitle}
+              title={
+                <T
+                  id="settings.getstartpage.group-title.privacy-and-security"
+                  m="Privacy and Security"
                 />
-              </Column>
-            )}
-          </ColumnWrapper>
-        </Group>
-
-        <Group className={styles.privacy}>
-          <Subtitle
-            title={
-              <T
-                id="settings.getstartpage.group-title.privacy-and-security"
-                m="Privacy and Security"
-              />
-            }
-          />
-          <ColumnWrapper>
+              }
+            />
             <PrivacySettings
               {...{
                 tempSettings,
-                onAttemptChangePassphrase,
-                isChangePassPhraseDisabled,
-                onChangeTempSettings,
-                walletReady,
-                changePassphraseRequestAttempt
+                onChangeTempSettings
               }}
             />
-          </ColumnWrapper>
-        </Group>
+          </Group>
+        </GroupWrapper>
       </Wrapper>
 
+      <ConfirmModal
+        show={showConfirmModal}
+        modalTitle={<T id="settings.resetNetworkTitle" m="Reset required" />}
+        buttonLabel={<T id="settings.save" m="Save" />}
+        modalContent={
+          <T
+            id="settings.resetNetworkContent"
+            m="The setting you have chosen to change requires Decrediton to be restarted.  Please confirm this action before proceeding."
+          />
+        }
+        size="large"
+        block={false}
+        onSubmit={saveSettingsHandler}
+        onCancelModal={() => {
+          setShowConfirmModal(false);
+          resetSettingsState();
+        }}
+      />
       <div className={styles.saveButtonWrapper}>
         <div className={styles.saveButton}>
           {needNetworkReset ? (
