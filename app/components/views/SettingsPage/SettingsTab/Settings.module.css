@@ -1,13 +1,3 @@
-.saveButtonWrapper {
-  width: 1481px;
-  text-align: right;
-}
-
-.saveButton {
-  display: inline-block;
-  margin-right: 0;
-}
-
 .subtitle {
   width: initial;
 }
@@ -16,36 +6,7 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-@media screen and (min-width: 1680px) and (max-width: 1920px) {
-  .saveButtonWrapper {
-    width: 1240px;
-  }
-}
-
-@media screen and (min-width: 1400px) and (max-width: 1680px) {
-  .saveButtonWrapper {
-    width: 1000px;
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .saveButtonWrapper {
-    width: 740px;
-  }
-}
-
-@media screen and (max-width: 1180px) {
-  .saveButtonWrapper {
-    width: 649px;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .saveButtonWrapper {
-    width: 355px;
-    text-align: center;
-  }
-
   .twoColumns {
     grid-template-columns: 1fr;
   }
