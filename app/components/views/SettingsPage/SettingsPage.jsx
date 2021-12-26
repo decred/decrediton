@@ -4,7 +4,9 @@ import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import LinksTab from "./LinksTab";
 import LogsTab from "./LogsTab";
 import TutorialsTab from "./TutorialsTab";
-import SettingsTab from "./SettingsTab";
+import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
+import GeneralSettingsTab from "./GeneralSettingsTab";
+import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
 import { useSettings } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
@@ -54,10 +56,22 @@ const SettingsPage = () => {
   const { setThemeName } = useTheme();
   const tabs = [
     {
-      path: "/settings/settings",
-      content: <SettingsTab setThemeName={setThemeName} />,
+      path: "/settings/connectivity",
+      content: ConnectivitySettingsTab,
       header: SettingsTabHeader,
-      label: <T id="settings.tab.settings" m="Settings" />
+      label: <T id="settings.tab.connectivity" m="Connectivity" />
+    },
+    {
+      path: "/settings/general",
+      content: <GeneralSettingsTab setThemeName={setThemeName} />,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.general" m="General" />
+    },
+    {
+      path: "/settings/privacyandsecurity",
+      content: PrivacyandSecuritySettingsTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.privacyandsecurity" m="Privacy and Security" />
     },
     {
       path: "/settings/links",

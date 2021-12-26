@@ -1,11 +1,11 @@
 .closeModalButton {
   height: 29px;
-  background-color: var(--wallet-close-button-bg);
+  background-color: var(--grey-7) !important;
   color: var(--wallet-close-button-text);
   background-image: var(--close-wallet-icon);
   background-repeat: no-repeat;
   background-size: 13px;
   background-position: 10px 8px;
-  border-radius: 10px;
+  border-radius: 0.5rem;
   padding: 0 15px 0 30px;
 }
