@@ -17,12 +17,7 @@ import {
   DEFAULT_LIGHT_THEME_NAME,
   DEFAULT_DARK_THEME_NAME
 } from "pi-ui";
-import {
-  Wrapper,
-  Group,
-  ColumnWrapper,
-  Column
-} from "views/SettingsPage/helpers";
+import { Wrapper, Group } from "views/SettingsPage/helpers";
 import { useSettings } from "hooks";
 import { BackButton, BackButtonArea } from "../helpers";
 import styles from "./Settings.module.css";
@@ -72,35 +67,21 @@ const SetttingsForm = ({ onSendBack }) => {
                 <T id="settings.group-title.connectivity" m="Connectivity" />
               }
             />
-            <ColumnWrapper>
-              <Column>
-                <NetworkSettings
-                  {...{
-                    tempSettings,
-                    onChangeTempSettings
-                  }}
-                />
-              </Column>
-              <Column>
-                <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-              </Column>
-            </ColumnWrapper>
+            <NetworkSettings
+              {...{
+                tempSettings,
+                onChangeTempSettings
+              }}
+            />
+            <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
           </Group>
 
           <Group className={styles.general}>
             <Subtitle
               title={<T id="settings.group-title.general" m="General" />}
             />
-            <ColumnWrapper>
-              <Column>
-                <UISettings
-                  {...{ tempSettings, locales, onChangeTempSettings }}
-                />
-              </Column>
-              <Column className={styles.timezone}>
-                <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-              </Column>
-            </ColumnWrapper>
+            <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
+            <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
           </Group>
 
           <Group className={styles.privacy}>
@@ -112,18 +93,16 @@ const SetttingsForm = ({ onSendBack }) => {
                 />
               }
             />
-            <ColumnWrapper>
-              <PrivacySettings
-                {...{
-                  tempSettings,
-                  onAttemptChangePassphrase,
-                  isChangePassPhraseDisabled,
-                  onChangeTempSettings,
-                  walletReady,
-                  changePassphraseRequestAttempt
-                }}
-              />
-            </ColumnWrapper>
+            <PrivacySettings
+              {...{
+                tempSettings,
+                onAttemptChangePassphrase,
+                isChangePassPhraseDisabled,
+                onChangeTempSettings,
+                walletReady,
+                changePassphraseRequestAttempt
+              }}
+            />
           </Group>
         </Wrapper>
       </div>
