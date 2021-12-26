@@ -5,7 +5,6 @@ import { DiscoverUsageModal } from "modals";
 import { KeyBlueButton } from "buttons";
 import { useSettings } from "hooks";
 import { Label, Box } from "../../../helpers";
-import { classNames } from "pi-ui";
 
 const MiscSettings = ({ tempSettings, currencies, onChangeTempSettings }) => {
   const {
@@ -28,7 +27,8 @@ const MiscSettings = ({ tempSettings, currencies, onChangeTempSettings }) => {
           <T id="settings.displayedUnits" m="Displayed Units" />
         </Label>
         <SettingsInput
-          className={classNames(styles.input, "selectWithBigFont")}
+          selectWithBigFont
+          className={styles.input}
           value={tempSettings.currencyDisplay}
           onChange={(newCurrency) =>
             onChangeTempSettings({ currencyDisplay: newCurrency.name })

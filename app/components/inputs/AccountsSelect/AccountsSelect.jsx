@@ -1,24 +1,24 @@
-import Select from "react-select";
 import { useAccountsSelect } from "./hooks";
 import { Balance } from "shared";
 import styles from "./AccountsSelect.module.css";
 import { classNames } from "pi-ui";
+import { Select } from "inputs";
 import LinkToAccounts from "./LinkToAccounts";
+import { components } from "react-select";
 
 const AccountsSelect = ({
   accountsType,
   className,
   selectClassName,
   showAccountsButton,
-  disabled,
   hideSpendable,
   filterAccounts,
   account: accountProp,
+  customStyles,
+  customComponents,
   onChange,
-  onKeyDown,
-  valueRenderer,
-  optionRenderer,
-  searchable
+  selectWithBigFont,
+  ...props
 }) => {
   const { account, accounts, placeholder } = useAccountsSelect({
     accountProp,
@@ -27,49 +27,54 @@ const AccountsSelect = ({
     onChange
   });
 
-  const selectKeyDown = (e) => {
-    switch (e.keyCode) {
-      case 8:
-      case 46:
-        e.preventDefault();
-        break;
-    }
-    onKeyDown?.(e);
+  const SingleValue = (props) => {
+    return (
+      <components.SingleValue {...props}>
+        <div
+          className={classNames(
+            styles.value,
+            selectWithBigFont && styles.selectWithBigFont
+          )}>
+          <div className={styles.name}>{props.data.name}</div>
+          {!hideSpendable && (
+            <div className={styles.spendable}>
+              <Balance flat amount={props.data.spendable} />
+            </div>
+          )}
+        </div>
+      </components.SingleValue>
+    );
   };
 
-  if (!valueRenderer) {
-    valueRenderer = (option) => (
-      <div className={styles.value}>
-        <div className={styles.name}>{option.name}</div>
-        {!hideSpendable && (
-          <div className={styles.spendable}>
-            <Balance flat amount={option.spendable} />
-          </div>
-        )}
-      </div>
+  const Option = (props) => {
+    return (
+      <components.Option {...props}>
+        <div className={styles.label}>
+          <div className={styles.name}>{props.data.name}</div>
+          {!hideSpendable && (
+            <div className={styles.spendable}>
+              <Balance flat amount={props.data.spendable} />
+            </div>
+          )}
+        </div>
+      </components.Option>
     );
-  }
+  };
 
   return (
     <div
-      className={classNames(styles.isRow, className)}
+      className={classNames(styles.container, className)}
       data-testid="accountsSelect">
       <Select
-        disabled={disabled}
-        clearable={false}
-        style={{ zIndex: "9" }}
         placeholder={placeholder}
-        multi={false}
         value={account}
-        valueKey="value"
-        labelKey="label"
         options={accounts}
-        valueRenderer={valueRenderer}
-        optionRenderer={optionRenderer ?? valueRenderer}
+        customComponents={{ SingleValue, Option, ...customComponents }}
+        className={selectClassName}
+        styles={customStyles}
+        selectWithBigFont={selectWithBigFont}
         onChange={(acc) => onChange?.(acc)}
-        className={classNames(styles.select, selectClassName)}
-        onInputKeyDown={selectKeyDown}
-        searchable={searchable}
+        {...props}
       />
       {showAccountsButton && <LinkToAccounts />}
     </div>
@@ -79,8 +84,7 @@ const AccountsSelect = ({
 AccountsSelect.propTypes = {
   accountsType: PropTypes.oneOf(["spending", "visible"]),
   className: PropTypes.string,
-  showAccountsButton: PropTypes.bool,
-  getAddressForSelected: PropTypes.bool
+  showAccountsButton: PropTypes.bool
 };
 
 export default AccountsSelect;

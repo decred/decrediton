@@ -22,7 +22,7 @@ const LanguageSelectPage = ({
       </SubTitle>
       <div className={styles.toolbar}>
         <LanguageSelectInput
-          value={selectedLang}
+          value={selectedLang.key}
           onChange={onChangeSelectedLang}
           valueKey="key"
           labelKey="description"

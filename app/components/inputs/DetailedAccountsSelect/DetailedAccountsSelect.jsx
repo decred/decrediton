@@ -3,71 +3,79 @@ import styles from "./DetailedAccountsSelect.module.css";
 import { Balance } from "shared";
 import { useDetailedAccountsSelect } from "./hooks";
 import { classNames } from "pi-ui";
+import { components } from "react-select";
 
 // default account's number equals 2^31-1.
 // source https://github.com/decred/dcrwallet/blob/master/wallet/udb/addressmanager.go#L43
 const isImported = ({ value }) => value === Math.pow(2, 31) - 1;
 
-const DetailedAccountsSelect = ({ selectClassName, ...props }) => {
+const DetailedAccountsSelect = (props) => {
   const { mixedAccount, changeAccount } = useDetailedAccountsSelect();
-  const valueRenderer = (option) => {
-    const isMixed = option.value === mixedAccount;
-    const isChange = option.value === changeAccount;
+  const SingleValue = (props) => {
+    const isMixed = props.data.value === mixedAccount;
+    const isChange = props.data.value === changeAccount;
     return (
-      <div className={styles.value}>
-        <div
-          className={classNames(
-            styles.name,
-            styles.icon,
-            isImported(option) && styles.imported,
-            isMixed && styles.mixed,
-            isChange && styles.unmixed
-          )}>
-          {option.name}
+      <components.SingleValue {...props}>
+        <div className={styles.value}>
+          <div
+            className={classNames(
+              styles.name,
+              styles.icon,
+              isImported(props.data) && styles.imported,
+              isMixed && styles.mixed,
+              isChange && styles.unmixed
+            )}>
+            {props.data.name}
+          </div>
+          <div className={styles.spendable}>
+            <span className={styles.balanceLabel}>Balance:</span>
+            <Balance
+              flat
+              amount={props.data.spendable}
+              classNameAmount={styles.balanceAmount}
+              classNameUnit={styles.balanceUnit}
+              classNameSecondary={styles.balanceSecondary}
+            />
+          </div>
         </div>
-        <div className={styles.spendable}>
-          <span className={styles.balanceLabel}>Balance:</span>
-          <Balance
-            flat
-            amount={option.spendable}
-            classNameAmount={styles.balanceAmount}
-            classNameUnit={styles.balanceUnit}
-            classNameSecondary={styles.balanceSecondary}
-          />
-        </div>
-      </div>
+      </components.SingleValue>
     );
   };
-  const optionRenderer = (option) => (
-    <div className={classNames(styles.value, styles.option)}>
-      <div className={styles.name}>{option.name}</div>
-      <div className={styles.spendable}>
-        <Balance flat amount={option.spendable} />
-      </div>
-    </div>
-  );
 
-  // `detailedAccountSelect` and `selectWithBigFont` classNames are
-  // temp solution to skinning from ReactSelectGlobal.css.
-  // When react-select will be replaced by the `pi-ui` component,
-  // this className can be deleted.
+  const Option = (props) => {
+    return (
+      <components.Option {...props}>
+        <div className={classNames(styles.value, styles.option)}>
+          <div className={styles.name}>{props.data.name}</div>
+          <div className={styles.spendable}>
+            <Balance flat amount={props.data.spendable} />
+          </div>
+        </div>
+      </components.Option>
+    );
+  };
+
+  const customStyles = {
+    control: () => ({
+      padding: 0,
+      border: "none"
+    }),
+    indicatorsContainer: () => ({
+      alignItems: "flex-start",
+      marginTop: "0.3rem"
+    })
+  };
+
   return (
     <AccountsSelect
-      className={classNames("detailedAccountSelect", "selectWithBigFont")}
-      valueRenderer={valueRenderer}
-      optionRenderer={optionRenderer}
-      selectClassName={classNames(styles.select, selectClassName)}
-      searchable={false}
+      selectWithBigFont
+      className={styles.detailedAccountSelect}
+      selectClassName={styles.select}
+      customStyles={customStyles}
+      customComponents={{ SingleValue, Option }}
       {...props}
     />
   );
-};
-
-DetailedAccountsSelect.propTypes = {
-  accountsType: PropTypes.oneOf(["spending", "visible"]),
-  className: PropTypes.string,
-  showAccountsButton: PropTypes.bool,
-  getAddressForSelected: PropTypes.bool
 };
 
 export default DetailedAccountsSelect;

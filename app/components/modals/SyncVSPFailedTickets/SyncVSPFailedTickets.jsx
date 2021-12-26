@@ -16,17 +16,19 @@ const SyncVSPFailedTickets = ({
   options
 }) => (
   <PassphraseModal {...{ show, onSubmit, onCancelModal, ...props }}>
-    <label className={classNames(styles.label, "selectWithBigFont")}>
+    <label className={styles.label}>
       <T id="syncVsp.vsp" m="VSP Select" />
       <VSPSelect
+        selectWithBigFont
         className="stakepool-purchase-ticket-input-select"
         {...{ account, onChange: setVSP, value, options }}
       />
     </label>
     <div className={classNames("margin-top-m", "margin-bottom-s")}>
-      <label className={classNames(styles.label, "selectWithBigFont")}>
+      <label className={styles.label}>
         <T id="syncVsp.account" m="Account" />
         <AccountsSelect
+          selectWithBigFont
           selectClassName={styles.accountSelectInput}
           {...{ account, onChange: setAccount }}
         />

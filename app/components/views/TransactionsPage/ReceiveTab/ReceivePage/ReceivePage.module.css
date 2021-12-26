@@ -27,7 +27,8 @@
   display: flex;
 }
 .receiveSelectAccountSelect {
-  align-items: flex-end;
+  align-items: center;
+  display: flex !important;
 }
 .receiveSelectAccountSelect a {
   margin-left: 10px;
@@ -116,6 +117,12 @@
 
 .blueButton {
   font-size: 16px;
+}
+
+.label {
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  color: var(--grey-7);
 }
 
 @media screen and (max-width: 768px) {

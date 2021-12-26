@@ -76,7 +76,6 @@ const SetttingsForm = ({ onSendBack }) => {
               <Column>
                 <NetworkSettings
                   {...{
-                    intl,
                     tempSettings,
                     onChangeTempSettings
                   }}

@@ -67,6 +67,7 @@ const ExistingSeedForm = ({
               onPaste={handleOnPaste}
               onChangeSeedWord={onChangeSeedWord}
               onPasteFromClipboard={pasteFromClipboard}
+              autoFocus={index === 0}
             />
           ))}
         </SeedArea>

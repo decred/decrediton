@@ -55,7 +55,7 @@ const SettingsPage = ({
         saveSettingsHandler();
       }
     }
-  }, [areSettingsDirty]);
+  }, [areSettingsDirty, needNetworkReset, saveSettingsHandler]);
 
   return (
     <>

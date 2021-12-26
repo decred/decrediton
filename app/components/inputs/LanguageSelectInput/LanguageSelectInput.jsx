@@ -1,58 +1,46 @@
-import Select from "react-select";
-import { injectIntl } from "react-intl";
+import { SettingsInput } from "inputs";
 import { classNames } from "pi-ui";
 import styles from "./LanguageSelectInput.module.css";
+import { components } from "react-select";
 
 const LanguageSelectInput = ({
-  className,
-  value,
-  onChange,
   valueKey,
   labelKey,
-  options,
-  ariaLabelledBy
+  ariaLabelledBy,
+  className,
+  ...props
 }) => {
-  const selectKeyDown = (e) => {
-    switch (e.keyCode) {
-      case 8:
-      case 46:
-        e.preventDefault();
-        break;
-    }
-  };
-
-  const valueRenderer = (option) => (
-    <div className={styles.label}>
-      <div className={classNames(styles.flag, styles[option.language])} />
-      <div className={styles.name}>{option.description}</div>
-    </div>
+  const SingleValue = (props) => (
+    <components.SingleValue {...props}>
+      <div className={styles.label}>
+        <div className={classNames(styles.flag, styles[props.data.value])} />
+        <div className={styles.singleValue}>{props.data.label}</div>
+      </div>
+    </components.SingleValue>
   );
 
-  const onChangeSelect = (value) => {
-    onChange?.(value);
-  };
+  const Option = (props) => (
+    <components.Option {...props}>
+      <div className={styles.label}>
+        <div className={classNames(styles.flag, styles[props.data.value])} />
+        <div className={styles.option}>{props.data.label}</div>
+      </div>
+    </components.Option>
+  );
 
   return (
     <div className={classNames(styles.input, className)}>
-      <Select
-        clearable={false}
-        multi={false}
-        value={value}
-        valueKey={valueKey}
-        labelKey={labelKey}
-        options={options}
-        valueRenderer={valueRenderer}
-        optionRenderer={valueRenderer}
-        onChange={onChangeSelect}
-        onInputKeyDown={selectKeyDown}
-        aria-labelledby={ariaLabelledBy}
+      <SettingsInput
+        {...{
+          valueKey,
+          labelKey,
+          ariaLabelledBy,
+          customComponents: { SingleValue, Option },
+          ...props
+        }}
       />
     </div>
   );
 };
 
-LanguageSelectInput.propTypes = {
-  className: PropTypes.string
-};
-
-export default injectIntl(LanguageSelectInput);
+export default LanguageSelectInput;

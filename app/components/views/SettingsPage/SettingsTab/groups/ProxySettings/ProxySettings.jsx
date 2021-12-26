@@ -8,7 +8,6 @@ import {
 } from "constants";
 import styles from "./ProxySettings.module.css";
 import { Label, Box } from "../../../helpers";
-import { classNames } from "pi-ui";
 
 const availableProxyTypes = [
   { name: <T id="settings.proxy.type.none" m="No Proxy" />, value: null },
@@ -25,7 +24,8 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
         <T id="settings.proxy.type" m="Proxy Type" />
       </Label>
       <SettingsInput
-        className={classNames(styles.input, "selectWithBigFont")}
+        selectWithBigFont
+        className={styles.input}
         value={tempSettings.proxyType}
         onChange={(newProxyType) =>
           onChangeTempSettings({ proxyType: newProxyType.value })

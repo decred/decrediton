@@ -2,11 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelectInput } from "inputs";
 import { InfoDocFieldModalInvisibleButton } from "buttons";
 import styles from "./UISettings.module.css";
-import {
-  DEFAULT_DARK_THEME_NAME,
-  DEFAULT_LIGHT_THEME_NAME,
-  classNames
-} from "pi-ui";
+import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { Box, Label } from "../../../helpers";
 
 const availableUIThemeTypes = [
@@ -27,7 +23,8 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
         <T id="settings.uitheme.type" m="Tonality" />
       </Label>
       <SettingsInput
-        className={classNames(styles.input, "selectWithBigFont")}
+        selectWithBigFont
+        className={styles.input}
         value={tempSettings.theme}
         ariaLabelledBy="theme-input"
         onChange={(newTheme) => onChangeTempSettings({ theme: newTheme.value })}
@@ -42,7 +39,8 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
         <T id="settings.locale" m="Locale" />
       </Label>
       <LanguageSelectInput
-        className={classNames(styles.input, "selectWithBigFont")}
+        selectWithBigFont
+        className={styles.input}
         value={tempSettings.locale}
         onChange={(newLocale) =>
           onChangeTempSettings({ locale: newLocale.key })
@@ -59,7 +57,8 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
         <T id="settings.uiAnimations.label" m="UI Animations" />
       </Label>
       <SettingsInput
-        className={classNames(styles.input, "selectWithBigFont")}
+        selectWithBigFont
+        className={styles.input}
         value={tempSettings.uiAnimations ? "true" : "false"}
         onChange={(newUIAnimations) =>
           onChangeTempSettings({ uiAnimations: newUIAnimations.value })

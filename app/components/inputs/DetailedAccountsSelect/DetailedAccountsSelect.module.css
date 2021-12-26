@@ -1,7 +1,4 @@
-.isRow {
-  display: flex;
-  flex-direction: row;
-}
+.detailedAccountSelect,
 .select {
   width: auto;
 }

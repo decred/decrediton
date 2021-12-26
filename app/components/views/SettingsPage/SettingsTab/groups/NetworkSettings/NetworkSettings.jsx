@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip, classNames } from "pi-ui";
+import { Tooltip } from "pi-ui";
 import { SettingsInput, SettingsTextInput } from "inputs";
 import { TESTNET, MAINNET } from "constants";
 import styles from "./NetworkSettings.module.css";
@@ -24,7 +24,8 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         content={<AlreadySetMessage />}
         disabled={!tempSettings.networkFromCli}>
         <SettingsInput
-          className={classNames(styles.input, "selectWithBigFont")}
+          selectWithBigFont
+          className={styles.input}
           value={tempSettings.network}
           onChange={(opt) => onChangeTempSettings({ network: opt.value })}
           valueKey="value"
@@ -55,10 +56,11 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         content={<AlreadySetMessage />}
         disabled={!tempSettings.spvModeFromCli}>
         <SettingsInput
-          className={classNames(styles.input, "selectWithBigFont")}
+          selectWithBigFont
+          className={styles.input}
           value={tempSettings.spvMode ? "true" : "false"}
           onChange={(opt) => onChangeTempSettings({ spvMode: opt.value })}
-          valueKey="key"
+          valueKey="value"
           labelKey="description"
           disabled={tempSettings.spvModeFromCli}
           ariaLabelledBy="spv-input"
@@ -86,12 +88,13 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         content={<AlreadySetMessage />}
         disabled={!tempSettings.daemonStartAdvancedFromCli}>
         <SettingsInput
-          className={classNames(styles.input, "selectWithBigFont")}
+          selectWithBigFont
+          className={styles.input}
           value={tempSettings.daemonStartAdvanced ? "true" : "false"}
           onChange={(opt) =>
             onChangeTempSettings({ daemonStartAdvanced: opt.value })
           }
-          valueKey="key"
+          valueKey="value"
           labelKey="description"
           disabled={tempSettings.daemonStartAdvancedFromCli}
           ariaLabelledBy="adv-damon-startup-input"

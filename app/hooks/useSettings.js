@@ -38,7 +38,7 @@ const useSettings = () => {
   );
 
   const resetSettingsState = useCallback(
-    (settings) => dispatch(sa.resetSettingsState()),
+    () => dispatch(sa.resetSettingsState()),
     [dispatch]
   );
 

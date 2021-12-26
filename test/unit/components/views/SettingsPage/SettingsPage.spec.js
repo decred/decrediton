@@ -57,7 +57,7 @@ const testDefaultAllowedExternalRequests = [
 ];
 
 const testCurrentSettings = {
-  locale: testDefaultLocale,
+  locale: testDefaultLocale.key,
   theme: testDefaultTheme,
   network: testDefaultNetwork.toLowerCase(),
   needNetworkReset: false,
@@ -277,7 +277,7 @@ test("test cli tooltips", () => {
 const getOptionByNameAndType = (name, type) => {
   const regex = new RegExp(type, "g");
   const options = screen
-    .getAllByRole("option", { name: name })
+    .getAllByText(name)
     .filter((option) => option.className.match(regex));
   return options[0];
 };
@@ -318,9 +318,9 @@ const testComboxBoxInput = (
   const saveButton = screen.getByText("Save");
   expect(saveButton.disabled).toBe(true);
   const inputControl = screen.getByLabelText(labelName);
-  const inputValueSpan = getOptionByNameAndType(oldValue, "value");
+  const inputValueSpan = getOptionByNameAndType(oldValue, "singleValue");
   expect(inputValueSpan.textContent).toMatch(oldValue);
-  user.click(inputControl.parentNode);
+  user.click(inputControl);
   user.click(getOptionByNameAndType(option, "option"));
 
   expect(screen.getByText("Save").disabled).toBe(false);

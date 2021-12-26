@@ -71,12 +71,9 @@ const PurchaseTicketsForm = ({
         <div className={classNames(styles.isColumn, styles.inputAddress)}>
           <label className={styles.rowLabel}>
             <T id="purchaseTickets.accountFrom" m="Account" />
-            <div
-              className={classNames(
-                styles.inputSelectContainer,
-                "selectWithBigFont"
-              )}>
+            <div className={styles.inputSelectContainer}>
               <AccountsSelect
+                selectWithBigFont
                 filterAccounts={notMixedAccounts}
                 className={styles.inputSelect}
                 selectClassName={styles.accountSelectInput}
@@ -87,12 +84,9 @@ const PurchaseTicketsForm = ({
           {!isLegacy && (
             <label className={styles.rowLabel}>
               <T id="purchaseTickets.vspFrom" m="VSP" />
-              <div
-                className={classNames(
-                  styles.vspContainer,
-                  "selectWithBigFont"
-                )}>
+              <div className={styles.vspContainer}>
                 <VSPSelect
+                  selectWithBigFont
                   className={styles.inputSelect}
                   style={{ width: "100%", marginRight: "10px" }}
                   {...{

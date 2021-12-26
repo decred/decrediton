@@ -110,34 +110,45 @@ const goToConfirmView = async () => {
 
 const goToRestoreView = async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  user.click(screen.getByText(/restore existing wallet/i));
+  await wait(() => screen.getByText("Welcome to Decrediton Wallet"));
+  user.click(screen.getByText("Restore Existing Wallet"));
   await wait(() => screen.getByText("Wallet Name"));
-  user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
+  user.type(screen.getByPlaceholderText("Choose a Name"), testWalletName);
 };
 
 const goToExistingSeedView = async () => {
   await goToRestoreView();
-  user.click(screen.getByText(/continue/i));
-  await wait(() => screen.getByText(/confirm seed key/i));
+  user.click(screen.getByText("Continue"));
+  await wait(() => screen.getByText("Confirm Seed Key"));
 };
 
-const testPrivatePassphraseInputs = async () => {
+const testPrivatePassphraseInputs = async (
+  privatePassphraseInput,
+  repeatPrivatePassphraseInput,
+  mistypeFirst = false
+) => {
   const testPassword = "test-password";
-  const privatePassphraseInput = screen.getByPlaceholderText(
-    "Write your Private Passphrase"
-  );
-  const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
-    "Confirm your Private Passphrase"
-  );
+  if (!privatePassphraseInput) {
+    privatePassphraseInput = screen.getByPlaceholderText(
+      "Write your Private Passphrase"
+    );
+  }
+  if (!repeatPrivatePassphraseInput) {
+    repeatPrivatePassphraseInput = screen.getByPlaceholderText(
+      "Confirm your Private Passphrase"
+    );
+  }
   fireEvent.change(privatePassphraseInput, {
     target: { value: testPassword }
   });
-  fireEvent.change(repeatPrivatePassphraseInput, {
-    target: { value: `mistyped ${testPassword}` }
-  });
-  await wait(() => screen.getByText(/passphrases do not match/i));
-  user.clear(repeatPrivatePassphraseInput);
+
+  if (mistypeFirst) {
+    fireEvent.change(repeatPrivatePassphraseInput, {
+      target: { value: `mistyped ${testPassword}` }
+    });
+    await wait(() => screen.getByText(/passphrases do not match/i));
+    user.clear(repeatPrivatePassphraseInput);
+  }
   fireEvent.change(repeatPrivatePassphraseInput, {
     target: { value: testPassword }
   });
@@ -155,13 +166,10 @@ const firePasteEvent = (combobox, text) => {
   fireEvent(combobox, pasteEvent);
 };
 
-const fillSeedWordEntryUsingSpaceKey = (combobox, word) => {
+const fillSeedWordEntryUsingEnterKey = (combobox, word) => {
   user.click(combobox);
-  user.type(combobox, word + " ");
-};
-const clearSeedWordEntryUsing = (combobox) => {
-  user.click(combobox);
-  fireEvent.keyDown(combobox, { key: "backspace", keyCode: 8 });
+  user.type(combobox, word);
+  fireEvent.keyDown(combobox, { key: "Enter", code: "Enter", charCode: 13 });
 };
 
 test("test copy seed view", async () => {
@@ -314,7 +322,7 @@ test("test typing a valid seed word on existing seed view", async () => {
   const comboboxArray = screen.getAllByRole("combobox");
   expect(comboboxArray.length).toBe(testSeedArray.length);
 
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
   expect(mockDecodeSeed).toHaveBeenCalled();
   await wait(() =>
     expect(screen.getByText("1.").parentNode.className).toMatch(/populated/)
@@ -388,7 +396,17 @@ test("pasting valid seed words on existing seed view and successfully create wal
       /please make sure you also have a physical, written down copy of your seed./i
     )
   );
-  await testPrivatePassphraseInputs();
+  const privatePassphraseInput = screen.getByPlaceholderText(
+    "Write your Private Passphrase"
+  );
+  const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
+    "Confirm your Private Passphrase"
+  );
+  await testPrivatePassphraseInputs(
+    privatePassphraseInput,
+    repeatPrivatePassphraseInput,
+    true
+  );
 
   user.click(screen.getByText(/create wallet/i));
   expect(mockCreateWallet).toHaveBeenCalled();
@@ -413,72 +431,89 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
 
   await wait(() =>
     screen.getByText(
-      /please make sure you also have a physical, written down copy of your seed./i
+      "*Please make sure you also have a physical, written down copy of your seed."
     )
   );
-  await testPrivatePassphraseInputs();
-  expect(screen.getByText(/create wallet/i).disabled).toBe(false);
-
   const privatePassphraseInput = screen.getByPlaceholderText(
     "Write your Private Passphrase"
   );
   const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
     "Confirm your Private Passphrase"
   );
+  const createWallet = screen.getByText("Create Wallet");
+  await testPrivatePassphraseInputs(
+    privatePassphraseInput,
+    repeatPrivatePassphraseInput
+  );
+  expect(createWallet.disabled).toBe(false);
 
   // differentiate passphrases
   user.type(repeatPrivatePassphraseInput, "plus-string");
-  await wait(() => screen.getByText(/passphrases do not match/i));
-  expect(screen.getByText(/create wallet/i).disabled).toBe(true);
+  screen.getByText("*Passphrases do not match");
+  expect(createWallet.disabled).toBe(true);
   // fix, button should be enabled
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
-  await testPrivatePassphraseInputs();
-  expect(screen.getByText(/create wallet/i).disabled).toBe(false);
+  await testPrivatePassphraseInputs(
+    privatePassphraseInput,
+    repeatPrivatePassphraseInput
+  );
+  expect(createWallet.disabled).toBe(false);
 
   // clear passphrases
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
-  await wait(() => screen.getByText(/please enter your private passphrase/i));
-  expect(screen.getByText(/create wallet/i).disabled).toBe(true);
+  screen.getByText("*Please enter your private passphrase");
+  expect(createWallet.disabled).toBe(true);
 
   // fix, button should be enabled
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
-  await testPrivatePassphraseInputs();
-  expect(screen.getByText(/create wallet/i).disabled).toBe(false);
-
-  // clear the first seed input, button should be disabled
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({})
+  await testPrivatePassphraseInputs(
+    privatePassphraseInput,
+    repeatPrivatePassphraseInput
   );
-  const comboboxArray = screen.getAllByRole("combobox");
-  clearSeedWordEntryUsing(comboboxArray[0]);
-  await wait(() =>
-    expect(screen.getByText("1.").parentNode.className).toMatch(/restore/)
-  );
-  expect(screen.getByText(/create wallet/i).disabled).toBe(true);
+  expect(createWallet.disabled).toBe(false);
+});
 
-  // fix, button should be enabled
+test("create wallet button must be disabled if any of the inputs is invalid", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
       decodedSeed: testSeedArray
     })
   );
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
-  await wait(() =>
-    expect(screen.getByText("1.").parentNode.className).toMatch(/populated/)
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
+    Promise.resolve(true)
   );
-  expect(screen.getByText(/create wallet/i)).not.toHaveAttribute("disabled");
+  await goToExistingSeedView();
+
+  const comboboxArray = screen.getAllByRole("combobox");
+  firePasteEvent(comboboxArray[0], testSeedMnemonic);
+
+  await wait(() =>
+    screen.getByText(
+      "*Please make sure you also have a physical, written down copy of your seed."
+    )
+  );
+  const privatePassphraseInput = screen.getByPlaceholderText(
+    "Write your Private Passphrase"
+  );
+  const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
+    "Confirm your Private Passphrase"
+  );
+  const createWallet = screen.getByText("Create Wallet");
+  await testPrivatePassphraseInputs(
+    privatePassphraseInput,
+    repeatPrivatePassphraseInput
+  );
+  expect(createWallet.disabled).toBe(false);
 
   // enter invalid seed word into the first input, button should be disabled
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.reject({})
   );
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[1]);
-  await wait(() =>
-    expect(screen.getByText(/create wallet/i)).toHaveAttribute("disabled")
-  );
+  fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[1]);
+  await wait(() => expect(createWallet).toHaveAttribute("disabled"));
 
   // fix, button should be enabled
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
@@ -486,10 +521,8 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
       decodedSeed: testSeedArray
     })
   );
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
-  await wait(() =>
-    expect(screen.getByText(/create wallet/i)).not.toHaveAttribute("disabled")
-  );
+  fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
+  await wait(() => expect(createWallet).not.toHaveAttribute("disabled"));
 });
 
 test("test POSITION_ERROR handling on restore view", async () => {
@@ -500,9 +533,9 @@ test("test POSITION_ERROR handling on restore view", async () => {
     Promise.reject({})
   );
   const comboboxArray = screen.getAllByRole("combobox");
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
   expect(screen.getByText("1.").parentNode.className).toMatch(/populated/);
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[1], testSeedArray[1]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[1], testSeedArray[1]);
   expect(screen.getByText("2.").parentNode.className).toMatch(/populated/);
 
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
@@ -510,7 +543,7 @@ test("test POSITION_ERROR handling on restore view", async () => {
       toString: () => `is ${POSITION_ERROR} 2, check for missing words`
     })
   );
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[2], testSeedArray[2]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[2], testSeedArray[2]);
   await wait(() =>
     expect(screen.getByText("3.").parentNode.className).toMatch(/error/)
   );
@@ -518,17 +551,17 @@ test("test POSITION_ERROR handling on restore view", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.reject({ details: MISMATCH_ERROR })
   );
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[4], testSeedArray[4]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[4], testSeedArray[4]);
   await wait(() =>
     expect(screen.getByText("5.").parentNode.className).toMatch(/populated/)
   );
 
   // if entered the same word, the decodeSeed should not be called
   mockDecodeSeed.mockClear();
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[4], testSeedArray[4]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[4], testSeedArray[4]);
   expect(mockDecodeSeed).not.toHaveBeenCalled();
 
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[5], testSeedArray[5]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[5], testSeedArray[5]);
   await wait(() =>
     expect(screen.getByText("6.").parentNode.className).toMatch(/populated/)
   );
@@ -543,9 +576,9 @@ test("test invalid POSITION_ERROR msg format handling on restore view", async ()
     })
   );
   const comboboxArray = screen.getAllByRole("combobox");
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[0], testSeedArray[0]);
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[1], testSeedArray[1]);
-  fillSeedWordEntryUsingSpaceKey(comboboxArray[3], testSeedArray[3]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[1], testSeedArray[1]);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[3], testSeedArray[3]);
   await wait(() =>
     expect(screen.getByText("4.").parentNode.className).toMatch(/populated/)
   );
@@ -652,19 +685,24 @@ test("test hex input tab on restore view", async () => {
   expect(hexInput.value).toMatch("");
 });
 
-test("press space button on seed combobox", async () => {
+test("space button should be disabled on seed combobox", async () => {
   await goToExistingSeedView();
 
   const combobox = screen.getAllByRole("combobox")[0];
   user.click(combobox);
   user.type(combobox, testSeedArray[0].charAt(0));
-  expect(screen.getByText(testSeedArray[0].charAt(0))).toBeInTheDocument();
+  expect(combobox.value).toMatch(testSeedArray[0].charAt(0));
   user.type(combobox, " ");
-  expect(
-    screen.queryByText(testSeedArray[0].charAt(0))
-  ).not.toBeInTheDocument();
-  expect(screen.getByText(testSeedArray[0])).toBeInTheDocument();
+  expect(combobox.value).toMatch(testSeedArray[0].charAt(0));
 });
+
+const getComboboxByName = (name) => {
+  const regex = new RegExp("singleValue", "g");
+  const options = screen
+    .getAllByText(name)
+    .filter((option) => option.className.match(regex));
+  return options[0];
+};
 
 test("middle mouse button down and paste on seed combobox", async () => {
   await goToExistingSeedView();
@@ -673,7 +711,7 @@ test("middle mouse button down and paste on seed combobox", async () => {
   fireEvent.mouseDown(combobox, { which: 2 });
   await wait(() => expect(mockClipboardReadText).toHaveBeenCalled());
   for (let i = 0; i < testSeedArray.length; i++) {
-    expect(screen.getByText(testSeedArray[i])).toBeInTheDocument();
+    expect(getComboboxByName(testSeedArray[i])).toBeInTheDocument();
   }
 });
 

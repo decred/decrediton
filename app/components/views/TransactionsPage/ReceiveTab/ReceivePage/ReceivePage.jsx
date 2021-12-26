@@ -13,7 +13,7 @@ import {
   getThemeProperty,
   TextHighlighted
 } from "pi-ui";
-import style from "./ReceivePage.module.css";
+import styles from "./ReceivePage.module.css";
 
 const messages = defineMessages({
   amountPlaceholder: {
@@ -54,39 +54,31 @@ const ReceivePage = ({
     <>
       {modal && <QRCodeModal {...{ amount, nextAddress, setModal }} />}
       <Subtitle title={<T id="receive.subtitle" m="Receive DCR" />} />
-      <div className={style.receiveContent}>
-        <div className={style.inputs}>
-          <div className={style.inputWrapper}>
-            <label htmlFor="receiveAccountSelect">
+      <div className={styles.receiveContent}>
+        <div className={styles.inputs}>
+          <div className={styles.inputWrapper}>
+            <label htmlFor="receiveAccountSelect" className={styles.label}>
               <T id="receive.accountLabel" m="This address is for" />
             </label>
-            {
-              // `selectWithBigFont` className is
-              // temp solution to skinning from ReactSelectGlobal.css.
-              // When react-select will be replaced by the `pi-ui` component,
-              // this className can be deleted.
-            }
             <ReceiveAccountsSelect
               id="receiveAccountSelect"
+              selectWithBigFont
               showAccountsButton
-              className={classNames(
-                style.receiveSelectAccountSelect,
-                "selectWithBigFont"
-              )}
-              selectClassName={style.receiveSelectAccountSelectInput}
+              className={styles.receiveSelectAccountSelect}
+              selectClassName={styles.receiveSelectAccountSelectInput}
             />
           </div>
           <div
             className={classNames(
-              style.inputWrapper,
-              style.amountInputWrapper
+              styles.inputWrapper,
+              styles.amountInputWrapper
             )}>
-            <div className={style.receiveSelectAmountInput}>
+            <div className={styles.receiveSelectAmountInput}>
               <DcrInput
                 newBiggerFontStyle
                 id="amountInput"
                 label={intl.formatMessage(messages.amountLabel)}
-                className={style.requestedAmountInput}
+                className={styles.requestedAmountInput}
                 required={false}
                 showErrors={error && error.amount}
                 invalid={error && error.amount}
@@ -99,18 +91,18 @@ const ReceivePage = ({
           </div>
         </div>
 
-        <div className={style.line}>
+        <div className={styles.line}>
           <TextHighlighted
             truncate={false}
-            className={classNames(style.receiveContentNestQR)}>
+            className={classNames(styles.receiveContentNestQR)}>
             {nextAddress}
             <div
               className={classNames(
-                style.receiveContentNestCopyQR,
-                tooltip && style.opacity
+                styles.receiveContentNestCopyQR,
+                tooltip && styles.opacity
               )}>
-              <div className={style.receiveContentNestCopyQRArrow} />
-              <div className={style.receiveContentNestCopyQRText}>
+              <div className={styles.receiveContentNestCopyQRArrow} />
+              <div className={styles.receiveContentNestCopyQRText}>
                 {tooltipText ? (
                   <T
                     id="receive.tooltipGenerated"
@@ -129,7 +121,7 @@ const ReceivePage = ({
             <Tooltip content={<T id="receiveTab.copy" m="Copy" />}>
               <ButtonIcon
                 type="copyToClipboard"
-                className={style.receiveContentCopyButton}
+                className={styles.receiveContentCopyButton}
                 iconBackgroundColor={iconColor}
                 onClick={() => {
                   copy(nextAddress);
@@ -150,11 +142,11 @@ const ReceivePage = ({
           </div>
         </div>
       </div>
-      <div className={style.generateButton}>
+      <div className={styles.generateButton}>
         <KeyBlueButton
           size="large"
           block={false}
-          className={style.blueButton}
+          className={styles.blueButton}
           onClick={() => {
             setTooltipText(true);
             showTooltip();

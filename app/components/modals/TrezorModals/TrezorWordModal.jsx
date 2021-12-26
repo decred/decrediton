@@ -1,22 +1,20 @@
 import { useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
-import Select from "react-select";
+import { Select } from "inputs";
 import Modal from "../Modal";
 import { ButtonsToolbar } from "shared";
 import { WORD_LIST } from "constants/trezor";
 import { classNames } from "pi-ui";
 import styles from "./TrezorModals.module.css";
 
-const inputOptions = WORD_LIST.map((w) => ({ word: w }));
+const inputOptions = WORD_LIST.map((w) => ({ value: w, label: w }));
 
 const getSeedWords = (input, callback) => {
-  input = input.toLowerCase();
+  const inputValue = input.toLowerCase();
   const options = inputOptions.filter(
-    (w) => w.word.toLowerCase().substr(0, input.length) === input
+    (w) => w.value.toLowerCase().substr(0, inputValue.length) === inputValue
   );
-  callback(null, {
-    options: options.slice(0, 5)
-  });
+  callback(options.slice(0, 5));
 };
 
 const TrezorWordModal = ({
@@ -41,10 +39,10 @@ const TrezorWordModal = ({
     setValue(null);
   }, [word, onSubmitWord]);
 
-  const onWordChanged = useCallback((value) => {
-    setWord(value);
-    setValue({ word: value });
-  }, []);
+  const onWordChanged = (value) => {
+    setWord(value.value);
+    setValue(value);
+  };
 
   const onSelectKeyDown = useCallback(
     (e) => {
@@ -73,16 +71,11 @@ const TrezorWordModal = ({
       </p>
 
       <div className={styles.wordSelect}>
-        <Select.Async
-          ref={(n) => n && n.focus()}
+        <Select
+          isAsync
+          isSearchable
+          defaultOptions
           autoFocus
-          simpleValue
-          multi={false}
-          clearable={false}
-          multi={false}
-          filterOptions={false}
-          valueKey={"word"}
-          labelKey={"word"}
           loadOptions={getSeedWords}
           onChange={onWordChanged}
           value={value}
@@ -92,8 +85,8 @@ const TrezorWordModal = ({
               m="Start typing word..."
             />
           }
-          onInputKeyDown={onSelectKeyDown}
-          disabled={!waitingForWord}
+          onKeyDown={onSelectKeyDown}
+          isDisabled={!waitingForWord}
         />
       </div>
 

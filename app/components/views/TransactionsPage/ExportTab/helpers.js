@@ -9,7 +9,7 @@ import {
 
 export const messages = {
   transactions: {
-    name: <T id="export.transactions.name" m="Transactions" />,
+    label: <T id="export.transactions.name" m="Transactions" />,
     description: (
       <T
         id="export.transactions.descr"
@@ -92,7 +92,7 @@ export const messages = {
     ]
   },
   dailyBalances: {
-    name: <T id="export.dailyBalances.name" m="Daily Balances" />,
+    label: <T id="export.dailyBalances.name" m="Daily Balances" />,
     description: (
       <T
         id="export.dailyBalances.descr"
@@ -235,7 +235,7 @@ export const messages = {
     ]
   },
   balances: {
-    name: <T id="export.balances.name" m="Balances" />,
+    label: <T id="export.balances.name" m="Balances" />,
     description: (
       <T
         id="export.balances.descr"
@@ -330,7 +330,7 @@ export const messages = {
     ]
   },
   voteTime: {
-    name: <T id="export.votetime.name" m="Vote Time" />,
+    label: <T id="export.votetime.name" m="Vote Time" />,
     description: (
       <T
         id="export.votetime.descr"
@@ -356,7 +356,7 @@ export const messages = {
     ]
   },
   tickets: {
-    name: <T id="export.tickets.name" m="Tickets" />,
+    label: <T id="export.tickets.name" m="Tickets" />,
     description: (
       <T id="export.tickets.descr" m="Export ticket and vote information." />
     ),
@@ -431,15 +431,15 @@ export const messages = {
 export const availableExports = [
   {
     ...messages.transactions,
-    key: "transactions",
+    value: "transactions",
     calcFunction: transactionStats
   },
   {
     ...messages.dailyBalances,
-    key: "dailyBalances",
+    value: "dailyBalances",
     calcFunction: dailyBalancesStats
   },
-  { ...messages.balances, key: "balances", calcFunction: balancesStats },
-  { ...messages.voteTime, key: "votetime", calcFunction: voteTimeStats },
-  { ...messages.tickets, key: "tickets", calcFunction: ticketStats }
+  { ...messages.balances, value: "balances", calcFunction: balancesStats },
+  { ...messages.voteTime, value: "votetime", calcFunction: voteTimeStats },
+  { ...messages.tickets, value: "tickets", calcFunction: ticketStats }
 ];

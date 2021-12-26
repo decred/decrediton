@@ -59,7 +59,6 @@
 
 .rowLabel {
   font-size: 13px;
-  line-height: 16px;
   color: var(--purchase-label);
   align-self: flex-end;
   width: 100%;
