@@ -47,9 +47,7 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
         id="proxyLocationInput"
         value={tempSettings.proxyLocation}
         ariaLabelledBy="proxy-location"
-        onChange={(e) =>
-          onChangeTempSettings({ proxyLocation: e.target.value })
-        }
+        onChange={(value) => onChangeTempSettings({ proxyLocation: value })}
       />
     </div>
   </Box>

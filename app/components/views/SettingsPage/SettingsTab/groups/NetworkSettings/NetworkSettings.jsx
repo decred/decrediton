@@ -128,8 +128,8 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
           value={tempSettings.spvConnect}
           disabled={tempSettings.spvConnectFromCli}
           ariaLabelledBy="spv-connect-input"
-          onChange={(e) =>
-            onChangeTempSettings({ spvConnect: e.target.value.split(",") })
+          onChange={(value) =>
+            onChangeTempSettings({ spvConnect: value.split(",") })
           }
         />
       </Tooltip>

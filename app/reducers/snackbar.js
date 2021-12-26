@@ -174,6 +174,7 @@ import {
   CREATEMIXERACCOUNTS_FAILED,
   RUNACCOUNTMIXER_FAILED
 } from "actions/AccountMixerActions";
+import { SETTINGS_SAVE } from "actions/SettingsActions";
 
 const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
 const ERROR_IS_OBJECT = "ERROR_IS_OBJECT";
@@ -729,6 +730,10 @@ const messages = defineMessages({
   DEX_EXPORT_SEED_FAILED: {
     id: "dex.export.seed.failed",
     defaultMessage: "{originalError}"
+  },
+  SETTINGS_SAVE: {
+    id: "settings.saved",
+    defaultMessage: "Settings saved successfully."
   }
 });
 
@@ -821,6 +826,7 @@ export default function snackbar(state = {}, action) {
     case SETVOTECHOICES_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
     case NEW_BTC_CONFIG_SUCCESS:
+    case SETTINGS_SAVE:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
