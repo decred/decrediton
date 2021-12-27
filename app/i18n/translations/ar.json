@@ -917,7 +917,7 @@
   "noProposals.description": "لا توجد مقترحات متاحة",
   "noStats.description": "لا توجد إحصائيات متاحة",
   "noTickets.description": "لم يتم العثور على أية تذاكر",
-  "noTransactions.description": "لم يتم العثور على أي معاملات,
+  "noTransactions.description": "لم يتم العثور على أي معاملات",
   "notification.new": "معاملة جديدة",
   "notification.seeTransactionDetails": "انظر تفاصيل المعاملة",
   "notification.transfer.fee": "رسم المعاملة",
