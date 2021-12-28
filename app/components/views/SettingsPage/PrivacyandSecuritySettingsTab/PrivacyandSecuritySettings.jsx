@@ -3,7 +3,8 @@ import PrivacySettings from "./PrivacySettings";
 import PrivatePassphraseSettings from "./PrivatePassphraseSettings";
 import { Subtitle } from "shared";
 import styles from "./PrivacyandSecuritySettings.module.css";
-import { Wrapper, Group, GroupWrapper } from "../helpers";
+import { Wrapper, Group } from "../helpers";
+import { classNames } from "pi-ui";
 
 const PrivacyandSecuritySettings = ({
   tempSettings,
@@ -11,51 +12,50 @@ const PrivacyandSecuritySettings = ({
   onAttemptChangePassphrase,
   isChangePassPhraseDisabled,
   changePassphraseRequestAttempt,
-  walletReady
+  walletReady,
+  wrapperClassName,
+  boxClassName
 }) => (
-  <Wrapper>
+  <Wrapper className={classNames(wrapperClassName, styles.wrapper)}>
     {walletReady && (
-      <GroupWrapper>
-        <Group>
-          <Subtitle
-            className={styles.subtitle}
-            title={
-              <T
-                id="settings.getstartpage.group-title.privatePassphrase"
-                m="Private Passphrase"
-              />
-            }
-          />
-          <PrivatePassphraseSettings
-            {...{
-              onAttemptChangePassphrase,
-              isChangePassPhraseDisabled,
-              changePassphraseRequestAttempt
-            }}
-          />
-        </Group>
-      </GroupWrapper>
-    )}
-
-    <GroupWrapper>
       <Group>
         <Subtitle
           className={styles.subtitle}
           title={
             <T
-              id="settings.getstartpage.group-title.privacy-and-security"
-              m="Privacy and Security"
+              id="settings.getstartpage.group-title.privatePassphrase"
+              m="Private Passphrase"
             />
           }
         />
-        <PrivacySettings
+        <PrivatePassphraseSettings
           {...{
-            tempSettings,
-            onChangeTempSettings
+            onAttemptChangePassphrase,
+            isChangePassPhraseDisabled,
+            changePassphraseRequestAttempt
           }}
         />
       </Group>
-    </GroupWrapper>
+    )}
+
+    <Group>
+      <Subtitle
+        className={styles.subtitle}
+        title={
+          <T
+            id="settings.getstartpage.group-title.privacy-and-security"
+            m="Privacy and Security"
+          />
+        }
+      />
+      <PrivacySettings
+        {...{
+          tempSettings,
+          onChangeTempSettings,
+          boxClassName
+        }}
+      />
+    </Group>
   </Wrapper>
 );
 
@@ -65,7 +65,9 @@ PrivacyandSecuritySettings.propTypes = {
   onAttemptChangePassphrase: PropTypes.func,
   isChangePassPhraseDisabled: PropTypes.bool.isRequired,
   changePassphraseRequestAttempt: PropTypes.bool.isRequired,
-  walletReady: PropTypes.bool.isRequired
+  walletReady: PropTypes.bool.isRequired,
+  wrapperClassName: PropTypes.string,
+  boxClassName: PropTypes.string
 };
 
 export default PrivacyandSecuritySettings;

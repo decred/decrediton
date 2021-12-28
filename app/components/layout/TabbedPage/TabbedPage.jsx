@@ -26,7 +26,9 @@ const TabbedPage = ({
 
   const onSelectTab = (index) => {
     setActiveTabIndex(index);
-    history.push(tabs[index].path);
+    if (tabs[index].path) {
+      history.push(tabs[index].path);
+    }
   };
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const TabbedPage = ({
             contentAnimation={uiAnimations ? "slide" : "none"}>
             {tabs
               .filter(({ disabled }) => !disabled)
-              .map(({ label, content, path, props }) => {
+              .map(({ label, content, path, props, key }) => {
                 const element = React.isValidElement(content)
                   ? k(content, {
                       ...props,
@@ -70,8 +72,8 @@ const TabbedPage = ({
                     // before send, otherwise they will be undfined.
                     h(content, { ...props }, null);
                 return (
-                  <Tab label={label} key={path}>
-                    <div key={`${path}-key`}>{element}</div>
+                  <Tab label={label} key={key ?? path}>
+                    <div key={`${key ?? path}-key`}>{element}</div>
                   </Tab>
                 );
               })}

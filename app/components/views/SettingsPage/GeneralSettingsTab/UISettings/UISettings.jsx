@@ -2,7 +2,11 @@ import { FormattedMessage as T } from "react-intl";
 import { SettingsInput, LanguageSelectInput } from "inputs";
 import { InfoDocFieldModalInvisibleButton } from "buttons";
 import styles from "./UISettings.module.css";
-import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
+import {
+  DEFAULT_DARK_THEME_NAME,
+  DEFAULT_LIGHT_THEME_NAME,
+  classNames
+} from "pi-ui";
 import { Box, Label } from "../../helpers";
 
 const availableUIThemeTypes = [
@@ -16,8 +20,13 @@ const availableUIThemeTypes = [
   }
 ];
 
-const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
-  <Box className={styles.box}>
+const UISettings = ({
+  tempSettings,
+  locales,
+  onChangeTempSettings,
+  uiBoxClassName
+}) => (
+  <Box className={classNames(styles.box, uiBoxClassName)}>
     <div>
       <Label id="theme-input">
         <T id="settings.uitheme.type" m="Tonality" />
@@ -94,7 +103,8 @@ const UISettings = ({ tempSettings, locales, onChangeTempSettings }) => (
 UISettings.propTypes = {
   tempSettings: PropTypes.object.isRequired,
   locales: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired,
+  uiBoxClassName: PropTypes.string
 };
 
 export default UISettings;

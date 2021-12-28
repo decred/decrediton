@@ -22,6 +22,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </Label>
       <Tooltip
         content={<AlreadySetMessage />}
+        className={styles.tooltip}
         disabled={!tempSettings.networkFromCli}>
         <SettingsInput
           selectWithBigFont
@@ -54,6 +55,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </Label>
       <Tooltip
         content={<AlreadySetMessage />}
+        className={styles.tooltip}
         disabled={!tempSettings.spvModeFromCli}>
         <SettingsInput
           selectWithBigFont
@@ -86,6 +88,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </Label>
       <Tooltip
         content={<AlreadySetMessage />}
+        className={styles.tooltip}
         disabled={!tempSettings.daemonStartAdvancedFromCli}>
         <SettingsInput
           selectWithBigFont
@@ -120,6 +123,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       </Label>
       <Tooltip
         content={<AlreadySetMessage />}
+        className={styles.tooltip}
         disabled={!tempSettings.spvConnectFromCli}>
         <SettingsTextInput
           newBiggerFontStyle

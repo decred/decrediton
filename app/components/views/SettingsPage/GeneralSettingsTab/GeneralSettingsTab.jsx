@@ -1,12 +1,18 @@
 import { useCallback, useEffect } from "react";
 import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
-import ErrorScreen from "ErrorScreen";
 import GeneralSettings from "./GeneralSettings";
-import { useSettings, useService } from "hooks";
+import { useSettings } from "hooks";
 import * as configConstants from "constants/config";
 import { wallet } from "wallet-preload-shim";
+import { useTheme } from "pi-ui";
 
-const GeneralSettingsTab = ({ setThemeName }) => {
+const GeneralSettingsTab = ({
+  wrapperClassName,
+  uiBoxClassName,
+  uiGroupClassName,
+  timezoneBoxClassName
+}) => {
+  const { setThemeName } = useTheme();
   const {
     tempSettings,
     onSaveSettings,
@@ -16,7 +22,6 @@ const GeneralSettingsTab = ({ setThemeName }) => {
     areSettingsDirty,
     walletReady
   } = useSettings();
-  const { walletService } = useService();
 
   const onSaveSettingsHandler = useCallback(() => {
     const config = wallet.getGlobalCfg();
@@ -37,23 +42,29 @@ const GeneralSettingsTab = ({ setThemeName }) => {
     }
   }, [areSettingsDirty, onSaveSettingsHandler]);
 
-  return !walletService ? (
-    <ErrorScreen />
-  ) : (
+  return (
     <GeneralSettings
       {...{
         tempSettings,
         currencies,
         locales,
         onChangeTempSettings,
-        walletReady
+        walletReady,
+        wrapperClassName,
+        uiBoxClassName,
+        uiGroupClassName,
+        timezoneBoxClassName
       }}
     />
   );
 };
 
 GeneralSettingsTab.propTypes = {
-  setThemeName: PropTypes.func
+  setThemeName: PropTypes.func,
+  wrapperClassName: PropTypes.string,
+  uiBoxClassName: PropTypes.string,
+  uiGroupClassName: PropTypes.string,
+  timezoneBoxClassName: PropTypes.string
 };
 
 export default GeneralSettingsTab;

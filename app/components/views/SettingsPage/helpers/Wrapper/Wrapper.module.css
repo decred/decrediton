@@ -1,20 +1,18 @@
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 150rem;
-  flex-direction: row;
   font-size: 13px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 73.7rem);
+  grid-gap: 3rem;
 }
 
 @media screen and (max-width: 1920px) {
   .wrapper {
-    width: 76.4rem;
+    grid-template-columns: repeat(1, 76.4rem);
   }
 }
 
 @media screen and (max-width: 768px) {
   .wrapper {
-    width: 35.5rem;
+    grid-template-columns: repeat(1, 35.5rem);
   }
 }

@@ -27,6 +27,7 @@ const LanguageSelectPage = ({
           valueKey="key"
           labelKey="description"
           options={availableLanguages}
+          className={styles.input}
         />
         <KeyBlueButton className={styles.button} onClick={onSelectLang}>
           <T id="selectLang.continueBtn" m="Continue" />

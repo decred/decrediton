@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { PrivacySettings } from "views/SettingsPage/SettingsTab/groups";
+import PrivacySettings from "views/SettingsPage/PrivacyandSecuritySettingsTab/PrivacySettings";
 import { InvisibleButton, KeyBlueButton } from "buttons";
 import { Title, SubTitle } from "../../helpers";
 import styles from "./CustomPrivacyOptions.module.css";

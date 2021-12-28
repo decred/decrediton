@@ -1,7 +1,8 @@
 import styles from "./Wrapper.module.css";
+import { classNames } from "pi-ui";
 
-const Wrapper = ({ children }) => (
-  <div className={styles.wrapper}>{children}</div>
+const Wrapper = ({ className, children }) => (
+  <div className={classNames(styles.wrapper, className)}>{children}</div>
 );
 
 Wrapper.propTypes = {

@@ -7,10 +7,10 @@ import TutorialsTab from "./TutorialsTab";
 import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
 import GeneralSettingsTab from "./GeneralSettingsTab";
 import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
-import { useSettings } from "hooks";
+import { useSettings, useService } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
-import { useTheme } from "pi-ui";
+import ErrorScreen from "ErrorScreen";
 
 const closeWalletModalContent = (walletName) => (
   <T
@@ -53,7 +53,7 @@ const SettingsPageHeader = () => {
 };
 
 const SettingsPage = () => {
-  const { setThemeName } = useTheme();
+  const { walletService } = useService();
   const tabs = [
     {
       path: "/settings/connectivity",
@@ -63,7 +63,7 @@ const SettingsPage = () => {
     },
     {
       path: "/settings/general",
-      content: <GeneralSettingsTab setThemeName={setThemeName} />,
+      content: <GeneralSettingsTab />,
       header: SettingsTabHeader,
       label: <T id="settings.tab.general" m="General" />
     },
@@ -92,7 +92,11 @@ const SettingsPage = () => {
       label: <T id="settings.tab.logs" m="Logs" />
     }
   ];
-  return <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />;
+  return !walletService ? (
+    <ErrorScreen />
+  ) : (
+    <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />
+  );
 };
 
 export default SettingsPage;

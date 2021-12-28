@@ -2,12 +2,29 @@
   width: initial;
 }
 
-.twoColumns {
-  grid-template-columns: repeat(2, 1fr);
+.wrapper {
+  grid-template-columns: repeat(4, 36.7rem);
+}
+
+.uiGroup {
+  grid-column: 3/5;
+}
+
+@media screen and (max-width: 1920px) {
+  .wrapper {
+    grid-template-columns: repeat(2, 36.7rem);
+  }
+  .uiGroup {
+    grid-column: 1/3;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .twoColumns {
-    grid-template-columns: 1fr;
+  .wrapper {
+    grid-template-columns: repeat(1, 35.5rem);
+  }
+
+  .uiGroup {
+    grid-column: 1;
   }
 }

@@ -4,10 +4,6 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.input {
-  width: 20.8rem;
-}
-
 .hasWarning strong {
   color: var(--error-text-color);
 }
@@ -26,9 +22,5 @@
 @media screen and (max-width: 768px) {
   .box {
     grid-template-columns: 1fr;
-  }
-
-  .input {
-    width: 31rem !important;
   }
 }

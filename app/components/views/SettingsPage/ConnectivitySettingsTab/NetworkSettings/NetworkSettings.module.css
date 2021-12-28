@@ -4,25 +4,12 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.input,
-.settingsTextInput {
-  width: 31rem !important;
-}
-
-@media screen and (max-width: 1920px) {
-  .input,
-  .settingsTextInput {
-    width: 32.7rem !important;
-  }
+.tooltip {
+  display: block !important;
 }
 
 @media screen and (max-width: 768px) {
   .box {
     grid-template-columns: 1fr;
-  }
-
-  .input,
-  .settingsTextInput {
-    width: 31rem !important;
   }
 }

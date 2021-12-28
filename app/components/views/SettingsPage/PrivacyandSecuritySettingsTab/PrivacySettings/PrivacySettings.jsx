@@ -6,11 +6,15 @@ import {
   EXTERNALREQUEST_POLITEIA,
   EXTERNALREQUEST_DCRDATA
 } from "constants";
-import { Checkbox } from "pi-ui";
+import { Checkbox, classNames } from "pi-ui";
 import styles from "./PrivacySettings.module.css";
 import { Box } from "../../helpers";
 
-const PrivacySettings = ({ tempSettings, onChangeTempSettings }) => {
+const PrivacySettings = ({
+  tempSettings,
+  onChangeTempSettings,
+  boxClassName
+}) => {
   const toggle = (value) => () => {
     const allowedExternalRequests = [...tempSettings.allowedExternalRequests];
     const idx = allowedExternalRequests.indexOf(value);
@@ -23,7 +27,7 @@ const PrivacySettings = ({ tempSettings, onChangeTempSettings }) => {
   };
 
   return (
-    <Box className={styles.box}>
+    <Box className={classNames(styles.box, boxClassName)}>
       <div>
         <Checkbox
           className={styles.privacyCheckbox}
@@ -134,7 +138,8 @@ const PrivacySettings = ({ tempSettings, onChangeTempSettings }) => {
 
 PrivacySettings.propTypes = {
   tempSettings: PropTypes.object.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired,
+  boxClassName: PropTypes.string
 };
 
 export default PrivacySettings;

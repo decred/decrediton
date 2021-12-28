@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import ErrorScreen from "ErrorScreen";
 import ConnectivitySettings from "./ConnectivitySettings";
-import { useSettings, useService } from "hooks";
+import { useSettings } from "hooks";
 
-const ConnectivitySettingsTab = () => {
+const ConnectivitySettingsTab = ({
+  wrapperClassName,
+  groupWrapperClassName
+}) => {
   const {
     tempSettings,
     onSaveSettings,
@@ -12,7 +14,6 @@ const ConnectivitySettingsTab = () => {
     needNetworkReset,
     resetSettingsState
   } = useSettings();
-  const { walletService } = useService();
 
   const onSaveSettingsHandler = useCallback(
     () => onSaveSettings && onSaveSettings(tempSettings),
@@ -35,19 +36,20 @@ const ConnectivitySettingsTab = () => {
     resetSettingsState();
   };
 
-  return !walletService ? (
-    <ErrorScreen />
-  ) : (
+  return (
     <ConnectivitySettings
       {...{
         onSaveSettings: onSaveSettingsHandler,
         tempSettings,
         onChangeTempSettings,
         showConfirmModal,
-        onCancelConfirmModal
+        onCancelConfirmModal,
+        wrapperClassName,
+        groupWrapperClassName
       }}
     />
   );
+  // );
 };
 
 export default ConnectivitySettingsTab;

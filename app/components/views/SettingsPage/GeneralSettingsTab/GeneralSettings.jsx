@@ -4,53 +4,57 @@ import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
 import { Subtitle } from "shared";
 import styles from "./GeneralSettings.module.css";
-import { Wrapper, Group, GroupWrapper } from "../helpers";
+import { Wrapper, Group } from "../helpers";
+import { classNames } from "pi-ui";
 
 const GeneralSettings = ({
   tempSettings,
   currencies,
   locales,
   onChangeTempSettings,
-  walletReady
+  walletReady,
+  wrapperClassName,
+  uiBoxClassName,
+  uiGroupClassName,
+  timezoneBoxClassName
 }) => (
-  <Wrapper>
-    <GroupWrapper className={styles.twoColumns}>
+  <Wrapper className={classNames(styles.wrapper, wrapperClassName)}>
+    <Group>
+      <Subtitle
+        className={styles.subtitle}
+        title={
+          <T id="settings.getstartpage.group-title.timezone" m="Timezone" />
+        }
+      />
+      <TimezoneSettings
+        {...{ tempSettings, onChangeTempSettings, timezoneBoxClassName }}
+      />
+    </Group>
+
+    {walletReady && (
       <Group>
         <Subtitle
           className={styles.subtitle}
-          title={
-            <T id="settings.getstartpage.group-title.timezone" m="Timezone" />
-          }
+          title={<T id="settings.getstartpage.group-title.misc" m="Misc" />}
         />
-        <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-      </Group>
-
-      {walletReady && (
-        <Group>
-          <Subtitle
-            className={styles.subtitle}
-            title={<T id="settings.getstartpage.group-title.misc" m="Misc" />}
-          />
-          <MiscSettings
-            {...{
-              tempSettings,
-              currencies,
-              onChangeTempSettings
-            }}
-          />
-        </Group>
-      )}
-    </GroupWrapper>
-
-    <GroupWrapper>
-      <Group>
-        <Subtitle
-          className={styles.subtitle}
-          title={<T id="settings.getstartpage.group-title.ui" m="UI" />}
+        <MiscSettings
+          {...{
+            tempSettings,
+            currencies,
+            onChangeTempSettings
+          }}
         />
-        <UISettings {...{ tempSettings, locales, onChangeTempSettings }} />
       </Group>
-    </GroupWrapper>
+    )}
+    <Group className={classNames(styles.uiGroup, uiGroupClassName)}>
+      <Subtitle
+        className={styles.subtitle}
+        title={<T id="settings.getstartpage.group-title.ui" m="UI" />}
+      />
+      <UISettings
+        {...{ tempSettings, locales, onChangeTempSettings, uiBoxClassName }}
+      />
+    </Group>
   </Wrapper>
 );
 
@@ -58,7 +62,11 @@ GeneralSettings.propTypes = {
   tempSettings: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
   locales: PropTypes.array,
-  onChangeTempSettings: PropTypes.func.isRequired
+  onChangeTempSettings: PropTypes.func.isRequired,
+  wrapperClassName: PropTypes.string,
+  uiBoxClassName: PropTypes.string,
+  uiGroupClassName: PropTypes.string,
+  timezoneBoxClassName: PropTypes.string
 };
 
 export default GeneralSettings;

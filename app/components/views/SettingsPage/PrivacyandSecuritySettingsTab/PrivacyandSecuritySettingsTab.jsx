@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import ErrorScreen from "ErrorScreen";
 import PrivacyandSecuritySettings from "./PrivacyandSecuritySettings";
-import { useSettings, useService } from "hooks";
+import { useSettings } from "hooks";
 
-const PrivacyandSecuritySettingsTab = () => {
+const PrivacyandSecuritySettingsTab = ({ wrapperClassName, boxClassName }) => {
   const {
     tempSettings,
     onSaveSettings,
@@ -14,7 +13,6 @@ const PrivacyandSecuritySettingsTab = () => {
     areSettingsDirty,
     walletReady
   } = useSettings();
-  const { walletService } = useService();
 
   useEffect(() => {
     if (areSettingsDirty) {
@@ -22,9 +20,7 @@ const PrivacyandSecuritySettingsTab = () => {
     }
   }, [areSettingsDirty, onSaveSettings, tempSettings]);
 
-  return !walletService ? (
-    <ErrorScreen />
-  ) : (
+  return (
     <PrivacyandSecuritySettings
       {...{
         tempSettings,
@@ -32,7 +28,9 @@ const PrivacyandSecuritySettingsTab = () => {
         onAttemptChangePassphrase,
         isChangePassPhraseDisabled,
         changePassphraseRequestAttempt,
-        walletReady
+        walletReady,
+        wrapperClassName,
+        boxClassName
       }}
     />
   );

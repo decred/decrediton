@@ -3,42 +3,37 @@ import NetworkSettings from "./NetworkSettings";
 import ProxySettings from "./ProxySettings";
 import { Subtitle } from "shared";
 import styles from "./ConnectivitySettings.module.css";
-import { Wrapper, Group, GroupWrapper, ConfirmRestartModal } from "../helpers";
+import { Wrapper, Group, ConfirmRestartModal } from "../helpers";
 
 const ConnectivitySettings = ({
   tempSettings,
   onChangeTempSettings,
   onSaveSettings,
   showConfirmModal,
-  onCancelConfirmModal
+  onCancelConfirmModal,
+  wrapperClassName
 }) => (
-  <Wrapper>
-    <GroupWrapper>
-      <Group>
-        <Subtitle
-          className={styles.subtitle}
-          title={
-            <T id="settings.getstartpage.group-title.network" m="Network" />
-          }
-        />
-        <NetworkSettings
-          {...{
-            tempSettings,
-            onChangeTempSettings
-          }}
-        />
-      </Group>
-    </GroupWrapper>
+  <Wrapper className={wrapperClassName}>
+    <Group>
+      <Subtitle
+        className={styles.subtitle}
+        title={<T id="settings.getstartpage.group-title.network" m="Network" />}
+      />
+      <NetworkSettings
+        {...{
+          tempSettings,
+          onChangeTempSettings
+        }}
+      />
+    </Group>
 
-    <GroupWrapper>
-      <Group>
-        <Subtitle
-          className={styles.subtitle}
-          title={<T id="settings.getstartpage.group-title.proxy" m="Proxy" />}
-        />
-        <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-      </Group>
-    </GroupWrapper>
+    <Group>
+      <Subtitle
+        className={styles.subtitle}
+        title={<T id="settings.getstartpage.group-title.proxy" m="Proxy" />}
+      />
+      <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+    </Group>
 
     <ConfirmRestartModal
       show={showConfirmModal}
@@ -53,7 +48,8 @@ ConnectivitySettings.propTypes = {
   onChangeTempSettings: PropTypes.func.isRequired,
   onSaveSettings: PropTypes.func.isRequired,
   showConfirmModal: PropTypes.bool.isRequired,
-  onCancelConfirmModal: PropTypes.func.isRequired
+  onCancelConfirmModal: PropTypes.func.isRequired,
+  wrapperClassName: PropTypes.string
 };
 
 export default ConnectivitySettings;
