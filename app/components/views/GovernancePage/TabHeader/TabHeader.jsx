@@ -15,7 +15,6 @@ const TabHeader = ({ descriptionHeaderClassName }) => {
         }
         className={classNames(
           styles.descriptionHeader,
-          styles.descriptionHeaderMain,
           descriptionHeaderClassName
         )}
       />
