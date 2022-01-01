@@ -23,13 +23,13 @@ const ProposalsListItem = ({
   blocksLeft,
   username,
   proposalStatus,
-  version
+  version,
+  isDarkTheme
 }) => {
   const {
     viewProposalDetailsHandler,
     tsDate,
     isTestnet,
-    isDarkTheme,
     linkedProposal
   } = useProposalsListItem(token);
   const isVoting = voteStatus === PROPOSAL_VOTING_ACTIVE;
