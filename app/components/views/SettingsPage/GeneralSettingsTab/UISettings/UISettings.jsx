@@ -74,6 +74,7 @@ const UISettings = ({
         }
         valueKey="value"
         labelKey="description"
+        ariaLabelledBy="ui-animation"
         options={[
           {
             key: "true",

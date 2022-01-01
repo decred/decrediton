@@ -11,6 +11,7 @@ import { useSettings, useService } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
 import ErrorScreen from "ErrorScreen";
+import { useTheme } from "pi-ui";
 
 const closeWalletModalContent = (walletName) => (
   <T
@@ -54,6 +55,7 @@ const SettingsPageHeader = () => {
 
 const SettingsPage = () => {
   const { walletService } = useService();
+  const { setThemeName } = useTheme();
   const tabs = [
     {
       path: "/settings/connectivity",
@@ -63,7 +65,7 @@ const SettingsPage = () => {
     },
     {
       path: "/settings/general",
-      content: <GeneralSettingsTab />,
+      content: <GeneralSettingsTab setThemeName={setThemeName} />,
       header: SettingsTabHeader,
       label: <T id="settings.tab.general" m="General" />
     },

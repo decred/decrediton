@@ -4,15 +4,14 @@ import GeneralSettings from "./GeneralSettings";
 import { useSettings } from "hooks";
 import * as configConstants from "constants/config";
 import { wallet } from "wallet-preload-shim";
-import { useTheme } from "pi-ui";
 
 const GeneralSettingsTab = ({
   wrapperClassName,
   uiBoxClassName,
   uiGroupClassName,
-  timezoneBoxClassName
+  timezoneBoxClassName,
+  setThemeName
 }) => {
-  const { setThemeName } = useTheme();
   const {
     tempSettings,
     onSaveSettings,

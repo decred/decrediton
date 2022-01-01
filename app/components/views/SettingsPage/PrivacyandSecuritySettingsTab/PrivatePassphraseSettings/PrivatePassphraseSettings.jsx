@@ -9,26 +9,24 @@ const PrivatePassphraseSettings = ({
   onAttemptChangePassphrase
 }) => {
   return (
-    <div>
-      <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
-        <ChangePassphraseButton
-          ariaLabelledBy="update-private-passphrase-button"
-          className={styles.changePassphraseButton}
-          loading={changePassphraseRequestAttempt}
-          disabled={isChangePassPhraseDisabled}
-          modalTitle={
-            <T id="settings.changeConfirmation" m="Change your passphrase" />
-          }
-          onSubmit={onAttemptChangePassphrase}
-          buttonLabel={
-            <T
-              id="settings.privatePassphrase.buttonLabel"
-              m="Update Private Passphrase"
-            />
-          }
-        />
-      </WatchOnlyWarnNotification>
-    </div>
+    <WatchOnlyWarnNotification isActive={isChangePassPhraseDisabled}>
+      <ChangePassphraseButton
+        ariaLabelledBy="update-private-passphrase-button"
+        className={styles.changePassphraseButton}
+        loading={changePassphraseRequestAttempt}
+        isDisabled={isChangePassPhraseDisabled}
+        modalTitle={
+          <T id="settings.changeConfirmation" m="Change your passphrase" />
+        }
+        onSubmit={onAttemptChangePassphrase}
+        buttonLabel={
+          <T
+            id="settings.privatePassphrase.buttonLabel"
+            m="Update Private Passphrase"
+          />
+        }
+      />
+    </WatchOnlyWarnNotification>
   );
 };
 

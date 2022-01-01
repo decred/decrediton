@@ -15,10 +15,10 @@ const ConnectivitySettingsTab = ({
     resetSettingsState
   } = useSettings();
 
-  const onSaveSettingsHandler = useCallback(
-    () => onSaveSettings && onSaveSettings(tempSettings),
-    [tempSettings, onSaveSettings]
-  );
+  const onSaveSettingsHandler = useCallback(() => {
+    setShowConfirmModal(false);
+    onSaveSettings && onSaveSettings(tempSettings);
+  }, [tempSettings, onSaveSettings]);
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   useEffect(() => {

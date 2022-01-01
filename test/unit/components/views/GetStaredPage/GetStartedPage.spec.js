@@ -1,5 +1,5 @@
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
-import { DEFAULT_LIGHT_THEME_NAME, DEFAULT_DARK_THEME_NAME } from "pi-ui";
+import { DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen, wait } from "@testing-library/react";
@@ -177,34 +177,16 @@ test("render empty wallet chooser view and click-on&test release notes", async (
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 });
 
-test("click on settings link", async () => {
+test("click on settings link and go back", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
 
   user.click(screen.getByText(/settings/i));
   await wait(() => screen.getByText(/connectivity/i));
-
-  user.click(screen.getByText(/save/i));
-  expect(mockGetGlobalCfg).toHaveBeenCalled();
 
   // go back
-  user.click(screen.getByText(/go back/i).nextElementSibling);
+  user.click(screen.getByText(/go back/i));
   await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-});
-
-test("click on settings link and change theme", async () => {
-  render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-
-  user.click(screen.getByText(/settings/i));
-  await wait(() => screen.getByText(/connectivity/i));
-
-  mockGetGlobalCfg.mockReturnValueOnce({
-    get: () => DEFAULT_DARK_THEME_NAME,
-    set: () => {}
-  });
-  user.click(screen.getByText(/save/i));
-  expect(mockGetGlobalCfg).toHaveBeenCalled();
 });
 
 test("click on logs view", async () => {

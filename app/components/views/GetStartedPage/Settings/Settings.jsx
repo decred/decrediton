@@ -6,6 +6,7 @@ import { InvisibleButton } from "buttons";
 import { GoBackMsg } from "../messages";
 import styles from "./Settings.module.css";
 import { TabbedPage, TitleHeader } from "layout";
+import { useTheme } from "pi-ui";
 
 const ContentWithGoBackButton = ({ onSendBack, children }) => (
   <>
@@ -17,6 +18,7 @@ const ContentWithGoBackButton = ({ onSendBack, children }) => (
 );
 
 const Setttings = ({ onSendBack }) => {
+  const { setThemeName } = useTheme();
   const tabs = [
     {
       key: "connectivity",
@@ -38,8 +40,8 @@ const Setttings = ({ onSendBack }) => {
             uiBoxClassName={styles.uiBox}
             uiGroupClassName={styles.uiGroup}
             timezoneBoxClassName={styles.timezoneBox}
+            setThemeName={setThemeName}
           />
-          ,
         </ContentWithGoBackButton>
       ),
       label: <T id="getstarted.settings.tab.general" m="General" />
