@@ -81,8 +81,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
 
   const getStateComponent = useCallback(async () => {
     const ctx = current.context;
-    const { selectedWallet } = ctx;
-    const { error } = ctx;
+    const { selectedWallet, error, passPhrase, isCreateNewWallet } = ctx;
     const { isWatchingOnly, isTrezor } = selectedWallet.value;
 
     let component, hasSoloTickets;
@@ -119,18 +118,32 @@ export const useWalletSetup = (settingUpWalletRef) => {
         if (allEncrypted) {
           sendContinue();
         } else {
+          const onSubmitAccountsPassphrase = (passphrase) => {
+            // send a continue so we can go to the loading state
+            onProcessAccounts(passphrase)
+              .then(() => sendContinue())
+              .catch((err) => onSendError(err));
+          };
+
+          if (
+            passPhrase &&
+            passPhrase != "" &&
+            isCreateNewWallet &&
+            !isProcessingManaged
+          ) {
+            return onSubmitAccountsPassphrase(passPhrase);
+          }
+
           component = h(SettingAccountsPassphrase, {
+            onSubmitAccountsPassphrase,
+            isProcessingManaged,
             error,
-            onSendContinue: sendContinue,
-            onSendError,
-            send,
             title: (
               <T
                 id="getstarted.setAccountsPass.title"
                 m="Migrate to per-account passphrases"
               />
             ),
-            onProcessAccounts,
             description: (
               <T
                 id="getstarted.setAccountsPass.description"

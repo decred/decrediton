@@ -1,5 +1,12 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { classNames, Tooltip, Button } from "pi-ui";
+import {
+  classNames,
+  Tooltip,
+  Button,
+  ButtonIcon,
+  useTheme,
+  getThemeProperty
+} from "pi-ui";
 import { wallet } from "wallet-preload-shim";
 import {
   DetailedAccountsSelect,
@@ -7,7 +14,6 @@ import {
   DcrInput,
   ReceiveAccountsSelect
 } from "inputs";
-import { SmallButton } from "buttons";
 import { Balance } from "shared";
 import styles from "./SendOutputRow.module.css";
 
@@ -46,7 +52,7 @@ const getSendAllFundsIcon = ({
             m="Send all funds from selected account - Disabled"
           />
         }>
-        <SmallButton className={styles.sendAllButton} disabled />
+        <ButtonIcon type="sendMax" disabled />
       </Tooltip>
     ) : !isSendAll ? (
       <Tooltip
@@ -57,7 +63,7 @@ const getSendAllFundsIcon = ({
             m="Send all funds from selected account"
           />
         }>
-        <SmallButton className={styles.sendAllButton} onClick={onShowSendAll} />
+        <ButtonIcon type="sendMax" onClick={onShowSendAll} />
       </Tooltip>
     ) : (
       <Tooltip
@@ -65,7 +71,7 @@ const getSendAllFundsIcon = ({
         content={
           <T id="sendtab.cancelSendAllTitle" m="Cancel sending all funds" />
         }>
-        <SmallButton className={styles.cancelSendAll} onClick={onHideSendAll} />
+        <ButtonIcon type="cancel" onClick={onHideSendAll} />
       </Tooltip>
     )}
   </div>
@@ -78,32 +84,45 @@ const getAddInputIcon = ({
   index,
   isSendAll,
   onlySendSelfAllowed
-}) =>
-  isSendSelf || onlySendSelfAllowed || isSendAll ? (
+}) => {
+  const { theme } = useTheme();
+  const iconColor = getThemeProperty(theme, "color-white");
+  return isSendSelf || onlySendSelfAllowed || isSendAll ? (
     <Tooltip
       contentClassName={styles.tooltipAddInput}
       content={<T id="sendtab.addOutput" m="Add output" />}>
-      <Button onClick={onAddOutput} className={styles.add} disabled>
-        <div />
-      </Button>
+      <ButtonIcon
+        type="plus"
+        iconColor={iconColor}
+        onClick={onAddOutput}
+        className={styles.addButton}
+        disabled
+      />
     </Tooltip>
   ) : index === 0 ? (
     <Tooltip
       contentClassName={styles.tooltipAddInput}
       content={<T id="sendtab.addOutput" m="Add output" />}>
-      <Button onClick={onAddOutput} className={styles.add}>
-        <div />
-      </Button>
+      <ButtonIcon
+        type="plus"
+        iconColor={iconColor}
+        onClick={onAddOutput}
+        className={classNames(styles.addButton, styles.blue)}
+      />
     </Tooltip>
   ) : (
     <Tooltip
       contentClassName={styles.tooltipDeleteInput}
       content={<T id="sendtab.deleteOutput" m="Delete output" />}>
-      <Button onClick={() => onRemoveOutput(index)} className={styles.delete}>
-        <div />
-      </Button>
+      <ButtonIcon
+        type="cancel"
+        iconColor={iconColor}
+        onClick={() => onRemoveOutput(index)}
+        className={styles.delete}
+      />
     </Tooltip>
   );
+};
 
 const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
   !isSendSelf ? (
@@ -112,7 +131,11 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
       content={
         <T id="sendtab.sendSelfTitle" m="Send funds to another account" />
       }>
-      <SmallButton className={styles.selfAccount} onClick={onShowSendSelf} />
+      <ButtonIcon
+        type="accounts"
+        onClick={onShowSendSelf}
+        className={styles.selfAccount}
+      />
     </Tooltip>
   ) : (
     <Tooltip
@@ -120,9 +143,10 @@ const getSendSelfIcon = ({ isSendSelf, onShowSendSelf, onShowSendOthers }) =>
       content={
         <T id="sendtab.sendOthersTitle" m="Send funds to another wallet" />
       }>
-      <SmallButton
-        className={styles.selfAccountCancel}
+      <ButtonIcon
+        type="cancel"
         onClick={onShowSendOthers}
+        className={styles.selfAccount}
       />
     </Tooltip>
   );

@@ -2,10 +2,10 @@ import { FormattedMessage as T } from "react-intl";
 import {
   KeyBlueButton,
   InvisibleButton,
-  InvisibleConfirmModalButton
+  InvisibleConfirmModalButton,
+  CopyToClipboardButton
 } from "buttons";
 import { BackupRedeemScriptModal } from "modals";
-import { CopyToClipboard } from "shared";
 import styles from "./StakePools.module.css";
 
 const StakePoolsList = ({
@@ -77,7 +77,7 @@ const StakePoolsList = ({
                         value: (
                           <div className={styles.script}>
                             <div className={styles.txDetailsRaw}>{Script}</div>
-                            <CopyToClipboard
+                            <CopyToClipboardButton
                               className={styles.copyToClipboard}
                               textToCopy={Script}
                             />

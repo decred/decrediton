@@ -1,5 +1,4 @@
-import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
-import { Switch, Redirect } from "react-router-dom";
+import { TabbedPage, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
 import { SendTab, SendTabHeader } from "./SendTab";
@@ -17,34 +16,35 @@ const PageHeader = () => (
   />
 );
 
-export default () => (
-  <TabbedPage header={<PageHeader />}>
-    <Switch>
-      <Redirect from="/transactions" exact to="/transactions/send" />
-    </Switch>
-    <Tab
-      path="/transactions/send"
-      component={SendTab}
-      header={SendTabHeader}
-      link={<T id="transactions.tab.send" m="Send" />}
-    />
-    <Tab
-      path="/transactions/receive"
-      component={ReceiveTab}
-      header={ReceiveTabHeader}
-      link={<T id="transactions.tab.receive" m="Receive" />}
-    />
-    <Tab
-      path="/transactions/history"
-      component={HistoryTab}
-      header={HistoryTabHeader}
-      link={<T id="transactions.tab.history" m="History" />}
-    />
-    <Tab
-      path="/transactions/export"
-      component={ExportTab}
-      header={ExportTabHeader}
-      link={<T id="transactions.tab.export" m="Export" />}
-    />
-  </TabbedPage>
+const tabs = [
+  {
+    path: "/transactions/send",
+    content: SendTab,
+    header: SendTabHeader,
+    label: <T id="transactions.tab.send" m="Send" />
+  },
+  {
+    path: "/transactions/receive",
+    content: ReceiveTab,
+    header: ReceiveTabHeader,
+    label: <T id="transactions.tab.receive" m="Receive" />
+  },
+  {
+    path: "/transactions/history",
+    content: HistoryTab,
+    header: HistoryTabHeader,
+    label: <T id="transactions.tab.history" m="History" />
+  },
+  {
+    path: "/transactions/export",
+    content: ExportTab,
+    header: ExportTabHeader,
+    label: <T id="transactions.tab.export" m="Export" />
+  }
+];
+
+const TransactionsPage = () => (
+  <TabbedPage header={<PageHeader />} tabs={tabs} />
 );
+
+export default TransactionsPage;

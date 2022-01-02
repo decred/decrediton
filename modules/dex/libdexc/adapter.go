@@ -6,6 +6,7 @@ package main
 import "C"
 import (
 	"context"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -72,6 +73,7 @@ func NewCoreAdapter() *CoreAdapter {
 		"CreateWallet": c.createWallet,
 		"UpdateWallet": c.updateWallet,
 		"User":         c.user,
+		"PreRegister":  c.discoverAcct,
 		"Register":     c.register,
 		"Login":        c.login,
 		"Logout":       c.logout,
@@ -208,13 +210,20 @@ func (c *CoreAdapter) run(callData *CallData) (string, error) {
 func (c *CoreAdapter) init(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		Pass string `json:"pass"`
-		// Seed string `json:"seed"` (TODO)
+		Seed string `json:"seed"`
 	})
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-
+	if form.Seed != "" {
+		seed, err := hex.DecodeString(form.Seed)
+		if err != nil {
+			return "", err
+		}
+		return "", c.core.InitializeClient([]byte(form.Pass), seed)
+	}
 	return "", c.core.InitializeClient([]byte(form.Pass), nil)
+
 }
 
 func (c *CoreAdapter) isInitialized(json.RawMessage) (string, error) {
@@ -225,6 +234,7 @@ func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		AssetID uint32            `json:"assetID"`
 		Config  map[string]string `json:"config"`
+		Type    string            `json:"type"`
 		Pass    string            `json:"pass"`
 		AppPW   string            `json:"appPass"`
 	})
@@ -233,8 +243,11 @@ func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
 	}
 	return "", c.core.ReconfigureWallet([]byte(form.AppPW),
 		[]byte(form.Pass),
-		form.AssetID,
-		form.Config,
+		&core.WalletForm{
+			AssetID: form.AssetID,
+			Config:  form.Config,
+			Type:    form.Type,
+		},
 	)
 }
 
@@ -242,6 +255,7 @@ func (c *CoreAdapter) createWallet(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		AssetID uint32            `json:"assetID"`
 		Config  map[string]string `json:"config"`
+		Type    string            `json:"type"`
 		Pass    string            `json:"pass"`
 		AppPW   string            `json:"appPass"`
 	})
@@ -251,6 +265,7 @@ func (c *CoreAdapter) createWallet(raw json.RawMessage) (string, error) {
 	return "", c.core.CreateWallet([]byte(form.AppPW), []byte(form.Pass), &core.WalletForm{
 		AssetID: form.AssetID,
 		Config:  form.Config,
+		Type:    form.Type,
 	})
 }
 
@@ -279,7 +294,7 @@ func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
 
 // When restoring from seed with init/InitializeClient, it may be desirable to
 // first attempt DEX account discovery without commiting to a fee payment. This
-// check with the given DEX server if our account (a public key) is already
+// checks with the given DEX server if our account (a public key) is already
 // registered. If it is, this creates the account in Core, returns true, and the
 // caller should NOT call register. If it returns false, the user should be
 // prompted to pay the registration fee as normal using the register method.
@@ -292,9 +307,13 @@ func (c *CoreAdapter) discoverAcct(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	_, alreadyRegistered, err := c.core.DiscoverAccount(form.Addr, []byte(form.AppPW), []byte(form.Cert))
+	config, alreadyRegistered, err := c.core.DiscoverAccount(form.Addr, []byte(form.AppPW), []byte(form.Cert))
 	// If alreadyRegistered == true, skip register. It's ready to go.
-	return replyWithErrorCheck(alreadyRegistered, err)
+	if alreadyRegistered {
+		return replyWithErrorCheck(alreadyRegistered, err)
+	} else {
+		return replyWithErrorCheck(config, err)
+	}
 }
 
 func (c *CoreAdapter) login(raw json.RawMessage) (string, error) {

@@ -51,6 +51,10 @@ export const goToError = () => (dispatch) => {
   dispatch(pushHistory("/error"));
 };
 
+export const goToAccounts = () => (dispatch) => {
+  dispatch(pushHistory("/accounts"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -94,7 +98,10 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(monitorLockableAccounts());
 
       // Start Dex if dexEnabled and NOT SPV mode
-      if (dexEnabled && !sel.isSPV(getState())) {
+      if (
+        dexEnabled &&
+        (!sel.isSPV(getState()) || sel.useDexSpvExperimental(getState()))
+      ) {
         await dispatch(startDex());
       }
     };
@@ -801,7 +808,7 @@ export const getAcctSpendableBalance = (acctId) => async (
     acctId,
     0
   );
-  return acct.spendable;
+  return acct?.spendable;
 };
 
 export const MIXERACCOUNTS_SPENDABLE_BALANCE =

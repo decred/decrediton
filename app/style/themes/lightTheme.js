@@ -104,8 +104,6 @@ const lightTheme = {
   "display-wallet-bg":
     "linear-gradient(225deg, var(--white-border), var(--display-wallet-gradient-right))",
   "select-border": "#e7eaed",
-  "toggle-switch-bg": "#d1d5db",
-  "toggle-switch-knob-bg": "#8997a5",
   "transaction-account-name-bg": "#E9F8FE",
   "account-row-hover": "#f0f4f4",
   "chart-cursor-color": "#e9f8fe",
@@ -172,6 +170,22 @@ const lightTheme = {
   "tab-text-active-color": "var(--input-color-default)",
   "tab-text-color": "var(--sidebar-menu-link)",
 
+  // tabbed page defaults
+  "tab-default-background-tabbedpage": "var(--background-back-color)",
+  "tab-default-border-tabbedpage": "var(--background-back-color)",
+
+  // proposals tabs
+  "tab-default-background-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-active-background-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-default-border-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-active-border-tabbedpage-proposals": "var(--grey-7)",
+
+  "seedword-label-bg": "#fff",
+  "seedword-label-border": "#e6eaed",
+  "seedword-label-text": "var(--grey-5)",
+  "seedword-button-text": "var(--main-dark-blue)",
+  "seedword-button-invalid-bg": "#f0b3a1",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettings.svg")),
   "menu-accounts": url(require("style/icons/accounts-active.png")),
@@ -207,9 +221,6 @@ const lightTheme = {
     require("style/icons/onboarding-checkcircle.svg")
   ),
   "x-grey": url(require("style/icons/x-grey.svg")),
-  "copy-to-clipboard-icon": url(
-    require("style/icons/copy-to-clipboard-blue.svg")
-  ),
   "stakey-privacy-standard": url(require("style/icons/privacyStandard.svg")),
   "stakey-privacy-disabled": url(require("style/icons/privacyDisabled.svg")),
   "stakey-privacy-custom": url(require("style/icons/privacyCustom.svg")),

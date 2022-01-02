@@ -130,5 +130,9 @@
   {
     "id": "appMenu.reloadUI",
     "defaultMessage": "Reload UI"
+  },
+  {
+    "id": "appMenu.loadCustomTranslation",
+    "defaultMessage": "Load Custom Translation"
   }
 ]

@@ -13,10 +13,11 @@ import {
   DEX_CHECKINIT_FAILED,
   DEX_LAUNCH_WINDOW_FAILED,
   CHECK_BTC_CONFIG_FAILED,
-  UPDATE_BTC_CONFIG_FAILED,
   CREATEDEXACCOUNT_FAILED,
   DEX_LOGOUT_FAILED,
-  DEX_USER_FAILED
+  DEX_USER_FAILED,
+  NEW_BTC_CONFIG_FAILED,
+  NEW_BTC_CONFIG_SUCCESS
 } from "actions/DexActions";
 import {
   PUBLISHTX_FAILED,
@@ -686,11 +687,6 @@ const messages = defineMessages({
     defaultMessage:
       "Failed to check an existing BTC Config file: {originalError}"
   },
-  UPDATE_BTC_CONFIG_FAILED: {
-    id: "dex.updateBTCConfig.failed",
-    defaultMessage:
-      "Failed to update an existing BTC Config file: {originalError}"
-  },
   CREATEDEXACCOUNT_FAILED: {
     id: "dex.createDEXAccount.failed",
     defaultMessage: "Failed to create an account for DEX: {originalError}"
@@ -719,6 +715,15 @@ const messages = defineMessages({
     id: "discoverAddress.success",
     defaultMessage:
       "You have successfully discovered address usage.  Rescan now commencing."
+  },
+  NEW_BTC_CONFIG_FAILED: {
+    id: "newBTCConfig.failed",
+    defaultMessage: "{originalError}"
+  },
+  NEW_BTC_CONFIG_SUCCESS: {
+    id: "newBTCConfig.success",
+    defaultMessage:
+      "You have successfully created a default bitcoin config.  Please restart your Bitcoin Core wallet for this config to be used as expected."
   }
 });
 
@@ -810,6 +815,7 @@ export default function snackbar(state = {}, action) {
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
+    case NEW_BTC_CONFIG_SUCCESS:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
@@ -955,12 +961,12 @@ export default function snackbar(state = {}, action) {
     case DEX_CHECKINIT_FAILED:
     case DEX_LAUNCH_WINDOW_FAILED:
     case CHECK_BTC_CONFIG_FAILED:
-    case UPDATE_BTC_CONFIG_FAILED:
     case DEX_LOGOUT_FAILED:
     case DEX_USER_FAILED:
     case STARTTICKETBUYERV3_FAILED:
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
+    case NEW_BTC_CONFIG_FAILED:
       type = "Error";
       if (
         action.error &&

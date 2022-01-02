@@ -81,6 +81,13 @@ export const getSyncAttemptRequest = get([
 ]);
 
 // general startup selector
+export const useDexSpvExperimental = get([
+  "settings",
+  "currentSettings",
+  "useDexSpvExperimental"
+]);
+export const pageBodyScrollHandler = get(["control", "pageBodyScrollHandler"]);
+export const pageBodyTopRef = get(["control", "pageBodyTopRef"]);
 export const setLanguage = get(["daemon", "setLanguage"]);
 export const showTutorial = get(["daemon", "tutorial"]);
 export const showPrivacy = get(["daemon", "showPrivacy"]);
@@ -181,7 +188,7 @@ const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
-      isWatchingOnly: wallet.watchingOnly,
+      isWatchingOnly: wallet.isWatchingOnly,
       lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null
     }),
     wallets
@@ -838,7 +845,8 @@ export const filteredRegularTxs = createSelector(
                 address.length > 1 &&
                 address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
                   -1
-            ) != undefined
+            ) != undefined ||
+            v.txHash.toLowerCase().includes(filter.search.toLowerCase())
           : true
       )
       .filter((v) =>
@@ -862,6 +870,11 @@ export const filteredStakeTxs = createSelector(
   (transactions, filter) => {
     const filteredTxs = Object.keys(transactions)
       .map((hash) => transactions[hash])
+      .filter((v) =>
+        filter.search
+          ? v.txHash.toLowerCase().includes(filter.search.toLowerCase())
+          : true
+      )
       .filter((v) => (filter.status ? filter.status === v.status : true));
 
     return filteredTxs;
@@ -930,7 +943,7 @@ export const legacyBuyerBalanceToMaintain = get([
 ]);
 export const legacyBuyerAccount = get(["control", "legacyAccount"]);
 export const getHasVSPTicketsError = get(["vsp", "hasVSPTicketsError"]);
-export const getIsLegacy = get(["vsp", "isLegacy"]);
+export const getIsLegacy = () => false; // hide legacy purchase
 export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
 const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
@@ -978,6 +991,10 @@ export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
 export const isProcessingUnmanaged = get([
   "vsp",
   "processUnmanagedTicketsAttempt"
+]);
+export const isSettingAccountsPassphrase = get([
+  "control",
+  "settingAccountsPassphrase"
 ]);
 
 export const getAvailableVSPsPubkeys = get(["vsp", "availableVSPsPubkeys"]);
@@ -1363,7 +1380,7 @@ export const unspentTicketsCount = compose(
 );
 export const activeTicketsCount = createSelector(
   [isSPV, getStakeInfoResponse],
-  (isSPV, r) => (isSPV ? r.unspent() + r.immature : r.live + r.immature)
+  (isSPV, r) => (isSPV ? r.unspent + r.immature : r.live + r.immature)
 );
 export const totalSubsidy = compose(
   (r) => (r ? r.totalSubsidy : 0),
@@ -1845,6 +1862,7 @@ export const getHasTicketFeeError = createSelector(
       : false;
   }
 );
+export const restoredFromSeed = get(["dex", "restoredFromSeed"]);
 export const dexOrdersOpen = get(["dex", "openOrder"]);
 export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
@@ -1898,6 +1916,9 @@ export const initDexAttempt = bool(get(["dex", "initAttempt"]));
 export const checkInitDexAttempt = bool(get(["dex", "dexCheckInitAttempt"]));
 export const registerDexAttempt = bool(get(["dex", "registerAttempt"]));
 export const createWalletDexAttempt = bool(get(["dex", "createWalletAttempt"]));
+export const btcCreateWalletDexAttempt = bool(
+  get(["dex", "btcCreateWalletAttempt"])
+);
 export const loginDexAttempt = bool(get(["dex", "loginAttempt"]));
 export const dexUser = get(["dex", "user"]);
 
@@ -1934,6 +1955,8 @@ export const dexBTCWalletRunning = compose(
 
 export const dexAddr = get(["dex", "addr"]);
 export const dexConfig = get(["dex", "config"]);
+export const alreadyPaid = get(["dex", "alreadyPaid"]);
+export const getConfigAttempt = get(["dex", "getConfigAttempt"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
 export const dexAccountNumber = createSelector(
   [dexAccount, balances],

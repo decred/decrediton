@@ -16,6 +16,7 @@ export const HeaderTimeMsg = () => (
 );
 export const BackBtnMsg = () => <T id="getStarted.backBtn" m="Cancel" />;
 export const GoBackMsg = () => <T id="logs.goBack" m="Go back" />;
+export const BackMsg = () => <T id="logs.back" m="Back" />;
 export const ConfirmSeedMsg = () => (
   <T id="confirmSeed.label" m="Confirm Seed Key" />
 );
@@ -58,6 +59,15 @@ export const messages = defineMessages({
   passphrasePlaceholder: {
     id: "getStarted.discoverAddresses.passphrasePlaceholder",
     defaultMessage: "Private Passphrase"
+  },
+  confirmSeedWrongWordError: {
+    id: "getStarted.confirmSeed.wrongWordError",
+    defaultMessage:
+      "Some words from the seed are incorrect. Please, choose the right ones to continue."
+  },
+  confirmSeedEnterAllWordsError: {
+    id: "getStarted.confirmSeed.enterAllWords",
+    defaultMessage: "*Please enter all words"
   }
 });
 

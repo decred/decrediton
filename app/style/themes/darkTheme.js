@@ -103,8 +103,6 @@ const darkTheme = {
   "loader-bg": "#223767",
   "display-wallet-bg": "#152042",
   "select-border": "#608ACE",
-  "toggle-switch-bg": "#7DA7D9",
-  "toggle-switch-knob-bg": "#E9F8FE",
   "transaction-account-name-bg": "#2F4D8C",
   "account-row-hover": "#1F325F",
   "chart-cursor-color": "#36579E",
@@ -121,7 +119,7 @@ const darkTheme = {
   "seedword-select-border-default-hover-text-color": "#7DA7D9",
   "txdetails-top-bg": "#1F325F",
   "trezor-line-color": "#608ACE",
-  "proposal-text-markdown": "#f6f8fa",
+  "proposal-text-markdown": "var(--background-container)",
   "background-address-copy-color": "#2F4D8C",
   "icons-shadow": "#09144036",
   "no-more-tickets-indicator-bg": "#2F4D8C",
@@ -162,15 +160,31 @@ const darkTheme = {
   "ln-close-channel-button-bg": "#7DA7D9",
   "ln-close-channel-button-text": "#0E152F",
 
-  // override pi-ui's toggle default dark background
-  "toggle-bar-color": "var(--background-copy-color)",
-
   // override pi-ui's tab colors
   "tab-default-color": "var(--sidebar-color)", // default border
   "tab-default-background": "var(--sidebar-color)",
   "tab-active-background": "var(--background-back-color)",
   "tab-text-active-color": "var(--input-color-default)",
   "tab-text-color": "var(--sidebar-menu-link)",
+
+  // tabbed page defaults
+  "tab-default-background-tabbedpage": "var(--background-back-color)",
+  "tab-default-border-tabbedpage": "var(--background-back-color)",
+
+  // proposals tabs
+  "tab-default-background-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-active-background-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-default-border-tabbedpage-proposals": "var(--governance-tab-bg)",
+  "tab-active-border-tabbedpage-proposals": "var(--grey-7)",
+
+  "seedword-label-bg": "#223767",
+  "seedword-label-border": "#223767",
+  "seedword-label-text": "#3262b0",
+  "seedword-button-text": "var(--info-modal-button-text)",
+  "seedword-button-invalid-bg": "#f0b3a1",
+
+  "button-icon-color-1": "#99C1E3",
+  "button-icon-color-2": "#436EC3",
 
   /* icons */
   "menu-settings": url(require("style/icons/menuSettingsDark.svg")),
@@ -209,9 +223,6 @@ const darkTheme = {
     require("style/icons/onboardingCheckcircleDark.svg")
   ),
   "x-grey": url(require("style/icons/xGreyDark.svg")),
-  "copy-to-clipboard-icon": url(
-    require("style/icons/copyToClipboardBlueDark.svg")
-  ),
   "stakey-privacy-standard": url(
     require("style/icons/privacyStandardDark.svg")
   ),
@@ -323,8 +334,8 @@ const darkTheme = {
   "ln-invoice-icon": url(require("style/icons/lnInvoiceIcon.svg")),
   "right-arrow": url(require("style/icons/rightArrowDark.svg")),
   "lock-checkmark": url(require("style/icons/lockCheckmark.svg")),
-  eye: url(require("style/icons/eye.svg")),
-  "eye-disabled": url(require("style/icons/eyeDisabled.svg")),
+  eye: url(require("style/icons/eyeDark.svg")),
+  "eye-disabled": url(require("style/icons/eyeDisabledDark.svg")),
   "lightning-icon": url(require("style/icons/lightningIcon.svg")),
   "lookup-icon": url(require("style/icons/lookupIcon.svg")),
   "plus-icon": url(require("style/icons/plusIcon.svg")),

@@ -49,6 +49,14 @@ log("info", "Starting main react app");
 
 const hasCliOption = (key) => cliOptions && cliOptions[key];
 
+// Apply translated strings from custom translation file if it was loaded for
+// this locale.
+const customLocaleMsgs = wallet.getCustomTranslationMessages();
+const currLocale = locales.find((value) => value.key === locale);
+if (currLocale && customLocaleMsgs) {
+  currLocale.messages = customLocaleMsgs;
+}
+
 const currentSettings = {
   locale: locale,
   daemonStartAdvanced:
@@ -69,7 +77,8 @@ const currentSettings = {
   network: hasCliOption("network") || globalCfg.get(NETWORK),
   networkFromCli: !!hasCliOption("network"),
   theme: globalCfg.get(THEME),
-  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS)
+  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS),
+  useDexSpvExperimental: globalCfg.get(cfgConstants.DEX_SPV_EXPERIMENTAL)
 };
 const initialState = {
   settings: {
@@ -365,7 +374,8 @@ const initialState = {
     cantCloseModalVisible: false,
     changeScriptByAccount: {},
     monitorLockableAccountsTimer: null,
-    confirmationDialogModalVisible: false
+    confirmationDialogModalVisible: false,
+    settingAccountsPassphrase: false
   },
   snackbar: {
     messages: Array()
@@ -479,7 +489,8 @@ const initialState = {
   },
   dex: {
     dexOrdersOpen: false,
-    loggedIn: false
+    loggedIn: false,
+    alreadyPaid: false
   },
   locales: locales
 };

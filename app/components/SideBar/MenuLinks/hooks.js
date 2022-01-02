@@ -33,6 +33,7 @@ export function useMenuLinks() {
   );
 
   const prepareLinkList = () => {
+    const useDexSpvExperimental = useSelector(sel.useDexSpvExperimental);
     let links = linkList;
     if (!isTrezor) {
       links = links.filter((l) => l.key !== TREZOR_KEY);
@@ -45,7 +46,7 @@ export function useMenuLinks() {
     }
     if (isSPV) {
       links = links.map((l) => {
-        if (l.key === DEX_KEY) {
+        if (l.key === DEX_KEY && !useDexSpvExperimental) {
           l.disabled = true;
           l.tooltip = (
             <T

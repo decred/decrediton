@@ -1,0 +1,13 @@
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.pageWrapper {
+  padding: 20px 40px;
+  background-color: var(--background-back-color);
+  border-radius: 10px;
+  margin-bottom: 50px;
+  max-width: 36em;
+  text-align: center;
+}

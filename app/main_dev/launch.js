@@ -938,8 +938,8 @@ export const launchDex = (walletPath, testnet, locale) => {
 
 export const initCheckDex = () => (!dex ? null : callDEX("IsInitialized", {}));
 
-export const initDexCall = (passphrase) =>
-  !dex ? null : callDEX("Init", { pass: passphrase });
+export const initDexCall = (passphrase, seed) =>
+  !dex ? null : callDEX("Init", { pass: passphrase, seed: seed });
 
 export const loginDexCall = (passphrase) =>
   !dex ? null : callDEX("Login", { pass: passphrase });
@@ -948,6 +948,7 @@ export const logoutDexCall = () => (!dex ? null : callDEX("Logout", {}));
 
 export const createWalletDexCall = (
   assetID,
+  walletType,
   passphrase,
   appPassphrase,
   account,
@@ -990,7 +991,8 @@ export const createWalletDexCall = (
       pass: passphrase ? passphrase : null,
       appPass: appPassphrase,
       config,
-      assetID
+      assetID,
+      type: walletType
     });
   } catch (error) {
     if (String(error).indexOf("wallet already exists") > -1) {
@@ -998,7 +1000,8 @@ export const createWalletDexCall = (
         pass: pw,
         appPass: appPassphrase,
         config,
-        assetID
+        assetID,
+        type: walletType
       });
     }
     throw error;
@@ -1007,6 +1010,9 @@ export const createWalletDexCall = (
 
 export const getDexConfigCall = (addr) =>
   !dex ? null : callDEX("DexConfig", { addr });
+
+export const preRegisterCall = (appPass, addr) =>
+  !dex ? null : callDEX("PreRegister", { appPass, addr });
 
 export const registerDexCall = (appPass, addr, fee) =>
   !dex

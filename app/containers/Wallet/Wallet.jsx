@@ -1,13 +1,13 @@
 import ReactTimeout from "react-timeout";
 import { Route } from "react-router-dom";
 import { StaticSwitch } from "shared";
-import HomePage from "components/views/HomePage/HomePage";
+import HomePage from "components/views/HomePage/";
 import SettingsPage from "components/views/SettingsPage/SettingsPage";
-import AccountsPage from "components/views/AccountsPage/AccountsPage";
+import AccountsPage from "components/views/AccountsPage";
 import WalletError from "components/views/WalletError";
 import ErrorScreen from "components/ErrorScreen";
 import InvalidRPCVersion from "components/views/InvalidRPCVersion";
-import PrivacyPage from "components/views/PrivacyPage/PrivacyPage";
+import PrivacyPage from "components/views/PrivacyPage";
 import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage/TicketsPage";

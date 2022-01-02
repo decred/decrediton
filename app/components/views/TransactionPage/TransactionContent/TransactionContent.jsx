@@ -1,5 +1,9 @@
-import { Balance, CopyToClipboard, ExternalLink } from "shared";
-import { KeyBlueButton, RevokeModalButton } from "buttons";
+import { Balance, ExternalLink } from "shared";
+import {
+  KeyBlueButton,
+  RevokeModalButton,
+  CopyToClipboardButton
+} from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
@@ -335,7 +339,7 @@ const TransactionContent = ({
           </div>
           <div className={styles.value}>
             <div className={styles.valueRawTx}>{rawTx}</div>
-            <CopyToClipboard
+            <CopyToClipboardButton
               textToCopy={rawTx}
               className={styles.receiveContentNestCopyToClipboardIcon}
             />

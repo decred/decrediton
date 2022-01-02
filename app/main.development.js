@@ -4,7 +4,7 @@ import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
 import {
   getCurrentBitcoinConfig,
-  updateDefaultBitcoinConfig,
+  newDefaultBitcoinConfig,
   initGlobalCfg,
   validateGlobalCfgFile
 } from "./config";
@@ -78,6 +78,7 @@ import {
   loginDex,
   logoutDex,
   getConfigDex,
+  preRegister,
   registerDex
 } from "./main_dev/ipc";
 import {
@@ -109,6 +110,11 @@ import {
   LOCALE,
   DISABLE_HARDWARE_ACCEL
 } from "constants/config";
+import {
+  loadCustomTranslation,
+  getCustomTranslationMessages,
+  currentLocalePlusCustomMsgs
+} from "./main_dev/customTranslation";
 import {
   default as devtoolsInstaller,
   REACT_DEVELOPER_TOOLS,
@@ -401,6 +407,8 @@ handle("create-wallet-dex", createWalletDex);
 
 handle("get-config-dex", getConfigDex);
 
+handle("preregister-dex", preRegister);
+
 handle("register-dex", registerDex);
 
 handle("user-dex", userDex);
@@ -425,7 +433,7 @@ function createDexWindow(serverAddress) {
 
 handle("check-btc-config", getCurrentBitcoinConfig);
 
-handle("update-btc-config", updateDefaultBitcoinConfig);
+handle("new-btc-config", newDefaultBitcoinConfig);
 
 handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
 
@@ -439,6 +447,11 @@ handle("daemon-getinfo", getDaemonInfo);
 
 handle("clean-shutdown", () =>
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID())
+);
+
+ipcMain.on(
+  "custom-translation-msgs",
+  (event) => (event.returnValue = getCustomTranslationMessages())
 );
 
 ipcMain.on("app-reload-ui", () => {
@@ -632,6 +645,14 @@ function setMenuLocale(locale) {
   //Removes previous listeners of "context-menu" event.
   mainWindow.webContents._events["context-menu"] = [];
 
+  // Merge locale messages with the english one, so any missing entries revert
+  // to english.
+  locale = { ...locale };
+  locale.messages = {
+    ...locales.find((v) => v.key == "en").messages,
+    ...locale.messages
+  };
+
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
     const inptMenu = inputMenu(
@@ -663,7 +684,18 @@ function setMenuLocale(locale) {
     }
   });
 
-  const template = initTemplate(mainWindow, confirmBrowserView, locale);
+  const loadCustomI18n = async () => {
+    await loadCustomTranslation();
+    setMenuLocale(currentLocalePlusCustomMsgs());
+    mainWindow.reload();
+  };
+
+  const template = initTemplate(
+    mainWindow,
+    confirmBrowserView,
+    loadCustomI18n,
+    locale
+  );
 
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);

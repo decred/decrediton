@@ -26,6 +26,7 @@
 }
 .inactive {
   border-color: transparent !important;
+  background-color: var(--background-back-color) !important;
 }
 
 @media screen and (max-width: 768px) {

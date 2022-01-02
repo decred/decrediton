@@ -47,11 +47,13 @@
 }
 .passphraseModalLabel {
   margin-top: 5px;
+  grid-column: 1;
 }
 .passphraseModalAddress {
   margin-left: 20px;
   margin-top: 5px;
   font-weight: 600;
+  grid-column: 2;
 }
 .passphraseModalBalance {
   margin-left: 20px;

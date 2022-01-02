@@ -1,4 +1,3 @@
-import { useMountEffect } from "hooks";
 import { useState, useCallback } from "react";
 
 export const useDexCreateWallets = ({
@@ -6,17 +5,20 @@ export const useDexCreateWallets = ({
   dexAccount,
   onBTCCreateWalletDex,
   onCreateWalletDex,
-  onCheckBTCConfig
+  onCheckBTCConfig,
+  onNewBTCConfig
 }) => {
+  const [hasNonDefault, setHasNonDefault] = useState(false);
   const [walletName, setWalletName] = useState(btcWalletName);
+  const [bitcoinDirectory, setBitcoinDirectory] = useState("");
+
+  const toggleHasNonDefault = useCallback(() => {
+    setHasNonDefault(!hasNonDefault);
+  }, [hasNonDefault]);
 
   const resetState = useCallback(() => {
     setWalletName(btcWalletName);
   }, [btcWalletName]);
-
-  useMountEffect(() => {
-    onCheckBTCConfig();
-  });
 
   const onCreateWallet = (passphrase, args) => {
     const { appPassphrase } = args;
@@ -30,5 +32,24 @@ export const useDexCreateWallets = ({
     resetState();
   };
 
-  return { walletName, setWalletName, onCreateWallet, onBTCCreateWallet };
+  const onCheckBTCConfigDex = () => {
+    onCheckBTCConfig(bitcoinDirectory);
+  };
+  const onNewBTCConfigDex = () => {
+    onNewBTCConfig(bitcoinDirectory);
+    resetState();
+  };
+
+  return {
+    walletName,
+    setWalletName,
+    onCreateWallet,
+    onBTCCreateWallet,
+    onCheckBTCConfigDex,
+    onNewBTCConfigDex,
+    bitcoinDirectory,
+    setBitcoinDirectory,
+    hasNonDefault,
+    toggleHasNonDefault
+  };
 };

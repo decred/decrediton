@@ -14,6 +14,7 @@ import {
 } from "constants/decrediton";
 import { classNames } from "pi-ui";
 import style from "./Snackbar.module.css";
+import { SNACKBAR_SIMPLE_MESSAGE } from "actions/SnackbarActions";
 
 const snackbarClasses = ({ type }) =>
   ({
@@ -49,7 +50,11 @@ const snackbarClasses = ({ type }) =>
     ),
     Warning: classNames(style.snackbar, style.snackbarWarning),
     Error: classNames(style.snackbar, style.snackbarError),
-    Success: classNames(style.snackbar, style.snackbarSuccess)
+    Success: classNames(style.snackbar, style.snackbarSuccess),
+    [SNACKBAR_SIMPLE_MESSAGE]: classNames(
+      style.snackbar,
+      style.snackbarSimpleMessage
+    )
   }[type] || "snackbar");
 
 const Snackbar = () => {

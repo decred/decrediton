@@ -35,6 +35,7 @@ const SendFromUnmixedAccountContent = ({
       </div>
       <TextInput
         id="confirmInput"
+        dataTestId="confirm-input"
         autoFocus
         className={styles.input}
         value={typedConfirmationPhrase}

@@ -25,6 +25,7 @@
 }
 
 .snackbar.snackbarWarning,
+.snackbar.snackbarSimpleMessage,
 .snackbar.snackbarError {
   background-image: var(--notification-error-icon);
 }

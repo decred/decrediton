@@ -198,7 +198,6 @@ const getAllSendToInput = () => screen.getAllByLabelText("Send to");
 
 test("render SendTab within its parent", () => {
   render(<TransactionsPage />);
-  user.click(screen.getByText("Send"));
 
   const amountInput = getAmountInput();
   const sendToInput = getSendToInput();
@@ -247,7 +246,6 @@ test("render SendTab within its parent", () => {
 test("render SendTab within its parent in testnet mode", () => {
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
   render(<TransactionsPage />);
-  user.click(screen.getByText("Send"));
 
   expect(screen.getByText(/testnet Decred addresses/i).textContent)
     .toMatchInlineSnapshot(`

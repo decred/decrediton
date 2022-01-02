@@ -7,6 +7,7 @@
   border-radius: 50%;
   line-height: 14px;
   font-size: 9pt;
+  text-align: center;
 }
 
 .tabsHeader {
@@ -15,11 +16,19 @@
 }
 
 .tabs {
-  margin: 0 0 0 95px;
+  margin: 0;
+  padding: 0 60px 0 96px;
+  background-color: var(--governance-tab-bg);
 }
 
 .tabContent {
   padding: 0;
+  top: 30px;
+  height: 100%;
+}
+
+.tabContent > div {
+  height: 100%;
 }
 
 .links {
@@ -44,8 +53,6 @@
 }
 
 .refreshProposals {
-  background-image: var(--proposals-refresh-icon);
-  background-color: var(--refresh-proposals) !important;
   margin-left: 10px;
 }
 
@@ -71,13 +78,10 @@
   cursor: pointer;
 }
 
-.activeCaret {
-  background-color: var(--grey-7) !important;
-}
-
 @media screen and (max-width: 1180px) {
   .tabs {
-    margin-left: 55px;
+    margin-left: 0;
+    padding-left: 55px;
   }
 
   .politeiaDisabled {
@@ -91,7 +95,8 @@
 
 @media screen and (max-width: 768px) {
   .tabs {
-    margin-left: 20px;
+    margin-left: 0;
+    padding-left: 20px;
   }
   .tab {
     margin-right: 25px;

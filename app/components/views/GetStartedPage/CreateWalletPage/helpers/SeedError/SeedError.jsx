@@ -1,6 +1,7 @@
 import styles from "./SeedError.module.css";
+import { classNames } from "pi-ui";
 
-const SeedError = ({ children }) => (
-  <div className={styles.seedError}>{children}</div>
+const SeedError = ({ className, children }) => (
+  <div className={classNames(styles.seedError, className)}>{children}</div>
 );
 export default SeedError;

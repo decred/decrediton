@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { wallet } from "wallet-preload-shim";
 import style from "./QRCodeModal.module.css";
+import { TextHighlighted } from "pi-ui";
 
 const QRCode = ({ addr, amount }) => {
   let uri = "decred:" + addr;
@@ -23,7 +24,9 @@ const QRCodeModal = ({ nextAddress, amount, setModal }) => (
         <div className={style.modalLabel}>
           <T id="receive.modalLabel" m="This is My Decred (DCR) Address" />
         </div>
-        <div className={style.modalAddress}>{nextAddress}</div>
+        <TextHighlighted className={style.modalAddress}>
+          {nextAddress}
+        </TextHighlighted>
         <div className={style.modalQR}>
           <QRCode addr={nextAddress} amount={amount} />
         </div>

@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip, classNames } from "pi-ui";
-import { Balance, CopyToClipboard } from "shared";
-import { SlateGrayButton } from "buttons";
+import { Balance } from "shared";
+import { SlateGrayButton, CopyToClipboardButton } from "buttons";
 import { IMPORTED_ACCOUNT, DEFAULT_ACCOUNT } from "constants";
 import DataLine from "./DataLine";
 import styles from "./AccountDetails.module.css";
@@ -94,7 +94,7 @@ const AccountsDetails = ({
           {showPubKey && accountExtendedKey ? (
             <>
               <div className={styles.pubkeyArea}>{accountExtendedKey}</div>
-              <CopyToClipboard
+              <CopyToClipboardButton
                 textToCopy={accountExtendedKey}
                 className={styles.pubkeyClipboard}
               />

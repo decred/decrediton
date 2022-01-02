@@ -1,0 +1,13 @@
+.textHighlighted {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  margin: 0 0.5rem;
+}
+
+.balance {
+  color: var(--main-dark-blue);
+}
+
+.balanceUnit {
+  color: var(--main-dark-blue);
+}

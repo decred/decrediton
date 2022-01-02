@@ -98,15 +98,15 @@ export const DEX_INIT_ATTEMPT = "DEX_INIT_ATTEMPT";
 export const DEX_INIT_SUCCESS = "DEX_INIT_SUCCESS";
 export const DEX_INIT_FAILED = "DEX_INIT_FAILED";
 
-export const initDex = (passphrase) => async (dispatch, getState) => {
+export const initDex = (passphrase, seed) => async (dispatch, getState) => {
   dispatch({ type: DEX_INIT_ATTEMPT });
   if (!sel.dexActive(getState())) {
     dispatch({ type: DEX_INIT_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
-    await dex.init(passphrase);
-    dispatch({ type: DEX_INIT_SUCCESS });
+    await dex.init(passphrase, seed);
+    dispatch({ type: DEX_INIT_SUCCESS, fromSeed: seed });
     // Request current user information
     dispatch(userDex());
   } catch (error) {
@@ -167,8 +167,10 @@ export const createWalletDex = (
     const rpclisten = rpcCreds.rpcListen;
     const rpccert = rpcCreds.rpcCert;
     const assetID = 42;
+    const walletType = "dcrwalletRPC";
     await dex.createWallet(
       assetID,
+      walletType,
       passphrase,
       appPassphrase,
       account,
@@ -212,8 +214,10 @@ export const btcCreateWalletDex = (
       ? btcConfig.test.rpcbind + ":" + btcConfig.test.rpcport
       : btcConfig.rpcbind + ":" + btcConfig.rpcport;
     const assetID = 0;
+    const walletType = "bitcoindRPC"; // "SPV" for the native/built-in spv btcwallet
     await dex.createWallet(
       assetID,
+      walletType,
       passphrase,
       appPassphrase,
       account,
@@ -256,6 +260,31 @@ export const userDex = () => async (dispatch, getState) => {
     dispatch({ type: DEX_USER_SUCCESS, user });
   } catch (error) {
     dispatch({ type: DEX_USER_FAILED, error });
+    return;
+  }
+};
+
+export const DEX_PREREGISTER_ATTEMPT = "DEX_PREREGISTER_ATTEMPT";
+export const DEX_PREREGISTER_SUCCESS = "DEX_PREREGISTER_SUCCESS";
+export const DEX_PREREGISTER_FAILED = "DEX_PREREGISTER_FAILED";
+
+export const preRegisterDex = (appPass, addr) => async (dispatch, getState) => {
+  dispatch({ type: DEX_PREREGISTER_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_PREREGISTER_FAILED, error: "Dex isn't active" });
+    return;
+  }
+  try {
+    const alreadyPaid = await dex.preRegister(appPass, addr);
+    // If it's not already paid it returns the config that is used to pay the
+    // required fee.
+    if (typeof alreadyPaid == "boolean") {
+      dispatch({ type: DEX_PREREGISTER_SUCCESS, alreadyPaid, addr });
+    } else {
+      dispatch({ type: DEX_GETCONFIG_SUCCESS, config: alreadyPaid, addr });
+    }
+  } catch (error) {
+    dispatch({ type: DEX_PREREGISTER_FAILED, error });
     return;
   }
 };
@@ -351,10 +380,13 @@ export const CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED =
 export const CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL =
   "CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL";
 
-export const checkBTCConfig = () => async (dispatch, getState) => {
+export const checkBTCConfig = (bitcoinDirectory) => async (
+  dispatch,
+  getState
+) => {
   dispatch({ type: CHECK_BTC_CONFIG_ATTEMPT });
   try {
-    const res = await dex.checkBTCConfig();
+    const res = await dex.checkBTCConfig(bitcoinDirectory);
     if (
       res.rpcuser &&
       res.rpcpassword &&
@@ -371,12 +403,10 @@ export const checkBTCConfig = () => async (dispatch, getState) => {
       dispatch({ type: CHECK_BTC_CONFIG_SUCCESS, btcConfig: res });
     } else {
       dispatch({ type: CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED });
-      dispatch(updateBTCConfig());
     }
   } catch (error) {
     if (String(error).indexOf("no such file or directory") > -1) {
       dispatch({ type: CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL });
-      dispatch(updateBTCConfig());
     } else {
       dispatch({ type: CHECK_BTC_CONFIG_FAILED, error });
     }
@@ -384,28 +414,32 @@ export const checkBTCConfig = () => async (dispatch, getState) => {
   return;
 };
 
-export const UPDATE_BTC_CONFIG_ATTEMPT = "UPDATE_BTC_CONFIG_ATTEMPT";
-export const UPDATE_BTC_CONFIG_SUCCESS = "UPDATE_BTC_CONFIG_SUCCESS";
-export const UPDATE_BTC_CONFIG_FAILED = "UPDATE_BTC_CONFIG_FAILED";
+export const NEW_BTC_CONFIG_ATTEMPT = "NEW_BTC_CONFIG_ATTEMPT";
+export const NEW_BTC_CONFIG_SUCCESS = "NEW_BTC_CONFIG_SUCCESS";
+export const NEW_BTC_CONFIG_FAILED = "NEW_BTC_CONFIG_FAILED";
 
-export const updateBTCConfig = () => async (dispatch, getState) => {
-  dispatch({ type: UPDATE_BTC_CONFIG_ATTEMPT });
+export const newBTCConfig = (bitcoinDirectory) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: NEW_BTC_CONFIG_ATTEMPT });
   try {
     const rpcuser = makeRandomString(12);
     const rpcpassword = makeRandomString(12);
     const rpcbind = "127.0.0.1";
     const rpcport = sel.isTestNet(getState()) ? "18332" : "8332";
     const testnet = sel.isTestNet(getState());
-    const res = await dex.updateBTCConfig(
+    const res = await dex.newBTCConfig(
       rpcuser,
       rpcpassword,
       rpcbind,
       rpcport,
-      testnet
+      testnet,
+      bitcoinDirectory
     );
-    dispatch({ type: UPDATE_BTC_CONFIG_SUCCESS, btcConfig: res });
+    dispatch({ type: NEW_BTC_CONFIG_SUCCESS, btcConfig: res });
   } catch (error) {
-    dispatch({ type: UPDATE_BTC_CONFIG_FAILED, error });
+    dispatch({ type: NEW_BTC_CONFIG_FAILED, error });
     return;
   }
 };

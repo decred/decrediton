@@ -61,6 +61,7 @@
 .tableHeader tr th:first-child,
 .tableBody tr td:first-child {
   width: 35em;
+  max-width: 35em;
   overflow: inherit;
 }
 

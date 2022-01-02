@@ -26,8 +26,8 @@ import CloseButton from "./CloseButton";
 import HelpLink from "./HelpLink/HelpLink";
 import InvisibleButton from "./InvisibleButton";
 import Button from "./Button/Button";
-import SmallButton from "./SmallButton";
 import PiUiButton from "./PiUiButton";
+import CopyToClipboardButton from "./CopyToClipboardButton";
 export {
   ModalButton,
   ToggleSwitch,
@@ -37,7 +37,7 @@ export {
   CloseButton,
   InvisibleButton,
   Button,
-  SmallButton
+  CopyToClipboardButton
 };
 
 /***************************************************

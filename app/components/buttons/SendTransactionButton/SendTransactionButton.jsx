@@ -2,6 +2,7 @@ import { PassphraseModalButton } from "../index";
 import KeyBlueButton from "../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { useSendTransactionButton } from "./hooks";
+import styles from "./SendTransactionButton.module.css";
 
 const SendTransactionButton = ({
   disabled,
@@ -49,6 +50,7 @@ const SendTransactionButton = ({
         disabled={disabled || isSendingTransaction}
         onSubmit={signTransaction}
         loading={isSendingTransaction}
+        modalClassName={styles.passphraseModal}
         buttonLabel={
           buttonLabel ? buttonLabel : <T id="send.sendBtn" m="Send" />
         }

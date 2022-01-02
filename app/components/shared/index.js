@@ -1,14 +1,8 @@
 export * from "./Balance";
-export { default as CopyToClipboard } from "./CopyToClipboard/CopyToClipboard";
-export { default as LinkToAccounts } from "./LinkToAccounts";
 export { default as TransitionMotionWrapper } from "./TransitionMotionWrapper";
 export { default as ExternalLink } from "./ExternalLink";
 export { default as ExternalButton } from "./ExternalButton";
 export { default as UnselectableText } from "./UnselectableText";
-export {
-  default as RoutedTabsHeader,
-  RoutedTab
-} from "./RoutedTabsHeader/RoutedTabsHeader";
 export { default as ShowWarning } from "./ShowWarning";
 export { default as ShowError } from "./ShowError";
 export { default as Documentation } from "./Documentation";
@@ -37,3 +31,4 @@ export { default as LNChannelStatus } from "./LNChannelStatus";
 export { default as DetailsTable } from "./DetailsTable";
 export { default as TruncatedText } from "./TruncatedText";
 export { default as CopyableText } from "./CopyableText";
+export { default as BalanceDisplay } from "./BalanceDisplay";

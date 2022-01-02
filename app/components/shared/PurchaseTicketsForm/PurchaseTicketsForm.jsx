@@ -29,23 +29,6 @@ const messages = defineMessages({
   }
 });
 
-export const LegacyVSPWarning = () => (
-  <T
-    id="purchase.isLegacyDescription"
-    m="Use a VSP which has not updated to vspd. Not recommended, legacy VSP support will soon be removed."
-  />
-);
-
-const LegacyCheckbox = ({ isLegacy, toggleIsLegacy }) => (
-  <Checkbox
-    label={<T id="purchase.isLegacy" m="Use Legacy VSP" />}
-    className={styles.useLegacyLabel}
-    id="box"
-    checked={isLegacy}
-    onChange={() => toggleIsLegacy(!isLegacy)}
-  />
-);
-
 const PurchaseTicketsForm = ({
   spvMode,
   isValid,
@@ -70,7 +53,6 @@ const PurchaseTicketsForm = ({
   toggleRememberVspHostCheckBox,
   notMixedAccounts,
   getRunningIndicator,
-  toggleIsLegacy,
   isLegacy,
   dismissBackupRedeemScript,
   onDismissBackupRedeemScript,
@@ -126,17 +108,6 @@ const PurchaseTicketsForm = ({
             </label>
           )}
           <div className={styles.checkboxWrapper}>
-            <div>
-              {!isLegacy ? (
-                <Tooltip
-                  contentClassName={styles.useLegacyTooltip}
-                  content={<LegacyVSPWarning />}>
-                  <LegacyCheckbox {...{ isLegacy, toggleIsLegacy }} />
-                </Tooltip>
-              ) : (
-                <LegacyCheckbox {...{ isLegacy, toggleIsLegacy }} />
-              )}
-            </div>
             {vsp && !isLegacy && (
               <Checkbox
                 className={styles.rememberVspCheckBox}
@@ -336,6 +307,7 @@ const PurchaseTicketsForm = ({
               />
             }
             disabled={!isValid}
+            modalClassName={styles.passphraseModal}
             onSubmit={onPurchaseTickets}
             buttonLabel={purchaseLabel()}
           />

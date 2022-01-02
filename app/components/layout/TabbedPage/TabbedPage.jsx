@@ -1,149 +1,98 @@
-import { classNames } from "pi-ui";
-import { Switch, Route } from "react-router-dom";
-import { TransitionMotion } from "react-motion";
-import { useEffect, useState, useReducer } from "react";
-import { useSelector } from "react-redux";
-import * as sel from "selectors";
-import { usePrevious } from "hooks";
-import { RoutedTabsHeader, RoutedTab } from "shared";
-import { getStyles, getMatchedTab, willEnter, willLeave } from "./helpers";
-import TabbedPageTab from "./TabbedPageTab";
+import {
+  useState,
+  useEffect,
+  createElement as h,
+  cloneElement as k
+} from "react";
+import { useHistory } from "react-router-dom";
+import { classNames, Tabs, Tab } from "pi-ui";
 import styles from "./TabbedPage.module.css";
-import { isFunction, isArray } from "lodash";
-
-// returns the state.styles in a static container, without animations.
-const staticStyles = (stylesObj, contentClassName) => (
-  <>
-    {stylesObj.map(({ key, data: { element } }) => (
-      <div
-        className={classNames(
-          styles.tabContent,
-          styles.visible,
-          contentClassName
-        )}
-        key={key}>
-        {element}
-      </div>
-    ))}
-  </>
-);
-
-// returns the state.styles wrapped in a TransitionMotion, to show the
-// animations.
-const animatedStyles = (stylesObj, dir, contentClassName) => (
-  <TransitionMotion
-    styles={stylesObj}
-    willLeave={() => willLeave(dir)}
-    willEnter={() => willEnter(dir)}>
-    {(interpolatedStyles) => (
-      <>
-        {interpolatedStyles.map(
-          ({ key, data: { element }, style: { left, opacity } }) => (
-            <div
-              className={classNames(
-                styles.tabContent,
-                Math.abs(left) < 0.1 && styles.visible,
-                contentClassName
-              )}
-              style={{
-                left,
-                right: -left,
-                opacity: opacity,
-                visibility: Math.abs(left) > 990 ? "hidden" : ""
-              }}
-              key={key}>
-              {element}
-            </div>
-          )
-        )}
-      </>
-    )}
-  </TransitionMotion>
-);
+import * as sel from "selectors";
+import { useSelector } from "react-redux";
+import DefaultThemesWithCustomTabsProvider from "./DefaultThemesWithCustomTabsProvider";
 
 const TabbedPage = ({
-  children,
-  className,
+  tabs,
   header,
   headerClassName,
   tabsClassName,
   tabContentClassName,
-  onChange,
-  caret,
-  activeCaretClassName
+  themes
 }) => {
   const location = useSelector(sel.location);
   const uiAnimations = useSelector(sel.uiAnimations);
-  const [matchedTab, setMatchedTab] = useReducer(() =>
-    getMatchedTab(location, children)
-  );
-  const previous = usePrevious({ matchedTab, location });
-  const [dir, setDir] = useState("l2r");
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const history = useHistory();
+
+  const onSelectTab = (index) => {
+    setActiveTabIndex(index);
+    history.push(tabs[index].path);
+  };
 
   useEffect(() => {
-    setMatchedTab(getMatchedTab(location, children));
-  }, [children, location]);
+    const tabIndex = tabs.findIndex(
+      (menuLink) => menuLink.path === location.pathname
+    );
+    if (tabIndex !== activeTabIndex && tabIndex > 0) {
+      setActiveTabIndex(tabIndex);
+    }
+  }, [location, activeTabIndex, tabs]);
 
-  useEffect(() => {
-    if (previous && previous.location.pathname === location.pathname) return;
-    if (isFunction(onChange)) onChange();
-    const matchedTab = getMatchedTab(location, children);
-    if (!matchedTab) return;
-    // if (previous && previous.matchedTab) is false, it probably means it is
-    // the first time rendering therefore we use "l2r", as it is probably the
-    // first tab.
-    const dir =
-      previous && previous.matchedTab
-        ? previous.matchedTab.index > matchedTab.index
-          ? "r2l"
-          : "l2r"
-        : "l2r";
-    setDir(dir);
-    setMatchedTab(matchedTab);
-  }, [location, previous, children, onChange]);
-
-  if (!isArray(children)) children = [children];
-
-  const tabs = children.filter(
-    ({ type, props: { disabled } }) => type === TabbedPageTab && !disabled
-  );
-
-  const nonTabs = children.filter(({ type }) => type !== TabbedPageTab);
-
-  const tabHeaders = tabs.map(
-    ({ props: { path, link, className, activeClassName } }) =>
-      RoutedTab(path, link, className, activeClassName)
-  );
-
-  const headers = tabs.map(({ props: { path, header } }) => (
-    <Route key={path} path={path} component={header} />
-  ));
-
-  const tabStyles = getStyles(matchedTab);
-
-  const tabContents = uiAnimations
-    ? animatedStyles(tabStyles, dir, tabContentClassName)
-    : staticStyles(tabStyles, tabContentClassName);
+  const SecondaryHeader = tabs[activeTabIndex].header;
 
   return (
     <div className={styles.wrapper}>
       <div className={classNames(styles.tabbedPageHeader, headerClassName)}>
         {header}
-        <Switch>{headers}</Switch>
-        <RoutedTabsHeader
-          tabs={tabHeaders}
-          tabsClassName={tabsClassName}
-          caret={caret}
-          activeCaretClassName={activeCaretClassName}
-        />
+        {SecondaryHeader && <SecondaryHeader />}
       </div>
 
-      <div className={classNames(styles.tabbedPageBody, className)}>
-        {tabContents}
-        {nonTabs}
+      <div className={styles.tabbedPageBody}>
+        <DefaultThemesWithCustomTabsProvider themes={themes}>
+          <Tabs
+            onSelectTab={onSelectTab}
+            activeTabIndex={activeTabIndex}
+            className={classNames(styles.tabs, tabsClassName)}
+            contentClassName={classNames(
+              styles.tabContent,
+              tabContentClassName
+            )}
+            contentAnimation={uiAnimations ? "slide" : "none"}>
+            {tabs
+              .filter(({ disabled }) => !disabled)
+              .map(({ label, content, path, props }) => {
+                const element = React.isValidElement(content)
+                  ? k(content, {
+                      ...props,
+                      ...props?.content?.props
+                    })
+                  : // If the content props are needed, make a valid react element
+                    // before send, otherwise they will be undfined.
+                    h(content, { ...props }, null);
+                return (
+                  <Tab label={label} key={path}>
+                    <div key={`${path}-key`}>{element}</div>
+                  </Tab>
+                );
+              })}
+          </Tabs>
+        </DefaultThemesWithCustomTabsProvider>
       </div>
     </div>
   );
+};
+
+TabbedPage.propTypes = {
+  tabs: PropTypes.array.isRequired,
+  header: PropTypes.object.isRequired,
+  headerClassName: PropTypes.string,
+  tabsClassName: PropTypes.string,
+  tabContentClassName: PropTypes.string,
+  themes: PropTypes.object
+};
+
+TabbedPage.defaultProps = {
+  themes: {}
 };
 
 export default TabbedPage;

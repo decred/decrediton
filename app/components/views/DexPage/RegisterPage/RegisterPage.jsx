@@ -14,23 +14,28 @@ const RegisterPage = () => {
     onRegisterDex,
     registerDexAttempt,
     onGetConfig,
+    onPreregister,
     dexConfig,
     dexAddr,
     defaultServerAddress,
-    dexRegisterError
+    dexRegisterError,
+    restoredFromSeed
   } = useDex();
 
   const {
     isValid,
     error,
     onGetConfigDex,
+    onPreRegisterDex,
     addr,
     setAddress,
     dexAccountNumber,
     defaultSpendingAccount,
-    dexAccountSpendable
+    dexAccountSpendable,
+    getConfigAttempt
   } = useDexRegisterPage({
     onGetConfig,
+    onPreregister,
     defaultServerAddress
   });
 
@@ -121,6 +126,42 @@ const RegisterPage = () => {
         )}
       </>
     );
+  } else if (restoredFromSeed) {
+    return (
+      <div>
+        <label className={styles.dexAddressLabel} htmlFor="dexServer">
+          <T id="dex.dexServer" m="DEX Server" />
+        </label>
+        <TextInput
+          id="dexServer"
+          className={styles.dexAddress}
+          required
+          value={addr}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="DEX Server"
+        />
+        {error && <div className="error">{error}</div>}
+        <PassphraseModalButton
+          className="margin-top-m"
+          disabled={!isValid || getConfigAttempt}
+          modalTitle={
+            <T id="dex.preRegisterModalTitle" m="Confirm Registration Check" />
+          }
+          modalDescription={
+            <T
+              id="dex.preRegisterModalDescription"
+              m="Since you have restored your DEX account from seed, we can now check to see if you have already paid your fee at the provided DEX server."
+            />
+          }
+          passphraseLabel={
+            <T id="dex.payDexFeeAppPassphrase" m="DEX Passphrase" />
+          }
+          loading={getConfigAttempt}
+          onSubmit={onPreRegisterDex}
+          buttonLabel={<T id="dex.preRegisterButton" m="Check Registration" />}
+        />
+      </div>
+    );
   } else {
     return (
       <div>
@@ -138,8 +179,8 @@ const RegisterPage = () => {
         {error && <div className="error">{error}</div>}
         <KeyBlueButton
           className="margin-top-m"
-          disabled={!isValid || registerDexAttempt}
-          loading={registerDexAttempt}
+          disabled={!isValid || getConfigAttempt}
+          loading={getConfigAttempt}
           onClick={onGetConfigDex}>
           <T id="dex.getFeeButton" m="Get Fee to Pay" />
         </KeyBlueButton>

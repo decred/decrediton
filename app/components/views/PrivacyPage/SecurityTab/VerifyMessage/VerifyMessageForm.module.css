@@ -1,0 +1,58 @@
+.button {
+  font-size: 13px !important;
+  line-height: 17px !important;
+  font-weight: 400 !important;
+}
+
+.form {
+  background-color: var(--background-back-color);
+  margin-bottom: 20px;
+  padding: 51px 0 0 0;
+  float: left;
+  width: 100%;
+  position: relative;
+}
+
+.buttonRight {
+  position: absolute;
+  top: -35px;
+  right: 0;
+}
+
+.formRow {
+  height: 50px;
+  width: 100%;
+}
+
+.formRowLabel {
+  float: left;
+  text-align: right;
+  padding-right: 10px;
+  width: 111px;
+  font-size: 19px;
+  line-height: 15px;
+}
+
+.formRowField {
+  float: left;
+  width: 300px;
+  height: 36px;
+}
+
+.formRowFieldMessage {
+  float: left;
+  width: 540px;
+}
+
+@media screen and (max-width: 1180px) {
+  .formRowFieldMessage {
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .formRowField,
+  .formRowFieldMessage {
+    width: 224px;
+  }
+}

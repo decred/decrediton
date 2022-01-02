@@ -1,4 +1,4 @@
-import { Balance } from "shared";
+import { BalanceDisplay } from "shared";
 import { DescriptionHeader } from "layout";
 import { useTreasuryInfo } from "../hooks";
 import { FormattedMessage as T } from "react-intl";
@@ -26,13 +26,7 @@ const TabHeader = ({ descriptionHeaderClassName }) => {
               id="governance.treasury_balance"
               m="Available Treasury Balance: {treasuryBalance}"
               values={{
-                treasuryBalance: (
-                  <Balance
-                    flat
-                    amount={treasuryBalance}
-                    classNameWrapper={styles.balanceAmount}
-                  />
-                )
+                treasuryBalance: <BalanceDisplay amount={treasuryBalance} />
               }}
             />
           }

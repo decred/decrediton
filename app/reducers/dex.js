@@ -29,6 +29,9 @@ import {
   DEX_GETCONFIG_ATTEMPT,
   DEX_GETCONFIG_FAILED,
   DEX_GETCONFIG_SUCCESS,
+  DEX_PREREGISTER_ATTEMPT,
+  DEX_PREREGISTER_FAILED,
+  DEX_PREREGISTER_SUCCESS,
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
@@ -43,10 +46,14 @@ import {
   CHECK_BTC_CONFIG_SUCCESS,
   CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
   CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
-  UPDATE_BTC_CONFIG_ATTEMPT,
-  UPDATE_BTC_CONFIG_FAILED,
-  UPDATE_BTC_CONFIG_SUCCESS
+  NEW_BTC_CONFIG_ATTEMPT,
+  NEW_BTC_CONFIG_SUCCESS,
+  NEW_BTC_CONFIG_FAILED,
+  BTC_CREATEWALLET_FAILED,
+  BTC_CREATEWALLET_ATTEMPT,
+  BTC_CREATEWALLET_SUCCESS
 } from "../actions/DexActions";
+import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
 export default function ln(state = {}, action) {
   switch (action.type) {
@@ -151,6 +158,25 @@ export default function ln(state = {}, action) {
         createWalletAttempt: false,
         createWalletError: null
       };
+
+    case BTC_CREATEWALLET_ATTEMPT:
+      return {
+        ...state,
+        btcCreateWalletAttempt: true,
+        btcCreateWalletError: null
+      };
+    case BTC_CREATEWALLET_FAILED:
+      return {
+        ...state,
+        btcCreateWalletAttempt: false,
+        btcCreateWalletError: action.error
+      };
+    case BTC_CREATEWALLET_SUCCESS:
+      return {
+        ...state,
+        btcCreateWalletAttempt: false,
+        btcCreateWalletError: null
+      };
     case DEX_USER_ATTEMPT:
       return {
         ...state,
@@ -189,7 +215,8 @@ export default function ln(state = {}, action) {
         initAttempt: false,
         dexInit: true,
         loggedIn: true,
-        registerError: null
+        registerError: null,
+        restoredFromSeed: action.fromSeed
       };
     case DEX_LAUNCH_WINDOW_ATTEMPT:
       return {
@@ -253,6 +280,27 @@ export default function ln(state = {}, action) {
         config: action.config,
         addr: action.addr,
         getConfigError: null
+      };
+    case DEX_PREREGISTER_ATTEMPT:
+      return {
+        ...state,
+        getConfigAttempt: true,
+        addr: null,
+        getConfigError: null
+      };
+    case DEX_PREREGISTER_FAILED:
+      return {
+        ...state,
+        getConfigAttempt: false,
+        getConfigError: action.error
+      };
+    case DEX_PREREGISTER_SUCCESS:
+      return {
+        ...state,
+        getConfigAttempt: false,
+        addr: action.addr,
+        getConfigError: null,
+        alreadyPaid: action.alreadyPaid
       };
     case CREATEDEXACCOUNT_ATTEMPT:
       return {
@@ -348,25 +396,45 @@ export default function ln(state = {}, action) {
         checkBtcConfigAttempt: false,
         btcInstallNeeded: true
       };
-    case UPDATE_BTC_CONFIG_ATTEMPT:
+    case NEW_BTC_CONFIG_ATTEMPT:
       return {
         ...state,
-        updateBtcConfigAttempt: true,
-        updateBtcConfigError: null,
-        btcConfig: null
+        newBTCConfigAttempt: true,
+        newBTCConfigError: null
       };
-    case UPDATE_BTC_CONFIG_FAILED:
+    case NEW_BTC_CONFIG_FAILED:
       return {
         ...state,
-        updateBtcConfigAttempt: false,
-        updateBtcConfigError: action.error
+        newBTCConfigAttempt: false,
+        newBTCConfigError: action.error
       };
-    case UPDATE_BTC_CONFIG_SUCCESS:
+    case NEW_BTC_CONFIG_SUCCESS:
       return {
         ...state,
-        updateBtcConfigAttempt: false,
-        updateBtcConfigError: null,
+        newBTCConfigAttempt: false,
+        newBTCConfigError: null,
+        btcInstallNeeded: false,
+        btcConfigUpdateNeeded: false,
         btcConfig: action.btcConfig
+      };
+    case CLOSEWALLET_SUCCESS:
+      return {
+        ...state,
+        checkBtcConfigAttempt: false,
+        btcConfigUpdateNeeded: false,
+        btcInstallNeeded: false,
+        btcConfig: null,
+        checkBtcConfigError: null,
+        openOrder: false,
+        logoutError: null,
+        dexSelectAccountAttempt: false,
+        dexSelectAccountError: null,
+        dexAccount: null,
+        getConfigAttempt: false,
+        addr: null,
+        getConfigError: null,
+        alreadyPaid: false,
+        config: null
       };
     default:
       return state;

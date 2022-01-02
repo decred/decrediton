@@ -104,7 +104,7 @@ const getPrivatePasshpraseInput = () =>
 const getContinueButton = () =>
   screen.getByRole("button", { name: "Continue" });
 const getCanceButton = () => screen.getByRole("button", { name: "Cancel" });
-const getAuotPilotToggleSwitch = () => screen.getByTestId("toggleSwitch");
+const getAuotPilotToggleSwitch = () => screen.getByTestId("switch");
 
 test("ln wallet exists", () => {
   selectors.lnWalletExists = jest.fn(() => true);

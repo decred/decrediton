@@ -148,7 +148,6 @@ let mockIsTicketAutoBuyerEnabled;
 let mockTicketBuyerV2Cancel;
 let mockGetRunningIndicator;
 let mockAddCustomStakePool;
-let mockToggleIsLegacy;
 
 beforeEach(() => {
   selectors.getIsLegacy = jest.fn(() => true);
@@ -195,18 +194,16 @@ beforeEach(() => {
   mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
     () => false
   );
-  mockToggleIsLegacy = spActions.toggleIsLegacy = jest.fn(() => () => {});
 });
 
 test("render LEGACY_PurchasePage", () => {
   render(<Purchase />, initialState);
 
-  // check Use Legacy VSP checkbox
+  // check if Use Legacy VSP checkbox is hidden
   expect(
     screen.queryByText(/use a VSP which has not updated to vspd/i)
   ).not.toBeInTheDocument(); // tooltip
-  user.click(screen.getByLabelText("Use Legacy VSP"));
-  expect(mockToggleIsLegacy).toHaveBeenCalledWith(false);
+  expect(screen.queryByLabelText("Use Legacy VSP")).not.toBeInTheDocument();
 
   expect(
     screen.getByText("Current VSP").nextElementSibling.textContent
@@ -404,7 +401,7 @@ test("test legacy autobuyer", async () => {
   const settingsButton = screen.getByRole("button", {
     name: "Ticket Autobuyer Settings"
   });
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(screen.getByTestId("switch"));
   await wait(() => getSettingsModalTitle());
   const saveButton = screen.getByRole("button", { name: "Save" });
   user.click(saveButton);
@@ -443,7 +440,7 @@ test("test legacy autobuyer", async () => {
   user.click(screen.getByRole("button", { name: "Cancel" }));
 
   // clicking again on switch should open the confirmation modal
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(screen.getByTestId("switch"));
   await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   expect(
     screen.getByText(/start ticket buyer confirmation/i)
@@ -455,7 +452,7 @@ test("test legacy autobuyer", async () => {
   // cancel first
   user.click(screen.getByText("Cancel"));
   // try again
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(screen.getByTestId("switch"));
   await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
@@ -474,7 +471,7 @@ test("test legacy autobuyer (autobuyer is runnning)", () => {
   render(<TicketAutoBuyer />, initialState);
   expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
   expect(screen.getByText(/turn off auto buyer/i)).toBeInTheDocument();
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(screen.getByTestId("switch"));
   expect(mockTicketBuyerV2Cancel).toHaveBeenCalled();
 });
 
@@ -484,7 +481,7 @@ test("test legacy autobuyer (a process is runnning)", () => {
   expect(
     screen.getByText(/privacy mixer or purchase ticket attempt running/i)
   ).toBeInTheDocument();
-  user.click(screen.getByTestId("toggleSwitch"));
+  user.click(screen.getByTestId("switch"));
 
   expect(
     screen.queryByText(/start ticket buyer confirmation/i)

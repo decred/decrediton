@@ -23,6 +23,7 @@ import {
   initDexCall,
   createWalletDexCall,
   getDexConfigCall,
+  preRegisterCall,
   registerDexCall,
   userDexCall,
   loginDexCall,
@@ -54,7 +55,7 @@ export const getAvailableWallets = (network) => {
 
     const cfg = getWalletCfg(isTestNet, wallet);
     const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
-    const watchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
+    const isWatchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
     const isTrezor = cfg.get(cfgConstants.TREZOR);
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
@@ -64,7 +65,7 @@ export const getAvailableWallets = (network) => {
       wallet,
       finished,
       lastAccess,
-      watchingOnly,
+      isWatchingOnly,
       isTrezor,
       isPrivacy
     });
@@ -276,14 +277,14 @@ export const checkInitDex = async () => {
   }
 };
 
-export const initDex = async (passphrase) => {
+export const initDex = async (passphrase, seed) => {
   if (!GetDexPID()) {
     logger.log("info", "Skipping init since dex is not runnning");
     return false;
   }
 
   try {
-    const init = await initDexCall(passphrase);
+    const init = await initDexCall(passphrase, seed);
     return init;
   } catch (e) {
     logger.log("error", `error init dex: ${e}`);
@@ -323,6 +324,7 @@ export const logoutDex = async () => {
 
 export const createWalletDex = async (
   assetID,
+  walletType,
   passphrase,
   appPassphrase,
   account,
@@ -339,6 +341,7 @@ export const createWalletDex = async (
   try {
     const createWallet = await createWalletDexCall(
       assetID,
+      walletType,
       passphrase,
       appPassphrase,
       account,
@@ -365,6 +368,22 @@ export const getConfigDex = async (addr) => {
     return getDexConfig;
   } catch (e) {
     logger.log("error", `error get config dex: ${e}`);
+    return e;
+  }
+};
+
+export const preRegister = async (appPass, addr) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping preregister since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const registered = await preRegisterCall(appPass, addr);
+    console.log("registered already?", registered);
+    return registered;
+  } catch (e) {
+    logger.log("error", `error preregister dex: ${e}`);
     return e;
   }
 };

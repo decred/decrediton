@@ -1,6 +1,5 @@
-import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
+import { TabbedPage, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { Switch, Redirect } from "react-router-dom";
 import { ConnectPage } from "./ConnectPage";
 import { AdvancedTab, AdvancedTabHeader } from "./AdvancedTab";
 import { ChannelsTab, ChannelsTabHeader } from "./ChannelsTab";
@@ -17,43 +16,40 @@ const LNPageHeader = () => (
   />
 );
 
-const LNActivePage = () => (
-  <TabbedPage header={<LNPageHeader />}>
-    <Switch>
-      <Redirect from="/ln" exact to="/ln/overview" />
-    </Switch>
-    <Tab
-      path="/ln/overview"
-      component={OverviewTab}
-      header={OverviewTabHeader}
-      link={<T id="ln.tab.overview" m="Overview" />}
-    />
-    <Tab
-      path="/ln/channels"
-      component={ChannelsTab}
-      header={ChannelsTabHeader}
-      link={<T id="ln.tab.channels" m="Channels" />}
-    />
-    <Tab
-      path="/ln/payments"
-      component={SendTab}
-      header={SendTabHeader}
-      link={<T id="ln.tab.send" m="Send" />}
-    />
-    <Tab
-      path="/ln/invoices"
-      component={ReceiveTab}
-      header={ReceiveTabHeader}
-      link={<T id="ln.tab.receive" m="Receive" />}
-    />
-    <Tab
-      path="/ln/advanced"
-      component={AdvancedTab}
-      header={AdvancedTabHeader}
-      link={<T id="ln.tab.advanced" m="Advanced" />}
-    />
-  </TabbedPage>
-);
+const tabs = [
+  {
+    path: "/ln/overview",
+    content: OverviewTab,
+    header: OverviewTabHeader,
+    label: <T id="ln.tab.overview" m="Overview" />
+  },
+  {
+    path: "/ln/channels",
+    content: ChannelsTab,
+    header: ChannelsTabHeader,
+    label: <T id="ln.tab.channels" m="Channels" />
+  },
+  {
+    path: "/ln/payments",
+    content: SendTab,
+    header: SendTabHeader,
+    label: <T id="ln.tab.send" m="Send" />
+  },
+  {
+    path: "/ln/invoices",
+    content: ReceiveTab,
+    header: ReceiveTabHeader,
+    label: <T id="ln.tab.receive" m="Receive" />
+  },
+  {
+    path: "/ln/advanced",
+    content: AdvancedTab,
+    header: AdvancedTabHeader,
+    label: <T id="ln.tab.advanced" m="Advanced" />
+  }
+];
+
+const LNActivePage = () => <TabbedPage header={<LNPageHeader />} tabs={tabs} />;
 
 const LNPage = () => {
   const { lnActive } = useLNPage();

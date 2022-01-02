@@ -316,7 +316,7 @@ test("trezor device is connected", async () => {
   const testRestoreSelectedWallet = {
     ...testSelectedWallet,
     value: { ...testSelectedWallet.value, isNew: false, isTrezor: true },
-    watchingOnly: true
+    isWatchingOnly: true
   };
 
   mockCreateWatchOnlyWalletRequest = wlActions.createWatchOnlyWalletRequest = jest.fn(

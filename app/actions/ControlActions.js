@@ -296,6 +296,18 @@ export const signTransactionAttempt = (passphrase, rawTx, acctNumber) => async (
     });
     dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
   } catch (error) {
+    if (sel.isTestNet(getState()) === true) {
+      wallet.log(
+        "warn",
+        "Sign Transaction Failed: " +
+          JSON.stringify({
+            error: error.message,
+            passphrase,
+            rawTx,
+            acctNumber
+          })
+      );
+    }
     dispatch({ error, type: SIGNTX_FAILED });
   }
 };
@@ -1431,3 +1443,11 @@ export const listenForConfirmationDialogRequests = () => (dispatch) => {
   const hiddenCb = () => dispatch({ type: CONFIRMATIONDIALOG_HIDDEN });
   wallet.onConfirmationDialogCallbacks(requestedCb, hiddenCb);
 };
+
+export const SET_PAGEBODY_SCROLLHANDLER = "SET_PAGEBODY_SCROLLHANDLER";
+export const setPageBodyScrollHandler = (scrollHandler) => (dispatch) =>
+  dispatch({ scrollHandler, type: SET_PAGEBODY_SCROLLHANDLER });
+
+export const SET_PAGEBODY_TOP_REF = "SET_PAGEBODY_TOP_REF";
+export const setPageBodyRef = (ref) => (dispatch) =>
+  dispatch({ ref, type: SET_PAGEBODY_TOP_REF });

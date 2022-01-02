@@ -1,0 +1,182 @@
+.privacyContent {
+  width: 740px;
+}
+.error {
+  color: var(--error-text-color);
+  margin-top: 8px;
+}
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+.isColumn {
+  display: flex;
+  flex-direction: column;
+}
+.bold {
+  font-weight: 700;
+}
+.select {
+  width: 300px;
+}
+.item {
+  padding: 10px;
+}
+.item.error {
+  color: red;
+}
+.area {
+  margin-left: auto;
+}
+.row {
+  margin-bottom: 10px;
+}
+.balanceRow {
+  width: 100%;
+  align-items: center;
+}
+.highlighted {
+  background-color: var(--blue-highlight-background);
+  padding: 2px;
+}
+
+.contentTitleButtonsArea {
+  margin-left: auto;
+}
+
+.mixerArea {
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.mixerStatus {
+  margin-right: auto;
+  font-size: 18px;
+  color: var(--privacy-mixer-status-color);
+  margin-bottom: 20px;
+  padding-left: 44px;
+  height: 34px;
+  align-items: center;
+  background-size: 34px;
+  background-repeat: no-repeat;
+  background-image: var(--decentralized-loop-still);
+}
+.mixerStatus.running {
+  background-image: var(--decentralized-loop-animation);
+}
+.mixerSettingsIconButton {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+}
+.balances {
+  display: flex;
+  flex-direction: row;
+}
+.balanceContainer {
+  background-size: 18px;
+  background-position: 2px 0;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  font-size: 17px;
+  line-height: 15px;
+  color: var(--privacy-balance-color);
+  position: relative;
+  font-family: var(--font-family-monospace);
+}
+.balanceContainer .balance-base {
+  color: var(--input-color-default);
+}
+.balanceContainer.mixedAccount {
+  background-image: var(--mixed-account-icon);
+}
+.balanceContainer.unmixedAccount {
+  background-image: var(--unmixed-account-icon);
+}
+.balanceContainer label {
+  font-size: 11px;
+  color: var(--privacy-balance-label-color);
+  line-height: 20px;
+  font-family: var(--font-family-regular);
+}
+.balanceContainer .alertIcon {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -2px;
+  left: 13px;
+  background-image: var(--animated-alert-icon);
+  background-size: 10px;
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+.balanceContainer.balanceError label {
+  color: var(--error-red);
+}
+.balanceContainer.mixedAccount label {
+  color: var(--privacy-balance-mixed-label-color);
+}
+.privacyArrows {
+  width: 50px;
+  height: 20px;
+  padding: 0 14px;
+}
+.privacyArrows.running {
+  background-image: var(--privacy-running-arrows);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px 20px;
+}
+.startButtonContrainer {
+  margin-left: auto;
+}
+.sendToUnmixedAccount {
+  background-color: var(--background-back-color);
+  padding: 30px 40px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.sendToUnmixedAccount .title {
+  margin-right: auto;
+  font-size: 18px;
+  line-height: 32px;
+  color: var(--privacy-mixer-status-color);
+  padding-left: 42px;
+  background-size: 32px;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-image: var(--self-transaction-icon);
+}
+.disabledTooltip {
+  width: 17rem;
+  text-align: center;
+}
+@media screen and (max-width: 1180px) {
+  .privacyContent {
+    width: 667px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .privacyContent {
+    width: 355px;
+    margin-left: 0;
+  }
+  .mixerArea {
+    padding: 30px 20px;
+  }
+  .sendToUnmixedAccount {
+    padding: 30px 20px 0 20px;
+  }
+  .mixerArea .balanceRow.isRow {
+    flex-direction: column;
+  }
+  .balanceRow {
+    align-items: flex-start;
+  }
+  .mixerSettingsIconButton {
+    right: 20px;
+  }
+}

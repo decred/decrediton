@@ -1,15 +1,9 @@
-import {
-  TabbedPage,
-  TabbedPageTab as Tab,
-  TitleHeader,
-  DescriptionHeader
-} from "layout";
-import { Switch, Redirect } from "react-router-dom";
+import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import SecurityTab from "./SecurityPage/SecurityPage";
-import PrivacyTab from "./Privacy/Privacy";
+import SecurityTab from "./SecurityTab";
+import PrivacyTab from "./PrivacyTab";
 import { usePrivacyPage } from "./hooks";
-import style from "./Privacy/Privacy.module.css";
+import styles from "./PrivacyPage.module.css";
 import { SECURITY_ICON } from "constants";
 
 export const PrivacyTabHeader = () => {
@@ -24,10 +18,10 @@ export const PrivacyTabHeader = () => {
         }
         values={{
           unmixedAccount: (
-            <span className={style.highlighted}>{changeAccountName}</span>
+            <span className={styles.highlighted}>{changeAccountName}</span>
           ),
           mixedAccount: (
-            <span className={style.highlighted}>{mixedAccountName}</span>
+            <span className={styles.highlighted}>{mixedAccountName}</span>
           )
         }}
       />
@@ -42,37 +36,31 @@ export const PrivacyTabHeader = () => {
   return <DescriptionHeader description={description} />;
 };
 
-const PrivacyPageHeader = () => {
-  return (
-    <TitleHeader
-      iconType={SECURITY_ICON}
-      title={<T id="privacypage.title" m="Privacy and Security" />}
-    />
-  );
-};
+const PrivacyPageHeader = () => (
+  <TitleHeader
+    iconType={SECURITY_ICON}
+    title={<T id="privacypage.title" m="Privacy and Security" />}
+  />
+);
 
 const PrivacyPage = () => {
-  const { privacyEnabled, isCreateAccountDisabled } = usePrivacyPage();
-
-  return (
-    <TabbedPage header={<PrivacyPageHeader />}>
-      <Switch>
-        <Redirect from="/privacy" exact to="/privacy/mixing" />
-      </Switch>
-      <Tab
-        path="/privacy/mixing"
-        component={<PrivacyTab {...{ isCreateAccountDisabled }} />}
-        link={<T id="privacy.tab.privacy" m="Privacy" />}
-        header={PrivacyTabHeader}
-        disabled={!privacyEnabled}
-      />
-      <Tab
-        path="/privacy/security"
-        component={SecurityTab}
-        header={PrivacyTabHeader}
-        link={<T id="privacy.tab.security.center" m="Security Center" />}
-      />
-    </TabbedPage>
-  );
+  const { privacyEnabled } = usePrivacyPage();
+  const tabs = [
+    {
+      path: "/privacy/mixing",
+      content: PrivacyTab,
+      header: PrivacyTabHeader,
+      label: <T id="privacy.tab.privacy" m="Privacy" />,
+      disabled: !privacyEnabled
+    },
+    {
+      path: "/privacy/security",
+      content: SecurityTab,
+      header: PrivacyTabHeader,
+      label: <T id="privacy.tab.security.center" m="Security Center" />
+    }
+  ];
+  return <TabbedPage header={<PrivacyPageHeader />} tabs={tabs} />;
 };
+
 export default PrivacyPage;

@@ -1,5 +1,13 @@
 import { useState, useMemo } from "react";
-import ConfirmSeedForm from "./Form";
+import ConfirmSeedForm from "./ConfirmSeedForm";
+import {
+  getSeedWordsArr,
+  verifySeedWordsArr,
+  selectedSeedWordsCount
+} from "./utils";
+import { useMountEffect } from "hooks";
+import { messages } from "../../messages";
+import { useIntl } from "react-intl";
 
 const ConfirmSeed = ({
   mnemonic,
@@ -7,36 +15,40 @@ const ConfirmSeed = ({
   setPassPhrase,
   onCreateWallet,
   isValid,
-  isCreatingWallet,
   setSeed,
+  decodeSeed,
   setError,
-  decodeSeed
+  setPageBodyScrollHandler,
+  pageBodyTopRef,
+  error
 }) => {
-  const splitMnemonicArr = mnemonic.split(" ");
-  const [splitMnemonic] = useState(splitMnemonicArr);
-  const randomThreshold = 0.3;
-  const seedWordsArr = useMemo(
-    () =>
-      splitMnemonic.map((word, index) => {
-        const shouldShow = Math.random() > randomThreshold;
-        return {
-          word: shouldShow ? word : "",
-          show: shouldShow,
-          index,
-          match: shouldShow
-        };
-      }),
-    [splitMnemonic]
+  const [seedWords, setSeedWords] = useState(() => getSeedWordsArr(mnemonic));
+  const [posBtBarToBottom, setPosBtBarToBottom] = useState(true);
+  const intl = useIntl();
+  const allWordsHaveBeenSelected = useMemo(
+    () => selectedSeedWordsCount(seedWords) === seedWords.length,
+    [seedWords]
   );
-  const [seedWords, setSeedWords] = useState(seedWordsArr);
+  const [topError, setTopError] = useState(null);
+
+  useMountEffect(() => {
+    setPageBodyScrollHandler((e) =>
+      setPosBtBarToBottom(
+        e.target.scrollHeight - (e.target.scrollTop + e.target.clientHeight) >=
+          80
+      )
+    );
+  });
+
+  const onSeedButtonClick = (index, selected) => {
+    const updatedSeedWords = [...seedWords];
+    updatedSeedWords[index].selected = selected;
+    setSeedWords(updatedSeedWords);
+    validateSeed(updatedSeedWords);
+  };
 
   const validateSeed = (updatedSeedWords) => {
-    // this logic compares state's updated seed word array(seedWords)
-    // against mnemonic props
-    const seedWordStr = updatedSeedWords
-      .map((seedWord) => seedWord.word)
-      .join(" ");
-    if (seedWordStr === mnemonic) {
+    if (verifySeedWordsArr(mnemonic, updatedSeedWords)) {
       decodeSeed(mnemonic)
         // if successfully decoded, update the state machine's seed.
         .then((response) => {
@@ -44,40 +56,53 @@ const ConfirmSeed = ({
           setError("");
         })
         .catch((e) => {
-          setError(e);
+          setError(e.toString());
           setSeed([]);
         });
     } else {
       setSeed([]);
-      setError("*Please confirm the missing words");
+      if (selectedSeedWordsCount(updatedSeedWords) === seedWords.length) {
+        setTopError(intl.formatMessage(messages.confirmSeedWrongWordError));
+        setError("");
+        if (pageBodyTopRef.current.scrollIntoView) {
+          pageBodyTopRef.current.scrollIntoView();
+        }
+      } else {
+        setError(intl.formatMessage(messages.confirmSeedEnterAllWordsError));
+        setTopError("");
+      }
     }
-  };
-
-  const onChangeSeedWord = (seedWord, update) => {
-    const updatedSeedWords = [...seedWords];
-    updatedSeedWords[seedWord.index] = {
-      word: update,
-      show: seedWord.show,
-      index: seedWord.index,
-      match: splitMnemonic[seedWord.index] === update
-    };
-    setSeedWords(updatedSeedWords);
-    validateSeed(updatedSeedWords);
   };
 
   return (
     <ConfirmSeedForm
       {...{
-        isCreatingWallet,
         seedWords,
-        onChangeSeedWord,
+        onSeedButtonClick,
         sendBack,
         onCreateWallet,
         isValid,
-        setPassPhrase
+        setPassPhrase,
+        posBtBarToBottom,
+        error,
+        allWordsHaveBeenSelected,
+        topError
       }}
     />
   );
+};
+
+ConfirmSeed.propTypes = {
+  mnemonic: PropTypes.string.isRequired,
+  sendBack: PropTypes.func.isRequired,
+  setPassPhrase: PropTypes.func.isRequired,
+  onCreateWallet: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+  setSeed: PropTypes.func.isRequired,
+  decodeSeed: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
+  setPageBodyScrollHandler: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default ConfirmSeed;

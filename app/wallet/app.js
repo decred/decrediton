@@ -170,3 +170,6 @@ export const grpcVersionsDetermined = (versions) =>
 
 export const genQRCodeSVG = (uri) =>
   qr.imageSync(uri, { type: "svg", ec_level: "H" });
+
+export const getCustomTranslationMessages = () =>
+  ipcRenderer.sendSync("custom-translation-msgs");

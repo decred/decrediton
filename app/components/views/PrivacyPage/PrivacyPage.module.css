@@ -1,0 +1,4 @@
+.highlighted {
+  background-color: var(--blue-highlight-background);
+  padding: 2px;
+}

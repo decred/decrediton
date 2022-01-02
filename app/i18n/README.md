@@ -1,6 +1,8 @@
 # Decrediton i18n & l12n
 
-This file explains the general layout of how internationalization (i18n) and localization (l12n) work in Decrediton.
+This file explains the general layout of how internationalization (i18n) and localization (l12n) work in Decrediton. This file is intended for **developers**.
+
+**Community translators** should read [community_translators.md](community_translators.md).
 
 ## During Coding
 
@@ -150,69 +152,29 @@ Decrediton implements i18n by using the tools provided by the [react-intl](https
 The following directories and files comprise the i18n subsystem:
 
 - **extracted/app**: Generated automatically by [babel-plugin-react-intl](https://github.com/yahoo/babel-plugin-react-intl)
-- **extract/static**: Static translation files (manually written)
+- **extracted/static**: Static translation files (manually written)
 - **locales/index.js**: Entrypoint for all i18n data
-- **pot/**: source *.pot files to be sent to translation
-- **po/**: source *.po files received from translators
 - **translations/\*.json**: Translated files to be used by the app
-
-Inside the `translations/` directory, there are a few special files:
-
-- **dev.json**: All strings of the app but not maintained on transifex (mainly useful while developing the i18n system and to check if all strings are translated).
-- **whitelist_dev.json**: Created automatically by [react-intl-translations-manager](https://github.com/GertjanReynaert/react-intl-translations-manager)
-
-The files inside the `po/` and `pot/` subdir are managed by the scripts and by transifex and shouldn't be manually updated.
+- **lib/**: Helper libraries for the translator UI
+- **translator.html**: Translator UI.
 
 ## Generating files for translation
 
-To generate the `decrediton.pot` file to be sent for translation, run the following:
+To generate the `original.json` and `previous_original.json` file that need to be updated before each release, use the following:
 
 ```shell
 # Ensure all strings have been picked up by babel.
 $ rm -r app/i18n/extracted/app
 $ yarn build
 
-# Prepare the .pot, dev.json and original.json files.
+# Prepare the original.json and previous_original files.
 $ yarn i18n-prepare-untranslated
 ```
 
-## Obtaining translated files
-
-To download the translated files from Transifex you have two options: log in to the Transifex admin UI, go into each resource, click on the action menu (the three vertical dots menu at the top right corner of the UI) and select "Download All Translations". You'll get a zip file with all translated files in your email.
-
-A second option is to use the [Transifex CLI client](https://docs.transifex.com/client/config). Again, log into Transifex, go to your settings page and create an API token. Then configure an environment variable `TX_TOKEN` holding the value of the generated token.
-
-Then install the Transifex CLI client via pip (minimum version: **0.13.4**) and run `tx pull -a`. For example:
-
-```
-$ cd src/decrediton
-$ export TX_TOKEN="<your api token>"
-$ tx pull -a
-```
-
-**:exclamation: Note**: I (@matheusd) haven't personally tested the `tx push` command within the Decrediton project, so pushing might wrongly replace the resources in Transifex. Use with care!
-
-## Assembling translated files
-
-Transifex will generate a bunch of *.po files (one per language). Save them on the `po/` dir. To get back the json files that the app actually uses, execute the following:
-
-```shell
-$ yarn i18n-assemble-translated
-```
-
-**:exclamation: Note**: Transifex generates files with a filename following the pattern `decrediton_(lang).po` but react-intl-po expects a filename with the pattern `decrediton.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.
-
+Manually verify the metadata for the `original.json` and `previous_original.json` files.
 
 ## Adding a new locale
 
 To add a new locale, get the translated file (.po) for it, place on the translated dir and assemble the translated .json.
 
 Then modify the file `locales/index.js` by adding a new locale. Use one of the existing languages as template.
-
-# The "dev" locale
-
-The "dev" locale ("Dev Locale for testing" in the app) is used mainly for testing the i18n subsystem. It doesn't go through transifex for translation and is mainly used by developers (it should not be shown in production).
-
-Any developer can change any string, format or property of this locale as needed for testing and without risking to modify a locale actually used in production.
-
-**:exclamation: Note**: If you test a packaged version of decrediton locally while still using the `dev` locale, you'll get an error on the debug console saying _language is not defined_. Just edit your local `config.json` and change locale to "en".

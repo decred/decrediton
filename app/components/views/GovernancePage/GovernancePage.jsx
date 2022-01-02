@@ -1,6 +1,5 @@
-import { TabbedPage, TabbedPageTab as Tab, TitleHeader } from "layout";
+import { TabbedPage, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { Switch, Redirect } from "react-router-dom";
 import ProposalsTab from "./Proposals";
 import VotingPrefsTab from "./Blockchain";
 import TabHeader from "./TabHeader";
@@ -14,28 +13,25 @@ const PageHeader = () => (
   />
 );
 
-export default () => (
-  <TabbedPage header={<PageHeader />} tabContentClassName={styles.tabContent}>
-    <Switch>
-      <Redirect from="/governance" exact to="/governance/proposals" />
-      <Redirect
-        from="/governance/proposals"
-        exact
-        to="/governance/proposals/prevote"
-      />
-    </Switch>
+const tabs = [
+  {
+    path: "/governance/proposals",
+    content: ProposalsTab,
+    header: TabHeader,
+    label: <T id="governance.tab.proposals" m="Proposals" />
+  },
+  {
+    path: "/governance/blockchain",
+    content: VotingPrefsTab,
+    header: TabHeader,
+    label: <T id="governance.tab.consensusChanges" m="Consensus Changes" />
+  }
+];
 
-    <Tab
-      path="/governance/proposals"
-      component={ProposalsTab}
-      header={TabHeader}
-      link={<T id="governance.tab.proposals" m="Proposals" />}
-    />
-    <Tab
-      path="/governance/blockchain"
-      component={VotingPrefsTab}
-      header={TabHeader}
-      link={<T id="governance.tab.consensusChanges" m="Consensus Changes" />}
-    />
-  </TabbedPage>
+export default () => (
+  <TabbedPage
+    header={<PageHeader />}
+    tabs={tabs}
+    tabContentClassName={styles.tabContent}
+  />
 );

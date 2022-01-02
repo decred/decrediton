@@ -9,64 +9,19 @@
 .sendOutputContainer.plus {
   border-right: none;
 }
-.add {
-  padding: 0 !important;
-  width: 24px;
-  height: 24px;
-  background-image: var(--add-icon);
-  background-size: 9px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  border: none !important;
+.addButton {
   margin-top: 8px;
+}
+.addButton.blue {
+  background-color: var(--accent-blue) !important;
 }
 .delete {
-  padding: 0 !important;
-  width: 24px;
-  height: 24px;
-  background-image: var(--delete-icon);
-  background-size: 9px;
-  background-position: center center;
-  background-repeat: no-repeat;
   background-color: var(--grey-7) !important;
-  border: none !important;
   margin-top: 8px;
-}
-.add:disabled {
-  background-color: var(--small-button-disabled-bg) !important;
-  cursor: default;
-  opacity: 0.5;
 }
 
 .selfAccount {
-  background-image: var(--menu-accounts);
-  margin-left: 10px;
-}
-.selfAccountCancel {
-  background-image: var(--indicator-invalid-icon);
-  margin-left: 10px;
-}
-.selfAccountCancel:hover {
-  opacity: 0.85;
-}
-.sendAllButton {
-  background-image: var(--send-all-default);
-}
-.sendAllButton:hover {
-  background-image: var(--send-all-hover);
-}
-.sendAllButton:disabled {
-  background-color: var(--small-button-disabled-bg) !important;
-  background-image: var(--send-all-disabled);
-  cursor: default;
-  opacity: 0.5;
-}
-
-.cancelSendAll {
-  background-image: var(--indicator-invalid-icon);
-}
-.cancelSendAll:hover {
-  opacity: 0.85;
+  margin-left: 1rem;
 }
 
 .amountContainer {

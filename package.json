@@ -33,8 +33,7 @@
     "package-mac": "yarn build && ./node_modules/.bin/electron-builder build --mac",
     "package-all": "yarn build && ./node_modules/.bin/electron-builder build -mwl",
     "package-dev-linux": "yarn build && ./node_modules/.bin/electron-builder build --linux tar.gz",
-    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
-    "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
+    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
     "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'",
@@ -67,7 +66,8 @@
       "app/middleware/ln/invoices_pb.js",
       "app/middleware/ln/autopilot_grpc_pb.js",
       "app/middleware/ln/autopilot_pb.js",
-      "app/middleware/ln/google/"
+      "app/middleware/ln/google/",
+      "app/i18n/lib/"
     ],
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
@@ -107,7 +107,8 @@
       "<rootDir>/app/middleware/ln/google/",
       "<rootDir>/bin/",
       "<rootDir>/app/dist/",
-      "<rootDir>/app/dist-trezor/"
+      "<rootDir>/app/dist-trezor/",
+      "<rootDir>/app/i18n/lib/"
     ]
   },
   "build": {
@@ -279,7 +280,7 @@
     "connect": "https://github.com/JoeGruffins/npm-extended-dcr#093a27dd6b0309351a2e53c705fe4710becd0368",
     "connected-react-router": "^6.8.0",
     "copy-webpack-plugin": "^8.1.0",
-    "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.2.0",
+    "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.4.0-rc1",
     "dex": "./modules/dex",
     "dom-helpers": "^3.4.0",
     "electron-devtools-installer": "^3.1.1",
@@ -309,12 +310,10 @@
     "react-intl-po": "^2.2.2",
     "react-markdown": "^6.0.2",
     "react-motion": "^0.5.2",
-    "react-paginate": "^7.0.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-select": "1.0.0",
     "react-timeout": "^2.0.1",
-    "react-visibility-sensor": "^4.1.3",
     "recharts": "^2.1.4",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
