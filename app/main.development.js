@@ -568,10 +568,10 @@ ipcMain.on("get-cli-options", (event) => {
   event.returnValue = cliOptions;
 });
 
-const setConfirmBrowserViewBounds = () => {
+const setConfirmBrowserViewBounds = (contentHeight) => {
   const mainBounds = mainWindow.getBounds();
   const maxWidth = 540;
-  const maxHeight = 380;
+  const maxHeight = contentHeight ?? 380;
   const width =
     mainBounds.width > maxWidth - 20 ? maxWidth : mainBounds.width - 20;
   const height =
@@ -585,6 +585,10 @@ const setConfirmBrowserViewBounds = () => {
   confirmBrowserView.setBounds(viewBounds);
 };
 
+ipcMain.on("set-confirmation-dialog-height", (event, height) => {
+  setConfirmBrowserViewBounds(height);
+});
+
 ipcMain.on("fill-confirmation-dialog-contents", (event, contents) => {
   confirmBrowserView.webContents.send(
     "fill-confirmation-dialog-contents",
@@ -593,6 +597,7 @@ ipcMain.on("fill-confirmation-dialog-contents", (event, contents) => {
   mainWindow.setBrowserView(confirmBrowserView);
   confirmBrowserView.setBackgroundColor("#ffffffff");
   setConfirmBrowserViewBounds();
+  confirmBrowserView.webContents.send("change-confirmation-dialog-height");
 });
 
 ipcMain.on("confirmation-dialog-reply", (event, res) => {
@@ -834,8 +839,12 @@ app.on("ready", async () => {
 
   // Re-center BrowserView on resizes. The events are different for linux and
   // windows/macOS.
-  mainWindow.on("resized", setConfirmBrowserViewBounds);
-  mainWindow.on("resize", setConfirmBrowserViewBounds);
+  mainWindow.on("resized", () =>
+    confirmBrowserView.webContents.send("change-confirmation-dialog-height")
+  );
+  mainWindow.on("resize", () =>
+    confirmBrowserView.webContents.send("change-confirmation-dialog-height")
+  );
 
   setMenuLocale(locale);
 });

@@ -6,10 +6,20 @@
 
       // Setup the callback to fill the contents of the confirmation div with
       // HTML sent by the wallet preload script.
-      ipcRenderer.on("fill-confirmation-dialog-contents", (event, { title, content, theme }) => {
-        document.getElementById("title").innerHTML = title;
-        document.getElementById("content").innerHTML = content;
-        document.getElementById("body").className = "theme-" + theme;
+      ipcRenderer.on(
+        "fill-confirmation-dialog-contents",
+        (event, { title, content, theme }) => {
+          document.getElementById("body").className = "theme-" + theme;
+          document.getElementById("title").innerHTML = title;
+          document.getElementById("content").innerHTML = content;
+        }
+      );
+
+      ipcRenderer.on("change-confirmation-dialog-height", () => {
+        ipcRenderer.send(
+          "set-confirmation-dialog-height",
+          parseInt(document.getElementById("root").offsetHeight)
+        );
       });
 
       function reply(res) {
@@ -19,9 +29,14 @@
 
     <style>
       /*********** General CSS *****************/
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
       .root {
         padding: 0.5em 1em 2em 1em;
-        font-family: 'Source Sans Pro', sans-serif;
+        font-family: "Source Sans Pro", sans-serif;
       }
 
       h1 {
@@ -54,8 +69,9 @@
         background-color: #2970ff;
       }
 
-      .seed, .hex-seed {
-        font-family: 'Source Code Pro', monospace;
+      .seed,
+      .hex-seed {
+        font-family: "Source Code Pro", monospace;
         margin-bottom: 20px;
         -webkit-user-select: none;
         user-select: none;
@@ -77,6 +93,7 @@
 
       /*********** Theme light *****************/
 
+      .theme-light,
       .theme-light .root {
         color: #48566e;
         background-color: white;
@@ -100,13 +117,14 @@
 
       /*********** Theme dark *****************/
 
+      .theme-dark,
       .theme-dark .root {
-        color: #B7DEEE;
+        color: #b7deee;
         background-color: #223767;
       }
 
       .theme-dark .btnAccept {
-        color: #E9F8FE;
+        color: #e9f8fe;
       }
 
       .theme-dark .btnAccept:hover {
@@ -114,17 +132,22 @@
       }
 
       .theme-dark .btnReject {
-        color: #3C62B0;
+        color: #3c62b0;
       }
 
       .theme-dark .btnReject:hover {
-        color: #B7DEEE;
+        color: #b7deee;
+      }
+
+      @font-face {
+        font-family: "Source Sans Pro";
+        src: url("./SourceSansPro-Regular.ttf"); /* stylelint-disable-line */
       }
     </style>
   </head>
 
   <body id="body">
-    <div class="root">
+    <div class="root" id="root">
       <h1 id="title">hey-o</h1>
       <div id="content">Listen what I'm sayin'-o</div>
       <div id="buttons">
@@ -132,5 +155,5 @@
         <button class="btnAccept" onclick="reply(true)">Accept</button>
       </div>
     </div>
-    </body>
+  </body>
 </html>
