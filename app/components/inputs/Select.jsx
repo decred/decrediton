@@ -31,10 +31,14 @@ const Select = ({ styles, selectWithBigFont, ariaLabelledBy, ...props }) => {
     singleValue: (provided) => ({
       margin: 0,
       fontSize: selectWithBigFont ? "1.6rem" : provided.fontSize,
-      lineHeight: selectWithBigFont ? "2.1rem" : provided.lineHeight
-    }),
-    option: () => ({
+      lineHeight: selectWithBigFont ? "2.1rem" : provided.lineHeight,
       color: "var(--main-dark-blue)"
+    }),
+    option: (_, state) => ({
+      color: "var(--main-dark-blue)",
+      backgroundColor: state.isFocused
+        ? "var(--background-hovered)"
+        : "var(--card-background)"
     }),
     menu: () => ({
       marginTop: 0

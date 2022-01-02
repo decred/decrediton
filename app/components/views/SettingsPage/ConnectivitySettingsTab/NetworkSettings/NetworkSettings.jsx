@@ -127,7 +127,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
         disabled={!tempSettings.spvConnectFromCli}>
         <SettingsTextInput
           newBiggerFontStyle
-          className={styles.settingsTextInput}
+          inputClassNames={styles.settingsTextInput}
           id="spvConnectInput"
           value={tempSettings.spvConnect}
           disabled={tempSettings.spvConnectFromCli}

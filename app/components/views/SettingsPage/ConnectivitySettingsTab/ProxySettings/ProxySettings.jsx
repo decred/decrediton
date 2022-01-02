@@ -43,7 +43,7 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
       </Label>
       <SettingsTextInput
         newBiggerFontStyle
-        className={styles.settingsTextInput}
+        inputClassNames={styles.settingsTextInput}
         id="proxyLocationInput"
         value={tempSettings.proxyLocation}
         ariaLabelledBy="proxy-location"

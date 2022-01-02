@@ -416,7 +416,7 @@ test("pasting valid seed words on existing seed view and successfully create wal
   );
 });
 
-test("create wallet button must be disabled if any of the inputs is invalid", async () => {
+test("check passphrase errors on restore view", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
       decodedSeed: testSeedArray
@@ -427,56 +427,28 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   );
   await goToExistingSeedView();
 
-  firePasteEvent(screen.getAllByRole("combobox")[0], testSeedMnemonic);
-
-  await wait(() =>
-    screen.getByText(
-      "*Please make sure you also have a physical, written down copy of your seed."
-    )
-  );
   const privatePassphraseInput = screen.getByPlaceholderText(
     "Write your Private Passphrase"
   );
   const repeatPrivatePassphraseInput = screen.getByPlaceholderText(
     "Confirm your Private Passphrase"
   );
-  const createWallet = screen.getByText("Create Wallet");
   await testPrivatePassphraseInputs(
     privatePassphraseInput,
     repeatPrivatePassphraseInput
   );
-  expect(createWallet.disabled).toBe(false);
 
-  // differentiate passphrases
+  // different passphrases
   user.type(repeatPrivatePassphraseInput, "plus-string");
   screen.getByText("*Passphrases do not match");
-  expect(createWallet.disabled).toBe(true);
-  // fix, button should be enabled
-  user.clear(privatePassphraseInput);
-  user.clear(repeatPrivatePassphraseInput);
-  await testPrivatePassphraseInputs(
-    privatePassphraseInput,
-    repeatPrivatePassphraseInput
-  );
-  expect(createWallet.disabled).toBe(false);
 
   // clear passphrases
   user.clear(privatePassphraseInput);
   user.clear(repeatPrivatePassphraseInput);
   screen.getByText("*Please enter your private passphrase");
-  expect(createWallet.disabled).toBe(true);
-
-  // fix, button should be enabled
-  user.clear(privatePassphraseInput);
-  user.clear(repeatPrivatePassphraseInput);
-  await testPrivatePassphraseInputs(
-    privatePassphraseInput,
-    repeatPrivatePassphraseInput
-  );
-  expect(createWallet.disabled).toBe(false);
 });
 
-test("create wallet button must be disabled if any of the inputs is invalid", async () => {
+test("create wallet button must be disabled if any of the inputs are invalid", async () => {
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.resolve({
       decodedSeed: testSeedArray
@@ -525,7 +497,7 @@ test("create wallet button must be disabled if any of the inputs is invalid", as
   await wait(() => expect(createWallet).not.toHaveAttribute("disabled"));
 });
 
-test("test POSITION_ERROR handling on restore view", async () => {
+test("test POSITION_ERROR handling on restore view (missing words)", async () => {
   await goToExistingSeedView();
 
   // reject with an empty error object
@@ -547,6 +519,20 @@ test("test POSITION_ERROR handling on restore view", async () => {
   await wait(() =>
     expect(screen.getByText("3.").parentNode.className).toMatch(/error/)
   );
+});
+
+test("test POSITION_ERROR handling on restore view (mismatch error)", async () => {
+  await goToExistingSeedView();
+
+  // reject with an empty error object
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
+    Promise.reject({})
+  );
+  const comboboxArray = screen.getAllByRole("combobox");
+  fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
+  expect(screen.getByText("1.").parentNode.className).toMatch(/populated/);
+  fillSeedWordEntryUsingEnterKey(comboboxArray[1], testSeedArray[1]);
+  expect(screen.getByText("2.").parentNode.className).toMatch(/populated/);
 
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
     Promise.reject({ details: MISMATCH_ERROR })

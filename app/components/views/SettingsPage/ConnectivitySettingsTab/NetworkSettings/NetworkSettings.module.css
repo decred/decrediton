@@ -8,6 +8,10 @@
   display: block !important;
 }
 
+.settingsTextInput {
+  color: var(--main-dark-blue) !important;
+}
+
 @media screen and (max-width: 768px) {
   .box {
     grid-template-columns: 1fr;
