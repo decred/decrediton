@@ -1,6 +1,6 @@
 .header {
   background-color: var(--background-back-color);
-  padding: 40px 60px 30px 60px;
+  padding: 40px 60px 25px 60px;
 }
 
 @media screen and (max-width: 1180px) {
