@@ -1,16 +1,18 @@
-export { default as SignMessageInfo } from "./InfoModals/SignMessage.md";
-export { default as VerifyMessageInfo } from "./InfoModals/VerifyMessage.md";
+export { default as DexNotes } from "./DexNotes/DexNotes.md";
+
+export { default as BalanceOverviewInfo } from "./InfoModals/BalanceOverview.md";
+export { default as DecredConstitution } from "./InfoModals/DecredConstitution.md";
 export { default as GapLimitInfo } from "./InfoModals/GapLimit.md";
-export { default as UIAnimationsInfo } from "./InfoModals/UIAnimations.md";
 export { default as PassphraseInfo } from "./InfoModals/Passphrase.md";
+export { default as PurchasePrivacyTicketsInfo } from "./InfoModals/PurchasePrivacyTickets.md";
+export { default as PurchaseTicketsInfo } from "./InfoModals/PurchaseTickets.md";
+export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeemable.md";
 export { default as SeedInfo } from "./InfoModals/Seed.md";
 export { default as SendFromUnmixedInfo } from "./InfoModals/SendFromUnmixed.md";
-export { default as PurchaseTicketsInfo } from "./InfoModals/PurchaseTickets.md";
-export { default as PurchasePrivacyTicketsInfo } from "./InfoModals/PurchasePrivacyTickets.md";
-export { default as BalanceOverviewInfo } from "./InfoModals/BalanceOverview.md";
+export { default as SignMessageInfo } from "./InfoModals/SignMessage.md";
 export { default as TicketAutoBuyerInfo } from "./InfoModals/TicketAutoBuyer.md";
-export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeemable.md";
-export { default as DecredConstitution } from "./InfoModals/DecredConstitution.md";
+export { default as UIAnimationsInfo } from "./InfoModals/UIAnimations.md";
+export { default as VerifyMessageInfo } from "./InfoModals/VerifyMessage.md";
 
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 export { default as WalletCreationWarning } from "./Warnings/WalletCreation.md";
@@ -43,5 +45,3 @@ export { default as TicketLifecycleTutorialPage05 } from "./TicketLifecycleTutor
 export { default as TicketLifecycleTutorialPage06 } from "./TicketLifecycleTutorial/Page06.md";
 
 export { default as LNBackupInfo } from "./LN/BackupInfo.md";
-
-export { default as DexNotes } from "./DexNotes/DexNotes.md";
