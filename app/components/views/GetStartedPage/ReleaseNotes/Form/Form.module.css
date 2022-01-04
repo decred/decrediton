@@ -80,6 +80,10 @@
   background-image: var(--release-image-v160);
 }
 
+.image.v170 {
+  background-image: var(--release-image-v170);
+}
+
 @media screen and (max-width: 1180px) {
   .image {
     flex: 1;
