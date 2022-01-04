@@ -16,35 +16,68 @@ const mockVspInfo = {
   }
 };
 
-const defaultMockAvailableVsps = [
+const defaultMockAvailableMainnetVsps = [
   {
     host: "https://test-stakepool1.eu",
     label: "https://test-stakepool1.eu",
     vspData: {
-      feepercentage: 2
+      feepercentage: 2,
+      network: "mainnet"
     }
   },
   {
     host: "https://test-stakepool2.eu",
     label: "https://test-stakepool2.eu",
     vspData: {
-      feepercentage: 3
+      feepercentage: 3,
+      network: "mainnet"
     }
   },
   {
     host: "https://test-stakepool3.eu",
     label: "https://test-stakepool3.eu",
     vspData: {
-      feepercentage: 4
+      feepercentage: 4,
+      network: "mainnet"
     }
   }
 ];
-let mockAvailableVsps = cloneDeep(defaultMockAvailableVsps);
+const defaultMockAvailableTestnetVsps = [
+  {
+    host: "https://test-stakepool4.eu",
+    label: "https://test-stakepool4.eu",
+    vspData: {
+      feepercentage: 4,
+      network: "testnet"
+    }
+  },
+  {
+    host: "https://test-stakepool5.eu",
+    label: "https://test-stakepool5.eu",
+    vspData: {
+      feepercentage: 5,
+      network: "testnet"
+    }
+  }
+];
+const defaultMockAvailableInvalidVsps = [
+  {
+    host: "https://test-stakepool6.eu",
+    label: "https://test-stakepool6.eu"
+  }
+];
+let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
 
 beforeEach(() => {
-  selectors.getAvailableVSPs = jest.fn(() => mockAvailableVsps);
+  selectors.isTestNet = jest.fn(() => false);
+  selectors.getAvailableVSPs = jest.fn(() => mockAvailableMainnetVsps);
   arrays.shuffle = jest.fn((arr) => arr);
   wallet.getVSPInfo = jest.fn(() => {});
+  wallet.getAllVSPs = jest.fn(() => [
+    ...mockAvailableMainnetVsps,
+    ...cloneDeep(defaultMockAvailableTestnetVsps),
+    ...cloneDeep(defaultMockAvailableInvalidVsps)
+  ]);
 });
 
 const testRandomVSP = async (
@@ -62,14 +95,14 @@ const testRandomVSP = async (
     errorResponse = error.message;
   }
 
-  mockAvailableVsps = cloneDeep(defaultMockAvailableVsps);
+  mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
   expect(vspResponse).toEqual(expectedVspResponse);
   expect(errorResponse).toEqual(expectedErrorResponse);
 };
 
-test.only("test getRandomVSP", async () => {
+test("test getRandomVSP", async () => {
   // no availableVSPs
-  mockAvailableVsps = [];
+  mockAvailableMainnetVsps = [];
   wallet.getVSPInfo = jest.fn(() => Promise.resolve(mockVspInfo));
   await testRandomVSP(5, undefined, "The available VSPs list is empty.");
 
@@ -78,8 +111,8 @@ test.only("test getRandomVSP", async () => {
   await testRandomVSP(
     5,
     {
-      ...mockAvailableVsps[2],
-      host: mockAvailableVsps[2].host,
+      ...mockAvailableMainnetVsps[2],
+      host: mockAvailableMainnetVsps[2].host,
       pubkey: mockVspInfo.data.pubkey
     },
     undefined
@@ -89,8 +122,8 @@ test.only("test getRandomVSP", async () => {
   await testRandomVSP(
     3,
     {
-      ...mockAvailableVsps[1],
-      host: mockAvailableVsps[1].host,
+      ...mockAvailableMainnetVsps[1],
+      host: mockAvailableMainnetVsps[1].host,
       pubkey: mockVspInfo.data.pubkey
     },
     undefined
@@ -100,8 +133,8 @@ test.only("test getRandomVSP", async () => {
   await testRandomVSP(
     2,
     {
-      ...mockAvailableVsps[0],
-      host: mockAvailableVsps[0].host,
+      ...mockAvailableMainnetVsps[0],
+      host: mockAvailableMainnetVsps[0].host,
       pubkey: mockVspInfo.data.pubkey
     },
     undefined
@@ -123,10 +156,57 @@ test.only("test getRandomVSP", async () => {
   await testRandomVSP(
     10,
     {
-      ...mockAvailableVsps[0],
-      host: mockAvailableVsps[0].host,
+      ...mockAvailableMainnetVsps[0],
+      host: mockAvailableMainnetVsps[0].host,
       pubkey: mockVspInfo.data.pubkey
     },
     undefined
   );
+});
+
+test("test discoverAvailableVSPs (mainnet)", async () => {
+  const store = createStore({});
+
+  const response = await store.dispatch(vspActions.discoverAvailableVSPs());
+  const expectedAvailableVsps = cloneDeep(defaultMockAvailableMainnetVsps).map(
+    (vsp) => ({
+      ...vsp,
+      label: vsp.host,
+      value: vsp.host
+    })
+  );
+
+  expect(response).toEqual(expectedAvailableVsps);
+  expect(store.getState().vsp.availableVSPs).toEqual(expectedAvailableVsps);
+  expect(store.getState().vsp.availableVSPsError).toEqual(undefined);
+});
+
+test("test discoverAvailableVSPs (testnet)", async () => {
+  selectors.isTestNet = jest.fn(() => true);
+  const store = createStore({});
+
+  const response = await store.dispatch(vspActions.discoverAvailableVSPs());
+  const expectedAvailableVsps = cloneDeep(defaultMockAvailableTestnetVsps).map(
+    (vsp) => ({
+      ...vsp,
+      label: vsp.host,
+      value: vsp.host
+    })
+  );
+
+  expect(response).toEqual(expectedAvailableVsps);
+  expect(store.getState().vsp.availableVSPs).toEqual(expectedAvailableVsps);
+  expect(store.getState().vsp.availableVSPsError).toEqual(undefined);
+});
+
+test("test discoverAvailableVSPs (error)", async () => {
+  const testErrorMessage = "test-error-message";
+  wallet.getAllVSPs = jest.fn(() => Promise.reject(testErrorMessage));
+  const store = createStore({});
+
+  const response = await store.dispatch(vspActions.discoverAvailableVSPs());
+
+  expect(response).toEqual(undefined);
+  expect(store.getState().vsp.availableVSPs).toEqual(null);
+  expect(store.getState().vsp.availableVSPsError).toEqual(testErrorMessage);
 });
