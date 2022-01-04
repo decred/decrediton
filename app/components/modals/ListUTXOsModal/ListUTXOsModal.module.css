@@ -80,4 +80,5 @@
 }
 .utxoValue .copyIcon {
   margin-left: 5px;
+  position: initial;
 }
