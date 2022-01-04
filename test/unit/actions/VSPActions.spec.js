@@ -18,42 +18,56 @@ const mockVspInfo = {
 
 const defaultMockAvailableMainnetVsps = [
   {
-    host: "https://test-stakepool1.eu",
-    label: "https://test-stakepool1.eu",
+    host: "test-stakepool1.eu",
+    label: "test-stakepool1.eu",
     vspData: {
       feepercentage: 2,
       network: "mainnet"
     }
   },
   {
-    host: "https://test-stakepool2.eu",
-    label: "https://test-stakepool2.eu",
+    host: "test-stakepool2.eu",
+    label: "test-stakepool2.eu",
     vspData: {
       feepercentage: 3,
       network: "mainnet"
     }
   },
   {
-    host: "https://test-stakepool3.eu",
-    label: "https://test-stakepool3.eu",
+    host: "test-stakepool3.eu",
+    label: "test-stakepool3.eu",
     vspData: {
       feepercentage: 4,
+      network: "mainnet"
+    }
+  },
+  {
+    host: "test-stakepool4.eu",
+    label: "test-stakepool4.eu",
+    vspData: {
+      network: "mainnet"
+    }
+  },
+  {
+    host: "test-stakepool5.eu",
+    label: "test-stakepool5.eu",
+    vspData: {
       network: "mainnet"
     }
   }
 ];
 const defaultMockAvailableTestnetVsps = [
   {
-    host: "https://test-stakepool4.eu",
-    label: "https://test-stakepool4.eu",
+    host: "test-stakepool6.eu",
+    label: "test-stakepool6.eu",
     vspData: {
       feepercentage: 4,
       network: "testnet"
     }
   },
   {
-    host: "https://test-stakepool5.eu",
-    label: "https://test-stakepool5.eu",
+    host: "test-stakepool7.eu",
+    label: "test-stakepool7.eu",
     vspData: {
       feepercentage: 5,
       network: "testnet"
@@ -62,8 +76,8 @@ const defaultMockAvailableTestnetVsps = [
 ];
 const defaultMockAvailableInvalidVsps = [
   {
-    host: "https://test-stakepool6.eu",
-    label: "https://test-stakepool6.eu"
+    host: "test-stakepool8.eu",
+    label: "test-stakepool8.eu"
   }
 ];
 let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
@@ -209,4 +223,70 @@ test("test discoverAvailableVSPs (error)", async () => {
   expect(response).toEqual(undefined);
   expect(store.getState().vsp.availableVSPs).toEqual(null);
   expect(store.getState().vsp.availableVSPsError).toEqual(testErrorMessage);
+});
+
+test("test getVSPsPubkeys", async () => {
+  const mockPubkeys = {
+    [`https://${mockAvailableMainnetVsps[0].host}`]: "test-pubkey1",
+    // second vsp rejected
+    // third vsp has no valid pukey
+    [`https://${mockAvailableMainnetVsps[2].host}`]: "invalid",
+    [`https://${mockAvailableMainnetVsps[3].host}`]: "test-pubkey3",
+    [`https://${mockAvailableMainnetVsps[4].host}`]: "test-pubkey4"
+  };
+  wallet.getVSPInfo = jest.fn((host) => {
+    return mockPubkeys[host] && mockPubkeys[host] !== "invalid"
+      ? Promise.resolve({ data: { pubkey: mockPubkeys[host] } })
+      : mockPubkeys[host]
+      ? Promise.resolve({ data: {} })
+      : Promise.reject();
+  });
+  const store = createStore({});
+  await store.dispatch(vspActions.getVSPsPubkeys());
+
+  expect(store.getState().vsp.availableVSPsPubkeys).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "host": "test-stakepool1.eu",
+        "label": "test-stakepool1.eu",
+        "pubkey": "test-pubkey1",
+        "value": "test-stakepool1.eu",
+        "vspData": Object {
+          "feepercentage": 2,
+          "network": "mainnet",
+        },
+      },
+      Object {
+        "host": "test-stakepool4.eu",
+        "label": "test-stakepool4.eu",
+        "pubkey": "test-pubkey3",
+        "value": "test-stakepool4.eu",
+        "vspData": Object {
+          "network": "mainnet",
+        },
+      },
+      Object {
+        "host": "test-stakepool5.eu",
+        "label": "test-stakepool5.eu",
+        "pubkey": "test-pubkey4",
+        "value": "test-stakepool5.eu",
+        "vspData": Object {
+          "network": "mainnet",
+        },
+      },
+    ]
+  `);
+  expect(store.getState().vsp.availableVSPsPubkeysError).toEqual(null);
+});
+
+test("test getVSPsPubkeys (error)", async () => {
+  const testErrorMessage = "test-error-message";
+  wallet.getAllVSPs = jest.fn(() => Promise.reject(testErrorMessage));
+  const store = createStore({});
+  await store.dispatch(vspActions.getVSPsPubkeys());
+
+  expect(store.getState().vsp.availableVSPsPubkeys).toEqual(undefined);
+  expect(store.getState().vsp.availableVSPsPubkeysError).toEqual(
+    "TypeError: vsps is not iterable"
+  );
 });
