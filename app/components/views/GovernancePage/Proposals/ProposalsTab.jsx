@@ -16,7 +16,7 @@ const ListLink = ({ count, children }) => (
   </>
 );
 
-const ProposalsTab = () => {
+const ProposalsTab = ({ isDarkTheme }) => {
   const {
     activeVoteCount,
     preVoteCount,
@@ -34,7 +34,7 @@ const ProposalsTab = () => {
   const tabs = [
     {
       path: "/governance/proposals/prevote",
-      content: h(ProposalsList, { tab }),
+      content: h(ProposalsList, { tab, isDarkTheme }),
       key: "preVote",
       className: styles.tab,
       label: (
@@ -45,7 +45,7 @@ const ProposalsTab = () => {
     },
     {
       path: "/governance/proposals/activevote",
-      content: h(ProposalsList, { tab }),
+      content: h(ProposalsList, { tab, isDarkTheme }),
       key: "activevote",
       className: styles.tab,
       label: (
@@ -56,14 +56,14 @@ const ProposalsTab = () => {
     },
     {
       path: "/governance/proposals/voted",
-      content: h(ProposalsList, { finishedVote: true, tab }),
+      content: h(ProposalsList, { finishedVote: true, tab, isDarkTheme }),
       key: "activevote",
       className: styles.tab,
       label: <T id="proposals.statusLinks.voted" m="Finished Voting" />
     },
     {
       path: "/governance/proposals/abandoned",
-      content: h(ProposalsList, { tab }),
+      content: h(ProposalsList, { tab, isDarkTheme }),
       key: "abandoned",
       className: styles.tab,
       label: <T id="proposals.statusLinks.abandoned" m="Abandoned" />

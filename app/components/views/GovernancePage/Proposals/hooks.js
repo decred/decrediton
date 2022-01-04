@@ -6,7 +6,6 @@ import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
 import { usePrevious } from "hooks";
 import { setLastPoliteiaAccessTime } from "actions/WalletLoaderActions";
-import { useTheme, DEFAULT_DARK_THEME_NAME } from "pi-ui";
 import { PROPOSALS_MAX_PAGE_SIZE } from "constants";
 
 export function useProposalsTab() {
@@ -40,8 +39,6 @@ export function useProposalsTab() {
 export function useProposalsListItem(token) {
   const tsDate = useSelector((state) => sel.tsDate(state));
   const isTestnet = useSelector(sel.isTestNet);
-  const { themeName } = useTheme();
-  const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
 
   const proposals = useSelector(sel.proposals);
   const proposalsDetails = useSelector(sel.proposalsDetails);
@@ -66,7 +63,6 @@ export function useProposalsListItem(token) {
     tsDate,
     viewProposalDetailsHandler,
     isTestnet,
-    isDarkTheme,
     linkedProposal
   };
 }

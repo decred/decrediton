@@ -23,7 +23,7 @@ const getProposalTypes = () => [
   }
 ];
 
-const ProposalsList = ({ finishedVote, tab }) => {
+const ProposalsList = ({ finishedVote, tab, isDarkTheme }) => {
   const [selectedFilter, setSelectedFilter] = useState(tab);
   const {
     getProposalError,
@@ -92,6 +92,7 @@ const ProposalsList = ({ finishedVote, tab }) => {
                     key={v.token}
                     {...v}
                     finishedVote={finishedVote}
+                    isDarkTheme={isDarkTheme}
                   />
                 ))}
               </div>
