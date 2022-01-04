@@ -25,8 +25,13 @@ import {
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
 
-const session = require("connect").default;
-const { TRANSPORT_EVENT, UI, UI_EVENT, DEVICE_EVENT } = require("connect");
+const session = require("trezor-connect").default;
+const {
+  TRANSPORT_EVENT,
+  UI,
+  UI_EVENT,
+  DEVICE_EVENT
+} = require("trezor-connect");
 const CHANGE = "device-changed";
 const DISCONNECT = "device-disconnect";
 const CONNECT = "device-connect";

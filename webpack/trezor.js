@@ -15,7 +15,7 @@ module.exports = {
 
     target: "web",
 
-    entry: "./node_modules/connect/lib/iframe/iframe.js",
+    entry: "./node_modules/trezor-connect/lib/iframe/iframe.js",
 
     devtool: "inline-source-map",
 
@@ -53,7 +53,7 @@ module.exports = {
 
         new CopyWebpackPlugin({
             patterns: [
-                { from: "./node_modules/connect/data", to: "data" }
+                { from: "./node_modules/trezor-connect/data", to: "data" }
             ]
         }),
 
