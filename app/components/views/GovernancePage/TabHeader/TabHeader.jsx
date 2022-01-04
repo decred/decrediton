@@ -2,8 +2,6 @@ import { BalanceDisplay } from "shared";
 import { DescriptionHeader } from "layout";
 import { useTreasuryInfo } from "../hooks";
 import { FormattedMessage as T } from "react-intl";
-import styles from "./TabHeader.module.css";
-import { classNames } from "pi-ui";
 
 const TabHeader = ({ descriptionHeaderClassName }) => {
   const { treasuryBalance } = useTreasuryInfo();
@@ -13,11 +11,7 @@ const TabHeader = ({ descriptionHeaderClassName }) => {
         description={
           <T id="governance.description" m="Governance aspects of Decred." />
         }
-        className={classNames(
-          styles.descriptionHeader,
-          styles.descriptionHeaderMain,
-          descriptionHeaderClassName
-        )}
+        className={descriptionHeaderClassName}
       />
       {treasuryBalance && (
         <DescriptionHeader
@@ -30,10 +24,7 @@ const TabHeader = ({ descriptionHeaderClassName }) => {
               }}
             />
           }
-          className={classNames(
-            styles.descriptionHeader,
-            descriptionHeaderClassName
-          )}
+          className={descriptionHeaderClassName}
         />
       )}
     </>

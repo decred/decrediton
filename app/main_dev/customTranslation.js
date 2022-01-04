@@ -37,7 +37,7 @@ export function getCustomTranslationMessages() {
   const config = getGlobalCfg();
   const currLocale = config.get(LOCALE);
   const msgs = customMessages[currLocale];
-  return { ...msgs };
+  return msgs;
 }
 
 export function currentLocalePlusCustomMsgs() {

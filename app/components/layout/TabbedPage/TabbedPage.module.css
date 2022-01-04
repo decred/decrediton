@@ -21,14 +21,14 @@
 
 .tabs {
   background-color: var(--background-back-color);
-  padding: 40px 60px 0 96px;
+  padding: 25px 60px 0 96px;
   position: relative;
   display: flex;
 }
 
 .tabContent {
   background-color: var(--background-container);
-  top: 71px;
+  top: 55px;
   bottom: 0;
   left: 0;
   right: 0;
