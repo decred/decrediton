@@ -6,7 +6,7 @@ const availableVersions = [
   {
     version: "1.7.0",
     docName: "ReleaseNote1_7_0",
-    imgClassName: "v160"
+    imgClassName: "v170"
   },
   {
     version: "1.6.0",
