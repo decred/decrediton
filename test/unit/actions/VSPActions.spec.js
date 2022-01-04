@@ -83,6 +83,7 @@ const defaultMockAvailableInvalidVsps = [
 let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
 
 beforeEach(() => {
+  selectors.getVSPInfoTimeoutTime = jest.fn(() => 100);
   selectors.isTestNet = jest.fn(() => false);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableMainnetVsps);
   arrays.shuffle = jest.fn((arr) => arr);
@@ -228,19 +229,36 @@ test("test discoverAvailableVSPs (error)", async () => {
 test("test getVSPsPubkeys", async () => {
   const mockPubkeys = {
     [`https://${mockAvailableMainnetVsps[0].host}`]: "test-pubkey1",
-    // second vsp rejected
-    // third vsp has no valid pukey
+    [`https://${mockAvailableMainnetVsps[1].host}`]: null, // will be rejected
     [`https://${mockAvailableMainnetVsps[2].host}`]: "invalid",
     [`https://${mockAvailableMainnetVsps[3].host}`]: "test-pubkey3",
     [`https://${mockAvailableMainnetVsps[4].host}`]: "test-pubkey4"
   };
+
+  const fetchTimes = {
+    [`https://${mockAvailableMainnetVsps[0].host}`]: 20,
+    [`https://${mockAvailableMainnetVsps[1].host}`]: 10,
+    [`https://${mockAvailableMainnetVsps[2].host}`]: 5,
+    [`https://${mockAvailableMainnetVsps[3].host}`]: 0,
+    [`https://${mockAvailableMainnetVsps[4].host}`]: 1000 // will timeout
+  };
+
   wallet.getVSPInfo = jest.fn((host) => {
-    return mockPubkeys[host] && mockPubkeys[host] !== "invalid"
-      ? Promise.resolve({ data: { pubkey: mockPubkeys[host] } })
-      : mockPubkeys[host]
-      ? Promise.resolve({ data: {} })
-      : Promise.reject();
+    if (!mockPubkeys[host]) {
+      return Promise.reject();
+    }
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        mockPubkeys[host] !== "invalid"
+          ? resolve({ data: { pubkey: mockPubkeys[host] } })
+          : mockPubkeys[host]
+          ? resolve({ data: {} })
+          : reject();
+      }, fetchTimes[host]);
+    });
   });
+
   const store = createStore({});
   await store.dispatch(vspActions.getVSPsPubkeys());
 
@@ -265,15 +283,6 @@ test("test getVSPsPubkeys", async () => {
           "network": "mainnet",
         },
       },
-      Object {
-        "host": "test-stakepool5.eu",
-        "label": "test-stakepool5.eu",
-        "pubkey": "test-pubkey4",
-        "value": "test-stakepool5.eu",
-        "vspData": Object {
-          "network": "mainnet",
-        },
-      },
     ]
   `);
   expect(store.getState().vsp.availableVSPsPubkeysError).toEqual(null);
@@ -287,6 +296,6 @@ test("test getVSPsPubkeys (error)", async () => {
 
   expect(store.getState().vsp.availableVSPsPubkeys).toEqual(undefined);
   expect(store.getState().vsp.availableVSPsPubkeysError).toEqual(
-    "TypeError: vsps is not iterable"
+    "Error: INVALID_VSPS"
   );
 });

@@ -1999,3 +1999,5 @@ export const btcConfig = get(["dex", "btcConfig"]);
 export const btcInstallNeeded = get(["dex", "btcInstallNeeded"]);
 export const btcConfigUpdateNeeded = get(["dex", "btcConfigUpdateNeeded"]);
 export const btcWalletName = get(["walletLoader", "btcWalletName"]);
+
+export const getVSPInfoTimeoutTime = () => 5000;
