@@ -29,10 +29,6 @@
   cursor: pointer;
   margin: 10px;
   background-repeat: no-repeat;
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 10px;
-  margin-top: -2px;
 }
 .getticketsCancelButton:hover {
   opacity: 0.7;
@@ -40,4 +36,5 @@
 .isRow {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
