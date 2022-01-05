@@ -28,7 +28,7 @@
     "dev": "yarn hot-server -- --start-hot",
     "dev-nosandbox": "yarn hot-server -- --start-hot-nosandbox",
     "package": "yarn build && ./node_modules/.bin/electron-builder build --publish never",
-    "package-win": "yarn build && ./node_modules/.bin/electron-builder build --win --x64 --ia32",
+    "package-win": "yarn build && ./node_modules/.bin/electron-builder build --win --x64",
     "package-linux": "yarn build && ./node_modules/.bin/electron-builder build --linux",
     "package-mac": "yarn build && ./node_modules/.bin/electron-builder build --mac",
     "package-all": "yarn build && ./node_modules/.bin/electron-builder build -mwl",
@@ -170,8 +170,6 @@
       "category": "public.app-category.tools",
       "target": [
         "AppImage",
-        "deb",
-        "rpm",
         "tar.gz"
       ],
       "icon": "./build/icon/"
@@ -239,7 +237,7 @@
     "css-loader": "^5.2.0",
     "electron": "15.1.2",
     "electron-builder": "^22.13.1",
-    "electron-rebuild": "^3.2.3",
+    "electron-rebuild": "^3.2.5",
     "enzyme": "^3.11.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",

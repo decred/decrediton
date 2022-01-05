@@ -630,12 +630,12 @@ export const launchDCRWallet = async (
   // add cspp cert path.
   // When in mainnet, we always include it, because if we doensn't and a user
   // sets mixing config, we would need to restart dcrwallet.
-  const certPath = path.resolve(getCertsPath(), "cspp.decred.org.pem");
+  const certPath = path.resolve(getCertsPath(), "mix.decred.org.pem");
   !testnet && args.push("--csppserver.ca=" + certPath);
   args.push(
     testnet
-      ? "--csppserver=cspp.decred.org:5760"
-      : "--csppserver=cspp.decred.org:15760"
+      ? "--csppserver=mix.decred.org:5760"
+      : "--csppserver=mix.decred.org:15760"
   );
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
