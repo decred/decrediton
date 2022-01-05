@@ -60,6 +60,7 @@ const TransactionContent = ({
     txBlockHash,
     txBlockUrl,
     txFee,
+    ticketTxFee,
     txDirection,
     rawTx,
     isPending
@@ -153,7 +154,7 @@ const TransactionContent = ({
               <T id="txDetails.transactionFeeLabel" m="Transaction fee" />:
             </div>
             <div className={styles.value}>
-              <Balance amount={txFee} />
+              <Balance amount={txFee ?? ticketTxFee} />
             </div>
           </div>
         )}
