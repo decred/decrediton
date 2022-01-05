@@ -1537,6 +1537,16 @@ message GetInfoResponse {
     used.
     **/
     bool server_active = 901 [json_name = "server_active"];
+
+    /*
+    Target height of the channel router startup graph pruning process.
+    */
+    uint32 router_prune_target = 902;
+
+    /*
+    Last checked height of the channel router startup graph pruning process.
+    */
+    uint32 router_prune_height = 903;
 }
 
 message GetRecoveryInfoRequest {

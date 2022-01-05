@@ -194,6 +194,9 @@ export const getDcrdLastLogLine = () =>
 export const getDcrwalletLastLogLine = () =>
   Promise.resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
 
+export const getDcrlndLastLogLine = () =>
+  Promise.resolve(ipcRenderer.sendSync("get-last-log-line-dcrlnd"));
+
 export const getPrivacyLogs = () =>
   Promise.resolve(ipcRenderer.sendSync("get-privacy-logs"));
 
