@@ -195,4 +195,7 @@ const getProposalsTab = (location) => {
   if (pathname.includes("abandoned")) {
     return "abandonedVote";
   }
+
+  // preVote by default
+  return "preVote";
 };
