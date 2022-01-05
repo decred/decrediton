@@ -58,7 +58,7 @@ export const LinksTab = () => (
         icon="matrix"
         href="https://decred.org/matrix"
         title={<T id="help.matrix" m="Matrix Chat" />}
-        subtitle={<T id="help.matrix.subtitle" m="riot.im" />}
+        subtitle={<T id="help.matrix.subtitle" m="element.io" />}
       />
       <HelpLink
         icon="forum"
