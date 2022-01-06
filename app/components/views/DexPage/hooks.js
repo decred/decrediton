@@ -137,7 +137,6 @@ export const useDex = () => {
   ]);
 
   const { Page, Header } = useMemo(() => {
-    console.log(dexBTCWalletRunning || dexBtcSpv, dexDCRWalletRunning);
     let page, header;
     if (!dexEnabled) {
       page = <EnablePage />;
