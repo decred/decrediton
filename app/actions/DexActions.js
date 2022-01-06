@@ -390,8 +390,6 @@ export const launchDexWindow = () => async (dispatch, getState) => {
     const serverAddress = dexServerAddress;
     await dex.launchWindow(serverAddress);
     dispatch({ type: DEX_LAUNCH_WINDOW_SUCCESS });
-    // Request current user information
-    dispatch(userDex());
   } catch (error) {
     dispatch({ type: DEX_LAUNCH_WINDOW_FAILED, error });
     return;
