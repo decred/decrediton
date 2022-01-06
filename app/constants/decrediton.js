@@ -90,7 +90,8 @@ export const MIXED_ACCOUNT = "mixed";
 export const CHANGE_ACCOUNT = "unmixed";
 
 // CSPP CONNECTION PARAMS
-export const CSPP_URL = "cspp.decred.org";
+export const CSPP_URL_LEGACY = "cspp.decred.org";
+export const CSPP_URL = "mix.decred.org";
 export const CSPP_PORT_TESTNET = "15760";
 export const CSPP_PORT_MAINNET = "5760";
 
