@@ -1957,6 +1957,8 @@ export const dexAddr = get(["dex", "addr"]);
 export const dexConfig = get(["dex", "config"]);
 export const alreadyPaid = get(["dex", "alreadyPaid"]);
 export const getConfigAttempt = get(["dex", "getConfigAttempt"]);
+export const askDexBtcSpv = get(["walletLoader", "askDexBtcSpv"]);
+export const dexBtcSpv = get(["walletLoader", "dexBtcSpv"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
 export const dexAccountNumber = createSelector(
   [dexAccount, balances],

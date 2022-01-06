@@ -4,7 +4,6 @@ import { FormattedMessage as T } from "react-intl";
 import * as sel from "selectors";
 import * as da from "actions/DexActions";
 import * as dm from "actions/DaemonActions";
-import { RegisterPage, RegisterPageHeader } from "./RegisterPage";
 import { DexView, DexViewHeader } from "./DexView";
 import {
   CreateWalletsPage,
@@ -33,7 +32,6 @@ export const useDex = () => {
   const loggedIn = useSelector(sel.loggedInDex);
   const dexAddr = useSelector(sel.dexAddr);
   const dexConfig = useSelector(sel.dexConfig);
-  const dexRegistered = useSelector(sel.dexRegistered);
   const dexConnected = useSelector(sel.dexConnected);
   const dexDCRWalletRunning = useSelector(sel.dexDCRWalletRunning);
   const dexBTCWalletRunning = useSelector(sel.dexBTCWalletRunning);
@@ -59,7 +57,8 @@ export const useDex = () => {
   const mixedAccount = useSelector(sel.getMixedAccount);
   const intl = useIntl();
   const restoredFromSeed = useSelector(sel.restoredFromSeed);
-  const alreadyPaid = useSelector(sel.alreadyPaid);
+  const dexBtcSpv = useSelector(sel.dexBtcSpv);
+  const askDexBtcSpv = useSelector(sel.askDexBtcSpv);
 
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
@@ -129,6 +128,14 @@ export const useDex = () => {
     [dispatch]
   );
 
+  const onUseBtcSpv = useCallback(() => dispatch(da.useBtcSpvDex(true)), [
+    dispatch
+  ]);
+
+  const onDoNotUseBtcSPV = useCallback(() => dispatch(da.useBtcSpvDex(false)), [
+    dispatch
+  ]);
+
   const { Page, Header } = useMemo(() => {
     let page, header;
     if (!dexEnabled) {
@@ -139,19 +146,12 @@ export const useDex = () => {
         if (!loggedIn) {
           page = <LoginPage />;
           header = <LoginPageHeader />;
-        } else if (
-          (dexRegistered || alreadyPaid) &&
-          dexDCRWalletRunning &&
-          dexBTCWalletRunning
-        ) {
+        } else if (dexDCRWalletRunning && (dexBTCWalletRunning || dexBtcSpv)) {
           page = <DexView />;
           header = <DexViewHeader />;
         } else if (!dexAccount) {
           page = <CreateDexAcctPage />;
           header = <CreateDexAcctPageHeader />;
-        } else if (dexDCRWalletRunning && dexBTCWalletRunning) {
-          page = <RegisterPage />;
-          header = <RegisterPageHeader />;
         } else if (!dexDCRWalletRunning || !dexBTCWalletRunning) {
           page = <CreateWalletsPage />;
           header = <CreateWalletsPageHeader />;
@@ -177,11 +177,10 @@ export const useDex = () => {
     dexActive,
     dexInit,
     loggedIn,
-    dexRegistered,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
     dexAccount,
-    alreadyPaid
+    dexBtcSpv
   ]);
   return {
     dexEnabled,
@@ -202,7 +201,6 @@ export const useDex = () => {
     loggedIn,
     dexAddr,
     dexConfig,
-    dexRegistered,
     dexConnected,
     dexDCRWalletRunning,
     dexBTCWalletRunning,
@@ -238,6 +236,9 @@ export const useDex = () => {
     mixedAccount,
     intl,
     restoredFromSeed,
-    alreadyPaid
+    onUseBtcSpv,
+    onDoNotUseBtcSPV,
+    dexBtcSpv,
+    askDexBtcSpv
   };
 };

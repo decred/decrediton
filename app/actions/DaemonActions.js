@@ -400,6 +400,8 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
 
       const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
       const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
+      const askDexBtcSpv = walletCfg.get(cfgConstants.ASK_DEX_BTC_SPV);
+      const dexBtcSpv = walletCfg.get(cfgConstants.DEX_BTC_SPV);
       const btcWalletName = walletCfg.get(cfgConstants.BTCWALLET_NAME);
       let rpcCreds = {};
       if (enableDex) {
@@ -521,7 +523,9 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         dexAccount,
         rpcCreds,
         btcWalletName,
-        needsVSPdProcessManaged
+        needsVSPdProcessManaged,
+        askDexBtcSpv,
+        dexBtcSpv
       });
       selectedWallet.value.isTrezor && dispatch(enableTrezor());
       await dispatch(getVersionServiceAttempt());
