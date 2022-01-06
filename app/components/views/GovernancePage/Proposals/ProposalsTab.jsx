@@ -120,7 +120,7 @@ const ProposalsTab = ({ isDarkTheme }) => {
           <PiLink
             className={styles.politeiaButton}
             CustomComponent={Button}
-            path="/proposals/new"
+            path="/record/new"
             isTestnet={isTestnet}>
             <T id="proposals.community.createLink" m="Create a Proposal" />
           </PiLink>
