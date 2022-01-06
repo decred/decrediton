@@ -26,6 +26,7 @@ import { getJSON } from "helpers/fetch";
 import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
+import { CSPP_URL, CSPP_URL_LEGACY } from "constants";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -411,6 +412,13 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
             "rpc.cert"
           )
         };
+      }
+
+      // Check to see if wallet config has old cspp.decred.org setting, will
+      // update to mix.decred.org
+      const currentCSPP = walletCfg.get(cfgConstants.CSPP_SERVER);
+      if (currentCSPP == CSPP_URL_LEGACY) {
+        walletCfg.set(cfgConstants.CSPP_SERVER, CSPP_URL);
       }
 
       const walletStarted = await wallet.startWallet(
