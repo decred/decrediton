@@ -121,11 +121,17 @@ export const DEX_LOGIN_FAILED = "DEX_LOGIN_FAILED";
 
 export const loginDex = (passphrase) => async (dispatch, getState) => {
   dispatch({ type: DEX_LOGIN_ATTEMPT });
+  const {
+    walletLoader: { confirmDexSeed }
+  } = getState();
   if (!sel.dexActive(getState())) {
     dispatch({ type: DEX_LOGIN_FAILED, error: "Dex isn't active" });
     return;
   }
   try {
+    if (!confirmDexSeed) {
+      dispatch(exportSeedDex(passphrase));
+    }
     await dex.login(passphrase);
     dispatch({ type: DEX_LOGIN_SUCCESS });
     // Request current user information
@@ -159,7 +165,7 @@ export const DEX_CONFIRM_SEED_ATTEMPT = "DEX_CONFIRM_SEED_ATTEMPT";
 export const DEX_CONFIRM_SEED_SUCCESS = "DEX_CONFIRM_SEED_SUCCESS";
 export const DEX_CONFIRM_SEED_FAILED = "DEX_CONFIRM_SEED_FAILED";
 
-export const cofirmDexSeed = () => async (dispatch, getState) => {
+export const confirmDexSeed = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();

@@ -51,7 +51,13 @@ import {
   NEW_BTC_CONFIG_FAILED,
   BTC_CREATEWALLET_FAILED,
   BTC_CREATEWALLET_ATTEMPT,
-  BTC_CREATEWALLET_SUCCESS
+  BTC_CREATEWALLET_SUCCESS,
+  DEX_EXPORT_SEED_ATTEMPT,
+  DEX_EXPORT_SEED_SUCCESS,
+  DEX_EXPORT_SEED_FAILED,
+  DEX_CONFIRM_SEED_ATTEMPT,
+  DEX_CONFIRM_SEED_SUCCESS,
+  DEX_CONFIRM_SEED_FAILED
 } from "../actions/DexActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -416,6 +422,44 @@ export default function ln(state = {}, action) {
         btcInstallNeeded: false,
         btcConfigUpdateNeeded: false,
         btcConfig: action.btcConfig
+      };
+    case DEX_EXPORT_SEED_ATTEMPT:
+      return {
+        ...state,
+        exportSeedAttempt: true,
+        exportSeedError: null,
+        dexSeed: null
+      };
+    case DEX_EXPORT_SEED_SUCCESS:
+      return {
+        ...state,
+        exportSeedAttempt: false,
+        exportSeedError: null,
+        dexSeed: action.dexSeed
+      };
+    case DEX_EXPORT_SEED_FAILED:
+      return {
+        ...state,
+        exportSeedAttempt: false,
+        exportSeedError: action.error,
+        dexSeed: null
+      };
+    case DEX_CONFIRM_SEED_ATTEMPT:
+      return {
+        ...state,
+        confirmSeedError: null
+      };
+    case DEX_CONFIRM_SEED_SUCCESS:
+      return {
+        ...state,
+        confirmSeedError: null,
+        dexSeed: null
+      };
+    case DEX_CONFIRM_SEED_FAILED:
+      return {
+        ...state,
+        confirmSeedError: action.error,
+        dexSeed: null
       };
     case CLOSEWALLET_SUCCESS:
       return {

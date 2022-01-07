@@ -12,6 +12,7 @@ import {
 import { EnablePage, EnablePageHeader } from "./EnablePage";
 import { InitPage, InitPageHeader } from "./InitPage";
 import { LoginPage, LoginPageHeader } from "./LoginPage";
+import { ConfirmDexSeed, ConfirmDexSeedHeader } from "./ConfirmDexSeed";
 import {
   CreateDexAcctPage,
   CreateDexAcctPageHeader
@@ -59,6 +60,9 @@ export const useDex = () => {
   const restoredFromSeed = useSelector(sel.restoredFromSeed);
   const dexBtcSpv = useSelector(sel.dexBtcSpv);
   const askDexBtcSpv = useSelector(sel.askDexBtcSpv);
+  const confirmDexSeed = useSelector(sel.confirmDexSeed);
+  const dexSeed = useSelector(sel.dexSeed);
+
 
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
@@ -94,6 +98,11 @@ export const useDex = () => {
 
   const onLoginDex = useCallback(
     (passphrase) => dispatch(da.loginDex(passphrase)),
+    [dispatch]
+  );
+
+  const onConfirmDexSeed = useCallback(
+    () => dispatch(da.confirmDexSeed()),
     [dispatch]
   );
 
@@ -146,6 +155,9 @@ export const useDex = () => {
         if (!loggedIn) {
           page = <LoginPage />;
           header = <LoginPageHeader />;
+        } else if (!confirmDexSeed) {
+          page = <ConfirmDexSeed />;
+          header = <ConfirmDexSeedHeader />;
         } else if (dexDCRWalletRunning && (dexBTCWalletRunning || dexBtcSpv)) {
           page = <DexView />;
           header = <DexViewHeader />;
@@ -180,7 +192,8 @@ export const useDex = () => {
     dexDCRWalletRunning,
     dexBTCWalletRunning,
     dexAccount,
-    dexBtcSpv
+    dexBtcSpv,
+    confirmDexSeed
   ]);
   return {
     dexEnabled,
@@ -239,6 +252,9 @@ export const useDex = () => {
     onUseBtcSpv,
     onDoNotUseBtcSPV,
     dexBtcSpv,
-    askDexBtcSpv
+    askDexBtcSpv,
+    confirmDexSeed,
+    onConfirmDexSeed,
+    dexSeed
   };
 };

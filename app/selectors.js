@@ -1959,6 +1959,8 @@ export const alreadyPaid = get(["dex", "alreadyPaid"]);
 export const getConfigAttempt = get(["dex", "getConfigAttempt"]);
 export const askDexBtcSpv = get(["walletLoader", "askDexBtcSpv"]);
 export const dexBtcSpv = get(["walletLoader", "dexBtcSpv"]);
+export const dexSeed = get(["dex", "dexSeed"]);
+export const confirmDexSeed = get(["walletLoader", "confirmDexSeed"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
 export const dexAccountNumber = createSelector(
   [dexAccount, balances],

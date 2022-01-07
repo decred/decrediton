@@ -89,6 +89,7 @@ export const BTCWALLET_NAME = "btcwallet_name";
 export const NEEDS_VSPD_PROCESS_TICKETS = "needs_vspd_process_tickets";
 export const DEX_BTC_SPV = "dex_use_btc_spv";
 export const ASK_DEX_BTC_SPV = "ask_dex_use_btc_spv";
+export const CONFIRM_DEX_SEED = "confirm_dex_seed";
 
 export const WALLET_INITIAL_VALUE = {
   [ENABLE_TICKET_BUYER]: false,
@@ -128,6 +129,7 @@ export const WALLET_INITIAL_VALUE = {
   [DEX_ACCOUNT]: null,
   [DEX_BTC_SPV]: false,
   [ASK_DEX_BTC_SPV]: false,
+  [CONFIRM_DEX_SEED]: false,
   [AUTOBUYER_SETTINGS]: null,
   // STAKEPOOLS is a legacy code which can be deleted after stopping giving
   // support for old vsp versions.
