@@ -30,6 +30,12 @@
   background-image: var(--notification-error-icon);
 }
 
+.snackbar.snackbarError {
+  display: grid;
+  grid-template-columns: 25rem auto;
+  align-items: center;
+}
+
 .snackbar.snackbarSuccess {
   background-image: var(--notification-success-icon);
 }
@@ -126,4 +132,8 @@
 
 .snackbarCloseButtonTop circle:last-of-type {
   stroke: var(--background-back-color);
+}
+
+.copyButton {
+  margin-left: 1rem;
 }
