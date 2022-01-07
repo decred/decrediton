@@ -99,6 +99,9 @@ export const DEX_INIT_SUCCESS = "DEX_INIT_SUCCESS";
 export const DEX_INIT_FAILED = "DEX_INIT_FAILED";
 
 export const initDex = (passphrase, seed) => async (dispatch, getState) => {
+  const {
+    walletLoader: { confirmDexSeed }
+  } = getState();
   dispatch({ type: DEX_INIT_ATTEMPT });
   if (!sel.dexActive(getState())) {
     dispatch({ type: DEX_INIT_FAILED, error: "Dex isn't active" });
@@ -108,6 +111,9 @@ export const initDex = (passphrase, seed) => async (dispatch, getState) => {
     await dex.init(passphrase, seed);
     dispatch({ type: DEX_INIT_SUCCESS, fromSeed: seed });
     // Request current user information
+    if (!confirmDexSeed) {
+      dispatch(exportSeedDex(passphrase));
+    }
     dispatch(userDex());
   } catch (error) {
     dispatch({ type: DEX_INIT_FAILED, error });
