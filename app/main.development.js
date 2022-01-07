@@ -77,6 +77,7 @@ import {
   userDex,
   loginDex,
   logoutDex,
+  exportSeed,
   getConfigDex,
   preRegister,
   registerDex
@@ -400,6 +401,8 @@ handle("check-init-dex", checkInitDex);
 handle("init-dex", initDex);
 
 handle("login-dex", loginDex);
+
+handle("export-seed-dex", exportSeed);
 
 handle("logout-dex", logoutDex);
 

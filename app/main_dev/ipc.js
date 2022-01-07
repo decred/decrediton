@@ -28,6 +28,7 @@ import {
   userDexCall,
   loginDexCall,
   logoutDexCall,
+  exportSeedDexCall,
   GetDexPID,
   closeDcrlnd,
   closeDex,
@@ -303,6 +304,21 @@ export const loginDex = async (passphrase) => {
     return login;
   } catch (e) {
     logger.log("error", `error login dex: ${e}`);
+    return e;
+  }
+};
+
+export const exportSeed = async (passphrase) => {
+  if (!GetDexPID()) {
+    logger.log("info", "Skipping export seed since dex is not runnning");
+    return false;
+  }
+
+  try {
+    const login = await exportSeedDexCall(passphrase);
+    return login;
+  } catch (e) {
+    logger.log("error", `error export seed dex: ${e}`);
     return e;
   }
 };

@@ -5,7 +5,7 @@ import { getNextAccountAttempt } from "./ControlActions";
 import { closeWalletRequest } from "./WalletLoaderActions";
 import { EXTERNALREQUEST_DEX } from "constants";
 import * as configConstants from "constants/config";
-import { makeRandomString } from "helpers";
+import { makeRandomString, base64ToHex } from "helpers";
 
 export const DEX_ENABLE_ATTEMPT = "DEX_ENABLE_ATTEMPT";
 export const DEX_ENABLE_FAILED = "DEX_ENABLE_FAILED";
@@ -133,6 +133,46 @@ export const loginDex = (passphrase) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: DEX_LOGIN_FAILED, error });
     return;
+  }
+};
+
+export const DEX_EXPORT_SEED_ATTEMPT = "DEX_EXPORT_SEED_ATTEMPT";
+export const DEX_EXPORT_SEED_SUCCESS = "DEX_EXPORT_SEED_SUCCESS";
+export const DEX_EXPORT_SEED_FAILED = "DEX_EXPORT_SEED_FAILED";
+
+export const exportSeedDex = (passphrase) => async (dispatch, getState) => {
+  dispatch({ type: DEX_EXPORT_SEED_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({ type: DEX_EXPORT_SEED_FAILED, error: "Dex isn't active" });
+    return;
+  }
+  try {
+    const seed = await dex.exportSeed(passphrase);
+    dispatch({ type: DEX_EXPORT_SEED_SUCCESS, dexSeed: base64ToHex(seed) });
+  } catch (error) {
+    dispatch({ type: DEX_EXPORT_SEED_FAILED, error });
+    return;
+  }
+};
+
+export const DEX_CONFIRM_SEED_ATTEMPT = "DEX_CONFIRM_SEED_ATTEMPT";
+export const DEX_CONFIRM_SEED_SUCCESS = "DEX_CONFIRM_SEED_SUCCESS";
+export const DEX_CONFIRM_SEED_FAILED = "DEX_CONFIRM_SEED_FAILED";
+
+export const cofirmDexSeed = () => async (dispatch, getState) => {
+  const {
+    daemon: { walletName }
+  } = getState();
+  try {
+    dispatch({ type: DEX_CONFIRM_SEED_ATTEMPT });
+    const walletConfig = wallet.getWalletCfg(
+      sel.isTestNet(getState()),
+      walletName
+    );
+    walletConfig.set(configConstants.CONFIRM_DEX_SEED, true);
+    dispatch({ type: DEX_CONFIRM_SEED_SUCCESS });
+  } catch (error) {
+    dispatch({ type: DEX_CONFIRM_SEED_ERROR, error });
   }
 };
 

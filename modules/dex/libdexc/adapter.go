@@ -70,6 +70,7 @@ func NewCoreAdapter() *CoreAdapter {
 		"shutdown":    c.shutdown,
 		// Pass-throughs to Core
 		"Init":         c.init,
+		"ExportSeed":   c.exportSeed,
 		"CreateWallet": c.createWallet,
 		"UpdateWallet": c.updateWallet,
 		"User":         c.user,
@@ -223,6 +224,17 @@ func (c *CoreAdapter) init(raw json.RawMessage) (string, error) {
 		return "", c.core.InitializeClient([]byte(form.Pass), seed)
 	}
 	return "", c.core.InitializeClient([]byte(form.Pass), nil)
+
+}
+
+func (c *CoreAdapter) exportSeed(raw json.RawMessage) (string, error) {
+	form := new(struct {
+		Pass string `json:"pass"`
+	})
+	if err := json.Unmarshal(raw, form); err != nil {
+		return "", err
+	}
+	return replyWithErrorCheck(c.core.ExportSeed([]byte(form.Pass)))
 
 }
 
