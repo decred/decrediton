@@ -10,14 +10,14 @@ const messages = defineMessages({
 });
 
 const LoginPage = () => {
-  const { onLoginDex, loginAttempt, intl } = useDex();
+  const { onLoginDex, loginDexAttempt, intl } = useDex();
 
   return (
     <PassphraseModalButton
-      disabled={loginAttempt}
+      disabled={loginDexAttempt}
       passphraseLabel={intl.formatMessage(messages.dexPassphraseLabelText)}
       modalTitle={<T id="dex.loginPassphrase" m="Enter DEX Passphrase" />}
-      loading={loginAttempt}
+      loading={loginDexAttempt}
       onSubmit={onLoginDex}
       buttonLabel={<T id="dex.loginPassphraseButton" m="Login" />}
     />
