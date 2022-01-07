@@ -63,7 +63,6 @@ export const useDex = () => {
   const confirmDexSeed = useSelector(sel.confirmDexSeed);
   const dexSeed = useSelector(sel.dexSeed);
 
-
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
   const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
     dispatch
@@ -101,10 +100,9 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onConfirmDexSeed = useCallback(
-    () => dispatch(da.confirmDexSeed()),
-    [dispatch]
-  );
+  const onConfirmDexSeed = useCallback(() => dispatch(da.confirmDexSeed()), [
+    dispatch
+  ]);
 
   const onCreateDexAccount = useCallback(
     (passphrase, name) => dispatch(da.createDexAccount(passphrase, name)),

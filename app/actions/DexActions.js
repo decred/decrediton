@@ -165,7 +165,7 @@ export const DEX_CONFIRM_SEED_ATTEMPT = "DEX_CONFIRM_SEED_ATTEMPT";
 export const DEX_CONFIRM_SEED_SUCCESS = "DEX_CONFIRM_SEED_SUCCESS";
 export const DEX_CONFIRM_SEED_FAILED = "DEX_CONFIRM_SEED_FAILED";
 
-export const confirmDexSeed = () => async (dispatch, getState) => {
+export const confirmDexSeed = () => (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
@@ -178,7 +178,7 @@ export const confirmDexSeed = () => async (dispatch, getState) => {
     walletConfig.set(configConstants.CONFIRM_DEX_SEED, true);
     dispatch({ type: DEX_CONFIRM_SEED_SUCCESS });
   } catch (error) {
-    dispatch({ type: DEX_CONFIRM_SEED_ERROR, error });
+    dispatch({ type: DEX_CONFIRM_SEED_FAILED, error });
   }
 };
 

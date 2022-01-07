@@ -1,0 +1,113 @@
+.isRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.columns {
+  width: 100%;
+  color: var(--account-text);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.columnLeft,
+.columnRight {
+  margin-top: 15px;
+}
+
+.title {
+  font-size: 19px;
+  text-align: right;
+  padding-right: 200px;
+  margin-bottom: 10px;
+}
+
+.actions {
+  width: 93%;
+  margin-left: 20px;
+  height: 100px;
+}
+.seedInstructions {
+  font-size: 20px;
+}
+
+.seed {
+  display: flex;
+  flex-direction: row;
+  margin-left: 30px;
+  margin-top: 18px;
+  width: 88%;
+}
+
+.seedLabel {
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 2px;
+  margin-right: 14px;
+}
+
+.seedButton {
+  height: 25px;
+  width: 75px;
+  color: var(--input-color-default);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 400;
+  background-color: var(--disabled-color);
+  padding: 2px 20px 3px 20px;
+  box-shadow: none;
+  transition: all 131ms var(--ease-in-out-quart);
+  cursor: auto;
+}
+
+.seedArea {
+  color: var(--input-color);
+  text-align: center;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 600;
+  padding: 2px 20px 3px 20px;
+  border-radius: 3px;
+  background-color: var(--background-copy-color);
+  height: 55px;
+  width: 390px;
+  word-break: break-all;
+  transition: all 131ms var(--ease-in-out-quart);
+  cursor: auto;
+}
+
+.seedAreaHidden {
+  color: var(--input-color-default);
+  text-align: center;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 600;
+  padding: 15px 20px 3px 20px;
+  border-radius: 3px;
+  background-color: var(--disabled-color);
+  height: 55px;
+  width: 390px;
+  word-break: break-all;
+  transition: all 131ms var(--ease-in-out-quart);
+  cursor: auto;
+}
+.seedAreaHidden:hover {
+  opacity: 0.7;
+}
+
+.seedClipboard {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .actions.isRow {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buttons {
+    margin: 0 auto;
+  }
+}

@@ -4,9 +4,12 @@ import { StandaloneHeader } from "layout";
 
 const ConfirmDexSeedHeader = () => (
   <StandaloneHeader
-    title={<T id="dex.confirmDexSeed.title" m="Confirm DEX App Seed" />}
+    title={<T id="dex.confirmDexSeed.title" m="Confirm DEX Account Seed" />}
     description={
-      <T id="dex.confirmDexSeed.description" m="Please confirm your DEX app seed before proceeding." />
+      <T
+        id="dex.confirmDexSeed.description"
+        m="Please confirm your DEX account seed before proceeding."
+      />
     }
     iconType={DEX_ICON}
   />
