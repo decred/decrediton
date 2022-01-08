@@ -1,8 +1,8 @@
-**Attention !** Veillez à conserver la graine de votre périphérique trezor dans un
-endroit sûr et accessible. Assurez-vous qu’elle est valide et qu’elle correspond
-bien à ce portefeuille avant de procéder à l’effacement et à la récupération du périphérique.
+**Avertissement!** Assurez-vous d'avoir conservé la graine (seed) de votre périphérique Trezor dans un
+endroit sûr et accessible. Vérifiez qu’elle est valide et qu’elle correspond
+bien à celle utilisée par le portefeuille avant de procéder à son effacement et à la récupération du périphérique.
 
-Toute négligence en ce sens entraînera une **perte de fonds**.
+Toute négligence dans ces vérifications pourrait entrainer une **perte de fonds**.
 
 Notez également que Decrediton prend uniquement en charge la récupération
-de graines de 24 mots (256 bits) et que les mots utilisés pour trezor et pour l’importation de dcrwallet sont *différents*.
+de la graine de 24 mots (256 bits) et que les mots utilisés par Trezor et pour les imports de dcrwallet sont *différents*.

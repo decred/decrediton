@@ -1,0 +1,1 @@
+Vous devez à présent avoir une meilleure compréhension du cycle de vie d'un ticket, et nous espérons que vous êtes maintenant prêt à démarrer le staking de vos Decred et à participer à la communauté !
