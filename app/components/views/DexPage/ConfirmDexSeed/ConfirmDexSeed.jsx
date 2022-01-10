@@ -26,9 +26,9 @@ const ConfirmDexSeed = () => {
           m="You should carefully write down your application
       seed and save a copy. Should you lose access to this machine or the
       critical application files, the seed can be used to restore your DEX accounts
-       and native wallets. Some older accounts cannot be restored from seed,
-       and whether old or new, it's good practice to backup the account keys
-       separately from the seed."
+       and native wallets. DEX accounts created in prior versions are not
+       recoverable with this seed, so be sure to export any such accounts
+       from the DEX Settings page."
         />
       </div>
       <div className={classNames(styles.actions, styles.isRow)}>
