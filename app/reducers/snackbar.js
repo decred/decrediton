@@ -17,7 +17,8 @@ import {
   DEX_LOGOUT_FAILED,
   DEX_USER_FAILED,
   NEW_BTC_CONFIG_FAILED,
-  NEW_BTC_CONFIG_SUCCESS
+  NEW_BTC_CONFIG_SUCCESS,
+  DEX_EXPORT_SEED_FAILED
 } from "actions/DexActions";
 import {
   PUBLISHTX_FAILED,
@@ -724,6 +725,10 @@ const messages = defineMessages({
     id: "newBTCConfig.success",
     defaultMessage:
       "You have successfully created a default bitcoin config.  Please restart your Bitcoin Core wallet for this config to be used as expected."
+  },
+  DEX_EXPORT_SEED_FAILED: {
+    id: "dex.export.seed.failed",
+    defaultMessage: "{originalError}"
   }
 });
 
@@ -967,6 +972,7 @@ export default function snackbar(state = {}, action) {
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
     case NEW_BTC_CONFIG_FAILED:
+    case DEX_EXPORT_SEED_FAILED:
       type = "Error";
       if (
         action.error &&
