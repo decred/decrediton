@@ -50,7 +50,8 @@ import {
   LNWALLET_GET_AUTOPILOT_STATUS_FAILED,
   LNWALLET_GETTRANSACTIONS_ATTEMPT,
   LNWALLET_GETTRANSACTIONS_SUCCESS,
-  LNWALLET_GETTRANSACTIONS_FAILED
+  LNWALLET_GETTRANSACTIONS_FAILED,
+  LNWALLET_WAITSYNC_PROGRESS
 } from "actions/LNActions";
 
 function addOutstandingPayment(oldOut, rhashHex, payData) {
@@ -257,6 +258,9 @@ export default function ln(state = {}, action) {
           maxInboundAmount: 0,
           maxOutboundAmount: 0
         },
+        lastDcrlndLogLine: "",
+        routerPruneTarget: 0,
+        routerPruneHeight: 0,
         towersList: [],
         recentlyOpenedChannel: null
       };
@@ -394,6 +398,14 @@ export default function ln(state = {}, action) {
       return {
         ...state,
         getTransactionsAttempt: false
+      };
+    case LNWALLET_WAITSYNC_PROGRESS:
+      return {
+        ...state,
+        lastDcrlndLogLine: action.lastDcrlndLogLine,
+        routerPruneTarget: action.routerPruneTarget,
+        routerPruneHeight: action.routerPruneHeight,
+        routerPruneStart: action.firstRouterPruneHeight
       };
     default:
       return state;

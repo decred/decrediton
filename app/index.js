@@ -485,7 +485,11 @@ const initialState = {
     getAutopilotStatusAttempt: false,
     autopilotEnabled: false,
     getTransactionsAttempt: false,
-    transactions: Array()
+    transactions: Array(),
+    lastDcrlndLogLine: "",
+    routerPruneTarget: 0,
+    routerPruneHeight: 0,
+    routerPruneStart: 0
   },
   dex: {
     dexOrdersOpen: false,

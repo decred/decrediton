@@ -378,21 +378,35 @@ const connectToLNWallet = (
   return { client: lnClient, wtClient };
 };
 
-const waitForDcrlndSynced = (lnClient) => async () => {
+export const LNWALLET_WAITSYNC_PROGRESS = "LNWALLET_WAITSYNC_PROGRESS";
+
+const waitForDcrlndSynced = (lnClient) => async (dispatch) => {
   const sleepMs = 3000;
-  const sleepCount = 60 / (sleepMs / 1000);
   const sleep = () => new Promise((resolve) => setTimeout(resolve, sleepMs));
 
-  for (let i = 0; i < sleepCount; i++) {
+  let firstRouterPruneHeight = 0;
+
+  for (;;) {
     const info = await ln.getInfo(lnClient);
     if (info.serverActive) {
       await sleep(); // Final sleep to let subsystems catch up.
       return;
     }
+    const lastDcrlndLogLine = await wallet.getDcrlndLastLogLine();
+    if (
+      info.routerPruneTarget != info.routerPruneHeight &&
+      firstRouterPruneHeight === 0
+    ) {
+      firstRouterPruneHeight = info.routerPruneHeight;
+    }
+    dispatch({
+      ...info,
+      lastDcrlndLogLine,
+      firstRouterPruneHeight,
+      type: LNWALLET_WAITSYNC_PROGRESS
+    });
     await sleep();
   }
-
-  throw new Error("dcrlnd wallet not synced after 60 seconds");
 };
 
 const loadLNStartupInfo = () => (dispatch) => {
