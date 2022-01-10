@@ -37,7 +37,8 @@ import { WALLETCREATED } from "actions/DaemonActions";
 import {
   CREATEDEXACCOUNT_SUCCESS,
   SELECT_DEXACCOUNT_SUCCESS,
-  DEX_USE_SPV_BTC_SUCCESS
+  DEX_USE_SPV_BTC_SUCCESS,
+  DEX_CONFIRM_SEED_SUCCESS
 } from "actions/DexActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
@@ -121,7 +122,8 @@ export default function walletLoader(state = {}, action) {
         dexRpcSettings: action.rpcCreds,
         btcWalletName: action.btcWalletName,
         askDexBtcSpv: action.askDexBtcSpv,
-        dexBtcSpv: action.dexBtcSpv
+        dexBtcSpv: action.dexBtcSpv,
+        confirmDexSeed: action.confirmDexSeed
       };
     case GETWALLETSEEDSVC_ATTEMPT:
       return { ...state, seedService: null };
@@ -253,6 +255,11 @@ export default function walletLoader(state = {}, action) {
         ...state,
         dexBtcSpv: action.dexBtcSpv,
         askDexBtcSpv: action.askDexBtcSpv
+      };
+    case DEX_CONFIRM_SEED_SUCCESS:
+      return {
+        ...state,
+        confirmDexSeed: true
       };
     default:
       return state;

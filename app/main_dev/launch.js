@@ -946,6 +946,9 @@ export const loginDexCall = (passphrase) =>
 
 export const logoutDexCall = () => (!dex ? null : callDEX("Logout", {}));
 
+export const exportSeedDexCall = (passphrase) =>
+  !dex ? null : callDEX("ExportSeed", { pass: passphrase });
+
 export const createWalletDexCall = (
   assetID,
   walletType,
