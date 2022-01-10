@@ -22,6 +22,15 @@
   text-align: center;
 }
 
+.logLine {
+  font-family: var(--font-family-mono);
+  margin-top: 2em;
+}
+
+.linearProgress {
+  margin-top: 1em;
+}
+
 @media screen and (max-width: 1180px) {
   .buttonContrainer,
   .connectOpts {

@@ -27,6 +27,10 @@ export function useLNPage() {
   const runningIndicator = useSelector(sel.getRunningIndicator);
   const describeGraph = useSelector(sel.lnDescribeGraph);
   const transactions = useSelector(sel.lnTransactions);
+  const lastLogLine = useSelector(sel.lnLastLogLine);
+  const routerPruneTarget = useSelector(sel.lnRouterPruneTarget);
+  const routerPruneHeight = useSelector(sel.lnRouterPruneHeight);
+  const routerPruneStart = useSelector(sel.lnRouterPruneStart);
 
   const recentNodes = useMemo(
     () =>
@@ -136,6 +140,10 @@ export function useLNPage() {
     runningIndicator,
     describeGraph,
     transactions,
-    cancelInvoice
+    cancelInvoice,
+    lastLogLine,
+    routerPruneTarget,
+    routerPruneHeight,
+    routerPruneStart
   };
 }

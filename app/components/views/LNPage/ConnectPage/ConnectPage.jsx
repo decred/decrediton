@@ -15,6 +15,7 @@ import { LN_ICON } from "constants";
 import { useConnectPage } from "./hooks";
 import { CreateLNWallet, CreateLNWalletHeader } from "./CreateLNWallet";
 import { AutopilotSwitch } from "./AutopilotSwitch";
+import { LinearProgressSmall } from "indicators";
 
 const stageMsgs = {
   [LNWALLET_STARTUPSTAGE_STARTDCRLND]: (
@@ -76,6 +77,10 @@ const ConnectPage = () => {
     onAccountOptionClick,
     onAcceptCreationWarning,
     runningIndicator,
+    lastLogLine,
+    routerPruneTarget,
+    routerPruneHeight,
+    routerPruneStart,
     intl
   } = useConnectPage();
 
@@ -154,6 +159,15 @@ const ConnectPage = () => {
             )}
           </div>
           {stageMsgs[startupStage] && <div>{stageMsgs[startupStage]}</div>}
+          {routerPruneTarget != routerPruneHeight && (
+            <LinearProgressSmall
+              className={styles.linearProgress}
+              value={routerPruneHeight}
+              max={routerPruneTarget}
+              min={routerPruneStart}
+            />
+          )}
+          <div className={styles.logLine}>{lastLogLine}</div>
         </div>
       )}
     </StandalonePage>

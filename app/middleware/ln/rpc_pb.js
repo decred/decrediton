@@ -15088,7 +15088,9 @@ proto.lnrpc.GetInfoResponse.toObject = function(includeInstance, msg) {
     proto.lnrpc.Chain.toObject, includeInstance),
     urisList: (f = jspb.Message.getRepeatedField(msg, 12)) == null ? undefined : f,
     featuresMap: (f = msg.getFeaturesMap()) ? f.toObject(includeInstance, proto.lnrpc.Feature.toObject) : [],
-    serverActive: jspb.Message.getBooleanFieldWithDefault(msg, 901, false)
+    serverActive: jspb.Message.getBooleanFieldWithDefault(msg, 901, false),
+    routerPruneTarget: jspb.Message.getFieldWithDefault(msg, 902, 0),
+    routerPruneHeight: jspb.Message.getFieldWithDefault(msg, 903, 0)
   };
 
   if (includeInstance) {
@@ -15203,6 +15205,14 @@ proto.lnrpc.GetInfoResponse.deserializeBinaryFromReader = function(msg, reader) 
     case 901:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setServerActive(value);
+      break;
+    case 902:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setRouterPruneTarget(value);
+      break;
+    case 903:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setRouterPruneHeight(value);
       break;
     default:
       reader.skipField();
@@ -15361,6 +15371,20 @@ proto.lnrpc.GetInfoResponse.serializeBinaryToWriter = function(message, writer) 
   if (f) {
     writer.writeBool(
       901,
+      f
+    );
+  }
+  f = message.getRouterPruneTarget();
+  if (f !== 0) {
+    writer.writeUint32(
+      902,
+      f
+    );
+  }
+  f = message.getRouterPruneHeight();
+  if (f !== 0) {
+    writer.writeUint32(
+      903,
       f
     );
   }
@@ -15749,6 +15773,42 @@ proto.lnrpc.GetInfoResponse.prototype.getServerActive = function() {
  */
 proto.lnrpc.GetInfoResponse.prototype.setServerActive = function(value) {
   return jspb.Message.setProto3BooleanField(this, 901, value);
+};
+
+
+/**
+ * optional uint32 router_prune_target = 902;
+ * @return {number}
+ */
+proto.lnrpc.GetInfoResponse.prototype.getRouterPruneTarget = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 902, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
+proto.lnrpc.GetInfoResponse.prototype.setRouterPruneTarget = function(value) {
+  return jspb.Message.setProto3IntField(this, 902, value);
+};
+
+
+/**
+ * optional uint32 router_prune_height = 903;
+ * @return {number}
+ */
+proto.lnrpc.GetInfoResponse.prototype.getRouterPruneHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 903, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.lnrpc.GetInfoResponse} returns this
+ */
+proto.lnrpc.GetInfoResponse.prototype.setRouterPruneHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 903, value);
 };
 
 

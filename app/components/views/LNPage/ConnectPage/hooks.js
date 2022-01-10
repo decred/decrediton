@@ -13,7 +13,11 @@ export function useConnectPage() {
     startDcrlnd,
     startAttempt,
     startupStage,
-    runningIndicator
+    runningIndicator,
+    lastLogLine,
+    routerPruneTarget,
+    routerPruneHeight,
+    routerPruneStart
   } = useLNPage();
 
   const [autopilotEnabled, setAutopilotEnabled] = useState(false);
@@ -71,6 +75,10 @@ export function useConnectPage() {
     onAccountOptionClick,
     onAcceptCreationWarning,
     runningIndicator,
+    lastLogLine,
+    routerPruneTarget,
+    routerPruneHeight,
+    routerPruneStart,
     intl
   };
 }

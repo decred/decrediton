@@ -500,6 +500,10 @@ ipcMain.on("get-last-log-line-dcrwallet", (event) => {
   event.returnValue = lastLogLine(GetDcrwalletLogs());
 });
 
+ipcMain.on("get-last-log-line-dcrlnd", (event) => {
+  event.returnValue = lastLogLine(GetDcrlndLogs());
+});
+
 ipcMain.on("get-privacy-logs", (event) => {
   event.returnValue = getPrivacyLogs();
 });

@@ -1903,6 +1903,10 @@ export const lnRecentlyOpenedChannel = get(["ln", "recentlyOpenedChannel"]);
 export const lnDescribeGraph = get(["ln", "describeGraph"]);
 export const lnAutopilotEnabled = get(["ln", "autopilotEnabled"]);
 export const lnTransactions = get(["ln", "transactions"]);
+export const lnLastLogLine = get(["ln", "lastDcrlndLogLine"]);
+export const lnRouterPruneTarget = get(["ln", "routerPruneTarget"]);
+export const lnRouterPruneHeight = get(["ln", "routerPruneHeight"]);
+export const lnRouterPruneStart = get(["ln", "routerPruneStart"]);
 
 // end of ln selectors
 
