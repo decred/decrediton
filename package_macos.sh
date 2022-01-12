@@ -50,7 +50,8 @@ mkdir -p ${YARNCACHE}
 
 # prepare directory with package files
 yarn install --cache-folder ${YARNCACHE}
-yarn package-mac
+yarn rebuild-natives
+yarn package-mac-${ARCH}
 
 # submit notarization
 _uuid=$(notary_submit)
