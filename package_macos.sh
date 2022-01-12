@@ -19,14 +19,6 @@ notary_status() {
 	xcrun altool --notarization-info ${_uuid} -p @keychain:${KEYCHAIN} 2>&1
 }
 
-# write an install script read from stdin
-# arg 1: script name
-installscript() {
-	local _script=${SCRIPTS}/$1
-	cat >${_script}
-	chmod 0755 ${_script}
-}
-
 [ $(uname) = Darwin ] || {
 	echo "$0 must be run from darwin" 2>&1
 	exit 1
