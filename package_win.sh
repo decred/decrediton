@@ -1,17 +1,12 @@
 #!/bin/sh
 
-[ $(uname) = Windows ] || {
-	echo "$0 must be run from windows" 2>&1
-	exit 1
-}
-[ $# = 3 ] || {
+[ $# = 2 ] || {
 	echo "usage: $0 version link pass" 2>&1
 	exit 2
 }
 
-VERSION=$1
-LINK=$2
-PASS=$3
+LINK=$1
+PASS=$2
 NODE_MODULES=node_modules
 YARNCACHE=.yarncache
 
