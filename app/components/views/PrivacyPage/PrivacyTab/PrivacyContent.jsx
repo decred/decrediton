@@ -39,7 +39,7 @@ const PrivacyContent = ({
   const onHideLog = () => setExpandedLogs(false);
   const onShowLog = () => setExpandedLogs(true);
   const { walletService } = useService();
-  console.log(isAutoBuyerRunning);
+
   return (
     <div className={styles.privacyContent}>
       <Subtitle
