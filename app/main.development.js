@@ -424,20 +424,20 @@ handle("stop-dex", stopDex);
 handle("launch-dex-window", createDexWindow);
 
 function createDexWindow(serverAddress) {
-    dexWindow.loadURL("http://" + serverAddress);
-    dexWindow.once("ready-to-show", () => {
-      dexWindow.show();
+  dexWindow.loadURL("http://" + serverAddress);
+  dexWindow.once("ready-to-show", () => {
+    dexWindow.show();
+  });
+  dexWindow.once("closed", () => {
+    dexWindow = new BrowserWindow({
+      show: false,
+      autoHideMenuBar: true,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
     });
-    dexWindow.once("closed", () => {
-      dexWindow = new BrowserWindow({
-        show: false,
-        autoHideMenuBar: true,
-        webPreferences: {
-          nodeIntegration: true,
-          contextIsolation: false
-        }
-      });
-    });
+  });
 }
 
 handle("check-btc-config", getCurrentBitcoinConfig);
