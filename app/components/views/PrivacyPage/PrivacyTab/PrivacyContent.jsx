@@ -31,7 +31,9 @@ const PrivacyContent = ({
   defaultSpendingAccountDisregardMixedAccount,
   mixedAccountSpendableBalance,
   changeAccountSpendableBalance,
-  getRunningIndicator
+  getRunningIndicator,
+  isAutoBuyerRunning,
+  onDisableTicketAutoBuyer
 }) => {
   const [expandedLogs, setExpandedLogs] = useState(false);
   const onHideLog = () => setExpandedLogs(false);
@@ -54,10 +56,14 @@ const PrivacyContent = ({
           className={classNames(
             styles.mixerStatus,
             styles.isRow,
-            accountMixerRunning && styles.running
+            (accountMixerRunning || isAutoBuyerRunning) && styles.running
           )}>
-          {accountMixerRunning ? (
-            <T id="privacy.mixersIsRunning" m="Mixer is running" />
+          {accountMixerRunning || isAutoBuyerRunning ? (
+            isAutoBuyerRunning ? (
+              <T id="privacy.autobuyerRunning" m="Autobuyer is running" />
+            ) : (
+              <T id="privacy.mixersIsRunning" m="Mixer is running" />
+            )
           ) : (
             <T id="privacy.mixerIsNotRunning" m="Mixer is not running" />
           )}
@@ -78,7 +84,7 @@ const PrivacyContent = ({
           <div
             className={classNames(
               styles.privacyArrows,
-              accountMixerRunning && styles.running
+              (accountMixerRunning || isAutoBuyerRunning) && styles.running
             )}
           />
           <div
@@ -92,9 +98,18 @@ const PrivacyContent = ({
             </label>
           </div>
           <div className={styles.startButtonContrainer}>
-            {accountMixerRunning ? (
-              <DangerButton onClick={stopAccountMixer}>
-                <T id="privacy.stop.mixer" m="Stop Mixer" />
+            {accountMixerRunning || isAutoBuyerRunning ? (
+              <DangerButton
+                onClick={
+                  isAutoBuyerRunning
+                    ? onDisableTicketAutoBuyer
+                    : stopAccountMixer
+                }>
+                {isAutoBuyerRunning ? (
+                  <T id="privacy.stop.autobuyer" m="Stop Auto Buyer" />
+                ) : (
+                  <T id="privacy.stop.mixer" m="Stop Mixer" />
+                )}
               </DangerButton>
             ) : getRunningIndicator ? (
               <Tooltip

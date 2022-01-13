@@ -2,6 +2,7 @@ import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import * as act from "actions/AccountMixerActions";
 import * as ca from "actions/ClientActions";
+import * as cta from "actions/ControlActions";
 import { getPrivacyLogs } from "actions/DaemonActions";
 import * as sel from "selectors";
 import { useMountEffect } from "hooks";
@@ -14,8 +15,13 @@ export function usePrivacy() {
     [dispatch]
   );
   const stopAccountMixer = () => dispatch(act.stopAccountMixer());
+  const onDisableTicketAutoBuyer = useCallback(
+    () => dispatch(cta.ticketBuyerCancel()),
+    [dispatch]
+  );
   const onGetPrivacyLogs = () => dispatch(getPrivacyLogs());
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
+  const isAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
   const csppServer = useSelector(sel.getCsppServer);
@@ -97,6 +103,8 @@ export function usePrivacy() {
     changeAccountSpendableBalance,
     defaultSpendingAccountDisregardMixedAccount,
     isCreateAccountDisabled,
-    getRunningIndicator
+    getRunningIndicator,
+    onDisableTicketAutoBuyer,
+    isAutoBuyerRunning
   };
 }
