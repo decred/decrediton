@@ -1707,7 +1707,7 @@ export const dcrdataEnabled = compose(
 const getAgendasResponse = get(["grpc", "getAgendasResponse"]);
 
 const currentAgenda = createSelector([getAgendasResponse], (response) =>
-  response ? response.agendasList[0] : EMPTY_ARRAY
+  response ? response.agendasList : EMPTY_ARRAY
 );
 
 const allAgendasNotNormalized = get(["grpc", "allAgendas"]);
@@ -1719,7 +1719,7 @@ const allAgendasVerify = createSelector(
   // If allAgendas length is 0 we return the agenda from dcrwallet, as dcrdata
   // may be down.
   (currentAgenda, dcrdataEnabled, allAgendas) =>
-    !dcrdataEnabled || allAgendas.length === 0 ? [currentAgenda] : allAgendas
+    !dcrdataEnabled || allAgendas.length === 0 ? currentAgenda : allAgendas
 );
 
 const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
@@ -1727,16 +1727,18 @@ const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
     // When agenda has getId function (this happens when dcrdata privacy is disabled
     // or a possible dcrdata crash) or the agenda is the same for dcrwallet and dcrdata.
     // We use the information from our dcrwallet grpc request.
-    if (agenda.id || currentAgenda.id === agenda.name) {
-      currentAgenda.isCurrent = true;
-      const agendaObj = {};
-      agendaObj.name = currentAgenda.id;
-      agendaObj.choices = currentAgenda.choicesList;
-      agendaObj.description = currentAgenda.description;
-      agendaObj.isCurrent = true;
-      agendaObj.finished = agenda.status === "finished";
-      agendaObj.passed = !!agenda.activated;
-      return agendaObj;
+    for (let i = 0; i < currentAgenda.length; i++) {
+      if (agenda.id || currentAgenda[i].id === agenda.name) {
+        currentAgenda[i].isCurrent = true;
+        const agendaObj = {};
+        agendaObj.name = currentAgenda[i].id;
+        agendaObj.choices = currentAgenda[i].choicesList;
+        agendaObj.description = currentAgenda[i].description;
+        agendaObj.isCurrent = true;
+        agendaObj.finished = agenda.status === "finished";
+        agendaObj.passed = !!agenda.activated;
+        return agendaObj;
+      }
     }
     agenda.isCurrent = false;
     agenda.finished = agenda.status === "finished";
