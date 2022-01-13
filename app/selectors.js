@@ -1727,8 +1727,8 @@ const normalizeAgenda = createSelector([currentAgenda], (currentAgenda) => {
     // When agenda has getId function (this happens when dcrdata privacy is disabled
     // or a possible dcrdata crash) or the agenda is the same for dcrwallet and dcrdata.
     // We use the information from our dcrwallet grpc request.
-    for (let i = 0; i < currentAgenda.length; i++) {
-      if (agenda.id || currentAgenda[i].id === agenda.name) {
+    for (var i = 0; i < currentAgenda.length; i++) {
+      if (currentAgenda[i].id === agenda.id || currentAgenda[i].id === agenda.name) {
         currentAgenda[i].isCurrent = true;
         const agendaObj = {};
         agendaObj.name = currentAgenda[i].id;
