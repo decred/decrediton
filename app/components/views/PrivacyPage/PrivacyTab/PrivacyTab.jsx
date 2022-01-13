@@ -23,7 +23,9 @@ const Privacy = ({ setInterval }) => {
     mixedAccountSpendableBalance,
     changeAccountSpendableBalance,
     getRunningIndicator,
-    isCreateAccountDisabled
+    isCreateAccountDisabled,
+    isAutoBuyerRunning,
+    onDisableTicketAutoBuyer
   } = usePrivacy();
 
   const [logs, setLogs] = useState("");
@@ -86,7 +88,9 @@ const Privacy = ({ setInterval }) => {
         mixedAccountSpendableBalance,
         changeAccountSpendableBalance,
         accounts,
-        getRunningIndicator
+        getRunningIndicator,
+        isAutoBuyerRunning,
+        onDisableTicketAutoBuyer
       }}
     />
   );
