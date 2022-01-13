@@ -1,4 +1,8 @@
+.container {
+  width: 60rem;
+  color: var(--main-dark-blue);
+}
+
 .seedInput {
-  width: 90% !important;
   max-width: 650px;
 }

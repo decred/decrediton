@@ -1,6 +1,8 @@
 .dexContent {
   width: 740px;
   min-height: 300px;
+  font-size: 1.6rem;
+  line-height: 2rem;
 }
 
 .accountSelect {
