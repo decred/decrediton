@@ -152,6 +152,7 @@ if (err !== null) {
 
 let menu;
 let mainWindow = null;
+let dexWindow = null;
 let confirmBrowserView;
 let previousWallet = null;
 
@@ -423,15 +424,20 @@ handle("stop-dex", stopDex);
 handle("launch-dex-window", createDexWindow);
 
 function createDexWindow(serverAddress) {
-  const child = new BrowserWindow({
-    parent: mainWindow,
-    show: false,
-    autoHideMenuBar: true
-  });
-  child.loadURL("http://" + serverAddress);
-  child.once("ready-to-show", () => {
-    child.show();
-  });
+    dexWindow.loadURL("http://" + serverAddress);
+    dexWindow.once("ready-to-show", () => {
+      dexWindow.show();
+    });
+    dexWindow.once("closed", () => {
+      dexWindow = new BrowserWindow({
+        show: false,
+        autoHideMenuBar: true,
+        webPreferences: {
+          nodeIntegration: true,
+          contextIsolation: false
+        }
+      });
+    });
 }
 
 handle("check-btc-config", getCurrentBitcoinConfig);
@@ -854,6 +860,15 @@ app.on("ready", async () => {
   );
 
   setMenuLocale(locale);
+
+  dexWindow = new BrowserWindow({
+    show: false,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  });
 });
 
 app.on("before-quit", async (event) => {
