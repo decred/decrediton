@@ -1,0 +1,267 @@
+.imageContainer,
+.image {
+  width: 58rem;
+  height: 40rem;
+  position: relative;
+}
+
+.image {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+/* LN images */
+
+.LNSlideImage1 {
+  background-image: var(--tutorial-ln-slide1);
+}
+
+.LNSlideImage2 {
+  background-image: var(--tutorial-ln-slide2);
+}
+
+.LNSlideImage3 {
+  background-image: var(--tutorial-ln-slide3);
+}
+
+.LNSlideImage4 {
+  background-image: var(--tutorial-ln-slide4);
+}
+
+.LNSlideImage5 {
+  background-image: var(--tutorial-ln-slide5);
+}
+
+.LNSlideImage6 {
+  background-image: var(--tutorial-ln-slide6);
+}
+
+/* ConsensusCode images */
+
+.consensusCodeSlideImage1-1 {
+  background-image: var(--tutorial-consensusCode-slide1-1);
+}
+
+.consensusCodeSlideImage1-2 {
+  background-image: var(--tutorial-consensusCode-slide1-2);
+}
+
+/* Decred intro images */
+
+.decredIntroSlideImage1 {
+  background-image: var(--tutorial-decredIntro-slide1);
+}
+
+.decredIntroSlideImage2-1 {
+  background-image: var(--tutorial-decredIntro-slide2-1);
+}
+
+.decredIntroSlideImage2-2 {
+  background-image: var(--tutorial-decredIntro-slide2-2);
+}
+
+/* powPos images */
+
+.powPosSlideImage1 {
+  background-image: var(--tutorial-powPos-slide1);
+}
+
+.powPosSlideImage2 {
+  background-image: var(--tutorial-powPos-slide2);
+}
+
+.powPosSlideImage3 {
+  background-image: var(--tutorial-powPos-slide3);
+}
+
+/* tickets images */
+
+.ticketsSlideImage1 {
+  background-image: var(--tutorial-tickets-slide1);
+}
+
+.ticketsSlideImage2-1 {
+  background-image: var(--tutorial-tickets-slide2-1);
+}
+
+.ticketsSlideImage2-2 {
+  background-image: var(--tutorial-tickets-slide2-2);
+}
+
+.ticketsSlideImage3-1 {
+  background-image: var(--tutorial-tickets-slide3-1);
+}
+
+.ticketsSlideImage3-2 {
+  background-image: var(--tutorial-tickets-slide3-2);
+}
+
+/* staking images */
+
+.stakingSlideImage1 {
+  background-image: var(--tutorial-staking-slide1);
+}
+
+.stakingSlideImage2 {
+  background-image: var(--tutorial-staking-slide2);
+}
+
+.stakingSlideImage3-1 {
+  background-image: var(--tutorial-staking-slide3-1);
+}
+
+.stakingSlideImage3-2 {
+  background-image: var(--tutorial-staking-slide3-2);
+}
+
+.stakingSlideImage4-1 {
+  background-image: var(--tutorial-staking-slide4-1);
+}
+
+.stakingSlideImage4-2 {
+  background-image: var(--tutorial-staking-slide4-2);
+}
+
+/* blocks images */
+
+.blocksSlideImage1 {
+  background-image: var(--tutorial-blocks-slide1);
+}
+
+.blocksSlideImage2 {
+  background-image: var(--tutorial-blocks-slide2);
+}
+
+.blocksSlideImage3 {
+  background-image: var(--tutorial-blocks-slide3);
+}
+
+.blocksSlideImage4 {
+  background-image: var(--tutorial-blocks-slide4);
+}
+
+.blocksSlideImage5 {
+  background-image: var(--tutorial-blocks-slide5);
+}
+
+/* consensusVoting images */
+
+.consensusVotingSlideImage1 {
+  background-image: var(--tutorial-consensusVoting-slide1);
+}
+
+.consensusVotingSlideImage2 {
+  background-image: var(--tutorial-consensusVoting-slide2);
+}
+
+.consensusVotingSlideImage3 {
+  background-image: var(--tutorial-consensusVoting-slide3);
+}
+
+.consensusVotingSlideImage4 {
+  background-image: var(--tutorial-consensusVoting-slide4);
+}
+
+.consensusVotingSlideImage5 {
+  background-image: var(--tutorial-consensusVoting-slide5);
+}
+
+.consensusVotingSlideImage6 {
+  background-image: var(--tutorial-consensusVoting-slide6);
+}
+
+.consensusVotingSlideImage7 {
+  background-image: var(--tutorial-consensusVoting-slide7);
+}
+
+/* lifecycle images */
+
+.lifecycleSlideImage1-1 {
+  background-image: var(--tutorial-lifecycle-slide1-1);
+}
+
+.lifecycleSlideImage1-2 {
+  background-image: var(--tutorial-lifecycle-slide1-2);
+}
+
+.lifecycleSlideImage2 {
+  background-image: var(--tutorial-lifecycle-slide2);
+}
+
+.lifecycleSlideImage3-1 {
+  background-image: var(--tutorial-lifecycle-slide3-1);
+}
+
+.lifecycleSlideImage3-2 {
+  background-image: var(--tutorial-lifecycle-slide3-2);
+}
+
+.lifecycleSlideImage4-1 {
+  background-image: var(--tutorial-lifecycle-slide4-1);
+}
+
+.lifecycleSlideImage4-2 {
+  background-image: var(--tutorial-lifecycle-slide4-2);
+}
+
+.lifecycleSlideImage5-1 {
+  background-image: var(--tutorial-lifecycle-slide5-1);
+}
+
+.lifecycleSlideImage5-2 {
+  background-image: var(--tutorial-lifecycle-slide5-2);
+}
+
+.lifecycleSlideImage5-3 {
+  background-image: var(--tutorial-lifecycle-slide5-3);
+}
+
+.lifecycleSlideImage5-4 {
+  background-image: var(--tutorial-lifecycle-slide5-4);
+}
+
+.lifecycleSlideImage6-1 {
+  background-image: var(--tutorial-lifecycle-slide6-1);
+}
+
+.lifecycleSlideImage6-2 {
+  background-image: var(--tutorial-lifecycle-slide6-2);
+}
+
+.lifecycleSlideImage6-3 {
+  background-image: var(--tutorial-lifecycle-slide6-3);
+}
+
+/* identity images */
+
+.identitySlideImage1 {
+  background-image: var(--tutorial-identity-slide1);
+}
+
+.identitySlideImage2 {
+  background-image: var(--tutorial-identity-slide2);
+}
+
+.identitySlideImage3 {
+  background-image: var(--tutorial-identity-slide3);
+}
+
+.identitySlideImage4 {
+  background-image: var(--tutorial-identity-slide4);
+}
+
+@media screen and (max-width: 1180px) {
+  .imageContainer,
+  .image {
+    width: 55rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imageContainer,
+  .image {
+    width: 27rem;
+    height: 20rem;
+  }
+}

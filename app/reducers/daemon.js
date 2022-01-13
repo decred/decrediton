@@ -1,6 +1,7 @@
 import {
   SELECT_LANGUAGE,
   FINISH_TUTORIAL,
+  SET_VISITED_TUTORIAL_TABS,
   FINISH_PRIVACY,
   FINISH_SPVCHOICE,
   DAEMONSTART_ATTEMPT,
@@ -40,6 +41,8 @@ export default function version(state = {}, action) {
       return { ...state, locale: action.language, setLanguage: false };
     case FINISH_TUTORIAL:
       return { ...state, tutorial: false };
+    case SET_VISITED_TUTORIAL_TABS:
+      return { ...state, visitedTutorialTabs: action.visitedTabs };
     case FINISH_SPVCHOICE:
       return { ...state, showSpvChoice: false };
     case FINISH_PRIVACY:

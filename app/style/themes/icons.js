@@ -175,12 +175,172 @@ const icons = {
   "search-icon-hover": url(require("style/icons/search-hover.svg")),
   "animated-alert-icon": url(require("style/icons/animated_alert_icon.gif")),
   "mixed-transaction-icon": url(require("style/icons/mixedTx.svg")),
-  "ln-slide1": url(require("style/icons/ln-slide1.svg")),
-  "ln-slide2": url(require("style/icons/ln-slide2.svg")),
-  "ln-slide3": url(require("style/icons/ln-slide3.svg")),
-  "ln-slide4": url(require("style/icons/ln-slide4.svg")),
-  "ln-slide5": url(require("style/icons/ln-slide5.svg")),
-  "ln-slide6": url(require("style/icons/ln-slide6.svg"))
+  //
+  // tutorials
+  //
+  // consensusCode
+  "tutorial-consensusCode-slide1-1": url(
+    require("style/icons/tutorials/consensusCode/consensus-slide1-1.svg")
+  ),
+  "tutorial-consensusCode-slide1-2": url(
+    require("style/icons/tutorials/consensusCode/consensus-slide1-2.svg")
+  ),
+  // LN
+  "tutorial-ln-slide1": url(require("style/icons/tutorials/ln/ln-slide1.svg")),
+  "tutorial-ln-slide2": url(require("style/icons/tutorials/ln/ln-slide2.svg")),
+  "tutorial-ln-slide3": url(require("style/icons/tutorials/ln/ln-slide3.svg")),
+  "tutorial-ln-slide4": url(require("style/icons/tutorials/ln/ln-slide4.svg")),
+  "tutorial-ln-slide5": url(require("style/icons/tutorials/ln/ln-slide5.svg")),
+  "tutorial-ln-slide6": url(require("style/icons/tutorials/ln/ln-slide6.svg")),
+  // decredIntro
+  "tutorial-decredIntro-slide1": url(
+    require("style/icons/tutorials/decredIntro/intro-slide1.svg")
+  ),
+  "tutorial-decredIntro-slide2-1": url(
+    require("style/icons/tutorials/decredIntro/intro-slide2-1.svg")
+  ),
+  "tutorial-decredIntro-slide2-2": url(
+    require("style/icons/tutorials/decredIntro/intro-slide2-2.svg")
+  ),
+  // powPos
+  "tutorial-powPos-slide1": url(
+    require("style/icons/tutorials/powPos/pos-pow-slide1.svg")
+  ),
+  "tutorial-powPos-slide2": url(
+    require("style/icons/tutorials/powPos/pos-pow-slide2.svg")
+  ),
+  "tutorial-powPos-slide3": url(
+    require("style/icons/tutorials/powPos/pos-pow-slide3.svg")
+  ),
+  // tickets
+  "tutorial-tickets-slide1": url(
+    require("style/icons/tutorials/tickets/tickets-slide1.svg")
+  ),
+  "tutorial-tickets-slide2-1": url(
+    require("style/icons/tutorials/tickets/tickets-slide2-1.svg")
+  ),
+  "tutorial-tickets-slide2-2": url(
+    require("style/icons/tutorials/tickets/tickets-slide2-2.svg")
+  ),
+  "tutorial-tickets-slide3-1": url(
+    require("style/icons/tutorials/tickets/tickets-slide3-1.svg")
+  ),
+  "tutorial-tickets-slide3-2": url(
+    require("style/icons/tutorials/tickets/tickets-slide3-2.svg")
+  ),
+  // staking
+  "tutorial-staking-slide1": url(
+    require("style/icons/tutorials/staking/staking-slide1.svg")
+  ),
+  "tutorial-staking-slide2": url(
+    require("style/icons/tutorials/staking/staking-slide2.svg")
+  ),
+  "tutorial-staking-slide3-1": url(
+    require("style/icons/tutorials/staking/staking-slide3-1.svg")
+  ),
+  "tutorial-staking-slide3-2": url(
+    require("style/icons/tutorials/staking/staking-slide3-2.svg")
+  ),
+  "tutorial-staking-slide4-1": url(
+    require("style/icons/tutorials/staking/staking-slide4-1.svg")
+  ),
+  "tutorial-staking-slide4-2": url(
+    require("style/icons/tutorials/staking/staking-slide4-2.svg")
+  ),
+  // blocks
+  "tutorial-blocks-slide1": url(
+    require("style/icons/tutorials/blocks/blocks-slide1.svg")
+  ),
+  "tutorial-blocks-slide2": url(
+    require("style/icons/tutorials/blocks/blocks-slide2.svg")
+  ),
+  "tutorial-blocks-slide3": url(
+    require("style/icons/tutorials/blocks/blocks-slide3.svg")
+  ),
+  "tutorial-blocks-slide4": url(
+    require("style/icons/tutorials/blocks/blocks-slide4.svg")
+  ),
+  "tutorial-blocks-slide5": url(
+    require("style/icons/tutorials/blocks/blocks-slide5.svg")
+  ),
+  // consensusVoting
+  "tutorial-consensusVoting-slide1": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide1.svg")
+  ),
+  "tutorial-consensusVoting-slide2": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide2.svg")
+  ),
+  "tutorial-consensusVoting-slide3": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide3.svg")
+  ),
+  "tutorial-consensusVoting-slide4": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide4.svg")
+  ),
+  "tutorial-consensusVoting-slide5": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide5.svg")
+  ),
+  "tutorial-consensusVoting-slide6": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide6.svg")
+  ),
+  "tutorial-consensusVoting-slide7": url(
+    require("style/icons/tutorials/consensusVoting/consensusvoting-slide7.svg")
+  ),
+  // lifecycle
+  "tutorial-lifecycle-slide1-1": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide1-1.svg")
+  ),
+  "tutorial-lifecycle-slide1-2": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide1-2.svg")
+  ),
+  "tutorial-lifecycle-slide2": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide2.svg")
+  ),
+  "tutorial-lifecycle-slide3-1": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide3-1.svg")
+  ),
+  "tutorial-lifecycle-slide3-2": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide3-2.svg")
+  ),
+  "tutorial-lifecycle-slide4-1": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide4-1.svg")
+  ),
+  "tutorial-lifecycle-slide4-2": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide4-2.svg")
+  ),
+  "tutorial-lifecycle-slide5-1": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide5-1.svg")
+  ),
+  "tutorial-lifecycle-slide5-2": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide5-2.svg")
+  ),
+  "tutorial-lifecycle-slide5-3": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide5-3.svg")
+  ),
+  "tutorial-lifecycle-slide5-4": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide5-4.svg")
+  ),
+  "tutorial-lifecycle-slide6-1": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide6-1.svg")
+  ),
+  "tutorial-lifecycle-slide6-2": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide6-2.svg")
+  ),
+  "tutorial-lifecycle-slide6-3": url(
+    require("style/icons/tutorials/lifecycle/lifecycle-slide6-3.svg")
+  ),
+  // identity
+  "tutorial-identity-slide1": url(
+    require("style/icons/tutorials/identity/identity-slide1.svg")
+  ),
+  "tutorial-identity-slide2": url(
+    require("style/icons/tutorials/identity/identity-slide2.svg")
+  ),
+  "tutorial-identity-slide3": url(
+    require("style/icons/tutorials/identity/identity-slide3.svg")
+  ),
+  "tutorial-identity-slide4": url(
+    require("style/icons/tutorials/identity/identity-slide4.svg")
+  )
 };
 
 export default icons;

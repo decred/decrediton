@@ -1,9 +1,28 @@
 import styles from "./CreationWarning.module.css";
 import { FormattedMessage as T } from "react-intl";
-import { Documentation } from "shared";
 import { KeyBlueButton } from "buttons";
+import { Subtitle } from "shared";
+import {
+  PagedTutorial,
+  tutorials
+} from "../../../SettingsPage/TutorialsTab/helpers";
+import { useCreationWarning } from "./hooks";
 
 const CreationWarning = ({ onAcceptCreationWarning }) => {
+  const {
+    visitedTutorialTabs,
+    setVisitedTutorialTabs,
+    activeTabIndexes,
+    setActiveTabIndexes
+  } = useCreationWarning();
+  const currentTutorial = "ln";
+  const slides = tutorials[currentTutorial].slides;
+
+  const isAcceptCreationWarningButtonEnabled = slides.reduce(
+    (acc, _, i) => (acc &= visitedTutorialTabs[currentTutorial]?.includes(i)),
+    true
+  );
+
   return (
     <>
       <Documentation name="LNWalletCreationWarning" />
@@ -12,8 +31,25 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
           id="ln.createWalletWarning.okBtn"
           m="I understand and accept the risks"
         />
-      </KeyBlueButton>
-    </>
+      </div>
+      <PagedTutorial
+        {...{
+          slides: tutorials.ln.slides,
+          visitedTabs: visitedTutorialTabs[currentTutorial],
+          setVisitedTabs: (newCheckedTabs) =>
+            setVisitedTutorialTabs({
+              ...visitedTutorialTabs,
+              [currentTutorial]: newCheckedTabs
+            }),
+          activeTabIndex: activeTabIndexes[currentTutorial],
+          setActiveTabIndex: (newActiveTabIndex) =>
+            setActiveTabIndexes({
+              ...activeTabIndexes,
+              [currentTutorial]: newActiveTabIndex
+            })
+        }}
+      />
+    </div>
   );
 };
 

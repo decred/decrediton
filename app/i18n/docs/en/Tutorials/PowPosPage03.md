@@ -1,0 +1,1 @@
+Decred employs a combination of PoW and PoS to yield the best of both systems, mitigate their weaknesses. Whether an new rules upgrade, emergency, conflict, bug fix or new technology, Decred facilitates formal agreement, helping to avoid contentious hard forks and maintain a unified community during the process.

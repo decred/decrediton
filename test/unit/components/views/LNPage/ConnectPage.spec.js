@@ -232,7 +232,264 @@ test("test disabled submit button", () => {
   expect(mockStartDcrlnd).not.toHaveBeenCalled();
 });
 
-test.only("test warning view", () => {
+const tabShouldBeInactive = (tab) =>
+  expect(tab.firstElementChild.firstElementChild.className).not.toMatch(
+    "active"
+  );
+const tabShouldBeUnchecked = (tab) =>
+  expect(tab.firstElementChild.firstElementChild.className).not.toMatch(
+    "visited"
+  );
+const tabShouldBeActive = (tab) =>
+  expect(tab.firstElementChild.firstElementChild.className).toMatch("active");
+const tabShouldBeChecked = (tab) =>
+  expect(tab.firstElementChild.firstElementChild.className).toMatch("visited");
+
+test("test warning view", () => {
   render(<ConnectPage />);
-  screen.debug();
+
+  const understandButton = getUnderstandButton();
+  const nextButton = screen.getByRole("button", { name: "Next" });
+  const previousButton = screen.getByRole("button", { name: "Previous" });
+  const previousArrowButton = screen.getByRole("button", {
+    name: "Previous arrow"
+  });
+  const nextArrowButton = screen.getByRole("button", { name: "Next arrow" });
+
+  const tab1 = screen.getByTestId("tab-0");
+  const tab2 = screen.getByTestId("tab-1");
+  const tab3 = screen.getByTestId("tab-2");
+  const tab4 = screen.getByTestId("tab-3");
+  const tab5 = screen.getByTestId("tab-4");
+  const tab6 = screen.getByTestId("tab-5");
+
+  // initial state
+  expect(understandButton.disabled).toBe(true);
+  expect(tab1.textContent).toBe("1/6Backup");
+  expect(tab2.textContent).toBe("2/6LN is a 2nd layer network");
+  expect(tab3.textContent).toBe("3/6Staying Online");
+  expect(tab4.textContent).toBe("4/6Watchtower Service");
+  expect(tab5.textContent).toBe("5/6Channels and Confirmations");
+  expect(tab6.textContent).toBe("6/6Unlocked During Operations");
+  expect(previousButton.className).toMatch("disabled");
+  expect(previousArrowButton.className).toMatch("disabled");
+
+  tabShouldBeActive(tab1);
+  tabShouldBeUnchecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeUnchecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeUnchecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeUnchecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+
+  // clicking on previousButton in vain
+  user.click(previousButton);
+  tabShouldBeActive(tab1);
+  tabShouldBeUnchecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeUnchecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeUnchecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeUnchecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+
+  // clicking on previousArrowButton in vain
+  user.click(previousArrowButton);
+  tabShouldBeActive(tab1);
+  tabShouldBeUnchecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeUnchecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeUnchecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeUnchecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+
+  // move on to the second tab
+  user.click(nextButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeActive(tab2);
+  tabShouldBeUnchecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeUnchecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeUnchecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(true);
+
+  // move on to the third tab click on the next arrow
+  user.click(nextArrowButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeActive(tab3);
+  tabShouldBeUnchecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeUnchecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(true);
+
+  // move on to the fourth tab
+  user.click(nextArrowButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeActive(tab4);
+  tabShouldBeUnchecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(true);
+
+  // move on to the fifth tab
+  user.click(nextButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeActive(tab5);
+  tabShouldBeUnchecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeUnchecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(true);
+
+  // move on to the final tab
+  user.click(nextButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeActive(tab6);
+  tabShouldBeChecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(false);
+  expect(nextButton.className).toMatch("disabled");
+  expect(nextArrowButton.className).toMatch("disabled");
+  // clicking on nextButton in vain
+  user.click(nextButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeActive(tab6);
+  tabShouldBeChecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(false);
+  expect(nextButton.className).toMatch("disabled");
+  expect(nextArrowButton.className).toMatch("disabled");
+
+  // clicking on nextArrowButton in vain
+  user.click(nextButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeActive(tab6);
+  tabShouldBeChecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(false);
+  expect(nextButton.className).toMatch("disabled");
+  expect(nextArrowButton.className).toMatch("disabled");
+
+  // move back to the fifth tab
+  user.click(previousButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeInactive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeActive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeChecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(false);
+  expect(nextButton.className).not.toMatch("disabled");
+  expect(nextArrowButton.className).not.toMatch("disabled");
+
+  // move back to the fourth tab clicking on the arrow button
+  user.click(previousArrowButton);
+  tabShouldBeInactive(tab1);
+  tabShouldBeChecked(tab1);
+  tabShouldBeInactive(tab2);
+  tabShouldBeChecked(tab2);
+  tabShouldBeInactive(tab3);
+  tabShouldBeChecked(tab3);
+  tabShouldBeActive(tab4);
+  tabShouldBeChecked(tab4);
+  tabShouldBeInactive(tab5);
+  tabShouldBeChecked(tab5);
+  tabShouldBeInactive(tab6);
+  tabShouldBeChecked(tab6);
+  expect(previousButton.className).not.toMatch("disabled");
+  expect(previousArrowButton.className).not.toMatch("disabled");
+  expect(understandButton.disabled).toBe(false);
+  expect(nextButton.className).not.toMatch("disabled");
+  expect(nextArrowButton.className).not.toMatch("disabled");
+
+  expect(screen.getByText(/before you continue/i)).toBeInTheDocument();
+  user.click(understandButton);
+  expect(screen.queryByText(/before you continue/i)).not.toBeInTheDocument();
+  expect(screen.getByText(/create new wallet account/i)).toBeInTheDocument();
 });
