@@ -152,6 +152,7 @@ if (err !== null) {
 
 let menu;
 let mainWindow = null;
+let dexWindow = null;
 let confirmBrowserView;
 let previousWallet = null;
 
@@ -423,14 +424,19 @@ handle("stop-dex", stopDex);
 handle("launch-dex-window", createDexWindow);
 
 function createDexWindow(serverAddress) {
-  const child = new BrowserWindow({
-    parent: mainWindow,
-    show: false,
-    autoHideMenuBar: true
+  dexWindow.loadURL("http://" + serverAddress);
+  dexWindow.once("ready-to-show", () => {
+    dexWindow.show();
   });
-  child.loadURL("http://" + serverAddress);
-  child.once("ready-to-show", () => {
-    child.show();
+  dexWindow.once("closed", () => {
+    dexWindow = new BrowserWindow({
+      show: false,
+      autoHideMenuBar: true,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true
+      }
+    });
   });
 }
 
@@ -854,6 +860,15 @@ app.on("ready", async () => {
   );
 
   setMenuLocale(locale);
+
+  dexWindow = new BrowserWindow({
+    show: false,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true
+    }
+  });
 });
 
 app.on("before-quit", async (event) => {
