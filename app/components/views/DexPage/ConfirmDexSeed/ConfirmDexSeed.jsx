@@ -1,6 +1,6 @@
 import { useDex } from "../hooks";
 import { useState } from "react";
-import { Tooltip, classNames } from "pi-ui";
+import { Tooltip, classNames, Message } from "pi-ui";
 import { KeyBlueButton, CopyToClipboardButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import styles from "./ConfirmDexSeed.module.css";
@@ -14,13 +14,10 @@ const ConfirmDexSeed = () => {
   };
 
   return (
-    <div>
-      <div
-        className={classNames(
-          styles.actions,
-          styles.isRow,
-          styles.seedInstructions
-        )}>
+    <div className={styles.container}>
+      <Message
+        kind="warning"
+        className={classNames(styles.isRow, styles.seedInstructions)}>
         <T
           id="dex.instructions.seed"
           m="You should carefully write down your application
@@ -30,15 +27,16 @@ const ConfirmDexSeed = () => {
        recoverable with this seed, so be sure to export any such accounts
        from the DEX Settings page."
         />
-      </div>
-      <div className={classNames(styles.actions, styles.isRow)}>
+      </Message>
+      <div className={styles.isRow}>
         <div className={styles.seed}>
           <div className={styles.seedLabel}>
-            <T id="dex.seed" m="DEX Account Seed" />
+            <T id="dex.seed" m="DEX Account Seed" />:
           </div>
           {showSeed ? (
             <>
               <Tooltip
+                contentClassName={styles.seedTooltip}
                 content={
                   <T id="dex.hide.seed" m="Click to Hide DEX Account Seed" />
                 }>

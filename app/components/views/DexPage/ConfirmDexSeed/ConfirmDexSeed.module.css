@@ -1,3 +1,8 @@
+.container {
+  width: 60rem;
+  color: var(--main-dark-blue);
+}
+
 .isRow {
   display: flex;
   flex-direction: row;
@@ -36,9 +41,12 @@
 .seed {
   display: flex;
   flex-direction: row;
-  margin-left: 30px;
-  margin-top: 18px;
-  width: 88%;
+  align-items: center;
+  margin: 3rem;
+}
+
+.seedTooltip {
+  width: max-content;
 }
 
 .seedLabel {
@@ -84,7 +92,7 @@
   font-size: 13px;
   line-height: 17px;
   font-weight: 600;
-  padding: 15px 20px 3px 20px;
+  padding: 2rem;
   border-radius: 3px;
   background-color: var(--disabled-color);
   height: 55px;

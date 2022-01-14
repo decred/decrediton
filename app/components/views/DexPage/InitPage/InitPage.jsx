@@ -14,7 +14,7 @@ const InitPage = () => {
   });
 
   return (
-    <>
+    <div className={styles.container}>
       <div>
         <T
           id="dex.newPassphrase"
@@ -43,6 +43,7 @@ const InitPage = () => {
         }
         checked={hasSeed}
         onChange={toggleHasSeed}
+        className="margin-top-s"
       />
       {hasSeed && (
         <TextInput
@@ -62,7 +63,7 @@ const InitPage = () => {
         onSubmit={onInitDexCall}
         buttonLabel={<T id="dex.initPassphraseButton" m="Set Dex Passphrase" />}
       />
-    </>
+    </div>
   );
 };
 

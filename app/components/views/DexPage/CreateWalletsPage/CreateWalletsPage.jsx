@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { classNames, Checkbox } from "pi-ui";
+import { classNames, Checkbox, Message } from "pi-ui";
 import { useDex } from "../hooks";
 import { PathBrowseInput } from "inputs";
 import { Input } from "../../GetStartedPage/helpers";
@@ -50,19 +50,35 @@ const CreateWalletsPage = () => {
   });
   return (
     <div className="flex-column align-start">
+      <div className={styles.subtitle}>
+        <T id="dex.subtitle.btcWallet" m="BTC wallet" />
+      </div>
       {!askDexBtcSpv ? (
-        <div>
-          <KeyBlueButton className="margin-top-m" onClick={onUseBtcSpv}>
-            <T id="dex.useBTCSPV" m="Use DEX Native BTC" />
-          </KeyBlueButton>
-          <KeyBlueButton className="margin-top-m" onClick={onDoNotUseBtcSPV}>
-            <T id="dex.doNotUseBTCSPV" m="Use Bitcoind Wallet" />
-          </KeyBlueButton>
+        <div className={classNames("flex-row", "align-center", styles.box)}>
+          <div className={classNames("flex-column", "align-center")}>
+            <strong>
+              <T id="dex.doNotUseBTCSPV.simpleSetup" m="Simple Setup" />
+            </strong>
+            <KeyBlueButton className="margin-top-s" onClick={onUseBtcSpv}>
+              <T id="dex.useBTCSPV" m="Use DEX Native BTC" />
+            </KeyBlueButton>
+          </div>
+          <div className={classNames("margin-left-s", "margin-right-s")}>
+            <T id="dex.doNotUseBTCSPV.or" m="or" />
+          </div>
+          <div className={classNames("flex-column", "align-center")}>
+            <strong>
+              <T id="dex.doNotUseBTCSPV.advancedSetup" m="Advanced Setup" />
+            </strong>
+            <KeyBlueButton className="margin-top-s" onClick={onDoNotUseBtcSPV}>
+              <T id="dex.doNotUseBTCSPV" m="Use Bitcoind Wallet" />
+            </KeyBlueButton>
+          </div>
         </div>
       ) : !dexBtcSpv ? (
         !dexBTCWalletRunning ? (
           btcConfig ? (
-            <>
+            <div className={styles.box}>
               <div>
                 <T
                   id="dex.connectBTCWallet"
@@ -89,35 +105,42 @@ const CreateWalletsPage = () => {
                 onChange={(e) => setWalletName(e.target.value)}
                 placeholder="BTC Wallet Name (leave empty if unnamed default wallet)"
               />
-              <AppPassAndPassphraseModalButton
-                className="margin-top-m"
-                passphraseLabel={
-                  <T
-                    id="dex.createBTCWalletPassphrase"
-                    m="BTC Passphrase (if set)"
-                  />
-                }
-                modalTitle={
-                  <T id="dex.createBTCWallet" m="Connect BTC Wallet" />
-                }
-                loading={btcCreateWalletDexAttempt}
-                onSubmit={onBTCCreateWallet}
-                buttonLabel={
-                  <T
-                    id="dex.createWalletBTCPassphraseButton"
-                    m="Connect BTC Wallet"
-                  />
-                }
-                passphraseNotRequired
-              />
-            </>
+              <div
+                className={classNames(
+                  "margin-top-m",
+                  "align-center",
+                  "flex-column"
+                )}>
+                <AppPassAndPassphraseModalButton
+                  passphraseLabel={
+                    <T
+                      id="dex.createBTCWalletPassphrase"
+                      m="BTC Passphrase (if set)"
+                    />
+                  }
+                  modalTitle={
+                    <T id="dex.createBTCWallet" m="Connect BTC Wallet" />
+                  }
+                  loading={btcCreateWalletDexAttempt}
+                  onSubmit={onBTCCreateWallet}
+                  buttonLabel={
+                    <T
+                      id="dex.createWalletBTCPassphraseButton"
+                      m="Connect BTC Wallet"
+                    />
+                  }
+                  passphraseNotRequired
+                />
+              </div>
+            </div>
           ) : (
-            <div>
+            <div className={styles.box}>
               {!btcConfigUpdateNeeded && !btcInstallNeeded && (
                 <div
                   className={classNames(
                     "margin-top-s",
-                    styles.btcConfigNeededArea
+                    styles.btcConfigNeededArea,
+                    "flex-column"
                   )}>
                   <Checkbox
                     label={
@@ -148,23 +171,35 @@ const CreateWalletsPage = () => {
                       />
                     </Input>
                   )}
-                  <KeyBlueButton
-                    className="margin-top-m"
-                    onClick={onCheckBTCConfigDex}>
-                    <T id="dex.findBTCConfigButton" m="Find bitcoin conf" />
-                  </KeyBlueButton>
+                  <div
+                    className={classNames(
+                      "margin-top-m",
+                      "align-center",
+                      "flex-column"
+                    )}>
+                    <KeyBlueButton onClick={onCheckBTCConfigDex}>
+                      <T id="dex.findBTCConfigButton" m="Find bitcoin conf" />
+                    </KeyBlueButton>
+                  </div>
                 </div>
               )}
               {btcConfigUpdateNeeded && (
-                <div className="margin-top-m">
-                  <T
-                    id="dex.updateBTCConfig"
-                    m="You must update your bitcoin.conf to properly communicate with the DEX."
-                  />
-                  <T
-                    id="dex.neededFieldsInConfig"
-                    m="The following fields are required in the bitcoin.conf rpcuser, rpcpassword, rpcbind, rpcport. You must also set 'server=1' to start the wallet listening for connections.  If you have any trouble with these instructions, please go to the support channel on chat.decred.org for further assistance."
-                  />
+                <div
+                  className={classNames(
+                    "margin-top-m",
+                    "align-center",
+                    "flex-column"
+                  )}>
+                  <div>
+                    <T
+                      id="dex.updateBTCConfig"
+                      m="You must update your bitcoin.conf to properly communicate with the DEX."
+                    />
+                    <T
+                      id="dex.neededFieldsInConfig"
+                      m="The following fields are required in the bitcoin.conf rpcuser, rpcpassword, rpcbind, rpcport. You must also set 'server=1' to start the wallet listening for connections.  If you have any trouble with these instructions, please go to the support channel on chat.decred.org for further assistance."
+                    />
+                  </div>
                   <KeyBlueButton
                     className="margin-top-m"
                     onClick={onCheckBTCConfigDex}>
@@ -173,8 +208,13 @@ const CreateWalletsPage = () => {
                 </div>
               )}
               {btcInstallNeeded && (
-                <div>
-                  <div className="margin-top-s">
+                <div
+                  className={classNames(
+                    "margin-top-m",
+                    "align-center",
+                    "flex-column"
+                  )}>
+                  <div>
                     <T
                       id="dex.checkBTCConfig"
                       m="You must confirm your bitcoin.conf is properly set up for connecting to DEX. If you have not yet installed a bitcoin wallet, please go to bitcoin.org for further instructions."
@@ -196,41 +236,51 @@ const CreateWalletsPage = () => {
             </div>
           )
         ) : (
-          <div>
-            <T
-              id="dex.btcWalletConnected"
-              m="BTC Wallet has been successfully connected!"
-            />
+          <div className={styles.box}>
+            <Message kind="success">
+              <T
+                id="dex.btcWalletConnected"
+                m="BTC Wallet has been successfully connected!"
+              />
+            </Message>
           </div>
         )
       ) : (
-        <div>
-          <T
-            id="dex.usingBtcSpv"
-            m="You have chosen to use the integrated BTC Wallet."
-          />
+        <div className={styles.box}>
+          <Message kind="success">
+            <T
+              id="dex.usingBtcSpv"
+              m="You have chosen to use the integrated BTC Wallet."
+            />
+          </Message>
         </div>
       )}
+      <div className={classNames(styles.subtitle, "margin-top-m")}>
+        <T id="dex.subtitle.dcrWallet" m="DCR wallet" />
+      </div>
       {!dexDCRWalletRunning ? (
-        <AppPassAndPassphraseModalButton
-          className="margin-top-m"
-          disabled={createWalletDexAttempt}
-          modalTitle={<T id="dex.createDCRWallet" m="Connect DCR Wallet" />}
-          loading={createWalletDexAttempt}
-          onSubmit={onCreateWallet}
-          buttonLabel={
-            <T
-              id="dex.createWalletDCRPassphraseButton"
-              m="Connect DCR Wallet"
-            />
-          }
-        />
-      ) : (
-        <div>
-          <T
-            id="dex.dcrWalletConnected"
-            m="DCR Wallet has been successfully connected!"
+        <div className={classNames(styles.box, "justify-center")}>
+          <AppPassAndPassphraseModalButton
+            disabled={createWalletDexAttempt}
+            modalTitle={<T id="dex.createDCRWallet" m="Connect DCR Wallet" />}
+            loading={createWalletDexAttempt}
+            onSubmit={onCreateWallet}
+            buttonLabel={
+              <T
+                id="dex.createWalletDCRPassphraseButton"
+                m="Connect DCR Wallet"
+              />
+            }
           />
+        </div>
+      ) : (
+        <div className={styles.box}>
+          <Message kind="success">
+            <T
+              id="dex.dcrWalletConnected"
+              m="DCR Wallet has been successfully connected!"
+            />
+          </Message>
         </div>
       )}
     </div>
