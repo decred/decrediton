@@ -433,8 +433,8 @@ function createDexWindow(serverAddress) {
       show: false,
       autoHideMenuBar: true,
       webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
+        nodeIntegration: false,
+        contextIsolation: true
       }
     });
   });
@@ -865,8 +865,8 @@ app.on("ready", async () => {
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+      nodeIntegration: false,
+      contextIsolation: true
     }
   });
 });
