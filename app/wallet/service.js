@@ -22,6 +22,7 @@ import {
   selializeNoWitnessEncode,
   decodeRawTransaction as decodeHelper
 } from "../helpers/msgTx";
+import { isMixTx } from "../helpers/transactions";
 import { extractPkScriptAddrs } from "../helpers/scripts";
 import { addrFromSStxPkScrCommitment } from "../helpers/tickets";
 import {
@@ -155,9 +156,15 @@ export function formatTransaction(block, transaction, index) {
   const txHash = transaction.getHash()
     ? rawHashToHex(transaction.getHash())
     : null;
-  const rawTx = transaction.getTransaction()
-    ? rawToHex(transaction.getTransaction())
-    : null;
+  let rawTx = null,
+    isMix = false;
+  if (transaction.getTransaction()) {
+    const buffTx = Buffer.from(transaction.getTransaction());
+    rawTx = buffTx.toString("hex");
+    const decoded = decodeHelper(buffTx);
+    isMix = isMixTx(decoded).isMix;
+  }
+
   const timestamp = block.getTimestamp()
     ? block.getTimestamp()
     : transaction.getTimestamp();
@@ -182,7 +189,8 @@ export function formatTransaction(block, transaction, index) {
     credits: transaction.getCreditsList().map((v) => v.toObject()),
     debits: transaction.getDebitsList().map((v) => v.toObject()),
     rawTx,
-    direction
+    direction,
+    isMix
   };
 }
 
