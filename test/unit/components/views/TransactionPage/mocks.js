@@ -178,6 +178,7 @@ const mockRegularTransactionList = [
     type: 0,
     amount: -3610,
     fee: 0,
+    isMix: true,
     debitAccounts: [4],
     creditAddresses: [
       "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
