@@ -16,13 +16,7 @@ import {
 } from "./fp";
 import { isNull } from "lodash";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
-import {
-  decodeVoteScript,
-  reverseHash,
-  isMixTx,
-  dateToLocal,
-  dateToUTC
-} from "helpers";
+import { decodeVoteScript, reverseHash, dateToLocal, dateToUTC } from "helpers";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
@@ -645,6 +639,7 @@ export const transactionNormalizer = createSelector(
         timestamp,
         txHash,
         rawTx,
+        isMix,
         outputs,
         creditAddresses,
         direction,
@@ -735,13 +730,6 @@ export const transactionNormalizer = createSelector(
               txDirection: TRANSACTION_DIR_RECEIVED,
               txAccountName: creditedAccountName
             };
-
-      const { isMix } = isMixTx(
-        wallet.decodeRawTransaction(
-          Buffer.from(origTx.rawTx, "hex"),
-          chainParams
-        )
-      );
 
       return {
         txUrl,
