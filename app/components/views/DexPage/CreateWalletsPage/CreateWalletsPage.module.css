@@ -2,3 +2,23 @@
   width: 90% !important;
   max-width: 650px;
 }
+
+.box {
+  background-color: var(--background-back-color);
+  padding: 3rem 4rem;
+  width: 50rem;
+  justify-content: space-around;
+}
+
+.subtitle {
+  color: var(--grey-6);
+  font-size: 2.4rem;
+  line-height: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    width: 355px;
+  }
+}

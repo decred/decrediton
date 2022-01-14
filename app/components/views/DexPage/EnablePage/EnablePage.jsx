@@ -1,12 +1,13 @@
 import { FormattedMessage as T } from "react-intl";
 import { useDex } from "../hooks";
 import { ResetNetworkButton } from "buttons";
+import styles from "./EnablePage.module.css";
 
 const EnablePage = () => {
   const { onEnableDex, enableDexAttempt } = useDex();
 
   return (
-    <>
+    <div className={styles.container}>
       <div>
         <T
           id="dex.enableInformation"
@@ -31,7 +32,7 @@ const EnablePage = () => {
         block={false}
         onSubmit={onEnableDex}
       />
-    </>
+    </div>
   );
 };
 
