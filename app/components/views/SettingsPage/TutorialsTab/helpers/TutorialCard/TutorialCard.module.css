@@ -22,14 +22,6 @@
   color: var(--grey-5);
 }
 
-.image {
-  background-color: #c4c4c4;
-  width: 9.2rem;
-  height: 9.2rem;
-  min-width: 9.2rem;
-  margin-left: 2.5rem;
-}
-
 .progressBarContainer {
   display: flex;
   align-items: center;
@@ -84,6 +76,54 @@
   font-size: 1.1rem;
   line-height: 1.4rem;
   color: var(--grey-5);
+}
+
+/* thumnail images */
+
+.thumbnail {
+  width: 9.2rem;
+  height: 9.2rem;
+  min-width: 9.2rem;
+  margin-left: 2.5rem;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.decredIntroThumb {
+  background-image: var(--tutorial-decredIntro-thumb);
+}
+
+.lnThumb {
+  background-image: var(--tutorial-ln-thumb);
+}
+
+.powPosThumb {
+  background-image: var(--tutorial-powPos-thumb);
+}
+
+.ticketsThumb {
+  background-image: var(--tutorial-tickets-thumb);
+}
+
+.stakingThumb {
+  background-image: var(--tutorial-staking-thumb);
+}
+
+.blocksThumb {
+  background-image: var(--tutorial-blocks-thumb);
+}
+
+.consensusVotingThumb {
+  background-image: var(--tutorial-consensusVoting-thumb);
+}
+
+.consensusCodeThumb {
+  background-image: var(--tutorial-consensusCode-thumb);
+}
+
+.lifecycleThumb {
+  background-image: var(--tutorial-lifecycle-thumb);
 }
 
 @media screen and (max-width: 1180px) {

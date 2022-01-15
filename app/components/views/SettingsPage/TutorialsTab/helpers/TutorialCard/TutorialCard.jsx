@@ -32,7 +32,12 @@ const TutorialCard = ({
         </div>
         <div className={styles.desc}>{tutorials[name].desc}</div>
       </div>
-      <div className={styles.image} />
+      <div
+        className={classNames(
+          styles.thumbnail,
+          styles[tutorials[name].thumbnailImage]
+        )}
+      />
     </div>
   </div>
 );

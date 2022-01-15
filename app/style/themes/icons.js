@@ -179,6 +179,9 @@ const icons = {
   // tutorials
   //
   // consensusCode
+  "tutorial-consensusCode-thumb": url(
+    require("style/icons/tutorials/consensusCode/thumb.svg")
+  ),
   "tutorial-consensusCode-slide1-1": url(
     require("style/icons/tutorials/consensusCode/consensus-slide1-1.svg")
   ),
@@ -186,6 +189,7 @@ const icons = {
     require("style/icons/tutorials/consensusCode/consensus-slide1-2.svg")
   ),
   // LN
+  "tutorial-ln-thumb": url(require("style/icons/tutorials/ln/thumb.svg")),
   "tutorial-ln-slide1": url(require("style/icons/tutorials/ln/ln-slide1.svg")),
   "tutorial-ln-slide2": url(require("style/icons/tutorials/ln/ln-slide2.svg")),
   "tutorial-ln-slide3": url(require("style/icons/tutorials/ln/ln-slide3.svg")),
@@ -193,6 +197,9 @@ const icons = {
   "tutorial-ln-slide5": url(require("style/icons/tutorials/ln/ln-slide5.svg")),
   "tutorial-ln-slide6": url(require("style/icons/tutorials/ln/ln-slide6.svg")),
   // decredIntro
+  "tutorial-decredIntro-thumb": url(
+    require("style/icons/tutorials/decredIntro/thumb.svg")
+  ),
   "tutorial-decredIntro-slide1": url(
     require("style/icons/tutorials/decredIntro/intro-slide1.svg")
   ),
@@ -203,6 +210,9 @@ const icons = {
     require("style/icons/tutorials/decredIntro/intro-slide2-2.svg")
   ),
   // powPos
+  "tutorial-powPos-thumb": url(
+    require("style/icons/tutorials/powPos/thumb.svg")
+  ),
   "tutorial-powPos-slide1": url(
     require("style/icons/tutorials/powPos/pos-pow-slide1.svg")
   ),
@@ -213,6 +223,9 @@ const icons = {
     require("style/icons/tutorials/powPos/pos-pow-slide3.svg")
   ),
   // tickets
+  "tutorial-tickets-thumb": url(
+    require("style/icons/tutorials/tickets/thumb.svg")
+  ),
   "tutorial-tickets-slide1": url(
     require("style/icons/tutorials/tickets/tickets-slide1.svg")
   ),
@@ -229,6 +242,9 @@ const icons = {
     require("style/icons/tutorials/tickets/tickets-slide3-2.svg")
   ),
   // staking
+  "tutorial-staking-thumb": url(
+    require("style/icons/tutorials/staking/thumb.svg")
+  ),
   "tutorial-staking-slide1": url(
     require("style/icons/tutorials/staking/staking-slide1.svg")
   ),
@@ -248,6 +264,9 @@ const icons = {
     require("style/icons/tutorials/staking/staking-slide4-2.svg")
   ),
   // blocks
+  "tutorial-blocks-thumb": url(
+    require("style/icons/tutorials/blocks/thumb.svg")
+  ),
   "tutorial-blocks-slide1": url(
     require("style/icons/tutorials/blocks/blocks-slide1.svg")
   ),
@@ -264,6 +283,9 @@ const icons = {
     require("style/icons/tutorials/blocks/blocks-slide5.svg")
   ),
   // consensusVoting
+  "tutorial-consensusVoting-thumb": url(
+    require("style/icons/tutorials/consensusVoting/thumb.svg")
+  ),
   "tutorial-consensusVoting-slide1": url(
     require("style/icons/tutorials/consensusVoting/consensusvoting-slide1.svg")
   ),
@@ -286,6 +308,9 @@ const icons = {
     require("style/icons/tutorials/consensusVoting/consensusvoting-slide7.svg")
   ),
   // lifecycle
+  "tutorial-lifecycle-thumb": url(
+    require("style/icons/tutorials/lifecycle/thumb.svg")
+  ),
   "tutorial-lifecycle-slide1-1": url(
     require("style/icons/tutorials/lifecycle/lifecycle-slide1-1.svg")
   ),

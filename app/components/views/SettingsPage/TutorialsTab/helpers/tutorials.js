@@ -6,6 +6,7 @@ tutorials.decredIntro = {
   title: "Decred Intro",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "decredIntroThumb",
   slides: [
     {
       label: (
@@ -35,6 +36,7 @@ tutorials.ln = {
   title: "What is Lightning Network?",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "lnThumb",
   slides: [
     {
       label: <T id="tutorials.ln.label1" m="Backup" />,
@@ -108,7 +110,8 @@ tutorials.ln = {
 tutorials.consensusCode = {
   title: "Consensus Code",
   desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+    "Small description of decredIntroThumbthe tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "consensusCodeThumb",
   slides: [
     {
       label: <T id="tutorials.consensusCode.label1" m="Consensus Code" />, // TODO
@@ -125,6 +128,7 @@ tutorials.powPos = {
   title: "Hybrid PoW/PoS",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "powPosThumb",
   slides: [
     {
       label: <T id="tutorials.powPos.label1" m="POW" />, // TODO
@@ -160,6 +164,7 @@ tutorials.tickets = {
   title: "Staking and Tickets",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "ticketsThumb",
   slides: [
     {
       label: <T id="tutorials.tickets.label1" m="Time-locking coins" />, // TODO
@@ -195,6 +200,7 @@ tutorials.staking = {
   title: "Core Functions of Staking",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "stakingThumb",
   slides: [
     {
       label: <T id="tutorials.staking.label1" m="New block creation" />, // TODO
@@ -230,6 +236,7 @@ tutorials.lifecycle = {
   title: "Ticket Lifecycle",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "lifecycleThumb",
   slides: [
     {
       label: (
@@ -298,6 +305,7 @@ tutorials.consensusVoting = {
   title: "Consensus Voting",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "consensusVotingThumb",
   slides: [
     {
       label: <T id="tutorials.consensusVoting.label1" m="Overview" />, // TODO
@@ -348,6 +356,7 @@ tutorials.blocks = {
   title: "Block Creation",
   desc:
     "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  thumbnailImage: "blocksThumb",
   slides: [
     {
       label: (
