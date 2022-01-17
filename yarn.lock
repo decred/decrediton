@@ -9773,7 +9773,7 @@ performance-now@^2.1.0:
 
 "pi-ui@https://github.com/bgptr/pi-ui#select":
   version "1.0.0"
-  resolved "https://github.com/bgptr/pi-ui#9d2e78dc05020e04077e58d9e1a1639b40db793d"
+  resolved "https://github.com/bgptr/pi-ui#b9e44533ad9719e5e073c973596b1580bcced3c1"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"

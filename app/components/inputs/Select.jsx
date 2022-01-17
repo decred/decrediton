@@ -57,7 +57,7 @@ const Select = ({ styles, selectWithBigFont, ariaLabelledBy, ...props }) => {
 
   return (
     <PiUiSelect
-      styles={customStyles}
+      customStyles={customStyles}
       maxMenuHeight={200}
       aria-labelledby={ariaLabelledBy}
       {...props}

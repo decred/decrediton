@@ -495,7 +495,7 @@ test("create wallet button must be disabled if any of the inputs are invalid", a
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
   await wait(() => expect(createWallet).not.toHaveAttribute("disabled"));
-});
+}, 30000);
 
 test("test POSITION_ERROR handling on restore view (missing words)", async () => {
   await goToExistingSeedView();
@@ -519,7 +519,7 @@ test("test POSITION_ERROR handling on restore view (missing words)", async () =>
   await wait(() =>
     expect(screen.getByText("3.").parentNode.className).toMatch(/error/)
   );
-});
+}, 30000);
 
 test("test POSITION_ERROR handling on restore view (mismatch error)", async () => {
   await goToExistingSeedView();
@@ -551,7 +551,7 @@ test("test POSITION_ERROR handling on restore view (mismatch error)", async () =
   await wait(() =>
     expect(screen.getByText("6.").parentNode.className).toMatch(/populated/)
   );
-});
+}, 30000);
 
 test("test invalid POSITION_ERROR msg format handling on restore view", async () => {
   await goToExistingSeedView();
@@ -568,7 +568,7 @@ test("test invalid POSITION_ERROR msg format handling on restore view", async ()
   await wait(() =>
     expect(screen.getByText("4.").parentNode.className).toMatch(/populated/)
   );
-});
+}, 30000);
 
 test("test hex input tab on restore view", async () => {
   await goToExistingSeedView();
