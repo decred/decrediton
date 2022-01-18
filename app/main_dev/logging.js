@@ -228,12 +228,21 @@ const reindexCheck = "Reindexing to height";
 const upgradeDatabase = "Upgrading database to version 6";
 const reindexing = "Reindexing block information in the database";
 const upgradeDB7 = "Upgrading database to version 7";
+const upgradeDB12 = "Upgrading database to version 12";
+const upgradeJournal3 = "Upgrading spend journal to version 3";
 
 // CheckDaemonLogs checks if dcrd send a message which need to be notified
 // to the user.
 export function CheckDaemonLogs(data) {
   let hasWarning = false;
-  const warningArray = [reindexCheck, upgradeDatabase, reindexing, upgradeDB7];
+  const warningArray = [
+    reindexCheck,
+    upgradeDatabase,
+    reindexing,
+    upgradeDB7,
+    upgradeDB12,
+    upgradeJournal3
+  ];
   warningArray.forEach((warnMsg) => {
     if (data.indexOf(warnMsg) > 0) {
       hasWarning = true;
