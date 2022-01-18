@@ -12,6 +12,7 @@
 
 .daemonWarning {
   padding: 10px;
+  white-space: pre-line;
 }
 
 @media screen and (max-width: 768px) {
