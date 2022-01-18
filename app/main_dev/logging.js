@@ -227,7 +227,8 @@ export function ClearDcrwalletLogs() {
 const reindexCheck = "Reindexing to height";
 const upgradeDatabase = "Upgrading database to version 6";
 const reindexing = "Reindexing block information in the database";
-const upgradeDB12 = "Upgrading database to version 7";
+const upgradeDB7 = "Upgrading database to version 7";
+const upgradeDB12 = "Upgrading database to version 12";
 const upgradeJournal3 = "Upgrading spend journal to version 3";
 
 // CheckDaemonLogs checks if dcrd send a message which need to be notified
