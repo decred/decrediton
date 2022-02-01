@@ -1,11 +1,11 @@
 import { FormattedMessage as T } from "react-intl";
 import { RadioButtonGroup } from "pi-ui";
-import styles from "./Settings.module.css";
+import styles from "./TimezoneSettings.module.css";
+import { ColumnTitle } from "../../helpers";
 
 const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
-  const update = (value) => {
-    onChangeTempSettings({ timezone: value });
-  };
+  const update = (value) => onChangeTempSettings({ timezone: value });
+
   const timezoneOptions = [
     {
       value: "local",
@@ -30,21 +30,22 @@ const TimezoneSettings = ({ tempSettings, onChangeTempSettings }) => {
   ];
 
   return (
-    <div className={styles.timezone}>
-      <div className={styles.columnTitle}>
-        <T id="settings.timezone.title" m="Timezone" />
-      </div>
-      <div className={styles.columnContent}>
-        <RadioButtonGroup
-          options={timezoneOptions}
-          onChange={(option) => update(option.value)}
-          value={tempSettings.timezone}
-          vertical
-          optionsClassName={styles.timezoneOption}
-        />
-      </div>
-    </div>
+    <>
+      <ColumnTitle title={<T id="settings.timezone.title" m="Timezone" />} />
+      <RadioButtonGroup
+        options={timezoneOptions}
+        onChange={(option) => update(option.value)}
+        value={tempSettings.timezone}
+        vertical
+        optionsClassName={styles.timezoneOption}
+      />
+    </>
   );
+};
+
+TimezoneSettings.propTypes = {
+  tempSettings: PropTypes.object.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
 };
 
 export default TimezoneSettings;

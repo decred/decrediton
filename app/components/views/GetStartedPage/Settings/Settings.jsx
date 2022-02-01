@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { classNames, Tooltip } from "pi-ui";
-// XXX add index.js in SettingsTab dir to have one import statement for all
-// settings components.
-import NetworkSettings from "views/SettingsPage/SettingsTab/NetworkSettings";
-import ProxySettings from "views/SettingsPage/SettingsTab/ProxySettings";
-import PrivacySettings from "views/SettingsPage/SettingsTab/PrivacySettings";
-import UISettings from "views/SettingsPage/SettingsTab/UISettings";
-import TimezoneSettings from "views/SettingsPage/SettingsTab/TimezoneSettings";
+import { Tooltip } from "pi-ui";
+import {
+  NetworkSettings,
+  ProxySettings,
+  PrivacySettings,
+  UISettings,
+  TimezoneSettings
+} from "views/SettingsPage/SettingsTab/groups";
 import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { GoBackMsg } from "../messages";
@@ -17,10 +17,12 @@ import {
   DEFAULT_LIGHT_THEME_NAME,
   DEFAULT_DARK_THEME_NAME
 } from "pi-ui";
-// XXX we shouldn't import other view css module here, this is breaking
-// css modules encapsulation principle - instead the shared classes should be
-// moved to a separate components and used in both places.
-import settingsTabStyles from "views/SettingsPage/SettingsTab/Settings.module.css";
+import {
+  Wrapper,
+  Group,
+  ColumnWrapper,
+  Column
+} from "views/SettingsPage/SettingsTab//helpers";
 import { useSettings } from "hooks";
 import { BackButton, BackButtonArea } from "../helpers";
 import styles from "./Settings.module.css";
@@ -63,57 +65,45 @@ const SetttingsForm = ({ onSendBack }) => {
           </Tooltip>
         </BackButtonArea>
         <Subtitle title={<T id="settings.subtitle" m="Settings" />} />
-        <div className={settingsTabStyles.wrapper}>
-          <div className={settingsTabStyles.group}>
+        <Wrapper>
+          <Group>
             <Subtitle
               title={
                 <T id="settings.group-title.connectivity" m="Connectivity" />
               }
             />
-            <div className={settingsTabStyles.columnWrapper}>
-              <div className={settingsTabStyles.column}>
+            <ColumnWrapper>
+              <Column>
                 <NetworkSettings
                   {...{
                     tempSettings,
                     onChangeTempSettings
                   }}
                 />
-              </div>
-              <div className={settingsTabStyles.column}>
+              </Column>
+              <Column>
                 <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-              </div>
-            </div>
-          </div>
+              </Column>
+            </ColumnWrapper>
+          </Group>
 
-          <div
-            className={classNames(
-              settingsTabStyles.group,
-              settingsTabStyles.general
-            )}>
+          <Group className={styles.general}>
             <Subtitle
               title={<T id="settings.group-title.general" m="General" />}
             />
-            <div className={settingsTabStyles.columnWrapper}>
-              <div className={settingsTabStyles.column}>
+            <ColumnWrapper>
+              <Column>
                 <UISettings
                   {...{ tempSettings, locales, onChangeTempSettings }}
                 />
-              </div>
-              <div
-                className={classNames(
-                  settingsTabStyles.column,
-                  settingsTabStyles.timezone
-                )}>
+              </Column>
+              <Column className={styles.timezone}>
                 <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-              </div>
-            </div>
-          </div>
+              </Column>
+            </ColumnWrapper>
+          </Group>
 
-          <div
-            className={classNames(
-              settingsTabStyles.group,
-              settingsTabStyles.privacy
-            )}>
+          <Group className={styles.privacy}>
             <Subtitle
               title={
                 <T
@@ -122,7 +112,7 @@ const SetttingsForm = ({ onSendBack }) => {
                 />
               }
             />
-            <div className={settingsTabStyles.columnWrapper}>
+            <ColumnWrapper>
               <PrivacySettings
                 {...{
                   tempSettings,
@@ -133,11 +123,11 @@ const SetttingsForm = ({ onSendBack }) => {
                   changePassphraseRequestAttempt
                 }}
               />
-            </div>
-          </div>
-        </div>
+            </ColumnWrapper>
+          </Group>
+        </Wrapper>
       </div>
-      <div className={settingsTabStyles.formSaveButtonWrapper}>
+      <div className={styles.saveButtonWrapper}>
         <KeyBlueButton
           disabled={!areSettingsDirty}
           size="large"

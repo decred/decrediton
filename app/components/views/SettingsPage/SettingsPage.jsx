@@ -1,10 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { CloseWalletModalButton } from "buttons";
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
-import { LinksTab } from "./LinksTab";
-import { LogsTab } from "./LogsTab/LogsTab";
-import { TutorialsTab } from "./TutorialsTab/TutorialsTab";
-import { SettingsTab } from "./SettingsTab/SettingsTab";
+import LinksTab from "./LinksTab";
+import LogsTab from "./LogsTab";
+import TutorialsTab from "./TutorialsTab";
+import SettingsTab from "./SettingsTab";
 import { useSettings } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";

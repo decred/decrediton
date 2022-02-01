@@ -2,7 +2,7 @@ import ErrorScreen from "ErrorScreen";
 import SettingsPage from "./Settings";
 import { useSettings, useService } from "hooks";
 
-export const SettingsTab = ({ setThemeName }) => {
+const SettingsTab = ({ setThemeName }) => {
   const {
     tempSettings,
     onSaveSettings,
@@ -44,3 +44,9 @@ export const SettingsTab = ({ setThemeName }) => {
     />
   );
 };
+
+SettingsTab.propTypes = {
+  setThemeName: PropTypes.func
+};
+
+export default SettingsTab;

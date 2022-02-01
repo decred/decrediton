@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 1481px;
+  flex-direction: row;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1680px) and (max-width: 1920px) {
+  .wrapper {
+    width: 1240px;
+  }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1680px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    margin-top: 0;
+    flex-direction: column;
+  }
+}
