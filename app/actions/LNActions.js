@@ -733,29 +733,38 @@ const handlePaymentStream = (payStream) => (dispatch, getState) => {
   dispatch({ payStream, type: LNWALLET_PAYSTREAM_CREATED });
 };
 
-export const sendPayment = (payReq, value) => (dispatch, getState) => {
+export const sendPayment = (payReq, value) => async (dispatch, getState) => {
   const { client } = getState().ln;
 
-  return new Promise((resolve, reject) => {
-    ln.decodePayReq(client, payReq)
-      .then((decoded) => {
-        const payData = { resolve, reject, decoded };
-        const rhashHex = decoded.paymentHash;
+  const decoded = await ln.decodePayReq(client, payReq);
 
-        dispatch({
-          payReq,
-          payData,
-          rhashHex,
-          type: LNWALLET_SENDPAYMENT_ATTEMPT
-        });
-        const payStream = ln.sendPayment(client, payReq, value);
-        dispatch(handlePaymentStream(payStream));
-      })
-      .catch((error) => {
-        dispatch({ error, rhashHex: null, type: LNWALLET_SENDPAYMENT_FAILED });
-        reject(error);
+  try {
+    const payStream = await ln.sendPayment(client, payReq, value);
+
+    return new Promise((resolve, reject) => {
+      const payData = { resolve, reject, decoded };
+      dispatch({
+        payReq,
+        payData,
+        rhashHex: decoded.paymentHash,
+        type: LNWALLET_SENDPAYMENT_ATTEMPT
       });
-  });
+      dispatch(handlePaymentStream(payStream));
+    });
+  } catch (error) {
+    if (String(error).indexOf("User rejected confirmation") > -1) {
+      // No need to show snackbar error when it was the user that rejected the
+      // payment.
+      return;
+    }
+    dispatch({
+      error,
+      rhashHex: null,
+      payData: { decoded },
+      type: LNWALLET_SENDPAYMENT_FAILED
+    });
+    throw error;
+  }
 };
 
 export const LNWALLET_OPENCHANNEL_CHANPENDING =
