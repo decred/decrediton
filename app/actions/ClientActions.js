@@ -751,21 +751,43 @@ export const copySeedToClipboard = (mnemonic) => (dispatch) => {
 };
 
 export const GETTREASURY_BALANCE_SUCCESS = "GETTREASURY_BALANCE_SUCCESS";
-export const getTreasuryBalance = () => (dispatch, getState) => {
+export const GETTREASURY_BALANCE_FAILED = "GETTREASURY_BALANCE_FAILED";
+export const getTreasuryBalance = () => async (dispatch, getState) => {
   const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
   const dURL = sel.dcrdataURL(getState());
-  da.getTreasuryInfo(dURL, treasuryAddress).then((treasuryInfo) => {
-    // Manually convert DCR to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
-    const unspentTreasury = treasuryInfo["data"]["dcr_unspent"];
-    if (!unspentTreasury) return;
-    const splitedTreasuryInfo = unspentTreasury.toString().split(".");
-    const integerPart = splitedTreasuryInfo[0];
-    // dcrdata can send numbers with its decimal part less than 8 decimals, so we manually add it.
-    let decimalPart = splitedTreasuryInfo[1];
-    decimalPart += "0".repeat(8 - decimalPart.length);
-    const treasuryBalance = integerPart + decimalPart;
-    dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
-  });
+  try {
+    let legacyTreasuryBalance = 0;
+    await da
+      .getLegacyTreasuryInfo(dURL, treasuryAddress)
+      .then((legacyTreasuryInfo) => {
+        const unspentLegacyTreasury = legacyTreasuryInfo["data"]["dcr_unspent"];
+        if (!unspentLegacyTreasury) return;
+        // Manually convert DCR to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
+        const splitedTreasuryInfo = unspentLegacyTreasury.toString().split(".");
+        const integerPart = splitedTreasuryInfo[0];
+        // dcrdata can send numbers with its decimal part less than 8 decimals, so we manually add it.
+        let decimalPart = splitedTreasuryInfo[1];
+        decimalPart += "0".repeat(8 - decimalPart.length);
+        legacyTreasuryBalance = integerPart + decimalPart;
+      });
+    let newTreasuryBalance = 0;
+    await da.getTreasuryInfo(dURL).then((treasuryInfo) => {
+      const unspentTreasury = treasuryInfo["data"]["balance"];
+      if (!unspentTreasury) return;
+      newTreasuryBalance = unspentTreasury;
+    });
+    console.log(legacyTreasuryBalance, newTreasuryBalance);
+    dispatch({
+      treasuryBalance:
+        parseInt(legacyTreasuryBalance) + parseInt(newTreasuryBalance),
+      type: GETTREASURY_BALANCE_SUCCESS
+    });
+  } catch (error) {
+    dispatch({
+      error: error,
+      type: GETTREASURY_BALANCE_FAILED
+    });
+  }
 };
 
 export const RESET_TREASURY_BALANCE = "RESET_TREASURY_BALANCE";
