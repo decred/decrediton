@@ -110,4 +110,5 @@ const LogsTabBody = ({ setInterval, clearInterval }) => {
   );
 };
 
-export const LogsTab = ReactTimeout(LogsTabBody);
+const LogsTab = ReactTimeout(LogsTabBody);
+export default LogsTab;

@@ -9,15 +9,8 @@ import {
 import { ChangePassphraseButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import { classNames, Checkbox } from "pi-ui";
-import styles from "./Settings.module.css";
-
-const propTypes = {
-  tempSettings: PropTypes.object.isRequired,
-  onAttemptChangePassphrase: PropTypes.func,
-  isChangePassPhraseDisabled: PropTypes.bool.isRequired,
-  changePassphraseRequestAttempt: PropTypes.bool.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
-};
+import styles from "./PrivacySettings.module.css";
+import { Row } from "../../helpers";
 
 const PrivacySettings = ({
   tempSettings,
@@ -43,7 +36,7 @@ const PrivacySettings = ({
       <div className={styles.column}>
         <div>
           {walletReady && (
-            <div className={classNames(styles.row, styles.rowChecklist)}>
+            <Row className={styles.row}>
               <div
                 disabled={isChangePassPhraseDisabled}
                 className={styles.updatePassphraseButton}>
@@ -75,9 +68,9 @@ const PrivacySettings = ({
                   />
                 </WatchOnlyWarnNotification>
               </div>
-            </div>
+            </Row>
           )}
-          <div className={classNames(styles.row, styles.rowChecklist)}>
+          <Row className={styles.row}>
             <Checkbox
               label={
                 <T
@@ -99,8 +92,8 @@ const PrivacySettings = ({
               }
               onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
             />
-          </div>
-          <div className={classNames(styles.row, styles.rowChecklist)}>
+          </Row>
+          <Row className={styles.row}>
             <Checkbox
               label={
                 <T
@@ -122,12 +115,12 @@ const PrivacySettings = ({
               }
               onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
             />
-          </div>
+          </Row>
         </div>
       </div>
       <div className={styles.column}>
         <div>
-          <div className={classNames(styles.row, styles.rowChecklist)}>
+          <Row className={styles.row}>
             <Checkbox
               label={
                 <T id="settings.privacy.updateCheck.label" m="Update Check" />
@@ -146,8 +139,8 @@ const PrivacySettings = ({
               }
               onChange={toggle(EXTERNALREQUEST_UPDATE_CHECK)}
             />
-          </div>
-          <div className={classNames(styles.row, styles.rowChecklist)}>
+          </Row>
+          <Row className={styles.row}>
             <Checkbox
               label={<T id="settings.privacy.politeia.label" m="Politeia" />}
               id="politeia"
@@ -164,8 +157,8 @@ const PrivacySettings = ({
               }
               onChange={toggle(EXTERNALREQUEST_POLITEIA)}
             />
-          </div>
-          <div className={classNames(styles.row, styles.rowChecklist)}>
+          </Row>
+          <Row className={styles.row}>
             <Checkbox
               label={
                 <T
@@ -187,13 +180,20 @@ const PrivacySettings = ({
               }
               onChange={toggle(EXTERNALREQUEST_DCRDATA)}
             />
-          </div>
+          </Row>
         </div>
       </div>
     </>
   );
 };
 
-PrivacySettings.propTypes = propTypes;
+PrivacySettings.propTypes = {
+  tempSettings: PropTypes.object.isRequired,
+  onAttemptChangePassphrase: PropTypes.func,
+  isChangePassPhraseDisabled: PropTypes.bool.isRequired,
+  changePassphraseRequestAttempt: PropTypes.bool.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired,
+  walletReady: PropTypes.bool.isRequired
+};
 
 export default PrivacySettings;

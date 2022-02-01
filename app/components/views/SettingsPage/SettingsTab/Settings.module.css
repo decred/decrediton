@@ -1,196 +1,11 @@
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 1481px;
-  flex-direction: row;
-  font-size: 13px;
-  flex-wrap: wrap;
-}
-
-.languageSelectInput {
-  width: 150px;
-  margin-right: 0;
-}
-
-.group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 37px;
-  width: 720px;
-}
-
 .privacy,
 .security,
 .timezone {
   float: left;
 }
 
-.privacy .columnTitle,
-.security .columnTitle,
-.timezone .columnTitle {
-  text-align: left;
-}
-
-.row {
-  display: flex;
-  margin-bottom: 20px;
-  justify-content: flex-end;
-}
-
-.rowChecklist {
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  flex-direction: column;
-}
-
-.rowChecklist .label {
-  text-align: left;
-  margin-left: 8px;
-  margin-right: 0;
-}
-
-.label {
-  display: inline-block;
-  margin-right: 14px;
-  text-align: right;
-}
-
-.restart {
-  font-weight: bold;
-}
-
-.group.general {
+.general {
   order: 3;
-}
-
-.columnWrapper {
-  padding: 30px 40px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  background: var(--background-back-color);
-  min-height: 190px;
-}
-
-.columnWrapper .column {
-  width: 300px;
-}
-
-.columnTitle {
-  font-size: 19px;
-  text-transform: capitalize;
-  margin-bottom: 14px;
-  line-height: 24px;
-}
-
-.columnWrapper .column .proxy .label {
-  width: 100px;
-}
-
-.privacy .columnContent {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.privacy .columnContent .row {
-  width: 300px;
-}
-
-.privacy .columnContent .row .label {
-  width: 130px;
-}
-
-.wrapper .label {
-  width: 116px;
-}
-
-.wrapper .label button {
-  margin-right: 0;
-}
-.wrapper .label.gapLimitLabel {
-  display: flex;
-  justify-content: flex-end;
-}
-.wrapper .label.gapLimitLabel label {
-  margin-right: 0;
-}
-.wrapper .label.gapLimitLabel button {
-  width: 24px;
-}
-
-.wrapper .label .infoLabel,
-.wrapper .label .infoFieldModalButton {
-  display: inline;
-}
-
-.infoFieldModalButton {
-  float: initial;
-  background-image: var(--info-icon);
-  background-size: 16px;
-  margin-right: 5px;
-}
-
-.changePasswordDefaultIcon {
-  background: var(--change-password-default-icon) no-repeat center;
-  background-color: var(--input-color);
-  background-size: 16px;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13);
-  outline: none;
-}
-
-.changePasswordDefaultIcon:hover {
-  background-color: var(--input-color-hover);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-}
-
-.changePasswordDisbledIcon,
-.changePasswordLoading {
-  background: var(--password-inactive-icon) no-repeat center;
-  background-color: var(--disabled-background-color);
-  cursor: default;
-}
-
-.changePasswordDisbledIcon:hover,
-.changePasswordLoading:hover {
-  background-color: var(--disabled-background-color) !important;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13) !important;
-}
-
-.input {
-  display: inline-block;
-  vertical-align: middle;
-  width: 150px;
-  min-width: 150px;
-  margin-right: 0;
-}
-
-.textInput {
-  width: 136px;
-  min-width: 136px;
-  height: 23px;
-  padding: 0px 4px 1px 10px;
-}
-
-.settingsTextInput {
-  width: 150px !important;
-}
-
-.inputError {
-  width: 290px;
-  float: right;
-  height: 100%;
-  text-align: left;
-  color: var(--error-red);
-  padding-top: 5px;
 }
 
 .saveButtonWrapper {
@@ -203,119 +18,19 @@
   margin-right: 0;
 }
 
-.closeWalletButton {
-  float: right;
-}
-
-.updatePassphraseButton {
-  font-size: 13px;
-  float: left;
-  line-height: 23px;
-  margin-bottom: 26px;
-}
-
-.updatePassphraseButton button {
-  margin-left: 0;
-  margin-right: 10px;
-}
-
-.updatePassphraseButton span {
-  float: left;
-  margin-top: 1px;
-  font-size: 13px;
-  line-height: 17px;
-}
-
-.getStartedContentNewSeed .general {
-  max-width: 400px;
-}
-
-.hasWarning strong {
-  color: var(--error-text-color);
-}
-
-.timezoneOption {
-  margin: 0 0 1rem 0 !important;
-}
-
-.timezoneOption label {
-  color: var(--input-color-default);
-}
-
 @media screen and (min-width: 1680px) and (max-width: 1920px) {
-  .wrapper {
-    width: 1240px;
-  }
-
-  .group {
-    width: 600px;
-  }
-
-  .column {
-    width: 100%;
-  }
-
-  .group .columnWrapper {
-    padding-left: 30px;
-    padding-right: 40px;
-  }
-
-  .group .columnWrapper .privacy .columnContent .row {
-    width: 250px;
-  }
-
-  .group .columnWrapper:nth-of-type(1),
-  .group .columnWrapper:nth-of-type(3) {
-    width: 280px;
-  }
-
-  .group .columnWrapper:nth-of-type(1) .columnTitle,
-  .group .columnWrapper:nth-of-type(3) .columnTitle {
-    margin-left: 0;
-  }
-
-  .group .columnWrapper .column {
-    width: 245px;
-  }
-
   .saveButtonWrapper {
     width: 1240px;
   }
 }
+
 @media screen and (min-width: 1400px) and (max-width: 1680px) {
-  .wrapper {
-    flex-direction: column;
-  }
-
-  .group {
-    width: 1000px;
-  }
-
-  .group .privacy .columnContent .row {
-    width: 220px;
-    flex-wrap: wrap;
-    margin-right: 200px;
-  }
-
-  .group.privacy {
+  .privacy {
     order: 3;
   }
 
-  .group.privacy .columnWrapper {
-    padding: 30px 40px;
-  }
-
-  .group.general {
+  .general {
     order: 2;
-  }
-
-  .columnWrapper .column {
-    width: 420px;
-  }
-
-  .group .wrapper .column.timezone .columnContent .row {
-    width: 220px;
-    flex-wrap: wrap;
   }
 
   .saveButtonWrapper {
@@ -324,44 +39,16 @@
 
   .timezone {
     margin-left: 20px;
-    width: 21rem;
   }
 }
 
 @media screen and (max-width: 1400px) {
-  .wrapper {
-    flex-direction: column;
-  }
-
-  .wrapper .group {
-    width: 739px;
-  }
-
-  .wrapper .group.privacy {
+  .privacy {
     order: 3;
   }
 
-  .wrapper .group.general {
+  .general {
     order: 2;
-  }
-
-  .wrapper .group .columnWrapper {
-    min-height: initial;
-    padding: 30px 40px;
-  }
-
-  .wrapper .group .columnWrapper .column {
-    width: 248px;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1),
-  .wrapper .group .columnWrapper .column:nth-of-type(3) {
-    width: 280px;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1) .columnTitle,
-  .wrapper .group .columnWrapper .column:nth-of-type(3) .columnTitle {
-    margin-left: 20px;
   }
 
   .saveButtonWrapper {
@@ -370,86 +57,14 @@
 }
 
 @media screen and (max-width: 1180px) {
-  .group {
-    width: 649px;
-  }
-
-  .group .columnWrapper {
-    padding-left: 20px;
-  }
-
-  .group .columnWrapper .privacy .columnContent .row {
-    width: 250px;
-  }
-
-  .group .columnWrapper .column {
-    width: 248px;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1),
-  .wrapper .group .columnWrapper .column:nth-of-type(3) {
-    width: 280px;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1) .columnTitle,
-  .wrapper .group .columnWrapper .column:nth-of-type(3) .columnTitle {
-    margin-left: 20px;
-  }
   .saveButtonWrapper {
-    width: 740px;
-  }
-
-  .app-modal.about-modal,
-  .app-modal-reduced-bar.about-modal,
-  .app-modal-standalone.about-modal {
-    margin-top: 30px;
-  }
-
-  .privacy .columnTitle,
-  .security .columnTitle {
-    text-align: left;
+    width: 649px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .wrapper {
-    margin-top: 0;
-    flex-direction: column;
-  }
-
-  .wrapper .group {
-    width: 355px;
-    margin-bottom: 27px;
-  }
-
-  .wrapper .group.privacy .columnWrapper {
-    padding-left: 15px;
-    padding-right: 35px;
-  }
-
-  .wrapper .group .columnWrapper {
-    padding-left: 15px;
-    padding-right: 35px;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1),
-  .wrapper .group .columnWrapper .column:nth-of-type(3),
-  .wrapper .group .columnWrapper .column {
-    width: 100%;
-  }
-
-  .wrapper .group .columnWrapper .column:nth-of-type(1) .columnTitle,
-  .wrapper .group .columnWrapper .column:nth-of-type(3) .columnTitle {
-    margin-left: 0;
-  }
-
-  .wrapper .group .columnWrapper .column.timezone {
+  .timezone {
     order: 3;
-  }
-
-  .wrapper .group .columnWrapper .privacy .columnContent .row {
-    width: 250px;
-    margin-right: initial;
   }
 
   .saveButtonWrapper {

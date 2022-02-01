@@ -1,4 +1,4 @@
-import SettingsPage from "components/views/SettingsPage/SettingsPage";
+import SettingsPage from "components/views/SettingsPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";

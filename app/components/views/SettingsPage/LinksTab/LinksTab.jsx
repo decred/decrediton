@@ -3,7 +3,7 @@ import { HelpLink, HelpLinkInfoModal, HelpLinkAboutModal } from "buttons";
 import { Subtitle } from "shared";
 import styles from "./LinksTab.module.css";
 
-export const LinksTab = () => (
+const LinksTab = () => (
   <>
     <Subtitle title={<T id="help.subtitle.project" m="Project Related" />} />
     <div className={styles.list}>
@@ -69,3 +69,5 @@ export const LinksTab = () => (
     </div>
   </>
 );
+
+export default LinksTab;

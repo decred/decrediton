@@ -3,7 +3,7 @@ import { Subtitle } from "shared";
 import { Link } from "react-router-dom";
 import styles from "./TutorialsTab.module.css";
 
-export const TutorialsTab = () => (
+const TutorialsTab = () => (
   <>
     <Subtitle title={<T id="tutorials.subtitle" m="Tutorials" />} />
     <div className={styles.overviewNoTickets}>
@@ -20,3 +20,5 @@ export const TutorialsTab = () => (
     </div>
   </>
 );
+
+export default TutorialsTab;

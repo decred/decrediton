@@ -6,7 +6,8 @@ import {
   PROXYTYPE_SOCKS4,
   PROXYTYPE_SOCKS5
 } from "constants";
-import styles from "./Settings.module.css";
+import styles from "./ProxySettings.module.css";
+import { Row, Label, ColumnTitle } from "../../helpers";
 
 const availableProxyTypes = [
   { name: <T id="settings.proxy.type.none" m="No Proxy" />, value: null },
@@ -17,15 +18,13 @@ const availableProxyTypes = [
 ];
 
 const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
-  <div className={styles.proxy}>
-    <div className={styles.columnTitle}>
-      <T id="settings.proxy.title" m="Proxy" />
-    </div>
-    <div className={styles.columnContent}>
-      <div className={styles.row}>
-        <label id="proxy-type-input" className={styles.label}>
+  <>
+    <ColumnTitle title={<T id="settings.proxy.title" m="Proxy" />} />
+    <div>
+      <Row>
+        <Label id="proxy-type-input">
           <T id="settings.proxy.type" m="Proxy Type" />
-        </label>
+        </Label>
         <SettingsInput
           className={styles.input}
           value={tempSettings.proxyType}
@@ -37,12 +36,12 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
           ariaLabelledBy="proxy-type-input"
           options={availableProxyTypes}
         />
-      </div>
+      </Row>
 
-      <div className={styles.row}>
-        <label id="proxy-location" className={styles.label}>
+      <Row>
+        <Label id="proxy-location">
           <T id="settings.proxy.location" m="Proxy Location" />
-        </label>
+        </Label>
         <SettingsTextInput
           className={styles.settingsTextInput}
           id="proxyLocationInput"
@@ -52,9 +51,14 @@ const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
             onChangeTempSettings({ proxyLocation: e.target.value })
           }
         />
-      </div>
+      </Row>
     </div>
-  </div>
+  </>
 );
+
+ProxySettings.propTypes = {
+  tempSettings: PropTypes.object.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired
+};
 
 export default ProxySettings;

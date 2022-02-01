@@ -1,21 +1,20 @@
 import { useCallback } from "react";
-import {
-  classNames,
-  DEFAULT_DARK_THEME_NAME,
-  DEFAULT_LIGHT_THEME_NAME
-} from "pi-ui";
+import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton, ResetNetworkButton } from "buttons";
-import NetworkSettings from "./NetworkSettings";
-import ProxySettings from "./ProxySettings";
-import PrivacySettings from "./PrivacySettings";
-import UISettings from "./UISettings";
-import MiscSettings from "./MiscSettings";
-import TimezoneSettings from "./TimezoneSettings";
+import {
+  NetworkSettings,
+  ProxySettings,
+  PrivacySettings,
+  UISettings,
+  MiscSettings,
+  TimezoneSettings
+} from "./groups";
 import { Subtitle } from "shared";
 import styles from "./Settings.module.css";
 import * as configConstants from "constants/config";
 import { wallet } from "wallet-preload-shim";
+import { Wrapper, Group, ColumnWrapper, Column } from "./helpers";
 
 const SettingsPage = ({
   areSettingsDirty,
@@ -46,8 +45,8 @@ const SettingsPage = ({
 
   return (
     <>
-      <div className={styles.wrapper}>
-        <div className={styles.group}>
+      <Wrapper>
+        <Group>
           <Subtitle
             title={
               <T
@@ -56,38 +55,38 @@ const SettingsPage = ({
               />
             }
           />
-          <div className={styles.columnWrapper}>
-            <div className={styles.column}>
+          <ColumnWrapper>
+            <Column>
               <NetworkSettings
                 {...{
                   tempSettings,
                   onChangeTempSettings
                 }}
               />
-            </div>
-            <div className={styles.column}>
+            </Column>
+            <Column>
               <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-            </div>
-          </div>
-        </div>
+            </Column>
+          </ColumnWrapper>
+        </Group>
 
-        <div className={classNames(styles.group, styles.general)}>
+        <Group className={styles.general}>
           <Subtitle
             title={
               <T id="settings.getstartpage.group-title.general" m="General" />
             }
           />
-          <div className={styles.columnWrapper}>
-            <div className={styles.column}>
+          <ColumnWrapper>
+            <Column>
               <UISettings
                 {...{ tempSettings, locales, onChangeTempSettings }}
               />
-            </div>
-            <div className={classNames(styles.column, styles.timezone)}>
+            </Column>
+            <Column className={styles.timezone}>
               <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-            </div>
+            </Column>
             {walletReady && (
-              <div className={styles.column}>
+              <Column>
                 <MiscSettings
                   {...{
                     tempSettings,
@@ -96,12 +95,12 @@ const SettingsPage = ({
                     onChangeTempSettings
                   }}
                 />
-              </div>
+              </Column>
             )}
-          </div>
-        </div>
+          </ColumnWrapper>
+        </Group>
 
-        <div className={classNames(styles.group, styles.privacy)}>
+        <Group className={styles.privacy}>
           <Subtitle
             title={
               <T
@@ -110,7 +109,7 @@ const SettingsPage = ({
               />
             }
           />
-          <div className={styles.columnWrapper}>
+          <ColumnWrapper>
             <PrivacySettings
               {...{
                 tempSettings,
@@ -121,9 +120,9 @@ const SettingsPage = ({
                 changePassphraseRequestAttempt
               }}
             />
-          </div>
-        </div>
-      </div>
+          </ColumnWrapper>
+        </Group>
+      </Wrapper>
 
       <div className={styles.saveButtonWrapper}>
         <div className={styles.saveButton}>

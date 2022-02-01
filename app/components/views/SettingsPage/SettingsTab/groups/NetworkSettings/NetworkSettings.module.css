@@ -1,0 +1,11 @@
+.input {
+  display: inline-block;
+  vertical-align: middle;
+  width: 150px;
+  min-width: 150px;
+  margin-right: 0;
+}
+
+.settingsTextInput {
+  width: 150px !important;
+}

@@ -1,15 +1,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { SettingsInput } from "inputs";
-import styles from "./Settings.module.css";
+import styles from "./MiscSettings.module.css";
 import { DiscoverUsageModal } from "modals";
 import { KeyBlueButton } from "buttons";
 import { useSettings } from "hooks";
-
-const propTypes = {
-  tempSettings: PropTypes.object.isRequired,
-  currencies: PropTypes.array.isRequired,
-  onChangeTempSettings: PropTypes.func.isRequired
-};
+import { Row, Label, ColumnTitle } from "../../helpers";
 
 const MiscSettings = ({
   tempSettings,
@@ -29,17 +24,16 @@ const MiscSettings = ({
     discoverUsageAttempt,
     rescanRunning
   } = useSettings();
+
   return (
-    <div className={styles.misc}>
-      <div className={styles.columnTitle}>
-        <T id="settings.misc.title" m="Misc" />
-      </div>
-      <div className={styles.columnContent}>
+    <>
+      <ColumnTitle title={<T id="settings.misc.title" m="Misc" />} />
+      <div>
         {walletReady && (
-          <div className={styles.row}>
-            <label id="displayed-units-input" className={styles.label}>
+          <Row>
+            <Label id="displayed-units-input">
               <T id="settings.displayedUnits" m="Displayed Units" />
-            </label>
+            </Label>
             <SettingsInput
               className={styles.input}
               value={tempSettings.currencyDisplay}
@@ -51,11 +45,11 @@ const MiscSettings = ({
               labelKey="name"
               options={currencies}
             />
-          </div>
+          </Row>
         )}
 
         {walletReady && (
-          <div className={styles.row}>
+          <Row>
             <KeyBlueButton
               onClick={showDiscoverModal}
               loading={discoverUsageAttempt || rescanRunning}
@@ -73,13 +67,18 @@ const MiscSettings = ({
                 clicked
               }}
             />
-          </div>
+          </Row>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
-MiscSettings.propTypes = propTypes;
+MiscSettings.propTypes = {
+  tempSettings: PropTypes.object.isRequired,
+  currencies: PropTypes.array.isRequired,
+  onChangeTempSettings: PropTypes.func.isRequired,
+  walletReady: PropTypes.bool.isRequired
+};
 
 export default MiscSettings;

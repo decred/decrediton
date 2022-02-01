@@ -1,0 +1,35 @@
+.columnWrapper {
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: var(--background-back-color);
+  min-height: 190px;
+}
+
+@media screen and (min-width: 1680px) and (max-width: 1920px) {
+  .columnWrapper {
+    padding-left: 30px;
+    padding-right: 40px;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .columnWrapper {
+    min-height: initial;
+    padding: 30px 40px;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .columnWrapper {
+    padding-left: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .columnWrapper {
+    padding-left: 15px;
+    padding-right: 35px;
+  }
+}
