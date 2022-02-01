@@ -13,6 +13,7 @@ import {
   mappedRequest,
   shimError
 } from "middleware/grpc/clientTracking";
+import { sendLNPayment as confPayment } from "../confirmationDialog";
 
 import {
   INVOICE_STATUS_OPEN,
@@ -212,7 +213,15 @@ export const decodePayReq = (client, payReq) => {
   return simpleRequest(client, "decodePayReq", request);
 };
 
-export const sendPayment = (client, payRequest, value) => {
+export const sendPayment = async (client, payRequest, value) => {
+  const invoice = await decodePayReq(client, payRequest);
+  await confPayment(
+    invoice.numAtoms,
+    invoice.paymentHash,
+    invoice.description,
+    invoice.destination
+  );
+
   const req = new pb.SendRequest();
   req.setPaymentRequest(payRequest);
   if (value) {
