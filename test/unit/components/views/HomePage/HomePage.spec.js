@@ -154,7 +154,7 @@ test("test HomePage with an immature ticket", async () => {
   expect(
     screen.getByText(/staking activity/i).parentNode.textContent
   ).toMatchInlineSnapshot(
-    '"Staking ActivitySee all →LiveTicket Price: 60.62796917 DCR60.62796917 DCRTicket Reward: 0.00000 DCR0.00DCRmixedVoteTicket Price: 69.25100364 DCR69.25100364 DCRTicket Reward: 0.03062042 DCR0.03DCRTicket Days To Vote: 22 daysmixedNov 3, 2021, 08:46"'
+    '"Staking ActivitySee all →LiveTicket Price: 60.62796917 DCR60.62796917 DCRFee StatusPaidNov 17, 2021, 13:35VoteTicket Price: 69.25100364 DCR69.25100364 DCRTicket Reward: 0.03062042 DCR0.03DCRTicket Days To Vote: 22 daysmixedNov 3, 2021, 08:46"'
   );
 
   // see all transactions
