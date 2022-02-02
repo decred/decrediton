@@ -5,12 +5,26 @@ import { TESTNET, MAINNET } from "constants";
 import styles from "./NetworkSettings.module.css";
 import { Box, Label } from "../../helpers";
 
-const AlreadySetMessage = () => (
-  <T
-    id="settings.alreadySetFromCli"
-    m="This was set as a command-line option when launching decrediton"
-  />
-);
+const SettingsInputWrapper = ({ isTooltipEnabled, children }) =>
+  isTooltipEnabled ? (
+    <Tooltip
+      content={
+        <T
+          id="settings.alreadySetFromCli"
+          m="This was set as a command-line option when launching decrediton"
+        />
+      }
+      className={styles.tooltip}>
+      {children}
+    </Tooltip>
+  ) : (
+    children
+  );
+
+SettingsInputWrapper.propTypes = {
+  isTooltipEnabled: PropTypes.bool,
+  children: PropTypes.object.isRequired
+};
 
 // Do **not** add stuff that depends on the wallet here, as this is also used
 // for startup config.
@@ -20,10 +34,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
       <Label id="network-input">
         <T id="settings.network" m="Network" />
       </Label>
-      <Tooltip
-        content={<AlreadySetMessage />}
-        className={styles.tooltip}
-        disabled={!tempSettings.networkFromCli}>
+      <SettingsInputWrapper isTooltipEnabled={tempSettings.networkFromCli}>
         <SettingsInput
           selectWithBigFont
           className={styles.input}
@@ -46,17 +57,14 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             }
           ]}
         />
-      </Tooltip>
+      </SettingsInputWrapper>
     </div>
 
     <div>
       <Label id="spv-input">
         <T id="settings.SPV" m="SPV" />
       </Label>
-      <Tooltip
-        content={<AlreadySetMessage />}
-        className={styles.tooltip}
-        disabled={!tempSettings.spvModeFromCli}>
+      <SettingsInputWrapper isTooltipEnabled={tempSettings.spvModeFromCli}>
         <SettingsInput
           selectWithBigFont
           className={styles.input}
@@ -79,17 +87,15 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             }
           ]}
         />
-      </Tooltip>
+      </SettingsInputWrapper>
     </div>
 
     <div>
       <Label id="adv-damon-startup-input">
         <T id="settings.advancedDaemon.label" m="Adv. Daemon Startup" />
       </Label>
-      <Tooltip
-        content={<AlreadySetMessage />}
-        className={styles.tooltip}
-        disabled={!tempSettings.daemonStartAdvancedFromCli}>
+      <SettingsInputWrapper
+        isTooltipEnabled={tempSettings.daemonStartAdvancedFromCli}>
         <SettingsInput
           selectWithBigFont
           className={styles.input}
@@ -114,17 +120,14 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             }
           ]}
         />
-      </Tooltip>
+      </SettingsInputWrapper>
     </div>
 
     <div>
       <Label id="spv-connect-input">
         <T id="settings.SPVConnect" m="SPV Connect" />
       </Label>
-      <Tooltip
-        content={<AlreadySetMessage />}
-        className={styles.tooltip}
-        disabled={!tempSettings.spvConnectFromCli}>
+      <SettingsInputWrapper isTooltipEnabled={tempSettings.spvConnectFromCli}>
         <SettingsTextInput
           newBiggerFontStyle
           inputClassNames={styles.settingsTextInput}
@@ -136,7 +139,7 @@ const NetworkSettings = ({ tempSettings, onChangeTempSettings }) => (
             onChangeTempSettings({ spvConnect: value.split(",") })
           }
         />
-      </Tooltip>
+      </SettingsInputWrapper>
     </div>
   </Box>
 );
