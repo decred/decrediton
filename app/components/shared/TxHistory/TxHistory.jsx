@@ -47,7 +47,8 @@ const TxHistory = ({ transactions = [], limit, overview, tsDate, history }) => {
           rowType = [
             txTypes.MISSED,
             txTypes.UNMINED,
-            txTypes.IMMATURE
+            txTypes.IMMATURE,
+            txTypes.LIVE
           ].includes(tx.status)
             ? tx.status
             : tx.txType;
