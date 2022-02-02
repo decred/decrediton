@@ -659,6 +659,7 @@ export const startTicketAutoBuyerV3 = (
     request.setBalanceToMaintain(balanceToMaintain);
     request.setAccount(accountNum);
     request.setVotingAccount(accountNum);
+    request.setLimit(1);
 
     const mixer = getClient(ticketBuyerService).runTicketBuyer(request);
     ok(shimStreamedResponse(mixer));
