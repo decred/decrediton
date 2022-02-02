@@ -18,6 +18,7 @@ import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
 import { shuffle } from "helpers";
 import { mapArray } from "fp";
+import { isArray } from "lodash";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -25,8 +26,7 @@ export const GETVSP_SUCCESS = "GETVSP_SUCCESS";
 
 export const getVSPInfo = (host) => async (dispatch) => {
   // 5 seconds for timeout.
-  const TIMEOUT_TIME = 5000;
-
+  const timeout_time = sel.getVSPInfoTimeoutTime();
   dispatch({ type: GETVSP_ATTEMPT });
 
   try {
@@ -36,7 +36,7 @@ export const getVSPInfo = (host) => async (dispatch) => {
     await wallet.allowVSPHost(host);
 
     const timeout = new Promise((resolve, reject) =>
-      setTimeout(() => reject({ isTimeout: true, vspHost: host }), TIMEOUT_TIME)
+      setTimeout(() => reject({ isTimeout: true, vspHost: host }), timeout_time)
     );
     const getInfo = wallet.getVSPInfo(host);
 
@@ -663,20 +663,34 @@ export const GETVSPSPUBKEYS_FAILED = "GETVSPSPUBKEYS_FAILED";
 export const getVSPsPubkeys = () => async (dispatch) => {
   try {
     dispatch({ type: GETVSPSPUBKEYS_ATTEMPT });
-    const availableVSPsPubkeys = [];
     const vsps = await dispatch(discoverAvailableVSPs());
-    for (const vsp of vsps) {
-      try {
-        const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-        if (pubkey) {
-          vsp.pubkey = pubkey;
-          availableVSPsPubkeys.push(vsp);
-        }
-      } catch (error) {
-        // Skip to the next vsp.
-      }
+    if (!isArray(vsps)) {
+      throw new Error("INVALID_VSPS");
     }
-    dispatch({ type: GETVSPSPUBKEYS_SUCCESS, availableVSPsPubkeys });
+    await Promise.all(
+      vsps.map((vsp) => {
+        return new Promise((resolve) =>
+          dispatch(getVSPInfo(vsp.host))
+            .then(({ pubkey }) => {
+              if (pubkey) {
+                vsp.pubkey = pubkey;
+                resolve(vsp);
+              } else {
+                resolve(null);
+              }
+            })
+            .catch(() => {
+              resolve(null);
+              // Skip to the next vsp.
+            })
+        );
+      })
+    ).then((result) =>
+      dispatch({
+        type: GETVSPSPUBKEYS_SUCCESS,
+        availableVSPsPubkeys: result.filter((vsp) => !!vsp?.pubkey)
+      })
+    );
   } catch (error) {
     dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
   }

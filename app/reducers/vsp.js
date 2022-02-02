@@ -19,6 +19,7 @@ import {
   SETVSPDVOTECHOICE_SUCCESS,
   SET_AUTOBUYER_SETTINGS,
   GETVSPSPUBKEYS_SUCCESS,
+  GETVSPSPUBKEYS_FAILED,
   GETVSPTRACKEDTICKETS_SUCCESS,
   SET_CANDISABLEPROCESSMANAGED,
   GETVSP_ATTEMPT,
@@ -157,7 +158,13 @@ export default function vsp(state = {}, action) {
     case GETVSPSPUBKEYS_SUCCESS:
       return {
         ...state,
-        availableVSPsPubkeys: action.availableVSPsPubkeys
+        availableVSPsPubkeys: action.availableVSPsPubkeys,
+        availableVSPsPubkeysError: null
+      };
+    case GETVSPSPUBKEYS_FAILED:
+      return {
+        ...state,
+        availableVSPsPubkeysError: String(action.error)
       };
     case GETVSPTRACKEDTICKETS_SUCCESS:
       return {
