@@ -1,0 +1,1 @@
+Il conto del portafoglio utilizzato per le operazioni LN rimane _sbloccato_ mentre il portafoglio LN è in funzione, quindi i fondi di quel conto sono a rischio da chiunque abbia accesso remoto o fisico al vostro computer. Si consiglia di usare un conto separato (o meglio ancora, un _portafoglio_ separato) con una piccola quantità di fondi per minimizzare il rischio.

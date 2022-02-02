@@ -1,0 +1,1 @@
+LN è stato implementato presupponendo che i nodi (portafogli) siano online per la maggior parte del tempo, quindi i portafogli _episodici_ (quelli che rimangono online per pochissimo tempo) potrebbero avere ridotta capacità di invio e ricezione dei pagamenti.

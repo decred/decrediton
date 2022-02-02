@@ -1,0 +1,1 @@
+Der Wallet-Account, welcher für LN-Operationen verwendet wird, bleibt _entsperrt_ während die LN-Wallet läuft, so dass Gelder von diesem Account durch jeden mit Fern- oder physischem Zugriff auf Ihren Computer gefährdet sind. Es wird empfohlen, einen separaten Account (oder besser noch ein separates _Wallet_) mit einem kleinen Geldbetrag zu verwenden, um das Risiko zu minimieren.
