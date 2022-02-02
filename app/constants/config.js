@@ -25,6 +25,7 @@ export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
 export const TREZOR_DEBUG = "trezor_debug";
 export const UPGD_ELECTRON8 = "is_electron8";
+export const AUTO_WALLET_LAUNCHING = "auto_wallet_launching";
 
 // advanced daemon configs
 export const RPCUSER = "rpc_user";
@@ -93,6 +94,7 @@ export const ASK_DEX_BTC_SPV = "ask_dex_use_btc_spv";
 export const CONFIRM_DEX_SEED = "confirm_dex_seed";
 export const WALLET_CREATED_AS_NEW = "wallet_created_as_new";
 export const SHOW_STAKING_WARNING = "show_staking_warning";
+export const DISPLAY_WALLET_GRADIENT = "display_wallet_gradient";
 
 export const WALLET_INITIAL_VALUE = {
   [ENABLE_TICKET_BUYER]: false,
@@ -170,5 +172,6 @@ export const INITIAL_VALUES = {
   [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
   [LN_ENABLED]: false,
-  [UPGD_ELECTRON8]: false
+  [UPGD_ELECTRON8]: false,
+  [AUTO_WALLET_LAUNCHING]: false
 };

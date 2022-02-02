@@ -10,7 +10,9 @@ const TutorialPage = ({
   visitedTabs,
   setVisitedTabs,
   activeTabIndex,
-  setActiveTabIndex
+  setActiveTabIndex,
+  pagedTutorialClassname,
+  tabContentWrapperClassName
 }) => {
   return (
     <div>
@@ -36,6 +38,8 @@ const TutorialPage = ({
           slides: tutorials[name].slides,
           activeTabIndex,
           setActiveTabIndex,
+          className: pagedTutorialClassname,
+          tabContentWrapperClassName
           onFinish: goBackHistory
         }}
       />
@@ -50,7 +54,9 @@ TutorialPage.propTypes = {
   visitedTabs: PropTypes.array,
   setVisitedTabs: PropTypes.func.isRequired,
   activeTabIndex: PropTypes.number,
-  setActiveTabIndex: PropTypes.func.isRequired
+  setActiveTabIndex: PropTypes.func.isRequired,
+  pagedTutorialClassname: PropTypes.string,
+  tabContentWrapperClassName: PropTypes.string
 };
 
 export default TutorialPage;

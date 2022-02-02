@@ -28,6 +28,7 @@ import * as cfgConstants from "constants/config";
 import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
 import { TRZ_WALLET_CLOSED } from "actions/TrezorActions";
+import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 
 const { SyncNotificationType } = api;
 
@@ -716,4 +717,26 @@ export const acceptStakingWarning = () => (dispatch, getState) => {
     type: SET_SHOW_STAKING_WARNING,
     showStakingWarning: false
   });
+};
+
+export const STOP_UNFINISHED_WALLET_FAILED = "STOP_UNFINISHED_WALLET_FAILED";
+export const stopUnfinishedWallet = () => async (dispatch) => {
+  try {
+    await wallet.stopWallet();
+    dispatch(setSelectedWallet(null));
+  } catch (err) {
+    dispatch({ error: err, type: STOP_UNFINISHED_WALLET_FAILED });
+  }
+};
+
+export const setAutoWalletLaunching = (autoWalletLaunching) => async (
+  dispatch,
+  getState
+) => {
+  dispatch(updateStateSettingsChanged({ autoWalletLaunching }, true));
+  const tempSettings = getState().settings.tempSettings;
+  const config = wallet.getGlobalCfg();
+  config.set(cfgConstants.AUTO_WALLET_LAUNCHING, autoWalletLaunching);
+
+  await dispatch(saveSettings(tempSettings));
 };

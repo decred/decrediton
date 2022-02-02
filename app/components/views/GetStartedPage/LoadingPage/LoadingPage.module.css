@@ -1,0 +1,19 @@
+.container {
+  width: 106rem;
+}
+
+.subtitle {
+  padding-top: 3rem;
+}
+
+@media screen and (max-width: 1180px) {
+  .container {
+    width: 63.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 31.5rem;
+  }
+}

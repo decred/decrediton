@@ -80,7 +80,8 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         isWatchingOnly: action.isWatchingOnly,
-        needsPassPhrase: false
+        needsPassPhrase: false,
+        syncRescanAttempt: false
       };
     case CLOSEWALLET_FAILED:
       return {
@@ -104,7 +105,8 @@ export default function walletLoader(state = {}, action) {
         syncError: null,
         synced: false,
         syncLastFetchedHeaderTime: null,
-        needsPassPhrase: false
+        needsPassPhrase: false,
+        syncRescanAttempt: false
       };
     case UPDATEDISCOVERACCOUNTS:
       return { ...state, discoverAccountsComplete: action.complete };
@@ -202,13 +204,17 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         syncFetchTimeStart: action.fetchTimeStart,
-        syncFetchHeadersAttempt: true
+        syncFetchHeadersAttempt: true,
+        syncFirstFetchedHeaderTime: null
       };
     case SYNC_FETCHED_HEADERS_PROGRESS:
       return {
         ...state,
         syncFetchHeadersCount: action.fetchHeadersCount,
-        syncLastFetchedHeaderTime: action.lastFetchedHeaderTime
+        syncLastFetchedHeaderTime: action.lastFetchedHeaderTime,
+        syncFirstFetchedHeaderTime: state.syncFirstFetchedHeaderTime
+          ? state.syncFirstFetchedHeaderTime
+          : action.lastFetchedHeaderTime
       };
     case SYNC_FETCHED_HEADERS_FINISHED:
       return {

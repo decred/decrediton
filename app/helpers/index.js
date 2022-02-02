@@ -10,6 +10,7 @@ export * from "./msgTx";
 export * from "./politeia";
 export * from "./scripts";
 export * from "./tickets";
+export * from "./displayWalletGradients";
 
 // kidCheck takes a component and returns a component that only renders if it
 // has children.

@@ -8,10 +8,11 @@ import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
 import TrezorConfig from "./TrezorConfig/TrezorConfig";
 import PreCreateWalletForm from "./PreCreateWallet/PreCreateWallet";
-import RescanWalletBody from "./RescanWallet/RescanWallet";
 import WalletPubpassInput from "./OpenWallet/OpenWallet";
 import DiscoverAccounts from "./OpenWallet/DiscoverAccounts";
 import ReleaseNotes from "./ReleaseNotes/ReleaseNotes";
+import OnboardingTutorialPage from "./OnboardingTutorialPage";
+import LoadingPage from "./LoadingPage";
 import {
   OPENWALLET_INPUT,
   OPENWALLET_INPUTPRIVPASS
@@ -21,9 +22,11 @@ import { useDaemonStartup } from "hooks";
 import { useMachine } from "@xstate/react";
 import { getStartedMachine } from "stateMachines/GetStartedStateMachine";
 import { AdvancedStartupBody } from "./AdvancedStartup/AdvancedStartup";
+import { TutorialPage } from "components/views/GetStartedPage";
 import styles from "./GetStarted.module.css";
 import { isObject } from "lodash";
 import { wallet } from "wallet-preload-shim";
+import { LoaderBarContainer } from "./helpers";
 
 export const useGetStarted = () => {
   const {
@@ -47,16 +50,26 @@ export const useGetStarted = () => {
     checkNetworkMatch,
     onConnectDaemon,
     onStartWallet,
+    onCloseWallet,
     syncDaemon,
     onOpenWallet,
-    onShowTutorial,
     appVersion,
     syncAttemptRequest,
     onGetDcrdLogs,
-    daemonWarning
+    daemonWarning,
+    stopUnfinishedWallet,
+    checkDisplayWalletGradients,
+    setAutoWalletLaunching,
+    autoWalletLaunching
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
+  const [NavlinkComponent, setNavlinkComponent] = useState(null);
+  const [
+    nextStateAfterWalletLoading,
+    setNextStateAfterWalletLoading
+  ] = useState(null);
+
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
       isAtPreStart: () => {
@@ -104,8 +117,8 @@ export const useGetStarted = () => {
           .catch((error) => {
             if (
               !error.connected &&
-              error.error.includes &&
-              error.error.includes("SSLV3_ALERT_HANDSHAKE_FAILURE")
+              error.error?.includes &&
+              error.error?.includes("SSLV3_ALERT_HANDSHAKE_FAILURE")
             ) {
               error = (
                 <T
@@ -143,7 +156,10 @@ export const useGetStarted = () => {
           return;
         }
         onGetAvailableWallets()
-          .then((w) => send({ type: "CHOOSE_WALLET", payload: { w } }))
+          .then((w) => {
+            checkDisplayWalletGradients(w.availableWallets);
+            send({ type: "CHOOSE_WALLET", payload: { w } });
+          })
           .catch((error) => send({ type: "AVAILABLE_WALLET_ERROR", error }));
 
         setShowNavLinks(true);
@@ -194,6 +210,7 @@ export const useGetStarted = () => {
           });
       },
       isSyncingRPC: async (context) => {
+        setNextStateAfterWalletLoading(null);
         const { passPhrase, isSPV } = context;
         if (syncAttemptRequest) {
           return;
@@ -202,17 +219,20 @@ export const useGetStarted = () => {
         // if synced, it means that the wallet is finished to sync and we can
         // push decrediton to home view.
         if (synced === true) {
-          send({ type: "SHOW_SETTING_UP_WALLET" });
+          setNextStateAfterWalletLoading({ type: "SHOW_SETTING_UP_WALLET" });
         }
         if (isSPV) {
           return startSPVSync(passPhrase)
-            .then(() => send({ type: "SHOW_SETTING_UP_WALLET" }))
+            .then(() => {
+              onNextStateAfterWalletLoading({ type: "SHOW_SETTING_UP_WALLET" });
+            })
             .catch((error) => {
               // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
               // private passphrase to discover accounts and the user typed a wrong
               // one.
               if (error == OPENWALLET_INPUTPRIVPASS) {
                 send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
+                return;
               }
               send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
             });
@@ -225,15 +245,34 @@ export const useGetStarted = () => {
               send({ type: "WALLET_DISCOVERACCOUNTS_PASS" });
               return;
             }
+            if (error.includes("wallet is loaded")) {
+              onNextStateAfterWalletLoading({ type: "SHOW_SETTING_UP_WALLET" });
+              return;
+            }
             throw error;
           }
-          send({ type: "SHOW_SETTING_UP_WALLET" });
+          onNextStateAfterWalletLoading({ type: "SHOW_SETTING_UP_WALLET" });
         } catch (error) {
           send({ type: "ERROR_SYNCING_WALLET", payload: { error } });
         }
       }
     }
   });
+
+  const onNextStateAfterWalletLoading = useCallback(
+    (nextState) => {
+      if (autoWalletLaunching) {
+        send({
+          type: "SHOW_SETTING_UP_WALLET"
+        });
+        setNextStateAfterWalletLoading(null);
+      } else {
+        setNextStateAfterWalletLoading(nextState);
+      }
+    },
+    [setNextStateAfterWalletLoading, autoWalletLaunching, send]
+  );
+
   const getError = useCallback((serviceError) => {
     if (!serviceError) return;
 
@@ -350,6 +389,27 @@ export const useGetStarted = () => {
     [send]
   );
 
+  const onCancelLoadingWallet = useCallback(
+    () => onCloseWallet().then(() => send({ type: "CANCEL_SYNCING_WALLET" })),
+    [send, onCloseWallet]
+  );
+
+  const onContinueOpeningWallet = useCallback(() => {
+    const nextState = nextStateAfterWalletLoading ?? {
+      type: "SHOW_SETTING_UP_WALLET"
+    };
+    send(nextState);
+    setNextStateAfterWalletLoading(null);
+  }, [send, setNextStateAfterWalletLoading, nextStateAfterWalletLoading]);
+
+  const onSaveAndContinueOpeningWallet = useCallback(
+    (autoOpeningWallet) => {
+      setAutoWalletLaunching(autoOpeningWallet);
+      onContinueOpeningWallet();
+    },
+    [onContinueOpeningWallet, setAutoWalletLaunching]
+  );
+
   const onShowCreateWallet = useCallback(
     ({ isNew, walletMasterPubKey, isTrezor }) =>
       send({
@@ -361,9 +421,47 @@ export const useGetStarted = () => {
     [send]
   );
 
+  const onShowSettings = useCallback(
+    () =>
+      setNavlinkComponent(
+        h(Settings, { onSendBack: () => setNavlinkComponent(null) })
+      ),
+    [setNavlinkComponent]
+  );
+
+  const onShowLogs = useCallback(
+    () =>
+      setNavlinkComponent(
+        h(Logs, { onSendBack: () => setNavlinkComponent(null) })
+      ),
+    [setNavlinkComponent]
+  );
+
   const onShowReleaseNotes = useCallback(
-    () => send({ type: "SHOW_RELEASE_NOTES" }),
-    [send]
+    () =>
+      setNavlinkComponent(
+        h(ReleaseNotes, { onSendBack: () => setNavlinkComponent(null) })
+      ),
+    [setNavlinkComponent]
+  );
+
+  const onShowTutorial = useCallback(
+    () =>
+      setNavlinkComponent(
+        h(TutorialPage, { onSendBack: () => setNavlinkComponent(null) })
+      ),
+    [setNavlinkComponent]
+  );
+
+  const onShowOnboardingTutorial = useCallback(
+    (currentOnboardingTutorial) =>
+      setNavlinkComponent(
+        h(OnboardingTutorialPage, {
+          goBackHistory: () => setNavlinkComponent(null),
+          currentTutorial: currentOnboardingTutorial
+        })
+      ),
+    [setNavlinkComponent]
   );
 
   const submitChosenWallet = useCallback(
@@ -392,7 +490,7 @@ export const useGetStarted = () => {
   );
 
   const getStateComponent = useCallback(
-    (updatedText, updatedAnimationType, updatedComponent) => {
+    (updatedText, updatedAnimationType) => {
       const {
         isCreateNewWallet,
         isSPV,
@@ -402,6 +500,8 @@ export const useGetStarted = () => {
       let component, text, animationType, PageComponent;
 
       const key = Object.keys(state.value)[0];
+      const loaderBarContainer = LoaderBarContainer;
+      let showLoaderBar = true;
       if (key === "startMachine") {
         switch (state.value[key]) {
           case "startAdvancedDaemon":
@@ -414,17 +514,15 @@ export const useGetStarted = () => {
                 }}
               />
             );
-            text = (
-              <T
-                id="loaderBar.WaitingDaemon"
-                m="Waiting for daemon connection..."
-              />
-            );
+            showLoaderBar = false;
             break;
           case "connectingDaemon":
             text = (
-              <T id="loaderBar.WaitingConnection" m="connecting to daemon..." />
+              <T id="loaderBar.WaitingConnection" m="Connecting to daemon..." />
             );
+            component = h(LoadingPage, {
+              onShowOnboardingTutorial
+            });
             break;
           case "checkingNetworkMatch":
             text = (
@@ -433,39 +531,34 @@ export const useGetStarted = () => {
                 m="Checking if network matches..."
               />
             );
+            component = h(LoadingPage, {
+              onShowOnboardingTutorial
+            });
             break;
           case "startingDaemon":
             animationType = styles.daemonWaiting;
             text = <T id="loaderBar.StartingDaemon" m="Starting Daemon..." />;
+            component = h(LoadingPage, {
+              onShowOnboardingTutorial
+            });
             break;
           case "syncingDaemon":
             animationType = styles.blockchainSyncing;
             text = <T id="loaderBar.syncingDaemon" m="Syncing Daemon..." />;
+            component = h(LoadingPage, {
+              onShowOnboardingTutorial
+            });
             break;
           case "choosingWallet":
-            text = isSPV ? (
-              <T
-                id="loaderBar.choosingWalletSPV"
-                m="Choose a wallet to open in SPV mode"
-              />
-            ) : (
-              <T id="loaderBar.choosingWallet" m="Choose a wallet to open" />
-            );
+            showLoaderBar = false;
             component = h(WalletSelection, {
               onSendCreateWallet,
               submitChosenWallet,
-              isSPV
+              isSPV,
+              onShowOnboardingTutorial
             });
             break;
           case "preCreateWallet":
-            text = isCreateNewWallet ? (
-              <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." />
-            ) : (
-              <T
-                id="loaderBar.preCreateWalletRestore"
-                m="Restore a Wallet..."
-              />
-            );
             component = h(PreCreateWalletForm, {
               onShowCreateWallet,
               onSendContinue,
@@ -475,6 +568,7 @@ export const useGetStarted = () => {
               isCreateNewWallet,
               error
             });
+            showLoaderBar = false;
             break;
           case "walletPubpassInput":
             text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
@@ -500,23 +594,26 @@ export const useGetStarted = () => {
             break;
           case "startingWallet":
             text = <T id="loaderBar.startingWallet" m="Starting wallet..." />;
+            component = h(LoadingPage, {
+              onShowOnboardingTutorial
+            });
             break;
           case "syncingRPC":
             animationType = styles.establishingRpc;
             text = (
               <T id="loaderBar.syncingRPC" m="Syncing RPC connection..." />
             );
+            component = h(LoadingPage, {
+              onShowOnboardingTutorial
+            });
             break;
         }
+
         PageComponent = h(GetStartedMachinePage, {
           submitRemoteCredentials,
           submitAppdata,
           error,
           availableWalletsError,
-          isSPV,
-          onShowReleaseNotes,
-          onShowTutorial,
-          appVersion,
           onGetDcrdLogs,
           daemonWarning,
 
@@ -525,20 +622,18 @@ export const useGetStarted = () => {
           animationType: updatedAnimationType
             ? updatedAnimationType
             : animationType,
-          StateComponent: updatedComponent ? updatedComponent : component
+          StateComponent: NavlinkComponent ?? component,
+          loaderBarContainer,
+          showLoaderBar,
+          onCancelLoadingWallet,
+          onContinueOpeningWallet,
+          onSaveAndContinueOpeningWallet,
+          nextStateAfterWalletLoading
         });
       }
-      if (key === "settings") {
-        PageComponent = h(Settings, { onSendBack });
-      }
-      if (key === "logs") {
-        PageComponent = h(Logs, { onSendBack });
-      }
+
       if (key === "trezorConfig") {
         PageComponent = h(TrezorConfig, { onSendBack });
-      }
-      if (key === "releaseNotes") {
-        PageComponent = h(ReleaseNotes, { onSendBack });
       }
       if (key === "creatingWallet") {
         PageComponent = h(CreateWalletMachine, {
@@ -552,7 +647,11 @@ export const useGetStarted = () => {
           settingUpWalletRef,
           appVersion,
           onShowTutorial,
-          onShowReleaseNotes
+          onShowReleaseNotes,
+          NavlinkComponent: NavlinkComponent,
+          LoadingPageComponent: h(LoadingPage, {
+            onShowOnboardingTutorial
+          })
         });
       }
 
@@ -579,13 +678,19 @@ export const useGetStarted = () => {
       onSendSetPassphrase,
       error,
       availableWalletsError,
-      daemonWarning
+      daemonWarning,
+      onShowOnboardingTutorial,
+      NavlinkComponent,
+      nextStateAfterWalletLoading,
+      onCancelLoadingWallet,
+      onContinueOpeningWallet,
+      onSaveAndContinueOpeningWallet
     ]
   );
 
   const machineStateValue = state && state.value;
   useEffect(() => {
-    let text, animationType, component;
+    let text, animationType;
     if (syncFetchMissingCfiltersAttempt) {
       animationType = styles.daemonWaiting;
       text = (
@@ -618,7 +723,6 @@ export const useGetStarted = () => {
           m="Scanning blocks for transactions"
         />
       );
-      component = RescanWalletBody;
     } else if (synced) {
       animationType = styles.finalizingSetup;
       text = (
@@ -628,7 +732,7 @@ export const useGetStarted = () => {
         />
       );
     }
-    getStateComponent(text, animationType, component);
+    getStateComponent(text, animationType);
   }, [
     syncFetchMissingCfiltersAttempt,
     syncFetchHeadersAttempt,
@@ -639,18 +743,14 @@ export const useGetStarted = () => {
     machineStateValue
   ]);
 
-  const onShowSettings = useCallback(() => send({ type: "SHOW_SETTINGS" }), [
-    send
-  ]);
-
-  const onShowLogs = useCallback(() => send({ type: "SHOW_LOGS" }), [send]);
-
   return {
     onShowLogs,
     onShowSettings,
     updateAvailable,
     isTestNet,
     PageComponent,
-    showNavLinks
+    showNavLinks,
+    onShowTutorial,
+    onShowReleaseNotes
   };
 };

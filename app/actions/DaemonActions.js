@@ -28,6 +28,7 @@ import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
 import { CSPP_URL, CSPP_URL_LEGACY } from "constants";
+import { preDefinedGradients } from "helpers";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -770,3 +771,42 @@ export const getDexLogs = () => (dispatch, getState) =>
       .then((logs) => resolve(logs))
       .catch((err) => reject(err));
   });
+
+export const generateRandomGradient = () => {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const invertedColor = (Number(`0x1${randomColor}`) ^ 0xffffff)
+    .toString(16)
+    .substr(1);
+  return `linear-gradient(#${randomColor} 0%, #${invertedColor} 100%)`;
+};
+
+export const checkDisplayWalletGradients = (availableWallets) => (
+  dispatch,
+  getState
+) => {
+  const missingGradientWallets = [];
+  let availableGradients = [...preDefinedGradients];
+  availableWallets
+    .sort((a, b) => b.lastAccess - a.lastAccess)
+    .forEach(({ wallet, displayWalletGradient }) => {
+      if (!displayWalletGradient) {
+        missingGradientWallets.push(wallet);
+      } else {
+        availableGradients = availableGradients.filter(
+          (gradient) => gradient != displayWalletGradient
+        );
+      }
+    });
+
+  // set missing gradients
+  if (missingGradientWallets.length > 0) {
+    availableGradients.reverse();
+    missingGradientWallets.forEach((walletName) => {
+      const gradient = availableGradients.pop() ?? generateRandomGradient();
+      const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
+      config.set(cfgConstants.DISPLAY_WALLET_GRADIENT, gradient);
+    });
+
+    dispatch(getAvailableWallets());
+  }
+};

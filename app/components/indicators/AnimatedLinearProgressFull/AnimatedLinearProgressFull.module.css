@@ -1,0 +1,97 @@
+.linearProgress {
+  height: 9.4rem;
+  width: 100%;
+  background-color: var(--loader-bg);
+  position: relative;
+  display: grid;
+
+  grid-template-columns: max-content auto;
+  padding: 1.7rem 4rem 2.2rem 4rem;
+  color: var(--main-dark-blue);
+}
+
+.linearProgressBar {
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    270deg,
+    var(--display-wallet-gradient-selected-right),
+    var(--input-color)
+  );
+  border-radius: 0 0.25rem 0.25rem 0;
+  height: 0.5rem;
+  box-shadow: 0px 5px 13px var(--input-color-blue-shadow);
+  transition: width 0.3s linear 0ms;
+  position: absolute;
+}
+
+.linearProgressBar.error {
+  background-color: var(--error-text-color);
+}
+
+.linearProgressText {
+  font-family: var(--font-family-regular);
+
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4rem;
+}
+
+.icons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon {
+  background-image: var(--blockchain-default);
+  background-repeat: no-repeat;
+  background-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+}
+
+.icon.initial {
+  background-image: var(--blockchain-initial);
+  background-size: 2.5rem;
+}
+
+.loaderBarEstimation {
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.4rem;
+}
+
+.loaderBarEstimation .bold {
+  font-weight: 700;
+}
+
+.lastLogLines {
+  font-size: 0.9rem;
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.openWalletButton,
+.cancelLoadingButton {
+  line-height: 1.6rem !important;
+  padding: 0.6rem 1rem !important;
+  margin-top: 0.5rem;
+}
+
+.cancelLoadingButton {
+  background-color: var(--grey-7) !important;
+}
+
+.spvIcon {
+  background-image: var(--menu-spvon-icon);
+  height: 3rem;
+  width: 3rem;
+  background-size: 3rem;
+  margin-right: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .loaderBarEstimation {
+    display: none;
+  }
+}

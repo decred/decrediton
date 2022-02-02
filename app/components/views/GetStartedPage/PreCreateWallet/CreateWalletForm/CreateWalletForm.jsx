@@ -1,54 +1,11 @@
-import { FormattedMessage as T, defineMessages } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { TextInput, IntegerInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { Collapse, ExternalLink } from "shared";
-import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
-import { Label, Input, Row } from "../../helpers";
+import { LoaderTitleMsg, messages } from "../../messages";
+import { Label, Input, Row, ContentContainer } from "../../helpers";
 import styles from "./CreateWalletForm.module.css";
-
-const messages = defineMessages({
-  messageWalletNamePlaceholder: {
-    id: "createwallet.walletname.placehlder",
-    defaultMessage: "Choose a Name"
-  },
-  messageWalletNameTooltip: {
-    id: "createwallet.walletname.tooltip",
-    defaultMessage:
-      "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
-  },
-  messageWalletWatchOnlyDescription: {
-    id: "createwallet.watchonly.description",
-    defaultMessage:
-      "A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet."
-  },
-  messageWalletTrezorDescription: {
-    id: "createwallet.trezor.description",
-    defaultMessage:
-      "Trezor is a hardware wallet. For more information, visit {link}"
-  },
-  messageWalletMasterPubKey: {
-    id: "createwallet.walletpubkey.placeholder",
-    defaultMessage: "Master Pub Key"
-  },
-  messageWalletMasterPubkeyError: {
-    id: "createwallet.walletWatchOnly.error",
-    defaultMessage: "Invalid Master Pubkey"
-  },
-  messageWalletDupeNameError: {
-    id: "createwallet.dupeWalletName.error",
-    defaultMessage: "Please choose an unused wallet name"
-  },
-  messageDisablecointypeupgrades: {
-    id: "createwallet.disablecointypeupgrades.description",
-    defaultMessage: "Never upgrade from legacy to SLIP0044 coin type keys"
-  },
-  messageGapLimit: {
-    id: "createwallet.gaplimit.description",
-    defaultMessage:
-      "Allowed unused address gap between used addresses of accounts"
-  }
-});
 
 const CreateWalletForm = ({
   createWallet,
@@ -75,18 +32,23 @@ const CreateWalletForm = ({
   setGapLimit
 }) => (
   <>
+    <ContentContainer>
+      <div>
+        <LoaderTitleMsg />
+      </div>
+    </ContentContainer>
     {isCreateNewWallet ? (
       <div className={styles.titleArea}>
         <div className={classNames(styles.iconSmall, styles.new)} />
         <div className={styles.title}>
-          <NewSeedTabMsg />
+          {intl.formatMessage(messages.newSeedTabMsg)}
         </div>
       </div>
     ) : (
       <div className={styles.titleArea}>
         <div className={classNames(styles.iconSmall, styles.restore)} />
         <div className={styles.title}>
-          <RestoreTabMsg />
+          {intl.formatMessage(messages.restoreTabMsg)}
         </div>
       </div>
     )}

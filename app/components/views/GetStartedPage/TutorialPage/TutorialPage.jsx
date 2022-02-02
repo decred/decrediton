@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import TutorialPage from "./Page";
 import { useDaemonStartup } from "hooks";
 
-const Tutorial = () => {
+const Tutorial = ({ onSendBack }) => {
   const { finishTutorial } = useDaemonStartup();
   const [tutorialStep, setTutorialStep] = useState(0);
 
@@ -18,7 +18,7 @@ const Tutorial = () => {
         tutorialStep,
         onNextTutorialStep,
         onGoToStep: setTutorialStep,
-        finishTutorial
+        finishTutorial: onSendBack ?? finishTutorial
       }}
     />
   );

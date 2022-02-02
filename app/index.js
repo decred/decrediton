@@ -76,7 +76,8 @@ const currentSettings = {
   network: hasCliOption("network") || globalCfg.get(NETWORK),
   networkFromCli: !!hasCliOption("network"),
   theme: globalCfg.get(THEME),
-  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS)
+  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS),
+  autoWalletLaunching: globalCfg.get(cfgConstants.AUTO_WALLET_LAUNCHING)
 };
 const initialState = {
   settings: {

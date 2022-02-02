@@ -26,10 +26,7 @@ export const getStartedMachine = Machine({
     startMachine: {
       initial: "preStart",
       on: {
-        SHOW_SETTINGS: "settings",
-        SHOW_LOGS: "logs",
         SHOW_TREZOR_CONFIG: "trezorConfig",
-        SHOW_RELEASE_NOTES: "releaseNotes",
         SHOW_CREATE_WALLET: "creatingWallet",
         SHOW_SETTING_UP_WALLET: "settingUpWallet"
       },
@@ -283,6 +280,9 @@ export const getStartedMachine = Machine({
           onEntry: "isSyncingRPC",
           on: {
             WALLET_DISCOVERACCOUNTS_PASS: "walletDiscoverAccountsPassInput",
+            CANCEL_SYNCING_WALLET: {
+              target: "choosingWallet"
+            },
             ERROR_SYNCING_WALLET: {
               target: "choosingWallet",
               actions: assign({
@@ -382,15 +382,6 @@ export const getStartedMachine = Machine({
         }
       }
     },
-    releaseNotes: {
-      initial: "releaseNotes",
-      states: {
-        releaseNotes: {}
-      },
-      on: {
-        BACK: "startMachine.hist"
-      }
-    },
     trezorConfig: {
       initial: "trezorConfig",
       states: {
@@ -399,26 +390,6 @@ export const getStartedMachine = Machine({
       on: {
         BACK: "startMachine.hist",
         SHOW_TREZOR_CONFIG: "trezorConfig"
-      }
-    },
-    settings: {
-      initial: "settings",
-      states: {
-        settings: {}
-      },
-      on: {
-        BACK: "startMachine.hist",
-        SHOW_LOGS: "logs"
-      }
-    },
-    logs: {
-      initial: "logs",
-      states: {
-        logs: {}
-      },
-      on: {
-        BACK: "startMachine.hist",
-        SHOW_SETTINGS: "settings"
       }
     }
   }

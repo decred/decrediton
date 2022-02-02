@@ -8,7 +8,7 @@ export { default as NoTicketsIndicator } from "./NoMoreIndicators/NoTickets";
 export { default as DecredLoading } from "./DecredLoading/DecredLoading";
 export { default as SimpleLoading } from "./SimpleLoading/SimpleLoading";
 export { default as RescanProgress } from "./RescanProgress/RescanProgress";
-export { default as AnimatedLinearProgressFull } from "./LinearProgress/AnimatedLinearProgressFull";
+export { default as AnimatedLinearProgressFull } from "./AnimatedLinearProgressFull";
 export { default as LinearProgressSmall } from "./LinearProgress/LinearProgressSmall";
 export { default as LoaderBarBottom } from "./LoaderBarBottom";
 export { default as NoStats } from "./NoMoreIndicators/NoStats";

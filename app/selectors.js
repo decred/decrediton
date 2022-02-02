@@ -122,6 +122,10 @@ export const syncFetchHeadersCount = get([
   "walletLoader",
   "syncFetchHeadersCount"
 ]);
+export const syncFetchHeadersFirstHeaderTime = get([
+  "walletLoader",
+  "syncFirstFetchedHeaderTime"
+]);
 export const syncFetchHeadersLastHeaderTime = get([
   "walletLoader",
   "syncLastFetchedHeaderTime"
@@ -177,7 +181,8 @@ const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
       network: wallet.network,
       finished: wallet.finished,
       isWatchingOnly: wallet.isWatchingOnly,
-      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null
+      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
+      displayWalletGradient: wallet.displayWalletGradient
     }),
     wallets
   )
@@ -346,6 +351,11 @@ export const unitDivisor = compose(
 );
 export const currentLocaleName = get(["settings", "currentSettings", "locale"]);
 export const timezone = get(["settings", "currentSettings", "timezone"]);
+export const autoWalletLaunching = get([
+  "settings",
+  "currentSettings",
+  "autoWalletLaunching"
+]);
 export const defaultLocaleName = createSelector(
   [currentLocaleName],
   (currentLocaleName) => {
@@ -977,6 +987,10 @@ export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
 export const getNoMoreLiveTickets = get(["grpc", "noMoreLiveTickets"]);
+export const startWalletServiceAttempt = get([
+  "grpc",
+  "startWalletServiceAttempt"
+]);
 
 export const rescanEndBlock = currentBlockHeight;
 export const rescanStartBlock = compose(

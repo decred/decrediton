@@ -1,21 +1,6 @@
 .loaderBar {
-  float: left;
-  width: 100%;
-  margin-bottom: 20px;
+  height: 6rem;
 }
 .setupWallet {
-  padding-left: 56px;
   background-image: var(--loader-animation-finalizing-setup) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
-}
-@media (--sm-viewport) {
-  .loaderBar {
-    margin-bottom: 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-  }
 }

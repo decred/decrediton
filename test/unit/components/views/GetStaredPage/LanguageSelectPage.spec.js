@@ -31,7 +31,7 @@ beforeEach(() => {
 
 test("render language select page", () => {
   render(<LanguageSelectPage />);
-  expect(screen.getByText(/welcome to decrediton wallet/i)).toBeInTheDocument();
+  expect(screen.getByText(/welcome to decrediton/i)).toBeInTheDocument();
   expect(screen.getByText(/choose your language/i)).toBeInTheDocument();
   expect(screen.getByText(testLocalesArray[0].description)).toBeInTheDocument();
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(

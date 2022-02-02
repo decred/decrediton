@@ -3,7 +3,7 @@ const url = (s) => `url('${s}')`;
 
 const lightTheme = {
   "background-back-color": "#fff",
-  "background-container": "#f3f5f6",
+  "background-container": "#F3F5F6",
   "background-container-opaque": "rgba(243, 245, 246, 0.895)",
   "background-container-hover": "#f0f4f4",
   "background-hovered": "#e9f8fe",
@@ -100,15 +100,11 @@ const lightTheme = {
   "filter-menu-bg-hover": "#596d81",
   "menutab-hover": "#596d81",
   "tooltip-container": "#f3f5f6",
-  "loader-bg": "#d1d5db",
-  "display-wallet-bg":
-    "linear-gradient(225deg, var(--white-border), var(--display-wallet-gradient-right))",
+  "loader-bg": "#F9FAFA",
   "select-border": "#e7eaed",
   "transaction-account-name-bg": "#E9F8FE",
   "account-row-hover": "#f0f4f4",
   "chart-cursor-color": "#e9f8fe",
-  "linear-progress-text-default": "#fff",
-  "linear-progress-text-initial": "#fff",
   "onboard-toolbar-shadow": "rgba(9,20,64,0.13)",
   "onboard-toolbar-background": "#fff",
   "background-copy-color": "#e9f8ff",
@@ -123,6 +119,7 @@ const lightTheme = {
   "proposal-text-markdown": "#f6f8fa",
   "background-address-copy-color": "#e9f8ff",
   "icons-shadow": "rgba(0, 0, 0, 0.12)",
+  "icons-shadow-hover": "rgba(0, 0, 0, 0.32)",
   "no-more-tickets-indicator-bg": "#E6EAED",
   "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
   "input-copy-hover-color": "#78d9f8",
@@ -140,6 +137,8 @@ const lightTheme = {
   "grey-5": "#8997A5",
   "grey-6": "#596D81",
   "grey-7": "#3D5873",
+  "light-green": "#C6ECCB",
+  "green-2": "#2ED8A3",
   orange: "#ED6D47",
   "light-blue": "#D4F0FD",
   "main-dark-blue": "#091440",
@@ -193,6 +192,7 @@ const lightTheme = {
   "seedword-button-text": "var(--main-dark-blue)",
   "seedword-button-invalid-bg": "#f0b3a1",
 
+  "launcher-link-color": "#536076",
   "alert-icon-bg-color": "#feb8a5",
 
   /* icons */
@@ -219,13 +219,10 @@ const lightTheme = {
   "testnet-logo": url(require("style/icons/testnet-logo.svg")),
   "mainnet-logo": url(require("style/icons/decred-logo.svg")),
   "create-wallet-icon": url(require("style/icons/createnewwallet.svg")),
-  "wallet-blue-icon": url(require("style/icons/wallet-blue.svg")),
   "wallet-gray-icon": url(require("style/icons/wallet-gray.svg")),
   blockchain: url(require("style/icons/blockchain.svg")),
   "blockchain-default": url(require("style/icons/blockchainDefault.svg")),
   "blockchain-initial": url(require("style/icons/blockchainInitial.svg")),
-  "launcher-edit-wallets": url(require("style/icons/editDefault.svg")),
-  "launcher-edit-wallets-hover": url(require("style/icons/editHover.svg")),
   "onboarding-checkcircle": url(
     require("style/icons/onboarding-checkcircle.svg")
   ),
