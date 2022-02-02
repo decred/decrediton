@@ -1,0 +1,1 @@
+A LN é implementada assumindo que os nós (carteiras) permanecem online a maior parte do tempo, portanto carteiras _episódicas_ (aquelas que permanecem online por pouco tempo de cada vez) podem ter sua habilidade de enviar e receber pagamentos degradada.

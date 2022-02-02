@@ -1,0 +1,1 @@
+LN wurde unter der Annahme implementiert, dass die Knoten (Wallets) die meiste Zeit online sind, so dass _episodische_ Wallets (solche, die nur für eine sehr geringe Zeitspanne online bleiben) eine verminderte Fähigkeit zum Senden und Empfangen von Zahlungen aufweisen können.

@@ -177,7 +177,13 @@ const icons = {
   "decred-logo": url(require("style/icons/dcrLogoShare.svg")),
   "search-icon-hover": url(require("style/icons/search-hover.svg")),
   "animated-alert-icon": url(require("style/icons/animated_alert_icon.gif")),
-  "mixed-transaction-icon": url(require("style/icons/mixedTx.svg"))
+  "mixed-transaction-icon": url(require("style/icons/mixedTx.svg")),
+  "ln-slide1": url(require("style/icons/ln-slide1.svg")),
+  "ln-slide2": url(require("style/icons/ln-slide2.svg")),
+  "ln-slide3": url(require("style/icons/ln-slide3.svg")),
+  "ln-slide4": url(require("style/icons/ln-slide4.svg")),
+  "ln-slide5": url(require("style/icons/ln-slide5.svg")),
+  "ln-slide6": url(require("style/icons/ln-slide6.svg"))
 };
 
 export default icons;

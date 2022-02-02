@@ -20,7 +20,6 @@ export { default as TrezorWipeWarning } from "./Warnings/TrezorWipe.md";
 export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwareUpdate.md";
 export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 export { default as LNForceCloseChannelWarning } from "./Warnings/LNForceCloseChannel.md";
-export { default as LNWalletCreationWarning } from "./Warnings/LNWalletCreation.md";
 export { default as MixerIntroduction } from "./Warnings/MixerIntroduction.md";
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
@@ -46,3 +45,9 @@ export { default as TicketLifecycleTutorialPage05 } from "./TicketLifecycleTutor
 export { default as TicketLifecycleTutorialPage06 } from "./TicketLifecycleTutorial/Page06.md";
 
 export { default as LNBackupInfo } from "./LN/BackupInfo.md";
+export { default as LNWalletCreationWarningPage01 } from "./LN/WalletCreationWarnings/WarningPage01.md";
+export { default as LNWalletCreationWarningPage02 } from "./LN/WalletCreationWarnings/WarningPage02.md";
+export { default as LNWalletCreationWarningPage03 } from "./LN/WalletCreationWarnings/WarningPage03.md";
+export { default as LNWalletCreationWarningPage04 } from "./LN/WalletCreationWarnings/WarningPage04.md";
+export { default as LNWalletCreationWarningPage05 } from "./LN/WalletCreationWarnings/WarningPage05.md";
+export { default as LNWalletCreationWarningPage06 } from "./LN/WalletCreationWarnings/WarningPage06.md";

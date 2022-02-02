@@ -1,0 +1,1 @@
+La cartera usada para las operaciones en LN se mantiene _desbloqueada_ mientras la cartera LN está corriendo. Los fondos de esa cuenta están en riesgo de cualquiera que tenga acceso remoto o físico al dispositivo. Se recomienda usar una cuenta separada (o mejor aún, una _cartera_ separada) con cantidades pequeñas de saldo para minimizar el riesgo.

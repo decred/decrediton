@@ -1,0 +1,1 @@
+Comprendete che una controparte malintenzionata potrebbe rubare fondi da portafogli _episodici_ a meno che non utilizzino un servizio [watchtower](https://docs.decred.org/lightning-network/watchtowers/).
