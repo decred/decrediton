@@ -1,9 +1,6 @@
 import { StandalonePage, StandaloneHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import {
-  PiUiPassphraseModalButton,
-  ToggleSwitch
-} from "buttons";
+import { PiUiPassphraseModalButton } from "buttons";
 import { Tooltip } from "pi-ui";
 import {
   LNWALLET_STARTUPSTAGE_STARTDCRLND,

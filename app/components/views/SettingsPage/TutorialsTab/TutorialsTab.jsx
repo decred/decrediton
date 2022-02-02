@@ -3,7 +3,7 @@ import { Subtitle } from "shared";
 import { TutorialOverview, TutorialPage, tutorials } from "./helpers";
 import { useTutorialsTab } from "./hooks";
 
-export const TutorialsTab = () => {
+const TutorialsTab = () => {
   const {
     currentTutorial,
     viewTutorialHandler,
@@ -65,3 +65,5 @@ export const TutorialsTab = () => {
     </>
   );
 };
+
+export default TutorialsTab;
