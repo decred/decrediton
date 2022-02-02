@@ -1,10 +1,10 @@
-import { Creatable } from "react-select";
 import { injectIntl, defineMessages } from "react-intl";
 import { useEffect, useState, useMemo } from "react";
 import { useVSPSelect } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "pi-ui";
 import styles from "./VSPSelect.modules.css";
+import { Select } from "inputs";
 
 const messages = defineMessages({
   placeholder: {
@@ -30,7 +30,15 @@ const getError = (error) => {
   return String(error);
 };
 
-function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
+function VSPSelect({
+  onChange,
+  options,
+  intl,
+  value,
+  isDisabled,
+  setVspFee,
+  selectWithBigFont
+}) {
   const { send, state, selectedOption, vspInfo, availableVSPs } = useVSPSelect(
     options,
     value,
@@ -93,13 +101,17 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
     // push new value if it is a new vsp option.
     if (value.newOption) {
       const host = value.host;
-      newOptions.push({
-        host,
-        label: host,
-        value: host
-      });
-
-      setNewOptions(newOptions);
+      setNewOptions((opts) => [
+        ...opts,
+        {
+          value: {
+            host,
+            label: host,
+            value: host
+          },
+          label: host
+        }
+      ]);
     }
     isRetry ? send({ type: "RETRY", value }) : send({ type: "FETCH", value });
   };
@@ -114,21 +126,24 @@ function VSPSelect({ onChange, options, intl, value, isDisabled, setVspFee }) {
 
   const getSelect = (isRetry) => {
     return (
-      <Creatable
+      <Select
+        isCreatable
+        isSearchable
+        selectWithBigFont={selectWithBigFont}
         options={vspList}
-        clearable={!!newOption}
+        isClearable={!!newOption}
         placeholder={intl.formatMessage(messages.placeholder)}
         onChange={(option) => handleOnChange(option, isRetry)}
         value={selectedOption}
-        newOptionCreator={() => {
-          return {
-            value: { host: newOption, label: newOption },
-            label: newOption,
-            host: newOption,
-            newOption: true
-          };
-        }}
-        disabled={isDisabled}
+        onCreateOption={(option) =>
+          handleOnChange(
+            {
+              value: { host: option, label: option, newOption: true }
+            },
+            isRetry
+          )
+        }
+        isDisabled={isDisabled}
         onInputChange={(input) => onSetNewOption(input)}
         isValidNewOption={() => !!newOption}
       />

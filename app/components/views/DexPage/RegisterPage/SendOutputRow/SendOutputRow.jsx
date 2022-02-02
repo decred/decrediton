@@ -68,8 +68,7 @@ const SendOutputRow = ({
     <div className={styles.sendInputWrapper}>
       {isSendSelf ? (
         <ReceiveAccountsSelect
-          disabled={receiveAccountsSelectDisabled}
-          getAddressForSelected={true}
+          isDisabled={receiveAccountsSelectDisabled}
           showAccountsButton={false}
           onKeyDown={onKeyDown}
           account={receiveAccount}

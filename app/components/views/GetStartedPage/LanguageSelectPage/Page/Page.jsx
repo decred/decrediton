@@ -22,11 +22,12 @@ const LanguageSelectPage = ({
       </SubTitle>
       <div className={styles.toolbar}>
         <LanguageSelectInput
-          value={selectedLang}
+          value={selectedLang.key}
           onChange={onChangeSelectedLang}
           valueKey="key"
           labelKey="description"
           options={availableLanguages}
+          className={styles.input}
         />
         <KeyBlueButton className={styles.button} onClick={onSelectLang}>
           <T id="selectLang.continueBtn" m="Continue" />

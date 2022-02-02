@@ -1,7 +1,7 @@
 import SettingsPage from "components/views/SettingsPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen } from "@testing-library/react";
+import { screen, fireEvent, wait } from "@testing-library/react";
 
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
@@ -55,9 +55,11 @@ const testDefaultAllowedExternalRequests = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_POLITEIA
 ];
+const testDefaultUIAnimationsLabel = "Enabled";
+const testUIAnimationsLabel = "Disabled";
 
 const testCurrentSettings = {
-  locale: testDefaultLocale,
+  locale: testDefaultLocale.key,
   theme: testDefaultTheme,
   network: testDefaultNetwork.toLowerCase(),
   needNetworkReset: false,
@@ -69,6 +71,7 @@ const testCurrentSettings = {
   currencyDisplay: testDefaultCurrencyDisplay,
   gapLimit: testDefaultGapLimit,
   timezone: testDefaultTimezone,
+  uiAnimations: testDefaultUIAnimationsLabel,
   allowedExternalRequests: testDefaultAllowedExternalRequests
 };
 const testSettings = {
@@ -82,7 +85,6 @@ let mockIsMainNet;
 let mockWalletService;
 let mockTicketBuyerService;
 let mockSaveSettings;
-let mockGetGlobalCfg;
 let mockChangePassphrase;
 let mockIsChangePassPhraseDisabled;
 let mockIsTicketAutoBuyerEnabled;
@@ -98,7 +100,7 @@ const settingsActions = sa;
 const vspActions = vspa;
 
 beforeEach(() => {
-  mockGetGlobalCfg = wallet.getGlobalCfg = jest.fn(() => {
+  wallet.getGlobalCfg = jest.fn(() => {
     return {
       get: () => DEFAULT_LIGHT_THEME_NAME,
       set: () => {}
@@ -277,65 +279,66 @@ test("test cli tooltips", () => {
 const getOptionByNameAndType = (name, type) => {
   const regex = new RegExp(type, "g");
   const options = screen
-    .getAllByRole("option", { name: name })
+    .getAllByText(name)
     .filter((option) => option.className.match(regex));
   return options[0];
 };
 
-const testConfirmModal = (
-  submitButtonText,
+const testConfirmModal = async (
+  changeFn,
   confirmHeaderText,
   confirmContent,
   confirmButtonLabel = "Confirm"
 ) => {
-  const submitButton = screen.getByText(submitButtonText);
-  // submit and cancel
-  user.click(submitButton);
-  expect(screen.getByText(confirmHeaderText)).toBeInTheDocument();
+  // wait for the confirm modal and cancel
+  await wait(() => screen.getByText(confirmHeaderText));
   if (confirmContent) {
     expect(screen.getByText(confirmContent)).toBeInTheDocument();
   }
   user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(confirmHeaderText)).not.toBeInTheDocument();
-  // submit and confirm
-  user.click(submitButton);
-  expect(screen.getByText(confirmHeaderText)).toBeInTheDocument();
-  user.click(screen.getByText(confirmButtonLabel));
+  // wait for the confirm modal and confirm
+  changeFn();
+  await wait(() => screen.getByText(confirmHeaderText));
+  user.click(screen.getByRole("button", { name: confirmButtonLabel }));
 };
 
-const testComboxBoxInput = (
+const testComboxBoxInput = async (
   labelName,
   oldValue,
   option,
   expectedChange,
-  needsConfirm
+  needsConfirm,
+  tabLabel = null
 ) => {
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  const saveButton = screen.getByText("Save");
-  expect(saveButton.disabled).toBe(true);
+  if (tabLabel) {
+    // go to the specified tab
+    user.click(screen.getAllByText(tabLabel)[0]);
+  }
   const inputControl = screen.getByLabelText(labelName);
-  const inputValueSpan = getOptionByNameAndType(oldValue, "value");
+  const inputValueSpan = getOptionByNameAndType(oldValue, "singleValue");
   expect(inputValueSpan.textContent).toMatch(oldValue);
-  user.click(inputControl.parentNode);
-  user.click(getOptionByNameAndType(option, "option"));
-
-  expect(screen.getByText("Save").disabled).toBe(false);
+  const changeFn = () => {
+    user.click(inputControl);
+    user.click(getOptionByNameAndType(option, "option"));
+  };
+  changeFn();
 
   if (needsConfirm) {
-    testConfirmModal("Save", "Reset required");
-  } else {
-    user.click(saveButton);
+    await testConfirmModal(changeFn, "Reset required");
   }
 
-  expect(mockSaveSettings).toHaveBeenCalledWith({
-    ...testCurrentSettings,
-    ...expectedChange
-  });
-  expect(mockGetGlobalCfg).toHaveBeenCalled();
+  await wait(() =>
+    expect(mockSaveSettings).toHaveBeenCalledWith({
+      ...testCurrentSettings,
+      ...expectedChange
+    })
+  );
 };
 
 test.each([
@@ -354,25 +357,36 @@ test.each([
     testDefaultLocaleLabel,
     testLocaleLabel,
     { locale: testLocale },
-    false
+    false,
+    "General"
   ],
   [
     "Displayed Units",
     testDefaultCurrencyDisplay,
     testCurrencyDisplay,
     { currencyDisplay: testCurrencyDisplay },
-    false
+    false,
+    "General"
   ],
   [
     "Tonality",
     testDefaultThemeLabel,
     testThemeLabel,
     { theme: testTheme },
-    false
+    false,
+    "General"
+  ],
+  [
+    "UI Animations",
+    testDefaultUIAnimationsLabel,
+    testUIAnimationsLabel,
+    { uiAnimations: false },
+    false,
+    "General"
   ]
 ])("change '%s' ComboBox from '%s' to '%s' expeced %s", testComboxBoxInput);
 
-const testTextFieldInput = (
+const testTextFieldInput = async (
   labelName,
   oldValue,
   newValue,
@@ -382,24 +396,27 @@ const testTextFieldInput = (
   render(<SettingsPage />, {
     initialState: { settings: testSettings }
   });
-  const saveButton = screen.getByText("Save");
-  expect(saveButton.disabled).toBe(true);
 
   const inputControl = screen.getByLabelText(labelName);
   expect(inputControl.value).toMatch(oldValue);
   user.clear(inputControl);
   user.type(inputControl, newValue);
+  // press enter
+  fireEvent.keyDown(inputControl, {
+    key: "enter",
+    keyCode: 13
+  });
 
-  expect(saveButton.disabled).toBe(false);
   if (needsConfirm) {
     testConfirmModal("Save", "Reset required");
-  } else {
-    user.click(saveButton);
   }
-  expect(mockSaveSettings).toHaveBeenCalledWith({
-    ...testCurrentSettings,
-    ...expectedChange
-  });
+
+  await wait(() =>
+    expect(mockSaveSettings).toHaveBeenCalledWith({
+      ...testCurrentSettings,
+      ...expectedChange
+    })
+  );
 };
 
 test.each([
@@ -425,8 +442,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
       settings: testSettings
     }
   });
-  const saveButton = screen.getByText("Save");
-  expect(saveButton.disabled).toBe(true);
+  user.click(screen.getByText("General"));
 
   options.forEach((option) =>
     expect(screen.getByLabelText(option.label).checked).toBe(
@@ -445,8 +461,6 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
     )
   );
 
-  expect(saveButton.disabled).toBe(false);
-  user.click(saveButton);
   const expectedChange = { ...testCurrentSettings };
   expectedChange[configKey] = otherOption.value;
   expect(mockSaveSettings).toHaveBeenCalledWith(expectedChange);
@@ -461,8 +475,6 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
       option.value == defaultOption.value
     )
   );
-
-  expect(saveButton.disabled).toBe(true);
 };
 
 test.each([
@@ -482,21 +494,18 @@ const testCheckBoxInput = (label, configKey) => {
       settings: testSettings
     }
   });
+  user.click(screen.getByText("Privacy and Security"));
 
   const checkbox = screen.getByLabelText(label);
   const defaultCheckedValue = testDefaultAllowedExternalRequests.includes(
     configKey
   );
-  const saveButton = screen.getByText("Save");
 
   expect(checkbox.checked).toBe(defaultCheckedValue);
 
-  expect(saveButton.disabled).toBe(true);
   user.click(checkbox);
   expect(checkbox.checked).toBe(!defaultCheckedValue);
-  expect(saveButton.disabled).toBe(false);
 
-  user.click(saveButton);
   const expectedChange = { ...testCurrentSettings };
 
   if (defaultCheckedValue) {
@@ -550,7 +559,10 @@ test("test update private passphrase", () => {
       settings: testSettings
     }
   });
-  const updateButton = screen.getByLabelText("Update Private Passphrase");
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
   const modalHeaderText = "Change your passphrase";
   // click and cancel
   user.click(updateButton);
@@ -622,7 +634,8 @@ test("update private passphrase is disabled", () => {
       settings: testSettings
     }
   });
+  user.click(screen.getByText("Privacy and Security"));
   expect(mockIsChangePassPhraseDisabled).toHaveBeenCalled();
-  user.click(screen.getByLabelText("Update Private Passphrase"));
+  user.click(screen.getByRole("button", { name: "Update Private Passphrase" }));
   expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
 });

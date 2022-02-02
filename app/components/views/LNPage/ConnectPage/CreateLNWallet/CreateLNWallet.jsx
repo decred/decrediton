@@ -70,17 +70,9 @@ const CreateLNWallet = ({
       <AnimatedContainer show={accountOption !== NEW_ACCOUNT}>
         <div className={styles.connectOptWrapper}>
           <div className={styles.connectOpt}>
-            {
-              // `selectWithBigFont` className is
-              // temp solution to skinning from ReactSelectGlobal.css.
-              // When react-select will be replaced by the `pi-ui` component,
-              // this className can be deleted.
-            }
             <ReceiveAccountsSelect
-              className={classNames(
-                styles.receiveSelectAccountSelect,
-                "selectWithBigFont"
-              )}
+              selectWithBigFont
+              className={styles.receiveSelectAccountSelect}
               selectClassName={styles.receiveSelectAccountSelectInput}
               account={account.value}
               onChange={onChangeAccount}

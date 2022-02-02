@@ -1,8 +1,7 @@
-import Select from "react-select";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames } from "pi-ui";
 import { KeyBlueButton, InfoModalButton } from "buttons";
-import { PathBrowseInput, FileBrowserFilters } from "inputs";
+import { PathBrowseInput, FileBrowserFilters, Select } from "inputs";
 import { Subtitle } from "shared";
 import styles from "./ExportPage.module.css";
 
@@ -66,21 +65,12 @@ const ExportPage = ({
       }
     />
     <div className={styles.exportArea}>
-      {
-        // `selectWithBigFont` className is
-        // temp solution to skinning from ReactSelectGlobal.css.
-        // When react-select will be replaced by the `pi-ui` component,
-        // this className can be deleted.
-      }
-      <div className={classNames(styles.exportAreaLeft, "selectWithBigFont")}>
+      <div className={styles.exportAreaLeft}>
         <label>
           <T id="export.select" m="Export Type" />
           <Select
-            clearable={false}
-            multi={false}
-            valueKey="key"
-            labelKey="name"
-            value={selectedExport.key}
+            selectWithBigFont
+            value={selectedExport}
             options={availableExports}
             onChange={onChangeSelectedExport}
           />

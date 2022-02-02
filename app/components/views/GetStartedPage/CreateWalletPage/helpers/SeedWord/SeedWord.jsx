@@ -7,7 +7,8 @@ const SeedWord = ({
   onChangeSeedWord,
   onPasteFromClipboard,
   onPaste,
-  isConfirm
+  isConfirm,
+  autoFocus
 }) => {
   const { index, show, match, word, error } = seedWord;
   return (
@@ -36,6 +37,7 @@ const SeedWord = ({
             value={{ name: word }}
             onPasteFromClipboard={onPasteFromClipboard}
             onPaste={onPaste}
+            autoFocus={autoFocus}
           />
         )}
       </span>

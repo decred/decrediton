@@ -173,7 +173,6 @@ test("show error when there is no walletService", () => {
 const getAmountInput = () => screen.getByLabelText("Amount");
 const queryAmountInput = () => screen.queryByLabelText("Amount");
 const getSendToInput = () => screen.getByLabelText("Send to");
-const querySendToInput = () => screen.queryByLabelText("Send to");
 const getSendAllButton = () =>
   screen.getByText("Send all funds from selected account").nextElementSibling;
 const getCancelSendAllButton = () =>
@@ -523,8 +522,7 @@ test("send funds to another account", async () => {
 
   user.type(getAmountInput(), `${validAmount}`);
   user.click(sendSelfButton);
-  expect(querySendToInput()).not.toBeInTheDocument();
-  user.click(screen.getByText(mockDefaultAccount.name));
+  user.click(screen.getAllByRole("combobox")[1]);
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
   selectors.publishTxResponse = jest.fn(() => "mocknewpublishtxresponse");
   user.click(screen.getByText(mockAccount2.name));

@@ -4,10 +4,13 @@ import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import LinksTab from "./LinksTab";
 import LogsTab from "./LogsTab";
 import TutorialsTab from "./TutorialsTab";
-import SettingsTab from "./SettingsTab";
-import { useSettings } from "hooks";
+import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
+import GeneralSettingsTab from "./GeneralSettingsTab";
+import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
+import { useSettings, useService } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
+import ErrorScreen from "ErrorScreen";
 import { useTheme } from "pi-ui";
 
 const closeWalletModalContent = (walletName) => (
@@ -51,13 +54,26 @@ const SettingsPageHeader = () => {
 };
 
 const SettingsPage = () => {
+  const { walletService } = useService();
   const { setThemeName } = useTheme();
   const tabs = [
     {
-      path: "/settings/settings",
-      content: <SettingsTab setThemeName={setThemeName} />,
+      path: "/settings/connectivity",
+      content: ConnectivitySettingsTab,
       header: SettingsTabHeader,
-      label: <T id="settings.tab.settings" m="Settings" />
+      label: <T id="settings.tab.connectivity" m="Connectivity" />
+    },
+    {
+      path: "/settings/general",
+      content: <GeneralSettingsTab setThemeName={setThemeName} />,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.general" m="General" />
+    },
+    {
+      path: "/settings/privacyandsecurity",
+      content: PrivacyandSecuritySettingsTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.privacyandsecurity" m="Privacy and Security" />
     },
     {
       path: "/settings/links",
@@ -78,7 +94,11 @@ const SettingsPage = () => {
       label: <T id="settings.tab.logs" m="Logs" />
     }
   ];
-  return <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />;
+  return !walletService ? (
+    <ErrorScreen />
+  ) : (
+    <TabbedPage header={<SettingsPageHeader />} tabs={tabs} />
+  );
 };
 
 export default SettingsPage;

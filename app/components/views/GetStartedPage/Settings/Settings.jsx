@@ -1,143 +1,82 @@
-import { useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
-import {
-  NetworkSettings,
-  ProxySettings,
-  PrivacySettings,
-  UISettings,
-  TimezoneSettings
-} from "views/SettingsPage/SettingsTab/groups";
-import { Subtitle } from "shared";
-import { KeyBlueButton } from "buttons";
+import ConnectivitySettingsTab from "views/SettingsPage/ConnectivitySettingsTab";
+import GeneralSettingsTab from "views/SettingsPage/GeneralSettingsTab";
+import PrivacyandSecuritySettingsTab from "views/SettingsPage/PrivacyandSecuritySettingsTab";
+import { InvisibleButton } from "buttons";
 import { GoBackMsg } from "../messages";
-import * as configConstants from "constants/config";
-import {
-  useTheme,
-  DEFAULT_LIGHT_THEME_NAME,
-  DEFAULT_DARK_THEME_NAME
-} from "pi-ui";
-import {
-  Wrapper,
-  Group,
-  ColumnWrapper,
-  Column
-} from "views/SettingsPage/SettingsTab//helpers";
-import { useSettings } from "hooks";
-import { BackButton, BackButtonArea } from "../helpers";
 import styles from "./Settings.module.css";
-import { wallet } from "wallet-preload-shim";
+import { TabbedPage, TitleHeader } from "layout";
+import { useTheme } from "pi-ui";
 
-const SetttingsForm = ({ onSendBack }) => {
+const ContentWithGoBackButton = ({ onSendBack, children }) => (
+  <>
+    <InvisibleButton className={styles.goBack} onClick={onSendBack}>
+      <GoBackMsg />
+    </InvisibleButton>
+    {children}
+  </>
+);
+
+const Setttings = ({ onSendBack }) => {
   const { setThemeName } = useTheme();
-  const {
-    areSettingsDirty,
-    tempSettings,
-    locales,
-    onChangeTempSettings,
-    onSaveSettings,
-    onAttemptChangePassphrase,
-    isChangePassPhraseDisabled,
-    changePassphraseRequestAttempt,
-    walletReady
-  } = useSettings();
-
-  const saveSettingsHandler = useCallback(() => {
-    const config = wallet.getGlobalCfg();
-    const oldTheme = config.get(configConstants.THEME);
-    if (oldTheme != tempSettings.theme) {
-      setThemeName(
-        tempSettings.theme.includes("dark")
-          ? DEFAULT_DARK_THEME_NAME
-          : DEFAULT_LIGHT_THEME_NAME
-      );
+  const tabs = [
+    {
+      key: "connectivity",
+      content: (
+        <ContentWithGoBackButton onSendBack={onSendBack}>
+          <ConnectivitySettingsTab
+            wrapperClassName={styles.connectionWrapper}
+          />
+        </ContentWithGoBackButton>
+      ),
+      label: <T id="getstarted.settings.tab.connectivity" m="Connectivity" />
+    },
+    {
+      key: "general",
+      content: (
+        <ContentWithGoBackButton onSendBack={onSendBack}>
+          <GeneralSettingsTab
+            wrapperClassName={styles.generalWrapper}
+            uiBoxClassName={styles.uiBox}
+            uiGroupClassName={styles.uiGroup}
+            timezoneBoxClassName={styles.timezoneBox}
+            setThemeName={setThemeName}
+          />
+        </ContentWithGoBackButton>
+      ),
+      label: <T id="getstarted.settings.tab.general" m="General" />
+    },
+    {
+      key: "privacyandsecurity",
+      content: (
+        <ContentWithGoBackButton onSendBack={onSendBack}>
+          <PrivacyandSecuritySettingsTab
+            wrapperClassName={styles.privacyAndSecurityWrapper}
+            boxClassName={styles.privacyAndSecurityBox}
+          />
+        </ContentWithGoBackButton>
+      ),
+      label: (
+        <T
+          id="getstarted.settings.tab.privacyandsecurity"
+          m="Privacy and Security"
+        />
+      )
     }
-    onSaveSettings(tempSettings);
-    onSendBack();
-  }, [onSaveSettings, onSendBack, tempSettings, setThemeName]);
-
+  ];
   return (
-    <>
-      <div>
-        <BackButtonArea className={styles.backButtonArea}>
-          <Tooltip content={<GoBackMsg />}>
-            <BackButton onClick={onSendBack} />
-          </Tooltip>
-        </BackButtonArea>
-        <Subtitle title={<T id="settings.subtitle" m="Settings" />} />
-        <Wrapper>
-          <Group>
-            <Subtitle
-              title={
-                <T id="settings.group-title.connectivity" m="Connectivity" />
-              }
-            />
-            <ColumnWrapper>
-              <Column>
-                <NetworkSettings
-                  {...{
-                    tempSettings,
-                    onChangeTempSettings
-                  }}
-                />
-              </Column>
-              <Column>
-                <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
-              </Column>
-            </ColumnWrapper>
-          </Group>
-
-          <Group className={styles.general}>
-            <Subtitle
-              title={<T id="settings.group-title.general" m="General" />}
-            />
-            <ColumnWrapper>
-              <Column>
-                <UISettings
-                  {...{ tempSettings, locales, onChangeTempSettings }}
-                />
-              </Column>
-              <Column className={styles.timezone}>
-                <TimezoneSettings {...{ tempSettings, onChangeTempSettings }} />
-              </Column>
-            </ColumnWrapper>
-          </Group>
-
-          <Group className={styles.privacy}>
-            <Subtitle
-              title={
-                <T
-                  id="settings.group-title.privacy-and-security"
-                  m="Privacy and Security"
-                />
-              }
-            />
-            <ColumnWrapper>
-              <PrivacySettings
-                {...{
-                  tempSettings,
-                  onAttemptChangePassphrase,
-                  isChangePassPhraseDisabled,
-                  onChangeTempSettings,
-                  walletReady,
-                  changePassphraseRequestAttempt
-                }}
-              />
-            </ColumnWrapper>
-          </Group>
-        </Wrapper>
-      </div>
-      <div className={styles.saveButtonWrapper}>
-        <KeyBlueButton
-          disabled={!areSettingsDirty}
-          size="large"
-          block={false}
-          onClick={saveSettingsHandler}>
-          <T id="getStarted.settings.save" m="Save" />
-        </KeyBlueButton>
-      </div>
-    </>
+    <div className={styles.tabsContainer}>
+      <TabbedPage
+        header={
+          <TitleHeader title={<T id="settings.subtitle" m="Settings" />} />
+        }
+        tabs={tabs}
+        tabsClassName={styles.tabs}
+        tabContentClassName={styles.tabsContent}
+        headerClassName={styles.tabHeader}
+      />
+    </div>
   );
 };
 
-export default SetttingsForm;
+export default Setttings;
