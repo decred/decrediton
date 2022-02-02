@@ -12,7 +12,8 @@ const PagedTutorial = ({
   visitedTabs,
   setVisitedTabs,
   activeTabIndex,
-  setActiveTabIndex
+  setActiveTabIndex,
+  onFinish
 }) => {
   useMountEffect(() => {
     if (slides.length === 1) {
@@ -36,6 +37,10 @@ const PagedTutorial = ({
   }
 
   const onSelectTab = (index) => {
+    if (onFinish && index == slides.length) {
+      onFinish();
+      return;
+    }
     if (index < 0 || index > slides.length - 1) {
       return;
     }
@@ -54,7 +59,8 @@ const PagedTutorial = ({
   const onPreviousTab = () => onSelectTab(activeTabIndex - 1);
   const onSelectTabs = () => {};
 
-  const nextArrowDisabled = activeTabIndex >= slides.length - 1;
+  const nextArrowDisabled =
+    activeTabIndex >= (onFinish ? slides.length : slides.length - 1);
   const previousArrowDisabled = activeTabIndex <= 0;
   const spaceEvenly = slides.length < 4;
 
@@ -145,7 +151,8 @@ PagedTutorial.propTypes = {
   visitedTabs: PropTypes.array,
   setVisitedTabs: PropTypes.func.isRequired,
   activeTabIndex: PropTypes.number,
-  setActiveTabIndex: PropTypes.func.isRequired
+  setActiveTabIndex: PropTypes.func.isRequired,
+  onFinish: PropTypes.func
 };
 
 PagedTutorial.defaultProps = {

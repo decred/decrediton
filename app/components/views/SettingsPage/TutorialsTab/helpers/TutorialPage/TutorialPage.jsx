@@ -35,7 +35,8 @@ const TutorialPage = ({
           setVisitedTabs,
           slides: tutorials[name].slides,
           activeTabIndex,
-          setActiveTabIndex
+          setActiveTabIndex,
+          onFinish: goBackHistory
         }}
       />
     </div>
