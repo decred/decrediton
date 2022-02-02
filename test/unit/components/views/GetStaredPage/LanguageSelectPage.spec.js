@@ -6,9 +6,13 @@ import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 
 const testLocalesArray = [
-  { description: "first-test-language" },
-  { description: "second-test-language" },
-  { description: "third-test-language" }
+  { key: "key1", description: "desc1", language: "lang1" },
+  {
+    key: "key2",
+    description: "desc2",
+    language: "lang2"
+  },
+  { key: "key3", description: "desc3", language: "lang3" }
 ];
 const selectors = sel;
 const daemonActions = da;
@@ -19,6 +23,7 @@ let mockIsTestNet;
 
 beforeEach(() => {
   mockSortedLocales = selectors.sortedLocales = jest.fn(() => testLocalesArray);
+  selectors.defaultLocaleName = jest.fn(() => testLocalesArray[0].key);
   mockSelectLanguage = daemonActions.selectLanguage = jest.fn(() => () => {});
   mockIsTestNet = selectors.isTestNet = jest.fn(() => false);
   selectors.stakeTransactions = jest.fn(() => []);
@@ -65,9 +70,11 @@ test("render language select page", () => {
   }
 
   user.click(screen.getByText(/continue/i));
-  expect(mockSelectLanguage).toHaveBeenCalledWith(
-    testLocalesArray[testLocalesArray.length - 1]
-  );
+  expect(mockSelectLanguage).toHaveBeenCalledWith({
+    ...testLocalesArray[testLocalesArray.length - 1],
+    label: testLocalesArray[testLocalesArray.length - 1].description,
+    value: testLocalesArray[testLocalesArray.length - 1].key
+  });
 });
 
 test("render language select page in testnet mode", () => {

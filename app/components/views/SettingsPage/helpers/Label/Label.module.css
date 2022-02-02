@@ -1,0 +1,7 @@
+.label {
+  color: var(--grey-7);
+}
+
+.label button {
+  margin-right: 0;
+}

@@ -1,0 +1,11 @@
+.box {
+  padding: 3rem 4rem;
+  background: var(--background-back-color);
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    padding: 3rem 2rem;
+  }
+}

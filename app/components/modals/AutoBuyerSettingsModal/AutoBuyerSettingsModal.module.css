@@ -41,9 +41,6 @@
   line-height: 16px;
   color: var(--stroke-color-hovered);
 }
-.accountSelectInput {
-  width: 100%;
-}
 .balanceToMaintainInput input {
   font-size: 16px;
 }

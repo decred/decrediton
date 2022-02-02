@@ -118,8 +118,17 @@ export const InfoDocFieldModalButton = mbb(
   styles.infoFieldModalButton,
   DocumentationInfoModal
 );
+export const InfoDocFieldModalInvisibleButton = mbb(
+  null,
+  DocumentationInfoModal,
+  InvisibleButton
+);
 export const DiscoverUsageButton = mbb(null, DiscoverUsageModal);
-export const ChangePassphraseButton = mbb(null, ChangePassphraseModal);
+export const ChangePassphraseButton = mbb(
+  null,
+  ChangePassphraseModal,
+  PiUiButton
+);
 export const InvisiblePassphraseModalButton = mbb(
   null,
   PassphraseModal,

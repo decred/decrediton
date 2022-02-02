@@ -6,11 +6,9 @@ import * as sel from "selectors";
 
 function ReceiveAccountsSelect({
   onChange,
-  className,
-  selectClassName,
   showAccountsButton,
-  disabled,
-  account
+  account,
+  ...props
 }) {
   const dispatch = useDispatch();
   const mixedAccount = useSelector(sel.getMixedAccount);
@@ -38,8 +36,6 @@ function ReceiveAccountsSelect({
     <AccountsSelect
       {...{
         showAccountsButton,
-        className,
-        selectClassName,
         onChange: onChangeAccount,
         accountsType: "visible",
         filterAccounts: [mixedAccount],
@@ -51,7 +47,8 @@ function ReceiveAccountsSelect({
           account && account != nextAddressAccount.value
             ? null
             : nextAddressAccount,
-        disabled
+        isSearchable: true,
+        ...props
       }}
     />
   );

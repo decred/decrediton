@@ -8,7 +8,6 @@ import configureStore from "./store/configureStore";
 import locales from "./i18n/locales";
 import "pi-ui/dist/index.css";
 import "./style/main.css";
-import "./style/ReactSelectGlobal.css";
 import pkg from "./package.json";
 import {
   DCR,

@@ -1,0 +1,12 @@
+.box {
+  min-height: 19rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 3rem;
+}
+
+.discoverUsageButton {
+  background-color: var(--grey-7);
+  padding: 0.6rem 1rem;
+  margin-top: 1rem;
+}

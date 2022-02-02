@@ -181,6 +181,13 @@ export function updateStateSettingsChanged(settings, norestart) {
   };
 }
 
+export const resetSettingsState = () => {
+  return (dispatch, getState) => {
+    const { currentSettings } = getState().settings;
+    dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
+  };
+};
+
 export const updateStateVoteSettingsChanged = (settings) => (
   dispatch,
   getState

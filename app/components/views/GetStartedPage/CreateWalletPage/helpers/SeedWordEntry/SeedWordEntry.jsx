@@ -1,11 +1,7 @@
-import Select from "react-select";
+import { Select } from "inputs";
 import { SEED_WORDS } from "constants/seed";
 import { wallet } from "wallet-preload-shim";
 import { useLayoutEffect } from "react";
-// SeedWordSelect.css includes custom styling for seed word select which need
-// to be loaded *after* ReactSelectGlobal.less, both imports should be deleted
-// when migrating to pi-ui's Select componentt!
-import "./SeedWordSelect.css";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map((name) => ({ name }));
 
@@ -16,7 +12,8 @@ const SeedWordEntry = ({
   seedWord,
   onPaste,
   value: { name },
-  disabled
+  disabled,
+  autoFocus
 }) => {
   useLayoutEffect(() => {
     document.onmousedown = (e) => {
@@ -27,7 +24,7 @@ const SeedWordEntry = ({
 
         // missing with the select options from react-select
         if (isPasted) {
-          const select = document.querySelector(".Select-menu-outer");
+          const select = document.querySelector("[id$='listbox']");
           if (select) {
             select.style.display = "none";
           }
@@ -37,39 +34,60 @@ const SeedWordEntry = ({
   });
 
   const getSeedWords = (input, callback) => {
-    input = input.toLowerCase();
+    const inputValue = input.toLowerCase();
     const options = SEED_WORD_OPTIONS.filter(
-      (i) => i.name.toLowerCase().substr(0, input.length) === input
-    );
-    callback(null, {
-      options: options.slice(0, 5)
+      (i) => i.name.toLowerCase().substr(0, inputValue.length) === inputValue
+    ).map((option) => {
+      return { value: option.name, label: option.name };
     });
+
+    callback(options.slice(0, 5));
   };
 
   const selectKeyDown = (e) => {
+    // prevent space key
     switch (e.keyCode) {
       case 32:
-        e.keyCode = 9;
+        e.preventDefault();
         break;
     }
   };
 
-  const value = { name };
+  const customStyles = {
+    indicatorsContainer: () => ({
+      display: "none"
+    }),
+    control: () => ({
+      border: "none",
+      background: "transparent"
+    }),
+    input: () => ({
+      textAlign: "center",
+      padding: "0"
+    }),
+    valueContainer: () => ({
+      textAlign: "center",
+      padding: "0 0.1em"
+    })
+  };
+
+  const value = { value: name, label: name };
   return (
     <div className={className} onPaste={onPaste}>
-      <Select.Async // use pi-ui's select here
-        autoFocus
-        simpleValue
+      <Select
+        isAsync
+        isSearchable
+        defaultOptions
+        autoFocus={autoFocus}
         disabled={disabled}
-        clearable={false}
-        multi={false}
-        filterOptions={false}
         value={value}
-        onChange={(value) => onChange(seedWord, value)}
-        valueKey="name"
-        labelKey="name"
+        onChange={({ value }) => onChange(seedWord, value)}
+        valueKey="value"
+        labelKey="label"
         loadOptions={getSeedWords}
-        onInputKeyDown={selectKeyDown}
+        placeholder=""
+        styles={customStyles}
+        onKeyDown={selectKeyDown}
       />
     </div>
   );

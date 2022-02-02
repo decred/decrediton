@@ -34,9 +34,6 @@ const icons = {
   "checkmark-context-icon": url(
     require("style/icons/checkMarkContextMenu.svg")
   ),
-  "change-password-default-icon": url(
-    require("style/icons/changepasswordDefault.svg")
-  ),
   "close-wallet-icon": url(require("style/icons/closeWallet.svg")),
   "contextbutton-eye-disabled-icon": url(
     require("style/icons/contextbutton-eye-disabled.svg")

@@ -1,105 +1,109 @@
-.backButtonArea {
-  position: absolute;
-  left: 1467px;
-  top: 66px;
-  right: initial;
+.tabsContainer {
+  height: calc(100vh - 17rem);
+  margin: -2rem -4rem 0 -4rem;
 }
 
-.privacy,
-.security,
-.timezone {
-  float: left;
+.tabs {
+  padding-left: 6rem !important;
 }
 
-.general {
-  order: 3;
+.tabsContent {
+  padding-top: 1rem;
+  padding-left: 6rem;
 }
 
-.saveButtonWrapper {
-  width: 1481px;
-  text-align: right;
+.tabHeader {
+  padding-left: 6rem !important;
 }
 
-.saveButton {
-  display: inline-block;
-  margin-right: 0;
+.uiGroup {
+  grid-column: initial;
+}
+
+.goBack {
+  background-image: var(--menu-arrow);
+  background-position: 0 center;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  padding: 2rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.privacyAndSecurityWrapper {
+  grid-template-columns: repeat(1, 105.8rem) !important;
+}
+
+.generalWrapper {
+  grid-template-columns: repeat(2, 51.5rem);
+}
+
+.privacyAndSecurityBox {
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.uiBox {
+  grid-template-columns: repeat(2, 1fr) !important;
 }
 
 @media screen and (max-width: 1920px) {
-  .backButtonArea {
-    left: 1230px;
+  .connectionWrapper {
+    grid-template-columns: repeat(2, 51.5rem);
   }
 }
 
-@media screen and (max-width: 1680px) {
-  .backButtonArea {
-    left: 988px;
+@media screen and (max-width: 1080px) {
+  .privacyAndSecurityWrapper,
+  .generalWrapper,
+  .connectionWrapper {
+    grid-template-columns: repeat(1, 76.4rem) !important;
+  }
+
+  .privacyAndSecurityBox {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
-@media screen and (min-width: 1680px) and (max-width: 1920px) {
-  .saveButtonWrapper {
-    width: 1240px;
-  }
-}
-
-@media screen and (min-width: 1400px) and (max-width: 1680px) {
-  .privacy {
-    order: 3;
+@media screen and (min-width: 768px) {
+  .timezoneBox ul li > div {
+    margin: 0 !important;
   }
 
-  .general {
-    order: 2;
+  .timezoneBox {
+    min-height: 10rem;
   }
 
-  .saveButtonWrapper {
-    width: 1000px;
-  }
-
-  .timezone {
-    margin-left: 20px;
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .backButtonArea {
-    left: 726px;
-  }
-
-  .privacy {
-    order: 3;
-  }
-
-  .general {
-    order: 2;
-  }
-
-  .saveButtonWrapper {
-    width: 740px;
-  }
-}
-
-@media screen and (max-width: 1180px) {
-  .saveButtonWrapper {
-    width: 649px;
-  }
-  .backButtonArea {
-    left: 638px;
+  .timezoneBox ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .backButtonArea {
-    top: 40px;
-    left: 342px;
+  .tabsContainer {
+    margin: 0 -2rem;
   }
 
-  .timezone {
-    order: 3;
+  .tabsContent {
+    padding: 1rem 2rem 1rem 2rem;
   }
 
-  .saveButtonWrapper {
-    width: 355px;
-    text-align: center;
+  .tabHeader,
+  .tabs {
+    padding-left: 2rem !important;
+  }
+
+  .generalWrapper,
+  .privacyAndSecurityWrapper,
+  .connectionWrapper {
+    grid-template-columns: repeat(1, 35.5rem) !important;
+  }
+
+  .privacyAndSecurityBox,
+  .uiBox {
+    grid-template-columns: 1fr !important;
   }
 }

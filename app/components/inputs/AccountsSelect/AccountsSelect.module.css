@@ -1,11 +1,16 @@
-.isRow {
-  display: flex;
-  flex-direction: row;
-}
-.select {
-  width: 300px;
+.container {
+  display: inline-block;
+  width: 100%;
 }
 .value {
+  display: flex;
+  justify-content: space-between;
+}
+.value.selectWithBigFont {
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+}
+.label {
   display: flex;
   justify-content: space-between;
 }

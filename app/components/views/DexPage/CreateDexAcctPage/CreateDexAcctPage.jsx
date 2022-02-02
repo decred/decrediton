@@ -39,7 +39,7 @@ const CreateDexAcctPage = () => {
             <T id="dex.createDexAccount.or" m="or" />
           </label>
           <AccountsSelect
-            disabled={dexAccountAttempt || dexSelectAccountAttempt}
+            isDisabled={dexAccountAttempt || dexSelectAccountAttempt}
             id="accountSelect"
             {...{ account, onChange: setAccount }}
             filterAccounts={[mixedAccount]}

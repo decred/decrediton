@@ -1,0 +1,26 @@
+.box {
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.hasWarning strong {
+  color: var(--error-text-color);
+}
+
+.infoButton {
+  padding: 0;
+  text-decoration: none;
+  color: var(--grey-5);
+  font-size: 1.1rem;
+  line-height: 1.4rem;
+}
+.infoButton:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .box {
+    grid-template-columns: 1fr;
+  }
+}

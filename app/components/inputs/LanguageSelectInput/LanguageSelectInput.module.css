@@ -1,24 +1,13 @@
-.input {
-  width: 200px;
-  margin-right: 0.5em;
-}
-
 .label {
   display: flex;
 }
 
-.label .flag {
-  margin: 5px 5px 0 0;
-}
-
 .flag {
-  flex-grow: 2;
   background-repeat: no-repeat;
-  background-size: 20px;
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-  margin-top: 2px;
+  background-size: 20px 13px;
+  width: 25px;
+  min-width: 25px;
+  background-position: left center;
 }
 
 .flag.ar {
@@ -61,6 +50,7 @@
   background-image: var(--flag-pl);
 }
 
+.flag.dev,
 .flag.pt-BR {
   background-image: var(--flag-ptbr);
 }
@@ -73,9 +63,8 @@
   background-image: var(--flag-hk);
 }
 
-.name {
-  flex-grow: 4;
-  width: 100px;
+.option,
+.singleValue {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

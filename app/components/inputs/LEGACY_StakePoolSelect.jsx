@@ -1,8 +1,7 @@
-import { Creatable } from "react-select";
-import Select from "react-select";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
 import { useState } from "react";
+import { Select } from "inputs";
 
 const messages = defineMessages({
   placeholder: {
@@ -55,15 +54,6 @@ const StakePoolSelect = ({
     );
   };
 
-  const newOptionCreator = () => {
-    return {
-      value: { Host: lastInput },
-      label: lastInput,
-      Host: lastInput,
-      newOption: true
-    };
-  };
-
   const onInputChange = (input) => {
     setLastInput(input);
   };
@@ -84,16 +74,25 @@ const StakePoolSelect = ({
     return true;
   };
 
-  const Component = creatable ? Creatable : Select;
-
   return (
-    <Component
+    <Select
+      isCreatable={creatable}
+      isSearchable
       {...props}
       options={getOptions()}
       placeholder={intl.formatMessage(messages.placeholder)}
       promptTextCreator={addStakePoolLabel}
       onChange={onChangeLocal}
-      newOptionCreator={newOptionCreator}
+      onCreateOption={(option) =>
+        onChangeLocal({
+          value: {
+            value: { Host: option }
+          },
+          label: option,
+          Host: option,
+          newOption: true
+        })
+      }
       onInputChange={onInputChange}
       isValidNewOption={isValidNewOption}
     />

@@ -19,12 +19,12 @@
 
 .newBiggerFontStyleInput {
   font-family: var(--font-family-regular);
-  font-size: 16px !important;
-  line-height: 16px !important;
+  font-size: 1.6rem !important;
+  line-height: 2.2rem !important;
 }
 .newBiggerFontStyleInput::placeholder {
-  font-size: 16px !important;
-  line-height: 16px !important;
+  font-size: 1.6rem !important;
+  line-height: 2.2rem !important;
   color: var(--grey-5) !important;
 }
 

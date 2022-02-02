@@ -37,6 +37,11 @@ const useSettings = () => {
     [dispatch]
   );
 
+  const resetSettingsState = useCallback(
+    () => dispatch(sa.resetSettingsState()),
+    [dispatch]
+  );
+
   const isVSPListingEnabled = useMemo(
     () =>
       tempSettings.allowedExternalRequests.includes(
@@ -130,7 +135,8 @@ const useSettings = () => {
     showDiscoverModal,
     hideDiscoverModal,
     discoverUsageAttempt,
-    rescanRunning
+    rescanRunning,
+    resetSettingsState
   };
 };
 

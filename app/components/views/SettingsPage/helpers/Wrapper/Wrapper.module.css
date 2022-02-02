@@ -1,0 +1,18 @@
+.wrapper {
+  font-size: 13px;
+  display: grid;
+  grid-template-columns: repeat(2, 73.7rem);
+  grid-gap: 3rem;
+}
+
+@media screen and (max-width: 1920px) {
+  .wrapper {
+    grid-template-columns: repeat(1, 76.4rem);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    grid-template-columns: repeat(1, 35.5rem);
+  }
+}

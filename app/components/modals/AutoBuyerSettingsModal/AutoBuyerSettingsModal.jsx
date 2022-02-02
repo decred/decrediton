@@ -59,15 +59,15 @@ const AutoBuyerSettingsModal = ({
         placeholder={intl.formatMessage(messages.balanceToMaintainPlaceholder)}
         label={intl.formatMessage(messages.balanceToMaintainLabel)}
       />
-      <label className={classNames(styles.label, "selectWithBigFont")}>
+      <label className={styles.label}>
         <T id="vsp.autobuyer.accountFrom" m="From" />
         <AccountsSelect
           {...{ account }}
+          selectWithBigFont
           onChange={setAccount}
           showAccountsButton={false}
           hideSpendable={true}
           filterAccounts={notMixedAccounts}
-          selectClassName={styles.accountSelectInput}
         />
       </label>
       {VSPSelectControl && (

@@ -1,7 +1,8 @@
 .customPrivacySettings {
-  width: 300px;
+  width: 60rem;
 }
 
 .privacyButtons {
+  margin-top: 1rem;
   text-align: right;
 }

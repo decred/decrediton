@@ -24,3 +24,4 @@ export { default as InlineField } from "./InlineField";
 export { default as SettingsTextInput } from "./SettingsTextInput";
 export { default as VSPSelect } from "./VSPSelect";
 export { default as SeedHexEntry } from "./SeedHexEntry";
+export { default as Select } from "./Select";

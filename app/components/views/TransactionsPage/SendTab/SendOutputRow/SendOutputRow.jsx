@@ -285,10 +285,6 @@ const SendOutputRow = ({
       <div className={styles.destinationContainer}>
         <div className={classNames(styles.sendInputWrapper, styles.address)}>
           {isSendSelf ? (
-            // `selectWithBigFont` className is
-            // temp solution to skinning from ReactSelectGlobal.css.
-            // When react-select will be replaced by the `pi-ui` component,
-            // this className can be deleted.
             <>
               <label
                 htmlFor={`addressInput-${index}`}
@@ -297,10 +293,9 @@ const SendOutputRow = ({
               </label>
               <ReceiveAccountsSelect
                 id={`addressInput-${index}`}
-                className="selectWithBigFont"
+                selectWithBigFont
                 selectClassName={styles.receiveAccountSelect}
-                disabled={receiveAccountsSelectDisabled}
-                getAddressForSelected={true}
+                isDisabled={receiveAccountsSelectDisabled}
                 showAccountsButton={false}
                 onKeyDown={onKeyDown}
                 account={receiveAccount}

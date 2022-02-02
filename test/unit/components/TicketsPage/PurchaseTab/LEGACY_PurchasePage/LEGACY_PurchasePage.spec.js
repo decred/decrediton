@@ -255,14 +255,12 @@ test("render LEGACY_PurchasePage", () => {
     screen.queryByLabelText("Always use this VSP")
   ).not.toBeInTheDocument();
   // change stakepool
-  const stakePoolSelectOption = screen.getAllByRole("option", {
-    name: mockConfiguredStakePools[0].Host
-  })[0];
+  const stakePoolSelectOption = screen.getAllByText(
+    mockConfiguredStakePools[0].Host
+  )[0];
 
   user.click(stakePoolSelectOption);
-  user.click(
-    screen.getByRole("option", { name: mockConfiguredStakePools[1].Host })
-  );
+  user.click(screen.getByText(mockConfiguredStakePools[1].Host));
 
   // changed values
   expect(screen.getByLabelText("Ticket Address:").value).toMatch(
@@ -363,7 +361,7 @@ test("render LEGACY_PurchasePage", () => {
   user.click(screen.getByText("Add VSP"));
   const testStakePoolHost = "test-stakepool-host";
   user.type(screen.getByRole("combobox"), testStakePoolHost);
-  user.click(screen.getByRole("option", { name: testStakePoolHost }));
+  user.click(screen.getByText(`Create "${testStakePoolHost}"`));
   expect(mockAddCustomStakePool).toHaveBeenCalledWith(testStakePoolHost);
 
   user.click(screen.getByText("Cancel"));
@@ -416,9 +414,7 @@ test("test legacy autobuyer", async () => {
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
   // set stakepool
   user.click(screen.getByText("Select VSP..."));
-  user.click(
-    screen.getByRole("option", { name: mockConfiguredStakePools[1].Host })
-  );
+  user.click(screen.getByText(mockConfiguredStakePools[1].Host));
 
   user.click(saveButton);
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
