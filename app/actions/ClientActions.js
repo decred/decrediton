@@ -776,7 +776,6 @@ export const getTreasuryBalance = () => async (dispatch, getState) => {
       if (!unspentTreasury) return;
       newTreasuryBalance = unspentTreasury;
     });
-    console.log(legacyTreasuryBalance, newTreasuryBalance);
     dispatch({
       treasuryBalance:
         parseInt(legacyTreasuryBalance) + parseInt(newTreasuryBalance),
