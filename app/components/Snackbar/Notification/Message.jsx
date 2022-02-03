@@ -17,18 +17,18 @@ const Message = ({
   return (
     <>
       <div className={style.snackbarMessage} data-testid="snackbar-message">
-        {topNotification && (
-          <button
-            aria-label="Close"
-            className={style.snackbarCloseButtonTop}
-            onClick={onDismissMessage}>
-            <ProgressRing radius={13} stroke={2} progress={progress} />
-          </button>
-        )}
         {txt}
       </div>
       {type === "Error" && (
         <CopyToClipboardButton textToCopy={txt} className={style.copyButton} />
+      )}
+      {topNotification && (
+        <button
+          aria-label="Close"
+          className={style.snackbarCloseButtonTop}
+          onClick={onDismissMessage}>
+          <ProgressRing radius={13} stroke={2} progress={progress} />
+        </button>
       )}
     </>
   );
