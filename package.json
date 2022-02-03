@@ -236,8 +236,8 @@
     "core-decorators": "^0.20.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.0",
-    "electron": "15.1.2",
-    "electron-builder": "^22.13.1",
+    "electron": "17.0.0",
+    "electron-builder": "^22.14.5",
     "electron-rebuild": "^3.2.5",
     "enzyme": "^3.11.0",
     "eslint": "^7.23.0",
@@ -245,7 +245,7 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.16.4",
-    "google-protobuf": "^3.15.6",
+    "google-protobuf": "^3.19.4",
     "html-webpack-plugin": "^5.3.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
@@ -281,7 +281,7 @@
     "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.4.0",
     "dex": "./modules/dex",
     "dom-helpers": "^3.4.0",
-    "electron-devtools-installer": "^3.1.1",
+    "electron-devtools-installer": "^3.2.0",
     "electron-fetch": "^1.7.3",
     "electron-store": "^7.0.2",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -328,7 +328,7 @@
     "xstate": "^4.17.1"
   },
   "optionalDependencies": {
-    "google-proto-files": "^2.4.0",
+    "google-proto-files": "^2.5.0",
     "grpc-tools": "^1.11.1",
     "win32ipc": "./modules/win32ipc"
   },
