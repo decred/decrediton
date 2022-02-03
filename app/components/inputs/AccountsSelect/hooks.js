@@ -61,7 +61,7 @@ export const useAccountsSelect = ({
   useEffect(() => {
     const newAccounts = getAccountsToShow();
     if (!isEqual(newAccounts, accounts)) {
-      if (!newAccounts.find((a) => isEqual(a.value, account.value))) {
+      if (!newAccounts.find((a) => isEqual(a.value, account?.value))) {
         setAccount(newAccounts[0]);
         onChange(newAccounts[0]);
       }
