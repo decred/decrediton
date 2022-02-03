@@ -31,8 +31,7 @@
 }
 
 .snackbar.snackbarError {
-  display: grid;
-  grid-template-columns: 25rem auto;
+  display: flex;
   align-items: center;
 }
 
