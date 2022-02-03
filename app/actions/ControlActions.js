@@ -162,6 +162,7 @@ export const getNextAccountAttempt = (passphrase, accountName) => async (
     return dispatch({ getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETNEXTACCOUNT_FAILED });
+    throw error;
   }
 };
 
