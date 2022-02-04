@@ -34,8 +34,9 @@
 
 .overviewBalanceLabel {
   font-family: var(--font-family-regular);
-  font-size: 11px;
   color: var(--overview-balance-label);
+  font-size: 1.3rem;
+  line-height: 1.6rem;
 }
 
 .overviewBalanceUnit {
@@ -86,12 +87,12 @@
 }
 
 .overviewBalanceSpendableLockedLabel {
-  font-size: 11px;
   color: var(--agenda-card-bottom-cfg);
   font-family: var(--font-family-regular);
-  line-height: 13px;
   margin-left: 10px;
   margin-top: 4px;
+  font-size: 1.3rem;
+  line-height: 1.6rem;
 }
 
 .overviewSpendableLockedWrapperArea {

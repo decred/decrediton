@@ -13,9 +13,14 @@ const Row = ({ pending, onClick, className, children, overview, eligible }) => (
     <div className={classNames(styles.txInfo, className)} onClick={onClick}>
       <div className={styles.txRowWrapper}>{children}</div>
       {pending && (
-        <Tooltip content={<T id="txHistory.Pending" m="Pending" />}>
-          <div className={styles.pendingOverviewDetails} onClick={onClick} />
-        </Tooltip>
+        <>
+          <div className={styles.pendingLabel}>
+            <T id="txhistory.pending" m="Pending" />
+          </div>
+          <Tooltip content={<T id="txHistory.Pending" m="Pending" />}>
+            <div className={styles.pendingOverviewDetails} onClick={onClick} />
+          </Tooltip>
+        </>
       )}
     </div>
   </div>

@@ -1,5 +1,5 @@
 import Row from "./Row";
-import { Balance } from "shared";
+import { Balance, TruncatedText } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import {
   TRANSACTION_DIR_RECEIVED,
@@ -28,16 +28,18 @@ const iconTooltipByType = (type) => {
   }
 };
 
-const TxDirection = ({ account, isCred }) => (
-  <div className={styles.direction}>
+const TxDirection = ({ account, isCred, overview }) => (
+  <div className={classNames(styles.direction, isCred && styles.isCred)}>
     {isCred ? (
       <T
         id="txHistory.out.tx"
-        m="To {acc}"
+        m="to {acc}"
         values={{
           acc: (
             <div className={styles.status}>
-              <div className={styles.accountName}>{account}</div>
+              <div className={styles.accountName}>
+                <TruncatedText text={account} max={overview ? 10 : 20} />
+              </div>
             </div>
           )
         }}
@@ -74,9 +76,11 @@ const RegularTxRow = ({
 }) => (
   <Row {...{ ...props, txAccountName, pending, overview }}>
     <div className={classNames(styles.info, overview && styles.overviewInfo)}>
-      <Tooltip content={iconTooltipByType(className)} placement="right">
-        <span className={classNames(styles[className], styles.icon)} />
-      </Tooltip>
+      <div className={styles.iconContainer}>
+        <Tooltip content={iconTooltipByType(className)} placement="right">
+          <span className={classNames(styles[className], styles.icon)} />
+        </Tooltip>
+      </div>
       <span className={styles.amountValue}>
         <Balance
           amount={
@@ -87,16 +91,20 @@ const RegularTxRow = ({
       {txDirection === TICKET_FEE ? (
         <div className={classNames("flex-row", styles.txDirection)}>
           <TxDirection account={txAccountNameDebited} />
-          <TxDirection account={txAccountNameCredited} isCred />
+          <TxDirection
+            account={txAccountNameCredited}
+            isCred
+            overview={overview}
+          />
         </div>
       ) : txDirection !== TRANSACTION_DIR_RECEIVED ? (
         <div className={classNames("flex-row", styles.txDirection)}>
           <TxDirection account={txAccountName} />
-          <TxDirection account={txOutputAddresses} isCred />
+          <TxDirection account={txOutputAddresses} isCred overview={overview} />
         </div>
       ) : (
         <div className={classNames("flex-row", styles.txDirection)}>
-          <TxDirection account={txAccountName} isCred />
+          <TxDirection account={txAccountName} isCred overview={overview} />
         </div>
       )}
       {!pending && (
