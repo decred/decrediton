@@ -233,7 +233,7 @@
   padding: 2px;
   border-radius: 5px;
   height: 20px;
-  max-width: 120px;
+  margin-right: 1rem;
 }
 
 .myTickets.overview .feeStatusContainer {
@@ -241,6 +241,7 @@
   grid-row: 2;
   justify-self: flex-end;
   width: max-content;
+  margin-right: 0;
 }
 
 .ticketRewardContainer {
@@ -364,7 +365,7 @@
 
 .historyRow .txInfo .txRowWrapper {
   padding: 16px 20px;
-  width: 97%;
+  width: 96%;
 }
 
 .eligibleRow {
