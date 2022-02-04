@@ -147,14 +147,14 @@ test("test HomePage with an immature ticket", async () => {
   expect(
     screen.getByText(/recent transactions/i).parentNode.textContent
   ).toMatchInlineSnapshot(
-    '"Recent TransactionsSee all →Received3.00000 DCRTo unmixedNov 17, 2021, 13:51Mix-2.00000 DCRFrom mixedTo mockOutput21Nov 17, 2021, 13:51"'
+    '"Recent TransactionsSee all →Received3.00000 DCRto unmixedNov 17, 2021, 13:51Mix-2.00000 DCRFrom mixedto mockO...put21Nov 17, 2021, 13:51"'
   );
 
   // check tickets
   expect(
     screen.getByText(/staking activity/i).parentNode.textContent
   ).toMatchInlineSnapshot(
-    '"Staking ActivitySee all →LiveTicket Price: 60.62796917 DCR60.62796917 DCRFee StatusPaidNov 17, 2021, 13:35VoteTicket Price: 69.25100364 DCR69.25100364 DCRTicket Reward: 0.03062042 DCR0.03DCRTicket Days To Vote: 22 daysmixedNov 3, 2021, 08:46"'
+    '"Staking ActivitySee all →Ticket, LiveNov 17, 2021, 13:35Ticket Price: 60.62796917 DCR60.62796917 DCRFee StatusPaidTicket, VoteNov 3, 2021, 08:46Ticket Price: 69.25100364 DCR69.25100364 DCRTicket Reward: 0.03062042 DCR0.03DCRTicket Days To Vote: 22 daysmixed"'
   );
 
   // see all transactions
