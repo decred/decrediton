@@ -281,7 +281,7 @@
 
 .ticketPrice {
   font-size: 1.5rem;
-  color: var(--input-color-default);
+  color: var(--grey-6);
   font-weight: 600;
 }
 
@@ -294,7 +294,7 @@
 
 .ticketPriceSecondary,
 .ticketPriceUnit {
-  color: var(--input-color-default);
+  color: var(--grey-6);
   font-weight: 600;
 }
 

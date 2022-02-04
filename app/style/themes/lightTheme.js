@@ -177,6 +177,10 @@ const lightTheme = {
   "tab-default-background-tabbedpage": "var(--background-back-color)",
   "tab-default-border-tabbedpage": "var(--background-back-color)",
 
+  // sidebar tabs
+  "tab-text-color-sidebar": "#3D5873",
+  "tab-active-background-sidebar": "var(--input-color-default)",
+
   // proposals tabs
   "tab-default-background-tabbedpage-proposals": "var(--governance-tab-bg)",
   "tab-active-background-tabbedpage-proposals": "var(--governance-tab-bg)",
