@@ -7,6 +7,7 @@ import LogsTab from "./LogsTab";
 import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
 import GeneralSettingsTab from "./GeneralSettingsTab";
 import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
+import { TrezorTab } from "./TrezorTab";
 import { useSettings, useService } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
