@@ -1,9 +1,10 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
 import { linkList, TREZOR_KEY, LN_KEY, DEX_KEY } from "./Links";
 import { useHistory } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
+import { cloneDeep } from "fp";
 
 export function useMenuLinks() {
   const location = useSelector(sel.location);
@@ -18,6 +19,7 @@ export function useMenuLinks() {
   );
   const newPreVoteProposalsCount = useSelector(sel.newPreVoteProposalsCount);
   const newProposalsStartedVoting = useSelector(sel.newProposalsStartedVoting);
+  const useDexSpvExperimental = useSelector(sel.useDexSpvExperimental);
 
   const notifProps = useMemo(
     () => ({
@@ -32,9 +34,8 @@ export function useMenuLinks() {
     ]
   );
 
-  const prepareLinkList = () => {
-    const useDexSpvExperimental = useSelector(sel.useDexSpvExperimental);
-    let links = linkList;
+  const menuLinks = useMemo(() => {
+    let links = cloneDeep(linkList);
     if (!isTrezor) {
       links = links.filter((l) => l.key !== TREZOR_KEY);
     }
@@ -58,16 +59,10 @@ export function useMenuLinks() {
         return l;
       });
     }
-
-    return links;
-  };
-
-  const links = useRef(prepareLinkList());
-  const menuLinks = useMemo(() => {
-    return links.current.map((link) => {
+    return links.map((link) => {
       return { ...link, notifProp: notifProps[link.notifProp] };
     });
-  }, [notifProps]);
+  }, [notifProps, isTrezor, lnEnabled, isSPV, useDexSpvExperimental]);
 
   const [activeTabIndex, setActiveTabIndex] = useState(-1);
   const history = useHistory();
