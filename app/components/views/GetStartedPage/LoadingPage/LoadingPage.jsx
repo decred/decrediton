@@ -13,7 +13,7 @@ const LoadingPage = ({ onShowOnboardingTutorial }) => {
         className={styles.subtitle}
         title={
           <T
-            id="getstarted.tutorials.learnAboutDecred"
+            id="getstarted.loadingpage.learnAboutDecred"
             m="Learn about decred"
           />
         }

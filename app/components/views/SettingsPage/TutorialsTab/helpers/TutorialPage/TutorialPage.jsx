@@ -39,7 +39,7 @@ const TutorialPage = ({
           activeTabIndex,
           setActiveTabIndex,
           className: pagedTutorialClassname,
-          tabContentWrapperClassName
+          tabContentWrapperClassName,
           onFinish: goBackHistory
         }}
       />

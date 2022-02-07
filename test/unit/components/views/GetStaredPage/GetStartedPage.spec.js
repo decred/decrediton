@@ -169,10 +169,14 @@ test("click on settings link and go back", async () => {
   await wait(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/settings/i));
-  await wait(() => screen.getByText(/connectivity/i));
+  await wait(() => screen.getByText("Connectivity"));
 
   // go back
-  user.click(screen.getByText(/go back/i).nextElementSibling);
+  user.click(
+    screen.getByRole("button", {
+      name: "Go back"
+    })
+  );
   await wait(() => screen.getByText(/welcome to decrediton/i));
 });
 

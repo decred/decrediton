@@ -14,7 +14,7 @@ const PagedTutorial = ({
   activeTabIndex,
   setActiveTabIndex,
   className,
-  tabContentWrapperClassName
+  tabContentWrapperClassName,
   onFinish
 }) => {
   useMountEffect(() => {
@@ -159,7 +159,7 @@ PagedTutorial.propTypes = {
   activeTabIndex: PropTypes.number,
   setActiveTabIndex: PropTypes.func.isRequired,
   className: PropTypes.string,
-  tabContentWrapperClassName: PropTypes.string
+  tabContentWrapperClassName: PropTypes.string,
   onFinish: PropTypes.func
 };
 
