@@ -100,7 +100,7 @@ const AnimatedLinearProgressFull = ({
   }
 
   return (
-    <div className={classNames(styles.linearProgress)}>
+    <div className={styles.linearProgress}>
       <div>
         {perComplete > 0 && (
           <div

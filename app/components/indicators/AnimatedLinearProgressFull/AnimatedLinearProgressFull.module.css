@@ -8,6 +8,7 @@
   grid-template-columns: max-content auto;
   padding: 1.7rem 4rem 2.2rem 4rem;
   color: var(--main-dark-blue);
+  z-index: 9999;
 }
 
 .linearProgressBar {

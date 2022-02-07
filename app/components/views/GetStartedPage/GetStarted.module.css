@@ -1,6 +1,6 @@
 .container {
   color: var(--title-text-and-button-background);
-  padding: 8.3rem 0;
+  padding: 8.3rem 0 0 0;
   position: relative;
 }
 

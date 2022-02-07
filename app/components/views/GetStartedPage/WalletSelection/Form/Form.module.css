@@ -189,17 +189,6 @@
   animation: bounce 1s var(--ease-in-out-quart) infinite;
 }
 
-@media (--bg-viewport) {
-  .container,
-  .displayWalletContainer {
-    width: 63.4rem;
-  }
-
-  .largeButtonIcon span {
-    font-size: 1.3rem !important;
-  }
-}
-
 @media (--sm-viewport) {
   .container,
   .displayWalletContainer {
