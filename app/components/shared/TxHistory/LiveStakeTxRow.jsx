@@ -60,34 +60,45 @@ const StakeTxRow = ({
   return (
     <Row {...{ className, pending, ...props, overview }}>
       <div
-        className={classNames(
-          styles.myTickets,
-          overview && styles.overview,
-          styles.live
-        )}>
-        <div className={styles.ticketStatus}>
+        className={classNames(styles.myTickets, overview && styles.overview)}>
+        <div className={styles.iconContainer}>
           <span className={classNames(styles[className], styles.icon)} />
-          <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Tooltip
-          className={styles.tooltip}
-          content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
-          <Balance
-            bold
-            classNameAmount={styles.myTicketsPrice}
-            classNameUnit={styles.noBold}
-            amount={ticketPrice}
-          />
-        </Tooltip>
-        <div></div>
-        <Tooltip
-          className={styles.tooltip}
-          content={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />}>
-          <div className={classNames(styles.feeStatus)}>{feeStatusString}</div>
-        </Tooltip>
+        <span className={styles.stakeType}>
+          {overview ? (
+            <T
+              id="ticket.type.liveTicketLabel"
+              m="Ticket, {typeMsg}"
+              values={{
+                typeMsg
+              }}
+            />
+          ) : (
+            typeMsg
+          )}
+        </span>
         {!pending && (
           <div className={styles.timeDateSpacer}>{timeMessage(txTs)}</div>
         )}
+        <div className={styles.ticketPriceContainer}>
+          <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+            <Balance
+              flat={overview}
+              classNameWrapper={styles.ticketPrice}
+              classNameSecondary={styles.ticketPriceSecondary}
+              classNameUnit={styles.ticketPriceUnit}
+              amount={ticketPrice}
+            />
+          </Tooltip>
+        </div>
+        <div className={styles.feeStatusContainer}>
+          <Tooltip
+            content={<T id="txRow.live.feeStatus.tooltip" m="Fee Status" />}>
+            <div className={classNames(styles.feeStatus)}>
+              {feeStatusString}
+            </div>
+          </Tooltip>
+        </div>
       </div>
     </Row>
   );

@@ -73,46 +73,70 @@ const StakeTxRow = ({
     <Row {...{ className, pending, ...props, overview }}>
       <div
         className={classNames(styles.myTickets, overview && styles.overview)}>
-        <div className={styles.ticketStatus}>
+        <div className={styles.iconContainer}>
           <span className={classNames(styles[className], styles.icon)} />
-          <span className={styles.stakeType}>{typeMsg}</span>
         </div>
-        <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
-          <Balance
-            bold
-            classNameAmount={styles.myTicketsPrice}
-            classNameUnit={styles.noBold}
-            amount={ticketPrice}
-          />
-        </Tooltip>
-        <Tooltip content={ticketRewardMessage}>
-          <Balance
-            classNameWrapper={styles.ticketReward}
-            noSmallAmount
-            amount={ticketReward}
-          />
-        </Tooltip>
-        {showDaysToVote ? (
-          <Tooltip content={daysToVoteMessage}>
-            <div className={styles.daysToVote}>
-              <T
-                id="statusSmall.daysToVotePlural"
-                m="{days, plural, one {# day} other {# days}}"
-                values={{ days: daysToVote }}
-              />
-            </div>
-          </Tooltip>
-        ) : (
-          <div />
-        )}
-        <div className={classNames(styles.accountName, styles.stakeAccount)}>
-          {accountName}
-        </div>
+        <span className={styles.stakeType}>
+          {overview ? (
+            <T
+              id="ticket.type.ticketLabel"
+              m="Ticket, {typeMsg}"
+              values={{
+                typeMsg
+              }}
+            />
+          ) : (
+            typeMsg
+          )}
+        </span>
         {!pending && (
           <div className={styles.timeDateSpacer}>
             {txLeaveTs && timeMessage(txLeaveTs)}
           </div>
         )}
+        <div className={styles.ticketPriceContainer}>
+          <Tooltip content={<TicketPriceMessage ticketPrice={ticketPrice} />}>
+            <Balance
+              flat={overview}
+              classNameWrapper={styles.ticketPrice}
+              classNameSecondary={styles.ticketPriceSecondary}
+              classNameUnit={styles.ticketPriceUnit}
+              amount={ticketPrice}
+            />
+          </Tooltip>
+        </div>
+        <div className={styles.ticketDetailsContainer}>
+          <div className={styles.ticketRewardContainer}>
+            <Tooltip content={ticketRewardMessage}>
+              <Balance
+                noSmallAmount
+                flat
+                classNameWrapper={styles.ticketReward}
+                classNameSecondary={styles.ticketRewardSecondary}
+                classNameUnit={styles.ticketRewardUnit}
+                amount={ticketReward}
+              />
+            </Tooltip>
+          </div>
+          {showDaysToVote ? (
+            <div className={styles.daysToVoteContainer}>
+              <Tooltip content={daysToVoteMessage}>
+                <div className={styles.daysToVote}>
+                  <T
+                    id="statusSmall.daysToVotePlural"
+                    m="{days, plural, one {# day} other {# days}}"
+                    values={{ days: daysToVote }}
+                  />
+                </div>
+              </Tooltip>
+            </div>
+          ) : (
+            <div />
+          )}
+        </div>
+        <div className={classNames(styles.accountName, styles.stakeAccount)}>
+          {accountName}
+        </div>
       </div>
     </Row>
   );

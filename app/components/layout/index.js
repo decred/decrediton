@@ -6,3 +6,4 @@ export { default as StandalonePageBody } from "./StandalonePageBody";
 export { default as StandalonePage } from "./StandalonePage";
 export { default as BlurableContainer } from "./BlurableContainer";
 export { default as PageBody } from "./PageBody";
+export { default as DefaultThemesWithCustomTabsProvider } from "./DefaultThemesWithCustomTabsProvider";

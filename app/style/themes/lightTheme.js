@@ -68,11 +68,11 @@ const lightTheme = {
   "header-desc-lighter-color": "#091440",
   "info-modal-button-bg": "#48566e",
   "info-modal-button-text": "#fff",
-  "agenda-card-bottom-cfg": "#596d81",
+  "agenda-card-bottom-cfg": "var(--grey-6)",
   "tabbed-page-header-bg": "#edeff1",
   "tabbed-page-header-active-bg": "#fff",
   "tabbed-page-header-text": "#9ca8b5",
-  "overview-balance-label": "#596d81",
+  "overview-balance-label": "var(--grey-6)",
   "chart-axis-stroke": "#666",
   "chart-axis-text": "#a4afba",
   "disabled-background-color-dark": "#e7eaed",
@@ -94,7 +94,7 @@ const lightTheme = {
   "tx-detail-text": "#596d81",
   "tx-detail-raw-shadow":
     "linear-gradient(to top, rgb(243, 246, 246, 0.6) 10%, rgb(243, 246, 246, 0.5) 20%, rgb(243, 246, 246, 0) 70%)",
-  "home-content-link": "#8997a5",
+  "home-content-link": "var(--main-dark-blue)",
   "transfer-details-bg": "#edeff1",
   "filter-menu-arrow": "#fff",
   "filter-menu-bg-hover": "#596d81",
@@ -176,6 +176,10 @@ const lightTheme = {
   // tabbed page defaults
   "tab-default-background-tabbedpage": "var(--background-back-color)",
   "tab-default-border-tabbedpage": "var(--background-back-color)",
+
+  // sidebar tabs
+  "tab-text-color-sidebar": "#3D5873",
+  "tab-active-background-sidebar": "var(--input-color-default)",
 
   // proposals tabs
   "tab-default-background-tabbedpage-proposals": "var(--governance-tab-bg)",
