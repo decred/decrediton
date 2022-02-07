@@ -9,7 +9,7 @@ import { classNames, Tabs, Tab } from "pi-ui";
 import styles from "./TabbedPage.module.css";
 import * as sel from "selectors";
 import { useSelector } from "react-redux";
-import DefaultThemesWithCustomTabsProvider from "./DefaultThemesWithCustomTabsProvider";
+import DefaultThemesWithCustomTabsProvider from "../DefaultThemesWithCustomTabsProvider";
 
 const TabbedPage = ({
   tabs,

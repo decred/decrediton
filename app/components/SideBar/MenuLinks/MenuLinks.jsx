@@ -1,7 +1,15 @@
-import { classNames, Tabs, Tab, Tooltip } from "pi-ui";
+import {
+  classNames,
+  Tabs,
+  Tab,
+  Tooltip,
+  useTheme,
+  getThemeProperty
+} from "pi-ui";
 import { useMenuLinks } from "./hooks";
 import styles from "./MenuLinks.module.css";
 import { MENU_LINKS_PER_ROW } from "constants/decrediton";
+import { DefaultThemesWithCustomTabsProvider } from "layout";
 
 const MenuLinks = () => {
   const {
@@ -12,8 +20,14 @@ const MenuLinks = () => {
     onSelectTab
   } = useMenuLinks();
 
+  const { theme } = useTheme();
+
   return (
-    <>
+    <DefaultThemesWithCustomTabsProvider
+      themes={{
+        "tab-text-color": getThemeProperty(theme, "tab-text-color-sidebar"),
+        "tab-default-background": getThemeProperty(theme, "sidebar-color")
+      }}>
       <Tabs
         onSelectTab={onSelectTab}
         activeTabIndex={activeTabIndex}
@@ -69,7 +83,7 @@ const MenuLinks = () => {
           );
         })}
       </Tabs>
-    </>
+    </DefaultThemesWithCustomTabsProvider>
   );
 };
 

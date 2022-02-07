@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><defs><style>.a{fill:#8997a5;}.b{fill:#c4cbd2;}</style></defs><g transform="translate(-909.605 -430.605)"><rect class="a" width="12" height="8" transform="translate(909.605 434.605)"/><rect class="b" width="8" height="4" transform="translate(911.605 436.605)"/><rect class="a" width="2" height="4.16" transform="translate(914.605 437.633)"/><path class="b" d="M81,150a3,3,0,0,1-6,0" transform="translate(837.605 286.605)"/><path class="a" d="M81,125.1a3,3,0,1,1-6,0" transform="translate(837.605 310.509)"/><circle class="b" cx="0.5" cy="0.5" r="0.5" transform="translate(915.105 435.633)"/><path class="b" d="M138.5,139.7h-1l.248-1.5h.5Z" transform="translate(777.605 297.933)"/><rect class="b" width="12" height="3.488" transform="translate(909.605 431.117)"/><rect class="a" width="2" height="4.16" transform="translate(909.605 430.605)"/><rect class="a" width="2" height="4.16" transform="translate(914.605 430.605)"/><rect class="a" width="2" height="4.16" transform="translate(919.605 430.605)"/></g></svg>
+<svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 4.66699H2V9.99999H10V4.66699Z" fill="#091440"/>
+<path d="M8.66601 6H3.33301V8.667H8.66601V6Z" fill="#C4CBD2"/>
+<path d="M8 5.33594C8 5.86637 7.78929 6.37508 7.41422 6.75015C7.03914 7.12523 6.53043 7.33594 6 7.33594C5.46957 7.33594 4.96086 7.12523 4.58578 6.75015C4.21071 6.37508 4 5.86637 4 5.33594" fill="#091440"/>
+<path d="M5.99999 6.01805C6.1839 6.01805 6.33299 5.86896 6.33299 5.68505C6.33299 5.50114 6.1839 5.35205 5.99999 5.35205C5.81608 5.35205 5.66699 5.50114 5.66699 5.68505C5.66699 5.86896 5.81608 6.01805 5.99999 6.01805Z" fill="#C4CBD2"/>
+<path d="M6.334 6.68506H5.66699L5.83199 5.68506H6.16699L6.334 6.68506Z" fill="#C4CBD2"/>
+<path d="M10 2.34082H2V4.66582H10V2.34082Z" fill="#C4CBD2"/>
+<path d="M3.333 2H2V4.773H3.333V2Z" fill="#091440"/>
+<path d="M6.66601 2H5.33301V4.773H6.66601V2Z" fill="#091440"/>
+<path d="M9.99999 2H8.66699V4.773H9.99999V2Z" fill="#091440"/>
+</svg>
+

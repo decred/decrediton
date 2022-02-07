@@ -181,6 +181,9 @@ const darkTheme = {
   "tab-default-border-tabbedpage-proposals": "var(--governance-tab-bg)",
   "tab-active-border-tabbedpage-proposals": "var(--grey-7)",
 
+  // sidebar tabs
+  "tab-text-color-sidebar": "var(--tab-text-color)",
+
   "seedword-label-bg": "#223767",
   "seedword-label-border": "#223767",
   "seedword-label-text": "#3262b0",
