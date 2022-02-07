@@ -22,7 +22,7 @@ const AutoWalletLaunchingModal = ({ onCancelModal, onSubmit, show }) => {
         id="autostart"
         description={
           <T
-            id="autoWalletLaunching.discoverUsageContent"
+            id="autoWalletLaunching.checkboxDesc"
             m="You’ll be able to change this later in Settings."
           />
         }
