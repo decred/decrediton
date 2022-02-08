@@ -29,7 +29,8 @@ const AutoWalletLaunchingModal = ({ onCancelModal, onSubmit, show }) => {
         checked={autoOpenWallet}
         onChange={() => setAutoOpeningWallet(!autoOpenWallet)}
       />
-      <div
+      <button
+        aria-label="Close"
         className={styles.infoCloseButtonTop}
         onClick={() => onCancelModal()}
       />

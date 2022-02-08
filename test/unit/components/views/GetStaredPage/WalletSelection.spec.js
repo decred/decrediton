@@ -21,6 +21,8 @@ let mockSetSelectedWallet;
 let mockOpenWalletAttempt;
 let mockStartRpcRequestFunc;
 let mockGetSelectedWallet;
+let mockGetSelectedWalletSelector;
+let mockSetAutoWalletLaunching;
 let testAvailableWallets;
 
 const selectors = sel;
@@ -95,6 +97,9 @@ beforeEach(() => {
   mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(() => () =>
     Promise.reject()
   );
+  mockSetAutoWalletLaunching = wlActions.setAutoWalletLaunching = jest.fn(
+    () => () => {}
+  );
   mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
     Promise.resolve()
   );
@@ -104,6 +109,10 @@ beforeEach(() => {
   selectors.isSPV = jest.fn(() => false);
   clientActions.goToHomePage = jest.fn(() => {});
   selectors.stakeTransactions = jest.fn(() => []);
+  mockGetSelectedWalletSelector = selectors.getSelectedWallet = jest.fn(
+    () => () => null
+  );
+  selectors.autoWalletLaunching = jest.fn(() => undefined);
 });
 
 test("render wallet chooser view", async () => {
@@ -181,7 +190,25 @@ test("test editing wallets", async () => {
   expect(screen.getByText(/edit wallets/i)).toBeInTheDocument();
 });
 
-test("launch a wallet", async () => {
+const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
+const launchWallet = async (ms) => {
+  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
+    Promise.resolve(true)
+  );
+  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(
+    () => async (dispatch) => {
+      if (ms) {
+        await sleep(ms);
+      }
+      dispatch({ type: wlActions.SYNC_SYNCED });
+      Promise.resolve();
+    }
+  );
+  mockGetSelectedWalletSelector = selectors.getSelectedWallet = jest.fn(
+    () => () => ({
+      value: "mock-wallet"
+    })
+  );
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton/i));
 
@@ -190,7 +217,76 @@ test("launch a wallet", async () => {
   await wait(() =>
     expect(mockStartWallet).toHaveBeenCalledWith(testAvailableWallets[1])
   );
+};
+
+test("launch a wallet and click on Save button on Auto Wallet launching modal", async () => {
+  await launchWallet();
+  await wait(() => screen.getByText("Finishing to load wallet"));
+
+  user.click(screen.getByRole("button", { name: "Open Wallet" }));
+  user.click(screen.getByRole("button", { name: "Save" }));
+  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+
+  expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
+
   expect(mockSetSelectedWallet).toHaveBeenCalled();
+  expect(mockStartWallet).toHaveBeenCalled();
+  expect(mockStartRpcRequestFunc).toHaveBeenCalled();
+  expect(mockGetSelectedWalletSelector).toHaveBeenCalled();
+  expect(mockSetAutoWalletLaunching).toHaveBeenCalledWith(true);
+});
+
+test("launch a wallet and click on checkbox, then the Save button on Auto Wallet launching modal", async () => {
+  await launchWallet();
+  await wait(() => screen.getByText("Finishing to load wallet"));
+
+  user.click(screen.getByRole("button", { name: "Open Wallet" }));
+  user.click(screen.getByRole("checkbox"));
+  user.click(screen.getByRole("button", { name: "Save" }));
+  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+
+  expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
+  expect(mockSetAutoWalletLaunching).toHaveBeenCalledWith(false);
+});
+
+test("launch a wallet and click on Ask me later button on Auto Wallet launching modal", async () => {
+  await launchWallet();
+  await wait(() => screen.getByText("Finishing to load wallet"));
+
+  user.click(screen.getByRole("button", { name: "Open Wallet" }));
+  user.click(screen.getByRole("button", { name: "Ask me later" }));
+  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+
+  expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
+  expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
+});
+
+test("launch a wallet and close Auto Wallet launching modal", async () => {
+  await launchWallet();
+  await wait(() => screen.getByText("Finishing to load wallet"));
+
+  user.click(screen.getByRole("button", { name: "Open Wallet" }));
+  user.click(screen.getByRole("button", { name: "Close" }));
+  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+
+  expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
+  expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
+});
+
+test("launch a wallet and open wallet automatically ", async () => {
+  selectors.autoWalletLaunching = jest.fn(() => true);
+  await launchWallet();
+
+  expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
+  expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
+});
+
+test("launch a wallet and cancel loading", async () => {
+  await launchWallet(1000);
+  await wait(() => screen.getByText("Cancel Loading"));
+  user.click(screen.getByText("Cancel Loading"));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
+  expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
 });
 
 test("launch an encrypted wallet", async () => {

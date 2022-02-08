@@ -86,14 +86,35 @@ test("render empty wallet chooser view", async () => {
   expect(screen.getByText(/create a new wallet/i)).toBeInTheDocument();
   expect(screen.getByText(/restore existing wallet/i)).toBeInTheDocument();
   expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument();
-  expect(screen.getByText(/learn the basics/i)).toBeInTheDocument();
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
     /testnetBody/
   );
-  // expect(screen.getByText(/update available/i)).toBeInTheDocument();
-  // expect(screen.getByText(/new version available/i)).toBeInTheDocument();
 
-  // TODO: check tutorials
+  // check tutorials
+  expect(screen.getByText(/learn about decred/i)).toBeInTheDocument();
+  user.click(screen.getByText("Decred Intro"));
+  await wait(() => screen.getByText("Back"));
+  // go back
+  user.click(screen.getByText("Back").nextElementSibling);
+  await wait(() => screen.getByText(/welcome to decrediton/i));
+
+  // open onboard tutorial again and go back by finishing it
+  user.click(screen.getByText("Decred Intro"));
+  await wait(() => screen.getByText("Back"));
+  // step forward
+  const nextButton = screen.getByRole("button", { name: "Next" });
+  user.click(nextButton);
+  expect(screen.getAllByText("Governance systems").length).toBeTruthy();
+  // finish
+  user.click(nextButton);
+  await wait(() => screen.getByText(/welcome to decrediton/i));
+
+  // check learn the basics
+  user.click(screen.getByRole("button", { name: "Learn the Basics" }));
+  await wait(() => screen.getByText("Skip"));
+  // go back
+  user.click(screen.getByText("Skip"));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();

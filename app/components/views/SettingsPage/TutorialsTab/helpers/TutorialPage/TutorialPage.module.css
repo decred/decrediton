@@ -21,7 +21,7 @@
   height: 1rem;
   width: 1rem;
   background-image: var(--menu-arrow-up);
-  background-position: 50% 0.4rem
+  background-position: 50% 0.4rem;
   background-repeat: no-repeat;
   transform: rotate(-90deg);
 }

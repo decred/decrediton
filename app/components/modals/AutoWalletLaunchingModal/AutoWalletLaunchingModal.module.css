@@ -22,6 +22,9 @@
   background-size: 10px 10px;
   background-repeat: no-repeat;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  outline: none;
 }
 
 .infoCloseButtonTop:hover {
