@@ -43,9 +43,6 @@ export function useMenuLinks() {
 
   const menuLinks = useMemo(() => {
     let links = cloneDeep(linkList);
-    if (!isTrezor) {
-      links = links.filter((l) => l.key !== TREZOR_KEY);
-    }
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
     }
