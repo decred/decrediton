@@ -4533,7 +4533,7 @@ data-urls@^2.0.0:
 
 "dcrdex-assets@https://github.com/decred/dcrdex-assets#v0.4.1":
   version "0.0.0"
-  resolved "https://github.com/decred/dcrdex-assets#7c46939316da8e747d40e1b43f9c204255790566"
+  resolved "https://github.com/decred/dcrdex-assets#f07835a796a15097d898ece9d401ae0923f710a8"
 
 debounce-fn@^4.0.0:
   version "4.0.0"
