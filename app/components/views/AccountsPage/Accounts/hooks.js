@@ -8,6 +8,7 @@ export function useAccounts() {
   const walletService = useSelector(sel.walletService);
   const accounts = useSelector(sel.sortedAccounts);
   const mixedAccount = useSelector(sel.getMixedAccount);
+  const dexAccount = useSelector(sel.dexAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
   const nextAccountRequestAttempt = useSelector(
     sel.getNextAccountRequestAttempt
@@ -46,6 +47,7 @@ export function useAccounts() {
     walletService,
     accounts,
     mixedAccount,
+    dexAccount,
     changeAccount,
     isLoading,
     accountExtendedKey,
