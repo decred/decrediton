@@ -336,14 +336,18 @@ export const createWallet = (selectedWallet) => (dispatch, getState) =>
           type: WALLETCREATED
         });
         dispatch(setSelectedWallet(selectedWallet));
+        const walletCfg = wallet.getWalletCfg(
+          network == TESTNET,
+          selectedWallet.value.wallet
+        );
+        walletCfg.set(
+          cfgConstants.WALLET_CREATED_AS_NEW,
+          !!selectedWallet.value.isNew
+        );
         if (
           selectedWallet.value.gapLimit &&
           selectedWallet.value.gapLimit > 0
         ) {
-          const walletCfg = wallet.getWalletCfg(
-            network == TESTNET,
-            selectedWallet.value.wallet
-          );
           walletCfg.set(cfgConstants.GAP_LIMIT, selectedWallet.value.gapLimit);
         }
         resolve(selectedWallet);
@@ -531,7 +535,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       });
       selectedWallet.value.isTrezor && dispatch(enableTrezor());
       await dispatch(getVersionServiceAttempt());
-      await dispatch(openWalletAttempt("", false));
+      await dispatch(openWalletAttempt("", false, selectedWallet));
       return discoverAccountsComplete;
     };
 

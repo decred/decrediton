@@ -233,11 +233,6 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
-  const stopUnfinishedWallet = useCallback(
-    () => dispatch(wla.stopUnfinishedWallet()),
-    [dispatch]
-  );
-
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -316,7 +311,6 @@ const useDaemonStartup = () => {
     isProcessingManaged,
     isProcessingUnmanaged,
     needsProcessManagedTickets,
-    stopUnfinishedWallet,
     isSettingAccountsPassphrase
   };
 };
