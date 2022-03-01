@@ -2,6 +2,8 @@ import { wallet } from "wallet-preload-shim";
 import { InvisibleConfirmPoliteiaModalButton } from "buttons";
 import { default as ReactMarkdown } from "react-markdown";
 import { FormattedMessage as T } from "react-intl";
+import gfm from "remark-gfm";
+import "./styles.css";
 
 // This changes links to never open. Debatable whether we want to
 // allow proposals to link somewhere directly from decrediton.
@@ -37,8 +39,11 @@ const renderProposalImage = ({ alt }) => <span>{alt}</span>;
 const ProposalBody = ({ body }) => (
   <>
     <ReactMarkdown
+      className="markdown-body"
       children={body}
       skipHtml={true}
+      remarkPlugins={[gfm]}
+      unwrapDisallowed={true}
       components={{
         a: renderInternalProposalLink,
 
