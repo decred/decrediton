@@ -21,7 +21,7 @@ export const useTicketAutoBuyer = () => {
     buyerMaxFeePercentage
   );
 
-  const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
+  const notMixedAccounts = useSelector(sel.getNotMixedAcctIfAllowed);
   // isValid check if we can show the modal to start the auto buyer.
   const [isValid, setIsValid] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);

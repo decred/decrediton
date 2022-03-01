@@ -20,7 +20,7 @@ export const usePurchaseTab = () => {
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
-  const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
+  const notMixedAccounts = useSelector(sel.getNotMixedAcctIfAllowed);
 
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const visibleAccounts = useSelector(sel.visibleAccounts);
