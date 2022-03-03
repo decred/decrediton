@@ -7,7 +7,7 @@ import { SimpleLoading } from "indicators";
 import { useImportScriptIconButton } from "./hooks";
 import styles from "./ImportScriptIconButton.module.css";
 
-const ImportScriptIconButton = () => {
+const ImportScriptIconButton = ({ ariaLabel }) => {
   const {
     rescanRequest,
     isImportingScript,
@@ -46,6 +46,7 @@ const ImportScriptIconButton = () => {
         modalComponent={ImportScriptModal}
         disabled={rescanRequest}
         onSubmit={onImportScript}
+        ariaLabel={ariaLabel}
       />
     </Tooltip>
   );
