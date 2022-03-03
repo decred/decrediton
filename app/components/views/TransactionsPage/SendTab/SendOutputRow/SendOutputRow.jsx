@@ -331,7 +331,7 @@ const SendOutputRow = ({
                   onClick={(e) => {
                     e.preventDefault();
                     onValidateAddress({
-                      address: wallet.readFromClipboard(),
+                      address: wallet.readFromClipboard().trim(),
                       index
                     });
                   }}>

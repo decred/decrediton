@@ -569,3 +569,26 @@ test("watching only trezor should show send button", () => {
   render(<SendTab />);
   expect(getSendButton()).toBeInTheDocument();
 });
+
+test("address input have to allow leading/trailing spaces", async () => {
+  render(<SendTab />);
+  const index = 0;
+  const sendToInput = getAllSendToInput()[index];
+  // test pasting address with trailing and leading spaces with paste putton
+  const pasteButton = getPasteButton();
+  const mockPastedAddress = "mockPastedAddress";
+  wallet.readFromClipboard.mockImplementation(
+    () => `          ${mockPastedAddress}              `
+  );
+
+  user.click(pasteButton);
+  await wait(() => expect(sendToInput.value).toBe(mockPastedAddress));
+
+  // type address with trailing and leading spaces
+  user.clear(sendToInput);
+  screen.debug();
+  fireEvent.change(sendToInput, {
+    target: { value: `   ${mockOutputs[index].address}     ` }
+  });
+  await wait(() => expect(sendToInput.value).toBe(mockOutputs[index].address));
+});
