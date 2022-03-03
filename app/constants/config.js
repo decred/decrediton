@@ -90,6 +90,7 @@ export const NEEDS_VSPD_PROCESS_TICKETS = "needs_vspd_process_tickets";
 export const DEX_BTC_SPV = "dex_use_btc_spv";
 export const ASK_DEX_BTC_SPV = "ask_dex_use_btc_spv";
 export const CONFIRM_DEX_SEED = "confirm_dex_seed";
+export const WALLET_CREATED_AS_NEW = "wallet_created_as_new";
 
 export const WALLET_INITIAL_VALUE = {
   [ENABLE_TICKET_BUYER]: false,
@@ -137,7 +138,8 @@ export const WALLET_INITIAL_VALUE = {
 
   // Force as true to ensure wallets with tickets prior to when this config was
   // introduced trigger a view of the "process managed tickets" page.
-  [NEEDS_VSPD_PROCESS_TICKETS]: true
+  [NEEDS_VSPD_PROCESS_TICKETS]: true,
+  [WALLET_CREATED_AS_NEW]: null
 };
 
 export const INITIAL_VALUES = {

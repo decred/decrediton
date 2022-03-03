@@ -53,8 +53,7 @@ export const useGetStarted = () => {
     appVersion,
     syncAttemptRequest,
     onGetDcrdLogs,
-    daemonWarning,
-    stopUnfinishedWallet
+    daemonWarning
   } = useDaemonStartup();
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
@@ -133,7 +132,7 @@ export const useGetStarted = () => {
           );
       },
       isAtChoosingWallet: (ctx, event) => {
-        const { selectedWallet } = event;
+        const selectedWallet = event?.selectedWallet || ctx?.selectedWallet;
         const { availableWalletsError } = ctx;
         if (selectedWallet) {
           return submitChosenWallet(selectedWallet);
@@ -176,7 +175,7 @@ export const useGetStarted = () => {
               !selectedWallet.finished &&
               error.message.includes("missing database file")
             ) {
-              stopUnfinishedWallet().then(() => send({ type: "ERROR", error }));
+              return onShowCreateWallet({ isNew: error.walletCreatedAsNew });
             }
 
             // If the error is OPENWALLET_INPUTPRIVPASS, the wallet needs the
