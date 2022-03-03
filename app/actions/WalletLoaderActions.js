@@ -139,6 +139,7 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
         } = getState();
         const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
         config.delete(cfgConstants.DISCOVER_ACCOUNTS);
+        config.delete(cfgConstants.WALLET_CREATED_AS_NEW);
         config.set(cfgConstants.DISCOVER_ACCOUNTS, isNew);
         dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
         dispatch({ type: CREATEWALLET_SUCCESS });
@@ -193,7 +194,7 @@ export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
 export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
 export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
-export const openWalletAttempt = (pubPass, retryAttempt) => (
+export const openWalletAttempt = (pubPass, retryAttempt, selectedWallet) => (
   dispatch,
   getState
 ) =>
@@ -236,6 +237,15 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (
           return reject(OPENWALLET_INPUT);
         }
 
+        if (!selectedWallet.finished) {
+          const walletCfg = wallet.getWalletCfg(
+            isTestNet(getState()),
+            selectedWallet.value.wallet
+          );
+          error.walletCreatedAsNew = !!walletCfg.get(
+            cfgConstants.WALLET_CREATED_AS_NEW
+          );
+        }
         dispatch({ error, type: OPENWALLET_FAILED });
         reject(error);
       });
@@ -693,14 +703,4 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
     currentBlockHeight,
     timestamp
   });
-};
-
-export const STOP_UNFINISHED_WALLET_FAILED = "STOP_UNFINISHED_WALLET_FAILED";
-export const stopUnfinishedWallet = () => async (dispatch) => {
-  try {
-    await wallet.stopWallet();
-    dispatch(setSelectedWallet(null));
-  } catch (err) {
-    dispatch({ error: err, type: STOP_UNFINISHED_WALLET_FAILED });
-  }
 };

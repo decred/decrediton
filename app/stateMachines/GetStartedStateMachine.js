@@ -322,7 +322,13 @@ export const getStartedMachine = Machine({
         }
       },
       on: {
-        BACK: "startMachine.choosingWallet",
+        BACK: {
+          target: "startMachine.choosingWallet",
+          actions: assign({
+            selectedWallet: () => null,
+            passPhrase: () => null
+          })
+        },
         WALLET_CREATED: {
           target: "startMachine.preStart",
           actions: assign({
@@ -333,7 +339,9 @@ export const getStartedMachine = Machine({
         ERROR: {
           target: "startMachine.choosingWallet",
           actions: assign({
-            error: (_, event) => event.error && event.error
+            error: (_, event) => event.error && event.error,
+            selectedWallet: () => null,
+            passPhrase: () => null
           })
         }
       }
