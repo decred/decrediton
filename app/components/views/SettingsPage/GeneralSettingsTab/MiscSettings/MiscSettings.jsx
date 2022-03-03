@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SettingsInput } from "inputs";
 import styles from "./MiscSettings.module.css";
 import { DiscoverUsageModal } from "modals";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, ImportScriptIconButton } from "buttons";
 import { useSettings } from "hooks";
 import { Label, Box } from "../../helpers";
 
@@ -39,28 +39,36 @@ const MiscSettings = ({ tempSettings, currencies, onChangeTempSettings }) => {
           options={currencies}
         />
       </div>
-      <div>
-        <Label id="address-usage">
-          <T id="settings.addressUsage" m="Address Usage" />
-        </Label>
-        <KeyBlueButton
-          className={styles.discoverUsageButton}
-          onClick={showDiscoverModal}
-          loading={discoverUsageAttempt || rescanRunning}
-          disabled={discoverUsageAttempt || rescanRunning}>
-          <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
-        </KeyBlueButton>
-        <DiscoverUsageModal
-          {...{
-            show: isDiscoverModalVisible,
-            onSubmit: onDiscoverUsage,
-            onCancelModal: hideDiscoverModal,
-            gapLimit,
-            setGapLimit,
-            isValid,
-            clicked
-          }}
-        />
+      <div className="justify-space-between">
+        <div>
+          <Label id="address-usage">
+            <T id="settings.addressUsage" m="Address Usage" />
+          </Label>
+          <KeyBlueButton
+            className={styles.discoverUsageButton}
+            onClick={showDiscoverModal}
+            loading={discoverUsageAttempt || rescanRunning}
+            disabled={discoverUsageAttempt || rescanRunning}>
+            <T id="settings.DiscoverAddressBtn" m="Discover Address Usage" />
+          </KeyBlueButton>
+          <DiscoverUsageModal
+            {...{
+              show: isDiscoverModalVisible,
+              onSubmit: onDiscoverUsage,
+              onCancelModal: hideDiscoverModal,
+              gapLimit,
+              setGapLimit,
+              isValid,
+              clicked
+            }}
+          />
+        </div>
+        <div>
+          <Label id="import-script">
+            <T id="settings.importScript" m="Import script" />
+          </Label>
+          <ImportScriptIconButton ariaLabel="Import script button" />
+        </div>
       </div>
     </Box>
   );

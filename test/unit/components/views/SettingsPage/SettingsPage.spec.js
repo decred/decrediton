@@ -91,6 +91,7 @@ let mockIsTicketAutoBuyerEnabled;
 let mockGetHasUnpaidFee;
 let mockGetAccountMixerRunning;
 let mockPurchaseTicketsRequestAttempt;
+let mockManualImportScriptAttempt;
 
 const wallet = wl;
 const selectors = sel;
@@ -108,6 +109,7 @@ beforeEach(() => {
   });
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
   mockIsMainNet = selectors.isMainNet = jest.fn(() => false);
+  selectors.rescanRequest = jest.fn(() => false);
   mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
     () => false
   );
@@ -141,6 +143,9 @@ beforeEach(() => {
     () => false
   );
   vspActions.discoverAvailableVSPs = jest.fn(() => () => {});
+  mockManualImportScriptAttempt = controlActions.manualImportScriptAttempt = jest.fn(
+    () => () => {}
+  );
 });
 
 test("show error when there is no walletService", () => {
@@ -638,4 +643,63 @@ test("update private passphrase is disabled", () => {
   expect(mockIsChangePassPhraseDisabled).toHaveBeenCalled();
   user.click(screen.getByRole("button", { name: "Update Private Passphrase" }));
   expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
+});
+
+test("test import script button", async () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  user.click(screen.getAllByText("General")[0]);
+
+  await wait(() => screen.getByText("Import script"));
+  expect(
+    screen.getByText("Manually import a redeem script for tickets.")
+  ).toBeInTheDocument();
+  const importScriptButton = screen.getByRole("button", {
+    name: "Import script button"
+  });
+  user.click(importScriptButton);
+
+  // modal has been shown
+  expect(screen.getByText("Import Redeem Script")).toBeInTheDocument();
+  // cancel first
+  user.click(screen.getByRole("button", { name: "Cancel" }));
+  expect(screen.queryByText("Import Redeem Script")).not.toBeInTheDocument();
+
+  //open again
+  user.click(importScriptButton);
+  const testScript = "test-script";
+  user.type(screen.getByLabelText("Script:"), testScript);
+
+  user.click(screen.getByRole("button", { name: "Continue" }));
+
+  expect(mockManualImportScriptAttempt).toHaveBeenCalledWith(testScript);
+
+  expect(screen.queryByText("Import Redeem Script")).not.toBeInTheDocument();
+});
+
+test("import script button should be disabled during rescan process", async () => {
+  selectors.rescanRequest = jest.fn(() => true);
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  user.click(screen.getAllByText("General")[0]);
+
+  await wait(() => screen.getByText("Import script"));
+  expect(
+    screen.queryByText("Manually import a redeem script for tickets.")
+  ).not.toBeInTheDocument();
+  expect(
+    screen.getByText("Importing scripts is disabled during a rescan.")
+  ).toBeInTheDocument();
+
+  expect(
+    screen.getByRole("button", {
+      name: "Import script button"
+    }).disabled
+  ).toBeTruthy();
 });
