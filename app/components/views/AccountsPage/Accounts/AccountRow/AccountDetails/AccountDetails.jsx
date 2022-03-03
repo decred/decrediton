@@ -109,7 +109,6 @@ const AccountsDetails = ({
       )}
       <div className={classNames(styles.buttons, "flex-row")}>
         {account.accountName !== IMPORTED_ACCOUNT &&
-          dexAccount !== "" &&
           account.accountName !== dexAccount && (
             <Tooltip
               content={<T id="accounts.rename.tip" m="Rename Account" />}>

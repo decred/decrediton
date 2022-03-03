@@ -35,7 +35,6 @@ const AccountRow = ({
     account,
     accountNumDetailsShown,
     renameAccount,
-    dexAccount,
     showAccount,
     hideAccount,
     onGetAccountExtendedKey
