@@ -43,7 +43,7 @@ const tabTitles = [
   />,
   <T
     id="ln.creationWarning.tab.title4"
-    m="Sending and Reciving amounts are limited to what is available in your published channels"
+    m="Sending and Receiving amounts are limited to what is available in your published channels"
   />,
   <T
     id="ln.creationWarning.tab.title5"
