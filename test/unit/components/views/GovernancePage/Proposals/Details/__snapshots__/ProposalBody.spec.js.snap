@@ -2,144 +2,141 @@
 
 exports[`ProposalBody renders full markdown 1`] = `
 <div>
-  <p>
-    Full markdown for testing
-  </p>
-  
+  <div
+    class="markdown-body"
+  >
+    <p>
+      Full markdown for testing
+    </p>
+    
 
-  <hr />
-  
+    <hr />
+    
 
-  <h1>
-    h1 Heading 8-)
-  </h1>
-  
+    <h1>
+      h1 Heading 8-)
+    </h1>
+    
 
-  <h2>
-    h2 Heading
-  </h2>
-  
+    <h2>
+      h2 Heading
+    </h2>
+    
 
-  <h3>
-    h3 Heading
-  </h3>
-  
+    <h3>
+      h3 Heading
+    </h3>
+    
 
-  <h4>
-    h4 Heading
-  </h4>
-  
+    <h4>
+      h4 Heading
+    </h4>
+    
 
-  <h5>
-    h5 Heading
-  </h5>
-  
+    <h5>
+      h5 Heading
+    </h5>
+    
 
-  <h6>
-    h6 Heading
-  </h6>
-  
+    <h6>
+      h6 Heading
+    </h6>
+    
 
-  <h2>
-    Horizontal Rules
-  </h2>
-  
+    <h2>
+      Horizontal Rules
+    </h2>
+    
 
-  <hr />
-  
+    <hr />
+    
 
-  <hr />
-  
+    <hr />
+    
 
-  <hr />
-  
+    <hr />
+    
 
-  <h2>
-    Typographic replacements
-  </h2>
-  
-
-  <p>
-    Enable typographer option to see result.
-  </p>
-  
-
-  <p>
-    (c) (C) (r) (R) (tm) (TM) (p) (P) +-
-  </p>
-  
-
-  <p>
-    test.. test... test..... test?..... test!....
-  </p>
-  
-
-  <p>
-    !!!!!! ???? ,,  -- ---
-  </p>
-  
-
-  <p>
-    "Smartypants, double quotes" and 'single quotes'
-  </p>
-  
-
-  <h2>
-    Emphasis
-  </h2>
-  
-
-  <p>
-    <strong>
-      This is bold text
-    </strong>
-  </p>
-  
-
-  <p>
-    <strong>
-      This is bold text
-    </strong>
-  </p>
-  
-
-  <p>
-    <em>
-      This is italic text
-    </em>
-  </p>
-  
-
-  <p>
-    <em>
-      This is italic text
-    </em>
-  </p>
-  
-
-  <p>
-    ~~Strikethrough~~
-  </p>
-  
-
-  <h2>
-    Blockquotes
-  </h2>
-  
-
-  <blockquote>
+    <h2>
+      Typographic replacements
+    </h2>
     
 
     <p>
-      Blockquotes can also be nested...
+      Enable typographer option to see result.
     </p>
+    
+
+    <p>
+      (c) (C) (r) (R) (tm) (TM) (p) (P) +-
+    </p>
+    
+
+    <p>
+      test.. test... test..... test?..... test!....
+    </p>
+    
+
+    <p>
+      !!!!!! ???? ,,  -- ---
+    </p>
+    
+
+    <p>
+      "Smartypants, double quotes" and 'single quotes'
+    </p>
+    
+
+    <h2>
+      Emphasis
+    </h2>
+    
+
+    <p>
+      <strong>
+        This is bold text
+      </strong>
+    </p>
+    
+
+    <p>
+      <strong>
+        This is bold text
+      </strong>
+    </p>
+    
+
+    <p>
+      <em>
+        This is italic text
+      </em>
+    </p>
+    
+
+    <p>
+      <em>
+        This is italic text
+      </em>
+    </p>
+    
+
+    <p>
+      <del>
+        Strikethrough
+      </del>
+    </p>
+    
+
+    <h2>
+      Blockquotes
+    </h2>
     
 
     <blockquote>
       
 
       <p>
-        ...by using additional greater-than signs right next to each other...
+        Blockquotes can also be nested...
       </p>
       
 
@@ -147,8 +144,19 @@ exports[`ProposalBody renders full markdown 1`] = `
         
 
         <p>
-          ...or with spaces between arrows.
+          ...by using additional greater-than signs right next to each other...
         </p>
+        
+
+        <blockquote>
+          
+
+          <p>
+            ...or with spaces between arrows.
+          </p>
+          
+
+        </blockquote>
         
 
       </blockquote>
@@ -157,731 +165,827 @@ exports[`ProposalBody renders full markdown 1`] = `
     </blockquote>
     
 
-  </blockquote>
-  
-
-  <h2>
-    Lists
-  </h2>
-  
-
-  <p>
-    Unordered
-  </p>
-  
-
-  <ul>
+    <h2>
+      Lists
+    </h2>
     
 
-    <li>
-      Create a list by starting a line with 
-      <code>
-        +
-      </code>
-      , 
-      <code>
-        -
-      </code>
-      , or 
-      <code>
-        *
-      </code>
-    </li>
+    <p>
+      Unordered
+    </p>
     
 
-    <li>
-      Sub-lists are made by indenting 2 spaces:
+    <ul>
       
 
-      <ul>
-        
-
-        <li>
-          Marker character change forces new list start:
-          
-
-          <ul>
-            
-
-            <li>
-              Ac tristique libero volutpat at
-            </li>
-            
-
-          </ul>
-          
-
-          <ul>
-            
-
-            <li>
-              Facilisis in pretium nisl aliquet
-            </li>
-            
-
-          </ul>
-          
-
-          <ul>
-            
-
-            <li>
-              Nulla volutpat aliquam velit
-            </li>
-            
-
-          </ul>
-          
-
-        </li>
-        
-
-      </ul>
-      
-
-    </li>
-    
-
-    <li>
-      Very easy!
-    </li>
-    
-
-  </ul>
-  
-
-  <p>
-    Ordered
-  </p>
-  
-
-  <ol>
-    
-
-    <li>
-      
-
-      <p>
-        Lorem ipsum dolor sit amet
-      </p>
-      
-
-    </li>
-    
-
-    <li>
-      
-
-      <p>
-        Consectetur adipiscing elit
-      </p>
-      
-
-    </li>
-    
-
-    <li>
-      
-
-      <p>
-        Integer molestie lorem at massa
-      </p>
-      
-
-    </li>
-    
-
-    <li>
-      
-
-      <p>
-        You can use sequential numbers...
-      </p>
-      
-
-    </li>
-    
-
-    <li>
-      
-
-      <p>
-        ...or keep all the numbers as 
+      <li>
+        Create a list by starting a line with 
         <code>
-          1.
+          +
         </code>
-      </p>
+        , 
+        <code>
+          -
+        </code>
+        , or 
+        <code>
+          *
+        </code>
+      </li>
       
 
-    </li>
+      <li>
+        Sub-lists are made by indenting 2 spaces:
+        
+
+        <ul>
+          
+
+          <li>
+            Marker character change forces new list start:
+            
+
+            <ul>
+              
+
+              <li>
+                Ac tristique libero volutpat at
+              </li>
+              
+
+            </ul>
+            
+
+            <ul>
+              
+
+              <li>
+                Facilisis in pretium nisl aliquet
+              </li>
+              
+
+            </ul>
+            
+
+            <ul>
+              
+
+              <li>
+                Nulla volutpat aliquam velit
+              </li>
+              
+
+            </ul>
+            
+
+          </li>
+          
+
+        </ul>
+        
+
+      </li>
+      
+
+      <li>
+        Very easy!
+      </li>
+      
+
+    </ul>
     
 
-  </ol>
-  
-
-  <p>
-    Start numbering with offset:
-  </p>
-  
-
-  <ol
-    start="57"
-  >
+    <p>
+      Ordered
+    </p>
     
 
-    <li>
-      foo
-    </li>
+    <ol>
+      
+
+      <li>
+        
+
+        <p>
+          Lorem ipsum dolor sit amet
+        </p>
+        
+
+      </li>
+      
+
+      <li>
+        
+
+        <p>
+          Consectetur adipiscing elit
+        </p>
+        
+
+      </li>
+      
+
+      <li>
+        
+
+        <p>
+          Integer molestie lorem at massa
+        </p>
+        
+
+      </li>
+      
+
+      <li>
+        
+
+        <p>
+          You can use sequential numbers...
+        </p>
+        
+
+      </li>
+      
+
+      <li>
+        
+
+        <p>
+          ...or keep all the numbers as 
+          <code>
+            1.
+          </code>
+        </p>
+        
+
+      </li>
+      
+
+    </ol>
     
 
-    <li>
-      bar
-    </li>
+    <p>
+      Start numbering with offset:
+    </p>
     
 
-  </ol>
-  
+    <ol
+      start="57"
+    >
+      
 
-  <h2>
-    Code
-  </h2>
-  
+      <li>
+        foo
+      </li>
+      
 
-  <p>
-    Inline 
-    <code>
-      code
-    </code>
-  </p>
-  
+      <li>
+        bar
+      </li>
+      
 
-  <p>
-    Indented code
-  </p>
-  
+    </ol>
+    
 
-  <pre>
-    <code>
-      // Some comments
+    <h2>
+      Code
+    </h2>
+    
+
+    <p>
+      Inline 
+      <code>
+        code
+      </code>
+    </p>
+    
+
+    <p>
+      Indented code
+    </p>
+    
+
+    <pre>
+      <code>
+        // Some comments
 line 1 of code
 line 2 of code
 line 3 of code
 
-    </code>
-  </pre>
-  
+      </code>
+    </pre>
+    
 
-  <p>
-    Block code "fences"
-  </p>
-  
+    <p>
+      Block code "fences"
+    </p>
+    
 
-  <pre>
-    <code>
-      Sample text here...
+    <pre>
+      <code>
+        Sample text here...
 
-    </code>
-  </pre>
-  
+      </code>
+    </pre>
+    
 
-  <p>
-    Syntax highlighting
-  </p>
-  
+    <p>
+      Syntax highlighting
+    </p>
+    
 
-  <pre>
-    <code
-      class="language-js"
-    >
-      var foo = function (bar) {
+    <pre>
+      <code
+        class="language-js"
+      >
+        var foo = function (bar) {
   return bar++;
 };
 
 console.log(foo(5));
 
-    </code>
-  </pre>
-  
-
-  <h2>
-    Tables
-  </h2>
-  
-
-  <p>
-    | Option | Description |
-| ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-  </p>
-  
-
-  <p>
-    Right aligned columns
-  </p>
-  
-
-  <p>
-    | Option | Description |
-| ------:| -----------:|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-  </p>
-  
-
-  <h2>
-    Links
-  </h2>
-  
-
-  <p>
-    <span>
-      <a
-        href="#"
-      >
-        link text
-      </a>
-    </span>
-  </p>
-  
-
-  <p>
-    <span>
-      <a
-        href="#"
-      >
-        link with title
-      </a>
-    </span>
-  </p>
-  
-
-  <p>
-    Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
-  </p>
-  
-
-  <h2>
-    Images
-  </h2>
-  
-
-  <p>
-    <span>
-      Minion
-    </span>
+      </code>
+    </pre>
     
 
-    <span>
-      Stormtroopocat
-    </span>
-  </p>
-  
+    <h2>
+      Tables
+    </h2>
+    
 
-  <p>
-    Like links, Images also have a footnote style syntax
-  </p>
-  
-
-  <p>
-    <span>
-      Alt text
-    </span>
-  </p>
-  
-
-  <p>
-    With a reference later in the document defining the URL location:
-  </p>
-  
-
-  <h2>
-    Plugins
-  </h2>
-  
-
-  <p>
-    The killer feature of 
-    <code>
-      markdown-it
-    </code>
-     is very effective support of
-
-    <span>
-      <a
-        href="#"
-      >
-        syntax plugins
-      </a>
-    </span>
-    .
-  </p>
-  
-
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        Emojies
-      </a>
-    </span>
-  </h3>
-  
-
-  <blockquote>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Option
+          </th>
+          <th>
+            Description
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            data
+          </td>
+          <td>
+            path to data files to supply the data that will be passed into templates.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            engine
+          </td>
+          <td>
+            engine to be used for processing templates. Handlebars is the default.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            ext
+          </td>
+          <td>
+            extension to be used for dest files.
+          </td>
+        </tr>
+      </tbody>
+    </table>
     
 
     <p>
-      Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
+      Right aligned columns
+    </p>
+    
+
+    <table>
+      <thead>
+        <tr>
+          <th
+            style="text-align: right;"
+          >
+            Option
+          </th>
+          <th
+            style="text-align: right;"
+          >
+            Description
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            style="text-align: right;"
+          >
+            data
+          </td>
+          <td
+            style="text-align: right;"
+          >
+            path to data files to supply the data that will be passed into templates.
+          </td>
+        </tr>
+        <tr>
+          <td
+            style="text-align: right;"
+          >
+            engine
+          </td>
+          <td
+            style="text-align: right;"
+          >
+            engine to be used for processing templates. Handlebars is the default.
+          </td>
+        </tr>
+        <tr>
+          <td
+            style="text-align: right;"
+          >
+            ext
+          </td>
+          <td
+            style="text-align: right;"
+          >
+            extension to be used for dest files.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+
+    <h2>
+      Links
+    </h2>
+    
+
+    <p>
+      <span>
+        <a
+          href="#"
+        >
+          link text
+        </a>
+      </span>
     </p>
     
 
     <p>
-      Shortcuts (emoticons): :-) :-( 8-) ;)
+      <span>
+        <a
+          href="#"
+        >
+          link with title
+        </a>
+      </span>
     </p>
     
 
-  </blockquote>
-  
-
-  <p>
-    see 
-    <span>
-      <a
-        href="#"
-      >
-        how to change output
-      </a>
-    </span>
-     with twemoji.
-  </p>
-  
-
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        Subscript
-      </a>
-    </span>
-     / 
-    <span>
-      <a
-        href="#"
-      >
-        Superscript
-      </a>
-    </span>
-  </h3>
-  
-
-  <ul>
+    <p>
+      Autoconverted link 
+      <span>
+        <a
+          href="#"
+        >
+          https://github.com/nodeca/pica
+        </a>
+      </span>
+       (enable linkify to see)
+    </p>
     
 
-    <li>
-      19^th^
-    </li>
+    <h2>
+      Images
+    </h2>
     
 
-    <li>
-      H~2~O
-    </li>
+    <p>
+      <span>
+        Minion
+      </span>
+      
+
+      <span>
+        Stormtroopocat
+      </span>
+    </p>
     
 
-  </ul>
-  
+    <p>
+      Like links, Images also have a footnote style syntax
+    </p>
+    
 
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        &lt;ins&gt;
-      </a>
-    </span>
-  </h3>
-  
+    <p>
+      <span>
+        Alt text
+      </span>
+    </p>
+    
 
-  <p>
-    ++Inserted text++
-  </p>
-  
+    <p>
+      With a reference later in the document defining the URL location:
+    </p>
+    
 
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        &lt;mark&gt;
-      </a>
-    </span>
-  </h3>
-  
+    <h2>
+      Plugins
+    </h2>
+    
 
-  <p>
-    ==Marked text==
-  </p>
-  
+    <p>
+      The killer feature of 
+      <code>
+        markdown-it
+      </code>
+       is very effective support of
 
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        Footnotes
-      </a>
-    </span>
-  </h3>
-  
+      <span>
+        <a
+          href="#"
+        >
+          syntax plugins
+        </a>
+      </span>
+      .
+    </p>
+    
 
-  <p>
-    Footnote 1 link[^first].
-  </p>
-  
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          Emojies
+        </a>
+      </span>
+    </h3>
+    
 
-  <p>
-    Footnote 2 link[^second].
-  </p>
-  
+    <blockquote>
+      
 
-  <p>
-    Inline footnote^[Text of inline footnote] definition.
-  </p>
-  
+      <p>
+        Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:
+      </p>
+      
 
-  <p>
-    Duplicated footnote reference[^second].
-  </p>
-  
+      <p>
+        Shortcuts (emoticons): :-) :-( 8-) ;)
+      </p>
+      
 
-  <p>
-    [^first]: Footnote 
-    <strong>
-      can have markup
-    </strong>
-  </p>
-  
+    </blockquote>
+    
 
-  <pre>
-    <code>
-      and multiple paragraphs.
+    <p>
+      see 
+      <span>
+        <a
+          href="#"
+        >
+          how to change output
+        </a>
+      </span>
+       with twemoji.
+    </p>
+    
 
-    </code>
-  </pre>
-  
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          Subscript
+        </a>
+      </span>
+       / 
+      <span>
+        <a
+          href="#"
+        >
+          Superscript
+        </a>
+      </span>
+    </h3>
+    
 
-  <p>
-    [^second]: Footnote text.
-  </p>
-  
+    <ul>
+      
 
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        Definition lists
-      </a>
-    </span>
-  </h3>
-  
+      <li>
+        19^th^
+      </li>
+      
 
-  <p>
-    Term 1
-  </p>
-  
+      <li>
+        H
+        <del>
+          2
+        </del>
+        O
+      </li>
+      
 
-  <p>
-    :   Definition 1
+    </ul>
+    
+
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          &lt;ins&gt;
+        </a>
+      </span>
+    </h3>
+    
+
+    <p>
+      ++Inserted text++
+    </p>
+    
+
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          &lt;mark&gt;
+        </a>
+      </span>
+    </h3>
+    
+
+    <p>
+      ==Marked text==
+    </p>
+    
+
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          Footnotes
+        </a>
+      </span>
+    </h3>
+    
+
+    <p>
+      Footnote 1 link[^first].
+    </p>
+    
+
+    <p>
+      Footnote 2 link[^second].
+    </p>
+    
+
+    <p>
+      Inline footnote^[Text of inline footnote] definition.
+    </p>
+    
+
+    <p>
+      Duplicated footnote reference[^second].
+    </p>
+    
+
+    <p>
+      [^first]: Footnote 
+      <strong>
+        can have markup
+      </strong>
+    </p>
+    
+
+    <pre>
+      <code>
+        and multiple paragraphs.
+
+      </code>
+    </pre>
+    
+
+    <p>
+      [^second]: Footnote text.
+    </p>
+    
+
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          Definition lists
+        </a>
+      </span>
+    </h3>
+    
+
+    <p>
+      Term 1
+    </p>
+    
+
+    <p>
+      :   Definition 1
 with lazy continuation.
-  </p>
-  
+    </p>
+    
 
-  <p>
-    Term 2 with 
-    <em>
-      inline markup
-    </em>
-  </p>
-  
+    <p>
+      Term 2 with 
+      <em>
+        inline markup
+      </em>
+    </p>
+    
 
-  <p>
-    :   Definition 2
-  </p>
-  
+    <p>
+      :   Definition 2
+    </p>
+    
 
-  <pre>
-    <code>
-          { some code, part of Definition 2 }
+    <pre>
+      <code>
+            { some code, part of Definition 2 }
 
 Third paragraph of definition 2.
 
-    </code>
-  </pre>
-  
+      </code>
+    </pre>
+    
 
-  <p>
-    <em>
-      Compact style:
-    </em>
-  </p>
-  
+    <p>
+      <em>
+        Compact style:
+      </em>
+    </p>
+    
 
-  <p>
-    Term 1
+    <p>
+      Term 1
 ~ Definition 1
-  </p>
-  
+    </p>
+    
 
-  <p>
-    Term 2
+    <p>
+      Term 2
 ~ Definition 2a
 ~ Definition 2b
-  </p>
-  
-
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        Abbreviations
-      </a>
-    </span>
-  </h3>
-  
-
-  <p>
-    This is HTML abbreviation example.
-  </p>
-  
-
-  <p>
-    It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-  </p>
-  
-
-  <p>
-    *[HTML]: Hyper Text Markup Language
-  </p>
-  
-
-  <h3>
-    <span>
-      <a
-        href="#"
-      >
-        Custom containers
-      </a>
-    </span>
-  </h3>
-  
-
-  <p>
-    ::: warning
-
-    <em>
-      here be dragons
-    </em>
+    </p>
     
+
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          Abbreviations
+        </a>
+      </span>
+    </h3>
+    
+
+    <p>
+      This is HTML abbreviation example.
+    </p>
+    
+
+    <p>
+      It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+    </p>
+    
+
+    <p>
+      *[HTML]: Hyper Text Markup Language
+    </p>
+    
+
+    <h3>
+      <span>
+        <a
+          href="#"
+        >
+          Custom containers
+        </a>
+      </span>
+    </h3>
+    
+
+    <p>
+      ::: warning
+
+      <em>
+        here be dragons
+      </em>
+      
 :::
-  </p>
-  
+    </p>
+    
 
-  <hr />
-  
+    <hr />
+    
 
-  <h1>
-    End of standard markdown test
-  </h1>
-  
+    <h1>
+      End of standard markdown test
+    </h1>
+    
 
-  <h1>
-    Start of custom markdown test
-  </h1>
-  
+    <h1>
+      Start of custom markdown test
+    </h1>
+    
 
-  <p>
-    <span>
-      politeia gui image
-    </span>
-  </p>
-  
+    <p>
+      <span>
+        politeia gui image
+      </span>
+    </p>
+    
 
-  <p>
-    <span>
-      politeia gui ref image
-    </span>
-  </p>
-  
+    <p>
+      <span>
+        politeia gui ref image
+      </span>
+    </p>
+    
 
-  <p>
-    and the reference is right below this
-  </p>
-  
+    <p>
+      and the reference is right below this
+    </p>
+    
 
-  <p>
-     Schnorr Signatures
-  </p>
-  
+    <p>
+       Schnorr Signatures
+    </p>
+    
 
-  
+    
 
-  
+    
 
-  <p>
-    exp/*
-  </p>
-  
+    <p>
+      exp/*
+    </p>
+    
 
-  <p>
-    ¼script¾alert(¢XSS¢)¼/script¾
-  </p>
-  
+    <p>
+      ¼script¾alert(¢XSS¢)¼/script¾
+    </p>
+    
 
-  <hr />
-  
+    <hr />
+    
 
-  <p>
-    Let's add some unicode emojis, just for fun!
-  </p>
-  
+    <p>
+      Let's add some unicode emojis, just for fun!
+    </p>
+    
 
-  <p>
-    ☯ 262F yin yang
+    <p>
+      ☯ 262F yin yang
 ☢ 2622 radioactive sign (trefoil)
 ⚽ 26BD soccer
-  </p>
-  
+    </p>
+    
 
-  <h1>
-    ⚖️
-  </h1>
+    <h1>
+      ⚖️
+    </h1>
+  </div>
 </div>
 `;
 
 exports[`ProposalBody renders simple markdown 1`] = `
 <div>
-  <p>
-    this is a 
-    <em>
-      test
-    </em>
-     proposal description
-  </p>
+  <div
+    class="markdown-body"
+  >
+    <p>
+      this is a 
+      <em>
+        test
+      </em>
+       proposal description
+    </p>
+  </div>
 </div>
 `;
 
 exports[`ProposalBody skips html 1`] = `
 <div>
-  <p>
-    this 
-    html
-     is blocked
-  </p>
+  <div
+    class="markdown-body"
+  >
+    <p>
+      this 
+      html
+       is blocked
+    </p>
+  </div>
 </div>
 `;
