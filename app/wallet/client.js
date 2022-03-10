@@ -1,5 +1,10 @@
 import { TicketTypes } from "helpers/tickets";
-import { strHashToRaw, rawHashToHex } from "../helpers/byteActions";
+import {
+  strHashToRaw,
+  rawHashToHex,
+  rawToHex,
+  hexToBytes
+} from "../helpers/byteActions";
 import { shimStreamedResponse } from "helpers/electronRenderer";
 import {
   withLog as log,
@@ -52,9 +57,25 @@ export const getVoteChoices = promisifyReq(
   "voteChoices",
   api.VoteChoicesRequest
 );
-export const getTreasuryPolicies = promisifyReq(
-  "treasuryPolicies",
-  api.TreasuryPoliciesRequest
+export const getTreasuryPolicies = log(
+  (walletService) =>
+    new Promise((ok, fail) => {
+      const request = new api.TreasuryPoliciesRequest();
+      getClient(walletService).treasuryPolicies(request, (err, res) => {
+        if (err) {
+          fail(err);
+          return;
+        }
+        const resObj = res.toObject();
+        resObj.policiesList = res.getPoliciesList().map((r) => ({
+          key: rawToHex(r.getKey()),
+          policy: r.getPolicy()
+        }));
+        ok(resObj);
+      });
+    }),
+  "Get Treasury Policies",
+  logOptionNoResponseData()
 );
 export const loadActiveDataFilters = promisifyReq(
   "loadActiveDataFilters",
@@ -184,7 +205,7 @@ export const setTreasuryPolicy = log(
   (votingService, key, policy) =>
     new Promise((ok, fail) => {
       const request = new api.SetTreasuryPolicyRequest();
-      request.setKey(key);
+      request.setKey(hexToBytes(key));
       request.setPolicy(policy);
       getClient(votingService).setTreasuryPolicy(request, (err, res) =>
         err ? fail(err) : ok(res.toObject())

@@ -38309,9 +38309,9 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.toObject = function(op
  */
 proto.walletrpc.TreasuryPoliciesResponse.Policy.toObject = function(includeInstance, msg) {
   var f, obj = {
-    key: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    key: msg.getKey_asB64(),
     policy: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    ticket: jspb.Message.getFieldWithDefault(msg, 3, "")
+    ticketHash: msg.getTicketHash_asB64()
   };
 
   if (includeInstance) {
@@ -38349,7 +38349,7 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.deserializeBinaryFromReader = fu
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setKey(value);
       break;
     case 2:
@@ -38357,8 +38357,8 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.deserializeBinaryFromReader = fu
       msg.setPolicy(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setTicket(value);
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setTicketHash(value);
       break;
     default:
       reader.skipField();
@@ -38389,9 +38389,9 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.serializeBinary = func
  */
 proto.walletrpc.TreasuryPoliciesResponse.Policy.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getKey();
+  f = message.getKey_asU8();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeBytes(
       1,
       f
     );
@@ -38403,9 +38403,9 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getTicket();
+  f = message.getTicketHash_asU8();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeBytes(
       3,
       f
     );
@@ -38414,20 +38414,44 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.serializeBinaryToWriter = functi
 
 
 /**
- * optional string key = 1;
- * @return {string}
+ * optional bytes key = 1;
+ * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getKey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {string} value
+ * optional bytes key = 1;
+ * This is a type-conversion wrapper around `getKey()`
+ * @return {string}
+ */
+proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getKey_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getKey()));
+};
+
+
+/**
+ * optional bytes key = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getKey()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getKey_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getKey()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
  * @return {!proto.walletrpc.TreasuryPoliciesResponse.Policy} returns this
  */
 proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.setKey = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -38450,20 +38474,44 @@ proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.setPolicy = function(v
 
 
 /**
- * optional string ticket = 3;
- * @return {string}
+ * optional bytes ticket_hash = 3;
+ * @return {!(string|Uint8Array)}
  */
-proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getTicket = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getTicketHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /**
- * @param {string} value
+ * optional bytes ticket_hash = 3;
+ * This is a type-conversion wrapper around `getTicketHash()`
+ * @return {string}
+ */
+proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getTicketHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getTicketHash()));
+};
+
+
+/**
+ * optional bytes ticket_hash = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getTicketHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.getTicketHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getTicketHash()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
  * @return {!proto.walletrpc.TreasuryPoliciesResponse.Policy} returns this
  */
-proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.setTicket = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+proto.walletrpc.TreasuryPoliciesResponse.Policy.prototype.setTicketHash = function(value) {
+  return jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -38537,7 +38585,7 @@ proto.walletrpc.SetTreasuryPolicyRequest.prototype.toObject = function(opt_inclu
  */
 proto.walletrpc.SetTreasuryPolicyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    key: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    key: msg.getKey_asB64(),
     policy: jspb.Message.getFieldWithDefault(msg, 2, ""),
     ticketHash: msg.getTicketHash_asB64()
   };
@@ -38577,7 +38625,7 @@ proto.walletrpc.SetTreasuryPolicyRequest.deserializeBinaryFromReader = function(
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setKey(value);
       break;
     case 2:
@@ -38617,9 +38665,9 @@ proto.walletrpc.SetTreasuryPolicyRequest.prototype.serializeBinary = function() 
  */
 proto.walletrpc.SetTreasuryPolicyRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getKey();
+  f = message.getKey_asU8();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeBytes(
       1,
       f
     );
@@ -38642,20 +38690,44 @@ proto.walletrpc.SetTreasuryPolicyRequest.serializeBinaryToWriter = function(mess
 
 
 /**
- * optional string key = 1;
- * @return {string}
+ * optional bytes key = 1;
+ * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.SetTreasuryPolicyRequest.prototype.getKey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /**
- * @param {string} value
+ * optional bytes key = 1;
+ * This is a type-conversion wrapper around `getKey()`
+ * @return {string}
+ */
+proto.walletrpc.SetTreasuryPolicyRequest.prototype.getKey_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getKey()));
+};
+
+
+/**
+ * optional bytes key = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getKey()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SetTreasuryPolicyRequest.prototype.getKey_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getKey()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
  * @return {!proto.walletrpc.SetTreasuryPolicyRequest} returns this
  */
 proto.walletrpc.SetTreasuryPolicyRequest.prototype.setKey = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+  return jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
