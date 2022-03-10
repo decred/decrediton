@@ -52,6 +52,10 @@ export const getVoteChoices = promisifyReq(
   "voteChoices",
   api.VoteChoicesRequest
 );
+export const getTreasuryPolicies = promisifyReq(
+  "treasuryPolicies",
+  api.TreasuryPoliciesRequest
+);
 export const loadActiveDataFilters = promisifyReq(
   "loadActiveDataFilters",
   api.LoadActiveDataFiltersRequest
@@ -174,6 +178,19 @@ export const setAgendaVote = log(
       );
     }),
   "Set Agenda Vote"
+);
+
+export const setTreasuryPolicy = log(
+  (votingService, key, policy) =>
+    new Promise((ok, fail) => {
+      const request = new api.SetTreasuryPolicyRequest();
+      request.setKey(key);
+      request.setPolicy(policy);
+      getClient(votingService).setTreasuryPolicy(request, (err, res) =>
+        err ? fail(err) : ok(res.toObject())
+      );
+    }),
+  "Set Treasury Policy"
 );
 
 export const abandonTransaction = log(

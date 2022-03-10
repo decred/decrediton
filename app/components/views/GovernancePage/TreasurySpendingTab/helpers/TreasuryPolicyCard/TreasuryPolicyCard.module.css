@@ -1,0 +1,43 @@
+.overview {
+  background-color: var(--background-back-color);
+  width: 724px;
+  padding: 20px 40px;
+}
+
+.piKeyContainer {
+  display: flex;
+  align-items: center;
+}
+
+.piKey {
+  margin: 0 0 0 1rem;
+  font-size: 1.7rem !important;
+  padding: 1rem !important;
+}
+
+@media screen and (max-width: 1180px) {
+  .overview {
+    width: 634px;
+    padding: 2rem;
+  }
+
+  .piKey {
+    font-size: 1.6rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .overview {
+    width: 315px;
+    padding: 10px !important;
+  }
+
+  .piKeyContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .piKey {
+    margin: 0;
+  }
+}

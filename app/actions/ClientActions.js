@@ -6,7 +6,8 @@ import {
   getNextAddressAttempt,
   getPeerInfo,
   publishUnminedTransactionsAttempt,
-  monitorLockableAccounts
+  monitorLockableAccounts,
+  unlockAllAcctAndExecFn
 } from "./ControlActions";
 import {
   transactionNtfnsStart,
@@ -96,6 +97,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
 
       await dispatch(getVoteChoicesAttempt());
       await dispatch(monitorLockableAccounts());
+      await dispatch(getTreasuryPolicies());
 
       // Start Dex if dexEnabled and NOT SPV mode
       if (
@@ -695,6 +697,47 @@ export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
       dispatch(getVoteChoicesAttempt());
     })
     .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
+};
+
+export const GETTREASURY_POLICIES_ATTEMPT = "GETTREASURY_POLICIES_ATTEMPT";
+export const GETTREASURY_POLICIES_FAILED = "GETTREASURY_POLICIES_FAILED";
+export const GETTREASURY_POLICIES_SUCCESS = "GETTREASURY_POLICIES_SUCCESS";
+
+export const getTreasuryPolicies = () => (dispatch, getState) => {
+  dispatch({ type: GETTREASURY_POLICIES_ATTEMPT });
+  wallet
+    .getTreasuryPolicies(sel.votingService(getState()))
+    .then((treasuryPolicies) =>
+      dispatch({
+        treasuryPoliciesResponse: treasuryPolicies.policiesList,
+        type: GETTREASURY_POLICIES_SUCCESS
+      })
+    )
+    .catch((error) => {
+      dispatch({ error, type: GETTREASURY_POLICIES_FAILED });
+    });
+};
+
+export const SETTREASURY_POLICY_ATTEMPT = "SETTREASURY_POLICY_ATTEMPT";
+export const SETTREASURY_POLICY_FAILED = "SETTREASURY_POLICY_FAILED";
+export const SETTREASURY_POLICY_SUCCESS = "SETTREASURY_POLICY_SUCCESS";
+
+export const setTreasuryPolicy = (key, policy, passphrase) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ payload: { key, policy }, type: SETTREASURY_POLICY_ATTEMPT });
+  await dispatch(
+    unlockAllAcctAndExecFn(passphrase, () =>
+      wallet
+        .setTreasuryPolicy(sel.votingService(getState()), key, policy)
+        .then(() => {
+          dispatch({ type: SETTREASURY_POLICY_SUCCESS });
+          dispatch(getTreasuryPolicies());
+        })
+        .catch((error) => dispatch({ error, type: SETTREASURY_POLICY_FAILED }))
+    )
+  );
 };
 
 export const GETMESSAGEVERIFICATIONSERVICE_ATTEMPT =
