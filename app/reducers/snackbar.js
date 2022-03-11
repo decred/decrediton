@@ -614,11 +614,11 @@ const messages = defineMessages({
   SETTREASURY_POLICY_SUCCESS: {
     id: "setTreasuryPolicy.updateVoteChoiceSuccess",
     defaultMessage:
-      "Your vote has been cast!\nThanks for participating in Decred's governance"
+      "Your treasury policy has been successfully updated! Thanks for participating in Decred's governance."
   },
   SETTREASURY_POLICY_FAILED: {
     id: "setTreasuryPolicy.updateVoteChoiceFailed",
-    defaultMessage: "Set trasury policy failed: {originalError}"
+    defaultMessage: "Set treasury policy failed: {originalError}"
   },
   CREATEMIXERACCOUNTS_SUCCESS: {
     id: "mixer.ntf.createdAcct",
