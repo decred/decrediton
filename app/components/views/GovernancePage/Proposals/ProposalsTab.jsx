@@ -57,7 +57,7 @@ const ProposalsTab = ({ isDarkTheme }) => {
     {
       path: "/governance/proposals/voted",
       content: h(ProposalsList, { finishedVote: true, tab, isDarkTheme }),
-      key: "activevote",
+      key: "voted",
       className: styles.tab,
       label: <T id="proposals.statusLinks.voted" m="Finished Voting" />
     },

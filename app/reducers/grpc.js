@@ -42,6 +42,12 @@ import {
   SETVOTECHOICES_ATTEMPT,
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS,
+  GETTREASURY_POLICIES_ATTEMPT,
+  GETTREASURY_POLICIES_FAILED,
+  GETTREASURY_POLICIES_SUCCESS,
+  SETTREASURY_POLICY_ATTEMPT,
+  SETTREASURY_POLICY_FAILED,
+  SETTREASURY_POLICY_SUCCESS,
   GETBESTBLOCK_ATTEMPT,
   GETBESTBLOCK_FAILED,
   GETBESTBLOCK_SUCCESS,
@@ -636,6 +642,42 @@ export default function grpc(state = {}, action) {
         ...state,
         setVoteChoicesRequestAttempt: false,
         setVoteChoicesResponse: action.voteChoices
+      };
+    case GETTREASURY_POLICIES_ATTEMPT:
+      return {
+        ...state,
+        getTreasuryPoliciesError: null,
+        getTreasuryPoliciesRequestAttempt: true
+      };
+    case GETTREASURY_POLICIES_FAILED:
+      return {
+        ...state,
+        getTreasuryPoliciesError: String(action.error),
+        getTreasuryPoliciesRequestAttempt: false
+      };
+    case GETTREASURY_POLICIES_SUCCESS:
+      return {
+        ...state,
+        getTreasuryPoliciesRequestAttempt: false,
+        getTreasuryPoliciesResponse: action.treasuryPoliciesResponse,
+        getTreasuryPoliciesError: null
+      };
+    case SETTREASURY_POLICY_ATTEMPT:
+      return {
+        ...state,
+        setTreasuryPolicyError: null,
+        setTreasuryPolicyRequestAttempt: true
+      };
+    case SETTREASURY_POLICY_FAILED:
+      return {
+        ...state,
+        setTreasuryPolicyError: String(action.error),
+        setTreasuryPolicyRequestAttempt: false
+      };
+    case SETTREASURY_POLICY_SUCCESS:
+      return {
+        ...state,
+        setTreasuryPolicyRequestAttempt: false
       };
     case GETSTARTUPTRANSACTIONS_SUCCESS:
       return {
