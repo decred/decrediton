@@ -1804,6 +1804,11 @@ export const setVspdVoteChoicesAttempt = get([
   "setVspdVoteChoicesRequestAttempt"
 ]);
 export const voteChoices = get(["grpc", "getVoteChoicesResponse"]);
+export const treasuryPolicies = get(["grpc", "getTreasuryPoliciesResponse"]);
+export const setTreasuryPolicyRequestAttempt = get([
+  "grpc",
+  "setTreasuryPolicyRequestAttempt"
+]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([

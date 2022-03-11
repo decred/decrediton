@@ -52,6 +52,8 @@ service WalletService {
 	rpc NextAccount (NextAccountRequest) returns (NextAccountResponse);
 	rpc NextAddress (NextAddressRequest) returns (NextAddressResponse);
 	rpc ImportPrivateKey (ImportPrivateKeyRequest) returns (ImportPrivateKeyResponse);
+	rpc ImportExtendedPublicKey (ImportExtendedPublicKeyRequest) returns (ImportExtendedPublicKeyResponse);
+	rpc ImportVotingAccountFromSeed (ImportVotingAccountFromSeedRequest) returns (ImportVotingAccountFromSeedResponse);
 	rpc ImportScript(ImportScriptRequest) returns (ImportScriptResponse);
 	rpc FundTransaction (FundTransactionRequest) returns (FundTransactionResponse);
 	rpc UnspentOutputs (UnspentOutputsRequest) returns (stream UnspentOutputResponse);
@@ -132,6 +134,8 @@ service AgendaService {
 service VotingService {
 	rpc VoteChoices (VoteChoicesRequest) returns (VoteChoicesResponse);
 	rpc SetVoteChoices (SetVoteChoicesRequest) returns (SetVoteChoicesResponse);
+  	rpc TreasuryPolicies (TreasuryPoliciesRequest) returns (TreasuryPoliciesResponse);
+  	rpc SetTreasuryPolicy (SetTreasuryPolicyRequest) returns (SetTreasuryPolicyResponse);
 }
 
 service MessageVerificationService {
@@ -280,6 +284,29 @@ message ImportPrivateKeyRequest {
 	int32 scan_from = 5;
 }
 message ImportPrivateKeyResponse {
+}
+
+message ImportExtendedPublicKeyRequest {
+	string xpub = 1;
+	string account_name = 2;
+	bool rescan = 3;
+	int32 scan_from = 4;
+}
+message ImportExtendedPublicKeyResponse {
+}
+
+message ImportVotingAccountFromSeedRequest {
+	bytes seed = 1;
+	string name = 2;
+	bytes passphrase = 3;
+	bool rescan = 4;
+	int32 scan_from = 5;
+	bool discover_usage = 6;
+	int32 discover_from = 7;
+	int32 discover_gap_limit = 8;
+}
+message ImportVotingAccountFromSeedResponse {
+	uint32 account = 1;
 }
 
 message ImportScriptRequest {
@@ -1004,6 +1031,25 @@ message SetVoteChoicesResponse {
 	uint32 votebits = 1;
 }
 
+message TreasuryPoliciesRequest {}
+
+message TreasuryPoliciesResponse {
+	message Policy {
+		bytes key = 1;
+		string policy = 2;
+		bytes ticket_hash = 3;
+	}
+	repeated Policy policies = 1;
+}
+
+message SetTreasuryPolicyRequest {
+	bytes key = 1;
+	string policy = 2;
+	bytes ticket_hash = 3;
+}
+
+message SetTreasuryPolicyResponse {}
+
 message VerifyMessageRequest {
 	string address = 1;
 	string message = 2;
@@ -1054,6 +1100,8 @@ message DecodedTransaction {
 			STAKE_SUB_CHANGE = 9;
 			PUB_KEY_ALT = 10;
 			PUB_KEY_HASH_ALT = 11;
+			TGEN = 12;
+			TADD = 13;
 		}
 		ScriptClass script_class = 7;
 		repeated string addresses = 8;
@@ -1100,6 +1148,8 @@ message ValidateAddressResponse {
 		StakeSubChangeTy = 9;
 		PubkeyAltTy = 10;
 		PubkeyHashAltTy = 11;
+		TreasuryGenTy = 12;
+		TreasuryAddTy = 13;
 	}
 	ScriptType script_type = 8;
 	bytes pay_to_addr_script = 9;

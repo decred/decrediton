@@ -1,0 +1,88 @@
+.voteSection {
+  background-color: var(--background-back-color);
+  padding: 10px 0;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.votePreference {
+  line-height: 0;
+  flex-basis: 73%;
+  display: flex;
+  align-items: center;
+  height: 35px;
+}
+
+.preferenceTitle {
+  font-size: 13px;
+}
+
+.voteRadioButtons {
+  margin-left: 10px;
+}
+
+.yes,
+.abstain,
+.no {
+  margin-top: 0 !important;
+}
+
+.yes > label,
+.abstain > label,
+.no > label {
+  display: flex;
+  align-items: center;
+}
+
+.yes > label > span:nth-child(1) {
+  border-color: var(--vote-yes-color);
+  top: 0 !important;
+}
+
+.yes > label > span:nth-child(2) {
+  background-color: var(--vote-yes-color);
+  top: 0.4rem !important;
+}
+
+.no > label > span:nth-child(1) {
+  border-color: var(--vote-no-color);
+  top: 0 !important;
+}
+
+.no > label > span:nth-child(2) {
+  background-color: var(--vote-no-color);
+  top: 0.4rem !important;
+}
+
+.abstain > label > span:nth-child(1) {
+  border-color: var(--vote-abstain-color);
+  top: 0 !important;
+}
+
+.abstain > label > span:nth-child(2) {
+  background-color: var(--vote-abstain-color);
+  top: 0.4rem !important;
+}
+
+@media screen and (max-width: 768px) {
+  .voteSection {
+    padding: 10px 10px 10px 0;
+  }
+
+  .votePreference {
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 3rem;
+    width: 100%;
+    flex-basis: auto;
+    height: 10rem;
+  }
+
+  .voteRadioButtons {
+    margin: 0;
+    align-self: center;
+  }
+}

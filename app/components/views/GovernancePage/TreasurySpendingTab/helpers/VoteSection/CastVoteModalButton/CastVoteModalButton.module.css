@@ -1,0 +1,41 @@
+.voteConfirmation {
+  background-color: var(--background-container);
+  font-size: 27px;
+  line-height: 34px;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: row;
+  text-transform: capitalize;
+}
+
+.yesProposal {
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--vote-yes-color);
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
+.noProposal {
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  background-color: var(--vote-no-color);
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
+.voteButton {
+  padding: 5px 8px;
+  margin-left: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .voteButton {
+    margin: 0;
+    align-self: center;
+  }
+}

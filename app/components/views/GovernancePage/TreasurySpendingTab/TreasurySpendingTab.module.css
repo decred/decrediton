@@ -1,0 +1,35 @@
+.headerWrapper {
+  background-color: var(--governance-tab-bg);
+}
+
+.pikeysWrapper {
+  margin: 20px 60px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.proposalsLink {
+  color: var(--link-color) !important;
+  cursor: pointer;
+}
+
+.proposalsLink:hover {
+  text-decoration: underline !important;
+}
+
+.cardWrapper {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 1180px) {
+  .pikeysWrapper {
+    margin-left: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pikeysWrapper {
+    margin: 20px;
+  }
+}

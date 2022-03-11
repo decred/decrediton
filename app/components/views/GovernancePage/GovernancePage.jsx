@@ -3,6 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import ProposalsTab from "./Proposals";
 import VotingPrefsTab from "./Blockchain";
 import TabHeader from "./TabHeader";
+import TreasurySpendingTab from "./TreasurySpendingTab";
 import { GOVERNANCE_ICON } from "constants";
 import styles from "./GovernancePage.module.css";
 import { useTheme, DEFAULT_DARK_THEME_NAME } from "pi-ui";
@@ -29,6 +30,12 @@ export default () => {
       content: VotingPrefsTab,
       header: TabHeader,
       label: <T id="governance.tab.consensusChanges" m="Consensus Changes" />
+    },
+    {
+      path: "/governance/treasury",
+      content: TreasurySpendingTab,
+      header: TabHeader,
+      label: <T id="governance.tab.treasurySpending" m="Treasury Spending" />
     }
   ];
   return (
