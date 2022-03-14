@@ -8,6 +8,7 @@ import styles from "./AccountsList.module.css";
 const AccountsList = ({
   accounts,
   mixedAccount,
+  dexAccount,
   changeAccount,
   isLoading,
   onGetAccountExtendedKey,
@@ -36,6 +37,7 @@ const AccountsList = ({
                 hasTickets,
                 account,
                 mixedAccount,
+                dexAccount,
                 changeAccount,
                 accountNumDetailsShown,
                 onGetAccountExtendedKey,
