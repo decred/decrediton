@@ -38,7 +38,8 @@ import {
   CREATEDEXACCOUNT_SUCCESS,
   SELECT_DEXACCOUNT_SUCCESS,
   DEX_USE_SPV_BTC_SUCCESS,
-  DEX_CONFIRM_SEED_SUCCESS
+  DEX_CONFIRM_SEED_SUCCESS,
+  RESET_DEXACCOUNT
 } from "actions/DexActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
@@ -260,6 +261,11 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         confirmDexSeed: true
+      };
+    case RESET_DEXACCOUNT:
+      return {
+        ...state,
+        dexAccount: null
       };
     default:
       return state;

@@ -57,7 +57,8 @@ import {
   DEX_EXPORT_SEED_FAILED,
   DEX_CONFIRM_SEED_ATTEMPT,
   DEX_CONFIRM_SEED_SUCCESS,
-  DEX_CONFIRM_SEED_FAILED
+  DEX_CONFIRM_SEED_FAILED,
+  RESET_DEXACCOUNT
 } from "../actions/DexActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -479,6 +480,11 @@ export default function ln(state = {}, action) {
         getConfigError: null,
         alreadyPaid: false,
         config: null
+      };
+    case RESET_DEXACCOUNT:
+      return {
+        ...state,
+        dexAccount: null
       };
     default:
       return state;

@@ -48,6 +48,7 @@ export const enableDex = () => (dispatch, getState) => {
 export const DEX_STARTUP_ATTEMPT = "DEX_STARTUP_ATTEMPT";
 export const DEX_STARTUP_FAILED = "DEX_STARTUP_FAILED";
 export const DEX_STARTUP_SUCCESS = "DEX_STARTUP_SUCCESS";
+export const RESET_DEXACCOUNT = "RESET_DEXACCOUNT";
 
 export const startDex = () => async (dispatch, getState) => {
   dispatch({ type: DEX_STARTUP_ATTEMPT });
@@ -56,12 +57,31 @@ export const startDex = () => async (dispatch, getState) => {
   const {
     daemon: { walletName }
   } = getState();
+  const accounts = sel.accounts(getState());
+  const dexAccount = sel.dexAccount(getState());
   const walletPath = wallet.getWalletPath(isTestnet, walletName);
-
   try {
     const res = await dex.start(walletPath, isTestnet, locale);
     dispatch({ type: DEX_STARTUP_SUCCESS, serverAddress: res });
     dispatch(dexCheckInit());
+
+    // Check to make sure dex account exists:
+    let dexAccountFound = false;
+    for (let i = 0; i < accounts.length; i++) {
+      if (accounts[i].accountName == dexAccount) {
+        dexAccountFound = true;
+        break;
+      }
+    }
+    // If dex account not found, reset and allow user to select again.
+    if (!dexAccountFound) {
+      const walletConfig = wallet.getWalletCfg(
+        sel.isTestNet(getState()),
+        walletName
+      );
+      dispatch({ type: RESET_DEXACCOUNT });
+      walletConfig.set(configConstants.DEX_ACCOUNT, null);
+    }
   } catch (error) {
     dispatch({ type: DEX_STARTUP_FAILED, error });
     return;

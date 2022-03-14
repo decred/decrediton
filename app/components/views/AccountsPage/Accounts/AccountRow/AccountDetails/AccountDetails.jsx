@@ -15,6 +15,7 @@ const AccountsDetails = ({
   account,
   showRenameAccount,
   hidden,
+  dexAccount,
   hideAccount,
   showAccount,
   showPubKey,
@@ -107,11 +108,16 @@ const AccountsDetails = ({
         </div>
       )}
       <div className={classNames(styles.buttons, "flex-row")}>
-        {account.accountName !== IMPORTED_ACCOUNT && (
-          <Tooltip content={<T id="accounts.rename.tip" m="Rename Account" />}>
-            <div className={styles.renameButton} onClick={showRenameAccount} />
-          </Tooltip>
-        )}
+        {account.accountName !== IMPORTED_ACCOUNT &&
+          account.accountName !== dexAccount && (
+            <Tooltip
+              content={<T id="accounts.rename.tip" m="Rename Account" />}>
+              <div
+                className={styles.renameButton}
+                onClick={showRenameAccount}
+              />
+            </Tooltip>
+          )}
         {account.accountName !== IMPORTED_ACCOUNT && (
           <Tooltip
             content={
