@@ -7,6 +7,7 @@ import TreasurySpendingTab from "./TreasurySpendingTab";
 import { GOVERNANCE_ICON } from "constants";
 import styles from "./GovernancePage.module.css";
 import { useTheme, DEFAULT_DARK_THEME_NAME } from "pi-ui";
+import { useGovernancePage } from "./hooks";
 
 const PageHeader = () => (
   <TitleHeader
@@ -15,9 +16,17 @@ const PageHeader = () => (
   />
 );
 
+const ListLink = ({ count, children }) => (
+  <>
+    {children}
+    {count ? <span className={styles.linkCount}>{count}</span> : null}
+  </>
+);
+
 export default () => {
   const { themeName } = useTheme();
   const isDarkTheme = themeName === DEFAULT_DARK_THEME_NAME;
+  const { newNotYetVotedAgendasCount } = useGovernancePage();
   const tabs = [
     {
       path: "/governance/proposals",
@@ -29,7 +38,11 @@ export default () => {
       path: "/governance/blockchain",
       content: VotingPrefsTab,
       header: TabHeader,
-      label: <T id="governance.tab.consensusChanges" m="Consensus Changes" />
+      label: (
+        <ListLink count={newNotYetVotedAgendasCount}>
+          <T id="governance.tab.consensusChanges" m="Consensus Changes" />
+        </ListLink>
+      )
     },
     {
       path: "/governance/treasury",

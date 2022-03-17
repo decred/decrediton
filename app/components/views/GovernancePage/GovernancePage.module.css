@@ -5,3 +5,16 @@
 .tabContent > div {
   height: 100%;
 }
+
+.linkCount {
+  position: absolute;
+  border: 1px solid var(--settings-desc);
+  background-color: var(--tooltip-container);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  line-height: 1.3rem;
+  font-size: 9pt;
+  text-align: center;
+  margin-left: 0.2rem;
+}

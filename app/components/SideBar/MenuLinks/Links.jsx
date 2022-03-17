@@ -28,7 +28,7 @@ export const linkList = [
     path: "/governance",
     link: <T id="sidebar.link.governance" m="Governance" />,
     icon: "governance",
-    notifProp: "newProposalsStartedVoting",
+    notifProp: ["newProposalsStartedVoting", "newNotYetVotedAgendasCount"],
     ariaLabel: "Governance"
   },
   {
