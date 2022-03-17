@@ -39,9 +39,23 @@ const Tickets = ({ toggleIsLegacy }) => {
   }, [visibleAccounts, account]);
 
   // todo use this vsp to buy solo tickets.
-  const [vsp, setVSP] = useState(
-    rememberedVspHost ? { host: rememberedVspHost.host } : null
-  );
+  const [vsp, setVSP] = useState(() => {
+    if (rememberedVspHost) {
+      // reset rememberedVspHost if it's outdated
+      if (
+        availableVSPs?.find(
+          (availableVSP) => availableVSP.host === rememberedVspHost.host
+        )?.outdated === true
+      ) {
+        setRememberedVspHost(null);
+        return null;
+      } else {
+        return { host: rememberedVspHost.host };
+      }
+    } else {
+      return null;
+    }
+  });
   const [numTicketsToBuy, setNumTicketsToBuy] = useState(1);
   const [isValid, setIsValid] = useState(false);
 

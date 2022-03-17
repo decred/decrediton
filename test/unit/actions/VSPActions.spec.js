@@ -20,39 +20,60 @@ const defaultMockAvailableMainnetVsps = [
   {
     host: "test-stakepool1.eu",
     label: "test-stakepool1.eu",
+    outdated: false,
     vspData: {
       feepercentage: 2,
-      network: "mainnet"
+      network: "mainnet",
+      vspdversion: "1.1.0"
     }
   },
   {
     host: "test-stakepool2.eu",
     label: "test-stakepool2.eu",
+    outdated: false,
     vspData: {
       feepercentage: 3,
-      network: "mainnet"
+      network: "mainnet",
+      vspdversion: "1.1.0"
     }
   },
   {
     host: "test-stakepool3.eu",
     label: "test-stakepool3.eu",
+    outdated: false,
     vspData: {
       feepercentage: 4,
-      network: "mainnet"
+      network: "mainnet",
+      vspdversion: "1.1.0"
     }
   },
   {
     host: "test-stakepool4.eu",
     label: "test-stakepool4.eu",
+    outdated: false,
     vspData: {
-      network: "mainnet"
+      network: "mainnet",
+      vspdversion: "1.1.0"
     }
   },
   {
     host: "test-stakepool5.eu",
     label: "test-stakepool5.eu",
+    outdated: false,
     vspData: {
-      network: "mainnet"
+      network: "mainnet",
+      vspdversion: "1.1.0"
+    }
+  },
+  {
+    host: "test-stakepool6.eu",
+    label: "test-stakepool6.eu",
+    outdated: true,
+    vspData: {
+      feepercentage: 1, // this vsp is outdated, so it's not going to be
+      // chosen in randomVSP despite the low fee percentage
+      network: "mainnet",
+      vspdversion: "1.0.0"
     }
   }
 ];
@@ -60,17 +81,21 @@ const defaultMockAvailableTestnetVsps = [
   {
     host: "test-stakepool6.eu",
     label: "test-stakepool6.eu",
+    outdated: false,
     vspData: {
       feepercentage: 4,
-      network: "testnet"
+      network: "testnet",
+      vspdversion: "1.1.0"
     }
   },
   {
     host: "test-stakepool7.eu",
     label: "test-stakepool7.eu",
+    outdated: false,
     vspData: {
       feepercentage: 5,
-      network: "testnet"
+      network: "testnet",
+      vspdversion: "1.1.0"
     }
   }
 ];
@@ -232,7 +257,8 @@ test("test getVSPsPubkeys", async () => {
     [`https://${mockAvailableMainnetVsps[1].host}`]: null, // will be rejected
     [`https://${mockAvailableMainnetVsps[2].host}`]: "invalid",
     [`https://${mockAvailableMainnetVsps[3].host}`]: "test-pubkey3",
-    [`https://${mockAvailableMainnetVsps[4].host}`]: "test-pubkey4"
+    [`https://${mockAvailableMainnetVsps[4].host}`]: "test-pubkey4",
+    [`https://${mockAvailableMainnetVsps[5].host}`]: "test-pubkey5"
   };
 
   const fetchTimes = {
@@ -240,7 +266,8 @@ test("test getVSPsPubkeys", async () => {
     [`https://${mockAvailableMainnetVsps[1].host}`]: 10,
     [`https://${mockAvailableMainnetVsps[2].host}`]: 5,
     [`https://${mockAvailableMainnetVsps[3].host}`]: 0,
-    [`https://${mockAvailableMainnetVsps[4].host}`]: 1000 // will timeout
+    [`https://${mockAvailableMainnetVsps[4].host}`]: 1000, // will timeout
+    [`https://${mockAvailableMainnetVsps[5].host}`]: 0
   };
 
   wallet.getVSPInfo = jest.fn((host) => {
@@ -267,20 +294,36 @@ test("test getVSPsPubkeys", async () => {
       Object {
         "host": "test-stakepool1.eu",
         "label": "test-stakepool1.eu",
+        "outdated": false,
         "pubkey": "test-pubkey1",
         "value": "test-stakepool1.eu",
         "vspData": Object {
           "feepercentage": 2,
           "network": "mainnet",
+          "vspdversion": "1.1.0",
         },
       },
       Object {
         "host": "test-stakepool4.eu",
         "label": "test-stakepool4.eu",
+        "outdated": false,
         "pubkey": "test-pubkey3",
         "value": "test-stakepool4.eu",
         "vspData": Object {
           "network": "mainnet",
+          "vspdversion": "1.1.0",
+        },
+      },
+      Object {
+        "host": "test-stakepool6.eu",
+        "label": "test-stakepool6.eu",
+        "outdated": true,
+        "pubkey": "test-pubkey5",
+        "value": "test-stakepool6.eu",
+        "vspData": Object {
+          "feepercentage": 1,
+          "network": "mainnet",
+          "vspdversion": "1.0.0",
         },
       },
     ]
@@ -298,4 +341,24 @@ test("test getVSPsPubkeys (error)", async () => {
   expect(store.getState().vsp.availableVSPsPubkeysError).toEqual(
     "Error: INVALID_VSPS"
   );
+});
+
+test("test isVSPOutdated function", () => {
+  const minVersion = "1.1.0";
+  expect(vspActions.isVSPOutdated("1.1.0", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("2.2.0", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("1.2.0", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("1.1.1", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("1.2.1", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("1.2.1-pre", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("1.2.1-alpha", minVersion)).toBeFalsy();
+  expect(vspActions.isVSPOutdated("1.2.1-beta", minVersion)).toBeFalsy();
+
+  expect(vspActions.isVSPOutdated("1.0.0", minVersion)).toBeTruthy();
+  expect(vspActions.isVSPOutdated("1.0.0-pre", minVersion)).toBeTruthy();
+  expect(vspActions.isVSPOutdated("1.1.0-pre", minVersion)).toBeTruthy();
+  expect(vspActions.isVSPOutdated("1.1.0-alpha", minVersion)).toBeTruthy();
+  expect(vspActions.isVSPOutdated("1.1.0-beta", minVersion)).toBeTruthy();
+  expect(vspActions.isVSPOutdated(null, minVersion)).toBeTruthy();
+  expect(vspActions.isVSPOutdated(undefined, minVersion)).toBeTruthy();
 });
