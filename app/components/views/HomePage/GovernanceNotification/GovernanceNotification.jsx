@@ -5,17 +5,28 @@ import { useGovernanceNotification } from "./hooks";
 const GovernanceNotification = () => {
   const {
     newNotYetVotedAgendasCount,
-    goToConsensusChanges
+    newNotYetVotedActiveProposalsCount,
+    goToConsensusChanges,
+    goToActiveProposals
   } = useGovernanceNotification();
 
   return (
     <div className={styles.votes}>
       {newNotYetVotedAgendasCount > 0 ? (
-        <a className={styles.consensusAgendas} onClick={goToConsensusChanges}>
+        <a onClick={goToConsensusChanges}>
           <T
             id="home.newNotYetVotedAgendasCount"
             m="{count, plural, one {1 new consensus agenda} other {# new consensus agendas}}"
             values={{ count: newNotYetVotedAgendasCount }}
+          />
+        </a>
+      ) : null}
+      {newNotYetVotedActiveProposalsCount > 0 ? (
+        <a onClick={goToActiveProposals}>
+          <T
+            id="home.newNotYetVotedActiveProposalsCount"
+            m="{count, plural, one {1 active proposal} other {# new active proposals}}"
+            values={{ count: newNotYetVotedActiveProposalsCount }}
           />
         </a>
       ) : null}

@@ -2,13 +2,14 @@
   padding-top: 2.5rem;
 }
 
-.consensusAgendas {
+.votes a {
   padding-left: 2rem;
   position: relative;
   cursor: pointer;
+  display: block;
 }
 
-.consensusAgendas::before {
+.votes a::before {
   content: "";
   background-repeat: no-repeat;
   background-image: var(--bell-notification-icon);

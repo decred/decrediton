@@ -6,12 +6,18 @@ export function useGovernanceNotification() {
   const newNotYetVotedAgendasCount = useSelector(
     sel.newNotYetVotedAgendasCount
   );
+  const newNotYetVotedActiveProposalsCount = useSelector(
+    sel.newNotYetVotedActiveProposalsCount
+  );
 
   const dispatch = useDispatch();
   const goToConsensusChanges = () => dispatch(cla.goToConsensusChanges());
+  const goToActiveProposals = () => dispatch(cla.goToActiveProposals());
 
   return {
     newNotYetVotedAgendasCount,
-    goToConsensusChanges
+    newNotYetVotedActiveProposalsCount,
+    goToConsensusChanges,
+    goToActiveProposals
   };
 }
