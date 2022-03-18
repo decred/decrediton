@@ -934,7 +934,15 @@ export const getRandomVSP = (maxFeePercentage) => async (
       vsp.vspData.feepercentage <= parseFloat(maxFeePercentage) && !vsp.outdated
   );
   if (filteredVSPs.length == 0) {
-    throw new Error("Max fee is too low.");
+    const minFee = availableVSPs.reduce((acc, vsp) => {
+      if (vsp.outdated || !vsp.vspData.feepercentage) {
+        return acc;
+      }
+      return acc < vsp.vspData.feepercentage ? acc : vsp.vspData.feepercentage;
+    }, undefined);
+    throw new Error(
+      `No VSPs available for that fee rate. (Minimum is currently ${minFee}%)`
+    );
   }
 
   const shuffledArray = shuffle(filteredVSPs);

@@ -181,7 +181,11 @@ test("test getRandomVSP", async () => {
   );
 
   // "too low maxFee, expect to receive error",
-  await testRandomVSP(1, undefined, "Max fee is too low.");
+  await testRandomVSP(
+    1,
+    undefined,
+    "No VSPs available for that fee rate. (Minimum is currently 2%)"
+  );
 
   // high max feee, but can't fetch any VSP info. Expect fetch error
   wallet.getVSPInfo = jest.fn(() => Promise.reject());
