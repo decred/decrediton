@@ -4536,9 +4536,9 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-"dcrdex-assets@https://github.com/decred/dcrdex-assets#v0.4.1":
+"dcrdex-assets@https://github.com/decred/dcrdex-assets#v0.4.2":
   version "0.0.0"
-  resolved "https://github.com/decred/dcrdex-assets#f07835a796a15097d898ece9d401ae0923f710a8"
+  resolved "https://github.com/decred/dcrdex-assets#c15fce6e40784ae25a4a8f007a72bc41a593ee11"
 
 debounce-fn@^4.0.0:
   version "4.0.0"
