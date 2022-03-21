@@ -29,6 +29,8 @@
 }
 .error {
   color: var(--error-text-color);
+  max-width: 30rem;
+  word-break: break-word;
 }
 .buttons {
   display: flex;

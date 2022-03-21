@@ -16,6 +16,11 @@
   text-overflow: ellipsis;
 }
 
+.optionWrapper.outdated {
+  color: var(--grey-5);
+  cursor: default;
+}
+
 .error {
   color: var(--error-text-color);
 }
@@ -23,6 +28,6 @@
 .tooltipContent {
   text-align: center;
   line-height: 20px;
-  width: 95px;
+  width: max-content;
   transition: 0.1s all ease;
 }

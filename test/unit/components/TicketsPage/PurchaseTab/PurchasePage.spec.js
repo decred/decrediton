@@ -32,14 +32,25 @@ const mockAvailableVsps = [
     host: "https://test-stakepool1.eu",
     label: "https://test-stakepool1.eu",
     vspData: {
-      feepercentage: 1
+      feepercentage: 1,
+      vspdversion: "1.1.0"
     }
   },
   {
     host: "https://test-stakepool2.eu",
     label: "https://test-stakepool2.eu",
     vspData: {
-      feepercentage: 2
+      feepercentage: 2,
+      vspdversion: "1.1.0"
+    }
+  },
+  {
+    host: "https://test-stakepool3.eu",
+    label: "https://test-stakepool3.eu",
+    outdated: true,
+    vspData: {
+      feepercentage: 3,
+      vspdversion: "1.0.0" // outdated
     }
   }
 ];
@@ -117,6 +128,7 @@ beforeEach(() => {
   selectors.lastVotedTicket = jest.fn(() => mockLastVotedTicket);
   selectors.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
   selectors.blocksNumberToNextTicket = jest.fn(() => 13);
+  selectors.getRememberedVspHost = jest.fn(() => null);
   mockAddAllowedExternalRequest = settingsActions.addAllowedExternalRequest = jest.fn(
     () => () => {}
   );
@@ -377,4 +389,60 @@ test("test `end of a ticket interval` state", () => {
       /Purchase Tickets is not available right now, because we are at the end of a ticket interval. After one block it will be available again./i
     )
   ).toBeInTheDocument();
+});
+
+test("remembered vsp have been set", async () => {
+  const testRememberedVSP = {
+    host: mockAvailableVsps[1].host,
+    label: mockAvailableVsps[1].label
+  };
+  selectors.getRememberedVspHost = jest.fn(() => testRememberedVSP);
+  render(<Purchase />, initialState);
+
+  await wait(() =>
+    expect(screen.queryByText("Loading")).not.toBeInTheDocument()
+  );
+  expect(screen.getByText(testRememberedVSP.host)).toBeInTheDocument();
+
+  expect(screen.getByLabelText("Always use this VSP").checked).toBeTruthy();
+  expect(mockSetRememberedVspHost).not.toHaveBeenCalled();
+
+  // uncheck Always use this VSP checkbox
+  user.click(screen.getByLabelText("Always use this VSP"));
+  expect(mockSetRememberedVspHost).toHaveBeenCalledWith(null);
+});
+
+test("an outdated remembered vsp has been set, should be cleared", async () => {
+  const testRememberedVSP = {
+    host: mockAvailableVsps[2].host,
+    label: mockAvailableVsps[2].label
+  };
+  selectors.getRememberedVspHost = jest.fn(() => testRememberedVSP);
+  render(<Purchase />, initialState);
+
+  await wait(() =>
+    expect(screen.queryByText("Loading")).not.toBeInTheDocument()
+  );
+
+  expect(screen.queryByText(testRememberedVSP.host)).not.toBeInTheDocument();
+  expect(screen.getByText("Select VSP...")).toBeInTheDocument();
+  expect(
+    screen.queryByLabelText("Always use this VSP")
+  ).not.toBeInTheDocument();
+  expect(mockSetRememberedVspHost).toHaveBeenCalledWith(null);
+});
+
+test("outdated vsp could not be selected", async () => {
+  render(<Purchase />, initialState);
+
+  await wait(() =>
+    expect(screen.queryByText("Loading")).not.toBeInTheDocument()
+  );
+
+  user.click(screen.getByText("Select VSP..."));
+  expect(screen.getByText("Out of date")).toBeInTheDocument();
+  // there is (only) one out of date tooltip
+  user.click(screen.getByText(mockAvailableVsps[2].host));
+  // click on outdated vsp is not allowed:
+  expect(screen.getByText("Select VSP...")).toBeInTheDocument();
 });

@@ -144,3 +144,5 @@ export const PiKeys = [
   "03f6e7041f1cf51ee10e0a01cd2b0385ce3cd9debaabb2296f7e9dee9329da946c"
   // "0319a37405cb4d1691971847d7719cfce70857c0f6e97d7c9174a3998cf0ab86dd",
 ];
+
+export const MIN_VSP_VERSION = "1.1.0";

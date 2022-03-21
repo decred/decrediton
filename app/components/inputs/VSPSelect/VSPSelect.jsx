@@ -2,7 +2,7 @@ import { injectIntl, defineMessages } from "react-intl";
 import { useEffect, useState, useMemo } from "react";
 import { useVSPSelect } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "pi-ui";
+import { Tooltip, classNames } from "pi-ui";
 import styles from "./VSPSelect.modules.css";
 import { Select } from "inputs";
 
@@ -59,19 +59,32 @@ function VSPSelect({
           contentClassName={styles.tooltipContent}
           content={
             <div>
-              <T
-                id="vsp.feeTooltip"
-                m="Fee: {feePercentage} %"
-                values={{
-                  feePercentage: vsp.vspData.feepercentage
-                }}
-              />
+              {vsp.outdated ? (
+                <div>
+                  <T id="vsp.outdated" m="Out of date" />
+                </div>
+              ) : (
+                <T
+                  id="vsp.feeTooltip"
+                  m="Fee: {feePercentage} %"
+                  values={{
+                    feePercentage: vsp.vspData.feepercentage
+                  }}
+                />
+              )}
             </div>
           }>
-          <div className={styles.optionWrapper}>{vsp.host}</div>
+          <div
+            className={classNames(
+              styles.optionWrapper,
+              vsp.outdated && styles.outdated
+            )}>
+            {vsp.host}
+          </div>
         </Tooltip>
       ),
-      value: vsp
+      value: vsp,
+      isDisabled: vsp.outdated
     }));
     opts = [
       {

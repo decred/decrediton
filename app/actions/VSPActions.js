@@ -19,6 +19,8 @@ import * as cfgConstants from "constants/config";
 import { shuffle } from "helpers";
 import { mapArray } from "fp";
 import { isArray } from "lodash";
+import semver from "semver";
+import { MIN_VSP_VERSION } from "constants";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -491,7 +493,8 @@ export const discoverAvailableVSPs = () => async (dispatch, getState) => {
       .map((vsp) => ({
         ...vsp,
         label: vsp.host,
-        value: vsp.host
+        value: vsp.host,
+        outdated: isVSPOutdated(vsp.vspData?.vspdversion, MIN_VSP_VERSION)
       }))
       .filter(({ vspData }) => {
         if (!vspData) return false;
@@ -510,6 +513,12 @@ export const discoverAvailableVSPs = () => async (dispatch, getState) => {
       error
     });
   }
+};
+
+// returns true if version < minVersion or version is not
+// defined, so VSP is out of date
+export const isVSPOutdated = (version, minVersion) => {
+  return !version || semver.lt(version, minVersion);
 };
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
@@ -921,10 +930,19 @@ export const getRandomVSP = (maxFeePercentage) => async (
     throw new Error("The available VSPs list is empty.");
   }
   const filteredVSPs = availableVSPs.filter(
-    (vsp) => vsp.vspData.feepercentage <= parseFloat(maxFeePercentage)
+    (vsp) =>
+      vsp.vspData.feepercentage <= parseFloat(maxFeePercentage) && !vsp.outdated
   );
   if (filteredVSPs.length == 0) {
-    throw new Error("Max fee is too low.");
+    const minFee = availableVSPs.reduce((acc, vsp) => {
+      if (vsp.outdated || !vsp.vspData.feepercentage) {
+        return acc;
+      }
+      return acc < vsp.vspData.feepercentage ? acc : vsp.vspData.feepercentage;
+    }, undefined);
+    throw new Error(
+      `No VSPs available for that fee rate. (Minimum is currently ${minFee}%)`
+    );
   }
 
   const shuffledArray = shuffle(filteredVSPs);
