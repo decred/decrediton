@@ -14,7 +14,7 @@ import {
   TICKET
 } from "constants/decrediton";
 import styles from "./TransactionContent.module.css";
-import { classNames } from "pi-ui";
+import { classNames, Tooltip } from "pi-ui";
 import { MaxNonWalletOutputs } from "constants";
 
 const { DecodedTransaction } = api;
@@ -48,7 +48,8 @@ const TransactionContent = ({
   onRevokeTicket,
   publishUnminedTransactions,
   currentBlockHeight,
-  isSPV
+  isSPV,
+  agendas
 }) => {
   const {
     txHash,
@@ -63,8 +64,21 @@ const TransactionContent = ({
     ticketTxFee,
     txDirection,
     rawTx,
-    isPending
+    isPending,
+    voteChoices
   } = transactionDetails;
+
+  const isVote = txType === VOTE;
+  const agendaChoicesData =
+    isVote &&
+    Object.keys(voteChoices).map((issueId) => {
+      const agendaDetails = agendas.find((agenda) => agenda.name === issueId);
+      return {
+        issueId,
+        description: agendaDetails?.description,
+        voteChoice: voteChoices[issueId]
+      };
+    });
 
   let nonWalletInputs = [];
   let nonWalletOutputs = [];
@@ -126,7 +140,33 @@ const TransactionContent = ({
             )}
           </div>
         </div>
-        {txType !== VOTE && (
+        {isVote ? (
+          <div className={styles.topRow}>
+            <div className={classNames(styles.name, styles.agendaName)}>
+              <T id="txDetails.agendaChoices" m="Agenda Choices" />:
+            </div>
+            <div className={styles.agendaGrid}>
+              {agendaChoicesData?.map((agenda) => (
+                <>
+                  <div>
+                    <Tooltip
+                      content={agenda.description}
+                      contentClassName={styles.agendaDescTooltip}>
+                      <span className={styles.issueId}>{agenda.issueId}</span>
+                    </Tooltip>
+                  </div>
+                  <div
+                    className={classNames(
+                      styles.voteChoice,
+                      styles[agenda.voteChoice]
+                    )}>
+                    {agenda.voteChoice}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        ) : (
           <div className={styles.topRow}>
             <div className={styles.name}>
               <T id="txDetails.toAddress" m="To address" />:

@@ -34,7 +34,7 @@ export function decodeVoteScript(network, outputScript) {
 
   const vote = outputScript
     .slice(2, 4)
-    .reduce((a, v, i) => a | (v << (i * 8), 0));
+    .reduce((a, v, i) => a | (v << (i * 8)), 0);
   const version =
     outputScript.length > 4
       ? outputScript.slice(4, 8).reduce((a, v, i) => a | (v << (i * 8)), 0)
@@ -64,7 +64,7 @@ export function decodeVoteScript(network, outputScript) {
       7: [
         {
           mask: 0x06,
-          name: "DCP0004",
+          name: "fixlnseqlocks",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
@@ -72,7 +72,7 @@ export function decodeVoteScript(network, outputScript) {
       8: [
         {
           mask: 0x06,
-          name: "DCP0005",
+          name: "headercommitments",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
@@ -80,8 +80,34 @@ export function decodeVoteScript(network, outputScript) {
       9: [
         {
           mask: 0x06,
-          name: "DCP0006",
+          name: "treasury",
           choices: { 0x02: "no", 0x04: "yes" },
+          defaultChoice: "abstain"
+        }
+      ],
+      10: [
+        {
+          mask: 0x06,
+          name: "reverttreasurypolicy",
+          choices: { 0x02: "no", 0x04: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x18,
+          name: "explicitverupgrades",
+          choices: { 0x08: "no", 0x10: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x60,
+          name: "autorevocations",
+          choices: { 0x20: "no", 0x40: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x180,
+          name: "changesubsidysplit",
+          choices: { 0x80: "no", 0x100: "yes" },
           defaultChoice: "abstain"
         }
       ]
@@ -90,7 +116,7 @@ export function decodeVoteScript(network, outputScript) {
       4: [
         {
           mask: 0x06,
-          name: "DCP0001",
+          name: "sdiffalgorithm",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         },
@@ -104,7 +130,7 @@ export function decodeVoteScript(network, outputScript) {
       5: [
         {
           mask: 0x06,
-          name: "DCP0002&3",
+          name: "lnfeatures",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
@@ -112,7 +138,7 @@ export function decodeVoteScript(network, outputScript) {
       6: [
         {
           mask: 0x06,
-          name: "DCP0004",
+          name: "fixlnseqlocks",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
@@ -120,7 +146,7 @@ export function decodeVoteScript(network, outputScript) {
       7: [
         {
           mask: 0x06,
-          name: "DCP0005",
+          name: "headercommitments",
           choices: { 0x02: "no", 0x04: "yes" },
           defaultChoice: "abstain"
         }
@@ -128,8 +154,34 @@ export function decodeVoteScript(network, outputScript) {
       8: [
         {
           mask: 0x06,
-          name: "DCP0006",
+          name: "treasury",
           choices: { 0x02: "no", 0x04: "yes" },
+          defaultChoice: "abstain"
+        }
+      ],
+      9: [
+        {
+          mask: 0x06,
+          name: "reverttreasurypolicy",
+          choices: { 0x02: "no", 0x04: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x18,
+          name: "explicitverupgrades",
+          choices: { 0x08: "no", 0x10: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x60,
+          name: "autorevocations",
+          choices: { 0x20: "no", 0x40: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x180,
+          name: "changesubsidysplit",
+          choices: { 0x80: "no", 0x100: "yes" },
           defaultChoice: "abstain"
         }
       ]
