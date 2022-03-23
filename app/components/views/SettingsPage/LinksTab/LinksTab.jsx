@@ -56,15 +56,15 @@ const LinksTab = () => (
     <div className={styles.list}>
       <HelpLink
         icon="matrix"
-        href="https://decred.org/matrix"
+        href="https://chat.decred.org/"
         title={<T id="help.matrix" m="Matrix Chat" />}
-        subtitle={<T id="help.matrix.subtitle" m="element.io" />}
+        subtitle={<T id="help.matrix.subtitle" m="chat.decred.org" />}
       />
       <HelpLink
         icon="forum"
-        href="https://t.me/decred"
+        href="https://t.me/Decred"
         title={<T id="help.telegram" m="Telegram" />}
-        subtitle={<T id="help.telegram.subtitle" m="t.me/decred" />}
+        subtitle={<T id="help.telegram.subtitle" m="t.me/Decred" />}
       />
     </div>
   </>
