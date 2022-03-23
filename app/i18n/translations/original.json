@@ -273,7 +273,7 @@
   "dex.logs": "Logs",
   "dex.neededFieldsInConfig": "The following fields are required in the bitcoin.conf rpcuser, rpcpassword, rpcbind, rpcport. You must also set 'server=1' to start the wallet listening for connections.  If you have any trouble with these instructions, please go to the support channel on chat.decred.org for further assistance.",
   "dex.newAccount": "Please create a new or select an existing account that will be connected to the DEX.  Transfer funds in and out of this account to deposit/withdrawal funds from what is accessible at the DEX.",
-  "dex.newPassphrase": "Please set a new passphrase for the DEX.  You may use the same passphrase as you use for your wallet, or chose a new one.",
+  "dex.newPassphrase": "Please set a new passphrase for the DEX.  You may use the same passphrase as you use for your wallet, or choose a new one.",
   "dex.newPassphraseNote": "Note: If you lose the DEX passphrase, you will be forced to create a new DEX account and pay your exchange fees again.",
   "dex.openorders.confirmModal.goback": "Go back",
   "dex.openorders.message": "There are currently open orders still being managed at the DEX.  Please wait until all orders are finished excuting before closing.  If you close before the orders are executed, you will not finish the trade and may be penalized.",
