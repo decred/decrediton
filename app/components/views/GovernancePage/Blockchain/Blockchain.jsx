@@ -66,7 +66,7 @@ const Blockchain = () => {
           description={
             <T
               id="votingPreferences.description"
-              m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets. You can know more about Consensus Rule Voting at {link}"
+              m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets. You can learn more about Consensus Rule Voting at {link}"
               values={{
                 link: (
                   <ExternalLink
