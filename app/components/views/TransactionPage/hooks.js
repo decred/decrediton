@@ -6,6 +6,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as ta from "actions/TransactionActions";
 import * as clia from "actions/ClientActions";
+import { find, compose, eq, get } from "fp";
 
 export function useTransactionPage(txHash) {
   const isSPV = useSelector(sel.isSPV);
@@ -13,6 +14,15 @@ export function useTransactionPage(txHash) {
   const stakeTxs = useSelector(sel.stakeTransactions);
   const decodedTransactions = useSelector(sel.decodedTransactions);
   const agendas = useSelector(sel.allAgendas);
+  const voteChoices = useSelector(sel.voteChoices);
+  const getAgendaSelectedChoice = useCallback(
+    (agendaId) =>
+      get(
+        ["choiceId"],
+        find(compose(eq(agendaId), get(["agendaId"])), voteChoices)
+      ),
+    [voteChoices]
+  );
 
   const viewedTransaction = regularTxs[txHash]
     ? regularTxs[txHash]
@@ -91,6 +101,7 @@ export function useTransactionPage(txHash) {
     viewedTransaction,
     decodedTx,
     isSPV,
-    agendas
+    agendas,
+    getAgendaSelectedChoice
   };
 }
