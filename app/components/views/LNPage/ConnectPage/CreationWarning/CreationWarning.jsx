@@ -8,7 +8,7 @@ import { Tabs, Tab, classNames } from "pi-ui";
 
 const tabLabels = [
   <T id="ln.creationWarning.tab.label1" m="Backup" />,
-  <T id="ln.creationWarning.tab.label6" m="LN is a 2nd layer network" />,
+  <T id="ln.creationWarning.tab.label6" m="Lightning is a Layer 2 Network" />,
   <T id="ln.creationWarning.tab.label2" m="Staying Online" />,
   <T id="ln.creationWarning.tab.label3" m="Watchtower Service" />,
   <T id="ln.creationWarning.tab.label4" m="Channels and Confirmations" />,
@@ -27,27 +27,27 @@ const tabDocs = [
 const tabTitles = [
   <T
     id="ln.creationWarning.tab.title1"
-    m="Backup data is needed in addition to seed key"
+    m="Backup data is needed in addition to wallet seed."
   />,
   <T
     id="ln.creationWarning.tab.title6"
-    m="LN is a 2nd layer network on top of the DCR blockchain, designed to facilitate micropayments more efficiently"
+    m="Lightning Network is a layer 2 network on top of the Decred blockchain, designed to facilitate micropayments more efficiently."
   />,
   <T
     id="ln.creationWarning.tab.title2"
-    m="Its preferred to keep wallet online most of the time"
+    m="It's preferred to keep your wallet online most of the time."
   />,
   <T
     id="ln.creationWarning.tab.title3"
-    m="Episodic wallets should use watchtower service for safety"
+    m="Episodic wallets should use a watchtower service for safety."
   />,
   <T
     id="ln.creationWarning.tab.title4"
-    m="Sending and Receiving amounts are limited to what is available in your published channels"
+    m="Sending and receiving amounts are limited to what is available in your published channels."
   />,
   <T
     id="ln.creationWarning.tab.title5"
-    m="Minimize risk by using a seperate wallet for LN"
+    m="Minimize risk by using a separate wallet for Lightning."
   />
 ];
 
@@ -130,7 +130,7 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
       <div className={styles.desc}>
         <T
           id="ln.creationWarning.desc"
-          m="Please understand that Lightning Network is still work in progress and should be used with caution. In particular:"
+          m="Please understand that Lightning Network is still a work in progress and should be used with caution. In particular:"
         />
       </div>
       <div className={styles.tabsContainer}>
