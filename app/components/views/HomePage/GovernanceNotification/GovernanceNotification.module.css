@@ -1,0 +1,33 @@
+.votes {
+  padding-top: 2.5rem;
+}
+
+.votes a {
+  padding-left: 2rem;
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+
+.votes a::before {
+  content: "";
+  background-repeat: no-repeat;
+  background-image: var(--bell-notification-icon);
+  background-position: center;
+  background-size: 10px;
+  width: 14px;
+  height: 14px;
+  margin-left: -2rem;
+  margin-top: 0.3rem;
+  position: absolute;
+  display: inline-block;
+  z-index: 10;
+  border-radius: 50%;
+  background-color: var(--stroke-color-focused);
+}
+
+@media screen and (max-width: 768px) {
+  .votes {
+    padding: 0 0 0.5rem 0;
+  }
+}

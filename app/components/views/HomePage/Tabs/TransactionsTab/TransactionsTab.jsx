@@ -4,6 +4,7 @@ import { TransactionChart } from "charts";
 import { useTransactions } from "./hooks";
 import { classNames } from "pi-ui";
 import sharedStyles from "../../HomePage.module.css";
+import GovernanceNotification from "../../GovernanceNotification";
 
 const TransactionsTab = () => {
   const {
@@ -13,31 +14,34 @@ const TransactionsTab = () => {
   } = useTransactions();
   return (
     <div className={sharedStyles.overviewContentWrapper}>
-      <div className={sharedStyles.overviewSpendableLockedWrapper}>
-        <div className={sharedStyles.overviewSpendableLockedWrapperArea}>
-          <Balance
-            classNameWrapper={classNames(
-              sharedStyles.overviewBalanceSpendableLocked,
-              sharedStyles.received,
-              sharedStyles.amount
-            )}
-            amount={balanceReceived}
-          />
-          <div className={sharedStyles.overviewBalanceSpendableLockedLabel}>
-            <T id="home.receivedBalanceLabel" m="Received" />
+      <div className={sharedStyles.overviewLeftWrapper}>
+        <GovernanceNotification />
+        <div className={sharedStyles.overviewSpendableLockedWrapper}>
+          <div className={sharedStyles.overviewSpendableLockedWrapperArea}>
+            <Balance
+              classNameWrapper={classNames(
+                sharedStyles.overviewBalanceSpendableLocked,
+                sharedStyles.received,
+                sharedStyles.amount
+              )}
+              amount={balanceReceived}
+            />
+            <div className={sharedStyles.overviewBalanceSpendableLockedLabel}>
+              <T id="home.receivedBalanceLabel" m="Received" />
+            </div>
           </div>
-        </div>
-        <div className={sharedStyles.overviewSpendableLockedWrapperArea}>
-          <Balance
-            classNameWrapper={classNames(
-              sharedStyles.overviewBalanceSpendableLocked,
-              sharedStyles.sent,
-              sharedStyles.amount
-            )}
-            amount={balanceSent}
-          />
-          <div className={sharedStyles.overviewBalanceSpendableLockedLabel}>
-            <T id="home.sentBalanceLabel" m="Sent" />
+          <div className={sharedStyles.overviewSpendableLockedWrapperArea}>
+            <Balance
+              classNameWrapper={classNames(
+                sharedStyles.overviewBalanceSpendableLocked,
+                sharedStyles.sent,
+                sharedStyles.amount
+              )}
+              amount={balanceSent}
+            />
+            <div className={sharedStyles.overviewBalanceSpendableLockedLabel}>
+              <T id="home.sentBalanceLabel" m="Sent" />
+            </div>
           </div>
         </div>
       </div>

@@ -523,6 +523,28 @@ test("tests notification icon on the menu link", () => {
   mockNewProposalsStartedVoting.mockRestore();
 });
 
+test("tests notification icon on the menu link (newNotYetVotedAgendasCount)", () => {
+  const mockNewNotYetVotedAgendasCount = (selectors.newNotYetVotedAgendasCount = jest.fn(
+    () => 3
+  ));
+  render(<SideBar />);
+  const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
+  expect(menuLink).toHaveClass("notificationIcon");
+  expect(mockNewNotYetVotedAgendasCount).toHaveBeenCalled();
+  mockNewNotYetVotedAgendasCount.mockRestore();
+});
+
+test("tests notification icon on the menu link (newNotYetVotedActiveProposalsCount)", () => {
+  const mockNewNotYetVotedActiveProposalsCount = (selectors.newNotYetVotedActiveProposalsCount = jest.fn(
+    () => 3
+  ));
+  render(<SideBar />);
+  const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
+  expect(menuLink).toHaveClass("notificationIcon");
+  expect(mockNewNotYetVotedActiveProposalsCount).toHaveBeenCalled();
+  mockNewNotYetVotedActiveProposalsCount.mockRestore();
+});
+
 test("tests tabbedPage location", async () => {
   const { history } = render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-transactions");

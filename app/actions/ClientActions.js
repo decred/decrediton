@@ -56,6 +56,14 @@ export const goToAccounts = () => (dispatch) => {
   dispatch(pushHistory("/accounts"));
 };
 
+export const goToConsensusChanges = () => (dispatch) => {
+  dispatch(pushHistory("/governance/blockchain"));
+};
+
+export const goToActiveProposals = () => (dispatch) => {
+  dispatch(pushHistory("/governance/proposals/activevote"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";

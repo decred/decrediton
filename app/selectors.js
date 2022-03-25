@@ -1804,6 +1804,19 @@ export const setVspdVoteChoicesAttempt = get([
   "setVspdVoteChoicesRequestAttempt"
 ]);
 export const voteChoices = get(["grpc", "getVoteChoicesResponse"]);
+export const newNotYetVotedAgendasCount = createSelector(
+  [allAgendas, voteChoices],
+  (ca, vcs) =>
+    ca.reduce((acc, a) => {
+      const choice =
+        vcs.find((vc) => vc.agendaId === a.name)?.choiceId || "abstain";
+      return !a.finished && choice === "abstain" ? acc + 1 : acc;
+    }, 0)
+);
+export const newNotYetVotedActiveProposalsCount = compose(
+  reduce((acc, p) => (p.currentVoteChoice === "abstain" ? acc + 1 : acc), 0),
+  activeVoteProposals
+);
 export const treasuryPolicies = get(["grpc", "getTreasuryPoliciesResponse"]);
 export const setTreasuryPolicyRequestAttempt = get([
   "grpc",
