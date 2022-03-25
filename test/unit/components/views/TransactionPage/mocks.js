@@ -1163,3 +1163,50 @@ mockStakeTransactionList.forEach((tx) => {
   }
   mockStakeTransactions[tx.txHash] = tx;
 });
+
+export const mockAgendas = [
+  {
+    name: "reverttreasurypolicy",
+    description:
+      "Change maximum treasury expenditure policy as defined in DCP0007"
+  },
+  {
+    name: "explicitverupgrades",
+    description: "Enable explicit version upgrades as defined in DCP0008"
+  },
+  {
+    name: "changesubsidysplit",
+    description:
+      "Change block reward subsidy split to 10/80/10 as defined in DCP0010"
+  },
+  {
+    name: "autorevocations",
+    description: "Enable automatic ticket revocations as defined in DCP0009"
+  },
+  {
+    name: "treasury",
+    description: "Enable decentralized Treasury opcodes as defined in DCP0006"
+  },
+  {
+    name: "headercommitments",
+    description: "Enable header commitments as defined in DCP0005"
+  },
+  {
+    name: "fixlnseqlocks",
+    description: "Modify sequence lock handling as defined in DCP0004"
+  },
+  {
+    name: "lnfeatures",
+    description:
+      "Enable features defined in DCP0002 and DCP0003 necessary to support Lightning Network (LN)"
+  },
+  {
+    name: "sdiffalgorithm",
+    description: "Change stake difficulty algorithm as defined in DCP0001"
+  },
+  {
+    name: "lnsupport",
+    description:
+      "Request developers begin work on Lightning Network (LN) integration"
+  }
+];

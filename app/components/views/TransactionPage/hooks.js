@@ -12,6 +12,8 @@ export function useTransactionPage(txHash) {
   const regularTxs = useSelector(sel.regularTransactions);
   const stakeTxs = useSelector(sel.stakeTransactions);
   const decodedTransactions = useSelector(sel.decodedTransactions);
+  const agendas = useSelector(sel.allAgendas);
+
   const viewedTransaction = regularTxs[txHash]
     ? regularTxs[txHash]
     : stakeTxs[txHash];
@@ -88,6 +90,7 @@ export function useTransactionPage(txHash) {
     state,
     viewedTransaction,
     decodedTx,
-    isSPV
+    isSPV,
+    agendas
   };
 }

@@ -16,7 +16,8 @@ const Transaction = () => {
     state,
     viewedTransaction,
     decodedTx,
-    isSPV
+    isSPV,
+    agendas
   } = useTransactionPage(txHash);
 
   if (!viewedTransaction) return null;
@@ -44,7 +45,8 @@ const Transaction = () => {
               onRevokeTicket,
               publishUnminedTransactions,
               currentBlockHeight,
-              isSPV
+              isSPV,
+              agendas
             }}
           />
         </StandalonePage>

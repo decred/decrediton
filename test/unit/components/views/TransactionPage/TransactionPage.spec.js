@@ -10,7 +10,8 @@ import * as wl from "wallet";
 import {
   mockRegularTransactions,
   mockStakeTransactions,
-  mockOldTxs
+  mockOldTxs,
+  mockAgendas
 } from "./mocks.js";
 
 const selectors = sel;
@@ -29,6 +30,7 @@ beforeEach(() => {
   selectors.isTestNet = jest.fn(() => true);
   selectors.chainParams = jest.fn(() => TestNetParams);
   selectors.currencyDisplay = jest.fn(() => DCR);
+  selectors.allAgendas = jest.fn(() => mockAgendas);
   mockAbandonTransactionAttempt = clientActions.abandonTransactionAttempt = jest.fn(
     () => () => {}
   );
@@ -386,6 +388,10 @@ test("voted ticket", async () => {
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
+
+  expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
+    "Enable decentralized Treasury opcodes as defined in DCP0006treasuryabstain"
+  );
 });
 
 test("missed ticket", async () => {

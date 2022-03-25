@@ -52,6 +52,9 @@
   font-size: 13px;
   line-height: 17px;
 }
+.name.agendaName {
+  line-height: 1.8rem;
+}
 .value {
   word-wrap: break-word;
   display: flex;
@@ -196,6 +199,59 @@
 
 .receiveContentNestCopyToClipboardIcon {
   margin-left: 1rem;
+}
+
+.agendaGrid {
+  display: grid;
+  width: 66rem;
+  grid-template-columns: min-content auto;
+  grid-row-gap: 0.5rem;
+  grid-column-gap: 1rem;
+}
+
+.issueId {
+  font-size: 1.3rem;
+  line-height: 1.7rem;
+  padding: 0.2rem 1rem;
+  border-radius: 0.3rem;
+  background-color: var(--blue-highlight-background);
+  color: var(--input-color-default);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.agendaDescTooltip {
+  width: 20rem;
+  text-align: center;
+}
+
+.agendaGrid .voteChoice {
+  padding-left: 1.5rem;
+}
+
+.agendaGrid .voteChoice::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  margin-left: -1.5rem;
+  margin-top: 0.6rem;
+  position: absolute;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+.agendaGrid .voteChoice.no::before {
+  background-color: var(--stroke-color-focused);
+}
+
+.agendaGrid .voteChoice.yes::before {
+  background-color: var(--color-green);
+}
+
+.agendaGrid .voteChoice.abstain::before {
+  background-color: var(--grey-7);
 }
 
 @media screen and (max-width: 1180px) {
