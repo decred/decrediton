@@ -18,27 +18,27 @@ const InitPage = () => {
       <div>
         <T
           id="dex.newPassphrase"
-          m="Please set a new passphrase for the DEX.  You may use the same passphrase as you use for your wallet, or chose a new one."
+          m="Please set a new passphrase for the DEX.  You may use the same passphrase as you use for your wallet, or choose a new one."
         />
       </div>
       <div className="margin-top-s">
         <T
           id="dex.newPassphraseNote"
-          m="Note: If you lose the DEX passphrase, you will be forced to create a new DEX account and pay your exchange fees again."
+          m="Note: If you lose the DEX passphrase, you will be forced to create a new DEX account and pay your registration fee again."
         />
       </div>
       <Checkbox
         label={
           <T
             id="dex.hasDexSeed.label"
-            m="I already have a DEX Seed to recover."
+            m="I already have a DEX seed to recover."
           />
         }
         id="hasDexSeed"
         description={
           <T
             id="dex.hasDexSeed.description"
-            m="DEX has a seed that allows you to recover your account at a paticular server."
+            m="A DEX seed allows you to recover your account at a paticular server."
           />
         }
         checked={hasSeed}
@@ -58,10 +58,10 @@ const InitPage = () => {
       <SetNewPassphraseModalButton
         className="margin-top-m"
         disabled={initDexAttempt}
-        modalTitle={<T id="dex.initPassphrase" m="Set Dex Passphrase" />}
+        modalTitle={<T id="dex.initPassphrase" m="Set DEX Passphrase" />}
         loading={initDexAttempt}
         onSubmit={onInitDexCall}
-        buttonLabel={<T id="dex.initPassphraseButton" m="Set Dex Passphrase" />}
+        buttonLabel={<T id="dex.initPassphraseButton" m="Set DEX Passphrase" />}
       />
     </div>
   );
