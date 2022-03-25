@@ -20,17 +20,27 @@ export function useMenuLinks() {
   const newPreVoteProposalsCount = useSelector(sel.newPreVoteProposalsCount);
   const newProposalsStartedVoting = useSelector(sel.newProposalsStartedVoting);
   const useDexSpvExperimental = useSelector(sel.useDexSpvExperimental);
+  const newNotYetVotedAgendasCount = useSelector(
+    sel.newNotYetVotedAgendasCount
+  );
+  const newNotYetVotedActiveProposalsCount = useSelector(
+    sel.newNotYetVotedActiveProposalsCount
+  );
 
   const notifProps = useMemo(
     () => ({
       newActiveVoteProposalsCount,
       newPreVoteProposalsCount,
-      newProposalsStartedVoting
+      newProposalsStartedVoting: newProposalsStartedVoting ? 1 : 0,
+      newNotYetVotedAgendasCount,
+      newNotYetVotedActiveProposalsCount
     }),
     [
       newActiveVoteProposalsCount,
       newPreVoteProposalsCount,
-      newProposalsStartedVoting
+      newProposalsStartedVoting,
+      newNotYetVotedAgendasCount,
+      newNotYetVotedActiveProposalsCount
     ]
   );
 
@@ -59,9 +69,13 @@ export function useMenuLinks() {
         return l;
       });
     }
-    return links.map((link) => {
-      return { ...link, notifProp: notifProps[link.notifProp] };
-    });
+    return links.map((link) => ({
+      ...link,
+      notifProp: link.notifProp?.reduce(
+        (acc, np) => acc + (notifProps[np] || 0),
+        0
+      )
+    }));
   }, [notifProps, isTrezor, lnEnabled, isSPV, useDexSpvExperimental]);
 
   const [activeTabIndex, setActiveTabIndex] = useState(-1);

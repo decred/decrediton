@@ -15,6 +15,9 @@ export function useHomePage() {
   const revokeTicketsSuccess = useSelector(sel.revokeTicketsSuccess);
   const totalBalance = useSelector(sel.totalBalance);
   const tsDate = useSelector(sel.tsDate);
+  const newNotYetVotedAgendasCount = useSelector(
+    sel.newNotYetVotedAgendasCount
+  );
 
   const goToMyTickets = () => dispatch(cla.goToMyTickets());
   const goToTransactionHistory = () => dispatch(cla.goToTransactionHistory());
@@ -29,6 +32,7 @@ export function useHomePage() {
     revokeTicketsSuccess,
     totalBalance,
     tsDate,
+    newNotYetVotedAgendasCount,
     goToMyTickets,
     goToTransactionHistory
   };
