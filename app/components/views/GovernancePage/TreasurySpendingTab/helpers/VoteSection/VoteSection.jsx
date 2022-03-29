@@ -12,7 +12,9 @@ const VoteSection = ({
   isLoading
 }) => {
   const [selected, setSelected] = useState(
-    () => treasuryPolicies.find((tp) => tp.key === piKey)?.policy ?? "abstain"
+    () =>
+      treasuryPolicies &&
+      (treasuryPolicies.find((tp) => tp.key === piKey)?.policy ?? "abstain")
   );
   const updatePreferences = (passphrase) =>
     setTreasuryPolicy(piKey, selected, passphrase);
