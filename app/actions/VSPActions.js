@@ -20,7 +20,7 @@ import { shuffle } from "helpers";
 import { mapArray } from "fp";
 import { isArray } from "lodash";
 import semver from "semver";
-import { MIN_VSP_VERSION } from "constants";
+import { MIN_VSP_VERSION, LIVE, UNMINED, IMMATURE } from "constants";
 
 export const GETVSP_ATTEMPT = "GETVSP_ATTEMPT";
 export const GETVSP_FAILED = "GETVSP_FAILED";
@@ -963,4 +963,55 @@ export const getRandomVSP = (maxFeePercentage) => async (
     throw new Error("Fetching VSP info failed.");
   }
   return randomVSP;
+};
+
+export const GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT =
+  "GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT";
+export const GETUNSPENTUNEXPIREDVSPTICKETS_FAILED =
+  "GETUNSPENTUNEXPIREDVSPTICKETS_FAILED";
+export const GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS =
+  "GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS";
+export const getUnspentUnexpiredVspTickets = () => async (
+  dispatch,
+  getState
+) => {
+  const { currentBlockHeight, walletService } = getState().grpc;
+  let vsps = [];
+  dispatch({ type: GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT });
+
+  try {
+    const tickets = await wallet.getTickets(
+      walletService,
+      0,
+      currentBlockHeight
+    );
+    tickets.forEach(({ ticket: { vspHost, txHash }, status }) => {
+      if (
+        vspHost &&
+        vspHost != "" &&
+        (status === LIVE || status === IMMATURE || status === UNMINED)
+      ) {
+        let foundVsp = false;
+        vsps = vsps.map((v) => {
+          if (v.host === vspHost) {
+            foundVsp = true;
+            return { ...v, tickets: [...v.tickets, txHash] };
+          }
+          return v;
+        });
+        if (!foundVsp) {
+          vsps.push({ host: vspHost, tickets: [txHash] });
+        }
+      }
+    });
+    dispatch({
+      type: GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS,
+      vsps
+    });
+  } catch (error) {
+    dispatch({
+      type: GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
+      error
+    });
+  }
 };
