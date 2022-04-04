@@ -238,12 +238,12 @@ const tabShouldBeInactive = (tab) =>
   );
 const tabShouldBeUnchecked = (tab) =>
   expect(tab.firstElementChild.firstElementChild.className).not.toMatch(
-    "checked"
+    "visited"
   );
 const tabShouldBeActive = (tab) =>
   expect(tab.firstElementChild.firstElementChild.className).toMatch("active");
 const tabShouldBeChecked = (tab) =>
-  expect(tab.firstElementChild.firstElementChild.className).toMatch("checked");
+  expect(tab.firstElementChild.firstElementChild.className).toMatch("visited");
 
 test("test warning view", () => {
   render(<ConnectPage />);
@@ -275,7 +275,7 @@ test("test warning view", () => {
   expect(previousArrowButton.className).toMatch("disabled");
 
   tabShouldBeActive(tab1);
-  tabShouldBeChecked(tab1);
+  tabShouldBeUnchecked(tab1);
   tabShouldBeInactive(tab2);
   tabShouldBeUnchecked(tab2);
   tabShouldBeInactive(tab3);
@@ -290,7 +290,7 @@ test("test warning view", () => {
   // clicking on previousButton in vain
   user.click(previousButton);
   tabShouldBeActive(tab1);
-  tabShouldBeChecked(tab1);
+  tabShouldBeUnchecked(tab1);
   tabShouldBeInactive(tab2);
   tabShouldBeUnchecked(tab2);
   tabShouldBeInactive(tab3);
@@ -305,7 +305,7 @@ test("test warning view", () => {
   // clicking on previousArrowButton in vain
   user.click(previousArrowButton);
   tabShouldBeActive(tab1);
-  tabShouldBeChecked(tab1);
+  tabShouldBeUnchecked(tab1);
   tabShouldBeInactive(tab2);
   tabShouldBeUnchecked(tab2);
   tabShouldBeInactive(tab3);
@@ -322,7 +322,7 @@ test("test warning view", () => {
   tabShouldBeInactive(tab1);
   tabShouldBeChecked(tab1);
   tabShouldBeActive(tab2);
-  tabShouldBeChecked(tab2);
+  tabShouldBeUnchecked(tab2);
   tabShouldBeInactive(tab3);
   tabShouldBeUnchecked(tab3);
   tabShouldBeInactive(tab4);
@@ -342,7 +342,7 @@ test("test warning view", () => {
   tabShouldBeInactive(tab2);
   tabShouldBeChecked(tab2);
   tabShouldBeActive(tab3);
-  tabShouldBeChecked(tab3);
+  tabShouldBeUnchecked(tab3);
   tabShouldBeInactive(tab4);
   tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
@@ -362,7 +362,7 @@ test("test warning view", () => {
   tabShouldBeInactive(tab3);
   tabShouldBeChecked(tab3);
   tabShouldBeActive(tab4);
-  tabShouldBeChecked(tab4);
+  tabShouldBeUnchecked(tab4);
   tabShouldBeInactive(tab5);
   tabShouldBeUnchecked(tab5);
   tabShouldBeInactive(tab6);
@@ -382,7 +382,7 @@ test("test warning view", () => {
   tabShouldBeInactive(tab4);
   tabShouldBeChecked(tab4);
   tabShouldBeActive(tab5);
-  tabShouldBeChecked(tab5);
+  tabShouldBeUnchecked(tab5);
   tabShouldBeInactive(tab6);
   tabShouldBeUnchecked(tab6);
   expect(previousButton.className).not.toMatch("disabled");

@@ -1,0 +1,1 @@
+In Politeia, proposals, comments, comment votes, and now also updates, are signed with identity's key. These messages can have high impact on decision making and spending, so these signatures might become more important.

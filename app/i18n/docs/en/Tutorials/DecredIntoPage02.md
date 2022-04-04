@@ -1,0 +1,1 @@
+Decred's consensus system that uses hybrid PoW/PoS, where PoS can override PoW, is an answer to Bitcoin's problem where PoW miners hold a monopoly on consensus enforcement via their exclusive write access to the ledger.

@@ -1,0 +1,2 @@
+While many cryptocurrency projects view consensus code as a means to an end or something delicate with which you must take great care, Decred takes the view that this code is the real engine that drives all cryptocurrencies.
+Due to the delicate nature of this code in a cryptocurrency project, exceptional measures must be undertaken to ensure that it behaves as planned under all possible scenarios.
