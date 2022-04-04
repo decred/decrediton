@@ -1,6 +1,7 @@
 import { walletrpc as api } from "../middleware/walletrpc/api_pb";
 import { OP_RETURN, SStxPKHMinOutSize, ripemd160Size } from "constants";
 import { checkEncode, newAddressScriptHashFromHash } from "./addresses";
+import { sprintf } from "sprintf-js";
 
 const GetTicketsResponse = api.GetTicketsResponse;
 export const TicketTypes = new Map([
@@ -35,6 +36,9 @@ export function decodeVoteScript(network, outputScript) {
   const vote = outputScript
     .slice(2, 4)
     .reduce((a, v, i) => a | (v << (i * 8)), 0);
+
+  const isLastBlockValid = vote & (1 << 0);
+
   const version =
     outputScript.length > 4
       ? outputScript.slice(4, 8).reduce((a, v, i) => a | (v << (i * 8)), 0)
@@ -205,7 +209,12 @@ export function decodeVoteScript(network, outputScript) {
     }
   }
 
-  return voteChoices;
+  return {
+    voteChoices,
+    version,
+    bits: sprintf("0x%+04x", vote),
+    isLastBlockValid
+  };
 }
 
 // addrFromSStxPkScrCommitment extracts a P2SH or P2PKH address from a ticket
