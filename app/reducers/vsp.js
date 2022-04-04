@@ -24,7 +24,10 @@ import {
   SET_CANDISABLEPROCESSMANAGED,
   GETVSP_ATTEMPT,
   GETVSP_FAILED,
-  GETVSP_SUCCESS
+  GETVSP_SUCCESS,
+  GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT,
+  GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS,
+  GETUNSPENTUNEXPIREDVSPTICKETS_FAILED
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -202,6 +205,20 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         getVSPAttempt: false
+      };
+    case GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT:
+      return { ...state, getUnspentUnexpiredVspTicketsAttempt: true };
+    case GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS:
+      return {
+        ...state,
+        getUnspentUnexpiredVspTicketsAttempt: false,
+        unspentUnexpiredVspTickets: action.vsps
+      };
+    case GETUNSPENTUNEXPIREDVSPTICKETS_FAILED:
+      return {
+        ...state,
+        getUnspentUnexpiredVspTicketsError: String(action.error),
+        getUnspentUnexpiredVspTicketsAttempt: false
       };
     default:
       return state;

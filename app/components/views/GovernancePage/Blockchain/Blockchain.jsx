@@ -5,7 +5,7 @@ import { ExternalLink, ExternalButton } from "shared";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import PageHeader from "../PageHeader";
 import styles from "./Blockchain.module.css";
-import { Tooltip } from "pi-ui";
+import { Tooltip, Message } from "pi-ui";
 import { TextInput } from "inputs";
 import { EyeFilterMenu } from "buttons";
 import { useIntl } from "react-intl";
@@ -32,7 +32,12 @@ const sortOptions = [
 ];
 
 const Blockchain = () => {
-  const { allAgendas, voteChoices, viewAgendaDetailsHandler } = useBlockchain();
+  const {
+    allAgendas,
+    voteChoices,
+    viewAgendaDetailsHandler,
+    outdatedUsedVsps
+  } = useBlockchain();
   const [filterByName, setFilterByName] = useState("");
   const [sortBy, setSortBy] = useState(sortOptions[0]);
   const [agendas, setAgendas] = useState(allAgendas);
@@ -93,6 +98,49 @@ const Blockchain = () => {
           }
         />
       </div>
+      {outdatedUsedVsps?.length > 0 && (
+        <div className={styles.outdatedUsedVspsAlert}>
+          <Message kind="warning">
+            <T
+              id="votingPreferences.outdatedUsedVsps.alert.header"
+              m="You have unspent tickets at {vspCount, plural, one {a VSP} other {VSPs}} that has not upgraded to the
+                          minimum version. While your confirmed/paid for tickets will be
+                          voted, your vote preferences will not be used."
+              values={{
+                vspCount: outdatedUsedVsps.length
+              }}
+            />
+            <div>
+              <T
+                id="votingPreferences.outdatedUsedVsps.alert"
+                m="Please contact {host} to ask them to upgrade."
+                values={{
+                  host:
+                    outdatedUsedVsps?.length === 1 ? (
+                      <ExternalLink
+                        className={styles.proposalsLink}
+                        href={outdatedUsedVsps[0].host}>
+                        {outdatedUsedVsps[0].host}
+                      </ExternalLink>
+                    ) : (
+                      <ul className="margin-left-l">
+                        {outdatedUsedVsps.map((vsp) => (
+                          <li key={vsp.host}>
+                            <ExternalLink
+                              className={styles.proposalsLink}
+                              href={vsp.host}>
+                              {vsp.host}
+                            </ExternalLink>
+                          </li>
+                        ))}
+                      </ul>
+                    )
+                }}
+              />
+            </div>
+          </Message>
+        </div>
+      )}
       <div className={styles.filters}>
         <div className={styles.searchByNameInput}>
           <TextInput
