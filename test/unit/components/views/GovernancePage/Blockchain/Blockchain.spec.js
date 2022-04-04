@@ -2,20 +2,29 @@ import Blockchain from "components/views/GovernancePage/Blockchain";
 import { render } from "test-utils.js";
 import { screen, wait } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import * as sel from "selectors";
+import * as gov from "actions/GovernanceActions";
+import * as wal from "wallet";
+import {
+  defaultMockAvailableMainnetVsps,
+  mockTickets
+} from "../../../../actions/vspMocks.js";
 
-let mockAllAgendas;
-let mockVoteChoices;
-const mockViewAgendaDetailsHandler = jest.fn();
+const selectors = sel;
+const govAction = gov;
+const wallet = wal;
 
-jest.mock("components/views/GovernancePage/Blockchain/hooks", () => ({
-  useBlockchain: () => {
-    return {
-      allAgendas: mockAllAgendas,
-      voteChoices: mockVoteChoices,
-      viewAgendaDetailsHandler: mockViewAgendaDetailsHandler
-    };
-  }
-}));
+let mockViewAgendaDetailsHandler;
+
+beforeEach(() => {
+  selectors.allAgendas = jest.fn(() => []);
+  selectors.voteChoices = jest.fn(() => []);
+  mockViewAgendaDetailsHandler = govAction.viewAgendaDetails = jest.fn(
+    () => () => {}
+  );
+  wallet.getTickets = jest.fn(() => Promise.resolve(mockTickets));
+  selectors.getAvailableVSPs = jest.fn(() => defaultMockAvailableMainnetVsps);
+});
 
 const testAgendaCardElements = (
   mockAgendaName,
@@ -35,7 +44,7 @@ const testAgendaCardElements = (
   expect(screen.getByText(expectedStatusText)).toBeInTheDocument();
 
   user.click(screen.getByText(mockDescription));
-  expect(mockViewAgendaDetailsHandler).toHaveBeenCalled();
+  expect(mockViewAgendaDetailsHandler).toHaveBeenCalledWith(mockAgendaName);
 };
 
 const testAgendaCard = (
@@ -47,16 +56,17 @@ const testAgendaCard = (
 ) => {
   const mockAgendaName = "test-agenda-name";
   const mockDescription = "test-desc-test";
-  mockAllAgendas = [
+  selectors.allAgendas = jest.fn(() => [
     {
       description: mockDescription,
       finished: finished,
       name: mockAgendaName,
       passed: passed
     }
-  ];
-
-  mockVoteChoices = [{ agendaId: mockAgendaName, choiceId: mockChoice }];
+  ]);
+  selectors.voteChoices = jest.fn(() => [
+    { agendaId: mockAgendaName, choiceId: mockChoice }
+  ]);
   render(<Blockchain />);
   testAgendaCardElements(
     mockAgendaName,
@@ -89,7 +99,6 @@ test.each([
 ])("test agendaCard ( choice: %s, finished: %s, passed: %s)", testAgendaCard);
 
 test("no agendas", () => {
-  mockAllAgendas = [];
   render(<Blockchain />);
   expect(
     screen.getByText(/there are currently no agendas for voting/i)
@@ -97,7 +106,7 @@ test("no agendas", () => {
 });
 
 test("test agenda search and sort controls", async () => {
-  mockAllAgendas = [
+  selectors.allAgendas = jest.fn(() => [
     {
       name: "test-name-1",
       description: "test-desc-1"
@@ -110,7 +119,7 @@ test("test agenda search and sort controls", async () => {
       name: "test-name-3",
       description: "test-desc-3"
     }
-  ];
+  ]);
   render(<Blockchain />);
   expect(
     screen
@@ -170,4 +179,37 @@ test("test agenda search and sort controls", async () => {
         .map((element) => element.textContent.trim())
     ).toStrictEqual(["test-desc-1", "test-desc-12", "test-desc-3"])
   );
+});
+
+test("test one outdated vsp alert", async () => {
+  render(<Blockchain />);
+  await wait(() => screen.getByText(/You have unspent tickets/i));
+
+  expect(
+    screen.getByText(/You have unspent tickets/i).textContent
+  ).toMatchInlineSnapshot(
+    '"You have unspent tickets at a VSP that has not upgraded to the minimum version. While your confirmed/paid for tickets will be voted, your vote preferences will not be used.Please contact https://test-stakepool6.eu to ask them to upgrade."'
+  );
+});
+
+test("test multiple outdated vsps alert", async () => {
+  defaultMockAvailableMainnetVsps[0].outdated = true;
+  selectors.getAvailableVSPs = jest.fn(() => defaultMockAvailableMainnetVsps);
+  render(<Blockchain />);
+  await wait(() => screen.getByText(/You have unspent tickets/i));
+
+  expect(
+    screen.getByText(/You have unspent tickets/i).textContent
+  ).toMatchInlineSnapshot(
+    '"You have unspent tickets at VSPs that has not upgraded to the minimum version. While your confirmed/paid for tickets will be voted, your vote preferences will not be used.Please contact https://test-stakepool1.euhttps://test-stakepool6.eu to ask them to upgrade."'
+  );
+});
+
+test("test no outdated vsps alert", () => {
+  defaultMockAvailableMainnetVsps[5].outdated = true;
+  selectors.getAvailableVSPs = jest.fn(() => defaultMockAvailableMainnetVsps);
+  render(<Blockchain />);
+  expect(
+    screen.queryByText(/You have unspent tickets/i)
+  ).not.toBeInTheDocument();
 });

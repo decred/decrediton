@@ -940,6 +940,10 @@ export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
 const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
 export const isGetVSPAttempt = get(["vsp", "getVSPAttempt"]);
+export const unspentUnexpiredVspTickets = get([
+  "vsp",
+  "unspentUnexpiredVspTickets"
+]);
 
 // getVSPTickets is a selector for getting an object with feeStatus as keys
 // and an array of tickets which have this feeStatus.

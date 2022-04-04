@@ -56,6 +56,11 @@
   width: max-content;
 }
 
+.outdatedUsedVspsAlert {
+  margin: 2rem 6rem;
+  width: 76.4rem;
+}
+
 @media screen and (max-width: 1180px) {
   .agendaWrapper {
     margin-left: 35px;

@@ -4,108 +4,20 @@ import * as vspa from "actions/VSPActions";
 import { createStore } from "test-utils.js";
 import * as arrs from "../../../app/helpers/arrays";
 import { cloneDeep } from "fp";
+import {
+  mockVspInfo,
+  defaultMockAvailableMainnetVsps,
+  defaultMockAvailableTestnetVsps,
+  defaultMockAvailableInvalidVsps,
+  mockTickets
+} from "./vspMocks.js";
+
+let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
 
 const selectors = sel;
 const vspActions = vspa;
 const wallet = wal;
 const arrays = arrs;
-
-const mockVspInfo = {
-  data: {
-    pubkey: "test-pubkey"
-  }
-};
-
-const defaultMockAvailableMainnetVsps = [
-  {
-    host: "test-stakepool1.eu",
-    label: "test-stakepool1.eu",
-    outdated: false,
-    vspData: {
-      feepercentage: 2,
-      network: "mainnet",
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "test-stakepool2.eu",
-    label: "test-stakepool2.eu",
-    outdated: false,
-    vspData: {
-      feepercentage: 3,
-      network: "mainnet",
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "test-stakepool3.eu",
-    label: "test-stakepool3.eu",
-    outdated: false,
-    vspData: {
-      feepercentage: 4,
-      network: "mainnet",
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "test-stakepool4.eu",
-    label: "test-stakepool4.eu",
-    outdated: false,
-    vspData: {
-      network: "mainnet",
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "test-stakepool5.eu",
-    label: "test-stakepool5.eu",
-    outdated: false,
-    vspData: {
-      network: "mainnet",
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "test-stakepool6.eu",
-    label: "test-stakepool6.eu",
-    outdated: true,
-    vspData: {
-      feepercentage: 1, // this vsp is outdated, so it's not going to be
-      // chosen in randomVSP despite the low fee percentage
-      network: "mainnet",
-      vspdversion: "1.0.0"
-    }
-  }
-];
-const defaultMockAvailableTestnetVsps = [
-  {
-    host: "test-stakepool6.eu",
-    label: "test-stakepool6.eu",
-    outdated: false,
-    vspData: {
-      feepercentage: 4,
-      network: "testnet",
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "test-stakepool7.eu",
-    label: "test-stakepool7.eu",
-    outdated: false,
-    vspData: {
-      feepercentage: 5,
-      network: "testnet",
-      vspdversion: "1.1.0"
-    }
-  }
-];
-const defaultMockAvailableInvalidVsps = [
-  {
-    host: "test-stakepool8.eu",
-    label: "test-stakepool8.eu"
-  }
-];
-let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
 
 beforeEach(() => {
   selectors.getVSPInfoTimeoutTime = jest.fn(() => 100);
@@ -118,6 +30,7 @@ beforeEach(() => {
     ...cloneDeep(defaultMockAvailableTestnetVsps),
     ...cloneDeep(defaultMockAvailableInvalidVsps)
   ]);
+  wallet.getTickets = jest.fn(() => Promise.resolve(mockTickets));
 });
 
 const testRandomVSP = async (
@@ -365,4 +278,36 @@ test("test isVSPOutdated function", () => {
   expect(vspActions.isVSPOutdated("1.1.0-beta", minVersion)).toBeTruthy();
   expect(vspActions.isVSPOutdated(null, minVersion)).toBeTruthy();
   expect(vspActions.isVSPOutdated(undefined, minVersion)).toBeTruthy();
+});
+
+test("test getUnspentUnexpiredVspTickets", async () => {
+  const store = createStore({});
+  await store.dispatch(vspActions.getUnspentUnexpiredVspTickets());
+  expect(store.getState().vsp.getUnspentUnexpiredVspTicketsAttempt).toBeFalsy();
+  expect(store.getState().vsp.unspentUnexpiredVspTickets).toStrictEqual([
+    {
+      host: `https://${defaultMockAvailableMainnetVsps[0].host}`,
+      tickets: ["tx-hash-1"]
+    },
+    {
+      host: `https://${defaultMockAvailableMainnetVsps[1].host}`,
+      tickets: ["tx-hash-2", "tx-hash-3"]
+    },
+    {
+      host: `https://${defaultMockAvailableMainnetVsps[5].host}`,
+      tickets: ["tx-hash-4"]
+    }
+  ]);
+});
+
+test("test getUnspentUnexpiredVspTickets", async () => {
+  const testError = "test-error-message";
+  wallet.getTickets = jest.fn(() => Promise.reject(testError));
+  const store = createStore({});
+  await store.dispatch(vspActions.getUnspentUnexpiredVspTickets());
+  expect(store.getState().vsp.getUnspentUnexpiredVspTicketsAttempt).toBeFalsy();
+  expect(store.getState().vsp.unspentUnexpiredVspTickets).toBe(undefined);
+  expect(store.getState().vsp.getUnspentUnexpiredVspTicketsError).toBe(
+    testError
+  );
 });
