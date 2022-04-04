@@ -31,6 +31,7 @@ beforeEach(() => {
   selectors.chainParams = jest.fn(() => TestNetParams);
   selectors.currencyDisplay = jest.fn(() => DCR);
   selectors.allAgendas = jest.fn(() => mockAgendas);
+  selectors.voteChoices = jest.fn(() => {});
   mockAbandonTransactionAttempt = clientActions.abandonTransactionAttempt = jest.fn(
     () => () => {}
   );
@@ -42,7 +43,7 @@ beforeEach(() => {
   wallet.getTransaction = jest.fn((_, txHash) => {
     const mockOldTx = mockOldTxs.find((tx) => tx.txHash === txHash);
     if (!mockOldTx) {
-      return throw Error("item does not exist");
+      throw Error("item does not exist");
     }
     return mockOldTx;
   });
@@ -72,6 +73,10 @@ const getSentFromText = () =>
   screen.getByText("Sent From").parentElement.textContent;
 const getTransactionText = () =>
   screen.getByText("Transaction:").parentElement.textContent;
+const getTicketSpentText = () =>
+  screen.getByText("Ticket Spent:").parentElement.textContent;
+const getVSPHostText = () =>
+  screen.getByText("VSP host:").parentElement.textContent;
 const getPending = () => screen.getByText("Pending");
 const getUnconfirmed = () => screen.getByText("Unconfirmed");
 const queryUnconfirmed = () => screen.queryByText("Unconfirmed");
@@ -369,6 +374,9 @@ test("voted ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed4,989 confirmations");
+  expect(getTicketSpentText()).toMatch(
+    "Ticket Spent:65b2b6f8195d1aece698c9d6058ccd97e60e18484d619e6b0b8317bb660cb27f"
+  );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
@@ -391,6 +399,49 @@ test("voted ticket", async () => {
 
   expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
     "Enable decentralized Treasury opcodes as defined in DCP0006treasuryabstain"
+  );
+
+  expect(getVSPHostText()).toMatch("VSP host:mockVspHost");
+});
+
+test("voted ticket (votes don't align with what the wallet currently has set)", async () => {
+  mockTxHash =
+    "f5c4259f1ae264a6bc7e52d5f602967e947fdebdb8bc7a551a18d36ab1933e17";
+  const mockStakeTransactionMap = {};
+  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 712217);
+  selectors.voteChoices = jest.fn(() => [
+    {
+      agendaId: "treasury",
+      choiceId: "yes"
+    }
+  ]);
+
+  render(<TransactionPage />, {
+    initialState: {
+      grpc: {
+        regularTransactions: {},
+        stakeTransactions: mockStakeTransactionMap,
+        decodedTransactions: {},
+        getAccountsResponse: {
+          accountsList: [
+            {
+              accountNumber: 0,
+              accountName: "default"
+            }
+          ]
+        }
+      }
+    },
+    currentSettings: {
+      network: "testnet"
+    }
+  });
+
+  await wait(() => getIODetails());
+
+  expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
+    "Enable decentralized Treasury opcodes as defined in DCP0006treasuryabstainThis doesn't align with what the wallet currently has set (yes)"
   );
 });
 
@@ -446,6 +497,7 @@ test("missed ticket", async () => {
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height706946");
+  expect(getVSPHostText()).toMatch("VSP host:mockVspHost-missed");
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
@@ -562,6 +614,7 @@ test("immature ticket", async () => {
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height712265");
+  expect(getVSPHostText()).toMatch("VSP host:mockVspHost-immature");
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
@@ -620,6 +673,7 @@ test("live ticket", async () => {
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height712265");
+  expect(getVSPHostText()).toMatch("VSP host:mockVspHost-live");
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
@@ -681,6 +735,7 @@ test("unmined ticket", async () => {
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(queryHeight()).not.toBeInTheDocument(); // not mined
+  expect(getVSPHostText()).toMatch("VSP host:mockVspHost-unmined");
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();

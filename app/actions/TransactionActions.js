@@ -737,6 +737,7 @@ const getMissingStakeTxData = async (
       }
     }
     ticketTx = transaction;
+    ticketTx.vspHost = ticket?.ticket.vspHost;
   } else {
     // vote/revoke
     const decodedSpender = wallet.decodeRawTransaction(
@@ -754,11 +755,14 @@ const getMissingStakeTxData = async (
     // in the `transactions` state var, we need to manually fetch the ticket
     // transaction
     try {
-      const ticket = await wallet.getTransaction(walletService, ticketTxHash);
+      const ticket = await wallet.getTicket(
+        walletService,
+        strHashToRaw(ticketTxHash)
+      );
       // tx which come from the gRPC call
       // walletService.getTransactions().getMinedTransactions().getTransactionsList()
       // at our wallet/service.js
-      ticketTx = ticket;
+      ticketTx = ticket?.ticket;
     } catch (error) {
       if (String(error).indexOf("NOT_FOUND") > -1) {
         // NOT_FOUND error means we have a vote/revocation tx recorded but not

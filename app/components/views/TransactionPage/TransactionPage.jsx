@@ -17,7 +17,8 @@ const Transaction = () => {
     viewedTransaction,
     decodedTx,
     isSPV,
-    agendas
+    agendas,
+    getAgendaSelectedChoice
   } = useTransactionPage(txHash);
 
   if (!viewedTransaction) return null;
@@ -46,7 +47,8 @@ const Transaction = () => {
               publishUnminedTransactions,
               currentBlockHeight,
               isSPV,
-              agendas
+              agendas,
+              getAgendaSelectedChoice
             }}
           />
         </StandalonePage>

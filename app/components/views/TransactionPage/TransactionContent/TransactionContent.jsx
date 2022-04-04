@@ -14,7 +14,7 @@ import {
   TICKET
 } from "constants/decrediton";
 import styles from "./TransactionContent.module.css";
-import { classNames, Tooltip } from "pi-ui";
+import { classNames, Tooltip, Icon, getThemeProperty, useTheme } from "pi-ui";
 import { MaxNonWalletOutputs } from "constants";
 
 const { DecodedTransaction } = api;
@@ -49,7 +49,8 @@ const TransactionContent = ({
   publishUnminedTransactions,
   currentBlockHeight,
   isSPV,
-  agendas
+  agendas,
+  getAgendaSelectedChoice
 }) => {
   const {
     txHash,
@@ -65,8 +66,12 @@ const TransactionContent = ({
     txDirection,
     rawTx,
     isPending,
-    voteChoices
+    voteChoices,
+    ticketTx
   } = transactionDetails;
+  const { theme } = useTheme();
+  const iconColor = getThemeProperty(theme, "color-orange");
+  const iconBgColor = getThemeProperty(theme, "alert-icon-bg-color");
 
   const isVote = txType === VOTE;
   const agendaChoicesData =
@@ -76,7 +81,8 @@ const TransactionContent = ({
       return {
         issueId,
         description: agendaDetails?.description,
-        voteChoice: voteChoices[issueId]
+        voteChoice: voteChoices[issueId],
+        setVoteChoice: getAgendaSelectedChoice(issueId)
       };
     });
 
@@ -141,31 +147,62 @@ const TransactionContent = ({
           </div>
         </div>
         {isVote ? (
-          <div className={styles.topRow}>
-            <div className={classNames(styles.name, styles.agendaName)}>
-              <T id="txDetails.agendaChoices" m="Agenda Choices" />:
+          <>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.ticketSpent" m="Ticket Spent" />:
+              </div>
+              <div className={styles.value}>
+                <ExternalLink className={styles.value} href={ticketTx.txUrl}>
+                  {ticketTx.txHash}
+                </ExternalLink>
+              </div>
             </div>
-            <div className={styles.agendaGrid}>
-              {agendaChoicesData?.map((agenda) => (
-                <>
-                  <div>
-                    <Tooltip
-                      content={agenda.description}
-                      contentClassName={styles.agendaDescTooltip}>
-                      <span className={styles.issueId}>{agenda.issueId}</span>
-                    </Tooltip>
-                  </div>
-                  <div
-                    className={classNames(
-                      styles.voteChoice,
-                      styles[agenda.voteChoice]
-                    )}>
-                    {agenda.voteChoice}
-                  </div>
-                </>
-              ))}
+            <div className={styles.topRow}>
+              <div className={classNames(styles.name, styles.agendaName)}>
+                <T id="txDetails.agendaChoices" m="Agenda Choices" />:
+              </div>
+              <div className={styles.agendaGrid}>
+                {agendaChoicesData?.map((agenda) => (
+                  <React.Fragment key={agenda.issueId}>
+                    <div>
+                      <Tooltip
+                        content={agenda.description}
+                        contentClassName={styles.agendaDescTooltip}>
+                        <span className={styles.issueId}>{agenda.issueId}</span>
+                      </Tooltip>
+                    </div>
+                    <div
+                      className={classNames(
+                        styles.voteChoice,
+                        styles[agenda.voteChoice]
+                      )}>
+                      {agenda.voteChoice}
+                    </div>
+                    <div className={styles.agendaAlert}>
+                      {agenda.setVoteChoice !== undefined &&
+                        agenda.setVoteChoice !== agenda.voteChoice && (
+                          <>
+                            <Icon
+                              type="alert"
+                              backgroundColor={iconColor}
+                              iconColor={iconBgColor}
+                            />
+                            <T
+                              id="txDetails.agendaAlert"
+                              m="This doesn't align with what the wallet currently has set ({setVoteChoice})"
+                              values={{
+                                setVoteChoice: agenda.setVoteChoice
+                              }}
+                            />
+                          </>
+                        )}
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         ) : (
           <div className={styles.topRow}>
             <div className={styles.name}>
@@ -196,6 +233,14 @@ const TransactionContent = ({
             <div className={styles.value}>
               <Balance amount={txFee ?? ticketTxFee} />
             </div>
+          </div>
+        )}
+        {(txType == TICKET || txType == VOTE) && ticketTx.vspHost && (
+          <div className={styles.topRow}>
+            <div className={styles.name}>
+              <T id="txDetails.vspHost" m="VSP host" />:
+            </div>
+            <div className={styles.value}>{ticketTx.vspHost}</div>
           </div>
         )}
       </div>
