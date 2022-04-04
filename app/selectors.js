@@ -525,6 +525,8 @@ export const ticketNormalizer = createSelector(
       // revocations have a tx fee that influences the stake rewards calc
       const spenderTxFee = hasSpender ? spenderTx.fee : 0;
 
+      ticketTx.txUrl = txURLBuilder(ticketTx.txHash);
+
       // ticket change is anything returned to the wallet on ticket purchase.
       const isTicketChange = (c) => c.index > 0 && c.index % 2 === 0;
       const ticketChange = ticketTx.credits.reduce(

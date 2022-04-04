@@ -147,6 +147,7 @@ function formatTicket(res) {
       res.getTicket().getSpender().getTransaction()
     );
   }
+  r.ticket.vspHost = res.getVspHost();
   return r;
 }
 

@@ -193,6 +193,8 @@ const darkTheme = {
   "button-icon-color-1": "#99C1E3",
   "button-icon-color-2": "#436EC3",
 
+  "alert-icon-bg-color": "#feb8a5",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettingsDark.svg")),
   "menu-accounts": url(require("style/icons/accountsActiveDark.svg")),

@@ -13789,7 +13789,8 @@ proto.walletrpc.GetTicketsResponse.prototype.toObject = function(opt_includeInst
 proto.walletrpc.GetTicketsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     ticket: (f = msg.getTicket()) && proto.walletrpc.GetTicketsResponse.TicketDetails.toObject(includeInstance, f),
-    block: (f = msg.getBlock()) && proto.walletrpc.GetTicketsResponse.BlockDetails.toObject(includeInstance, f)
+    block: (f = msg.getBlock()) && proto.walletrpc.GetTicketsResponse.BlockDetails.toObject(includeInstance, f),
+    vspHost: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -13836,6 +13837,10 @@ proto.walletrpc.GetTicketsResponse.deserializeBinaryFromReader = function(msg, r
       reader.readMessage(value,proto.walletrpc.GetTicketsResponse.BlockDetails.deserializeBinaryFromReader);
       msg.setBlock(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVspHost(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -13879,6 +13884,13 @@ proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter = function(message, w
       2,
       f,
       proto.walletrpc.GetTicketsResponse.BlockDetails.serializeBinaryToWriter
+    );
+  }
+  f = message.getVspHost();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
     );
   }
 };
@@ -14415,6 +14427,24 @@ proto.walletrpc.GetTicketsResponse.prototype.clearBlock = function() {
  */
 proto.walletrpc.GetTicketsResponse.prototype.hasBlock = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string vsp_host = 3;
+ * @return {string}
+ */
+proto.walletrpc.GetTicketsResponse.prototype.getVspHost = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.walletrpc.GetTicketsResponse} returns this
+ */
+proto.walletrpc.GetTicketsResponse.prototype.setVspHost = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

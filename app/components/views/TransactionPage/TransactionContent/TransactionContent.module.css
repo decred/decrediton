@@ -204,7 +204,7 @@
 .agendaGrid {
   display: grid;
   width: 66rem;
-  grid-template-columns: min-content auto;
+  grid-template-columns: min-content min-content auto;
   grid-row-gap: 0.5rem;
   grid-column-gap: 1rem;
 }
@@ -252,6 +252,12 @@
 
 .agendaGrid .voteChoice.abstain::before {
   background-color: var(--grey-7);
+}
+
+.agendaAlert {
+  color: var(--color-orange);
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 1180px) {

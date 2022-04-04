@@ -193,6 +193,8 @@ const lightTheme = {
   "seedword-button-text": "var(--main-dark-blue)",
   "seedword-button-invalid-bg": "#f0b3a1",
 
+  "alert-icon-bg-color": "#feb8a5",
+
   /* icons */
   "menu-settings": url(require("style/icons/menuSettings.svg")),
   "menu-accounts": url(require("style/icons/accounts-active.png")),
