@@ -547,7 +547,7 @@ export const ticketNormalizer = createSelector(
         ticketStakeRewards,
         ticketReturnAmount,
         ticketPoolFee,
-        voteChoices;
+        voteScript;
       if (hasSpender) {
         // everything returned to the wallet after voting/revoking
         ticketReturnAmount = spenderTx.credits.reduce(
@@ -580,8 +580,10 @@ export const ticketNormalizer = createSelector(
         }
 
         if (isVote) {
-          const voteScript = decodedSpenderTx.outputs[1].script;
-          voteChoices = decodeVoteScript(network, voteScript);
+          voteScript = decodeVoteScript(
+            network,
+            decodedSpenderTx.outputs[1].script
+          );
         }
       }
 
@@ -600,7 +602,7 @@ export const ticketNormalizer = createSelector(
         ticketPoolFee,
         ticketStakeRewards,
         ticketReturnAmount,
-        voteChoices,
+        voteScript,
         spenderTxFee,
         enterTimestamp: ticketTx.timestamp,
         leaveTimestamp: hasSpender ? spenderTx.timestamp : null,

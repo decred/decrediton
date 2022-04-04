@@ -77,6 +77,12 @@ const getTicketSpentText = () =>
   screen.getByText("Ticket Spent:").parentElement.textContent;
 const getVSPHostText = () =>
   screen.getByText("VSP host:").parentElement.textContent;
+const getLastBlockValidText = () =>
+  screen.getByText("Last Block Valid:").parentElement.textContent;
+const getVoteVersionText = () =>
+  screen.getByText("Vote Version:").parentElement.textContent;
+const getVoteBitsText = () =>
+  screen.getByText("Vote Bits:").parentElement.textContent;
 const getPending = () => screen.getByText("Pending");
 const getUnconfirmed = () => screen.getByText("Unconfirmed");
 const queryUnconfirmed = () => screen.queryByText("Unconfirmed");
@@ -402,6 +408,9 @@ test("voted ticket", async () => {
   );
 
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost");
+  expect(getLastBlockValidText()).toMatch("Last Block Valid:true");
+  expect(getVoteVersionText()).toMatch("Vote Version:9");
+  expect(getVoteBitsText()).toMatch("Vote Bits:0x0001");
 });
 
 test("voted ticket (votes don't align with what the wallet currently has set)", async () => {

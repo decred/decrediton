@@ -66,7 +66,7 @@ const TransactionContent = ({
     txDirection,
     rawTx,
     isPending,
-    voteChoices,
+    voteScript,
     ticketTx
   } = transactionDetails;
   const { theme } = useTheme();
@@ -76,12 +76,12 @@ const TransactionContent = ({
   const isVote = txType === VOTE;
   const agendaChoicesData =
     isVote &&
-    Object.keys(voteChoices).map((issueId) => {
+    Object.keys(voteScript.voteChoices).map((issueId) => {
       const agendaDetails = agendas.find((agenda) => agenda.name === issueId);
       return {
         issueId,
         description: agendaDetails?.description,
-        voteChoice: voteChoices[issueId],
+        voteChoice: voteScript.voteChoices[issueId],
         setVoteChoice: getAgendaSelectedChoice(issueId)
       };
     });
@@ -157,6 +157,30 @@ const TransactionContent = ({
                   {ticketTx.txHash}
                 </ExternalLink>
               </div>
+            </div>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.lastBlockValid" m="Last Block Valid" />:
+              </div>
+              <div className={styles.value}>
+                {voteScript.isLastBlockValid ? (
+                  <T id="txDetails.true" m="true" />
+                ) : (
+                  <T id="txDetails.false" m="false" />
+                )}
+              </div>
+            </div>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.version" m="Vote Version" />:
+              </div>
+              <div className={styles.value}>{voteScript.version}</div>
+            </div>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.bits" m="Vote Bits" />:
+              </div>
+              <div className={styles.value}>{voteScript.bits}</div>
             </div>
             <div className={styles.topRow}>
               <div className={classNames(styles.name, styles.agendaName)}>
