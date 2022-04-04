@@ -40,7 +40,7 @@ const CreationWarning = ({ onAcceptCreationWarning }) => {
       <div className={styles.desc}>
         <T
           id="ln.creationWarning.desc"
-          m="Please understand that Lightning Network is still work in progress and should be used with caution. In particular:"
+          m="Please understand that Lightning Network is still a work in progress and should be used with caution. In particular:"
         />
       </div>
       <PagedTutorial

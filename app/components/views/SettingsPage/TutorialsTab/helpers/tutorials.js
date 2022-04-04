@@ -44,18 +44,18 @@ tutorials.ln = {
       title: (
         <T
           id="tutorials.ln.title1"
-          m="Backup data is needed in addition to seed key"
+          m="Backup data is needed in addition to wallet seed."
         />
       ),
       images: ["LNSlideImage1"]
     },
     {
-      label: <T id="tutorials.ln.label6" m="LN is a 2nd layer network" />,
+      label: <T id="tutorials.ln.label6" m="Lightning is a Layer 2 Network" />,
       doc: "LNWalletCreationWarningPage06",
       title: (
         <T
           id="tutorials.ln.title6"
-          m="LN is a 2nd layer network on top of the DCR blockchain, designed to facilitate micropayments more efficiently"
+          m="Lightning Network is a layer 2 network on top of the Decred blockchain, designed to facilitate micropayments more efficiently."
         />
       ),
       images: ["LNSlideImage2"]
@@ -66,7 +66,7 @@ tutorials.ln = {
       title: (
         <T
           id="tutorials.ln.title2"
-          m="Its preferred to keep wallet online most of the time"
+          m="It's preferred to keep your wallet online most of the time."
         />
       ),
       images: ["LNSlideImage3"]
@@ -77,7 +77,7 @@ tutorials.ln = {
       title: (
         <T
           id="tutorials.ln.title3"
-          m="Episodic wallets should use watchtower service for safety"
+          m="Episodic wallets should use a watchtower service for safety."
         />
       ),
       images: ["LNSlideImage4"]
@@ -88,7 +88,7 @@ tutorials.ln = {
       title: (
         <T
           id="tutorials.ln.title4"
-          m="Sending and Reciving amounts are limited to what is available in your published channels"
+          m="Sending and receiving amounts are limited to what is available in your published channels."
         />
       ),
       images: ["LNSlideImage5"]
@@ -99,7 +99,7 @@ tutorials.ln = {
       title: (
         <T
           id="tutorials.ln.title5"
-          m="Minimize risk by using a seperate wallet for LN"
+          m="Minimize risk by using a separate wallet for Lightning."
         />
       ),
       images: ["LNSlideImage6"]
