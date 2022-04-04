@@ -1,0 +1,1 @@
+Proof-of-Work (PoW) solved the double spending problem, being a primer for cryptocurrencies. From its protocol consensus perspective, the lack of formal decision-making procedures has a history of controversies and chain splits. PoW miners hold a monopoly on consensus enforcement via their exclusive write access to the ledger.

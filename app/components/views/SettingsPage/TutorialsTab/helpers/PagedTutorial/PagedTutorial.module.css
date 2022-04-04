@@ -1,0 +1,200 @@
+.tabs {
+  overflow: hidden !important;
+  height: 3.6rem !important;
+  width: 100%;
+}
+
+.tabs.spaceEvenly {
+  justify-content: space-evenly;
+}
+
+.tabs.spaceEvenly .tabLabel {
+  width: inherit;
+}
+
+.tab {
+  margin-right: 0.5rem !important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  cursor: default !important;
+  width: inherit;
+}
+
+.tab:last-of-type {
+  margin-right: 0 !important;
+}
+
+.tab > span {
+  width: inherit;
+}
+
+.tabsContainer {
+  display: flex;
+  flex-direction: row;
+  width: 76.4rem;
+}
+.tabsContainer .tabButton {
+  width: 4rem;
+  min-width: 4rem;
+  height: 3.6rem;
+  background-color: var(--ln-nav-button-bg);
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.tabsContainer .tabButton:hover {
+  background-color: var(--grey-5);
+}
+.tabsContainer .tabButton .icon {
+  width: 1rem;
+  height: 1rem;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+}
+.tabsContainer .tabButton.previous:hover .icon {
+  background-image: var(--arrow-left-white);
+  transform: rotate(0deg);
+}
+.tabsContainer .tabButton.previous .icon {
+  transform: rotate(-90deg);
+}
+.tabsContainer .tabButton.next:hover .icon {
+  background-image: var(--arrow-left-white);
+  transform: rotate(180deg);
+}
+.tabsContainer .tabButton.next .icon {
+  transform: rotate(90deg);
+}
+.tabsContainer .tabButton.previous {
+  margin-right: 0.5rem;
+}
+.tabsContainer .tabButton.next {
+  margin-left: 0.5rem;
+}
+.tabsContainer .tabButton.disabled {
+  cursor: default;
+  background-color: var(--ln-nav-button-bg);
+}
+.tabsContainer .tabButton.disabled .icon {
+  opacity: 0.5;
+}
+.tabsContainer .tabButton.disabled:hover {
+  background-color: var(--ln-nav-button-bg);
+  color: var(--main-dark-blue);
+}
+.tabsContainer .tabButton.disabled.previous:hover .icon {
+  background-image: var(--menu-arrow-up);
+  transform: rotate(-90deg);
+}
+
+.tabsContainer .tabButton.disabled.next:hover .icon {
+  background-image: var(--menu-arrow-up);
+  transform: rotate(90deg);
+}
+
+.tabContent {
+  position: absolute;
+  top: 4rem;
+}
+.tabContentWrapper {
+  position: relative;
+  padding: 3rem 0;
+  background-color: var(--background-back-color);
+  width: 76.4rem;
+}
+
+.tabDesc {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  text-align: center;
+  color: var(--main-dark-blue);
+  padding: 0 10rem;
+  max-width: initial;
+}
+
+.unavailableAlert {
+  padding: 0 18.2rem 1rem 18.2rem;
+  text-align: center;
+}
+
+.tabTitle {
+  font-size: 1.8rem;
+  line-height: 2.3rem;
+  text-align: center;
+  color: var(--main-dark-blue);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  padding: 0 10rem;
+}
+
+.stepIndicator {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--grey-5);
+}
+
+.tabContent .bottomGrid {
+  display: grid;
+  grid-template-columns: 1fr 50rem 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.tabContent .arrow {
+  width: 3rem;
+  height: 3rem;
+  background-image: var(--ln-wallet-creation-warning-arrow);
+  background-repeat: no-repeat;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.tabContent .arrow.next {
+  transform: rotate(180deg);
+}
+
+.tabContent .arrow:hover {
+  opacity: 0.5;
+}
+
+.tabContent .arrow.disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 1180px) {
+  .tabsContainer,
+  .tabContentWrapper {
+    width: 67.5rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .tabsContainer,
+  .tabContentWrapper {
+    width: 35.5rem;
+  }
+
+  .tabContent .bottomGrid {
+    grid-template-columns: 1fr 25rem 1fr;
+  }
+
+  .tabContent .bottomGrid .image {
+    width: 25rem;
+    height: 20rem;
+  }
+
+  .tabTitle,
+  .tabDesc {
+    padding: 0 5rem;
+  }
+
+  .tabs.spaceEvenly {
+    justify-content: inherit;
+  }
+}

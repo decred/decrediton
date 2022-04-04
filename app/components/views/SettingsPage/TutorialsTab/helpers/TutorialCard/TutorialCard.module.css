@@ -1,0 +1,148 @@
+.overview {
+  background-color: var(--background-back-color);
+  width: 72.4rem;
+  padding: 2rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 2.3rem;
+  color: var(--main-dark-blue);
+}
+
+.desc {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: var(--grey-5);
+}
+
+.progressBarContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1.3rem 0 1rem 0;
+}
+
+.progressBar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5rem;
+  width: 100%;
+  margin-right: 1rem;
+  height: 0.6rem;
+}
+
+.progressBar > div {
+  border: 0.1rem solid var(--grey-3);
+  background-color: var(--grey-3);
+  height: 0.6rem;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.progressBar > div.checked {
+  background-color: var(--accent-blue);
+  border: 0.1rem solid var(--accent-blue);
+}
+
+.progressBar > div.active {
+  background-color: transparent;
+  border: 0.1rem solid var(--accent-blue);
+}
+
+.progressBar > div.active:before {
+  content: "";
+  background-image: var(--arrow-right-blue-icon);
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  position: absolute;
+  top: -1.3rem;
+  left: calc(50% - 0.55rem);
+  transform: rotate(90deg);
+}
+
+.stepIndicator {
+  font-size: 1.1rem;
+  line-height: 1.4rem;
+  color: var(--grey-5);
+}
+
+/* thumnail images */
+
+.thumbnail {
+  width: 9.2rem;
+  height: 9.2rem;
+  min-width: 9.2rem;
+  margin-left: 2.5rem;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.decredIntroThumb {
+  background-image: var(--tutorial-decredIntro-thumb);
+}
+
+.lnThumb {
+  background-image: var(--tutorial-ln-thumb);
+}
+
+.powPosThumb {
+  background-image: var(--tutorial-powPos-thumb);
+}
+
+.ticketsThumb {
+  background-image: var(--tutorial-tickets-thumb);
+}
+
+.stakingThumb {
+  background-image: var(--tutorial-staking-thumb);
+}
+
+.blocksThumb {
+  background-image: var(--tutorial-blocks-thumb);
+}
+
+.consensusVotingThumb {
+  background-image: var(--tutorial-consensusVoting-thumb);
+}
+
+.consensusCodeThumb {
+  background-image: var(--tutorial-consensusCode-thumb);
+}
+
+.lifecycleThumb {
+  background-image: var(--tutorial-lifecycle-thumb);
+}
+
+@media screen and (max-width: 1180px) {
+  .overview {
+    width: 63.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .overview {
+    width: 31.5rem;
+    padding: 10px !important;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .image {
+    display: none;
+  }
+}

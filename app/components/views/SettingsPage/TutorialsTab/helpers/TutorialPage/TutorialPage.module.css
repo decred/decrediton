@@ -1,0 +1,75 @@
+.cardWrapper {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.backButton {
+  width: 4rem;
+  background-color: var(--governance-nav-button-bg);
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: var(--grey-5);
+}
+
+.backArrow {
+  height: 1rem;
+  width: 1rem;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 5px;
+  background-repeat: no-repeat;
+  transform: rotate(-90deg);
+}
+
+.backButton:hover .backArrow {
+  background-image: var(--arrow-left-white);
+  transform: rotate(0);
+  background-position: 50% 0;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.detailsText {
+  font-family: var(--font-family-regular-semi-bold);
+  padding: 3rem 4rem;
+  background-color: var(--background-back-color);
+  margin: 0.5rem 0 2rem 0;
+  border-top: 0.1rem solid var(--tabbed-page-header-bg);
+  width: 7.64rem;
+  font-size: 1.6rem;
+}
+
+.piButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 7.4rem;
+}
+
+.loadingPage {
+  width: 100%;
+  text-align: center;
+}
+
+.piButton {
+  border: 0 !important;
+  text-decoration: none !important;
+  color: var(--color-white) !important;
+  font-weight: var(--font-weight-semi-bold) !important;
+}
+
+@media screen and (max-width: 1180px) {
+  .detailsText {
+    width: 6.74rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .detailsText {
+    padding-left: 2rem;
+    width: 3.55rem;
+  }
+}

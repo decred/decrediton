@@ -1,0 +1,39 @@
+.tabLabelContent {
+  padding: 0 1rem;
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  color: var(--main-dark-blue);
+  background-color: var(--background-back-color);
+  height: 3.6rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 16.4rem;
+}
+
+.tab:hover,
+.tab:hover .tabLabelContent {
+  color: var(--main-dark-blue) !important;
+}
+
+.tabLabelContent strong {
+  padding-right: 0.5rem;
+}
+
+.tabLabelContent .label {
+  max-width: 10rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.tabLabelContent.visited {
+  background-image: var(--blue-checkmark);
+  background-repeat: no-repeat;
+  background-size: 1rem 0.7rem;
+  background-position: right 1.5rem center;
+}
+
+.tabLabelContent.active {
+  background-color: var(--ln-active-tab-bg);
+  color: var(--ln-active-tab-color);
+}

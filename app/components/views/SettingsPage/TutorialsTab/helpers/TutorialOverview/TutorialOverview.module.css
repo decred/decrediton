@@ -1,0 +1,38 @@
+.cardWrapper {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.cardWrapper:hover {
+  filter: drop-shadow(0 0.2rem 0.4rem rgba(0, 0, 0, 0.16));
+}
+
+.continueButton {
+  width: 4rem;
+  background-color: var(--governance-nav-button-bg);
+  cursor: pointer;
+}
+
+.cardWrapper:hover .continueButton {
+  background-color: var(--grey-5);
+}
+
+.continueArrow {
+  height: 1rem;
+  width: 1rem;
+  background-image: var(--menu-arrow-up);
+  background-position: 50% 5px;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+}
+
+.cardWrapper:hover .continueArrow {
+  background-image: var(--arrow-left-white);
+  background-position: 50% 0;
+  transform: rotate(180deg);
+}
+
+.overview {
+  padding-left: 4rem !important;
+}

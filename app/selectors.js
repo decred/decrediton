@@ -74,6 +74,7 @@ export const pageBodyScrollHandler = get(["control", "pageBodyScrollHandler"]);
 export const pageBodyTopRef = get(["control", "pageBodyTopRef"]);
 export const setLanguage = get(["daemon", "setLanguage"]);
 export const showTutorial = get(["daemon", "tutorial"]);
+export const visitedTutorialTabs = get(["daemon", "visitedTutorialTabs"]);
 export const showPrivacy = get(["daemon", "showPrivacy"]);
 export const showSpvChoice = get(["daemon", "showSpvChoice"]);
 export const daemonWarning = get(["daemon", "daemonWarning"]);

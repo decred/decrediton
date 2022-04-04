@@ -1,0 +1,1 @@
+Proof-of-Stake (PoS) developed a better alignment of interests, and computational efficiencies, though resulted in different shortcomings, most notably the “nothing-at-stake problem” and inherent risks of resulting in feudalism.

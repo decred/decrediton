@@ -109,6 +109,7 @@ const initialState = {
     daemonRemote: false,
     locale: locale,
     tutorial: globalCfg.get(cfgConstants.SHOW_TUTORIAL),
+    visitedTutorialTabs: globalCfg.get(cfgConstants.VISITED_TUTORIAL_TABS),
     showPrivacy: globalCfg.get(cfgConstants.SHOW_PRIVACY),
     setLanguage: globalCfg.get(cfgConstants.SET_LANGUAGE),
     showSpvChoice: globalCfg.get(cfgConstants.SHOW_SPV_CHOICE),

@@ -9,6 +9,7 @@ export const SET_LANGUAGE = "set_language";
 export const UI_ANIMATIONS = "ui_animations";
 export const SHOW_SPV_CHOICE = "show_spvchoice";
 export const SHOW_TUTORIAL = "show_tutorial";
+export const VISITED_TUTORIAL_TABS = "visited_tutorial_tabs";
 export const SHOW_PRIVACY = "show_privacy";
 export const ALLOWED_EXTERNAL_REQUESTS = "allowed_external_requests";
 export const ALLOWED_VSP_HOSTS = "allowed_vsp_hosts";
@@ -154,6 +155,7 @@ export const INITIAL_VALUES = {
   [UI_ANIMATIONS]: true,
   [SHOW_SPV_CHOICE]: true,
   [SHOW_TUTORIAL]: true,
+  [VISITED_TUTORIAL_TABS]: {},
   [SHOW_PRIVACY]: true,
   [ALLOWED_EXTERNAL_REQUESTS]: [],
   [ALLOWED_VSP_HOSTS]: [],

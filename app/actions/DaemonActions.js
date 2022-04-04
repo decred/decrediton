@@ -32,6 +32,7 @@ import { CSPP_URL, CSPP_URL_LEGACY } from "constants";
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
+export const SET_VISITED_TUTORIAL_TABS = "SET_VISITED_TUTORIAL_TABS";
 export const FINISH_PRIVACY = "FINISH_PRIVACY";
 export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTART_ATTEMPT = "DAEMONSTART_ATTEMPT";
@@ -156,6 +157,12 @@ export const finishTutorial = () => (dispatch) => {
   config.set(cfgConstants.SHOW_TUTORIAL, false);
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
+};
+
+export const setVisitedTutorialTabs = (visitedTabs) => (dispatch) => {
+  const config = wallet.getGlobalCfg();
+  config.set(cfgConstants.VISITED_TUTORIAL_TABS, visitedTabs);
+  dispatch({ type: SET_VISITED_TUTORIAL_TABS, visitedTabs });
 };
 
 export const finishPrivacy = () => (dispatch) => {
