@@ -57,7 +57,6 @@ export const useGetStarted = () => {
     syncAttemptRequest,
     onGetDcrdLogs,
     daemonWarning,
-    stopUnfinishedWallet,
     checkDisplayWalletGradients,
     setAutoWalletLaunching,
     autoWalletLaunching

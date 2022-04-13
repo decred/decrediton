@@ -281,7 +281,11 @@ export const getStartedMachine = Machine({
           on: {
             WALLET_DISCOVERACCOUNTS_PASS: "walletDiscoverAccountsPassInput",
             CANCEL_SYNCING_WALLET: {
-              target: "choosingWallet"
+              target: "choosingWallet",
+              actions: assign({
+                selectedWallet: () => null,
+                passPhrase: () => null
+              })
             },
             ERROR_SYNCING_WALLET: {
               target: "choosingWallet",
