@@ -6,6 +6,7 @@ import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
 import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
 import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
 import SettingAccountsPassphrase from "./SetAccountsPassphrase";
+import ResendVotesToRecentlyUpdatedVSPs from "./ResendVotesToRecentlyUpdatedVSPs";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +15,9 @@ import {
 } from "actions/ControlActions";
 import {
   getVSPsPubkeys,
-  setCanDisableProcessManaged
+  setCanDisableProcessManaged,
+  getRecentlyUpdatedUsedVSPs,
+  getNotAbstainVotes
 } from "actions/VSPActions";
 import { ExternalLink } from "shared";
 import { DecredLoading } from "indicators";
@@ -58,6 +61,16 @@ export const useWalletSetup = (settingUpWalletRef) => {
   const onGetVSPsPubkeys = useCallback(() => dispatch(getVSPsPubkeys()), [
     dispatch
   ]);
+
+  const onGetRecentlyUpdatedUsedVSPs = useCallback(
+    () => dispatch(getRecentlyUpdatedUsedVSPs()),
+    [dispatch]
+  );
+
+  const onGetNotAbstainVotes = useCallback(
+    () => dispatch(getNotAbstainVotes()),
+    [dispatch]
+  );
 
   const sendContinue = useCallback(() => {
     send({ type: "CONTINUE" });
@@ -283,6 +296,27 @@ export const useWalletSetup = (settingUpWalletRef) => {
           });
         }
         break;
+      case "resendVotesToRecentlyUpdatedVSPs":
+        {
+          const notAbstainVotes = onGetNotAbstainVotes();
+
+          if (notAbstainVotes.length === 0) {
+            sendContinue();
+          } else {
+            const vsps = await onGetRecentlyUpdatedUsedVSPs();
+            if (vsps.length === 0) {
+              sendContinue();
+            } else {
+              component = h(ResendVotesToRecentlyUpdatedVSPs, {
+                cancel: onSendBack,
+                send,
+                vsps,
+                votes: notAbstainVotes
+              });
+            }
+          }
+        }
+        break;
       case "goToHomeView":
         goToHome();
         break;
@@ -310,7 +344,9 @@ export const useWalletSetup = (settingUpWalletRef) => {
     onProcessAccounts,
     onGetVSPsPubkeys,
     onSkipProcessManaged,
-    isVSPListingEnabled
+    isVSPListingEnabled,
+    onGetRecentlyUpdatedUsedVSPs,
+    onGetNotAbstainVotes
   ]);
 
   return {

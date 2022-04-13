@@ -28,6 +28,10 @@ import {
   GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT,
   GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS,
   GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
+  UPDATE_USED_VSPS,
+  RESENDVSPDVOTECHOICES_ATTEMPT,
+  RESENDVSPDVOTECHOICES_SUCCESS,
+  RESENDVSPDVOTECHOICES_FAILED
   GETVSP_TICKET_STATUS_ATTEMPT,
   GETVSP_TICKET_STATUS_SUCCESS,
   GETVSP_TICKET_STATUS_FAILED,
@@ -86,6 +90,8 @@ export default function vsp(state = {}, action) {
       return { ...state, isLegacy: action.isLegacy };
     case SET_REMEMBERED_VSP_HOST:
       return { ...state, rememberedVspHost: action.rememberedVspHost };
+    case UPDATE_USED_VSPS:
+      return { ...state, usedVSPs: action.usedVSPs };
     case SYNCVSPTICKETS_ATTEMPT:
       return {
         ...state,
@@ -229,6 +235,19 @@ export default function vsp(state = {}, action) {
         ...state,
         getUnspentUnexpiredVspTicketsError: String(action.error),
         getUnspentUnexpiredVspTicketsAttempt: false
+      };
+    case RESENDVSPDVOTECHOICES_ATTEMPT:
+      return { ...state, resendVSPDVoteChoicesAttempt: true };
+    case RESENDVSPDVOTECHOICES_SUCCESS:
+      return {
+        ...state,
+        resendVSPDVoteChoicesAttempt: false
+      };
+    case RESENDVSPDVOTECHOICES_FAILED:
+      return {
+        ...state,
+        resendVSPDVoteChoicesAttemptError: String(action.error),
+        resendVSPDVoteChoicesAttempt: false
       };
     case GETVSP_TICKET_STATUS_ATTEMPT:
       return { ...state, getVSPTicketStatusAttempt: true };

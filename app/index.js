@@ -104,6 +104,8 @@ const initialState = {
     needsProcessManagedTickets: true,
     canDisableProcessManaged: true,
     numVSPicketsToBuy: 1
+    usedVSPs: [],
+    mockAvailableMainnetVsps: false
   },
   daemon: {
     networkMatch: false,
