@@ -75,11 +75,6 @@ export const getSyncAttemptRequest = get([
 ]);
 
 // general startup selector
-export const useDexSpvExperimental = get([
-  "settings",
-  "currentSettings",
-  "useDexSpvExperimental"
-]);
 export const pageBodyScrollHandler = get(["control", "pageBodyScrollHandler"]);
 export const pageBodyTopRef = get(["control", "pageBodyTopRef"]);
 export const setLanguage = get(["daemon", "setLanguage"]);
