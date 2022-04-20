@@ -78,7 +78,7 @@ const TxHistory = ({ transactions = [], limit, overview, tsDate, history }) => {
               txLeaveTs: tx.leaveTimestamp && tsDate(tx.leaveTimestamp),
               overview,
               pending: tx.isPending,
-              onClick: () => history.push(`/transaction/history/${tx.txHash}`),
+              onClick: () => history.push(`/transactions/history/${tx.txHash}`),
               timeMessage: (txTimestamp) =>
                 shortDatetimeFormatter.format(txTimestamp)
             }}
