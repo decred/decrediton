@@ -31,7 +31,8 @@ import {
   SYNC_RESCAN_PROGRESS,
   SYNC_RESCAN_FINISHED,
   SYNC_CANCEL,
-  WALLET_SELECTED
+  WALLET_SELECTED,
+  SET_SHOW_STAKING_WARNING
 } from "actions/WalletLoaderActions";
 import { WALLETCREATED } from "actions/DaemonActions";
 import {
@@ -266,6 +267,11 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         dexAccount: null
+      };
+    case SET_SHOW_STAKING_WARNING:
+      return {
+        ...state,
+        showStakingWarning: action.showStakingWarning
       };
     default:
       return state;

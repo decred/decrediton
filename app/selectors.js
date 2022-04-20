@@ -174,6 +174,9 @@ export const getChangeAccountSpendableBalance = get([
 ]);
 
 export const discoverUsageAttempt = get(["control", "discoverUsageAttempt"]);
+export const showStakingWarning = bool(
+  get(["walletLoader", "showStakingWarning"])
+);
 
 const availableWallets = get(["daemon", "availableWallets"]);
 const availableWalletsSelect = createSelector([availableWallets], (wallets) =>

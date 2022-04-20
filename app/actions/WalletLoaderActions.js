@@ -704,3 +704,16 @@ export const setLastPoliteiaAccessTime = () => (dispatch, getState) => {
     timestamp
   });
 };
+
+export const SET_SHOW_STAKING_WARNING = "SET_SHOW_STAKING_WARNING";
+export const acceptStakingWarning = () => (dispatch, getState) => {
+  const {
+    daemon: { walletName }
+  } = getState();
+  const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
+  config.set(cfgConstants.SHOW_STAKING_WARNING, false);
+  dispatch({
+    type: SET_SHOW_STAKING_WARNING,
+    showStakingWarning: false
+  });
+};
