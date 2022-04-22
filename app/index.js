@@ -269,7 +269,8 @@ const initialState = {
     // Loader
     getLoaderRequestAttempt: false,
     loader: null,
-    getLoaderError: null
+    getLoaderError: null,
+    showStakingWarning: true
   },
   notifications: {
     transactionNtfns: null,

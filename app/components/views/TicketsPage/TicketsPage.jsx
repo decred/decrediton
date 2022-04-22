@@ -1,4 +1,10 @@
-import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
+import {
+  TabbedPage,
+  TitleHeader,
+  DescriptionHeader,
+  StandalonePage,
+  StandaloneHeader
+} from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { BalanceDisplay } from "shared";
 import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
@@ -7,6 +13,7 @@ import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
 import { TICKET_ICON } from "constants";
 import { useTicketsPage } from "./hooks";
+import StakingTabWarning from "./StakingTabWarning";
 
 const PageHeader = () => (
   <TitleHeader
@@ -31,6 +38,22 @@ const TabHeader = () => {
     />
   );
 };
+
+const StakingTabWarningHeader = ({ ticketPrice }) => (
+  <StandaloneHeader
+    title={<T id="tickets.warning.title" m="Staking" />}
+    description={
+      <T
+        id="tickets.warning.description"
+        m="Current Price: {ticketPrice}"
+        values={{
+          ticketPrice: <BalanceDisplay amount={ticketPrice} />
+        }}
+      />
+    }
+    iconType={TICKET_ICON}
+  />
+);
 
 const tabs = [
   {
@@ -59,6 +82,20 @@ const tabs = [
   }
 ];
 
-const TicketsPage = () => <TabbedPage header={<PageHeader />} tabs={tabs} />;
+const TicketsPage = () => {
+  const {
+    showStakingWarning,
+    ticketPrice,
+    onAcceptStakingWarning
+  } = useTicketsPage();
+  return showStakingWarning ? (
+    <StandalonePage
+      header={<StakingTabWarningHeader ticketPrice={ticketPrice} />}>
+      <StakingTabWarning onAcceptCreationWarning={onAcceptStakingWarning} />
+    </StandalonePage>
+  ) : (
+    <TabbedPage header={<PageHeader />} tabs={tabs} />
+  );
+};
 
 export default TicketsPage;
