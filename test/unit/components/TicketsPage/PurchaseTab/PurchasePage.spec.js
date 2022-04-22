@@ -13,6 +13,14 @@ import { en as enLocale } from "i18n/locales";
 import { DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 import * as arrs from "../../../../../app/helpers/arrays";
+import {
+  mockVspInfo,
+  mockAvailableVsps,
+  mockMixedAccountValue,
+  mockChangeAccountValue,
+  mockNumTicketsToBuy,
+  mockMixedAccount
+} from "./mocks";
 
 const selectors = sel;
 const controlActions = ca;
@@ -20,52 +28,6 @@ const vspActions = vspa;
 const settingsActions = sa;
 const wallet = wal;
 const arrays = arrs;
-
-const mockVspInfo = {
-  data: {
-    pubkey: "test-pubkey",
-    feepercentage: 2
-  }
-};
-const mockAvailableVsps = [
-  {
-    host: "https://test-stakepool1.eu",
-    label: "https://test-stakepool1.eu",
-    vspData: {
-      feepercentage: 1,
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "https://test-stakepool2.eu",
-    label: "https://test-stakepool2.eu",
-    vspData: {
-      feepercentage: 2,
-      vspdversion: "1.1.0"
-    }
-  },
-  {
-    host: "https://test-stakepool3.eu",
-    label: "https://test-stakepool3.eu",
-    outdated: true,
-    vspData: {
-      feepercentage: 3,
-      vspdversion: "1.0.0" // outdated
-    }
-  }
-];
-const mockMixedAccountValue = 6;
-const mockChangeAccountValue = 6;
-const mockNumTicketsToBuy = 1;
-const mockMixedAccount = {
-  hidden: false,
-  label: "mixed: 249.79547928 DCR",
-  name: "mixed",
-  spendable: 24979547928,
-  spendableAndUnit: "249.79547928 DCR",
-  total: 24979547928,
-  value: mockMixedAccountValue
-};
 
 const mockPassphrase = "test-passphrase";
 const locale = enLocale;

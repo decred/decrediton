@@ -1,7 +1,8 @@
 import {
   syncCancel,
   setSelectedWallet,
-  openWalletAttempt
+  openWalletAttempt,
+  SET_SHOW_STAKING_WARNING
 } from "./WalletLoaderActions";
 import { getVersionServiceAttempt, semverCompatible } from "./VersionActions";
 import { stopNotifcations } from "./NotificationActions";
@@ -492,6 +493,9 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const needsVSPdProcessManaged = walletCfg.get(
         cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
       );
+      const showStakingWarning = walletCfg.get(
+        cfgConstants.SHOW_STAKING_WARNING
+      );
 
       const autobuyerSettings = walletCfg.get(cfgConstants.AUTOBUYER_SETTINGS);
       dispatch({
@@ -519,6 +523,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         currentStakePoolConfig,
         dismissBackupRedeemScript
       });
+      dispatch({ type: SET_SHOW_STAKING_WARNING, showStakingWarning });
       const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
       dispatch({
         type: WALLET_LOADER_SETTINGS,
