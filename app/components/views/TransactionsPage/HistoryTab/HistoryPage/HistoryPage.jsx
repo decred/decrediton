@@ -89,7 +89,8 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
-  onChangeSliderValue
+  onChangeSliderValue,
+  transactionsRequestAttempt
 }) => (
   <>
     <Subtitle
@@ -117,14 +118,18 @@ const Page = ({
       initialLoad={loadMoreThreshold > 90}
       useWindow={false}
       threshold={loadMoreThreshold}>
-      <div className={styles.historyPageContent}>
+      <div
+        className={styles.historyPageContent}
+        data-testid="historyPageContent">
         {transactions.length > 0 ? (
           <TxHistory {...{ transactions, tsDate, mode: "regular" }} />
         ) : null}
       </div>
     </InfiniteScroll>
     {!noMoreTransactions ? (
-      <LoadingMoreTransactionsIndicator />
+      <LoadingMoreTransactionsIndicator
+        onClick={() => !transactionsRequestAttempt && onLoadMoreTransactions()}
+      />
     ) : transactions.length > 0 ? (
       <NoMoreTransactionsIndicator />
     ) : (
