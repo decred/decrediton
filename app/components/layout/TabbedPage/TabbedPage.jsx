@@ -73,7 +73,11 @@ const TabbedPage = ({
                     h(content, { ...props }, null);
                 return (
                   <Tab label={label} key={key ?? path}>
-                    <div key={`${key ?? path}-key`}>{element}</div>
+                    <div
+                      key={`${key ?? path}-key`}
+                      className={styles.tabContentContainer}>
+                      {element}
+                    </div>
                   </Tab>
                 );
               })}

@@ -89,7 +89,7 @@ const Transaction = ({
         <Tooltip content={`${message.txHash}`}>
           <Link
             onClick={onDismissMessage}
-            to={`/transaction/history/${message.txHash}`}>
+            to={`/transactions/history/${message.txHash}`}>
             {message.txHash}
           </Link>
         </Tooltip>

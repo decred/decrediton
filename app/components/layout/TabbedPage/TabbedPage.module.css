@@ -32,7 +32,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: calc(100% - 66px);
+}
+
+.tabContentContainer {
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 30px 80px 30px 60px;
@@ -42,7 +45,7 @@
   .tabbedPageHeader {
     padding-left: 20px;
   }
-  .tabContent {
+  .tabContentContainer {
     padding: 30px 20px 30px 20px;
   }
   .tabs {
@@ -56,7 +59,7 @@
     padding-top: 30px;
   }
 
-  .tabContent {
+  .tabContentContainer {
     padding: 15px 10px 80px 10px;
     top: 45px;
   }
