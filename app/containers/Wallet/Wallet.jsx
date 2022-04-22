@@ -62,7 +62,7 @@ const Wallet = ({ setInterval }) => {
           <Route path="/dex" component={DexPage} />
         </StaticSwitch>
         <Route
-          path="/transaction/history/:txHash"
+          path="/transactions/history/:txHash"
           component={TransactionPage}
         />
         <Route
