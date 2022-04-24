@@ -41,7 +41,9 @@ const HistoryTab = () => {
     transactionsRequestAttempt
   } = useHistoryTab();
 
-  const [index, setIndex] = useState(transactions.length);
+  const [index, setIndex] = useState(() =>
+    Math.min(BATCH_TX_COUNT, transactions.length)
+  );
   const [noMoreTransactionsReally, setNoMoreTransactionsReally] = useState(
     false
   );
