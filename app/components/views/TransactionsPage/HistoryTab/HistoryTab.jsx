@@ -44,14 +44,14 @@ const HistoryTab = () => {
   const [index, setIndex] = useState(() =>
     Math.min(BATCH_TX_COUNT, transactions.length)
   );
-  const [noMoreTransactionsReally, setNoMoreTransactionsReally] = useState(
+  const [noMoreTransactionsToShow, setNoMoreTransactionsToShow] = useState(
     false
   );
   const { search, listDirection } = transactionsFilter;
 
   useEffect(() => {
     setIndex(BATCH_TX_COUNT);
-    setNoMoreTransactionsReally(false);
+    setNoMoreTransactionsToShow(false);
   }, [transactionsFilter]);
 
   const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
@@ -87,7 +87,7 @@ const HistoryTab = () => {
     } else if (!noMoreTransactions) {
       onGetTransactions(false);
     } else {
-      setNoMoreTransactionsReally(true);
+      setNoMoreTransactionsToShow(true);
     }
   };
 
@@ -159,7 +159,7 @@ const HistoryTab = () => {
         loadMoreThreshold,
         transactions: visibleTransactions,
         transactionsFilter,
-        noMoreTransactions: noMoreTransactionsReally,
+        noMoreTransactions: noMoreTransactionsToShow,
         selectedSortOrderKey,
         selectedTxTypeKeys,
         searchText,
