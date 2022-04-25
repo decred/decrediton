@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import RegularTxRow from "./RegularTxRow";
 import StakeTxRow from "./StakeTxRow";
 import LiveStakeTxRow from "./LiveStakeTxRow";
@@ -28,7 +28,8 @@ const TxRowByType = {
   [txTypes.COINBASE]: RegularTxRow
 };
 
-const TxRow = ({ tx, tsDate, overview, history }) => {
+const TxRow = ({ tx, tsDate, overview, history, activeRow, setActiveRow }) => {
+  const txHash = tx.txHash;
   const txTimestamp = tx.enterTimestamp || tx.timestamp; // we define the transaction icon by its rowType, so we pass it as a
   // className props
   let rowType = tx.status || tx.txType;
@@ -59,17 +60,23 @@ const TxRow = ({ tx, tsDate, overview, history }) => {
       .map((o) => o.address)
       .join(" ");
 
+  const onClick = useCallback(() => {
+    setActiveRow(txHash);
+    history.push(`/transactions/history/${txHash}`);
+  }, [txHash, setActiveRow, history]);
+
   return (
     <Component
       {...{
         ...tx,
+        active: activeRow === txHash,
         txOutputAddresses,
         className: rowType,
         txTs: txTimestamp && tsDate(txTimestamp),
         txLeaveTs: tx.leaveTimestamp && tsDate(tx.leaveTimestamp),
         overview,
         pending: tx.isPending,
-        onClick: () => history.push(`/transactions/history/${tx.txHash}`),
+        onClick,
         timeMessage: (txTimestamp) => shortDatetimeFormatter.format(txTimestamp)
       }}
     />
