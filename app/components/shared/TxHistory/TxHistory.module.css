@@ -353,6 +353,11 @@
   height: 54px;
 }
 
+.historyRow.activeRow {
+  border-left: 0.4rem solid var(--accent-color);
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.16));
+}
+
 .historyRow:hover {
   background-image: var(--arrow-right-blue-icon);
   background-color: var(--tx-history-background-hover);
@@ -375,6 +380,10 @@
 .historyRow.eligibleRow .txInfo .txRowWrapper {
   padding: 16px 20px 16px 20px;
   width: 100%;
+}
+
+.historyRow.activeRow .txInfo .txRowWrapper {
+  padding-left: 1.6rem;
 }
 
 .overviewRow .txInfo .myTickets .timeDateSpacer {
