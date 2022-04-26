@@ -12,6 +12,9 @@ export function useHistoryTab() {
   const transactionsFilter = useSelector(sel.transactionsFilter);
   const noMoreTransactions = useSelector(sel.noMoreRegularTxs);
   const totalBalance = useSelector(sel.totalBalance);
+  const transactionsRequestAttempt = useSelector(
+    sel.getTransactionsRequestAttempt
+  );
 
   const dispatch = useDispatch();
 
@@ -32,6 +35,7 @@ export function useHistoryTab() {
     totalBalance,
     noMoreTransactions,
     onGetTransactions,
-    onChangeTransactionsFilter
+    onChangeTransactionsFilter,
+    transactionsRequestAttempt
   };
 }

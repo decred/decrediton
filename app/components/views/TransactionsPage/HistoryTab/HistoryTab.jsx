@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ErrorScreen from "ErrorScreen";
-import HistoryPage from "./HistoryPage/HistoryPage";
+import HistoryPage from "./HistoryPage";
 import { FormattedMessage as T } from "react-intl";
 import { DescriptionHeader } from "layout";
 import { BalanceDisplay } from "shared";
@@ -37,7 +37,8 @@ const HistoryTab = () => {
     transactionsFilter,
     noMoreTransactions,
     onGetTransactions,
-    onChangeTransactionsFilter
+    onChangeTransactionsFilter,
+    transactionsRequestAttempt
   } = useHistoryTab();
 
   const { search, listDirection } = transactionsFilter;
@@ -145,7 +146,8 @@ const HistoryTab = () => {
         onChangeSortType,
         onChangeSearchText,
         onLoadMoreTransactions,
-        onChangeSliderValue
+        onChangeSliderValue,
+        transactionsRequestAttempt
       }}
     />
   );

@@ -2,10 +2,7 @@ import { TabbedPage, TitleHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { ReceiveTab, ReceiveTabHeader } from "./ReceiveTab";
 import { SendTab, SendTabHeader } from "./SendTab";
-import {
-  default as HistoryTab,
-  HistoryTabHeader
-} from "./HistoryTab/HistoryTab";
+import { HistoryTab, HistoryTabHeader } from "./HistoryTab";
 import { ExportTab, ExportTabHeader } from "./ExportTab";
 import { TRANSACTIONS_ICON } from "constants";
 
