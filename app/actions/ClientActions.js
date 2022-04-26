@@ -108,10 +108,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getTreasuryPolicies());
 
       // Start Dex if dexEnabled and NOT SPV mode
-      if (
-        dexEnabled &&
-        (!sel.isSPV(getState()) || sel.useDexSpvExperimental(getState()))
-      ) {
+      if (dexEnabled) {
         await dispatch(startDex());
       }
     };

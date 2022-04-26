@@ -76,8 +76,7 @@ const currentSettings = {
   network: hasCliOption("network") || globalCfg.get(NETWORK),
   networkFromCli: !!hasCliOption("network"),
   theme: globalCfg.get(THEME),
-  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS),
-  useDexSpvExperimental: globalCfg.get(cfgConstants.DEX_SPV_EXPERIMENTAL)
+  uiAnimations: globalCfg.get(cfgConstants.UI_ANIMATIONS)
 };
 const initialState = {
   settings: {

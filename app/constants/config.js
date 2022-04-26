@@ -24,7 +24,6 @@ export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
 export const TREZOR_DEBUG = "trezor_debug";
 export const UPGD_ELECTRON8 = "is_electron8";
-export const DEX_SPV_EXPERIMENTAL = "dex_spv_experimental";
 
 // advanced daemon configs
 export const RPCUSER = "rpc_user";
@@ -167,6 +166,5 @@ export const INITIAL_VALUES = {
   [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
   [LN_ENABLED]: false,
-  [UPGD_ELECTRON8]: false,
-  [DEX_SPV_EXPERIMENTAL]: false
+  [UPGD_ELECTRON8]: false
 };
