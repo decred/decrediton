@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./HistoryPage";
 import { FormattedMessage as T } from "react-intl";
 import { DescriptionHeader } from "layout";
 import { BalanceDisplay } from "shared";
-import { DCR } from "constants";
+import { DCR, BATCH_TX_COUNT } from "constants";
 import { useService } from "hooks";
 import { useHistoryTab } from "./hooks";
 import { selectedTxTypesFromFilter, getSortTypes, getTxTypes } from "./helpers";
@@ -41,7 +41,19 @@ const HistoryTab = () => {
     transactionsRequestAttempt
   } = useHistoryTab();
 
+  const [index, setIndex] = useState(() =>
+    Math.min(BATCH_TX_COUNT, transactions.length)
+  );
+  const [noMoreTransactionsToShow, setNoMoreTransactionsToShow] = useState(
+    false
+  );
   const { search, listDirection } = transactionsFilter;
+
+  useEffect(() => {
+    setIndex(BATCH_TX_COUNT);
+    setNoMoreTransactionsToShow(false);
+  }, [transactionsFilter]);
+
   const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
 
   const [searchText, setSearchText] = useState(search);
@@ -69,7 +81,15 @@ const HistoryTab = () => {
     setSearchText(searchText);
   };
 
-  const onLoadMoreTransactions = () => onGetTransactions(false);
+  const onLoadMoreTransactions = () => {
+    if (index < transactions.length) {
+      setIndex(Math.min(index + BATCH_TX_COUNT, transactions.length));
+    } else if (!noMoreTransactions) {
+      onGetTransactions(false);
+    } else {
+      setNoMoreTransactionsToShow(true);
+    }
+  };
 
   const onChangeSliderValue = (value, minOrMax) => {
     // convert from atoms
@@ -125,6 +145,11 @@ const HistoryTab = () => {
     });
   };
 
+  const visibleTransactions = useMemo(() => transactions.slice(0, index), [
+    index,
+    transactions
+  ]);
+
   return !walletService ? (
     <ErrorScreen />
   ) : (
@@ -132,9 +157,9 @@ const HistoryTab = () => {
       {...{
         tsDate,
         loadMoreThreshold,
-        transactions,
+        transactions: visibleTransactions,
         transactionsFilter,
-        noMoreTransactions,
+        noMoreTransactions: noMoreTransactionsToShow,
         selectedSortOrderKey,
         selectedTxTypeKeys,
         searchText,

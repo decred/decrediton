@@ -2,13 +2,22 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames, Tooltip } from "pi-ui";
 import styles from "./TxHistory.module.css";
 
-const Row = ({ pending, onClick, className, children, overview, eligible }) => (
+const Row = ({
+  pending,
+  onClick,
+  className,
+  children,
+  overview,
+  eligible,
+  active
+}) => (
   <div
     className={classNames(
       overview && pending && classNames("flex-row", styles.overviewPending),
       overview && styles.overviewRow,
       !overview && classNames("flex-row", styles.historyRow),
-      eligible && styles.eligibleRow
+      eligible && styles.eligibleRow,
+      active && styles.activeRow
     )}>
     <div className={classNames(styles.txInfo, className)} onClick={onClick}>
       <div className={styles.txRowWrapper}>{children}</div>

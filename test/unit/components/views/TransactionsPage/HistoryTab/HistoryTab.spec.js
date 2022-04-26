@@ -6,8 +6,9 @@ import user from "@testing-library/user-event";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
-import { DCR } from "constants";
+import { DCR, BATCH_TX_COUNT } from "constants";
 import { mockRegularTransactions } from "../../TransactionPage/mocks";
+import { cloneDeep } from "fp";
 
 let mockWalletService;
 const selectors = sel;
@@ -135,7 +136,6 @@ beforeEach(() => {
   mockWalletService = selectors.walletService = jest.fn(() => {
     return {};
   });
-  selectors.noMoreRegularTxs = jest.fn(() => false);
   mockGetTransactions = transactionActions.getTransactions = jest.fn(
     () => () => {}
   );
@@ -153,7 +153,7 @@ const queryLoadingMoreLabel = () =>
 test("show error when there is no walletService", () => {
   mockWalletService = selectors.walletService = jest.fn(() => {});
   render(<HistoryTab />, {
-    initialState
+    initialState: cloneDeep(initialState)
   });
   expect(
     screen.getByText("Something went wrong, please go back")
@@ -167,10 +167,40 @@ const getTxTypeFilterMenuItem = (name) => {
   return nodes.find((node) => node.textContent === name);
 };
 
+const incAllTestTxs = (mockGetTransactionsResponse, ts) => {
+  const { lastTransaction, txList } = getTestTxs(
+    ts || mockGetTransactionsResponse.getRegularTxsAux.lastTransaction.timestamp
+  );
+  mockGetTransactionsResponse.regularTransactions = txList;
+  mockGetTransactionsResponse.getRegularTxsAux.lastTransaction = lastTransaction;
+  return mockGetTransactionsResponse;
+};
+
+const viewAllTxs = (mockGetTransactionsResponse, chunkCount) => {
+  let i = 1;
+  while (queryLoadingMoreLabel()) {
+    user.click(getLoadingMoreLabel());
+    mockGetTransactionsResponse = incAllTestTxs(mockGetTransactionsResponse);
+    if (i++ == chunkCount) {
+      mockGetTransactionsResponse.getRegularTxsAux.noMoreTransactions = true;
+    }
+  }
+  return mockGetTransactionsResponse;
+};
+
+const countTxsByType = (txs, types, isMix = false) =>
+  Object.keys(txs).reduce(
+    (acc, tx) =>
+      types.includes(txs[tx].direction) && !!txs[tx].isMix === isMix
+        ? acc + 1
+        : acc,
+    0
+  );
+
 test("test txList", async () => {
   jest.useFakeTimers();
   let allTestTxs = {};
-  const mockGetTransactionsResponse = {
+  let mockGetTransactionsResponse = {
     type: transactionActions.GETTRANSACTIONS_COMPLETE,
     getRegularTxsAux: { noMoreTransactions: false },
     getStakeTxsAux: {},
@@ -188,53 +218,43 @@ test("test txList", async () => {
       return dispatch(mockGetTransactionsResponse);
     }
   );
-  const incAllTestTxs = (ts) => {
-    const { lastTransaction, txList } = getTestTxs(
-      ts ||
-        mockGetTransactionsResponse.getRegularTxsAux.lastTransaction.timestamp
-    );
-    mockGetTransactionsResponse.regularTransactions = txList;
-    mockGetTransactionsResponse.getRegularTxsAux.lastTransaction = lastTransaction;
-  };
 
-  incAllTestTxs(1587545280);
+  const chunkCount = 25;
+
+  mockGetTransactionsResponse = incAllTestTxs(
+    mockGetTransactionsResponse,
+    1587545280
+  );
 
   render(<TransactionsPage />, {
-    initialState
+    initialState: cloneDeep(initialState)
   });
   user.click(screen.getByText("History"));
 
+  // Scroll down to the bottom.
+  // The data should be fetched by getTransactions request
   expect(getHistoryPageContent().childElementCount).toBe(0);
-
-  const chunkCount = 10;
-  // loads more items chunkCount times
-  for (let i = 1; i <= chunkCount; i++) {
-    user.click(getLoadingMoreLabel());
-    expect(mockGetTransactions).toHaveBeenCalledTimes(i);
-    expect(getHistoryPageContent().childElementCount).toBe(
-      Object.keys(mockRegularTransactions).length * i
-    );
-    expect(getLoadingMoreLabel()).toBeInTheDocument();
-    incAllTestTxs();
-  }
-
-  // loads the last items, no more txs
-  selectors.noMoreRegularTxs = jest.fn(() => true);
-  user.click(getLoadingMoreLabel());
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
   expect(getHistoryPageContent().childElementCount).toBe(
     Object.keys(allTestTxs).length
   );
-  expect(mockGetTransactions).toHaveBeenCalledTimes(chunkCount + 1);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(
+    Object.keys(allTestTxs).length / Object.keys(mockRegularTransactions).length
+  );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // go to Send and come back. no more getTransactions call should happen
   user.click(screen.getByText("Send"));
   user.click(screen.getByText("History"));
 
+  mockGetTransactions.mockClear();
+  // start with BATCH_TX_COUNT, and loads the rest gradually
+  expect(getHistoryPageContent().childElementCount).toBe(BATCH_TX_COUNT);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
   expect(getHistoryPageContent().childElementCount).toBe(
     Object.keys(allTestTxs).length
   );
-  expect(mockGetTransactions).toHaveBeenCalledTimes(chunkCount + 1);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show just sent txs
@@ -245,47 +265,79 @@ test("test txList", async () => {
   user.click(getTxTypeFilterMenuItem("Sent"));
   jest.advanceTimersByTime(101);
 
-  await wait(
-    () => expect(screen.getAllByText("Sent").length).toBe(chunkCount + 1) // each chunk has one element of each type
+  await wait(() =>
+    expect(getHistoryPageContent().childElementCount).not.toBe(
+      Object.keys(allTestTxs).length
+    )
   );
 
-  // show just sent and received txs
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  let expectedVisibleItems = countTxsByType(allTestTxs, ["sent"]);
+
+  expect(screen.getAllByText("Sent").length).toBe(expectedVisibleItems);
+  expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
+
+  // show sent and received txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Received"));
   jest.advanceTimersByTime(101);
 
-  await wait(
-    () =>
-      expect(getHistoryPageContent().childElementCount).toBe(
-        (chunkCount + 1) * 2
-      ) // each chunk has one element of each type
+  await wait(() =>
+    expect(getHistoryPageContent().childElementCount).not.toBe(
+      Object.keys(allTestTxs).length
+    )
   );
-  expect(screen.getAllByText("Sent").length).toBe(chunkCount + 1);
-  expect(screen.getAllByText("Received").length).toBe(chunkCount + 1);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  expectedVisibleItems = countTxsByType(allTestTxs, ["sent", "received"]);
+
+  expect(
+    screen.getAllByText("Sent").length + screen.getAllByText("Received").length
+  ).toBe(expectedVisibleItems);
+  expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show just received txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Sent"));
   jest.advanceTimersByTime(101);
 
-  await wait(
-    () => expect(getHistoryPageContent().childElementCount).toBe(chunkCount + 1) // each chunk has one element of each type
+  await wait(() =>
+    expect(getHistoryPageContent().childElementCount).not.toBe(
+      Object.keys(allTestTxs).length
+    )
   );
-  expect(screen.getAllByText("Received").length).toBe(chunkCount + 1);
+
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  expectedVisibleItems = countTxsByType(allTestTxs, ["received"]);
+
+  expect(screen.getAllByText("Received").length).toBe(expectedVisibleItems);
+  expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show just received and Ticket Fee txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Ticket fee"));
   jest.advanceTimersByTime(101);
 
-  await wait(
-    () =>
-      expect(getHistoryPageContent().childElementCount).toBe(
-        (chunkCount + 1) * 2
-      ) // each chunk has one element of each type
+  await wait(() =>
+    expect(getHistoryPageContent().childElementCount).not.toBe(
+      Object.keys(allTestTxs).length
+    )
   );
-  expect(screen.getAllByText("Received").length).toBe(chunkCount + 1);
-  expect(screen.getAllByText("Self transfer").length).toBe(chunkCount + 1);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  expectedVisibleItems = countTxsByType(allTestTxs, ["received", "ticketfee"]);
+
+  expect(
+    screen.getAllByText("Self transfer").length +
+      screen.getAllByText("Received").length
+  ).toBe(expectedVisibleItems);
+  expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show all txs again
   user.click(txTypeFilterButton);
@@ -295,20 +347,35 @@ test("test txList", async () => {
   jest.advanceTimersByTime(101);
 
   await wait(() =>
-    expect(getHistoryPageContent().childElementCount).toBe(
+    expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
   );
+
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  expect(getHistoryPageContent().childElementCount).toBe(
+    Object.keys(allTestTxs).length
+  );
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show just mixed txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Mixed"));
   jest.advanceTimersByTime(101);
 
-  await wait(
-    () => expect(getHistoryPageContent().childElementCount).toBe(chunkCount + 1) // each chunk has one element of each type
+  await wait(() =>
+    expect(getHistoryPageContent().childElementCount).not.toBe(
+      Object.keys(allTestTxs).length
+    )
   );
-  expect(screen.getAllByText("Mix").length).toBe(chunkCount + 1);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  expectedVisibleItems = countTxsByType(allTestTxs, ["sent"], true);
+
+  expect(screen.getAllByText("Mix").length).toBe(expectedVisibleItems);
+  expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show all txs again by toggle Mixed option
   user.click(txTypeFilterButton);
@@ -316,10 +383,17 @@ test("test txList", async () => {
   jest.advanceTimersByTime(101);
 
   await wait(() =>
-    expect(getHistoryPageContent().childElementCount).toBe(
+    expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
   );
+
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  expect(getHistoryPageContent().childElementCount).toBe(
+    Object.keys(allTestTxs).length
+  );
+  expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // filter by hash id
   user.type(
@@ -330,6 +404,65 @@ test("test txList", async () => {
   await wait(() => expect(getHistoryPageContent().childElementCount).toBe(1));
 });
 
+test("show only sent txs which are coming from wallet and not from redux", async () => {
+  jest.useFakeTimers();
+  let allTestTxs = {};
+  let mockGetTransactionsResponse = {
+    type: transactionActions.GETTRANSACTIONS_COMPLETE,
+    getRegularTxsAux: { noMoreTransactions: false },
+    getStakeTxsAux: {},
+    stakeTransactions: [],
+    regularTransactions: [],
+    startRequestHeight: 0,
+    noMoreLiveTickets: true
+  };
+  mockGetTransactions = transactionActions.getTransactions = jest.fn(
+    () => (dispatch) => {
+      allTestTxs = {
+        ...allTestTxs,
+        ...mockGetTransactionsResponse.regularTransactions
+      };
+      return dispatch(mockGetTransactionsResponse);
+    }
+  );
+
+  const chunkCount = 50;
+
+  mockGetTransactionsResponse = incAllTestTxs(
+    mockGetTransactionsResponse,
+    1587545280
+  );
+
+  render(<TransactionsPage />, {
+    initialState: cloneDeep(initialState)
+  });
+  user.click(screen.getByText("History"));
+  user.click(getLoadingMoreLabel());
+
+  // show just sent txs
+  mockGetTransactions.mockClear();
+  const txTypeFilterButton = screen.getAllByRole("button", {
+    name: "EyeFilterMenu"
+  })[1];
+  user.click(txTypeFilterButton);
+  user.click(getTxTypeFilterMenuItem("Sent"));
+  jest.advanceTimersByTime(101);
+
+  await wait(() =>
+    expect(getHistoryPageContent().childElementCount).not.toBe(0)
+  );
+
+  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  const expectedVisibleItems = countTxsByType(allTestTxs, ["sent"]);
+
+  expect(screen.getAllByText("Sent").length).toBe(expectedVisibleItems);
+  expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
+  expect(mockGetTransactions).toHaveBeenCalledTimes(
+    Object.keys(allTestTxs).length / Object.keys(mockRegularTransactions).length
+  );
+  expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
+});
+
 test("test tx sorting", async () => {
   jest.useFakeTimers();
 
@@ -338,7 +471,7 @@ test("test tx sorting", async () => {
   ));
 
   render(<TransactionsPage />, {
-    initialState
+    initialState: cloneDeep(initialState)
   });
   user.click(screen.getByText("History"));
 

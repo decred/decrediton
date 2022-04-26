@@ -44,7 +44,6 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TICKET_FEE,
-  MIXED,
   VOTED,
   LIVE,
   UNMINED,
@@ -808,52 +807,6 @@ export const getStakeTransactionsCancel = get([
   "grpc",
   "stakeTransactionsCancel"
 ]);
-
-// filterTransactions filters a list of transactions given a filtering object.
-//
-// Currently supported filters in the filter object:
-// - type (array): Array of types a transaction must belong to, to be accepted.
-//   Currently, just the MIXED type is supported
-// - directions (array): Array of allowed directions for regular
-//   transactions (sent/received/transferred/ticketfee)
-//
-// If empty, all transactions are accepted.
-export const filteredRegularTxs = createSelector(
-  [regularTransactions, transactionsFilter],
-  (transactions, filter) => {
-    const filteredTxs = Object.keys(transactions)
-      .map((hash) => transactions[hash])
-      .filter(
-        (v) =>
-          filter.directions.length == 0 || // All directions
-          filter.directions.includes(v.txDirection)
-      )
-      .filter((v) =>
-        filter.search
-          ? v.creditAddresses.find(
-              (address) =>
-                address.length > 1 &&
-                address.toLowerCase().indexOf(filter.search.toLowerCase()) !==
-                  -1
-            ) != undefined ||
-            v.txHash.toLowerCase().includes(filter.search.toLowerCase())
-          : true
-      )
-      .filter((v) =>
-        filter.minAmount ? Math.abs(v.txAmount) >= filter.minAmount : true
-      )
-      .filter((v) =>
-        filter.maxAmount ? Math.abs(v.txAmount) <= filter.maxAmount : true
-      )
-      .filter(
-        (v) =>
-          (filter.directions.length == 0 && filter.types.length == 0) || // All directions
-          v.mixedTx == filter.types.includes(MIXED)
-      );
-
-    return filteredTxs;
-  }
-);
 
 export const filteredStakeTxs = createSelector(
   [stakeTransactions, ticketsFilter],

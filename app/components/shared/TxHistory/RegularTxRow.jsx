@@ -72,9 +72,10 @@ const RegularTxRow = ({
   txAccountNameDebited,
   timeMessage,
   className,
+  active,
   ...props
 }) => (
-  <Row {...{ ...props, txAccountName, pending, overview }}>
+  <Row {...{ ...props, txAccountName, pending, overview, active }}>
     <div className={classNames(styles.info, overview && styles.overviewInfo)}>
       <div className={styles.iconContainer}>
         <Tooltip content={iconTooltipByType(className)} placement="right">
