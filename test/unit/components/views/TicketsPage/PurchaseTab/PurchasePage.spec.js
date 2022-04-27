@@ -1,5 +1,5 @@
-import Purchase from "../../../../../app/components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
-import TicketAutoBuyer from "../../../../../app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/";
+import Purchase from "components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
+import TicketAutoBuyer from "components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { fireEvent, screen, wait } from "@testing-library/react";
@@ -12,7 +12,7 @@ import { DCR } from "constants";
 import { en as enLocale } from "i18n/locales";
 import { DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
-import * as arrs from "../../../../../app/helpers/arrays";
+import * as arrs from "../../../../../../app/helpers/arrays";
 import {
   mockVspInfo,
   mockAvailableVsps,

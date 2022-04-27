@@ -30,8 +30,10 @@ const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
     startRequestHeight,
     ticketsFilter,
     currentBlockHeight,
+    transactionsRequestAttempt,
     stakeTransactionsCancel,
-    onToggleGetTransactions
+    onToggleGetTransactions,
+    getTickets
   } = useLoadingMoreTickets();
 
   return stakeTransactionsCancel ? (
@@ -78,7 +80,7 @@ const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
           <div
             className={classNames(styles.isRow, styles.loadingMoreTicketsInfo)}>
             <div className={styles.loadingMoreTicketsIcon}></div>
-            <div>
+            <div onClick={() => !transactionsRequestAttempt && getTickets()}>
               <>
                 <T
                   id="myTickets.loadingMoreTickets"

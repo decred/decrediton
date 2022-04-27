@@ -1,4 +1,4 @@
-import StakeInfo from "../../../../../app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfo";
+import StakeInfo from "components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfo";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";

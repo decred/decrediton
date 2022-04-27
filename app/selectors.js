@@ -809,22 +809,6 @@ export const getStakeTransactionsCancel = get([
   "stakeTransactionsCancel"
 ]);
 
-export const filteredStakeTxs = createSelector(
-  [stakeTransactions, ticketsFilter],
-  (transactions, filter) => {
-    const filteredTxs = Object.keys(transactions)
-      .map((hash) => transactions[hash])
-      .filter((v) =>
-        filter.search
-          ? v.txHash.toLowerCase().includes(filter.search.toLowerCase())
-          : true
-      )
-      .filter((v) => (filter.status ? filter.status === v.status : true));
-
-    return filteredTxs;
-  }
-);
-
 export const lastVotedTicket = createSelector(
   [stakeTransactions],
   (transactions) => {

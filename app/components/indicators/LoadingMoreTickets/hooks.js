@@ -7,15 +7,21 @@ export function useLoadingMoreTickets() {
   const ticketsFilter = useSelector(sel.ticketsFilter);
   const currentBlockHeight = useSelector(sel.currentBlockHeight);
   const stakeTransactionsCancel = useSelector(sel.getStakeTransactionsCancel);
+  const transactionsRequestAttempt = useSelector(
+    sel.getTransactionsRequestAttempt
+  );
 
   const dispatch = useDispatch();
   const onToggleGetTransactions = () => dispatch(ta.toggleGetTransactions());
+  const getTickets = () => dispatch(ta.getTransactions(true));
 
   return {
     startRequestHeight,
     ticketsFilter,
     currentBlockHeight,
+    transactionsRequestAttempt,
     stakeTransactionsCancel,
-    onToggleGetTransactions
+    onToggleGetTransactions,
+    getTickets
   };
 }

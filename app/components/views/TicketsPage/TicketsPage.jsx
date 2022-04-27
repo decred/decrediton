@@ -9,7 +9,7 @@ import { FormattedMessage as T } from "react-intl";
 import { BalanceDisplay } from "shared";
 import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
-import { default as MyTicketsTab } from "./MyTicketsTab/MyTicketsTab";
+import MyTicketsTab from "./MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
 import { TICKET_ICON } from "constants";
 import { useTicketsPage } from "./hooks";
