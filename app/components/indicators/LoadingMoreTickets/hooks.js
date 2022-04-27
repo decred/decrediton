@@ -13,7 +13,6 @@ export function useLoadingMoreTickets() {
 
   const dispatch = useDispatch();
   const onToggleGetTransactions = () => dispatch(ta.toggleGetTransactions());
-  const getTickets = () => dispatch(ta.getTransactions(true));
 
   return {
     startRequestHeight,
@@ -21,7 +20,6 @@ export function useLoadingMoreTickets() {
     currentBlockHeight,
     transactionsRequestAttempt,
     stakeTransactionsCancel,
-    onToggleGetTransactions,
-    getTickets
+    onToggleGetTransactions
   };
 }

@@ -25,15 +25,18 @@ const AscMessage = ({ startRequestHeight, currentBlockHeight }) => (
   />
 );
 
-const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
+const LoadingMoreTicketsIndicator = ({
+  className,
+  isLiveTickets,
+  getTickets
+}) => {
   const {
     startRequestHeight,
     ticketsFilter,
     currentBlockHeight,
     transactionsRequestAttempt,
     stakeTransactionsCancel,
-    onToggleGetTransactions,
-    getTickets
+    onToggleGetTransactions
   } = useLoadingMoreTickets();
 
   return stakeTransactionsCancel ? (

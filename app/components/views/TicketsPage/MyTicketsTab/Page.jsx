@@ -183,7 +183,7 @@ const TicketListPage = ({
         />
       </InfiniteScroll>
       {!noMoreTickets ? (
-        <LoadingMoreTicketsIndicator />
+        <LoadingMoreTicketsIndicator getTickets={getTickets} />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (

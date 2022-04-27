@@ -109,6 +109,8 @@ beforeEach(() => {
   mockToggleGetTransactions = transactionActions.toggleGetTransactions = jest.fn(
     () => () => {}
   );
+  selectors.startRequestHeight = jest.fn(() => 1000);
+  selectors.currentBlockHeight = jest.fn(() => 10000);
 });
 afterEach(() => {
   jest.useRealTimers();
@@ -244,7 +246,7 @@ test("test tickets list", async () => {
     )
   );
 
-  // TODO: viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
   let expectedVisibleItems = countTxsByType(allTestTxs, ["live"]);
 
   expect(screen.getAllByText("Live").length).toBe(expectedVisibleItems);
@@ -253,6 +255,7 @@ test("test tickets list", async () => {
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show just unmined
+  blockHeightIndexes.currentBlockHeight = 1000;
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("unmined"));
   jest.advanceTimersByTime(101);
@@ -263,7 +266,7 @@ test("test tickets list", async () => {
     )
   );
 
-  // TODO: viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
   expectedVisibleItems = countTxsByType(allTestTxs, ["unmined"]);
 
   expect(screen.getAllByText("Unmined").length).toBe(expectedVisibleItems);
@@ -272,21 +275,26 @@ test("test tickets list", async () => {
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // show all tickets again
+  blockHeightIndexes.currentBlockHeight = 1000;
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("All"));
   jest.advanceTimersByTime(101);
 
   await wait(() =>
-    expect(getHistoryPageContent().childElementCount).toBe(
+    expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
   );
 
-  // TODO: viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
   expect(mockGetTransactions).toHaveBeenCalledTimes(0);
+  expect(getHistoryPageContent().childElementCount).toBe(
+    Object.keys(allTestTxs).length
+  );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
   // filter by hash id
+  blockHeightIndexes.currentBlockHeight = 1000;
   user.type(
     screen.getByPlaceholderText("Filter by Hash"),
     Object.keys(allTestTxs)[3]
@@ -337,6 +345,18 @@ test("test ticket sorting", async () => {
 });
 
 test("test no tickets", () => {
+  const mockGetTransactionsResponse = {
+    type: transactionActions.GETTRANSACTIONS_COMPLETE,
+    getStakeTxsAux: { noMoreTransactions: true },
+    getRegularTxsAux: {},
+    stakeTransactions: {},
+    regularTransactions: {},
+    startRequestHeight: 0,
+    noMoreLiveTickets: true
+  };
+  mockGetTransactions = transactionActions.getTransactions = jest.fn(
+    () => (dispatch) => dispatch(mockGetTransactionsResponse)
+  );
   const initialStateMod = {
     ...cloneDeep(initialState)
   };
@@ -348,5 +368,6 @@ test("test no tickets", () => {
     }
   });
   user.click(screen.getByText("Ticket History"));
+  user.click(getLoadingMoreLabel());
   expect(screen.getByText("No Tickets Found"));
 });
