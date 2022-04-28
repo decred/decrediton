@@ -4,10 +4,11 @@ import * as ca from "actions/ClientActions";
 import * as ta from "actions/TransactionActions";
 import * as vspa from "actions/VSPActions";
 import { useSettings } from "hooks";
+import { useVSP } from "hooks";
 
 export const useVSPTicketsList = () => {
   // selectors
-  const vspTickets = useSelector(sel.getVSPTickets);
+  const { vspTickets } = useVSP();
 
   const tsDate = useSelector(sel.tsDate);
   const noMoreTickets = useSelector(sel.noMoreStakeTxs);

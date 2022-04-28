@@ -11,7 +11,7 @@ const CantCloseModals = (props) => {
   const { show, onSubmit, onCancelModal, modalContent } = props;
   const {
     autoBuyerRunning,
-    hasUnpaidFee,
+    hasTicketFeeError,
     cantCloseModalVisible,
     onHideCantCloseModal,
     shutdownApp,
@@ -23,7 +23,7 @@ const CantCloseModals = (props) => {
   const Component = useMemo(() => {
     if (autoBuyerRunning) {
       return AutobuyerRunning;
-    } else if (hasUnpaidFee) {
+    } else if (hasTicketFeeError) {
       return HasTicketFeeErro;
     } else if (accountMixerRunning) {
       return AccountMixerRunningModal;
@@ -35,7 +35,7 @@ const CantCloseModals = (props) => {
     return;
   }, [
     autoBuyerRunning,
-    hasUnpaidFee,
+    hasTicketFeeError,
     accountMixerRunning,
     purchasingTickets,
     dexOrdersOpen

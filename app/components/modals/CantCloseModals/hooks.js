@@ -2,10 +2,11 @@ import * as sel from "selectors";
 import { hideCantCloseModal } from "actions/ControlActions";
 import * as da from "actions/DaemonActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useVSP } from "hooks";
 
 export function useCantCloseModal() {
   const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
-  const hasUnpaidFee = useSelector(sel.getHasTicketFeeError);
+  const { hasTicketFeeError } = useVSP();
   const cantCloseModalVisible = useSelector(sel.cantCloseModalVisible);
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const purchasingTickets = useSelector(sel.purchaseTicketsRequestAttempt);
@@ -18,7 +19,7 @@ export function useCantCloseModal() {
 
   return {
     autoBuyerRunning: autoBuyerRunning || ticketAutoBuyerRunning,
-    hasUnpaidFee,
+    hasTicketFeeError,
     cantCloseModalVisible,
     onHideCantCloseModal,
     shutdownApp,
