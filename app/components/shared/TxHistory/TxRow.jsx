@@ -28,7 +28,15 @@ const TxRowByType = {
   [txTypes.COINBASE]: RegularTxRow
 };
 
-const TxRow = ({ tx, tsDate, overview, history, activeRow, setActiveRow }) => {
+const TxRow = ({
+  tx,
+  tsDate,
+  overview,
+  history,
+  activeRow,
+  setActiveRow,
+  location
+}) => {
   const txHash = tx.txHash;
   const txTimestamp = tx.enterTimestamp || tx.timestamp; // we define the transaction icon by its rowType, so we pass it as a
   // className props
@@ -62,8 +70,8 @@ const TxRow = ({ tx, tsDate, overview, history, activeRow, setActiveRow }) => {
 
   const onClick = useCallback(() => {
     setActiveRow(txHash);
-    history.push(`/transactions/history/${txHash}`);
-  }, [txHash, setActiveRow, history]);
+    history.push(`${location.pathname}/${txHash}`);
+  }, [txHash, setActiveRow, history, location]);
 
   return (
     <Component

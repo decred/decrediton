@@ -65,6 +65,12 @@ const Wallet = ({ setInterval }) => {
           path="/transactions/history/:txHash"
           component={TransactionPage}
         />
+        <Route path="/tickets/mytickets/:txHash" component={TransactionPage} />
+        <Route
+          path="/tickets/vspTicketsStatus/:txHash"
+          component={TransactionPage}
+        />
+        <Route path="/home/:txHash" component={TransactionPage} />
         <Route
           path="/proposal/details/:token"
           component={ProposalDetailsPage}
