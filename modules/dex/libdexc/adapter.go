@@ -19,8 +19,10 @@ import (
 	"decred.org/dcrdex/dex"
 	"github.com/decred/slog"
 
-	_ "decred.org/dcrdex/client/asset/btc" // register btc asset
-	_ "decred.org/dcrdex/client/asset/dcr" // register dcr asset
+	_ "decred.org/dcrdex/client/asset/btc"  // register btc asset
+	_ "decred.org/dcrdex/client/asset/dcr"  // register dcr asset
+	_ "decred.org/dcrdex/client/asset/doge" // register doge asset
+	_ "decred.org/dcrdex/client/asset/ltc"  // register ltc asset
 )
 
 type callHandler func(json.RawMessage) (string, error)
@@ -116,9 +118,13 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 
 	c.ctx, c.kill = context.WithCancel(context.Background())
 	ccore, err := core.New(&core.Config{
-		DBPath:   form.DBPath,
-		Net:      form.Net,
-		Logger:   logger,
+		DBPath: form.DBPath,
+		Net:    form.Net,
+		Logger: logger,
+		// Onion applies ONLY to .onion addresses, unlike TorProxy, which is
+		// used for connections to all servers regardless of hostname. TODO:
+		// expose an option for the user to set this and TorProxy.
+		Onion:    "127.0.0.1:9050",
 		Language: form.Language,
 	})
 	if err != nil {
