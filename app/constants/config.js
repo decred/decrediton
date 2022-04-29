@@ -81,6 +81,7 @@ export const USED_VSPS = "used_vsps";
 export const AUTOBUYER_SETTINGS = "autobuyer_settings";
 export const DEX_ACCOUNT = "dex_account";
 export const ENABLE_DEX = "enableddex";
+export const DEX_READY = "dex_ready";
 export const DEXWALLET_RPCUSERNAME = "dexwallet_rpcuser";
 export const DEXWALLET_RPCPASSWORD = "dexwallet_rpcpass";
 export const DEXWALLET_HOSTPORT = "dexwallet_host";
@@ -124,6 +125,7 @@ export const WALLET_INITIAL_VALUE = {
   [USED_VSPS]: [],
   [LN_WALLET_EXISTS]: false,
   [ENABLE_DEX]: false,
+  [DEX_READY]: false,
   [DEXWALLET_RPCUSERNAME]: "",
   [DEXWALLET_RPCPASSWORD]: "",
   [DEXWALLET_HOSTPORT]: "",

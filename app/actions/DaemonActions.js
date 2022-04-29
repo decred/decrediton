@@ -404,6 +404,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       );
 
       const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
+      const dexReady = walletCfg.get(cfgConstants.DEX_READY);
       const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
       const askDexBtcSpv = walletCfg.get(cfgConstants.ASK_DEX_BTC_SPV);
       const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
@@ -530,6 +531,7 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         csppPort,
         mixedAccountBranch,
         enableDex,
+        dexReady,
         dexAccount,
         rpcCreds,
         btcWalletName,

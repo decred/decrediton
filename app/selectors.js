@@ -1883,6 +1883,7 @@ export const lnRouterPruneStart = get(["ln", "routerPruneStart"]);
 // start of dex selectors
 
 export const dexEnabled = bool(get(["walletLoader", "dexEnabled"]));
+export const dexReady = bool(get(["walletLoader", "dexReady"]));
 export const enableDexAttempt = bool(get(["dex", "enableDexAttempt"]));
 export const dexActive = bool(get(["dex", "active"]));
 export const dexInit = bool(get(["dex", "dexInit"]));
