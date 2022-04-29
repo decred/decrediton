@@ -81,7 +81,13 @@ export const useWalletSetup = (settingUpWalletRef) => {
 
   const getStateComponent = useCallback(async () => {
     const ctx = current.context;
-    const { selectedWallet, error, passPhrase, isCreateNewWallet } = ctx;
+    const {
+      selectedWallet,
+      error,
+      passPhrase,
+      isCreateNewWallet,
+      isRestoreNewWallet
+    } = ctx;
     const { isWatchingOnly, isTrezor } = selectedWallet.value;
 
     let component, hasSoloTickets;
@@ -128,7 +134,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
           if (
             passPhrase &&
             passPhrase != "" &&
-            isCreateNewWallet &&
+            (isCreateNewWallet || isRestoreNewWallet) &&
             !isProcessingManaged
           ) {
             return onSubmitAccountsPassphrase(passPhrase);
