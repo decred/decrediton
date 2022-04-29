@@ -40,7 +40,8 @@ import {
   SELECT_DEXACCOUNT_SUCCESS,
   DEX_USE_SPV_BTC_SUCCESS,
   DEX_CONFIRM_SEED_SUCCESS,
-  RESET_DEXACCOUNT
+  RESET_DEXACCOUNT,
+  DEX_READY
 } from "actions/DexActions";
 import {
   CREATEMIXERACCOUNTS_SUCCESS,
@@ -120,6 +121,7 @@ export default function walletLoader(state = {}, action) {
         csppPort: action.csppPort,
         mixedAccountBranch: action.mixedAccountBranch,
         dexEnabled: action.enableDex,
+        dexReady: action.dexReady,
         dexAccount: action.dexAccount,
         dexRpcSettings: action.rpcCreds,
         btcWalletName: action.btcWalletName,
@@ -272,6 +274,11 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         showStakingWarning: action.showStakingWarning
+      };
+    case DEX_READY:
+      return {
+        ...state,
+        dexReady: true
       };
     default:
       return state;

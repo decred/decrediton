@@ -36,6 +36,7 @@ export const useDex = () => {
   const dexConnected = useSelector(sel.dexConnected);
   const dexDCRWalletRunning = useSelector(sel.dexDCRWalletRunning);
   const dexBTCWalletRunning = useSelector(sel.dexBTCWalletRunning);
+  const dexReady = useSelector(sel.dexReady);
   const user = useSelector(sel.dexUser);
   const enableDexAttempt = useSelector(sel.enableDexAttempt);
   const dexAccount = useSelector(sel.dexAccount);
@@ -150,7 +151,10 @@ export const useDex = () => {
       header = <EnablePageHeader />;
     } else if (dexActive) {
       if (dexInit) {
-        if (!loggedIn) {
+        if (dexReady) {
+          page = <DexView />;
+          header = <DexViewHeader />;
+        } else if (!loggedIn) {
           page = <LoginPage />;
           header = <LoginPageHeader />;
         } else if (!confirmDexSeed) {
@@ -183,6 +187,7 @@ export const useDex = () => {
     }
     return { Page: page, Header: header };
   }, [
+    dexReady,
     dexEnabled,
     dexActive,
     dexInit,

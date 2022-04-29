@@ -448,10 +448,13 @@ export const registerDex = (appPass) => async (dispatch, getState) => {
 export const DEX_LAUNCH_WINDOW_ATTEMPT = "DEX_LAUNCH_WINDOW_ATTEMPT";
 export const DEX_LAUNCH_WINDOW_SUCCESS = "DEX_LAUNCH_WINDOW_SUCCESS";
 export const DEX_LAUNCH_WINDOW_FAILED = "DEX_LAUNCH_WINDOW_FAILED";
+export const DEX_READY = "DEX_READY";
 
 export const launchDexWindow = () => async (dispatch, getState) => {
   const {
-    dex: { dexServerAddress }
+    dex: { dexServerAddress },
+    walletLoader: { dexReady },
+    daemon: { walletName }
   } = getState();
   dispatch({ type: DEX_LAUNCH_WINDOW_ATTEMPT });
   if (!sel.dexActive(getState())) {
@@ -462,6 +465,14 @@ export const launchDexWindow = () => async (dispatch, getState) => {
     const serverAddress = dexServerAddress;
     await dex.launchWindow(serverAddress);
     dispatch({ type: DEX_LAUNCH_WINDOW_SUCCESS });
+    if (!dexReady) {
+      const walletConfig = wallet.getWalletCfg(
+        sel.isTestNet(getState()),
+        walletName
+      );
+      walletConfig.set(configConstants.DEX_READY, true);
+      dispatch({ type: DEX_READY });
+    }
   } catch (error) {
     dispatch({ type: DEX_LAUNCH_WINDOW_FAILED, error });
     return;
