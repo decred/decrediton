@@ -19,8 +19,10 @@ import (
 	"decred.org/dcrdex/dex"
 	"github.com/decred/slog"
 
-	_ "decred.org/dcrdex/client/asset/btc" // register btc asset
-	_ "decred.org/dcrdex/client/asset/dcr" // register dcr asset
+	_ "decred.org/dcrdex/client/asset/btc"  // register btc asset
+	_ "decred.org/dcrdex/client/asset/dcr"  // register dcr asset
+	_ "decred.org/dcrdex/client/asset/doge" // register doge asset
+	_ "decred.org/dcrdex/client/asset/ltc"  // register ltc asset
 )
 
 type callHandler func(json.RawMessage) (string, error)
