@@ -278,7 +278,7 @@
     "bufferutil": "^4.0.3",
     "connected-react-router": "^6.8.0",
     "copy-webpack-plugin": "^8.1.0",
-    "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.4.2",
+    "dcrdex-assets": "https://github.com/decred/dcrdex-assets#v0.4.3",
     "dex": "./modules/dex",
     "dom-helpers": "^3.4.0",
     "electron-devtools-installer": "^3.2.0",
