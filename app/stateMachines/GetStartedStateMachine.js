@@ -213,7 +213,7 @@ export const getStartedMachine = Machine({
                   !isUndefined(event.isNew)
                     ? !event.isNew
                     : context.isRestoreNewWallet,
-		isTrezor: (context, event) => event.isTrezor
+                isTrezor: (context, event) => event.isTrezor
               })
             },
             ERROR: {
