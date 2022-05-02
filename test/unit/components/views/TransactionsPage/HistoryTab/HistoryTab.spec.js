@@ -500,3 +500,31 @@ test("test tx sorting", async () => {
     })
   );
 });
+
+test("test no txs", () => {
+  const mockGetTransactionsResponse = {
+    type: transactionActions.GETTRANSACTIONS_COMPLETE,
+    getRegularTxsAux: { noMoreTransactions: true },
+    stakeTransactions: {},
+    regularTransactions: {},
+    startRequestHeight: 0,
+    noMoreLiveTickets: true
+  };
+
+  mockGetTransactions = transactionActions.getTransactions = jest.fn(
+    () => (dispatch) => dispatch(mockGetTransactionsResponse)
+  );
+  const initialStateMod = {
+    ...cloneDeep(initialState)
+  };
+  initialStateMod.grpc.getRegularTxsAux.noMoreTransactions = true;
+  render(<TransactionsPage />, {
+    initialState: initialStateMod,
+    currentSettings: {
+      network: "testnet"
+    }
+  });
+  user.click(screen.getByText("History"));
+  user.click(getLoadingMoreLabel());
+  expect(screen.getByText("No Transactions Found"));
+});
