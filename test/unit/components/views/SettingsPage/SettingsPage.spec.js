@@ -148,7 +148,7 @@ beforeEach(() => {
   mockManualImportScriptAttempt = controlActions.manualImportScriptAttempt = jest.fn(
     () => () => {}
   );
-  wallet.getVSPTicketsByFeeStatus = jest.fn((_, feeStatus) =>
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
     Promise.resolve({
       ticketHashes: []
     })

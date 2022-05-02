@@ -142,7 +142,7 @@ beforeEach(() => {
   selectors.startRequestHeight = jest.fn(() => 1000);
   selectors.currentBlockHeight = jest.fn(() => 10000);
 
-  wallet.getVSPTicketsByFeeStatus = jest.fn((_, feeStatus) =>
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
     Promise.resolve({
       ticketHashes: []
     })
