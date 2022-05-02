@@ -1,13 +1,7 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import {
-  LIVE,
-  UNMINED,
-  IMMATURE,
-  VOTED,
-  VSP_FEE_PROCESS_ERRORED
-} from "constants";
+import { LIVE, UNMINED, IMMATURE, VSP_FEE_PROCESS_ERRORED } from "constants";
 import { cloneDeep } from "fp";
 
 const useVSP = () => {

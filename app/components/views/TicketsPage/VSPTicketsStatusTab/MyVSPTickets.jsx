@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import TicketListPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 import { useVSPTicketsList } from "./hooks";
@@ -78,7 +78,6 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     availableVSPs
   } = useVSPTicketsList();
 
-  const [tickets, setTickets] = useState([]);
   const [account, setAccount] = useState(defaultSpendingAccount);
   const [vsp, setVSP] = useState(
     rememberedVspHost ? { host: rememberedVspHost.host } : null
@@ -98,18 +97,18 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
     getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED);
   });
 
-  useEffect(() => {
-    let tickets = [];
+  const tickets = useMemo(() => {
+    let filteredTickets = [];
     Object.keys(vspTickets).forEach((feeStatus) => {
       // if the ticket type is all, always add it to ticket. Otherwise
       // add only  the selected type key.
       if (selectedTicketTypeKey === "all") {
-        tickets = [...tickets, ...vspTickets[feeStatus]];
+        filteredTickets = [...filteredTickets, ...vspTickets[feeStatus]];
       } else if (selectedTicketTypeKey == feeStatus) {
-        tickets = [...tickets, ...vspTickets[feeStatus]];
+        filteredTickets = [...filteredTickets, ...vspTickets[feeStatus]];
       }
     });
-    setTickets(tickets);
+    return filteredTickets;
   }, [selectedTicketTypeKey, vspTickets]);
 
   const onChangeFilter = (filter) => {

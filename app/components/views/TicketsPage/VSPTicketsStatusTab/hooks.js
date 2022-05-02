@@ -25,11 +25,11 @@ export const useVSPTicketsList = () => {
   // actions
   const dispatch = useDispatch();
   const goBackHistory = () => dispatch(ca.goBackHistory());
-  const getLiveTickets = (isStake) => {
+  const getLiveTickets = () => {
     if (noMoreLiveTickets) {
       return;
     }
-    dispatch(ta.getTransactions(isStake));
+    dispatch(ta.getTransactions(true));
   };
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));

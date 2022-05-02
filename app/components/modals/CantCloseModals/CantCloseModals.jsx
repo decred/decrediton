@@ -3,7 +3,7 @@ import PurchasingTicketsModal from "./PurchasingTicketsModal";
 import AccountMixerRunningModal from "./AccountMixerRunningModal";
 import AutobuyerRunning from "./AutobuyerRunningModal";
 import DexOpenOrdersModal from "./DexOpenOrdersModal";
-import HasTicketFeeErro from "./HasTicketFeeError";
+import HasTicketFeeError from "./HasTicketFeeError";
 import { useCantCloseModal } from "./hooks";
 import { ConfirmModal } from "modals";
 
@@ -24,7 +24,7 @@ const CantCloseModals = (props) => {
     if (autoBuyerRunning) {
       return AutobuyerRunning;
     } else if (hasTicketFeeError) {
-      return HasTicketFeeErro;
+      return HasTicketFeeError;
     } else if (accountMixerRunning) {
       return AccountMixerRunningModal;
     } else if (purchasingTickets) {
