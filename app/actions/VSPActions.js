@@ -1,7 +1,8 @@
 import {
   importScriptAttempt,
   rescanAttempt,
-  unlockAllAcctAndExecFn
+  unlockAllAcctAndExecFn,
+  signMessageAttempt
 } from "./ControlActions";
 import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
@@ -14,6 +15,7 @@ import {
   VSP_FEE_PROCESS_PAID,
   VSP_FEE_PROCESS_CONFIRMED
 } from "constants";
+import { TICKET } from "constants/decrediton";
 import { USED_VSPS } from "constants/config";
 import * as cfgConstants from "constants/config";
 import { shuffle } from "helpers";
@@ -1013,5 +1015,53 @@ export const getUnspentUnexpiredVspTickets = () => async (
       type: GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
       error
     });
+  }
+};
+
+export const GETVSP_TICKET_STATUS_ATTEMPT = "GETVSP_TICKET_STATUS_ATTEMPT";
+export const GETVSP_TICKET_STATUS_SUCCESS = "GETVSP_TICKET_STATUS_SUCCESS";
+export const GETVSP_TICKET_STATUS_FAILED = "GETVSP_TICKET_STATUS_FAILED";
+
+export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: GETVSP_TICKET_STATUS_ATTEMPT });
+
+  try {
+    if (!tx || !decodedTx) {
+      // TODO
+      return;
+    }
+
+    const { txType, ticketTx, txHash } = tx;
+    const host = ticketTx.vspHost;
+    if (txType != TICKET || !host) {
+      // TODO
+      return;
+    }
+
+    const txURLBuilder = sel.txURLBuilder(getState());
+    // This only consider the first commitment address which is the first odd output
+    const commitmentAddress = decodedTx.outputs[1].decodedScript.address;
+
+    const json = {
+      tickethash: txHash
+    };
+    const sig = await dispatch(
+      signMessageAttempt(commitmentAddress, JSON.stringify(json), passphrase)
+    );
+
+    // Check if user allows access to this VSP. This might trigger a confirmation
+    // dialog.
+    await wallet.allowVSPHost(host);
+    const info = await wallet.getVSPTicketStatus({ host, sig, json });
+    // TODO: check if fee status is equal to the known status, and process ticket automatically
+    dispatch({ type: GETVSP_TICKET_STATUS_SUCCESS });
+    info.data.feetxUrl = txURLBuilder(info.data.feetxhash);
+    return info.data;
+  } catch (error) {
+    dispatch({ type: GETVSP_TICKET_STATUS_FAILED, error });
+    throw error;
   }
 };

@@ -881,6 +881,7 @@ export const signMessageAttempt = (address, message, passphrase) => async (
       getSignMessageSignature: sig,
       type: SIGNMESSAGE_SUCCESS
     });
+    return sig;
   } catch (error) {
     dispatch({ error, type: SIGNMESSAGE_FAILED });
   }

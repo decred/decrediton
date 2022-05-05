@@ -63,11 +63,6 @@ export const usePurchaseTab = () => {
     () => dispatch(ca.ticketBuyerCancel()),
     [dispatch]
   );
-  const getTicketStatus = useCallback(
-    (host, tickethash, passphrase) =>
-      dispatch(vspa.getVSPTicketStatus(host, tickethash, passphrase)),
-    [dispatch]
-  );
 
   const getVSPTicketsByFeeStatus = (feeStatus) => {
     dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
@@ -114,7 +109,6 @@ export const usePurchaseTab = () => {
     availableVSPs: isVSPListingEnabled ? availableVSPs : [],
     availableVSPsError,
     onDisableTicketAutoBuyer,
-    getTicketStatus,
     ticketAutoBuyerRunning,
     getVSPTicketsByFeeStatus,
     isLegacy,
