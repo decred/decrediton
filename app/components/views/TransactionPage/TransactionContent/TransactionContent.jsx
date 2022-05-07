@@ -271,53 +271,54 @@ const TransactionContent = ({
               </div>
               <div className={styles.value}>{ticketTx.vspHost}</div>
             </div>
-            {VSPTicketStatus ? (
-              <>
+            {txType == TICKET &&
+              (VSPTicketStatus ? (
+                <>
+                  <div className={styles.topRow}>
+                    <div className={styles.name}>
+                      <T id="txDetails.feeTxHashLabel" m="Fee tx hash" />:
+                    </div>
+                    <div className={styles.value}>
+                      <ExternalLink
+                        className={styles.value}
+                        href={VSPTicketStatus.feetxUrl}>
+                        {VSPTicketStatus.feetxhash}
+                      </ExternalLink>
+                    </div>
+                  </div>
+                  <div className={styles.topRow}>
+                    <div className={styles.name}>
+                      <T id="txDetails.feeTxStatusLabel" m="Fee tx status" />:
+                    </div>
+                    <div className={styles.value}>
+                      {VSPTicketStatus.feetxstatus}
+                    </div>
+                  </div>
+                </>
+              ) : (
                 <div className={styles.topRow}>
-                  <div className={styles.name}>
-                    <T id="txDetails.feeTxHashLabel" m="Fee tx hash" />:
-                  </div>
+                  <div className={styles.name}></div>
                   <div className={styles.value}>
-                    <ExternalLink
-                      className={styles.value}
-                      href={VSPTicketStatus.feetxUrl}>
-                      {VSPTicketStatus.feetxhash}
-                    </ExternalLink>
+                    <PassphraseModalButton
+                      modalTitle={
+                        <T
+                          id="txDetails.signMessageModal"
+                          m="Fetch VSP Ticket Status"
+                        />
+                      }
+                      buttonLabel={
+                        <T
+                          id="txDetails.signMessageBtn"
+                          m="Fetch VSP Ticket Status"
+                        />
+                      }
+                      loading={getVSPTicketStatusAttempt}
+                      disabled={getVSPTicketStatusAttempt}
+                      onSubmit={getVSPTicketStatus}
+                    />
                   </div>
                 </div>
-                <div className={styles.topRow}>
-                  <div className={styles.name}>
-                    <T id="txDetails.feeStatusLabel" m="Fee status" />:
-                  </div>
-                  <div className={styles.value}>
-                    {VSPTicketStatus.feetxstatus}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className={styles.topRow}>
-                <div className={styles.name}></div>
-                <div className={styles.value}>
-                  <PassphraseModalButton
-                    modalTitle={
-                      <T
-                        id="txDetails.signMessageModal"
-                        m="Fetch VSP Ticket Status"
-                      />
-                    }
-                    buttonLabel={
-                      <T
-                        id="txDetails.signMessageBtn"
-                        m="Fetch VSP Ticket Status"
-                      />
-                    }
-                    loading={getVSPTicketStatusAttempt}
-                    disabled={getVSPTicketStatusAttempt}
-                    onSubmit={getVSPTicketStatus}
-                  />
-                </div>
-              </div>
-            )}
+              ))}
           </>
         )}
       </div>

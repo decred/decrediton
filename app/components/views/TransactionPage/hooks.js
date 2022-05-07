@@ -58,16 +58,10 @@ export function useTransactionPage(txHash) {
   const [VSPTicketStatus, setVSPTicketStatus] = useState(null);
 
   const getVSPTicketStatus = useCallback(
-    async (passphrase) => {
-      try {
-        const res = await dispatch(
-          vspa.getVSPTicketStatus(passphrase, viewedTransaction, decodedTx)
-        );
-        setVSPTicketStatus(res);
-      } catch (error) {
-        // TODO
-        console.error({ error });
-      }
+    (passphrase) => {
+      dispatch(
+        vspa.getVSPTicketStatus(passphrase, viewedTransaction, decodedTx)
+      ).then((res) => setVSPTicketStatus(res));
     },
     [dispatch, viewedTransaction, decodedTx]
   );

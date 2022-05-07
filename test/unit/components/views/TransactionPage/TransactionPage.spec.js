@@ -25,6 +25,16 @@ const testCurrentBlockHeight = 709245;
 let mockAbandonTransactionAttempt;
 let mockPublishUnminedTransactionsAttempt;
 let mockGoBackHistory;
+let mockGetVSPTicketStatus;
+let mockSignMessageAttempt;
+
+const mockVSPTicketInfoResponse = {
+  data: {
+    feetxstatus: "confirmed",
+    feetxhash: "test-feetxhash"
+  }
+};
+const mockSig = "mock-sig";
 
 beforeEach(() => {
   selectors.isTestNet = jest.fn(() => true);
@@ -47,6 +57,14 @@ beforeEach(() => {
     }
     return mockOldTx;
   });
+
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.resolve(mockVSPTicketInfoResponse)
+  );
+
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => mockSig
+  );
 });
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -686,6 +704,33 @@ test("live ticket", async () => {
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
+
+  // fetch VSP Ticket Status
+
+  const fetchVSPTicketStatusBt = screen.getByRole("button", {
+    name: "Fetch VSP Ticket Status"
+  });
+  user.click(fetchVSPTicketStatusBt);
+
+  //cancel first
+  user.click(screen.getByRole("button", { name: "Cancel" }));
+  user.click(fetchVSPTicketStatusBt);
+
+  const testPassphrase = "test-pass";
+  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+
+  user.click(screen.getByRole("button", { name: "Continue" }));
+
+  await wait(() => screen.getByText("Fee tx hash:"));
+
+  expect(screen.getByText("Fee tx hash:").parentNode.textContent).toMatch(
+    `Fee tx hash:${mockVSPTicketInfoResponse.data.feetxhash}`
+  );
+  expect(screen.getByText("Fee tx status:").parentNode.textContent).toMatch(
+    `Fee tx status:${mockVSPTicketInfoResponse.data.feetxstatus}`
+  );
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).toHaveBeenCalled();
 });
 
 test("unmined ticket", async () => {
