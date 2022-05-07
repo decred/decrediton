@@ -30,7 +30,7 @@ let mockSignMessageAttempt;
 
 const mockVSPTicketInfoResponse = {
   data: {
-    feetxstatus: "confirmed",
+    feetxstatus: "broadcasted",
     feetxhash: "test-feetxhash"
   }
 };

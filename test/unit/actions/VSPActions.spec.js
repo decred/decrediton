@@ -13,8 +13,16 @@ import {
   mockTickets
 } from "./vspMocks.js";
 import { mockStakeTransactions } from "../components/views/TransactionPage/mocks.js";
+import {
+  mockMixedAccountValue,
+  mockChangeAccountValue,
+  mockMixedAccount
+} from "../components/TicketsPage/PurchaseTab/mocks.js";
 
 let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
+const mockAvailableMainnetVspsPubkeys = cloneDeep(
+  defaultMockAvailableMainnetVsps
+).map((v) => ({ ...v, pubkey: `${v.host}-pubkey` }));
 
 const selectors = sel;
 const vspActions = vspa;
@@ -24,6 +32,7 @@ const controlActions = ca;
 
 let mockSignMessageAttempt;
 let mockGetVSPTicketStatus;
+let mockProcessManagedTickets;
 
 const mockSig = "test-sig";
 const mockVSPTicketInfoResponse = {
@@ -49,6 +58,14 @@ beforeEach(() => {
   selectors.getVSPInfoTimeoutTime = jest.fn(() => 100);
   selectors.isTestNet = jest.fn(() => false);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableMainnetVsps);
+  selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+  selectors.getChangeAccount = jest.fn(() => mockChangeAccountValue);
+  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.getAvailableVSPsPubkeys = jest.fn(
+    () => mockAvailableMainnetVspsPubkeys
+  );
   arrays.shuffle = jest.fn((arr) => arr);
   wallet.getVSPInfo = jest.fn(() => {});
   wallet.getAllVSPs = jest.fn(() => [
@@ -63,6 +80,14 @@ beforeEach(() => {
   mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
     Promise.resolve(mockVSPTicketInfoResponse)
   );
+
+  mockProcessManagedTickets = wallet.processManagedTickets = jest.fn(
+    () => () => {}
+  );
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
+    Promise.resolve({ ticketHashes: [] })
+  );
+  wallet.getVSPTrackedTickets = jest.fn(() => Promise.resolve());
 });
 
 const testRandomVSP = async (
@@ -349,6 +374,10 @@ const mockTx =
   mockStakeTransactions[
     "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873"
   ];
+const mockTxImmature =
+  mockStakeTransactions[
+    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16872"
+  ];
 const mockVspHost = "mock-vsp-host";
 const mockCommitmentAddress = "test-commitment-address";
 const mockDecodedTx = {
@@ -389,6 +418,37 @@ test("test getVSPTicketStatus", async () => {
   });
 
   expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
+  expect(mockProcessManagedTickets).toHaveBeenCalled();
+});
+
+test("test getVSPTicketStatus (immature ticket)", async () => {
+  const mockTxCopy = cloneDeep(mockTxImmature);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(mockVSPTicketInfoResponse.data);
+  expect(res).toHaveProperty(
+    "feetxUrl",
+    `https://dcrdata.decred.org/tx/${mockVSPTicketInfoResponse.data.feetxhash}`
+  );
+
+  expect(mockSignMessageAttempt).toHaveBeenCalledWith(
+    mockCommitmentAddress,
+    `{"tickethash":"${mockTxImmature["txHash"]}"}`,
+    mockPassphrase
+  );
+
+  expect(mockGetVSPTicketStatus).toHaveBeenCalledWith({
+    host: mockVspHost,
+    json: { tickethash: mockTxImmature["txHash"] },
+    sig: mockSig
+  });
+
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
+  expect(mockProcessManagedTickets).toHaveBeenCalled();
 });
 
 test("test getVSPTicketStatus (in testnet mode the fee tx hash url should point to testnet)", async () => {
@@ -570,6 +630,26 @@ test("test getVSPTicketStatus (getVSPTicketStatus response error)", async () => 
   // the error message is shown by snackbar
   expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
     "Error: test-message (code: 10)"
+  );
+});
+
+test("test getVSPTicketStatus (signMessage error)", async () => {
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => null
+  );
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
+  // the error message is shown by snackbar
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
+    "Error: Invalid signature"
   );
 });
 

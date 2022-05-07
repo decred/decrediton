@@ -695,12 +695,14 @@ export const getVSPsPubkeys = () => async (dispatch) => {
             })
         );
       })
-    ).then((result) =>
+    ).then((result) => {
+      const availableVSPsPubkeys = result.filter((vsp) => !!vsp?.pubkey);
       dispatch({
         type: GETVSPSPUBKEYS_SUCCESS,
-        availableVSPsPubkeys: result.filter((vsp) => !!vsp?.pubkey)
-      })
-    );
+        availableVSPsPubkeys
+      });
+      return availableVSPsPubkeys;
+    });
   } catch (error) {
     dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
   }
@@ -717,7 +719,11 @@ export const processManagedTickets = (passphrase) => async (
   getState
 ) => {
   const walletService = sel.walletService(getState());
-  const availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
+  let availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
+
+  if (!availableVSPsPubkeys) {
+    availableVSPsPubkeys = await dispatch(getVSPsPubkeys());
+  }
   try {
     dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
     let feeAccount, changeAccount;
@@ -1073,7 +1079,15 @@ export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
     if (info.data.code) {
       throw new Error(`${info.data.message} (code: ${info.data.code})`);
     }
-    // TODO: check if fee status is equal to the known status, and process ticket automatically
+
+    if (
+      (tx.status === LIVE || tx.status === IMMATURE) &&
+      info.data.feetxstatus === "confirmed" &&
+      tx.feeStatus != VSP_FEE_PROCESS_CONFIRMED
+    ) {
+      dispatch(processManagedTickets(passphrase));
+    }
+
     dispatch({ type: GETVSP_TICKET_STATUS_SUCCESS });
     info.data.feetxUrl = txURLBuilder(info.data.feetxhash);
     return info.data;
