@@ -7,12 +7,19 @@ import * as sel from "selectors";
 import * as clia from "actions/ClientActions";
 import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
+import { cloneDeep } from "fp";
 import {
   mockRegularTransactions,
   mockStakeTransactions,
   mockOldTxs,
   mockAgendas
 } from "./mocks.js";
+import {
+  mockMixedAccountValue,
+  mockChangeAccountValue,
+  mockMixedAccount
+} from "../../TicketsPage/PurchaseTab/mocks";
+import { defaultMockAvailableMainnetVsps } from "../../../actions/vspMocks";
 
 const selectors = sel;
 const clientActions = clia;
@@ -35,6 +42,9 @@ const mockVSPTicketInfoResponse = {
   }
 };
 const mockSig = "mock-sig";
+const mockAvailableMainnetVspsPubkeys = cloneDeep(
+  defaultMockAvailableMainnetVsps
+).map((v) => ({ ...v, pubkey: `${v.host}-pubkey` }));
 
 beforeEach(() => {
   selectors.isTestNet = jest.fn(() => true);
@@ -42,6 +52,14 @@ beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
   selectors.allAgendas = jest.fn(() => mockAgendas);
   selectors.voteChoices = jest.fn(() => {});
+  selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+  selectors.getChangeAccount = jest.fn(() => mockChangeAccountValue);
+  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.getAvailableVSPsPubkeys = jest.fn(
+    () => mockAvailableMainnetVspsPubkeys
+  );
   mockAbandonTransactionAttempt = clientActions.abandonTransactionAttempt = jest.fn(
     () => () => {}
   );
@@ -61,9 +79,13 @@ beforeEach(() => {
   mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
     Promise.resolve(mockVSPTicketInfoResponse)
   );
-
   mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
     () => () => mockSig
+  );
+
+  wallet.processManagedTickets = jest.fn(() => () => {});
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
+    Promise.resolve({ ticketHashes: [] })
   );
 });
 jest.mock("react-router-dom", () => ({
