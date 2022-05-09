@@ -6,6 +6,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as ta from "actions/TransactionActions";
 import * as clia from "actions/ClientActions";
+import * as vspa from "actions/VSPActions";
 import { find, compose, eq, get } from "fp";
 
 export function useTransactionPage(txHash) {
@@ -15,6 +16,7 @@ export function useTransactionPage(txHash) {
   const decodedTransactions = useSelector(sel.decodedTransactions);
   const agendas = useSelector(sel.allAgendas);
   const voteChoices = useSelector(sel.voteChoices);
+  const getVSPTicketStatusAttempt = useSelector(sel.getVSPTicketStatusAttempt);
   const getAgendaSelectedChoice = useCallback(
     (agendaId) =>
       get(
@@ -52,6 +54,18 @@ export function useTransactionPage(txHash) {
     () => dispatch(ca.publishUnminedTransactionsAttempt()),
     [dispatch]
   );
+
+  const [VSPTicketStatus, setVSPTicketStatus] = useState(null);
+
+  const getVSPTicketStatus = useCallback(
+    (passphrase) => {
+      dispatch(
+        vspa.getVSPTicketStatus(passphrase, viewedTransaction, decodedTx)
+      ).then((res) => setVSPTicketStatus(res));
+    },
+    [dispatch, viewedTransaction, decodedTx]
+  );
+
   const [state, send] = useMachine(fetchMachine, {
     actions: {
       initial: () => {
@@ -102,6 +116,9 @@ export function useTransactionPage(txHash) {
     decodedTx,
     isSPV,
     agendas,
-    getAgendaSelectedChoice
+    getAgendaSelectedChoice,
+    getVSPTicketStatus,
+    getVSPTicketStatusAttempt,
+    VSPTicketStatus
   };
 }

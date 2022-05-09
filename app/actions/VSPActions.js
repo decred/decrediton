@@ -1,7 +1,8 @@
 import {
   importScriptAttempt,
   rescanAttempt,
-  unlockAllAcctAndExecFn
+  unlockAllAcctAndExecFn,
+  signMessageAttempt
 } from "./ControlActions";
 import { SETVOTECHOICES_SUCCESS } from "./ClientActions";
 import * as sel from "../selectors";
@@ -694,12 +695,14 @@ export const getVSPsPubkeys = () => async (dispatch) => {
             })
         );
       })
-    ).then((result) =>
+    ).then((result) => {
+      const availableVSPsPubkeys = result.filter((vsp) => !!vsp?.pubkey);
       dispatch({
         type: GETVSPSPUBKEYS_SUCCESS,
-        availableVSPsPubkeys: result.filter((vsp) => !!vsp?.pubkey)
-      })
-    );
+        availableVSPsPubkeys
+      });
+      return availableVSPsPubkeys;
+    });
   } catch (error) {
     dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
   }
@@ -716,7 +719,11 @@ export const processManagedTickets = (passphrase) => async (
   getState
 ) => {
   const walletService = sel.walletService(getState());
-  const availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
+  let availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
+
+  if (!availableVSPsPubkeys) {
+    availableVSPsPubkeys = await dispatch(getVSPsPubkeys());
+  }
   try {
     dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
     let feeAccount, changeAccount;
@@ -1013,5 +1020,85 @@ export const getUnspentUnexpiredVspTickets = () => async (
       type: GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
       error
     });
+  }
+};
+
+export const GETVSP_TICKET_STATUS_ATTEMPT = "GETVSP_TICKET_STATUS_ATTEMPT";
+export const GETVSP_TICKET_STATUS_SUCCESS = "GETVSP_TICKET_STATUS_SUCCESS";
+export const GETVSP_TICKET_STATUS_FAILED = "GETVSP_TICKET_STATUS_FAILED";
+
+export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
+  dispatch,
+  getState
+) => {
+  let commitmentAddress;
+  let json;
+  try {
+    if (!tx || !tx.ticketTx || !tx.ticketTx.vspHost || !tx.txHash) {
+      throw new Error("Invalid tx parameter");
+    }
+
+    if (
+      !decodedTx ||
+      !decodedTx.outputs ||
+      decodedTx.outputs.length < 2 ||
+      !decodedTx.outputs[1].decodedScript ||
+      !decodedTx.outputs[1].decodedScript.address
+    ) {
+      throw new Error("Invalid decodedTx parameter");
+    }
+
+    // This only considers the first commitment address which is the first odd output
+    commitmentAddress = decodedTx.outputs[1].decodedScript.address;
+
+    json = {
+      tickethash: tx.txHash
+    };
+  } catch (error) {
+    dispatch({ type: GETVSP_TICKET_STATUS_FAILED, error });
+    return;
+  }
+
+  const sig = await dispatch(
+    signMessageAttempt(commitmentAddress, JSON.stringify(json), passphrase)
+  );
+
+  if (!sig) {
+    return;
+  }
+
+  dispatch({ type: GETVSP_TICKET_STATUS_ATTEMPT });
+  try {
+    // Check if user allows access to this VSP. This might trigger a confirmation
+    // dialog.
+    await wallet.allowVSPHost(tx.ticketTx.vspHost);
+    const info = await wallet.getVSPTicketStatus({
+      host: tx.ticketTx.vspHost,
+      sig,
+      json
+    });
+
+    if (!info || !info.data) {
+      throw new Error("Invalid response from the VSP");
+    }
+
+    if (info.data.code) {
+      throw new Error(`${info.data.message} (code: ${info.data.code})`);
+    }
+
+    if (
+      (tx.status === LIVE || tx.status === IMMATURE) &&
+      info.data.feetxstatus === "confirmed" &&
+      tx.feeStatus != VSP_FEE_PROCESS_CONFIRMED
+    ) {
+      dispatch(processManagedTickets(passphrase));
+    }
+
+    dispatch({ type: GETVSP_TICKET_STATUS_SUCCESS });
+    const txURLBuilder = sel.txURLBuilder(getState());
+    info.data.feetxUrl = txURLBuilder(info.data.feetxhash);
+    return info.data;
+  } catch (error) {
+    dispatch({ type: GETVSP_TICKET_STATUS_FAILED, error });
   }
 };

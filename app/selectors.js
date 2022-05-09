@@ -1762,6 +1762,10 @@ export const setVspdVoteChoicesAttempt = get([
   "vsp",
   "setVspdVoteChoicesRequestAttempt"
 ]);
+export const getVSPTicketStatusAttempt = get([
+  "vsp",
+  "getVSPTicketStatusAttempt"
+]);
 export const voteChoices = get(["grpc", "getVoteChoicesResponse"]);
 export const newNotYetVotedAgendasCount = createSelector(
   [allAgendas, voteChoices],

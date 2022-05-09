@@ -18,7 +18,10 @@ const Transaction = () => {
     decodedTx,
     isSPV,
     agendas,
-    getAgendaSelectedChoice
+    getAgendaSelectedChoice,
+    getVSPTicketStatus,
+    getVSPTicketStatusAttempt,
+    VSPTicketStatus
   } = useTransactionPage(txHash);
 
   if (!viewedTransaction) return null;
@@ -48,7 +51,10 @@ const Transaction = () => {
               currentBlockHeight,
               isSPV,
               agendas,
-              getAgendaSelectedChoice
+              getAgendaSelectedChoice,
+              getVSPTicketStatus,
+              getVSPTicketStatusAttempt,
+              VSPTicketStatus
             }}
           />
         </StandalonePage>

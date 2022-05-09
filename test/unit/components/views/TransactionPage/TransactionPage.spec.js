@@ -7,12 +7,19 @@ import * as sel from "selectors";
 import * as clia from "actions/ClientActions";
 import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
+import { cloneDeep } from "fp";
 import {
   mockRegularTransactions,
   mockStakeTransactions,
   mockOldTxs,
   mockAgendas
 } from "./mocks.js";
+import {
+  mockMixedAccountValue,
+  mockChangeAccountValue,
+  mockMixedAccount
+} from "../../TicketsPage/PurchaseTab/mocks";
+import { defaultMockAvailableMainnetVsps } from "../../../actions/vspMocks";
 
 const selectors = sel;
 const clientActions = clia;
@@ -25,6 +32,19 @@ const testCurrentBlockHeight = 709245;
 let mockAbandonTransactionAttempt;
 let mockPublishUnminedTransactionsAttempt;
 let mockGoBackHistory;
+let mockGetVSPTicketStatus;
+let mockSignMessageAttempt;
+
+const mockVSPTicketInfoResponse = {
+  data: {
+    feetxstatus: "broadcasted",
+    feetxhash: "test-feetxhash"
+  }
+};
+const mockSig = "mock-sig";
+const mockAvailableMainnetVspsPubkeys = cloneDeep(
+  defaultMockAvailableMainnetVsps
+).map((v) => ({ ...v, pubkey: `${v.host}-pubkey` }));
 
 beforeEach(() => {
   selectors.isTestNet = jest.fn(() => true);
@@ -32,6 +52,14 @@ beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
   selectors.allAgendas = jest.fn(() => mockAgendas);
   selectors.voteChoices = jest.fn(() => {});
+  selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+  selectors.getChangeAccount = jest.fn(() => mockChangeAccountValue);
+  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.getAvailableVSPsPubkeys = jest.fn(
+    () => mockAvailableMainnetVspsPubkeys
+  );
   mockAbandonTransactionAttempt = clientActions.abandonTransactionAttempt = jest.fn(
     () => () => {}
   );
@@ -47,6 +75,18 @@ beforeEach(() => {
     }
     return mockOldTx;
   });
+
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.resolve(mockVSPTicketInfoResponse)
+  );
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => mockSig
+  );
+
+  wallet.processManagedTickets = jest.fn(() => () => {});
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
+    Promise.resolve({ ticketHashes: [] })
+  );
 });
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -686,6 +726,33 @@ test("live ticket", async () => {
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
+
+  // fetch VSP Ticket Status
+
+  const fetchVSPTicketStatusBt = screen.getByRole("button", {
+    name: "Fetch VSP Ticket Status"
+  });
+  user.click(fetchVSPTicketStatusBt);
+
+  //cancel first
+  user.click(screen.getByRole("button", { name: "Cancel" }));
+  user.click(fetchVSPTicketStatusBt);
+
+  const testPassphrase = "test-pass";
+  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+
+  user.click(screen.getByRole("button", { name: "Continue" }));
+
+  await wait(() => screen.getByText("Fee tx hash:"));
+
+  expect(screen.getByText("Fee tx hash:").parentNode.textContent).toMatch(
+    `Fee tx hash:${mockVSPTicketInfoResponse.data.feetxhash}`
+  );
+  expect(screen.getByText("Fee tx status:").parentNode.textContent).toMatch(
+    `Fee tx status:${mockVSPTicketInfoResponse.data.feetxstatus}`
+  );
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).toHaveBeenCalled();
 });
 
 test("unmined ticket", async () => {

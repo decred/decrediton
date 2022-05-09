@@ -27,7 +27,10 @@ import {
   GETVSP_SUCCESS,
   GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT,
   GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS,
-  GETUNSPENTUNEXPIREDVSPTICKETS_FAILED
+  GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
+  GETVSP_TICKET_STATUS_ATTEMPT,
+  GETVSP_TICKET_STATUS_SUCCESS,
+  GETVSP_TICKET_STATUS_FAILED
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -219,6 +222,19 @@ export default function vsp(state = {}, action) {
         ...state,
         getUnspentUnexpiredVspTicketsError: String(action.error),
         getUnspentUnexpiredVspTicketsAttempt: false
+      };
+    case GETVSP_TICKET_STATUS_ATTEMPT:
+      return { ...state, getVSPTicketStatusAttempt: true };
+    case GETVSP_TICKET_STATUS_SUCCESS:
+      return {
+        ...state,
+        getVSPTicketStatusAttempt: false
+      };
+    case GETVSP_TICKET_STATUS_FAILED:
+      return {
+        ...state,
+        getVSPTicketStatusError: String(action.error),
+        getVSPTicketStatusAttempt: false
       };
     default:
       return state;

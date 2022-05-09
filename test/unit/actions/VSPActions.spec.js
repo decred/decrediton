@@ -1,6 +1,7 @@
 import * as sel from "selectors";
 import * as wal from "wallet";
 import * as vspa from "actions/VSPActions";
+import * as ca from "actions/ControlActions";
 import { createStore } from "test-utils.js";
 import * as arrs from "../../../app/helpers/arrays";
 import { cloneDeep } from "fp";
@@ -11,18 +12,60 @@ import {
   defaultMockAvailableInvalidVsps,
   mockTickets
 } from "./vspMocks.js";
+import { mockStakeTransactions } from "../components/views/TransactionPage/mocks.js";
+import {
+  mockMixedAccountValue,
+  mockChangeAccountValue,
+  mockMixedAccount
+} from "../components/TicketsPage/PurchaseTab/mocks.js";
 
 let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
+const mockAvailableMainnetVspsPubkeys = cloneDeep(
+  defaultMockAvailableMainnetVsps
+).map((v) => ({ ...v, pubkey: `${v.host}-pubkey` }));
 
 const selectors = sel;
 const vspActions = vspa;
 const wallet = wal;
 const arrays = arrs;
+const controlActions = ca;
+
+let mockSignMessageAttempt;
+let mockGetVSPTicketStatus;
+let mockProcessManagedTickets;
+
+const mockSig = "test-sig";
+const mockVSPTicketInfoResponse = {
+  data: {
+    timestamp: 1651855899,
+    ticketconfirmed: true,
+    feetxstatus: "confirmed",
+    feetxhash: "test-feetxhash",
+    altsignaddress: "",
+    votechoices: {
+      autorevocations: "abstain",
+      changesubsidysplit: "abstain",
+      explicitverupgrades: "abstain",
+      reverttreasurypolicy: "abstain"
+    },
+    tspendpolicy: {},
+    treasurypolicy: {},
+    request: "test-request"
+  }
+};
 
 beforeEach(() => {
   selectors.getVSPInfoTimeoutTime = jest.fn(() => 100);
   selectors.isTestNet = jest.fn(() => false);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableMainnetVsps);
+  selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+  selectors.getChangeAccount = jest.fn(() => mockChangeAccountValue);
+  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.getAvailableVSPsPubkeys = jest.fn(
+    () => mockAvailableMainnetVspsPubkeys
+  );
   arrays.shuffle = jest.fn((arr) => arr);
   wallet.getVSPInfo = jest.fn(() => {});
   wallet.getAllVSPs = jest.fn(() => [
@@ -31,6 +74,20 @@ beforeEach(() => {
     ...cloneDeep(defaultMockAvailableInvalidVsps)
   ]);
   wallet.getTickets = jest.fn(() => Promise.resolve(mockTickets));
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => mockSig
+  );
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.resolve(mockVSPTicketInfoResponse)
+  );
+
+  mockProcessManagedTickets = wallet.processManagedTickets = jest.fn(
+    () => () => {}
+  );
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
+    Promise.resolve({ ticketHashes: [] })
+  );
+  wallet.getVSPTrackedTickets = jest.fn(() => Promise.resolve());
 });
 
 const testRandomVSP = async (
@@ -310,4 +367,302 @@ test("test getUnspentUnexpiredVspTickets", async () => {
   expect(store.getState().vsp.getUnspentUnexpiredVspTicketsError).toBe(
     testError
   );
+});
+
+const mockPassphrase = "test-passphrase";
+const mockTx =
+  mockStakeTransactions[
+    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873"
+  ];
+const mockTxImmature =
+  mockStakeTransactions[
+    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16872"
+  ];
+const mockVspHost = "mock-vsp-host";
+const mockCommitmentAddress = "test-commitment-address";
+const mockDecodedTx = {
+  outputs: [
+    {},
+    {
+      decodedScript: {
+        address: mockCommitmentAddress
+      }
+    }
+  ]
+};
+
+test("test getVSPTicketStatus", async () => {
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(mockVSPTicketInfoResponse.data);
+  expect(res).toHaveProperty(
+    "feetxUrl",
+    `https://dcrdata.decred.org/tx/${mockVSPTicketInfoResponse.data.feetxhash}`
+  );
+
+  expect(mockSignMessageAttempt).toHaveBeenCalledWith(
+    mockCommitmentAddress,
+    `{"tickethash":"${mockTx["txHash"]}"}`,
+    mockPassphrase
+  );
+
+  expect(mockGetVSPTicketStatus).toHaveBeenCalledWith({
+    host: mockVspHost,
+    json: { tickethash: mockTx["txHash"] },
+    sig: mockSig
+  });
+
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
+  expect(mockProcessManagedTickets).toHaveBeenCalled();
+});
+
+test("test getVSPTicketStatus (immature ticket)", async () => {
+  const mockTxCopy = cloneDeep(mockTxImmature);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(mockVSPTicketInfoResponse.data);
+  expect(res).toHaveProperty(
+    "feetxUrl",
+    `https://dcrdata.decred.org/tx/${mockVSPTicketInfoResponse.data.feetxhash}`
+  );
+
+  expect(mockSignMessageAttempt).toHaveBeenCalledWith(
+    mockCommitmentAddress,
+    `{"tickethash":"${mockTxImmature["txHash"]}"}`,
+    mockPassphrase
+  );
+
+  expect(mockGetVSPTicketStatus).toHaveBeenCalledWith({
+    host: mockVspHost,
+    json: { tickethash: mockTxImmature["txHash"] },
+    sig: mockSig
+  });
+
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
+  expect(mockProcessManagedTickets).toHaveBeenCalled();
+});
+
+test("test getVSPTicketStatus (in testnet mode the fee tx hash url should point to testnet)", async () => {
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({
+    settings: { currentSettings: { network: "testnet" } }
+  });
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(mockVSPTicketInfoResponse.data);
+  expect(res).toHaveProperty(
+    "feetxUrl",
+    `https://testnet.decred.org/tx/${mockVSPTicketInfoResponse.data.feetxhash}`
+  );
+});
+
+const testGetVSPTicketStatusFailing = async (
+  _,
+  errorMsg,
+  getInvalidMockTx,
+  mockInvalidDecodedTx
+) => {
+  const mockTxCopy = getInvalidMockTx();
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(
+      mockPassphrase,
+      mockTxCopy,
+      mockInvalidDecodedTx
+    )
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).not.toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(errorMsg);
+};
+
+const mockValidMockTxCopy = cloneDeep(mockTx);
+mockValidMockTxCopy.ticketTx = { vspHost: mockVspHost };
+
+test.each([
+  [
+    "invalid tx parameter",
+    "Error: Invalid tx parameter",
+    () => null,
+    cloneDeep(mockDecodedTx)
+  ],
+  [
+    "invalid tx.ticketTx parameter",
+    "Error: Invalid tx parameter",
+    () => {
+      const res = cloneDeep(mockValidMockTxCopy);
+      res.ticketTx = null;
+      return res;
+    },
+    cloneDeep(mockDecodedTx)
+  ],
+  [
+    "invalid tx.ticketTx.vspHost parameter",
+    "Error: Invalid tx parameter",
+    () => cloneDeep(mockTx),
+    cloneDeep(mockDecodedTx)
+  ],
+  [
+    "invalid tx.txHash",
+    "Error: Invalid tx parameter",
+    () => {
+      const res = cloneDeep(mockValidMockTxCopy);
+      res.txHash = null;
+      return res;
+    },
+    cloneDeep(mockDecodedTx)
+  ],
+  [
+    "invalid decodedTx",
+    "Error: Invalid decodedTx parameter",
+    () => cloneDeep(mockValidMockTxCopy),
+    null
+  ],
+  [
+    "empy decodedTx",
+    "Error: Invalid decodedTx parameter",
+    () => cloneDeep(mockValidMockTxCopy),
+    {}
+  ],
+  [
+    "decodedTx.output empty",
+    "Error: Invalid decodedTx parameter",
+    () => cloneDeep(mockValidMockTxCopy),
+    {
+      output: []
+    }
+  ],
+  [
+    "decodedTx.output has only one element",
+    "Error: Invalid decodedTx parameter",
+    () => cloneDeep(mockValidMockTxCopy),
+    {
+      output: [{}]
+    }
+  ],
+  [
+    "decodedTx.output first odd output has not decodedScript prop",
+    "Error: Invalid decodedTx parameter",
+    () => cloneDeep(mockValidMockTxCopy),
+    {
+      output: [{}, {}]
+    }
+  ],
+  [
+    "decodedTx.output.decodedScript has no address prop",
+    "Error: Invalid decodedTx parameter",
+    () => cloneDeep(mockValidMockTxCopy),
+    {
+      output: [{}, { decodedScript: {} }]
+    }
+  ]
+])("test failing getVSPTicketStatus (%s)", testGetVSPTicketStatusFailing);
+
+test("test getVSPTicketStatus (getVSPTicketStatus error)", async () => {
+  const mockErrorMessage = "mockErrorMessage";
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.reject(mockErrorMessage)
+  );
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).toHaveBeenCalled();
+  // the error message is shown by snackbar
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
+    mockErrorMessage
+  );
+});
+
+test("test getVSPTicketStatus (getVSPTicketStatus invalid response)", async () => {
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.resolve({})
+  );
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).toHaveBeenCalled();
+  // the error message is shown by snackbar
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
+    "Error: Invalid response from the VSP"
+  );
+});
+
+test("test getVSPTicketStatus (getVSPTicketStatus response error)", async () => {
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.resolve({ data: { code: 10, message: "test-message" } })
+  );
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).toHaveBeenCalled();
+  // the error message is shown by snackbar
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
+    "Error: test-message (code: 10)"
+  );
+});
+
+test("test getVSPTicketStatus (signMessage error)", async () => {
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => null
+  );
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
+});
+
+test("test getVSPTicketStatus (signMessage error)", async () => {
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => null
+  );
+  const mockTxCopy = cloneDeep(mockTx);
+  mockTxCopy.ticketTx = { vspHost: mockVspHost };
+  const store = createStore({});
+  const res = await store.dispatch(
+    vspActions.getVSPTicketStatus(mockPassphrase, mockTxCopy, mockDecodedTx)
+  );
+
+  expect(res).toStrictEqual(undefined);
+  expect(mockSignMessageAttempt).toHaveBeenCalled();
+  expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
 });
