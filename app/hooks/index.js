@@ -10,3 +10,4 @@ export { default as useTheming } from "./useTheming";
 export { default as useTrezor } from "./useTrezor";
 export { default as useLocale } from "./useLocale";
 export { default as useNetwork } from "./useNetwork";
+export { default as useVSP } from "./useVSP";

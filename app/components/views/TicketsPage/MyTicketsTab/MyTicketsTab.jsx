@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FormattedMessage as T } from "react-intl";
 import TicketListPage from "./Page";
 import { useTicketsList } from "./hooks";
@@ -13,7 +13,8 @@ import {
   REVOKED,
   DESC,
   ASC,
-  ALL
+  ALL,
+  BATCH_TX_COUNT
 } from "constants";
 
 const labels = {
@@ -116,6 +117,31 @@ const MyTickets = ({ toggleIsLegacy }) => {
   );
   const [searchText, setSearchText] = useState(ticketsFilter.search);
 
+  const [index, setIndex] = useState(() =>
+    Math.min(BATCH_TX_COUNT, tickets.length)
+  );
+  const [noMoreTicketsToShow, setNoMoreTicketsToShow] = useState(false);
+
+  const onLoadMoreTickets = () => {
+    if (index < tickets.length) {
+      setIndex(Math.min(index + BATCH_TX_COUNT, tickets.length));
+    } else if (!noMoreTickets) {
+      getTickets();
+    } else {
+      setNoMoreTicketsToShow(true);
+    }
+  };
+
+  const visibleTickets = useMemo(() => tickets.slice(0, index), [
+    index,
+    tickets
+  ]);
+
+  useEffect(() => {
+    setIndex(BATCH_TX_COUNT);
+    setNoMoreTicketsToShow(false);
+  }, [ticketsFilter]);
+
   const onChangeFilter = (filter) => {
     const newFilter = { ...ticketsFilter, ...filter };
     changeTicketsFilter(newFilter);
@@ -148,15 +174,15 @@ const MyTickets = ({ toggleIsLegacy }) => {
         loadMoreThreshold,
         ticketTypes,
         sortTypes,
-        tickets,
+        tickets: visibleTickets,
         ticketsFilter,
         changeTicketsFilter,
         onChangeSortType,
         onChangeSelectedType,
         tsDate,
-        getTickets,
+        getTickets: onLoadMoreTickets,
         goBackHistory,
-        noMoreTickets,
+        noMoreTickets: noMoreTicketsToShow,
         toggleIsLegacy,
         loadingQRs,
         QRs,

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as ca from "actions/ClientActions";
@@ -13,15 +13,30 @@ export const useTicketsList = () => {
   const dispatch = useDispatch();
 
   // selectors
-  const tickets = useSelector(sel.filteredStakeTxs);
+  const tickets = useSelector(sel.stakeTransactions);
   const tsDate = useSelector(sel.tsDate);
   const noMoreTickets = useSelector(sel.noMoreStakeTxs);
   const ticketsFilter = useSelector(sel.ticketsFilter);
   const window = useSelector(sel.mainWindow);
 
+  const filteredStakeTxs = useMemo(() => {
+    const filteredTxs = Object.keys(tickets)
+      .map((hash) => tickets[hash])
+      .filter((v) =>
+        ticketsFilter.search
+          ? v.txHash.toLowerCase().includes(ticketsFilter.search.toLowerCase())
+          : true
+      )
+      .filter((v) =>
+        ticketsFilter.status ? ticketsFilter.status === v.status : true
+      );
+
+    return filteredTxs;
+  }, [tickets, ticketsFilter]);
+
   // actions
   const goBackHistory = () => dispatch(ca.goBackHistory());
-  const getTickets = (isStake) => dispatch(ta.getTransactions(isStake));
+  const getTickets = () => dispatch(ta.getTransactions(true));
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));
 
@@ -79,7 +94,7 @@ export const useTicketsList = () => {
 
   return {
     intl,
-    tickets,
+    tickets: filteredStakeTxs,
     tsDate,
     noMoreTickets,
     ticketsFilter,

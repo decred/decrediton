@@ -44,11 +44,7 @@ import {
   TRANSACTION_DIR_SENT,
   TRANSACTION_DIR_RECEIVED,
   TICKET_FEE,
-  VOTED,
-  LIVE,
-  UNMINED,
-  IMMATURE,
-  VSP_FEE_PROCESS_ERRORED
+  VOTED
 } from "constants";
 import { wallet } from "wallet-preload-shim";
 import { isArray } from "lodash";
@@ -808,22 +804,6 @@ export const getStakeTransactionsCancel = get([
   "stakeTransactionsCancel"
 ]);
 
-export const filteredStakeTxs = createSelector(
-  [stakeTransactions, ticketsFilter],
-  (transactions, filter) => {
-    const filteredTxs = Object.keys(transactions)
-      .map((hash) => transactions[hash])
-      .filter((v) =>
-        filter.search
-          ? v.txHash.toLowerCase().includes(filter.search.toLowerCase())
-          : true
-      )
-      .filter((v) => (filter.status ? filter.status === v.status : true));
-
-    return filteredTxs;
-  }
-);
-
 export const lastVotedTicket = createSelector(
   [stakeTransactions],
   (transactions) => {
@@ -889,50 +869,12 @@ export const getHasVSPTicketsError = get(["vsp", "hasVSPTicketsError"]);
 export const getIsLegacy = () => false; // hide legacy purchase
 export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
-const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
+export const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
 export const isGetVSPAttempt = get(["vsp", "getVSPAttempt"]);
 export const unspentUnexpiredVspTickets = get([
   "vsp",
   "unspentUnexpiredVspTickets"
 ]);
-
-// getVSPTickets is a selector for getting an object with feeStatus as keys
-// and an array of tickets which have this feeStatus.
-export const getVSPTickets = createSelector(
-  [getVSPTicketsHashes, stakeTransactions],
-  (hashes, txsMap) => {
-    if (!hashes) return;
-    const vspTickets = {};
-    Object.keys(hashes).forEach((feeStatus) => {
-      // fee status hashes
-      const fsHashes = hashes[feeStatus];
-
-      fsHashes.forEach((hash) => {
-        if (!vspTickets[feeStatus]) {
-          vspTickets[feeStatus] = [];
-        }
-        if (!hash) return;
-        // right now we only show fee status for tickets which can be voted.
-        if (!txsMap[hash]) {
-          // it should not have an uknown tx. If there is, we should get this tx
-          // before showing the vsp tickets.
-          return null;
-        }
-        if (
-          txsMap[hash].status === IMMATURE ||
-          txsMap[hash].status === LIVE ||
-          txsMap[hash].status === UNMINED
-        ) {
-          const objCopy = Object.assign({}, txsMap[hash]);
-          objCopy.feeStatus = feeStatus;
-          vspTickets[feeStatus] = [objCopy, ...vspTickets[feeStatus]];
-        }
-        return null;
-      });
-    });
-    return vspTickets;
-  }
-);
 
 export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
 export const isProcessingUnmanaged = get([
@@ -1827,20 +1769,10 @@ export const getRunningIndicator = or(
   isTicketAutoBuyerEnabled
 );
 
-export const getHasTicketFeeError = createSelector(
-  [getVSPTickets],
-  (vspTickets) => {
-    if (!vspTickets) return;
-    return vspTickets[VSP_FEE_PROCESS_ERRORED]
-      ? vspTickets[VSP_FEE_PROCESS_ERRORED].length > 0
-      : false;
-  }
-);
 export const restoredFromSeed = get(["dex", "restoredFromSeed"]);
 export const dexOrdersOpen = get(["dex", "openOrder"]);
 export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
-export const getCanClose = not(or(getRunningIndicator, getHasTicketFeeError));
 // end of selectors for closing decrediton.
 
 // ln selectors

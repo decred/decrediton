@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useMountEffect } from "hooks";
 import { useSelector, useDispatch } from "react-redux";
 import { wallet } from "wallet-preload-shim";
+import { useVSP } from "hooks";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as cla from "actions/ClientActions";
@@ -38,7 +39,9 @@ const useApp = () => {
   const window = useSelector(sel.mainWindow);
   const aboutModalMacOSVisible = useSelector(sel.aboutModalMacOSVisible);
   const modalVisible = useSelector(sel.modalVisible);
-  const canClose = useSelector(sel.getCanClose);
+  const { hasTicketFeeError } = useVSP();
+  const runningIndicator = useSelector(sel.getRunningIndicator);
+  const canClose = !(runningIndicator || hasTicketFeeError);
   const theme = useSelector(sel.theme);
 
   const [isWaiting, setIsWaiting] = useState(false);

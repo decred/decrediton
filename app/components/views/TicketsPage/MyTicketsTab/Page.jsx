@@ -123,12 +123,7 @@ const TicketListPage = ({
 }) => {
   const isOverview = window.innerWidth < 768; // small width
   return (
-    <InfiniteScroll
-      hasMore={!noMoreTickets}
-      loadMore={() => getTickets(true)}
-      initialLoad={!noMoreTickets}
-      useWindow={false}
-      threshold={90}>
+    <>
       <Subtitle
         title={<T id="mytickets.subtitle" m="My Tickets" />}
         className={styles.subtitle}
@@ -150,45 +145,51 @@ const TicketListPage = ({
         })}
       />
       {tickets.length > 0 && (
-        <>
-          <div className={styles.tableHeader}>
-            <div>
-              <T id="tickets.table.header.status" m="Ticket Status" />
-            </div>
-            <div>
-              <T id="tickets.table.header.price" m="Price" />
-            </div>
-            <div>
-              <T id="tickets.table.header.reward" m="Reward" />
-            </div>
-            <div>
-              <T id="tickets.table.header.votetime" m="Vote Time" />
-            </div>
-            <div>
-              <T id="tickets.table.header.account" m="Account" />
-            </div>
-            <div>
-              <T id="tickets.table.header.purchased" m="Voted" />
-            </div>
+        <div className={styles.tableHeader}>
+          <div>
+            <T id="tickets.table.header.status" m="Ticket Status" />
           </div>
-          <TxHistory
-            {...{
-              transactions: tickets,
-              tsDate,
-              mode: "stake",
-              overview: isOverview
-            }}
-          />
-        </>
+          <div>
+            <T id="tickets.table.header.price" m="Price" />
+          </div>
+          <div>
+            <T id="tickets.table.header.reward" m="Reward" />
+          </div>
+          <div>
+            <T id="tickets.table.header.votetime" m="Vote Time" />
+          </div>
+          <div>
+            <T id="tickets.table.header.account" m="Account" />
+          </div>
+          <div>
+            <T id="tickets.table.header.purchased" m="Voted" />
+          </div>
+        </div>
       )}
+      <InfiniteScroll
+        hasMore={!noMoreTickets}
+        loadMore={() => getTickets()}
+        initialLoad={!noMoreTickets}
+        useWindow={false}
+        threshold={90}
+        data-testid="ticketHistoryPageContent">
+        <TxHistory
+          {...{
+            transactions: tickets,
+            tsDate,
+            mode: "stake",
+            overview: isOverview
+          }}
+        />
+      </InfiniteScroll>
       {!noMoreTickets ? (
-        <LoadingMoreTicketsIndicator />
+        <LoadingMoreTicketsIndicator getTickets={getTickets} />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (
         <NoTicketsIndicator />
       )}
-    </InfiniteScroll>
+    </>
   );
 };
 

@@ -4,10 +4,11 @@ import * as ca from "actions/ClientActions";
 import * as ta from "actions/TransactionActions";
 import * as vspa from "actions/VSPActions";
 import { useSettings } from "hooks";
+import { useVSP } from "hooks";
 
 export const useVSPTicketsList = () => {
   // selectors
-  const vspTickets = useSelector(sel.getVSPTickets);
+  const { vspTickets } = useVSP();
 
   const tsDate = useSelector(sel.tsDate);
   const noMoreTickets = useSelector(sel.noMoreStakeTxs);
@@ -24,11 +25,11 @@ export const useVSPTicketsList = () => {
   // actions
   const dispatch = useDispatch();
   const goBackHistory = () => dispatch(ca.goBackHistory());
-  const getLiveTickets = (isStake) => {
+  const getLiveTickets = () => {
     if (noMoreLiveTickets) {
       return;
     }
-    dispatch(ta.getTransactions(isStake));
+    dispatch(ta.getTransactions(true));
   };
   const changeTicketsFilter = (newFilter) =>
     dispatch(ta.changeTicketsFilter(newFilter));

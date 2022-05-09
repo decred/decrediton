@@ -1,5 +1,5 @@
-import Purchase from "../../../../../../app/components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
-import TicketAutoBuyer from "../../../../../../app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer";
+import Purchase from "components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
+import TicketAutoBuyer from "components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_TicketAutoBuyer";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen, act, fireEvent, wait } from "@testing-library/react";
