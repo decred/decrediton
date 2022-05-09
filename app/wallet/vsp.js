@@ -50,8 +50,8 @@ export const getStakePoolInfo = promisifyReqLogNoData(
 );
 export const getVSPInfo = promisifyReqLogNoData("getVSPInfo", api.getVSPInfo);
 export const getVSPTicketStatus = promisifyReqLogNoData(
-  "getVSPTicketStatusInfo",
-  api.getTicketStatus
+  "getVSPTicketStatus",
+  api.getVSPTicketStatus
 );
 
 // addAllowedVSPsInCfg modifies the config file to allow the given VSP hosts

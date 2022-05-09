@@ -2,7 +2,8 @@ import { Balance, ExternalLink } from "shared";
 import {
   KeyBlueButton,
   RevokeModalButton,
-  CopyToClipboardButton
+  CopyToClipboardButton,
+  PassphraseModalButton
 } from "buttons";
 import { addSpacingAroundText } from "helpers";
 import { FormattedMessage as T } from "react-intl";
@@ -50,7 +51,10 @@ const TransactionContent = ({
   currentBlockHeight,
   isSPV,
   agendas,
-  getAgendaSelectedChoice
+  getAgendaSelectedChoice,
+  getVSPTicketStatus,
+  getVSPTicketStatusAttempt,
+  VSPTicketStatus
 }) => {
   const {
     txHash,
@@ -260,12 +264,62 @@ const TransactionContent = ({
           </div>
         )}
         {(txType == TICKET || txType == VOTE) && ticketTx.vspHost && (
-          <div className={styles.topRow}>
-            <div className={styles.name}>
-              <T id="txDetails.vspHost" m="VSP host" />:
+          <>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.vspHost" m="VSP host" />:
+              </div>
+              <div className={styles.value}>{ticketTx.vspHost}</div>
             </div>
-            <div className={styles.value}>{ticketTx.vspHost}</div>
-          </div>
+            {txType == TICKET &&
+              (VSPTicketStatus ? (
+                <>
+                  <div className={styles.topRow}>
+                    <div className={styles.name}>
+                      <T id="txDetails.feeTxHashLabel" m="Fee tx hash" />:
+                    </div>
+                    <div className={styles.value}>
+                      <ExternalLink
+                        className={styles.value}
+                        href={VSPTicketStatus.feetxUrl}>
+                        {VSPTicketStatus.feetxhash}
+                      </ExternalLink>
+                    </div>
+                  </div>
+                  <div className={styles.topRow}>
+                    <div className={styles.name}>
+                      <T id="txDetails.feeTxStatusLabel" m="Fee tx status" />:
+                    </div>
+                    <div className={styles.value}>
+                      {VSPTicketStatus.feetxstatus}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className={styles.topRow}>
+                  <div className={styles.name}></div>
+                  <div className={styles.value}>
+                    <PassphraseModalButton
+                      modalTitle={
+                        <T
+                          id="txDetails.signMessageModal"
+                          m="Fetch VSP Ticket Status"
+                        />
+                      }
+                      buttonLabel={
+                        <T
+                          id="txDetails.signMessageBtn"
+                          m="Fetch VSP Ticket Status"
+                        />
+                      }
+                      loading={getVSPTicketStatusAttempt}
+                      disabled={getVSPTicketStatusAttempt}
+                      onSubmit={getVSPTicketStatus}
+                    />
+                  </div>
+                </div>
+              ))}
+          </>
         )}
       </div>
       {isPending ? (

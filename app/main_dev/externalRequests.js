@@ -143,8 +143,15 @@ export const installSessionHandlers = (mainLogger) => {
         statusLine = "OK";
         newHeaders["Access-Control-Allow-Headers"] = "Content-Type";
       }
-    }
 
+      const globalCfg = getGlobalCfg();
+      const cfgAllowedVSPs = globalCfg.get(cfgConstants.ALLOWED_VSP_HOSTS, []);
+      if (cfgAllowedVSPs.some((url) => details.url.includes(url))) {
+        statusLine = "OK";
+        newHeaders["Access-Control-Allow-Headers"] =
+          "Content-Type, VSP-Client-Signature";
+      }
+    }
     callback({ responseHeaders: newHeaders, statusLine });
   });
 };
@@ -208,7 +215,7 @@ export const allowVSPRequests = (stakePoolHost) => {
   if (allowedExternalRequests[reqType]) return;
 
   addAllowedURL(stakePoolHost + "/api/v3/vspinfo");
-  addAllowedURL(stakePoolHost + "/api/ticketstatus");
+  addAllowedURL(stakePoolHost + "/api/v3/ticketstatus");
 };
 
 export const reloadAllowedExternalRequests = () => {

@@ -66,7 +66,8 @@ import {
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
-  SETVSPDVOTECHOICE_FAILED
+  SETVSPDVOTECHOICE_FAILED,
+  GETVSP_TICKET_STATUS_FAILED
 } from "actions/VSPActions";
 import {
   ABANDONTRANSACTION_SUCCESS,
@@ -654,6 +655,10 @@ const messages = defineMessages({
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
   },
+  GETVSP_TICKET_STATUS_FAILED: {
+    id: "set.getvspticketstatus.failed",
+    defaultMessage: "Fetch vsp ticket status failed: {originalError}"
+  },
   DEX_STARTUP_FAILED: {
     id: "dex.startup.failed",
     defaultMessage: "DEX Client Failed to Start: {originalError}"
@@ -973,6 +978,7 @@ export default function snackbar(state = {}, action) {
     case PROCESSMANAGEDTICKETS_FAILED:
     case SETVOTECHOICES_FAILED:
     case SETVSPDVOTECHOICE_FAILED:
+    case GETVSP_TICKET_STATUS_FAILED:
     case DEX_STARTUP_FAILED:
     case DEX_LOGIN_FAILED:
     case DEX_ENABLE_FAILED:

@@ -33,11 +33,13 @@ const LEGACY_POST = (path, apiToken, json) => {
 };
 
 const POST = (path, vspClientSig, json) => {
-  const config = {
-    headers: {
-      "VSP-CLIENT-SIGNATURE": vspClientSig
-    }
-  };
+  const config = vspClientSig
+    ? {
+        headers: {
+          "VSP-Client-Signature": vspClientSig
+        }
+      }
+    : {};
   // This json request is strigfied at the call which is making it.
   return postJSON(path, json, config);
 };
@@ -174,8 +176,8 @@ export function getVSPInfo(host, cb) {
     .catch((error) => cb(null, error, host));
 }
 
-export function getTicketStatus({ host, vspClientSig, request }, cb) {
-  POST(host + "/api/ticketstatus", vspClientSig, request)
+export function getVSPTicketStatus({ host, sig, json }, cb) {
+  POST(host + "/api/v3/ticketstatus", sig, json)
     .then((resp) => cb(resp, null, host))
     .catch((error) => cb(null, error, host));
 }
