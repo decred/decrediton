@@ -647,10 +647,7 @@ test("test getVSPTicketStatus (signMessage error)", async () => {
   expect(res).toStrictEqual(undefined);
   expect(mockSignMessageAttempt).toHaveBeenCalled();
   expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
-  // the error message is shown by snackbar
-  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
-    "Error: Invalid signature"
-  );
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
 });
 
 test("test getVSPTicketStatus (signMessage error)", async () => {
@@ -667,8 +664,5 @@ test("test getVSPTicketStatus (signMessage error)", async () => {
   expect(res).toStrictEqual(undefined);
   expect(mockSignMessageAttempt).toHaveBeenCalled();
   expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
-  // the error message is shown by snackbar
-  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(
-    "Error: Invalid signature"
-  );
+  expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
 });

@@ -1031,8 +1031,8 @@ export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
   dispatch,
   getState
 ) => {
-  dispatch({ type: GETVSP_TICKET_STATUS_ATTEMPT });
-
+  let commitmentAddress;
+  let json;
   try {
     if (!tx || !tx.ticketTx || !tx.ticketTx.vspHost || !tx.txHash) {
       throw new Error("Invalid tx parameter");
@@ -1048,21 +1048,27 @@ export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
       throw new Error("Invalid decodedTx parameter");
     }
 
-    const txURLBuilder = sel.txURLBuilder(getState());
     // This only considers the first commitment address which is the first odd output
-    const commitmentAddress = decodedTx.outputs[1].decodedScript.address;
+    commitmentAddress = decodedTx.outputs[1].decodedScript.address;
 
-    const json = {
+    json = {
       tickethash: tx.txHash
     };
-    const sig = await dispatch(
-      signMessageAttempt(commitmentAddress, JSON.stringify(json), passphrase)
-    );
+  } catch (error) {
+    dispatch({ type: GETVSP_TICKET_STATUS_FAILED, error });
+    return;
+  }
 
-    if (!sig) {
-      throw new Error("Invalid signature");
-    }
+  const sig = await dispatch(
+    signMessageAttempt(commitmentAddress, JSON.stringify(json), passphrase)
+  );
 
+  if (!sig) {
+    return;
+  }
+
+  dispatch({ type: GETVSP_TICKET_STATUS_ATTEMPT });
+  try {
     // Check if user allows access to this VSP. This might trigger a confirmation
     // dialog.
     await wallet.allowVSPHost(tx.ticketTx.vspHost);
@@ -1089,6 +1095,7 @@ export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
     }
 
     dispatch({ type: GETVSP_TICKET_STATUS_SUCCESS });
+    const txURLBuilder = sel.txURLBuilder(getState());
     info.data.feetxUrl = txURLBuilder(info.data.feetxhash);
     return info.data;
   } catch (error) {
