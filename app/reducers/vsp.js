@@ -40,7 +40,6 @@ import {
 } from "actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
-import { GETVSPTICKETSTATUS_FAILED } from "actions/VSPActions";
 
 export default function vsp(state = {}, action) {
   switch (action.type) {
