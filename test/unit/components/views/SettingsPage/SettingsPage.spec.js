@@ -7,6 +7,7 @@ import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as sa from "actions/SettingsActions";
 import * as wla from "actions/WalletLoaderActions";
+import * as ta from "actions/TransactionActions";
 import { PROXYTYPE_HTTP, PROXYTYPE_PAC } from "constants";
 import * as wl from "wallet";
 import { DEFAULT_DARK_THEME_NAME, DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
@@ -15,11 +16,13 @@ import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA
+  EXTERNALREQUEST_DCRDATA,
+  VSP_FEE_PROCESS_ERRORED
 } from "constants";
 import { en as enLocale } from "i18n/locales";
 import * as vspa from "actions/VSPActions";
 import { DCR, ATOMS } from "constants";
+import { mockStakeTransactions } from "../TransactionPage/mocks";
 
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
@@ -88,7 +91,6 @@ let mockSaveSettings;
 let mockChangePassphrase;
 let mockIsChangePassPhraseDisabled;
 let mockIsTicketAutoBuyerEnabled;
-let mockGetHasUnpaidFee;
 let mockGetAccountMixerRunning;
 let mockPurchaseTicketsRequestAttempt;
 let mockManualImportScriptAttempt;
@@ -99,6 +101,7 @@ const controlActions = ca;
 const wlActions = wla;
 const settingsActions = sa;
 const vspActions = vspa;
+const transactionActions = ta;
 
 beforeEach(() => {
   wallet.getGlobalCfg = jest.fn(() => {
@@ -135,7 +138,6 @@ beforeEach(() => {
     () => false
   );
   selectors.getTicketAutoBuyerRunning = jest.fn(() => false);
-  mockGetHasUnpaidFee = selectors.getHasTicketFeeError = jest.fn(() => false);
   mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => false
   );
@@ -146,6 +148,14 @@ beforeEach(() => {
   mockManualImportScriptAttempt = controlActions.manualImportScriptAttempt = jest.fn(
     () => () => {}
   );
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
+    Promise.resolve({
+      ticketHashes: []
+    })
+  );
+  transactionActions.toggleGetTransactions = jest.fn(() => () => {});
+  selectors.stakeTransactions = jest.fn(() => {});
+  selectors.getVSPTicketsHashes = jest.fn(() => {});
 });
 
 test("show error when there is no walletService", () => {
@@ -166,16 +176,24 @@ test("show error when there is no walletService", () => {
   expect(mockTicketBuyerService).toHaveBeenCalled();
 });
 
-test("test close wallet button (there is no ongoing process) ", () => {
+test("test close wallet button (there is no ongoing process) ", async () => {
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  testConfirmModal("Close Wallet", "Confirmation Required");
+  const changeFn = () => {
+    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  };
+  changeFn();
+  await testConfirmModal(
+    changeFn,
+    "Confirmation Required",
+    `Are you sure you want to close ${testWalletName} and return to the launcher?`
+  );
 });
 
-test("test close wallet button (ticket autobuyer is running) ", () => {
+test("test close wallet button (ticket autobuyer is running) ", async () => {
   mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
     () => true
   );
@@ -185,31 +203,69 @@ test("test close wallet button (ticket autobuyer is running) ", () => {
     }
   });
   expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
-  testConfirmModal(
-    "Close Wallet",
+  const changeFn = () => {
+    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  };
+  changeFn();
+  await testConfirmModal(
+    changeFn,
     "Auto Ticket Buyer Still Running",
     "If you proceed, it will be closed and no more tickets will be purchased.",
     "Close Anyway"
   );
 });
 
-test("test close wallet button (has unpaid fee) ", () => {
-  mockGetHasUnpaidFee = selectors.getHasTicketFeeError = jest.fn(() => true);
+const testCloseWalletButtonUnpaidTicketFee = async (
+  status,
+  expectDefaultModal = false
+) => {
+  selectors.stakeTransactions = jest.fn(() => mockStakeTransactions);
+  selectors.getVSPTicketsHashes = jest.fn(() => {
+    return {
+      [VSP_FEE_PROCESS_ERRORED]: [
+        Object.keys(mockStakeTransactions).find(
+          (hash) => mockStakeTransactions[hash].status === status
+        )
+      ]
+    };
+  });
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  expect(mockGetHasUnpaidFee).toHaveBeenCalled();
-  testConfirmModal(
-    "Close Wallet",
-    "VSP Tickets Fee Error",
-    /You have outstanding tickets that are not properly registered with a VSP/i,
-    "Close Anyway"
-  );
-});
+  const changeFn = () => {
+    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  };
+  changeFn();
+  if (expectDefaultModal) {
+    await testConfirmModal(
+      changeFn,
+      "Confirmation Required",
+      `Are you sure you want to close ${testWalletName} and return to the launcher?`
+    );
+  } else {
+    await testConfirmModal(
+      changeFn,
+      "VSP Tickets Fee Error",
+      /You have outstanding tickets that are not properly registered with a VSP/i,
+      "Close Anyway"
+    );
+  }
+};
 
-test("test close wallet button (account mixer is running) ", () => {
+test.each([
+  ["live"],
+  ["unmined"],
+  ["immature"],
+  ["missed", true],
+  ["revoked", true]
+])(
+  "test close wallet button (has unpaid %s ticket fee)",
+  testCloseWalletButtonUnpaidTicketFee
+);
+
+test("test close wallet button (account mixer is running) ", async () => {
   mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => true
   );
@@ -219,15 +275,19 @@ test("test close wallet button (account mixer is running) ", () => {
     }
   });
   expect(mockGetAccountMixerRunning).toHaveBeenCalled();
-  testConfirmModal(
-    "Close Wallet",
+  const changeFn = () => {
+    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  };
+  changeFn();
+  await testConfirmModal(
+    changeFn,
     "Account mixer is running",
     "Account mixer is currently running. Ongoing mixes will be cancelled and no more Decred will be mixed if you proceed.",
     "Close Anyway"
   );
 });
 
-test("test close wallet button (still finalizing ticket purchases) ", () => {
+test("test close wallet button (still finalizing ticket purchases) ", async () => {
   mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
     () => true
   );
@@ -237,15 +297,19 @@ test("test close wallet button (still finalizing ticket purchases) ", () => {
     }
   });
   expect(mockPurchaseTicketsRequestAttempt).toHaveBeenCalled();
-  testConfirmModal(
-    "Close Wallet",
+  const changeFn = () => {
+    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  };
+  changeFn();
+  await testConfirmModal(
+    changeFn,
     "Purchasing Tickets",
     "Decrediton is still finalizing ticket purchases. Tickets may not be registered with the VSP if you proceed now, which can result in missed votes.",
     "Close Anyway"
   );
 });
 
-test("test close wallet button (legacy auto ticket buyer still running) ", () => {
+test("test close wallet button (legacy auto ticket buyer still running) ", async () => {
   selectors.getTicketAutoBuyerRunning = jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
@@ -253,8 +317,12 @@ test("test close wallet button (legacy auto ticket buyer still running) ", () =>
     }
   });
   expect(mockPurchaseTicketsRequestAttempt).toHaveBeenCalled();
-  testConfirmModal(
-    "Close Wallet",
+  const changeFn = () => {
+    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  };
+  changeFn();
+  await testConfirmModal(
+    changeFn,
     "Auto Ticket Buyer Still Running",
     "If you proceed, it will be closed and no more tickets will be purchased.",
     "Close Anyway"

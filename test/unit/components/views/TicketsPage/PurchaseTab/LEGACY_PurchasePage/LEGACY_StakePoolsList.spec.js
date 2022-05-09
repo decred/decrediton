@@ -1,4 +1,4 @@
-import StakePoolsList from "../../../../../../app/components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList";
+import StakePoolsList from "components/views/TicketsPage/PurchaseTab/LEGACY_PurchasePage/LEGACY_StakePools/StakePoolsList";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";

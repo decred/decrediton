@@ -10,7 +10,7 @@ import InvalidRPCVersion from "components/views/InvalidRPCVersion";
 import PrivacyPage from "components/views/PrivacyPage";
 import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage";
-import TicketsPage from "components/views/TicketsPage/TicketsPage";
+import TicketsPage from "components/views/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
@@ -65,6 +65,12 @@ const Wallet = ({ setInterval }) => {
           path="/transactions/history/:txHash"
           component={TransactionPage}
         />
+        <Route path="/tickets/mytickets/:txHash" component={TransactionPage} />
+        <Route
+          path="/tickets/vspTicketsStatus/:txHash"
+          component={TransactionPage}
+        />
+        <Route path="/home/:txHash" component={TransactionPage} />
         <Route
           path="/proposal/details/:token"
           component={ProposalDetailsPage}

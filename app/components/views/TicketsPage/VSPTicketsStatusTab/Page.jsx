@@ -57,12 +57,7 @@ const TicketListPage = ({
   const loadMoreThreshold = 90 + Math.max(0, window.innerHeight - 765);
 
   return (
-    <InfiniteScroll
-      hasMore={!noMoreTickets}
-      loadMore={() => getLiveTickets(true)}
-      initialLoad={!noMoreTickets}
-      useWindow={false}
-      threshold={loadMoreThreshold}>
+    <>
       <Subtitle
         title={<T id="vsp.mytickets.subtitle" m="Live Tickets" />}
         className={styles.subtitle}
@@ -111,24 +106,35 @@ const TicketListPage = ({
               <T id="vsptickets.table.header.purchased" m="Purchased" />
             </div>
           </div>
-          <TxHistory
-            {...{
-              transactions: tickets,
-              tsDate,
-              mode: "liveStake",
-              overview: isOverview
-            }}
-          />
         </>
       )}
+      <InfiniteScroll
+        hasMore={!noMoreTickets}
+        loadMore={() => getLiveTickets()}
+        initialLoad={!noMoreTickets}
+        useWindow={false}
+        threshold={loadMoreThreshold}
+        data-testid="VSPTicketHistoryPageContent">
+        <TxHistory
+          {...{
+            transactions: tickets,
+            tsDate,
+            mode: "liveStake",
+            overview: isOverview
+          }}
+        />
+      </InfiniteScroll>
       {!noMoreLiveTickets ? (
-        <LoadingMoreTicketsIndicator isLiveTickets={true} />
+        <LoadingMoreTicketsIndicator
+          isLiveTickets
+          getTickets={getLiveTickets}
+        />
       ) : tickets.length > 0 ? (
         <NoMoreTicketsIndicator />
       ) : (
         <NoTicketsIndicator />
       )}
-    </InfiniteScroll>
+    </>
   );
 };
 

@@ -25,11 +25,16 @@ const AscMessage = ({ startRequestHeight, currentBlockHeight }) => (
   />
 );
 
-const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
+const LoadingMoreTicketsIndicator = ({
+  className,
+  isLiveTickets,
+  getTickets
+}) => {
   const {
     startRequestHeight,
     ticketsFilter,
     currentBlockHeight,
+    transactionsRequestAttempt,
     stakeTransactionsCancel,
     onToggleGetTransactions
   } = useLoadingMoreTickets();
@@ -78,7 +83,7 @@ const LoadingMoreTicketsIndicator = ({ className, isLiveTickets }) => {
           <div
             className={classNames(styles.isRow, styles.loadingMoreTicketsInfo)}>
             <div className={styles.loadingMoreTicketsIcon}></div>
-            <div>
+            <div onClick={() => !transactionsRequestAttempt && getTickets()}>
               <>
                 <T
                   id="myTickets.loadingMoreTickets"
