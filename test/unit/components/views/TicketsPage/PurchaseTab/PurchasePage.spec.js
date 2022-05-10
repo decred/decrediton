@@ -60,7 +60,6 @@ const mockCurrencyDisplay = DCR;
 const mockTicketPrice = 6816662938;
 
 let mockPurchaseTicketsAttempt;
-let mockRevokeTicketsAttempt;
 let mockStartTicketBuyerV3Attempt;
 let mockGetTicketAutoBuyerRunning;
 let mockTicketBuyerCancel;
@@ -96,9 +95,6 @@ beforeEach(() => {
   );
 
   mockPurchaseTicketsAttempt = controlActions.newPurchaseTicketsAttempt = jest.fn(
-    () => () => {}
-  );
-  mockRevokeTicketsAttempt = controlActions.revokeTicketsAttempt = jest.fn(
     () => () => {}
   );
   mockStartTicketBuyerV3Attempt = controlActions.startTicketBuyerV3Attempt = jest.fn(
@@ -208,17 +204,6 @@ test("render PurchasePage", async () => {
   user.type(inputTag, "100000000");
   user.click(purchaseButton);
   expect(mockPurchaseTicketsAttempt).not.toHaveBeenCalled();
-
-  // revoke
-  user.click(screen.getByText("Revoke"));
-  expect(screen.getByText(/revoke tickets confirmation/i)).toBeInTheDocument();
-  // cancel first
-  user.click(screen.getByText("Cancel"));
-  // try again
-  user.click(screen.getByText("Revoke"));
-  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
-  user.click(screen.getByText("Continue"));
-  expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
 });
 
 const getSettingsButton = () =>

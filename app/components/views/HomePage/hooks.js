@@ -11,8 +11,6 @@ export function useHomePage() {
   const spendableTotalBalance = useSelector(sel.spendableTotalBalance);
   const transactions = useSelector(sel.homeHistoryTransactions);
   const tickets = useSelector(sel.homeHistoryTickets);
-  const revokeTicketsError = useSelector(sel.revokeTicketsError);
-  const revokeTicketsSuccess = useSelector(sel.revokeTicketsSuccess);
   const totalBalance = useSelector(sel.totalBalance);
   const tsDate = useSelector(sel.tsDate);
   const newNotYetVotedAgendasCount = useSelector(
@@ -28,8 +26,6 @@ export function useHomePage() {
     spendableTotalBalance,
     transactions,
     tickets,
-    revokeTicketsError,
-    revokeTicketsSuccess,
     totalBalance,
     tsDate,
     newNotYetVotedAgendasCount,
