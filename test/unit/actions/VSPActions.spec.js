@@ -17,7 +17,7 @@ import {
   mockMixedAccountValue,
   mockChangeAccountValue,
   mockMixedAccount
-} from "../components/TicketsPage/PurchaseTab/mocks.js";
+} from "../views/components/TicketsPage/PurchaseTab/mocks.js";
 
 let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
 const mockAvailableMainnetVspsPubkeys = cloneDeep(
