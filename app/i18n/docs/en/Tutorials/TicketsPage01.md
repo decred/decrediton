@@ -1,1 +1,1 @@
-Decred holders can participate in the Staking (Proof-of-Stake) process by time-locking their coins (amounting to the ticket value) in exchange of tickets.
+Decred holders can participate in the Proof-of-Stake (PoS) system by purchasing tickets.
