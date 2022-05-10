@@ -17,6 +17,7 @@ export function useTransactionPage(txHash) {
   const agendas = useSelector(sel.allAgendas);
   const voteChoices = useSelector(sel.voteChoices);
   const getVSPTicketStatusAttempt = useSelector(sel.getVSPTicketStatusAttempt);
+  const isSigningMessage = useSelector(sel.isSigningMessage);
   const getAgendaSelectedChoice = useCallback(
     (agendaId) =>
       get(
@@ -113,6 +114,7 @@ export function useTransactionPage(txHash) {
     getAgendaSelectedChoice,
     getVSPTicketStatus,
     getVSPTicketStatusAttempt,
-    VSPTicketStatus
+    VSPTicketStatus,
+    isSigningMessage
   };
 }

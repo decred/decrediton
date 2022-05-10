@@ -51,7 +51,8 @@ const TransactionContent = ({
   getAgendaSelectedChoice,
   getVSPTicketStatus,
   getVSPTicketStatusAttempt,
-  VSPTicketStatus
+  VSPTicketStatus,
+  isSigningMessage
 }) => {
   const {
     txHash,
@@ -305,8 +306,8 @@ const TransactionContent = ({
                           m="Fetch VSP Ticket Status"
                         />
                       }
-                      loading={getVSPTicketStatusAttempt}
-                      disabled={getVSPTicketStatusAttempt}
+                      loading={getVSPTicketStatusAttempt || isSigningMessage}
+                      disabled={getVSPTicketStatusAttempt || isSigningMessage}
                       onSubmit={getVSPTicketStatus}
                     />
                   </div>
