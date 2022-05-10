@@ -121,9 +121,6 @@
   width: 764px;
   justify-content: flex-end;
 }
-.revokeButton {
-  margin-right: 10px;
-}
 .vspContainer {
   display: flex;
   font-size: 16px;

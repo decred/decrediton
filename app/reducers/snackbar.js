@@ -32,10 +32,6 @@ import {
   STARTTICKETBUYERV2_FAILED,
   STOPTICKETBUYERV2_SUCCESS,
   STOPTICKETBUYER_SUCCESS,
-  REVOKETICKETS_SUCCESS,
-  REVOKETICKETS_FAILED,
-  REVOKETICKET_SUCCESS,
-  REVOKETICKET_FAILED,
   IMPORTSCRIPT_MANUAL_SUCCESS,
   IMPORTSCRIPT_MANUAL_FAILED,
   RENAMEACCOUNT_SUCCESS,
@@ -231,22 +227,6 @@ const messages = defineMessages({
   },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
-    defaultMessage: "{originalError}"
-  },
-  REVOKETICKETS_SUCCESS: {
-    id: "tickets.revokeTicketsHeader",
-    defaultMessage: "You successfully revoked tickets"
-  },
-  REVOKETICKETS_FAILED: {
-    id: "tickets.errors.revokeTicketsFailed",
-    defaultMessage: "{originalError}"
-  },
-  REVOKETICKET_SUCCESS: {
-    id: "tickets.revokeTicketHeader",
-    defaultMessage: "You successfully revoked a ticket"
-  },
-  REVOKETICKET_FAILED: {
-    id: "tickets.errors.revokeTicketFailed",
     defaultMessage: "{originalError}"
   },
   IMPORTSCRIPT_MANUAL_SUCCESS: {
@@ -796,8 +776,6 @@ export default function snackbar(state = {}, action) {
     case RENAMEACCOUNT_SUCCESS:
     case GETNEXTACCOUNT_SUCCESS:
     case CHANGEPASSPHRASE_SUCCESS:
-    case REVOKETICKETS_SUCCESS:
-    case REVOKETICKET_SUCCESS:
     case IMPORTSCRIPT_MANUAL_SUCCESS:
     case STARTTICKETBUYERV2_SUCCESS:
     case STARTTICKETBUYERV3_SUCCESS:
@@ -914,8 +892,6 @@ export default function snackbar(state = {}, action) {
     case PUBLISHTX_FAILED:
     case ABANDONTRANSACTION_FAILED:
     case PURCHASETICKETS_FAILED:
-    case REVOKETICKETS_FAILED:
-    case REVOKETICKET_FAILED:
     case IMPORTSCRIPT_MANUAL_FAILED:
     case UPDATESTAKEPOOLCONFIG_FAILED:
     case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:

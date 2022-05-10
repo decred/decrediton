@@ -147,7 +147,6 @@ export const AppPassAndPassphraseModalButton = mbb(
   KeyBlueButton
 );
 
-export const RevokeModalButton = mbb(null, PassphraseModal, PiUiButton);
 export const TicketPurchaseModalButton = mbb(null, PassphraseModal, PiUiButton);
 
 export const AutoBuyerPassphraseModalSwitch = mbb(

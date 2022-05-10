@@ -10,7 +10,6 @@ const Transaction = () => {
   const { txHash } = useParams();
   const {
     abandonTransaction,
-    onRevokeTicket,
     publishUnminedTransactions,
     currentBlockHeight,
     state,
@@ -46,7 +45,6 @@ const Transaction = () => {
               transactionDetails: viewedTransaction,
               decodedTransaction: decodedTx,
               abandonTransaction,
-              onRevokeTicket,
               publishUnminedTransactions,
               currentBlockHeight,
               isSPV,

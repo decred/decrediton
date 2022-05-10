@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { SettingsInput } from "inputs";
 import styles from "./MiscSettings.module.css";
 import { DiscoverUsageModal } from "modals";
-import { KeyBlueButton, ImportScriptIconButton } from "buttons";
+import { KeyBlueButton } from "buttons";
 import { useSettings } from "hooks";
 import { Label, Box } from "../../helpers";
 
@@ -62,12 +62,6 @@ const MiscSettings = ({ tempSettings, currencies, onChangeTempSettings }) => {
               clicked
             }}
           />
-        </div>
-        <div>
-          <Label id="import-script">
-            <T id="settings.importScript" m="Import script" />
-          </Label>
-          <ImportScriptIconButton ariaLabel="Import script button" />
         </div>
       </div>
     </Box>

@@ -69,7 +69,6 @@ export function PurchasePage({
   isLoading,
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
-  onRevokeTickets,
   notMixedAccounts,
   isVSPListingEnabled,
   onEnableVSPListing,
@@ -114,7 +113,6 @@ export function PurchasePage({
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            onRevokeTickets,
             getRunningIndicator,
             toggleIsLegacy,
             isLegacy: false

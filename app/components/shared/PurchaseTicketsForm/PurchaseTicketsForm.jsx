@@ -2,7 +2,6 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
 import {
   TicketPurchaseModalButton,
-  RevokeModalButton,
   PiUiButton,
   TicketsCogs,
   ImportScriptIconButton,
@@ -20,7 +19,6 @@ import styles from "./PurchaseTicketsForm.module.css";
 import { useIntl } from "react-intl";
 
 const purchaseLabel = () => <T id="purchaseTickets.purchaseBtn" m="Purchase" />;
-const revokeLabel = () => <T id="purchaseTickets.revokeBtn" m="Revoke" />;
 
 const messages = defineMessages({
   insufficientBalanceErrorMsg: {
@@ -30,7 +28,6 @@ const messages = defineMessages({
 });
 
 const PurchaseTicketsForm = ({
-  spvMode,
   isValid,
   handleOnKeyDown,
   numTicketsToBuy,
@@ -46,7 +43,6 @@ const PurchaseTicketsForm = ({
   vspFee,
   setVspFee,
   onPurchaseTickets,
-  onRevokeTickets,
   availableVSPs,
   isLoading,
   rememberedVspHost,
@@ -243,36 +239,6 @@ const PurchaseTicketsForm = ({
         </div>
       )}
       <div className={styles.buttonsArea}>
-        {getRunningIndicator ? (
-          <Tooltip
-            contentClassName={styles.disabledTooltip}
-            content={
-              <T
-                id="tickets.revoke.running"
-                m="Privacy Mixer or Autobuyer running, please shut them off before revoking tickets."
-              />
-            }>
-            <PiUiButton disabled={true} className={styles.revokeButton}>
-              {revokeLabel()}
-            </PiUiButton>
-          </Tooltip>
-        ) : (
-          !spvMode && (
-            <RevokeModalButton
-              modalTitle={
-                <T
-                  id="tickets.revokeConfirmations"
-                  m="Revoke Tickets Confirmation"
-                />
-              }
-              className={styles.revokeButton}
-              onSubmit={onRevokeTickets}
-              kind="secondary"
-              buttonLabel={revokeLabel()}
-            />
-          )
-        )}
-
         {isWatchingOnly ? (
           <PiUiButton disabled={!isValid} onClick={onPurchaseTickets}>
             {purchaseLabel()}
