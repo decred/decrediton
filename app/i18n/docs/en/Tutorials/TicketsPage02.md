@@ -1,6 +1,1 @@
-These tickets are used to vote on miners’ Proof-of-Work in order to validate changes to the Decred blockchain and on the governance proposals within the Politeia system.
-
-Opt-in governance via time-locking coins. Applies to:
-creating new blocks
-consensus changes
-project management
+These tickets are used to vote on blocks that have been created by the Proof-of-Work (PoW) miners.  These votes allow stakeholders to ensure that blocks are being created properly.  Votes include the ability to vote for or against on-chain consensus changes.  Finally, ticket owndership allows for participation in Decred's off-chain governance system Politeia, where users are able to submit proposals within the Decred eco-system.
