@@ -1304,8 +1304,6 @@ export const purchaseTicketsSuccess = get([
   "control",
   "purchaseTicketsSuccess"
 ]);
-export const revokeTicketsError = get(["control", "revokeTicketsError"]);
-export const revokeTicketsSuccess = get(["control", "revokeTicketsSuccess"]);
 export const importScriptSuccess = get(["control", "importScriptSuccess"]);
 export const importScriptError = get(["control", "importScriptError"]);
 export const startAutoBuyerError = get(["control", "startAutoBuyerError"]);

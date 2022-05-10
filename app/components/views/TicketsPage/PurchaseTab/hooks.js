@@ -80,9 +80,6 @@ export const usePurchaseTab = () => {
     dispatch(vspa.toggleIsLegacy(isLegacy));
   };
 
-  const onRevokeTickets = (passphrase) =>
-    dispatch(ca.revokeTicketsAttempt(passphrase));
-
   const setRememberedVspHost = (vsp) =>
     dispatch(vspa.setRememberedVspHost(vsp));
 
@@ -118,7 +115,6 @@ export const usePurchaseTab = () => {
     isLoading,
     rememberedVspHost,
     setRememberedVspHost,
-    onRevokeTickets,
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,

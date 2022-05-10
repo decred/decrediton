@@ -2,11 +2,7 @@
 import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import {
-  getStakeInfoAttempt,
-  startWalletServices,
-  getStartupWalletInfo
-} from "./ClientActions";
+import { startWalletServices, getStartupWalletInfo } from "./ClientActions";
 import { rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
@@ -518,56 +514,6 @@ export const newPurchaseTicketsAttempt = (
       }
     }
     dispatch({ error, type: PURCHASETICKETS_FAILED });
-  }
-};
-
-export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";
-export const REVOKETICKETS_FAILED = "REVOKETICKETS_FAILED";
-export const REVOKETICKETS_SUCCESS = "REVOKETICKETS_SUCCESS";
-
-export const revokeTicketsAttempt = (passphrase) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({ type: REVOKETICKETS_ATTEMPT });
-  const walletService = sel.walletService(getState());
-  try {
-    const revokeTicketsResponse = await dispatch(
-      unlockAllAcctAndExecFn(passphrase, () =>
-        wallet.revokeTickets(walletService)
-      )
-    );
-    dispatch({ revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
-    setTimeout(() => {
-      dispatch(getStakeInfoAttempt());
-    }, 4000);
-  } catch (error) {
-    dispatch({ error, type: REVOKETICKETS_FAILED });
-  }
-};
-
-export const REVOKETICKET_ATTEMPT = "REVOKETICKET_ATTEMPT";
-export const REVOKETICKET_FAILED = "REVOKETICKET_FAILED";
-export const REVOKETICKET_SUCCESS = "REVOKETICKET_SUCCESS";
-
-export const revokeTicketAttempt = (passphrase, ticketHash) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({ type: REVOKETICKET_ATTEMPT });
-  const walletService = sel.walletService(getState());
-  try {
-    const revokeTicketResponse = await dispatch(
-      unlockAllAcctAndExecFn(passphrase, () =>
-        wallet.revokeTicket(walletService, ticketHash)
-      )
-    );
-    dispatch({ revokeTicketResponse, type: REVOKETICKET_SUCCESS });
-    setTimeout(() => {
-      dispatch(getStakeInfoAttempt());
-    }, 4000);
-  } catch (error) {
-    dispatch({ error, type: REVOKETICKET_FAILED });
   }
 };
 
