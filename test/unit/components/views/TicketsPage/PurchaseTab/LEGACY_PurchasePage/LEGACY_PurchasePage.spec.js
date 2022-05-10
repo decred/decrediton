@@ -142,7 +142,6 @@ const spActions = spa;
 
 let mockPurchaseTicketsAttempt;
 let mockDismissBackupRedeemScript;
-let mockRevokeTicketsAttempt;
 let mockStartTicketBuyerV2Attempt;
 let mockIsTicketAutoBuyerEnabled;
 let mockTicketBuyerV2Cancel;
@@ -178,9 +177,6 @@ beforeEach(() => {
   );
   mockAddCustomStakePool = spActions.addCustomStakePool = jest.fn(() => () =>
     Promise.resolve()
-  );
-  mockRevokeTicketsAttempt = controlActions.revokeTicketsAttempt = jest.fn(
-    () => () => {}
   );
   mockStartTicketBuyerV2Attempt = controlActions.startTicketBuyerV2Attempt = jest.fn(
     () => () => {}
@@ -378,17 +374,6 @@ test("render LEGACY_PurchasePage", () => {
   user.click(screen.getByText("Dismiss Message"));
   user.click(screen.getByText("Confirm"));
   expect(mockDismissBackupRedeemScript).toHaveBeenCalled();
-
-  // revoke
-  user.click(screen.getByText("Revoke"));
-  expect(screen.getByText(/revoke tickets confirmation/i)).toBeInTheDocument();
-  // cancel first
-  user.click(screen.getByText("Cancel"));
-  // try again
-  user.click(screen.getByText("Revoke"));
-  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
-  user.click(screen.getByText("Continue"));
-  expect(mockRevokeTicketsAttempt).toHaveBeenCalledWith(mockPassphrase);
 });
 
 const getSettingsModalTitle = () =>

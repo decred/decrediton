@@ -336,11 +336,6 @@ const initialState = {
     purchaseTicketsResponse: null,
     purchaseTicketsSuccess: "",
     purchaseTicketsError: null,
-    // RevokeTickets
-    revokeTicketsRequestAttempt: false,
-    revokeTicketsResponse: null,
-    revokeTicketsSuccess: "",
-    revokeTicketsError: null,
 
     // TicketBuyerService
     ticketBuyerService: null,
