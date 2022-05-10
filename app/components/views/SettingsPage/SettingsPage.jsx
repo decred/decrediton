@@ -3,7 +3,7 @@ import { CloseWalletModalButton } from "buttons";
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import LinksTab from "./LinksTab";
 import LogsTab from "./LogsTab";
-import TutorialsTab from "./TutorialsTab";
+// import TutorialsTab from "./TutorialsTab";
 import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
 import GeneralSettingsTab from "./GeneralSettingsTab";
 import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
@@ -81,12 +81,14 @@ const SettingsPage = () => {
       header: SettingsTabHeader,
       label: <T id="settings.tab.sources" m="Sources" />
     },
+    /*
     {
       path: "/settings/tutorials",
       content: TutorialsTab,
       header: SettingsTabHeader,
       label: <T id="settings.tab.tutorials" m="Tutorials" />
     },
+    */
     {
       path: "/settings/logs",
       content: LogsTab,

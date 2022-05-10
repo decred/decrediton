@@ -18,7 +18,7 @@ import {
   mockMixedAccountValue,
   mockChangeAccountValue,
   mockMixedAccount
-} from "../../TicketsPage/PurchaseTab/mocks";
+} from "../TicketsPage/PurchaseTab/mocks";
 import { defaultMockAvailableMainnetVsps } from "../../../actions/vspMocks";
 
 const selectors = sel;
