@@ -20,7 +20,8 @@ const Transaction = () => {
     getAgendaSelectedChoice,
     getVSPTicketStatus,
     getVSPTicketStatusAttempt,
-    VSPTicketStatus
+    VSPTicketStatus,
+    isSigningMessage
   } = useTransactionPage(txHash);
 
   if (!viewedTransaction) return null;
@@ -52,7 +53,8 @@ const Transaction = () => {
               getAgendaSelectedChoice,
               getVSPTicketStatus,
               getVSPTicketStatusAttempt,
-              VSPTicketStatus
+              VSPTicketStatus,
+              isSigningMessage
             }}
           />
         </StandalonePage>
