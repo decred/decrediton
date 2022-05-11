@@ -229,6 +229,7 @@
 
 .agendaGrid .voteChoice {
   padding-left: 1.5rem;
+  position: relative;
 }
 
 .agendaGrid .voteChoice::before {
