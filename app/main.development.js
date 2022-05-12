@@ -428,6 +428,10 @@ function createDexWindow(serverAddress) {
   dexWindow.once("ready-to-show", () => {
     dexWindow.show();
   });
+  dexWindow.webContents.on("will-navigate", (e, url) => {
+    mainWindow.webContents.send("open-external", url);
+    e.preventDefault();
+  });
   dexWindow.once("closed", () => {
     dexWindow = new BrowserWindow({
       show: false,
