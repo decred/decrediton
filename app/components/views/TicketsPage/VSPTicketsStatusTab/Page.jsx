@@ -124,7 +124,7 @@ const TicketListPage = ({
           }}
         />
       </InfiniteScroll>
-      {!noMoreLiveTickets ? (
+      {!noMoreLiveTickets && !noMoreTickets ? (
         <LoadingMoreTicketsIndicator
           isLiveTickets
           getTickets={getLiveTickets}
