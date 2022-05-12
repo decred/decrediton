@@ -10,7 +10,9 @@ import {
 } from "lodash";
 import qr from "qr-image";
 
-ipcRenderer.on("open-external", (e, url) => openExternalURL(url));
+if (ipcRenderer.on) {
+  ipcRenderer.on("open-external", (e, url) => openExternalURL(url));
+}
 
 export const onAppReloadRequested = (cb) =>
   ipcRenderer.on("app-reload-requested", cb);
