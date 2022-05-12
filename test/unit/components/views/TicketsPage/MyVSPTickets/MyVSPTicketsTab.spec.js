@@ -404,6 +404,5 @@ test("test no tickets", () => {
     }
   });
   user.click(screen.getByText("Ticket Status"));
-  user.click(getLoadingMoreLabel());
   expect(screen.getByText("No Tickets Found"));
 });
