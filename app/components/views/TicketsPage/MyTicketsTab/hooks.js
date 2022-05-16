@@ -90,7 +90,7 @@ export const useTicketsList = () => {
       })
       // XXX snackbar error instead plzx.
       .catch((err) => console.log(err));
-  }, [tickets, qrHashes]);
+  }, [filteredStakeTxs, qrHashes]);
 
   return {
     intl,
