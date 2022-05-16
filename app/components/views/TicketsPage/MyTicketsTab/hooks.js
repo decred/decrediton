@@ -59,7 +59,7 @@ export const useTicketsList = () => {
   // have changed since last viewing.
   const prepareQRs = useCallback(() => {
     setLoadingQRs(true);
-    const filteredTiks = tickets.filter(activeFilter);
+    const filteredTiks = filteredStakeTxs.filter(activeFilter);
     const filteredHashes = filteredTiks.map(({ txHash }) => txHash);
 
     if (filteredHashes.length == 0) {
@@ -90,7 +90,7 @@ export const useTicketsList = () => {
       })
       // XXX snackbar error instead plzx.
       .catch((err) => console.log(err));
-  }, [tickets, qrHashes]);
+  }, [filteredStakeTxs, qrHashes]);
 
   return {
     intl,
