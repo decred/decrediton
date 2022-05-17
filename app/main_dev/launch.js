@@ -23,7 +23,13 @@ import {
   AddToPrivacyLog
 } from "./logging";
 import parseArgs from "minimist";
-import { OPTIONS, UPGD_ELECTRON8 } from "constants";
+import {
+  OPTIONS,
+  UPGD_ELECTRON8,
+  CSPP_URL,
+  CSPP_PORT_TESTNET,
+  CSPP_PORT_MAINNET
+} from "constants";
 import * as cfgConstants from "constants/config";
 import os from "os";
 import fs from "fs";
@@ -630,12 +636,12 @@ export const launchDCRWallet = async (
   // add cspp cert path.
   // When in mainnet, we always include it, because if we doensn't and a user
   // sets mixing config, we would need to restart dcrwallet.
-  const certPath = path.resolve(getCertsPath(), "mix.decred.org.pem");
+  const certPath = path.resolve(getCertsPath(), CSPP_URL + ".pem");
   !testnet && args.push("--csppserver.ca=" + certPath);
   args.push(
-    testnet
-      ? "--csppserver=mix.decred.org:5760"
-      : "--csppserver=mix.decred.org:15760"
+    !testnet
+      ? "--csppserver=" + CSPP_URL + ":" + CSPP_PORT_MAINNET
+      : "--csppserver=" + CSPP_URL + ":" + CSPP_PORT_TESTNET
   );
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
