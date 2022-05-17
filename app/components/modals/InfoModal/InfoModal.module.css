@@ -30,7 +30,6 @@
   break-inside: avoid-page;
   color: var(--modal-text);
   margin-bottom: 2em;
-  text-align: justify;
 }
 .content li {
   list-style-position: inside;
