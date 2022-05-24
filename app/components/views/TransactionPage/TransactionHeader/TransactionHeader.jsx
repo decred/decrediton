@@ -8,7 +8,10 @@ import {
   TICKET,
   LIVE,
   VOTE,
+  VOTED,
   MISSED,
+  REVOKED,
+  EXPIRED,
   UNMINED,
   IMMATURE,
   REVOCATION,
@@ -37,12 +40,18 @@ import styles from "./TransactionHeader.module.css";
 const messages = defineMessages({
   [TICKET]: { id: "txDetails.type.ticket", defaultMessage: "Ticket" },
   [VOTE]: { id: "txDetails.type.vote", defaultMessage: "Vote" },
-  [REVOCATION]: { id: "txDetails.type.revoke", defaultMessage: "Revoke" },
+  [REVOCATION]: {
+    id: "txDetails.type.revocation",
+    defaultMessage: "Revocation"
+  },
   [COINBASE]: { id: "txDetails.type.coinbase", defaultMessage: "Coinbase" },
   [MISSED]: { id: "txDetails.type.missed", defaultMessage: "Missed" },
   [UNMINED]: { id: "txDetails.type.unmined", defaultMessage: "Unmined" },
   [IMMATURE]: { id: "txDetails.type.immature", defaultMessage: "Immature" },
-  [LIVE]: { id: "txDetails.type.live", defaultMessage: "Live" }
+  [LIVE]: { id: "txDetails.type.live", defaultMessage: "Live" },
+  [VOTED]: { id: "txDetails.type.voted", defaultMessage: "Voted" },
+  [REVOKED]: { id: "txDetails.type.revoked", defaultMessage: "Revoked" },
+  [EXPIRED]: { id: "txDetails.type.expired", defaultMessage: "Expired" }
 });
 
 const headerIcons = {
@@ -68,32 +77,27 @@ const icon = ({ txType, txDirection, status }) =>
         [MISSED, UNMINED, IMMATURE].includes(status) ? status : txType
       ];
 
-const title = ({
-  txType,
-  txAmount,
-  txDirection,
-  ticketReward,
-  intl,
-  status
-}) => {
-  let titleComp;
-  txType !== REGULAR
-    ? (titleComp = [MISSED, UNMINED, IMMATURE, LIVE].includes(status)
-        ? intl.formatMessage(messages[status])
-        : intl.formatMessage(messages[txType]))
-    : (titleComp = (
-        <Balance
-          title
-          bold
-          amount={
-            txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount
-          }
-        />
-      ));
-  if (txType === TICKET && ticketReward) {
-    titleComp = `${titleComp}, Voted`;
+const title = ({ txType, txAmount, txDirection, intl, status }) => {
+  if (txType === REGULAR) {
+    return (
+      <Balance
+        title
+        bold
+        amount={txDirection !== TRANSACTION_DIR_RECEIVED ? -txAmount : txAmount}
+      />
+    );
+  } else if (txType === TICKET) {
+    return `${intl.formatMessage(messages[txType])}, ${intl.formatMessage(
+      messages[status]
+    )}`;
+  } else if (messages[txType]) {
+    return intl.formatMessage(messages[txType]);
+  } else if (messages[status]) {
+    return intl.formatMessage(messages[status]);
+  } else {
+    console.error("unknown transaction");
+    return "";
   }
-  return titleComp;
 };
 
 const backBtn = ({ goBack }) => (
@@ -238,7 +242,6 @@ const TransactionHeader = ({
         txType,
         txAmount,
         txDirection,
-        ticketReward,
         intl,
         status
       })}

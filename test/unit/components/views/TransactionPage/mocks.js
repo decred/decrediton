@@ -616,7 +616,7 @@ const mockStakeTransactionList = [
       "22ed8c58e324add4fc81ed7dd6c207b44e9b475a4f097f473ac829bc00000000",
     index: 0,
     txHash: "f5c4259f1ae264a6bc7e52d5f602967e947fdebdb8bc7a551a18d36ab1933e17",
-    txType: "vote",
+    txType: "ticket",
     debitsAmount: 10088957415,
     creditsAmount: 10093801558,
     type: 2,
@@ -800,7 +800,127 @@ const mockStakeTransactionList = [
     },
     status: "missed"
   },
-  // revoked
+  // revoked ticket
+  {
+    timestamp: 1637487987,
+    height: 815405,
+    blockHash:
+      "000000080433728b66a9dcd5471205adde4df9619af27f45613f60c4d3dc8a02",
+    index: 0,
+    hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+    txHash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+    txType: "ticket",
+    debitsAmount: 8600221089,
+    creditsAmount: 8600218109,
+    type: 1,
+    amount: -2980,
+    fee: 2980,
+    debitAccounts: [0],
+    creditAddresses: ["TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ"],
+    isStake: true,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 8600218109,
+        address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
+        outputScript: "unapFOlPYM9gpJSRDMD+KPZi22h5RnROiKw="
+      }
+    ],
+    debits: [
+      {
+        index: 0,
+        previousAccount: 0,
+        previousAmount: 8600221089
+      }
+    ],
+    rawTx:
+      "010000000145dff3de5ec042630f66a9ba4ea2ed6d70f3fa306af01858a83efa676d3779000000000000ffffffff03fde99c000200000000001aba76a914e94f60cf60a494910cc0fe28f662db687946744e88ac00000000000000000000206a1e8ef37a84dc2bc7c924877e1ab3026b3b5a102e5fa1f59c0002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001a1f59c00020000002c710c00030000006a47304402206888557060684807b6e78f47ea8c186debe45f2316a584abe60c5495f36f77f80220249421832ab9ea9e6bbb70d50376e7f48258b3108a345dc299d1de8186e046060121036343175c705537c636732c42fa699ba96f6296bc66b915216cbc833d00e18e10",
+    isMix: false,
+    spender: {
+      timestamp: 1643948925,
+      height: -1,
+      blockHash: "",
+      index: -1,
+      hash: "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
+      txHash:
+        "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
+      txType: "revocation",
+      debitsAmount: 8600218109,
+      creditsAmount: 8600218109,
+      type: 3,
+      amount: 0,
+      fee: 0,
+      debitAccounts: [0],
+      creditAddresses: ["Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 8600218109,
+          address: "Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy",
+          outputScript: "vHapFI7zeoTcK8fJJId+GrMCaztaEC5fiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 8600218109
+        }
+      ],
+      rawTx:
+        "0200000001997fa9df69903ad5d40fce86f0da366f3d9c13b842e947d1d0859a30e3e24eb00000000001ffffffff01fde99c000200000000001abc76a9148ef37a84dc2bc7c924877e1ab3026b3b5a102e5f88ac000000000000000001fde99c00020000002d710c000800000000",
+      isMix: false
+    },
+    status: "revoked",
+    ticket: {
+      timestamp: 1637487987,
+      height: 815405,
+      blockHash:
+        "000000080433728b66a9dcd5471205adde4df9619af27f45613f60c4d3dc8a02",
+      index: 0,
+      hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+      txHash:
+        "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+      txType: "ticket",
+      debitsAmount: 8600221089,
+      creditsAmount: 8600218109,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [0],
+      creditAddresses: ["TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 8600218109,
+          address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
+          outputScript: "unapFOlPYM9gpJSRDMD+KPZi22h5RnROiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 8600221089
+        }
+      ],
+      rawTx:
+        "010000000145dff3de5ec042630f66a9ba4ea2ed6d70f3fa306af01858a83efa676d3779000000000000ffffffff03fde99c000200000000001aba76a914e94f60cf60a494910cc0fe28f662db687946744e88ac00000000000000000000206a1e8ef37a84dc2bc7c924877e1ab3026b3b5a102e5fa1f59c0002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001a1f59c00020000002c710c00030000006a47304402206888557060684807b6e78f47ea8c186debe45f2316a584abe60c5495f36f77f80220249421832ab9ea9e6bbb70d50376e7f48258b3108a345dc299d1de8186e046060121036343175c705537c636732c42fa699ba96f6296bc66b915216cbc833d00e18e10",
+      isMix: false,
+      vspHost: "",
+      txUrl:
+        "https://testnet.decred.org/tx/b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99"
+    }
+  },
+  // revocation
   {
     timestamp: 1622730448,
     height: 697812,

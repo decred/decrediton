@@ -552,7 +552,7 @@ test("missed ticket", async () => {
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
-test("revoked ticket", async () => {
+test("revocation", async () => {
   mockTxHash =
     "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c";
   const rawTx = mockStakeTransactions[mockTxHash].rawTx;
@@ -581,7 +581,7 @@ test("revoked ticket", async () => {
   await wait(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("revocation");
-  expect(getTitleText()).toMatch("Revoke");
+  expect(getTitleText()).toMatch("Revocation");
   expect(getTicketCostText()).toMatch("Ticket Cost64.75415536 DCR");
   expect(getRewardText()).toMatch("Reward-0.0000518 DCR");
 
@@ -605,6 +605,64 @@ test("revoked ticket", async () => {
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height697812");
+
+  user.click(screen.getByText("Back"));
+  expect(mockGoBackHistory).toHaveBeenCalled();
+});
+
+test("revoked ticket", async () => {
+  mockTxHash =
+    "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99";
+  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+  const mockStakeTransactionMap = {};
+  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 924414);
+
+  render(<TransactionPage />, {
+    initialState: {
+      grpc: {
+        regularTransactions: {},
+        stakeTransactions: mockStakeTransactionMap,
+        decodedTransactions: {},
+        getAccountsResponse: {
+          accountsList: [
+            {
+              accountNumber: 0,
+              accountName: "default"
+            }
+          ]
+        }
+      }
+    }
+  });
+
+  await wait(() => getIODetails());
+
+  expect(getHeaderTitleIconClassName()).toMatch("ticket");
+  expect(getTitleText()).toMatch("Ticket, Revoked");
+  expect(getTicketCostText()).toMatch("Ticket Cost86.00218109 DCR");
+  expect(getRewardText()).toMatch("Reward-0.0000298 DCR");
+
+  expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
+  expect(queryUnconfirmed()).not.toBeInTheDocument();
+  expect(getConfirmedText()).toMatch("Confirmed109,009 confirmations");
+  expect(getToAddressText()).toMatch(
+    "To address: Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  );
+
+  expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
+  expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
+
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault86.00218109 DCR");
+  // don't have non wallet input
+  expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
+
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 86.00218109 DCR");
+  // don't have non wallet output
+  expect(getNonWalletOutputs()).toMatch("Non Wallet Outputs");
+
+  expect(screen.getByText(rawTx)).toBeInTheDocument();
+  expect(getHeightText()).toMatch("Height815405");
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
