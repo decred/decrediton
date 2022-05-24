@@ -95,7 +95,7 @@ const title = ({ txType, txAmount, txDirection, intl, status }) => {
   } else if (messages[status]) {
     return intl.formatMessage(messages[status]);
   } else {
-    console.error("unknown transaction");
+    console.error("unknown transaction type");
     return "";
   }
 };

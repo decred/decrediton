@@ -383,11 +383,73 @@ test("self coins from unmixed to mixed account", async () => {
 
 test("voted ticket", async () => {
   mockTxHash =
-    "f5c4259f1ae264a6bc7e52d5f602967e947fdebdb8bc7a551a18d36ab1933e17";
+    "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57";
   const rawTx = mockStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
   mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
-  selectors.currentBlockHeight = jest.fn(() => 712217);
+  selectors.currentBlockHeight = jest.fn(() => 924414);
+
+  render(<TransactionPage />, {
+    initialState: {
+      grpc: {
+        regularTransactions: {},
+        stakeTransactions: mockStakeTransactionMap,
+        decodedTransactions: {},
+        getAccountsResponse: {
+          accountsList: [
+            {
+              accountNumber: 0,
+              accountName: "default"
+            }
+          ]
+        }
+      }
+    },
+    currentSettings: {
+      network: "testnet"
+    }
+  });
+
+  await wait(() => getIODetails());
+
+  expect(getHeaderTitleIconClassName()).toMatch("ticket");
+  expect(getTitleText()).toMatch("Ticket, Voted");
+  expect(getTicketCostText()).toMatch("Ticket Cost122.71678363 DCR");
+  expect(getRewardText()).toMatch("Reward0.04586488 DCR");
+
+  expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
+  expect(queryUnconfirmed()).not.toBeInTheDocument();
+  expect(getConfirmedText()).toMatch("Confirmed4,572 confirmations");
+
+  expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
+  expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
+
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault122.71678363 DCR");
+  expect(getNonWalletInputsText()).toMatch(
+    "Non Wallet Inputs 92ce48f17cf6a507f401a45d60ecd819443c6246f2f0e366b5614631032e0fb5:0 122.71681343 DCR"
+  );
+
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 122.76267831 DCR");
+  expect(getNonWalletOutputs()).toMatch(
+    "Non Wallet Outputs TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU 122.71678363 DCR TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n 0.00000 DCR"
+  );
+
+  expect(screen.getByText(rawTx)).toBeInTheDocument();
+  expect(getHeightText()).toMatch("Height919842");
+
+  user.click(screen.getByText("Back"));
+  expect(mockGoBackHistory).toHaveBeenCalled();
+
+  expect(getVSPHostText()).toMatch("VSP host:mockVspHost");
+});
+
+test("vote tx", async () => {
+  mockTxHash =
+    "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da";
+  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+  const mockStakeTransactionMap = {};
+  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 924414);
 
   render(<TransactionPage />, {
     initialState: {
@@ -414,54 +476,54 @@ test("voted ticket", async () => {
 
   expect(getHeaderTitleIconClassName()).toMatch("vote");
   expect(getTitleText()).toMatch("Vote");
-  expect(getTicketCostText()).toMatch("Ticket Cost100.88957415 DCR");
-  expect(getRewardText()).toMatch("Reward0.04841163 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost122.71678363 DCR");
+  expect(getRewardText()).toMatch("Reward0.04586488 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
-  expect(getConfirmedText()).toMatch("Confirmed4,989 confirmations");
+  expect(getConfirmedText()).toMatch("Confirmed4,437 confirmations");
   expect(getTicketSpentText()).toMatch(
-    "Ticket Spent:65b2b6f8195d1aece698c9d6058ccd97e60e18484d619e6b0b8317bb660cb27f"
+    "Ticket Spent:6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault100.88957415 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault122.71678363 DCR");
   expect(getNonWalletInputsText()).toMatch(
-    "Non Wallet Inputs 0000000000000000000000000000000000000000000000000000000000000000:4294967295 0.04844143 DCR"
+    "Non Wallet Inputs 0000000000000000000000000000000000000000000000000000000000000000:4294967295 0.04589468 DCR"
   );
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 100.93801558 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 122.76267831 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs [script] - OP_RETURN OP_DATA_36 d77be628eb5a04f845a27ddf86ddf721e2a6e68e130334c36e87c7ee000000009bca0a00 0.00000 DCR [script] - OP_RETURN OP_DATA_6 010009000000 0.00000 DCR"
+    "Non Wallet Outputs [script] - OP_RETURN OP_DATA_36 32c8b01145a24d62ff8db613ca24a3b92e2472bac893ad0e864f1c8b00000000a8090e00 0.00000 DCR [script] - OP_RETURN OP_DATA_6 01000a000000 0.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
-  expect(getHeightText()).toMatch("Height707228");
+  expect(getHeightText()).toMatch("Height919977");
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 
   expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
-    "Enable decentralized Treasury opcodes as defined in DCP0006treasuryabstain"
+    "Agenda Choices:Change maximum treasury expenditure policy as defined in DCP0007reverttreasurypolicyabstainEnable explicit version upgrades as defined in DCP0008explicitverupgradesabstainEnable automatic ticket revocations as defined in DCP0009autorevocationsabstainChange block reward subsidy split to 10/80/10 as defined in DCP0010changesubsidysplitabstain"
   );
 
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost");
   expect(getLastBlockValidText()).toMatch("Last Block Valid:true");
-  expect(getVoteVersionText()).toMatch("Vote Version:9");
+  expect(getVoteVersionText()).toMatch("Vote Version:10");
   expect(getVoteBitsText()).toMatch("Vote Bits:0x0001");
 });
 
-test("voted ticket (votes don't align with what the wallet currently has set)", async () => {
+test("vote tx (votes don't align with what the wallet currently has set)", async () => {
   mockTxHash =
-    "f5c4259f1ae264a6bc7e52d5f602967e947fdebdb8bc7a551a18d36ab1933e17";
+    "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da";
   const mockStakeTransactionMap = {};
   mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712217);
   selectors.voteChoices = jest.fn(() => [
     {
-      agendaId: "treasury",
+      agendaId: "changesubsidysplit",
       choiceId: "yes"
     }
   ]);
@@ -490,7 +552,7 @@ test("voted ticket (votes don't align with what the wallet currently has set)", 
   await wait(() => getIODetails());
 
   expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
-    "Enable decentralized Treasury opcodes as defined in DCP0006treasuryabstainThis doesn't align with what the wallet currently has set (yes)"
+    "Agenda Choices:Change maximum treasury expenditure policy as defined in DCP0007reverttreasurypolicyabstainEnable explicit version upgrades as defined in DCP0008explicitverupgradesabstainEnable automatic ticket revocations as defined in DCP0009autorevocationsabstainChange block reward subsidy split to 10/80/10 as defined in DCP0010changesubsidysplitabstainThis doesn't align with what the wallet currently has set (yes)"
   );
 });
 
