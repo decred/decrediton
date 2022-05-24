@@ -154,7 +154,11 @@ const subtitle = ({
           {leaveTimestamp && (
             <div className={styles.subtitlePair}>
               <div className={styles.subtitleSentfrom}>
-                <T id="txDetails.votedOn" m="Voted On" />
+                {txType === REVOCATION ? (
+                  <T id="txDetails.missedOn" m="Missed On" />
+                ) : (
+                  <T id="txDetails.votedOn" m="Voted On" />
+                )}
               </div>
               <div className={styles.subtitleDate}>
                 <T
