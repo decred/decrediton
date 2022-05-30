@@ -403,7 +403,7 @@
   "getStarted.backBtn": "Cancelar",
   "getStarted.btnLogs": "Logs",
   "getStarted.btnSettings": "Configurações",
-  "getStarted.chainLoading.headerTime": "Tempo dede o último cabeçalho obtido:",
+  "getStarted.chainLoading.headerTime": "Tempo desde o último cabeçalho obtido:",
   "getStarted.chainLoading.syncEstimation": "Estimativa para completar download da blockchain:",
   "getStarted.chainLoading.syncEstimation.small": "Carregando blockchain Decred, conclusão estimada",
   "getStarted.confirmSeed.enterAllWords": "*Por favor digite todas as palavras",
