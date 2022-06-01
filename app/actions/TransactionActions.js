@@ -10,7 +10,7 @@ import {
 import { getVSPTicketsByFeeStatus } from "./VSPActions";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { getStartupStats } from "./StatisticsActions";
-import { hexToBytes, strHashToRaw } from "helpers";
+import { hexToBytes, strHashToRaw, reverseHash } from "helpers";
 import {
   RECENT_TX_COUNT,
   BATCH_TX_COUNT,
@@ -22,7 +22,10 @@ import {
   TICKET,
   VOTE,
   VOTED,
-  REVOKED
+  REVOKED,
+  TRANSACTION_DIR_SENT,
+  TRANSACTION_DIR_RECEIVED,
+  TICKET_FEE
 } from "constants";
 import { getNextAddressAttempt } from "./ControlActions";
 import { MaxNonWalletOutputs } from "constants";
@@ -282,7 +285,10 @@ export const newTransactionsReceived = (
     newlyUnminedTransactions,
     newlyMinedTransactions,
     stakeTransactions,
-    regularTransactions
+    regularTransactions,
+    normalizedRegularTransactions: dispatch(
+      normalizeRegularTransactions(regularTransactions)
+    )
   });
 
   if (newlyMinedTransactions.length > 0) {
@@ -303,11 +309,16 @@ export const changeTransactionsFilter = (newFilter) => (dispatch, getState) =>
     const {
       transactionsFilter: { listDirection }
     } = getState().grpc;
-    let { regularTransactions, getRegularTxsAux } = getState().grpc;
+    let {
+      regularTransactions,
+      getRegularTxsAux,
+      normalizedRegularTransactions
+    } = getState().grpc;
     // If list direction changes (from asc to desc or vice versa), we need to
     // clean txs, otherwise the UI gets buggy with infinite scroll.
     if (listDirection !== newFilter.listDirection) {
       regularTransactions = {};
+      normalizedRegularTransactions = {};
       getRegularTxsAux = {
         noMoreTransactions: false,
         lastTransaction: null
@@ -316,6 +327,7 @@ export const changeTransactionsFilter = (newFilter) => (dispatch, getState) =>
     dispatch({
       transactionsFilter: newFilter,
       regularTransactions,
+      normalizedRegularTransactions,
       getRegularTxsAux,
       type: CHANGE_TRANSACTIONS_FILTER
     });
@@ -483,7 +495,10 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     recentStakeTxs,
     maturingBlockHeights,
     stakeTransactions,
-    regularTransactions
+    regularTransactions,
+    normalizedRegularTransactions: dispatch(
+      normalizeRegularTransactions(regularTransactions)
+    )
   });
 };
 
@@ -705,7 +720,10 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     stakeTransactions,
     regularTransactions,
     startRequestHeight,
-    noMoreLiveTickets
+    noMoreLiveTickets,
+    normalizedRegularTransactions: dispatch(
+      normalizeRegularTransactions(regularTransactions)
+    )
   });
 };
 
@@ -912,3 +930,146 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
         reject(error);
       });
   });
+
+export const normalizeRegularTransactions = (regularTransactions) => (
+  dispatch
+) =>
+  Object.keys(regularTransactions).reduce((normalizedMap, txHash) => {
+    const tx = regularTransactions[txHash];
+    if (tx.isStake) return null;
+    normalizedMap[txHash] = dispatch(transactionNormalizer(tx));
+    return normalizedMap;
+  }, {});
+
+// transactionNormalizer normalizes regular decred's regular transactions
+const transactionNormalizer = (origTx) => (_, getState) => {
+  const accounts = sel.accounts(getState());
+  const txURLBuilder = sel.txURLBuilder(getState());
+  const blockURLBuilder = sel.blockURLBuilder(getState());
+  const chainParams = sel.chainParams(getState());
+  const mixedAccountName = sel.getMixedAccountName(getState());
+
+  const findAccount = (num) =>
+    accounts.find((account) => account.accountNumber === num);
+  const getAccountName = (num) =>
+    ((act) => (act ? act.accountName : ""))(findAccount(num));
+
+  const {
+    blockHash,
+    height,
+    type,
+    txType,
+    timestamp,
+    txHash,
+    rawTx,
+    isMix,
+    outputs,
+    creditAddresses,
+    direction,
+    amount: origAmount
+  } = origTx;
+  const txUrl = txURLBuilder(txHash);
+  const txBlockHash = blockHash
+    ? reverseHash(Buffer.from(blockHash).toString("hex"))
+    : null;
+  const txBlockUrl = blockURLBuilder(txBlockHash);
+
+  let totalFundsReceived = 0;
+  let totalChange = 0;
+  const txInputs = [];
+  const txOutputs = [];
+  const fee = origTx.fee;
+  let debitedAccountName, creditedAccountName;
+  const totalDebit = origTx.debits.reduce((total, debit) => {
+    const debitedAccount = debit.previousAccount;
+    debitedAccountName = getAccountName(debitedAccount);
+    const amount = debit.previousAmount;
+    txInputs.push({
+      accountName: debitedAccountName,
+      amount,
+      index: debit.index
+    });
+    return total + amount;
+  }, 0);
+
+  let selfTx = false;
+  origTx.credits.forEach((credit) => {
+    const amount = credit.amount;
+    const address = credit.address;
+    const creditedAccount = credit.account;
+    const currentCreditedAccountName = getAccountName(creditedAccount);
+    // If we find a self credited account which isn't a change output
+    // & tx has one or more wallet inputs & no non-wallet outputs we consider
+    // the transaction as self trnsaction
+    if (
+      !credit.internal &&
+      txInputs.length > 0 &&
+      origTx.credits.length === outputs.length
+    ) {
+      selfTx = true;
+    }
+    // If we find credit which is not a change, then we pick
+    // it as receiver
+    if (!creditedAccountName || !credit.internal) {
+      creditedAccountName = currentCreditedAccountName;
+    }
+    txOutputs.push({
+      accountName: currentCreditedAccountName,
+      amount,
+      address,
+      index: credit.index
+    });
+    credit.internal ? (totalChange += amount) : (totalFundsReceived += amount);
+  });
+
+  const txDetails =
+    totalFundsReceived + totalChange + fee < totalDebit
+      ? {
+          txAmount: totalDebit - fee - totalChange - totalFundsReceived,
+          txDirection: TRANSACTION_DIR_SENT,
+          txAccountName: debitedAccountName
+        }
+      : totalFundsReceived + totalChange + fee === totalDebit
+      ? {
+          txAmount: fee,
+          txDirection: TICKET_FEE,
+          txAccountNameCredited: creditedAccountName,
+          txAccountNameDebited: debitedAccountName
+        }
+      : totalFundsReceived === 0 &&
+        totalChange > 0 &&
+        origAmount === totalChange &&
+        direction === TRANSACTION_DIR_RECEIVED
+      ? // probably this is an incoming atomic swap
+        {
+          txAmount: totalChange,
+          txDirection: TRANSACTION_DIR_RECEIVED,
+          txAccountName: creditedAccountName
+        }
+      : {
+          txAmount: totalFundsReceived,
+          txDirection: TRANSACTION_DIR_RECEIVED,
+          txAccountName: creditedAccountName
+        };
+
+  return {
+    txUrl,
+    txBlockUrl,
+    txHash,
+    txHeight: height,
+    txType,
+    timestamp,
+    isPending: height <= 0,
+    txFee: fee,
+    txInputs,
+    txOutputs,
+    txBlockHash,
+    txNumericType: type,
+    rawTx,
+    outputs,
+    creditAddresses,
+    mixedTx: isMix || debitedAccountName === mixedAccountName,
+    selfTx: !isMix && selfTx,
+    ...txDetails
+  };
+};

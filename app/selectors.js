@@ -761,18 +761,10 @@ export const transactionNormalizer = createSelector(
 const stakeTxs = get(["grpc", "stakeTransactions"]);
 const regularTxs = get(["grpc", "regularTransactions"]);
 
-// transactions selectors normalized.
-export const regularTransactions = createSelector(
-  [transactionNormalizer, regularTxs],
-  (normalizerFn, txsMap) => {
-    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
-      const tx = txsMap[txHash];
-      if (tx.isStake) return null;
-      normalizedMap[txHash] = normalizerFn(tx);
-      return normalizedMap;
-    }, {});
-  }
-);
+export const regularTransactions = get([
+  "grpc",
+  "normalizedRegularTransactions"
+]);
 
 export const stakeTransactions = createSelector(
   [ticketNormalizer, stakeTxs],
