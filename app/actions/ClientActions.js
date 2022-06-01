@@ -21,10 +21,7 @@ import {
   setVSPDVoteChoices
 } from "./VSPActions";
 import { startDex } from "./DexActions";
-import {
-  getStartupTransactions,
-  normalizeRegularTransactions
-} from "./TransactionActions";
+import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
 import { checkLnWallet } from "./LNActions";
 import { push as pushHistory, goBack } from "connected-react-router";
@@ -864,7 +861,8 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
       const {
         regularTransactions,
         recentRegularTransactions,
-        normalizedRegularTransactions
+        normalizedRegularTransactions,
+        normalizedRecentRegularTransactions
       } = state.grpc;
       // remove from transactions
       delete regularTransactions[txid];
@@ -872,11 +870,15 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
       const newRecentRegularTransactions = recentRegularTransactions.filter(
         (t) => t.txHash !== txid
       );
+      const newNormalizedRecentRegularTransactions = normalizedRecentRegularTransactions.filter(
+        (t) => t.txHash !== txid
+      );
       dispatch({
         type: ABANDONTRANSACTION_SUCCESS,
         regularTransactions,
         recentRegularTransactions: newRecentRegularTransactions,
-        normalizedRegularTransactions: normalizedRegularTransactions
+        normalizedRegularTransactions: normalizedRegularTransactions,
+        normalizedRecentRegularTransactions: newNormalizedRecentRegularTransactions
       });
       dispatch(goBack());
     })

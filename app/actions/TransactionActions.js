@@ -288,6 +288,9 @@ export const newTransactionsReceived = (
     regularTransactions,
     normalizedRegularTransactions: dispatch(
       normalizeRegularTransactions(regularTransactions)
+    ),
+    normalizedRecentRegularTransactions: dispatch(
+      normalizeRecentTransactions(recentRegularTransactions)
     )
   });
 
@@ -498,6 +501,9 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     regularTransactions,
     normalizedRegularTransactions: dispatch(
       normalizeRegularTransactions(regularTransactions)
+    ),
+    normalizedRecentRegularTransactions: dispatch(
+      normalizeRecentTransactions(recentRegularTxs)
     )
   });
 };
@@ -931,15 +937,20 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
       });
   });
 
-export const normalizeRegularTransactions = (regularTransactions) => (
-  dispatch
-) =>
-  Object.keys(regularTransactions).reduce((normalizedMap, txHash) => {
-    const tx = regularTransactions[txHash];
+export const normalizeRegularTransactions = (txs) => (dispatch) =>
+  Object.keys(txs).reduce((normalizedMap, txHash) => {
+    const tx = txs[txHash];
     if (tx.isStake) return null;
     normalizedMap[txHash] = dispatch(transactionNormalizer(tx));
     return normalizedMap;
   }, {});
+
+export const normalizeRecentTransactions = (txs) => (dispatch) =>
+  txs.reduce((normalizedArray, tx) => {
+    if (tx.isStake) return null;
+    normalizedArray.push(dispatch(transactionNormalizer(tx)));
+    return normalizedArray;
+  }, []);
 
 // transactionNormalizer normalizes regular decred's regular transactions
 const transactionNormalizer = (origTx) => (_, getState) => {

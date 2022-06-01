@@ -433,7 +433,9 @@ export default function grpc(state = {}, action) {
         abandonTransactionRequestAttempt: false,
         recentRegularTransactions: action.recentRegularTransactions,
         regularTransactions: action.regularTransactions,
-        normalizedRegularTransactions: action.normalizedRegularTransactions
+        normalizedRegularTransactions: action.normalizedRegularTransactions,
+        normalizedRecentRegularTransactions:
+          action.normalizedRecentRegularTransactions
       };
     case MIXERACCOUNTS_SPENDABLE_BALANCE:
       return {
@@ -451,7 +453,9 @@ export default function grpc(state = {}, action) {
         recentStakeTransactions: action.recentStakeTransactions,
         stakeTransactions: action.stakeTransactions,
         regularTransactions: action.regularTransactions,
-        normalizedRegularTransactions: action.normalizedRegularTransactions
+        normalizedRegularTransactions: action.normalizedRegularTransactions,
+        normalizedRecentRegularTransactions:
+          action.normalizedRecentRegularTransactions
       };
     case CHANGE_TRANSACTIONS_FILTER:
       return {
@@ -696,7 +700,9 @@ export default function grpc(state = {}, action) {
         recentStakeTransactions: action.recentStakeTxs,
         stakeTransactions: action.stakeTransactions,
         regularTransactions: action.regularTransactions,
-        normalizedRegularTransactions: action.normalizedRegularTransactions
+        normalizedRegularTransactions: action.normalizedRegularTransactions,
+        normalizedRecentRegularTransactions:
+          action.normalizedRecentRegularTransactions
       };
     case MATURINGHEIGHTS_CHANGED:
       return {
@@ -733,6 +739,10 @@ export default function grpc(state = {}, action) {
         },
         recentRegularTransactions: [],
         recentStakeTransactions: [],
+        normalizedRegularTransactions: {},
+        normalizedRecentRegularTransactions: {},
+        regularTransactions: {},
+        stakeTransactions: {},
         ticketBuyerService: null,
         transactionsSinceLastOpened: null,
         votingService: null,

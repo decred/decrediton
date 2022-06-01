@@ -211,6 +211,7 @@ const initialState = {
     stakeTransactions: {},
     regularTransactions: {},
     normalizedRegularTransactions: {},
+    normalizedRecentRegularTransactions: {},
     // getRegularTxsAux is a state helper to get regular transactions
     getRegularTxsAux: {
       noMoreTransactions: false,
