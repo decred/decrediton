@@ -947,7 +947,7 @@ export const normalizeRegularTransactions = (txs) => (dispatch) =>
 
 export const normalizeRecentTransactions = (txs) => (dispatch) =>
   txs.reduce((normalizedArray, tx) => {
-    if (tx.isStake) return normalizedMap;
+    if (tx.isStake) return normalizedArray;
     normalizedArray.push(dispatch(transactionNormalizer(tx)));
     return normalizedArray;
   }, []);

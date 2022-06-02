@@ -9,7 +9,7 @@ const toByteArray = (hex) => {
   return res;
 };
 
-const mockNormalizedRegularTransactionList = [
+export const mockNormalizedRegularTransactionList = [
   // regular pending transaction
   {
     txUrl:
@@ -283,7 +283,7 @@ const mockNormalizedRegularTransactionList = [
     txAccountName: "account-4"
   }
 ];
-const mockRegularTransactionList = [
+export const mockRegularTransactionList = [
   // regular pending transaction
   {
     timestamp: 1624527872,
@@ -881,8 +881,8 @@ export const mockOldTxs = [
   }
 ];
 
-const mockStakeTransactionList = [
-  // vote tx
+export const mockStakeTransactionList = [
+  // voted tx
   {
     timestamp: 1652874655,
     height: 919977,
