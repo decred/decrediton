@@ -3,9 +3,10 @@ import { createStore } from "test-utils.js";
 import { wait } from "@testing-library/react";
 import {
   mockRegularTransactions,
+  mockStakeTransactions,
   mockNormalizedRegularTransactions
 } from "../components/views/TransactionPage/mocks.js";
-import { isEqual } from "lodash/fp";
+import { isEqual, cloneDeep } from "lodash/fp";
 
 const transactionActions = cla;
 
@@ -56,8 +57,13 @@ test("test transactionNormalizer", async () => {
     }
   });
 
+  const txs = {
+    ...cloneDeep(mockRegularTransactions),
+    ...cloneDeep(mockStakeTransactions) // stake txs should not be processed
+  };
+
   const normalizedTransaction = await store.dispatch(
-    transactionActions.normalizeRegularTransactions(mockRegularTransactions)
+    transactionActions.normalizeRegularTransactions(txs)
   );
 
   expect(

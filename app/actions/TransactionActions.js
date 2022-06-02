@@ -940,14 +940,14 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
 export const normalizeRegularTransactions = (txs) => (dispatch) =>
   Object.keys(txs).reduce((normalizedMap, txHash) => {
     const tx = txs[txHash];
-    if (tx.isStake) return null;
+    if (tx.isStake) return normalizedMap;
     normalizedMap[txHash] = dispatch(transactionNormalizer(tx));
     return normalizedMap;
   }, {});
 
 export const normalizeRecentTransactions = (txs) => (dispatch) =>
   txs.reduce((normalizedArray, tx) => {
-    if (tx.isStake) return null;
+    if (tx.isStake) return normalizedMap;
     normalizedArray.push(dispatch(transactionNormalizer(tx)));
     return normalizedArray;
   }, []);
