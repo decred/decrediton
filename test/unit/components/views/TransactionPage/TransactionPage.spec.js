@@ -9,7 +9,7 @@ import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
 import { cloneDeep } from "fp";
 import {
-  mockRegularTransactions,
+  mockNormalizedRegularTransactions,
   mockStakeTransactions,
   mockOldTxs,
   mockAgendas
@@ -150,22 +150,14 @@ const getRewardText = () =>
 test("regular sent pending tx from default account to an external address", async () => {
   mockTxHash =
     "263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d";
-  const rawTx = mockRegularTransactions[mockTxHash].rawTx;
+  const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        regularTransactions: mockRegularTransactions,
+        normalizedRegularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
-        decodedTransactions: {},
-        getAccountsResponse: {
-          accountsList: [
-            {
-              accountNumber: 0,
-              accountName: "default"
-            }
-          ]
-        }
+        decodedTransactions: {}
       }
     }
   });
@@ -209,23 +201,15 @@ test("regular sent pending tx from default account to an external address", asyn
 test("regular received mined tx to the default account", async () => {
   mockTxHash =
     "642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e";
-  const rawTx = mockRegularTransactions[mockTxHash].rawTx;
+  const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   selectors.currentBlockHeight = jest.fn(() => 712214);
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        regularTransactions: mockRegularTransactions,
+        normalizedRegularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
-        decodedTransactions: {},
-        getAccountsResponse: {
-          accountsList: [
-            {
-              accountNumber: 0,
-              accountName: "default"
-            }
-          ]
-        }
+        decodedTransactions: {}
       }
     }
   });
@@ -266,27 +250,15 @@ test("regular received mined tx to the default account", async () => {
 test("regular self transfer tx to unmixed account", async () => {
   mockTxHash =
     "9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304";
-  const rawTx = mockRegularTransactions[mockTxHash].rawTx;
+  const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   selectors.currentBlockHeight = jest.fn(() => 712836);
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        regularTransactions: mockRegularTransactions,
+        normalizedRegularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
-        decodedTransactions: {},
-        getAccountsResponse: {
-          accountsList: [
-            {
-              accountNumber: 0,
-              accountName: "default"
-            },
-            {
-              accountNumber: 4,
-              accountName: "unmixed"
-            }
-          ]
-        }
+        decodedTransactions: {}
       }
     }
   });
@@ -311,7 +283,7 @@ test("regular self transfer tx to unmixed account", async () => {
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
   expect(getWalletOutputs()).toMatch(
-    "Wallet Outputs unmixed 50.00000 DCR default 13.62441426 DCR"
+    "Wallet Outputs account-4 50.00000 DCR default 13.62441426 DCR"
   );
   // don't have any non wallet input
   expect(getNonWalletOutputs()).toMatch("Non Wallet Outputs");
@@ -326,23 +298,15 @@ test("regular self transfer tx to unmixed account", async () => {
 test("self coins from unmixed to mixed account", async () => {
   mockTxHash =
     "ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c";
-  const rawTx = mockRegularTransactions[mockTxHash].rawTx;
+  const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   selectors.currentBlockHeight = jest.fn(() => 712883);
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        regularTransactions: mockRegularTransactions,
+        normalizedRegularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
-        decodedTransactions: {},
-        getAccountsResponse: {
-          accountsList: [
-            {
-              accountNumber: 0,
-              accountName: "default"
-            }
-          ]
-        }
+        decodedTransactions: {}
       }
     }
   });
@@ -362,7 +326,7 @@ test("self coins from unmixed to mixed account", async () => {
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputs50.00000 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsaccount-450.00000 DCR");
   expect(getNonWalletInputsText()).toMatch(
     "Non Wallet Inputs 1fb0d31823836168b59ea0d52d301905aa8c64c694b528e22e901d5b3cac7377:6 14.04694804 DCR 1fb0d31823836168b59ea0d52d301905aa8c64c694b528e22e901d5b3cac7377:13 16.50200823 DCR"
   );
@@ -455,6 +419,7 @@ test("vote tx", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -532,6 +497,7 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -567,6 +533,7 @@ test("missed ticket", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -626,6 +593,7 @@ test("revocation", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -742,6 +710,7 @@ test("immature ticket", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -801,6 +770,7 @@ test("live ticket", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -887,6 +857,7 @@ test("unmined ticket", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
+        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {

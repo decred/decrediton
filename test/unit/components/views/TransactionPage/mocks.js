@@ -9,6 +9,280 @@ const toByteArray = (hex) => {
   return res;
 };
 
+const mockNormalizedRegularTransactionList = [
+  // regular pending transaction
+  {
+    txUrl:
+      "https://testnet.decred.org/tx/263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d",
+    txBlockUrl: "",
+    txHash: "263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d",
+    txHeight: -1,
+    txType: "regular",
+    timestamp: 1624527932,
+    isPending: true,
+    txFee: 2530,
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 1793854340,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 993851810,
+        address: "TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY",
+        index: 0
+      }
+    ],
+    txBlockHash: null,
+    txNumericType: 0,
+    rawTx:
+      "010000000137bdd42d19c66cb0ee0da40f5419b284bcd16af1d3836f313fad124b5e5a4fe80000000000ffffffff02a2f93c3b0000000000001976a914694d918352de4cfe4bee6776a3f2502a7fcdc2f888ac0008af2f0000000000001976a9145aec0ddf49a9ca0ad1de2b4143666f544860043688ac000000000000000001840bec6a0000000091d80a000b0000006b4830450221009ce94aac7683dfbac6e23716af87b7529b3cf53d69d1bae7772a9e1baccc873902204e0312be8be7a518723c0c7d9e1f40abe67c681e9aabf78deb21d964c31872c201210314012e939d6ab30c7dacb4258654b0996ce89f7e47faa57bbbf65c44dffd668f",
+    outputs: [
+      {
+        address: "TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY",
+        value: 993851810,
+        isChange: true
+      },
+      {
+        address: "TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk",
+        value: 800000000,
+        isChange: false
+      }
+    ],
+    creditAddresses: ["TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY"],
+    mixedTx: false,
+    selfTx: false,
+    txAmount: 800000000,
+    txDirection: "sent",
+    txAccountName: "default"
+  },
+  // regular received mined regular transaction
+  {
+    txUrl:
+      "https://testnet.decred.org/tx/642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    txHash: "642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e",
+    txHeight: 706945,
+    txType: "regular",
+    timestamp: 1623923254,
+    isPending: false,
+    txFee: 0,
+    txInputs: [],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 10000000000,
+        address: "TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV",
+        index: 0
+      }
+    ],
+    txBlockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    txNumericType: 0,
+    rawTx:
+      "0100000004bf28aa8fb5d6dac3178e9332a702d8e8356873ca8fe6d33dccbd2d9c5fd7683e0100000000ffffffffdb19f3f77aeeb622700d23fe355b63fe8fd76b8b7632b0589d84b9c38e05d4ae0000000000ffffffff6bf93964a8376db78e1e1ff4afb9f1b798d7bec728e012311fed0e31a8afd0190100000000ffffffff782715c018478b5632ef57c589e3411bb192d3b5ee456a0b116108c15ec1b5140000000000ffffffff0200e40b540200000000001976a9143686c91e4d6e3993d2a868c9d6989d26bf0932b888acfc0fb0d60600000000001976a914778e4e20f5a4979265fb74af268034d7f90e805f88ac00000000000000000400a3e1110000000004c40a00010000006a473044022043d419c5d52dc0d24b49e3967770c4ca652363aa2daeb17a72535ef6a3d0cbca022039f51a398ee97134b33d19261f5aadeb6fffb65df16b509e5477682d5a70b3170121023679ebfc751737b730d41e5cb3b7552ae5b5781d9871094c518bac333ac544e7000e270700000000c6c30a00010000006b4830450221008cc6a8b5e8b24db0d91548ffc613e82f9a8451a40a80fb1e84802e0f964e1fd5022074c95643de7f719a771cb6d2adadd7a412ed9b8ad5d65d30b33ca18788266e570121023679ebfc751737b730d41e5cb3b7552ae5b5781d9871094c518bac333ac544e700e1f505000000000dc40a00090000006a47304402203312f602dc56e581d138fe39d5024cf41efd2fec0e186526af3c9558d620507602206eb04e0f14315d561529ae280efef4982e086d51499dd70a61c8f34f32fe13500121023679ebfc751737b730d41e5cb3b7552ae5b5781d9871094c518bac333ac544e7527fbd0b0900000071180a00040000006a47304402202dd4f98539723adccf4ec139676d8589fc596575584b39baf2bb28e53f9e6aca0220575014c485b5ce5814f84889eda85a981be339bc713588f3d9fabcccce1cecbe01210396f97ab7cf4fb3bf9c8198d2c19c709a623103fe2c6316a7a6751484537a6820",
+    outputs: [
+      {
+        address: "TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV",
+        value: 10000000000,
+        isChange: true
+      },
+      {
+        address: "TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA",
+        value: 29371666428,
+        isChange: false
+      }
+    ],
+    creditAddresses: ["TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV"],
+    mixedTx: false,
+    selfTx: false,
+    txAmount: 10000000000,
+    txDirection: "received",
+    txAccountName: "default"
+  },
+
+  // regular self transfer transactio
+  {
+    txUrl:
+      "https://testnet.decred.org/tx/9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304",
+    txBlockUrl:
+      "https://testnet.decred.org/block/00000000cf7eee715245616121f06e62fb3ac39c5cc296076395b80e21b5de62",
+    txHash: "9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304",
+    txHeight: 712832,
+    txType: "regular",
+    timestamp: 1624605208,
+    isPending: false,
+    txFee: 2530,
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 6362443956,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "account-4",
+        amount: 5000000000,
+        address: "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+        index: 0
+      },
+      {
+        accountName: "default",
+        amount: 1362441426,
+        address: "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8",
+        index: 1
+      }
+    ],
+    txBlockHash:
+      "00000000cf7eee715245616121f06e62fb3ac39c5cc296076395b80e21b5de62",
+    txNumericType: 0,
+    rawTx:
+      "010000000105b2574bf056ac5bc8b1da11e13277dc7f9a4fcf1fcb46c8d7004d1b952e354c0100000000ffffffff0200f2052a0100000000001976a9140cbd0ed5738aee2c8b507c7234e140bdf5d2120e88acd23435510000000000001976a914ab2e3b83e5e37b902197b85599be1826373d082288ac000000000000000001b4303b7b0100000072de0a00050000006a47304402203c4e1289c57e46903e3b4444f9a6a4beab805b0a13b7551f63d35ba8eb8f3d0a02203ba8b75862288de7d71be0610f49ac0e880721ce3a6500b1ca75dbed687a682d0121032dcb435ca06b6c25401bfb7a4c6411ea79327e29e7f929571405f21db2f0cd20",
+    outputs: [
+      {
+        address: "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+        value: 5000000000,
+        isChange: true
+      },
+      {
+        address: "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8",
+        value: 1362441426,
+        isChange: true
+      }
+    ],
+    creditAddresses: [
+      "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+      "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8"
+    ],
+    mixedTx: false,
+    selfTx: true,
+    txAmount: 2530,
+    txDirection: "ticketfee",
+    txAccountNameCredited: "account-4",
+    txAccountNameDebited: "default"
+  },
+  // regular mixed transaction (from unmixed to mixed)
+  {
+    txUrl:
+      "https://testnet.decred.org/tx/ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c",
+    txBlockUrl:
+      "https://testnet.decred.org/block/00000000f6281f84cd50fbf1dc0d13f39b843aa04fc1894d92db193534ff41d3",
+    txHash: "ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c",
+    txHeight: 712872,
+    txType: "regular",
+    timestamp: 1624609448,
+    isPending: false,
+    txFee: 0,
+    txInputs: [
+      {
+        accountName: "account-4",
+        amount: 5000000000,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "account-4",
+        amount: 705029094,
+        address: "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+        index: 2
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+        index: 4
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+        index: 5
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+        index: 6
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs",
+        index: 7
+      }
+    ],
+    txBlockHash:
+      "00000000f6281f84cd50fbf1dc0d13f39b843aa04fc1894d92db193534ff41d3",
+    txNumericType: 0,
+    rawTx:
+      "010000000304a30f2f7a92cd0dc3ccc73b462f3988e851adc27b62897300a918c498b910910000000000000000007773ac3c5b1d902ee228b594c6648caa0519302dd5a09eb56861832318d3b01f0600000000000000007773ac3c5b1d902ee228b594c6648caa0519302dd5a09eb56861832318d3b01f0d00000000000000000915075c220000000000001976a914cf7ab856a54d039fb39c0437abecbb0a9cd22d4d88ac000000400000000000001976a914f5516162c4bb1ead78ed98758c744a9ede0642de88ace6e3052a0000000000001976a914b460a98fa91d688b9e7fb4533fde58c7b88617e288ac32e7b9130000000000001976a91430faefe4d83fa63c8d05a3b6a2240f9ba15b38bf88ac000000400000000000001976a91424c2aaaaba269fe4801322cca894dc53202b6cd588ac000000400000000000001976a914a1066198f4f2738684af9c0dabf2e0acb5368c1388ac000000400000000000001976a91445e8178ec05a05068af93bdd580667b0ecf50af788ac000000400000000000001976a914c73bdb952eac21dac545a074812f981b7398fce188ac000000400000000000001976a914f57e187ad1dfce7cc591cb85411c65d17fd8224e88ac00000000000000000300f2052a0100000080e00a00080000006b483045022100e533cbb88e3f11d9650262cd51e245dfe4d0659baa34df17e7eaaf3421c94bb102201144f1e482867e5984e9d0cf75a7cc7ae208786e7630be8d750fa24a8422f81001210393e85132b9aed5d69f7b0e8bfb48b2300fecc7710e7ba30c65ec2412d3d685ed14f1b95300000000a3e00a00070000006b4830450221009f9feb22dd01bbc16c97d889bca3e2200ed254f6a8e3ef421b1e4d25eab5c3ae02201b6c4e794a9a5ae211221f8bf569512d7a9489a164dc5a189f52ca2fccbf7b0d0121032aec130af5e726017c039cb471331bc95314f3b65d6e289a15af3310e5ce3c40f7105c6200000000a3e00a00070000006a47304402204b2d81fe96320768d0f547ceb836a656c6ff1c5d4bd81b626d053d77a0de3e96022042111c6311774c32d2d75f7c6e92904b40ef974ca995a81c8fa5a3fd9f3b137a012103b1ea67a2e2bcd020b470fbbdb14687d1034bce11eee0665db2e53f5467d1af3e",
+    outputs: [
+      {
+        address: "TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw",
+        value: 576456469,
+        isChange: false
+      },
+      {
+        address: "TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva",
+        value: 1073741824,
+        isChange: false
+      },
+      {
+        address: "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+        value: 705029094,
+        isChange: true
+      },
+      {
+        address: "TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm",
+        value: 330950450,
+        isChange: false
+      },
+      {
+        address: "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3",
+        value: 1073741824,
+        isChange: false
+      }
+    ],
+    creditAddresses: [
+      "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+      "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+      "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+      "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+      "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs"
+    ],
+    mixedTx: true,
+    selfTx: false,
+    txAmount: 3610,
+    txDirection: "sent",
+    txAccountName: "account-4"
+  }
+];
 const mockRegularTransactionList = [
   // regular pending transaction
   {
@@ -1404,6 +1678,11 @@ export const mockRegularTransactions = {};
 mockRegularTransactionList.forEach((tx) => {
   tx.blockHash = toByteArray(tx.blockHash);
   mockRegularTransactions[tx.txHash] = tx;
+});
+
+export const mockNormalizedRegularTransactions = {};
+mockNormalizedRegularTransactionList.forEach((tx) => {
+  mockNormalizedRegularTransactions[tx.txHash] = tx;
 });
 
 export const mockStakeTransactions = {};

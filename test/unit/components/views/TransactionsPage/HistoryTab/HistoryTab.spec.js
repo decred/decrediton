@@ -7,7 +7,7 @@ export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
 import { DCR, BATCH_TX_COUNT } from "constants";
-import { mockRegularTransactions } from "../../TransactionPage/mocks";
+import { mockNormalizedRegularTransactions } from "../../TransactionPage/mocks";
 import { cloneDeep } from "fp";
 
 let mockWalletService;
@@ -24,7 +24,8 @@ const initialState = {
       maxAmount: null,
       minAmount: null
     },
-    regularTransactions: [],
+    regularTransactions: {},
+    normalizedRegularTransactions: {},
     getRegularTxsAux: {
       noMoreTransactions: false
     }
@@ -36,8 +37,8 @@ const getTestTxs = (startTs) => {
   const startDate = new Date(startTs * 1000);
   let lastTransaction;
 
-  Object.keys(mockRegularTransactions).forEach((txHash) => {
-    lastTransaction = { ...mockRegularTransactions[txHash] };
+  Object.keys(mockNormalizedRegularTransactions).forEach((txHash) => {
+    lastTransaction = { ...mockNormalizedRegularTransactions[txHash] };
     startDate.setHours(startDate.getHours() - 1);
     const ts = Math.floor(startDate.getTime() / 1000);
     lastTransaction.txHash = `test-txHash-${ts}`;
@@ -171,7 +172,7 @@ const incAllTestTxs = (mockGetTransactionsResponse, ts) => {
   const { lastTransaction, txList } = getTestTxs(
     ts || mockGetTransactionsResponse.getRegularTxsAux.lastTransaction.timestamp
   );
-  mockGetTransactionsResponse.regularTransactions = txList;
+  mockGetTransactionsResponse.normalizedRegularTransactions = txList;
   mockGetTransactionsResponse.getRegularTxsAux.lastTransaction = lastTransaction;
   return mockGetTransactionsResponse;
 };
@@ -191,7 +192,7 @@ const viewAllTxs = (mockGetTransactionsResponse, chunkCount) => {
 const countTxsByType = (txs, types, isMix = false) =>
   Object.keys(txs).reduce(
     (acc, tx) =>
-      types.includes(txs[tx].direction) && !!txs[tx].isMix === isMix
+      types.includes(txs[tx].txDirection) && !!txs[tx].mixedTx === isMix
         ? acc + 1
         : acc,
     0
@@ -204,8 +205,9 @@ test("test txList", async () => {
     type: transactionActions.GETTRANSACTIONS_COMPLETE,
     getRegularTxsAux: { noMoreTransactions: false },
     getStakeTxsAux: {},
-    stakeTransactions: [],
-    regularTransactions: [],
+    stakeTransactions: {},
+    regularTransactions: {},
+    normalizedRegularTransactions: {},
     startRequestHeight: 0,
     noMoreLiveTickets: true
   };
@@ -213,7 +215,7 @@ test("test txList", async () => {
     () => (dispatch) => {
       allTestTxs = {
         ...allTestTxs,
-        ...mockGetTransactionsResponse.regularTransactions
+        ...mockGetTransactionsResponse.normalizedRegularTransactions
       };
       return dispatch(mockGetTransactionsResponse);
     }
@@ -239,7 +241,8 @@ test("test txList", async () => {
     Object.keys(allTestTxs).length
   );
   expect(mockGetTransactions).toHaveBeenCalledTimes(
-    Object.keys(allTestTxs).length / Object.keys(mockRegularTransactions).length
+    Object.keys(allTestTxs).length /
+      Object.keys(mockNormalizedRegularTransactions).length
   );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 
@@ -420,7 +423,7 @@ test("show only sent txs which are coming from wallet and not from redux", async
     () => (dispatch) => {
       allTestTxs = {
         ...allTestTxs,
-        ...mockGetTransactionsResponse.regularTransactions
+        ...mockGetTransactionsResponse.normalizedRegularTransactions
       };
       return dispatch(mockGetTransactionsResponse);
     }
@@ -458,7 +461,8 @@ test("show only sent txs which are coming from wallet and not from redux", async
   expect(screen.getAllByText("Sent").length).toBe(expectedVisibleItems);
   expect(getHistoryPageContent().childElementCount).toBe(expectedVisibleItems);
   expect(mockGetTransactions).toHaveBeenCalledTimes(
-    Object.keys(allTestTxs).length / Object.keys(mockRegularTransactions).length
+    Object.keys(allTestTxs).length /
+      Object.keys(mockNormalizedRegularTransactions).length
   );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
 });
@@ -507,6 +511,7 @@ test("test no txs", () => {
     getRegularTxsAux: { noMoreTransactions: true },
     stakeTransactions: {},
     regularTransactions: {},
+    normalizedRegularTransactions: {},
     startRequestHeight: 0,
     noMoreLiveTickets: true
   };
