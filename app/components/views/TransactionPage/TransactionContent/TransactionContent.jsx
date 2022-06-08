@@ -9,6 +9,7 @@ import { FormattedMessage as T } from "react-intl";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import {
   VOTE,
+  REVOCATION,
   TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_SENT,
   TICKET
@@ -76,6 +77,7 @@ const TransactionContent = ({
   const iconBgColor = getThemeProperty(theme, "alert-icon-bg-color");
 
   const isVote = txType === VOTE;
+  const isRevocation = txType === REVOCATION;
   const agendaChoicesData =
     isVote &&
     Object.keys(voteScript.voteChoices).map((issueId) => {
@@ -144,7 +146,7 @@ const TransactionContent = ({
             )}
           </div>
         </div>
-        {isVote ? (
+        {(isVote || isRevocation) && (
           <>
             <div className={styles.topRow}>
               <div className={styles.name}>
@@ -156,6 +158,10 @@ const TransactionContent = ({
                 </ExternalLink>
               </div>
             </div>
+          </>
+        )}
+        {isVote ? (
+          <>
             <div className={styles.topRow}>
               <div className={styles.name}>
                 <T id="txDetails.lastBlockValid" m="Last Block Valid" />:

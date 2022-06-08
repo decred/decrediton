@@ -15,7 +15,8 @@ import {
   VSP_FEE_PROCESS_PAID,
   VSP_FEE_PROCESS_ERRORED,
   VSP_FEE_PROCESS_CONFIRMED,
-  EXTERNALREQUEST_STAKEPOOL_LISTING
+  EXTERNALREQUEST_STAKEPOOL_LISTING,
+  TICKET
 } from "constants";
 import { mockAvailableVsps, mockVspInfo } from "../PurchaseTab/mocks";
 import { en as enLocale } from "i18n/locales";
@@ -55,13 +56,20 @@ const initialState = {
   }
 };
 
+const mockStakeTickets = {};
+Object.keys(mockStakeTransactions).forEach((txHash) => {
+  if (mockStakeTransactions[txHash].txType === TICKET) {
+    mockStakeTickets[txHash] = mockStakeTransactions[txHash];
+  }
+});
+
 const getTestTxs = (startTs) => {
   const txList = {};
   const startDate = new Date(startTs * 1000);
   let lastTransaction;
 
-  Object.keys(mockStakeTransactions).forEach((txHash) => {
-    lastTransaction = { ...mockStakeTransactions[txHash] };
+  Object.keys(mockStakeTickets).forEach((txHash) => {
+    lastTransaction = { ...mockStakeTickets[txHash] };
     startDate.setHours(startDate.getHours() - 1);
     const ts = Math.floor(startDate.getTime() / 1000);
     lastTransaction.txHash = `test-txHash-${ts}`;
@@ -191,7 +199,7 @@ const viewAllTxs = (mockGetTransactionsResponse, chunkCount) => {
   return mockGetTransactionsResponse;
 };
 
-test("test vps ticket status list", async () => {
+test("test vsp ticket status list", async () => {
   jest.useFakeTimers();
   let allTestTxs = {};
   let mockGetTransactionsResponse = {
@@ -294,7 +302,7 @@ test("test vps ticket status list", async () => {
 
   await wait(() => expect(getHistoryPageContent().childElementCount).toBe(17));
   expect(mockGetTransactions).toHaveBeenCalledTimes(
-    Object.keys(allTestTxs).length / Object.keys(mockStakeTransactions).length
+    Object.keys(allTestTxs).length / Object.keys(mockStakeTickets).length
   );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
   expect(getNoMoreTicketsLabel()).toBeInTheDocument();
