@@ -22,15 +22,28 @@ const testTreasuryPolicies = [
 ];
 
 let mockSetTreasuryPolicy;
+const testBalances = [
+  {
+    accountNumber: 0,
+    accountName: "default",
+    hidden: false,
+    encrypted: true,
+    total: 143506029948
+  }
+];
 
 beforeEach(() => {
   selectors.treasuryPolicies = jest.fn(() => testTreasuryPolicies);
+  selectors.balances = jest.fn(() => testBalances);
+  selectors.unlockableAccounts = jest.fn(() => testBalances);
   mockSetTreasuryPolicy = wallet.setTreasuryPolicy = jest.fn(() =>
     Promise.resolve()
   );
+  wallet.unlockAccount = jest.fn(() => Promise.resolve(true));
+  wallet.lockAccount = jest.fn(() => Promise.resolve(true));
 });
 
-const vote = async (policy) => {
+const vote = async (policy, expectPassphraseError = false) => {
   // vote on yes
   const yesRadioBtn = screen.getByText(policy).parentNode.previousSibling;
   const updatePrefBtn = screen.getByRole("button", {
@@ -63,12 +76,21 @@ const vote = async (policy) => {
   expect(continueBtn.disabled).toBeFalsy();
   user.click(continueBtn);
 
+  if (!expectPassphraseError) {
+    await wait(() =>
+      expect(mockSetTreasuryPolicy).toHaveBeenCalledWith(
+        undefined, // votingService
+        testPiKey,
+        policy
+      )
+    );
+  } else {
+    expect(mockSetTreasuryPolicy).not.toHaveBeenCalled();
+  }
   await wait(() =>
-    expect(mockSetTreasuryPolicy).toHaveBeenCalledWith(
-      undefined, // votingService
-      testPiKey,
-      policy
-    )
+    screen.getByRole("button", {
+      name: "Update Preference"
+    })
   );
 };
 
@@ -109,4 +131,18 @@ test("test treasury spending tab (already voted abstain)", () => {
   expect(
     screen.getByText("abstain").parentNode.previousSibling.checked
   ).toBeTruthy();
+});
+
+test("test treasury spending tab (wrong passphrase entered)", async () => {
+  wallet.unlockAccount = jest.fn(() => Promise.reject("error"));
+  render(<TreasurySpendingTab />);
+  await vote("yes", true);
+});
+
+test("test treasury spending tab (treasury policy set error)", async () => {
+  mockSetTreasuryPolicy = wallet.setTreasuryPolicy = jest.fn(() =>
+    Promise.reject("error")
+  );
+  render(<TreasurySpendingTab />);
+  await vote("yes");
 });

@@ -732,17 +732,23 @@ export const setTreasuryPolicy = (key, policy, passphrase) => async (
   getState
 ) => {
   dispatch({ payload: { key, policy }, type: SETTREASURY_POLICY_ATTEMPT });
-  await dispatch(
-    unlockAllAcctAndExecFn(passphrase, () =>
-      wallet
-        .setTreasuryPolicy(sel.votingService(getState()), key, policy)
-        .then(() => {
-          dispatch({ type: SETTREASURY_POLICY_SUCCESS });
-          dispatch(getTreasuryPolicies());
-        })
-        .catch((error) => dispatch({ error, type: SETTREASURY_POLICY_FAILED }))
-    )
-  );
+  try {
+    await dispatch(
+      unlockAllAcctAndExecFn(passphrase, () =>
+        wallet
+          .setTreasuryPolicy(sel.votingService(getState()), key, policy)
+          .then(() => {
+            dispatch({ type: SETTREASURY_POLICY_SUCCESS });
+            dispatch(getTreasuryPolicies());
+          })
+          .catch((error) =>
+            dispatch({ error, type: SETTREASURY_POLICY_FAILED })
+          )
+      )
+    );
+  } catch (error) {
+    dispatch({ error, type: SETTREASURY_POLICY_FAILED });
+  }
 };
 
 export const GETMESSAGEVERIFICATIONSERVICE_ATTEMPT =
