@@ -858,27 +858,16 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
   wallet
     .abandonTransaction(sel.walletService(state), txid)
     .then(() => {
-      const {
-        regularTransactions,
-        recentRegularTransactions,
-        normalizedRegularTransactions,
-        normalizedRecentRegularTransactions
-      } = state.grpc;
+      const { regularTransactions, recentRegularTransactions } = state.grpc;
       // remove from transactions
       delete regularTransactions[txid];
-      delete normalizedRegularTransactions[txid];
       const newRecentRegularTransactions = recentRegularTransactions.filter(
-        (t) => t.txHash !== txid
-      );
-      const newNormalizedRecentRegularTransactions = normalizedRecentRegularTransactions.filter(
         (t) => t.txHash !== txid
       );
       dispatch({
         type: ABANDONTRANSACTION_SUCCESS,
         regularTransactions,
-        recentRegularTransactions: newRecentRegularTransactions,
-        normalizedRegularTransactions: normalizedRegularTransactions,
-        normalizedRecentRegularTransactions: newNormalizedRecentRegularTransactions
+        recentRegularTransactions: newRecentRegularTransactions
       });
       dispatch(goBack());
     })

@@ -10,7 +10,7 @@ import * as wl from "wallet";
 import { cloneDeep } from "fp";
 import {
   mockNormalizedRegularTransactions,
-  mockStakeTransactions,
+  mockNormalizedStakeTransactions,
   mockOldTxs,
   mockAgendas
 } from "./mocks.js";
@@ -155,7 +155,7 @@ test("regular sent pending tx from default account to an external address", asyn
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        normalizedRegularTransactions: mockNormalizedRegularTransactions,
+        regularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
         decodedTransactions: {}
       }
@@ -207,7 +207,7 @@ test("regular received mined tx to the default account", async () => {
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        normalizedRegularTransactions: mockNormalizedRegularTransactions,
+        regularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
         decodedTransactions: {}
       }
@@ -256,7 +256,7 @@ test("regular self transfer tx to unmixed account", async () => {
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        normalizedRegularTransactions: mockNormalizedRegularTransactions,
+        regularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
         decodedTransactions: {}
       }
@@ -304,7 +304,7 @@ test("self coins from unmixed to mixed account", async () => {
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        normalizedRegularTransactions: mockNormalizedRegularTransactions,
+        regularTransactions: mockNormalizedRegularTransactions,
         stakeTransactions: {},
         decodedTransactions: {}
       }
@@ -347,79 +347,17 @@ test("self coins from unmixed to mixed account", async () => {
 
 test("voted ticket", async () => {
   mockTxHash =
-    "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+    "f5c4259f1ae264a6bc7e52d5f602967e947fdebdb8bc7a551a18d36ab1933e17";
+  const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
-  selectors.currentBlockHeight = jest.fn(() => 924414);
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 712217);
 
   render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
-        stakeTransactions: mockStakeTransactionMap,
-        decodedTransactions: {},
-        getAccountsResponse: {
-          accountsList: [
-            {
-              accountNumber: 0,
-              accountName: "default"
-            }
-          ]
-        }
-      }
-    },
-    currentSettings: {
-      network: "testnet"
-    }
-  });
-
-  await wait(() => getIODetails());
-
-  expect(getHeaderTitleIconClassName()).toMatch("ticket");
-  expect(getTitleText()).toMatch("Ticket, Voted");
-  expect(getTicketCostText()).toMatch("Ticket Cost122.71678363 DCR");
-  expect(getRewardText()).toMatch("Reward0.04586488 DCR");
-
-  expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
-  expect(queryUnconfirmed()).not.toBeInTheDocument();
-  expect(getConfirmedText()).toMatch("Confirmed4,572 confirmations");
-
-  expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
-  expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
-
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault122.71678363 DCR");
-  expect(getNonWalletInputsText()).toMatch(
-    "Non Wallet Inputs 92ce48f17cf6a507f401a45d60ecd819443c6246f2f0e366b5614631032e0fb5:0 122.71681343 DCR"
-  );
-
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 122.76267831 DCR");
-  expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU 122.71678363 DCR TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n 0.00000 DCR"
-  );
-
-  expect(screen.getByText(rawTx)).toBeInTheDocument();
-  expect(getHeightText()).toMatch("Height919842");
-
-  user.click(screen.getByText("Back"));
-  expect(mockGoBackHistory).toHaveBeenCalled();
-
-  expect(getVSPHostText()).toMatch("VSP host:mockVspHost");
-});
-
-test("vote tx", async () => {
-  mockTxHash =
-    "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
-  const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
-  selectors.currentBlockHeight = jest.fn(() => 924414);
-
-  render(<TransactionPage />, {
-    initialState: {
-      grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -484,7 +422,7 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
   mockTxHash =
     "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da";
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712217);
   selectors.voteChoices = jest.fn(() => [
     {
@@ -497,7 +435,7 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
     initialState: {
       grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
+        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -524,16 +462,16 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
 
 test("missed ticket", async () => {
   mockTxHash =
-    "d9916343ec3817801ab63f44b5d3fbf637e3045f0293e99ed0f2954286dd7ad4";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+    "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc";
+  const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
-  selectors.currentBlockHeight = jest.fn(() => 712217);
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 930680);
   render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
+        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -552,29 +490,29 @@ test("missed ticket", async () => {
 
   expect(getHeaderTitleIconClassName()).toMatch("missed");
   expect(getTitleText()).toMatch("Missed");
-  expect(getTicketCostText()).toMatch("Ticket Cost96.63775267 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost85.93625324 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
-  expect(getConfirmedText()).toMatch("Confirmed5,271 confirmations");
+  expect(getConfirmedText()).toMatch("Confirmed16,098 confirmations");
   expect(getToAddressText()).toMatch(
-    "To address: TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1  TsTRP3GpMrtvRZ2XK5CopdZ9HhxsRJ75Cwn  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+    "To address: Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC  TsUpkwUgWxgCumeS9xwHhVbMXcHGBeGfCLG  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault96.63778247 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault85.93628304 DCR");
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 96.63775267 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 85.93625324 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsTRP3GpMrtvRZ2XK5CopdZ9HhxsRJ75Cwn 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet Outputs TsUpkwUgWxgCumeS9xwHhVbMXcHGBeGfCLG 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
-  expect(getHeightText()).toMatch("Height706946");
+  expect(getHeightText()).toMatch("Height914582");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-missed");
 
   user.click(screen.getByText("Back"));
@@ -584,16 +522,16 @@ test("missed ticket", async () => {
 test("revocation", async () => {
   mockTxHash =
     "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+  const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712217);
 
   render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
+        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -700,17 +638,17 @@ test("revoked ticket", async () => {
 
 test("immature ticket", async () => {
   mockTxHash =
-    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16872";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+    "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530";
+  const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
-  selectors.currentBlockHeight = jest.fn(() => 712277);
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 930691);
 
   render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
+        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -729,29 +667,29 @@ test("immature ticket", async () => {
 
   expect(getHeaderTitleIconClassName()).toMatch("immature");
   expect(getTitleText()).toMatch("Immature");
-  expect(getTicketCostText()).toMatch("Ticket Cost37.31114774 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost67.85796485 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
-  expect(getConfirmedText()).toMatch("Confirmed12 confirmations");
+  expect(getConfirmedText()).toMatch("Confirmed1 confirmation");
   expect(getToAddressText()).toMatch(
-    "To address: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+    "To address: TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK  TsTP4a61273kCXL9ZDgRKZsPrV6Emh3nxB7  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault37.31117754 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault67.85799465 DCR");
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 37.31114774 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 67.85796485 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet Outputs TsTP4a61273kCXL9ZDgRKZsPrV6Emh3nxB7 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
-  expect(getHeightText()).toMatch("Height712265");
+  expect(getHeightText()).toMatch("Height930690");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-immature");
 
   user.click(screen.getByText("Back"));
@@ -760,17 +698,17 @@ test("immature ticket", async () => {
 
 test("live ticket", async () => {
   mockTxHash =
-    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+    "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07";
+  const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
-  selectors.currentBlockHeight = jest.fn(() => 712277);
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
+  selectors.currentBlockHeight = jest.fn(() => 931147);
 
   render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
+        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -789,29 +727,29 @@ test("live ticket", async () => {
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Live");
-  expect(getTicketCostText()).toMatch("Ticket Cost37.31114774 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost67.85796485 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
-  expect(getConfirmedText()).toMatch("Confirmed12 confirmations");
+  expect(getConfirmedText()).toMatch("Confirmed451 confirmations");
   expect(getToAddressText()).toMatch(
-    "To address: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+    "To address: TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4  TsRBbeBi7cpeoKsMEtzDDi2isLT6ETX8o2p  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault37.31117754 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault67.85799465 DCR");
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 37.31114774 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 67.85796485 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet Outputs TsRBbeBi7cpeoKsMEtzDDi2isLT6ETX8o2p 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
-  expect(getHeightText()).toMatch("Height712265");
+  expect(getHeightText()).toMatch("Height930696");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-live");
 
   user.click(screen.getByText("Back"));
@@ -847,27 +785,19 @@ test("live ticket", async () => {
 
 test("unmined ticket", async () => {
   mockTxHash =
-    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16874";
-  const rawTx = mockStakeTransactions[mockTxHash].rawTx;
+    "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60";
+  const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
-  mockStakeTransactionMap[mockTxHash] = mockStakeTransactions[mockTxHash];
+  mockStakeTransactionMap[mockTxHash] = mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712277);
 
   render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
-        normalizedRegularTransactions: {},
+        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
-        getAccountsResponse: {
-          accountsList: [
-            {
-              accountNumber: 0,
-              accountName: "default"
-            }
-          ]
-        }
       }
     }
   });
@@ -878,11 +808,11 @@ test("unmined ticket", async () => {
   expect(getTitleText()).toMatch("Unmined");
   expect(getPending()).toBeInTheDocument();
   expect(getUnconfirmed()).toBeInTheDocument();
-  expect(getTicketCostText()).toMatch("Ticket Cost37.31114774 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost67.85796485 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(getToAddressText()).toMatch(
-    "To address: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+    "To address: TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7  Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   user.click(getAbandonTransactionButton());
@@ -891,13 +821,13 @@ test("unmined ticket", async () => {
   user.click(getRebroadcastTransaction());
   expect(mockPublishUnminedTransactionsAttempt).toHaveBeenCalled();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault37.31117754 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsaccount-1567.85799465 DCR");
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 37.31114774 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 67.85796485 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet Outputs Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();

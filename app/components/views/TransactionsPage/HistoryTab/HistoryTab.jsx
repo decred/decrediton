@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./HistoryPage";
 import { FormattedMessage as T } from "react-intl";
@@ -49,10 +49,15 @@ const HistoryTab = () => {
   );
   const { search, listDirection } = transactionsFilter;
 
+  const isMounted = useRef(false);
   useEffect(() => {
-    setIndex(BATCH_TX_COUNT);
-    setNoMoreTransactionsToShow(false);
-  }, [transactionsFilter]);
+    if (isMounted.current) {
+      setIndex(BATCH_TX_COUNT);
+      setNoMoreTransactionsToShow(false);
+    } else {
+      isMounted.current = true;
+    }
+  }, [transactionsFilter, isMounted]);
 
   const selTxTypeKeys = selectedTxTypesFromFilter(transactionsFilter);
 

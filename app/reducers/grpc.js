@@ -415,13 +415,7 @@ export default function grpc(state = {}, action) {
         getTransactionsRequestAttempt: false,
         noMoreLiveTickets: action.noMoreLiveTickets,
         startRequestHeight:
-          action.startRequestHeight || state.startRequestHeight,
-        normalizedRegularTransactions: action.normalizedRegularTransactions
-          ? {
-              ...state.normalizedRegularTransactions,
-              ...action.normalizedRegularTransactions
-            }
-          : state.normalizedRegularTransactions
+          action.startRequestHeight || state.startRequestHeight
       };
     case ABANDONTRANSACTION_ATTEMPT:
       return { ...state, abandonTransactionRequestAttempt: true };
@@ -432,10 +426,7 @@ export default function grpc(state = {}, action) {
         ...state,
         abandonTransactionRequestAttempt: false,
         recentRegularTransactions: action.recentRegularTransactions,
-        regularTransactions: action.regularTransactions,
-        normalizedRegularTransactions: action.normalizedRegularTransactions,
-        normalizedRecentRegularTransactions:
-          action.normalizedRecentRegularTransactions
+        regularTransactions: action.regularTransactions
       };
     case MIXERACCOUNTS_SPENDABLE_BALANCE:
       return {
@@ -452,18 +443,14 @@ export default function grpc(state = {}, action) {
         recentRegularTransactions: action.recentRegularTransactions,
         recentStakeTransactions: action.recentStakeTransactions,
         stakeTransactions: action.stakeTransactions,
-        regularTransactions: action.regularTransactions,
-        normalizedRegularTransactions: action.normalizedRegularTransactions,
-        normalizedRecentRegularTransactions:
-          action.normalizedRecentRegularTransactions
+        regularTransactions: action.regularTransactions
       };
     case CHANGE_TRANSACTIONS_FILTER:
       return {
         ...state,
         transactionsFilter: action.transactionsFilter,
         regularTransactions: action.regularTransactions,
-        getRegularTxsAux: action.getRegularTxsAux,
-        normalizedRegularTransactions: action.normalizedRegularTransactions
+        getRegularTxsAux: action.getRegularTxsAux
       };
     case UPDATETIMESINCEBLOCK:
       return {
@@ -699,10 +686,7 @@ export default function grpc(state = {}, action) {
         recentRegularTransactions: action.recentRegularTxs,
         recentStakeTransactions: action.recentStakeTxs,
         stakeTransactions: action.stakeTransactions,
-        regularTransactions: action.regularTransactions,
-        normalizedRegularTransactions: action.normalizedRegularTransactions,
-        normalizedRecentRegularTransactions:
-          action.normalizedRecentRegularTransactions
+        regularTransactions: action.regularTransactions
       };
     case MATURINGHEIGHTS_CHANGED:
       return {
@@ -739,8 +723,6 @@ export default function grpc(state = {}, action) {
         },
         recentRegularTransactions: [],
         recentStakeTransactions: [],
-        normalizedRegularTransactions: {},
-        normalizedRecentRegularTransactions: {},
         regularTransactions: {},
         stakeTransactions: {},
         ticketBuyerService: null,

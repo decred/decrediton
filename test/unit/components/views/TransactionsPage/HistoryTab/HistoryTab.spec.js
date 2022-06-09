@@ -25,7 +25,6 @@ const initialState = {
       minAmount: null
     },
     regularTransactions: {},
-    normalizedRegularTransactions: {},
     getRegularTxsAux: {
       noMoreTransactions: false
     }
@@ -172,7 +171,7 @@ const incAllTestTxs = (mockGetTransactionsResponse, ts) => {
   const { lastTransaction, txList } = getTestTxs(
     ts || mockGetTransactionsResponse.getRegularTxsAux.lastTransaction.timestamp
   );
-  mockGetTransactionsResponse.normalizedRegularTransactions = txList;
+  mockGetTransactionsResponse.regularTransactions = txList;
   mockGetTransactionsResponse.getRegularTxsAux.lastTransaction = lastTransaction;
   return mockGetTransactionsResponse;
 };
@@ -207,7 +206,6 @@ test("test txList", async () => {
     getStakeTxsAux: {},
     stakeTransactions: {},
     regularTransactions: {},
-    normalizedRegularTransactions: {},
     startRequestHeight: 0,
     noMoreLiveTickets: true
   };
@@ -215,7 +213,7 @@ test("test txList", async () => {
     () => (dispatch) => {
       allTestTxs = {
         ...allTestTxs,
-        ...mockGetTransactionsResponse.normalizedRegularTransactions
+        ...mockGetTransactionsResponse.regularTransactions
       };
       return dispatch(mockGetTransactionsResponse);
     }
@@ -423,7 +421,7 @@ test("show only sent txs which are coming from wallet and not from redux", async
     () => (dispatch) => {
       allTestTxs = {
         ...allTestTxs,
-        ...mockGetTransactionsResponse.normalizedRegularTransactions
+        ...mockGetTransactionsResponse.regularTransactions
       };
       return dispatch(mockGetTransactionsResponse);
     }
@@ -511,7 +509,6 @@ test("test no txs", () => {
     getRegularTxsAux: { noMoreTransactions: true },
     stakeTransactions: {},
     regularTransactions: {},
-    normalizedRegularTransactions: {},
     startRequestHeight: 0,
     noMoreLiveTickets: true
   };

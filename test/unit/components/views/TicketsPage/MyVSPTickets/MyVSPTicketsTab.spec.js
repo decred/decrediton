@@ -8,7 +8,7 @@ import * as ta from "actions/TransactionActions";
 import * as wl from "wallet";
 import * as vspa from "actions/VSPActions";
 import { DCR } from "constants";
-import { mockStakeTransactions } from "../../TransactionPage/mocks";
+import { mockNormalizedStakeTransactions } from "../../TransactionPage/mocks";
 import { cloneDeep } from "fp";
 import {
   VSP_FEE_PROCESS_STARTED,
@@ -68,8 +68,8 @@ const getTestTxs = (startTs) => {
   const startDate = new Date(startTs * 1000);
   let lastTransaction;
 
-  Object.keys(mockStakeTickets).forEach((txHash) => {
-    lastTransaction = { ...mockStakeTickets[txHash] };
+  Object.keys(mockNormalizedStakeTransactions).forEach((txHash) => {
+    lastTransaction = { ...mockNormalizedStakeTransactions[txHash] };
     startDate.setHours(startDate.getHours() - 1);
     const ts = Math.floor(startDate.getTime() / 1000);
     lastTransaction.txHash = `test-txHash-${ts}`;
@@ -302,7 +302,8 @@ test("test vsp ticket status list", async () => {
 
   await wait(() => expect(getHistoryPageContent().childElementCount).toBe(17));
   expect(mockGetTransactions).toHaveBeenCalledTimes(
-    Object.keys(allTestTxs).length / Object.keys(mockStakeTickets).length
+    Object.keys(allTestTxs).length /
+      Object.keys(mockNormalizedStakeTransactions).length
   );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
   expect(getNoMoreTicketsLabel()).toBeInTheDocument();
