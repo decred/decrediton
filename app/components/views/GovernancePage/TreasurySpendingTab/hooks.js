@@ -5,6 +5,8 @@ import { FormattedMessage as T } from "react-intl";
 
 export function useTreasurySpending() {
   const treasuryPolicies = useSelector(sel.treasuryPolicies);
+  const chainParams = useSelector(sel.chainParams);
+  const PiKeys = chainParams.PiKeys;
   const setTreasuryPolicyRequestAttempt = useSelector(
     sel.setTreasuryPolicyRequestAttempt
   );
@@ -32,6 +34,7 @@ export function useTreasurySpending() {
     treasuryPolicies,
     setTreasuryPolicy,
     policyOptions,
+    PiKeys,
     isLoading: !!setTreasuryPolicyRequestAttempt
   };
 }

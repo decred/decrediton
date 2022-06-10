@@ -3,7 +3,6 @@ import PageHeader from "../PageHeader";
 import styles from "./TreasurySpendingTab.module.css";
 import { useTreasurySpending } from "./hooks";
 import { TreasuryPolicyCard } from "./helpers";
-import { PiKeys } from "constants";
 import { ExternalLink } from "shared";
 
 const TreasurySpendingTab = () => {
@@ -11,6 +10,7 @@ const TreasurySpendingTab = () => {
     setTreasuryPolicy,
     policyOptions,
     treasuryPolicies,
+    PiKeys,
     isLoading
   } = useTreasurySpending();
 

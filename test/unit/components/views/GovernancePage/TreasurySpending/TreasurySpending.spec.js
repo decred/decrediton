@@ -4,18 +4,19 @@ import { screen, wait } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import * as sel from "selectors";
 import * as wal from "wallet";
-import { PiKeys } from "constants";
+import { MainNetParams, TestNetParams } from "constants";
 
 const selectors = sel;
 const wallet = wal;
 
-const testPiKey = PiKeys[0];
+const PiKey_mainnet = MainNetParams.PiKeys[0];
+const PiKey_testnet = TestNetParams.PiKeys[0];
 const testPassphrase = "test-passphrase";
 
 const testTreasuryPolicies = [
   { key: "k1", policy: "p1" },
   {
-    key: testPiKey,
+    key: PiKey_mainnet,
     policy: "yes"
   },
   { key: "k3", policy: "p3" }
@@ -43,7 +44,7 @@ beforeEach(() => {
   wallet.lockAccount = jest.fn(() => Promise.resolve(true));
 });
 
-const vote = async (policy, expectPassphraseError = false) => {
+const vote = async (policy, expectPassphraseError, expectedPiKey) => {
   // vote on yes
   const yesRadioBtn = screen.getByText(policy).parentNode.previousSibling;
   const updatePrefBtn = screen.getByRole("button", {
@@ -80,7 +81,7 @@ const vote = async (policy, expectPassphraseError = false) => {
     await wait(() =>
       expect(mockSetTreasuryPolicy).toHaveBeenCalledWith(
         undefined, // votingService
-        testPiKey,
+        expectedPiKey,
         policy
       )
     );
@@ -101,9 +102,9 @@ test("test treasury spending tab (not yet voted)", async () => {
     screen.getByText("abstain").parentNode.previousSibling.checked
   ).toBeTruthy();
 
-  await vote("yes");
-  await vote("abstain");
-  await vote("no");
+  await vote("yes", false, PiKey_mainnet);
+  await vote("abstain", false, PiKey_mainnet);
+  await vote("no", false, PiKey_mainnet);
 });
 
 test("test treasury spending tab (already voted yes)", () => {
@@ -115,7 +116,7 @@ test("test treasury spending tab (already voted yes)", () => {
 
 test("test treasury spending tab (already voted no)", () => {
   selectors.treasuryPolicies = jest.fn(() => [
-    { key: testPiKey, policy: "no" }
+    { key: PiKey_mainnet, policy: "no" }
   ]);
   render(<TreasurySpendingTab />);
   expect(
@@ -125,7 +126,7 @@ test("test treasury spending tab (already voted no)", () => {
 
 test("test treasury spending tab (already voted abstain)", () => {
   selectors.treasuryPolicies = jest.fn(() => [
-    { key: testPiKey, policy: "abstain" }
+    { key: PiKey_mainnet, policy: "abstain" }
   ]);
   render(<TreasurySpendingTab />);
   expect(
@@ -136,7 +137,7 @@ test("test treasury spending tab (already voted abstain)", () => {
 test("test treasury spending tab (wrong passphrase entered)", async () => {
   wallet.unlockAccount = jest.fn(() => Promise.reject("error"));
   render(<TreasurySpendingTab />);
-  await vote("yes", true);
+  await vote("yes", true, PiKey_mainnet);
 });
 
 test("test treasury spending tab (treasury policy set error)", async () => {
@@ -144,5 +145,17 @@ test("test treasury spending tab (treasury policy set error)", async () => {
     Promise.reject("error")
   );
   render(<TreasurySpendingTab />);
-  await vote("yes");
+  await vote("yes", false, PiKey_mainnet);
+});
+
+test("test treasury spending tab (testnet)", async () => {
+  selectors.treasuryPolicies = jest.fn(() => [
+    { key: PiKey_testnet, policy: "abstain" }
+  ]);
+  render(<TreasurySpendingTab />, {
+    currentSettings: {
+      network: "testnet"
+    }
+  });
+  await vote("yes", false, PiKey_testnet);
 });
