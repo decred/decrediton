@@ -10,6 +10,10 @@ export function useTreasurySpending() {
   const setTreasuryPolicyRequestAttempt = useSelector(
     sel.setTreasuryPolicyRequestAttempt
   );
+  const isTestNet = useSelector(sel.isTestNet);
+  const dcrdSourceLink = isTestNet
+    ? "https://github.com/decred/dcrd/blob/master/chaincfg/testnetparams.go#L391"
+    : "https://github.com/decred/dcrd/blob/master/chaincfg/mainnetparams.go#L479";
   const dispatch = useDispatch();
 
   const setTreasuryPolicy = (key, policy, passphrase) =>
@@ -34,6 +38,7 @@ export function useTreasurySpending() {
     treasuryPolicies,
     setTreasuryPolicy,
     policyOptions,
+    dcrdSourceLink,
     PiKeys,
     isLoading: !!setTreasuryPolicyRequestAttempt
   };

@@ -10,6 +10,7 @@ const TreasurySpendingTab = () => {
     setTreasuryPolicy,
     policyOptions,
     treasuryPolicies,
+    dcrdSourceLink,
     PiKeys,
     isLoading
   } = useTreasurySpending();
@@ -27,7 +28,7 @@ const TreasurySpendingTab = () => {
                 link: (
                   <ExternalLink
                     className={styles.proposalsLink}
-                    href="https://github.com/decred/dcrd/blob/master/chaincfg/mainnetparams.go#L485">
+                    href={dcrdSourceLink}>
                     dcrd source code
                   </ExternalLink>
                 )
