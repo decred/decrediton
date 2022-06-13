@@ -776,7 +776,6 @@ test("immature ticket", async () => {
     initialState: {
       grpc: {
         regularTransactions: {},
-        regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
         getAccountsResponse: {
@@ -836,7 +835,6 @@ test("live ticket", async () => {
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        regularTransactions: {},
         regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {},
@@ -924,7 +922,6 @@ test("unmined ticket", async () => {
   render(<TransactionPage />, {
     initialState: {
       grpc: {
-        regularTransactions: {},
         regularTransactions: {},
         stakeTransactions: mockStakeTransactionMap,
         decodedTransactions: {}

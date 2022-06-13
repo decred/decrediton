@@ -9,14 +9,13 @@ import {
   eq,
   bool,
   map,
-  apply,
   some,
   uniq,
   createSelectorEager as createSelector
 } from "./fp";
 import { isNull } from "lodash";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
-import { decodeVoteScript, dateToLocal, dateToUTC } from "helpers";
+import { dateToLocal, dateToUTC } from "helpers";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
@@ -43,7 +42,6 @@ import {
   MAINNET,
   VOTED
 } from "constants";
-import { wallet } from "wallet-preload-shim";
 import { isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;

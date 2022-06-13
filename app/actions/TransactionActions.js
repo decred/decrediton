@@ -952,7 +952,6 @@ const transactionNormalizer = (origTx) => (_, getState) => {
   const accounts = sel.accounts(getState());
   const txURLBuilder = sel.txURLBuilder(getState());
   const blockURLBuilder = sel.blockURLBuilder(getState());
-  const chainParams = sel.chainParams(getState());
   const mixedAccountName = sel.getMixedAccountName(getState());
 
   const findAccount = (num) =>

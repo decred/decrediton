@@ -1,6 +1,5 @@
 import * as cla from "actions/TransactionActions";
 import { createStore } from "test-utils.js";
-import { wait } from "@testing-library/react";
 import {
   mockRegularTransactions,
   mockStakeTransactions,
