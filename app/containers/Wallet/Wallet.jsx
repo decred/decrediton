@@ -62,15 +62,18 @@ const Wallet = ({ setInterval }) => {
           <Route path="/dex" component={DexPage} />
         </StaticSwitch>
         <Route
-          path="/transactions/history/:txHash"
-          component={TransactionPage}
+          path={[
+            "/transactions/history/:txHash",
+            "/tickets/vspTicketsStatus/:txHash",
+            "/tickets/mytickets/:txHash",
+            "/home/:txHash"
+          ]}
+          render={(props) => (
+            // use render property to make sure that every time a
+            // new TransactionPage component is created
+            <TransactionPage {...props} key={props.location.key} />
+          )}
         />
-        <Route path="/tickets/mytickets/:txHash" component={TransactionPage} />
-        <Route
-          path="/tickets/vspTicketsStatus/:txHash"
-          component={TransactionPage}
-        />
-        <Route path="/home/:txHash" component={TransactionPage} />
         <Route
           path="/proposal/details/:token"
           component={ProposalDetailsPage}

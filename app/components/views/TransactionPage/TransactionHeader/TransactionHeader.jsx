@@ -242,27 +242,33 @@ const TransactionHeader = ({
   const iconTxType = mixedTx ? MIXED : selfTx ? SELFTRANSFER : txType;
   return (
     <StandaloneHeader
-      title={title({
-        txType,
-        txAmount,
-        txDirection,
-        intl,
-        status
-      })}
-      iconType={icon({ txType: iconTxType, txDirection, status })}
-      description={subtitle({
-        txType,
-        isPending,
-        enterTimestamp,
-        timestamp,
-        leaveTimestamp,
-        ticketPrice,
-        ticketReward,
-        txDirection,
-        tsDate,
-        txInputs,
-        status
-      })}
+      title={
+        txType &&
+        title({
+          txType,
+          txAmount,
+          txDirection,
+          intl,
+          status
+        })
+      }
+      iconType={txType && icon({ txType: iconTxType, txDirection, status })}
+      description={
+        txType &&
+        subtitle({
+          txType,
+          isPending,
+          enterTimestamp,
+          timestamp,
+          leaveTimestamp,
+          ticketPrice,
+          ticketReward,
+          txDirection,
+          tsDate,
+          txInputs,
+          status
+        })
+      }
       actionButton={backBtn({ goBack })}
     />
   );
