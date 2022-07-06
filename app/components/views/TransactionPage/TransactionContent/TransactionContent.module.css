@@ -142,9 +142,6 @@
   border-radius: 3px;
   background-color: var(--blue-highlight-background);
   color: var(--input-color-default);
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
   text-align: center;
   margin-right: 5px;
 }
@@ -153,7 +150,7 @@
   margin-bottom: 5px;
 }
 .address {
-  width: 80px;
+  min-width: 80px;
   margin-bottom: 5px;
 }
 .amount {
