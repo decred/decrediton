@@ -1,7 +1,14 @@
 import fs from "fs";
 import path from "path";
 import parseArgs from "minimist";
-import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
+import {
+  app,
+  BrowserWindow,
+  Menu,
+  dialog,
+  BrowserView,
+  globalShortcut
+} from "electron";
 import {
   getCurrentBitcoinConfig,
   newDefaultBitcoinConfig,
@@ -869,6 +876,9 @@ app.on("ready", async () => {
       contextIsolation: true
     }
   });
+  globalShortcut.register("F5", () =>
+    BrowserWindow.getFocusedWindow().reload()
+  );
 });
 
 app.on("before-quit", async (event) => {
