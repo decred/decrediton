@@ -399,12 +399,20 @@ const TransactionContent = ({
               {nonWalletInputs.map(({ address, amount }, idx) => (
                 <div key={idx} className={styles.row}>
                   <div className={styles.address}>
-                    <TruncatedText
-                      text={address}
-                      max={truncateMax}
-                      showTooltip
-                      tooltipClassName={styles.tooltipClassName}
-                    />
+                    {isVote ? (
+                      // Stakebase transactions (votes) have only one (stakebase) non-wallet output
+                      <T
+                        id="txDetails.nonWalletInputs.Stakebase"
+                        m="Stakebase"
+                      />
+                    ) : (
+                      <TruncatedText
+                        text={address}
+                        max={truncateMax}
+                        showTooltip
+                        tooltipClassName={styles.tooltipClassName}
+                      />
+                    )}
                   </div>
                   <div className={styles.amount}>
                     <Balance amount={amount} />
