@@ -71,7 +71,9 @@ const TransactionContent = ({
     rawTx,
     isPending,
     voteScript,
-    ticketTx
+    ticketTx,
+    status,
+    spenderTx
   } = transactionDetails;
 
   const { theme } = useTheme();
@@ -159,6 +161,21 @@ const TransactionContent = ({
                 <NavLink
                   to={location.pathname.replace(txHash, ticketTx.txHash)}>
                   {ticketTx.txHash}
+                </NavLink>
+              </div>
+            </div>
+          </>
+        )}
+        {txType === TICKET && spenderTx && (
+          <>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.spendingTx" m="Spending Tx" />:
+              </div>
+              <div className={styles.value}>
+                <NavLink
+                  to={location.pathname.replace(txHash, spenderTx.txHash)}>
+                  {spenderTx.txHash}
                 </NavLink>
               </div>
             </div>
