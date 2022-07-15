@@ -12,11 +12,22 @@ const toByteArray = (hex) => {
 export const mockNormalizedRegularTransactionList = [
   // regular pending transaction
   {
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 993851810,
+        address: "TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY",
+        outputScript: "dqkUaU2Rg1LeTP5L7md2o/JQKn/NwviIrA=="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 1793854340 }],
     txUrl:
       "https://testnet.decred.org/tx/263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d",
     txBlockUrl: "https://testnet.decred.org/block/null",
     txHash: "263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d",
-    txHeight: -1,
+    height: -1,
     txType: "regular",
     timestamp: 1624527872,
     isPending: true,
@@ -36,7 +47,7 @@ export const mockNormalizedRegularTransactionList = [
         index: 0
       }
     ],
-    txBlockHash: null,
+    blockHash: null,
     txNumericType: 0,
     rawTx:
       "010000000137bdd42d19c66cb0ee0da40f5419b284bcd16af1d3836f313fad124b5e5a4fe80000000000ffffffff02a2f93c3b0000000000001976a914694d918352de4cfe4bee6776a3f2502a7fcdc2f888ac0008af2f0000000000001976a9145aec0ddf49a9ca0ad1de2b4143666f544860043688ac000000000000000001840bec6a0000000000000000ffffffff6b4830450221009ce94aac7683dfbac6e23716af87b7529b3cf53d69d1bae7772a9e1baccc873902204e0312be8be7a518723c0c7d9e1f40abe67c681e9aabf78deb21d964c31872c201210314012e939d6ab30c7dacb4258654b0996ce89f7e47faa57bbbf65c44dffd668f",
@@ -61,12 +72,23 @@ export const mockNormalizedRegularTransactionList = [
   },
   // regular received mined regular transaction
   {
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: false,
+        amount: 10000000000,
+        address: "TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV",
+        outputScript: "dqkUNobJHk1uOZPSqGjJ1pidJr8JMriIrA=="
+      }
+    ],
+    debits: [],
     txUrl:
       "https://testnet.decred.org/tx/642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e",
     txBlockUrl:
       "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     txHash: "642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e",
-    txHeight: 706945,
+    height: 706945,
     txType: "regular",
     timestamp: 1623923254,
     isPending: false,
@@ -80,7 +102,7 @@ export const mockNormalizedRegularTransactionList = [
         index: 0
       }
     ],
-    txBlockHash:
+    blockHash:
       "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     txNumericType: 0,
     rawTx:
@@ -104,15 +126,33 @@ export const mockNormalizedRegularTransactionList = [
     txDirection: "received",
     txAccountName: "default"
   },
-
   // regular self transfer transactio
   {
+    credits: [
+      {
+        index: 0,
+        account: 4,
+        internal: false,
+        amount: 5000000000,
+        address: "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+        outputScript: "dqkUDL0O1XOK7iyLUHxyNOFAvfXSEg6IrA=="
+      },
+      {
+        index: 1,
+        account: 0,
+        internal: true,
+        amount: 1362441426,
+        address: "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8",
+        outputScript: "dqkUqy47g+Xje5Ahl7hVmb4YJjc9CCKIrA=="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6362443956 }],
     txUrl:
       "https://testnet.decred.org/tx/9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304",
     txBlockUrl:
       "https://testnet.decred.org/block/00000000cf7eee715245616121f06e62fb3ac39c5cc296076395b80e21b5de62",
     txHash: "9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304",
-    txHeight: 712832,
+    height: 712832,
     txType: "regular",
     timestamp: 1624605208,
     isPending: false,
@@ -138,7 +178,7 @@ export const mockNormalizedRegularTransactionList = [
         index: 1
       }
     ],
-    txBlockHash:
+    blockHash:
       "00000000cf7eee715245616121f06e62fb3ac39c5cc296076395b80e21b5de62",
     txNumericType: 0,
     rawTx:
@@ -168,12 +208,55 @@ export const mockNormalizedRegularTransactionList = [
   },
   // regular mixed transaction (from unmixed to mixed)
   {
+    credits: [
+      {
+        index: 2,
+        account: 4,
+        internal: true,
+        amount: 705029094,
+        address: "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+        outputScript: "dqkUtGCpj6kdaIuef7RTP95Yx7iGF+KIrA=="
+      },
+      {
+        index: 4,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+        outputScript: "dqkUJMKqqromn+SAEyLMqJTcUyArbNWIrA=="
+      },
+      {
+        index: 5,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+        outputScript: "dqkUoQZhmPTyc4aEr5wNq/LgrLU2jBOIrA=="
+      },
+      {
+        index: 6,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+        outputScript: "dqkURegXjsBaBQaK+TvdWAZnsOz1CveIrA=="
+      },
+      {
+        index: 7,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs",
+        outputScript: "dqkUxzvblS6sIdrFRaB0gS+YG3OY/OGIrA=="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 4, previousAmount: 5000000000 }],
     txUrl:
       "https://testnet.decred.org/tx/ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c",
     txBlockUrl:
       "https://testnet.decred.org/block/00000000f6281f84cd50fbf1dc0d13f39b843aa04fc1894d92db193534ff41d3",
     txHash: "ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c",
-    txHeight: 712872,
+    height: 712872,
     txType: "regular",
     timestamp: 1624609448,
     isPending: false,
@@ -217,7 +300,7 @@ export const mockNormalizedRegularTransactionList = [
         index: 7
       }
     ],
-    txBlockHash:
+    blockHash:
       "00000000f6281f84cd50fbf1dc0d13f39b843aa04fc1894d92db193534ff41d3",
     txNumericType: 0,
     rawTx:
@@ -884,9 +967,27 @@ export const mockOldTxs = [
 export const mockNormalizedStakeTransactionList = [
   // vote tx
   {
+    type: 2,
+    credits: [
+      {
+        index: 2,
+        account: 15,
+        internal: true,
+        amount: 6790119971,
+        address: "Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr",
+        outputScript: "u3apFJm/el6ZyMAOCezvNx6r14Zbz14RiKw="
+      }
+    ],
+    debits: [
+      {
+        index: 1,
+        previousAccount: 0,
+        previousAmount: 6785796485
+      }
+    ],
     txHash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
-    txBlockHash:
-      "1472512351262304275125239808423343934577220111166192222712233111195632030000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash:
       "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
     ticketHash:
@@ -895,7 +996,7 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1654202680,
       height: 930685,
       blockHash:
-        "0000000017288e2033c8422a15ec0557bad02ee38123efb55d225d96d79c4183",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
       txHash:
         "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
@@ -938,7 +1039,7 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1654485406,
       height: 932737,
       blockHash:
-        "0000000017288e2033c8422a15ec0557bad02ee38123efb55d225d96d79c4183",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
       hash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
       txHash:
@@ -1015,18 +1116,37 @@ export const mockNormalizedStakeTransactionList = [
         index: 2
       }
     ],
-    txHeight: 932737,
+    height: 932737,
     txUrl:
       "https://testnet.decred.org/tx/843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
     txBlockUrl:
-      "https://testnet.decred.org/block/147,251,235,126,230,42,75,125,239,80,84,233,43,93,45,77,220,111,166,192,222,71,223,31,11,195,63,203,0,0,0,0",
-    isStake: true
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
   },
   // voted ticket
   {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 12271678363,
+        address: "TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU",
+        outputScript: "unapFFyo29n4+AuvdgX88JdEQQCZoS+biKw="
+      }
+    ],
+    debits: [
+      {
+        index: 0,
+        previousAccount: 15,
+        previousAmount: 12271681343
+      }
+    ],
     txHash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
-    txBlockHash:
-      "622052481661118244101721862111241762312168183126154218228197206112562432411870000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash:
       "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
     ticketHash:
@@ -1035,10 +1155,9 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1652858637,
       height: 919842,
       blockHash:
-        "622052481661118244101721862111241762312168183126154218228197206112562432411870000",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
-      hash:
-        "622052481661118244101721862111241762312168183126154218228197206112562432411870000",
+      hash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
       txHash:
         "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
       txType: "ticket",
@@ -1072,15 +1191,15 @@ export const mockNormalizedStakeTransactionList = [
       isMix: false,
       vspHost: "mockVspHost-votedticket",
       txUrl:
-        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57"
+        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+      feeStatus: 1
     },
     spenderTx: {
       timestamp: 1652874655,
       height: -1,
       blockHash: "",
       index: -1,
-      hash:
-        "622052481661118244101721862111241762312168183126154218228197206112562432411870000",
+      hash: "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txHash:
         "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txType: "vote",
@@ -1140,33 +1259,40 @@ export const mockNormalizedStakeTransactionList = [
     txType: "ticket",
     isPending: false,
     accountName: "account-15",
-    txInputs: [
+    txInputs: [{ accountName: "account-15", amount: 12271681343, index: 0 }],
+    txOutputs: [
       {
         accountName: "default",
         amount: 12271678363,
-        index: 1
+        address: "TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU",
+        index: 0
       }
     ],
-    txOutputs: [
-      {
-        accountName: "account-15",
-        amount: 12276267831,
-        address: "TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n",
-        index: 2
-      }
-    ],
-    txHeight: 919842,
+    height: 919842,
     txUrl:
       "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
     txBlockUrl:
-      "https://testnet.decred.org/block/62,205,248,166,111,8,244,101,72,186,211,124,176,23,12,168,183,126,154,218,228,197,206,112,56,243,241,187,0,0,0,0",
-    isStake: true
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: 1
   },
   // missed
   {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 8593625324,
+        address: "Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC",
+        outputScript: "unapFHlAc365vEeYpW/aMvo2gidAIAgViKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 8593628304 }],
     txHash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
-    txBlockHash:
-      "684345812851621431511071671612171552312106242261019155169152051412090000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash: null,
     ticketHash:
       "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
@@ -1174,7 +1300,7 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1652256415,
       height: 914582,
       blockHash:
-        "684345812851621431511071671612171552312106242261019155169152051412090000",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
       hash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
       txHash:
@@ -1214,9 +1340,13 @@ export const mockNormalizedStakeTransactionList = [
     },
     spenderTx: null,
     ticketPrice: 8593625324,
+    ticketReward: undefined,
     ticketChange: 0,
     ticketInvestment: 8593628304,
     ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
     spenderTxFee: 0,
     enterTimestamp: 1652256415,
     leaveTimestamp: null,
@@ -1226,13 +1356,7 @@ export const mockNormalizedStakeTransactionList = [
     txType: "ticket",
     isPending: false,
     accountName: "default",
-    txInputs: [
-      {
-        accountName: "default",
-        amount: 8593628304,
-        index: 0
-      }
-    ],
+    txInputs: [{ accountName: "default", amount: 8593628304, index: 0 }],
     txOutputs: [
       {
         accountName: "default",
@@ -1241,18 +1365,31 @@ export const mockNormalizedStakeTransactionList = [
         index: 0
       }
     ],
-    txHeight: 914582,
+    height: 914582,
     txUrl:
       "https://testnet.decred.org/tx/d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
     txBlockUrl:
-      "https://testnet.decred.org/block/68,43,45,81,2,85,162,143,151,107,167,161,217,155,231,210,6,242,26,10,191,5,5,169,15,205,141,209,0,0,0,0",
-    isStake: true
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
   },
   // revoked ticket
   {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 8600218109,
+        address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
+        outputScript: "unapFOlPYM9gpJSRDMD+KPZi22h5RnROiKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 8600221089 }],
     txHash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
-    txBlockHash:
-      "2138220211196966397691272421549724977222173518712132201691021391145148000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash:
       "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
     ticketHash:
@@ -1261,10 +1398,9 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1637487987,
       height: 815405,
       blockHash:
-        "2138220211196966397691272421549724977222173518712132201691021391145148000",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
-      hash:
-        "2138220211196966397691272421549724977222173518712132201691021391145148000",
+      hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
       txHash:
         "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
       txType: "ticket",
@@ -1305,8 +1441,7 @@ export const mockNormalizedStakeTransactionList = [
       height: -1,
       blockHash: "",
       index: -1,
-      hash:
-        "2138220211196966397691272421549724977222173518712132201691021391145148000",
+      hash: "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
       txHash:
         "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
       txType: "revocation",
@@ -1346,6 +1481,7 @@ export const mockNormalizedStakeTransactionList = [
     ticketTxFee: 2980,
     ticketStakeRewards: -3.465027200069926e-7,
     ticketReturnAmount: 8600218109,
+    voteScript: undefined,
     spenderTxFee: 0,
     enterTimestamp: 1637487987,
     leaveTimestamp: 1643948925,
@@ -1355,33 +1491,40 @@ export const mockNormalizedStakeTransactionList = [
     txType: "ticket",
     isPending: false,
     accountName: "default",
-    txInputs: [
-      {
-        accountName: "default",
-        amount: 8600218109,
-        index: 0
-      }
-    ],
+    txInputs: [{ accountName: "default", amount: 8600221089, index: 0 }],
     txOutputs: [
       {
         accountName: "default",
         amount: 8600218109,
-        address: "Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy",
+        address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
         index: 0
       }
     ],
-    txHeight: 815405,
+    height: 815405,
     txUrl:
       "https://testnet.decred.org/tx/b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
     txBlockUrl:
-      "https://testnet.decred.org/block/2,138,220,211,196,96,63,97,69,127,242,154,97,249,77,222,173,5,18,71,213,220,169,102,139,114,51,4,8,0,0,0",
-    isStake: true
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
   },
   // revocation
   {
+    type: 3,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6475413336,
+        address: "Tsic4BsFzDL1jhR4LTbWS8LvGFgxjqFG3pU",
+        outputScript: "vHapFMDks6W1pFTjiMaGSuUSBSI6EtzkiKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6475415536 }],
     txHash: "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
-    txBlockHash:
-      "a52cdf0ddcfdb30a191f021262edfaae9f38b6a819d0338d9c7ca04900000000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash:
       "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
     ticketHash:
@@ -1422,9 +1565,6 @@ export const mockNormalizedStakeTransactionList = [
       rawTx:
         "010000000120b97bf5eb8969095c3b8fa9590701f910246f464b84db62423b34c37b6747330000000000ffffffff03f0fff6810100000000001aba76a91451d06806b3922a664e9e9cd63fe18caa7081ea6688ac00000000000000000000206a1ec0e4b3a5b5a454e388c6864ae51205223a12dce4940bf781010000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001940bf7810100000044180a00020000006a47304402204be3e7097a452d99c2b56c138f8df33a923f6da1f9f465e56c75b9cdd571864902201bf7a3e9db1cfd3b7f8e55252d5f3c04311275bbc2c4ff2333472840c262b413012102936911a32e4e000e56f82207ec5d39a66b9971021869905087b23a10399cb1b0",
       isMix: false,
-      transaction:
-        "b0b19c39103ab287509069180271996ba6395dec0722f8560e004e2ea311699302210113b462c24028473323ffc4c2bb751231043c5f2d25558e7f3bfd1cdbe9a3f71b2002498671d5cdb9756ce565f4f9a16d3f923af38d8f136cb5c2992d457a09e7e34b20024430476a00000002000a18440000000181f70b94010000000000000000ac88000000000000000000000000000000000000000014a976bd1a0000000000000000000058000000000181f70b94e4dc123a220512e54a86c688e354a4b5a5b3e4c01e6a2000000000000000000000ac8866ea8170aa8ce13fd69c9e4e662a92b30668d05114a976ba1a00000000000181f6fff003ffffffff00000000003347677bc3343b4262db844b466f2410f9010759a98f3b5c096989ebf57bb9200100000001",
-      vspHost: "",
       txUrl:
         "https://testnet.decred.org/tx/9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47"
     },
@@ -1432,7 +1572,7 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1622730448,
       height: 697812,
       blockHash:
-        "a52cdf0ddcfdb30a191f021262edfaae9f38b6a819d0338d9c7ca04900000000",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
       hash: "8c6e88a38ceac7e52ef3c9f4d936d0cf16fcc0a510955cab255f3a23ce2e09c1",
       txHash:
@@ -1474,6 +1614,7 @@ export const mockNormalizedStakeTransactionList = [
     ticketTxFee: 2980,
     ticketStakeRewards: -7.999482948014599e-7,
     ticketReturnAmount: 6475413336,
+    voteScript: undefined,
     spenderTxFee: 2200,
     enterTimestamp: 1618322224,
     leaveTimestamp: 1622730448,
@@ -1498,17 +1639,30 @@ export const mockNormalizedStakeTransactionList = [
         index: 0
       }
     ],
-    txHeight: 697812,
+    height: 697812,
     txUrl:
       "https://testnet.decred.org/tx/c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
     txBlockUrl:
-      "https://testnet.decred.org/block/165,44,223,13,220,253,179,10,25,31,2,18,98,237,250,174,159,56,182,168,25,208,51,141,156,124,160,73,0,0,0,0",
-    isStake: true
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
   },
   // unmined
   {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6785796485,
+        address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+        outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 15, previousAmount: 6785799465 }],
     txHash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
-    txBlockHash: null,
+    blockHash: null,
     spenderHash: null,
     ticketHash:
       "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
@@ -1555,9 +1709,13 @@ export const mockNormalizedStakeTransactionList = [
     },
     spenderTx: null,
     ticketPrice: 6785796485,
+    ticketReward: undefined,
     ticketChange: 0,
     ticketInvestment: 6785799465,
     ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
     spenderTxFee: 0,
     enterTimestamp: 1654202499,
     leaveTimestamp: null,
@@ -1582,18 +1740,30 @@ export const mockNormalizedStakeTransactionList = [
         index: 0
       }
     ],
-    txHeight: -1,
+    height: -1,
     txUrl:
       "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
     txBlockUrl: "https://testnet.decred.org/block/null",
     isStake: true,
-    feeStatus: "1"
+    feeStatus: 1
   },
   // immature
   {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6785796485,
+        address: "TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK",
+        outputScript: "unapFA+UU96/HfOSYqbq+B/LmP95fIlciKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6785799465 }],
     txHash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
-    txBlockHash:
-      "20119681051141410810924511111182431481116154121732568211834212961881980000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash: null,
     ticketHash:
       "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
@@ -1601,10 +1771,9 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1654203366,
       height: 930690,
       blockHash:
-        "20119681051141410810924511111182431481116154121732568211834212961881980000",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
-      hash:
-        "20119681051141410810924511111182431481116154121732568211834212961881980000",
+      hash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
       txHash:
         "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
       txType: "ticket",
@@ -1642,9 +1811,13 @@ export const mockNormalizedStakeTransactionList = [
     },
     spenderTx: null,
     ticketPrice: 6785796485,
+    ticketReward: undefined,
     ticketChange: 0,
     ticketInvestment: 6785799465,
     ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
     spenderTxFee: 0,
     enterTimestamp: 1654203366,
     leaveTimestamp: null,
@@ -1669,19 +1842,31 @@ export const mockNormalizedStakeTransactionList = [
         index: 0
       }
     ],
-    txHeight: 930690,
+    height: 930690,
     txUrl:
       "https://testnet.decred.org/tx/f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
     txBlockUrl:
-      "https://testnet.decred.org/block/201,196,8,105,114,14,108,109,245,111,111,8,243,148,111,6,154,121,7,32,56,82,118,34,212,96,188,198,0,0,0,0",
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     isStake: true,
     feeStatus: 1
   },
   // live
   {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6785796485,
+        address: "TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4",
+        outputScript: "unapFIMhyeEfBENiiiK/SodiN02IfAYyiKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6785799465 }],
     txHash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
-    txBlockHash:
-      "2461281242451519322413042331554325410220623113586313092624444441722080000",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
     spenderHash: null,
     ticketHash:
       "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
@@ -1689,10 +1874,9 @@ export const mockNormalizedStakeTransactionList = [
       timestamp: 1654204193,
       height: 930696,
       blockHash:
-        "2461281242451519322413042331554325410220623113586313092624444441722080000",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
       index: 0,
-      hash:
-        "2461281242451519322413042331554325410220623113586313092624444441722080000",
+      hash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
       txHash:
         "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
       txType: "ticket",
@@ -1730,9 +1914,13 @@ export const mockNormalizedStakeTransactionList = [
     },
     spenderTx: null,
     ticketPrice: 6785796485,
+    ticketReward: undefined,
     ticketChange: 0,
     ticketInvestment: 6785799465,
     ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
     spenderTxFee: 0,
     enterTimestamp: 1654204193,
     leaveTimestamp: null,
@@ -1757,12 +1945,13 @@ export const mockNormalizedStakeTransactionList = [
         index: 0
       }
     ],
-    txHeight: 930696,
+    height: 930696,
     txUrl:
       "https://testnet.decred.org/tx/05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
     txBlockUrl:
-      "https://testnet.decred.org/block/246,128,124,245,15,193,224,130,4,233,155,43,254,10,220,62,3,113,58,63,130,92,6,244,44,44,172,208,0,0,0,0",
-    isStake: true
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
   }
 ];
 
@@ -1772,7 +1961,7 @@ export const mockStakeTransactionList = [
     timestamp: 1654485406,
     height: 932737,
     blockHash:
-      "1472512351262304275125239808423343934577220111166192222712233111195632030000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash:
       "1472512351262304275125239808423343934577220111166192222712233111195632030000",
@@ -1810,7 +1999,7 @@ export const mockStakeTransactionList = [
       timestamp: 1654202680,
       height: 930685,
       blockHash:
-        "0000000017288e2033c8422a15ec0557bad02ee38123efb55d225d96d79c4183",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
       txHash:
         "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
@@ -1845,7 +2034,7 @@ export const mockStakeTransactionList = [
       isMix: false,
       transaction:
         "dd4e8be1d68c736d04abb90be4eeb0f80f9916285eed5a48e18abbe818eb5a5d022101dd0bee776b514b69f8ee2dd8ee53a7a0f10accb935a09583a158c3396de46e2120020c7829fb5ab19632689cb71dc02f0cfba8902ee8a7c1fd39cddd47bbe2c5cf2020024430476affffffff000000000000000194771529010000000000000000ac88000000000000000000000000000000000000000014a976bd1a000000000000000000004e000000000194771529115ecf5b86d7ab1e37efec090ec0c8995e7abf991e6a2000000000000000000000ac88b3b6ed49917287e02023617b04195541d2b0fe6114a976ba1a0000000000019477098503ffffffff0000000000e5dc43be34ab5c22a65b787ec469a1cd0a44cce6b7addca25816a5e7b3b3a9540100000001",
-      vspHost: "https://teststakepool.decred.org",
+      vspHost: "mockVspHost",
       txUrl:
         "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
     },
@@ -1853,9 +2042,9 @@ export const mockStakeTransactionList = [
       timestamp: 1654485406,
       height: 932737,
       blockHash:
-        "1472512351262304275125239808423343934577220111166192222712233111195632030000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
-      hash: "0000000017288e2033c8422a15ec0557bad02ee38123efb55d225d96d79c4183",
+      hash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
       txHash:
         "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
       txType: "vote",
@@ -1895,7 +2084,7 @@ export const mockStakeTransactionList = [
     timestamp: 1652858637,
     height: 919842,
     blockHash:
-      "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
     txHash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
@@ -1928,11 +2117,12 @@ export const mockStakeTransactionList = [
     rawTx:
       "0100000001b50f2e03314661b566e3f0f246623c4419d8ec605da401f407a5f67cf148ce920000000000ffffffff039bf372db0200000000001aba76a9145ca8dbd9f8f80baf7605fcf09744410099a12f9b88ac00000000000000000000206a1e53b208495f9fabdfa80b4be10c4d0e488b33f2993fff72db02000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac0000000000000000013fff72db0200000000000000ffffffff6b483045022100d8f4e49c56f3249947a759d7ba766b671579399e758feaa12bc525c822c020f602200266d21d887165183479cf3d06a01470ceadc53b73527f6863ae76bf22a11ea001210355d8fdf5cdec7a8848e6d653d6c379908c256d4b54b7be637ab5018d56d19149",
     isMix: false,
+    vspHost: "mockVspHost-votedticket",
     ticket: {
       timestamp: 1652858637,
       height: 919842,
       blockHash:
-        "00000000bbf1f33870cec5e4da9a7eb7a80c17b07cd3ba4865f4086fa6f8cd3e",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
       txHash:
@@ -1966,16 +2156,17 @@ export const mockStakeTransactionList = [
       rawTx:
         "0100000001b50f2e03314661b566e3f0f246623c4419d8ec605da401f407a5f67cf148ce920000000000ffffffff039bf372db0200000000001aba76a9145ca8dbd9f8f80baf7605fcf09744410099a12f9b88ac00000000000000000000206a1e53b208495f9fabdfa80b4be10c4d0e488b33f2993fff72db02000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac0000000000000000013fff72db0200000000000000ffffffff6b483045022100d8f4e49c56f3249947a759d7ba766b671579399e758feaa12bc525c822c020f602200266d21d887165183479cf3d06a01470ceadc53b73527f6863ae76bf22a11ea001210355d8fdf5cdec7a8848e6d653d6c379908c256d4b54b7be637ab5018d56d19149",
       isMix: false,
-      vspHost: "mockVspHost",
+      vspHost: "mockVspHost-votedticket",
       txUrl:
-        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57"
+        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+      feeStatus: 1
     },
     spender: {
       timestamp: 1652874655,
       height: -1,
       blockHash: "",
       index: -1,
-      hash: "000000005af1c046f26b1a4336280e37a84a8d8e20898a1a27af18a4f23c2e56",
+      hash: "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txHash:
         "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txType: "vote",
@@ -1990,7 +2181,7 @@ export const mockStakeTransactionList = [
       credits: [
         {
           index: 2,
-          account: 0,
+          account: 15,
           internal: true,
           amount: 12276267831,
           address: "TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n",
@@ -2016,7 +2207,7 @@ export const mockStakeTransactionList = [
     timestamp: 1652256415,
     height: 914582,
     blockHash:
-      "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873",
     txHash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
@@ -2053,7 +2244,7 @@ export const mockStakeTransactionList = [
       timestamp: 1652256415,
       height: 914582,
       blockHash:
-        "684345812851621431511071671612171552312106242261019155169152051412090000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
       txHash:
@@ -2087,7 +2278,7 @@ export const mockStakeTransactionList = [
       rawTx:
         "0100000001d5c92daf04dc8a5abfa0d4dd96cc0ce98c78ffa126d299aabe340c7d4baf14360000000000ffffffff03ec5038000200000000001aba76a9147940737eb9bc4798a56fda32fa3682274020081588ac00000000000000000000206a1e29b9f346a3b78f1b4b029429aee2a484fdaaf28b905c380002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001905c38000200000095f40d00010000006b483045022100bdac06f033cd0fe652bd8d5fc21833a3b7064114c8a949c7157f58f5d2dc2e2302206b2bb830c34c75c76ca3df491245c775eeb4eb3e0b73bca6ead94ed34762e439012103033666b327ef4a26ea4f26ce53223f3cd092a063d57f711ea3ec7169cbce4ed9",
       isMix: false,
-      vspHost: "vspHost-missed",
+      vspHost: "mockVspHost-missed",
       txUrl:
         "https://testnet.decred.org/tx/d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc"
     },
@@ -2098,7 +2289,7 @@ export const mockStakeTransactionList = [
     timestamp: 1637487987,
     height: 815405,
     blockHash:
-      "000000080433728b66a9dcd5471205adde4df9619af27f45613f60c4d3dc8a02",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
     txHash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
@@ -2174,7 +2365,7 @@ export const mockStakeTransactionList = [
       timestamp: 1637487987,
       height: 815405,
       blockHash:
-        "000000080433728b66a9dcd5471205adde4df9619af27f45613f60c4d3dc8a02",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
       txHash:
@@ -2218,7 +2409,7 @@ export const mockStakeTransactionList = [
     timestamp: 1622730448,
     height: 697812,
     blockHash:
-      "a52cdf0ddcfdb30a191f021262edfaae9f38b6a819d0338d9c7ca04900000000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "8c6e88a38ceac7e52ef3c9f4d936d0cf16fcc0a510955cab255f3a23ce2e09c1",
     txHash: "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
@@ -2252,10 +2443,9 @@ export const mockStakeTransactionList = [
       "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052",
     ticket: {
       timestamp: 1618322224,
-      height: -1,
+      height: 661573,
       blockHash: "",
-      index: -1,
-      hash: "47ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a",
+      hash: "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
       txHash:
         "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
       txType: "ticket",
@@ -2285,13 +2475,14 @@ export const mockStakeTransactionList = [
         }
       ],
       rawTx:
-        "010000000120b97bf5eb8969095c3b8fa9590701f910246f464b84db62423b34c37b6747330000000000ffffffff03f0fff6810100000000001aba76a91451d06806b3922a664e9e9cd63fe18caa7081ea6688ac00000000000000000000206a1ec0e4b3a5b5a454e388c6864ae51205223a12dce4940bf781010000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001940bf7810100000044180a00020000006a47304402204be3e7097a452d99c2b56c138f8df33a923f6da1f9f465e56c75b9cdd571864902201bf7a3e9db1cfd3b7f8e55252d5f3c04311275bbc2c4ff2333472840c262b413012102936911a32e4e000e56f82207ec5d39a66b9971021869905087b23a10399cb1b0"
+        "010000000120b97bf5eb8969095c3b8fa9590701f910246f464b84db62423b34c37b6747330000000000ffffffff03f0fff6810100000000001aba76a91451d06806b3922a664e9e9cd63fe18caa7081ea6688ac00000000000000000000206a1ec0e4b3a5b5a454e388c6864ae51205223a12dce4940bf781010000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001940bf7810100000044180a00020000006a47304402204be3e7097a452d99c2b56c138f8df33a923f6da1f9f465e56c75b9cdd571864902201bf7a3e9db1cfd3b7f8e55252d5f3c04311275bbc2c4ff2333472840c262b413012102936911a32e4e000e56f82207ec5d39a66b9971021869905087b23a10399cb1b0",
+      isMix: false
     },
     spender: {
       timestamp: 1622730448,
       height: 697812,
       blockHash:
-        "a52cdf0ddcfdb30a191f021262edfaae9f38b6a819d0338d9c7ca04900000000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "8c6e88a38ceac7e52ef3c9f4d936d0cf16fcc0a510955cab255f3a23ce2e09c1",
       txHash:
@@ -2323,7 +2514,8 @@ export const mockStakeTransactionList = [
         }
       ],
       rawTx:
-        "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052"
+        "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052",
+      isMix: false
     },
     status: "revoked"
   },
@@ -2413,7 +2605,7 @@ export const mockStakeTransactionList = [
     timestamp: 1654203366,
     height: 930690,
     blockHash:
-      "20119681051141410810924511111182431481116154121732568211834212961881980000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
     txHash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
@@ -2450,7 +2642,7 @@ export const mockStakeTransactionList = [
       timestamp: 1654203366,
       height: 930690,
       blockHash:
-        "20119681051141410810924511111182431481116154121732568211834212961881980000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
       txHash:
@@ -2496,7 +2688,7 @@ export const mockStakeTransactionList = [
     timestamp: 1654204193,
     height: 930696,
     blockHash:
-      "2461281242451519322413042331554325410220623113586313092624444441722080000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e079",
     txHash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
@@ -2533,7 +2725,7 @@ export const mockStakeTransactionList = [
       timestamp: 1654204193,
       height: 930696,
       blockHash:
-        "2461281242451519322413042331554325410220623113586313092624444441722080000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
       txHash:

@@ -58,11 +58,11 @@ const TransactionContent = ({
   const {
     txHash,
     txUrl,
-    txHeight,
+    height,
     txType,
     txInputs,
     txOutputs,
-    txBlockHash,
+    blockHash,
     txBlockUrl,
     txFee,
     ticketTxFee,
@@ -72,6 +72,7 @@ const TransactionContent = ({
     voteScript,
     ticketTx
   } = transactionDetails;
+
   const { theme } = useTheme();
   const iconColor = getThemeProperty(theme, "color-orange");
   const iconBgColor = getThemeProperty(theme, "alert-icon-bg-color");
@@ -137,9 +138,7 @@ const TransactionContent = ({
                   id="transaction.confirmationHeight"
                   m="{confirmations, plural, =0 {Mined, block awaiting approval} one {# confirmation} other {# confirmations}}"
                   values={{
-                    confirmations: !isPending
-                      ? currentBlockHeight - txHeight
-                      : 0
+                    confirmations: !isPending ? currentBlockHeight - height : 0
                   }}
                 />
               </span>
@@ -457,7 +456,7 @@ const TransactionContent = ({
               </div>
               <div className={styles.value}>
                 <ExternalLink className={styles.value} href={txBlockUrl}>
-                  {txBlockHash}
+                  {blockHash}
                 </ExternalLink>
               </div>
             </div>
@@ -465,7 +464,7 @@ const TransactionContent = ({
               <div className={styles.name}>
                 <T id="txDetails.blockHeightLabel" m="Height" />
               </div>
-              <div className={styles.value}>{txHeight}</div>
+              <div className={styles.value}>{height}</div>
             </div>
           </>
         )}

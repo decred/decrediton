@@ -131,11 +131,13 @@ export const newTransactionsReceived = (
   newlyUnminedTransactions = await normalizeBatchTx(
     walletService,
     chainParams,
+    dispatch,
     newlyUnminedTransactions
   );
   newlyMinedTransactions = await normalizeBatchTx(
     walletService,
     chainParams,
+    dispatch,
     newlyMinedTransactions
   );
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
@@ -283,19 +285,13 @@ export const newTransactionsReceived = (
   });
 
   dispatch({
-    recentRegularTransactions: dispatch(
-      normalizeRecentTransactions(recentRegularTransactions)
-    ),
-    recentStakeTransactions: dispatch(
-      normalizeRecentStakeTransactions(recentStakeTransactions)
-    ),
+    recentRegularTransactions,
+    recentStakeTransactions,
     unminedTransactions,
     newlyUnminedTransactions,
     newlyMinedTransactions,
-    stakeTransactions: dispatch(normalizeStakeTransactions(stakeTransactions)),
-    regularTransactions: dispatch(
-      normalizeRegularTransactions(regularTransactions)
-    ),
+    stakeTransactions,
+    regularTransactions,
     type: NEW_TRANSACTIONS_RECEIVED
   });
 
@@ -447,7 +443,12 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     -1,
     pageSize
   );
-  unmined = await normalizeBatchTx(walletService, chainParams, unmined);
+  unmined = await normalizeBatchTx(
+    walletService,
+    chainParams,
+    dispatch,
+    unmined
+  );
   transactions.push(...unmined);
 
   mergeRegularTxs(unmined);
@@ -461,7 +462,7 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
       1,
       pageSize
     );
-    mined = await normalizeBatchTx(walletService, chainParams, mined);
+    mined = await normalizeBatchTx(walletService, chainParams, dispatch, mined);
     // make transactions map
     transactions.push(...mined);
 
@@ -493,13 +494,11 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
 
   dispatch({
     type: GETSTARTUPTRANSACTIONS_SUCCESS,
-    recentRegularTxs: dispatch(normalizeRecentTransactions(recentRegularTxs)),
-    recentStakeTxs: dispatch(normalizeRecentStakeTransactions(recentStakeTxs)),
+    recentRegularTxs,
+    recentStakeTxs,
     maturingBlockHeights,
-    stakeTransactions: dispatch(normalizeStakeTransactions(stakeTransactions)),
-    regularTransactions: dispatch(
-      normalizeRegularTransactions(regularTransactions)
-    )
+    stakeTransactions,
+    regularTransactions
   });
 };
 
@@ -566,26 +565,31 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 // normalizeTx is used to normalize txs after fetched from dcrwallet.
 // this is needed because we do not have all information right after
 // fetching it. So we need to manually fill them.
-const normalizeTx = async (walletService, chainParams, tx) => {
+const normalizeTx = async (walletService, chainParams, dispatch, tx) => {
   if (tx.isStake) {
     // For stake txs, fetch the missing stake info.
-    return {
-      ...tx,
-      ...(await getMissingStakeTxData(walletService, chainParams, tx))
-    };
+    const missingStakeData = await getMissingStakeTxData(
+      walletService,
+      chainParams,
+      tx
+    );
+    const normalizedTx = { ...tx, ...missingStakeData };
+    return dispatch(stakeTransactionNormalizer(normalizedTx));
   }
 
   // For regular tx we get the nonWalletoutputs so we can show them at
   // the overview.
   const outputs = await getNonWalletOutputs(walletService, chainParams, tx);
+  const normalizedTx = { ...tx, outputs };
 
-  return { ...tx, outputs };
+  return dispatch(regularTransactionNormalizer(normalizedTx));
 };
 
-const normalizeBatchTx = async (walletService, chainParams, txs) =>
+const normalizeBatchTx = async (walletService, chainParams, dispatch, txs) =>
   await Promise.all(
     txs.map((tx) =>
-      (async () => await normalizeTx(walletService, chainParams, tx))()
+      (async () =>
+        await normalizeTx(walletService, chainParams, dispatch, tx))()
     )
   );
 
@@ -639,7 +643,12 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   dispatch({ type: GETTRANSACTIONS_ATTEMPT });
   // first, request unmined transactions. They always come first in decrediton.
   let { unmined } = await wallet.getTransactions(walletService, -1, -1, 0);
-  unmined = await normalizeBatchTx(walletService, chainParams, unmined);
+  unmined = await normalizeBatchTx(
+    walletService,
+    chainParams,
+    dispatch,
+    unmined
+  );
   transactions.push(...unmined);
 
   let startRequestHeight, endRequestHeight;
@@ -683,7 +692,12 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
       }
       lastTransaction = mined[mined.length - 1];
 
-      mined = await normalizeBatchTx(walletService, chainParams, mined);
+      mined = await normalizeBatchTx(
+        walletService,
+        chainParams,
+        dispatch,
+        mined
+      );
 
       // concat txs
       transactions.push(...mined);
@@ -708,12 +722,12 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   if (isStake) {
     stakeTransactions = {
       ...stakeTransactions,
-      ...dispatch(normalizeStakeTransactions(newTxs.stakeTransactions))
+      ...newTxs.stakeTransactions
     };
   } else {
     regularTransactions = {
       ...regularTransactions,
-      ...dispatch(normalizeRegularTransactions(newTxs.regularTransactions))
+      ...newTxs.regularTransactions
     };
   }
 
@@ -932,34 +946,24 @@ export const listUnspentOutputs = (accountNum) => (dispatch, getState) =>
       });
   });
 
-export const normalizeRegularTransactions = (txs) => (dispatch) =>
-  Object.keys(txs).reduce((normalizedMap, txHash) => {
-    const tx = txs[txHash];
-    if (tx.isStake) return normalizedMap;
-    normalizedMap[txHash] = dispatch(transactionNormalizer(tx));
-    return normalizedMap;
-  }, {});
+const getAccountName = (num, accounts) => {
+  const findAccount = (num) =>
+    accounts.find((account) => account.accountNumber === num);
 
-export const normalizeRecentTransactions = (txs) => (dispatch) =>
-  txs.reduce((normalizedArray, tx) => {
-    if (tx.isStake) return normalizedArray;
-    normalizedArray.push(dispatch(transactionNormalizer(tx)));
-    return normalizedArray;
-  }, []);
+  return ((act) => (act ? act.accountName : ""))(findAccount(num));
+};
 
-// transactionNormalizer normalizes regular decred's regular transactions
-const transactionNormalizer = (origTx) => (_, getState) => {
+// regularTransactionNormalizer normalizes regular decred's regular transactions
+export const regularTransactionNormalizer = (origTx) => (_, getState) => {
   const accounts = sel.accounts(getState());
   const txURLBuilder = sel.txURLBuilder(getState());
   const blockURLBuilder = sel.blockURLBuilder(getState());
   const mixedAccountName = sel.getMixedAccountName(getState());
 
-  const findAccount = (num) =>
-    accounts.find((account) => account.accountNumber === num);
-  const getAccountName = (num) =>
-    ((act) => (act ? act.accountName : ""))(findAccount(num));
-
   const {
+    credits,
+    debits,
+    fee,
     blockHash,
     height,
     type,
@@ -983,11 +987,10 @@ const transactionNormalizer = (origTx) => (_, getState) => {
   let totalChange = 0;
   const txInputs = [];
   const txOutputs = [];
-  const fee = origTx.fee;
   let debitedAccountName, creditedAccountName;
-  const totalDebit = origTx.debits.reduce((total, debit) => {
+  const totalDebit = debits.reduce((total, debit) => {
     const debitedAccount = debit.previousAccount;
-    debitedAccountName = getAccountName(debitedAccount);
+    debitedAccountName = getAccountName(debitedAccount, accounts);
     const amount = debit.previousAmount;
     txInputs.push({
       accountName: debitedAccountName,
@@ -998,18 +1001,21 @@ const transactionNormalizer = (origTx) => (_, getState) => {
   }, 0);
 
   let selfTx = false;
-  origTx.credits.forEach((credit) => {
+  credits.forEach((credit) => {
     const amount = credit.amount;
     const address = credit.address;
     const creditedAccount = credit.account;
-    const currentCreditedAccountName = getAccountName(creditedAccount);
+    const currentCreditedAccountName = getAccountName(
+      creditedAccount,
+      accounts
+    );
     // If we find a self credited account which isn't a change output
     // & tx has one or more wallet inputs & no non-wallet outputs we consider
     // the transaction as self trnsaction
     if (
       !credit.internal &&
       txInputs.length > 0 &&
-      origTx.credits.length === outputs.length
+      credits.length === outputs.length
     ) {
       selfTx = true;
     }
@@ -1058,17 +1064,19 @@ const transactionNormalizer = (origTx) => (_, getState) => {
         };
 
   return {
+    credits,
+    debits,
     txUrl,
     txBlockUrl,
     txHash,
-    txHeight: height,
+    height,
     txType,
     timestamp,
     isPending: height <= 0,
     txFee: fee,
     txInputs,
     txOutputs,
-    txBlockHash,
+    blockHash: txBlockHash,
     txNumericType: type,
     rawTx,
     outputs,
@@ -1079,28 +1087,16 @@ const transactionNormalizer = (origTx) => (_, getState) => {
   };
 };
 
-export const normalizeStakeTransactions = (txs) => (dispatch) =>
-  Object.keys(txs).reduce((normalizedMap, txHash) => {
-    const tx = txs[txHash];
-    if (!tx.isStake) return normalizedMap;
-    normalizedMap[txHash] = dispatch(ticketNormalizer(tx));
-    return normalizedMap;
-  }, {});
-
-export const normalizeRecentStakeTransactions = (txs) => (dispatch) =>
-  txs.reduce((normalizedArray, tx) => {
-    if (!tx.isStake) return normalizedArray;
-    normalizedArray.push(dispatch(ticketNormalizer(tx)));
-    return normalizedArray;
-  }, []);
-
-const ticketNormalizer = (ticket) => (_, getState) => {
+export const stakeTransactionNormalizer = (ticket) => (_, getState) => {
   const network = sel.network(getState());
   const accounts = sel.accounts(getState());
   const chainParams = sel.chainParams(getState());
   const txURLBuilder = sel.txURLBuilder(getState());
   const blockURLBuilder = sel.blockURLBuilder(getState());
   const {
+    type,
+    credits,
+    debits,
     txType,
     status,
     spender,
@@ -1110,77 +1106,59 @@ const ticketNormalizer = (ticket) => (_, getState) => {
     height,
     feeStatus
   } = ticket;
-  // TODO refactor same code to be used in tickets and regular tx normalizers.
-  const findAccount = (num) =>
-    accounts.find((account) => account.accountNumber === num);
-  const getAccountName = (num) =>
-    ((act) => (act ? act.accountName : ""))(findAccount(num));
+
   const txInputs = [];
   const txOutputs = [];
   const hasSpender = spender && spender.hash;
-  const isVote = status === VOTED;
   const isPending = height <= 0;
   // Some legacy vsp fees wallet will have tickets without `ticket` field
   // and only with `spender` so we use it as fallback
   const ticketTx = ticket.ticket || ticket.spender;
   const ticketHash = ticketTx.txHash;
   const spenderTx = hasSpender ? spender : null;
-  const txBlockHash = blockHash ? blockHash : null;
   const txHash = ticket.txHash;
   const txUrl = txURLBuilder(txHash);
+  const txBlockHash = blockHash
+    ? reverseHash(Buffer.from(blockHash).toString("hex"))
+    : null;
   const txBlockUrl = blockURLBuilder(txBlockHash);
 
   const spenderHash = hasSpender ? spenderTx.txHash : null;
   const hasCredits = ticketTx.credits.length > 0;
-  if (spenderTx) {
-    spenderTx.debits.reduce((total, debit) => {
-      const debitedAccount = debit.previousAccount;
-      const debitedAccountName = getAccountName(debitedAccount);
-      const amount = debit.previousAmount;
-      txInputs.push({
-        accountName: debitedAccountName,
-        amount,
-        index: debit.index
-      });
-      return total + amount;
-    }, 0);
-    spenderTx.credits.forEach((credit) => {
-      const amount = credit.amount;
-      const address = credit.address;
-      const creditedAccount = credit.account;
-      const creditedAccountName = getAccountName(creditedAccount);
-      txOutputs.push({
-        accountName: creditedAccountName,
-        amount,
-        address,
-        index: credit.index
-      });
-    });
-  } else {
-    ticketTx.debits.reduce((total, debit) => {
-      const debitedAccount = debit.previousAccount;
-      const debitedAccountName = getAccountName(debitedAccount);
-      const amount = debit.previousAmount;
-      txInputs.push({
-        accountName: debitedAccountName,
-        amount,
-        index: debit.index
-      });
-      return total + amount;
-    }, 0);
 
-    ticketTx.credits.forEach((credit) => {
-      const amount = credit.amount;
-      const address = credit.address;
-      const creditedAccount = credit.account;
-      const creditedAccountName = getAccountName(creditedAccount);
-      txOutputs.push({
-        accountName: creditedAccountName,
-        amount,
-        address,
-        index: credit.index
-      });
+  debits.reduce((total, debit) => {
+    const debitedAccount = debit.previousAccount;
+    const debitedAccountName = getAccountName(debitedAccount, accounts);
+    const amount = debit.previousAmount;
+    txInputs.push({
+      accountName: debitedAccountName,
+      amount,
+      index: debit.index
     });
+    return total + amount;
+  }, 0);
+  credits.forEach((credit) => {
+    const amount = credit.amount;
+    const address = credit.address;
+    const creditedAccount = credit.account;
+    const creditedAccountName = getAccountName(creditedAccount, accounts);
+    txOutputs.push({
+      accountName: creditedAccountName,
+      amount,
+      address,
+      index: credit.index
+    });
+  });
+
+  if (spenderTx && spenderTx.blockHash) {
+    spenderTx.blockHash = reverseHash(
+      Buffer.from(spenderTx.blockHash).toString("hex")
+    );
+  }
+  if (ticketTx && ticketTx.blockHash) {
+    ticketTx.blockHash = reverseHash(
+      Buffer.from(ticketTx.blockHash).toString("hex")
+    );
   }
 
   let ticketPrice = 0;
@@ -1203,7 +1181,6 @@ const ticketNormalizer = (ticket) => (_, getState) => {
   const spenderTxFee = hasSpender ? spenderTx.fee : 0;
 
   ticketTx.txUrl = txURLBuilder(ticketTx.txHash);
-
   // ticket change is anything returned to the wallet on ticket purchase.
   const isTicketChange = (c) => c.index > 0 && c.index % 2 === 0;
   const ticketChange = ticketTx.credits.reduce(
@@ -1215,45 +1192,25 @@ const ticketNormalizer = (ticket) => (_, getState) => {
   let accountName = "";
   const debitList = ticketTx.debits;
   if (debitList.length > 0) {
-    accountName = getAccountName(debitList[0].previousAccount);
+    accountName = getAccountName(debitList[0].previousAccount, accounts);
   }
   const ticketInvestment =
     debitList.reduce((a, v) => a + v.previousAmount, 0) - ticketChange;
 
-  let ticketReward,
-    ticketStakeRewards,
-    ticketReturnAmount,
-    ticketPoolFee,
-    voteScript;
+  let ticketReward, ticketStakeRewards, ticketReturnAmount, voteScript;
   if (hasSpender) {
     // everything returned to the wallet after voting/revoking
     ticketReturnAmount = spenderTx.credits.reduce((a, v) => a + v.amount, 0);
 
     // this is liquid from applicable fees (i.e, what the wallet actually made)
     ticketReward = ticketReturnAmount - ticketInvestment;
-
     ticketStakeRewards = ticketReward / ticketInvestment;
 
-    const decodedSpenderTx = wallet.decodeRawTransaction(
-      Buffer.from(spenderTx.rawTx, "hex"),
-      chainParams
-    );
-
-    // Check pool fee. If there is a debit at index=0 of the ticket but not
-    // a corresponding credit at the expected index on the spender, then
-    // that was a pool fee.
-    const hasIndex0Debit = ticketTx.debits.some((d) => d.index === 0);
-    const hasIndex0Credit = spenderTx.credits.some((c) => {
-      // In votes, the first 2 outputs are voting block and vote bits
-      // OP_RETURNs, so ignore those.
-      return (isVote && c.index === 2) || (!isVote && c.index === 0);
-    });
-    if (hasIndex0Debit && !hasIndex0Credit) {
-      const poolFeeDebit = ticketTx.debits.find((d) => d.index === 0);
-      ticketPoolFee = poolFeeDebit.previousAmount;
-    }
-
-    if (isVote) {
+    if (status === VOTED) {
+      const decodedSpenderTx = wallet.decodeRawTransaction(
+        Buffer.from(spenderTx.rawTx, "hex"),
+        chainParams
+      );
       voteScript = decodeVoteScript(
         network,
         decodedSpenderTx.outputs[1].script
@@ -1262,8 +1219,11 @@ const ticketNormalizer = (ticket) => (_, getState) => {
   }
 
   return {
+    type,
+    credits,
+    debits,
     txHash,
-    txBlockHash,
+    blockHash: txBlockHash,
     spenderHash,
     ticketHash,
     ticketTx,
@@ -1273,7 +1233,6 @@ const ticketNormalizer = (ticket) => (_, getState) => {
     ticketChange,
     ticketInvestment,
     ticketTxFee,
-    ticketPoolFee,
     ticketStakeRewards,
     ticketReturnAmount,
     voteScript,
@@ -1282,13 +1241,12 @@ const ticketNormalizer = (ticket) => (_, getState) => {
     leaveTimestamp: hasSpender ? spenderTx.timestamp : null,
     status: ticket.status,
     rawTx,
-    tx: ticketTx,
     txType,
     isPending,
     accountName,
     txInputs,
     txOutputs,
-    txHeight: ticket.height,
+    height: ticket.height,
     txUrl,
     txBlockUrl,
     isStake,

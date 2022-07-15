@@ -389,16 +389,14 @@ test("voted ticket", async () => {
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault122.71678363 DCR");
-  expect(getNonWalletInputsText()).toMatch(
-    "Non Wallet Inputs 92ce48f17cf6a507f401a45d60ecd819443c6246f2f0e366b5614631032e0fb5:0 122.71681343 DCR"
+  expect(getWalletInputsText()).toMatch(
+    "Wallet Inputsaccount-15122.71681343 DCR"
   );
+  expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch(
-    "Wallet Outputs account-15 122.76267831 DCR"
-  );
+  expect(getWalletOutputs()).toMatch("Wallet Outputs default 122.71678363 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU 122.71678363 DCR TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n 0.00000 DCR"
+    "Non Wallet Outputs TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -742,13 +740,13 @@ test("revoked ticket", async () => {
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed109,009 confirmations");
   expect(getToAddressText()).toMatch(
-    "To address: Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+    "To address: TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault86.00218109 DCR");
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault86.00221089 DCR");
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 

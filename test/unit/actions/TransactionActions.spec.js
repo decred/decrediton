@@ -4,9 +4,7 @@ import {
   mockRegularTransactions,
   mockStakeTransactions,
   mockNormalizedRegularTransactions,
-  mockRegularTransactionList,
-  mockNormalizedRegularTransactionList,
-  mockStakeTransactionList
+  mockNormalizedStakeTransactions
 } from "../components/views/TransactionPage/mocks.js";
 import { isEqual, cloneDeep } from "lodash/fp";
 
@@ -51,42 +49,43 @@ const initialState = {
         {
           accountNumber: 7,
           accountName: "unmixed"
+        },
+        {
+          accountNumber: 15,
+          accountName: "account-15"
         }
       ]
     }
   }
 };
 
-test("test transactionNormalizer", async () => {
+const normalizeTransactions = (txs, store) =>
+  Object.keys(txs).reduce((normalizedMap, txHash) => {
+    const tx = txs[txHash];
+    if (tx.isStake) {
+      normalizedMap[txHash] = store.dispatch(
+        transactionActions.stakeTransactionNormalizer(tx)
+      );
+    } else {
+      normalizedMap[txHash] = store.dispatch(
+        transactionActions.regularTransactionNormalizer(tx)
+      );
+    }
+    return normalizedMap;
+  }, {});
+
+test("test transactionNormalizer and ticketNormalizer", () => {
   const store = createStore(initialState);
 
   const txs = {
     ...cloneDeep(mockRegularTransactions),
-    ...cloneDeep(mockStakeTransactions) // stake txs should not be processed
+    ...cloneDeep(mockStakeTransactions)
+  };
+  const expectedNormalizedTxs = {
+    ...cloneDeep(mockNormalizedRegularTransactions),
+    ...cloneDeep(mockNormalizedStakeTransactions)
   };
 
-  const normalizedTransaction = await store.dispatch(
-    transactionActions.normalizeRegularTransactions(txs)
-  );
-
-  expect(
-    isEqual(normalizedTransaction, mockNormalizedRegularTransactions)
-  ).toBeTruthy();
-});
-
-test("test normalizeRecentTransactions", async () => {
-  const store = createStore(initialState);
-
-  const txs = [
-    ...cloneDeep(mockRegularTransactionList),
-    ...cloneDeep(mockStakeTransactionList) // stake txs should not be processed
-  ];
-
-  const normalizedTransaction = await store.dispatch(
-    transactionActions.normalizeRecentTransactions(txs)
-  );
-
-  expect(
-    isEqual(normalizedTransaction, mockNormalizedRegularTransactionList)
-  ).toBeTruthy();
+  const normalizedTransactions = normalizeTransactions(txs, store);
+  expect(isEqual(normalizedTransactions, expectedNormalizedTxs)).toBeTruthy();
 });
