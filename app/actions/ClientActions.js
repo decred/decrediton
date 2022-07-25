@@ -58,6 +58,10 @@ export const goToActiveProposals = () => (dispatch) => {
   dispatch(pushHistory("/governance/proposals/activevote"));
 };
 
+export const goToTreasurySpending = () => (dispatch) => {
+  dispatch(pushHistory("/governance/treasury"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -98,6 +102,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getVoteChoicesAttempt());
       await dispatch(monitorLockableAccounts());
       await dispatch(getTreasuryPolicies());
+      await dispatch(getTSpendPolicies());
 
       // Start Dex if dexEnabled and NOT SPV mode
       if (dexEnabled) {
@@ -700,6 +705,48 @@ export const getTreasuryPolicies = () => (dispatch, getState) => {
     .catch((error) => {
       dispatch({ error, type: GETTREASURY_POLICIES_FAILED });
     });
+};
+
+export const GETTSPEND_POLICIES_ATTEMPT = "GETTSPEND_POLICIES_ATTEMPT";
+export const GETTSPEND_POLICIES_FAILED = "GETTSPEND_POLICIES_FAILED";
+export const GETTSPEND_POLICIES_SUCCESS = "GETTSPEND_POLICIES_SUCCESS";
+
+export const getTSpendPolicies = () => (dispatch, getState) => {
+  dispatch({ type: GETTSPEND_POLICIES_ATTEMPT });
+  wallet
+    .getTSpendPolicies(sel.votingService(getState()))
+    .then((tspendPolicies) =>
+      dispatch({
+        tspendPoliciesResponse: tspendPolicies.policiesList,
+        type: GETTSPEND_POLICIES_SUCCESS
+      })
+    )
+    .catch((error) => {
+      dispatch({ error, type: GETTSPEND_POLICIES_FAILED });
+    });
+};
+
+export const SETTSPEND_POLICY_ATTEMPT = "SETTSPEND_POLICY_ATTEMPT";
+export const SETTSPEND_POLICY_FAILED = "SETTSPEND_POLICY_FAILED";
+export const SETTSPEND_POLICY_SUCCESS = "SETTSPEND_POLICY_SUCCESS";
+
+export const setTSpendPolicy = (hash, policy, passphrase) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ payload: { hash, policy }, type: SETTSPEND_POLICY_ATTEMPT });
+  try {
+    await dispatch(
+      unlockAllAcctAndExecFn(passphrase, () =>
+        wallet.setTSpendPolicy(sel.votingService(getState()), hash, policy)
+      )
+    );
+    await dispatch(setVSPDVoteChoices(passphrase));
+    dispatch(getTSpendPolicies());
+    dispatch({ type: SETTSPEND_POLICY_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: SETTSPEND_POLICY_FAILED });
+  }
 };
 
 export const SETTREASURY_POLICY_ATTEMPT = "SETTREASURY_POLICY_ATTEMPT";

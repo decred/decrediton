@@ -40,7 +40,15 @@ let mockSignMessageAttempt;
 const mockVSPTicketInfoResponse = {
   data: {
     feetxstatus: "broadcasted",
-    feetxhash: "test-feetxhash"
+    feetxhash: "test-feetxhash",
+    treasurypolicy: {
+      testPiKey1: "yes",
+      testPiKey2: "no"
+    },
+    tspendpolicy: {
+      testHash1: "yes",
+      testHash2: "no"
+    }
   }
 };
 const mockSig = "mock-sig";
@@ -908,6 +916,12 @@ test("live ticket", async () => {
   );
   expect(screen.getByText("Fee tx status:").parentNode.textContent).toMatch(
     `Fee tx status:${mockVSPTicketInfoResponse.data.feetxstatus}`
+  );
+  expect(screen.getByText("Treasury Policy:").parentNode.textContent).toMatch(
+    `Treasury Policy:testPiKey1${mockVSPTicketInfoResponse.data.treasurypolicy.testPiKey1}testPiKey2${mockVSPTicketInfoResponse.data.treasurypolicy.testPiKey2}`
+  );
+  expect(screen.getByText("TSpend Policy:").parentNode.textContent).toMatch(
+    `TSpend Policy:testHash1${mockVSPTicketInfoResponse.data.tspendpolicy.testHash1}testHash2${mockVSPTicketInfoResponse.data.tspendpolicy.testHash2}`
   );
   expect(mockSignMessageAttempt).toHaveBeenCalled();
   expect(mockGetVSPTicketStatus).toHaveBeenCalled();
