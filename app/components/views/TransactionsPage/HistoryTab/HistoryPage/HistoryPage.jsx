@@ -39,6 +39,7 @@ const subtitleMenu = ({
         id="filterByAddrOrHashInput"
         type="text"
         placeholder={intl.formatMessage(messages.filterByAddrOrHashPlaceholder)}
+        size={intl.formatMessage(messages.filterByAddrOrHashPlaceholder).length}
         value={searchText}
         onChange={(e) => onChangeSearchText(e.target.value)}
       />
