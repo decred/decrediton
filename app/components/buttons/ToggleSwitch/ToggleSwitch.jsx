@@ -29,8 +29,8 @@ const ToggleSwitch = ({
         <Toggle
           {...{
             onToggle: onClick,
-            toggled: enabled,
-            disabled,
+            toggled: !!enabled,
+            disabled: !!disabled,
             className
           }}
         />
