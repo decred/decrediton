@@ -1,4 +1,4 @@
-Stakeshuffle++ requires two dedicated wallet accounts - a "mixed" account and an
+StakeShuffle requires two dedicated wallet accounts - a "mixed" account and an
 "unmixed" account.
 
 When the account mixer is activated, Decred will be transferred from the unmixed
