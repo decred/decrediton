@@ -21,7 +21,6 @@
   margin-top: 0.3rem;
   position: absolute;
   display: inline-block;
-  z-index: 10;
   border-radius: 50%;
   background-color: var(--stroke-color-focused);
 }
