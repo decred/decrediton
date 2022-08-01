@@ -43,7 +43,7 @@ const PrivacyContent = ({
   return (
     <div className={styles.privacyContent}>
       <Subtitle
-        title={<T id="privacy.coinMixer" m="Stakeshuffle++" />}
+        title={<T id="privacy.coinMixer" m="StakeShuffle" />}
         className={classNames(styles.isRow)}
         children={
           <div className={classNames(styles.contentTitleButtonsArea)}>
