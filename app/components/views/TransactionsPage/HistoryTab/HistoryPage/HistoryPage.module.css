@@ -9,7 +9,7 @@
 
 .historySearchTx {
   display: inline-block;
-  width: 15rem;
+  min-width: 15rem;
 }
 
 .historyPageContent {
