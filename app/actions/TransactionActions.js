@@ -1,6 +1,6 @@
 import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
-import eq from "lodash/fp/eq";
+import { uniq } from "lodash/fp";
 import { checkUnmixedAccountBalance } from "./AccountMixerActions";
 import {
   getStakeInfoAttempt,
@@ -49,61 +49,49 @@ export const toggleGetTransactions = () => (dispatch, getState) => {
   });
 };
 
-function checkAccountsToUpdate(txs, accountsToUpdate) {
-  txs.forEach((tx) => {
-    tx.credits.forEach((credit) => {
-      if (accountsToUpdate.find(eq(credit.account)) === undefined)
-        accountsToUpdate.push(credit.account);
-    });
-    tx.debits.forEach((debit) => {
-      if (accountsToUpdate.find(eq(debit.previousAccount)) === undefined)
-        accountsToUpdate.push(debit.previousAccount);
-    });
-  });
-  return accountsToUpdate;
-}
+export const checkAccountsToUpdate = (txs) =>
+  uniq(
+    txs.reduce(
+      (acc, curr) => [
+        ...acc,
+        ...[
+          ...curr.credits.map((credit) => credit.account),
+          ...curr.debits.map((debit) => debit.previousAccount)
+        ]
+      ],
+      []
+    )
+  );
 
 // getNewAccountAddresses get accounts which received new inputs and get
 // new addresses for avoiding reuse.
-export const getNewAccountAddresses = (txs) => (dispatch) => {
-  const acctAddressUpdated = [];
-  txs.forEach((tx) => {
-    tx.credits.forEach((credit) => {
-      const acctNumber = credit.account;
-      // if account address not updated yet, update it
-      if (acctAddressUpdated.find(eq(acctNumber)) === undefined) {
-        acctAddressUpdated.push(acctNumber);
-        dispatch(getNextAddressAttempt(acctNumber));
-      }
-    });
-  });
-};
+export const getNewAccountAddresses = (txs) => (dispatch) =>
+  uniq(
+    txs.reduce(
+      (acc, curr) => [
+        ...acc,
+        ...[...curr.credits.map((credit) => credit.account)]
+      ],
+      []
+    )
+  ).forEach((acctNumber) => dispatch(getNextAddressAttempt(acctNumber)));
 
-function checkForStakeTransactions(txs) {
-  let stakeTxsFound = false;
-  txs.forEach((tx) => {
-    if (tx.isStake) {
-      stakeTxsFound = true;
-      return;
-    }
-  });
-  return stakeTxsFound;
-}
+export const checkForStakeTransactions = (txs) => txs.some((tx) => tx.isStake);
 
 // divideTransactions separate a transactions array into stake txs and regular
 // txs, so we can send them to selectors.
-const divideTransactions = (transactions) => {
-  const stakeTransactions = transactions.reduce((m, t) => {
-    t.isStake ? (m[t.txHash] = t) : null;
-    return m;
-  }, {});
-  const regularTransactions = transactions.reduce((m, t) => {
-    !t.isStake ? (m[t.txHash] = t) : null;
-    return m;
-  }, {});
-
-  return { stakeTransactions, regularTransactions };
-};
+export const divideTransactions = (txs) =>
+  txs.reduce(
+    (m, t) => {
+      if (t.isStake) {
+        m.stakeTransactions[t.txHash] = t;
+      } else {
+        m.regularTransactions[t.txHash] = t;
+      }
+      return m;
+    },
+    { stakeTransactions: {}, regularTransactions: {} }
+  );
 
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 export const MATURINGHEIGHTS_CHANGED = "MATURINGHEIGHTS_CHANGED";
@@ -194,16 +182,10 @@ export const newTransactionsReceived = (
   };
 
   // update accounts related to the transaction balance.
-  let accountsToUpdate = new Array();
-  accountsToUpdate = checkAccountsToUpdate(
-    newlyUnminedTransactions,
-    accountsToUpdate
-  );
-  accountsToUpdate = checkAccountsToUpdate(
-    newlyMinedTransactions,
-    accountsToUpdate
-  );
-  accountsToUpdate = Array.from(new Set(accountsToUpdate));
+  const accountsToUpdate = checkAccountsToUpdate([
+    ...newlyUnminedTransactions,
+    ...newlyMinedTransactions
+  ]);
   accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   // get new addresses for accounts which received decred
@@ -308,54 +290,50 @@ export const newTransactionsReceived = (
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
-export const changeTransactionsFilter = (newFilter) => (dispatch, getState) =>
-  new Promise((resolve) => {
-    const {
-      transactionsFilter: { listDirection }
-    } = getState().grpc;
-    let { regularTransactions, getRegularTxsAux } = getState().grpc;
-    // If list direction changes (from asc to desc or vice versa), we need to
-    // clean txs, otherwise the UI gets buggy with infinite scroll.
-    if (listDirection !== newFilter.listDirection) {
-      regularTransactions = {};
-      getRegularTxsAux = {
-        noMoreTransactions: false,
-        lastTransaction: null
-      };
-    }
-    dispatch({
-      transactionsFilter: newFilter,
-      regularTransactions,
-      getRegularTxsAux,
-      type: CHANGE_TRANSACTIONS_FILTER
-    });
-    resolve();
+export const changeTransactionsFilter = (newFilter) => (dispatch, getState) => {
+  const {
+    transactionsFilter: { listDirection }
+  } = getState().grpc;
+  let { regularTransactions, getRegularTxsAux } = getState().grpc;
+  // If list direction changes (from asc to desc or vice versa), we need to
+  // clean txs, otherwise the UI gets buggy with infinite scroll.
+  if (listDirection !== newFilter.listDirection) {
+    regularTransactions = {};
+    getRegularTxsAux = {
+      noMoreTransactions: false,
+      lastTransaction: null
+    };
+  }
+  dispatch({
+    transactionsFilter: newFilter,
+    regularTransactions,
+    getRegularTxsAux,
+    type: CHANGE_TRANSACTIONS_FILTER
   });
+};
 
 export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
-export const changeTicketsFilter = (newFilter) => (dispatch, getState) =>
-  new Promise((resolve) => {
-    const {
-      ticketsFilter: { listDirection }
-    } = getState().grpc;
-    let { stakeTransactions, getStakeTxsAux } = getState().grpc;
-    // If list direction changes (from asc to desc or vice versa), we need to
-    // clean txs, otherwise the UI gets buggy with infinite scroll.
-    if (listDirection !== newFilter.listDirection) {
-      stakeTransactions = {};
-      getStakeTxsAux = {
-        noMoreTransactions: false,
-        lastTransaction: null
-      };
-    }
-    dispatch({
-      ticketsFilter: newFilter,
-      stakeTransactions,
-      getStakeTxsAux,
-      type: CHANGE_TICKETS_FILTER
-    });
-    resolve();
+export const changeTicketsFilter = (newFilter) => (dispatch, getState) => {
+  const {
+    ticketsFilter: { listDirection }
+  } = getState().grpc;
+  let { stakeTransactions, getStakeTxsAux } = getState().grpc;
+  // If list direction changes (from asc to desc or vice versa), we need to
+  // clean txs, otherwise the UI gets buggy with infinite scroll.
+  if (listDirection !== newFilter.listDirection) {
+    stakeTransactions = {};
+    getStakeTxsAux = {
+      noMoreTransactions: false,
+      lastTransaction: null
+    };
+  }
+  dispatch({
+    ticketsFilter: newFilter,
+    stakeTransactions,
+    getStakeTxsAux,
+    type: CHANGE_TICKETS_FILTER
   });
+};
 
 export const GETSTARTUPTRANSACTIONS_ATTEMPT = "GETSTARTUPTRANSACTIONS_ATTEMPT";
 export const GETSTARTUPTRANSACTIONS_SUCCESS = "GETSTARTUPTRANSACTIONS_SUCCESS";
@@ -516,7 +494,7 @@ export const decodeRawTransaction = (hexTx, hash) => (dispatch, getState) => {
 
 // getNonWalletOutputs decodes a tx and gets outputs which are not from the wallet.
 // This is needed to show output addresses at our home and tx history pages.
-const getNonWalletOutputs = (walletService, chainParams, tx) =>
+export const getNonWalletOutputs = (walletService, chainParams, tx) =>
   new Promise((resolve, reject) => {
     try {
       const decodedTx = wallet.decodeRawTransaction(
@@ -585,7 +563,12 @@ const normalizeTx = async (walletService, chainParams, dispatch, tx) => {
   return dispatch(regularTransactionNormalizer(normalizedTx));
 };
 
-const normalizeBatchTx = async (walletService, chainParams, dispatch, txs) =>
+export const normalizeBatchTx = async (
+  walletService,
+  chainParams,
+  dispatch,
+  txs
+) =>
   await Promise.all(
     txs.map((tx) =>
       (async () =>
@@ -690,7 +673,6 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
         noMoreTransactions = true;
         break;
       }
-      lastTransaction = mined[mined.length - 1];
 
       mined = await normalizeBatchTx(
         walletService,
@@ -698,6 +680,8 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
         dispatch,
         mined
       );
+
+      lastTransaction = mined[mined.length - 1];
 
       // concat txs
       transactions.push(...mined);
@@ -742,7 +726,7 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   });
 };
 
-const getMissingStakeTxData = async (
+export const getMissingStakeTxData = async (
   walletService,
   chainParams,
   transaction
@@ -814,7 +798,7 @@ const getMissingStakeTxData = async (
 
 // Given a list of transactions, returns the maturing heights of all
 // stake txs in the list.
-function transactionsMaturingHeights(txs, chainParams) {
+export const transactionsMaturingHeights = (txs, chainParams) => {
   const res = {};
   const addToRes = (height, found) => {
     const accounts = res[height] || [];
@@ -825,10 +809,9 @@ function transactionsMaturingHeights(txs, chainParams) {
   };
 
   txs.forEach((tx) => {
-    const accountsToUpdate = [];
+    const accountsToUpdate = checkAccountsToUpdate([tx]);
     switch (tx.type) {
       case TransactionDetails.TransactionType.TICKET_PURCHASE:
-        checkAccountsToUpdate([tx], accountsToUpdate);
         addToRes(tx.height + chainParams.TicketExpiry, accountsToUpdate);
         addToRes(tx.height + chainParams.SStxChangeMaturity, accountsToUpdate);
         addToRes(tx.height + chainParams.TicketMaturity, accountsToUpdate); // FIXME: remove as it doesn't change balances
@@ -836,14 +819,13 @@ function transactionsMaturingHeights(txs, chainParams) {
 
       case TransactionDetails.TransactionType.VOTE:
       case TransactionDetails.TransactionType.REVOCATION:
-        checkAccountsToUpdate([tx], accountsToUpdate);
         addToRes(tx.height + chainParams.CoinbaseMaturity, accountsToUpdate);
         break;
     }
   });
 
   return res;
-}
+};
 
 // getAmountFromTxInputs receives a decoded tx and adds the amount of
 // each input from the previous transaction. We need this because when decoding
@@ -1211,10 +1193,12 @@ export const stakeTransactionNormalizer = (ticket) => (_, getState) => {
         Buffer.from(spenderTx.rawTx, "hex"),
         chainParams
       );
-      voteScript = decodeVoteScript(
-        network,
-        decodedSpenderTx.outputs[1].script
-      );
+      if (decodedSpenderTx.outputs.length > 1) {
+        voteScript = decodeVoteScript(
+          network,
+          decodedSpenderTx.outputs[1].script
+        );
+      }
     }
   }
 
