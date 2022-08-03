@@ -12,7 +12,6 @@ const wallet = wal;
 
 const PiKey_mainnet = MainNetParams.PiKeys[0];
 const PiKey_testnet = TestNetParams.PiKeys[0];
-const testPiKey = PiKeys[0];
 const testTSpendHash = "test-tspend-hash";
 const testPassphrase = "test-passphrase";
 
@@ -58,12 +57,16 @@ beforeEach(() => {
   wallet.lockAccount = jest.fn(() => Promise.resolve(true));
 });
 
-const expectedPiKeyResult = async (policy, expectPassphraseError) => {
+const expectedPiKeyResult = async (
+  policy,
+  expectPassphraseError,
+  expectedPiKey
+) => {
   if (!expectPassphraseError) {
     await wait(() =>
       expect(mockSetTreasuryPolicy).toHaveBeenCalledWith(
         undefined, // votingService
-        testPiKey,
+        expectedPiKey,
         policy
       )
     );
@@ -90,7 +93,8 @@ const vote = async (
   policy,
   container,
   expectedResult,
-  expectPassphraseError = false
+  expectPassphraseError = false,
+  expectedPiKey
 ) => {
   // vote on yes
   const yesRadioBtn = within(container).getByText(policy).parentNode
@@ -125,7 +129,7 @@ const vote = async (
   expect(continueBtn.disabled).toBeFalsy();
   user.click(continueBtn);
 
-  await expectedResult(policy, expectPassphraseError);
+  await expectedResult(policy, expectPassphraseError, expectedPiKey);
   await wait(() =>
     within(container).getByRole("button", {
       name: "Update Preference"
@@ -147,9 +151,9 @@ test("PiKey test: treasury spending tab (not yet voted)", async () => {
     within(container).getByText("abstain").parentNode.previousSibling.checked
   ).toBeTruthy();
 
-  await vote("yes", container, expectedPiKeyResult);
-  await vote("abstain", container, expectedPiKeyResult);
-  await vote("no", container, expectedPiKeyResult);
+  await vote("yes", container, expectedPiKeyResult, false, PiKey_mainnet);
+  await vote("abstain", container, expectedPiKeyResult, false, PiKey_mainnet);
+  await vote("no", container, expectedPiKeyResult, false, PiKey_mainnet);
 });
 
 test("PiKey test: treasury spending tab (already voted yes)", () => {
@@ -189,7 +193,7 @@ test("PiKey test: treasury spending tab (wrong passphrase entered)", async () =>
   render(<TreasurySpendingTab />);
   const container = getPiKeyContainer();
 
-  await vote("yes", container, expectedPiKeyResult, true);
+  await vote("yes", container, expectedPiKeyResult, true, PiKey_mainnet);
 });
 
 test("PiKey test: treasury spending tab (treasury policy set error)", async () => {
@@ -199,7 +203,20 @@ test("PiKey test: treasury spending tab (treasury policy set error)", async () =
   render(<TreasurySpendingTab />);
   const container = getPiKeyContainer();
 
-  await vote("yes", container, expectedPiKeyResult);
+  await vote("yes", container, expectedPiKeyResult, false, PiKey_mainnet);
+});
+
+test("PiKey test: treasury spending tab (testnet)", async () => {
+  selectors.treasuryPolicies = jest.fn(() => [
+    { key: PiKey_testnet, policy: "abstain" }
+  ]);
+  render(<TreasurySpendingTab />, {
+    currentSettings: {
+      network: "testnet"
+    }
+  });
+  const container = getPiKeyContainer();
+  await vote("yes", container, expectedPiKeyResult, false, PiKey_testnet);
 });
 
 /* TSpend vote tests */
