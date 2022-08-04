@@ -1116,9 +1116,6 @@ export const stakeTransactionNormalizer = (ticket) => (_, getState) => {
   const ticketTx = ticket.ticket || ticket.spender;
   const ticketHash = ticketTx.txHash;
   const spenderTx = hasSpender ? spender : null;
-  const txBlockHash = blockHash
-    ? reverseHash(Buffer.from(blockHash).toString("hex"))
-    : null;
   const txHash = ticket.txHash;
   const txUrl = txURLBuilder(txHash);
   const txBlockHash = blockHash
