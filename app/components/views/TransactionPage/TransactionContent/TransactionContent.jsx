@@ -72,7 +72,6 @@ const TransactionContent = ({
     isPending,
     voteScript,
     ticketTx,
-    status,
     spenderTx
   } = transactionDetails;
 
