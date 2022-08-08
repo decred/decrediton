@@ -876,13 +876,23 @@ app.on("ready", async () => {
       contextIsolation: true
     }
   });
-  globalShortcut.register("F5", () =>
-    BrowserWindow.getFocusedWindow().reload()
-  );
+});
+
+app.on("browser-window-focus", () => {
+  globalShortcut.register("F5", () => {
+    if (BrowserWindow.getFocusedWindow()) {
+      BrowserWindow.getFocusedWindow().reload();
+    }
+  });
+});
+
+app.on("browser-window-blur", () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on("before-quit", async (event) => {
   logger.log("info", "Caught before-quit. Set decrediton as was closed");
+  globalShortcut.unregisterAll();
   event.preventDefault();
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   try {
