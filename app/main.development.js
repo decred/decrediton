@@ -1,14 +1,7 @@
 import fs from "fs";
 import path from "path";
 import parseArgs from "minimist";
-import {
-  app,
-  BrowserWindow,
-  Menu,
-  dialog,
-  BrowserView,
-  globalShortcut
-} from "electron";
+import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
 import {
   getCurrentBitcoinConfig,
   newDefaultBitcoinConfig,
@@ -434,6 +427,12 @@ function createDexWindow(serverAddress) {
   dexWindow.loadURL("http://" + serverAddress);
   dexWindow.once("ready-to-show", () => {
     dexWindow.show();
+  });
+  dexWindow.webContents.on("before-input-event", (event, input) => {
+    if (input.key === "F5") {
+      dexWindow.reload();
+      event.preventDefault();
+    }
   });
   dexWindow.once("closed", () => {
     dexWindow = new BrowserWindow({
@@ -876,9 +875,6 @@ app.on("ready", async () => {
       contextIsolation: true
     }
   });
-  globalShortcut.register("F5", () =>
-    BrowserWindow.getFocusedWindow().reload()
-  );
 });
 
 app.on("before-quit", async (event) => {
