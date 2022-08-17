@@ -66,12 +66,17 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) =>
         const ticketsHashes = response.ticketHashes;
 
         // add fee status into our stake transactions map.
-        const { stakeTransactions } = getState().grpc;
+        const { stakeTransactions, recentStakeTransactions } = getState().grpc;
         ticketsHashes.forEach((ticketHash) => {
           const tx = stakeTransactions[ticketHash];
           if (tx) {
             tx.feeStatus = feeStatus;
           }
+          recentStakeTransactions.map(
+            (tx) =>
+              (tx.feeStatus =
+                tx.txHash === ticketHash ? feeStatus : tx.feeStatus)
+          );
         });
         // dispatch if we have tickets with error to register.
         if (feeStatus == VSP_FEE_PROCESS_ERRORED && ticketsHashes.length > 0) {
@@ -82,7 +87,8 @@ export const getVSPTicketsByFeeStatus = (feeStatus) => (dispatch, getState) =>
           type: GETVSPTICKETSTATUS_SUCCESS,
           vspTickets: { [feeStatus]: ticketsHashes },
           feeStatus,
-          stakeTransactions
+          stakeTransactions,
+          recentStakeTransactions
         });
 
         resolve(ticketsHashes);

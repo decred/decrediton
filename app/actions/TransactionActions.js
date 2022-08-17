@@ -596,6 +596,7 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
     stakeTransactionsCancel
   } = getState().grpc;
   const chainParams = sel.chainParams(getState());
+  const vspTicketsHashes = sel.getVSPTicketsHashes(getState());
   let {
     getRegularTxsAux,
     getStakeTxsAux,
@@ -703,6 +704,15 @@ export const getTransactions = (isStake) => async (dispatch, getState) => {
   // divide stake transactions and regular transactions map. This way we can
   // have different filter behaviors without one interfering the other.
   const newTxs = divideTransactions(transactions);
+
+  Object.keys(vspTicketsHashes).forEach((feeStatus) => {
+    vspTicketsHashes[feeStatus].forEach((ticketHash) => {
+      if (newTxs.stakeTransactions[ticketHash]) {
+        newTxs.stakeTransactions[ticketHash].feeStatus = feeStatus;
+      }
+    });
+  });
+
   if (isStake) {
     stakeTransactions = {
       ...stakeTransactions,

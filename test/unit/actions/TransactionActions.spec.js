@@ -119,6 +119,13 @@ const mockRegularMixedTxHash =
 const mockRegularSelfTxHash =
   "9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304";
 
+const mockVspTickets = {
+  0: [],
+  1: [mockUnminedTicketHash],
+  2: [],
+  3: [mockVotedTicketHash]
+};
+
 const mockUnminedTransactions = [
   [
     mockRegularTransactions[mockRegularPendingTxHash],
@@ -157,6 +164,7 @@ beforeEach(() => {
   }));
   selectors.isTestNet = jest.fn(() => true);
   selectors.getChangeAccount = jest.fn(() => testChangeAccountId);
+  selectors.getVSPTicketsHashes = jest.fn(() => mockVspTickets);
   mockDecodeRawTransaction = wallet.decodeRawTransaction = jest.fn((p) => {
     const txHex = rawToHex(p);
     if (mockDecodedTransactions[txHex]) {
@@ -1202,7 +1210,10 @@ test("test getTransactions (fetching regular txs)", async () => {
   expect(
     isEqual(store.getState().grpc.getRegularTxsAux, {
       noMoreTransactions: true,
-      lastTransaction: mockNormalizedStakeTransactions[mockVotedTicketHash]
+      lastTransaction: {
+        ...mockNormalizedStakeTransactions[mockVotedTicketHash],
+        feeStatus: VSP_FEE_PROCESS_CONFIRMED.toString()
+      }
     })
   ).toBeTruthy();
 });
@@ -1273,7 +1284,10 @@ test("test getTransactions (fetching regular txs, listing asc)", async () => {
   expect(
     isEqual(store.getState().grpc.getRegularTxsAux, {
       noMoreTransactions: true,
-      lastTransaction: mockNormalizedStakeTransactions[mockVotedTicketHash]
+      lastTransaction: {
+        ...mockNormalizedStakeTransactions[mockVotedTicketHash],
+        feeStatus: VSP_FEE_PROCESS_CONFIRMED.toString()
+      }
     })
   ).toBeTruthy();
 });
@@ -1318,10 +1332,15 @@ test("test getTransactions (fetching stake txs)", async () => {
 
   const expectedStakeTransactions = {
     ...initialStateCopy.grpc.stakeTransactions,
-    [mockUnminedTicketHash]:
-      mockNormalizedStakeTransactions[mockUnminedTicketHash],
+    [mockUnminedTicketHash]: {
+      ...mockNormalizedStakeTransactions[mockUnminedTicketHash],
+      feeStatus: VSP_FEE_PROCESS_PAID.toString()
+    },
     [mockVoteTx]: mockNormalizedStakeTransactions[mockVoteTx],
-    [mockVotedTicketHash]: mockNormalizedStakeTransactions[mockVotedTicketHash]
+    [mockVotedTicketHash]: {
+      ...mockNormalizedStakeTransactions[mockVotedTicketHash],
+      feeStatus: VSP_FEE_PROCESS_CONFIRMED.toString()
+    }
   };
 
   // regularTransactions and getRegularTxsAux shuld not changed
@@ -1344,7 +1363,10 @@ test("test getTransactions (fetching stake txs)", async () => {
   expect(
     isEqual(store.getState().grpc.getStakeTxsAux, {
       noMoreTransactions: true,
-      lastTransaction: mockNormalizedStakeTransactions[mockVotedTicketHash]
+      lastTransaction: {
+        ...mockNormalizedStakeTransactions[mockVotedTicketHash],
+        feeStatus: VSP_FEE_PROCESS_CONFIRMED.toString()
+      }
     })
   ).toBeTruthy();
 });

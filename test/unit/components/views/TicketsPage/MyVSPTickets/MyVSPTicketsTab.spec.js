@@ -43,6 +43,7 @@ const initialState = {
       vspFeeStatus: null
     },
     stakeTransactions: {},
+    recentStakeTransactions: [],
     getStakeTxsAux: {
       noMoreTransactions: false
     }

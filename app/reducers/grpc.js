@@ -158,7 +158,8 @@ export default function grpc(state = {}, action) {
     case GETVSPTICKETSTATUS_SUCCESS:
       return {
         ...state,
-        stakeTransactions: action.stakeTransactions
+        stakeTransactions: action.stakeTransactions,
+        recentStakeTransactions: action.recentStakeTransactions
       };
     case CREATEMIXERACCOUNTS_ATTEMPT:
       return {
