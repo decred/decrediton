@@ -22,6 +22,7 @@ import { LNChannelModal } from "modals";
 import { DetailsTable } from "shared";
 import { getChannelTypes } from "./helpers";
 import { AutopilotSwitch } from "../ConnectPage/AutopilotSwitch";
+import { CHANNEL_STATUS_CLOSED } from "constants";
 
 const messages = defineMessages({
   filterByHashPlaceholder: {
@@ -312,7 +313,7 @@ const ChannelsTab = () => {
             />
           }
           closeButton={
-            recentlyOpenedChannel.active && (
+            recentlyOpenedChannel.status !== CHANNEL_STATUS_CLOSED && (
               <CloseChannelModalButton
                 className={styles.modalCloseButton}
                 modalTitle={
