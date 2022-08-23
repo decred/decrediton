@@ -51,7 +51,6 @@ type CoreAdapter struct {
 	ctx           context.Context
 	kill          context.CancelFunc
 	inited        uint32
-	logLevel      slog.Level
 	serverRunning uint32
 	core          *core.Core
 	webServer     *dex.ConnectionMaster
@@ -134,7 +133,6 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		return fmt.Errorf("error creating client core: %v", err)
 	}
 	c.core = ccore
-	c.logLevel = form.LogLevel
 
 	c.wg.Add(1)
 	go func() {
@@ -186,6 +184,7 @@ func (c *CoreAdapter) shutdown(json.RawMessage) (string, error) {
 	c.kill()
 	c.wg.Wait()
 	c.webServer.Wait()
+	closeFileLogger()
 	atomic.SwapUint32(&c.inited, 0)
 	return "", nil
 }
