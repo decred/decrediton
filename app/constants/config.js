@@ -86,7 +86,6 @@ export const DEX_READY = "dex_ready";
 export const DEXWALLET_RPCUSERNAME = "dexwallet_rpcuser";
 export const DEXWALLET_RPCPASSWORD = "dexwallet_rpcpass";
 export const DEXWALLET_HOSTPORT = "dexwallet_host";
-export const BTCWALLET_NAME = "btcwallet_name";
 export const NEEDS_VSPD_PROCESS_TICKETS = "needs_vspd_process_tickets";
 export const DEX_BTC_SPV = "dex_use_btc_spv";
 export const ASK_DEX_BTC_SPV = "ask_dex_use_btc_spv";

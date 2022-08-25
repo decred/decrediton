@@ -124,7 +124,6 @@ export default function walletLoader(state = {}, action) {
         dexReady: action.dexReady,
         dexAccount: action.dexAccount,
         dexRpcSettings: action.rpcCreds,
-        btcWalletName: action.btcWalletName,
         askDexBtcSpv: action.askDexBtcSpv,
         dexBtcSpv: action.dexBtcSpv,
         confirmDexSeed: action.confirmDexSeed

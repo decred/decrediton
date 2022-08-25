@@ -13,5 +13,3 @@ export const getConfig = invocable("get-config-dex");
 export const preRegister = invocable("preregister-dex");
 export const register = invocable("register-dex");
 export const launchWindow = invocable("launch-dex-window");
-export const checkBTCConfig = invocable("check-btc-config");
-export const newBTCConfig = invocable("new-btc-config");

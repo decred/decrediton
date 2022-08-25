@@ -41,17 +41,6 @@ import {
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,
   DEX_LOGOUT_FAILED,
-  CHECK_BTC_CONFIG_ATTEMPT,
-  CHECK_BTC_CONFIG_FAILED,
-  CHECK_BTC_CONFIG_SUCCESS,
-  CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
-  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
-  NEW_BTC_CONFIG_ATTEMPT,
-  NEW_BTC_CONFIG_SUCCESS,
-  NEW_BTC_CONFIG_FAILED,
-  BTC_CREATEWALLET_FAILED,
-  BTC_CREATEWALLET_ATTEMPT,
-  BTC_CREATEWALLET_SUCCESS,
   DEX_EXPORT_SEED_ATTEMPT,
   DEX_EXPORT_SEED_SUCCESS,
   DEX_EXPORT_SEED_FAILED,
@@ -164,25 +153,6 @@ export default function ln(state = {}, action) {
         ...state,
         createWalletAttempt: false,
         createWalletError: null
-      };
-
-    case BTC_CREATEWALLET_ATTEMPT:
-      return {
-        ...state,
-        btcCreateWalletAttempt: true,
-        btcCreateWalletError: null
-      };
-    case BTC_CREATEWALLET_FAILED:
-      return {
-        ...state,
-        btcCreateWalletAttempt: false,
-        btcCreateWalletError: action.error
-      };
-    case BTC_CREATEWALLET_SUCCESS:
-      return {
-        ...state,
-        btcCreateWalletAttempt: false,
-        btcCreateWalletError: null
       };
     case DEX_USER_ATTEMPT:
       return {
@@ -371,59 +341,6 @@ export default function ln(state = {}, action) {
         openOrder: action.openOrder,
         logoutError: action.error
       };
-    case CHECK_BTC_CONFIG_ATTEMPT:
-      return {
-        ...state,
-        checkBtcConfigAttempt: true,
-        checkBtcConfigError: null,
-        btcConfigUpdateNeeded: false,
-        btcInstallNeeded: false
-      };
-    case CHECK_BTC_CONFIG_FAILED:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        checkBtcConfigError: action.error
-      };
-    case CHECK_BTC_CONFIG_SUCCESS:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        btcConfig: action.btcConfig
-      };
-    case CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        btcConfigUpdateNeeded: true
-      };
-    case CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        btcInstallNeeded: true
-      };
-    case NEW_BTC_CONFIG_ATTEMPT:
-      return {
-        ...state,
-        newBTCConfigAttempt: true,
-        newBTCConfigError: null
-      };
-    case NEW_BTC_CONFIG_FAILED:
-      return {
-        ...state,
-        newBTCConfigAttempt: false,
-        newBTCConfigError: action.error
-      };
-    case NEW_BTC_CONFIG_SUCCESS:
-      return {
-        ...state,
-        newBTCConfigAttempt: false,
-        newBTCConfigError: null,
-        btcInstallNeeded: false,
-        btcConfigUpdateNeeded: false,
-        btcConfig: action.btcConfig
-      };
     case DEX_EXPORT_SEED_ATTEMPT:
       return {
         ...state,
@@ -465,11 +382,6 @@ export default function ln(state = {}, action) {
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
-        checkBtcConfigAttempt: false,
-        btcConfigUpdateNeeded: false,
-        btcInstallNeeded: false,
-        btcConfig: null,
-        checkBtcConfigError: null,
         openOrder: false,
         logoutError: null,
         dexSelectAccountAttempt: false,

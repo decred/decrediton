@@ -2,12 +2,7 @@ import fs from "fs";
 import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
-import {
-  getCurrentBitcoinConfig,
-  newDefaultBitcoinConfig,
-  initGlobalCfg,
-  validateGlobalCfgFile
-} from "./config";
+import { initGlobalCfg, validateGlobalCfgFile } from "./config";
 import {
   appLocaleFromElectronLocale,
   default as locales
@@ -451,10 +446,6 @@ function createDexWindow(serverAddress) {
     });
   });
 }
-
-handle("check-btc-config", getCurrentBitcoinConfig);
-
-handle("new-btc-config", newDefaultBitcoinConfig);
 
 handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
 

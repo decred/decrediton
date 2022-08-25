@@ -7,8 +7,7 @@ import {
   getGlobalCfgPath,
   getWalletPath,
   dcrwalletConf,
-  getDcrdRpcCert,
-  getDefaultBitcoinDirectory
+  getDcrdRpcCert
 } from "./main_dev/paths";
 import * as cfgConstants from "constants/config";
 
@@ -261,56 +260,4 @@ export function checkNoLegacyWalletConfig(testnet, walletPath, noLegacyRpc) {
   } catch (e) {
     console.log(e);
   }
-}
-
-export const getCurrentBitcoinConfig = (bitcoinDirectory) => {
-  // if bitcoinDirectory is empty then just use the default
-  const confDir = bitcoinDirectory
-    ? bitcoinDirectory
-    : getDefaultBitcoinDirectory();
-
-  const btcConfPath = path.join(confDir, "bitcoin.conf");
-  return ini.parse(fs.readFileSync(btcConfPath, "utf8"));
-};
-
-export function newDefaultBitcoinConfig(
-  rpcuser,
-  rpcpassword,
-  rpcbind,
-  rpcport,
-  testnet,
-  bitcoinDirectory
-) {
-  // if bitcoinDirectory is empty then just use the default
-  const confDir = bitcoinDirectory
-    ? bitcoinDirectory
-    : getDefaultBitcoinDirectory();
-  if (!fs.existsSync(path.join(confDir, "bitcoin.conf"))) {
-    let bitcoinConf = {};
-    if (testnet) {
-      bitcoinConf = {
-        rpcuser,
-        rpcpassword,
-        server: 1,
-        test: {
-          rpcbind,
-          rpcport
-        }
-      };
-    } else {
-      bitcoinConf = {
-        rpcuser,
-        rpcpassword,
-        rpcbind,
-        rpcport,
-        server: 1
-      };
-    }
-    fs.writeFileSync(
-      path.join(confDir, "bitcoin.conf"),
-      ini.stringify(bitcoinConf)
-    );
-    return bitcoinConf;
-  }
-  return null;
 }

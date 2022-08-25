@@ -4,12 +4,12 @@ import { StandaloneHeader } from "layout";
 
 const CreateWalletPageHeader = () => (
   <StandaloneHeader
-    title={<T id="dex.createWallet.title" m="Connect Wallets to Dex" />}
+    title={<T id="dex.createWallet.title" m="Connect DCR Wallet to Dex" />}
     description={
       <T
         id="dex.createWallet.description"
         m={
-          "Complete the following steps to connect your DCR and BTC wallets to the DEX."
+          "Connect your DCR wallet to the DEX."
         }
       />
     }
