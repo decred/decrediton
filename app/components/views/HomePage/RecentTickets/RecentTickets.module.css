@@ -51,7 +51,7 @@
   background-image: var(--ticket-lifecycle-icon);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .ticketTxWrapper {
     margin-top: 20px;
     margin-left: 0;

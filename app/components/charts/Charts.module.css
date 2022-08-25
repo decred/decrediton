@@ -90,12 +90,12 @@
 .recharts-tooltip-cursor {
   fill: var(--chart-cursor-color);
 }
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .meteredTicksArea {
     margin-left: 60px;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .meteredChartLegend {
     margin: 0;
   }

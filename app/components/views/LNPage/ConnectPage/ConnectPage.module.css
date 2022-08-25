@@ -31,14 +31,14 @@
   margin-top: 1em;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .buttonContrainer,
   .connectOpts {
     width: 667px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .buttonContrainer,
   .connectOpts {
     width: 355px;

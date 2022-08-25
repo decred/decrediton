@@ -54,14 +54,14 @@
   text-align: center;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .sendButtonArea {
     bottom: 50px;
     right: 33px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .isRow.sendArea {
     flex-direction: column;
     height: auto;

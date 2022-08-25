@@ -2,13 +2,13 @@
   margin-bottom: 30px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .section {
     margin-left: 0;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .section {
     flex-direction: column;
   }

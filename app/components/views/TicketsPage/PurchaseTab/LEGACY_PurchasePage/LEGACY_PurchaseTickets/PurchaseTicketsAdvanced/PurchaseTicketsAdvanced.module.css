@@ -93,7 +93,7 @@ label.infoLabel.expiry {
   padding: 0;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .infoGrid {
     grid-template-columns: repeat(4, max-content);
   }
@@ -108,7 +108,7 @@ label.infoLabel.expiry {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .infoGrid {
     grid-template-columns: repeat(2, max-content);
   }

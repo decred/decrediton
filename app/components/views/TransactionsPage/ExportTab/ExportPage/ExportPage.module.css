@@ -89,7 +89,7 @@ ul.exportInfoFields {
   text-align: right;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .exportAreaLeft {
     width: 388px;
   }
@@ -103,7 +103,7 @@ ul.exportInfoFields {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .modal {
     width: 350px !important;
   }

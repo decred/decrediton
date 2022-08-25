@@ -46,7 +46,7 @@
   color: var(--main-dark-blue);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .value .paymentHash {
     max-width: 242px;
   }

@@ -131,7 +131,7 @@
   opacity: 0.7;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .actions.isRow {
     display: flex;
     flex-direction: column;

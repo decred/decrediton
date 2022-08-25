@@ -71,7 +71,7 @@ h1 {
   flex-direction: row-reverse;
 }
 
-@media screen and (max-width: 560px) {
+@media (--xs-viewport) {
   .pinModal,
   .passphraseModal,
   .togglePassphraseConfirmModal,

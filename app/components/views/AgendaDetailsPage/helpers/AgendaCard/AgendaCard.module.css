@@ -136,7 +136,7 @@
   color: var(--main-dark-blue);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .overview {
     width: 634px;
   }
@@ -146,7 +146,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overview {
     width: 315px;
     padding: 10px !important;

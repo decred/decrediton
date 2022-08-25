@@ -125,12 +125,12 @@
   width: max-content;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .charts {
     width: 667px;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .charts {
     padding-top: 20px;
     width: 355px;

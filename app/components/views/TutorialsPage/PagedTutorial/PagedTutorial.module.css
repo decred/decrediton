@@ -27,7 +27,7 @@
   color: var(--new-wallet-label);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .closeButton {
     top: 30px;
     right: 30px;

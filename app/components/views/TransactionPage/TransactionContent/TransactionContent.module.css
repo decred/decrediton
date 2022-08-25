@@ -261,7 +261,7 @@
   align-items: center;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .rebroadcastBtnContainer,
   .revokeBtnContainer {
     width: 770px;
@@ -282,7 +282,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .buttonContainer {
     display: flex;
     flex-direction: column-reverse;

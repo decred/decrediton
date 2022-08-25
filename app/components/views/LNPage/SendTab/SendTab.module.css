@@ -83,7 +83,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .container {
     width: 355px;
   }

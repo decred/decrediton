@@ -57,12 +57,12 @@
   margin: 0px 4px 0px 4px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .warningText {
     column-count: 1;
   }
 }
-@media screen and (max-width: 560px) {
+@media (--xs-viewport) {
   .confirmSeedCopy {
     max-height: 60%;
   }

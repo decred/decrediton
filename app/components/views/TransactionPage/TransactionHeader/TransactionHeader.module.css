@@ -34,7 +34,7 @@
 .thinButton {
   padding: 5px 20px 5px 20px !important;
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .standalonePage .subtitle {
     margin-top: 10px;
     width: 355px;

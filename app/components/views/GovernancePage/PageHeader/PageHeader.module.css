@@ -23,7 +23,7 @@
   color: var(--main-dark-blue);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .header {
     width: 696px;
     padding-left: 55px;
@@ -34,7 +34,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .header {
     width: 338px;
     padding-left: 20px;

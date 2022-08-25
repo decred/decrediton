@@ -105,13 +105,13 @@
   background-color: var(--vote-no-color);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .listItem {
     width: 700px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .listItem {
     width: 100%;
   }

@@ -25,7 +25,7 @@
   background-color: var(--stroke-color-focused);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .votes {
     padding: 0 0 0.5rem 0;
   }

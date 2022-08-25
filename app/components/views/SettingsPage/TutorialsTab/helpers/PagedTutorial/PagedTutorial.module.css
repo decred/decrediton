@@ -168,13 +168,13 @@
   opacity: 0.5;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .tabsContainer,
   .tabContentWrapper {
     width: 67.5rem;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tabsContainer,
   .tabContentWrapper {
     width: 35.5rem;

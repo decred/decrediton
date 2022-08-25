@@ -6,7 +6,7 @@
   padding: 0;
   top: 157px;
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .standalonePage > div:first-child {
     padding-bottom: 10px;
   }

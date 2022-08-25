@@ -199,7 +199,7 @@
   animation: bounce 1s var(--ease-in-out-quart) infinite;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .editWalletsButton {
     margin: 5px 0;
   }

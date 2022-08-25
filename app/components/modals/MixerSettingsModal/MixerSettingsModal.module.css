@@ -32,12 +32,12 @@
   float: right;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .mixerSettings {
     width: 594px !important;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .mixerSettings {
     width: 305px;
     min-width: unset;

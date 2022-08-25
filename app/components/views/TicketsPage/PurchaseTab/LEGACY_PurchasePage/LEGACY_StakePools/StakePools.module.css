@@ -140,7 +140,7 @@
   padding: 10px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .configuredVSP {
     width: 355px;
     height: 210px;

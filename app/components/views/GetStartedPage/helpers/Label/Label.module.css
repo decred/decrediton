@@ -6,7 +6,7 @@
   font-size: 13px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .label {
     width: 77px;
   }

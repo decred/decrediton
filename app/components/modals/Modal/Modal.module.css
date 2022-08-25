@@ -60,7 +60,7 @@
   text-align: left;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overlayReducedBar {
     left: 0;
     bottom: 70px;

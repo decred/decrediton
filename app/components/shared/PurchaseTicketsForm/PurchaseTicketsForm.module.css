@@ -177,7 +177,7 @@
   margin-bottom: 5px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .buttonsArea {
     width: 667px;
   }
@@ -186,7 +186,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .purchaseForm {
     padding: 30px 20px;
     padding-bottom: 0;
