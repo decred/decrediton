@@ -1,20 +1,24 @@
 import DexPage from "components/views/DexPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, wait, act } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DexActions";
+import * as dm from "actions/DaemonActions";
 import copy from "clipboard-copy";
 import { DCR } from "constants";
 jest.mock("clipboard-copy");
 
 const selectors = sel;
 const dexActions = da;
+const daemonActions = dm;
 
 const testPassphrase = "test-passphrase";
 const testDexPassphrase = "test-dex-passphrase";
 const testSeed = "test-seed";
 const testAccountName = "test-account-name";
+const testLog = "test-log";
+const testLog2 = "test-log2";
 
 let mockOnEnableDex;
 let mockInitDex;
@@ -25,6 +29,7 @@ let mockSelectDexAccount;
 let mockCreateWalletDex;
 let mockLaunchDexWindow;
 let mockLoginDex;
+let mockGetDexLogs;
 
 const mockMixedAccountValue = 6;
 
@@ -100,6 +105,9 @@ beforeEach(() => {
   mockCreateWalletDex = dexActions.createWalletDex = jest.fn(() => () => {});
   mockLaunchDexWindow = dexActions.launchDexWindow = jest.fn(() => () => {});
   mockLoginDex = dexActions.loginDex = jest.fn(() => () => {});
+  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(() => () =>
+    Promise.resolve(testLog)
+  );
 });
 
 const getEnableBtn = () => screen.getByRole("button", { name: "Enable DEX" });
@@ -394,4 +402,61 @@ test("test login view", () => {
   user.click(contineBtn);
 
   expect(mockLoginDex).toHaveBeenCalledWith(testDexPassphrase);
+});
+
+test("test when dex is ready", async () => {
+  selectors.dexInit = jest.fn(() => true);
+  selectors.dexReady = jest.fn(() => true);
+  jest.useFakeTimers();
+
+  render(<DexPage />);
+  user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
+
+  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
+  user.click(screen.getByText("Logs"));
+  expect(screen.getByText(testLog)).toBeInTheDocument();
+  // hide log
+  user.click(screen.getByText("Logs"));
+  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
+
+  // show again
+  user.click(screen.getByText("Logs"));
+
+  mockGetDexLogs.mockClear();
+  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(() => () =>
+    Promise.resolve(testLog2)
+  );
+  act(() => {
+    jest.advanceTimersByTime(2001);
+  });
+
+  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  expect(screen.getByText(testLog2)).toBeInTheDocument();
+  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
+  expect(mockLaunchDexWindow).toHaveBeenCalled();
+});
+
+test("receive error while getting error", async () => {
+  selectors.dexInit = jest.fn(() => true);
+  selectors.dexReady = jest.fn(() => true);
+  jest.useFakeTimers();
+
+  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(() => () =>
+    Promise.reject("error")
+  );
+  render(<DexPage />);
+
+  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
+  user.click(screen.getByText("Logs"));
+  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
+
+  mockGetDexLogs.mockClear();
+  act(() => {
+    jest.advanceTimersByTime(2001);
+  });
+
+  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
 });
