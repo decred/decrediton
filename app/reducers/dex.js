@@ -11,9 +11,6 @@ import {
   DEX_LOGIN_ATTEMPT,
   DEX_LOGIN_SUCCESS,
   DEX_LOGIN_FAILED,
-  DEX_REGISTER_ATTEMPT,
-  DEX_REGISTER_SUCCESS,
-  DEX_REGISTER_FAILED,
   DEX_LAUNCH_WINDOW_ATTEMPT,
   DEX_LAUNCH_WINDOW_SUCCESS,
   DEX_LAUNCH_WINDOW_FAILED,
@@ -26,12 +23,6 @@ import {
   DEX_CREATEWALLET_ATTEMPT,
   DEX_CREATEWALLET_FAILED,
   DEX_CREATEWALLET_SUCCESS,
-  DEX_GETCONFIG_ATTEMPT,
-  DEX_GETCONFIG_FAILED,
-  DEX_GETCONFIG_SUCCESS,
-  DEX_PREREGISTER_ATTEMPT,
-  DEX_PREREGISTER_FAILED,
-  DEX_PREREGISTER_SUCCESS,
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
@@ -115,27 +106,6 @@ export default function ln(state = {}, action) {
         loggedIn: true,
         loginError: null
       };
-    case DEX_REGISTER_ATTEMPT:
-      return {
-        ...state,
-        registerAttempt: true,
-        registered: false,
-        registerError: null
-      };
-    case DEX_REGISTER_FAILED:
-      return {
-        ...state,
-        registerAttempt: false,
-        registered: false,
-        registerError: action.error
-      };
-    case DEX_REGISTER_SUCCESS:
-      return {
-        ...state,
-        registerAttempt: false,
-        registered: true,
-        registerError: null
-      };
     case DEX_CREATEWALLET_ATTEMPT:
       return {
         ...state,
@@ -177,8 +147,7 @@ export default function ln(state = {}, action) {
     case DEX_INIT_ATTEMPT:
       return {
         ...state,
-        initAttempt: true,
-        registerError: null
+        initAttempt: true
       };
     case DEX_INIT_FAILED:
       return {
@@ -191,9 +160,7 @@ export default function ln(state = {}, action) {
         ...state,
         initAttempt: false,
         dexInit: true,
-        loggedIn: true,
-        registerError: null,
-        restoredFromSeed: action.fromSeed
+        loggedIn: true
       };
     case DEX_LAUNCH_WINDOW_ATTEMPT:
       return {
@@ -235,49 +202,6 @@ export default function ln(state = {}, action) {
         dexCheckInitAttempt: false,
         dexInit: action.res,
         dexInitError: null
-      };
-    case DEX_GETCONFIG_ATTEMPT:
-      return {
-        ...state,
-        getConfigAttempt: true,
-        config: null,
-        addr: null,
-        getConfigError: null
-      };
-    case DEX_GETCONFIG_FAILED:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        getConfigError: action.error
-      };
-    case DEX_GETCONFIG_SUCCESS:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        config: action.config,
-        addr: action.addr,
-        getConfigError: null
-      };
-    case DEX_PREREGISTER_ATTEMPT:
-      return {
-        ...state,
-        getConfigAttempt: true,
-        addr: null,
-        getConfigError: null
-      };
-    case DEX_PREREGISTER_FAILED:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        getConfigError: action.error
-      };
-    case DEX_PREREGISTER_SUCCESS:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        addr: action.addr,
-        getConfigError: null,
-        alreadyPaid: action.alreadyPaid
       };
     case CREATEDEXACCOUNT_ATTEMPT:
       return {
@@ -387,11 +311,8 @@ export default function ln(state = {}, action) {
         dexSelectAccountAttempt: false,
         dexSelectAccountError: null,
         dexAccount: null,
-        getConfigAttempt: false,
-        addr: null,
         getConfigError: null,
-        alreadyPaid: false,
-        config: null
+        alreadyPaid: false
       };
     case RESET_DEXACCOUNT:
       return {

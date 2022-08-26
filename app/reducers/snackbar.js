@@ -7,8 +7,6 @@ import {
   DEX_ENABLE_FAILED,
   DEX_INIT_FAILED,
   DEX_CREATEWALLET_FAILED,
-  DEX_REGISTER_FAILED,
-  DEX_GETCONFIG_FAILED,
   DEX_CHECKINIT_FAILED,
   DEX_LAUNCH_WINDOW_FAILED,
   CREATEDEXACCOUNT_FAILED,
@@ -655,14 +653,6 @@ const messages = defineMessages({
     id: "dex.connectWallet.failed",
     defaultMessage: "Connecting to DCR wallet Failed: {originalError}"
   },
-  DEX_REGISTER_FAILED: {
-    id: "dex.register.failed",
-    defaultMessage: "Paying DEX Fee Failed: {originalError}"
-  },
-  DEX_GETCONFIG_FAILED: {
-    id: "dex.getConfig.failed",
-    defaultMessage: "Getting DEX Config Failed: {originalError}"
-  },
   DEX_CHECKINIT_FAILED: {
     id: "dex.checkInit.failed",
     defaultMessage:
@@ -937,8 +927,6 @@ export default function snackbar(state = {}, action) {
     case DEX_ENABLE_FAILED:
     case DEX_INIT_FAILED:
     case DEX_CREATEWALLET_FAILED:
-    case DEX_REGISTER_FAILED:
-    case DEX_GETCONFIG_FAILED:
     case CREATEDEXACCOUNT_FAILED:
     case DEX_CHECKINIT_FAILED:
     case DEX_LAUNCH_WINDOW_FAILED:

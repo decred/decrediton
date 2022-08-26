@@ -129,7 +129,7 @@ export const initDex = (passphrase, seed) => async (dispatch, getState) => {
   }
   try {
     await dex.init(passphrase, seed);
-    dispatch({ type: DEX_INIT_SUCCESS, fromSeed: seed });
+    dispatch({ type: DEX_INIT_SUCCESS });
     // Request current user information
     if (!confirmDexSeed) {
       dispatch(exportSeedDex(passphrase));
@@ -275,89 +275,6 @@ export const userDex = () => async (dispatch, getState) => {
     dispatch({ type: DEX_USER_SUCCESS, user });
   } catch (error) {
     dispatch({ type: DEX_USER_FAILED, error });
-    return;
-  }
-};
-
-export const DEX_PREREGISTER_ATTEMPT = "DEX_PREREGISTER_ATTEMPT";
-export const DEX_PREREGISTER_SUCCESS = "DEX_PREREGISTER_SUCCESS";
-export const DEX_PREREGISTER_FAILED = "DEX_PREREGISTER_FAILED";
-
-export const preRegisterDex = (appPass, addr) => async (dispatch, getState) => {
-  dispatch({ type: DEX_PREREGISTER_ATTEMPT });
-  if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_PREREGISTER_FAILED, error: "Dex isn't active" });
-    return;
-  }
-  try {
-    const alreadyPaid = await dex.preRegister(appPass, addr);
-    // If it's not already paid it returns the config that is used to pay the
-    // required fee.
-    if (typeof alreadyPaid == "boolean") {
-      dispatch({ type: DEX_PREREGISTER_SUCCESS, alreadyPaid, addr });
-    } else {
-      dispatch({ type: DEX_GETCONFIG_SUCCESS, config: alreadyPaid, addr });
-    }
-  } catch (error) {
-    dispatch({ type: DEX_PREREGISTER_FAILED, error });
-    return;
-  }
-};
-
-export const DEX_GETCONFIG_ATTEMPT = "DEX_GETCONFIG_ATTEMPT";
-export const DEX_GETCONFIG_SUCCESS = "DEX_GETCONFIG_SUCCESS";
-export const DEX_GETCONFIG_FAILED = "DEX_GETCONFIG_FAILED";
-
-export const getConfigDex = (addr) => async (dispatch, getState) => {
-  dispatch({ type: DEX_GETCONFIG_ATTEMPT });
-  if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_GETCONFIG_FAILED, error: "Dex isn't active" });
-    return;
-  }
-  try {
-    const config = await dex.getConfig(addr);
-    dispatch({ type: DEX_GETCONFIG_SUCCESS, config, addr });
-  } catch (error) {
-    dispatch({ type: DEX_GETCONFIG_FAILED, error });
-    return;
-  }
-};
-
-export const DEX_REGISTER_ATTEMPT = "DEX_REGISTER_ATTEMPT";
-export const DEX_REGISTER_SUCCESS = "DEX_REGISTER_SUCCESS";
-export const DEX_REGISTER_FAILED = "DEX_REGISTER_FAILED";
-
-// NOTE: dex accepts fees in multiple assets, as indicated by server in
-// config.regFees object. See the dcrdex/client/core.Exchange struct. This
-// function registers with Decred.
-export const registerDex = (appPass) => async (dispatch, getState) => {
-  dispatch({ type: DEX_REGISTER_ATTEMPT });
-  if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_REGISTER_FAILED, error: "Dex isn't active" });
-    return;
-  }
-  const {
-    dex: { config, addr }
-  } = getState();
-  if (!config.regFees.dcr || config.regFees.dcr.id != 42) {
-    throw "unexpected fee payment type, expected to be paid in DCR";
-  }
-  const fee = config.feeAsset.amount;
-  try {
-    await dex.register(appPass, addr, fee);
-    dispatch({ type: DEX_REGISTER_SUCCESS });
-    // Request current user information
-    dispatch(userDex());
-  } catch (error) {
-    let dispatchError = error;
-    if (String(error).indexOf("insufficient funds") > -1) {
-      dispatchError = new Error(
-        "Insufficient funds in dex account to pay " +
-          fee +
-          ". Please fund the account, and try again."
-      );
-    }
-    dispatch({ type: DEX_REGISTER_FAILED, error: dispatchError });
     return;
   }
 };

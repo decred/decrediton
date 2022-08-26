@@ -26,12 +26,9 @@ export const useDex = () => {
   const dexActive = useSelector(sel.dexActive);
   const dexInit = useSelector(sel.dexInit);
   const initDexAttempt = useSelector(sel.initDexAttempt);
-  const registerDexAttempt = useSelector(sel.registerDexAttempt);
   const createWalletDexAttempt = useSelector(sel.createWalletDexAttempt);
   const loginDexAttempt = useSelector(sel.loginDexAttempt);
   const loggedIn = useSelector(sel.loggedInDex);
-  const dexAddr = useSelector(sel.dexAddr);
-  const dexConfig = useSelector(sel.dexConfig);
   const dexConnected = useSelector(sel.dexConnected);
   const dexDCRWalletRunning = useSelector(sel.dexDCRWalletRunning);
   const dexReady = useSelector(sel.dexReady);
@@ -40,19 +37,15 @@ export const useDex = () => {
   const dexAccount = useSelector(sel.dexAccount);
   const dexAccountAttempt = useSelector(sel.dexAccountAttempt);
   const dexSelectAccountAttempt = useSelector(sel.dexSelectAccountAttempt);
-  const defaultServerAddress = useSelector(sel.defaultDEXServer);
   const dexGetFeeError = useSelector(sel.dexGetFeeError);
-  const dexRegisterError = useSelector(sel.dexRegisterError);
   const dexLoginError = useSelector(sel.dexLoginError);
   const dexLogoutError = useSelector(sel.dexLogoutError);
-  const dexCreateWalletError = useSelector(sel.dexRegisterError);
   const userError = useSelector(sel.userError);
   const initError = useSelector(sel.initError);
   const dexAccountError = useSelector(sel.dexAccountError);
   const dexEnableError = useSelector(sel.dexEnableError);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const intl = useIntl();
-  const restoredFromSeed = useSelector(sel.restoredFromSeed);
   const confirmDexSeed = useSelector(sel.confirmDexSeed);
   const dexSeed = useSelector(sel.dexSeed);
 
@@ -68,11 +61,6 @@ export const useDex = () => {
 
   const onInitDexWithSeed = useCallback(
     (passphrase, seed) => dispatch(da.initDex(passphrase, seed)),
-    [dispatch]
-  );
-
-  const onRegisterDex = useCallback(
-    (passphrase) => dispatch(da.registerDex(passphrase)),
     [dispatch]
   );
 
@@ -101,16 +89,6 @@ export const useDex = () => {
   );
 
   const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
-
-  const onPreregister = useCallback(
-    (passphrase, address) => dispatch(da.preRegisterDex(passphrase, address)),
-    [dispatch]
-  );
-
-  const onGetConfig = useCallback(
-    (address) => dispatch(da.getConfigDex(address)),
-    [dispatch]
-  );
 
   const { Page, Header } = useMemo(() => {
     let page, header;
@@ -171,22 +149,16 @@ export const useDex = () => {
     onInitDex,
     onInitDexWithSeed,
     initDexAttempt,
-    onRegisterDex,
     onGetDexLogs,
-    registerDexAttempt,
     onCreateWalletDex,
     createWalletDexAttempt,
     onLoginDex,
     loginDexAttempt,
     loggedIn,
-    dexAddr,
-    dexConfig,
     dexConnected,
     dexDCRWalletRunning,
     onEnableDex,
     enableDexAttempt,
-    onGetConfig,
-    onPreregister,
     user,
     onLaunchDexWindow,
     onCreateDexAccount,
@@ -194,12 +166,9 @@ export const useDex = () => {
     dexAccount,
     dexAccountAttempt,
     dexSelectAccountAttempt,
-    defaultServerAddress,
     dexGetFeeError,
-    dexRegisterError,
     dexLoginError,
     dexLogoutError,
-    dexCreateWalletError,
     userError,
     initError,
     dexAccountError,
@@ -208,7 +177,6 @@ export const useDex = () => {
     Header,
     mixedAccount,
     intl,
-    restoredFromSeed,
     confirmDexSeed,
     onConfirmDexSeed,
     dexSeed

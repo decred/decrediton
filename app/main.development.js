@@ -72,10 +72,7 @@ import {
   userDex,
   loginDex,
   logoutDex,
-  exportSeed,
-  getConfigDex,
-  preRegister,
-  registerDex
+  exportSeed
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -403,12 +400,6 @@ handle("export-seed-dex", exportSeed);
 handle("logout-dex", logoutDex);
 
 handle("create-wallet-dex", createWalletDex);
-
-handle("get-config-dex", getConfigDex);
-
-handle("preregister-dex", preRegister);
-
-handle("register-dex", registerDex);
 
 handle("user-dex", userDex);
 
