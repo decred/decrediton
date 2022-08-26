@@ -23,6 +23,8 @@ let mockConfirmDexSeed;
 let mockCreateDexAccount;
 let mockSelectDexAccount;
 let mockCreateWalletDex;
+let mockLaunchDexWindow;
+let mockLoginDex;
 
 const mockMixedAccountValue = 6;
 
@@ -96,6 +98,8 @@ beforeEach(() => {
   mockCreateDexAccount = dexActions.createDexAccount = jest.fn(() => () => {});
   mockSelectDexAccount = dexActions.selectDexAccount = jest.fn(() => () => {});
   mockCreateWalletDex = dexActions.createWalletDex = jest.fn(() => () => {});
+  mockLaunchDexWindow = dexActions.launchDexWindow = jest.fn(() => () => {});
+  mockLoginDex = dexActions.loginDex = jest.fn(() => () => {});
 });
 
 const getEnableBtn = () => screen.getByRole("button", { name: "Enable DEX" });
@@ -118,8 +122,7 @@ const getSelectAnExistingAccountButton = () =>
   screen.getByRole("button", { name: "Select an existing account" });
 const getConnectDCRWalletButton = () =>
   screen.getByRole("button", { name: "Connect DCR Wallet" });
-const queryConnectDCRWalletButton = () =>
-  screen.queryByRole("button", { name: "Connect DCR Wallet" });
+const getLoginBtn = () => screen.queryByRole("button", { name: "Login" });
 
 test("enable dex view", () => {
   selectors.dexEnabled = jest.fn(() => false);
@@ -347,4 +350,48 @@ test("connecting DCR wallet is in progress", () => {
   selectors.createWalletDexAttempt = jest.fn(() => true);
   render(<DexPage />);
   expect(queryEnableBtn()).not.toBeInTheDocument();
+});
+
+test("test launch DEX view", () => {
+  selectors.dexInit = jest.fn(() => true);
+  selectors.confirmDexSeed = jest.fn(() => true);
+  selectors.dexAccount = jest.fn(() => mockAccount2.name);
+  selectors.dexDCRWalletRunning = jest.fn(() => true);
+
+  render(<DexPage />);
+
+  user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
+
+  expect(mockLaunchDexWindow).toHaveBeenCalled();
+});
+
+test("test login view", () => {
+  selectors.dexInit = jest.fn(() => true);
+  selectors.confirmDexSeed = jest.fn(() => true);
+  selectors.dexAccount = jest.fn(() => mockAccount2.name);
+  selectors.dexDCRWalletRunning = jest.fn(() => true);
+  selectors.loggedInDex = jest.fn(() => false);
+
+  render(<DexPage />);
+
+  expect(screen.getByText("DEX Login")).toBeInTheDocument();
+  expect(
+    screen.getByText("Login and connect wallet to Dex")
+  ).toBeInTheDocument();
+
+  const loginButton = getLoginBtn();
+
+  user.click(loginButton);
+  //cancel first
+  user.click(getCancelBtn());
+
+  user.click(loginButton);
+
+  const contineBtn = getContinueBtn();
+  const dexPassphraseInput = screen.getByLabelText("DEX Passphrase");
+  expect(contineBtn.disabled).toBeTruthy();
+  user.type(dexPassphraseInput, testDexPassphrase);
+  user.click(contineBtn);
+
+  expect(mockLoginDex).toHaveBeenCalledWith(testDexPassphrase);
 });
