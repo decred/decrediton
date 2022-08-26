@@ -214,32 +214,6 @@ export const DEX_LOGOUT_FAILED = "DEX_LOGOUT_FAILED";
 
 export const logoutDex = () => dex.logout();
 
-export const DEX_USE_SPV_BTC_ATTEMPT = "DEX_USE_SPV_BTC_ATTEMPT";
-export const DEX_USE_SPV_BTC_SUCCESS = "DEX_USE_SPV_BTC_SUCCESS";
-export const DEX_USE_SPV_BTC_FAILED = "DEX_USE_SPV_BTC_FAILED";
-
-export const useBtcSpvDex = (useSPV) => (dispatch, getState) => {
-  const {
-    daemon: { walletName }
-  } = getState();
-  try {
-    dispatch({ type: DEX_USE_SPV_BTC_ATTEMPT });
-    const walletConfig = wallet.getWalletCfg(
-      sel.isTestNet(getState()),
-      walletName
-    );
-    dispatch({
-      type: DEX_USE_SPV_BTC_SUCCESS,
-      dexBtcSpv: useSPV,
-      askDexBtcSpv: true
-    });
-    walletConfig.set(configConstants.DEX_BTC_SPV, useSPV);
-    walletConfig.set(configConstants.ASK_DEX_BTC_SPV, true);
-  } catch (error) {
-    dispatch({ type: DEX_USE_SPV_BTC_FAILED, error });
-  }
-};
-
 export const DEX_CREATEWALLET_ATTEMPT = "DEX_CREATEWALLET_ATTEMPT";
 export const DEX_CREATEWALLET_SUCCESS = "DEX_CREATEWALLET_SUCCESS";
 export const DEX_CREATEWALLET_FAILED = "DEX_CREATEWALLET_FAILED";

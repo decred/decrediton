@@ -53,8 +53,6 @@ export const useDex = () => {
   const mixedAccount = useSelector(sel.getMixedAccount);
   const intl = useIntl();
   const restoredFromSeed = useSelector(sel.restoredFromSeed);
-  const dexBtcSpv = useSelector(sel.dexBtcSpv);
-  const askDexBtcSpv = useSelector(sel.askDexBtcSpv);
   const confirmDexSeed = useSelector(sel.confirmDexSeed);
   const dexSeed = useSelector(sel.dexSeed);
 
@@ -114,14 +112,6 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onUseBtcSpv = useCallback(() => dispatch(da.useBtcSpvDex(true)), [
-    dispatch
-  ]);
-
-  const onDoNotUseBtcSPV = useCallback(() => dispatch(da.useBtcSpvDex(false)), [
-    dispatch
-  ]);
-
   const { Page, Header } = useMemo(() => {
     let page, header;
     if (!dexEnabled) {
@@ -138,7 +128,7 @@ export const useDex = () => {
         } else if (!confirmDexSeed) {
           page = <ConfirmDexSeed />;
           header = <ConfirmDexSeedHeader />;
-        } else if (dexDCRWalletRunning && dexBtcSpv) {
+        } else if (dexDCRWalletRunning) {
           page = <DexView />;
           header = <DexViewHeader />;
         } else if (!dexAccount) {
@@ -172,7 +162,6 @@ export const useDex = () => {
     loggedIn,
     dexDCRWalletRunning,
     dexAccount,
-    dexBtcSpv,
     confirmDexSeed
   ]);
   return {
@@ -220,10 +209,6 @@ export const useDex = () => {
     mixedAccount,
     intl,
     restoredFromSeed,
-    onUseBtcSpv,
-    onDoNotUseBtcSPV,
-    dexBtcSpv,
-    askDexBtcSpv,
     confirmDexSeed,
     onConfirmDexSeed,
     dexSeed
