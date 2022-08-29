@@ -50,6 +50,7 @@
       "^electron$": "<rootDir>/test/mocks/electronMock.js",
       "^electron-store$": "<rootDir>/test/mocks/electronStore.js",
       "wallet$": "<rootDir>/test/mocks/walletMock.js",
+      "^dex$": "<rootDir>/test/mocks/dexMock.js",
       "^walletCrypto$": "<rootDir>/app/wallet/crypto.js",
       "^fetchModule$": "<rootDir>/app/helpers/fetchModule.js",
       "wallet-preload-shim$": "<rootDir>/test/mocks/walletPreloadShimMock.js"

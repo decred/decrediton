@@ -8,9 +8,7 @@ const CreateWalletPageHeader = () => (
     description={
       <T
         id="dex.createWallet.description"
-        m={
-          "Connect your DCR wallet to the DEX."
-        }
+        m={"Connect your DCR wallet to the DEX."}
       />
     }
     iconType={DEX_ICON}
