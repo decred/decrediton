@@ -11,6 +11,14 @@
   font-size: 15px;
   line-height: 19px;
   margin-top: 3px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.docButton {
+  outline:none;
+  margin-left: 0.5rem;
 }
 
 .iconSmall {

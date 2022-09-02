@@ -13,6 +13,7 @@ const PageHeader = () => (
   <TitleHeader
     iconType={GOVERNANCE_ICON}
     title={<T id="governance.title" m="Governance" />}
+    docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#governance"
   />
 );
 

@@ -97,6 +97,7 @@ const Page = ({
     <Subtitle
       title={<T id="history.subtitle" m="Transaction History" />}
       className={styles.isRow}
+      docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#history"
       children={subtitleMenu({
         sortTypes,
         txTypes,
