@@ -1,4 +1,5 @@
 import { ButtonIcon, useTheme, getThemeProperty } from "pi-ui";
+import { wallet } from "wallet-preload-shim";
 
 const DocButton = ({ className, docUrl }) => {
   const { theme } = useTheme();

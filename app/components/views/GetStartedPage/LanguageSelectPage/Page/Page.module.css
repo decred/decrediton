@@ -4,13 +4,13 @@
 }
 
 .title {
-  display:flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .docButton {
-  outline:none;
+  outline: none;
   margin-left: 1rem;
 }
 

@@ -10,13 +10,13 @@
   color: var(--grey-6);
   font-size: 28px;
   line-height: 30px;
-  display:flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .docButton {
-  outline:none;
+  outline: none;
   margin-left: 0.5rem;
 }
 
