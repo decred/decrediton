@@ -25,18 +25,11 @@ export const usePurchaseTab = () => {
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const visibleAccounts = useSelector(sel.visibleAccounts);
 
-  const selectedAccountForTicketPurchase = useSelector(
-    sel.selectedAccountForTicketPurchase
-  );
+  const selectedAccountForTicketPurchase = useSelector(sel.selectedAccountForTicketPurchase);
   const account = useMemo(() => {
-    const accountName =
-      selectedAccountForTicketPurchase || defaultSpendingAccount.name;
+    const accountName = selectedAccountForTicketPurchase || defaultSpendingAccount.name;
     return visibleAccounts?.find((a) => isEqual(a.name, accountName));
-  }, [
-    visibleAccounts,
-    selectedAccountForTicketPurchase,
-    defaultSpendingAccount
-  ]);
+  }, [visibleAccounts, selectedAccountForTicketPurchase, defaultSpendingAccount]);
 
   const selectedVSP = useSelector(sel.selectedVSP);
 

@@ -535,10 +535,7 @@ export const getVSPTrackedTicketsCommitAccounts = createSelector(
 );
 export const getVSPTicketBuyerAccount = get(["vsp", "account"]);
 
-export const selectedAccountForTicketPurchase = get([
-  "vsp",
-  "selectedAccountForTicketPurchase"
-]);
+export const selectedAccountForTicketPurchase = get(["vsp", "selectedAccountForTicketPurchase"]);
 export const selectedVSP = get(["vsp", "selectedVSP"]);
 export const numVSPicketsToBuy = get(["vsp", "numVSPicketsToBuy"]);
 
