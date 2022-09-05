@@ -30,7 +30,10 @@ import {
   GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
   GETVSP_TICKET_STATUS_ATTEMPT,
   GETVSP_TICKET_STATUS_SUCCESS,
-  GETVSP_TICKET_STATUS_FAILED
+  GETVSP_TICKET_STATUS_FAILED,
+  SET_ACCOUNT_FOR_TICKET_PURCHASE,
+  SET_SELECTED_VSP,
+  SET_NUM_TICKETS_TO_BUY
 } from "actions/VSPActions";
 import {
   STARTTICKETBUYERV3_ATTEMPT,
@@ -192,7 +195,11 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         trackedTickets: {},
-        needsProcessManagedTickets: true
+        needsProcessManagedTickets: true,
+        account: null,
+        selectedAccountForTicketPurchase: null,
+        selectedVSP: null,
+        numVSPicketsToBuy: 1
       };
     case GETVSP_ATTEMPT:
       return {
@@ -235,6 +242,21 @@ export default function vsp(state = {}, action) {
         ...state,
         getVSPTicketStatusError: String(action.error),
         getVSPTicketStatusAttempt: false
+      };
+    case SET_ACCOUNT_FOR_TICKET_PURCHASE:
+      return {
+        ...state,
+        selectedAccountForTicketPurchase: action.account.name
+      };
+    case SET_SELECTED_VSP:
+      return {
+        ...state,
+        selectedVSP: action.selectedVSP
+      };
+    case SET_NUM_TICKETS_TO_BUY:
+      return {
+        ...state,
+        numVSPicketsToBuy: action.numVSPicketsToBuy
       };
     default:
       return state;
