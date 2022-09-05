@@ -156,7 +156,9 @@ export function updateStateSettingsChanged(settings, norestart) {
     const networkChange = {
       network: true,
       spvMode: true,
-      daemonStartAdvanced: true
+      daemonStartAdvanced: true,
+      proxyType: true,
+      proxyLocation: true
     };
 
     const newDiffersFromTemp = settingsFields.reduce(
