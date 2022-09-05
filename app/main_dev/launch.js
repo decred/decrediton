@@ -28,7 +28,8 @@ import {
   UPGD_ELECTRON8,
   CSPP_URL,
   CSPP_PORT_TESTNET,
-  CSPP_PORT_MAINNET
+  CSPP_PORT_MAINNET,
+  PROXYTYPE_SOCKS5
 } from "constants";
 import * as cfgConstants from "constants/config";
 import os from "os";
@@ -43,6 +44,7 @@ import ini from "ini";
 import { makeRandomString, isPlainString as isString } from "helpers/strings";
 import { makeFileBackup } from "helpers/files";
 import { DEX_LOCALPAGE } from "./externalRequests";
+import { getProxyTypeAndLocation } from "./proxy";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -390,6 +392,15 @@ export const launchDCRD = (reactIPC, testnet, appdata) =>
       args.push("--testnet");
     }
 
+    const { proxyType, proxyLocation } = getProxyTypeAndLocation();
+    logger.log(
+      "info",
+      `ProxyType: ${proxyType}, ProxyLocation: ${proxyLocation}`
+    );
+    if (proxyType === PROXYTYPE_SOCKS5 && proxyLocation) {
+      args.push(`--proxy=${proxyLocation}`);
+    }
+
     rpcuser = rpc_user;
     rpcpass = rpc_pass;
     rpccert = rpc_cert;
@@ -643,6 +654,15 @@ export const launchDCRWallet = async (
       ? "--csppserver=" + CSPP_URL + ":" + CSPP_PORT_MAINNET
       : "--csppserver=" + CSPP_URL + ":" + CSPP_PORT_TESTNET
   );
+
+  const { proxyType, proxyLocation } = getProxyTypeAndLocation();
+  logger.log(
+    "info",
+    `ProxyType: ${proxyType}, ProxyLocation: ${proxyLocation}`
+  );
+  if (proxyType === PROXYTYPE_SOCKS5 && proxyLocation) {
+    args.push(`--proxy=${proxyLocation}`);
+  }
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);
   if (!fs.existsSync(dcrwExe)) {
