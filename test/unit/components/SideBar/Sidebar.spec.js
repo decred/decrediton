@@ -40,7 +40,7 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
-const defaultMenuLinkBorderColor = "border-color: rgba(255, 255, 255, 1)"; //sidebar-color
+const defaultMenuLinkBorderColor = "border-color: rgba(249, 250, 250, 1)"; //sidebar-color
 const activeMenuLinkBorderColor = "border-color: rgba(46, 216, 163, 1)";
 const testCurrentBlockHeight = 12;
 const testBalances = [
