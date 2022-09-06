@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.detailsWrapper {
+  margin-bottom: 5rem;
+}
+
 .backButton {
   width: 40px;
   background-color: var(--governance-nav-button-bg);
@@ -93,6 +97,9 @@
 @media (--sm-viewport) {
   .detailsText {
     padding-left: 20px;
+    width: 355px;
+  }
+  .piButtonWrapper {
     width: 355px;
   }
 }

@@ -50,7 +50,7 @@ const ProposalDetails = ({
     voteStatus === PROPOSAL_VOTING_REJECTED;
 
   return (
-    <div>
+    <div className={styles.detailsWrapper}>
       <div className={classNames(styles.cardWrapper)}>
         <div
           className={classNames(styles.backButton, "flex-centralize")}
