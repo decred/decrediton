@@ -15,7 +15,7 @@
   white-space: pre-line;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .loaderBar {
     margin-bottom: 0;
     position: fixed;

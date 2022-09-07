@@ -88,13 +88,13 @@
   height: 40px;
   align-self: flex-end;
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .info,
   .info.double {
     width: 400px !important;
   }
 }
-@media screen and (max-width: 560px) {
+@media (--xs-viewport) {
   .info,
   .info.double {
     width: 300px !important;

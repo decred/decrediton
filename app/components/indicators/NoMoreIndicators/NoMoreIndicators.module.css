@@ -44,12 +44,12 @@
   background-color: var(--background-back-color);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .noProposals {
     margin-left: 40px;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .noMoreTicketsIndicator {
     width: 315px;
   }

@@ -403,7 +403,7 @@
   line-height: 1.6rem;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .info {
     grid-template-columns: 0.5fr 3.5fr 10fr 3fr;
   }
@@ -418,7 +418,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overviewRow {
     width: 355px;
   }

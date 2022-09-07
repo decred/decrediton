@@ -9,7 +9,7 @@
   background-position: 15px 15px;
   background-size: 30px;
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .loaderBar {
     margin-bottom: 0;
     position: fixed;

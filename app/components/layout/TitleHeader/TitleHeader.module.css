@@ -89,13 +89,13 @@
   margin-left: auto;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .container {
     width: 667px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .container {
     width: 345px;
   }

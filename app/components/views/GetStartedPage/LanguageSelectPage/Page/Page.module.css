@@ -12,7 +12,7 @@
   margin-right: 0.5em;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .button {
     padding: 6px 20px;
   }

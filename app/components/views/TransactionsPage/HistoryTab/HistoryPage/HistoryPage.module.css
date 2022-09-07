@@ -29,13 +29,13 @@
   width: max-content;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .historyPageContent {
     width: 667px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .historyPageContent {
     width: 355px;
   }

@@ -72,7 +72,7 @@
   top: 0.4rem !important;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .votePreference {
     flex-basis: 70%;
   }
@@ -86,7 +86,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .voteSection {
     width: 355px;
     padding: 10px 10px 10px 20px;

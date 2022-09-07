@@ -4,7 +4,7 @@
   width: 295px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .input {
     width: 243px;
   }

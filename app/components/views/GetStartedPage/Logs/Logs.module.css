@@ -4,14 +4,14 @@
   right: 0;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .backButtonArea {
     left: 622px;
     right: initial;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .backButtonArea {
     top: 30px;
     left: 342px;

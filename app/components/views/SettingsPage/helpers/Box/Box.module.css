@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .box {
     padding: 3rem 2rem;
   }

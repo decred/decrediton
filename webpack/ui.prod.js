@@ -27,7 +27,18 @@ module.exports = merge(baseConfig, {
     rules: [
       {
         test: /\.css$/,
-        use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"]
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                config: "./postcss.config.js"
+              }
+            }
+          }
+        ]
       }
     ]
   },
@@ -37,8 +48,8 @@ module.exports = merge(baseConfig, {
 
     new CopyWebpackPlugin({
       patterns: [
-          // Copy the generated trezor iframe and code.
-          { from: "./app/dist-trezor", to: "" }
+        // Copy the generated trezor iframe and code.
+        { from: "./app/dist-trezor", to: "" }
       ]
     }),
 
@@ -54,7 +65,7 @@ module.exports = merge(baseConfig, {
     }),
 
     new webpack.DefinePlugin({
-      "__ELECTRON_ENV": JSON.stringify("renderer")
+      __ELECTRON_ENV: JSON.stringify("renderer")
     })
   ],
 
@@ -62,7 +73,6 @@ module.exports = merge(baseConfig, {
     // Trezor-connect currently fails without this.
     __dirname: true
   },
-
 
   optimization: {
     minimizer: [

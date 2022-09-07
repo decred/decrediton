@@ -85,13 +85,13 @@
   color: var(--input-color-hover);
 }
 
-@media screen and (max-width: 1000px) {
+@media (--md-viewport) {
   .about {
     width: inherit;
   }
 }
 
-@media screen and (max-width: 560px) {
+@media (--xs-viewport) {
   .about {
     width: 455px !important;
     height: 290px;

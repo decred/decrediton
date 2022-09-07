@@ -62,7 +62,7 @@
   color: var(--main-dark-blue);
   font-size: 13px;
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .value {
     max-width: 235px;
   }

@@ -84,7 +84,7 @@
   background-image: var(--release-image-v170);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .image {
     flex: 1;
     margin-top: 14px;
@@ -96,7 +96,7 @@
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media (--md-viewport) {
   .text {
     max-width: inherit;
     margin-left: 15px;
@@ -107,7 +107,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .text {
     margin: 10px 0 0 0;
   }

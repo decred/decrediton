@@ -93,14 +93,14 @@
   background-image: var(--help-forum);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .icon {
     margin-right: 10px;
     margin-bottom: 10px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .icon {
     margin-right: 0;
     width: 355px;

@@ -86,7 +86,7 @@
   padding: 0 !important;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tableHeader {
     display: none;
   }

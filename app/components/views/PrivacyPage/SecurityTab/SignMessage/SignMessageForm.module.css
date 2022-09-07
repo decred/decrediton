@@ -38,13 +38,13 @@
   width: 540px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .formRowFieldMessage {
     width: 450px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .formRowField,
   .formRowFieldMessage {
     width: 224px;

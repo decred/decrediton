@@ -78,7 +78,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .tabs {
     margin-left: 0;
     padding-left: 55px;
@@ -93,7 +93,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tabs {
     margin-left: 0;
     padding-left: 20px;

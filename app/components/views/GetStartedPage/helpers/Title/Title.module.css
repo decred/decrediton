@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .title {
     font-size: 23px;
   }

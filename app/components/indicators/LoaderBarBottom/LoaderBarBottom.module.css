@@ -16,7 +16,7 @@
   font-weight: 700;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .barEstimation {
     display: none;
   }

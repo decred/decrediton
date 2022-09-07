@@ -153,13 +153,13 @@
   width: 17rem;
   text-align: center;
 }
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .privacyContent {
     width: 667px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .privacyContent {
     width: 355px;
     margin-left: 0;

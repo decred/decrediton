@@ -3,13 +3,13 @@
   padding: 40px 60px 25px 60px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .header {
     padding-left: 20px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .header {
     height: initial;
     display: flex;

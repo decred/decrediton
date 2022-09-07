@@ -71,7 +71,7 @@
   height: 24px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     grid-row-gap: 10px;

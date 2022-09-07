@@ -22,7 +22,7 @@
   color: var(--title-text-and-button-background-hovered);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .buttonsBar {
     display: flex;
     justify-content: flex-end;

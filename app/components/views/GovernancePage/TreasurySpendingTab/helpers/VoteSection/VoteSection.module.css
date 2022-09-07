@@ -67,7 +67,7 @@
   top: 0.4rem !important;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .voteSection {
     padding: 10px 10px 10px 0;
   }

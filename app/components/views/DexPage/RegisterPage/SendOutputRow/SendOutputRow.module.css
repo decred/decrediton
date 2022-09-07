@@ -31,14 +31,14 @@
 .tooltipSendToSelf {
   width: 18rem;
 }
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .sendOutputContainer {
     grid-template-columns: max-content 240px minmax(max-content, 1fr) 240px;
     padding: 7px 0 26px 0;
     width: 594px;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .sendOutputContainer {
     grid-template-columns: max-content 256px;
     grid-template-rows: repeat(3, 25px);
