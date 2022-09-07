@@ -4,13 +4,13 @@
   padding-top: 106px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .content {
     padding: 56px 0 0 0;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .content {
     padding: 40px 0 0 0;
   }

@@ -6,7 +6,7 @@
   float: left;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .contentContainer {
     font-size: 23px;
     margin-bottom: 20px;

@@ -20,13 +20,13 @@
   grid-template-columns: max-content auto max-content max-content;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .dexContent {
     width: 634px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .dexContent {
     width: 355px;
     margin-left: 0;

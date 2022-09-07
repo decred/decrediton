@@ -19,7 +19,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .wrapper {
     grid-template-columns: repeat(1, 35.5rem);
   }

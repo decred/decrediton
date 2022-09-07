@@ -60,7 +60,7 @@
   color: var(--wallet-tutorial-link);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .standardPage {
     flex-direction: column;
   }

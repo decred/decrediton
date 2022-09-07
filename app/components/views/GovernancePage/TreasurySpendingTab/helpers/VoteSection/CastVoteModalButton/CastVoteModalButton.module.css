@@ -33,7 +33,7 @@
   margin-left: 5px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .voteButton {
     margin: 0;
     align-self: center;

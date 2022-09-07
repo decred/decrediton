@@ -20,7 +20,7 @@
   overflow-x: hidden;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .pageView {
     width: 100%;
   }

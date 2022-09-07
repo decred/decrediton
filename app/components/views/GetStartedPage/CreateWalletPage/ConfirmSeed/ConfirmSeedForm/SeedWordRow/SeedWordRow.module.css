@@ -47,7 +47,7 @@
   background: var(--seedword-button-invalid-bg);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .buttonContainer button {
     width: 110px;
   }

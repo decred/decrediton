@@ -45,7 +45,7 @@
   margin-bottom: 10px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .sidebar {
     display: flex;
     width: 100% !important;

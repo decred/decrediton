@@ -61,13 +61,13 @@
   font-weight: var(--font-weight-semi-bold) !important;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .detailsText {
     width: 6.74rem;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .detailsText {
     padding-left: 2rem;
     width: 3.55rem;

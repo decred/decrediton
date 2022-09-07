@@ -64,13 +64,13 @@
   cursor: default;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .securityPageTab {
     width: 649px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .securityPageTab {
     margin-top: 30px;
     width: 355px;

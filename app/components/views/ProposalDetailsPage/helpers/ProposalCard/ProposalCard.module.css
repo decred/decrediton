@@ -109,7 +109,7 @@
   color: var(--tab-text-active-color) !important;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .overview {
     width: 626px;
   }
@@ -123,7 +123,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overview {
     width: 315px;
     padding: 10px !important;

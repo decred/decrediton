@@ -43,6 +43,14 @@ module.exports = merge(baseConfig, {
                 localIdentName: "[local]__[hash:base64:5]"
               }
             }
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                config: "./postcss.config.js"
+              }
+            }
           }
         ],
         include: /\.module\.css$/
@@ -80,7 +88,7 @@ module.exports = merge(baseConfig, {
     new webpack.HotModuleReplacementPlugin(),
 
     new webpack.DefinePlugin({
-      "__ELECTRON_ENV": JSON.stringify("renderer")
+      __ELECTRON_ENV: JSON.stringify("renderer")
     }),
 
     new webpack.LoaderOptionsPlugin({
@@ -89,8 +97,8 @@ module.exports = merge(baseConfig, {
 
     new CopyWebpackPlugin({
       patterns: [
-          // Copy the generated trezor iframe and code.
-          { from: "./app/dist-trezor", to: "" }
+        // Copy the generated trezor iframe and code.
+        { from: "./app/dist-trezor", to: "" }
       ]
     }),
 
@@ -104,5 +112,16 @@ module.exports = merge(baseConfig, {
       template: "app/staticPages/confirmation-dialog.html",
       inject: false
     })
+  ],
+  // Uncomment to see postcss-loader warnings
+  // TODO: Remove when the new solution is implemented and warning is removed
+  // ignore: postcss-custom-properties: "importFrom" and "exportTo" will be removed in a future version of postcss-custom-properties.
+  // We are looking for insights and anecdotes on how these features are used so that we can design the best alternative.
+  // Please let us know if our proposal will work for you.
+  // Visit the discussion on github for more details. https://github.com/csstools/postcss-plugins/discussions/192
+  ignoreWarnings: [
+    {
+      module: /postcss-loader\/dist\/cjs\.js/
+    }
   ]
 });

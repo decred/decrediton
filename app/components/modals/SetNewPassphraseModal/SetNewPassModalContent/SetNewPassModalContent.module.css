@@ -54,7 +54,7 @@
 .closeButtonTop:hover {
   opacity: 0.7;
 }
-@media screen and (max-width: 560px) {
+@media (--xs-viewport) {
   .passphrase {
     max-height: 60%;
   }

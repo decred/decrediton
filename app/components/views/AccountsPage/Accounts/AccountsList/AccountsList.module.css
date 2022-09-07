@@ -3,7 +3,7 @@
   width: 740px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .contentNest {
     width: 667px;
   }

@@ -133,7 +133,7 @@
   justify-content: space-between;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .overviewTransactionsTicket {
     padding: 30px 20px;
   }
@@ -152,7 +152,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overviewTab {
     display: inline-block;
     width: 30px;
@@ -193,7 +193,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overviewTab {
     display: inline-block;
     width: 30px;

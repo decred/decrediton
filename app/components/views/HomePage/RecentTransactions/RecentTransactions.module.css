@@ -44,7 +44,7 @@
   background-image: var(--buy-decred-icon);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .wrapper {
     width: 100%;
   }

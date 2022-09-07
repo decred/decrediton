@@ -68,7 +68,7 @@
   background-image: var(--disable-spv);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .option {
     width: 100%;
     margin: 0 0 10px 0;

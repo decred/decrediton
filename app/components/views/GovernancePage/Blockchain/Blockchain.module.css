@@ -61,7 +61,7 @@
   width: 76.4rem;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .agendaWrapper {
     margin-left: 35px;
   }
@@ -70,7 +70,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .agendaWrapper {
     margin: 20px;
   }

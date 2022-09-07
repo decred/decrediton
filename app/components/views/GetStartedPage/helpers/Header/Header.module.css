@@ -10,7 +10,7 @@
 .tutorialButton:hover {
   background-color: var(--title-text-and-button-background-hovered);
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .loaderButtons {
     margin-bottom: 50px;
   }

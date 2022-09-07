@@ -251,14 +251,14 @@
   background-image: var(--tutorial-identity-slide4);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .imageContainer,
   .image {
     width: 55rem;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .imageContainer,
   .image {
     width: 27rem;

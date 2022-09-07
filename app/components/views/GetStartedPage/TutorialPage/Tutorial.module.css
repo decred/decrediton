@@ -77,7 +77,7 @@ video {
   width: 34px;
 }
 
-@media screen and (max-width: 1000px) {
+@media (--md-viewport) {
   .tutorial .main {
     top: 88px;
     left: 21px;
@@ -89,7 +89,7 @@ video {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tutorialMainToolbar {
     justify-content: space-between;
     flex-wrap: nowrap;

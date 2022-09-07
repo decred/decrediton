@@ -126,13 +126,13 @@
   background-image: var(--tutorial-lifecycle-thumb);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .overview {
     width: 63.4rem;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .overview {
     width: 31.5rem;
     padding: 10px !important;

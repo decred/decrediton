@@ -61,14 +61,14 @@
   max-width: 300px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .validateAddressForm,
   .validateAddressOwnedForm {
     width: 649px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .validateAddressForm,
   .validateAddressOwnedForm {
     width: 355px;

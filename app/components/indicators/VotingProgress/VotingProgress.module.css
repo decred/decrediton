@@ -15,12 +15,12 @@
   background-color: var(--vote-no-color);
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .votingProgressIndicator {
     width: 120px;
   }
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .votingProgressIndicator {
     width: 120px;
   }

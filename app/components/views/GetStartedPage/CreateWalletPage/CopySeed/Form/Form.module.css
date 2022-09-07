@@ -42,7 +42,7 @@
   align-items: initial;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .copy {
     grid-column: 1 / 4;
     background-position: 80px;

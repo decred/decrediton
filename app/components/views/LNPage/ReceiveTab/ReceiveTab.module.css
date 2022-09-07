@@ -81,7 +81,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .lnAddInvoice {
     padding: 30px 20px;
   }

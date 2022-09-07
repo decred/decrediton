@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .body {
     padding-left: 20px;
     padding-right: 20px;

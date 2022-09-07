@@ -2,7 +2,7 @@
   width: 692px;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .titleWrapper {
     flex-direction: column;
     margin-bottom: 20px;

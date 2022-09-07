@@ -47,7 +47,7 @@
   background-position: 0 center;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .warningText {
     column-count: 1;
   }

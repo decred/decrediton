@@ -129,7 +129,7 @@
   background-image: var(--ticket-voted);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .accordion {
     margin-bottom: 30px;
   }

@@ -1,4 +1,4 @@
-@media screen and (max-width: 1000px) {
+@media (--md-viewport) {
   .wide {
     justify-content: flex-start;
     margin: 0;
@@ -21,7 +21,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .wide {
     flex-direction: column;
     justify-content: flex-start;

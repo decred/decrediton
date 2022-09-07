@@ -45,7 +45,7 @@
   top: 0.4rem !important;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .votePreference {
     flex-basis: initial;
   }

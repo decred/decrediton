@@ -67,7 +67,7 @@
   margin: 20px 0 0 0;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .modal {
     width: 355px;
     padding: 30px 20px;

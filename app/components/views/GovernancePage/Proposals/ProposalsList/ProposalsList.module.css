@@ -34,7 +34,7 @@
   padding-top: 22px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .proposalList {
     margin-left: 35px;
   }
@@ -43,7 +43,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .proposalList {
     padding-bottom: 100px;
     margin-left: 10px;

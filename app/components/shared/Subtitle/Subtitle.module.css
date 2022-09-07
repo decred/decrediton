@@ -12,14 +12,14 @@
   margin-top: -20px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .tabbedPageSubtitle {
     margin-left: 0;
     width: 667px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tabbedPageSubtitle {
     width: 355px;
     margin-left: 0;

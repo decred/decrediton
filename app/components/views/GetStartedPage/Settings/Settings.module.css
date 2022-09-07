@@ -66,7 +66,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media (--bigger-than-sm-viewport) {
   .timezoneBox ul li > div {
     margin: 0 !important;
   }
@@ -82,7 +82,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tabsContainer {
     margin: 0 -2rem;
   }

@@ -106,7 +106,7 @@
 .lastLogLines {
   font-size: 9px;
 }
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .loaderBarEstimation {
     display: none;
   }

@@ -84,7 +84,7 @@
   opacity: 0.7;
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .logo {
     flex-direction: row-reverse;
   }

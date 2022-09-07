@@ -43,7 +43,7 @@
   padding: 30px 80px 30px 60px;
 }
 
-@media screen and (max-width: 1180px) {
+@media (--bg-viewport) {
   .tabbedPageHeader {
     padding-left: 20px;
   }
@@ -56,7 +56,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .tabbedPageHeader {
     padding-top: 30px;
   }

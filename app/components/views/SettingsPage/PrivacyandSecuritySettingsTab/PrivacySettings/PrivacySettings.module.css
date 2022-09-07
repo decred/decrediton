@@ -10,7 +10,7 @@
   color: var(--grey-7);
 }
 
-@media screen and (max-width: 768px) {
+@media (--sm-viewport) {
   .box {
     grid-template-columns: 1fr;
   }
