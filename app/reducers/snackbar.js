@@ -300,7 +300,7 @@ const messages = defineMessages({
   DAEMONCONNECTING_TIMEOUT: {
     id: "daemonSyncingTimeout.errors",
     defaultMessage:
-      "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it."
+      "Daemon connection timeout exceeded.\n That Probably means you filled your parameters wrong. Please review it."
   },
   DAEMONCONNECTING_ERROR: {
     id: "daemon.connect.error",
@@ -695,7 +695,7 @@ const messages = defineMessages({
   },
   DEX_USER_FAILED: {
     id: "dex.user.failed",
-    defaultMessage: "Failed to retreive user information: {originalError}"
+    defaultMessage: "Failed to retrieve user information: {originalError}"
   },
   STARTTICKETBUYERV3_FAILED: {
     id: "vsp.runautobuyer.failed",

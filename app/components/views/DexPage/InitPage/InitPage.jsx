@@ -38,7 +38,7 @@ const InitPage = () => {
         description={
           <T
             id="dex.hasDexSeed.description"
-            m="A DEX seed allows you to recover your account at a paticular server."
+            m="A DEX seed allows you to recover your account at a particular server and your native DEX wallets."
           />
         }
         checked={hasSeed}

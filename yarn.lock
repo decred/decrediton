@@ -4497,10 +4497,6 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-"dcrdex-assets@https://github.com/decred/dcrdex-assets#v0.4.3":
-  version "0.0.0"
-  resolved "https://github.com/decred/dcrdex-assets#df683f161bd24fc32e8e9d1216a0101e7e5282aa"
-
 debounce-fn@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/debounce-fn/-/debounce-fn-4.0.0.tgz#ed76d206d8a50e60de0dd66d494d82835ffe61c7"

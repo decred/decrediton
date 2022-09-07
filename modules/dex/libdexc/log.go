@@ -11,12 +11,9 @@ import (
 	"github.com/jrick/logrotate/rotator"
 )
 
-var (
-	// logRotator is one of the logging outputs. It should be closed on
-	// application shutdown.
-	logRotator *rotator.Rotator
-	log        dex.Logger
-)
+// logRotator is one of the logging outputs. It should be closed on application
+// shutdown.
+var logRotator *rotator.Rotator
 
 // logWriter implements an io.Writer that outputs to stdout
 // and a rotating log file.
@@ -28,7 +25,7 @@ func (w logWriter) Write(p []byte) (n int, err error) {
 	return logRotator.Write(p)
 }
 
-// initLogging initializes the logging rotater to write logs to logFile and
+// initLogging initializes the logging rotator to write logs to logFile and
 // create roll files in the same directory. initLogging must be called before
 // the package-global log rotator variables are used.
 func initLogging(logDirectory, logFilename, lvl string, utc bool) *dex.LoggerMaker {
@@ -47,7 +44,6 @@ func initLogging(logDirectory, logFilename, lvl string, utc bool) *dex.LoggerMak
 		fmt.Fprintf(os.Stderr, "failed to create custom logger: %v\n", err)
 		os.Exit(1)
 	}
-	log = lm.Logger("APP")
 	return lm
 }
 
@@ -55,5 +51,6 @@ func initLogging(logDirectory, logFilename, lvl string, utc bool) *dex.LoggerMak
 func closeFileLogger() {
 	if logRotator != nil {
 		logRotator.Close()
+		logRotator = nil
 	}
 }
