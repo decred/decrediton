@@ -365,7 +365,7 @@ test.each([
       type: CONNECTDAEMON_FAILURE,
       daemonTimeout: true
     },
-    "Daemon connection timeout exceded.\n That Probably means you filled your parameters wrong. Please review it."
+    "Daemon connection timeout exceeded.\n That Probably means you filled your parameters wrong. Please review it."
   ],
   [
     {

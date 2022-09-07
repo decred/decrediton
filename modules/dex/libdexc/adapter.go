@@ -19,10 +19,13 @@ import (
 	"decred.org/dcrdex/dex"
 	"github.com/decred/slog"
 
-	_ "decred.org/dcrdex/client/asset/btc"  // register btc asset
-	_ "decred.org/dcrdex/client/asset/dcr"  // register dcr asset
-	_ "decred.org/dcrdex/client/asset/doge" // register doge asset
-	_ "decred.org/dcrdex/client/asset/ltc"  // register ltc asset
+	// Register the supported assets.
+	_ "decred.org/dcrdex/client/asset/bch"
+	_ "decred.org/dcrdex/client/asset/btc"
+	_ "decred.org/dcrdex/client/asset/dcr"
+	_ "decred.org/dcrdex/client/asset/doge"
+	_ "decred.org/dcrdex/client/asset/ltc"
+	_ "decred.org/dcrdex/client/asset/zec"
 )
 
 type callHandler func(json.RawMessage) (string, error)
@@ -48,7 +51,6 @@ type CoreAdapter struct {
 	ctx           context.Context
 	kill          context.CancelFunc
 	inited        uint32
-	logLevel      slog.Level
 	serverRunning uint32
 	core          *core.Core
 	webServer     *dex.ConnectionMaster
@@ -131,7 +133,6 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		return fmt.Errorf("error creating client core: %v", err)
 	}
 	c.core = ccore
-	c.logLevel = form.LogLevel
 
 	c.wg.Add(1)
 	go func() {
@@ -161,7 +162,6 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 		CustomSiteDir: form.SiteDir,
 		Language:      form.Language,
 		Logger:        c.logMaker.Logger("SRVR"),
-		ReloadHTML:    false,
 		HttpProf:      false,
 	})
 	if err != nil {
@@ -184,6 +184,7 @@ func (c *CoreAdapter) shutdown(json.RawMessage) (string, error) {
 	c.kill()
 	c.wg.Wait()
 	c.webServer.Wait()
+	closeFileLogger()
 	atomic.SwapUint32(&c.inited, 0)
 	return "", nil
 }
@@ -311,7 +312,7 @@ func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
 }
 
 // When restoring from seed with init/InitializeClient, it may be desirable to
-// first attempt DEX account discovery without commiting to a fee payment. This
+// first attempt DEX account discovery without committing to a fee payment. This
 // checks with the given DEX server if our account (a public key) is already
 // registered. If it is, this creates the account in Core, returns true, and the
 // caller should NOT call register. If it returns false, the user should be

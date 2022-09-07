@@ -13,7 +13,7 @@ const DexOpenOrdersModal = ({ show, onCancelModal }) => (
     <div>
       <T
         id="dex.openorders.message"
-        m="There are currently open orders still being managed at the DEX.  Please wait until all orders are finished excuting before closing.  If you close before the orders are executed, you will not finish the trade and may be penalized."
+        m="There are currently open orders still being managed on the DEX.  Please wait until all orders are finished executing before closing.  If you close before the orders are executed, you will not finish the trade and may be penalized."
       />
     </div>
     <div className={styles.toolbar}>

@@ -153,7 +153,7 @@ const CreateWalletsPage = () => {
                     description={
                       <T
                         id="dex.btcWalletLocation.description"
-                        m="If you have a non-default bitcoin location, please check the box and indentify the location."
+                        m="If you have a non-default bitcoin location, please check the box and identify the location."
                       />
                     }
                     checked={hasNonDefault}

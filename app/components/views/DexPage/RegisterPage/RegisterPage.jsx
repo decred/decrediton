@@ -56,7 +56,7 @@ const RegisterPage = () => {
         </div>
         <div className={styles.sendToDexAccount}>
           <div className={styles.title}>
-            <T id="dex.sendToDexAccount.title" m="Send to Dex Account" />
+            <T id="dex.sendToDexAccount.title" m="Send to DEX Account" />
           </div>
           <SendTransaction
             onlySendSelfAllowed={true}

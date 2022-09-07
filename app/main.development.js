@@ -434,6 +434,10 @@ function createDexWindow(serverAddress) {
       event.preventDefault();
     }
   });
+  dexWindow.webContents.setWindowOpenHandler(({ url }) => {
+    mainWindow.webContents.send("open-external", url);
+    return { action: "deny" };
+  });
   dexWindow.once("closed", () => {
     dexWindow = new BrowserWindow({
       show: false,
@@ -441,7 +445,9 @@ function createDexWindow(serverAddress) {
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true
-      }
+      },
+      width: 1280,
+      height: 940
     });
   });
 }
@@ -873,7 +879,9 @@ app.on("ready", async () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true
-    }
+    },
+    width: 1280,
+    height: 940
   });
 });
 
