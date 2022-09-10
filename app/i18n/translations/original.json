@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "version": "v1.7.5-pre"
+  },
   "SendFromUnmixed.btnCancel": "Cancel",
   "SendFromUnmixed.btnConfirm": "Enable sending from unmixed accounts",
   "SendFromUnmixed.confirmPhraseInstruction": "Please type {confirmationPhrase} to allow sending from unmixed accounts.",
