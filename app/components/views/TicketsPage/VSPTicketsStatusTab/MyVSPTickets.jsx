@@ -58,7 +58,7 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyVSPTickets = ({ toggleIsLegacy }) => {
+const MyVSPTickets = () => {
   const {
     tsDate,
     noMoreTickets,
@@ -144,7 +144,6 @@ const MyVSPTickets = ({ toggleIsLegacy }) => {
         selectedSortOrderKey,
         loadMoreThreshold,
         ticketTypes,
-        toggleIsLegacy,
         tickets,
         ticketsFilter,
         changeTicketsFilter,

@@ -11,13 +11,6 @@ import { getClient } from "middleware/grpc/clientTracking";
 import { signTx as confDialogSignTx } from "./confirmationDialog";
 import { validateAddress } from "./service";
 
-const hexToBytes = (hex) => {
-  const bytes = [];
-  for (let c = 0; c < hex.length; c += 2)
-    bytes.push(parseInt(hex.substr(c, 2), 16));
-  return bytes;
-};
-
 export const getNextAccount = (walletService, passphrase, name) =>
   new Promise((ok, fail) => {
     const request = new api.NextAccountRequest();
@@ -73,18 +66,6 @@ export const importPrivateKey = (
     request.setRescan(rescan);
     request.setScanFrom(scanFrom);
     getClient(walletService).importPrivateKey(request, (err, res) =>
-      err ? fail(err) : ok(res.toObject())
-    );
-  });
-
-export const importScript = (walletService, script) =>
-  new Promise((ok, fail) => {
-    const request = new api.ImportScriptRequest();
-    request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
-    request.setRescan(false);
-    request.setScanFrom(0);
-    request.setRequireRedeemable(true);
-    getClient(walletService).importScript(request, (err, res) =>
       err ? fail(err) : ok(res.toObject())
     );
   });
@@ -600,23 +581,6 @@ export const setAccountPassphrase = (
     }
     getClient(walletService).setAccountPassphrase(request, (err, res) =>
       err ? fail(err) : ok(res.toObject())
-    );
-  });
-
-export const startTicketAutoBuyerV2 = (
-  ticketBuyerService,
-  { balanceToMaintain, account, votingAccount, votingAddress }
-) =>
-  new Promise((ok) => {
-    const request = new api.RunTicketBuyerRequest();
-    request.setBalanceToMaintain(balanceToMaintain);
-    request.setAccount(account);
-    request.setVotingAccount(votingAccount);
-    request.setVotingAddress(votingAddress);
-    ok(
-      shimStreamedResponse(
-        getClient(ticketBuyerService).runTicketBuyer(request)
-      )
     );
   });
 

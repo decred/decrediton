@@ -3,9 +3,6 @@ import {
   NumericInput,
   IntegerInput,
   FloatInput,
-  BlocksInput,
-  FeeInput,
-  PercentInput,
   InlineField,
   PassphraseModalField,
   PasswordInput,
@@ -22,7 +19,6 @@ import user from "@testing-library/user-event";
 import { screen, wait } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import { useState } from "react";
-import * as sel from "selectors";
 import * as wallet from "wallet";
 
 const inputDataTestId = "input-data-test-id";
@@ -36,12 +32,9 @@ const testUnit = "test-unit";
 const testPlaceholder = "test-placeholder";
 const invalidErrorMsg = "This field is wrong";
 const requiredErrorMsg = "This field is required";
-const testCurrency = "DCR-test";
 const anyArg = expect.anything;
 const testFilePath = "test-filePath";
-const selectors = sel;
 
-let mockCurrencyDisplay;
 let mockOnChange;
 let mockOnKeyDownSubmit;
 let mockOnKeyDown;
@@ -54,7 +47,6 @@ beforeEach(() => {
   mockOnKeyDown = jest.fn(() => {});
   mockOnFocus = jest.fn(() => {});
   mockOnBlur = jest.fn(() => {});
-  mockCurrencyDisplay = selectors.currencyDisplay = jest.fn(() => testCurrency);
 });
 
 const getInputAndInputTag = (props) => {
@@ -173,31 +165,6 @@ test("render default FloatInput", () => {
   expect(input.className).toMatch("numericInput");
   user.type(inputTag, "1.89a&%4234}");
   expect(inputTag.value).toBe("1.894");
-});
-
-test("render default BlocksInput", () => {
-  const { input, inputTag } = renderWrappedInput(BlocksInput);
-  checkDefaultInput(input, inputTag);
-  expect(input.className).toMatch("numericInput");
-  user.type(inputTag, "1.89a&%4234}");
-  expect(inputTag.value).toBe("1.894234");
-  expect(screen.getByText("blocks").className).toMatch("unitArea");
-  expect(screen.getByText("blocks").className).toMatch("numericInputUnitArea");
-});
-
-test("render default FeeInput", () => {
-  const { input, inputTag } = renderInput(FeeInput);
-  checkDefaultInput(input, inputTag);
-  expect(input.className).toMatch("numericInput");
-  expect(screen.getByText(`${testCurrency}/KB`));
-  expect(mockCurrencyDisplay).toHaveBeenCalled();
-});
-
-test("render default PercentInput", () => {
-  const { input, inputTag } = renderInput(PercentInput);
-  checkDefaultInput(input, inputTag);
-  expect(input.className).toMatch("numericInput");
-  expect(screen.getByText("%"));
 });
 
 test("render inlineField", () => {

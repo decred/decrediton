@@ -38,9 +38,6 @@ const currentSettings = {
 };
 const initialState = {
   initialState: {
-    control: {
-      numTicketsToBuy: mockNumTicketsToBuy
-    },
     settings: {
       currentSettings,
       tempSettings: currentSettings
@@ -63,12 +60,10 @@ let mockPurchaseTicketsAttempt;
 let mockStartTicketBuyerV3Attempt;
 let mockGetTicketAutoBuyerRunning;
 let mockTicketBuyerCancel;
-let mockGetRunningIndicator;
 let mockSetRememberedVspHost;
 let mockAddAllowedExternalRequest;
 
 beforeEach(() => {
-  selectors.getIsLegacy = jest.fn(() => false);
   selectors.stakePoolListingEnabled = jest.fn(() => true);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableVsps);
   selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
@@ -94,7 +89,7 @@ beforeEach(() => {
     () => () => {}
   );
 
-  mockPurchaseTicketsAttempt = controlActions.newPurchaseTicketsAttempt = jest.fn(
+  mockPurchaseTicketsAttempt = controlActions.purchaseTicketsAttempt = jest.fn(
     () => () => {}
   );
   mockStartTicketBuyerV3Attempt = controlActions.startTicketBuyerV3Attempt = jest.fn(
@@ -106,9 +101,7 @@ beforeEach(() => {
   mockTicketBuyerCancel = controlActions.ticketBuyerCancel = jest.fn(
     () => () => {}
   );
-  mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(
-    () => false
-  );
+  selectors.getRunningIndicator = jest.fn(() => false);
   wallet.getVSPInfo = jest.fn(() => {
     return Promise.resolve(mockVspInfo);
   });
@@ -126,12 +119,6 @@ test("render PurchasePage", async () => {
   expect(
     screen.getByText(/Purchasing mixed tickets can take some time/i)
   ).toBeInTheDocument();
-
-  // check if Use Legacy VSP checkbox is hidden
-  expect(
-    screen.queryByText(/use a VSP which has not updated to vspd/i)
-  ).not.toBeInTheDocument(); // tooltip
-  expect(screen.queryByLabelText("Use Legacy VSP")).not.toBeInTheDocument();
 
   // set stakepool
   user.click(screen.getByText("Select VSP..."));
@@ -298,20 +285,6 @@ test("test autobuyer (autobuyer is runnning)", () => {
   expect(screen.getByText(/turn off auto buyer/i)).toBeInTheDocument();
   user.click(getToggleSwitch());
   expect(mockTicketBuyerCancel).toHaveBeenCalled();
-});
-
-test("test legacy autobuyer (a process is runnning)", () => {
-  mockGetRunningIndicator = selectors.getRunningIndicator = jest.fn(() => true);
-  render(<TicketAutoBuyer />, initialState);
-  expect(
-    screen.getByText(/privacy mixer or purchase ticket attempt running/i)
-  ).toBeInTheDocument();
-  user.click(getToggleSwitch());
-
-  expect(
-    screen.queryByText(/start ticket buyer confirmation/i)
-  ).not.toBeInTheDocument();
-  expect(mockGetRunningIndicator).toHaveBeenCalled();
 });
 
 test("test when VSP listing is not enabled ", () => {

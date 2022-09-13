@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
 
-const Tickets = ({ toggleIsLegacy }) => {
+const Tickets = () => {
   const {
     spvMode,
     blocksNumberToNextTicket,
@@ -97,7 +97,6 @@ const Tickets = ({ toggleIsLegacy }) => {
         setAccount,
         ticketPrice,
         isValid,
-        toggleIsLegacy,
         availableVSPs,
         setVSP,
         onV3PurchaseTicket,

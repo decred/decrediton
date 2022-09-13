@@ -19,9 +19,7 @@ export const usePurchaseTab = () => {
   const ticketPrice = useSelector(sel.ticketPrice);
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
-  const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
-  const isLegacy = useSelector(sel.getIsLegacy);
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
@@ -58,9 +56,7 @@ export const usePurchaseTab = () => {
   );
   const onPurchaseTicketV3 = useCallback(
     (passphrase, account, numTickets, vsp) =>
-      dispatch(
-        ca.newPurchaseTicketsAttempt(passphrase, account, numTickets, vsp)
-      ),
+      dispatch(ca.purchaseTicketsAttempt(passphrase, account, numTickets, vsp)),
     [dispatch]
   );
   const onEnableTicketAutoBuyer = useCallback(
@@ -82,18 +78,6 @@ export const usePurchaseTab = () => {
 
   const getVSPTicketsByFeeStatus = (feeStatus) => {
     dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
-  };
-
-  const toggleIsLegacy = (isLegacy) => {
-    if (autoBuyerRunning) {
-      // stop runnig legacy autobuyer
-      dispatch(ca.ticketBuyerV2Cancel());
-    }
-    if (ticketAutoBuyerRunning) {
-      // stop running new autobuyer
-      dispatch(ca.ticketBuyerCancel());
-    }
-    dispatch(vspa.toggleIsLegacy(isLegacy));
   };
 
   const setRememberedVspHost = useCallback(
@@ -172,8 +156,6 @@ export const usePurchaseTab = () => {
     onDisableTicketAutoBuyer,
     ticketAutoBuyerRunning,
     getVSPTicketsByFeeStatus,
-    isLegacy,
-    toggleIsLegacy,
     mixedAccount,
     changeAccount,
     isLoading,

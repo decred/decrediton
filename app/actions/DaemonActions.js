@@ -15,11 +15,7 @@ import {
   DEX_LOGOUT_FAILED,
   logoutDex
 } from "./DexActions";
-import {
-  TOGGLE_ISLEGACY,
-  SET_REMEMBERED_VSP_HOST,
-  SET_AUTOBUYER_SETTINGS
-} from "./VSPActions";
+import { SET_REMEMBERED_VSP_HOST, SET_AUTOBUYER_SETTINGS } from "./VSPActions";
 import { wallet, fs } from "wallet-preload-shim";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { isTestNet } from "selectors";
@@ -54,8 +50,6 @@ export const DAEMON_WARNING = "DAEMON_WARNING";
 export const WALLET_ERROR = "WALLET_ERROR";
 export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
-export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
-export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
@@ -446,40 +440,18 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const { port } = walletStarted;
       wallet.setPreviousWallet(selectedWallet);
 
-      // TODO clean up this found stakepool
-      // we will not need to save at the config the current stakepool
-      // anymore as now it is not needed to register into one.
-      // we can save a favorite vsp, though.
-      const currentStakePoolConfig = walletCfg.get(cfgConstants.STAKEPOOLS);
-      let firstConfiguredStakePool = null;
-      if (currentStakePoolConfig !== undefined) {
-        for (let i = 0; i < currentStakePoolConfig.length; i++) {
-          if (
-            currentStakePoolConfig[i].ApiKey &&
-            currentStakePoolConfig[i].Network == network
-          ) {
-            firstConfiguredStakePool = currentStakePoolConfig[i];
-            break;
-          }
-        }
-      }
       const walletName = selectedWallet.value.wallet;
       const gapLimit = walletCfg.get(cfgConstants.GAP_LIMIT);
       const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
       const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
-      const balanceToMaintain = walletCfg.get(cfgConstants.BALANCE_TO_MAINTAIN);
       const discoverAccountsComplete = walletCfg.get(
         cfgConstants.DISCOVER_ACCOUNTS
       );
-      const selectedStakePool = firstConfiguredStakePool;
       const lastPoliteiaAccessTime = walletCfg.get(
         cfgConstants.POLITEIA_LAST_ACCESS_TIME
       );
       const lastPoliteiaAccessBlock = walletCfg.get(
         cfgConstants.POLITEIA_LAST_ACCESS_BLOCK
-      );
-      const dismissBackupRedeemScript = walletCfg.get(
-        cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT
       );
       const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
       const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
@@ -488,7 +460,6 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
       const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
       const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
       const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
-      const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
       const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
       const needsVSPdProcessManaged = walletCfg.get(
         cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
@@ -513,16 +484,8 @@ export const startWallet = (selectedWallet, hasPassPhrase) => (
         lastPoliteiaAccessTime,
         lastPoliteiaAccessBlock
       });
-      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      dispatch({ type: TOGGLE_ISLEGACY, isLegacy });
       dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
-      dispatch({
-        type: WALLET_STAKEPOOL_SETTINGS,
-        selectedStakePool,
-        currentStakePoolConfig,
-        dismissBackupRedeemScript
-      });
       dispatch({ type: SET_SHOW_STAKING_WARNING, showStakingWarning });
       const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
       dispatch({

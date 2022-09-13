@@ -38,11 +38,6 @@
   background-color: var(--sidebar-color);
 }
 
-.legacyIcon {
-  margin-left: auto;
-  cursor: pointer;
-}
-
 .checkbox {
   display: flex;
   flex-direction: row-reverse;

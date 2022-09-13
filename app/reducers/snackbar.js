@@ -21,13 +21,8 @@ import {
   PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_SUCCESS_LESS,
   PURCHASETICKETS_FAILED,
-  STARTTICKETBUYERV2_SUCCESS,
   STARTTICKETBUYERV3_SUCCESS,
-  STARTTICKETBUYERV2_FAILED,
-  STOPTICKETBUYERV2_SUCCESS,
   STOPTICKETBUYER_SUCCESS,
-  IMPORTSCRIPT_MANUAL_SUCCESS,
-  IMPORTSCRIPT_MANUAL_FAILED,
   RENAMEACCOUNT_SUCCESS,
   RENAMEACCOUNT_FAILED,
   GETNEXTACCOUNT_SUCCESS,
@@ -46,13 +41,7 @@ import {
   DISCOVERUSAGE_SUCCESS
 } from "actions/ControlActions";
 import {
-  UPDATESTAKEPOOLCONFIG_SUCCESS,
-  UPDATESTAKEPOOLCONFIG_FAILED,
-  SETSTAKEPOOLVOTECHOICES_FAILED,
   REMOVESTAKEPOOLCONFIG,
-  ADDCUSTOMSTAKEPOOL_SUCCESS,
-  ADDCUSTOMSTAKEPOOL_FAILED,
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
@@ -223,44 +212,6 @@ const messages = defineMessages({
     id: "tickets.errors.purchaseTicketsFailed",
     defaultMessage: "{originalError}"
   },
-  IMPORTSCRIPT_MANUAL_SUCCESS: {
-    id: "tickets.importScriptHeader",
-    defaultMessage: "You successfully imported a script"
-  },
-  IMPORTSCRIPT_MANUAL_FAILED: {
-    id: "tickets.errors.importScriptFailed",
-    defaultMessage: "{originalError}"
-  },
-  STARTAUTOBUYER_SUCCESS: {
-    id: "tickets.startAutoBuyerHeader",
-    defaultMessage: "Ticket buyer is now running."
-  },
-  STARTAUTOBUYER_FAILED: {
-    id: "tickets.errors.startAutoBuyerFailed",
-    defaultMessage: "{originalError}"
-  },
-  STOPAUTOBUYER_SUCCESS: {
-    id: "tickets.stopAutoBuyerHeader",
-    defaultMessage: "Ticket buyer is now stopped."
-  },
-  UPDATESTAKEPOOLCONFIG_SUCCESS: {
-    id: "tickets.updateStakePoolConfigHeader",
-    defaultMessage:
-      "You have successfully updated your legacy stakepool settings."
-  },
-  UPDATESTAKEPOOLCONFIG_FAILED: {
-    id: "tickets.errors.updateStakePoolConfigFailed",
-    defaultMessage: "{originalError}"
-  },
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED: {
-    id: "tickets.errors.refreshStakePoolInfo",
-    defaultMessage:
-      "Error refreshing stakepool data from {host}: {originalError}"
-  },
-  SETSTAKEPOOLVOTECHOICES_FAILED: {
-    id: "tickets.errors.setStakePoolVoteChoicesFailed",
-    defaultMessage: "{originalError}"
-  },
   RENAMEACCOUNT_SUCCESS: {
     id: "accounts.renameAccount",
     defaultMessage: "Successfully renamed account."
@@ -324,14 +275,6 @@ const messages = defineMessages({
     id: "export.completed",
     defaultMessage: "Export of file ‘{filename}’ completed!"
   },
-  ADDCUSTOMSTAKEPOOL_FAILED: {
-    id: "addCustomStakePool.failed",
-    defaultMessage: "Error trying to add custom stakepool: {originalError}"
-  },
-  ADDCUSTOMSTAKEPOOL_SUCCESS: {
-    id: "addCustomStakePool.success",
-    defaultMessage: "Successfully added stakepool {host}."
-  },
   GETACCOUNTEXTENDEDKEY_FAILED: {
     id: "accountExtendedKey.failed",
     defaultMessage: "Error getting account extended key: {originalError}"
@@ -340,21 +283,9 @@ const messages = defineMessages({
     id: "spvSync.Failed",
     defaultMessage: "Error syncing SPV wallet: {originalError}"
   },
-  STARTTICKETBUYERV2_SUCCESS: {
-    id: "runTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully started."
-  },
   STARTTICKETBUYERV3_SUCCESS: {
     id: "runTicketBuyerNew.Success",
     defaultMessage: "Ticket Buyer successfully started."
-  },
-  STARTTICKETBUYERV2_FAILED: {
-    id: "runTicketBuyer.Failed",
-    defaultMessage: "Invalid private password. Please try again."
-  },
-  STOPTICKETBUYERV2_SUCCESS: {
-    id: "stopTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully stopped."
   },
   STOPTICKETBUYER_SUCCESS: {
     id: "stopTicketBuyerNew.Success",
@@ -623,7 +554,7 @@ const messages = defineMessages({
   SETVOTECHOICES_SUCCESS: {
     id: "set.vote.success",
     defaultMessage:
-      "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
+      "You have successfully updated your wallet vote choices on any VSPs you may have had set up."
   },
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",
@@ -744,19 +675,14 @@ export default function snackbar(state = {}, action) {
     case RENAMEACCOUNT_SUCCESS:
     case GETNEXTACCOUNT_SUCCESS:
     case CHANGEPASSPHRASE_SUCCESS:
-    case IMPORTSCRIPT_MANUAL_SUCCESS:
-    case STARTTICKETBUYERV2_SUCCESS:
     case STARTTICKETBUYERV3_SUCCESS:
-    case STOPTICKETBUYERV2_SUCCESS:
     case STOPTICKETBUYER_SUCCESS:
-    case UPDATESTAKEPOOLCONFIG_SUCCESS:
     case REMOVESTAKEPOOLCONFIG:
     case SEEDCOPIEDTOCLIPBOARD:
     case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     case ABANDONTRANSACTION_SUCCESS:
     case PURCHASETICKETS_SUCCESS:
     case PURCHASETICKETS_SUCCESS_LESS:
-    case ADDCUSTOMSTAKEPOOL_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_WIPEDEVICE_SUCCESS:
     case TRZ_RECOVERDEVICE_SUCCESS:
@@ -794,9 +720,6 @@ export default function snackbar(state = {}, action) {
 
       // custom values for some success messages
       switch (action.type) {
-        case ADDCUSTOMSTAKEPOOL_SUCCESS:
-          values = { host: action.poolInfo.Host };
-          break;
         case EXPORT_COMPLETED:
           values = { filename: action.filename };
           break;
@@ -859,11 +782,6 @@ export default function snackbar(state = {}, action) {
     case PUBLISHTX_FAILED:
     case ABANDONTRANSACTION_FAILED:
     case PURCHASETICKETS_FAILED:
-    case IMPORTSCRIPT_MANUAL_FAILED:
-    case UPDATESTAKEPOOLCONFIG_FAILED:
-    case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
-    case SETSTAKEPOOLVOTECHOICES_FAILED:
-    case ADDCUSTOMSTAKEPOOL_FAILED:
     case DECODERAWTXS_FAILED:
     case SIGNMESSAGE_FAILED:
     case VERIFYMESSAGE_FAILED:
@@ -880,7 +798,6 @@ export default function snackbar(state = {}, action) {
     case UPDATEVOTECHOICE_FAILED:
     case SETTREASURY_POLICY_FAILED:
     case GETACCOUNTEXTENDEDKEY_FAILED:
-    case STARTTICKETBUYERV2_FAILED:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED:
@@ -955,12 +872,6 @@ export default function snackbar(state = {}, action) {
       }
 
       values = { originalError: String(action.error) };
-
-      // custom values for some error messages
-      switch (action.type) {
-        case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
-          values = { ...values, host: action.host };
-      }
 
       if (process.env.NODE_ENV === "development" && action.error) {
         // in development mode, log failures as errors in the console which helps

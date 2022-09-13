@@ -3,7 +3,6 @@ import {
   DISCOVERAVAILABLEVSPS_FAILED,
   GETVSPTICKETSTATUS_SUCCESS,
   HASVSPTICKETSERRORED,
-  TOGGLE_ISLEGACY,
   SET_REMEMBERED_VSP_HOST,
   SYNCVSPTICKETS_ATTEMPT,
   SYNCVSPTICKETS_FAILED,
@@ -86,8 +85,6 @@ export default function vsp(state = {}, action) {
       };
     case HASVSPTICKETSERRORED:
       return { ...state, hasVSPTicketsError: action.hasVSPTicketsError };
-    case TOGGLE_ISLEGACY:
-      return { ...state, isLegacy: action.isLegacy };
     case SET_REMEMBERED_VSP_HOST:
       return { ...state, rememberedVspHost: action.rememberedVspHost };
     case UPDATE_USED_VSPS:

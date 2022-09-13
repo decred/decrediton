@@ -7,10 +7,8 @@ export { default as PathButton } from "./PathButton/PathButton";
 export { default as RescanButton } from "./RescanButton/RescanButton";
 export { default as RescanCancelButton } from "./RescanButton/RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
-export { default as TicketsCogs } from "./TicketsCogs";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
-export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
 export { default as ListUTXOsButton } from "./ListUTXOsButton";
 export { default as PiUiButton } from "./PiUiButton";
@@ -81,12 +79,6 @@ const helpLinkButtonNew = ({ icon, onClick, title, subtitle }) => (
     subtitle={subtitle}
     expand
   />
-);
-
-const helpLinkButton = ({ className, onClick, buttonLabel }) => (
-  <div className={className} onClick={onClick}>
-    {buttonLabel}
-  </div>
 );
 
 const PoliteiaLinkButton = ({ children, onClick }) => (
@@ -164,12 +156,6 @@ export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
 export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
-export const AddVSPButton = mbb(null, ConfirmModal, KeyBlueButton);
-export const ScriptRedeemableButton = mbb(
-  null,
-  DocumentationInfoModal,
-  helpLinkButton
-);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb(

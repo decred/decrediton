@@ -81,10 +81,6 @@ export const loadActiveDataFilters = promisifyReq(
   "loadActiveDataFilters",
   api.LoadActiveDataFiltersRequest
 );
-export const getTicketBuyerConfig = promisifyReq(
-  "ticketBuyerConfig",
-  api.TicketBuyerConfigRequest
-);
 export const stopAutoBuyer = promisifyReq(
   "stopAutoBuyer",
   api.StopAutoBuyerRequest

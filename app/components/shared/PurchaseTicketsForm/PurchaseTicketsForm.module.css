@@ -7,22 +7,6 @@
   flex-direction: column;
 }
 
-.legacyIcon {
-  margin-left: auto;
-  cursor: pointer;
-}
-
-.useLegacyTooltip {
-  font-size: 12px;
-  width: 20rem;
-}
-
-.useLegacyLabel {
-  font-size: 16px;
-  line-height: 20px;
-  color: var(--purchase-label);
-}
-
 .infoFields strong {
   color: var(--input-color);
 }
@@ -143,38 +127,6 @@
 }
 .passphraseModal {
   width: 500px;
-}
-
-/* legacy */
-
-.info {
-  margin-bottom: 10px;
-  background-color: var(--transfer-details-bg);
-}
-.actionButtons {
-  float: right;
-  margin: 15px 19px 0 0;
-}
-.warningArea {
-  padding-left: 50px;
-  background-image: var(--info-warning-icon);
-  background-repeat: no-repeat;
-  background-size: 30px;
-  background-position: 5px 50%;
-  border: 1px solid var(--error-text-color);
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-.backupButtonsRowArea {
-  justify-content: flex-end;
-}
-.stakepoolContentSend {
-  margin-top: 1em;
-}
-.vspWarningBackupRedeemButton {
-  margin-top: 10px;
-  margin-right: 5px;
-  margin-bottom: 5px;
 }
 
 @media (--bg-viewport) {

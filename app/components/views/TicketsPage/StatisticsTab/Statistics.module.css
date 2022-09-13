@@ -96,15 +96,6 @@
   float: left;
   margin-bottom: 33px;
 }
-.stakepoolUnconfiguredSelect {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 0.5em;
-
-  width: 220px;
-  font-size: 16px;
-  float: right;
-}
 .myTicketsStakepoolStatsRow {
   width: 600px;
   float: left;

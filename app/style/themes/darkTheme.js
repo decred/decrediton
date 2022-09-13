@@ -65,7 +65,6 @@ const darkTheme = {
   "text-toggle-button-border": "#1B2B54",
   "text-toggle-button-bg": "#1F325F",
   "text-toggle-button-inactive-text": "#2F4D8C",
-  "header-desc-lighter-color": "#99C1E3",
   "info-modal-button-bg": "#7DA7D9",
   "info-modal-button-text": "#0E152F",
   "agenda-card-bottom-cfg": "#99C1E3",
@@ -95,7 +94,6 @@ const darkTheme = {
   "tx-detail-raw-shadow":
     "linear-gradient(to top, rgb(243, 246, 246, 0.25) 10%, rgb(243, 246, 246, 0.20) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#99C1E3",
-  "transfer-details-bg": "#152042",
   "filter-menu-arrow": "#99C1E3",
   "filter-menu-bg-hover": "#3C62B0",
   "menutab-hover": "#7DA7D9",
@@ -270,7 +268,6 @@ const darkTheme = {
   "wallet-tutorial-check-circle": url(
     require("style/icons/walletTutorialCheckcircleDark.svg")
   ),
-  "importscript-icon": url(require("style/icons/importScriptDark.svg")),
   "stakepool-stats-active-icon": url(
     require("style/icons/stakepoolsActiveDark.svg")
   ),
@@ -280,15 +277,9 @@ const darkTheme = {
   "tx-details-arrow-left": url(
     require("style/icons/txDetailsArrowLeftDark.svg")
   ),
-  "stake-pool-icon": url(require("style/icons/stakepoolDark.svg")),
-  "expiry-icon": url(require("style/icons/expiryDark.svg")),
-  "split-fee-icon": url(require("style/icons/splitFeeDark.svg")),
-  "pool-fee-icon": url(require("style/icons/poolFeesDark.svg")),
   "tickets-cogs-opened-icon": url(
     require("style/icons/ticketsCogsOpenedDark.svg")
   ),
-  "ticket-address-icon": url(require("style/icons/votingAddressDark.svg")),
-  "fee-address-icon": url(require("style/icons/poolFeeAddressDark.svg")),
   "sort-by-icon": url(require("style/icons/sortbyDark.svg")),
   "contextbutton-eye-default-icon": url(
     require("style/icons/contextbuttonEyeDefaultDark.svg")

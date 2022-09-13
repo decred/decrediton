@@ -62,7 +62,6 @@ export function PurchasePage({
   vspFee,
   setVspFee,
   isValid,
-  toggleIsLegacy,
   onV3PurchaseTicket,
   mixedAccount,
   changeAccount,
@@ -116,9 +115,7 @@ export function PurchasePage({
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            getRunningIndicator,
-            toggleIsLegacy,
-            isLegacy: false
+            getRunningIndicator
           }}
         />
       )}

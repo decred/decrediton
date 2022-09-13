@@ -92,7 +92,6 @@ let mockTicketBuyerService;
 let mockSaveSettings;
 let mockChangePassphrase;
 let mockIsChangePassPhraseDisabled;
-let mockIsTicketAutoBuyerEnabled;
 let mockGetAccountMixerRunning;
 let mockPurchaseTicketsRequestAttempt;
 
@@ -135,9 +134,6 @@ beforeEach(() => {
     () => () => {}
   );
 
-  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
-    () => false
-  );
   selectors.getTicketAutoBuyerRunning = jest.fn(() => false);
   mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => false
@@ -188,28 +184,6 @@ test("test close wallet button (there is no ongoing process) ", async () => {
     changeFn,
     "Confirmation Required",
     `Are you sure you want to close ${testWalletName} and return to the launcher?`
-  );
-});
-
-test("test close wallet button (ticket autobuyer is running) ", async () => {
-  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
-    () => true
-  );
-  render(<SettingsPage />, {
-    initialState: {
-      settings: testSettings
-    }
-  });
-  expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
-  };
-  changeFn();
-  await testConfirmModal(
-    changeFn,
-    "Auto Ticket Buyer Still Running",
-    "If you proceed, it will be closed and no more tickets will be purchased.",
-    "Close Anyway"
   );
 });
 
@@ -307,7 +281,7 @@ test("test close wallet button (still finalizing ticket purchases) ", async () =
   );
 });
 
-test("test close wallet button (legacy auto ticket buyer still running) ", async () => {
+test("test close wallet button (auto ticket buyer still running) ", async () => {
   selectors.getTicketAutoBuyerRunning = jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {

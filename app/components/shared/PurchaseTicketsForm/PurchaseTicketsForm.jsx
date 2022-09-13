@@ -1,20 +1,8 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
-import {
-  TicketPurchaseModalButton,
-  PiUiButton,
-  TicketsCogs,
-  ImportScriptIconButton,
-  KeyBlueButton,
-  InvisibleConfirmModalButton
-} from "buttons";
+import { TicketPurchaseModalButton, PiUiButton } from "buttons";
 import { AccountsSelect, NumTicketsInput, VSPSelect } from "inputs";
-import {
-  TransitionMotionWrapper,
-  ShowWarning,
-  ExternalLink,
-  Balance
-} from "shared";
+import { Balance } from "shared";
 import styles from "./PurchaseTicketsForm.module.css";
 import { useIntl } from "react-intl";
 
@@ -48,17 +36,7 @@ const PurchaseTicketsForm = ({
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
   notMixedAccounts,
-  getRunningIndicator,
-  isLegacy,
-  dismissBackupRedeemScript,
-  onDismissBackupRedeemScript,
-  isShowingAdvanced,
-  onToggleShowAdvanced,
-  getQuickBarComponent,
-  getAdvancedComponent,
-  willEnter,
-  willLeave,
-  toggleShowVsp
+  getRunningIndicator
 }) => {
   const intl = useIntl();
   return (
@@ -77,28 +55,26 @@ const PurchaseTicketsForm = ({
               />
             </div>
           </label>
-          {!isLegacy && (
-            <label className={styles.rowLabel}>
-              <T id="purchaseTickets.vspFrom" m="VSP" />
-              <div className={styles.vspContainer}>
-                <VSPSelect
-                  selectWithBigFont
-                  className={styles.inputSelect}
-                  style={{ width: "100%", marginRight: "10px" }}
-                  {...{
-                    options: availableVSPs,
-                    account,
-                    onChange: setVSP,
-                    value: vsp,
-                    isDisabled: !!rememberedVspHost,
-                    setVspFee
-                  }}
-                />
-              </div>
-            </label>
-          )}
+          <label className={styles.rowLabel}>
+            <T id="purchaseTickets.vspFrom" m="VSP" />
+            <div className={styles.vspContainer}>
+              <VSPSelect
+                selectWithBigFont
+                className={styles.inputSelect}
+                style={{ width: "100%", marginRight: "10px" }}
+                {...{
+                  options: availableVSPs,
+                  account,
+                  onChange: setVSP,
+                  value: vsp,
+                  isDisabled: !!rememberedVspHost,
+                  setVspFee
+                }}
+              />
+            </div>
+          </label>
           <div className={styles.checkboxWrapper}>
-            {vsp && !isLegacy && (
+            {vsp && (
               <Checkbox
                 className={styles.rememberVspCheckBox}
                 label={
@@ -171,73 +147,6 @@ const PurchaseTicketsForm = ({
           )}
         </div>
       </div>
-      {isLegacy && (
-        <div className={styles.info}>
-          <div className={classNames(styles.actionButtons, styles.isColumn)}>
-            <TicketsCogs
-              opened={!isShowingAdvanced}
-              onClick={onToggleShowAdvanced}
-              ariaLabel="Show advanced settings"
-            />
-            <ImportScriptIconButton />
-          </div>
-          <TransitionMotionWrapper
-            {...{
-              styles: !isShowingAdvanced
-                ? getQuickBarComponent
-                : getAdvancedComponent,
-              willEnter: !isShowingAdvanced
-                ? () => willEnter(270)
-                : () => willEnter(80),
-              willLeave
-            }}
-          />
-        </div>
-      )}
-      {!dismissBackupRedeemScript && isLegacy && (
-        <div className={styles.warningArea}>
-          <ShowWarning
-            warn={
-              <T
-                id="purchase.ticket.backup.redeem.warn"
-                m="You must backup your redeem script. More information about it can be found at {link}"
-                values={{
-                  link: (
-                    <ExternalLink
-                      href={
-                        "https://docs.decred.org/wallets/decrediton/using-decrediton/#backup-redeem-script"
-                      }>
-                      <T id="purchase.ticket.decred.docs" m="Decred docs" />
-                    </ExternalLink>
-                  )
-                }}
-              />
-            }
-          />
-          <div
-            className={classNames(styles.isRow, styles.backupButtonsRowArea)}>
-            <InvisibleConfirmModalButton
-              modalTitle={<T id="purchase.ticket.modal.title" m="Dismiss" />}
-              modalContent={
-                <T
-                  id="purchase.ticket.modal.desc"
-                  m="Are you sure you want to dismiss this message? Make sure your redeem scripts are backed up."
-                />
-              }
-              buttonLabel={
-                <T id="purchase.ticket.dismiss.warn" m="Dismiss Message" />
-              }
-              onSubmit={() => onDismissBackupRedeemScript()}
-              className={styles.stakepoolContentSend}
-            />
-            <KeyBlueButton
-              className={styles.vspWarningBackupRedeemButton}
-              onClick={() => toggleShowVsp(true)}>
-              <T id="purchase.ticket.warn.button" m="Backup Redeem Scripts" />
-            </KeyBlueButton>
-          </div>
-        </div>
-      )}
       <div className={styles.buttonsArea}>
         {isWatchingOnly ? (
           <PiUiButton disabled={!isValid} onClick={onPurchaseTickets}>
