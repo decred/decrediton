@@ -353,7 +353,7 @@ export const purchaseTicketsAttempt = (
         // process managed tickets.
         dispatch(setNeedsVSPdProcessTickets(true));
 
-        const res = await wallet.purchaseTicketsV3(
+        const res = await wallet.purchaseTickets(
           walletService,
           account,
           numTickets,
@@ -432,15 +432,15 @@ export const discoverUsageAttempt = (gapLimit) => async (
   }
 };
 
-export const STARTTICKETBUYERV3_ATTEMPT = "STARTTICKETBUYERV3_ATTEMPT";
-export const STARTTICKETBUYERV3_FAILED = "STARTTICKETBUYERV3_FAILED";
-export const STARTTICKETBUYERV3_SUCCESS = "STARTTICKETBUYERV3_SUCCESS";
+export const STARTTICKETBUYER_ATTEMPT = "STARTTICKETBUYER_ATTEMPT";
+export const STARTTICKETBUYER_FAILED = "STARTTICKETBUYER_FAILED";
+export const STARTTICKETBUYER_SUCCESS = "STARTTICKETBUYER_SUCCESS";
 
 export const STOPTICKETBUYER_ATTEMPT = "STOPTICKETBUYER_ATTEMPT";
 export const STOPTICKETBUYER_FAILED = "STOPTICKETBUYER_FAILED";
 export const STOPTICKETBUYER_SUCCESS = "STOPTICKETBUYER_SUCCESS";
 
-export const startTicketBuyerV3Attempt = (
+export const startTicketBuyerAttempt = (
   passphrase,
   account,
   balanceToMaintain,
@@ -454,7 +454,7 @@ export const startTicketBuyerV3Attempt = (
   const ticketBuyerConfig = { vsp, balanceToMaintain, account };
 
   const { ticketBuyerService } = getState().grpc;
-  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV3_ATTEMPT });
+  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYER_ATTEMPT });
 
   try {
     const accountNum = account.encrypted ? account.value : null;
@@ -467,7 +467,7 @@ export const startTicketBuyerV3Attempt = (
         accountUnlocks,
         () => {
           dispatch(setNeedsVSPdProcessTickets(true));
-          return wallet.startTicketAutoBuyerV3(ticketBuyerService, {
+          return wallet.startTicketAutoBuyer(ticketBuyerService, {
             mixedAccount,
             mixedAcctBranch,
             changeAccount,
@@ -494,7 +494,7 @@ export const startTicketBuyerV3Attempt = (
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
         if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYERV3_FAILED });
+          dispatch({ error: status, type: STARTTICKETBUYER_FAILED });
         }
       } else {
         dispatch({ type: STOPTICKETBUYER_SUCCESS });
@@ -507,11 +507,11 @@ export const startTicketBuyerV3Attempt = (
       vsp,
       balanceToMaintain,
       account,
-      type: STARTTICKETBUYERV3_SUCCESS
+      type: STARTTICKETBUYER_SUCCESS
     });
     return ticketBuyer;
   } catch (error) {
-    dispatch({ error, type: STARTTICKETBUYERV3_FAILED });
+    dispatch({ error, type: STARTTICKETBUYER_FAILED });
   }
 };
 

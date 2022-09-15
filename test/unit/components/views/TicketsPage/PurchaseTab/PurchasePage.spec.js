@@ -57,14 +57,13 @@ const mockCurrencyDisplay = DCR;
 const mockTicketPrice = 6816662938;
 
 let mockPurchaseTicketsAttempt;
-let mockStartTicketBuyerV3Attempt;
+let mockStartTicketBuyerAttempt;
 let mockGetTicketAutoBuyerRunning;
 let mockTicketBuyerCancel;
 let mockSetRememberedVspHost;
 let mockAddAllowedExternalRequest;
 
 beforeEach(() => {
-  selectors.stakePoolListingEnabled = jest.fn(() => true);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableVsps);
   selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
   selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
@@ -92,7 +91,7 @@ beforeEach(() => {
   mockPurchaseTicketsAttempt = controlActions.purchaseTicketsAttempt = jest.fn(
     () => () => {}
   );
-  mockStartTicketBuyerV3Attempt = controlActions.startTicketBuyerV3Attempt = jest.fn(
+  mockStartTicketBuyerAttempt = controlActions.startTicketBuyerAttempt = jest.fn(
     () => () => {}
   );
   mockGetTicketAutoBuyerRunning = selectors.getTicketAutoBuyerRunning = jest.fn(
@@ -264,7 +263,7 @@ test("test autobuyer", async () => {
   await wait(() => screen.getByText(/start ticket buyer confirmation/i));
   user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
-  expect(mockStartTicketBuyerV3Attempt).toHaveBeenCalledWith(
+  expect(mockStartTicketBuyerAttempt).toHaveBeenCalledWith(
     mockPassphrase,
     mockMixedAccount,
     mockBalanceToMaintain * 100000000,

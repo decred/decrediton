@@ -16,11 +16,6 @@ import { isNull } from "lodash";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { dateToLocal, dateToUTC } from "helpers";
 import {
-  EXTERNALREQUEST_STAKEPOOL_LISTING,
-  EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA
-} from "constants";
-import {
   POLITEIA_URL_TESTNET,
   POLITEIA_URL_MAINNET
 } from "./middleware/politeiaapi";
@@ -840,10 +835,6 @@ export const allowedExternalRequests = get([
   "currentSettings",
   "allowedExternalRequests"
 ]);
-export const stakePoolListingEnabled = compose(
-  (l) => l.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1,
-  allowedExternalRequests
-);
 export const isSigningMessage = get(["grpc", "getSignMessageRequestAttempt"]);
 export const signMessageError = get(["grpc", "getSignMessageError"]);
 export const signMessageSignature = get(["grpc", "getSignMessageSignature"]);
@@ -944,8 +935,6 @@ export const purchaseTicketsRequestAttempt = get([
   "control",
   "purchaseTicketsRequestAttempt"
 ]);
-
-export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
 
 export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 

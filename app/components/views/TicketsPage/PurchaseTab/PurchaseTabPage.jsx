@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
-import UnsignedTickets from "../UnsignedTickets";
-import StakeInfo from "../StakeInfo";
+import UnsignedTickets from "./UnsignedTickets";
+import StakeInfo from "./StakeInfo";
 
-import { PurchaseTicketsForm } from "shared";
+import PurchaseTicketsForm from "./PurchaseTicketsForm";
 import { ShowWarning, Subtitle } from "shared";
-import styles from "../PurchaseTab.module.css";
+import styles from "./PurchaseTabPage.module.css";
 import { KeyBlueButton } from "buttons";
-import TicketAutoBuyer from "../TicketAutoBuyer";
+import TicketAutoBuyer from "./TicketAutoBuyer";
 
 const PrivacyInfo = () => {
   const [show, setShow] = useState(false);
@@ -43,7 +43,7 @@ const EnableVSP = ({ onEnableVSP }) => (
   </div>
 );
 
-export function PurchasePage({
+export function PurchaseTabPage({
   spvMode,
   blocksNumberToNextTicket,
   sidebarOnBottom,
@@ -62,7 +62,7 @@ export function PurchasePage({
   vspFee,
   setVspFee,
   isValid,
-  onV3PurchaseTicket,
+  onPurchaseTicket,
   mixedAccount,
   changeAccount,
   isLoading,
@@ -111,7 +111,7 @@ export function PurchasePage({
             vspFee,
             setVspFee,
             isValid,
-            onPurchaseTickets: onV3PurchaseTicket,
+            onPurchaseTickets: onPurchaseTicket,
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,

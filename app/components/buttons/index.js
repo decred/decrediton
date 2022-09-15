@@ -71,7 +71,7 @@ const mbb = (className, modalComponent, buttonComponent) => (p) => (
   />
 );
 
-const helpLinkButtonNew = ({ icon, onClick, title, subtitle }) => (
+const helpLinkButton = ({ icon, onClick, title, subtitle }) => (
   <HelpLink
     icon={icon}
     onClick={onClick}
@@ -94,9 +94,9 @@ const InfoButton = ({ className, onClick }) => (
 export const HelpLinkInfoModal = mbb(
   null,
   DocumentationInfoModal,
-  helpLinkButtonNew
+  helpLinkButton
 );
-export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
+export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButton);
 export const InfoModalButton = mbb(styles.infoModalButton, InfoModal);
 export const InfoDocModalButton = mbb(
   styles.infoModalButton,
@@ -169,9 +169,4 @@ export const InvisibleConfirmPoliteiaModalButton = mbb(
   null,
   ConfirmModal,
   PoliteiaLinkButton
-);
-export const InvisibleConfirmModalButton = mbb(
-  null,
-  ConfirmModal,
-  InvisibleButton
 );

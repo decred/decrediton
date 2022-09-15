@@ -21,7 +21,7 @@ import {
   PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_SUCCESS_LESS,
   PURCHASETICKETS_FAILED,
-  STARTTICKETBUYERV3_SUCCESS,
+  STARTTICKETBUYER_SUCCESS,
   STOPTICKETBUYER_SUCCESS,
   RENAMEACCOUNT_SUCCESS,
   RENAMEACCOUNT_FAILED,
@@ -35,13 +35,12 @@ import {
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS,
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
-  STARTTICKETBUYERV3_FAILED,
+  STARTTICKETBUYER_FAILED,
   SETACCOUNTSPASSPHRASE_FAILED,
   DISCOVERUSAGE_FAILED,
   DISCOVERUSAGE_SUCCESS
 } from "actions/ControlActions";
 import {
-  REMOVESTAKEPOOLCONFIG,
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
@@ -251,10 +250,6 @@ const messages = defineMessages({
     id: "daemon.connect.error",
     defaultMessage: "Error connecting to daemon"
   },
-  REMOVESTAKEPOOLCONFIG: {
-    id: "stakepools.removedStakePoolConfig",
-    defaultMessage: "Successfully removed StakePool config"
-  },
   SIGNMESSAGE_FAILED: {
     id: "security.sign.failed",
     defaultMessage: "{originalError}"
@@ -283,7 +278,7 @@ const messages = defineMessages({
     id: "spvSync.Failed",
     defaultMessage: "Error syncing SPV wallet: {originalError}"
   },
-  STARTTICKETBUYERV3_SUCCESS: {
+  STARTTICKETBUYER_SUCCESS: {
     id: "runTicketBuyerNew.Success",
     defaultMessage: "Ticket Buyer successfully started."
   },
@@ -605,7 +600,7 @@ const messages = defineMessages({
     id: "dex.user.failed",
     defaultMessage: "Failed to retrieve user information: {originalError}"
   },
-  STARTTICKETBUYERV3_FAILED: {
+  STARTTICKETBUYER_FAILED: {
     id: "vsp.runautobuyer.failed",
     defaultMessage: "{originalError}"
   },
@@ -675,9 +670,8 @@ export default function snackbar(state = {}, action) {
     case RENAMEACCOUNT_SUCCESS:
     case GETNEXTACCOUNT_SUCCESS:
     case CHANGEPASSPHRASE_SUCCESS:
-    case STARTTICKETBUYERV3_SUCCESS:
+    case STARTTICKETBUYER_SUCCESS:
     case STOPTICKETBUYER_SUCCESS:
-    case REMOVESTAKEPOOLCONFIG:
     case SEEDCOPIEDTOCLIPBOARD:
     case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     case ABANDONTRANSACTION_SUCCESS:
@@ -849,7 +843,7 @@ export default function snackbar(state = {}, action) {
     case DEX_LAUNCH_WINDOW_FAILED:
     case DEX_LOGOUT_FAILED:
     case DEX_USER_FAILED:
-    case STARTTICKETBUYERV3_FAILED:
+    case STARTTICKETBUYER_FAILED:
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
     case DEX_EXPORT_SEED_FAILED:

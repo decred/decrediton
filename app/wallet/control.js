@@ -173,45 +173,6 @@ export const publishTransaction = (walletService, tx) =>
 export const purchaseTickets = (
   walletService,
   accountNum,
-  spendLimit,
-  requiredConf,
-  numTickets,
-  expiry,
-  ticketFee,
-  txFee,
-  stakepool,
-  signTx
-) =>
-  new Promise((ok, fail) => {
-    if (
-      (!stakepool.PoolAddress && stakepool.PoolAddress == "") ||
-      (!stakepool.PoolFees && stakepool.PoolFees == 0)
-    ) {
-      return fail(
-        "Purchase ticket failed: Pool Address or Pool Fees can't be empty"
-      );
-    }
-    const request = new api.PurchaseTicketsRequest();
-    request.setAccount(accountNum);
-    request.setChangeAccount(accountNum.value);
-    request.setSpendLimit(spendLimit);
-    request.setRequiredConfirmations(requiredConf);
-    request.setTicketAddress(stakepool.TicketAddress);
-    request.setNumTickets(numTickets);
-    request.setPoolAddress(stakepool.PoolAddress);
-    request.setPoolFees(stakepool.PoolFees);
-    request.setExpiry(expiry);
-    request.setTxFee(txFee);
-    request.setTicketFee(ticketFee);
-    request.setDontSignTx(!signTx);
-    getClient(walletService).purchaseTickets(request, (err, res) =>
-      err ? fail(err) : ok(res.toObject())
-    );
-  });
-
-export const purchaseTicketsV3 = (
-  walletService,
-  accountNum,
   numTickets,
   signTx,
   vsp,
@@ -584,7 +545,7 @@ export const setAccountPassphrase = (
     );
   });
 
-export const startTicketAutoBuyerV3 = (
+export const startTicketAutoBuyer = (
   ticketBuyerService,
   {
     mixedAccount,

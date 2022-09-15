@@ -86,12 +86,7 @@ export const useTicketAutoBuyer = () => {
   const onEnableTicketAutoBuyer = useCallback(
     (passphrase, account, balanceToMaintain, vsp) =>
       dispatch(
-        ca.startTicketBuyerV3Attempt(
-          passphrase,
-          account,
-          balanceToMaintain,
-          vsp
-        )
+        ca.startTicketBuyerAttempt(passphrase, account, balanceToMaintain, vsp)
       ),
     [dispatch]
   );

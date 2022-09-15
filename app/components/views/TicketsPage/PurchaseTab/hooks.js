@@ -5,7 +5,6 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
-import { listUnspentOutputs } from "actions/TransactionActions";
 import * as sel from "selectors";
 import { isEqual } from "lodash/fp";
 
@@ -54,25 +53,9 @@ export const usePurchaseTab = () => {
     () => dispatch(vspa.discoverAvailableVSPs()),
     [dispatch]
   );
-  const onPurchaseTicketV3 = useCallback(
+  const purchaseTicketsAttempt = useCallback(
     (passphrase, account, numTickets, vsp) =>
       dispatch(ca.purchaseTicketsAttempt(passphrase, account, numTickets, vsp)),
-    [dispatch]
-  );
-  const onEnableTicketAutoBuyer = useCallback(
-    (passphrase, account, balanceToMaintain, vsp) =>
-      dispatch(
-        ca.startTicketBuyerV3Attempt(
-          passphrase,
-          account,
-          balanceToMaintain,
-          vsp
-        )
-      ),
-    [dispatch]
-  );
-  const onDisableTicketAutoBuyer = useCallback(
-    () => dispatch(ca.ticketBuyerCancel()),
     [dispatch]
   );
 
@@ -149,13 +132,10 @@ export const usePurchaseTab = () => {
     spendingAccounts,
     discoverAvailableVSPs,
     ticketPrice,
-    onEnableTicketAutoBuyer,
-    onPurchaseTicketV3,
+    purchaseTicketsAttempt,
     availableVSPs: isVSPListingEnabled ? availableVSPs : [],
     availableVSPsError,
-    onDisableTicketAutoBuyer,
     ticketAutoBuyerRunning,
-    getVSPTicketsByFeeStatus,
     mixedAccount,
     changeAccount,
     isLoading,
@@ -164,7 +144,6 @@ export const usePurchaseTab = () => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
-    onListUnspentOutputs,
     getRunningIndicator,
     account,
     setAccount,

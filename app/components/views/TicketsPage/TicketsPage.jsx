@@ -7,7 +7,7 @@ import {
 } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { BalanceDisplay } from "shared";
-import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
+import PurchaseTab from "./PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
 import MyTicketsTab from "./MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
