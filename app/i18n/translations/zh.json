@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "version": "v1.7.0"
+  },
   "SendFromUnmixed.btnCancel": "取消",
   "SendFromUnmixed.btnConfirm": "启用从混币帐户发送",
   "SendFromUnmixed.confirmPhraseInstruction": "请输入{confirmationPhrase}以允许从混币帐户发送。",
