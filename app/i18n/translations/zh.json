@@ -36,7 +36,6 @@
   "accounts.hide.pubkey": "隐藏公钥",
   "accounts.hide.tip": "隐藏",
   "accounts.immatureRewards": "未成熟的奖励",
-  "accounts.immatureStake": "生成未成熟票",
   "accounts.immatureStakingRewards": "不成熟的质押奖励",
   "accounts.keys": "密钥",
   "accounts.keys.counts": "{external} 外部、 {internal}内部、 {imported} 已导出",
