@@ -17,7 +17,6 @@
   "aboutModal.whatsNew": "有何更新？",
   "account.Hidden": "隐藏",
   "account.mixer.running.btnCancel": "取消",
-  "account.mixer.running.btnConfirm": "关闭Decrediton",
   "account.mixer.running.message": "混币工具正在工作。\n            如果现在关闭Decrediton将会\n           立即停止混币操作。",
   "account.mixer.running.title": "混币工具正在运行",
   "account.pubKey": "扩展的公钥",
