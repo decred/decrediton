@@ -180,11 +180,12 @@ export const startDaemon = (params) => (dispatch, getState) =>
     // be started doing a long process (like a db upgrade), so we check is it
     // is starting, before dispatching a new DAEMONSTART_ATTEMPT.
     if (daemonStarting) {
-      return;
+      return resolve();
     }
     dispatch({ type: DAEMONSTART_ATTEMPT });
     if (daemonStarted) {
-      return dispatch({ type: DAEMONSTART_SUCCESS });
+      dispatch({ type: DAEMONSTART_SUCCESS });
+      return resolve();
     }
 
     return wallet
@@ -640,7 +641,7 @@ export const syncDaemon = () => (dispatch, getState) =>
       const {
         daemon: { daemonSynced, timeStart, blockStart }
       } = getState();
-      if (daemonSynced) resolve();
+      if (daemonSynced) return resolve();
       return wallet
         .getBlockCount()
         .then((blockChainInfo) => {
@@ -660,7 +661,7 @@ export const syncDaemon = () => (dispatch, getState) =>
               dispatch({
                 syncHeight,
                 currentBlockCount: blockCount,
-                timeStart: new Date(),
+                timeStart: Date.now(),
                 blockStart: blockCount,
                 type: DAEMONSYNCING_START
               });
@@ -668,7 +669,7 @@ export const syncDaemon = () => (dispatch, getState) =>
               const blocksLeft = syncHeight - blockCount;
               const blocksDiff = blockCount - blockStart;
               if (blocksDiff !== 0) {
-                const currentTime = new Date();
+                const currentTime = Date.now();
                 const timeSyncing = (currentTime - timeStart) / 1000;
                 const secondsLeft = Math.round(
                   (blocksLeft / blocksDiff) * timeSyncing
@@ -691,18 +692,6 @@ export const syncDaemon = () => (dispatch, getState) =>
     };
     updateBlockCount();
   });
-
-export const getDcrdLogs = () => {
-  wallet
-    .getDcrdLogs()
-    .then((logs) => {
-      return logs;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null, err;
-    });
-};
 
 export const getDcrdLastLineLogs = () => () =>
   new Promise((resolve, reject) =>
@@ -727,30 +716,6 @@ export const getPrivacyLogs = () => () =>
       .then((logs) => resolve(logs))
       .catch((err) => reject(err))
   );
-
-export const getDecreditonLogs = () => {
-  wallet
-    .getDecreditonLogs()
-    .then((logs) => {
-      return logs;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null, err;
-    });
-};
-
-export const getDcrlndLogs = () => {
-  wallet
-    .getDcrlndLogs()
-    .then((logs) => {
-      return logs;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null, err;
-    });
-};
 
 export const GET_DEX_LOGS = "GET_DEX_LOGS";
 export const getDexLogs = () => (dispatch, getState) =>
