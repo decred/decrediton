@@ -661,7 +661,7 @@ export const syncDaemon = () => (dispatch, getState) =>
               return;
             }
 
-            if (blockStart === 0) {
+            if (!blockStart || !timeStart) {
               dispatch({
                 syncHeight,
                 currentBlockCount: blockCount,
