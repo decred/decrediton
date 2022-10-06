@@ -54,7 +54,7 @@ const mockBalances = [
     internalKeys: 0,
     importedKeys: 0,
     encrypted: true,
-    unlocked: false,
+    unlocked: true,
     hidden: false,
     HDPath: "m / 44' / 1' / 3'",
     total: 0,
@@ -159,7 +159,7 @@ test("test the Primary account", async () => {
     '"BalancesTotal95.51454006 DCRSpendable95.51454006 DCRImmature Rewards0.00000 DCRLocked By Tickets0.00000 DCRVoting Authority58.02257025 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
   expect(getPropertiesTextContent()).toMatchInlineSnapshot(
-    "\"PropertiesAccount number0HD Pathm / 44' / 1' / 0'Keys418 external, 437 internal, 0 imported\""
+    "\"PropertiesAccount number0HD Pathm / 44' / 1' / 0'Keys418 external, 437 internal, 0 importedLock statuslocked\""
   );
   expect(getExtendedPublicKeyValue()).toBe("Hidden");
   // reveal pubKey
@@ -225,7 +225,7 @@ test("test a common account", async () => {
     '"BalancesTotal481.25138665 DCRSpendable350.74115317 DCRImmature Rewards0.00000 DCRLocked By Tickets130.51023348 DCRVoting Authority130.51020368 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
   expect(getPropertiesTextContent()).toMatchInlineSnapshot(
-    "\"PropertiesAccount number1HD Pathm / 44' / 1' / 7'Keys188 external, 98 internal, 0 imported\""
+    "\"PropertiesAccount number1HD Pathm / 44' / 1' / 7'Keys188 external, 98 internal, 0 importedLock statuslocked\""
   );
 
   // not empty account is not hideable
@@ -251,7 +251,7 @@ test("test an empy account", async () => {
     '"BalancesTotal0.00000 DCRSpendable0.00000 DCRImmature Rewards0.00000 DCRLocked By Tickets0.00000 DCRVoting Authority0.00000 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
   expect(getPropertiesTextContent()).toMatchInlineSnapshot(
-    "\"PropertiesAccount number2HD Pathm / 44' / 1' / 3'Keys2 external, 0 internal, 0 imported\""
+    "\"PropertiesAccount number2HD Pathm / 44' / 1' / 3'Keys2 external, 0 internal, 0 importedLock statusunlocked\""
   );
 
   // test hide button

@@ -84,6 +84,14 @@ const AccountsDetails = ({
             }}
           />
         </DataLine>
+        <DataLine>
+          <T id="accounts.lockStatus" m="Lock status" />
+          {account.unlocked ? (
+            <T id="accounts.unlocked" m="unlocked" />
+          ) : (
+            <T id="accounts.locked" m="locked" />
+          )}
+        </DataLine>
       </div>
     </div>
     <div className={classNames(styles.actions, styles.isRow)}>
