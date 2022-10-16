@@ -129,6 +129,9 @@ const queryUnconfirmed = () => screen.queryByText("Unconfirmed");
 const queryPending = () => screen.queryByText("Pending");
 const getToAddressText = () =>
   screen.getByText("To address:").parentElement.textContent;
+const getToAddressesText = () =>
+  // TODO
+  screen.getByText("To addresses:").parentElement.textContent;
 const getTransactionFeeText = () =>
   screen.getByText("Transaction fee:").parentElement.textContent;
 const getWalletInputsText = () =>
@@ -178,8 +181,8 @@ test("regular sent pending tx from default account to an external address", asyn
   expect(getSentFromText()).toMatch("Sent FromdefaultUnconfirmed");
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(getPending()).toBeInTheDocument();
-  expect(getToAddressText()).toMatch(
-    "To address: TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY  TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY  TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk"
   );
   expect(getTransactionFeeText()).toMatch("Transaction fee:0.0000253 DCR");
 
@@ -238,8 +241,8 @@ test("regular received mined tx to the default account", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryPending()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed5,269 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV  TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV  TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -299,8 +302,8 @@ test("regular self transfer tx to unmixed account", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryPending()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed4 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh  TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh  TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -355,8 +358,8 @@ test("self coins from unmixed to mixed account", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryPending()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed11 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR  TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY  TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC  TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5  TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs  TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw  TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva  TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm  TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR  TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY  TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC  TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5  TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs  TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw  TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva  TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm  TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -590,8 +593,8 @@ test("missed ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed5,271 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1  TsTRP3GpMrtvRZ2XK5CopdZ9HhxsRJ75Cwn  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1  TsTRP3GpMrtvRZ2XK5CopdZ9HhxsRJ75Cwn  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -708,8 +711,8 @@ test("revoked ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed109,009 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -765,8 +768,8 @@ test("immature ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed12 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -824,8 +827,8 @@ test("live ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed12 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -910,8 +913,8 @@ test("unmined ticket", async () => {
   expect(getTicketCostText()).toMatch("Ticket Cost37.31114774 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
-  expect(getToAddressText()).toMatch(
-    "To address: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressesText()).toMatch(
+    "To addresses: TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU  TsVa9jpZGjAg1oqHBsUbrEtFbQjv9rUjVfj  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   user.click(getAbandonTransactionButton());

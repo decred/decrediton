@@ -1636,6 +1636,7 @@
   "txDetails.ticketSpent": "Ticket Spent",
   "txDetails.timestamp": "{timestamp, date, medium} {timestamp, time, medium}",
   "txDetails.toAddress": "To address",
+  "txDetails.toAddresses": "To addresses",
   "txDetails.tooManyNonWalletOutputs": "Please use the txid link above to see all non-wallet outputs on dcrdata.",
   "txDetails.tooManyNonWalletOutputsAddresses": "Please use the txid link above to see all non-wallet addresses on dcrdata.",
   "txDetails.transactionFeeLabel": "Transaction fee",

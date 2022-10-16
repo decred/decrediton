@@ -234,7 +234,17 @@ const TransactionContent = ({
         ) : (
           <div className={styles.topRow}>
             <div className={styles.name}>
-              <T id="txDetails.toAddress" m="To address" />:
+              {txOutputs.length + nonWalletOutputs.length >= 2 ? (
+                <T
+                  id="txDetails.toAddresses"
+                  m="To addresses:"
+                />
+              ) : (
+                <T
+                  id="txDetails.toAddress"
+                  m="To address:"
+                />
+              )}
             </div>
             <div className={classNames(styles.value, styles.nonFlex)}>
               {txOutputs.map(({ address }, i) => (

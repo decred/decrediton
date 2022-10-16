@@ -103,7 +103,7 @@ const mockRegularTransactionList = [
       }
     ]
   },
-  // regular self transfer transactio
+  // regular self transfer transaction
   {
     timestamp: 1624605208,
     height: 712832,
