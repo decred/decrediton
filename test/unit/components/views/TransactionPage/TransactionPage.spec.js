@@ -130,7 +130,6 @@ const queryPending = () => screen.queryByText("Pending");
 const getToAddressText = () =>
   screen.getByText("To address:").parentElement.textContent;
 const getToAddressesText = () =>
-  // TODO
   screen.getByText("To addresses:").parentElement.textContent;
 const getTransactionFeeText = () =>
   screen.getByText("Transaction fee:").parentElement.textContent;
