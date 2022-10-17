@@ -77,8 +77,6 @@ export const usePurchaseTab = () => {
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
 
-  const getRunningIndicator = useSelector(sel.getRunningIndicator);
-
   const vsp = useMemo(() => {
     if (selectedVSP) {
       return selectedVSP;
@@ -130,6 +128,7 @@ export const usePurchaseTab = () => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
+    onListUnspentOutputs,
     getRunningIndicator,
     account,
     setAccount,

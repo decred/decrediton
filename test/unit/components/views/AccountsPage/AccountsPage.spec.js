@@ -8,7 +8,7 @@ import * as cla from "actions/ClientActions";
 import { DCR } from "constants";
 const selectors = sel;
 const controlActions = ca;
-const clientAction = cla;
+const clientActions = cla;
 
 const mockBalances = [
   {
@@ -91,6 +91,7 @@ let mockRenameAccountAttempt;
 let mockGetNextAccountAttempt;
 let mockShowAccount;
 let mockHideAccount;
+let mockGetAccountsAttempt;
 
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
@@ -118,8 +119,11 @@ beforeEach(() => {
   mockGetNextAccountAttempt = controlActions.getNextAccountAttempt = jest.fn(
     () => () => {}
   );
-  mockShowAccount = clientAction.showAccount = jest.fn(() => () => {});
-  mockHideAccount = clientAction.hideAccount = jest.fn(() => () => {});
+  mockShowAccount = clientActions.showAccount = jest.fn(() => () => {});
+  mockHideAccount = clientActions.hideAccount = jest.fn(() => () => {});
+  mockGetAccountsAttempt = clientActions.getAccountsAttempt = jest.fn(
+    () => () => {}
+  );
 });
 
 const getBalances = () => screen.getByText("Balances");
@@ -201,6 +205,8 @@ test("test the Primary account", async () => {
     mockBalances[0].accountNumber,
     testAccountName
   );
+
+  expect(mockGetAccountsAttempt).toHaveBeenCalled();
 
   // hide account details
   user.click(account);

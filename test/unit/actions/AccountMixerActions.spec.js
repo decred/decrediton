@@ -21,6 +21,7 @@ import { cloneDeep } from "fp";
 import { createStore } from "test-utils.js";
 import * as wal from "wallet";
 import { isEqual } from "lodash";
+import { mockUnlockLockAndGetAccountsAttempt } from "./ControlActions.spec.js";
 
 const accountMixerActions = ama;
 const wallet = wal;
@@ -47,29 +48,47 @@ const testMixedAccountName = "text-mixed-account-name";
 const testChangeAccountName = "text-change-account-name";
 const testWalletService = "test-wallet-service";
 
+const selectedAccountNumberForTicketPurchase = 1;
+const selectedAccountForTicketPurchaseName = "ticket-purchase-account-name";
+
+const ticketBuyerAccountNumber = 2;
+const ticketBuyerAccountName = "ticket-buyer-account-name";
+
+const changeAccountNumber = 3;
+
 const testGetCoinjoinOutputsByAccResponse = {
   wrappers_: [{}, [{ accountNumber: 1, coinjoinTxsSum: 12 }]]
 };
+
+const testBalances = [
+  { accountNumber: 0, accountName: "default", encrypted: true },
+  {
+    accountNumber: selectedAccountNumberForTicketPurchase,
+    accountName: selectedAccountForTicketPurchaseName,
+    encrypted: true
+  },
+  {
+    accountNumber: ticketBuyerAccountNumber,
+    accountName: ticketBuyerAccountName,
+    encrypted: true
+  },
+  {
+    accountNumber: changeAccountNumber,
+    accountName: testChangeAccount,
+    encrypted: true
+  },
+  {
+    accountNumber: 2147483647,
+    accountName: "imported"
+  }
+];
 
 const initialState = {
   grpc: {
     address: testAddress,
     port: testPort,
     walletService: testWalletService,
-    balances: [
-      {
-        accountNumber: 0,
-        accountName: "default"
-      },
-      {
-        accountNumber: 1,
-        accountName: "account-1"
-      },
-      {
-        accountNumber: 2147483647,
-        accountName: "imported"
-      }
-    ]
+    balances: testBalances
   },
   daemon: { walletName: testWalletName }
 };
@@ -81,14 +100,11 @@ let mockWalletCfgGet;
 let mockWalletCfgSet;
 let mockGetBalance;
 let mockRunAccountMixerRequest;
-let mockUnlockAcctAndExecFn;
 let mockMixerStreamer;
 let mockOnEvent;
 let mockCleanPrivacyLogs;
 let mockMixerStreamerCancel;
-let mockLockAccount;
 let mockGetNextAccountAttempt;
-let mockGetAccountsAttempt;
 let mockGetMixerAcctsSpendableBalances;
 let mockGetCoinjoinOutputspByAcctReq;
 
@@ -104,9 +120,6 @@ beforeEach(() => {
   );
   mockCleanPrivacyLogs = wallet.cleanPrivacyLogs = jest.fn(() => {});
 
-  mockUnlockAcctAndExecFn = controlActions.unlockAcctAndExecFn = jest.fn(
-    (passphrase, accts, fn) => async () => await fn()
-  );
   mockMixerStreamerCancel = jest.fn(() => {});
   mockMixerStreamer = { cancel: mockMixerStreamerCancel };
 
@@ -117,10 +130,6 @@ beforeEach(() => {
     set: mockWalletCfgSet
   }));
 
-  mockLockAccount = controlActions.lockAccount = jest.fn(() => () => {});
-  mockGetAccountsAttempt = clientActions.getAccountsAttempt = jest.fn(
-    () => () => Promise.resolve()
-  );
   mockGetMixerAcctsSpendableBalances = clientActions.getMixerAcctsSpendableBalances = jest.fn(
     () => () => Promise.resolve()
   );
@@ -256,9 +265,15 @@ test("test checkUnmixedAccountBalance - insufficient balance", async () => {
   expect(store.getState().grpc.mixerStreamerError).not.toBeNull();
 });
 
-test("test runAccountMixer", async () => {
+test("test runAccountMixer start and stop", async () => {
+  const {
+    mockLockAccount,
+    mockUnlockAccount
+  } = mockUnlockLockAndGetAccountsAttempt();
+
   const events = {};
   mockMixerStreamer = {
+    cancel: mockMixerStreamerCancel,
     on: (eventName, fn) => {
       events[eventName] = fn;
     }
@@ -282,26 +297,26 @@ test("test runAccountMixer", async () => {
       passphrase: testPassphrase,
       mixedAccount: testMixedAccount,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: testChangeAccount,
+      changeAccount: changeAccountNumber,
       csppServer: testCsppServer
     })
   );
 
   await wait(() =>
-    expect(mockUnlockAcctAndExecFn).toHaveBeenCalledWith(
+    expect(mockUnlockAccount).toHaveBeenCalledWith(
+      testWalletService,
       testPassphrase,
-      [testChangeAccount],
-      expect.any(Function),
-      true
+      changeAccountNumber
     )
   );
+
   await wait(() =>
     expect(mockRunAccountMixerRequest).toHaveBeenCalledWith(
       testAccountMixerService,
       {
         mixedAccount: testMixedAccount,
         mixedAccountBranch: testMixedAccountBranch,
-        changeAccount: testChangeAccount,
+        changeAccount: changeAccountNumber,
         csppServer: testCsppServer
       }
     )
@@ -311,23 +326,39 @@ test("test runAccountMixer", async () => {
   );
   mockOnEvent("data");
   expect(store.getState().grpc.mixerStreamerError).toBeNull();
-  mockOnEvent("end");
 
   // if context was cancelled we can ignore it, as it probably means
   // mixer was stopped.
+  //
+  store.dispatch(accountMixerActions.stopAccountMixer(true));
   mockOnEvent("error", "Cancelled");
   expect(store.getState().grpc.mixerStreamerError).toBeNull();
 
   mockOnEvent("error", testError);
+  mockOnEvent("end");
   expect(store.getState().grpc.mixerStreamerError).toBe(testError);
+
+  await wait(() =>
+    expect(mockLockAccount).toHaveBeenCalledWith(
+      testWalletService,
+      changeAccountNumber
+    )
+  );
+
+  expect(mockCleanPrivacyLogs).toHaveBeenCalled();
+  expect(mockMixerStreamerCancel).toHaveBeenCalled();
+  await wait(() =>
+    expect(store.getState().grpc.accountMixerRunning).toBeFalsy()
+  );
+  expect(store.getState().grpc.mixerStreamer).toBeNull();
 });
 
 test("test runAccountMixer - unlockAcctAndExecFn failed", async () => {
-  mockUnlockAcctAndExecFn = controlActions.unlockAcctAndExecFn = jest.fn(
-    () => () => {
-      throw testError;
-    }
-  );
+  mockUnlockLockAndGetAccountsAttempt();
+
+  const mockUnlockAccount = (wallet.unlockAccount = jest.fn(() => {
+    throw testError;
+  }));
 
   const store = createStore(
     cloneDeep({
@@ -343,17 +374,16 @@ test("test runAccountMixer - unlockAcctAndExecFn failed", async () => {
       passphrase: testPassphrase,
       mixedAccount: testMixedAccount,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: testChangeAccount,
+      changeAccount: changeAccountNumber,
       csppServer: testCsppServer
     })
   );
 
   await wait(() =>
-    expect(mockUnlockAcctAndExecFn).toHaveBeenCalledWith(
+    expect(mockUnlockAccount).toHaveBeenCalledWith(
+      testWalletService,
       testPassphrase,
-      [testChangeAccount],
-      expect.any(Function),
-      true
+      changeAccountNumber
     )
   );
 
@@ -362,33 +392,9 @@ test("test runAccountMixer - unlockAcctAndExecFn failed", async () => {
   );
 });
 
-test("test stopAccountMixer", async () => {
-  const store = createStore(
-    cloneDeep({
-      ...initialState,
-      grpc: {
-        ...initialState.grpc,
-        mixerStreamer: mockMixerStreamer,
-        accountMixerRunning: true
-      },
-      walletLoader: {
-        ...initialState.walletLoader,
-        changeAccount: testChangeAccount
-      }
-    })
-  );
-  store.dispatch(accountMixerActions.stopAccountMixer(true));
-
-  expect(mockCleanPrivacyLogs).toHaveBeenCalled();
-  expect(mockMixerStreamerCancel).toHaveBeenCalled();
-  expect(mockLockAccount).toHaveBeenCalledWith(testChangeAccount);
-  await wait(() =>
-    expect(store.getState().grpc.accountMixerRunning).toBeFalsy()
-  );
-  expect(store.getState().grpc.mixerStreamer).toBeNull();
-});
-
 test("test stopAccountMixer - mixerStreamer is undefined, does not clean privacy logs", () => {
+  const { mockLockAccount } = mockUnlockLockAndGetAccountsAttempt();
+
   const store = createStore(
     cloneDeep({
       ...initialState,
@@ -405,6 +411,8 @@ test("test stopAccountMixer - mixerStreamer is undefined, does not clean privacy
 });
 
 test("test stopAccountMixer - cancel mixer failed", () => {
+  const { mockLockAccount } = mockUnlockLockAndGetAccountsAttempt();
+
   mockMixerStreamerCancel = jest.fn(() => {
     throw testError;
   });
@@ -434,6 +442,8 @@ test("test stopAccountMixer - cancel mixer failed", () => {
 });
 
 const testCreateNeededAccounts = async (initialState, expectedCsppPort) => {
+  const { mockGetAccountsAttempt } = mockUnlockLockAndGetAccountsAttempt();
+
   const store = createStore(initialState);
   await store.dispatch(
     accountMixerActions.createNeededAccounts(
@@ -491,6 +501,8 @@ test("test createNeededAccounts on testnet", () => {
 });
 
 test("test createNeededAccounts - failed", async () => {
+  const { mockGetAccountsAttempt } = mockUnlockLockAndGetAccountsAttempt();
+
   mockGetNextAccountAttempt = controlActions.getNextAccountAttempt = jest.fn(
     () => () => Promise.reject(testError)
   );
@@ -531,7 +543,9 @@ test("test getCoinjoinOutputspByAcct", async () => {
   expect(
     isEqual(result, [
       { acctIdx: 0, coinjoinSum: 0 },
-      { acctIdx: 1, coinjoinSum: 12 }
+      { acctIdx: 1, coinjoinSum: 12 },
+      { acctIdx: 2, coinjoinSum: 0 },
+      { acctIdx: 3, coinjoinSum: 0 }
     ])
   ).toBeTruthy();
 });

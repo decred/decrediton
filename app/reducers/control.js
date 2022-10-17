@@ -65,7 +65,10 @@ import {
   SETACCOUNTSPASSPHRASE_SUCCESS,
   SETACCOUNTSPASSPHRASE_FAILED,
   SET_PAGEBODY_SCROLLHANDLER,
-  SET_PAGEBODY_TOP_REF
+  SET_PAGEBODY_TOP_REF,
+  LOCKACCOUNT_SUCCESS,
+  LOCKACCOUNT_ATTEMPT,
+  LOCKACCOUNT_FAILED
 } from "../actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -463,6 +466,21 @@ export default function control(state = {}, action) {
       return {
         ...state,
         pageBodyTopRef: action.ref
+      };
+    case LOCKACCOUNT_ATTEMPT:
+      return {
+        ...state,
+        lockAccountError: null
+      };
+    case LOCKACCOUNT_SUCCESS:
+      return {
+        ...state,
+        lockAccountError: null
+      };
+    case LOCKACCOUNT_FAILED:
+      return {
+        ...state,
+        lockAccountError: action.error
       };
     default:
       return state;

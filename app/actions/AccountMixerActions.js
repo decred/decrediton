@@ -7,7 +7,7 @@ import {
   getMixerAcctsSpendableBalances
 } from "./ClientActions";
 import {
-  lockAccount,
+  relockAccounts,
   unlockAcctAndExecFn,
   getNextAccountAttempt
 } from "./ControlActions";
@@ -100,11 +100,12 @@ export const runAccountMixer = ({
 }) => (dispatch, getState) =>
   new Promise((resolve) => {
     dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
+    const accountUnlocks = [changeAccount];
     const runMixerAsync = async () => {
       const mixerStreamer = await dispatch(
         unlockAcctAndExecFn(
           passphrase,
-          [changeAccount],
+          accountUnlocks,
           () =>
             wallet.runAccountMixerRequest(sel.accountMixerService(getState()), {
               mixedAccount,
@@ -119,12 +120,13 @@ export const runAccountMixer = ({
     };
 
     runMixerAsync()
-      .then((resp) => {
+      .then(async (resp) => {
         const { mixerStreamer, error } = resp;
         // we can throw errors, like when the account has a small balance,
         // so this check is necessary.
         if (error) {
-          dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+          await dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+          dispatch(relockAccounts(accountUnlocks));
           return;
         }
         mixerStreamer.on("data", () => resolve());
@@ -141,9 +143,10 @@ export const runAccountMixer = ({
         });
         dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
       })
-      .catch((error) =>
-        dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED })
-      );
+      .catch(async (error) => {
+        await dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+        dispatch(relockAccounts(accountUnlocks));
+      });
   });
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
@@ -161,9 +164,9 @@ export const stopAccountMixer = (cleanLogs) => {
     dispatch({ type: STOPMIXER_ATTEMPT });
     try {
       const changeAccount = sel.getChangeAccount(getState());
-      mixerStreamer.cancel();
-      await dispatch(lockAccount(changeAccount));
-      dispatch({ type: STOPMIXER_SUCCESS });
+      await mixerStreamer.cancel();
+      await dispatch({ type: STOPMIXER_SUCCESS });
+      await dispatch(relockAccounts([changeAccount]));
     } catch (error) {
       dispatch({ type: STOPMIXER_FAILED, error });
     }
