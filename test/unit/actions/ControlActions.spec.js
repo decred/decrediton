@@ -169,3 +169,163 @@ test("test filterUnlockableAccounts - purchase ticket is running", () => {
 
   testRunnning(store);
 });
+
+import * as d from "actions/DexActions";
+import * as ca from "actions/ControlActions";
+import { cloneDeep } from "lodash";
+import { createStore } from "test-utils.js";
+import * as wal from "wallet";
+import { testBalances, dexAccountName } from "./accountMocks.js";
+
+const controlActions = ca;
+const wallet = wal;
+const dexActions = d;
+
+const testWalletService = "test-wallet-service";
+const testError = "test-error";
+const testPassphrase = "test-passphrase";
+const testNewPassphrase = "test-new-passphrase";
+const testDEXAppPassword = "test-new-password";
+
+const initialState = {
+  grpc: {
+    balances: testBalances,
+    walletService: testWalletService
+  },
+  walletLoader: {
+    dexAccount: dexAccountName
+  }
+};
+
+let mockSetAccountPassphrase;
+let mockSetWalletPasswordDex;
+let mockChangePassphrase;
+
+beforeEach(() => {
+  mockSetAccountPassphrase = wallet.setAccountPassphrase = jest.fn(() => {});
+  mockChangePassphrase = wallet.changePassphrase = jest.fn(() =>
+    Promise.resolve({})
+  );
+  mockSetWalletPasswordDex = dexActions.setWalletPasswordDex = jest.fn(
+    () => () => {}
+  );
+});
+
+test("test changePassphraseAttempt", async () => {
+  const testPriv = true;
+  const store = createStore(cloneDeep(initialState));
+  await store.dispatch(
+    controlActions.changePassphraseAttempt(
+      testPassphrase,
+      testNewPassphrase,
+      testPriv
+    )
+  );
+
+  expect(mockChangePassphrase).toHaveBeenCalledWith(
+    testWalletService,
+    testPassphrase,
+    testNewPassphrase,
+    testPriv
+  );
+
+  testBalances.forEach(({ accountNumber, accountName }, index) => {
+    if (accountName !== "imported") {
+      expect(mockSetAccountPassphrase).toHaveBeenNthCalledWith(
+        index + 1,
+        testWalletService,
+        accountNumber,
+        testPassphrase,
+        testNewPassphrase,
+        null
+      );
+    }
+  });
+
+  expect(mockSetWalletPasswordDex).not.toHaveBeenCalled();
+  expect(store.getState().control.changePassphraseError).toBeNull();
+  expect(store.getState().control.changePassphraseRequestAttempt).toBeFalsy();
+  expect(store.getState().control.changePassphraseResponse).toStrictEqual({});
+  expect(store.getState().control.changePassphraseSuccess).toBe(
+    "Your private passphrase was successfully updated."
+  );
+});
+
+test("test changePassphraseAttempt - failed", async () => {
+  mockChangePassphrase = wallet.changePassphrase = jest.fn(() =>
+    Promise.reject(testError)
+  );
+  const testPriv = true;
+  const store = createStore(cloneDeep(initialState));
+  await store.dispatch(
+    controlActions.changePassphraseAttempt(
+      testPassphrase,
+      testNewPassphrase,
+      testPriv
+    )
+  );
+
+  expect(mockChangePassphrase).toHaveBeenCalledWith(
+    testWalletService,
+    testPassphrase,
+    testNewPassphrase,
+    testPriv
+  );
+
+  expect(mockSetAccountPassphrase).not.toHaveBeenCalled();
+  expect(mockSetWalletPasswordDex).not.toHaveBeenCalled();
+
+  expect(store.getState().control.changePassphraseError).toBe(testError);
+  expect(store.getState().control.changePassphraseRequestAttempt).toBeFalsy();
+  expect(store.getState().control.changePassphraseResponse).toBe(undefined);
+  expect(store.getState().control.changePassphraseSuccess).toBe(undefined);
+});
+
+test("test changePassphraseAttempt - dex is active", async () => {
+  const testPriv = true;
+  const store = createStore(
+    cloneDeep({
+      ...initialState,
+      dex: { ...initialState.dex, active: true }
+    })
+  );
+  await store.dispatch(
+    controlActions.changePassphraseAttempt(
+      testPassphrase,
+      testNewPassphrase,
+      testPriv,
+      testDEXAppPassword
+    )
+  );
+
+  expect(mockChangePassphrase).toHaveBeenCalledWith(
+    testWalletService,
+    testPassphrase,
+    testNewPassphrase,
+    testPriv
+  );
+
+  testBalances.forEach(({ accountNumber, accountName }, index) => {
+    if (accountName !== "imported") {
+      expect(mockSetAccountPassphrase).toHaveBeenNthCalledWith(
+        index + 1,
+        testWalletService,
+        accountNumber,
+        testPassphrase,
+        testNewPassphrase,
+        null
+      );
+    }
+  });
+  expect(mockSetWalletPasswordDex).toHaveBeenCalledWith(
+    testNewPassphrase,
+    testDEXAppPassword
+  );
+
+  expect(store.getState().control.changePassphraseError).toBeNull();
+  expect(store.getState().control.changePassphraseRequestAttempt).toBeFalsy();
+  expect(store.getState().control.changePassphraseResponse).toStrictEqual({});
+  expect(store.getState().control.changePassphraseSuccess).toBe(
+    "Your private passphrase was successfully updated."
+  );
+});

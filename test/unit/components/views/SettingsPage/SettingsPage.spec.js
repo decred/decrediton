@@ -712,11 +712,93 @@ test("test update private passphrase", () => {
   expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
   expect(continueButton.disabled).toBe(false);
 
+  expect(
+    screen.queryByLabelText(/^DEX App Passsword/i)
+  ).not.toBeInTheDocument();
   user.click(screen.getByText("Continue"));
   expect(mockChangePassphrase).toHaveBeenCalledWith(
     testPassphrase,
     testNewPassphrase,
-    true
+    true,
+    null
+  );
+});
+
+test("test update private passphrase, DEX is active", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings,
+      dex: {
+        active: true
+      }
+    }
+  });
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
+  const modalHeaderText = "Change your passphrase";
+  // click and cancel
+  user.click(updateButton);
+  expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
+  user.click(screen.getByText("Cancel"));
+  expect(screen.queryByText(modalHeaderText)).not.toBeInTheDocument();
+
+  user.click(updateButton);
+  expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
+
+  const continueButton = screen.getByText("Continue");
+  expect(continueButton.disabled).toBe(true);
+  // test 'This Field is required' error message
+  testPassphraseInputRequiedErrorMsg("Private Passphrase");
+  testPassphraseInputRequiedErrorMsg("New Private Passphrase");
+  testPassphraseInputRequiedErrorMsg("Confirm");
+  expect(continueButton.disabled).toBe(true);
+
+  // fill input fields
+  const testPassphrase = "test-passphrase";
+  const testNewPassphrase = "test-new-passphrase";
+  const testDEXAppPasspword = "test-dex-app-password";
+  const testConfirmPassphrase = "test-confirm-passphrase";
+  user.type(screen.getByLabelText(/^private passphrase/i), testPassphrase);
+  user.type(
+    screen.getByLabelText(/^new private passphrase/i),
+    testNewPassphrase
+  );
+  expect(continueButton.disabled).toBe(true);
+  user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
+  expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
+
+  // fix confirm passphrase
+  user.clear(screen.getByLabelText(/^confirm/i));
+  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  expect(
+    screen.queryByText("Passwords does not match.")
+  ).not.toBeInTheDocument();
+  expect(continueButton.disabled).toBe(false);
+
+  // clear confirm and new passphrases. should get an error message
+  user.clear(screen.getByLabelText(/^confirm/i));
+  user.clear(screen.getByLabelText(/^new private passphrase/i));
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+  expect(continueButton.disabled).toBe(true);
+
+  //refill inputs
+  user.type(
+    screen.getByLabelText(/^new private passphrase/i),
+    testNewPassphrase
+  );
+  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
+  expect(continueButton.disabled).toBe(false);
+
+  user.type(screen.getByLabelText(/^DEX App Passsword/i), testDEXAppPasspword);
+  user.click(screen.getByText("Continue"));
+  expect(mockChangePassphrase).toHaveBeenCalledWith(
+    testPassphrase,
+    testNewPassphrase,
+    true,
+    testDEXAppPasspword
   );
 });
 

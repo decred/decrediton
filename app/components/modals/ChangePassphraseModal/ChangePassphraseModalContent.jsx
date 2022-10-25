@@ -1,6 +1,7 @@
 import { PasswordInput } from "inputs";
 import { PassphraseModal } from "modals";
 import { defineMessages } from "react-intl";
+import styles from "./ChangePassphraseModal.module.css";
 
 const messages = defineMessages({
   newPassphraseLabelText: {
@@ -18,6 +19,19 @@ const messages = defineMessages({
   confirmPassphraseplaceholderText: {
     id: "changePassModal.confirmPassphrasePlaceholder",
     defaultMessage: "Confirm your Private Passphrase"
+  },
+  dexAppPasswordLabelText: {
+    id: "dexPassModal.confirm",
+    defaultMessage: "DEX App Passsword"
+  },
+  dexAppPasswordPlaceholderText: {
+    id: "dexPassModal.dexPasswordPlaceholder",
+    defaultMessage: "Write your DEX App Passsword"
+  },
+  dexAppPasswordDesc: {
+    id: "dexPassModal.dexAppPasswordDesc",
+    defaultMessage:
+      "Providing DEX app password automatically propagates the changes to dexc too"
   }
 });
 
@@ -31,6 +45,9 @@ const Modal = ({
   onTriggerPassphraseModalSubmit,
   error,
   intl,
+  dexAppPassword,
+  setDexAppPassword,
+  dexActive,
   ...props
 }) => (
   <PassphraseModal
@@ -61,8 +78,27 @@ const Modal = ({
       )}
       value={confirmPrivPass}
       onChange={(e) => setConfirmPrivPass(e.target.value)}
-      onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+      onKeyDownSubmit={!dexActive && onTriggerPassphraseModalSubmit}
     />
+    {dexActive && (
+      <>
+        <PasswordInput
+          newBiggerFontStyle
+          id="dexAppPasswordInput"
+          required
+          label={intl.formatMessage(messages.dexAppPasswordLabelText)}
+          placeholder={intl.formatMessage(
+            messages.dexAppPasswordPlaceholderText
+          )}
+          value={dexAppPassword}
+          onChange={(e) => setDexAppPassword(e.target.value)}
+          onKeyDownSubmit={onTriggerPassphraseModalSubmit}
+        />
+        <div className={styles.dexAppPasswordDesc}>
+          {intl.formatMessage(messages.dexAppPasswordDesc)}
+        </div>
+      </>
+    )}
     {error && <div className="error">{error}</div>}
   </PassphraseModal>
 );

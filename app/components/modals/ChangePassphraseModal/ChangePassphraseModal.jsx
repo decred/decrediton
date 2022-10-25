@@ -2,17 +2,22 @@ import Modal from "./ChangePassphraseModalContent";
 import { useEffect, useState, useCallback } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { useIntl } from "react-intl";
+import { useSelector } from "react-redux";
+import * as sel from "selectors";
 
 const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   const [newPassphrase, setNewPassphrase] = useState(null);
   const [confirmPrivPass, setConfirmPrivPass] = useState(null);
+  const [dexAppPassword, setDexAppPassword] = useState(null);
   const [isValid, setIsValid] = useState(false);
   const [error, setIsError] = useState("");
   const intl = useIntl();
+  const dexActive = useSelector(sel.dexActive);
 
   const resetState = useCallback(() => {
     setNewPassphrase(null);
     setConfirmPrivPass(null);
+    setDexAppPassword(null);
   }, []);
 
   const onCancelModalCallback = useCallback(() => {
@@ -22,10 +27,10 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
 
   const onSubmitCallback = useCallback(
     (passPhrase) => {
-      onSubmit(passPhrase, { newPassphrase, priv: true });
+      onSubmit(passPhrase, { newPassphrase, priv: true, dexAppPassword });
       resetState();
     },
-    [newPassphrase, onSubmit, resetState]
+    [newPassphrase, onSubmit, resetState, dexAppPassword]
   );
 
   useEffect(() => {
@@ -65,6 +70,9 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
         onSubmit: onSubmitCallback,
         setNewPassphrase,
         setConfirmPrivPass,
+        dexAppPassword,
+        setDexAppPassword,
+        dexActive,
         error,
         intl
       }}

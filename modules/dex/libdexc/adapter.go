@@ -73,16 +73,17 @@ func NewCoreAdapter() *CoreAdapter {
 		"startServer": c.startServer,
 		"shutdown":    c.shutdown,
 		// Pass-throughs to Core
-		"Init":         c.init,
-		"ExportSeed":   c.exportSeed,
-		"CreateWallet": c.createWallet,
-		"UpdateWallet": c.updateWallet,
-		"User":         c.user,
-		"PreRegister":  c.discoverAcct,
-		"Register":     c.register,
-		"Login":        c.login,
-		"Logout":       c.logout,
-		"DexConfig":    c.getDexConfig,
+		"Init":              c.init,
+		"ExportSeed":        c.exportSeed,
+		"CreateWallet":      c.createWallet,
+		"UpdateWallet":      c.updateWallet,
+		"SetWalletPassword": c.setWalletPassword,
+		"User":              c.user,
+		"PreRegister":       c.discoverAcct,
+		"Register":          c.register,
+		"Login":             c.login,
+		"Logout":            c.logout,
+		"DexConfig":         c.getDexConfig,
 	}
 	c.wg = new(sync.WaitGroup)
 
@@ -268,6 +269,18 @@ func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
 			Type:    form.Type,
 		},
 	)
+}
+
+func (c *CoreAdapter) setWalletPassword(raw json.RawMessage) (string, error) {
+	form := new(struct {
+		AppPW   string `json:"appPass"`
+		AssetID uint32 `json:"assetID"`
+		Pass    string `json:"pass"`
+	})
+	if err := json.Unmarshal(raw, form); err != nil {
+		return "", err
+	}
+	return "", c.core.SetWalletPassword([]byte(form.AppPW), form.AssetID, []byte(form.Pass))
 }
 
 func (c *CoreAdapter) createWallet(raw json.RawMessage) (string, error) {

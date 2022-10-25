@@ -260,6 +260,32 @@ export const createWalletDex = (
   }
 };
 
+export const DEX_SETWALLET_PASSWORD_ATTEMPT = "DEX_SETWALLET_PASSWORD_ATTEMPT";
+export const DEX_SETWALLET_PASSWORD_SUCCESS = "DEX_SETWALLET_PASSWORD_SUCCESS";
+export const DEX_SETWALLET_PASSWORD_FAILED = "DEX_SETWALLET_PASSWORD_FAILED";
+
+export const setWalletPasswordDex = (passphrase, appPassphrase) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: DEX_SETWALLET_PASSWORD_ATTEMPT });
+  if (!sel.dexActive(getState())) {
+    dispatch({
+      type: DEX_SETWALLET_PASSWORD_FAILED,
+      error: "Dex isn't active"
+    });
+    return;
+  }
+  try {
+    const assetID = 42;
+    await dex.setWalletPassword(assetID, passphrase, appPassphrase);
+    dispatch({ type: DEX_SETWALLET_PASSWORD_SUCCESS });
+  } catch (error) {
+    dispatch({ type: DEX_SETWALLET_PASSWORD_FAILED, error });
+    return;
+  }
+};
+
 export const DEX_USER_ATTEMPT = "DEX_USER_ATTEMPT";
 export const DEX_USER_SUCCESS = "DEX_USER_SUCCESS";
 export const DEX_USER_FAILED = "DEX_USER_FAILED";
