@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, { readFileSync } from "fs";
 import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
@@ -281,7 +281,16 @@ const installExtensions = async () => {
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
     for (const name of extensions) {
       try {
-        await devtoolsInstaller(name, forceDownload);
+        const extName = await devtoolsInstaller(name, forceDownload);
+        const extPath = path.join(
+          `${app.getPath("userData")}/extensions/${name.id}`
+        );
+        const manifestRawData = readFileSync(`${extPath}/manifest.json`);
+        const manifest = JSON.parse(manifestRawData);
+        logger.log(
+          "info",
+          `Extension Installed: ${extName}. Version: ${manifest.version}`
+        );
       } catch (e) {
         console.log("Error installing extension: " + e);
       }
