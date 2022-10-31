@@ -4765,6 +4765,11 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
+dcrwin32ipc@./modules/dcrwin32ipc:
+  version "0.1.0"
+  dependencies:
+    bindings "~1.2.1"
+
 debounce-fn@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/debounce-fn/-/debounce-fn-4.0.0.tgz#ed76d206d8a50e60de0dd66d494d82835ffe61c7"
@@ -13766,11 +13771,6 @@ wildcard@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.0.tgz#a77d20e5200c6faaac979e4b3aadc7b3dd7f8fec"
   integrity sha512-JcKqAHLPxcdb9KM49dufGXn2x3ssnfjbcaQdLlfZsL9rH9wgDQjUtDxbo8NE0F6SFvydeu1VhZe7hZuHsB2/pw==
-
-win32ipc@./modules/win32ipc:
-  version "0.1.0"
-  dependencies:
-    bindings "~1.2.1"
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"

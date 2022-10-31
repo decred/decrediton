@@ -231,10 +231,10 @@ everything again.
 The end result for module compilation should be the following files:
 
 - `app/node_modules/blake-hash/bin/win32-x64-64/blake-hash.node`
-- `app/node_modules/win32ipc/build/Release/win32ipc.node`
+- `app/node_modules/dcrwin32ipc/build/Release/dcrwin32ipc.node`
 - `app/node_modules/grpc/src/node/extension_binary/electron-v3.0-win32-x64/grpc_node.node`
 
-*Note*: `yarn start` does _not_ currently correctly load the win32ipc module, so
+*Note*: `yarn start` does _not_ currently correctly load the dcrwin32ipc module, so
 testing with yarn build/start will fail to correctly unload dcrd/dcrwallet when
 closing.
 
