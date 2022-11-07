@@ -32,11 +32,11 @@ import {
   GetDexPID,
   closeDcrlnd,
   closeDex,
-  setDcrdRpcCredentials,
-  GetDexCreds
+  setDcrdRpcCredentials
 } from "./launch";
 import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
+import { DEX_LOCALPAGE } from "./externalRequests";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -250,8 +250,8 @@ export const startDex = async (walletPath, testnet, locale) => {
       "info",
       `Skipping restart of DEX as it is already running ${GetDexPID()}`
     );
-    const creds = GetDexCreds();
-    return { wasRunning: true, ...creds };
+    const serverAddress = DEX_LOCALPAGE;
+    return serverAddress;
   }
 
   try {
