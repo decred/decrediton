@@ -17,3 +17,9 @@ export const ipcRenderer = {
 export const clipboard = {
   readText: jest.fn(() => "")
 };
+
+export const session = {
+  defaultSession: {
+    setProxy: jest.fn(() => Promise.resolve())
+  }
+};
