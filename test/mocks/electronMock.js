@@ -18,8 +18,19 @@ export const clipboard = {
   readText: jest.fn(() => "")
 };
 
+export let onBeforeSendHeadersListener;
+export let onHeadersReceivedListener;
+
 export const session = {
   defaultSession: {
-    setProxy: jest.fn(() => Promise.resolve())
+    setProxy: jest.fn(() => Promise.resolve()),
+    webRequest: {
+      onBeforeSendHeaders: jest.fn((_, cb) => {
+        onBeforeSendHeadersListener = cb;
+      }),
+      onHeadersReceived: jest.fn((cb) => {
+        onHeadersReceivedListener = cb;
+      })
+    }
   }
 };
