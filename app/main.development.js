@@ -447,7 +447,8 @@ function createDexWindow(serverAddress) {
         contextIsolation: true
       },
       width: 1280,
-      height: 940
+      height: 940,
+      icon: __dirname + "/dcrdex.png"
     });
   });
 }
@@ -881,7 +882,8 @@ app.on("ready", async () => {
       contextIsolation: true
     },
     width: 1280,
-    height: 940
+    height: 940,
+    icon: __dirname + "/dcrdex.png"
   });
 });
 
