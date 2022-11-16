@@ -184,7 +184,7 @@ func (c *CoreAdapter) shutdown(json.RawMessage) (string, error) {
 	c.kill()
 	c.wg.Wait()
 	c.webServer.Wait()
-	closeFileLogger()
+	// closeFileLogger() // commented until we resolve (*Core).tipChange potentially logging after core shutdown
 	atomic.SwapUint32(&c.inited, 0)
 	return "", nil
 }
