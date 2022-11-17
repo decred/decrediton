@@ -7,17 +7,11 @@ import {
   DEX_ENABLE_FAILED,
   DEX_INIT_FAILED,
   DEX_CREATEWALLET_FAILED,
-  DEX_REGISTER_FAILED,
-  DEX_GETCONFIG_FAILED,
-  BTC_CREATEWALLET_FAILED,
   DEX_CHECKINIT_FAILED,
   DEX_LAUNCH_WINDOW_FAILED,
-  CHECK_BTC_CONFIG_FAILED,
   CREATEDEXACCOUNT_FAILED,
   DEX_LOGOUT_FAILED,
   DEX_USER_FAILED,
-  NEW_BTC_CONFIG_FAILED,
-  NEW_BTC_CONFIG_SUCCESS,
   DEX_EXPORT_SEED_FAILED
 } from "actions/DexActions";
 import {
@@ -659,18 +653,6 @@ const messages = defineMessages({
     id: "dex.connectWallet.failed",
     defaultMessage: "Connecting to DCR wallet Failed: {originalError}"
   },
-  DEX_REGISTER_FAILED: {
-    id: "dex.register.failed",
-    defaultMessage: "Paying DEX Fee Failed: {originalError}"
-  },
-  DEX_GETCONFIG_FAILED: {
-    id: "dex.getConfig.failed",
-    defaultMessage: "Getting DEX Config Failed: {originalError}"
-  },
-  BTC_CREATEWALLET_FAILED: {
-    id: "dex.connectBTCWallet.failed",
-    defaultMessage: "Connect to BTC wallet Failed: {originalError}"
-  },
   DEX_CHECKINIT_FAILED: {
     id: "dex.checkInit.failed",
     defaultMessage:
@@ -679,11 +661,6 @@ const messages = defineMessages({
   DEX_LAUNCH_WINDOW_FAILED: {
     id: "dex.launchWindow.failed",
     defaultMessage: "DEX Windows failed to be launched: {originalError}"
-  },
-  CHECK_BTC_CONFIG_FAILED: {
-    id: "dex.checkBTCConfig.failed",
-    defaultMessage:
-      "Failed to check an existing BTC Config file: {originalError}"
   },
   CREATEDEXACCOUNT_FAILED: {
     id: "dex.createDEXAccount.failed",
@@ -713,15 +690,6 @@ const messages = defineMessages({
     id: "discoverAddress.success",
     defaultMessage:
       "You have successfully discovered address usage.  Rescan now commencing."
-  },
-  NEW_BTC_CONFIG_FAILED: {
-    id: "newBTCConfig.failed",
-    defaultMessage: "{originalError}"
-  },
-  NEW_BTC_CONFIG_SUCCESS: {
-    id: "newBTCConfig.success",
-    defaultMessage:
-      "You have successfully created a default bitcoin config.  Please restart your Bitcoin Core wallet for this config to be used as expected."
   },
   DEX_EXPORT_SEED_FAILED: {
     id: "dex.export.seed.failed",
@@ -820,7 +788,6 @@ export default function snackbar(state = {}, action) {
     case SETVOTECHOICES_SUCCESS:
     case SETTREASURY_POLICY_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
-    case NEW_BTC_CONFIG_SUCCESS:
     case SETTINGS_SAVE:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
@@ -960,19 +927,14 @@ export default function snackbar(state = {}, action) {
     case DEX_ENABLE_FAILED:
     case DEX_INIT_FAILED:
     case DEX_CREATEWALLET_FAILED:
-    case DEX_REGISTER_FAILED:
-    case DEX_GETCONFIG_FAILED:
-    case BTC_CREATEWALLET_FAILED:
     case CREATEDEXACCOUNT_FAILED:
     case DEX_CHECKINIT_FAILED:
     case DEX_LAUNCH_WINDOW_FAILED:
-    case CHECK_BTC_CONFIG_FAILED:
     case DEX_LOGOUT_FAILED:
     case DEX_USER_FAILED:
     case STARTTICKETBUYERV3_FAILED:
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
-    case NEW_BTC_CONFIG_FAILED:
     case DEX_EXPORT_SEED_FAILED:
       type = "Error";
       if (

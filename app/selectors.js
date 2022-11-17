@@ -1768,7 +1768,6 @@ export const getRunningIndicator = or(
   isTicketAutoBuyerEnabled
 );
 
-export const restoredFromSeed = get(["dex", "restoredFromSeed"]);
 export const dexOrdersOpen = get(["dex", "openOrder"]);
 export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
@@ -1824,21 +1823,11 @@ export const dexActive = bool(get(["dex", "active"]));
 export const dexInit = bool(get(["dex", "dexInit"]));
 export const initDexAttempt = bool(get(["dex", "initAttempt"]));
 export const checkInitDexAttempt = bool(get(["dex", "dexCheckInitAttempt"]));
-export const registerDexAttempt = bool(get(["dex", "registerAttempt"]));
 export const createWalletDexAttempt = bool(get(["dex", "createWalletAttempt"]));
-export const btcCreateWalletDexAttempt = bool(
-  get(["dex", "btcCreateWalletAttempt"])
-);
 export const loginDexAttempt = bool(get(["dex", "loginAttempt"]));
 export const dexUser = get(["dex", "user"]);
 
 export const dexConnected = compose(
-  (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
-  dexUser
-);
-
-export const dexRegistered = compose(
-  // XXX check if any of the exchanges that come back from users request are registered
   (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
   dexUser
 );
@@ -1853,43 +1842,9 @@ export const dexDCRWalletRunning = compose(
   dexUser
 );
 
-export const dexBTCWalletRunning = compose(
-  (user) =>
-    user &&
-    user.assets &&
-    user.assets["0"] &&
-    user.assets["0"].wallet &&
-    user.assets["0"].wallet.running,
-  dexUser
-);
-
-export const dexAddr = get(["dex", "addr"]);
-export const dexConfig = get(["dex", "config"]);
-export const alreadyPaid = get(["dex", "alreadyPaid"]);
-export const getConfigAttempt = get(["dex", "getConfigAttempt"]);
-export const askDexBtcSpv = get(["walletLoader", "askDexBtcSpv"]);
-export const dexBtcSpv = get(["walletLoader", "dexBtcSpv"]);
 export const dexSeed = get(["dex", "dexSeed"]);
 export const confirmDexSeed = get(["walletLoader", "confirmDexSeed"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
-export const dexAccountNumber = createSelector(
-  [dexAccount, balances],
-  (dexAccount, balances) =>
-    !dexAccount
-      ? null
-      : balances
-          .filter(({ accountName }) => accountName === dexAccount)
-          .map(({ accountNumber }) => accountNumber)[0]
-);
-export const dexAccountSpendable = createSelector(
-  [dexAccount, balances],
-  (dexAccount, balances) =>
-    !dexAccount
-      ? null
-      : balances
-          .filter(({ accountName }) => accountName === dexAccount)
-          .map(({ spendable }) => spendable)[0]
-);
 export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
 export const dexSelectAccountAttempt = bool(
   get(["dex", "dexSelectAccountAttempt"])
@@ -1901,17 +1856,11 @@ export const defaultDEXServer = compose(
 );
 
 export const dexGetFeeError = get(["dex", "getConfigError"]);
-export const dexRegisterError = get(["dex", "registerError"]);
 export const dexLoginError = get(["dex", "loginError"]);
 export const dexLogoutError = get(["dex", "logoutError"]);
-export const dexCreateWalletError = get(["dex", "createWalletError"]);
 export const userError = get(["dex", "userError"]);
 export const initError = get(["dex", "initError"]);
 export const dexAccountError = get(["dex", "dexAccountError"]);
 export const dexEnableError = get(["dex", "enabledError"]);
-export const btcConfig = get(["dex", "btcConfig"]);
-export const btcInstallNeeded = get(["dex", "btcInstallNeeded"]);
-export const btcConfigUpdateNeeded = get(["dex", "btcConfigUpdateNeeded"]);
-export const btcWalletName = get(["walletLoader", "btcWalletName"]);
 
 export const getVSPInfoTimeoutTime = () => 5000;

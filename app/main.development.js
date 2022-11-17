@@ -2,12 +2,7 @@ import fs, { readFileSync } from "fs";
 import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
-import {
-  getCurrentBitcoinConfig,
-  newDefaultBitcoinConfig,
-  initGlobalCfg,
-  validateGlobalCfgFile
-} from "./config";
+import { initGlobalCfg, validateGlobalCfgFile } from "./config";
 import {
   appLocaleFromElectronLocale,
   default as locales
@@ -77,10 +72,7 @@ import {
   userDex,
   loginDex,
   logoutDex,
-  exportSeed,
-  getConfigDex,
-  preRegister,
-  registerDex
+  exportSeed
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -418,12 +410,6 @@ handle("logout-dex", logoutDex);
 
 handle("create-wallet-dex", createWalletDex);
 
-handle("get-config-dex", getConfigDex);
-
-handle("preregister-dex", preRegister);
-
-handle("register-dex", registerDex);
-
 handle("user-dex", userDex);
 
 handle("start-dex", startDex);
@@ -461,10 +447,6 @@ function createDexWindow(serverAddress) {
     });
   });
 }
-
-handle("check-btc-config", getCurrentBitcoinConfig);
-
-handle("new-btc-config", newDefaultBitcoinConfig);
 
 handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
 
