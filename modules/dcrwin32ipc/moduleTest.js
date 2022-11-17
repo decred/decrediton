@@ -1,6 +1,6 @@
 const childProcess = require("child_process");
 const util = require("util");
-const addon = require("./build/Release/win32ipc");
+const addon = require("./build/Release/dcrwin32ipc");
 
 const pipe = addon.createPipe("out");
 console.log(pipe.readEnd, pipe.writeEnd);
