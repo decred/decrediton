@@ -34,3 +34,8 @@ export const session = {
     }
   }
 };
+
+export const app = {
+  name: "testAppName",
+  getVersion: () => "testVersion"
+};
