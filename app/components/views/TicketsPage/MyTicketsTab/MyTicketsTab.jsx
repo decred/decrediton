@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { FormattedMessage as T } from "react-intl";
 import TicketListPage from "./Page";
 import { useTicketsList } from "./hooks";
@@ -137,10 +137,15 @@ const MyTickets = ({ toggleIsLegacy }) => {
     tickets
   ]);
 
+  const isMounted = useRef(false);
   useEffect(() => {
-    setIndex(BATCH_TX_COUNT);
-    setNoMoreTicketsToShow(false);
-  }, [ticketsFilter]);
+    if (isMounted.current) {
+      setIndex(BATCH_TX_COUNT);
+      setNoMoreTicketsToShow(false);
+    } else {
+      isMounted.current = true;
+    }
+  }, [ticketsFilter, isMounted]);
 
   const onChangeFilter = (filter) => {
     const newFilter = { ...ticketsFilter, ...filter };

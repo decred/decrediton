@@ -9,7 +9,364 @@ const toByteArray = (hex) => {
   return res;
 };
 
-const mockRegularTransactionList = [
+export const mockNormalizedRegularTransactionList = [
+  // regular pending transaction
+  {
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 993851810,
+        address: "TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY",
+        outputScript: "dqkUaU2Rg1LeTP5L7md2o/JQKn/NwviIrA=="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 1793854340 }],
+    txUrl:
+      "https://testnet.decred.org/tx/263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d",
+    txBlockUrl: "https://testnet.decred.org/block/null",
+    txHash: "263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d",
+    height: -1,
+    txType: "regular",
+    timestamp: 1624527872,
+    isPending: true,
+    txFee: 2530,
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 1793854340,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 993851810,
+        address: "TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY",
+        index: 0
+      }
+    ],
+    blockHash: null,
+    txNumericType: 0,
+    rawTx:
+      "010000000137bdd42d19c66cb0ee0da40f5419b284bcd16af1d3836f313fad124b5e5a4fe80000000000ffffffff02a2f93c3b0000000000001976a914694d918352de4cfe4bee6776a3f2502a7fcdc2f888ac0008af2f0000000000001976a9145aec0ddf49a9ca0ad1de2b4143666f544860043688ac000000000000000001840bec6a0000000000000000ffffffff6b4830450221009ce94aac7683dfbac6e23716af87b7529b3cf53d69d1bae7772a9e1baccc873902204e0312be8be7a518723c0c7d9e1f40abe67c681e9aabf78deb21d964c31872c201210314012e939d6ab30c7dacb4258654b0996ce89f7e47faa57bbbf65c44dffd668f",
+    outputs: [
+      {
+        address: "TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY",
+        value: 993851810,
+        isChange: true
+      },
+      {
+        address: "TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk",
+        value: 800000000,
+        isChange: false
+      }
+    ],
+    creditAddresses: ["TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY"],
+    mixedTx: false,
+    selfTx: false,
+    txAmount: 800000000,
+    txDirection: "sent",
+    txAccountName: "default"
+  },
+  // regular received mined regular transaction
+  {
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: false,
+        amount: 10000000000,
+        address: "TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV",
+        outputScript: "dqkUNobJHk1uOZPSqGjJ1pidJr8JMriIrA=="
+      }
+    ],
+    debits: [],
+    txUrl:
+      "https://testnet.decred.org/tx/642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    txHash: "642e3756be5a38636dfcdc643da9c6f5be8c9a1015b4623ad9cab38ff0ceec8e",
+    height: 706945,
+    txType: "regular",
+    timestamp: 1623923254,
+    isPending: false,
+    txFee: 0,
+    txInputs: [],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 10000000000,
+        address: "TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV",
+        index: 0
+      }
+    ],
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    txNumericType: 0,
+    rawTx:
+      "0100000004bf28aa8fb5d6dac3178e9332a702d8e8356873ca8fe6d33dccbd2d9c5fd7683e0100000000ffffffffdb19f3f77aeeb622700d23fe355b63fe8fd76b8b7632b0589d84b9c38e05d4ae0000000000ffffffff6bf93964a8376db78e1e1ff4afb9f1b798d7bec728e012311fed0e31a8afd0190100000000ffffffff782715c018478b5632ef57c589e3411bb192d3b5ee456a0b116108c15ec1b5140000000000ffffffff0200e40b540200000000001976a9143686c91e4d6e3993d2a868c9d6989d26bf0932b888acfc0fb0d60600000000001976a914778e4e20f5a4979265fb74af268034d7f90e805f88ac00000000000000000400a3e1110000000004c40a00010000006a473044022043d419c5d52dc0d24b49e3967770c4ca652363aa2daeb17a72535ef6a3d0cbca022039f51a398ee97134b33d19261f5aadeb6fffb65df16b509e5477682d5a70b3170121023679ebfc751737b730d41e5cb3b7552ae5b5781d9871094c518bac333ac544e7000e270700000000c6c30a00010000006b4830450221008cc6a8b5e8b24db0d91548ffc613e82f9a8451a40a80fb1e84802e0f964e1fd5022074c95643de7f719a771cb6d2adadd7a412ed9b8ad5d65d30b33ca18788266e570121023679ebfc751737b730d41e5cb3b7552ae5b5781d9871094c518bac333ac544e700e1f505000000000dc40a00090000006a47304402203312f602dc56e581d138fe39d5024cf41efd2fec0e186526af3c9558d620507602206eb04e0f14315d561529ae280efef4982e086d51499dd70a61c8f34f32fe13500121023679ebfc751737b730d41e5cb3b7552ae5b5781d9871094c518bac333ac544e7527fbd0b0900000071180a00040000006a47304402202dd4f98539723adccf4ec139676d8589fc596575584b39baf2bb28e53f9e6aca0220575014c485b5ce5814f84889eda85a981be339bc713588f3d9fabcccce1cecbe01210396f97ab7cf4fb3bf9c8198d2c19c709a623103fe2c6316a7a6751484537a6820",
+    outputs: [
+      {
+        address: "TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV",
+        value: 10000000000,
+        isChange: true
+      },
+      {
+        address: "TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA",
+        value: 29371666428,
+        isChange: false
+      }
+    ],
+    creditAddresses: ["TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV"],
+    mixedTx: false,
+    selfTx: false,
+    txAmount: 10000000000,
+    txDirection: "received",
+    txAccountName: "default"
+  },
+  // regular self transfer transactio
+  {
+    credits: [
+      {
+        index: 0,
+        account: 4,
+        internal: false,
+        amount: 5000000000,
+        address: "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+        outputScript: "dqkUDL0O1XOK7iyLUHxyNOFAvfXSEg6IrA=="
+      },
+      {
+        index: 1,
+        account: 0,
+        internal: true,
+        amount: 1362441426,
+        address: "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8",
+        outputScript: "dqkUqy47g+Xje5Ahl7hVmb4YJjc9CCKIrA=="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6362443956 }],
+    txUrl:
+      "https://testnet.decred.org/tx/9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304",
+    txBlockUrl:
+      "https://testnet.decred.org/block/00000000cf7eee715245616121f06e62fb3ac39c5cc296076395b80e21b5de62",
+    txHash: "9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304",
+    height: 712832,
+    txType: "regular",
+    timestamp: 1624605208,
+    isPending: false,
+    txFee: 2530,
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 6362443956,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "account-4",
+        amount: 5000000000,
+        address: "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+        index: 0
+      },
+      {
+        accountName: "default",
+        amount: 1362441426,
+        address: "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8",
+        index: 1
+      }
+    ],
+    blockHash:
+      "00000000cf7eee715245616121f06e62fb3ac39c5cc296076395b80e21b5de62",
+    txNumericType: 0,
+    rawTx:
+      "010000000105b2574bf056ac5bc8b1da11e13277dc7f9a4fcf1fcb46c8d7004d1b952e354c0100000000ffffffff0200f2052a0100000000001976a9140cbd0ed5738aee2c8b507c7234e140bdf5d2120e88acd23435510000000000001976a914ab2e3b83e5e37b902197b85599be1826373d082288ac000000000000000001b4303b7b0100000000000000ffffffff6a47304402203c4e1289c57e46903e3b4444f9a6a4beab805b0a13b7551f63d35ba8eb8f3d0a02203ba8b75862288de7d71be0610f49ac0e880721ce3a6500b1ca75dbed687a682d0121032dcb435ca06b6c25401bfb7a4c6411ea79327e29e7f929571405f21db2f0cd20",
+    outputs: [
+      {
+        address: "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+        value: 5000000000,
+        isChange: true
+      },
+      {
+        address: "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8",
+        value: 1362441426,
+        isChange: true
+      }
+    ],
+    creditAddresses: [
+      "TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh",
+      "TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8"
+    ],
+    mixedTx: false,
+    selfTx: true,
+    txAmount: 2530,
+    txDirection: "ticketfee",
+    txAccountNameCredited: "account-4",
+    txAccountNameDebited: "default"
+  },
+  // regular mixed transaction (from unmixed to mixed)
+  {
+    credits: [
+      {
+        index: 2,
+        account: 4,
+        internal: true,
+        amount: 705029094,
+        address: "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+        outputScript: "dqkUtGCpj6kdaIuef7RTP95Yx7iGF+KIrA=="
+      },
+      {
+        index: 4,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+        outputScript: "dqkUJMKqqromn+SAEyLMqJTcUyArbNWIrA=="
+      },
+      {
+        index: 5,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+        outputScript: "dqkUoQZhmPTyc4aEr5wNq/LgrLU2jBOIrA=="
+      },
+      {
+        index: 6,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+        outputScript: "dqkURegXjsBaBQaK+TvdWAZnsOz1CveIrA=="
+      },
+      {
+        index: 7,
+        account: 3,
+        internal: false,
+        amount: 1073741824,
+        address: "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs",
+        outputScript: "dqkUxzvblS6sIdrFRaB0gS+YG3OY/OGIrA=="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 4, previousAmount: 5000000000 }],
+    txUrl:
+      "https://testnet.decred.org/tx/ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c",
+    txBlockUrl:
+      "https://testnet.decred.org/block/00000000f6281f84cd50fbf1dc0d13f39b843aa04fc1894d92db193534ff41d3",
+    txHash: "ee6dbff0efe2eeb8c803133284462849661709beab258fb57453997afd9f492c",
+    height: 712872,
+    txType: "regular",
+    timestamp: 1624609448,
+    isPending: false,
+    txFee: 0,
+    txInputs: [
+      {
+        accountName: "account-4",
+        amount: 5000000000,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "account-4",
+        amount: 705029094,
+        address: "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+        index: 2
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+        index: 4
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+        index: 5
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+        index: 6
+      },
+      {
+        accountName: "account-3",
+        amount: 1073741824,
+        address: "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs",
+        index: 7
+      }
+    ],
+    blockHash:
+      "00000000f6281f84cd50fbf1dc0d13f39b843aa04fc1894d92db193534ff41d3",
+    txNumericType: 0,
+    rawTx:
+      "010000000304a30f2f7a92cd0dc3ccc73b462f3988e851adc27b62897300a918c498b910910000000000000000007773ac3c5b1d902ee228b594c6648caa0519302dd5a09eb56861832318d3b01f0600000000000000007773ac3c5b1d902ee228b594c6648caa0519302dd5a09eb56861832318d3b01f0d00000000000000000915075c220000000000001976a914cf7ab856a54d039fb39c0437abecbb0a9cd22d4d88ac000000400000000000001976a914f5516162c4bb1ead78ed98758c744a9ede0642de88ace6e3052a0000000000001976a914b460a98fa91d688b9e7fb4533fde58c7b88617e288ac32e7b9130000000000001976a91430faefe4d83fa63c8d05a3b6a2240f9ba15b38bf88ac000000400000000000001976a91424c2aaaaba269fe4801322cca894dc53202b6cd588ac000000400000000000001976a914a1066198f4f2738684af9c0dabf2e0acb5368c1388ac000000400000000000001976a91445e8178ec05a05068af93bdd580667b0ecf50af788ac000000400000000000001976a914c73bdb952eac21dac545a074812f981b7398fce188ac000000400000000000001976a914f57e187ad1dfce7cc591cb85411c65d17fd8224e88ac00000000000000000300f2052a0100000000000000000000006b483045022100e533cbb88e3f11d9650262cd51e245dfe4d0659baa34df17e7eaaf3421c94bb102201144f1e482867e5984e9d0cf75a7cc7ae208786e7630be8d750fa24a8422f81001210393e85132b9aed5d69f7b0e8bfb48b2300fecc7710e7ba30c65ec2412d3d685ed14f1b9530000000000000000000000006b4830450221009f9feb22dd01bbc16c97d889bca3e2200ed254f6a8e3ef421b1e4d25eab5c3ae02201b6c4e794a9a5ae211221f8bf569512d7a9489a164dc5a189f52ca2fccbf7b0d0121032aec130af5e726017c039cb471331bc95314f3b65d6e289a15af3310e5ce3c40f7105c620000000000000000000000006a47304402204b2d81fe96320768d0f547ceb836a656c6ff1c5d4bd81b626d053d77a0de3e96022042111c6311774c32d2d75f7c6e92904b40ef974ca995a81c8fa5a3fd9f3b137a012103b1ea67a2e2bcd020b470fbbdb14687d1034bce11eee0665db2e53f5467d1af3e",
+    outputs: [
+      {
+        address: "TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw",
+        value: 576456469,
+        isChange: false
+      },
+      {
+        address: "TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva",
+        value: 1073741824,
+        isChange: false
+      },
+      {
+        address: "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+        value: 705029094,
+        isChange: true
+      },
+      {
+        address: "TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm",
+        value: 330950450,
+        isChange: false
+      },
+      {
+        address: "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs",
+        value: 1073741824,
+        isChange: true
+      },
+      {
+        address: "TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3",
+        value: 1073741824,
+        isChange: false
+      }
+    ],
+    creditAddresses: [
+      "TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR",
+      "TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY",
+      "TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC",
+      "TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5",
+      "TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs"
+    ],
+    mixedTx: true,
+    selfTx: false,
+    txAmount: 3610,
+    txDirection: "sent",
+    txAccountName: "account-4"
+  }
+];
+export const mockRegularTransactionList = [
   // regular pending transaction
   {
     timestamp: 1624527872,
@@ -607,50 +964,199 @@ export const mockOldTxs = [
   }
 ];
 
-const mockStakeTransactionList = [
+export const mockNormalizedStakeTransactionList = [
   // vote tx
   {
-    timestamp: 1652874655,
-    height: 919977,
-    blockHash:
-      "000000005af1c046f26b1a4336280e37a84a8d8e20898a1a27af18a4f23c2e56",
-    index: 0,
-    hash: "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
-    txHash: "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
-    txType: "vote",
-    debitsAmount: 12271678363,
-    creditsAmount: 12276267831,
     type: 2,
-    amount: 4589468,
-    fee: 0,
-    debitAccounts: [0],
-    creditAddresses: ["TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n"],
-    isStake: true,
     credits: [
       {
         index: 2,
         account: 15,
         internal: true,
-        amount: 12276267831,
-        address: "TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n",
-        outputScript: "u3apFFOyCElfn6vfqAtL4QxNDkiLM/KZiKw="
+        amount: 6790119971,
+        address: "Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr",
+        outputScript: "u3apFJm/el6ZyMAOCezvNx6r14Zbz14RiKw="
       }
     ],
     debits: [
       {
         index: 1,
         previousAccount: 0,
-        previousAmount: 12271678363
+        previousAmount: 6785796485
       }
     ],
+    txHash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash:
+      "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+    ticketHash:
+      "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+    ticketTx: {
+      timestamp: 1654202680,
+      height: 930685,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+      txHash:
+        "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+      txType: "ticket",
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [15],
+      creditAddresses: ["TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6785796485,
+          address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+          outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 15,
+          previousAmount: 6785799465
+        }
+      ],
+      rawTx:
+        "010000000154a9b3b3e7a51658a2dcadb7e6cc440acda169c47e785ba6225cab34be43dce50000000000ffffffff03850977940100000000001aba76a91461feb0d2415519047b612320e087729149edb6b388ac00000000000000000000206a1e99bf7a5e99c8c00e09ecef371eabd7865bcf5e112915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6a473044022020cfc5e2bb47ddcd39fdc1a7e82e90a8fb0c2fc01db79c683296b15afb29780c0220216ee46d39c358a18395a035b9cc0af1a0a753eed82deef8694b516b77ee0bdd0121025d5aeb18e8bb8ae1485aed5e2816990ff8b0eee40bb9ab046d738cd6e18b4edd",
+      isMix: false,
+      transaction:
+        "dd4e8be1d68c736d04abb90be4eeb0f80f9916285eed5a48e18abbe818eb5a5d022101dd0bee776b514b69f8ee2dd8ee53a7a0f10accb935a09583a158c3396de46e2120020c7829fb5ab19632689cb71dc02f0cfba8902ee8a7c1fd39cddd47bbe2c5cf2020024430476affffffff000000000000000194771529010000000000000000ac88000000000000000000000000000000000000000014a976bd1a000000000000000000004e000000000194771529115ecf5b86d7ab1e37efec090ec0c8995e7abf991e6a2000000000000000000000ac88b3b6ed49917287e02023617b04195541d2b0fe6114a976ba1a0000000000019477098503ffffffff0000000000e5dc43be34ab5c22a65b787ec469a1cd0a44cce6b7addca25816a5e7b3b3a9540100000001",
+      vspHost: "mockVspHost",
+      txUrl:
+        "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
+    },
+    spenderTx: {
+      timestamp: 1654485406,
+      height: 932737,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
+      hash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+      txHash:
+        "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+      txType: "vote",
+      debitsAmount: 6785796485,
+      creditsAmount: 6790119971,
+      type: 2,
+      amount: 4323486,
+      fee: 0,
+      debitAccounts: [0],
+      creditAddresses: ["Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr"],
+      isStake: true,
+      credits: [
+        {
+          index: 2,
+          account: 15,
+          internal: true,
+          amount: 6790119971,
+          address: "Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr",
+          outputScript: "u3apFJm/el6ZyMAOCezvNx6r14Zbz14RiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 1,
+          previousAccount: 0,
+          previousAmount: 6785796485
+        }
+      ],
+      rawTx:
+        "01000000020000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff60ed215decf9ec50b50ff4477db42b1603178dab67e35d59f22b0de16cf4c1650000000001ffffffff0300000000000000000000266a24e4d5021f882b7926497679f68b14dbf77fdd2a901b24560ab297789e00000000803b0e0000000000000000000000086a0601000a0000002302b9940100000000001abb76a91499bf7a5e99c8c00e09ecef371eabd7865bcf5e1188ac0000000000000000029ef841000000000000000000ffffffff02000085097794010000007d330e00060000006a473044022038c9d8cafe8d98a904c72760e29a7f1e3942c9ef398a7384ca7b946517a3f598022016768855eae1edb7297ee52717bb4c1a247e836fce316a1d681026f4bcf9e5240121027bf4538b926d5668452965c44dbf8724b571ee6b3bae2eab59fd6969e6e87f13",
+      isMix: false
+    },
+    ticketPrice: 6785796485,
+    ticketReward: 4320506,
+    ticketChange: 0,
+    ticketInvestment: 6785799465,
+    ticketTxFee: 2980,
+    ticketStakeRewards: 0.0006366981550640327,
+    ticketReturnAmount: 6790119971,
+    voteScript: {
+      voteChoices: {
+        reverttreasurypolicy: "abstain",
+        explicitverupgrades: "abstain",
+        autorevocations: "abstain",
+        changesubsidysplit: "abstain"
+      },
+      version: 10,
+      bits: "0x0001",
+      isLastBlockValid: 1
+    },
+    spenderTxFee: 0,
+    enterTimestamp: 1654202680,
+    leaveTimestamp: 1654485406,
+    status: "voted",
     rawTx:
-      "01000000020000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff574f7189057261e0e816b09306c3dd4ae55146be8d1ce52a4d5c2475fdcf85600000000001ffffffff0300000000000000000000266a2432c8b01145a24d62ff8db613ca24a3b92e2472bac893ad0e864f1c8b00000000a8090e0000000000000000000000086a0601000a00000037fbb8db0200000000001abb76a91453b208495f9fabdfa80b4be10c4d0e488b33f29988ac0000000000000000029c0746000000000000000000ffffffff0200009bf372db0200000022090e00110000006a4730440220481a66bdf843d6fe2f41b0b5ba129cfec694f82bac72602d08998a2a8b792fb2022003b0a2c8ddfcc317fdb5fac33cc0fbff280ce4bc250caef3e94840c79ef60ee301210355174775888e14ed49e50dd0b904e6dca3f6b4595afd9248a020a4aa87ae469e",
-    isMix: false,
-    ticket: {
+      "01000000020000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff60ed215decf9ec50b50ff4477db42b1603178dab67e35d59f22b0de16cf4c1650000000001ffffffff0300000000000000000000266a24e4d5021f882b7926497679f68b14dbf77fdd2a901b24560ab297789e00000000803b0e0000000000000000000000086a0601000a0000002302b9940100000000001abb76a91499bf7a5e99c8c00e09ecef371eabd7865bcf5e1188ac0000000000000000029ef841000000000000000000ffffffff02000085097794010000007d330e00060000006a473044022038c9d8cafe8d98a904c72760e29a7f1e3942c9ef398a7384ca7b946517a3f598022016768855eae1edb7297ee52717bb4c1a247e836fce316a1d681026f4bcf9e5240121027bf4538b926d5668452965c44dbf8724b571ee6b3bae2eab59fd6969e6e87f13",
+    txType: "vote",
+    isPending: false,
+    accountName: "account-15",
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 6785796485,
+        index: 1
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "account-15",
+        amount: 6790119971,
+        address: "Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr",
+        index: 2
+      }
+    ],
+    height: 932737,
+    txUrl:
+      "https://testnet.decred.org/tx/843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
+  },
+  // voted ticket
+  {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 12271678363,
+        address: "TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU",
+        outputScript: "unapFFyo29n4+AuvdgX88JdEQQCZoS+biKw="
+      }
+    ],
+    debits: [
+      {
+        index: 0,
+        previousAccount: 15,
+        previousAmount: 12271681343
+      }
+    ],
+    txHash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash:
+      "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
+    ticketHash:
+      "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+    ticketTx: {
       timestamp: 1652858637,
       height: 919842,
       blockHash:
-        "000000005af1c046f26b1a4336280e37a84a8d8e20898a1a27af18a4f23c2e56",
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
       hash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
       txHash:
         "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
@@ -683,19 +1189,17 @@ const mockStakeTransactionList = [
       rawTx:
         "0100000001b50f2e03314661b566e3f0f246623c4419d8ec605da401f407a5f67cf148ce920000000000ffffffff039bf372db0200000000001aba76a9145ca8dbd9f8f80baf7605fcf09744410099a12f9b88ac00000000000000000000206a1e53b208495f9fabdfa80b4be10c4d0e488b33f2993fff72db02000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac0000000000000000013fff72db0200000000000000ffffffff6b483045022100d8f4e49c56f3249947a759d7ba766b671579399e758feaa12bc525c822c020f602200266d21d887165183479cf3d06a01470ceadc53b73527f6863ae76bf22a11ea001210355d8fdf5cdec7a8848e6d653d6c379908c256d4b54b7be637ab5018d56d19149",
       isMix: false,
-      transaction:
-        "4991d1568d01b57a63beb7544b6d258c9079c3d653d6e648887aeccdf5fdd855032101a01ea122bf76ae63687f52733bc5adce7014a0063dcf7934186571881dd266022002f620c022c825c52ba1ea8f759e397915676b76bad759a7479924f3569ce4f4d80021024530486bffffffff0000000000000002db72ff3f010000000000000000ac88000000000000000000000000000000000000000014a976bd1a000000000000000000004e0000000002db72ff3f99f2338b480e4d0ce14b0ba8dfab9f5f4908b2531e6a2000000000000000000000ac889b2fa19900414497f0fc0576af0bf8f8d9dba85c14a976ba1a000000000002db72f39b03ffffffff000000000092ce48f17cf6a507f401a45d60ecd819443c6246f2f0e366b5614631032e0fb50100000001",
-      vspHost: "mockVspHost",
+      vspHost: "mockVspHost-votedticket",
       txUrl:
-        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57"
+        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+      feeStatus: 1
     },
-    spender: {
+    spenderTx: {
       timestamp: 1652874655,
-      height: 919977,
-      blockHash:
-        "000000005af1c046f26b1a4336280e37a84a8d8e20898a1a27af18a4f23c2e56",
-      index: 0,
-      hash: "000000005af1c046f26b1a4336280e37a84a8d8e20898a1a27af18a4f23c2e56",
+      height: -1,
+      blockHash: "",
+      index: -1,
+      hash: "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txHash:
         "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txType: "vote",
@@ -710,7 +1214,7 @@ const mockStakeTransactionList = [
       credits: [
         {
           index: 2,
-          account: 0,
+          account: 15,
           internal: true,
           amount: 12276267831,
           address: "TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n",
@@ -728,6 +1232,851 @@ const mockStakeTransactionList = [
         "01000000020000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff574f7189057261e0e816b09306c3dd4ae55146be8d1ce52a4d5c2475fdcf85600000000001ffffffff0300000000000000000000266a2432c8b01145a24d62ff8db613ca24a3b92e2472bac893ad0e864f1c8b00000000a8090e0000000000000000000000086a0601000a00000037fbb8db0200000000001abb76a91453b208495f9fabdfa80b4be10c4d0e488b33f29988ac0000000000000000029c0746000000000000000000ffffffff0200009bf372db0200000022090e00110000006a4730440220481a66bdf843d6fe2f41b0b5ba129cfec694f82bac72602d08998a2a8b792fb2022003b0a2c8ddfcc317fdb5fac33cc0fbff280ce4bc250caef3e94840c79ef60ee301210355174775888e14ed49e50dd0b904e6dca3f6b4595afd9248a020a4aa87ae469e",
       isMix: false
     },
+    ticketPrice: 12271678363,
+    ticketReward: 4586488,
+    ticketChange: 0,
+    ticketInvestment: 12271681343,
+    ticketTxFee: 2980,
+    ticketStakeRewards: 0.00037374568910365487,
+    ticketReturnAmount: 12276267831,
+    voteScript: {
+      voteChoices: {
+        reverttreasurypolicy: "abstain",
+        explicitverupgrades: "abstain",
+        autorevocations: "abstain",
+        changesubsidysplit: "abstain"
+      },
+      version: 10,
+      bits: "0x0001",
+      isLastBlockValid: 1
+    },
+    spenderTxFee: 0,
+    enterTimestamp: 1652858637,
+    leaveTimestamp: 1652874655,
+    status: "voted",
+    rawTx:
+      "0100000001b50f2e03314661b566e3f0f246623c4419d8ec605da401f407a5f67cf148ce920000000000ffffffff039bf372db0200000000001aba76a9145ca8dbd9f8f80baf7605fcf09744410099a12f9b88ac00000000000000000000206a1e53b208495f9fabdfa80b4be10c4d0e488b33f2993fff72db02000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac0000000000000000013fff72db0200000000000000ffffffff6b483045022100d8f4e49c56f3249947a759d7ba766b671579399e758feaa12bc525c822c020f602200266d21d887165183479cf3d06a01470ceadc53b73527f6863ae76bf22a11ea001210355d8fdf5cdec7a8848e6d653d6c379908c256d4b54b7be637ab5018d56d19149",
+    txType: "ticket",
+    isPending: false,
+    accountName: "account-15",
+    txInputs: [{ accountName: "account-15", amount: 12271681343, index: 0 }],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 12271678363,
+        address: "TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU",
+        index: 0
+      }
+    ],
+    height: 919842,
+    txUrl:
+      "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: 1
+  },
+  // missed
+  {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 8593625324,
+        address: "Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC",
+        outputScript: "unapFHlAc365vEeYpW/aMvo2gidAIAgViKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 8593628304 }],
+    txHash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash: null,
+    ticketHash:
+      "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
+    ticketTx: {
+      timestamp: 1652256415,
+      height: 914582,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
+      hash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
+      txHash:
+        "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
+      txType: "ticket",
+      debitsAmount: 8593628304,
+      creditsAmount: 8593625324,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [0],
+      creditAddresses: ["Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 8593625324,
+          address: "Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC",
+          outputScript: "unapFHlAc365vEeYpW/aMvo2gidAIAgViKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 8593628304
+        }
+      ],
+      rawTx:
+        "0100000001d5c92daf04dc8a5abfa0d4dd96cc0ce98c78ffa126d299aabe340c7d4baf14360000000000ffffffff03ec5038000200000000001aba76a9147940737eb9bc4798a56fda32fa3682274020081588ac00000000000000000000206a1e29b9f346a3b78f1b4b029429aee2a484fdaaf28b905c380002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001905c38000200000095f40d00010000006b483045022100bdac06f033cd0fe652bd8d5fc21833a3b7064114c8a949c7157f58f5d2dc2e2302206b2bb830c34c75c76ca3df491245c775eeb4eb3e0b73bca6ead94ed34762e439012103033666b327ef4a26ea4f26ce53223f3cd092a063d57f711ea3ec7169cbce4ed9",
+      isMix: false,
+      vspHost: "mockVspHost-missed",
+      txUrl:
+        "https://testnet.decred.org/tx/d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc"
+    },
+    spenderTx: null,
+    ticketPrice: 8593625324,
+    ticketReward: undefined,
+    ticketChange: 0,
+    ticketInvestment: 8593628304,
+    ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
+    spenderTxFee: 0,
+    enterTimestamp: 1652256415,
+    leaveTimestamp: null,
+    status: "missed",
+    rawTx:
+      "0100000001d5c92daf04dc8a5abfa0d4dd96cc0ce98c78ffa126d299aabe340c7d4baf14360000000000ffffffff03ec5038000200000000001aba76a9147940737eb9bc4798a56fda32fa3682274020081588ac00000000000000000000206a1e29b9f346a3b78f1b4b029429aee2a484fdaaf28b905c380002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001905c38000200000095f40d00010000006b483045022100bdac06f033cd0fe652bd8d5fc21833a3b7064114c8a949c7157f58f5d2dc2e2302206b2bb830c34c75c76ca3df491245c775eeb4eb3e0b73bca6ead94ed34762e439012103033666b327ef4a26ea4f26ce53223f3cd092a063d57f711ea3ec7169cbce4ed9",
+    txType: "ticket",
+    isPending: false,
+    accountName: "default",
+    txInputs: [{ accountName: "default", amount: 8593628304, index: 0 }],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 8593625324,
+        address: "Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC",
+        index: 0
+      }
+    ],
+    height: 914582,
+    txUrl:
+      "https://testnet.decred.org/tx/d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
+  },
+  // revoked ticket
+  {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 8600218109,
+        address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
+        outputScript: "unapFOlPYM9gpJSRDMD+KPZi22h5RnROiKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 8600221089 }],
+    txHash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash:
+      "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
+    ticketHash:
+      "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+    ticketTx: {
+      timestamp: 1637487987,
+      height: 815405,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
+      hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+      txHash:
+        "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+      txType: "ticket",
+      debitsAmount: 8600221089,
+      creditsAmount: 8600218109,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [0],
+      creditAddresses: ["TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 8600218109,
+          address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
+          outputScript: "unapFOlPYM9gpJSRDMD+KPZi22h5RnROiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 8600221089
+        }
+      ],
+      rawTx:
+        "010000000145dff3de5ec042630f66a9ba4ea2ed6d70f3fa306af01858a83efa676d3779000000000000ffffffff03fde99c000200000000001aba76a914e94f60cf60a494910cc0fe28f662db687946744e88ac00000000000000000000206a1e8ef37a84dc2bc7c924877e1ab3026b3b5a102e5fa1f59c0002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001a1f59c00020000002c710c00030000006a47304402206888557060684807b6e78f47ea8c186debe45f2316a584abe60c5495f36f77f80220249421832ab9ea9e6bbb70d50376e7f48258b3108a345dc299d1de8186e046060121036343175c705537c636732c42fa699ba96f6296bc66b915216cbc833d00e18e10",
+      isMix: false,
+      vspHost: "",
+      txUrl:
+        "https://testnet.decred.org/tx/b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99"
+    },
+    spenderTx: {
+      timestamp: 1643948925,
+      height: -1,
+      blockHash: "",
+      index: -1,
+      hash: "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
+      txHash:
+        "c63ff33bf5955e8636d57be2762d60e1fedaf65c92548e08784db9a4e433de1d",
+      txType: "revocation",
+      debitsAmount: 8600218109,
+      creditsAmount: 8600218109,
+      type: 3,
+      amount: 0,
+      fee: 0,
+      debitAccounts: [0],
+      creditAddresses: ["Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 8600218109,
+          address: "Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy",
+          outputScript: "vHapFI7zeoTcK8fJJId+GrMCaztaEC5fiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 8600218109
+        }
+      ],
+      rawTx:
+        "0200000001997fa9df69903ad5d40fce86f0da366f3d9c13b842e947d1d0859a30e3e24eb00000000001ffffffff01fde99c000200000000001abc76a9148ef37a84dc2bc7c924877e1ab3026b3b5a102e5f88ac000000000000000001fde99c00020000002d710c000800000000",
+      isMix: false
+    },
+    ticketPrice: 8600218109,
+    ticketReward: -2980,
+    ticketChange: 0,
+    ticketInvestment: 8600221089,
+    ticketTxFee: 2980,
+    ticketStakeRewards: -3.465027200069926e-7,
+    ticketReturnAmount: 8600218109,
+    voteScript: undefined,
+    spenderTxFee: 0,
+    enterTimestamp: 1637487987,
+    leaveTimestamp: 1643948925,
+    status: "revoked",
+    rawTx:
+      "010000000145dff3de5ec042630f66a9ba4ea2ed6d70f3fa306af01858a83efa676d3779000000000000ffffffff03fde99c000200000000001aba76a914e94f60cf60a494910cc0fe28f662db687946744e88ac00000000000000000000206a1e8ef37a84dc2bc7c924877e1ab3026b3b5a102e5fa1f59c0002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001a1f59c00020000002c710c00030000006a47304402206888557060684807b6e78f47ea8c186debe45f2316a584abe60c5495f36f77f80220249421832ab9ea9e6bbb70d50376e7f48258b3108a345dc299d1de8186e046060121036343175c705537c636732c42fa699ba96f6296bc66b915216cbc833d00e18e10",
+    txType: "ticket",
+    isPending: false,
+    accountName: "default",
+    txInputs: [{ accountName: "default", amount: 8600221089, index: 0 }],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 8600218109,
+        address: "TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ",
+        index: 0
+      }
+    ],
+    height: 815405,
+    txUrl:
+      "https://testnet.decred.org/tx/b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
+  },
+  // revocation
+  {
+    type: 3,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6475413336,
+        address: "Tsic4BsFzDL1jhR4LTbWS8LvGFgxjqFG3pU",
+        outputScript: "vHapFMDks6W1pFTjiMaGSuUSBSI6EtzkiKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6475415536 }],
+    txHash: "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash:
+      "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
+    ticketHash:
+      "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
+    ticketTx: {
+      timestamp: 1618322224,
+      height: 661573,
+      blockHash: "",
+      hash: "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
+      txHash:
+        "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
+      txType: "ticket",
+      debitsAmount: 6475418516,
+      creditsAmount: 6475415536,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [0],
+      creditAddresses: ["TsYUisRdHbZ7p4y2w2Hfnu9zp9bUn6BzxPu"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6475415536,
+          address: "TsYUisRdHbZ7p4y2w2Hfnu9zp9bUn6BzxPu",
+          outputScript: "unapFFHQaAazkipmTp6c1j/hjKpwgepmiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 6475418516
+        }
+      ],
+      rawTx:
+        "010000000120b97bf5eb8969095c3b8fa9590701f910246f464b84db62423b34c37b6747330000000000ffffffff03f0fff6810100000000001aba76a91451d06806b3922a664e9e9cd63fe18caa7081ea6688ac00000000000000000000206a1ec0e4b3a5b5a454e388c6864ae51205223a12dce4940bf781010000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001940bf7810100000044180a00020000006a47304402204be3e7097a452d99c2b56c138f8df33a923f6da1f9f465e56c75b9cdd571864902201bf7a3e9db1cfd3b7f8e55252d5f3c04311275bbc2c4ff2333472840c262b413012102936911a32e4e000e56f82207ec5d39a66b9971021869905087b23a10399cb1b0",
+      isMix: false,
+      txUrl:
+        "https://testnet.decred.org/tx/9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47"
+    },
+    spenderTx: {
+      timestamp: 1622730448,
+      height: 697812,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
+      hash: "8c6e88a38ceac7e52ef3c9f4d936d0cf16fcc0a510955cab255f3a23ce2e09c1",
+      txHash:
+        "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
+      txType: "revocation",
+      debitsAmount: 6475415536,
+      creditsAmount: 6475413336,
+      type: 3,
+      amount: -2200,
+      fee: 2200,
+      debitAccounts: [0],
+      creditAddresses: ["Tsic4BsFzDL1jhR4LTbWS8LvGFgxjqFG3pU"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6475413336,
+          address: "Tsic4BsFzDL1jhR4LTbWS8LvGFgxjqFG3pU",
+          outputScript: "vHapFMDks6W1pFTjiMaGSuUSBSI6EtzkiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 6475415536
+        }
+      ],
+      rawTx:
+        "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052",
+      isMix: false
+    },
+    ticketPrice: 6475415536,
+    ticketReward: -5180,
+    ticketChange: 0,
+    ticketInvestment: 6475418516,
+    ticketTxFee: 2980,
+    ticketStakeRewards: -7.999482948014599e-7,
+    ticketReturnAmount: 6475413336,
+    voteScript: undefined,
+    spenderTxFee: 2200,
+    enterTimestamp: 1618322224,
+    leaveTimestamp: 1622730448,
+    status: "revoked",
+    rawTx:
+      "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052",
+    txType: "revocation",
+    isPending: false,
+    accountName: "default",
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 6475415536,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 6475413336,
+        address: "Tsic4BsFzDL1jhR4LTbWS8LvGFgxjqFG3pU",
+        index: 0
+      }
+    ],
+    height: 697812,
+    txUrl:
+      "https://testnet.decred.org/tx/c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
+  },
+  // unmined
+  {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6785796485,
+        address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+        outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 15, previousAmount: 6785799465 }],
+    txHash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+    blockHash: null,
+    spenderHash: null,
+    ticketHash:
+      "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+    ticketTx: {
+      timestamp: 1654202499,
+      height: -1,
+      blockHash: null,
+      index: 0,
+      hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+      txHash:
+        "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+      txType: "ticket",
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [15],
+      creditAddresses: ["TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6785796485,
+          address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+          outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 15,
+          previousAmount: 6785799465
+        }
+      ],
+      rawTx:
+        "010000000154a9b3b3e7a51658a2dcadb7e6cc440acda169c47e785ba6225cab34be43dce50000000000ffffffff03850977940100000000001aba76a91461feb0d2415519047b612320e087729149edb6b388ac00000000000000000000206a1e99bf7a5e99c8c00e09ecef371eabd7865bcf5e112915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6a473044022020cfc5e2bb47ddcd39fdc1a7e82e90a8fb0c2fc01db79c683296b15afb29780c0220216ee46d39c358a18395a035b9cc0af1a0a753eed82deef8694b516b77ee0bdd0121025d5aeb18e8bb8ae1485aed5e2816990ff8b0eee40bb9ab046d738cd6e18b4edd",
+      isMix: false,
+      vspHost: "mockVspHost-unmined",
+      txUrl:
+        "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
+    },
+    spenderTx: null,
+    ticketPrice: 6785796485,
+    ticketReward: undefined,
+    ticketChange: 0,
+    ticketInvestment: 6785799465,
+    ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
+    spenderTxFee: 0,
+    enterTimestamp: 1654202499,
+    leaveTimestamp: null,
+    status: "unmined",
+    rawTx:
+      "010000000154a9b3b3e7a51658a2dcadb7e6cc440acda169c47e785ba6225cab34be43dce50000000000ffffffff03850977940100000000001aba76a91461feb0d2415519047b612320e087729149edb6b388ac00000000000000000000206a1e99bf7a5e99c8c00e09ecef371eabd7865bcf5e112915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6a473044022020cfc5e2bb47ddcd39fdc1a7e82e90a8fb0c2fc01db79c683296b15afb29780c0220216ee46d39c358a18395a035b9cc0af1a0a753eed82deef8694b516b77ee0bdd0121025d5aeb18e8bb8ae1485aed5e2816990ff8b0eee40bb9ab046d738cd6e18b4edd",
+    txType: "ticket",
+    isPending: true,
+    accountName: "account-15",
+    txInputs: [
+      {
+        accountName: "account-15",
+        amount: 6785799465,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 6785796485,
+        address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+        index: 0
+      }
+    ],
+    height: -1,
+    txUrl:
+      "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+    txBlockUrl: "https://testnet.decred.org/block/null",
+    isStake: true,
+    feeStatus: 1
+  },
+  // immature
+  {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6785796485,
+        address: "TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK",
+        outputScript: "unapFA+UU96/HfOSYqbq+B/LmP95fIlciKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6785799465 }],
+    txHash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash: null,
+    ticketHash:
+      "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
+    ticketTx: {
+      timestamp: 1654203366,
+      height: 930690,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
+      hash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
+      txHash:
+        "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
+      txType: "ticket",
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [0],
+      creditAddresses: ["TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6785796485,
+          address: "TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK",
+          outputScript: "unapFA+UU96/HfOSYqbq+B/LmP95fIlciKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 6785799465
+        }
+      ],
+      rawTx:
+        "01000000011a1b3fc2661245ba6b8cab9e315cf76b16c565f1c1277512608d51906f1636c10000000000ffffffff03850977940100000000001aba76a9140f9453debf1df39262a6eaf81fcb98ff797c895c88ac00000000000000000000206a1e19e5ba2f1f3b99efe1090707638af39998a1b7582915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a510695025634a249cda2c85fe63a43312cb0ee5c02db2f1256fe4f835702f8002202b0f4c7e093500b75626a4829c9705a370cb2f2f834702abe8b9ac268d5ac57b012102dfa5deeeee8b65f2738483d412f2bb5627fa7f761b132f3b4eef2e154151902c",
+      isMix: false,
+      vspHost: "mockVspHost-immature",
+      txUrl:
+        "https://testnet.decred.org/tx/f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530"
+    },
+    spenderTx: null,
+    ticketPrice: 6785796485,
+    ticketReward: undefined,
+    ticketChange: 0,
+    ticketInvestment: 6785799465,
+    ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
+    spenderTxFee: 0,
+    enterTimestamp: 1654203366,
+    leaveTimestamp: null,
+    status: "immature",
+    rawTx:
+      "01000000011a1b3fc2661245ba6b8cab9e315cf76b16c565f1c1277512608d51906f1636c10000000000ffffffff03850977940100000000001aba76a9140f9453debf1df39262a6eaf81fcb98ff797c895c88ac00000000000000000000206a1e19e5ba2f1f3b99efe1090707638af39998a1b7582915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a510695025634a249cda2c85fe63a43312cb0ee5c02db2f1256fe4f835702f8002202b0f4c7e093500b75626a4829c9705a370cb2f2f834702abe8b9ac268d5ac57b012102dfa5deeeee8b65f2738483d412f2bb5627fa7f761b132f3b4eef2e154151902c",
+    txType: "ticket",
+    isPending: false,
+    accountName: "default",
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 6785799465,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 6785796485,
+        address: "TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK",
+        index: 0
+      }
+    ],
+    height: 930690,
+    txUrl:
+      "https://testnet.decred.org/tx/f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: 1
+  },
+  // live
+  {
+    type: 1,
+    credits: [
+      {
+        index: 0,
+        account: 0,
+        internal: true,
+        amount: 6785796485,
+        address: "TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4",
+        outputScript: "unapFIMhyeEfBENiiiK/SodiN02IfAYyiKw="
+      }
+    ],
+    debits: [{ index: 0, previousAccount: 0, previousAmount: 6785799465 }],
+    txHash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
+    blockHash:
+      "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    spenderHash: null,
+    ticketHash:
+      "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
+    ticketTx: {
+      timestamp: 1654204193,
+      height: 930696,
+      blockHash:
+        "0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+      index: 0,
+      hash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
+      txHash:
+        "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
+      txType: "ticket",
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [0],
+      creditAddresses: ["TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6785796485,
+          address: "TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4",
+          outputScript: "unapFIMhyeEfBENiiiK/SodiN02IfAYyiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 0,
+          previousAmount: 6785799465
+        }
+      ],
+      rawTx:
+        "010000000164f0acf752429210f469c6536c857d092aac8bc84fa661f013b535aa6394c4710000000000ffffffff03850977940100000000001aba76a9148321c9e11f0443628a22bf4a8762374d887c063288ac00000000000000000000206a1e01ca6bb0120ca64e750a9cbaa66597f010c1c03d2915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a58c8e7b6f33b3c3fdc43dfa7472d19e39cc8c22c5990f94ca45a9458c860bfe02202227864c234f9a2c328418cabf6a5934e99d16806a8492805ad4243155d77e63012102029965f740c2b87c21dca96fb4195f71dae34b779ef4daed5902f98a0c09a437",
+      isMix: false,
+      vspHost: "mockVspHost-live",
+      txUrl:
+        "https://testnet.decred.org/tx/05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07"
+    },
+    spenderTx: null,
+    ticketPrice: 6785796485,
+    ticketReward: undefined,
+    ticketChange: 0,
+    ticketInvestment: 6785799465,
+    ticketTxFee: 2980,
+    ticketStakeRewards: undefined,
+    ticketReturnAmount: undefined,
+    voteScript: undefined,
+    spenderTxFee: 0,
+    enterTimestamp: 1654204193,
+    leaveTimestamp: null,
+    status: "live",
+    rawTx:
+      "010000000164f0acf752429210f469c6536c857d092aac8bc84fa661f013b535aa6394c4710000000000ffffffff03850977940100000000001aba76a9148321c9e11f0443628a22bf4a8762374d887c063288ac00000000000000000000206a1e01ca6bb0120ca64e750a9cbaa66597f010c1c03d2915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a58c8e7b6f33b3c3fdc43dfa7472d19e39cc8c22c5990f94ca45a9458c860bfe02202227864c234f9a2c328418cabf6a5934e99d16806a8492805ad4243155d77e63012102029965f740c2b87c21dca96fb4195f71dae34b779ef4daed5902f98a0c09a437",
+    txType: "ticket",
+    isPending: false,
+    accountName: "default",
+    txInputs: [
+      {
+        accountName: "default",
+        amount: 6785799465,
+        index: 0
+      }
+    ],
+    txOutputs: [
+      {
+        accountName: "default",
+        amount: 6785796485,
+        address: "TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4",
+        index: 0
+      }
+    ],
+    height: 930696,
+    txUrl:
+      "https://testnet.decred.org/tx/05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
+    txBlockUrl:
+      "https://testnet.decred.org/block/0000000bc17d35756d4383c27e91d83bcb5be0f8bf9943675cba87e8223eeb21",
+    isStake: true,
+    feeStatus: undefined
+  }
+];
+
+export const mockStakeTransactionList = [
+  // vote tx
+  {
+    timestamp: 1654485406,
+    height: 932737,
+    blockHash:
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
+    index: 0,
+    hash:
+      "1472512351262304275125239808423343934577220111166192222712233111195632030000",
+    txHash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+    txType: "vote",
+    debitsAmount: 6785796485,
+    creditsAmount: 6790119971,
+    type: 2,
+    amount: 4323486,
+    fee: 0,
+    debitAccounts: [0],
+    creditAddresses: ["Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr"],
+    isStake: true,
+    credits: [
+      {
+        index: 2,
+        account: 15,
+        internal: true,
+        amount: 6790119971,
+        address: "Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr",
+        outputScript: "u3apFJm/el6ZyMAOCezvNx6r14Zbz14RiKw="
+      }
+    ],
+    debits: [
+      {
+        index: 1,
+        previousAccount: 0,
+        previousAmount: 6785796485
+      }
+    ],
+    rawTx:
+      "01000000020000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff60ed215decf9ec50b50ff4477db42b1603178dab67e35d59f22b0de16cf4c1650000000001ffffffff0300000000000000000000266a24e4d5021f882b7926497679f68b14dbf77fdd2a901b24560ab297789e00000000803b0e0000000000000000000000086a0601000a0000002302b9940100000000001abb76a91499bf7a5e99c8c00e09ecef371eabd7865bcf5e1188ac0000000000000000029ef841000000000000000000ffffffff02000085097794010000007d330e00060000006a473044022038c9d8cafe8d98a904c72760e29a7f1e3942c9ef398a7384ca7b946517a3f598022016768855eae1edb7297ee52717bb4c1a247e836fce316a1d681026f4bcf9e5240121027bf4538b926d5668452965c44dbf8724b571ee6b3bae2eab59fd6969e6e87f13",
+    isMix: false,
+    ticket: {
+      timestamp: 1654202680,
+      height: 930685,
+      blockHash:
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
+      hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+      txHash:
+        "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+      txType: "ticket",
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
+      type: 1,
+      amount: -2980,
+      fee: 2980,
+      debitAccounts: [15],
+      creditAddresses: ["TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7"],
+      isStake: true,
+      credits: [
+        {
+          index: 0,
+          account: 0,
+          internal: true,
+          amount: 6785796485,
+          address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+          outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
+        }
+      ],
+      debits: [
+        {
+          index: 0,
+          previousAccount: 15,
+          previousAmount: 6785799465
+        }
+      ],
+      rawTx:
+        "010000000154a9b3b3e7a51658a2dcadb7e6cc440acda169c47e785ba6225cab34be43dce50000000000ffffffff03850977940100000000001aba76a91461feb0d2415519047b612320e087729149edb6b388ac00000000000000000000206a1e99bf7a5e99c8c00e09ecef371eabd7865bcf5e112915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6a473044022020cfc5e2bb47ddcd39fdc1a7e82e90a8fb0c2fc01db79c683296b15afb29780c0220216ee46d39c358a18395a035b9cc0af1a0a753eed82deef8694b516b77ee0bdd0121025d5aeb18e8bb8ae1485aed5e2816990ff8b0eee40bb9ab046d738cd6e18b4edd",
+      isMix: false,
+      transaction:
+        "dd4e8be1d68c736d04abb90be4eeb0f80f9916285eed5a48e18abbe818eb5a5d022101dd0bee776b514b69f8ee2dd8ee53a7a0f10accb935a09583a158c3396de46e2120020c7829fb5ab19632689cb71dc02f0cfba8902ee8a7c1fd39cddd47bbe2c5cf2020024430476affffffff000000000000000194771529010000000000000000ac88000000000000000000000000000000000000000014a976bd1a000000000000000000004e000000000194771529115ecf5b86d7ab1e37efec090ec0c8995e7abf991e6a2000000000000000000000ac88b3b6ed49917287e02023617b04195541d2b0fe6114a976ba1a0000000000019477098503ffffffff0000000000e5dc43be34ab5c22a65b787ec469a1cd0a44cce6b7addca25816a5e7b3b3a9540100000001",
+      vspHost: "mockVspHost",
+      txUrl:
+        "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
+    },
+    spender: {
+      timestamp: 1654485406,
+      height: 932737,
+      blockHash:
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
+      index: 0,
+      hash: "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+      txHash:
+        "843128b4209be24400f5c7452aad43c2a7592979fcce6de22695e501c6a4d3b4",
+      txType: "vote",
+      debitsAmount: 6785796485,
+      creditsAmount: 6790119971,
+      type: 2,
+      amount: 4323486,
+      fee: 0,
+      debitAccounts: [0],
+      creditAddresses: ["Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr"],
+      isStake: true,
+      credits: [
+        {
+          index: 2,
+          account: 15,
+          internal: true,
+          amount: 6790119971,
+          address: "Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr",
+          outputScript: "u3apFJm/el6ZyMAOCezvNx6r14Zbz14RiKw="
+        }
+      ],
+      debits: [
+        {
+          index: 1,
+          previousAccount: 0,
+          previousAmount: 6785796485
+        }
+      ],
+      rawTx:
+        "01000000020000000000000000000000000000000000000000000000000000000000000000ffffffff00ffffffff60ed215decf9ec50b50ff4477db42b1603178dab67e35d59f22b0de16cf4c1650000000001ffffffff0300000000000000000000266a24e4d5021f882b7926497679f68b14dbf77fdd2a901b24560ab297789e00000000803b0e0000000000000000000000086a0601000a0000002302b9940100000000001abb76a91499bf7a5e99c8c00e09ecef371eabd7865bcf5e1188ac0000000000000000029ef841000000000000000000ffffffff02000085097794010000007d330e00060000006a473044022038c9d8cafe8d98a904c72760e29a7f1e3942c9ef398a7384ca7b946517a3f598022016768855eae1edb7297ee52717bb4c1a247e836fce316a1d681026f4bcf9e5240121027bf4538b926d5668452965c44dbf8724b571ee6b3bae2eab59fd6969e6e87f13",
+      isMix: false
+    },
     status: "voted"
   },
   // voted ticket
@@ -735,7 +2084,7 @@ const mockStakeTransactionList = [
     timestamp: 1652858637,
     height: 919842,
     blockHash:
-      "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
     txHash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
@@ -768,11 +2117,12 @@ const mockStakeTransactionList = [
     rawTx:
       "0100000001b50f2e03314661b566e3f0f246623c4419d8ec605da401f407a5f67cf148ce920000000000ffffffff039bf372db0200000000001aba76a9145ca8dbd9f8f80baf7605fcf09744410099a12f9b88ac00000000000000000000206a1e53b208495f9fabdfa80b4be10c4d0e488b33f2993fff72db02000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac0000000000000000013fff72db0200000000000000ffffffff6b483045022100d8f4e49c56f3249947a759d7ba766b671579399e758feaa12bc525c822c020f602200266d21d887165183479cf3d06a01470ceadc53b73527f6863ae76bf22a11ea001210355d8fdf5cdec7a8848e6d653d6c379908c256d4b54b7be637ab5018d56d19149",
     isMix: false,
+    vspHost: "mockVspHost-votedticket",
     ticket: {
       timestamp: 1652858637,
       height: 919842,
       blockHash:
-        "00000000bbf1f33870cec5e4da9a7eb7a80c17b07cd3ba4865f4086fa6f8cd3e",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
       txHash:
@@ -806,16 +2156,17 @@ const mockStakeTransactionList = [
       rawTx:
         "0100000001b50f2e03314661b566e3f0f246623c4419d8ec605da401f407a5f67cf148ce920000000000ffffffff039bf372db0200000000001aba76a9145ca8dbd9f8f80baf7605fcf09744410099a12f9b88ac00000000000000000000206a1e53b208495f9fabdfa80b4be10c4d0e488b33f2993fff72db02000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac0000000000000000013fff72db0200000000000000ffffffff6b483045022100d8f4e49c56f3249947a759d7ba766b671579399e758feaa12bc525c822c020f602200266d21d887165183479cf3d06a01470ceadc53b73527f6863ae76bf22a11ea001210355d8fdf5cdec7a8848e6d653d6c379908c256d4b54b7be637ab5018d56d19149",
       isMix: false,
-      vspHost: "mockVspHost",
+      vspHost: "mockVspHost-votedticket",
       txUrl:
-        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57"
+        "https://testnet.decred.org/tx/6085cffd75245c4d2ae51c8dbe4651e54addc30693b016e8e061720589714f57",
+      feeStatus: 1
     },
     spender: {
       timestamp: 1652874655,
       height: -1,
       blockHash: "",
       index: -1,
-      hash: "000000005af1c046f26b1a4336280e37a84a8d8e20898a1a27af18a4f23c2e56",
+      hash: "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txHash:
         "fbde49cea3a4f27110aed317dff2e8c2f00d44550bce68f5ef182b1d356d79da",
       txType: "vote",
@@ -830,7 +2181,7 @@ const mockStakeTransactionList = [
       credits: [
         {
           index: 2,
-          account: 0,
+          account: 15,
           internal: true,
           amount: 12276267831,
           address: "TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n",
@@ -853,79 +2204,83 @@ const mockStakeTransactionList = [
   },
   // missed
   {
-    timestamp: 1623923652,
-    height: 706946,
+    timestamp: 1652256415,
+    height: 914582,
     blockHash:
-      "ac7f70041e636f548314989b0eb7f50b9699194d58693642beb67aa401000000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
-    hash: "d47add864295f2d09ee993025f04e337f6fbd3b5443fb61a801738ec436391d9",
-    txHash: "d9916343ec3817801ab63f44b5d3fbf637e3045f0293e99ed0f2954286dd7ad4",
+    hash: "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873",
+    txHash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
     txType: "ticket",
-    debitsAmount: 9663778247,
-    creditsAmount: 9663775267,
+    debitsAmount: 8593628304,
+    creditsAmount: 8593625324,
     type: 1,
     amount: -2980,
     fee: 2980,
     debitAccounts: [0],
-    creditAddresses: ["TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1"],
+    creditAddresses: ["Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC"],
     isStake: true,
     credits: [
       {
         index: 0,
         account: 0,
         internal: true,
-        amount: 9663775267,
-        address: "TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1",
-        outputScript: "unapFGFlNa2jpIRoGJLHW9lUJxgWv3YIiKw="
+        amount: 8593625324,
+        address: "Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC",
+        outputScript: "unapFHlAc365vEeYpW/aMvo2gidAIAgViKw="
       }
     ],
     debits: [
       {
         index: 0,
         previousAccount: 0,
-        previousAmount: 9663778247
+        previousAmount: 8593628304
       }
     ],
     rawTx:
-      "01000000011a85d6fba21ae1ce273289089662304e13da5c745391e44fba4c614edbcc4c960000000000ffffffff03238201400200000000001aba76a914616535ada3a484681892c75bd954271816bf760888ac00000000000000000000206a1e1a55f9e36f3c419b77a06ad9eb27e1229d8f7bfcc78d0140020000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001c78d01400200000081c90a000b0000006a473044022069248e698f6942357e33d6abd7faf692ef7b5ca9c869a6271d958b75261262e10220189fc7aa035e0b7bdda299f900e078febfd99bdd19ddbc337b90062919e0136b01210293e05bb5230bac9482452e908367fa4c2c0207955c22d5f6479635f3db1b6327",
+      "0100000001d5c92daf04dc8a5abfa0d4dd96cc0ce98c78ffa126d299aabe340c7d4baf14360000000000ffffffff03ec5038000200000000001aba76a9147940737eb9bc4798a56fda32fa3682274020081588ac00000000000000000000206a1e29b9f346a3b78f1b4b029429aee2a484fdaaf28b905c380002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001905c38000200000095f40d00010000006b483045022100bdac06f033cd0fe652bd8d5fc21833a3b7064114c8a949c7157f58f5d2dc2e2302206b2bb830c34c75c76ca3df491245c775eeb4eb3e0b73bca6ead94ed34762e439012103033666b327ef4a26ea4f26ce53223f3cd092a063d57f711ea3ec7169cbce4ed9",
+    isMix: false,
     ticket: {
-      timestamp: 1623923652,
-      height: 706946,
+      timestamp: 1652256415,
+      height: 914582,
       blockHash:
-        "ac7f70041e636f548314989b0eb7f50b9699194d58693642beb67aa401000000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
-      hash: "d47add864295f2d09ee993025f04e337f6fbd3b5443fb61a801738ec436391d9",
+      hash: "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
       txHash:
-        "d9916343ec3817801ab63f44b5d3fbf637e3045f0293e99ed0f2954286dd7ad4",
+        "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc",
       txType: "ticket",
-      debitsAmount: 9663778247,
-      creditsAmount: 9663775267,
+      debitsAmount: 8593628304,
+      creditsAmount: 8593625324,
       type: 1,
       amount: -2980,
       fee: 2980,
       debitAccounts: [0],
-      creditAddresses: ["TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1"],
+      creditAddresses: ["Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC"],
       isStake: true,
       credits: [
         {
           index: 0,
           account: 0,
           internal: true,
-          amount: 9663775267,
-          address: "TsZu7GLduXJKyD69vpuBrTj6Ja2sREAY1M1",
-          outputScript: "unapFGFlNa2jpIRoGJLHW9lUJxgWv3YIiKw="
+          amount: 8593625324,
+          address: "Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC",
+          outputScript: "unapFHlAc365vEeYpW/aMvo2gidAIAgViKw="
         }
       ],
       debits: [
         {
           index: 0,
           previousAccount: 0,
-          previousAmount: 9663778247
+          previousAmount: 8593628304
         }
       ],
       rawTx:
-        "01000000011a85d6fba21ae1ce273289089662304e13da5c745391e44fba4c614edbcc4c960000000000ffffffff03238201400200000000001aba76a914616535ada3a484681892c75bd954271816bf760888ac00000000000000000000206a1e1a55f9e36f3c419b77a06ad9eb7e1229d8f7bfcc78d0140020000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001c78d01400200000081c90a000b0000006a473044022069248e698f6942357e33d6abd7faf692ef7b5ca9c869a6271d958b75261262e10220189fc7aa035e0b7bdda299f900e078febfd99bdd19ddbc337b90062919e0136b01210293e05bb5230bac9482452e908367fa4c2c0207955c22d5f6479635f3db1b6327",
-      vspHost: "mockVspHost-missed"
+        "0100000001d5c92daf04dc8a5abfa0d4dd96cc0ce98c78ffa126d299aabe340c7d4baf14360000000000ffffffff03ec5038000200000000001aba76a9147940737eb9bc4798a56fda32fa3682274020081588ac00000000000000000000206a1e29b9f346a3b78f1b4b029429aee2a484fdaaf28b905c380002000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001905c38000200000095f40d00010000006b483045022100bdac06f033cd0fe652bd8d5fc21833a3b7064114c8a949c7157f58f5d2dc2e2302206b2bb830c34c75c76ca3df491245c775eeb4eb3e0b73bca6ead94ed34762e439012103033666b327ef4a26ea4f26ce53223f3cd092a063d57f711ea3ec7169cbce4ed9",
+      isMix: false,
+      vspHost: "mockVspHost-missed",
+      txUrl:
+        "https://testnet.decred.org/tx/d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc"
     },
     status: "missed"
   },
@@ -934,7 +2289,7 @@ const mockStakeTransactionList = [
     timestamp: 1637487987,
     height: 815405,
     blockHash:
-      "000000080433728b66a9dcd5471205adde4df9619af27f45613f60c4d3dc8a02",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
     txHash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
@@ -1010,7 +2365,7 @@ const mockStakeTransactionList = [
       timestamp: 1637487987,
       height: 815405,
       blockHash:
-        "000000080433728b66a9dcd5471205adde4df9619af27f45613f60c4d3dc8a02",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "b04ee2e3309a85d0d147e942b8139c3d6f36daf086ce0fd4d53a9069dfa97f99",
       txHash:
@@ -1054,7 +2409,7 @@ const mockStakeTransactionList = [
     timestamp: 1622730448,
     height: 697812,
     blockHash:
-      "a52cdf0ddcfdb30a191f021262edfaae9f38b6a819d0338d9c7ca04900000000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
     hash: "8c6e88a38ceac7e52ef3c9f4d936d0cf16fcc0a510955cab255f3a23ce2e09c1",
     txHash: "c1092ece233a5f25ab5c9510a5c0fc16cfd036d9f4c9f32ee5c7ea8ca3886e8c",
@@ -1088,10 +2443,9 @@ const mockStakeTransactionList = [
       "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052",
     ticket: {
       timestamp: 1618322224,
-      height: -1,
+      height: 661573,
       blockHash: "",
-      index: -1,
-      hash: "47ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a",
+      hash: "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
       txHash:
         "9a1bfc118243cab22ea20499d08431c6700d2aceae6b61e2e9f6476e24bfec47",
       txType: "ticket",
@@ -1121,13 +2475,14 @@ const mockStakeTransactionList = [
         }
       ],
       rawTx:
-        "010000000120b97bf5eb8969095c3b8fa9590701f910246f464b84db62423b34c37b6747330000000000ffffffff03f0fff6810100000000001aba76a91451d06806b3922a664e9e9cd63fe18caa7081ea6688ac00000000000000000000206a1ec0e4b3a5b5a454e388c6864ae51205223a12dce4940bf781010000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001940bf7810100000044180a00020000006a47304402204be3e7097a452d99c2b56c138f8df33a923f6da1f9f465e56c75b9cdd571864902201bf7a3e9db1cfd3b7f8e55252d5f3c04311275bbc2c4ff2333472840c262b413012102936911a32e4e000e56f82207ec5d39a66b9971021869905087b23a10399cb1b0"
+        "010000000120b97bf5eb8969095c3b8fa9590701f910246f464b84db62423b34c37b6747330000000000ffffffff03f0fff6810100000000001aba76a91451d06806b3922a664e9e9cd63fe18caa7081ea6688ac00000000000000000000206a1ec0e4b3a5b5a454e388c6864ae51205223a12dce4940bf781010000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001940bf7810100000044180a00020000006a47304402204be3e7097a452d99c2b56c138f8df33a923f6da1f9f465e56c75b9cdd571864902201bf7a3e9db1cfd3b7f8e55252d5f3c04311275bbc2c4ff2333472840c262b413012102936911a32e4e000e56f82207ec5d39a66b9971021869905087b23a10399cb1b0",
+      isMix: false
     },
     spender: {
       timestamp: 1622730448,
       height: 697812,
       blockHash:
-        "a52cdf0ddcfdb30a191f021262edfaae9f38b6a819d0338d9c7ca04900000000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
       hash: "8c6e88a38ceac7e52ef3c9f4d936d0cf16fcc0a510955cab255f3a23ce2e09c1",
       txHash:
@@ -1159,244 +2514,256 @@ const mockStakeTransactionList = [
         }
       ],
       rawTx:
-        "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052"
+        "010000000147ecbf246e47f6e9e2616baece2a0d70c63184d09904a22eb2ca438211fc1b9a0000000001ffffffff0158f7f6810100000000001abc76a914c0e4b3a5b5a454e388c6864ae51205223a12dce488ac000000000000000001f0fff6810100000045180a00060000006b483045022100ab8406a6b9bf915b48dd251519d64a7c8cf8019adc370bdd82b8d914e128280a02204ed8d9726d3a0b8186cba70e1dfd28be1ef3d9eb4e94dd412c85bc979b49a878012102ce47d2933e9b7a2fdd867dd95716ffa7674ea15083349c9dfc2f3a29ddb28052",
+      isMix: false
     },
     status: "revoked"
   },
   // unmined
   {
-    timestamp: 1624534387,
+    timestamp: 1654202499,
     height: -1,
     blockHash: null,
     index: 0,
-    hash: "7268c1fa609ee3c042073012066a169d178b1ab5faad1a9440dc3eeeb1366d7d",
-    txHash: "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16874",
+    hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
+    txHash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
     txType: "ticket",
-    debitsAmount: 3731117754,
-    creditsAmount: 3731114774,
+    debitsAmount: 6785799465,
+    creditsAmount: 6785796485,
     type: 1,
     amount: -2980,
     fee: 2980,
-    debitAccounts: [0],
-    creditAddresses: ["TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU"],
+    debitAccounts: [15],
+    creditAddresses: ["TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7"],
     isStake: true,
     credits: [
       {
         index: 0,
         account: 0,
         internal: true,
-        amount: 3731114774,
-        address: "TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU",
-        outputScript: "unapFHyIuckvdJ6IQbvXkPpCvH9iKZwWiKw="
+        amount: 6785796485,
+        address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+        outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
       }
     ],
     debits: [
       {
         index: 0,
-        previousAccount: 0,
-        previousAmount: 3731117754
+        previousAccount: 15,
+        previousAmount: 6785799465
       }
     ],
     rawTx:
-      "010000000186c0442e361ab94261602434ff49aaca20ea1316100fce542f9497a11bfc736b0000000000ffffffff03164b64de0000000000001aba76a9147c88b9c92f749e8841bbd790fa42bc7f62299c1688ac00000000000000000000206a1e31eede4990f81aabdf6ac274b9858f3d9f7ec0e3ba5664de000000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001ba5664de0000000000000000ffffffff6b483045022100faf3a618d5ec7255556c68f0c79a4a1e3f0dd75e06e9759c24fa5bc06bb2a12502201022b1a619d9f8427edbcf7595b051474a3455738cf61d3478fe0a919264f95501210218bb44dd0393aae1ced4e631a7d354e430c1adc3f9e2ce96f2ce51347e13f32c",
+      "010000000154a9b3b3e7a51658a2dcadb7e6cc440acda169c47e785ba6225cab34be43dce50000000000ffffffff03850977940100000000001aba76a91461feb0d2415519047b612320e087729149edb6b388ac00000000000000000000206a1e99bf7a5e99c8c00e09ecef371eabd7865bcf5e112915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6a473044022020cfc5e2bb47ddcd39fdc1a7e82e90a8fb0c2fc01db79c683296b15afb29780c0220216ee46d39c358a18395a035b9cc0af1a0a753eed82deef8694b516b77ee0bdd0121025d5aeb18e8bb8ae1485aed5e2816990ff8b0eee40bb9ab046d738cd6e18b4edd",
+    isMix: false,
     ticket: {
-      timestamp: 1624534387,
+      timestamp: 1654202499,
       height: -1,
       blockHash: null,
       index: 0,
-      hash: "7268c1fa609ee3c042073012066a169d178b1ab5faad1a9440dc3eeeb1366d7d",
+      hash: "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
       txHash:
-        "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16874",
+        "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60",
       txType: "ticket",
-      debitsAmount: 3731117754,
-      creditsAmount: 3731114774,
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
       type: 1,
       amount: -2980,
       fee: 2980,
-      debitAccounts: [0],
-      creditAddresses: ["TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU"],
+      debitAccounts: [15],
+      creditAddresses: ["TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7"],
       isStake: true,
       credits: [
         {
           index: 0,
           account: 0,
           internal: true,
-          amount: 3731114774,
-          address: "TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU",
-          outputScript: "unapFHyIuckvdJ6IQbvXkPpCvH9iKZwWiKw="
+          amount: 6785796485,
+          address: "TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7",
+          outputScript: "unapFGH+sNJBVRkEe2EjIOCHcpFJ7baziKw="
         }
       ],
       debits: [
         {
           index: 0,
-          previousAccount: 0,
-          previousAmount: 3731117754
+          previousAccount: 15,
+          previousAmount: 6785799465
         }
       ],
       rawTx:
-        "010000000186c0442e361ab94261602434ff49aaca20ea1316100fce542f9497a11bfc736b0000000000ffffffff03164b64de0000000000001aba76a9147c88b9c92f749e8841bbd790fa42bc7f62299c1688ac00000000000000000000206a1e31eede4990f81aabdf6ac274b9858f3d9f7ec0e3ba5664de000000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001ba5664de0000000000000000ffffffff6b483045022100faf3a618d5ec7255556c68f0c79a4a1e3f0dd75e06e9759c24fa5bc06bb2a12502201022b1a619d9f8427edbcf7595b051474a3455738cf61d3478fe0a919264f95501210218bb44dd0393aae1ced4e631a7d354e430c1adc3f9e2ce96f2ce51347e13f32c",
-      vspHost: "mockVspHost-unmined"
+        "010000000154a9b3b3e7a51658a2dcadb7e6cc440acda169c47e785ba6225cab34be43dce50000000000ffffffff03850977940100000000001aba76a91461feb0d2415519047b612320e087729149edb6b388ac00000000000000000000206a1e99bf7a5e99c8c00e09ecef371eabd7865bcf5e112915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6a473044022020cfc5e2bb47ddcd39fdc1a7e82e90a8fb0c2fc01db79c683296b15afb29780c0220216ee46d39c358a18395a035b9cc0af1a0a753eed82deef8694b516b77ee0bdd0121025d5aeb18e8bb8ae1485aed5e2816990ff8b0eee40bb9ab046d738cd6e18b4edd",
+      isMix: false,
+      vspHost: "mockVspHost-unmined",
+      txUrl:
+        "https://testnet.decred.org/tx/65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
     },
     status: "unmined",
-    feeStatus: "1"
+    feeStatus: 1
   },
   // immature
   {
-    timestamp: 1624534588,
-    height: 712265,
+    timestamp: 1654203366,
+    height: 930690,
     blockHash:
-      "46f843e79f131cf969628c4b05c568811ec53dbe8b365a50945485b300000000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
-    hash: "7268c1fa609ee3c042073012066a169d178b1ab5faad1a9440dc3eeeb1366d7d",
-    txHash: "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16872",
+    hash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
+    txHash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
     txType: "ticket",
-    debitsAmount: 3731117754,
-    creditsAmount: 3731114774,
+    debitsAmount: 6785799465,
+    creditsAmount: 6785796485,
     type: 1,
     amount: -2980,
     fee: 2980,
     debitAccounts: [0],
-    creditAddresses: ["TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU"],
+    creditAddresses: ["TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK"],
     isStake: true,
     credits: [
       {
         index: 0,
         account: 0,
         internal: true,
-        amount: 3731114774,
-        address: "TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU",
-        outputScript: "unapFHyIuckvdJ6IQbvXkPpCvH9iKZwWiKw="
+        amount: 6785796485,
+        address: "TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK",
+        outputScript: "unapFA+UU96/HfOSYqbq+B/LmP95fIlciKw="
       }
     ],
     debits: [
       {
         index: 0,
         previousAccount: 0,
-        previousAmount: 3731117754
+        previousAmount: 6785799465
       }
     ],
     rawTx:
-      "010000000186c0442e361ab94261602434ff49aaca20ea1316100fce542f9497a11bfc736b0000000000ffffffff03164b64de0000000000001aba76a9147c88b9c92f749e8841bbd790fa42bc7f62299c1688ac00000000000000000000206a1e31eede4990f81aabdf6ac274b9858f3d9f7ec0e3ba5664de000000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001ba5664de0000000000000000ffffffff6b483045022100faf3a618d5ec7255556c68f0c79a4a1e3f0dd75e06e9759c24fa5bc06bb2a12502201022b1a619d9f8427edbcf7595b051474a3455738cf61d3478fe0a919264f95501210218bb44dd0393aae1ced4e631a7d354e430c1adc3f9e2ce96f2ce51347e13f32c",
+      "01000000011a1b3fc2661245ba6b8cab9e315cf76b16c565f1c1277512608d51906f1636c10000000000ffffffff03850977940100000000001aba76a9140f9453debf1df39262a6eaf81fcb98ff797c895c88ac00000000000000000000206a1e19e5ba2f1f3b99efe1090707638af39998a1b7582915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a510695025634a249cda2c85fe63a43312cb0ee5c02db2f1256fe4f835702f8002202b0f4c7e093500b75626a4829c9705a370cb2f2f834702abe8b9ac268d5ac57b012102dfa5deeeee8b65f2738483d412f2bb5627fa7f761b132f3b4eef2e154151902c",
+    isMix: false,
     ticket: {
-      timestamp: 1624534588,
-      height: 712265,
+      timestamp: 1654203366,
+      height: 930690,
       blockHash:
-        "46f843e79f131cf969628c4b05c568811ec53dbe8b365a50945485b300000000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
-      hash: "7268c1fa609ee3c042073012066a169d178b1ab5faad1a9440dc3eeeb1366d7d",
+      hash: "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
       txHash:
-        "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16872",
+        "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530",
       txType: "ticket",
-      debitsAmount: 3731117754,
-      creditsAmount: 3731114774,
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
       type: 1,
       amount: -2980,
       fee: 2980,
       debitAccounts: [0],
-      creditAddresses: ["TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU"],
+      creditAddresses: ["TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK"],
       isStake: true,
       credits: [
         {
           index: 0,
           account: 0,
           internal: true,
-          amount: 3731114774,
-          address: "TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU",
-          outputScript: "unapFHyIuckvdJ6IQbvXkPpCvH9iKZwWiKw="
+          amount: 6785796485,
+          address: "TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK",
+          outputScript: "unapFA+UU96/HfOSYqbq+B/LmP95fIlciKw="
         }
       ],
       debits: [
         {
           index: 0,
           previousAccount: 0,
-          previousAmount: 3731117754
+          previousAmount: 6785799465
         }
       ],
       rawTx:
-        "010000000186c0442e361ab94261602434ff49aaca20ea1316100fce542f9497a11bfc736b0000000000ffffffff03164b64de0000000000001aba76a9147c88b9c92f749e8841bbd790fa42bc7f62299c1688ac00000000000000000000206a1e31eede4990f81aabdf6ac274b9858f3d9f7ec0e3ba5664de000000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001ba5664de0000000000000000ffffffff6b483045022100faf3a618d5ec7255556c68f0c79a4a1e3f0dd75e06e9759c24fa5bc06bb2a12502201022b1a619d9f8427edbcf7595b051474a3455738cf61d3478fe0a919264f95501210218bb44dd0393aae1ced4e631a7d354e430c1adc3f9e2ce96f2ce51347e13f32c",
-      vspHost: "mockVspHost-immature"
+        "01000000011a1b3fc2661245ba6b8cab9e315cf76b16c565f1c1277512608d51906f1636c10000000000ffffffff03850977940100000000001aba76a9140f9453debf1df39262a6eaf81fcb98ff797c895c88ac00000000000000000000206a1e19e5ba2f1f3b99efe1090707638af39998a1b7582915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a510695025634a249cda2c85fe63a43312cb0ee5c02db2f1256fe4f835702f8002202b0f4c7e093500b75626a4829c9705a370cb2f2f834702abe8b9ac268d5ac57b012102dfa5deeeee8b65f2738483d412f2bb5627fa7f761b132f3b4eef2e154151902c",
+      isMix: false,
+      vspHost: "mockVspHost-immature",
+      txUrl:
+        "https://testnet.decred.org/tx/f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530"
     },
     status: "immature",
     feeStatus: 1
   },
   // live
   {
-    timestamp: 1624534588,
-    height: 712265,
+    timestamp: 1654204193,
+    height: 930696,
     blockHash:
-      "46f843e79f131cf969628c4b05c568811ec53dbe8b365a50945485b300000000",
+      "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
     index: 0,
-    hash: "7268c1fa609ee3c042073012066a169d178b1ab5faad1a9440dc3eeeb1366d7d",
-    txHash: "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873",
+    hash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e079",
+    txHash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
     txType: "ticket",
-    debitsAmount: 3731117754,
-    creditsAmount: 3731114774,
+    debitsAmount: 6785799465,
+    creditsAmount: 6785796485,
     type: 1,
     amount: -2980,
     fee: 2980,
     debitAccounts: [0],
-    creditAddresses: ["TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU"],
+    creditAddresses: ["TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4"],
     isStake: true,
     credits: [
       {
         index: 0,
         account: 0,
         internal: true,
-        amount: 3731114774,
-        address: "TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU",
-        outputScript: "unapFHyIuckvdJ6IQbvXkPpCvH9iKZwWiKw="
+        amount: 6785796485,
+        address: "TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4",
+        outputScript: "unapFIMhyeEfBENiiiK/SodiN02IfAYyiKw="
       }
     ],
     debits: [
       {
         index: 0,
         previousAccount: 0,
-        previousAmount: 3731117754
+        previousAmount: 6785799465
       }
     ],
     rawTx:
-      "010000000186c0442e361ab94261602434ff49aaca20ea1316100fce542f9497a11bfc736b0000000000ffffffff03164b64de0000000000001aba76a9147c88b9c92f749e8841bbd790fa42bc7f62299c1688ac00000000000000000000206a1e31eede4990f81aabdf6ac274b9858f3d9f7ec0e3ba5664de000000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001ba5664de0000000000000000ffffffff6b483045022100faf3a618d5ec7255556c68f0c79a4a1e3f0dd75e06e9759c24fa5bc06bb2a12502201022b1a619d9f8427edbcf7595b051474a3455738cf61d3478fe0a919264f95501210218bb44dd0393aae1ced4e631a7d354e430c1adc3f9e2ce96f2ce51347e13f32c",
+      "010000000164f0acf752429210f469c6536c857d092aac8bc84fa661f013b535aa6394c4710000000000ffffffff03850977940100000000001aba76a9148321c9e11f0443628a22bf4a8762374d887c063288ac00000000000000000000206a1e01ca6bb0120ca64e750a9cbaa66597f010c1c03d2915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a58c8e7b6f33b3c3fdc43dfa7472d19e39cc8c22c5990f94ca45a9458c860bfe02202227864c234f9a2c328418cabf6a5934e99d16806a8492805ad4243155d77e63012102029965f740c2b87c21dca96fb4195f71dae34b779ef4daed5902f98a0c09a437",
+    isMix: false,
     ticket: {
-      timestamp: 1624534588,
-      height: 712265,
+      timestamp: 1654204193,
+      height: 930696,
       blockHash:
-        "46f843e79f131cf969628c4b05c568811ec53dbe8b365a50945485b300000000",
+        "21eb3e22e887ba5c674399bff8e05bcb3bd8917ec283436d75357dc10b000000",
       index: 0,
-      hash: "7268c1fa609ee3c042073012066a169d178b1ab5faad1a9440dc3eeeb1366d7d",
+      hash: "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
       txHash:
-        "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873",
+        "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07",
       txType: "ticket",
-      debitsAmount: 3731117754,
-      creditsAmount: 3731114774,
+      debitsAmount: 6785799465,
+      creditsAmount: 6785796485,
       type: 1,
       amount: -2980,
       fee: 2980,
       debitAccounts: [0],
-      creditAddresses: ["TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU"],
+      creditAddresses: ["TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4"],
       isStake: true,
       credits: [
         {
           index: 0,
           account: 0,
           internal: true,
-          amount: 3731114774,
-          address: "TscNc4DXrcuFgFJ6WyohhKaqvyDyJ8pksUU",
-          outputScript: "unapFHyIuckvdJ6IQbvXkPpCvH9iKZwWiKw="
+          amount: 6785796485,
+          address: "TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4",
+          outputScript: "unapFIMhyeEfBENiiiK/SodiN02IfAYyiKw="
         }
       ],
       debits: [
         {
           index: 0,
           previousAccount: 0,
-          previousAmount: 3731117754
+          previousAmount: 6785799465
         }
       ],
       rawTx:
-        "010000000186c0442e361ab94261602434ff49aaca20ea1316100fce542f9497a11bfc736b0000000000ffffffff03164b64de0000000000001aba76a9147c88b9c92f749e8841bbd790fa42bc7f62299c1688ac00000000000000000000206a1e31eede4990f81aabdf6ac274b9858f3d9f7ec0e3ba5664de000000000058000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001ba5664de0000000000000000ffffffff6b483045022100faf3a618d5ec7255556c68f0c79a4a1e3f0dd75e06e9759c24fa5bc06bb2a12502201022b1a619d9f8427edbcf7595b051474a3455738cf61d3478fe0a919264f95501210218bb44dd0393aae1ced4e631a7d354e430c1adc3f9e2ce96f2ce51347e13f32c",
-      vspHost: "mockVspHost-live"
+        "010000000164f0acf752429210f469c6536c857d092aac8bc84fa661f013b535aa6394c4710000000000ffffffff03850977940100000000001aba76a9148321c9e11f0443628a22bf4a8762374d887c063288ac00000000000000000000206a1e01ca6bb0120ca64e750a9cbaa66597f010c1c03d2915779401000000004e000000000000000000001abd76a914000000000000000000000000000000000000000088ac000000000000000001291577940100000000000000ffffffff6b483045022100a58c8e7b6f33b3c3fdc43dfa7472d19e39cc8c22c5990f94ca45a9458c860bfe02202227864c234f9a2c328418cabf6a5934e99d16806a8492805ad4243155d77e63012102029965f740c2b87c21dca96fb4195f71dae34b779ef4daed5902f98a0c09a437",
+      isMix: false,
+      vspHost: "mockVspHost-live",
+      txUrl:
+        "https://testnet.decred.org/tx/05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07"
     },
-    status: "live",
-    feeStatus: 1
+    status: "live"
   }
 ];
 
@@ -1404,6 +2771,11 @@ export const mockRegularTransactions = {};
 mockRegularTransactionList.forEach((tx) => {
   tx.blockHash = toByteArray(tx.blockHash);
   mockRegularTransactions[tx.txHash] = tx;
+});
+
+export const mockNormalizedRegularTransactions = {};
+mockNormalizedRegularTransactionList.forEach((tx) => {
+  mockNormalizedRegularTransactions[tx.txHash] = tx;
 });
 
 export const mockStakeTransactions = {};
@@ -1416,6 +2788,11 @@ mockStakeTransactionList.forEach((tx) => {
     tx.spender.blockHash = toByteArray(tx.spender.blockHash);
   }
   mockStakeTransactions[tx.txHash] = tx;
+});
+
+export const mockNormalizedStakeTransactions = {};
+mockNormalizedStakeTransactionList.forEach((tx) => {
+  mockNormalizedStakeTransactions[tx.txHash] = tx;
 });
 
 export const mockAgendas = [

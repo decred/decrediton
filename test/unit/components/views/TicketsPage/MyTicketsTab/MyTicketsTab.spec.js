@@ -6,7 +6,7 @@ export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
 import { DCR } from "constants";
-import { mockStakeTransactions } from "../../TransactionPage/mocks";
+import { mockNormalizedStakeTransactions } from "../../TransactionPage/mocks";
 import { cloneDeep } from "fp";
 
 const selectors = sel;
@@ -31,8 +31,8 @@ const getTestTxs = (startTs) => {
   const startDate = new Date(startTs * 1000);
   let lastTransaction;
 
-  Object.keys(mockStakeTransactions).forEach((txHash) => {
-    lastTransaction = { ...mockStakeTransactions[txHash] };
+  Object.keys(mockNormalizedStakeTransactions).forEach((txHash) => {
+    lastTransaction = { ...mockNormalizedStakeTransactions[txHash] };
     startDate.setHours(startDate.getHours() - 1);
     const ts = Math.floor(startDate.getTime() / 1000);
     lastTransaction.txHash = `test-txHash-${ts}`;
@@ -225,7 +225,8 @@ test("test tickets list", async () => {
     Object.keys(allTestTxs).length
   );
   expect(mockGetTransactions).toHaveBeenCalledTimes(
-    Object.keys(allTestTxs).length / Object.keys(mockStakeTransactions).length
+    Object.keys(allTestTxs).length /
+      Object.keys(mockNormalizedStakeTransactions).length
   );
   expect(queryLoadingMoreLabel()).not.toBeInTheDocument();
   expect(getNoMoreTicketsLabel()).toBeInTheDocument();
