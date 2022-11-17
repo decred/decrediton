@@ -488,8 +488,7 @@ const initialState = {
   },
   dex: {
     dexOrdersOpen: false,
-    loggedIn: false,
-    alreadyPaid: false
+    loggedIn: false
   },
   locales: locales
 };

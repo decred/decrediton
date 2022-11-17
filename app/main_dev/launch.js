@@ -1017,22 +1017,6 @@ export const createWalletDexCall = (
   }
 };
 
-export const getDexConfigCall = (addr) =>
-  !dex ? null : callDEX("DexConfig", { addr });
-
-export const preRegisterCall = (appPass, addr) =>
-  !dex ? null : callDEX("PreRegister", { appPass, addr });
-
-export const registerDexCall = (appPass, addr, fee) =>
-  !dex
-    ? null
-    : callDEX("Register", {
-        appPass,
-        url: addr,
-        fee: parseInt(fee),
-        cert: ""
-      });
-
 export const userDexCall = () => (!dex ? null : callDEX("User", {}));
 
 export const GetDcrwPort = () => dcrwPort;

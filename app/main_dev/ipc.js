@@ -22,9 +22,6 @@ import {
   initCheckDex,
   initDexCall,
   createWalletDexCall,
-  getDexConfigCall,
-  preRegisterCall,
-  registerDexCall,
   userDexCall,
   loginDexCall,
   logoutDexCall,
@@ -369,52 +366,6 @@ export const createWalletDex = async (
     return createWallet;
   } catch (e) {
     logger.log("error", `error create wallet dex: ${e}`);
-    return e;
-  }
-};
-
-export const getConfigDex = async (addr) => {
-  if (!GetDexPID()) {
-    logger.log("info", "Skipping get config since dex is not runnning");
-    return false;
-  }
-
-  try {
-    const getDexConfig = await getDexConfigCall(addr);
-    return getDexConfig;
-  } catch (e) {
-    logger.log("error", `error get config dex: ${e}`);
-    return e;
-  }
-};
-
-export const preRegister = async (appPass, addr) => {
-  if (!GetDexPID()) {
-    logger.log("info", "Skipping preregister since dex is not runnning");
-    return false;
-  }
-
-  try {
-    const registered = await preRegisterCall(appPass, addr);
-    console.log("registered already?", registered);
-    return registered;
-  } catch (e) {
-    logger.log("error", `error preregister dex: ${e}`);
-    return e;
-  }
-};
-
-export const registerDex = async (appPass, addr, fee) => {
-  if (!GetDexPID()) {
-    logger.log("info", "Skipping register since dex is not runnning");
-    return false;
-  }
-
-  try {
-    const register = await registerDexCall(appPass, addr, fee);
-    return register;
-  } catch (e) {
-    logger.log("error", `error register dex: ${e}`);
     return e;
   }
 };
