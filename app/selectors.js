@@ -9,14 +9,13 @@ import {
   eq,
   bool,
   map,
-  apply,
   some,
   uniq,
   createSelectorEager as createSelector
 } from "./fp";
 import { isNull } from "lodash";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
-import { decodeVoteScript, reverseHash, dateToLocal, dateToUTC } from "helpers";
+import { dateToLocal, dateToUTC } from "helpers";
 import {
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_POLITEIA,
@@ -41,12 +40,8 @@ import {
   UNIT_DIVISOR,
   TESTNET,
   MAINNET,
-  TRANSACTION_DIR_SENT,
-  TRANSACTION_DIR_RECEIVED,
-  TICKET_FEE,
   VOTED
 } from "constants";
-import { wallet } from "wallet-preload-shim";
 import { isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
@@ -413,377 +408,16 @@ export const chainParams = compose(
   isTestNet
 );
 
-export const ticketNormalizer = createSelector(
-  [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
-  (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
-    return (ticket) => {
-      const {
-        txType,
-        status,
-        spender,
-        blockHash,
-        rawTx,
-        isStake,
-        height,
-        feeStatus
-      } = ticket;
-      // TODO refactor same code to be used in tickets and regular tx normalizers.
-      const findAccount = (num) =>
-        accounts.find((account) => account.accountNumber === num);
-      const getAccountName = (num) =>
-        ((act) => (act ? act.accountName : ""))(findAccount(num));
-      const txInputs = [];
-      const txOutputs = [];
-      const hasSpender = spender && spender.hash;
-      const isVote = status === VOTED;
-      const isPending = height <= 0;
-      // Some legacy vsp fees wallet will have tickets without `ticket` field
-      // and only with `spender` so we use it as fallback
-      const ticketTx = ticket.ticket || ticket.spender;
-      const ticketHash = ticketTx.txHash;
-      const spenderTx = hasSpender ? spender : null;
-      const txBlockHash = blockHash ? blockHash : null;
-      const txHash = ticket.txHash;
-      const txUrl = txURLBuilder(txHash);
-      const txBlockUrl = blockURLBuilder(txBlockHash);
-
-      const spenderHash = hasSpender ? spenderTx.txHash : null;
-      const hasCredits = ticketTx.credits.length > 0;
-      if (spenderTx) {
-        spenderTx.debits.reduce((total, debit) => {
-          const debitedAccount = debit.previousAccount;
-          const debitedAccountName = getAccountName(debitedAccount);
-          const amount = debit.previousAmount;
-          txInputs.push({
-            accountName: debitedAccountName,
-            amount,
-            index: debit.index
-          });
-          return total + amount;
-        }, 0);
-        spenderTx.credits.forEach((credit) => {
-          const amount = credit.amount;
-          const address = credit.address;
-          const creditedAccount = credit.account;
-          const creditedAccountName = getAccountName(creditedAccount);
-          txOutputs.push({
-            accountName: creditedAccountName,
-            amount,
-            address,
-            index: credit.index
-          });
-        });
-      } else {
-        ticketTx.debits.reduce((total, debit) => {
-          const debitedAccount = debit.previousAccount;
-          const debitedAccountName = getAccountName(debitedAccount);
-          const amount = debit.previousAmount;
-          txInputs.push({
-            accountName: debitedAccountName,
-            amount,
-            index: debit.index
-          });
-          return total + amount;
-        }, 0);
-
-        ticketTx.credits.forEach((credit) => {
-          const amount = credit.amount;
-          const address = credit.address;
-          const creditedAccount = credit.account;
-          const creditedAccountName = getAccountName(creditedAccount);
-          txOutputs.push({
-            accountName: creditedAccountName,
-            amount,
-            address,
-            index: credit.index
-          });
-        });
-      }
-
-      let ticketPrice = 0;
-      if (hasCredits) {
-        ticketPrice = ticketTx.credits[0].amount;
-      } else {
-        // we don't have a credit when we don't have the voting rights (unimported
-        // stakepool script, solo voting ticket, split ticket, etc)
-        const decodedTicketTx = wallet.decodeRawTransaction(
-          Buffer.from(ticketTx.rawTx, "hex"),
-          chainParams
-        );
-        ticketPrice = decodedTicketTx.outputs[0].value;
-      }
-
-      // ticket tx fee is the fee for the transaction where the ticket was bought
-      const ticketTxFee = ticketTx.fee;
-
-      // revocations have a tx fee that influences the stake rewards calc
-      const spenderTxFee = hasSpender ? spenderTx.fee : 0;
-
-      ticketTx.txUrl = txURLBuilder(ticketTx.txHash);
-
-      // ticket change is anything returned to the wallet on ticket purchase.
-      const isTicketChange = (c) => c.index > 0 && c.index % 2 === 0;
-      const ticketChange = ticketTx.credits.reduce(
-        (s, c) => (s + isTicketChange(c) ? c.amount : 0),
-        0
-      );
-
-      // ticket investment is the full amount paid by the wallet on the ticket purchase
-      let accountName = "";
-      const debitList = ticketTx.debits;
-      if (debitList.length > 0) {
-        accountName = getAccountName(debitList[0].previousAccount);
-      }
-      const ticketInvestment =
-        debitList.reduce((a, v) => a + v.previousAmount, 0) - ticketChange;
-
-      let ticketReward,
-        ticketStakeRewards,
-        ticketReturnAmount,
-        ticketPoolFee,
-        voteScript;
-      if (hasSpender) {
-        // everything returned to the wallet after voting/revoking
-        ticketReturnAmount = spenderTx.credits.reduce(
-          (a, v) => a + v.amount,
-          0
-        );
-
-        // this is liquid from applicable fees (i.e, what the wallet actually made)
-        ticketReward = ticketReturnAmount - ticketInvestment;
-
-        ticketStakeRewards = ticketReward / ticketInvestment;
-
-        const decodedSpenderTx = wallet.decodeRawTransaction(
-          Buffer.from(spenderTx.rawTx, "hex"),
-          chainParams
-        );
-
-        // Check pool fee. If there is a debit at index=0 of the ticket but not
-        // a corresponding credit at the expected index on the spender, then
-        // that was a pool fee.
-        const hasIndex0Debit = ticketTx.debits.some((d) => d.index === 0);
-        const hasIndex0Credit = spenderTx.credits.some((c) => {
-          // In votes, the first 2 outputs are voting block and vote bits
-          // OP_RETURNs, so ignore those.
-          return (isVote && c.index === 2) || (!isVote && c.index === 0);
-        });
-        if (hasIndex0Debit && !hasIndex0Credit) {
-          const poolFeeDebit = ticketTx.debits.find((d) => d.index === 0);
-          ticketPoolFee = poolFeeDebit.previousAmount;
-        }
-
-        if (isVote) {
-          voteScript = decodeVoteScript(
-            network,
-            decodedSpenderTx.outputs[1].script
-          );
-        }
-      }
-
-      return {
-        txHash,
-        txBlockHash,
-        spenderHash,
-        ticketHash,
-        ticketTx,
-        spenderTx,
-        ticketPrice,
-        ticketReward,
-        ticketChange,
-        ticketInvestment,
-        ticketTxFee,
-        ticketPoolFee,
-        ticketStakeRewards,
-        ticketReturnAmount,
-        voteScript,
-        spenderTxFee,
-        enterTimestamp: ticketTx.timestamp,
-        leaveTimestamp: hasSpender ? spenderTx.timestamp : null,
-        status: ticket.status,
-        rawTx,
-        tx: ticketTx,
-        txType,
-        isPending,
-        accountName,
-        txInputs,
-        txOutputs,
-        txHeight: ticket.height,
-        txUrl,
-        txBlockUrl,
-        isStake,
-        feeStatus
-      };
-    };
-  }
-);
-
 export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
-
-// transactionNormalizer normalizes regular decred's regular transactions
-export const transactionNormalizer = createSelector(
-  [accounts, txURLBuilder, blockURLBuilder, chainParams, getMixedAccountName],
-  (accounts, txURLBuilder, blockURLBuilder, chainParams, mixedAccountName) => {
-    const findAccount = (num) =>
-      accounts.find((account) => account.accountNumber === num);
-    const getAccountName = (num) =>
-      ((act) => (act ? act.accountName : ""))(findAccount(num));
-    return (origTx) => {
-      const {
-        blockHash,
-        height,
-        type,
-        txType,
-        timestamp,
-        txHash,
-        rawTx,
-        isMix,
-        outputs,
-        creditAddresses,
-        direction,
-        amount: origAmount
-      } = origTx;
-      const txUrl = txURLBuilder(txHash);
-      const txBlockHash = blockHash
-        ? reverseHash(Buffer.from(blockHash).toString("hex"))
-        : null;
-      const txBlockUrl = blockURLBuilder(txBlockHash);
-
-      let totalFundsReceived = 0;
-      let totalChange = 0;
-      const txInputs = [];
-      const txOutputs = [];
-      const fee = origTx.fee;
-      let debitedAccountName, creditedAccountName;
-      const totalDebit = origTx.debits.reduce((total, debit) => {
-        const debitedAccount = debit.previousAccount;
-        debitedAccountName = getAccountName(debitedAccount);
-        const amount = debit.previousAmount;
-        txInputs.push({
-          accountName: debitedAccountName,
-          amount,
-          index: debit.index
-        });
-        return total + amount;
-      }, 0);
-
-      let selfTx = false;
-      origTx.credits.forEach((credit) => {
-        const amount = credit.amount;
-        const address = credit.address;
-        const creditedAccount = credit.account;
-        const currentCreditedAccountName = getAccountName(creditedAccount);
-        // If we find a self credited account which isn't a change output
-        // & tx has one or more wallet inputs & no non-wallet outputs we consider
-        // the transaction as self trnsaction
-        if (
-          !credit.internal &&
-          txInputs.length > 0 &&
-          origTx.credits.length === outputs.length
-        ) {
-          selfTx = true;
-        }
-        // If we find credit which is not a change, then we pick
-        // it as receiver
-        if (!creditedAccountName || !credit.internal) {
-          creditedAccountName = currentCreditedAccountName;
-        }
-        txOutputs.push({
-          accountName: currentCreditedAccountName,
-          amount,
-          address,
-          index: credit.index
-        });
-        credit.internal
-          ? (totalChange += amount)
-          : (totalFundsReceived += amount);
-      });
-
-      const txDetails =
-        totalFundsReceived + totalChange + fee < totalDebit
-          ? {
-              txAmount: totalDebit - fee - totalChange - totalFundsReceived,
-              txDirection: TRANSACTION_DIR_SENT,
-              txAccountName: debitedAccountName
-            }
-          : totalFundsReceived + totalChange + fee === totalDebit
-          ? {
-              txAmount: fee,
-              txDirection: TICKET_FEE,
-              txAccountNameCredited: creditedAccountName,
-              txAccountNameDebited: debitedAccountName
-            }
-          : totalFundsReceived === 0 &&
-            totalChange > 0 &&
-            origAmount === totalChange &&
-            direction === TRANSACTION_DIR_RECEIVED
-          ? // probably this is an incoming atomic swap
-            {
-              txAmount: totalChange,
-              txDirection: TRANSACTION_DIR_RECEIVED,
-              txAccountName: creditedAccountName
-            }
-          : {
-              txAmount: totalFundsReceived,
-              txDirection: TRANSACTION_DIR_RECEIVED,
-              txAccountName: creditedAccountName
-            };
-
-      return {
-        txUrl,
-        txBlockUrl,
-        txHash,
-        txHeight: height,
-        txType,
-        timestamp,
-        isPending: height <= 0,
-        txFee: fee,
-        txInputs,
-        txOutputs,
-        txBlockHash,
-        txNumericType: type,
-        rawTx,
-        outputs,
-        creditAddresses,
-        mixedTx: isMix || debitedAccountName === mixedAccountName,
-        selfTx: !isMix && selfTx,
-        ...txDetails
-      };
-    };
-  }
-);
 
 // ****** Transactions selectors ********
 
 // transactions selectors before normalized
 // these selectors are maps, with tx hash as key, containing all transactions
 // which decrediton already known about them.
-const stakeTxs = get(["grpc", "stakeTransactions"]);
-const regularTxs = get(["grpc", "regularTransactions"]);
 
-// transactions selectors normalized.
-export const regularTransactions = createSelector(
-  [transactionNormalizer, regularTxs],
-  (normalizerFn, txsMap) => {
-    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
-      const tx = txsMap[txHash];
-      if (tx.isStake) return null;
-      normalizedMap[txHash] = normalizerFn(tx);
-      return normalizedMap;
-    }, {});
-  }
-);
-
-export const stakeTransactions = createSelector(
-  [ticketNormalizer, stakeTxs],
-  (normalizerFn, txsMap) => {
-    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
-      const tx = txsMap[txHash];
-      normalizedMap[txHash] = normalizerFn(tx);
-      return normalizedMap;
-    }, {});
-  }
-);
+export const regularTransactions = get(["grpc", "regularTransactions"]);
+export const stakeTransactions = get(["grpc", "stakeTransactions"]);
 
 export const startRequestHeight = get(["grpc", "startRequestHeight"]);
 
@@ -828,18 +462,12 @@ export const hasTickets = compose(
   stakeTransactions
 );
 
-const transactionsNormalizer = createSelector([transactionNormalizer], map);
-const ticketsNormalizer = createSelector([ticketNormalizer], map);
+export const homeHistoryTickets = get(["grpc", "recentStakeTransactions"]);
 
-export const homeHistoryTickets = createSelector(
-  [ticketsNormalizer, get(["grpc", "recentStakeTransactions"])],
-  apply
-);
-
-export const homeHistoryTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "recentRegularTransactions"])],
-  apply
-);
+export const homeHistoryTransactions = get([
+  "grpc",
+  "recentRegularTransactions"
+]);
 
 // ******* end of transactions selectors ************
 

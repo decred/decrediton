@@ -12,7 +12,7 @@ import {
   defaultMockAvailableInvalidVsps,
   mockTickets
 } from "./vspMocks.js";
-import { mockStakeTransactions } from "../components/views/TransactionPage/mocks.js";
+import { mockNormalizedStakeTransactions } from "../components/views/TransactionPage/mocks.js";
 import {
   mockMixedAccountValue,
   mockChangeAccountValue,
@@ -371,12 +371,12 @@ test("test getUnspentUnexpiredVspTickets", async () => {
 
 const mockPassphrase = "test-passphrase";
 const mockTx =
-  mockStakeTransactions[
-    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16873"
+  mockNormalizedStakeTransactions[
+    "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07"
   ];
 const mockTxImmature =
-  mockStakeTransactions[
-    "7d6d36b1ee3edc40941aadfab51a8b179d166a0612300742c0e39e60fac16872"
+  mockNormalizedStakeTransactions[
+    "f0085fbc5f7476dc4907618262ae6e8a967ab1ac21c55465ed1dc31369dec530"
   ];
 const mockVspHost = "mock-vsp-host";
 const mockCommitmentAddress = "test-commitment-address";
@@ -513,7 +513,11 @@ test.each([
   [
     "invalid tx.ticketTx.vspHost parameter",
     "Error: Invalid tx parameter",
-    () => cloneDeep(mockTx),
+    () => {
+      const res = cloneDeep(mockTx);
+      res.ticketTx.vspHost = null;
+      return res;
+    },
     cloneDeep(mockDecodedTx)
   ],
   [
