@@ -38,7 +38,9 @@
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
     "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'",
     "prettify:diff": "prettier --list-different 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'",
-    "deps-graphs": "node ./scripts/generateDepGraphs"
+    "deps-graphs": "node ./scripts/generateDepGraphs",
+    "analyze": "source-map-explorer 'app/dist/*.js'",
+    "analyze:gzip": "source-map-explorer 'app/dist/*.js' --gzip"
   },
   "jest": {
     "verbose": true,
@@ -256,6 +258,7 @@
     "prettier": "^2.2.1",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
+    "source-map-explorer": "^2.5.3",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
     "webpack": "^5.28.0",
@@ -291,7 +294,7 @@
     "minimist": "^1.2.3",
     "mv": "^2.1.1",
     "node-polyfill-webpack-plugin": "^1.1.0",
-    "pi-ui": "https://github.com/decred/pi-ui",
+    "pi-ui": "https://github.com/decred/pi-ui/",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.0",
