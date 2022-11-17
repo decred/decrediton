@@ -83,6 +83,12 @@ The current recommended versions for the main tools are:
 
 To ease node version management, install all top-level tools (node/npm/yarn) using [nvm](https://github.com/nvm-sh/nvm).
 
+### Electron extensions
+
+Decrediton uses [electron-devtools-installer](https://github.com/MarshallOfSound/electron-devtools-installer) to automatically install react and redux dev tools in the `userData/extensions` directory.
+
+The extensions *will not* be updated unless you set the `UPGRADE_EXTENSIONS` environment variable to `true`.
+
 ### Decred Binaries
 
 Development using the master version of decrediton usually requires using a
