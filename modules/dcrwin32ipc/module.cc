@@ -138,4 +138,4 @@ void Init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "getPipeEndFd", GetPipeEndFd);
 }
 
-NODE_MODULE(win32ipc, Init)
+NODE_MODULE(dcrwin32ipc, Init)

@@ -3,7 +3,7 @@
 // with a wallet name "default-wallet".
 
 const childProcess = require("child_process");
-const addon = require("./build/Release/win32ipc");
+const addon = require("./build/Release/dcrwin32ipc");
 const path = require("path");
 const os = require("os");
 const fs = require("fs");
