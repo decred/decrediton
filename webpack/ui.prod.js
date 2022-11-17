@@ -13,7 +13,7 @@ const baseConfig = require("./ui.base");
 const webpack = require("webpack");
 
 module.exports = merge(baseConfig, {
-  devtool: "cheap-module-source-map",
+  devtool: "source-map",
 
   entry: ["@babel/polyfill", "./app/index"],
 
