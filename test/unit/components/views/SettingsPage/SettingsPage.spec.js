@@ -60,6 +60,7 @@ const testDefaultAllowedExternalRequests = [
 ];
 const testDefaultUIAnimationsLabel = "Enabled";
 const testUIAnimationsLabel = "Disabled";
+const testDefaultAutoWalletLaunching = false;
 
 const testCurrentSettings = {
   locale: testDefaultLocale.key,
@@ -75,7 +76,8 @@ const testCurrentSettings = {
   gapLimit: testDefaultGapLimit,
   timezone: testDefaultTimezone,
   uiAnimations: testDefaultUIAnimationsLabel,
-  allowedExternalRequests: testDefaultAllowedExternalRequests
+  allowedExternalRequests: testDefaultAllowedExternalRequests,
+  autoWalletLaunching: testDefaultAutoWalletLaunching
 };
 const testSettings = {
   currentSettings: testCurrentSettings,
@@ -557,7 +559,7 @@ test.each([
   ]
 ])("test '%s' RadioButtonGroup", testRadioButtonGroupInput);
 
-const testCheckBoxInput = (label, configKey) => {
+const testCheckBoxInputOnPrivacy = (label, configKey) => {
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -594,7 +596,31 @@ test.each([
   ["Update Check", EXTERNALREQUEST_UPDATE_CHECK],
   ["Politeia", EXTERNALREQUEST_POLITEIA],
   ["Decred Block Explorer", EXTERNALREQUEST_DCRDATA]
-])("test '%s' Checkbox", testCheckBoxInput);
+])("test '%s' Checkbox", testCheckBoxInputOnPrivacy);
+
+test("test launcer CheckBox", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  user.click(screen.getByText("General"));
+
+  const checkbox = screen.getByLabelText(
+    "Launch wallet immediately after loading completes"
+  );
+  expect(checkbox.checked).toBe(testDefaultAutoWalletLaunching);
+
+  user.click(checkbox);
+  expect(checkbox.checked).toBe(!testDefaultAutoWalletLaunching);
+
+  const expectedChange = {
+    ...testCurrentSettings,
+    autoWalletLaunching: !testDefaultAutoWalletLaunching
+  };
+
+  expect(mockSaveSettings).toHaveBeenCalledWith(expectedChange);
+});
 
 const getFieldRequiredErrorCount = () => {
   const inputErrorString = "This field is required";

@@ -52,6 +52,10 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   config.set(configConstants.NETWORK, settings.network);
   config.set(configConstants.THEME, settings.theme);
   config.set(configConstants.UI_ANIMATIONS, settings.uiAnimations);
+  config.set(
+    configConstants.AUTO_WALLET_LAUNCHING,
+    settings.autoWalletLaunching
+  );
 
   if (walletName) {
     const walletConfig = wallet.getWalletCfg(isTestNet(getState()), walletName);
@@ -62,7 +66,10 @@ export const saveSettings = (settings) => async (dispatch, getState) => {
   }
 
   if (
-    !equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)
+    !equalElements(
+      oldAllowedExternalRequests ?? [],
+      settings.allowedExternalRequests
+    )
   ) {
     wallet.reloadAllowedExternalRequests();
   }

@@ -71,6 +71,9 @@ const useDaemonStartup = () => {
   );
   const syncFetchHeadersAttempt = useSelector(sel.syncFetchHeadersAttempt);
   const syncFetchHeadersCount = useSelector(sel.syncFetchHeadersCount);
+  const syncFetchHeadersFirstHeaderTime = useSelector(
+    sel.syncFetchHeadersFirstHeaderTime
+  );
   const syncFetchHeadersLastHeaderTime = useSelector(
     sel.syncFetchHeadersLastHeaderTime
   );
@@ -81,6 +84,8 @@ const useDaemonStartup = () => {
   const syncFetchHeadersComplete = useSelector(sel.syncFetchHeadersComplete);
   const syncFetchTimeStart = useSelector(sel.syncFetchTimeStart);
   const selectedWalletSelector = useSelector(sel.getSelectedWallet);
+  const startWalletServiceAttempt = useSelector(sel.startWalletServiceAttempt);
+  const autoWalletLaunching = useSelector(sel.autoWalletLaunching);
 
   // general methods
   // Methods for showing positions when first starting decrediton
@@ -174,6 +179,9 @@ const useDaemonStartup = () => {
     (selectedWallet) => dispatch(da.startWallet(selectedWallet)),
     [dispatch]
   );
+  const onCloseWallet = useCallback(() => dispatch(wla.closeWalletRequest()), [
+    dispatch
+  ]);
   const onRemoveWallet = useCallback(
     (selectedWallet) => dispatch(da.removeWallet(selectedWallet)),
     [dispatch]
@@ -233,6 +241,23 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const stopUnfinishedWallet = useCallback(
+    () => dispatch(wla.stopUnfinishedWallet()),
+    [dispatch]
+  );
+
+  const checkDisplayWalletGradients = useCallback(
+    (availableWallets) =>
+      dispatch(da.checkDisplayWalletGradients(availableWallets)),
+    [dispatch]
+  );
+
+  const setAutoWalletLaunching = useCallback(
+    (autoWalletLaunching) =>
+      dispatch(wla.setAutoWalletLaunching(autoWalletLaunching)),
+    [dispatch]
+  );
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -246,6 +271,7 @@ const useDaemonStartup = () => {
     goToErrorPage,
     onRemoveWallet,
     onStartWallet,
+    onCloseWallet,
     onGetAvailableWallets,
     syncDaemon,
     checkNetworkMatch,
@@ -293,12 +319,15 @@ const useDaemonStartup = () => {
     syncFetchMissingCfiltersEnd,
     syncFetchHeadersAttempt,
     syncFetchHeadersCount,
+    syncFetchHeadersFirstHeaderTime,
     syncFetchHeadersLastHeaderTime,
     syncDiscoverAddressesAttempt,
     syncRescanAttempt,
     syncFetchHeadersComplete,
     syncFetchTimeStart,
     selectedWalletSelector,
+    startWalletServiceAttempt,
+    autoWalletLaunching,
     goToHome,
     setCoinjoinCfg,
     onGetDcrdLogs,
@@ -311,7 +340,10 @@ const useDaemonStartup = () => {
     isProcessingManaged,
     isProcessingUnmanaged,
     needsProcessManagedTickets,
-    isSettingAccountsPassphrase
+    stopUnfinishedWallet,
+    isSettingAccountsPassphrase,
+    checkDisplayWalletGradients,
+    setAutoWalletLaunching
   };
 };
 

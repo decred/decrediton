@@ -4,8 +4,8 @@ import styles from "./WalletError.module.css";
 const WalletError = () => {
   const { getNetworkError } = useWalletError();
   return (
-    <div style={styles.view}>
-      <div style={styles.content}>
+    <div className={styles.view}>
+      <div className={styles.content}>
         {getNetworkError ? (
           <p>
             {getNetworkError} Please verify that your dcrd is configured
@@ -13,9 +13,8 @@ const WalletError = () => {
           </p>
         ) : (
           <p>
-            {" "}
             We have detected that your wallet has disconnected. Please reload
-            Decrediton to fix this problem.{" "}
+            Decrediton to fix this problem.
           </p>
         )}
       </div>

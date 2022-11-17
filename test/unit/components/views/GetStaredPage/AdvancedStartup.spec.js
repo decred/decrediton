@@ -55,14 +55,11 @@ beforeEach(() => {
 
 test("test remote daemon form", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockIsAdvancedDaemon).toHaveBeenCalled();
   expect(mockGetRemoteCredentials).toHaveBeenCalled();
   expect(mockGetAppdataPath).toHaveBeenCalled();
-  expect(
-    screen.getByText(/waiting for daemon connection.../i)
-  ).toBeInTheDocument();
   expect(
     screen.getByText(/complete one of the following/i).textContent
   ).toMatchInlineSnapshot(
@@ -123,7 +120,7 @@ test("test remote daemon form", async () => {
 
 test("test local daemon form", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByTestId("switch"));
   expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
@@ -146,7 +143,7 @@ test("test local daemon form", async () => {
 
 test("test skip link", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/skip/i));
   await wait(() => screen.getByText(testStartDaemonErrorMsg));

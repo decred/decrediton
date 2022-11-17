@@ -129,7 +129,6 @@ const icons = {
   ),
   "what-is-staking-icon": url(require("style/icons/what-is-staking.svg")),
   "watch-only-icon": url(require("style/icons/watchOnlyNav.svg")),
-  "x-white-icon": url(require("style/icons/closeWhite.svg")),
   "show-pubkey-icon": url(require("style/icons/accountShowWhite.svg")),
   "hide-pubkey-icon": url(require("style/icons/accountHideWhite.svg")),
   "loader-animation-blockchain-syncing": url(

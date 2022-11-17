@@ -1,0 +1,21 @@
+.pagedTutorial,
+.tabContentWrapper,
+.container {
+  width: 106rem;
+}
+
+@media screen and (max-width: 1180px) {
+  .pagedTutorial,
+  .tabContentWrapper,
+  .container {
+    width: 63.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pagedTutorial,
+  .tabContentWrapper,
+  .container {
+    width: 31.5rem;
+  }
+}

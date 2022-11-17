@@ -1,4 +1,4 @@
-import PrivacyPage from "components/views/GetStartedPage/PrivacyPage/PrivacyPage";
+import { PrivacyPage } from "components/views/GetStartedPage";
 import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import user from "@testing-library/user-event";

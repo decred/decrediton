@@ -1,8 +1,12 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import WalletSelectionForm from "./Form";
 import { useDaemonStartup } from "hooks";
 
-const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
+const WalletSelectionBody = ({
+  submitChosenWallet,
+  onSendCreateWallet,
+  onShowOnboardingTutorial
+}) => {
   const {
     isSPV,
     availableWallets,
@@ -11,12 +15,6 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
     creatingWallet
   } = useDaemonStartup();
   const [editWallets, setEditWallets] = useState(false);
-  const [selectedWallet, setSelectedWallet] = useState(null);
-
-  useEffect(() => {
-    setSelectedWallet(availableWallets[0]);
-  }, [availableWallets]);
-
   const onToggleEditWallet = useCallback(() => {
     setEditWallets(!editWallets);
   }, [editWallets]);
@@ -28,15 +26,9 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
     [onSendCreateWallet]
   );
 
-  const onChangeAvailableWallets = useCallback(
-    (selectedWallet) => setSelectedWallet(selectedWallet),
-    [setSelectedWallet]
-  );
-
   return (
     <WalletSelectionForm
       {...{
-        selectedWallet,
         submitChosenWallet,
         availableWallets,
         editWallets,
@@ -46,7 +38,7 @@ const WalletSelectionBody = ({ submitChosenWallet, onSendCreateWallet }) => {
         creatingWallet,
         onToggleEditWallet,
         showCreateWalletForm,
-        onChangeAvailableWallets
+        onShowOnboardingTutorial
       }}
     />
   );

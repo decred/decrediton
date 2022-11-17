@@ -1,4 +1,5 @@
-import { classNames } from "pi-ui";
+import { FormattedMessage as T } from "react-intl";
+import { classNames, Tooltip } from "pi-ui";
 import styles from "./TutorialPage.module.css";
 import TutorialCard from "../TutorialCard";
 import PagedTutorial from "../PagedTutorial";
@@ -10,16 +11,22 @@ const TutorialPage = ({
   visitedTabs,
   setVisitedTabs,
   activeTabIndex,
-  setActiveTabIndex
+  setActiveTabIndex,
+  pagedTutorialClassname,
+  tabContentWrapperClassName
 }) => {
   return (
     <div>
       <div className={classNames(styles.cardWrapper)}>
-        <div
-          className={classNames(styles.backButton, "flex-centralize")}
-          onClick={goBackHistory}>
-          <div className={styles.backArrow}></div>
-        </div>
+        <Tooltip
+          content={<T id="tutorialpage.back" m="Back" />}
+          className={styles.backTooltip}>
+          <div
+            onClick={goBackHistory}
+            className={classNames(styles.backButton, "flex-centralize")}>
+            <div className={styles.backArrow}></div>
+          </div>
+        </Tooltip>
         <TutorialCard
           {...{
             name,
@@ -36,6 +43,8 @@ const TutorialPage = ({
           slides: tutorials[name].slides,
           activeTabIndex,
           setActiveTabIndex,
+          className: pagedTutorialClassname,
+          tabContentWrapperClassName,
           onFinish: goBackHistory
         }}
       />
@@ -50,7 +59,9 @@ TutorialPage.propTypes = {
   visitedTabs: PropTypes.array,
   setVisitedTabs: PropTypes.func.isRequired,
   activeTabIndex: PropTypes.number,
-  setActiveTabIndex: PropTypes.func.isRequired
+  setActiveTabIndex: PropTypes.func.isRequired,
+  pagedTutorialClassname: PropTypes.string,
+  tabContentWrapperClassName: PropTypes.string
 };
 
 export default TutorialPage;

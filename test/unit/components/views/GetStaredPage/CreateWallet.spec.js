@@ -93,7 +93,7 @@ beforeEach(() => {
 
 const goToCopySeedView = async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
   user.click(screen.getByText(/create a new wallet/i));
   await wait(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
@@ -110,8 +110,8 @@ const goToConfirmView = async () => {
 
 const goToRestoreView = async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText("Welcome to Decrediton Wallet"));
-  user.click(screen.getByText("Restore Existing Wallet"));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
+  user.click(screen.getByText(/restore existing wallet/i));
   await wait(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText("Choose a Name"), testWalletName);
 };
@@ -375,7 +375,7 @@ test("pasting valid seed words on existing seed view and receive create wallet r
   // expect to jump back to the wallet choose view, and display
   // the error msg received from createWalletRequest
   await wait(() => screen.getByText(testCreateWalletRequestErrorMsg));
-  screen.getByText(/choose a wallet to open/i);
+  screen.getByText(/choose the wallet to access/i);
 });
 
 test("pasting valid seed words on existing seed view and successfully create wallet", async () => {
@@ -412,7 +412,7 @@ test("pasting valid seed words on existing seed view and successfully create wal
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockCreateWalletRequest).toHaveBeenCalled();
   await wait(() =>
-    expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
+    expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
 
@@ -707,7 +707,7 @@ test("test cancel button on existing seed view", async () => {
   user.click(screen.getByText("Cancel"));
   await wait(() => expect(mockCancelCreateWallet).toHaveBeenCalled());
   await wait(() =>
-    expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
+    expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
 
@@ -717,7 +717,7 @@ test("test cancel button on copy seed view", async () => {
   user.click(screen.getByText("Cancel"));
   await wait(() => expect(mockCancelCreateWallet).toHaveBeenCalled());
   await wait(() =>
-    expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
+    expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
 
@@ -733,7 +733,7 @@ test("test go back button on existing seed view", async () => {
 
   user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() =>
-    expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
+    expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
 
@@ -742,7 +742,7 @@ test("test go back button on copy seed view", async () => {
 
   user.click(screen.getByText(/go back/i).nextElementSibling);
   await wait(() =>
-    expect(screen.getByText(/choose a wallet to open/i)).toBeInTheDocument()
+    expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
 

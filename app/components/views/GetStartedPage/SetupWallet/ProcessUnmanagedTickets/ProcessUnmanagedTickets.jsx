@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { Tooltip } from "pi-ui";
 import { Subtitle } from "shared";
-import { GoBackMsg } from "../../messages";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
-import { BackButton, BackButtonArea } from "../../helpers";
 import { VSPSelect } from "inputs";
 
 export default ({
@@ -42,13 +39,6 @@ export default ({
 
   return (
     <div className={styles.content}>
-      <BackButtonArea>
-        {isProcessingUnmanaged && (
-          <Tooltip content={<GoBackMsg />}>
-            <BackButton onClick={cancel} />
-          </Tooltip>
-        )}
-      </BackButtonArea>
       <Subtitle className={styles.subtitle} title={title} />
       <div className={styles.description}>{description}</div>
       {!noVspSelection && (
