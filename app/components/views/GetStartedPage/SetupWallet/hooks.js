@@ -185,7 +185,6 @@ export const useWalletSetup = (settingUpWalletRef) => {
             sendContinue();
           } else {
             component = h(SettingMixedAccount, {
-              cancel: sendContinue,
               onSendContinue: sendContinue
             });
           }

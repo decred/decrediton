@@ -1,6 +1,6 @@
 .tabsContainer {
   height: calc(100vh - 17rem);
-  margin: -2rem -4rem 0 -4rem;
+  margin: -2rem -4rem;
 }
 
 .tabs {

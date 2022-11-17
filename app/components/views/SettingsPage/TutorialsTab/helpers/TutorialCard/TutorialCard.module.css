@@ -1,7 +1,11 @@
 .overview {
   background-color: var(--background-back-color);
-  width: 72.4rem;
+  width: 100%;
   padding: 2rem;
+}
+
+.overview.small {
+  padding: 1rem 2rem 1rem 1.5rem;
 }
 
 .row {
@@ -16,10 +20,21 @@
   color: var(--main-dark-blue);
 }
 
+.overview.small .title {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 2.2rem;
+}
+
 .desc {
   font-size: 1.6rem;
   line-height: 2rem;
   color: var(--grey-5);
+}
+
+.overview.small .desc {
+  font-size: 1.3rem;
+  line-height: 1.6rem;
 }
 
 .progressBarContainer {
@@ -90,6 +105,12 @@
   background-position: center;
 }
 
+.overview.small .thumbnail {
+  width: 4.6rem;
+  height: 4.6rem;
+  min-width: 4.6rem;
+}
+
 .decredIntroThumb {
   background-image: var(--tutorial-decredIntro-thumb);
 }
@@ -126,15 +147,8 @@
   background-image: var(--tutorial-lifecycle-thumb);
 }
 
-@media (--bg-viewport) {
-  .overview {
-    width: 63.4rem;
-  }
-}
-
 @media (--sm-viewport) {
   .overview {
-    width: 31.5rem;
     padding: 10px !important;
   }
 
@@ -142,7 +156,7 @@
     flex-direction: column;
   }
 
-  .image {
+  .thumbnail {
     display: none;
   }
 }

@@ -24,7 +24,10 @@ export const DiscoverLabelMsg = () => (
   <T id="getStarted.discover.label" m="Scan for accounts" />
 );
 export const LoaderTitleMsg = () => (
-  <T id="loader.title" m={"Welcome to Decrediton Wallet"} />
+  <T id="loader.title" m={"Welcome To Decrediton"} />
+);
+export const LoaderTitleMsgChooseTheWalletToAccess = () => (
+  <T id="loader.title.chooseTheWallet" m={"Choose The Wallet To Access"} />
 );
 export const DiscoverAccountsInfoMsg = () => (
   <T
@@ -42,11 +45,8 @@ export const ScanBtnMsg = () => (
 export const LearnBasicsMsg = () => (
   <T id="getStarted.learnBasics" m="Learn the Basics" />
 );
-export const NewSeedTabMsg = () => (
-  <T id="getStarted.newSeedTab" m="Create a New Wallet" />
-);
-export const RestoreTabMsg = () => (
-  <T id="getStarted.restore" m="Restore Existing Wallet" />
+export const ReleaseInfoMsg = () => (
+  <T id="getStarted.releaseInfo" m="Release Info" />
 );
 export const CreateWalletMsg = () => (
   <T id="createWallet.createWalletBtn" m="Create Wallet" />
@@ -68,6 +68,66 @@ export const messages = defineMessages({
   confirmSeedEnterAllWordsError: {
     id: "getStarted.confirmSeed.enterAllWords",
     defaultMessage: "*Please enter all words"
+  },
+  newSeedTabMsg: {
+    id: "getStarted.newSeedTab",
+    defaultMessage: "Create a New Wallet"
+  },
+  restoreTabMsg: {
+    id: "getStarted.restore",
+    defaultMessage: "Restore Existing Wallet"
+  },
+  trezorTabMsg: {
+    id: "getStarted.trezor",
+    defaultMessage: "Setup a Trezor Wallet"
+  },
+  closeEditWallets: {
+    id: "getStarted.closeEditWallets",
+    defaultMessage: "Close"
+  },
+  editWallets: {
+    id: "getStarted.editWallets",
+    defaultMessage: "Edit Wallets"
+  },
+  messageWalletNamePlaceholder: {
+    id: "createwallet.walletname.placehlder",
+    defaultMessage: "Choose a Name"
+  },
+  messageWalletNameTooltip: {
+    id: "createwallet.walletname.tooltip",
+    defaultMessage:
+      "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
+  },
+  messageWalletWatchOnlyDescription: {
+    id: "createwallet.watchonly.description",
+    defaultMessage:
+      "A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet."
+  },
+  messageWalletTrezorDescription: {
+    id: "createwallet.trezor.description",
+    defaultMessage:
+      "Trezor is a hardware wallet. For more information, visit {link}"
+  },
+  messageWalletMasterPubKey: {
+    id: "createwallet.walletpubkey.placeholder",
+    defaultMessage: "Master Pub Key"
+  },
+  messageWalletMasterPubkeyError: {
+    id: "createwallet.walletWatchOnly.error",
+    defaultMessage: "Invalid Master Pubkey"
+  },
+  messageWalletDupeNameError: {
+    id: "createwallet.dupeWalletName.error",
+    defaultMessage: "Please choose an unused wallet name"
+  },
+  messageDisablecointypeupgrades: {
+    id: "createwallet.disablecointypeupgrades.description",
+    defaultMessage: "Never upgrade from legacy to SLIP0044 coin type keys"
+  },
+  messageGapLimit: {
+    id: "createwallet.gaplimit.description",
+    defaultMessage:
+      "Allowed unused address gap between used addresses of accounts"
   }
 });
 

@@ -7,17 +7,22 @@ const TutorialOverview = ({
   tutorials,
   visitedTabs,
   activeTabIndex,
-  viewTutorialHandler
+  viewTutorialHandler,
+  showProgressBar
 }) => (
   <div
     onClick={() => viewTutorialHandler(name)}
-    className={classNames(styles.cardWrapper)}>
+    className={classNames(
+      styles.cardWrapper,
+      !showProgressBar && styles.small
+    )}>
     <TutorialCard
       {...{
         name,
         tutorials,
         visitedTabs,
         activeTabIndex,
+        showProgressBar,
         className: styles.overview
       }}
     />
@@ -32,7 +37,8 @@ TutorialOverview.propTypes = {
   tutorials: PropTypes.object.isRequired,
   visitedTabs: PropTypes.array,
   activeTabIndex: PropTypes.number,
-  viewTutorialHandler: PropTypes.func.isRequired
+  viewTutorialHandler: PropTypes.func.isRequired,
+  showProgressBar: PropTypes.bool
 };
 
 export default TutorialOverview;

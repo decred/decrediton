@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { classNames, Checkbox, Tooltip } from "pi-ui";
+import { classNames, Checkbox } from "pi-ui";
 import { Subtitle } from "shared";
 import { KeyBlueButton } from "buttons";
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT } from "constants";
-import { GoBackMsg } from "../../messages";
 import { useDaemonStartup, useMountEffect, useAccounts } from "hooks";
-import { BackButton, BackButtonArea } from "../../helpers";
 import styles from "./SetMixedAcctPage.module.css";
 
-export default ({ cancel, onSendContinue }) => {
+export default ({ onSendContinue }) => {
   const { getCoinjoinOutputspByAcct, setCoinjoinCfg } = useDaemonStartup();
   const { onRenameAccount } = useAccounts();
   const [coinjoinSumByAcct, setCjSumByAcct] = useState(null);
@@ -58,11 +56,6 @@ export default ({ cancel, onSendContinue }) => {
 
   return (
     <div className={styles.content}>
-      <BackButtonArea>
-        <Tooltip content={<GoBackMsg />}>
-          <BackButton onClick={cancel} />
-        </Tooltip>
-      </BackButtonArea>
       <Subtitle
         className={styles.subtitle}
         title={<T id="getstarted.setAccount.title" m="Set Mixed Account" />}

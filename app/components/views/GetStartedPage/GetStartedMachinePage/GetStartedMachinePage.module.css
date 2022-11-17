@@ -11,7 +11,8 @@
 }
 
 .daemonWarning {
-  padding: 10px;
+  color: var(--error-text-color);
+  padding-bottom: 0.1rem;
   white-space: pre-line;
 }
 

@@ -3,10 +3,14 @@
   margin-bottom: 0.5rem;
 }
 
+.backTooltip {
+  display: flex !important;
+}
+
 .backButton {
   width: 4rem;
-  background-color: var(--governance-nav-button-bg);
   cursor: pointer;
+  background-color: var(--governance-nav-button-bg);
 }
 
 .backButton:hover {
@@ -17,7 +21,7 @@
   height: 1rem;
   width: 1rem;
   background-image: var(--menu-arrow-up);
-  background-position: 50% 5px;
+  background-position: 50% 0.4rem;
   background-repeat: no-repeat;
   transform: rotate(-90deg);
 }

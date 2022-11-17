@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import UISettings from "./UISettings";
 import MiscSettings from "./MiscSettings";
 import TimezoneSettings from "./TimezoneSettings";
+import LauncherSettings from "./LauncherSettings";
 import { Subtitle } from "shared";
 import styles from "./GeneralSettings.module.css";
 import { Wrapper, Group } from "../helpers";
@@ -19,6 +20,15 @@ const GeneralSettings = ({
   timezoneBoxClassName
 }) => (
   <Wrapper className={classNames(styles.wrapper, wrapperClassName)}>
+    <Group>
+      <Subtitle
+        className={styles.subtitle}
+        title={
+          <T id="settings.getstartpage.group-title.launcher" m="Launcher" />
+        }
+      />
+      <LauncherSettings {...{ tempSettings, onChangeTempSettings }} />
+    </Group>
     <Group>
       <Subtitle
         className={styles.subtitle}

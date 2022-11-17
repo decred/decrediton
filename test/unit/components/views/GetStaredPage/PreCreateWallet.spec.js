@@ -91,7 +91,7 @@ beforeEach(() => {
 
 const goToGetStartedView = async () => {
   render(<GetStartedPage />);
-  return await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  return await wait(() => screen.getByText(/welcome to decrediton/i));
 };
 
 const goToCreateNewWalletView = async () => {
@@ -115,7 +115,7 @@ test("test when createWallet has been rejected", async () => {
   expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
 
   user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("daemon response success through createWallet function and createWalletPage has been reached", async () => {
@@ -333,7 +333,7 @@ test("trezor device is connected", async () => {
       trezor: { device: { connected: true } }
     }
   });
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
   user.click(screen.getByText(/restore existing wallet/i));
   await wait(() => screen.getByText("Wallet Name"));
   user.click(screen.getByText("Advanced Options"));
@@ -378,7 +378,7 @@ test("trezor has to auto-disable when step back from restore view", async () => 
   expect(mockEnableTrezor).toHaveBeenCalled();
 
   user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
   expect(mockDisableTrezor).toHaveBeenCalled();
 });
 
