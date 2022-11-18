@@ -6,7 +6,7 @@ import { StandalonePage } from "layout";
 import { useTransactionPage } from "./hooks";
 import styles from "./TransactionPage.module.css";
 
-const Transaction = () => {
+const TransactionPage = () => {
   const { txHash } = useParams();
   const {
     abandonTransaction,
@@ -24,7 +24,6 @@ const Transaction = () => {
     isSigningMessage
   } = useTransactionPage(txHash);
 
-  if (!viewedTransaction) return null;
   switch (state.value) {
     case "idle":
       return <></>;
@@ -72,4 +71,4 @@ const Transaction = () => {
   }
 };
 
-export default Transaction;
+export default TransactionPage;
