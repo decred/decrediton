@@ -730,6 +730,9 @@ test("test update private passphrase, DEX is active", () => {
       settings: testSettings,
       dex: {
         active: true
+      },
+      walletLoader: {
+        dexAccount: "test-dex-account-name"
       }
     }
   });
@@ -800,6 +803,47 @@ test("test update private passphrase, DEX is active", () => {
     true,
     testDEXAppPasspword
   );
+});
+
+test("test update private passphrase, DEX is active, but dex account is null", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings,
+      dex: {
+        active: true
+      }
+    }
+  });
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
+  user.click(updateButton);
+  expect(
+    screen.queryByLabelText(/^DEX App Passsword/i)
+  ).not.toBeInTheDocument();
+});
+
+test("test update private passphrase, DEX is active, but dex account is empty string", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings,
+      dex: {
+        active: true
+      },
+      walletLoader: {
+        dexAccount: ""
+      }
+    }
+  });
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
+  user.click(updateButton);
+  expect(
+    screen.queryByLabelText(/^DEX App Passsword/i)
+  ).not.toBeInTheDocument();
 });
 
 test("update private passphrase is disabled", () => {

@@ -81,7 +81,7 @@ const Modal = ({
       onChange={(e) => setConfirmPrivPass(e.target.value)}
       onKeyDownSubmit={!dexActive && onTriggerPassphraseModalSubmit}
     />
-    {dexActive && dexAccountName && (
+    {dexActive && dexAccountName && dexAccountName !== "" && (
       <>
         <PasswordInput
           newBiggerFontStyle
