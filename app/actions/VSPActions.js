@@ -1102,3 +1102,8 @@ export const getVSPTicketStatus = (passphrase, tx, decodedTx) => async (
     dispatch({ type: GETVSP_TICKET_STATUS_FAILED, error });
   }
 };
+
+export const SET_ACCOUNT_FOR_TICKET_PURCHASE =
+  "SET_ACCOUNT_FOR_TICKET_PURCHASE";
+export const SET_SELECTED_VSP = "SET_SELECTED_VSP";
+export const SET_NUM_TICKETS_TO_BUY = "SET_NUM_TICKETS_TO_BUY";

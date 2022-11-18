@@ -1117,33 +1117,41 @@ export const UNLOCKANDEXECFN_SUCCESS = "UNLOCKANDEXECFN_SUCCESS";
 
 // filterUnlockableAccounts returns a subset of the given array of account
 // numbers, excluding those that shouldn't be locked.
-const filterUnlockableAccounts = (accts, getState) => {
+export const filterUnlockableAccounts = (accts, getState) => {
   const accounts = sel.balances(getState());
 
   // Track list of unlockable accounts.
   const unlockableAccts = {};
-  const setUnlockable = (acctNb) => (unlockableAccts[parseInt(acctNb)] = true);
+  const setUnlockable = (acctNb) => {
+    if (!isNumber(acctNb)) {
+      return;
+    }
+    unlockableAccts[parseInt(acctNb)] = true;
+  };
+  const getAccountByName = (accountName) =>
+    accounts.find((acct) => acct.accountName === accountName);
+  const setUnlockableByAccountName = (accountName) =>
+    setUnlockable(getAccountByName(accountName)?.accountNumber);
 
   // Do not allow locking of the dex account, as it isn't supposed to lock.
-  const dexAccountName = sel.dexAccount(getState());
-  const dexAccount = accounts.find(
-    (acct) => acct.accountName === dexAccountName
-  );
-  dexAccount && setUnlockable(dexAccount.accountNumber);
+  setUnlockableByAccountName(sel.dexAccount(getState()));
 
   // Do not allow locking of the mixed and change account or ticket buyer account
   // while they are running.
   if (sel.getRunningIndicator(getState())) {
-    const mixedAcct = sel.getMixedAccount(getState());
-    const unmixedAcct = sel.getChangeAccount(getState());
-    const ticketBuyerAccount = sel.getVSPTicketBuyerAccount(getState());
+    setUnlockable(sel.getMixedAccount(getState()));
+    setUnlockable(sel.getChangeAccount(getState()));
+
+    setUnlockableByAccountName(sel.getVSPTicketBuyerAccount(getState()));
+    setUnlockableByAccountName(
+      sel.selectedAccountForTicketPurchase(getState())
+    );
+
+    /* legacy ticket buyer is deprecated
     const legacyTicketBuyerCfg = sel.ticketBuyerConfig(getState());
-    isNumber(mixedAcct) && setUnlockable(mixedAcct);
-    isNumber(unmixedAcct) && setUnlockable(unmixedAcct);
-    isNumber(ticketBuyerAccount?.value) &&
-      setUnlockable(ticketBuyerAccount?.value);
     isNumber(legacyTicketBuyerCfg?.account?.value) &&
       setUnlockable(legacyTicketBuyerCfg?.account?.value);
+    */
   }
 
   // Do not allow locking of accounts for which there are tickets with

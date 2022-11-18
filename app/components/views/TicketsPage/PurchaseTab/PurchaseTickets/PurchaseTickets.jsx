@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { PurchasePage } from "./Page";
 import { usePurchaseTab } from "../hooks";
-import { isEqual } from "lodash/fp";
 
 const Tickets = ({ toggleIsLegacy }) => {
   const {
@@ -14,7 +13,6 @@ const Tickets = ({ toggleIsLegacy }) => {
     availableVSPs,
     // TODO treat errors:
     // availableVSPsError,
-    defaultSpendingAccount,
     ticketPrice,
     onPurchaseTicketV3,
     mixedAccount,
@@ -26,36 +24,14 @@ const Tickets = ({ toggleIsLegacy }) => {
     isVSPListingEnabled,
     onEnableVSPListing,
     getRunningIndicator,
-    visibleAccounts
+    account,
+    setAccount,
+    vsp,
+    setVSP,
+    numTicketsToBuy,
+    setNumTicketsToBuy
   } = usePurchaseTab();
 
-  const [account, setAccount] = useState(defaultSpendingAccount);
-  useEffect(() => {
-    const newAccount = visibleAccounts?.find((a) =>
-      isEqual(a.value, account?.value)
-    );
-    newAccount && setAccount(newAccount);
-  }, [visibleAccounts, account]);
-
-  // todo use this vsp to buy solo tickets.
-  const [vsp, setVSP] = useState(() => {
-    if (rememberedVspHost) {
-      // reset rememberedVspHost if it's outdated
-      if (
-        availableVSPs?.find(
-          (availableVSP) => availableVSP.host === rememberedVspHost.host
-        )?.outdated === true
-      ) {
-        setRememberedVspHost(null);
-        return null;
-      } else {
-        return { host: rememberedVspHost.host };
-      }
-    } else {
-      return null;
-    }
-  });
-  const [numTicketsToBuy, setNumTicketsToBuy] = useState(1);
   const [isValid, setIsValid] = useState(false);
 
   const toggleRememberVspHostCheckBox = () => {
@@ -73,9 +49,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   };
 
   const onIncrementNumTickets = () => {
-    setNumTicketsToBuy((numTicketsToBuy) =>
-      numTicketsToBuy == "" ? 1 : numTicketsToBuy + 1
-    );
+    setNumTicketsToBuy(numTicketsToBuy == "" ? 1 : numTicketsToBuy + 1);
   };
 
   const onChangeNumTickets = (numTicketsToBuy) => {
@@ -87,9 +61,7 @@ const Tickets = ({ toggleIsLegacy }) => {
   };
 
   const onDecrementNumTickets = () => {
-    setNumTicketsToBuy((numTicketsToBuy) =>
-      numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1
-    );
+    setNumTicketsToBuy(numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1);
   };
 
   const onV3PurchaseTicket = (passphrase) => {
