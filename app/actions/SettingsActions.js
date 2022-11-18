@@ -195,25 +195,6 @@ export const resetSettingsState = () => {
   };
 };
 
-export const updateStateVoteSettingsChanged = (settings) => (
-  dispatch,
-  getState
-) => {
-  const {
-    settings: { tempSettings, currentSettings }
-  } = getState();
-  const {
-    daemon: { walletName }
-  } = getState();
-  if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
-    const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
-    config.set(configConstants.ENABLE_TICKET_BUYER, settings.enableTicketBuyer);
-    dispatch({ tempSettings: settings, type: SETTINGS_CHANGED });
-  } else {
-    dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
-  }
-};
-
 export const setNeedsVSPdProcessTickets = (value) => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const isTestNet = sel.isTestNet(getState());
