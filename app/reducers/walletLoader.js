@@ -105,7 +105,10 @@ export default function walletLoader(state = {}, action) {
         synced: false,
         syncLastFetchedHeaderTime: null,
         needsPassPhrase: false,
-        syncRescanAttempt: false
+        syncRescanAttempt: false,
+        dexAccount: null,
+        dexEnabled: null,
+        dexReady: null
       };
     case UPDATEDISCOVERACCOUNTS:
       return { ...state, discoverAccountsComplete: action.complete };
