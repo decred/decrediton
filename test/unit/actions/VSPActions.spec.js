@@ -15,13 +15,7 @@ import {
 import { USED_VSPS } from "constants/config";
 import { MIN_VSP_VERSION } from "constants";
 import { LIVE } from "constants";
-import { mockStakeTransactions } from "../components/views/TransactionPage/mocks.js";
 import { mockNormalizedStakeTransactions } from "../components/views/TransactionPage/mocks.js";
-import {
-  mockMixedAccountValue,
-  mockChangeAccountValue,
-  mockMixedAccount
-} from "../components/views/TicketsPage/PurchaseTab/mocks";
 
 let mockAvailableMainnetVsps = cloneDeep(defaultMockAvailableMainnetVsps);
 const mockAvailableMainnetVspsPubkeys = cloneDeep(
@@ -37,6 +31,9 @@ const controlActions = ca;
 let mockWalletCfgGet;
 let mockWalletCfgSet;
 let mockSetVspdAgendaChoices;
+let mockSignMessageAttempt;
+let mockGetVSPTicketStatus;
+let mockProcessManagedTickets;
 
 const testPassphrase = "test-passphrase";
 const testError = "test-error-message";
@@ -116,10 +113,6 @@ const mockAllAgendasAllFinished = mockAllAgendas.map((v) => ({
   finished: true
 }));
 
-let mockSignMessageAttempt;
-let mockGetVSPTicketStatus;
-let mockProcessManagedTickets;
-
 const mockSig = "test-sig";
 const mockVSPTicketInfoResponse = {
   data: {
@@ -149,10 +142,6 @@ beforeEach(() => {
   }));
   selectors.voteChoices = jest.fn(() => mockVoteChoices);
   selectors.allAgendas = jest.fn(() => mockAllAgendas);
-  selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
-  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
-  selectors.getChangeAccount = jest.fn(() => mockChangeAccountValue);
-  selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
   selectors.getAvailableVSPsPubkeys = jest.fn(
     () => mockAvailableMainnetVspsPubkeys
   );
