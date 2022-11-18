@@ -61,6 +61,7 @@ const TicketListPage = ({
       <Subtitle
         title={<T id="vsp.mytickets.subtitle" m="Live Tickets" />}
         className={styles.subtitle}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#tickets-status"
         children={subtitleMenu({
           sortTypes,
           ticketTypes,

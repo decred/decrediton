@@ -6,6 +6,7 @@ import { Collapse, ExternalLink } from "shared";
 import { LoaderTitleMsg, messages } from "../../messages";
 import { Label, Input, Row, ContentContainer } from "../../helpers";
 import styles from "./CreateWalletForm.module.css";
+import { DocButton } from "buttons";
 
 const CreateWalletForm = ({
   createWallet,
@@ -42,6 +43,10 @@ const CreateWalletForm = ({
         <div className={classNames(styles.iconSmall, styles.new)} />
         <div className={styles.title}>
           {intl.formatMessage(messages.newSeedTabMsg)}
+          <DocButton
+            className={styles.docButton}
+            docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#create-a-new-wallet"
+          />
         </div>
       </div>
     ) : (
@@ -49,6 +54,10 @@ const CreateWalletForm = ({
         <div className={classNames(styles.iconSmall, styles.restore)} />
         <div className={styles.title}>
           {intl.formatMessage(messages.restoreTabMsg)}
+          <DocButton
+            className={styles.docButton}
+            docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#restore-existing-wallet"
+          />
         </div>
       </div>
     )}

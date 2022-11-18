@@ -38,6 +38,7 @@ const SettingsPageHeader = () => {
     <TitleHeader
       title={<T id="settings.title" m="Settings" />}
       iconType={SETTINGS_ICON}
+      docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#settings"
       optionalButton={
         <CloseWalletModalButton
           modalTitle={

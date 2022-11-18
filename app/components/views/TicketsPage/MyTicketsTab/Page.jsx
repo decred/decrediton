@@ -127,6 +127,7 @@ const TicketListPage = ({
       <Subtitle
         title={<T id="mytickets.subtitle" m="My Tickets" />}
         className={styles.subtitle}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#historic-tickets"
         children={subtitleMenu({
           intl,
           searchText,

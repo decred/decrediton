@@ -86,6 +86,7 @@ const StatisticsTab = () => {
         title={<T id="statistics.subtitle" m="Statistics" />}
         className={styles.isRow}
         children={subtitleMenu({ allStakePoolStats, hasStats })}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#statistics"
       />
       <div className={styles.charts}>
         {getMyTicketsStatsRequest ? (

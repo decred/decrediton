@@ -3,6 +3,17 @@
   display: flex;
 }
 
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.docButton {
+  outline: none;
+  margin-left: 1rem;
+}
+
 .button {
   padding: 5px 16px 10px 16px;
 }

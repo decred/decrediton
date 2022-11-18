@@ -44,6 +44,7 @@ const SendTab = () => {
         title={<T id="send.subtitle" m="Send DCR" />}
         className={"flex-row"}
         children={<ListUTXOsButton />}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#send"
       />
       <SendTransaction styles={styles} SendOutputRow={SendOutputRow} />
     </>

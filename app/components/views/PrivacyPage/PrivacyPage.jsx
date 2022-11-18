@@ -40,6 +40,7 @@ const PrivacyPageHeader = () => (
   <TitleHeader
     iconType={SECURITY_ICON}
     title={<T id="privacypage.title" m="Privacy and Security" />}
+    docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#privacy-and-security"
   />
 );
 
