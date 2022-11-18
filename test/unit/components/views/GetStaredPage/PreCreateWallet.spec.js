@@ -263,9 +263,7 @@ test("test watch only control on restore wallet", async () => {
 
 test("test create trezor-backed wallet page (trezor device is NOT connected)", async () => {
   await goToGetStartedView();
-  user.click(
-    screen.getByText("Create a Trezor-backed Wallet").nextElementSibling
-  );
+  user.click(screen.getByText("Setup a Trezor Wallet").parentElement);
   await wait(() => screen.getByText(/no trezor is detected/i));
   expect(
     screen.getByText(/no trezor is detected/i).textContent
@@ -277,7 +275,7 @@ test("test create trezor-backed wallet page (trezor device is NOT connected)", a
 
   // go back
   user.click(screen.getByText("Back"));
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("test create trezor-backed wallet page (trezor device is connected)", async () => {
@@ -310,10 +308,8 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
       }
     }
   });
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  user.click(
-    screen.getByText("Create a Trezor-backed Wallet").nextElementSibling
-  );
+  await wait(() => screen.getByText(/welcome to decrediton/i));
+  user.click(screen.getByText("Setup a Trezor Wallet").parentElement);
 
   await wait(() => screen.getByText("Wallet Name"));
   expect(mockEnableTrezor).toHaveBeenCalled();
@@ -358,10 +354,8 @@ test("trezor has to auto-disable when step back from create trezor-backed wallet
       }
     }
   });
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
-  user.click(
-    screen.getByText("Create a Trezor-backed Wallet").nextElementSibling
-  );
+  await wait(() => screen.getByText(/welcome to decrediton/i));
+  user.click(screen.getByText("Setup a Trezor Wallet").parentElement);
 
   await wait(() => screen.getByText("Wallet Name"));
   expect(mockEnableTrezor).toHaveBeenCalled();
