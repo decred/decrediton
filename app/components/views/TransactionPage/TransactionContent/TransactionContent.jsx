@@ -1,3 +1,4 @@
+import { useLocation, NavLink } from "react-router-dom";
 import { Balance, ExternalLink } from "shared";
 import {
   KeyBlueButton,
@@ -74,6 +75,7 @@ const TransactionContent = ({
   } = transactionDetails;
 
   const { theme } = useTheme();
+  const location = useLocation();
   const iconColor = getThemeProperty(theme, "color-orange");
   const iconBgColor = getThemeProperty(theme, "alert-icon-bg-color");
 
@@ -152,9 +154,10 @@ const TransactionContent = ({
                 <T id="txDetails.ticketSpent" m="Ticket Spent" />:
               </div>
               <div className={styles.value}>
-                <ExternalLink className={styles.value} href={ticketTx.txUrl}>
+                <NavLink
+                  to={location.pathname.replace(txHash, ticketTx.txHash)}>
                   {ticketTx.txHash}
-                </ExternalLink>
+                </NavLink>
               </div>
             </div>
           </>
@@ -278,11 +281,13 @@ const TransactionContent = ({
                       <T id="txDetails.feeTxHashLabel" m="Fee tx hash" />:
                     </div>
                     <div className={styles.value}>
-                      <ExternalLink
-                        className={styles.value}
-                        href={VSPTicketStatus.feetxUrl}>
+                      <NavLink
+                        to={location.pathname.replace(
+                          txHash,
+                          VSPTicketStatus.feetxhash
+                        )}>
                         {VSPTicketStatus.feetxhash}
-                      </ExternalLink>
+                      </NavLink>
                     </div>
                   </div>
                   <div className={styles.topRow}>

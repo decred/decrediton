@@ -7,6 +7,7 @@ import * as sel from "selectors";
 import * as clia from "actions/ClientActions";
 import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
+import * as ta from "actions/TransactionActions";
 import { cloneDeep } from "fp";
 import {
   mockNormalizedRegularTransactions,
@@ -25,6 +26,7 @@ const selectors = sel;
 const clientActions = clia;
 const controlActions = ca;
 const wallet = wl;
+const transactionActions = ta;
 
 let mockTxHash = "";
 const testCurrentBlockHeight = 709245;
@@ -87,6 +89,7 @@ beforeEach(() => {
   wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
     Promise.resolve({ ticketHashes: [] })
   );
+  transactionActions.getTransactions = jest.fn(() => () => {});
 });
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -963,4 +966,173 @@ test("unmined ticket", async () => {
 
   user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
+});
+
+test("show not yet fetched regular tx", async () => {
+  mockTxHash = "not-yet-fetched-tx-hash";
+
+  const mockGetTransactionsResponse = {
+    type: transactionActions.GETTRANSACTIONS_COMPLETE,
+    getStakeTxsAux: { noMoreTransactions: false },
+    getRegularTxsAux: { noMoreTransactions: false },
+    stakeTransactions: {},
+    regularTransactions: {},
+    startRequestHeight: 0
+  };
+
+  let counter = 0;
+  transactionActions.getTransactions = jest.fn(() => (dispatch) => {
+    if (counter++ > 3) {
+      mockGetTransactionsResponse.regularTransactions[mockTxHash] = {
+        ...mockNormalizedRegularTransactions[
+          "9110b998c418a9007389627bc2ad51e888392f463bc7ccc30dcd927a2f0fa304"
+        ],
+        txHash: mockTxHash
+      };
+    }
+    return dispatch(mockGetTransactionsResponse);
+  });
+
+  render(<TransactionPage />, {
+    initialState: {
+      grpc: {
+        ticketsFilter: {
+          listDirection: "desc",
+          status: null,
+          vspFeeStatus: null
+        },
+        transactionsFilter: {
+          search: null,
+          listDirection: "desc",
+          types: [],
+          directions: [],
+          maxAmount: null,
+          minAmount: null
+        },
+        regularTransactions: {},
+        stakeTransactions: {},
+        decodedTransactions: {},
+        getRegularTxsAux: {
+          noMoreTransactions: false
+        },
+        getStakeTxsAux: {
+          noMoreTransactions: false
+        }
+      }
+    }
+  });
+
+  await wait(() => getIODetails());
+});
+
+test("show not yet fetched stake tx", async () => {
+  mockTxHash = "not-yet-fetched-tx-hash";
+
+  const mockGetTransactionsResponse = {
+    type: transactionActions.GETTRANSACTIONS_COMPLETE,
+    getStakeTxsAux: { noMoreTransactions: false },
+    getRegularTxsAux: { noMoreTransactions: false },
+    stakeTransactions: {},
+    regularTransactions: {},
+    startRequestHeight: 0
+  };
+
+  let counter = 0;
+  transactionActions.getTransactions = jest.fn(() => (dispatch) => {
+    if (counter++ > 3) {
+      mockGetTransactionsResponse.stakeTransactions[mockTxHash] = {
+        ...mockNormalizedStakeTransactions[
+          "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
+        ],
+        txHash: mockTxHash
+      };
+    }
+    return dispatch(mockGetTransactionsResponse);
+  });
+
+  render(<TransactionPage />, {
+    initialState: {
+      grpc: {
+        ticketsFilter: {
+          listDirection: "desc",
+          status: null,
+          vspFeeStatus: null
+        },
+        transactionsFilter: {
+          search: null,
+          listDirection: "desc",
+          types: [],
+          directions: [],
+          maxAmount: null,
+          minAmount: null
+        },
+        regularTransactions: {},
+        stakeTransactions: {},
+        decodedTransactions: {},
+        getRegularTxsAux: {
+          noMoreTransactions: false
+        },
+        getStakeTxsAux: {
+          noMoreTransactions: false
+        }
+      }
+    }
+  });
+
+  await wait(() => getIODetails());
+});
+
+test("show not yet fetched stake tx (won't find it)", async () => {
+  mockTxHash = "not-yet-fetched-tx-hash";
+
+  const mockGetTransactionsResponse = {
+    type: transactionActions.GETTRANSACTIONS_COMPLETE,
+    getStakeTxsAux: { noMoreTransactions: false },
+    getRegularTxsAux: { noMoreTransactions: false },
+    stakeTransactions: {},
+    regularTransactions: {},
+    startRequestHeight: 0
+  };
+
+  let counter = 0;
+  transactionActions.getTransactions = jest.fn(() => (dispatch) => {
+    if (counter++ > 3) {
+      mockGetTransactionsResponse.getStakeTxsAux.noMoreTransactions = true;
+    }
+    if (counter++ > 5) {
+      mockGetTransactionsResponse.getRegularTxsAux.noMoreTransactions = true;
+    }
+    return dispatch(mockGetTransactionsResponse);
+  });
+
+  render(<TransactionPage />, {
+    initialState: {
+      grpc: {
+        ticketsFilter: {
+          listDirection: "desc",
+          status: null,
+          vspFeeStatus: null
+        },
+        transactionsFilter: {
+          search: null,
+          listDirection: "desc",
+          types: [],
+          directions: [],
+          maxAmount: null,
+          minAmount: null
+        },
+        regularTransactions: {},
+        stakeTransactions: {},
+        decodedTransactions: {},
+        getRegularTxsAux: {
+          noMoreTransactions: false
+        },
+        getStakeTxsAux: {
+          noMoreTransactions: false
+        }
+      }
+    }
+  });
+
+  await wait(() => screen.getByText("Transaction not found"));
 });
