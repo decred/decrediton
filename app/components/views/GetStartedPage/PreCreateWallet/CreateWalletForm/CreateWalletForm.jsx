@@ -42,7 +42,7 @@ const CreateWalletForm = ({
       <div className={styles.titleArea}>
         <div className={classNames(styles.iconSmall, styles.new)} />
         <div className={styles.title}>
-          <NewSeedTabMsg />
+          {intl.formatMessage(messages.newSeedTabMsg)}
           <DocButton
             className={styles.docButton}
             docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#create-a-new-wallet"
@@ -53,7 +53,7 @@ const CreateWalletForm = ({
       <div className={styles.titleArea}>
         <div className={classNames(styles.iconSmall, styles.restore)} />
         <div className={styles.title}>
-          <RestoreTabMsg />
+          {intl.formatMessage(messages.restoreTabMsg)}
           <DocButton
             className={styles.docButton}
             docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#restore-existing-wallet"
