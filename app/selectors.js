@@ -34,7 +34,9 @@ import {
   UNIT_DIVISOR,
   TESTNET,
   MAINNET,
-  VOTED
+  VOTED,
+  EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_DCRDATA
 } from "constants";
 import { isArray } from "lodash";
 
