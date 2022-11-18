@@ -1,8 +1,19 @@
+import * as d from "actions/DexActions";
 import * as ca from "actions/ControlActions";
+import * as wal from "wallet";
 import { cloneDeep, isEqual } from "lodash";
 import { createStore } from "test-utils.js";
+import { testBalances, dexAccountName } from "./accountMocks.js";
 
 const controlActions = ca;
+const wallet = wal;
+const dexActions = d;
+
+const testWalletService = "test-wallet-service";
+const testError = "test-error";
+const testPassphrase = "test-passphrase";
+const testNewPassphrase = "test-new-passphrase";
+const testDEXAppPassword = "test-new-password";
 
 const selectedAccountForTicketPurchase = 1;
 const selectedAccountForTicketPurchaseName = "ticket-purchase-account-name";
@@ -13,25 +24,13 @@ const ticketBuyerAccountName = "ticket-buyer-account-name";
 const changeAccount = 3;
 const mixedAccount = 4;
 const dexAccountNumber = 5;
-const dexAccountName = "dex";
-
 const commitmentAccount = 6;
 
-const testBalances = [
-  { accountNumber: 0, accountName: "default" },
-  {
-    accountNumber: selectedAccountForTicketPurchase,
-    accountName: selectedAccountForTicketPurchaseName
-  },
-  { accountNumber: ticketBuyerAccount, accountName: ticketBuyerAccountName },
-  { accountNumber: changeAccount, accountName: "test-account3" },
-  { accountNumber: mixedAccount, accountName: "test-account4" },
-  { accountNumber: dexAccountNumber, accountName: dexAccountName },
-  { accountNumber: commitmentAccount, accountName: "test-account5" }
-];
-
 const initialState = {
-  grpc: { balances: testBalances },
+  grpc: {
+    balances: testBalances,
+    walletService: testWalletService
+  },
   walletLoader: {
     dexAccount: dexAccountName,
     mixedAccount: mixedAccount,
@@ -52,6 +51,20 @@ const initialState = {
     }
   }
 };
+
+let mockSetAccountPassphrase;
+let mockSetWalletPasswordDex;
+let mockChangePassphrase;
+
+beforeEach(() => {
+  mockSetAccountPassphrase = wallet.setAccountPassphrase = jest.fn(() => {});
+  mockChangePassphrase = wallet.changePassphrase = jest.fn(() =>
+    Promise.resolve({})
+  );
+  mockSetWalletPasswordDex = dexActions.setWalletPasswordDex = jest.fn(
+    () => () => {}
+  );
+});
 
 test("test filterUnlockableAccounts - there is no running progress", () => {
   const store = createStore(cloneDeep(initialState));
@@ -168,47 +181,6 @@ test("test filterUnlockableAccounts - purchase ticket is running", () => {
   );
 
   testRunnning(store);
-});
-
-import * as d from "actions/DexActions";
-import * as ca from "actions/ControlActions";
-import { cloneDeep } from "lodash";
-import { createStore } from "test-utils.js";
-import * as wal from "wallet";
-import { testBalances, dexAccountName } from "./accountMocks.js";
-
-const controlActions = ca;
-const wallet = wal;
-const dexActions = d;
-
-const testWalletService = "test-wallet-service";
-const testError = "test-error";
-const testPassphrase = "test-passphrase";
-const testNewPassphrase = "test-new-passphrase";
-const testDEXAppPassword = "test-new-password";
-
-const initialState = {
-  grpc: {
-    balances: testBalances,
-    walletService: testWalletService
-  },
-  walletLoader: {
-    dexAccount: dexAccountName
-  }
-};
-
-let mockSetAccountPassphrase;
-let mockSetWalletPasswordDex;
-let mockChangePassphrase;
-
-beforeEach(() => {
-  mockSetAccountPassphrase = wallet.setAccountPassphrase = jest.fn(() => {});
-  mockChangePassphrase = wallet.changePassphrase = jest.fn(() =>
-    Promise.resolve({})
-  );
-  mockSetWalletPasswordDex = dexActions.setWalletPasswordDex = jest.fn(
-    () => () => {}
-  );
 });
 
 test("test changePassphraseAttempt", async () => {
