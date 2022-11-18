@@ -26,7 +26,9 @@ const MenuLinks = () => {
     <DefaultThemesWithCustomTabsProvider
       themes={{
         "tab-text-color": getThemeProperty(theme, "tab-text-color-sidebar"),
-        "tab-default-background": getThemeProperty(theme, "sidebar-color")
+        "tab-default-background": getThemeProperty(theme, "sidebar-color"),
+        "tab-default-color": getThemeProperty(theme, "sidebar-color"),
+        "tab-secondary-active-color": getThemeProperty(theme, "sidebar-color")
       }}>
       <Tabs
         onSelectTab={onSelectTab}

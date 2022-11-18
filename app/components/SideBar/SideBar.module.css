@@ -45,6 +45,23 @@
   margin-bottom: 10px;
 }
 
+.rescanProgressIndicator {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.linearProgressSmall {
+  border-radius: 0px !important;
+  background-color: var(--input-color-hover) !important;
+}
+
+.linearProgressSmallBar {
+  background: var(--accent-color) !important;
+  border-radius: 0px !important;
+}
+
 @media (--sm-viewport) {
   .sidebar {
     display: flex;
