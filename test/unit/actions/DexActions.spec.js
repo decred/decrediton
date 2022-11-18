@@ -71,6 +71,7 @@ let mockLogin;
 let mockLogout;
 let mockCreateWallet;
 let mockLaunchWindow;
+let mockSetWalletPassword;
 let mockGetNextAccountAttempt;
 
 beforeEach(() => {
@@ -102,6 +103,7 @@ beforeEach(() => {
   mockGetNextAccountAttempt = controlActions.getNextAccountAttempt = jest.fn(
     () => () => {}
   );
+  mockSetWalletPassword = dex.setWalletPassword = jest.fn(() => {});
 });
 
 const testEnabledDex = async (initialState, expectedHostPort) => {
@@ -621,4 +623,66 @@ test("test selecting dex account - failed", async () => {
   );
   expect(store.getState().dex.dexAccount).toBe(testDexAccountName);
   expect(store.getState().dex.dexSelectAccountError).toBe(testError);
+});
+
+test("test setWalletPasswordDex", async () => {
+  const store = createStore(
+    cloneDeep({
+      ...initialState,
+      dex: { active: true }
+    })
+  );
+  await store.dispatch(
+    dexActions.setWalletPasswordDex(testPassphrase, testAppPassphrase)
+  );
+
+  expect(mockSetWalletPassword).toHaveBeenCalledWith(
+    42, // assetID DCR
+    testPassphrase,
+    testAppPassphrase
+  );
+
+  expect(store.getState().dex.setWalletPasswordAttempt).toBeFalsy();
+  expect(store.getState().dex.setWalletPasswordError).toBeNull();
+});
+
+test("test setWalletPasswordDex - failed", async () => {
+  mockSetWalletPassword = dex.setWalletPassword = jest.fn(() => {
+    throw testError;
+  });
+  const store = createStore(
+    cloneDeep({
+      ...initialState,
+      dex: { active: true }
+    })
+  );
+  await store.dispatch(
+    dexActions.setWalletPasswordDex(testPassphrase, testAppPassphrase)
+  );
+
+  expect(mockSetWalletPassword).toHaveBeenCalledWith(
+    42, // assetID DCR
+    testPassphrase,
+    testAppPassphrase
+  );
+
+  expect(store.getState().dex.setWalletPasswordAttempt).toBeFalsy();
+  expect(store.getState().dex.setWalletPasswordError).toBe(testError);
+});
+
+test("test setWalletPasswordDex - dex is not active", async () => {
+  const store = createStore(
+    cloneDeep({
+      ...initialState,
+      dex: { active: false }
+    })
+  );
+  await store.dispatch(
+    dexActions.setWalletPasswordDex(testPassphrase, testAppPassphrase)
+  );
+
+  expect(mockSetWalletPassword).not.toHaveBeenCalled();
+
+  expect(store.getState().dex.setWalletPasswordAttempt).toBeFalsy();
+  expect(store.getState().dex.setWalletPasswordError).toBe("Dex isn't active");
 });

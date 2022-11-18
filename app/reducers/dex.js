@@ -38,7 +38,10 @@ import {
   DEX_CONFIRM_SEED_ATTEMPT,
   DEX_CONFIRM_SEED_SUCCESS,
   DEX_CONFIRM_SEED_FAILED,
-  RESET_DEXACCOUNT
+  RESET_DEXACCOUNT,
+  DEX_SETWALLET_PASSWORD_ATTEMPT,
+  DEX_SETWALLET_PASSWORD_FAILED,
+  DEX_SETWALLET_PASSWORD_SUCCESS
 } from "../actions/DexActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -123,6 +126,24 @@ export default function ln(state = {}, action) {
         ...state,
         createWalletAttempt: false,
         createWalletError: null
+      };
+    case DEX_SETWALLET_PASSWORD_ATTEMPT:
+      return {
+        ...state,
+        setWalletPasswordAttempt: true,
+        setWalletPasswordError: null
+      };
+    case DEX_SETWALLET_PASSWORD_FAILED:
+      return {
+        ...state,
+        setWalletPasswordAttempt: false,
+        setWalletPasswordError: action.error
+      };
+    case DEX_SETWALLET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        setWalletPasswordAttempt: false,
+        setWalletPasswordError: null
       };
     case DEX_USER_ATTEMPT:
       return {

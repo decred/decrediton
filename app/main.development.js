@@ -69,6 +69,7 @@ import {
   checkInitDex,
   initDex,
   createWalletDex,
+  setWalletPasswordDex,
   userDex,
   loginDex,
   logoutDex,
@@ -417,6 +418,8 @@ handle("start-dex", startDex);
 handle("stop-dex", stopDex);
 
 handle("launch-dex-window", createDexWindow);
+
+handle("set-wallet-password-dex", setWalletPasswordDex);
 
 function createDexWindow(serverAddress) {
   dexWindow.loadURL("http://" + serverAddress);
