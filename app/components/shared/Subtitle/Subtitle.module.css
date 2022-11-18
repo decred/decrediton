@@ -12,6 +12,17 @@
   margin-top: -20px;
 }
 
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.docButton {
+  outline: none;
+  margin-left: 0.5rem;
+}
+
 @media (--bg-viewport) {
   .tabbedPageSubtitle {
     margin-left: 0;

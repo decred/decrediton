@@ -79,7 +79,10 @@ export function PurchasePage({
     <div className={styles.purchaseTicketArea}>
       <StakeInfo {...{ sidebarOnBottom }} />
       {!isVSPListingEnabled && <EnableVSP onEnableVSP={onEnableVSPListing} />}
-      <Subtitle title={<T id="purchase.subtitle" m="Purchase Tickets" />} />
+      <Subtitle
+        title={<T id="purchase.subtitle" m="Purchase Tickets" />}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#purchase-tickets"
+      />
       {mixedAccount && changeAccount && <PrivacyInfo />}
       {spvMode && blocksNumberToNextTicket === 2 ? (
         <ShowWarning

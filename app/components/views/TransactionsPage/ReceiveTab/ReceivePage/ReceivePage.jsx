@@ -53,7 +53,10 @@ const ReceivePage = ({
   return (
     <>
       {modal && <QRCodeModal {...{ amount, nextAddress, setModal }} />}
-      <Subtitle title={<T id="receive.subtitle" m="Receive DCR" />} />
+      <Subtitle
+        title={<T id="receive.subtitle" m="Receive DCR" />}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#receive"
+      />
       <div className={styles.receiveContent}>
         <div className={styles.inputs}>
           <div className={styles.inputWrapper}>
