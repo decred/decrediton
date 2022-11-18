@@ -46,6 +46,8 @@ import {
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
   SETVSPDVOTECHOICE_FAILED,
+  SETVSPDVOTECHOICE_SINGLE_FAILED,
+  SETVSPDVOTECHOICE_PARTIAL_SUCCESS,
   GETVSP_TICKET_STATUS_FAILED
 } from "actions/VSPActions";
 import {
@@ -550,11 +552,24 @@ const messages = defineMessages({
   SETVOTECHOICES_SUCCESS: {
     id: "set.vote.success",
     defaultMessage:
-      "You have successfully updated your wallet vote choices on any VSPs you may have had set up."
+      "You have successfully updated your wallet vote choices on any VSP you may have had set up."
+  },
+  SETVSPDVOTECHOICE_PARTIAL_SUCCESS: {
+    id: "set.vote.partial.success",
+    defaultMessage:
+      "You have partially updated your wallet vote choices on any VSP you may have had set up."
   },
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
+  },
+  SETVSPDVOTECHOICE_SINGLE_FAILED: {
+    id: "set.vspdvote.single.failed",
+    defaultMessage: "Set vspd vote choice failed on {host}. {originalError}"
+  },
+  SETVSPDVOTECHOICE_TIMEOUT_FAILED: {
+    id: "set.vspdvote.timeout.failed",
+    defaultMessage: "Set vspd vote choice timeout exceded on {host}"
   },
   GETVSP_TICKET_STATUS_FAILED: {
     id: "set.getvspticketstatus.failed",
@@ -712,6 +727,7 @@ export default function snackbar(state = {}, action) {
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
     case SETTREASURY_POLICY_SUCCESS:
+    case SETVSPDVOTECHOICE_PARTIAL_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
     case SETTINGS_SAVE:
       type = "Success";
@@ -837,6 +853,7 @@ export default function snackbar(state = {}, action) {
     case PROCESSMANAGEDTICKETS_FAILED:
     case SETVOTECHOICES_FAILED:
     case SETVSPDVOTECHOICE_FAILED:
+    case SETVSPDVOTECHOICE_SINGLE_FAILED:
     case GETVSP_TICKET_STATUS_FAILED:
     case DEX_STARTUP_FAILED:
     case DEX_LOGIN_FAILED:
@@ -872,6 +889,13 @@ export default function snackbar(state = {}, action) {
       }
 
       values = { originalError: String(action.error) };
+
+      // custom values for some error messages
+      switch (action.type) {
+        case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
+        case SETVSPDVOTECHOICE_SINGLE_FAILED:
+          values = { ...values, host: action.host };
+      }
 
       if (process.env.NODE_ENV === "development" && action.error) {
         // in development mode, log failures as errors in the console which helps

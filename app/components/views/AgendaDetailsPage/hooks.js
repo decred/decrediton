@@ -27,9 +27,8 @@ export const useAgendaDetails = () => {
   const selectedChoice = getAgendaSelectedChoice(agenda, voteChoices);
 
   const [newSelectedChoice, setNewSelectedChoice] = useState(selectedChoice);
-  const settingVoteChoices = useSelector(sel.setVoteChoicesAttempt);
   const settingVspdVoteChoices = useSelector(sel.setVspdVoteChoicesAttempt);
-  const isLoading = settingVoteChoices || settingVspdVoteChoices;
+  const isLoading = settingVspdVoteChoices;
 
   const dispatch = useDispatch();
   const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [

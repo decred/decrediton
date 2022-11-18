@@ -466,6 +466,10 @@ export const processUnmanagedTickets = (passphrase, vspHost, vspPubkey) => (
 export const SETVSPDVOTECHOICE_ATTEMPT = "SETVSPDVOTECHOICE_ATTEMPT";
 export const SETVSPDVOTECHOICE_SUCCESS = "SETVSPDVOTECHOICE_SUCCESS";
 export const SETVSPDVOTECHOICE_FAILED = "SETVSPDVOTECHOICE_FAILED";
+export const SETVSPDVOTECHOICE_SINGLE_FAILED =
+  "SETVSPDVOTECHOICE_SINGLE_FAILED";
+export const SETVSPDVOTECHOICE_PARTIAL_SUCCESS =
+  "SETVSPDVOTECHOICE_PARTIAL_SUCCESS";
 
 // setVSPDVoteChoices gets all vsps and updates the set vote choices to
 // whatever the wallet has.
@@ -473,19 +477,13 @@ export const setVSPDVoteChoices = (passphrase, vsps) => async (
   dispatch,
   getState
 ) => {
-  const availableVSPs = vsps ? vsps : await dispatch(discoverAvailableVSPs());
-  for (const vsp of availableVSPs) {
-    try {
-      const { pubkey } = await dispatch(getVSPInfo(vsp.host));
-      vsp.pubkey = pubkey;
-    } catch (error) {
-      // Ignore fetching info (won't set the vote choice for this vspd).
-      // TODO: this should be tracked so that users know this VSP isn't voting
-      // according to their wishes.
-    }
-  }
   try {
     dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
+
+    const vsps = await dispatch(discoverAvailableVSPs());
+    if (!isArray(vsps)) {
+      throw new Error("INVALID_VSPS");
+    }
     const walletService = sel.walletService(getState());
     let feeAccount, changeAccount;
     const mixedAccount = sel.getMixedAccount(getState());
@@ -499,30 +497,66 @@ export const setVSPDVoteChoices = (passphrase, vsps) => async (
 
     await dispatch(
       unlockAllAcctAndExecFn(passphrase, () =>
-        Promise.all(
-          availableVSPs.map(async (vsp) => {
-            if (vsp.pubkey) {
-              await wallet.setVspdAgendaChoices(
-                walletService,
-                vsp.host,
-                vsp.pubkey,
-                feeAccount,
-                changeAccount
-              );
-              dispatch(
-                updateUsedVSPs({
-                  host: vsp.host,
-                  vspdversion: vsp.vspData?.vspdversion
+        Promise.allSettled(
+          vsps.map((vsp) => {
+            return new Promise((resolve, reject) =>
+              dispatch(getVSPInfo(vsp.host))
+                .then(async ({ pubkey }) => {
+                  if (pubkey) {
+                    try {
+                      await wallet.setVspdAgendaChoices(
+                        walletService,
+                        vsp.host,
+                        pubkey,
+                        feeAccount,
+                        changeAccount
+                      );
+                    } catch (error) {
+                      reject({
+                        host: vsp.host,
+                        error
+                      });
+                    }
+                  } else {
+                    reject({
+                      host: vsp.host,
+                      error: "Error: missing pubkey"
+                    });
+                  }
+                  resolve();
                 })
-              );
-            }
+                .catch((error) => {
+                  reject({
+                    host: vsp.host,
+                    error: error?.isTimeout ? "Error: timeout exceded" : error
+                  });
+                })
+            );
           })
-        )
+        ).then((results) => {
+          const failedAttempt = results.filter(
+            (result) => result.status !== "fulfilled"
+          );
+          if (failedAttempt.length > 0) {
+            failedAttempt.forEach((result) => {
+              dispatch({
+                type: SETVSPDVOTECHOICE_SINGLE_FAILED,
+                host: result.reason.host,
+                error: result.reason.error
+              });
+            });
+            if (failedAttempt.length < results.length) {
+              dispatch({ type: SETVSPDVOTECHOICE_PARTIAL_SUCCESS });
+            }
+            dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
+          } else {
+            dispatch({ type: SETVOTECHOICES_SUCCESS });
+            dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
+          }
+        })
       )
     );
 
-    dispatch({ type: SETVOTECHOICES_SUCCESS });
-    dispatch({ type: SETVSPDVOTECHOICE_SUCCESS });
     return true;
   } catch (error) {
     dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
