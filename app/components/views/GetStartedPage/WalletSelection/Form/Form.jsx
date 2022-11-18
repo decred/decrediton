@@ -64,9 +64,7 @@ const WalletSelectionForm = ({
   const TrezorButton = (props) => (
     <ButtonIcon
       type="trezor"
-      onClick={() => {
-        /* TODO */
-      }}
+      onClick={() => showCreateTrezorBackedWalletForm()}
       text={intl.formatMessage(messages.trezorTabMsg)}
       iconColor={trezorIconColor}
       {...props}

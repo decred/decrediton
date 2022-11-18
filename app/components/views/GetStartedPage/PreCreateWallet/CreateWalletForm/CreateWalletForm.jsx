@@ -2,7 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { TextInput, IntegerInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
-import { Collapse, ExternalLink } from "shared";
+import { Collapse } from "shared";
 import { LoaderTitleMsg, messages } from "../../messages";
 import { Label, Input, Row, ContentContainer } from "../../helpers";
 import styles from "./CreateWalletForm.module.css";

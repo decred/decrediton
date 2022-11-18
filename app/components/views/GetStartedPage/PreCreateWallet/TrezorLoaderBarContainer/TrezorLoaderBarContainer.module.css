@@ -20,6 +20,31 @@
 .loaderBar,
 .loaderBar > div {
   height: 60px;
+  background: linear-gradient(
+    270deg,
+    var(--display-wallet-gradient-selected-right),
+    var(--input-color)
+  );
+  color: var(--white-button-text);
+  padding-left: 1rem;
+  font-size: 1.1rem;
+}
+
+.loaderBar > div > div:nth-of-type(1) {
+  grid-column: 2;
+  grid-row: 1;
+  align-items: center;
+  display: flex;
+  padding-left: 1rem;
+}
+.loaderBar > div > div:nth-of-type(2n) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.loaderBar > div > div:nth-of-type(2n) > div {
+  background-size: 2rem;
+  background-position: center;
 }
 
 .deviceStatus {

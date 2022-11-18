@@ -496,7 +496,7 @@ export const useGetStarted = () => {
 
       const key = Object.keys(state.value)[0];
       let hideHeader = false;
-      const loaderBarContainer = LoaderBarContainer;
+      let loaderBarContainer = LoaderBarContainer;
       let showLoaderBar = true;
       if (key === "startMachine") {
         switch (state.value[key]) {
@@ -555,20 +555,14 @@ export const useGetStarted = () => {
             });
             break;
           case "preCreateWallet":
-            text = isTrezor ? (
+            text = isTrezor && (
               <T
                 id="loaderBar.preCreateTrezorWalletCreate"
                 m="Create a trezor wallet..."
               />
-            ) : isCreateNewWallet ? (
-              <T id="loaderBar.preCreateWalletCreate" m="Create a wallet..." />
-            ) : (
-              <T
-                id="loaderBar.preCreateWalletRestore"
-                m="Restore a Wallet..."
-              />
             );
             hideHeader = isTrezor;
+            showLoaderBar = isTrezor;
             loaderBarContainer = isTrezor ? TrezorLoaderBarContainer : null;
             component = h(PreCreateWalletForm, {
               onShowCreateWallet,
@@ -579,7 +573,6 @@ export const useGetStarted = () => {
               isTrezor,
               error
             });
-            showLoaderBar = !isTrezor;
             break;
           case "walletPubpassInput":
             text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
@@ -619,7 +612,6 @@ export const useGetStarted = () => {
             });
             break;
         }
-
         PageComponent = h(GetStartedMachinePage, {
           submitRemoteCredentials,
           submitAppdata,
@@ -640,13 +632,10 @@ export const useGetStarted = () => {
           onContinueOpeningWallet,
           onSaveAndContinueOpeningWallet,
           nextStateAfterWalletLoading,
-          hideHeader,
+          hideHeader
         });
       }
 
-      if (key === "trezorConfig") {
-        PageComponent = h(TrezorConfig, { onSendBack });
-      }
       if (key === "creatingWallet") {
         PageComponent = h(CreateWalletMachine, {
           createWalletRef,
