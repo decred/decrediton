@@ -544,6 +544,13 @@ export const getVSPTrackedTicketsCommitAccounts = createSelector(
 );
 export const getVSPTicketBuyerAccount = get(["vsp", "account"]);
 
+export const selectedAccountForTicketPurchase = get([
+  "vsp",
+  "selectedAccountForTicketPurchase"
+]);
+export const selectedVSP = get(["vsp", "selectedVSP"]);
+export const numVSPicketsToBuy = get(["vsp", "numVSPicketsToBuy"]);
+
 // ****************** end of vsp selectors ******************
 
 export const dailyBalancesStats = get(["statistics", "dailyBalances"]);
@@ -1406,8 +1413,8 @@ export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 export const getRunningIndicator = or(
   getAccountMixerRunning,
   getTicketAutoBuyerRunning,
-  purchaseTicketsRequestAttempt,
-  isTicketAutoBuyerEnabled
+  purchaseTicketsRequestAttempt
+  // isTicketAutoBuyerEnabled  -- legacy autobuery is deprecated
 );
 
 export const dexOrdersOpen = get(["dex", "openOrder"]);
