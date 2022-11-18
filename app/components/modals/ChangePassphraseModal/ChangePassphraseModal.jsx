@@ -13,6 +13,7 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
   const [error, setIsError] = useState("");
   const intl = useIntl();
   const dexActive = useSelector(sel.dexActive);
+  const dexAccountName = useSelector(sel.dexAccount());
 
   const resetState = useCallback(() => {
     setNewPassphrase(null);
@@ -73,6 +74,7 @@ const ChangePassphraseModal = ({ onCancelModal, onSubmit, ...props }) => {
         dexAppPassword,
         setDexAppPassword,
         dexActive,
+        dexAccountName,
         error,
         intl
       }}
