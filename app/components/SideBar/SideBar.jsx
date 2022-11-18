@@ -3,11 +3,11 @@ import MenuBottomExpanded from "./MenuBottom/MenuBottomExpanded";
 import MenuBottomCollapsed from "./MenuBottom/MenuBottomCollapsed";
 import MenuLinks from "./MenuLinks/MenuLinks";
 import Logo from "./Logo/Logo";
+import { LinearProgressSmall } from "indicators";
 import style from "./SideBar.module.css";
 import { classNames } from "pi-ui";
 import { useSideBar } from "./hooks";
 import { useRescan } from "hooks";
-
 const SideBar = () => {
   const {
     isShowingAccounts,
@@ -33,7 +33,12 @@ const SideBar = () => {
     onAccountsListWheel,
     uiAnimations
   } = useSideBar();
-  const { rescanAttempt, rescanCancel } = useRescan();
+  const {
+    rescanEndBlock,
+    rescanCurrentBlock,
+    rescanAttempt,
+    rescanCancel
+  } = useRescan();
 
   return (
     <div
@@ -70,6 +75,17 @@ const SideBar = () => {
           }}
         />
       </div>
+      {rescanRequest && (
+        <div className={style.rescanProgressIndicator}>
+          <LinearProgressSmall
+            min={0}
+            max={1}
+            value={rescanCurrentBlock / rescanEndBlock}
+            className={style.linearProgressSmall}
+            barClassName={style.linearProgressSmallBar}
+          />
+        </div>
+      )}
       {expandSideBar ? (
         <MenuBottomExpanded
           {...{
