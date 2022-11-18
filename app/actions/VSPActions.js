@@ -635,20 +635,30 @@ export const toggleIsLegacy = (isLegacy) => (dispatch, getState) => {
   });
 };
 
+// updateUsedVSPs adds a new vsp to wallet config (used_vsps) or
+// updates its data if it exists. The saved data is expanded
+// with the MIN_VSP_VERSION.
 export const UPDATE_USED_VSPS = "UPDATE_USED_VSPS";
 export const updateUsedVSPs = (vsp) => (dispatch, getState) => {
   const walletName = sel.getWalletName(getState());
   const isTestNet = sel.isTestNet(getState());
   const walletCfg = wallet.getWalletCfg(isTestNet, walletName);
   const usedVSPs = walletCfg.get(USED_VSPS);
-  const isUsed = usedVSPs.find((usedVSP) => usedVSP.host === vsp.host);
-  // ignore if already added.
-  if (isUsed) return;
-  // update otherwise.
-  usedVSPs.push(vsp);
-  walletCfg.set(USED_VSPS, usedVSPs);
-
-  dispatch({ type: SET_REMEMBERED_VSP_HOST, usedVSPs });
+  let isVspFound = false;
+  const updatedVsp = { ...vsp, minVspVersion: MIN_VSP_VERSION };
+  let updatedUsedVSPs = usedVSPs?.map((usedVSP) => {
+    if (usedVSP.host === vsp.host) {
+      isVspFound = true;
+      return { ...usedVSP, ...updatedVsp };
+    } else {
+      return usedVSP;
+    }
+  });
+  if (!isVspFound) {
+    updatedUsedVSPs = usedVSPs ? [...usedVSPs, updatedVsp] : [updatedVsp];
+  }
+  walletCfg.set(USED_VSPS, updatedUsedVSPs);
+  dispatch({ type: UPDATE_USED_VSPS, usedVSPs: updatedUsedVSPs });
 };
 
 export const SET_REMEMBERED_VSP_HOST = "SET_REMEMBERED_VSP_HOST";
@@ -847,11 +857,11 @@ export const SETVSPDVOTECHOICE_FAILED = "SETVSPDVOTECHOICE_FAILED";
 
 // setVSPDVoteChoices gets all vsps and updates the set vote choices to
 // whatever the wallet has.
-export const setVSPDVoteChoices = (passphrase) => async (
+export const setVSPDVoteChoices = (passphrase, vsps) => async (
   dispatch,
   getState
 ) => {
-  const availableVSPs = await dispatch(discoverAvailableVSPs());
+  const availableVSPs = vsps ? vsps : await dispatch(discoverAvailableVSPs());
   for (const vsp of availableVSPs) {
     try {
       const { pubkey } = await dispatch(getVSPInfo(vsp.host));
@@ -887,6 +897,12 @@ export const setVSPDVoteChoices = (passphrase) => async (
                 feeAccount,
                 changeAccount
               );
+              dispatch(
+                updateUsedVSPs({
+                  host: vsp.host,
+                  vspdversion: vsp.vspData?.vspdversion
+                })
+              );
             }
           })
         )
@@ -898,6 +914,7 @@ export const setVSPDVoteChoices = (passphrase) => async (
     return true;
   } catch (error) {
     dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
+    throw error;
   }
 };
 
@@ -1015,11 +1032,119 @@ export const getUnspentUnexpiredVspTickets = () => async (
       type: GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS,
       vsps
     });
+    return vsps;
   } catch (error) {
     dispatch({
       type: GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
       error
     });
+  }
+};
+
+// getNotAbstainVotes returns all saved votes which are not
+// abstaining and related to an in-progress agenda.
+export const getNotAbstainVotes = () => (_, getState) => {
+  const voteChoices = sel.voteChoices(getState());
+  const allAgendas = sel.allAgendas(getState());
+
+  return voteChoices?.filter((vote) => {
+    const agendaDetails = allAgendas.find(
+      (agenda) => agenda.name === vote.agendaId
+    );
+    return (
+      agendaDetails && !agendaDetails.finished && vote.choiceId !== "abstain"
+    );
+  });
+};
+
+// getRecentlyUpdatedUsedVSPs returns all recently updated VSPs
+// which have > 0 unspent tickets.
+// A vsp is considered as recently updated if it is not outdated now,
+// and it was outdated when the last vote took place
+// (vsp_version_current >= min_vsp_version &&
+// vsp_version_saved < min_vsp_version_saved, where vsp_version_current
+// and min_vsp_version are the fresh and current values)
+export const getRecentlyUpdatedUsedVSPs = () => async (dispatch, getState) => {
+  const walletName = sel.getWalletName(getState());
+  const isTestNet = sel.isTestNet(getState());
+  const walletCfg = wallet.getWalletCfg(isTestNet, walletName);
+  const usedVSPs = walletCfg.get(USED_VSPS);
+  if (!usedVSPs) {
+    return null;
+  }
+
+  const availableVSPs = await dispatch(discoverAvailableVSPs());
+  if (!availableVSPs) {
+    return null;
+  }
+
+  const recentlyUpdatedUsedVSPs = usedVSPs.filter((v) => {
+    if (!v.vspdversion || !v.minVspVersion) {
+      return false;
+    }
+
+    const currentVSPData = availableVSPs.find((av) => av.host === v.host);
+    if (!currentVSPData) {
+      return false;
+    }
+
+    return (
+      isVSPOutdated(v.vspdversion, v.minVspVersion) && !currentVSPData.outdated
+    );
+  });
+
+  if (recentlyUpdatedUsedVSPs.length === 0) {
+    return [];
+  }
+
+  const unspentTickets = await dispatch(getUnspentUnexpiredVspTickets());
+  if (!unspentTickets) {
+    return null;
+  }
+  return unspentTickets.filter(
+    (v) =>
+      v.tickets.length > 0 &&
+      recentlyUpdatedUsedVSPs.find((av) => `https://${av.host}` === v.host)
+  );
+};
+
+export const RESENDVSPDVOTECHOICES_ATTEMPT = "RESENDVSPDVOTECHOICES_ATTEMPT";
+export const RESENDVSPDVOTECHOICES_FAILED = "RESENDVSPDVOTECHOICES_FAILED";
+export const RESENDVSPDVOTECHOICES_SUCCESS = "RESENDVSPDVOTECHOICES_SUCCESS";
+export const resendVSPDVoteChoices = (vsps, passphrase) => async (dispatch) => {
+  dispatch({
+    type: RESENDVSPDVOTECHOICES_ATTEMPT
+  });
+  try {
+    if (!vsps) {
+      throw new Error("Invalid VSPs parameter");
+    }
+    const availableVSPs = await dispatch(discoverAvailableVSPs());
+    if (!availableVSPs) {
+      throw new Error("Invalid fetching available VSPs");
+    }
+
+    const detailedVSPs = vsps?.reduce((acc, v) => {
+      const detailedVSP = availableVSPs.find(
+        (av) => `https://${av.host}` === v.host
+      );
+      return detailedVSP ? [...acc, detailedVSP] : acc;
+    }, []);
+
+    if (!detailedVSPs || detailedVSPs.length === 0) {
+      throw new Error("Unknown vsps");
+    }
+
+    await dispatch(setVSPDVoteChoices(passphrase, detailedVSPs));
+    dispatch({
+      type: RESENDVSPDVOTECHOICES_SUCCESS
+    });
+  } catch (error) {
+    dispatch({
+      type: RESENDVSPDVOTECHOICES_FAILED,
+      error
+    });
+    throw error;
   }
 };
 
