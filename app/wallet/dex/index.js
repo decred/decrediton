@@ -10,3 +10,4 @@ export const exportSeed = invocable("export-seed-dex");
 export const createWallet = invocable("create-wallet-dex");
 export const user = invocable("user-dex");
 export const launchWindow = invocable("launch-dex-window");
+export const setWalletPassword = invocable("set-wallet-password-dex");

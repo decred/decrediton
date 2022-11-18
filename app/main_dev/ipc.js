@@ -22,6 +22,7 @@ import {
   initCheckDex,
   initDexCall,
   createWalletDexCall,
+  setWalletPasswordDexCall,
   userDexCall,
   loginDexCall,
   logoutDexCall,
@@ -370,6 +371,32 @@ export const createWalletDex = async (
     return createWallet;
   } catch (e) {
     logger.log("error", `error create wallet dex: ${e}`);
+    return e;
+  }
+};
+
+export const setWalletPasswordDex = async (
+  assetID,
+  passphrase,
+  appPassphrase
+) => {
+  if (!GetDexPID()) {
+    logger.log(
+      "info",
+      "Skipping setting wallet password since dex is not runnning"
+    );
+    return false;
+  }
+
+  try {
+    const setWalletPassword = await setWalletPasswordDexCall(
+      assetID,
+      passphrase,
+      appPassphrase
+    );
+    return setWalletPassword;
+  } catch (e) {
+    logger.log("error", `error set wallet password dex: ${e}`);
     return e;
   }
 };

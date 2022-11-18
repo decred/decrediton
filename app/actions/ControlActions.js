@@ -8,6 +8,7 @@ import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
 import { isNumber } from "fp";
 import { setNeedsVSPdProcessTickets } from "./SettingsActions";
+import { setWalletPasswordDex } from "./DexActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -223,16 +224,20 @@ export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
 export const CHANGEPASSPHRASE_FAILED = "CHANGEPASSPHRASE_FAILED";
 export const CHANGEPASSPHRASE_SUCCESS = "CHANGEPASSPHRASE_SUCCESS";
 
-export const changePassphraseAttempt = (oldPass, newPass, priv) => (
-  dispatch,
-  getState
-) => {
+export const changePassphraseAttempt = (
+  oldPass,
+  newPass,
+  priv,
+  dexAppPassword
+) => (dispatch, getState) => {
   dispatch({ type: CHANGEPASSPHRASE_ATTEMPT });
   return wallet
     .changePassphrase(sel.walletService(getState()), oldPass, newPass, priv)
     .then(async (res) => {
       if (priv) {
         const oldAccounts = sel.balances(getState());
+        const dexActive = sel.dexActive(getState());
+        const dexAccountName = sel.dexAccount(getState());
         await Promise.all(
           oldAccounts.map(async (acct) => {
             // just skip if imported account.
@@ -251,6 +256,13 @@ export const changePassphraseAttempt = (oldPass, newPass, priv) => (
                 null
               )
             );
+            if (
+              dexActive &&
+              dexAppPassword &&
+              acct.accountName === dexAccountName
+            ) {
+              await dispatch(setWalletPasswordDex(newPass, dexAppPassword));
+            }
             return acct;
           })
         );

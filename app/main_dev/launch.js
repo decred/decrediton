@@ -1017,6 +1017,21 @@ export const createWalletDexCall = (
   }
 };
 
+export const setWalletPasswordDexCall = (
+  assetID,
+  passphrase,
+  appPassphrase
+) => {
+  if (!dex) {
+    return;
+  }
+  return callDEX("SetWalletPassword", {
+    pass: passphrase,
+    appPass: appPassphrase,
+    assetID
+  });
+};
+
 export const userDexCall = () => (!dex ? null : callDEX("User", {}));
 
 export const GetDcrwPort = () => dcrwPort;

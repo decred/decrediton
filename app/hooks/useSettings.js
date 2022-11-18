@@ -26,8 +26,10 @@ const useSettings = () => {
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {
-      const { newPassphrase, priv } = args;
-      dispatch(ca.changePassphraseAttempt(oldPass, newPassphrase, priv));
+      const { newPassphrase, priv, dexAppPassword } = args;
+      dispatch(
+        ca.changePassphraseAttempt(oldPass, newPassphrase, priv, dexAppPassword)
+      );
     },
     [dispatch]
   );
