@@ -1,12 +1,37 @@
 import * as d from "actions/DexActions";
 import * as ca from "actions/ControlActions";
+import * as cla from "actions/ClientActions";
+import * as ta from "actions/TransactionActions";
+import * as sa from "actions/SettingsActions";
+import * as vspa from "actions/VSPActions";
 import * as wal from "wallet";
 import { cloneDeep, isEqual } from "lodash";
 import { createStore } from "test-utils.js";
-import { testBalances, dexAccountName } from "./accountMocks.js";
+import {
+  testBalances,
+  dexAccountName,
+  changeAccountNumber,
+  mixedAccountNumber,
+  mixedAccountName,
+  mixedAccount,
+  defaultAccountNumber,
+  defaultAccount,
+  dexAccountNumber,
+  commitmentAccountNumber,
+  unencryptedAccount,
+  ticketBuyerAccountNumber,
+  ticketBuyerAccountName
+} from "./accountMocks.js";
+import { wait } from "@testing-library/react";
+import { advanceBy, clear } from "jest-date-mock";
+import { act } from "react-dom/test-utils";
 
 const controlActions = ca;
 const wallet = wal;
+const vspActions = vspa;
+const settingsActions = sa;
+const transactionActions = ta;
+const clientActions = cla;
 const dexActions = d;
 
 const testWalletService = "test-wallet-service";
@@ -18,23 +43,46 @@ const testDEXAppPassword = "test-new-password";
 const selectedAccountForTicketPurchase = 1;
 const selectedAccountForTicketPurchaseName = "ticket-purchase-account-name";
 
-const ticketBuyerAccount = 2;
-const ticketBuyerAccountName = "ticket-buyer-account-name";
+const testTicketBuyerService = "test-ticket-buyer-service";
+const testVSP = { host: "test-vsp-host", pubkey: "test-vsp-pubkey" };
+const testMixedAccountBranch = "test-mixed-account-branch";
+const testCsppServer = "test-cspp-server";
+const testCsppPort = "test-cspp-port";
+const expectedCsppReq = {
+  mixedAccount: mixedAccountNumber,
+  changeAccount: changeAccountNumber,
+  csppServer: testCsppServer,
+  csppPort: testCsppPort,
+  mixedAcctBranch: testMixedAccountBranch
+};
 
-const changeAccount = 3;
-const mixedAccount = 4;
-const dexAccountNumber = 5;
-const commitmentAccount = 6;
+const testUnspentOutputs = ["unspent-output"];
+const testBalanceToMaintain = 3;
+const testAddress = "test-address";
+const testMessage = "test-message";
+const testSignature =
+  "2019071291abce6c142209780554b183131b451da4b0a520d6ba931013a7bfc7c831a72350c4a0d2e45077caa0a75c4bb2f476d76d765bc96069d03b3bc87ef856";
+
+const testAccountMixerService = "test-accountmixer-service";
 
 const initialState = {
   grpc: {
     balances: testBalances,
-    walletService: testWalletService
+    walletService: testWalletService,
+    ticketBuyerService: testTicketBuyerService,
+    accountMixerService: testAccountMixerService,
+    getTicketPriceResponse: {
+      ticketPrice: 6309912196,
+      height: 1007755
+    }
   },
   walletLoader: {
     dexAccount: dexAccountName,
-    mixedAccount: mixedAccount,
-    changeAccount: changeAccount
+    mixedAccount: mixedAccountNumber,
+    changeAccount: changeAccountNumber,
+    csppServer: testCsppServer,
+    csppPort: testCsppPort,
+    mixedAccountBranch: testMixedAccountBranch
   },
   vsp: {
     account: ticketBuyerAccountName,
@@ -44,17 +92,30 @@ const initialState = {
         host: "https://teststakepool.decred.org",
         tickets: [
           {
-            commitmentAccount: commitmentAccount
+            commitmentAccount: commitmentAccountNumber
           }
         ]
       }
     }
-  }
+  },
+  control: { lockAccountError: null }
 };
 
 let mockSetAccountPassphrase;
 let mockSetWalletPasswordDex;
 let mockChangePassphrase;
+let mockGetVSPTrackedTickets;
+let mockSetNeedsVSPdProcessTickets;
+let mockCallbackFunction;
+let mockPurchaseTicketsV3;
+let mockListUnspentOutputs;
+let mockStartTicketAutoBuyerV3;
+let mockValidateAddress;
+let mockSignMessage;
+let mockUpdateUsedVSPs;
+let mockMixerStreamer;
+let mockRunAccountMixerRequest;
+let mockMixerStreamerCancel;
 
 beforeEach(() => {
   mockSetAccountPassphrase = wallet.setAccountPassphrase = jest.fn(() => {});
@@ -64,6 +125,46 @@ beforeEach(() => {
   mockSetWalletPasswordDex = dexActions.setWalletPasswordDex = jest.fn(
     () => () => {}
   );
+  mockGetVSPTrackedTickets = vspActions.getVSPTrackedTickets = jest.fn(
+    () => (dispatch) => {
+      dispatch({
+        trackedTickets: initialState.vsp.trackedTickets,
+        type: vspActions.GETVSPTRACKEDTICKETS_SUCCESS
+      });
+      Promise.resolve();
+    }
+  );
+  mockSetNeedsVSPdProcessTickets = settingsActions.setNeedsVSPdProcessTickets = jest.fn(
+    () => () => {}
+  );
+  mockCallbackFunction = jest.fn(() => new Promise((r) => setTimeout(r, 10)));
+  mockPurchaseTicketsV3 = wallet.purchaseTicketsV3 = jest.fn(() =>
+    Promise.resolve({ ticketHashes: [] })
+  );
+  mockUpdateUsedVSPs = vspActions.updateUsedVSPs = jest.fn(() => () => {});
+  mockListUnspentOutputs = transactionActions.listUnspentOutputs = jest.fn(
+    () => () => Promise.resolve(testUnspentOutputs)
+  );
+  mockValidateAddress = wallet.validateAddress = jest.fn(() => ({
+    accountNumber: defaultAccountNumber
+  }));
+  mockSignMessage = wallet.signMessage = jest.fn(() => ({
+    signature: testSignature
+  }));
+
+  mockMixerStreamerCancel = jest.fn(() => {});
+  mockMixerStreamer = { cancel: mockMixerStreamerCancel };
+  mockRunAccountMixerRequest = wallet.runAccountMixerRequest = jest.fn(() =>
+    Promise.resolve(mockMixerStreamer)
+  );
+  wallet.getAccountMixerService = jest.fn(() =>
+    Promise.resolve(testAccountMixerService)
+  );
+});
+
+afterEach(() => {
+  clear();
+  jest.useRealTimers();
 });
 
 test("test filterUnlockableAccounts - there is no running progress", () => {
@@ -72,11 +173,11 @@ test("test filterUnlockableAccounts - there is no running progress", () => {
   const accts = [
     0,
     selectedAccountForTicketPurchase,
-    ticketBuyerAccount,
-    changeAccount,
-    mixedAccount,
+    ticketBuyerAccountNumber,
+    changeAccountNumber,
+    mixedAccountNumber,
     dexAccountNumber,
-    commitmentAccount
+    commitmentAccountNumber
   ];
   const filteredAccounts = controlActions.filterUnlockableAccounts(
     accts,
@@ -86,15 +187,15 @@ test("test filterUnlockableAccounts - there is no running progress", () => {
   // dex account is always filtered out
   expect(filteredAccounts.includes(dexAccountNumber)).toBeFalsy();
   // commitment accounts are always filtered out
-  expect(filteredAccounts.includes(commitmentAccount)).toBeFalsy();
+  expect(filteredAccounts.includes(commitmentAccountNumber)).toBeFalsy();
   // all other accounts remained
   expect(
     isEqual(filteredAccounts, [
       0,
       selectedAccountForTicketPurchase,
-      ticketBuyerAccount,
-      changeAccount,
-      mixedAccount
+      ticketBuyerAccountNumber,
+      changeAccountNumber,
+      mixedAccountNumber
     ])
   ).toBeTruthy();
 });
@@ -107,9 +208,9 @@ test("test filterUnlockableAccounts - invalid dex account name", () => {
   const accts = [
     0,
     selectedAccountForTicketPurchase,
-    ticketBuyerAccount,
-    changeAccount,
-    mixedAccount,
+    ticketBuyerAccountNumber,
+    changeAccountNumber,
+    mixedAccountNumber,
     dexAccountNumber
   ];
   const filteredAccounts = controlActions.filterUnlockableAccounts(
@@ -125,9 +226,9 @@ const testRunnning = (store) => {
   const accts = [
     0,
     selectedAccountForTicketPurchase,
-    ticketBuyerAccount,
-    changeAccount,
-    mixedAccount,
+    ticketBuyerAccountNumber,
+    changeAccountNumber,
+    mixedAccountNumber,
     dexAccountNumber
   ];
   const filteredAccounts = controlActions.filterUnlockableAccounts(
@@ -138,12 +239,12 @@ const testRunnning = (store) => {
   // dex account is always filtered out
   expect(filteredAccounts.includes(dexAccountNumber)).toBeFalsy();
   // commitment accounts are always filtered out
-  expect(filteredAccounts.includes(commitmentAccount)).toBeFalsy();
+  expect(filteredAccounts.includes(commitmentAccountNumber)).toBeFalsy();
   // all other accounts remained
 
-  expect(filteredAccounts.includes(mixedAccount)).toBeFalsy();
-  expect(filteredAccounts.includes(changeAccount)).toBeFalsy();
-  expect(filteredAccounts.includes(ticketBuyerAccount)).toBeFalsy();
+  expect(filteredAccounts.includes(mixedAccountNumber)).toBeFalsy();
+  expect(filteredAccounts.includes(changeAccountNumber)).toBeFalsy();
+  expect(filteredAccounts.includes(ticketBuyerAccountNumber)).toBeFalsy();
   expect(
     filteredAccounts.includes(selectedAccountForTicketPurchase)
   ).toBeFalsy();
