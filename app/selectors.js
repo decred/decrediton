@@ -514,6 +514,10 @@ export const unspentUnexpiredVspTickets = get([
   "vsp",
   "unspentUnexpiredVspTickets"
 ]);
+export const resendVSPDVoteChoicesAttempt = get([
+  "vsp",
+  "resendVSPDVoteChoicesAttempt"
+]);
 
 export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
 export const isProcessingUnmanaged = get([
