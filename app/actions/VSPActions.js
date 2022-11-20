@@ -480,7 +480,9 @@ export const setVSPDVoteChoices = (passphrase, vsps) => async (
   try {
     dispatch({ type: SETVSPDVOTECHOICE_ATTEMPT });
 
-    const vsps = await dispatch(discoverAvailableVSPs());
+    if (!vsps) {
+      vsps = await dispatch(discoverAvailableVSPs());
+    }
     if (!isArray(vsps)) {
       throw new Error("INVALID_VSPS");
     }
@@ -510,6 +512,12 @@ export const setVSPDVoteChoices = (passphrase, vsps) => async (
                         pubkey,
                         feeAccount,
                         changeAccount
+                      );
+                      await dispatch(
+                        updateUsedVSPs({
+                          host: vsp.host,
+                          vspdversion: vsp.vspData?.vspdversion
+                        })
                       );
                     } catch (error) {
                       reject({
@@ -560,7 +568,6 @@ export const setVSPDVoteChoices = (passphrase, vsps) => async (
     return true;
   } catch (error) {
     dispatch({ type: SETVSPDVOTECHOICE_FAILED, error });
-    throw error;
   }
 };
 

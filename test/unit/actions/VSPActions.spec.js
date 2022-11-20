@@ -15,11 +15,9 @@ import {
   fetchTimes,
   mockVSPTicketInfoResponse
 } from "./vspMocks.js";
-import { mockStakeTransactions } from "../components/views/TransactionPage/mocks.js";
 import {
   mockMixedAccountValue,
   mockChangeAccountValue,
-  mockMixedAccount,
   mockDefaultAccount,
   mockDefaultAccountValue
 } from "../components/views/TicketsPage/PurchaseTab/mocks";
@@ -45,9 +43,7 @@ let mockSetVspdAgendaChoices;
 let mockSignMessageAttempt;
 let mockGetVSPTicketStatus;
 let mockProcessManagedTickets;
-let mockSetVspdAgendaChoices;
 
-const testPassphrase = "test-passphrase";
 const testError = "test-error-message";
 
 const testDefaultSpendingAccount = 0;
@@ -110,8 +106,6 @@ const mockAllAgendasAllFinished = mockAllAgendas.map((v) => ({
   ...v,
   finished: true
 }));
-
-const mockSig = "test-sig";
 
 beforeEach(() => {
   selectors.getVSPInfoTimeoutTime = jest.fn(() => 100);
@@ -461,7 +455,7 @@ test("test updateUsedVSPs - update existing vsp", async () => {
 });
 
 test("test setVSPDVoteChoices", async () => {
-  const mockUsedVSPs = {
+  const mockUsedVSPsOrig = {
     [USED_VSPS]: [
       {
         host: defaultMockAvailableMainnetVsps[0].host,
@@ -470,6 +464,7 @@ test("test setVSPDVoteChoices", async () => {
       }
     ]
   };
+  const mockUsedVSPs = cloneDeep(mockUsedVSPsOrig);
   mockWalletCfgSet = jest.fn((key, usedVSP) => {
     mockUsedVSPs[key] = usedVSP;
   });
@@ -493,8 +488,8 @@ test("test setVSPDVoteChoices", async () => {
   expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
     1, // first call
     undefined, // walletService
-    defaultMockAvailableMainnetVsps[0].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
+    defaultMockAvailableMainnetVsps[3].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
     testDefaultSpendingAccount,
     testDefaultSpendingAccount
   );
@@ -502,14 +497,15 @@ test("test setVSPDVoteChoices", async () => {
   expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
     2, // second call
     undefined, // walletService
-    defaultMockAvailableMainnetVsps[3].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
+    defaultMockAvailableMainnetVsps[0].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
     testDefaultSpendingAccount,
     testDefaultSpendingAccount
   );
 
   expect(mockWalletCfgSet).toHaveBeenNthCalledWith(1, USED_VSPS, [
-    expectedUpdatedVSPs[0]
+    mockUsedVSPsOrig[USED_VSPS][0],
+    expectedUpdatedVSPs[1]
   ]);
   expect(mockWalletCfgSet).toHaveBeenNthCalledWith(
     2,
@@ -663,43 +659,6 @@ test("test setVSPDVoteChoices in a private wallet, all request finish successful
   expect(store.getState().vsp.usedVSPs[3]).toEqual(expectedUpdatedVSPs[3]);
   expect(store.getState().vsp.usedVSPs[4]).toEqual(expectedUpdatedVSPs[4]);
   expect(store.getState().vsp.usedVSPs[5]).toEqual(expectedUpdatedVSPs[5]);
-});
-
-test("test setVSPDVoteChoices (received error)", async () => {
-  selectors.getMixedAccount = jest.fn(() => null);
-  selectors.getChangeAccount = jest.fn(() => null);
-  const testErrorMessage = "test-error-msg";
-  mockSetVspdAgendaChoices = wallet.setVspdAgendaChoices = jest.fn(() =>
-    Promise.reject(testErrorMessage)
-  );
-  const store = createStore({});
-  let receivedErrorMsg;
-  try {
-    await store.dispatch(vspActions.setVSPDVoteChoices(testPassphrase));
-  } catch (error) {
-    receivedErrorMsg = error;
-  }
-
-  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
-    1, // first call
-    undefined, // walletService
-    defaultMockAvailableMainnetVsps[0].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
-    testDefaultSpendingAccount,
-    testDefaultSpendingAccount
-  );
-
-  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
-    2, // second call
-    undefined, // walletService
-    defaultMockAvailableMainnetVsps[3].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
-    testDefaultSpendingAccount,
-    testDefaultSpendingAccount
-  );
-
-  expect(store.getState().snackbar.messages[0].type).toBe("Error");
-  expect(receivedErrorMsg).toEqual(testErrorMessage);
 });
 
 test("test getRecentlyUpdatedUsedVSPs - success", async () => {
