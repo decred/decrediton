@@ -59,17 +59,10 @@ export const usePurchaseTab = () => {
     [dispatch]
   );
 
-  const getVSPTicketsByFeeStatus = (feeStatus) => {
-    dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
-  };
-
   const setRememberedVspHost = useCallback(
     (vsp) => dispatch(vspa.setRememberedVspHost(vsp)),
     [dispatch]
   );
-
-  const onListUnspentOutputs = (accountNum) =>
-    dispatch(listUnspentOutputs(accountNum));
 
   const setAccount = useCallback(
     (account) => {

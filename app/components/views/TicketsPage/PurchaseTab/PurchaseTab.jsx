@@ -14,7 +14,6 @@ const PurchaseTab = () => {
     availableVSPs,
     // TODO treat errors:
     // availableVSPsError,
-    defaultSpendingAccount,
     ticketPrice,
     purchaseTicketsAttempt,
     mixedAccount,
@@ -26,36 +25,22 @@ const PurchaseTab = () => {
     isVSPListingEnabled,
     onEnableVSPListing,
     getRunningIndicator,
-    visibleAccounts
+    visibleAccounts,
+    account,
+    setAccount,
+    vsp,
+    setVSP,
+    numTicketsToBuy,
+    setNumTicketsToBuy
   } = usePurchaseTab();
 
-  const [account, setAccount] = useState(defaultSpendingAccount);
   useEffect(() => {
     const newAccount = visibleAccounts?.find((a) =>
       isEqual(a.value, account?.value)
     );
     newAccount && setAccount(newAccount);
-  }, [visibleAccounts, account]);
+  }, [visibleAccounts, account, setAccount]);
 
-  // todo use this vsp to buy solo tickets.
-  const [vsp, setVSP] = useState(() => {
-    if (rememberedVspHost) {
-      // reset rememberedVspHost if it's outdated
-      if (
-        availableVSPs?.find(
-          (availableVSP) => availableVSP.host === rememberedVspHost.host
-        )?.outdated === true
-      ) {
-        setRememberedVspHost(null);
-        return null;
-      } else {
-        return { host: rememberedVspHost.host };
-      }
-    } else {
-      return null;
-    }
-  });
-  const [numTicketsToBuy, setNumTicketsToBuy] = useState(1);
   const [isValid, setIsValid] = useState(false);
 
   const toggleRememberVspHostCheckBox = () => {
@@ -73,9 +58,7 @@ const PurchaseTab = () => {
   };
 
   const onIncrementNumTickets = () => {
-    setNumTicketsToBuy((numTicketsToBuy) =>
-      numTicketsToBuy == "" ? 1 : numTicketsToBuy + 1
-    );
+    setNumTicketsToBuy(numTicketsToBuy == "" ? 1 : numTicketsToBuy + 1);
   };
 
   const onChangeNumTickets = (numTicketsToBuy) => {
@@ -87,9 +70,7 @@ const PurchaseTab = () => {
   };
 
   const onDecrementNumTickets = () => {
-    setNumTicketsToBuy((numTicketsToBuy) =>
-      numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1
-    );
+    setNumTicketsToBuy(numTicketsToBuy <= 1 ? 1 : numTicketsToBuy - 1);
   };
 
   const onPurchaseTicket = (passphrase) => {
