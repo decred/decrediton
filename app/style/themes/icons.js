@@ -83,9 +83,6 @@ const icons = {
   "lifecycle-04": url(require("style/icons/lifecycle-04.png")),
   "lifecycle-05": url(require("style/icons/lifecycle-05.png")),
   "lifecycle-06": url(require("style/icons/lifecycle-06.png")),
-  "manage-pools-icon": url(
-    require("style/icons/tickets-manage-stakepools.svg")
-  ),
   "minus-big-icon": url(require("style/icons/minus-big.svg")),
   "minus-small-icon": url(require("style/icons/minus-small.svg")),
   "new-loader": url(require("style/icons/3D_Loading.gif")),
@@ -169,7 +166,6 @@ const icons = {
   "ticket-revoked": url(require("style/icons/ticketRevoked.svg")),
   "ticket-unmined": url(require("style/icons/ticketUnmined.svg")),
   "ticket-voted": url(require("style/icons/ticketVoted.svg")),
-  "delete-vsp": url(require("style/icons/deleteVSP.svg")),
   "decred-logo": url(require("style/icons/dcrLogoShare.svg")),
   "search-icon-hover": url(require("style/icons/search-hover.svg")),
   "animated-alert-icon": url(require("style/icons/animated_alert_icon.gif")),

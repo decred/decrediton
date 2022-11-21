@@ -86,15 +86,10 @@ const initialState = {
     settingsChanged: false,
     needNetworkReset: false
   },
-  stakepool: {
-    currentStakePoolConfig: null,
-    selectedStakePool: null
-  },
   vsp: {
     availableVSPs: null,
     availableVSPsError: null,
     ticketAutoBuyerRunning: null,
-    isLegacy: null,
     rememberedVspHost: null,
     processUnmanagedTicketsAttempt: false,
     processUnmanagedTicketsError: null,
@@ -153,7 +148,6 @@ const initialState = {
     address: "127.0.0.1",
     port: "9121",
     walletService: null,
-    requiredStakepoolAPIVersion: 2,
     recentBlockTimestamp: null,
     currentBlockHeight: 0,
 
@@ -282,7 +276,6 @@ const initialState = {
     accountNtfnsResponse: null
   },
   control: {
-    numTicketsToBuy: 1,
     // ExtendedPubKey
     getExtendedPubKeyAttempt: false,
     getExtendedPubKeyResponse: null,
@@ -311,11 +304,6 @@ const initialState = {
     importPrivateKeyRequestAttempt: false,
     importPrivateKeyResponse: null,
     importPrivateKeyError: null,
-    // ImportScript
-    importScriptRequestAttempt: false,
-    importScriptResponse: null,
-    importScriptError: null,
-    importScriptSuccess: "",
     // ChangePassphrase
     changePassphraseRequestAttempt: false,
     changePassphraseResponse: null,
@@ -342,22 +330,6 @@ const initialState = {
 
     // TicketBuyerService
     ticketBuyerService: null,
-    // TicketBuyerConfig
-    balanceToMaintain: null,
-    getTicketBuyerConfigRequestAttempt: false,
-    getTicketBuyerConfigResponse: null,
-    getTicketBuyerConfigSuccess: null,
-    getTicketBuyerConfigError: null,
-    // StartAutoBuyer
-    startAutoBuyerRequestAttempt: false,
-    startAutoBuyerResponse: null,
-    startAutoBuyerSuccess: null,
-    startAutoBuyerError: null,
-    // StopAutoBuyer
-    stopAutoBuyerRequestAttempt: false,
-    stopAutoBuyerResponse: null,
-    stopAutoBuyerSuccess: null,
-    stopAutoBuyerError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,
     constructTxResponse: null,

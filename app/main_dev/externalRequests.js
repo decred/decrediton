@@ -174,7 +174,6 @@ export const allowExternalRequest = (externalReqType) => {
       addAllowedURL("https://mainnet.decred.org/api/status");
       break;
     case EXTERNALREQUEST_STAKEPOOL_LISTING:
-      addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
       addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=vsp$/);
       break;
     case EXTERNALREQUEST_UPDATE_CHECK:
@@ -196,17 +195,6 @@ export const allowExternalRequest = (externalReqType) => {
   }
 
   allowedExternalRequests[externalReqType] = true;
-};
-
-// TODO remove after stopping support vsp v1/v2.
-export const LEGACY_allowStakepoolRequests = (stakePoolHost) => {
-  const reqType = "stakepool_" + stakePoolHost;
-  if (allowedExternalRequests[reqType]) return;
-
-  addAllowedURL(stakePoolHost + "/api/v1/address");
-  addAllowedURL(stakePoolHost + "/api/v2/voting");
-  addAllowedURL(stakePoolHost + "/api/v1/getpurchaseinfo");
-  addAllowedURL(stakePoolHost + "/api/v1/stats");
 };
 
 // allowVSPRequests allows external vsp request into decrediton.

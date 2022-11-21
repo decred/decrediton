@@ -5,7 +5,6 @@ import * as sta from "actions/StatisticsActions";
 
 export function useStatistics() {
   const ticketPoolSize = useSelector(sel.ticketPoolSize);
-  const allStakePoolStats = useSelector(sel.networkStakePoolStatsList);
   const voteTimeStats = useSelector(sel.voteTimeStats);
   const getMyTicketsStatsRequest = useSelector(sel.getMyTicketsStatsRequest);
   const stakeRewardsStats = useSelector(sel.stakeRewardsStats);
@@ -16,7 +15,6 @@ export function useStatistics() {
     sel.ninetyFifthPercentileVoteTime
   );
   const hasTickets = useSelector(sel.hasTickets);
-  const selectedStakePool = useSelector(sel.selectedStakePool);
   const ticketDataHeatmap = useSelector(sel.ticketDataHeatmap);
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
 
@@ -50,24 +48,9 @@ export function useStatistics() {
     statQueried
   ]);
 
-  const [stakePool, setStakePool] = useState(() => {
-    let stakePool = allStakePoolStats[0];
-    if (selectedStakePool) {
-      const idxSel = allStakePoolStats.findIndex(
-        (s) => s.Host === selectedStakePool.Host
-      );
-      if (idxSel > -1) {
-        stakePool = allStakePoolStats[idxSel];
-      }
-    }
-
-    return stakePool;
-  });
-
   return {
     hasStats: voteTimeStats && !getMyTicketsStatsRequest,
     ticketPoolSize,
-    allStakePoolStats,
     voteTimeStats,
     getMyTicketsStatsRequest,
     stakeRewardsStats,
@@ -76,12 +59,9 @@ export function useStatistics() {
     averageVoteTime,
     ninetyFifthPercentileVoteTime,
     hasTickets,
-    selectedStakePool,
     ticketDataHeatmap,
     getMyTicketsStats,
     getTicketsHeatmapStats,
-    stakePool,
-    setStakePool,
     sidebarOnBottom
   };
 }

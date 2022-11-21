@@ -29,8 +29,6 @@ let mockWalletCfgGet;
 let mockWalletCfgSet;
 
 beforeEach(() => {
-  selectors.getIsLegacy = jest.fn(() => false);
-  selectors.stakePoolListingEnabled = jest.fn(() => true);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableVsps);
   selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
   selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
