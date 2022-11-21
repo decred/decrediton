@@ -535,7 +535,7 @@ export const startTicketBuyerAttempt = (
     ticketBuyer.on("error", async (status) => {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
-        await dispatch({ error: status, type: STARTTICKETBUYERV3_FAILED });
+        await dispatch({ error: status, type: STARTTICKETBUYER_FAILED });
       } else {
         await dispatch({ type: STOPTICKETBUYER_SUCCESS });
       }
@@ -552,7 +552,7 @@ export const startTicketBuyerAttempt = (
     });
     return ticketBuyer;
   } catch (error) {
-    await dispatch({ error, type: STARTTICKETBUYERV3_FAILED });
+    await dispatch({ error, type: STARTTICKETBUYER_FAILED });
     // need to relock accounts here because unlockAcctAndExecFn
     // has been called with `leaveUnlock=true` parameter
     await dispatch(relockAccounts(accountUnlocks));
