@@ -23,6 +23,7 @@ const useSettings = () => {
   const needNetworkReset = useSelector(sel.needNetworkReset);
   const walletName = useSelector(sel.getWalletName);
   const walletReady = useSelector(sel.getWalletReady);
+  const isTrezor = useSelector(sel.isTrezor);
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {
@@ -121,6 +122,7 @@ const useSettings = () => {
     needNetworkReset,
     walletName,
     walletReady,
+    isTrezor,
     onAttemptChangePassphrase,
     onChangeTempSettings,
     onSaveSettings,

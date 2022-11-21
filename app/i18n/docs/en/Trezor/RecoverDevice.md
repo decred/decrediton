@@ -1,0 +1,1 @@
+**_Note!_** Decrediton only supports 24 word (256 bit) seeds. The words for dcrwallet and Trezor imports are **different**! This means that you cannot directly import an existing Trezor seed in a software wallet (or conversely: import an existing 33-word Decred seed to the hardware device).

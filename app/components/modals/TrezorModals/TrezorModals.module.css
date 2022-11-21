@@ -1,13 +1,18 @@
 h1 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 35px;
+  color: var(--grey-7);
 }
 
 .pinModal,
 .passphraseModal,
 .togglePassphraseConfirmModal,
 .wordModal {
-  width: 500px;
-  padding: 20px;
+  width: 413px;
+  padding: 30px 23px 20px 40px;
+  position: relative;
 }
 
 .pinModal.getStarted,
@@ -20,7 +25,10 @@ h1 {
 .pinModal > p,
 .togglePassphraseConfirmModal > p,
 .wordModal > p {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--grey-7);
 }
 
 .passphraseModal p:last-child {
@@ -31,19 +39,32 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 55px 30px 37px;
+}
+
+.learnMoreLink {
+  color: var(--link-color) !important;
+  cursor: pointer;
+  text-decoration: underline !important;
 }
 
 .pinPad {
   display: grid;
-  grid-template-columns: 2em 2em 2em;
+  grid-template-columns: 80px 80px 80px;
+  grid-template-rows: 80px 80px 80px;
+  grid-gap: 9px;
   text-align: center;
   font-size: 150%;
 }
 
 .pinPadButton {
-  padding: 0.5em 0em 0.7em 0;
-  border: 1px solid transparent;
+  border: 1px solid var(--trezor-pin-bt-border);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grey-7);
+  font-size: 28px;
 }
 
 .pinPadButton:hover {
@@ -56,6 +77,43 @@ h1 {
 
 .passwordField {
   margin-bottom: 20px;
+  padding: 0 55px 0 37px;
+}
+
+.passwordFieldInput {
+  font-size: 28px !important;
+  line-height: 35px !important;
+  letter-spacing: 0.5em;
+  color: var(--grey-7);
+}
+
+.clearPinButton {
+  height: 15px;
+  width: 15px;
+  background-image: var(--x-grey);
+  border: none !important;
+  padding: 0 !important;
+  transition: none !important;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--background-back-color) !important;
+}
+
+.clearPinButton:hover {
+  opacity: 0.85;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .wordSelect {
@@ -68,7 +126,11 @@ h1 {
 
 .buttons {
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.buttons button {
+  height: 44px;
 }
 
 @media (--xs-viewport) {

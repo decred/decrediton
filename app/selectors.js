@@ -1401,6 +1401,27 @@ export const trezorEnablePassphraseProtection = get([
 export const trezorPerformingOperation = get(["trezor", "performingOperation"]);
 export const trezorDevice = get(["trezor", "device"]);
 export const trezorLabel = get(["trezor", "deviceLabel"]);
+export const trezorPinProtection = get(["trezor", "pinProtection"]);
+export const trezorPerformingTogglePinProtection = get([
+  "trezor",
+  "performingTogglePinProtection"
+]);
+export const trezorPassphraseProtection = get([
+  "trezor",
+  "passphraseProtection"
+]);
+export const trezorPerformingTogglePassphraseProtection = get([
+  "trezor",
+  "performingTogglePassphraseProtection"
+]);
+export const trezorPassphraseOnDeviceProtection = get([
+  "trezor",
+  "passphraseOnDeviceProtection"
+]);
+export const trezorPerformingTogglePassphraseOnDeviceProtection = get([
+  "trezor",
+  "performingTogglePassphraseOnDeviceProtection"
+]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([
   "trezor",
   "walletCreationMasterPubkeyAttempt"

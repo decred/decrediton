@@ -1,0 +1,36 @@
+.changeToDecredHomeScreen {
+  margin-right: 10px !important;
+}
+
+.label {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--main-dark-blue);
+}
+
+.changeLabelWrapper {
+  margin-top: 15px;
+}
+
+.newLabelInput input {
+  width: 274px;
+}
+
+.newLabelInput input:disabled {
+  opacity: 0.5;
+}
+
+.newLabelButton {
+  height: 29px;
+  font-size: 13px;
+  line-height: 16.34px;
+  padding: 6px 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .newLabelInput input {
+    width: 208px;
+  }
+}
