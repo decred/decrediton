@@ -144,7 +144,6 @@ export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
         config.set(cfgConstants.DISCOVER_ACCOUNTS, isNew);
         dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
         dispatch({ type: CREATEWALLET_SUCCESS });
-        dispatch(clearStakePoolConfigNewWallet());
         dispatch(getWalletServiceAttempt());
         resolve(true);
       })
@@ -409,28 +408,6 @@ export const getSelectedWallet = () => (dispatch) => {
 };
 
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
-export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
-
-export function clearStakePoolConfigNewWallet() {
-  return (dispatch, getState) => {
-    const {
-      daemon: { walletName }
-    } = getState();
-    const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
-    config.delete(cfgConstants.STAKEPOOLS);
-
-    wallet.getStakePoolInfo().then((foundStakePoolConfigs) => {
-      if (foundStakePoolConfigs) {
-        const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
-        config.set(cfgConstants.STAKEPOOLS, foundStakePoolConfigs);
-        dispatch({
-          currentStakePoolConfig: foundStakePoolConfigs,
-          type: CLEARSTAKEPOOLCONFIG
-        });
-      }
-    });
-  };
-}
 
 export const GENERATESEED_ATTEMPT = "GENERATESEED_ATTEMPT";
 export const GENERATESEED_FAILED = "GENERATESEED_FAILED";

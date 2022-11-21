@@ -8,17 +8,10 @@ import * as sel from "selectors";
 import { act } from "react-dom/test-utils";
 import {
   PURCHASETICKETS_SUCCESS,
-  STARTTICKETBUYERV2_FAILED,
   RENAMEACCOUNT_SUCCESS,
   CHANGEPASSPHRASE_FAILED
 } from "actions/ControlActions";
-import {
-  SETSTAKEPOOLVOTECHOICES_FAILED,
-  ADDCUSTOMSTAKEPOOL_SUCCESS,
-  ADDCUSTOMSTAKEPOOL_FAILED,
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
-  SYNCVSPTICKETS_FAILED
-} from "actions/VSPActions";
+import { SYNCVSPTICKETS_FAILED } from "actions/VSPActions";
 import { DECODERAWTXS_FAILED } from "actions/TransactionActions";
 import { EXPORT_COMPLETED } from "actions/StatisticsActions";
 import { WALLETREMOVED_FAILED } from "actions/DaemonActions";
@@ -40,7 +33,6 @@ import { NEW_TRANSACTIONS_RECEIVED } from "actions/TransactionActions";
 const testFilename = "test-filename";
 const testTicketHashes = ["t1"];
 const testTicketHashesMulti = ["t1", "t2"];
-const testHost = "test-host";
 const testTrezorDeviceLabel = "test-device-label";
 const testInvoiceMemo = "test-invoice-memo";
 const testDestPath = "test-dest-path";
@@ -257,10 +249,6 @@ test.each([
     `You bought  ${testTicketHashesMulti.length} tickets`
   ],
   [
-    { type: ADDCUSTOMSTAKEPOOL_SUCCESS, poolInfo: { Host: testHost } },
-    `Successfully added stakepool ${testHost}.`
-  ],
-  [
     {
       type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS,
       deviceLabel: testTrezorDeviceLabel,
@@ -313,19 +301,6 @@ test.each([
   [
     { type: CHANGEPASSPHRASE_FAILED },
     "Update passphrase failed. Incorrect private passphrase, please try again."
-  ],
-  [
-    { type: REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED, error: testErr },
-    `Error refreshing stakepool data from : ${testErr}`
-  ],
-  [{ type: SETSTAKEPOOLVOTECHOICES_FAILED }, null],
-  [
-    { type: ADDCUSTOMSTAKEPOOL_FAILED, error: testErr },
-    `Error trying to add custom stakepool: ${testErr}`
-  ],
-  [
-    { type: STARTTICKETBUYERV2_FAILED },
-    "Invalid private password. Please try again."
   ],
   [
     { type: TRZ_NOCONNECTEDDEVICE },

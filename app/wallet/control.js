@@ -11,13 +11,6 @@ import { getClient } from "middleware/grpc/clientTracking";
 import { signTx as confDialogSignTx } from "./confirmationDialog";
 import { validateAddress } from "./service";
 
-const hexToBytes = (hex) => {
-  const bytes = [];
-  for (let c = 0; c < hex.length; c += 2)
-    bytes.push(parseInt(hex.substr(c, 2), 16));
-  return bytes;
-};
-
 export const getNextAccount = (walletService, passphrase, name) =>
   new Promise((ok, fail) => {
     const request = new api.NextAccountRequest();
@@ -73,18 +66,6 @@ export const importPrivateKey = (
     request.setRescan(rescan);
     request.setScanFrom(scanFrom);
     getClient(walletService).importPrivateKey(request, (err, res) =>
-      err ? fail(err) : ok(res.toObject())
-    );
-  });
-
-export const importScript = (walletService, script) =>
-  new Promise((ok, fail) => {
-    const request = new api.ImportScriptRequest();
-    request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
-    request.setRescan(false);
-    request.setScanFrom(0);
-    request.setRequireRedeemable(true);
-    getClient(walletService).importScript(request, (err, res) =>
       err ? fail(err) : ok(res.toObject())
     );
   });
@@ -190,45 +171,6 @@ export const publishTransaction = (walletService, tx) =>
   });
 
 export const purchaseTickets = (
-  walletService,
-  accountNum,
-  spendLimit,
-  requiredConf,
-  numTickets,
-  expiry,
-  ticketFee,
-  txFee,
-  stakepool,
-  signTx
-) =>
-  new Promise((ok, fail) => {
-    if (
-      (!stakepool.PoolAddress && stakepool.PoolAddress == "") ||
-      (!stakepool.PoolFees && stakepool.PoolFees == 0)
-    ) {
-      return fail(
-        "Purchase ticket failed: Pool Address or Pool Fees can't be empty"
-      );
-    }
-    const request = new api.PurchaseTicketsRequest();
-    request.setAccount(accountNum);
-    request.setChangeAccount(accountNum.value);
-    request.setSpendLimit(spendLimit);
-    request.setRequiredConfirmations(requiredConf);
-    request.setTicketAddress(stakepool.TicketAddress);
-    request.setNumTickets(numTickets);
-    request.setPoolAddress(stakepool.PoolAddress);
-    request.setPoolFees(stakepool.PoolFees);
-    request.setExpiry(expiry);
-    request.setTxFee(txFee);
-    request.setTicketFee(ticketFee);
-    request.setDontSignTx(!signTx);
-    getClient(walletService).purchaseTickets(request, (err, res) =>
-      err ? fail(err) : ok(res.toObject())
-    );
-  });
-
-export const purchaseTicketsV3 = (
   walletService,
   accountNum,
   numTickets,
@@ -603,24 +545,7 @@ export const setAccountPassphrase = (
     );
   });
 
-export const startTicketAutoBuyerV2 = (
-  ticketBuyerService,
-  { balanceToMaintain, account, votingAccount, votingAddress }
-) =>
-  new Promise((ok) => {
-    const request = new api.RunTicketBuyerRequest();
-    request.setBalanceToMaintain(balanceToMaintain);
-    request.setAccount(account);
-    request.setVotingAccount(votingAccount);
-    request.setVotingAddress(votingAddress);
-    ok(
-      shimStreamedResponse(
-        getClient(ticketBuyerService).runTicketBuyer(request)
-      )
-    );
-  });
-
-export const startTicketAutoBuyerV3 = (
+export const startTicketAutoBuyer = (
   ticketBuyerService,
   {
     mixedAccount,

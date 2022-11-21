@@ -33,7 +33,6 @@ export const getGlobalCfg = (...args) => {
 };
 
 export const setLastHeight = cfg.setLastHeight;
-export const updateStakePoolConfig = cfg.updateStakePoolConfig;
 export const getDcrdCert = cfg.getDcrdCert;
 export const setAppdataPath = cfg.setAppdataPath;
 export const getAppdataPath = cfg.getAppdataPath;

@@ -3,7 +3,6 @@ import {
   DISCOVERAVAILABLEVSPS_FAILED,
   GETVSPTICKETSTATUS_SUCCESS,
   HASVSPTICKETSERRORED,
-  TOGGLE_ISLEGACY,
   SET_REMEMBERED_VSP_HOST,
   SYNCVSPTICKETS_ATTEMPT,
   SYNCVSPTICKETS_FAILED,
@@ -40,9 +39,9 @@ import {
   SET_NUM_TICKETS_TO_BUY
 } from "actions/VSPActions";
 import {
-  STARTTICKETBUYERV3_ATTEMPT,
-  STARTTICKETBUYERV3_SUCCESS,
-  STARTTICKETBUYERV3_FAILED,
+  STARTTICKETBUYER_ATTEMPT,
+  STARTTICKETBUYER_SUCCESS,
+  STARTTICKETBUYER_FAILED,
   STOPTICKETBUYER_SUCCESS
 } from "actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -61,9 +60,9 @@ export default function vsp(state = {}, action) {
         availableVSPs: null,
         availableVSPsError: action.error
       };
-    case STARTTICKETBUYERV3_ATTEMPT:
+    case STARTTICKETBUYER_ATTEMPT:
       return { ...state, ticketAutoBuyerRunning: false };
-    case STARTTICKETBUYERV3_SUCCESS:
+    case STARTTICKETBUYER_SUCCESS:
       return {
         ...state,
         ticketAutoBuyerRunning: true,
@@ -72,7 +71,7 @@ export default function vsp(state = {}, action) {
         balanceToMaintain: action.balanceToMaintain,
         account: action.account.name
       };
-    case STARTTICKETBUYERV3_FAILED:
+    case STARTTICKETBUYER_FAILED:
       return { ...state, ticketAutoBuyerRunning: false };
     case STOPTICKETBUYER_SUCCESS:
       return { ...state, ticketAutoBuyerRunning: false };
@@ -86,8 +85,6 @@ export default function vsp(state = {}, action) {
       };
     case HASVSPTICKETSERRORED:
       return { ...state, hasVSPTicketsError: action.hasVSPTicketsError };
-    case TOGGLE_ISLEGACY:
-      return { ...state, isLegacy: action.isLegacy };
     case SET_REMEMBERED_VSP_HOST:
       return { ...state, rememberedVspHost: action.rememberedVspHost };
     case UPDATE_USED_VSPS:

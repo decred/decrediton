@@ -177,49 +177,6 @@ export const importPrivateKeyAttempt = (...args) => (dispatch, getState) => {
     .catch((error) => dispatch({ error, type: IMPORTPRIVKEY_FAILED }));
 };
 
-export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
-export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
-export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
-
-// importScriptAttempt tries to import the given script into the wallet. It will
-// throw an exception in case of errors.
-export const importScriptAttempt = (script) => async (dispatch, getState) => {
-  dispatch({ type: IMPORTSCRIPT_ATTEMPT });
-  const walletService = sel.walletService(getState());
-  try {
-    const importScriptResponse = await wallet.importScript(
-      walletService,
-      script
-    );
-    dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
-    return importScriptResponse;
-  } catch (error) {
-    dispatch({ error, type: IMPORTSCRIPT_FAILED });
-    if (error instanceof Error) {
-      throw error;
-    }
-    throw new Error(error);
-  }
-};
-
-export const IMPORTSCRIPT_MANUAL_SUCCESS = "IMPORTSCRIPT_MANUAL_SUCCESS";
-export const IMPORTSCRIPT_MANUAL_FAILED = "IMPORTSCRIPT_MANUAL_FAILED";
-
-// manualImportScriptAttempt imports a script from a "manual" (ie,
-// user-initiated) entry. This is in contrast of importScriptAttempt which is
-// meant as a step during some other operation (eg: linking to a stakepool).
-//
-// This function always initiates a complete wallet rescan in case of success.
-export const manualImportScriptAttempt = (script) => async (dispatch) => {
-  try {
-    await dispatch(importScriptAttempt(script));
-    dispatch({ type: IMPORTSCRIPT_MANUAL_SUCCESS });
-    dispatch(rescanAttempt(0));
-  } catch (error) {
-    dispatch({ error, type: IMPORTSCRIPT_MANUAL_FAILED });
-  }
-};
-
 export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
 export const CHANGEPASSPHRASE_FAILED = "CHANGEPASSPHRASE_FAILED";
 export const CHANGEPASSPHRASE_SUCCESS = "CHANGEPASSPHRASE_SUCCESS";
@@ -369,84 +326,7 @@ export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
 export const PURCHASETICKETS_SUCCESS_LESS = "PURCHASETICKETS_SUCCESS_LESS";
 export const CREATE_UNSIGNEDTICKETS_SUCCESS = "CREATE_UNSIGNEDTICKETS_SUCCESS";
 
-// TODO move purchaseTicketsAttempt to TransactionActions
 export const purchaseTicketsAttempt = (
-  passphrase,
-  account,
-  spendLimit,
-  requiredConf,
-  numTickets,
-  expiry,
-  ticketFee,
-  txFee,
-  stakepool
-) => async (dispatch, getState) => {
-  try {
-    const currentBlockHeight = sel.currentBlockHeight(getState());
-    const walletService = sel.walletService(getState());
-    expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
-    txFee = txFee * 1e8;
-    ticketFee = ticketFee * 1e8;
-    const dontSignTx = sel.isWatchingOnly(getState());
-
-    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
-
-    const stakePoolStats = await wallet.getStakePoolStats(stakepool.Host);
-
-    if (stakePoolStats.data.data.PoolStatus == "Closed") {
-      throw new Error(
-        "Unable to purchase a ticket from a closed VSP (" + stakepool.Host + ")"
-      );
-    }
-
-    let purchaseTicketsResponse = null;
-    let accountNum = null;
-    // If we need to sign the tx, we re-import the script to ensure the
-    // wallet will control the ticket. And unlock the wallet
-    if (!dontSignTx) {
-      const importScriptResponse = await dispatch(
-        importScriptAttempt(stakepool.Script)
-      );
-      if (importScriptResponse.p2shAddress !== stakepool.TicketAddress) {
-        throw new Error(
-          "Trying to use a ticket address not corresponding to script"
-        );
-      }
-      accountNum = account.encrypted ? account.value : null;
-      // Since we are currently using the default account for the ticket's
-      // voting address we also need to unlock that account in case we need
-      // that as well during purchasing tickets.
-      const accts = accountNum !== 0 ? [accountNum, 0] : [accountNum];
-      purchaseTicketsResponse = await dispatch(
-        unlockAcctAndExecFn(passphrase, accts, () =>
-          wallet.purchaseTickets(
-            walletService,
-            account,
-            spendLimit,
-            requiredConf,
-            numTickets,
-            expiry,
-            ticketFee,
-            txFee,
-            stakepool,
-            !dontSignTx
-          )
-        )
-      );
-      if (dontSignTx) {
-        return dispatch({
-          purchaseTicketsResponse,
-          type: CREATE_UNSIGNEDTICKETS_SUCCESS
-        });
-      }
-    }
-    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-  } catch (error) {
-    dispatch({ error, type: PURCHASETICKETS_FAILED });
-  }
-};
-
-export const newPurchaseTicketsAttempt = (
   passphrase,
   account,
   numTickets,
@@ -455,7 +335,7 @@ export const newPurchaseTicketsAttempt = (
   const walletService = sel.walletService(getState());
   try {
     const dontSignTx = sel.isWatchingOnly(getState());
-    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+    dispatch({ type: PURCHASETICKETS_ATTEMPT });
     const csppReq = {
       mixedAccount: sel.getMixedAccount(getState()),
       changeAccount: sel.getChangeAccount(getState()),
@@ -473,7 +353,7 @@ export const newPurchaseTicketsAttempt = (
         // process managed tickets.
         dispatch(setNeedsVSPdProcessTickets(true));
 
-        const res = await wallet.purchaseTicketsV3(
+        const res = await wallet.purchaseTickets(
           walletService,
           account,
           numTickets,
@@ -552,15 +432,15 @@ export const discoverUsageAttempt = (gapLimit) => async (
   }
 };
 
-export const STARTTICKETBUYERV3_ATTEMPT = "STARTTICKETBUYERV3_ATTEMPT";
-export const STARTTICKETBUYERV3_FAILED = "STARTTICKETBUYERV3_FAILED";
-export const STARTTICKETBUYERV3_SUCCESS = "STARTTICKETBUYERV3_SUCCESS";
+export const STARTTICKETBUYER_ATTEMPT = "STARTTICKETBUYER_ATTEMPT";
+export const STARTTICKETBUYER_FAILED = "STARTTICKETBUYER_FAILED";
+export const STARTTICKETBUYER_SUCCESS = "STARTTICKETBUYER_SUCCESS";
 
 export const STOPTICKETBUYER_ATTEMPT = "STOPTICKETBUYER_ATTEMPT";
 export const STOPTICKETBUYER_FAILED = "STOPTICKETBUYER_FAILED";
 export const STOPTICKETBUYER_SUCCESS = "STOPTICKETBUYER_SUCCESS";
 
-export const startTicketBuyerV3Attempt = (
+export const startTicketBuyerAttempt = (
   passphrase,
   account,
   balanceToMaintain,
@@ -574,7 +454,7 @@ export const startTicketBuyerV3Attempt = (
   const ticketBuyerConfig = { vsp, balanceToMaintain, account };
 
   const { ticketBuyerService } = getState().grpc;
-  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV3_ATTEMPT });
+  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYER_ATTEMPT });
 
   try {
     const accountNum = account.encrypted ? account.value : null;
@@ -587,7 +467,7 @@ export const startTicketBuyerV3Attempt = (
         accountUnlocks,
         () => {
           dispatch(setNeedsVSPdProcessTickets(true));
-          return wallet.startTicketAutoBuyerV3(ticketBuyerService, {
+          return wallet.startTicketAutoBuyer(ticketBuyerService, {
             mixedAccount,
             mixedAcctBranch,
             changeAccount,
@@ -614,7 +494,7 @@ export const startTicketBuyerV3Attempt = (
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
         if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYERV3_FAILED });
+          dispatch({ error: status, type: STARTTICKETBUYER_FAILED });
         }
       } else {
         dispatch({ type: STOPTICKETBUYER_SUCCESS });
@@ -627,11 +507,11 @@ export const startTicketBuyerV3Attempt = (
       vsp,
       balanceToMaintain,
       account,
-      type: STARTTICKETBUYERV3_SUCCESS
+      type: STARTTICKETBUYER_SUCCESS
     });
     return ticketBuyer;
   } catch (error) {
-    dispatch({ error, type: STARTTICKETBUYERV3_FAILED });
+    dispatch({ error, type: STARTTICKETBUYER_FAILED });
   }
 };
 
@@ -940,80 +820,6 @@ export const getAccountExtendedKeyAttempt = (accountNumber) => (
     .catch((error) => dispatch({ error, type: GETACCOUNTEXTENDEDKEY_FAILED }));
 };
 
-// LEGACY CODE
-// this can be removed after stopping support for vsp v1 and v2.
-export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
-export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
-export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
-
-export const STOPTICKETBUYERV2_ATTEMPT = "STOPTICKETBUYERV2_ATTEMPT";
-export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
-export const STOPTICKETBUYERV2_SUCCESS = "STOPTICKETBUYERV2_SUCCESS";
-
-export const startTicketBuyerV2Attempt = (
-  passphrase,
-  account,
-  balanceToMaintain,
-  stakepool
-) => async (dispatch, getState) => {
-  const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
-  dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
-  try {
-    const request = {
-      balanceToMaintain,
-      account: account.value,
-      votingAccount: account.value,
-      votingAddress: stakepool.TicketAddress
-    };
-    const { ticketBuyerService } = getState().grpc;
-    const ticketBuyer = await dispatch(
-      unlockAcctAndExecFn(passphrase, [account.value], () =>
-        wallet.startTicketAutoBuyerV2(ticketBuyerService, request)
-      )
-    );
-    ticketBuyer.on("data", function (response) {
-      // No expected responses but log in case.
-      console.log(response);
-    });
-    ticketBuyer.on("end", function (response) {
-      // No expected response in end but log in case.
-      console.log(response);
-    });
-    ticketBuyer.on("error", function (status) {
-      status = status + "";
-      if (status.indexOf("Cancelled") < 0) {
-        if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
-        }
-      } else {
-        dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
-      }
-    });
-    dispatch({
-      ticketBuyerCall: ticketBuyer,
-      ticketBuyerAcct: account,
-      type: STARTTICKETBUYERV2_SUCCESS
-    });
-  } catch (error) {
-    dispatch({ error, type: STARTTICKETBUYERV2_FAILED });
-  }
-};
-
-export function ticketBuyerV2Cancel() {
-  return async (dispatch, getState) => {
-    const { ticketBuyerCall, ticketBuyerAcct } = getState().control;
-    if (!ticketBuyerCall) return;
-    if (ticketBuyerCall) {
-      dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
-      ticketBuyerCall.cancel();
-      const acctNumber = ticketBuyerAcct.encrypted
-        ? ticketBuyerAcct.value
-        : null;
-      await dispatch(lockAccount(acctNumber));
-    }
-  };
-}
-
 export const GETPEERINFO_ATTEMPT = "GETPEERINFO_ATTEMPT";
 export const GETPEERINFO_FAILED = "GETPEERINFO_FAILED";
 export const GETPEERINFO_SUCCESS = "GETPEERINFO_SUCCESS";
@@ -1027,20 +833,6 @@ export const getPeerInfo = () => (dispatch, getState) => {
       dispatch({ type: GETPEERINFO_SUCCESS, peersCount });
     })
     .catch((error) => dispatch({ type: GETPEERINFO_FAILED, error }));
-};
-
-export const SAVE_LEGACY_AUTOBUYER_SETTINGS = "SAVE_LEGACY_AUTOBUYER_SETTINGS ";
-export const saveLegacyAutoBuyerSettings = ({
-  balanceToMaintain,
-  account,
-  vsp
-}) => (dispatch) => {
-  dispatch({
-    type: SAVE_LEGACY_AUTOBUYER_SETTINGS,
-    balanceToMaintain,
-    account,
-    vsp
-  });
 };
 
 export const SETACCOUNTPASSPHRASE_ATTEMPT = "SETACCOUNTPASSPHRASE_ATTEMPT";
@@ -1158,12 +950,6 @@ export const filterUnlockableAccounts = (accts, getState) => {
     setUnlockableByAccountName(
       sel.selectedAccountForTicketPurchase(getState())
     );
-
-    /* legacy ticket buyer is deprecated
-    const legacyTicketBuyerCfg = sel.ticketBuyerConfig(getState());
-    isNumber(legacyTicketBuyerCfg?.account?.value) &&
-      setUnlockable(legacyTicketBuyerCfg?.account?.value);
-    */
   }
 
   // Do not allow locking of accounts for which there are tickets with

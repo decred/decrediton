@@ -13,13 +13,7 @@ import {
   transactionNtfnsStart,
   accountNtfnsStart
 } from "./NotificationActions";
-import {
-  refreshStakepoolPurchaseInformation,
-  setStakePoolVoteChoices,
-  getStakepoolStats,
-  getVSPTicketsByFeeStatus,
-  setVSPDVoteChoices
-} from "./VSPActions";
+import { getVSPTicketsByFeeStatus, setVSPDVoteChoices } from "./VSPActions";
 import { startDex } from "./DexActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -88,11 +82,9 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getPeerInfo());
       await dispatch(getTicketPriceAttempt());
       await dispatch(getNetworkAttempt());
-      await dispatch(refreshStakepoolPurchaseInformation());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
       await dispatch(getDecodeMessageServiceAttempt());
-      await dispatch(getStakepoolStats());
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
@@ -665,14 +657,11 @@ export const GETVOTECHOICES_ATTEMPT = "GETVOTECHOICES_ATTEMPT";
 export const GETVOTECHOICES_FAILED = "GETVOTECHOICES_FAILED";
 export const GETVOTECHOICES_SUCCESS = "GETVOTECHOICES_SUCCESS";
 
-export const getVoteChoicesAttempt = (stakePool) => (dispatch, getState) => {
+export const getVoteChoicesAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVOTECHOICES_ATTEMPT });
   wallet
     .getVoteChoices(sel.votingService(getState()))
     .then((voteChoices) => {
-      if (stakePool) {
-        dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
-      }
       const voteChoicesConfig = voteChoices.choicesList.map((choice) => ({
         agendaId: choice.agendaId,
         choiceId: choice.choiceId
@@ -695,10 +684,6 @@ export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
     .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then(() => {
       dispatch(setVSPDVoteChoices(passphrase));
-      const stakePools = sel.configuredStakePools(getState());
-      for (let i = 0; i < stakePools.length; i++) {
-        dispatch(getVoteChoicesAttempt(stakePools[i]));
-      }
       dispatch(getVoteChoicesAttempt());
     })
     .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));

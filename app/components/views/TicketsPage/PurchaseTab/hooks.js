@@ -5,7 +5,6 @@ import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
-import { listUnspentOutputs } from "actions/TransactionActions";
 import * as sel from "selectors";
 import { isEqual } from "lodash/fp";
 
@@ -19,9 +18,7 @@ export const usePurchaseTab = () => {
   const ticketPrice = useSelector(sel.ticketPrice);
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
-  const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
-  const isLegacy = useSelector(sel.getIsLegacy);
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
@@ -56,53 +53,16 @@ export const usePurchaseTab = () => {
     () => dispatch(vspa.discoverAvailableVSPs()),
     [dispatch]
   );
-  const onPurchaseTicketV3 = useCallback(
+  const purchaseTicketsAttempt = useCallback(
     (passphrase, account, numTickets, vsp) =>
-      dispatch(
-        ca.newPurchaseTicketsAttempt(passphrase, account, numTickets, vsp)
-      ),
+      dispatch(ca.purchaseTicketsAttempt(passphrase, account, numTickets, vsp)),
     [dispatch]
   );
-  const onEnableTicketAutoBuyer = useCallback(
-    (passphrase, account, balanceToMaintain, vsp) =>
-      dispatch(
-        ca.startTicketBuyerV3Attempt(
-          passphrase,
-          account,
-          balanceToMaintain,
-          vsp
-        )
-      ),
-    [dispatch]
-  );
-  const onDisableTicketAutoBuyer = useCallback(
-    () => dispatch(ca.ticketBuyerCancel()),
-    [dispatch]
-  );
-
-  const getVSPTicketsByFeeStatus = (feeStatus) => {
-    dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
-  };
-
-  const toggleIsLegacy = (isLegacy) => {
-    if (autoBuyerRunning) {
-      // stop runnig legacy autobuyer
-      dispatch(ca.ticketBuyerV2Cancel());
-    }
-    if (ticketAutoBuyerRunning) {
-      // stop running new autobuyer
-      dispatch(ca.ticketBuyerCancel());
-    }
-    dispatch(vspa.toggleIsLegacy(isLegacy));
-  };
 
   const setRememberedVspHost = useCallback(
     (vsp) => dispatch(vspa.setRememberedVspHost(vsp)),
     [dispatch]
   );
-
-  const onListUnspentOutputs = (accountNum) =>
-    dispatch(listUnspentOutputs(accountNum));
 
   const setAccount = useCallback(
     (account) => {
@@ -165,15 +125,10 @@ export const usePurchaseTab = () => {
     spendingAccounts,
     discoverAvailableVSPs,
     ticketPrice,
-    onEnableTicketAutoBuyer,
-    onPurchaseTicketV3,
+    purchaseTicketsAttempt,
     availableVSPs: isVSPListingEnabled ? availableVSPs : [],
     availableVSPsError,
-    onDisableTicketAutoBuyer,
     ticketAutoBuyerRunning,
-    getVSPTicketsByFeeStatus,
-    isLegacy,
-    toggleIsLegacy,
     mixedAccount,
     changeAccount,
     isLoading,
@@ -182,7 +137,6 @@ export const usePurchaseTab = () => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
-    onListUnspentOutputs,
     getRunningIndicator,
     account,
     setAccount,

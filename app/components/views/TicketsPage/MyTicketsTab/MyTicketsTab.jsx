@@ -91,7 +91,7 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyTickets = ({ toggleIsLegacy }) => {
+const MyTickets = () => {
   const {
     intl,
     tickets,
@@ -188,7 +188,6 @@ const MyTickets = ({ toggleIsLegacy }) => {
         getTickets: onLoadMoreTickets,
         goBackHistory,
         noMoreTickets: noMoreTicketsToShow,
-        toggleIsLegacy,
         loadingQRs,
         QRs,
         QRsPage,

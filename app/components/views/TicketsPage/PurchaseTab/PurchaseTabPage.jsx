@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { classNames } from "pi-ui";
-import UnsignedTickets from "../UnsignedTickets";
-import StakeInfo from "../StakeInfo";
+import UnsignedTickets from "./UnsignedTickets";
+import StakeInfo from "./StakeInfo";
 
-import { PurchaseTicketsForm } from "shared";
+import PurchaseTicketsForm from "./PurchaseTicketsForm";
 import { ShowWarning, Subtitle } from "shared";
-import styles from "../PurchaseTab.module.css";
+import styles from "./PurchaseTabPage.module.css";
 import { KeyBlueButton } from "buttons";
-import TicketAutoBuyer from "../TicketAutoBuyer";
+import TicketAutoBuyer from "./TicketAutoBuyer";
 
 const PrivacyInfo = () => {
   const [show, setShow] = useState(false);
@@ -22,7 +22,7 @@ const PrivacyInfo = () => {
       {show && (
         <T
           id="purchase.vsp.privacy.enabled.description"
-          m="Purchasing mixed tickets can take some time because mix transactions are only created every 20 minutes. The Privacy And Security page contains more information regarding the mixing process."
+          m="Purchasing mixed tickets can take some time because mix transactions are only created every 10 minutes. The Privacy And Security page contains more information regarding the mixing process."
         />
       )}
     </div>
@@ -43,7 +43,7 @@ const EnableVSP = ({ onEnableVSP }) => (
   </div>
 );
 
-export function PurchasePage({
+export function PurchaseTabPage({
   spvMode,
   blocksNumberToNextTicket,
   sidebarOnBottom,
@@ -62,8 +62,7 @@ export function PurchasePage({
   vspFee,
   setVspFee,
   isValid,
-  toggleIsLegacy,
-  onV3PurchaseTicket,
+  onPurchaseTicket,
   mixedAccount,
   changeAccount,
   isLoading,
@@ -112,13 +111,11 @@ export function PurchasePage({
             vspFee,
             setVspFee,
             isValid,
-            onPurchaseTickets: onV3PurchaseTicket,
+            onPurchaseTickets: onPurchaseTicket,
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            getRunningIndicator,
-            toggleIsLegacy,
-            isLegacy: false
+            getRunningIndicator
           }}
         />
       )}

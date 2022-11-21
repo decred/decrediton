@@ -5,12 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useVSP } from "hooks";
 
 export function useCantCloseModal() {
-  const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const { hasTicketFeeError } = useVSP();
   const cantCloseModalVisible = useSelector(sel.cantCloseModalVisible);
   const accountMixerRunning = useSelector(sel.getAccountMixerRunning);
   const purchasingTickets = useSelector(sel.purchaseTicketsRequestAttempt);
-  const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
+  const autoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const dexOrdersOpen = useSelector(sel.dexOrdersOpen);
 
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ export function useCantCloseModal() {
   const shutdownApp = () => dispatch(da.shutdownApp());
 
   return {
-    autoBuyerRunning: autoBuyerRunning || ticketAutoBuyerRunning,
+    autoBuyerRunning,
     hasTicketFeeError,
     cantCloseModalVisible,
     onHideCantCloseModal,

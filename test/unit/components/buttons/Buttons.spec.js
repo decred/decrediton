@@ -4,8 +4,7 @@ import {
   DangerButton,
   InvisibleButton,
   KeyBlueButton,
-  SlateGrayButton,
-  TicketsCogs
+  SlateGrayButton
 } from "buttons";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
@@ -103,20 +102,4 @@ test("render default SlateGrayButton", () => {
   render(<SlateGrayButton>{testButtonLabel}</SlateGrayButton>);
   const button = screen.getByRole("button");
   expect(button.className).toMatch("slateGrayButton");
-});
-
-test("render opened TicketsCogs", () => {
-  render(<TicketsCogs opened onClick={mockOnClick} />);
-  const button = screen.getByRole("button");
-  expect(button.className).toMatch(/opened/i);
-  user.click(button);
-  expect(mockOnClick).toHaveBeenCalled();
-});
-
-test("render closed TicketsCogs", () => {
-  render(<TicketsCogs opened={false} onClick={mockOnClick} />);
-  const button = screen.getByRole("button");
-  expect(button.className).toMatch(/closed/i);
-  user.click(button);
-  expect(mockOnClick).toHaveBeenCalled();
 });

@@ -1,7 +1,6 @@
 import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
-import { stakePoolInfo } from "./middleware/vspapi";
 import {
   getGlobalCfgPath,
   getWalletPath,
@@ -28,11 +27,6 @@ export function initWalletCfg(testnet, walletPath) {
     }
   });
 
-  stakePoolInfo((foundStakePoolConfigs) => {
-    if (foundStakePoolConfigs !== null) {
-      updateStakePoolConfig(config, foundStakePoolConfigs);
-    }
-  });
   cleanWalletCfg(config);
   return config;
 }
@@ -128,31 +122,6 @@ export function getDcrdCert(dcrdCertPath) {
 
   const cert = fs.readFileSync(certPath);
   return cert;
-}
-
-export function updateStakePoolConfig(config, foundStakePoolConfigs) {
-  const currentStakePoolConfigs =
-    config.has(cfgConstants.STAKEPOOLS) &&
-    Array.isArray(config.get(cfgConstants.STAKEPOOLS))
-      ? config.get(cfgConstants.STAKEPOOLS)
-      : [];
-
-  const currentConfigsByHost = currentStakePoolConfigs.reduce((l, s) => {
-    l[s.Host] = s;
-    return l;
-  }, {});
-
-  if (foundStakePoolConfigs !== null) {
-    const newStakePoolConfigs = foundStakePoolConfigs.map((s) => {
-      const current = currentConfigsByHost[s.Host];
-      delete currentConfigsByHost[s.Host];
-      return current ? { ...current, ...s } : s;
-    });
-    Object.keys(currentConfigsByHost).forEach((v) =>
-      newStakePoolConfigs.push(currentConfigsByHost[v])
-    );
-    config.set(cfgConstants.STAKEPOOLS, newStakePoolConfigs);
-  }
 }
 
 export function getConfigData(configKey) {
