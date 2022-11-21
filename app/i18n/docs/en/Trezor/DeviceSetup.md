@@ -1,0 +1,1 @@
+The options below are for creating a new or recovering an existing Trezor device-based Wallet. The operations below can also be made at Trezor Web Wallet [https://trezor.io/start/](https://trezor.io/start/)

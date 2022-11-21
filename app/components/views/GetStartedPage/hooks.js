@@ -6,7 +6,6 @@ import Logs from "./Logs/Logs";
 import { FormattedMessage as T } from "react-intl";
 import { createElement as h } from "react";
 import GetStartedMachinePage from "./GetStartedMachinePage";
-import TrezorConfig from "./TrezorConfig/TrezorConfig";
 import PreCreateWalletForm from "./PreCreateWallet/PreCreateWallet";
 import WalletPubpassInput from "./OpenWallet/OpenWallet";
 import DiscoverAccounts from "./OpenWallet/DiscoverAccounts";
@@ -26,6 +25,7 @@ import { TutorialPage } from "components/views/GetStartedPage";
 import styles from "./GetStarted.module.css";
 import { isObject } from "lodash";
 import { wallet } from "wallet-preload-shim";
+import TrezorLoaderBarContainer from "views/GetStartedPage/PreCreateWallet/TrezorLoaderBarContainer";
 import { LoaderBarContainer } from "./helpers";
 
 export const useGetStarted = () => {
@@ -374,7 +374,7 @@ export const useGetStarted = () => {
   ]);
 
   const onSendCreateWallet = useCallback(
-    (isNew) => send({ type: "CREATE_WALLET", isNew }),
+    (isNew, isTrezor) => send({ type: "CREATE_WALLET", isNew, isTrezor }),
     [send]
   );
 
@@ -483,15 +483,11 @@ export const useGetStarted = () => {
     [send]
   );
 
-  const onShowTrezorConfig = useCallback(
-    () => send({ type: "SHOW_TREZOR_CONFIG" }),
-    [send]
-  );
-
   const getStateComponent = useCallback(
     (updatedText, updatedAnimationType) => {
       const {
         isCreateNewWallet,
+        isTrezor,
         isSPV,
         createWalletRef,
         settingUpWalletRef
@@ -499,7 +495,8 @@ export const useGetStarted = () => {
       let component, text, animationType, PageComponent;
 
       const key = Object.keys(state.value)[0];
-      const loaderBarContainer = LoaderBarContainer;
+      let hideHeader = false;
+      let loaderBarContainer = LoaderBarContainer;
       let showLoaderBar = true;
       if (key === "startMachine") {
         switch (state.value[key]) {
@@ -558,16 +555,24 @@ export const useGetStarted = () => {
             });
             break;
           case "preCreateWallet":
+            text = isTrezor && (
+              <T
+                id="loaderBar.preCreateTrezorWalletCreate"
+                m="Create a trezor wallet..."
+              />
+            );
+            hideHeader = isTrezor;
+            showLoaderBar = isTrezor;
+            loaderBarContainer = isTrezor ? TrezorLoaderBarContainer : null;
             component = h(PreCreateWalletForm, {
               onShowCreateWallet,
               onSendContinue,
               onSendBack,
               onSendError,
-              onShowTrezorConfig,
               isCreateNewWallet,
+              isTrezor,
               error
             });
-            showLoaderBar = false;
             break;
           case "walletPubpassInput":
             text = <T id="loaderBar.walletPubPass" m="Insert your pubkey" />;
@@ -607,7 +612,6 @@ export const useGetStarted = () => {
             });
             break;
         }
-
         PageComponent = h(GetStartedMachinePage, {
           submitRemoteCredentials,
           submitAppdata,
@@ -627,13 +631,11 @@ export const useGetStarted = () => {
           onCancelLoadingWallet,
           onContinueOpeningWallet,
           onSaveAndContinueOpeningWallet,
-          nextStateAfterWalletLoading
+          nextStateAfterWalletLoading,
+          hideHeader
         });
       }
 
-      if (key === "trezorConfig") {
-        PageComponent = h(TrezorConfig, { onSendBack });
-      }
       if (key === "creatingWallet") {
         PageComponent = h(CreateWalletMachine, {
           createWalletRef,
@@ -667,7 +669,6 @@ export const useGetStarted = () => {
       onSendError,
       onShowCreateWallet,
       onShowReleaseNotes,
-      onShowTrezorConfig,
       submitAppdata,
       submitChosenWallet,
       submitRemoteCredentials,

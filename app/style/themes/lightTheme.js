@@ -164,6 +164,8 @@ const lightTheme = {
   "ln-active-tab-color": "var(--main-dark-blue)",
   "ln-close-channel-button-bg": "var(--grey-7)",
   "ln-close-channel-button-text": "#fff",
+  "trezor-pin-bt-border": "#C4CBD2",
+  "decred-logo-icon-color": "var(--input-color-default)",
 
   // override pi-ui's tab colors
   "tab-default-color": "var(--sidebar-color)", // default border
@@ -194,7 +196,6 @@ const lightTheme = {
 
   "launcher-link-color": "#536076",
   "alert-icon-bg-color": "#feb8a5",
-
   /* icons */
   "menu-settings": url(require("style/icons/menuSettings.svg")),
   "menu-accounts": url(require("style/icons/accounts-active.png")),
@@ -353,7 +354,12 @@ const lightTheme = {
   "ln-network-capacity-icon": url(
     require("style/icons/LNNetworkCapacityIcon.svg")
   ),
-  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
+  "tz-wipe-device": url(require("style/icons/tzWipeDevice.svg")),
+  "tz-recover-device": url(require("style/icons/tzRecoverDevice.svg")),
+  "tz-init-device": url(require("style/icons/tzInitDevice.svg")),
+  "tz-backup-device": url(require("style/icons/tzBackupDevice.svg")),
+  "tz-create-bt": url(require("style/icons/tzCreateBt.svg"))
 };
 
 export default lightTheme;

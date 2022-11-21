@@ -107,6 +107,7 @@ export const connect = () => async (dispatch, getState) => {
     return;
   });
   dispatch({ type: TRZ_CONNECT_SUCCESS });
+  dispatch(getFeatures());
 };
 
 export const TRZ_TREZOR_DISABLED = "TRZ_TREZOR_DISABLED";
@@ -136,6 +137,7 @@ function onChange(dispatch, getState, features) {
   if (device == currentDevice) return;
   const deviceLabel = features.label;
   dispatch({ deviceLabel, device, type: TRZ_SELECTEDDEVICE_CHANGED });
+  dispatch(getFeatures());
 }
 
 function onConnect(dispatch, getState, features) {
@@ -146,6 +148,7 @@ function onConnect(dispatch, getState, features) {
     device = BOOTLOADER_MODE;
   }
   dispatch({ deviceLabel, device, type: TRZ_LOADDEVICE });
+  dispatch(getFeatures());
   return device;
 }
 
@@ -333,12 +336,18 @@ async function deviceRun(dispatch, getState, fn) {
   }
 }
 
-const getFeatures = async (dispatch, getState) => {
-  const features = await deviceRun(dispatch, getState, async () => {
-    const res = await session.getFeatures();
-    return res.payload;
-  });
-  return features;
+export const TRZ_GETFEATURES_SUCCESS = "TRZ_GETFEATURES_SUCCESS";
+export const getFeatures = () => async (dispatch, getState) => {
+  try {
+    const features = await deviceRun(dispatch, getState, async () => {
+      const res = await session.getFeatures();
+      return res.payload;
+    });
+    dispatch({ type: TRZ_GETFEATURES_SUCCESS, features });
+    return features;
+  } catch (error) {
+    return null;
+  }
 };
 
 export const TRZ_CANCELOPERATION_SUCCESS = "TRZ_CANCELOPERATION_SUCCESS";
@@ -549,12 +558,7 @@ export const TRZ_TOGGLEPINPROTECTION_SUCCESS =
 export const togglePinProtection = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TOGGLEPINPROTECTION_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
-    dispatch({ error, type: TRZ_TOGGLEPINPROTECTION_FAILED });
-    return;
-  });
-
-  const clearProtection = !!features.pin_protection;
+  const clearProtection = !!selectors.trezorPinProtection(getState());
 
   try {
     await deviceRun(dispatch, getState, async () => {
@@ -563,9 +567,9 @@ export const togglePinProtection = () => async (dispatch, getState) => {
       });
       return res.payload;
     });
+    await dispatch(getFeatures());
     dispatch({
       clearProtection,
-      deviceLabel: features.label,
       type: TRZ_TOGGLEPINPROTECTION_SUCCESS
     });
   } catch (error) {
@@ -585,12 +589,7 @@ export const TRZ_TOGGLEPASSPHRASEPROTECTION_CONFIRMED =
 export const togglePassPhraseProtection = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TOGGLEPASSPHRASEPROTECTION_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
-    dispatch({ error, type: TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
-    return;
-  });
-
-  const enableProtection = !features.passphrase_protection;
+  const enableProtection = !selectors.trezorPassphraseProtection(getState());
 
   try {
     await deviceRun(dispatch, getState, async () => {
@@ -599,9 +598,9 @@ export const togglePassPhraseProtection = () => async (dispatch, getState) => {
       });
       return res.payload;
     });
+    await dispatch(getFeatures());
     dispatch({
       enablePassphraseProtection: enableProtection,
-      deviceLabel: features.label,
       type: TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS
     });
   } catch (error) {
@@ -619,12 +618,9 @@ export const TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS =
 export const togglePassphraseOnDevice = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TOGGLEPASSPHRASEONDEVICE_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
-    dispatch({ error, type: TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED });
-    return;
-  });
-
-  const enableOnDevice = !features.passphrase_always_on_device;
+  const enableOnDevice = !selectors.trezorPassphraseOnDeviceProtection(
+    getState()
+  );
 
   try {
     await deviceRun(dispatch, getState, async () => {
@@ -633,9 +629,9 @@ export const togglePassphraseOnDevice = () => async (dispatch, getState) => {
       });
       return res.payload;
     });
+    await dispatch(getFeatures());
     dispatch({
       enablePassphraseOnDevice: enableOnDevice,
-      deviceLabel: features.label,
       type: TRZ_TOGGLEPASSPHRASEONDEVICE_SUCCESS
     });
   } catch (error) {
@@ -650,7 +646,7 @@ export const TRZ_CHANGEHOMESCREEN_SUCCESS = "TRZ_CHANGEHOMESCREEN_SUCCESS";
 export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_CHANGEHOMESCREEN_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
+  const features = await dispatch(getFeatures()).catch((error) => {
     dispatch({ error, type: TRZ_CHANGEHOMESCREEN_FAILED });
     return;
   });
@@ -788,7 +784,7 @@ export const TRZ_BACKUPDEVICE_SUCCESS = "TRZ_BACKUPDEVICE_SUCCESS";
 export const backupDevice = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_BACKUPDEVICE_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
+  const features = await dispatch(getFeatures()).catch((error) => {
     dispatch({ error, type: TRZ_BACKUPDEVICE_FAILED });
     return;
   });
@@ -868,7 +864,7 @@ export const updateFirmware = (path) => async (dispatch, getState) => {
 
   dispatch({ type: TRZ_UPDATEFIRMWARE_ATTEMPT });
 
-  const features = await getFeatures(dispatch, getState).catch((error) => {
+  const features = await dispatch(getFeatures()).catch((error) => {
     dispatch({ error, type: TRZ_UPDATEFIRMWARE_FAILED });
     return;
   });
@@ -911,7 +907,10 @@ export const getWalletCreationMasterPubKey = () => async (
 
   try {
     // Check that the firmware running in this trezor has the seed constant fix.
-    const features = await getFeatures(dispatch, getState);
+    const features = await dispatch(getFeatures()).catch((error) => {
+      dispatch({ error, type: TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED });
+      return;
+    });
     const versionLessThan = (wantMajor, wantMinor) =>
       features.major_version < wantMajor ||
       (features.major_version == wantMajor &&

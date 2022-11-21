@@ -25,6 +25,7 @@ import {
 const WalletSelectionForm = ({
   availableWallets,
   showCreateWalletForm,
+  showCreateTrezorBackedWalletForm,
   onRemoveWallet,
   onToggleEditWallet,
   editWallets,
@@ -63,9 +64,7 @@ const WalletSelectionForm = ({
   const TrezorButton = (props) => (
     <ButtonIcon
       type="trezor"
-      onClick={() => {
-        /* TODO */
-      }}
+      onClick={() => showCreateTrezorBackedWalletForm()}
       text={intl.formatMessage(messages.trezorTabMsg)}
       iconColor={trezorIconColor}
       {...props}

@@ -1,0 +1,5 @@
+.deviceSetupRows {
+  display: grid;
+  grid-row-gap: 35px;
+  margin-top: 25px;
+}

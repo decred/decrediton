@@ -189,6 +189,18 @@
   animation: bounce 1s var(--ease-in-out-quart) infinite;
 }
 
+.createTrezorBackedWalletTooltip {
+  width: 17rem;
+  text-align: center;
+}
+
+.createTrezorBackedWalletBt {
+  background-color: var(--background-back-color) !important;
+  background-image: var(--tz-create-bt);
+  background-size: 11px;
+  margin-left: 10px !important;
+}
+
 @media (--sm-viewport) {
   .container,
   .displayWalletContainer {

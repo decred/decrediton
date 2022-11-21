@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import { linkList, TREZOR_KEY, LN_KEY, DEX_KEY } from "./Links";
+import { linkList, LN_KEY, DEX_KEY } from "./Links";
 import { useHistory } from "react-router-dom";
 import { cloneDeep } from "fp";
 
@@ -43,9 +43,6 @@ export function useMenuLinks() {
 
   const menuLinks = useMemo(() => {
     let links = cloneDeep(linkList);
-    if (!isTrezor) {
-      links = links.filter((l) => l.key !== TREZOR_KEY);
-    }
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
     }

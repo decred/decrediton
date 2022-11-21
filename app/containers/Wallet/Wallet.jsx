@@ -16,7 +16,6 @@ import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
 import AgendaDetailsPage from "components/views/AgendaDetailsPage";
 import ChannelDetailsPage from "components/views/LNPage/ChannelDetailsPage";
-import TrezorPage from "components/views/TrezorPage";
 import LNPage from "components/views/LNPage";
 import DexPage from "components/views/DexPage";
 import SideBar from "components/SideBar/SideBar";
@@ -57,7 +56,6 @@ const Wallet = ({ setInterval }) => {
           <Route path="/tickets" component={TicketsPage} />
           <Route path="/tutorial" component={TutorialsPage} />
           <Route path="/governance" component={GovernancePage} />
-          <Route path="/trezor" component={TrezorPage} />
           <Route path="/ln" component={LNPage} />
           <Route path="/dex" component={DexPage} />
         </StaticSwitch>

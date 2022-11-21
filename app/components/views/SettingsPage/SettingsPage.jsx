@@ -7,6 +7,7 @@ import LogsTab from "./LogsTab";
 import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
 import GeneralSettingsTab from "./GeneralSettingsTab";
 import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
+import { TrezorTab } from "./TrezorTab";
 import { useSettings, useService } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
@@ -57,6 +58,7 @@ const SettingsPageHeader = () => {
 const SettingsPage = () => {
   const { walletService } = useService();
   const { setThemeName } = useTheme();
+  const { isTrezor } = useSettings();
   const tabs = [
     {
       path: "/settings/connectivity",
@@ -75,6 +77,13 @@ const SettingsPage = () => {
       content: PrivacyandSecuritySettingsTab,
       header: SettingsTabHeader,
       label: <T id="settings.tab.privacyandsecurity" m="Privacy and Security" />
+    },
+    {
+      disabled: !isTrezor,
+      path: "/settings/trezor",
+      content: TrezorTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.trezor" m="Trezor" />
     },
     {
       path: "/settings/links",

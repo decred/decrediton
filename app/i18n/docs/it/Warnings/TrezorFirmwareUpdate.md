@@ -1,4 +1,4 @@
-**Attenzione!** Usare solo firmware ufficiale distribuito da SatoshiLabs (produttore di 
+**_Attenzione!_** Usare solo firmware ufficiale distribuito da SatoshiLabs (produttore di
 Trezor) o da altre fonti molto affidabili. L'uso di un firmware non standard
 o ottenuto da un individuo o società non affidabile potrebbe causare **perdita
 o furto di fondi **. 

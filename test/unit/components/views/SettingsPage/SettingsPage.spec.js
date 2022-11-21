@@ -860,3 +860,19 @@ test("update private passphrase is disabled", () => {
   user.click(screen.getByRole("button", { name: "Update Private Passphrase" }));
   expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
 });
+
+test("renders settings with trezor enabled", () => {
+  const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
+  render(<SettingsPage />);
+  expect(screen.getByText("Trezor")).toBeInTheDocument();
+  expect(mockIsTrezor).toHaveBeenCalled();
+  mockIsTrezor.mockRestore();
+});
+
+test("renders settings with trezor is NOT enabled", () => {
+  const mockIsTrezor = (selectors.isTrezor = jest.fn(() => false));
+  render(<SettingsPage />);
+  expect(screen.queryByText("Trezor")).not.toBeInTheDocument();
+  expect(mockIsTrezor).toHaveBeenCalled();
+  mockIsTrezor.mockRestore();
+});

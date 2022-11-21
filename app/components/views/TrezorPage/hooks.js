@@ -1,15 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import * as sel from "selectors";
 import * as trza from "actions/TrezorActions";
+import { useIntl } from "react-intl";
 
 export function useTrezorPage() {
   const isPerformingUpdate = useSelector(sel.isPerformingTrezorUpdate);
   const device = useSelector(sel.trezorDevice);
   const performingOperation = useSelector(sel.trezorPerformingOperation);
+  const performingTogglePinProtection = useSelector(
+    sel.trezorPerformingTogglePinProtection
+  );
+  const performingTogglePassphraseProtection = useSelector(
+    sel.trezorPerformingTogglePassphraseProtection
+  );
+  const performingTogglePassphraseOnDeviceProtection = useSelector(
+    sel.trezorPerformingTogglePassphraseOnDeviceProtection
+  );
+  const pinProtection = useSelector(sel.trezorPinProtection);
+  const passphraseProtection = useSelector(sel.trezorPassphraseProtection);
+  const passphraseOnDeviceProtection = useSelector(
+    sel.trezorPassphraseOnDeviceProtection
+  );
   const performingRecoverDevice = useSelector(
     sel.trezorPerformingRecoverDevice
   );
+  const deviceLabel = useSelector(sel.trezorLabel);
+  const intl = useIntl();
 
   const dispatch = useDispatch();
 
@@ -50,11 +67,29 @@ export function useTrezorPage() {
     dispatch
   ]);
 
+  const getFeatures = useCallback(() => dispatch(trza.getFeatures()), [
+    dispatch
+  ]);
+
+  useEffect(() => {
+    if (device) {
+      getFeatures();
+    }
+  }, [device, getFeatures]);
+
   return {
     isPerformingUpdate,
     performingOperation,
     performingRecoverDevice,
     device,
+    performingTogglePinProtection,
+    performingTogglePassphraseProtection,
+    performingTogglePassphraseOnDeviceProtection,
+    pinProtection,
+    passphraseProtection,
+    passphraseOnDeviceProtection,
+    deviceLabel,
+    intl,
     connect,
     togglePinProtection,
     togglePassPhraseProtection,

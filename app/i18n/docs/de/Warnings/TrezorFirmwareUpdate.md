@@ -1,4 +1,4 @@
-**Warnung!** Verwenden Sie nur offizielle Firmware, die von SatoshiLabs (Hersteller
+**_Warnung!_** Verwenden Sie nur offizielle Firmware, die von SatoshiLabs (Hersteller
 von Trezor) oder anderen sehr vertrauenswürdigen Quellen vertrieben wird. Die
 Verwendung einer anderen als der Standard-Firmware oder einer von einer nicht
 vertrauenswürdigen Person oder Firma erhaltenen kann zum **Verlust oder Diebstahl
