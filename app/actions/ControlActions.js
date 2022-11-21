@@ -370,7 +370,7 @@ export const purchaseTicketsAttempt = (
           // process managed tickets.
           dispatch(setNeedsVSPdProcessTickets(true));
 
-          const purchaseTicketsResponse = await wallet.purchaseTicketsV3(
+          const purchaseTicketsResponse = await wallet.purchaseTickets(
             walletService,
             account,
             numTickets,

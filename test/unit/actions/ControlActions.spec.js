@@ -138,7 +138,7 @@ beforeEach(() => {
     () => () => {}
   );
   mockCallbackFunction = jest.fn(() => new Promise((r) => setTimeout(r, 10)));
-  mockPurchaseTickets = wallet.purchaseTicketsV3 = jest.fn(() =>
+  mockPurchaseTickets = wallet.purchaseTickets = jest.fn(() =>
     Promise.resolve({ ticketHashes: [] })
   );
   mockUpdateUsedVSPs = vspActions.updateUsedVSPs = jest.fn(() => () => {});
@@ -1376,7 +1376,7 @@ test("test purchase tickets - bought expected number of tickets", async () => {
   );
   const testNumTickets = 2;
   const testTicketHashes = ["text-ticket-hash1", "test-ticket-hash2"];
-  mockPurchaseTickets = wallet.purchaseTicketsV3 = jest.fn(() =>
+  mockPurchaseTickets = wallet.purchaseTickets = jest.fn(() =>
     Promise.resolve({ ticketHashes: testTicketHashes })
   );
   await store.dispatch(
@@ -1434,7 +1434,7 @@ test("test purchase tickets - failed ", async () => {
     })
   );
   const testNumTickets = 1;
-  mockPurchaseTickets = wallet.purchaseTicketsV3 = jest.fn(() =>
+  mockPurchaseTickets = wallet.purchaseTickets = jest.fn(() =>
     Promise.reject(testError)
   );
   await store.dispatch(
@@ -1517,7 +1517,7 @@ test("test purchase tickets - failed with insufficient balance", async () => {
     })
   );
   const testNumTickets = 1;
-  mockPurchaseTickets = wallet.purchaseTicketsV3 = jest.fn(() =>
+  mockPurchaseTickets = wallet.purchaseTickets = jest.fn(() =>
     Promise.reject(testError + "insufficient balance")
   );
   await store.dispatch(
