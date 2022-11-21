@@ -664,7 +664,7 @@ export default function snackbar(state = {}, action) {
         break;
       }
 
-      type = tx.direction || TRANSACTION_TYPES[tx.type];
+      type = tx.txDirection || TRANSACTION_TYPES[tx.type];
       message = { ...tx, type };
       values = { message };
       break;
