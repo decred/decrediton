@@ -1,5 +1,5 @@
 import { useLocation, NavLink } from "react-router-dom";
-import { Balance, ExternalLink } from "shared";
+import { Balance, ExternalLink, TruncatedText } from "shared";
 import {
   KeyBlueButton,
   CopyToClipboardButton,
@@ -71,7 +71,8 @@ const TransactionContent = ({
     rawTx,
     isPending,
     voteScript,
-    ticketTx
+    ticketTx,
+    spenderTx
   } = transactionDetails;
 
   const { theme } = useTheme();
@@ -107,6 +108,8 @@ const TransactionContent = ({
       .filter((v, i) => walletOutputIndices.indexOf(i) === -1)
       .map(mapNonWalletOutput);
   }
+
+  const truncateMax = 18;
 
   return (
     <>
@@ -157,6 +160,21 @@ const TransactionContent = ({
                 <NavLink
                   to={location.pathname.replace(txHash, ticketTx.txHash)}>
                   {ticketTx.txHash}
+                </NavLink>
+              </div>
+            </div>
+          </>
+        )}
+        {txType === TICKET && spenderTx && (
+          <>
+            <div className={styles.topRow}>
+              <div className={styles.name}>
+                <T id="txDetails.spendingTx" m="Spending Tx" />:
+              </div>
+              <div className={styles.value}>
+                <NavLink
+                  to={location.pathname.replace(txHash, spenderTx.txHash)}>
+                  {spenderTx.txHash}
                 </NavLink>
               </div>
             </div>
@@ -236,7 +254,14 @@ const TransactionContent = ({
         ) : (
           <div className={styles.topRow}>
             <div className={styles.name}>
-              <T id="txDetails.toAddress" m="To address" />:
+              <T
+                id="txDetails.toAddress"
+                m="{addressCount, plural, one {To address} other {To addresses} }"
+                values={{
+                  addressCount: txOutputs.length + nonWalletOutputs.length
+                }}
+              />
+              :
             </div>
             <div className={classNames(styles.value, styles.nonFlex)}>
               {txOutputs.map(({ address }, i) => (
@@ -364,7 +389,14 @@ const TransactionContent = ({
               </div>
               {txInputs.map(({ accountName, amount }, idx) => (
                 <div key={idx} className={styles.row}>
-                  <div className={styles.address}>{accountName}</div>
+                  <div className={styles.address}>
+                    <TruncatedText
+                      text={accountName}
+                      max={truncateMax}
+                      showTooltip
+                      tooltipClassName={styles.tooltipClassName}
+                    />
+                  </div>
                   <div className={styles.amount}>
                     <Balance amount={amount} />
                   </div>
@@ -383,7 +415,20 @@ const TransactionContent = ({
               {nonWalletInputs.map(({ address, amount }, idx) => (
                 <div key={idx} className={styles.row}>
                   <div className={styles.address}>
-                    {addSpacingAroundText(address)}
+                    {isVote ? (
+                      // Stakebase transactions (votes) have only one (stakebase) non-wallet output
+                      <T
+                        id="txDetails.nonWalletInputs.Stakebase"
+                        m="Stakebase"
+                      />
+                    ) : (
+                      <TruncatedText
+                        text={address}
+                        max={truncateMax}
+                        showTooltip
+                        tooltipClassName={styles.tooltipClassName}
+                      />
+                    )}
                   </div>
                   <div className={styles.amount}>
                     <Balance amount={amount} />
@@ -406,11 +451,18 @@ const TransactionContent = ({
               {txOutputs.map(({ accountName, decodedScript, amount }, idx) => (
                 <div key={idx} className={styles.row}>
                   <div className={styles.address}>
-                    {txDirection === TRANSACTION_DIR_SENT
-                      ? "change"
-                      : accountName
-                      ? addSpacingAroundText(accountName)
-                      : addSpacingAroundText(decodedScript.address)}
+                    <TruncatedText
+                      text={
+                        txDirection === TRANSACTION_DIR_SENT
+                          ? "change"
+                          : accountName
+                          ? accountName
+                          : decodedScript.address
+                      }
+                      max={truncateMax}
+                      showTooltip
+                      tooltipClassName={styles.tooltipClassName}
+                    />
                   </div>
                   <div className={styles.amount}>
                     <Balance amount={amount} />
@@ -439,7 +491,12 @@ const TransactionContent = ({
                   <div key={idx} className={styles.row}>
                     <div
                       className={classNames(styles.address, styles.nonWallet)}>
-                      {addSpacingAroundText(address)}
+                      <TruncatedText
+                        text={address}
+                        max={truncateMax}
+                        showTooltip
+                        tooltipClassName={styles.tooltipClassName}
+                      />
                     </div>
                     <div className={styles.amount}>{amount}</div>
                   </div>
