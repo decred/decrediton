@@ -431,6 +431,7 @@ export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
     });
   } catch (error) {
     dispatch({ error, type: GETACCOUNTS_FAILED });
+    throw error;
   }
 };
 

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as cla from "actions/ClientActions";
+import { useMountEffect } from "hooks";
 
 export function useAccounts() {
   const walletService = useSelector(sel.walletService);
@@ -24,6 +25,10 @@ export function useAccounts() {
   const hasTickets = useSelector(sel.hasTickets);
 
   const dispatch = useDispatch();
+
+  useMountEffect(() => {
+    dispatch(cla.getAccountsAttempt(true));
+  });
 
   const onRenameAccount = useCallback(
     (accountNumber, accountName) =>
