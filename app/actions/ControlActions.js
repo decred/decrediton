@@ -347,12 +347,20 @@ export const purchaseTicketsAttempt =
               type: PURCHASETICKETS_ATTEMPT
             });
             const dontSignTx = sel.isWatchingOnly(getState());
+            const isAccountMixed =
+              account.value == sel.getMixedAccount(getState());
             const csppReq = {
-              mixedAccount: sel.getMixedAccount(getState()),
-              changeAccount: sel.getChangeAccount(getState()),
-              csppServer: sel.getCsppServer(getState()),
-              csppPort: sel.getCsppPort(getState()),
-              mixedAcctBranch: sel.getMixedAccountBranch(getState())
+              mixedAccount: isAccountMixed
+                ? sel.getMixedAccount(getState())
+                : "",
+              changeAccount: isAccountMixed
+                ? sel.getChangeAccount(getState())
+                : "",
+              csppServer: isAccountMixed ? sel.getCsppServer(getState()) : "",
+              csppPort: isAccountMixed ? sel.getCsppPort(getState()) : "",
+              mixedAcctBranch: isAccountMixed
+                ? sel.getMixedAccountBranch(getState())
+                : ""
             };
             // Since we're about to purchase a ticket, ensure on next startup we'll
             // process managed tickets.
