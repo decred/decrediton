@@ -119,7 +119,7 @@ export function rescanAttempt(beginHeight, beginHash, startup) {
         if (status.indexOf("Cancelled") < 0) {
           console.error("Rescan error", status);
           reject(status);
-          dispatch({ type: RESCAN_FAILED });
+          dispatch({ type: RESCAN_FAILED, error: status });
         }
       });
     });
@@ -675,8 +675,6 @@ export const constructTransactionAttempt = (
     }
   }
 };
-
-export const VALIDATEADDRESS_CLEANSTORE = "VALIDATEADDRESS_CLEANSTORE";
 
 export const validateAddress = (address) => async (dispatch, getState) => {
   try {

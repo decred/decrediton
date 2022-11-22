@@ -21,7 +21,14 @@ import { cloneDeep } from "fp";
 import { createStore } from "test-utils.js";
 import * as wal from "wallet";
 import { isEqual } from "lodash";
-import { mockUnlockLockAndGetAccountsAttempt } from "./ControlActions.spec.js";
+import {
+  mockUnlockLockAndGetAccountsAttempt,
+  selectedAccountNumberForTicketPurchase,
+  selectedAccountForTicketPurchaseName,
+  ticketBuyerAccountNumber,
+  ticketBuyerAccountName,
+  changeAccountNumber
+} from "./accountMocks.js";
 
 const accountMixerActions = ama;
 const wallet = wal;
@@ -47,14 +54,6 @@ const testError = "test-error";
 const testMixedAccountName = "text-mixed-account-name";
 const testChangeAccountName = "text-change-account-name";
 const testWalletService = "test-wallet-service";
-
-const selectedAccountNumberForTicketPurchase = 1;
-const selectedAccountForTicketPurchaseName = "ticket-purchase-account-name";
-
-const ticketBuyerAccountNumber = 2;
-const ticketBuyerAccountName = "ticket-buyer-account-name";
-
-const changeAccountNumber = 3;
 
 const testGetCoinjoinOutputsByAccResponse = {
   wrappers_: [{}, [{ accountNumber: 1, coinjoinTxsSum: 12 }]]

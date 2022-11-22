@@ -49,8 +49,8 @@ export function isValidAddress(addr, network) {
   return null;
 }
 
-const ERR_INVALID_MASTER_PUB_KEY = "ERR_INVALID_MASTER_PUB_KEY";
-const ERR_INVALID_MASTERPUB_CHECKSUM = "ERR_INVALID_MASTERPUB_CHECKSUM";
+export const ERR_INVALID_MASTER_PUB_KEY = "ERR_INVALID_MASTER_PUB_KEY";
+export const ERR_INVALID_MASTERPUB_CHECKSUM = "ERR_INVALID_MASTERPUB_CHECKSUM";
 
 export function isValidMasterPubKey(masterPubKey) {
   if (!masterPubKey || !masterPubKey.trim().length)
