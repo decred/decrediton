@@ -345,7 +345,8 @@ const initialState = {
     changeScriptByAccount: {},
     monitorLockableAccountsTimer: null,
     confirmationDialogModalVisible: false,
-    settingAccountsPassphrase: false
+    settingAccountsPassphrase: false,
+    locaAccountError: null
   },
   snackbar: {
     messages: Array()

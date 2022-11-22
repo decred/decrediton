@@ -2,13 +2,18 @@
 import { wallet } from "wallet-preload-shim";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { startWalletServices, getStartupWalletInfo } from "./ClientActions";
+import {
+  startWalletServices,
+  getStartupWalletInfo,
+  getAccountsAttempt
+} from "./ClientActions";
 import { rawToHex } from "helpers/byteActions";
 import { listUnspentOutputs } from "./TransactionActions";
 import { updateUsedVSPs, getVSPTrackedTickets } from "./VSPActions";
 import { isNumber } from "fp";
 import { setNeedsVSPdProcessTickets } from "./SettingsActions";
 import { setWalletPasswordDex } from "./DexActions";
+import { stopAccountMixer, runAccountMixer } from "./AccountMixerActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -332,80 +337,117 @@ export const purchaseTicketsAttempt = (
   numTickets,
   vsp
 ) => async (dispatch, getState) => {
-  const walletService = sel.walletService(getState());
+  // stop the mixer if it's running
+  let needToRestartMixer = false;
+  const isAccountMixerRunning = sel.getAccountMixerRunning(getState());
+  if (isAccountMixerRunning) {
+    await dispatch(stopAccountMixer());
+    needToRestartMixer = true;
+  }
+
+  // Since we are currently using the default account for the ticket's
+  // voting address we also need to unlock that account so communication
+  // with the VSP may occur.
   try {
-    const dontSignTx = sel.isWatchingOnly(getState());
-    dispatch({ type: PURCHASETICKETS_ATTEMPT });
-    const csppReq = {
-      mixedAccount: sel.getMixedAccount(getState()),
-      changeAccount: sel.getChangeAccount(getState()),
-      csppServer: sel.getCsppServer(getState()),
-      csppPort: sel.getCsppPort(getState()),
-      mixedAcctBranch: sel.getMixedAccountBranch(getState())
-    };
-    // Since we are currently using the default account for the ticket's
-    // voting address we also need to unlock that account so communication
-    // with the VSP may occur.
     const accts = account.value !== 0 ? [account.value, 0] : [account.value];
-    const purchaseTicketsResponse = await dispatch(
+    await dispatch(
       unlockAcctAndExecFn(passphrase, accts, async () => {
-        // Since we're about to purchase a ticket, ensure on next startup we'll
-        // process managed tickets.
-        dispatch(setNeedsVSPdProcessTickets(true));
+        try {
+          const walletService = sel.walletService(getState());
+          dispatch({
+            numTicketsToBuy: numTickets,
+            type: PURCHASETICKETS_ATTEMPT
+          });
+          const dontSignTx = sel.isWatchingOnly(getState());
+          const csppReq = {
+            mixedAccount: sel.getMixedAccount(getState()),
+            changeAccount: sel.getChangeAccount(getState()),
+            csppServer: sel.getCsppServer(getState()),
+            csppPort: sel.getCsppPort(getState()),
+            mixedAcctBranch: sel.getMixedAccountBranch(getState())
+          };
+          // Since we're about to purchase a ticket, ensure on next startup we'll
+          // process managed tickets.
+          dispatch(setNeedsVSPdProcessTickets(true));
 
-        const res = await wallet.purchaseTickets(
-          walletService,
-          account,
-          numTickets,
-          !dontSignTx,
-          vsp,
-          csppReq
-        );
+          const purchaseTicketsResponse = await wallet.purchaseTickets(
+            walletService,
+            account,
+            numTickets,
+            !dontSignTx,
+            vsp,
+            csppReq
+          );
 
-        // Update the list of dcrwallet tracked VSP tickets. This figures out
-        // which accounts need to be left unlocked.
-        await dispatch(getVSPTrackedTickets());
+          // Update the list of dcrwallet tracked VSP tickets. This figures out
+          // which accounts need to be left unlocked.
+          await dispatch(getVSPTrackedTickets());
 
-        return res;
+          if (dontSignTx) {
+            return dispatch({
+              purchaseTicketsResponse,
+              type: CREATE_UNSIGNEDTICKETS_SUCCESS
+            });
+          }
+          // save vsp for future checking if the wallet has all tickets synced.
+          dispatch(updateUsedVSPs(vsp));
+          const numBought = purchaseTicketsResponse.ticketHashes.length;
+          if (numBought < numTickets) {
+            dispatch({
+              purchaseTicketsResponse,
+              numAttempted: numTickets,
+              type: PURCHASETICKETS_SUCCESS_LESS
+            });
+          } else {
+            dispatch({
+              purchaseTicketsResponse,
+              type: PURCHASETICKETS_SUCCESS
+            });
+          }
+        } catch (error) {
+          if (String(error).indexOf("insufficient balance") > 0) {
+            const unspentOutputs = await dispatch(
+              listUnspentOutputs(account.value)
+            );
+            // we need at least one 2 utxo for each ticket, one for paying the fee
+            // and another for the splitTx and ticket purchase.
+            // Note: at least one of them needs to be big enough for ticket purchase.
+            if (unspentOutputs.length < numTickets * 2) {
+              // check if amount is indeed insufficient
+              const ticketPrice = sel.ticketPrice(getState());
+              if (account.spendable > ticketPrice * numTickets) {
+                return dispatch({
+                  error: `Not enough utxo. Need to break the input so one can be reserved
+            for paying the fee.`,
+                  type: PURCHASETICKETS_FAILED
+                });
+              }
+            }
+          }
+          dispatch({ error, type: PURCHASETICKETS_FAILED });
+        }
       })
     );
-    if (dontSignTx) {
-      return dispatch({
-        purchaseTicketsResponse,
-        type: CREATE_UNSIGNEDTICKETS_SUCCESS
-      });
-    }
-    // save vsp for future checking if the wallet has all tickets synced.
-    dispatch(updateUsedVSPs(vsp));
-    const numBought = purchaseTicketsResponse.ticketHashes.length;
-    if (numBought < numTickets) {
-      dispatch({
-        purchaseTicketsResponse,
-        numAttempted: numTickets,
-        type: PURCHASETICKETS_SUCCESS_LESS
-      });
-    } else {
-      dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-    }
   } catch (error) {
-    if (String(error).indexOf("insufficient balance") > 0) {
-      const unspentOutputs = await dispatch(listUnspentOutputs(account.value));
-      // we need at least one 2 utxo for each ticket, one for paying the fee
-      // and another for the splitTx and ticket purchase.
-      // Note: at least one of them needs to be big enough for ticket purchase.
-      if (unspentOutputs.length < numTickets * 2) {
-        // check if amount is indeed insufficient
-        const ticketPrice = sel.ticketPrice(getState());
-        if (account.spendable > ticketPrice * numTickets) {
-          return dispatch({
-            error: `Not enough utxo. Need to break the input so one can be reserved
-            for paying the fee.`,
-            type: PURCHASETICKETS_FAILED
-          });
-        }
-      }
+    console.log({ error });
+  } finally {
+    if (needToRestartMixer) {
+      const mixedAccount = sel.getMixedAccount(getState());
+      const changeAccount = sel.getChangeAccount(getState());
+      const mixedAccountBranch = sel.getMixedAccountBranch(getState());
+      const csppServer = sel.getCsppServer(getState());
+      const csppPort = sel.getCsppPort(getState());
+
+      dispatch(
+        runAccountMixer({
+          passphrase,
+          mixedAccount,
+          mixedAccountBranch,
+          changeAccount,
+          csppServer: `${csppServer}:${csppPort}`
+        })
+      );
     }
-    dispatch({ error, type: PURCHASETICKETS_FAILED });
   }
 };
 
@@ -456,11 +498,11 @@ export const startTicketBuyerAttempt = (
   const { ticketBuyerService } = getState().grpc;
   dispatch({ ticketBuyerConfig, type: STARTTICKETBUYER_ATTEMPT });
 
+  const accountNum = account.encrypted ? account.value : null;
+  const accountUnlocks = mixedAccount
+    ? [accountNum, changeAccount]
+    : [accountNum];
   try {
-    const accountNum = account.encrypted ? account.value : null;
-    const accountUnlocks = mixedAccount
-      ? [accountNum, changeAccount]
-      : [accountNum];
     const ticketBuyer = await dispatch(
       unlockAcctAndExecFn(
         passphrase,
@@ -490,15 +532,14 @@ export const startTicketBuyerAttempt = (
       // No expected response in end but log in case.
       console.log(response);
     });
-    ticketBuyer.on("error", function (status) {
+    ticketBuyer.on("error", async (status) => {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
-        if (status.indexOf("invalid passphrase") > 0) {
-          dispatch({ error: status, type: STARTTICKETBUYER_FAILED });
-        }
+        await dispatch({ error: status, type: STARTTICKETBUYER_FAILED });
       } else {
-        dispatch({ type: STOPTICKETBUYER_SUCCESS });
+        await dispatch({ type: STOPTICKETBUYER_SUCCESS });
       }
+      await dispatch(relockAccounts(accountUnlocks));
     });
     // update used vsps
     dispatch(updateUsedVSPs(vsp));
@@ -511,22 +552,18 @@ export const startTicketBuyerAttempt = (
     });
     return ticketBuyer;
   } catch (error) {
-    dispatch({ error, type: STARTTICKETBUYER_FAILED });
+    await dispatch({ error, type: STARTTICKETBUYER_FAILED });
+    // need to relock accounts here because unlockAcctAndExecFn
+    // has been called with `leaveUnlock=true` parameter
+    await dispatch(relockAccounts(accountUnlocks));
   }
 };
 
-export function ticketBuyerCancel() {
-  return async (dispatch, getState) => {
-    const { ticketBuyerCall, account } = getState().vsp;
-    if (!ticketBuyerCall) return;
-    if (ticketBuyerCall) {
-      ticketBuyerCall.cancel();
-      dispatch({ type: STOPTICKETBUYER_ATTEMPT });
-      const acctNumber = account.encrypted ? account.value : null;
-      await dispatch(lockAccount(acctNumber));
-    }
-  };
-}
+export const ticketBuyerCancel = () => async (dispatch, getState) => {
+  dispatch({ type: STOPTICKETBUYER_ATTEMPT });
+  const { ticketBuyerCall } = getState().vsp;
+  await ticketBuyerCall?.cancel();
+};
 
 export const CONSTRUCTTX_ATTEMPT = "CONSTRUCTTX_ATTEMPT";
 export const CONSTRUCTTX_FAILED = "CONSTRUCTTX_FAILED";
@@ -966,59 +1003,27 @@ export const filterUnlockableAccounts = (accts, getState) => {
 // account in case of success or error, if leaveUnlock is not informed.
 export const unlockAcctAndExecFn = (
   passphrase,
-  accts,
+  acctNumbers,
   fn,
   leaveUnlock
-) => async (dispatch, getState) => {
+) => async (dispatch) => {
   let res = null;
   let fnError = null;
-  const walletService = sel.walletService(getState());
-  const accounts = sel.balances(getState());
-
-  // Verify all accounts that will be unlocked exist and are encrypted with an
-  // individual passphrase.
-  accts.forEach((acctNum) => {
-    const account = accounts.find((acct) => acct.accountNumber === acctNum);
-    if (!account) {
-      throw "Account not found";
-    }
-    if (!account.encrypted) {
-      throw "Account not encrypted";
-    }
-  });
-
-  // Helper function to relock the needed accounts.
-  const relockAccounts = async () => {
-    try {
-      const lockableAccts = filterUnlockableAccounts(accts, getState);
-      await Promise.all(
-        lockableAccts.map((acctNumber) =>
-          wallet.lockAccount(walletService, acctNumber)
-        )
-      );
-    } catch (error) {
-      console.error("Unable to re-lock accounts", error);
-      throw error;
-    }
-  };
 
   // Unlock all needed accounts.
   dispatch({ type: UNLOCKANDEXECFN_ATTEMPT });
-  dispatch({ type: UNLOCKACCOUNT_ATTEMPT });
   try {
     await Promise.all(
-      accts.map((acctNumber) =>
-        wallet.unlockAccount(walletService, passphrase, acctNumber)
+      acctNumbers.map((acctNumber) =>
+        dispatch(unlockAccount(passphrase, acctNumber))
       )
     );
-    dispatch({ type: UNLOCKACCOUNT_SUCCESS });
   } catch (error) {
     try {
-      await relockAccounts();
+      await dispatch(relockAccounts(acctNumbers));
     } catch (error) {
       dispatch({ type: LOCKACCOUNT_FAILED, error });
     }
-    dispatch({ type: UNLOCKACCOUNT_FAILED, error });
     dispatch({ type: UNLOCKANDEXECFN_FAILED, error });
     throw error;
   }
@@ -1039,13 +1044,9 @@ export const unlockAcctAndExecFn = (
     return res;
   }
 
-  // lock account
   try {
-    await relockAccounts();
-    dispatch({ type: LOCKACCOUNT_SUCCESS });
+    await dispatch(relockAccounts(acctNumbers));
   } catch (error) {
-    // no need to lock as unlock errored.
-    dispatch({ type: LOCKACCOUNT_FAILED, error });
     dispatch({ type: UNLOCKANDEXECFN_FAILED, error });
     throw error;
   }
@@ -1072,8 +1073,67 @@ export const unlockAllAcctAndExecFn = (passphrase, fn, leaveUnlock) => (
   return dispatch(unlockAcctAndExecFn(passphrase, unlockable, fn, leaveUnlock));
 };
 
+export const unlockAccount = (passphrase, acctNumber) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: UNLOCKACCOUNT_ATTEMPT, acctNumber });
+  try {
+    const walletService = sel.walletService(getState());
+    const accounts = sel.balances(getState());
+    const account = accounts.find((acct) => acct.accountNumber === acctNumber);
+    if (!account) {
+      throw "Account not found";
+    }
+    if (!account.encrypted) {
+      throw "Account not encrypted";
+    }
+    await wallet.unlockAccount(walletService, passphrase, acctNumber);
+    dispatch({ type: UNLOCKACCOUNT_SUCCESS, acctNumber });
+  } catch (error) {
+    dispatch({ type: UNLOCKACCOUNT_FAILED, error });
+    throw error;
+  }
+};
+
+export const RELOCKACCOUNTS_ATTEMPT = "RELOCKACCOUNTS_ATTEMPT";
+export const RELOCKACCOUNTS_FAILED = "RELOCKACCOUNTS_FAILED";
+export const RELOCKACCOUNTS_SUCCESS = "RELOCKACCOUNTS_SUCCESS";
+
+export const relockAccounts = (accountNumbers) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: RELOCKACCOUNTS_ATTEMPT, accountNumbers });
+  try {
+    let unlockedAccountNumbers;
+    try {
+      await dispatch(getAccountsAttempt(true));
+      const accounts = sel.balances(getState());
+      unlockedAccountNumbers = accounts
+        .filter((account) => account.unlocked && account.encrypted)
+        .map((account) => account.accountNumber);
+    } catch (error) {
+      // failed to refresh accounts data. as a fallback,
+      // consider all `accountNumbers` unlocked
+      unlockedAccountNumbers = accountNumbers;
+    }
+
+    await Promise.all(
+      unlockedAccountNumbers.map((acctNumber) =>
+        dispatch(lockAccount(acctNumber))
+      )
+    );
+
+    dispatch({ type: RELOCKACCOUNTS_SUCCESS, unlockedAccountNumbers });
+  } catch (error) {
+    dispatch({ type: RELOCKACCOUNTS_FAILED, error });
+    throw error;
+  }
+};
+
 export const lockAccount = (acctNumber) => async (dispatch, getState) => {
-  dispatch({ type: LOCKACCOUNT_ATTEMPT });
+  dispatch({ type: LOCKACCOUNT_ATTEMPT, acctNumber });
   try {
     const accounts = sel.balances(getState());
     const account = accounts.find((acct) => acct.accountNumber === acctNumber);
@@ -1086,9 +1146,10 @@ export const lockAccount = (acctNumber) => async (dispatch, getState) => {
     const lockable = filterUnlockableAccounts([acctNumber], getState);
     if (lockable.length === 0) return;
     await wallet.lockAccount(sel.walletService(getState()), lockable[0]);
-    dispatch({ type: LOCKACCOUNT_SUCCESS });
+    dispatch({ type: LOCKACCOUNT_SUCCESS, acctNumber });
   } catch (error) {
     dispatch({ type: LOCKACCOUNT_FAILED, error });
+    throw error;
   }
 };
 
@@ -1119,6 +1180,10 @@ export const MONITORLOCKACBLEACCOUNTS_STOPPED =
 // allow locking some wallet accounts.
 export const monitorLockableAccounts = () => (dispatch, getState) => {
   const checkFunc = async () => {
+    // Don't attempt to relock if there's a function running that depends on
+    // unlocked accounts.
+    if (getState().control.unlockAndExecFnRunning) return;
+
     // Check if the lst of VSP tracked ticket accounts changed and lock any
     // accounts that are no longer needed.
     const oldTicketAccounts = sel.getVSPTrackedTicketsCommitAccounts(
@@ -1131,10 +1196,6 @@ export const monitorLockableAccounts = () => (dispatch, getState) => {
     const toLockAccts = oldTicketAccounts.filter(
       (acct) => !(acct in newTicketAccounts)
     );
-
-    // Don't attempt to relock if there's a function running that depends on
-    // unlocked accounts.
-    if (getState().control.unlockAndExecFnRunning) return;
 
     // If there are no more tickets being tracked (meaning all were confirmed)
     // and we didn't skip the initial ProcessManagedTickets page and the
@@ -1153,25 +1214,10 @@ export const monitorLockableAccounts = () => (dispatch, getState) => {
     // Attempt to relock all accounts that can now be locked.
     const lockable = filterUnlockableAccounts(toLockAccts, getState);
     if (lockable.length === 0) return;
-    const walletService = sel.walletService(getState());
-    dispatch({ type: LOCKACCOUNT_ATTEMPT, accounts: lockable });
     try {
-      await Promise.all(
-        lockable.map(async (acctNumber) => {
-          try {
-            await wallet.lockAccount(walletService, acctNumber);
-          } catch (error) {
-            // Only throw locking error if it's not due to account already locked.
-            if (String(error).indexOf("account is already locked") === -1) {
-              throw error;
-            }
-          }
-        })
-      );
-      dispatch({ type: LOCKACCOUNT_SUCCESS, accounts: lockable });
+      await dispatch(relockAccounts(lockable));
     } catch (error) {
-      console.error("Unable to re-lock accounts", error);
-      dispatch({ type: LOCKACCOUNT_FAILED, error });
+      console.error(error);
     }
   };
 

@@ -38,7 +38,8 @@ import {
   STARTTICKETBUYER_FAILED,
   SETACCOUNTSPASSPHRASE_FAILED,
   DISCOVERUSAGE_FAILED,
-  DISCOVERUSAGE_SUCCESS
+  DISCOVERUSAGE_SUCCESS,
+  LOCKACCOUNT_FAILED
 } from "actions/ControlActions";
 import {
   SYNCVSPTICKETS_SUCCESS,
@@ -624,6 +625,10 @@ const messages = defineMessages({
   SETTINGS_SAVE: {
     id: "settings.saved",
     defaultMessage: "Settings saved successfully."
+  },
+  LOCKACCOUNT_FAILED: {
+    id: "accounts.lockFailed",
+    defaultMessage: "Failed to lock account: {originalError}"
   }
 });
 
@@ -659,7 +664,7 @@ export default function snackbar(state = {}, action) {
         break;
       }
 
-      type = tx.direction || TRANSACTION_TYPES[tx.type];
+      type = tx.txDirection || TRANSACTION_TYPES[tx.type];
       message = { ...tx, type };
       values = { message };
       break;
@@ -847,6 +852,7 @@ export default function snackbar(state = {}, action) {
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
     case DEX_EXPORT_SEED_FAILED:
+    case LOCKACCOUNT_FAILED:
       type = "Error";
       if (
         action.error &&

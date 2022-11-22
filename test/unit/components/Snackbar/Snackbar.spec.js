@@ -94,7 +94,7 @@ test("test a newlyMinedTransaction snackbar message", async () => {
         fee: testFee,
         amount: testAmount,
         txHash: testTxHash,
-        direction: "ticketfee"
+        txDirection: "ticketfee"
       }
     ],
     stakeTransactions: {},
