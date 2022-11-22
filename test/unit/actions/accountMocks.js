@@ -1,3 +1,9 @@
+import * as cla from "actions/ClientActions";
+import * as wal from "wallet";
+
+const wallet = wal;
+const clientActions = cla;
+
 export const selectedAccountNumberForTicketPurchase = 1;
 export const selectedAccountForTicketPurchaseName =
   "ticket-purchase-account-name";
@@ -60,3 +66,45 @@ export const testBalances = [
   },
   { accountNumber: 2147483647, accountName: "imported", encrypted: false }
 ];
+
+export const mockUnlockLockAndGetAccountsAttempt = () => {
+  let unlockedAccounts = [];
+  const addUnlockedAccount = (accountNumber) =>
+    unlockedAccounts.push(accountNumber);
+  const mockLockAccount = (wallet.lockAccount = jest.fn((_, accountNumber) => {
+    if (!unlockedAccounts.includes(accountNumber)) {
+      console.error(`${accountNumber} is not unlocked`);
+    } else {
+      unlockedAccounts = unlockedAccounts.filter((an) => an != accountNumber);
+    }
+  }));
+  const mockUnlockAccount = (wallet.unlockAccount = jest.fn(
+    (_, passphrase, accountNumber) => {
+      if (unlockedAccounts.includes(accountNumber)) {
+        console.error(`${accountNumber} is already unlocked (${passphrase})`);
+      } else {
+        unlockedAccounts.push(accountNumber);
+      }
+    }
+  ));
+  const mockGetAccountsAttempt = (clientActions.getAccountsAttempt = jest.fn(
+    () => async (dispatch) => {
+      const updatedBalances = testBalances.map((b) =>
+        unlockedAccounts.includes(b.accountNumber)
+          ? { ...b, unlocked: true }
+          : b
+      );
+      await dispatch({
+        balances: updatedBalances,
+        type: cla.GETBALANCE_SUCCESS
+      });
+    }
+  ));
+
+  return {
+    addUnlockedAccount,
+    mockLockAccount,
+    mockUnlockAccount,
+    mockGetAccountsAttempt
+  };
+};
