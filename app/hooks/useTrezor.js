@@ -37,16 +37,18 @@ const useTrezor = () => {
     () => dispatch(trza.cancelCurrentOperation()),
     [dispatch]
   );
-  const onSubmitPin = useCallback((pin) => dispatch(trza.submitPin(pin)), [
-    dispatch
-  ]);
+  const onSubmitPin = useCallback(
+    (pin) => dispatch(trza.submitPin(pin)),
+    [dispatch]
+  );
   const onSubmitPassPhrase = useCallback(
     (passPhrase) => dispatch(trza.submitPassPhrase(passPhrase)),
     [dispatch]
   );
-  const onSubmitWord = useCallback((word) => dispatch(trza.submitWord(word)), [
-    dispatch
-  ]);
+  const onSubmitWord = useCallback(
+    (word) => dispatch(trza.submitWord(word)),
+    [dispatch]
+  );
   const onTogglePinProtection = useCallback(
     () => dispatch(trza.togglePinProtection()),
     [dispatch]
@@ -63,25 +65,30 @@ const useTrezor = () => {
     (label) => dispatch(trza.changeLabel(label)),
     [dispatch]
   );
-  const onWipeDevice = useCallback(() => dispatch(trza.wipeDevice()), [
-    dispatch
-  ]);
-  const onRecoverDevice = useCallback(() => dispatch(trza.recoverDevice()), [
-    dispatch
-  ]);
-  const onInitDevice = useCallback(() => dispatch(trza.initDevice()), [
-    dispatch
-  ]);
-  const onBackupDevice = useCallback(() => dispatch(trza.backupDevice()), [
-    dispatch
-  ]);
+  const onWipeDevice = useCallback(
+    () => dispatch(trza.wipeDevice()),
+    [dispatch]
+  );
+  const onRecoverDevice = useCallback(
+    () => dispatch(trza.recoverDevice()),
+    [dispatch]
+  );
+  const onInitDevice = useCallback(
+    () => dispatch(trza.initDevice()),
+    [dispatch]
+  );
+  const onBackupDevice = useCallback(
+    () => dispatch(trza.backupDevice()),
+    [dispatch]
+  );
   const onUpdateFirmware = useCallback(
     (path) => dispatch(trza.updateFirmware(path)),
     [dispatch]
   );
-  const onEnableTrezor = useCallback(() => dispatch(trza.enableTrezor()), [
-    dispatch
-  ]);
+  const onEnableTrezor = useCallback(
+    () => dispatch(trza.enableTrezor()),
+    [dispatch]
+  );
 
   return {
     isTrezor,

@@ -122,15 +122,12 @@ beforeEach(() => {
     set: mockGlobalCfgSet
   }));
   mockChangeMenuLocale = wallet.changeMenuLocale = jest.fn(() => {});
-  mockReloadAllowedExternalRequests = wallet.reloadAllowedExternalRequests = jest.fn(
-    () => {}
-  );
-  mockGetTokenAndInitialBatch = governanceActions.getTokenAndInitialBatch = jest.fn(
-    () => () => {}
-  );
-  mockResetInventoryAndProposals = governanceActions.resetInventoryAndProposals = jest.fn(
-    () => () => {}
-  );
+  mockReloadAllowedExternalRequests = wallet.reloadAllowedExternalRequests =
+    jest.fn(() => {});
+  mockGetTokenAndInitialBatch = governanceActions.getTokenAndInitialBatch =
+    jest.fn(() => () => {});
+  mockResetInventoryAndProposals =
+    governanceActions.resetInventoryAndProposals = jest.fn(() => () => {});
 
   mockGetTreasuryBalance = clientActions.getTreasuryBalance = jest.fn(
     () => () => {}

@@ -52,24 +52,28 @@ export function useTrezorPage() {
     [dispatch]
   );
   const wipeDevice = useCallback(() => dispatch(trza.wipeDevice()), [dispatch]);
-  const recoverDevice = useCallback(() => dispatch(trza.recoverDevice()), [
-    dispatch
-  ]);
+  const recoverDevice = useCallback(
+    () => dispatch(trza.recoverDevice()),
+    [dispatch]
+  );
   const initDevice = useCallback(() => dispatch(trza.initDevice()), [dispatch]);
-  const backupDevice = useCallback(() => dispatch(trza.backupDevice()), [
-    dispatch
-  ]);
+  const backupDevice = useCallback(
+    () => dispatch(trza.backupDevice()),
+    [dispatch]
+  );
   const updateFirmware = useCallback(
     (path) => dispatch(trza.updateFirmware(path)),
     [dispatch]
   );
-  const enableTrezor = useCallback(() => dispatch(trza.enableTrezor()), [
-    dispatch
-  ]);
+  const enableTrezor = useCallback(
+    () => dispatch(trza.enableTrezor()),
+    [dispatch]
+  );
 
-  const getFeatures = useCallback(() => dispatch(trza.getFeatures()), [
-    dispatch
-  ]);
+  const getFeatures = useCallback(
+    () => dispatch(trza.getFeatures()),
+    [dispatch]
+  );
 
   useEffect(() => {
     if (device) {

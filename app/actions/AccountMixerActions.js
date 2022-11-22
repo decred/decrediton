@@ -70,84 +70,88 @@ export const RUNACCOUNTMIXER_NOBALANCE = "RUNACCOUNTMIXER_NOBALANCE";
 export const RUNACCOUNTMIXER_SUFFICIENTBALANCE =
   "RUNACCOUNTMIXER_SUFFICIENTBALANCE";
 
-export const checkUnmixedAccountBalance = (changeAccount) => async (
-  dispatch
-) => {
-  const spendableBal = await dispatch(getAcctSpendableBalance(changeAccount));
-  if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
-    dispatch({
-      error: (
-        <T
-          id="accountMixer.insufficientUnmixedAccountBalance"
-          m="Insufficient unmixed account balance"
-        />
-      ),
-      type: RUNACCOUNTMIXER_NOBALANCE
-    });
-  } else {
-    dispatch({
-      type: RUNACCOUNTMIXER_SUFFICIENTBALANCE
-    });
-  }
-};
+export const checkUnmixedAccountBalance =
+  (changeAccount) => async (dispatch) => {
+    const spendableBal = await dispatch(getAcctSpendableBalance(changeAccount));
+    if (spendableBal < MIN_RELAY_FEE_ATOMS + MIN_MIX_DENOMINATION_ATOMS) {
+      dispatch({
+        error: (
+          <T
+            id="accountMixer.insufficientUnmixedAccountBalance"
+            m="Insufficient unmixed account balance"
+          />
+        ),
+        type: RUNACCOUNTMIXER_NOBALANCE
+      });
+    } else {
+      dispatch({
+        type: RUNACCOUNTMIXER_SUFFICIENTBALANCE
+      });
+    }
+  };
 
-export const runAccountMixer = ({
-  passphrase,
-  mixedAccount,
-  mixedAccountBranch,
-  changeAccount,
-  csppServer
-}) => (dispatch, getState) =>
-  new Promise((resolve) => {
-    dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
-    const accountUnlocks = [changeAccount];
-    const runMixerAsync = async () => {
-      const mixerStreamer = await dispatch(
-        unlockAcctAndExecFn(
-          passphrase,
-          accountUnlocks,
-          () =>
-            wallet.runAccountMixerRequest(sel.accountMixerService(getState()), {
-              mixedAccount,
-              mixedAccountBranch,
-              changeAccount,
-              csppServer
-            }),
-          true
-        )
-      );
-      return { mixerStreamer };
-    };
+export const runAccountMixer =
+  ({
+    passphrase,
+    mixedAccount,
+    mixedAccountBranch,
+    changeAccount,
+    csppServer
+  }) =>
+  (dispatch, getState) =>
+    new Promise((resolve) => {
+      dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
+      const accountUnlocks = [changeAccount];
+      const runMixerAsync = async () => {
+        const mixerStreamer = await dispatch(
+          unlockAcctAndExecFn(
+            passphrase,
+            accountUnlocks,
+            () =>
+              wallet.runAccountMixerRequest(
+                sel.accountMixerService(getState()),
+                {
+                  mixedAccount,
+                  mixedAccountBranch,
+                  changeAccount,
+                  csppServer
+                }
+              ),
+            true
+          )
+        );
+        return { mixerStreamer };
+      };
 
-    runMixerAsync()
-      .then(async (resp) => {
-        const { mixerStreamer, error } = resp;
-        // we can throw errors, like when the account has a small balance,
-        // so this check is necessary.
-        if (error) {
+      runMixerAsync()
+        .then(async (resp) => {
+          const { mixerStreamer, error } = resp;
+          // we can throw errors, like when the account has a small balance,
+          // so this check is necessary.
+          if (error) {
+            await dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+            dispatch(relockAccounts(accountUnlocks));
+            return;
+          }
+          mixerStreamer.on("data", () => resolve());
+          mixerStreamer.on("error", (error) => {
+            // if context was cancelled we can ignore it, as it probably means
+            // mixer was stopped.
+            if (!String(error).includes("Cancelled")) {
+              dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
+            }
+          });
+          mixerStreamer.on("end", (data) => {
+            // not supposed to get here, but if it does, we log to see.
+            console.log(data);
+          });
+          dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
+        })
+        .catch(async (error) => {
           await dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
           dispatch(relockAccounts(accountUnlocks));
-          return;
-        }
-        mixerStreamer.on("data", () => resolve());
-        mixerStreamer.on("error", (error) => {
-          // if context was cancelled we can ignore it, as it probably means
-          // mixer was stopped.
-          if (!String(error).includes("Cancelled")) {
-            dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
-          }
         });
-        mixerStreamer.on("end", (data) => {
-          // not supposed to get here, but if it does, we log to see.
-          console.log(data);
-        });
-        dispatch({ type: RUNACCOUNTMIXER_SUCCESS, mixerStreamer });
-      })
-      .catch(async (error) => {
-        await dispatch({ error: error + "", type: RUNACCOUNTMIXER_FAILED });
-        dispatch(relockAccounts(accountUnlocks));
-      });
-  });
+    });
 
 export const STOPMIXER_ATTEMPT = "STOPMIXER_ATTEMPT";
 export const STOPMIXER_FAILED = "STOPMIXER_FAILED";
@@ -177,66 +181,62 @@ export const CREATEMIXERACCOUNTS_ATTEMPT = "CREATEMIXERACCOUNTS_ATTEMPT";
 export const CREATEMIXERACCOUNTS_FAILED = "CREATEMIXERACCOUNTS_FAILED";
 export const CREATEMIXERACCOUNTS_SUCCESS = "CREATEMIXERACCOUNTS_SUCCESS";
 
-export const createNeededAccounts = (
-  passphrase,
-  mixedAccountName,
-  changeAccountName
-) => async (dispatch) => {
-  dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
+export const createNeededAccounts =
+  (passphrase, mixedAccountName, changeAccountName) => async (dispatch) => {
+    dispatch({ type: CREATEMIXERACCOUNTS_ATTEMPT });
 
-  try {
-    const mixedAccount = await dispatch(
-      getNextAccountAttempt(passphrase, mixedAccountName)
-    );
-    const changeAccount = await dispatch(
-      getNextAccountAttempt(passphrase, changeAccountName)
-    );
+    try {
+      const mixedAccount = await dispatch(
+        getNextAccountAttempt(passphrase, mixedAccountName)
+      );
+      const changeAccount = await dispatch(
+        getNextAccountAttempt(passphrase, changeAccountName)
+      );
 
-    // update accounts selectors
-    dispatch(getAccountsAttempt(true));
-    const mixedNumber = mixedAccount.getNextAccountResponse.accountNumber;
-    const changeNumber = changeAccount.getNextAccountResponse.accountNumber;
+      // update accounts selectors
+      dispatch(getAccountsAttempt(true));
+      const mixedNumber = mixedAccount.getNextAccountResponse.accountNumber;
+      const changeNumber = changeAccount.getNextAccountResponse.accountNumber;
 
-    dispatch(
-      setCoinjoinCfg({
-        mixedNumber,
-        changeNumber
-      })
-    );
-    dispatch(getMixerAcctsSpendableBalances());
-  } catch (error) {
-    dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
-  }
-};
+      dispatch(
+        setCoinjoinCfg({
+          mixedNumber,
+          changeNumber
+        })
+      );
+      dispatch(getMixerAcctsSpendableBalances());
+    } catch (error) {
+      dispatch({ type: CREATEMIXERACCOUNTS_FAILED, error });
+    }
+  };
 
-export const setCoinjoinCfg = ({ mixedNumber, changeNumber }) => (
-  dispatch,
-  getState
-) => {
-  const isTestnet = sel.isTestNet(getState());
-  const walletName = sel.getWalletName(getState());
-  const cfg = wallet.getWalletCfg(isTestnet, walletName);
+export const setCoinjoinCfg =
+  ({ mixedNumber, changeNumber }) =>
+  (dispatch, getState) => {
+    const isTestnet = sel.isTestNet(getState());
+    const walletName = sel.getWalletName(getState());
+    const cfg = wallet.getWalletCfg(isTestnet, walletName);
 
-  const csppServer = CSPP_URL;
-  const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;
+    const csppServer = CSPP_URL;
+    const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;
 
-  cfg.set(CSPP_SERVER, csppServer);
-  cfg.set(CSPP_PORT, csppPort);
-  cfg.set(MIXED_ACCOUNT_CFG, mixedNumber);
-  cfg.set(CHANGE_ACCOUNT_CFG, changeNumber);
-  cfg.set(MIXED_ACC_BRANCH, 0);
-  // by default it is only allowed to send from mixed account.
-  cfg.set(SEND_FROM_UNMIXED, false);
+    cfg.set(CSPP_SERVER, csppServer);
+    cfg.set(CSPP_PORT, csppPort);
+    cfg.set(MIXED_ACCOUNT_CFG, mixedNumber);
+    cfg.set(CHANGE_ACCOUNT_CFG, changeNumber);
+    cfg.set(MIXED_ACC_BRANCH, 0);
+    // by default it is only allowed to send from mixed account.
+    cfg.set(SEND_FROM_UNMIXED, false);
 
-  dispatch({
-    type: CREATEMIXERACCOUNTS_SUCCESS,
-    mixedAccount: mixedNumber,
-    changeAccount: changeNumber,
-    csppPort,
-    csppServer,
-    mixedAccountBranch: 0
-  });
-};
+    dispatch({
+      type: CREATEMIXERACCOUNTS_SUCCESS,
+      mixedAccount: mixedNumber,
+      changeAccount: changeNumber,
+      csppPort,
+      csppServer,
+      mixedAccountBranch: 0
+    });
+  };
 
 // getCoinjoinOutputspByAcct get all possible coinjoin outputs which an account
 // may have. This is used so we can recover privacy wallets and don't miss

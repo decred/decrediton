@@ -59,8 +59,8 @@ beforeEach(() => {
   selectors.lnTransactions = jest.fn(() => mockTransactions);
   selectors.lnDescribeGraph = jest.fn(() => mockDescribeGraph);
 
-  mockCancelInvoice = lnActions.cancelInvoice = jest.fn(() => () =>
-    Promise.resolve()
+  mockCancelInvoice = lnActions.cancelInvoice = jest.fn(
+    () => () => Promise.resolve()
   );
   lnActions.getNetworkInfo = jest.fn(() => () => {});
   mockGoToChannelsTab = lnActions.goToChannelsTab = jest.fn(() => () => {});

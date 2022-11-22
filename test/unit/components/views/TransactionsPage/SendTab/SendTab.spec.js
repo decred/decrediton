@@ -128,9 +128,8 @@ beforeEach(() => {
   selectors.constructTxRequestAttempt = jest.fn(() => false);
   selectors.getRunningIndicator = jest.fn(() => false);
   selectors.currencyDisplay = jest.fn(() => DCR);
-  mockConstructTransactionAttempt = controlActions.constructTransactionAttempt = jest.fn(
-    () => () => {}
-  );
+  mockConstructTransactionAttempt = controlActions.constructTransactionAttempt =
+    jest.fn(() => () => {});
   mockValidateAddress = controlActions.validateAddress = jest.fn(() => () => {
     return {
       error: "ERR_INVALID_ADDR_TOOSHORT",
@@ -152,8 +151,8 @@ beforeEach(() => {
       Promise.resolve(res);
     }
   );
-  transactionActions.listUnspentOutputs = jest.fn(() => () =>
-    Promise.resolve(mockUnspentOutputs)
+  transactionActions.listUnspentOutputs = jest.fn(
+    () => () => Promise.resolve(mockUnspentOutputs)
   );
 });
 

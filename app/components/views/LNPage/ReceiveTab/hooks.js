@@ -24,13 +24,8 @@ export function useReceiveTab() {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const intl = useIntl();
 
-  const {
-    invoices,
-    tsDate,
-    addInvoiceAttempt,
-    addInvoice,
-    cancelInvoice
-  } = useLNPage();
+  const { invoices, tsDate, addInvoiceAttempt, addInvoice, cancelInvoice } =
+    useLNPage();
 
   const onValueChanged = ({ atomValue }) => setAtomValue(atomValue);
 

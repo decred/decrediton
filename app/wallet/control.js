@@ -257,7 +257,8 @@ export const constructTransaction = (
     request.setRequiredConfirmations(confirmations);
     request.setOutputSelectionAlgorithm(0);
     outputs.forEach(({ destination, amount }) => {
-      const outputDest = new api.ConstructTransactionRequest.OutputDestination();
+      const outputDest =
+        new api.ConstructTransactionRequest.OutputDestination();
       const output = new api.ConstructTransactionRequest.Output();
       outputDest.setAddress(destination);
       output.setDestination(outputDest);
@@ -266,11 +267,13 @@ export const constructTransaction = (
     });
 
     if (change?.script) {
-      const changeDest = new api.ConstructTransactionRequest.OutputDestination();
+      const changeDest =
+        new api.ConstructTransactionRequest.OutputDestination();
       changeDest.setScript(Buffer.from(change.script));
       request.setChangeDestination(changeDest);
     } else if (change?.address) {
-      const outputDest = new api.ConstructTransactionRequest.OutputDestination();
+      const outputDest =
+        new api.ConstructTransactionRequest.OutputDestination();
       outputDest.setAddress(change.address);
       request.setChangeDestination(outputDest);
     }

@@ -82,9 +82,8 @@ beforeEach(() => {
     set: mockWalletCfgSet
   });
   helpers.makeRandomString = jest.fn(() => testRandomString);
-  mockAddAllowedExternalRequest = settingsActions.addAllowedExternalRequest = jest.fn(
-    () => () => {}
-  );
+  mockAddAllowedExternalRequest = settingsActions.addAllowedExternalRequest =
+    jest.fn(() => () => {});
   mockCloseWalletRequest = walletLoaderActions.closeWalletRequest = jest.fn(
     () => () => {}
   );

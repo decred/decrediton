@@ -26,15 +26,12 @@ beforeEach(() => {
   mockTogglePinProtection = trezorActions.togglePinProtection = jest.fn(
     () => () => {}
   );
-  mockTogglePassphraseProtection = trezorActions.togglePassPhraseProtection = jest.fn(
-    () => () => {}
-  );
-  mockTogglePassphraseOnDeviceProtection = trezorActions.togglePassphraseOnDevice = jest.fn(
-    () => () => {}
-  );
-  mockChangeToDecredHomeScreen = trezorActions.changeToDecredHomeScreen = jest.fn(
-    () => () => {}
-  );
+  mockTogglePassphraseProtection = trezorActions.togglePassPhraseProtection =
+    jest.fn(() => () => {});
+  mockTogglePassphraseOnDeviceProtection =
+    trezorActions.togglePassphraseOnDevice = jest.fn(() => () => {});
+  mockChangeToDecredHomeScreen = trezorActions.changeToDecredHomeScreen =
+    jest.fn(() => () => {});
 
   mockWipeDevice = trezorActions.wipeDevice = jest.fn(() => () => {});
   mockRecoverDevice = trezorActions.recoverDevice = jest.fn(() => () => {});
@@ -171,7 +168,8 @@ test("test passphrase on device protection switch", () => {
   const features = {
     passphrase_always_on_device: true
   };
-  const passphraseOnDeviceProtectionLabel = getPassphraseOnDeviceProtectionToggleLabel();
+  const passphraseOnDeviceProtectionLabel =
+    getPassphraseOnDeviceProtectionToggleLabel();
 
   // the control is in loading state
   expect(

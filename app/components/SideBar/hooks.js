@@ -34,12 +34,14 @@ export function useSideBar() {
   const uiAnimations = useSelector(sel.uiAnimations);
 
   const dispatch = useDispatch();
-  const onExpandSideBar = useCallback(() => dispatch(sba.expandSideBar()), [
-    dispatch
-  ]);
-  const onReduceSideBar = useCallback(() => dispatch(sba.reduceSideBar()), [
-    dispatch
-  ]);
+  const onExpandSideBar = useCallback(
+    () => dispatch(sba.expandSideBar()),
+    [dispatch]
+  );
+  const onReduceSideBar = useCallback(
+    () => dispatch(sba.reduceSideBar()),
+    [dispatch]
+  );
 
   return {
     isShowingAccounts,

@@ -16,9 +16,10 @@ const PoliteiaLink = ({
       }`,
     [isTestnet, path]
   );
-  const onClickHandler = useCallback(() => wallet.openExternalURL(href), [
-    href
-  ]);
+  const onClickHandler = useCallback(
+    () => wallet.openExternalURL(href),
+    [href]
+  );
   return (
     <Link
       onClick={onClickHandler}

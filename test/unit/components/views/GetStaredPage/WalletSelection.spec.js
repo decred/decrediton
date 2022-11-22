@@ -87,21 +87,21 @@ beforeEach(() => {
   selectors.getDaemonSynced = jest.fn(() => true);
   mockRemoveWallet = daemonActions.removeWallet = jest.fn(() => () => {});
   mockSetSelectedWallet = wlActions.setSelectedWallet = jest.fn(() => () => {});
-  mockGetSelectedWallet = wlActions.getSelectedWallet = jest.fn(() => () =>
-    null
+  mockGetSelectedWallet = wlActions.getSelectedWallet = jest.fn(
+    () => () => null
   );
-  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
-    Promise.reject(OPENWALLET_FAILED_INPUT)
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(
+    () => () => Promise.reject(OPENWALLET_FAILED_INPUT)
   );
   wlActions.spvSyncAttempt = jest.fn(() => () => Promise.reject());
-  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(() => () =>
-    Promise.reject()
+  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(
+    () => () => Promise.reject()
   );
   mockSetAutoWalletLaunching = wlActions.setAutoWalletLaunching = jest.fn(
     () => () => {}
   );
-  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
-    Promise.resolve()
+  mockStartWallet = daemonActions.startWallet = jest.fn(
+    () => () => Promise.resolve()
   );
   mockSortedAvailableWallets = selectors.sortedAvailableWallets = jest.fn(
     () => testAvailableWallets
@@ -192,8 +192,8 @@ test("test editing wallets", async () => {
 
 const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
 const launchWallet = async (ms) => {
-  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
-    Promise.resolve(true)
+  mockStartWallet = daemonActions.startWallet = jest.fn(
+    () => () => Promise.resolve(true)
   );
   mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(
     () => async (dispatch) => {
@@ -293,8 +293,8 @@ test("launch an encrypted wallet", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton/i));
 
-  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
-    Promise.reject(OPENWALLET_INPUT)
+  mockStartWallet = daemonActions.startWallet = jest.fn(
+    () => () => Promise.reject(OPENWALLET_INPUT)
   );
   user.click(screen.getByText(testAvailableWallets[0].value.wallet));
   await wait(() => expect(mockStartWallet).toHaveBeenCalled());
@@ -305,9 +305,8 @@ test("launch an encrypted wallet", async () => {
   ).toMatchInlineSnapshot(
     '"This wallet is encrypted, please enter the public passphrase to decrypt it."'
   );
-  const publicPassphraseInput = screen.getByPlaceholderText(
-    /public passphrase/i
-  );
+  const publicPassphraseInput =
+    screen.getByPlaceholderText(/public passphrase/i);
   const testInvalidPassphrase = "invalid-passphrase";
   const testValidPassphrase = "valid-passphrase";
   const openWalletButton = screen.getByText("Open Wallet");
@@ -327,8 +326,8 @@ test("launch an encrypted wallet", async () => {
 
   // invalid passphrase & unknown error
   const UNKNOWN_ERROR = "UNKNOWN_ERROR";
-  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
-    Promise.reject(UNKNOWN_ERROR)
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(
+    () => () => Promise.reject(UNKNOWN_ERROR)
   );
   user.type(publicPassphraseInput, testInvalidPassphrase);
   user.click(openWalletButton);
@@ -347,8 +346,8 @@ test("launch an encrypted wallet", async () => {
   expect(mockOpenWalletAttempt).not.toHaveBeenCalled();
 
   // valid passphrase + submit the form by press enter
-  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
-    Promise.resolve(OPENWALLET_SUCCESS)
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(
+    () => () => Promise.resolve(OPENWALLET_SUCCESS)
   );
   user.type(publicPassphraseInput, testValidPassphrase + "{enter}");
   await wait(() =>
@@ -363,8 +362,8 @@ test("ask for passphrase if account discovery is needed", async () => {
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton/i));
 
-  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
-    Promise.reject(OPENWALLET_INPUTPRIVPASS)
+  mockStartWallet = daemonActions.startWallet = jest.fn(
+    () => () => Promise.reject(OPENWALLET_INPUTPRIVPASS)
   );
   mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(
     () => (dispatch) => {
@@ -374,9 +373,8 @@ test("ask for passphrase if account discovery is needed", async () => {
   );
   user.click(screen.getByText(testAvailableWallets[0].value.wallet));
   await wait(() => expect(mockStartWallet).toHaveBeenCalled());
-  let privatePassphraseInput = screen.getByPlaceholderText(
-    /private passphrase/i
-  );
+  let privatePassphraseInput =
+    screen.getByPlaceholderText(/private passphrase/i);
   const testInvalidPassphrase = "invalid-passphrase";
   const testValidPassphrase = "valid-passphrase";
   let continueButton = screen.getByText("Continue");
@@ -409,8 +407,8 @@ test("ask for passphrase if account discovery is needed", async () => {
   expect(mockStartRpcRequestFunc).not.toHaveBeenCalled();
 
   // valid passphrase + submit the form by press enter
-  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(() => () =>
-    Promise.resolve()
+  mockStartRpcRequestFunc = wlActions.startRpcRequestFunc = jest.fn(
+    () => () => Promise.resolve()
   );
   user.type(privatePassphraseInput, testValidPassphrase + "{enter}");
   await wait(() =>
@@ -425,19 +423,18 @@ test("launch an encrypted wallet and ask private passphrase too if account disco
   render(<GetStartedPage />);
   await wait(() => screen.getByText(/welcome to decrediton/i));
 
-  mockStartWallet = daemonActions.startWallet = jest.fn(() => () =>
-    Promise.reject(OPENWALLET_INPUT)
+  mockStartWallet = daemonActions.startWallet = jest.fn(
+    () => () => Promise.reject(OPENWALLET_INPUT)
   );
-  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(() => () =>
-    Promise.reject(OPENWALLET_INPUTPRIVPASS)
+  mockOpenWalletAttempt = wlActions.openWalletAttempt = jest.fn(
+    () => () => Promise.reject(OPENWALLET_INPUTPRIVPASS)
   );
 
   user.click(screen.getByText(testAvailableWallets[0].value.wallet));
   await wait(() => expect(mockStartWallet).toHaveBeenCalled());
 
-  const publicPassphraseInput = screen.getByPlaceholderText(
-    /public passphrase/i
-  );
+  const publicPassphraseInput =
+    screen.getByPlaceholderText(/public passphrase/i);
   const testValidPassphrase = "valid-passphrase";
 
   user.type(publicPassphraseInput, testValidPassphrase + "{enter}");

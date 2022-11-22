@@ -33,12 +33,8 @@ const SideBar = () => {
     onAccountsListWheel,
     uiAnimations
   } = useSideBar();
-  const {
-    rescanEndBlock,
-    rescanCurrentBlock,
-    rescanAttempt,
-    rescanCancel
-  } = useRescan();
+  const { rescanEndBlock, rescanCurrentBlock, rescanAttempt, rescanCancel } =
+    useRescan();
 
   return (
     <div

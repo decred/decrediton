@@ -8,17 +8,11 @@ import styles from "./InitPage.module.css";
 
 const InitPage = () => {
   const { onInitDex, onInitDexWithSeed, initDexAttempt } = useDex();
-  const {
-    hasSeed,
-    toggleHasSeed,
-    seed,
-    setSeed,
-    onInitDexCall,
-    seedError
-  } = useInitPage({
-    onInitDex,
-    onInitDexWithSeed
-  });
+  const { hasSeed, toggleHasSeed, seed, setSeed, onInitDexCall, seedError } =
+    useInitPage({
+      onInitDex,
+      onInitDexWithSeed
+    });
 
   return (
     <div className={styles.container}>

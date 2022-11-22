@@ -132,10 +132,10 @@ const MyTickets = () => {
     }
   };
 
-  const visibleTickets = useMemo(() => tickets.slice(0, index), [
-    index,
-    tickets
-  ]);
+  const visibleTickets = useMemo(
+    () => tickets.slice(0, index),
+    [index, tickets]
+  );
 
   const isMounted = useRef(false);
   useEffect(() => {

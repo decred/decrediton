@@ -33,10 +33,12 @@ import {
   rawToHex
 } from "../helpers/byteActions";
 
-const promisify = (fn) => (...args) =>
-  new Promise((ok, fail) =>
-    fn(...args, (res, err) => (err ? fail(err) : ok(trackClient(res))))
-  );
+const promisify =
+  (fn) =>
+  (...args) =>
+    new Promise((ok, fail) =>
+      fn(...args, (res, err) => (err ? fail(err) : ok(trackClient(res))))
+    );
 
 export const getWalletService = promisify(client.getWalletService);
 export const getTicketBuyerService = promisify(client.getTicketBuyerV2Service);

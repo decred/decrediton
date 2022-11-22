@@ -11,9 +11,10 @@ export function useModal(onCancelModal) {
   const modalRef = useRef(null);
 
   const dispatch = useDispatch();
-  const onModalVisible = useCallback(() => dispatch(modalVisible()), [
-    dispatch
-  ]);
+  const onModalVisible = useCallback(
+    () => dispatch(modalVisible()),
+    [dispatch]
+  );
   const onModalHidden = useCallback(() => dispatch(modalHidden()), [dispatch]);
 
   // This switches modalVisible redux switch on when modal mount

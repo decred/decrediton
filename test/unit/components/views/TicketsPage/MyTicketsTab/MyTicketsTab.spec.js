@@ -106,9 +106,8 @@ beforeEach(() => {
   mockGetTransactions = transactionActions.getTransactions = jest.fn(
     () => () => {}
   );
-  mockToggleGetTransactions = transactionActions.toggleGetTransactions = jest.fn(
-    () => () => {}
-  );
+  mockToggleGetTransactions = transactionActions.toggleGetTransactions =
+    jest.fn(() => () => {});
   selectors.startRequestHeight = jest.fn(() => 1000);
   selectors.currentBlockHeight = jest.fn(() => 10000);
 });
@@ -307,9 +306,8 @@ test("test tickets list", async () => {
 test("test ticket sorting", async () => {
   jest.useFakeTimers();
 
-  const mockChangeTransactionsFilter = (transactionActions.changeTicketsFilter = jest.fn(
-    () => () => {}
-  ));
+  const mockChangeTransactionsFilter = (transactionActions.changeTicketsFilter =
+    jest.fn(() => () => {}));
 
   render(<TicketsPage />, {
     initialState: cloneDeep(initialState),

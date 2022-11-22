@@ -58,9 +58,10 @@ export const useWalletSetup = (settingUpWalletRef) => {
     [dispatch]
   );
 
-  const onGetVSPsPubkeys = useCallback(() => dispatch(getVSPsPubkeys()), [
-    dispatch
-  ]);
+  const onGetVSPsPubkeys = useCallback(
+    () => dispatch(getVSPsPubkeys()),
+    [dispatch]
+  );
 
   const onGetRecentlyUpdatedUsedVSPs = useCallback(
     () => dispatch(getRecentlyUpdatedUsedVSPs()),

@@ -6,12 +6,8 @@ import { useLNPage } from "../hooks";
 
 export const useChannelDetails = () => {
   const { channelPoint } = useParams();
-  const {
-    channels,
-    pendingChannels,
-    closedChannels,
-    closeChannel
-  } = useLNPage();
+  const { channels, pendingChannels, closedChannels, closeChannel } =
+    useLNPage();
   const channel = useMemo(
     () =>
       [...channels, ...pendingChannels, ...closedChannels].find(
@@ -21,9 +17,10 @@ export const useChannelDetails = () => {
   );
 
   const dispatch = useDispatch();
-  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [
-    dispatch
-  ]);
+  const goBackHistory = useCallback(
+    () => dispatch(cli.goBackHistory()),
+    [dispatch]
+  );
 
   const onCloseChannel = (channel) =>
     closeChannel(channel.channelPoint, !channel.active);

@@ -101,18 +101,19 @@ beforeEach(() => {
     return {};
   });
   selectors.getWalletName = jest.fn(() => mockWalletName);
-  mockGetAccountExtendedKeyAttempt = controlActions.getAccountExtendedKeyAttempt = jest.fn(
-    (accountNumber) => (dispatch) => {
-      const res = {
-        accExtendedPubKey: `${mockPubKey}-${accountNumber}`,
-        accountNumber
-      };
-      return dispatch({
-        getAccountExtendedKeyResponse: res,
-        type: controlActions.GETACCOUNTEXTENDEDKEY_SUCCESS
-      });
-    }
-  );
+  mockGetAccountExtendedKeyAttempt =
+    controlActions.getAccountExtendedKeyAttempt = jest.fn(
+      (accountNumber) => (dispatch) => {
+        const res = {
+          accExtendedPubKey: `${mockPubKey}-${accountNumber}`,
+          accountNumber
+        };
+        return dispatch({
+          getAccountExtendedKeyResponse: res,
+          type: controlActions.GETACCOUNTEXTENDEDKEY_SUCCESS
+        });
+      }
+    );
   mockRenameAccountAttempt = controlActions.renameAccountAttempt = jest.fn(
     () => () => {}
   );

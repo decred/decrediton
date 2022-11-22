@@ -1044,12 +1044,8 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     backwards
   } = opts;
 
-  const {
-    currentBlockHeight,
-    walletService,
-    recentBlockTimestamp,
-    balances
-  } = getState().grpc;
+  const { currentBlockHeight, walletService, recentBlockTimestamp, balances } =
+    getState().grpc;
 
   const chainParams = sel.chainParams(getState());
 

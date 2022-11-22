@@ -92,12 +92,14 @@ export function useLNPage() {
       ),
     [dispatch]
   );
-  const exportBackup = useCallback((path) => dispatch(lna.exportBackup(path)), [
-    dispatch
-  ]);
-  const verifyBackup = useCallback((path) => dispatch(lna.verifyBackup(path)), [
-    dispatch
-  ]);
+  const exportBackup = useCallback(
+    (path) => dispatch(lna.exportBackup(path)),
+    [dispatch]
+  );
+  const verifyBackup = useCallback(
+    (path) => dispatch(lna.verifyBackup(path)),
+    [dispatch]
+  );
 
   const cancelInvoice = useCallback(
     (paymentHash) => dispatch(lna.cancelInvoice(paymentHash)),

@@ -89,30 +89,36 @@ const useDaemonStartup = () => {
 
   // general methods
   // Methods for showing positions when first starting decrediton
-  const onShowTutorial = useCallback(() => dispatch(da.showTutorial()), [
-    dispatch
-  ]);
-  const onShowSpvChoice = useCallback(() => dispatch(da.showSpvChoice()), [
-    dispatch
-  ]);
-  const onShowPrivacy = useCallback(() => dispatch(da.showPrivacy()), [
-    dispatch
-  ]);
-  const onShowLanguage = useCallback(() => dispatch(da.showLanguage()), [
-    dispatch
-  ]);
-  const onShowGetStarted = useCallback(() => dispatch(da.showGetStarted()), [
-    dispatch
-  ]);
+  const onShowTutorial = useCallback(
+    () => dispatch(da.showTutorial()),
+    [dispatch]
+  );
+  const onShowSpvChoice = useCallback(
+    () => dispatch(da.showSpvChoice()),
+    [dispatch]
+  );
+  const onShowPrivacy = useCallback(
+    () => dispatch(da.showPrivacy()),
+    [dispatch]
+  );
+  const onShowLanguage = useCallback(
+    () => dispatch(da.showLanguage()),
+    [dispatch]
+  );
+  const onShowGetStarted = useCallback(
+    () => dispatch(da.showGetStarted()),
+    [dispatch]
+  );
   // language page
   const onSelectLanguage = useCallback(
     (selectedLanguage) => dispatch(da.selectLanguage(selectedLanguage)),
     [dispatch]
   );
   // spv page
-  const toggleSpv = useCallback((isSPV) => dispatch(da.toggleSpv(isSPV)), [
-    dispatch
-  ]);
+  const toggleSpv = useCallback(
+    (isSPV) => dispatch(da.toggleSpv(isSPV)),
+    [dispatch]
+  );
   // privacy page
   const setupStandardPrivacy = useCallback(
     () => dispatch(da.setupStandardPrivacy()),
@@ -123,13 +129,15 @@ const useDaemonStartup = () => {
     [dispatch]
   );
   // tutorial page
-  const finishTutorial = useCallback(() => dispatch(da.finishTutorial()), [
-    dispatch
-  ]);
+  const finishTutorial = useCallback(
+    () => dispatch(da.finishTutorial()),
+    [dispatch]
+  );
   // end of general methods
-  const finishPrivacy = useCallback(() => dispatch(da.finishPrivacy()), [
-    dispatch
-  ]);
+  const finishPrivacy = useCallback(
+    () => dispatch(da.finishPrivacy()),
+    [dispatch]
+  );
   // start daemon and wallet methods
   const onRetryStartRPC = useCallback(
     async (privPass, isRetry) =>
@@ -179,9 +187,10 @@ const useDaemonStartup = () => {
     (selectedWallet) => dispatch(da.startWallet(selectedWallet)),
     [dispatch]
   );
-  const onCloseWallet = useCallback(() => dispatch(wla.closeWalletRequest()), [
-    dispatch
-  ]);
+  const onCloseWallet = useCallback(
+    () => dispatch(wla.closeWalletRequest()),
+    [dispatch]
+  );
   const onRemoveWallet = useCallback(
     (selectedWallet) => dispatch(da.removeWallet(selectedWallet)),
     [dispatch]
@@ -193,22 +202,26 @@ const useDaemonStartup = () => {
     (selectedWallet) => dispatch(da.createWallet(selectedWallet)),
     [dispatch]
   );
-  const onGetDcrdLogs = useCallback(() => dispatch(da.getDcrdLastLineLogs()), [
-    dispatch
-  ]);
-  const getDcrwalletLogs = useCallback(() => dispatch(da.getDcrwalletLogs()), [
-    dispatch
-  ]);
+  const onGetDcrdLogs = useCallback(
+    () => dispatch(da.getDcrdLastLineLogs()),
+    [dispatch]
+  );
+  const getDcrwalletLogs = useCallback(
+    () => dispatch(da.getDcrwalletLogs()),
+    [dispatch]
+  );
   const trezorLoadDeviceList = useCallback(
     () => dispatch(trza.loadDeviceList()),
     [dispatch]
   );
-  const trezorEnable = useCallback(() => dispatch(trza.enableTrezor()), [
-    dispatch
-  ]);
-  const trezorDisable = useCallback(() => dispatch(trza.disableTrezor()), [
-    dispatch
-  ]);
+  const trezorEnable = useCallback(
+    () => dispatch(trza.enableTrezor()),
+    [dispatch]
+  );
+  const trezorDisable = useCallback(
+    () => dispatch(trza.disableTrezor()),
+    [dispatch]
+  );
   const trezorAlertNoConnectedDevice = useCallback(
     () => dispatch(trza.alertNoConnectedDevice()),
     [dispatch]

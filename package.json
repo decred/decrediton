@@ -256,7 +256,7 @@
     "madge": "^4.0.2",
     "mini-css-extract-plugin": "^1.4.0",
     "node-loader": "^1.0.2",
-    "prettier": "^2.2.1",
+    "prettier": "2.7.1",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
     "source-map-explorer": "^2.5.3",
