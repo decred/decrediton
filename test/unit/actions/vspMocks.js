@@ -181,3 +181,40 @@ export const mockTickets = [
     }
   }
 ];
+
+export const mockPubkeys = {
+  [`https://${defaultMockAvailableMainnetVsps[0].host}`]: "test-pubkey1",
+  [`https://${defaultMockAvailableMainnetVsps[1].host}`]: null, // will be rejected
+  [`https://${defaultMockAvailableMainnetVsps[2].host}`]: "invalid", // invalid host
+  [`https://${defaultMockAvailableMainnetVsps[3].host}`]: "test-pubkey3",
+  [`https://${defaultMockAvailableMainnetVsps[4].host}`]: "test-pubkey4",
+  [`https://${defaultMockAvailableMainnetVsps[5].host}`]: "test-pubkey5"
+};
+
+export const fetchTimes = {
+  [`https://${defaultMockAvailableMainnetVsps[0].host}`]: 20,
+  [`https://${defaultMockAvailableMainnetVsps[1].host}`]: 10,
+  [`https://${defaultMockAvailableMainnetVsps[2].host}`]: 5,
+  [`https://${defaultMockAvailableMainnetVsps[3].host}`]: 0,
+  [`https://${defaultMockAvailableMainnetVsps[4].host}`]: 1000, // will timeout
+  [`https://${defaultMockAvailableMainnetVsps[5].host}`]: 30
+};
+
+export const mockVSPTicketInfoResponse = {
+  data: {
+    timestamp: 1651855899,
+    ticketconfirmed: true,
+    feetxstatus: "confirmed",
+    feetxhash: "test-feetxhash",
+    altsignaddress: "",
+    votechoices: {
+      autorevocations: "abstain",
+      changesubsidysplit: "abstain",
+      explicitverupgrades: "abstain",
+      reverttreasurypolicy: "abstain"
+    },
+    tspendpolicy: {},
+    treasurypolicy: {},
+    request: "test-request"
+  }
+};

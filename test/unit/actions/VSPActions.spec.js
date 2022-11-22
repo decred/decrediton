@@ -10,8 +10,17 @@ import {
   defaultMockAvailableMainnetVsps,
   defaultMockAvailableTestnetVsps,
   defaultMockAvailableInvalidVsps,
-  mockTickets
+  mockTickets,
+  mockPubkeys,
+  fetchTimes,
+  mockVSPTicketInfoResponse
 } from "./vspMocks.js";
+import {
+  mockMixedAccountValue,
+  mockChangeAccountValue,
+  mockDefaultAccount,
+  mockDefaultAccountValue
+} from "../components/views/TicketsPage/PurchaseTab/mocks";
 import { USED_VSPS } from "constants/config";
 import { MIN_VSP_VERSION } from "constants";
 import { LIVE } from "constants";
@@ -35,24 +44,7 @@ let mockSignMessageAttempt;
 let mockGetVSPTicketStatus;
 let mockProcessManagedTickets;
 
-const testPassphrase = "test-passphrase";
 const testError = "test-error-message";
-
-const mockPubkeys = {
-  [`https://${mockAvailableMainnetVsps[0].host}`]: "test-pubkey1",
-  [`https://${mockAvailableMainnetVsps[1].host}`]: null, // will be rejected
-  [`https://${mockAvailableMainnetVsps[2].host}`]: "invalid", // invalid host
-  [`https://${mockAvailableMainnetVsps[3].host}`]: "test-pubkey3",
-  [`https://${mockAvailableMainnetVsps[4].host}`]: "test-pubkey4"
-};
-
-const fetchTimes = {
-  [`https://${mockAvailableMainnetVsps[0].host}`]: 20,
-  [`https://${mockAvailableMainnetVsps[1].host}`]: 10,
-  [`https://${mockAvailableMainnetVsps[2].host}`]: 5,
-  [`https://${mockAvailableMainnetVsps[3].host}`]: 0,
-  [`https://${mockAvailableMainnetVsps[4].host}`]: 1000 // will timeout
-};
 
 const testDefaultSpendingAccount = 0;
 const testMixedAccount = 2;
@@ -72,6 +64,8 @@ const mockDefaultUsedVSPs = {
     }
   ]
 };
+const mockSig = "test-sig";
+const testPassphrase = "test-passphrase";
 
 const mockVoteChoices = [
   {
@@ -113,26 +107,6 @@ const mockAllAgendasAllFinished = mockAllAgendas.map((v) => ({
   finished: true
 }));
 
-const mockSig = "test-sig";
-const mockVSPTicketInfoResponse = {
-  data: {
-    timestamp: 1651855899,
-    ticketconfirmed: true,
-    feetxstatus: "confirmed",
-    feetxhash: "test-feetxhash",
-    altsignaddress: "",
-    votechoices: {
-      autorevocations: "abstain",
-      changesubsidysplit: "abstain",
-      explicitverupgrades: "abstain",
-      reverttreasurypolicy: "abstain"
-    },
-    tspendpolicy: {},
-    treasurypolicy: {},
-    request: "test-request"
-  }
-};
-
 beforeEach(() => {
   selectors.getVSPInfoTimeoutTime = jest.fn(() => 100);
   selectors.isTestNet = jest.fn(() => false);
@@ -146,7 +120,6 @@ beforeEach(() => {
     () => mockAvailableMainnetVspsPubkeys
   );
   arrays.shuffle = jest.fn((arr) => arr);
-  wallet.getVSPInfo = jest.fn(() => {});
   wallet.getAllVSPs = jest.fn(() => [
     ...mockAvailableMainnetVsps,
     ...cloneDeep(defaultMockAvailableTestnetVsps),
@@ -159,6 +132,20 @@ beforeEach(() => {
     get: mockWalletCfgGet,
     set: mockWalletCfgSet
   });
+  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
+    () => () => mockSig
+  );
+  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
+    Promise.resolve(mockVSPTicketInfoResponse)
+  );
+
+  mockProcessManagedTickets = wallet.processManagedTickets = jest.fn(
+    () => () => {}
+  );
+  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
+    Promise.resolve({ ticketHashes: [] })
+  );
+  wallet.getVSPTrackedTickets = jest.fn(() => Promise.resolve());
   mockSetVspdAgendaChoices = wallet.setVspdAgendaChoices = jest.fn(() => {});
   wallet.getVSPInfo = jest.fn((host) => {
     if (!mockPubkeys[host]) {
@@ -175,20 +162,6 @@ beforeEach(() => {
       }, fetchTimes[host]);
     });
   });
-  mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
-    () => () => mockSig
-  );
-  mockGetVSPTicketStatus = wallet.getVSPTicketStatus = jest.fn(() =>
-    Promise.resolve(mockVSPTicketInfoResponse)
-  );
-
-  mockProcessManagedTickets = wallet.processManagedTickets = jest.fn(
-    () => () => {}
-  );
-  wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
-    Promise.resolve({ ticketHashes: [] })
-  );
-  wallet.getVSPTrackedTickets = jest.fn(() => Promise.resolve());
 });
 
 const testRandomVSP = async (
@@ -218,7 +191,6 @@ test("test getRandomVSP", async () => {
   await testRandomVSP(5, undefined, "The available VSPs list is empty.");
 
   // high maxFee
-  wallet.getVSPInfo = jest.fn(() => Promise.resolve(mockVspInfo));
   await testRandomVSP(
     5,
     {
@@ -327,40 +299,6 @@ test("test discoverAvailableVSPs (error)", async () => {
 });
 
 test("test getVSPsPubkeys", async () => {
-  const mockPubkeys = {
-    [`https://${mockAvailableMainnetVsps[0].host}`]: "test-pubkey1",
-    [`https://${mockAvailableMainnetVsps[1].host}`]: null, // will be rejected
-    [`https://${mockAvailableMainnetVsps[2].host}`]: "invalid",
-    [`https://${mockAvailableMainnetVsps[3].host}`]: "test-pubkey3",
-    [`https://${mockAvailableMainnetVsps[4].host}`]: "test-pubkey4",
-    [`https://${mockAvailableMainnetVsps[5].host}`]: "test-pubkey5"
-  };
-
-  const fetchTimes = {
-    [`https://${mockAvailableMainnetVsps[0].host}`]: 20,
-    [`https://${mockAvailableMainnetVsps[1].host}`]: 10,
-    [`https://${mockAvailableMainnetVsps[2].host}`]: 5,
-    [`https://${mockAvailableMainnetVsps[3].host}`]: 0,
-    [`https://${mockAvailableMainnetVsps[4].host}`]: 1000, // will timeout
-    [`https://${mockAvailableMainnetVsps[5].host}`]: 0
-  };
-
-  wallet.getVSPInfo = jest.fn((host) => {
-    if (!mockPubkeys[host]) {
-      return Promise.reject();
-    }
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        mockPubkeys[host] !== "invalid"
-          ? resolve({ data: { pubkey: mockPubkeys[host] } })
-          : mockPubkeys[host]
-          ? resolve({ data: {} })
-          : reject();
-      }, fetchTimes[host]);
-    });
-  });
-
   const store = createStore({});
   await store.dispatch(vspActions.getVSPsPubkeys());
 
@@ -517,7 +455,7 @@ test("test updateUsedVSPs - update existing vsp", async () => {
 });
 
 test("test setVSPDVoteChoices", async () => {
-  const mockUsedVSPs = {
+  const mockUsedVSPsOrig = {
     [USED_VSPS]: [
       {
         host: defaultMockAvailableMainnetVsps[0].host,
@@ -526,6 +464,7 @@ test("test setVSPDVoteChoices", async () => {
       }
     ]
   };
+  const mockUsedVSPs = cloneDeep(mockUsedVSPsOrig);
   mockWalletCfgSet = jest.fn((key, usedVSP) => {
     mockUsedVSPs[key] = usedVSP;
   });
@@ -549,8 +488,8 @@ test("test setVSPDVoteChoices", async () => {
   expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
     1, // first call
     undefined, // walletService
-    defaultMockAvailableMainnetVsps[0].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
+    defaultMockAvailableMainnetVsps[3].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
     testDefaultSpendingAccount,
     testDefaultSpendingAccount
   );
@@ -558,14 +497,15 @@ test("test setVSPDVoteChoices", async () => {
   expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
     2, // second call
     undefined, // walletService
-    defaultMockAvailableMainnetVsps[3].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
+    defaultMockAvailableMainnetVsps[0].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
     testDefaultSpendingAccount,
     testDefaultSpendingAccount
   );
 
   expect(mockWalletCfgSet).toHaveBeenNthCalledWith(1, USED_VSPS, [
-    expectedUpdatedVSPs[0]
+    mockUsedVSPsOrig[USED_VSPS][0],
+    expectedUpdatedVSPs[1]
   ]);
   expect(mockWalletCfgSet).toHaveBeenNthCalledWith(
     2,
@@ -719,43 +659,6 @@ test("test setVSPDVoteChoices in a private wallet, all request finish successful
   expect(store.getState().vsp.usedVSPs[3]).toEqual(expectedUpdatedVSPs[3]);
   expect(store.getState().vsp.usedVSPs[4]).toEqual(expectedUpdatedVSPs[4]);
   expect(store.getState().vsp.usedVSPs[5]).toEqual(expectedUpdatedVSPs[5]);
-});
-
-test("test setVSPDVoteChoices (received error)", async () => {
-  selectors.getMixedAccount = jest.fn(() => null);
-  selectors.getChangeAccount = jest.fn(() => null);
-  const testErrorMessage = "test-error-msg";
-  mockSetVspdAgendaChoices = wallet.setVspdAgendaChoices = jest.fn(() =>
-    Promise.reject(testErrorMessage)
-  );
-  const store = createStore({});
-  let receivedErrorMsg;
-  try {
-    await store.dispatch(vspActions.setVSPDVoteChoices(testPassphrase));
-  } catch (error) {
-    receivedErrorMsg = error;
-  }
-
-  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
-    1, // first call
-    undefined, // walletService
-    defaultMockAvailableMainnetVsps[0].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
-    testDefaultSpendingAccount,
-    testDefaultSpendingAccount
-  );
-
-  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
-    2, // second call
-    undefined, // walletService
-    defaultMockAvailableMainnetVsps[3].host,
-    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
-    testDefaultSpendingAccount,
-    testDefaultSpendingAccount
-  );
-
-  expect(store.getState().snackbar.messages[0].type).toBe("Error");
-  expect(receivedErrorMsg).toEqual(testErrorMessage);
 });
 
 test("test getRecentlyUpdatedUsedVSPs - success", async () => {
@@ -1358,4 +1261,228 @@ test("test getVSPTicketStatus (signMessage error)", async () => {
   expect(mockSignMessageAttempt).toHaveBeenCalled();
   expect(mockGetVSPTicketStatus).not.toHaveBeenCalled();
   expect(store.getState().vsp.getVSPTicketStatusError).toEqual(undefined);
+});
+
+test("test setVSPDVoteChoices", async () => {
+  selectors.getMixedAccount = jest.fn(() => null);
+  selectors.getChangeAccount = jest.fn(() => null);
+  selectors.defaultSpendingAccount = jest.fn(() => mockDefaultAccount);
+
+  const store = createStore({});
+  await store.dispatch(vspActions.setVSPDVoteChoices(testPassphrase));
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    1, // fist call
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[3].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
+    mockDefaultAccountValue,
+    mockDefaultAccountValue
+  );
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    2, // second call
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[0].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
+    mockDefaultAccountValue,
+    mockDefaultAccountValue
+  );
+
+  expect(store.getState().snackbar.messages[0].type).toBe("Error");
+  expect(store.getState().snackbar.messages[0].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[0].values.originalError).toBe(
+    "invalid host"
+  );
+  expect(store.getState().snackbar.messages[0].values.host).toBe(
+    mockAvailableMainnetVsps[1].host
+  );
+
+  expect(store.getState().snackbar.messages[1].type).toBe("Error");
+  expect(store.getState().snackbar.messages[1].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[1].values.originalError).toMatch(
+    "missing pubkey"
+  );
+  expect(store.getState().snackbar.messages[1].values.host).toBe(
+    mockAvailableMainnetVsps[2].host
+  );
+
+  expect(store.getState().snackbar.messages[2].type).toBe("Error");
+  expect(store.getState().snackbar.messages[2].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[2].values.originalError).toMatch(
+    "timeout"
+  );
+  expect(store.getState().snackbar.messages[2].values.host).toBe(
+    mockAvailableMainnetVsps[4].host
+  );
+
+  expect(store.getState().snackbar.messages[3].type).toBe("Success");
+  expect(store.getState().snackbar.messages[3].message.id).toBe(
+    "set.vote.partial.success"
+  );
+});
+
+test("test setVSPDVoteChoices in a private wallet, all request finish successfully", async () => {
+  selectors.getMixedAccount = jest.fn(() => mockMixedAccountValue);
+  selectors.getChangeAccount = jest.fn(() => mockChangeAccountValue);
+  wallet.getVSPInfo = jest.fn(() => Promise.resolve(mockVspInfo));
+  const store = createStore({});
+  await store.dispatch(vspActions.setVSPDVoteChoices(testPassphrase));
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    1, // fist call
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[0].host,
+    mockVspInfo.data.pubkey,
+    mockMixedAccountValue,
+    mockChangeAccountValue
+  );
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    2,
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[1].host,
+    mockVspInfo.data.pubkey,
+    mockMixedAccountValue,
+    mockChangeAccountValue
+  );
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    3,
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[2].host,
+    mockVspInfo.data.pubkey,
+    mockMixedAccountValue,
+    mockChangeAccountValue
+  );
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    4,
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[3].host,
+    mockVspInfo.data.pubkey,
+    mockMixedAccountValue,
+    mockChangeAccountValue
+  );
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    5,
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[4].host,
+    mockVspInfo.data.pubkey,
+    mockMixedAccountValue,
+    mockChangeAccountValue
+  );
+
+  // only one success snackbar is visible
+  expect(store.getState().snackbar.messages[0].type).toBe("Success");
+  expect(store.getState().snackbar.messages[0].message.id).toBe(
+    "set.vote.success"
+  );
+});
+
+test("test setVSPDVoteChoices (received error)", async () => {
+  selectors.getMixedAccount = jest.fn(() => null);
+  selectors.getChangeAccount = jest.fn(() => null);
+  selectors.defaultSpendingAccount = jest.fn(() => mockDefaultAccount);
+
+  const testErrorMessage = "test-error-msg";
+  mockSetVspdAgendaChoices = wallet.setVspdAgendaChoices = jest.fn(() =>
+    Promise.reject(testErrorMessage)
+  );
+  const store = createStore({});
+  await store.dispatch(vspActions.setVSPDVoteChoices(testPassphrase));
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    1, // fist call
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[3].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[3].host}`],
+    mockDefaultAccountValue,
+    mockDefaultAccountValue
+  );
+
+  expect(mockSetVspdAgendaChoices).toHaveBeenNthCalledWith(
+    2, // second call
+    undefined, // walletService
+    defaultMockAvailableMainnetVsps[0].host,
+    mockPubkeys[`https://${mockAvailableMainnetVsps[0].host}`],
+    mockDefaultAccountValue,
+    mockDefaultAccountValue
+  );
+
+  expect(store.getState().snackbar.messages[0].type).toBe("Error");
+  expect(store.getState().snackbar.messages[0].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[0].values.originalError).toBe(
+    testErrorMessage
+  );
+  expect(store.getState().snackbar.messages[0].values.host).toBe(
+    mockAvailableMainnetVsps[0].host
+  );
+
+  expect(store.getState().snackbar.messages[1].type).toBe("Error");
+  expect(store.getState().snackbar.messages[1].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[1].values.originalError).toMatch(
+    "invalid host"
+  );
+  expect(store.getState().snackbar.messages[1].values.host).toBe(
+    mockAvailableMainnetVsps[1].host
+  );
+
+  expect(store.getState().snackbar.messages[2].type).toBe("Error");
+  expect(store.getState().snackbar.messages[2].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[2].values.originalError).toMatch(
+    "missing pubkey"
+  );
+  expect(store.getState().snackbar.messages[2].values.host).toBe(
+    mockAvailableMainnetVsps[2].host
+  );
+
+  expect(store.getState().snackbar.messages[3].type).toBe("Error");
+  expect(store.getState().snackbar.messages[3].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[3].values.originalError).toBe(
+    testErrorMessage
+  );
+  expect(store.getState().snackbar.messages[3].values.host).toBe(
+    mockAvailableMainnetVsps[3].host
+  );
+
+  expect(store.getState().snackbar.messages[4].type).toBe("Error");
+  expect(store.getState().snackbar.messages[4].message.id).toBe(
+    "set.vspdvote.single.failed"
+  );
+  expect(store.getState().snackbar.messages[4].values.originalError).toMatch(
+    "timeout"
+  );
+  expect(store.getState().snackbar.messages[4].values.host).toBe(
+    mockAvailableMainnetVsps[4].host
+  );
+});
+
+test("test setVSPDVoteChoices (no available VSP)", async () => {
+  selectors.getAvailableVSPs = jest.fn(() => null);
+  wallet.getAllVSPs = jest.fn(() => null);
+  const store = createStore({});
+  await store.dispatch(vspActions.setVSPDVoteChoices(testPassphrase));
+
+  // only one error snackbar is visible
+  expect(store.getState().snackbar.messages[0].type).toBe("Error");
+  expect(store.getState().snackbar.messages[0].message.id).toBe(
+    "set.vspdvote.failed"
+  );
+  expect(store.getState().snackbar.messages[0].values.originalError).toMatch(
+    "INVALID_VSPS"
+  );
 });
