@@ -31,6 +31,7 @@ export const mockAvailableVsps = [
     }
   }
 ];
+export const mockDefaultAccountValue = 0;
 export const mockMixedAccountValue = 6;
 export const mockChangeAccountValue = 6;
 export const mockNumTicketsToBuy = 1;
@@ -42,4 +43,13 @@ export const mockMixedAccount = {
   spendableAndUnit: "249.79547928 DCR",
   total: 24979547928,
   value: mockMixedAccountValue
+};
+export const mockDefaultAccount = {
+  hidden: false,
+  label: "default: 3.79547928 DCR",
+  name: "default",
+  spendable: 379547928,
+  spendableAndUnit: "3.79547928 DCR",
+  total: 379547928,
+  value: mockDefaultAccountValue
 };
