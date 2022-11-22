@@ -892,7 +892,6 @@ export default function snackbar(state = {}, action) {
 
       // custom values for some error messages
       switch (action.type) {
-        case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
         case SETVSPDVOTECHOICE_SINGLE_FAILED:
           values = { ...values, host: action.host };
       }
