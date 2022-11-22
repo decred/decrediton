@@ -31,9 +31,10 @@ export const useAgendaDetails = () => {
   const isLoading = settingVspdVoteChoices;
 
   const dispatch = useDispatch();
-  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [
-    dispatch
-  ]);
+  const goBackHistory = useCallback(
+    () => dispatch(cli.goBackHistory()),
+    [dispatch]
+  );
   const onUpdateVotePreference = (agendaId, choiceId, passphrase) =>
     dispatch(cli.setVoteChoicesAttempt(agendaId, choiceId, passphrase));
   const updatePreferences = async (passphrase) => {

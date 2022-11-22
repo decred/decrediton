@@ -28,12 +28,10 @@ beforeEach(() => {
   mockSignMessageAttempt = controlActions.signMessageAttempt = jest.fn(
     () => () => {}
   );
-  mockSignMessageAttemptTrezor = trezorActions.signMessageAttemptTrezor = jest.fn(
-    () => () => {}
-  );
-  mockGetMessageVerificationServiceAttempt = clientAction.getMessageVerificationServiceAttempt = jest.fn(
-    () => () => {}
-  );
+  mockSignMessageAttemptTrezor = trezorActions.signMessageAttemptTrezor =
+    jest.fn(() => () => {});
+  mockGetMessageVerificationServiceAttempt =
+    clientAction.getMessageVerificationServiceAttempt = jest.fn(() => () => {});
   mockVerifyMessageAttempt = controlActions.verifyMessageAttempt = jest.fn(
     () => () => {}
   );
@@ -77,22 +75,23 @@ test("type invalid address to validate", async () => {
 });
 
 test("type valid, not owned address to validate", async () => {
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 0,
-      error: null,
-      index: 0,
-      isInternal: false,
-      isMine: false,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 0,
+        error: null,
+        index: 0,
+        isInternal: false,
+        isMine: false,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
 
@@ -105,22 +104,23 @@ test("type valid, not owned address to validate", async () => {
 });
 
 test("type valid, owned address to validate", async () => {
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 4,
-      error: null,
-      index: 57,
-      isInternal: true,
-      isMine: true,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 4,
+        error: null,
+        index: 57,
+        isInternal: true,
+        isMine: true,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
 
@@ -138,22 +138,23 @@ test("type valid, owned address to validate", async () => {
 test("test signing message", async () => {
   const testSignature = "test-signature";
   selectors.signMessageSignature = jest.fn(() => testSignature);
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 4,
-      error: null,
-      index: 57,
-      isInternal: true,
-      isMine: true,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 4,
+        error: null,
+        index: 57,
+        isInternal: true,
+        isMine: true,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
   const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
@@ -192,22 +193,23 @@ test("test signing message", async () => {
 
 test("test signing message on a trezor-backed wallet", async () => {
   selectors.isTrezor = jest.fn(() => true);
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 4,
-      error: null,
-      index: 57,
-      isInternal: true,
-      isMine: true,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 4,
+        error: null,
+        index: 57,
+        isInternal: true,
+        isMine: true,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
   const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
@@ -233,22 +235,23 @@ test("test signing message on a trezor-backed wallet", async () => {
 });
 
 test("test signing message using address not owning", async () => {
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 4,
-      error: null,
-      index: 57,
-      isInternal: true,
-      isMine: false,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 4,
+        error: null,
+        index: 57,
+        isInternal: true,
+        isMine: false,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
   const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
@@ -274,22 +277,23 @@ test("test verify message", async () => {
       valid: true
     };
   });
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 4,
-      error: null,
-      index: 57,
-      isInternal: true,
-      isMine: true,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 4,
+        error: null,
+        index: 57,
+        isInternal: true,
+        isMine: true,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
   user.click(getVerifyMessageToggleBt());
@@ -329,22 +333,23 @@ test("test verify invalid message", async () => {
       valid: false
     };
   });
-  controlActions.validateAddress = jest.fn(() => () =>
-    Promise.resolve({
-      accountNumber: 4,
-      error: null,
-      index: 57,
-      isInternal: true,
-      isMine: true,
-      isScript: false,
-      isValid: true,
-      payToAddrScript: "",
-      pkScriptAddrsList: [],
-      pubKey: "",
-      pubKeyAddr: "",
-      scriptType: 0,
-      sigsRequired: 0
-    })
+  controlActions.validateAddress = jest.fn(
+    () => () =>
+      Promise.resolve({
+        accountNumber: 4,
+        error: null,
+        index: 57,
+        isInternal: true,
+        isMine: true,
+        isScript: false,
+        isValid: true,
+        payToAddrScript: "",
+        pkScriptAddrsList: [],
+        pubKey: "",
+        pubKeyAddr: "",
+        scriptType: 0,
+        sigsRequired: 0
+      })
   );
   render(<SecurityTab />);
   user.click(getVerifyMessageToggleBt());

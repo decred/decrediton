@@ -126,13 +126,11 @@ beforeEach(() => {
   selectors.getMixedAccountBranch = jest.fn(() => mockMixedAccountBranch);
   selectors.getAllowSendFromUnmixed = jest.fn(() => false);
 
-  mockToggleAllowSendFromUnmixed = accountMixerActions.toggleAllowSendFromUnmixed = jest.fn(
-    () => () => {}
-  );
+  mockToggleAllowSendFromUnmixed =
+    accountMixerActions.toggleAllowSendFromUnmixed = jest.fn(() => () => {});
   controlActions.getNextAddressAttempt = jest.fn(() => () => {});
-  mockConstructTransactionAttempt = controlActions.constructTransactionAttempt = jest.fn(
-    () => () => {}
-  );
+  mockConstructTransactionAttempt = controlActions.constructTransactionAttempt =
+    jest.fn(() => () => {});
   mockDispatchSingleMessage = snackbarActions.dispatchSingleMessage = jest.fn(
     () => () => {}
   );

@@ -82,11 +82,11 @@ beforeEach(() => {
   selectors.lnOutstandingPayments = jest.fn(() => mockOutstandingPayments);
   selectors.lnFailedPayments = jest.fn(() => mockFailedPayment);
   selectors.lnPayments = jest.fn(() => mockPayments);
-  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(() => () =>
-    Promise.resolve(mockValidDecodedPayRequest)
+  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(
+    () => () => Promise.resolve(mockValidDecodedPayRequest)
   );
-  mockSendPayment = lnActions.sendPayment = jest.fn(() => () =>
-    Promise.resolve()
+  mockSendPayment = lnActions.sendPayment = jest.fn(
+    () => () => Promise.resolve()
   );
 });
 
@@ -147,8 +147,8 @@ test("test send form with valid lightning request", async () => {
 });
 
 test("test send form with expired lightning request (with empty fallbackAddr)", async () => {
-  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(() => () =>
-    Promise.resolve(mockExpiredDecodedPayRequest)
+  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(
+    () => () => Promise.resolve(mockExpiredDecodedPayRequest)
   );
   render(<SendTab />);
 
@@ -180,8 +180,8 @@ test("test send form with expired lightning request (with empty fallbackAddr)", 
 
 test("test send form with invalid lightning request", async () => {
   const mockErrorResp = "mock-error-resp";
-  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(() => () =>
-    Promise.reject(mockErrorResp)
+  mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(
+    () => () => Promise.reject(mockErrorResp)
   );
   render(<SendTab />);
 

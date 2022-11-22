@@ -84,16 +84,14 @@ beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
   selectors.blocksNumberToNextTicket = jest.fn(() => 13);
   selectors.getRememberedVspHost = jest.fn(() => null);
-  mockAddAllowedExternalRequest = settingsActions.addAllowedExternalRequest = jest.fn(
-    () => () => {}
-  );
+  mockAddAllowedExternalRequest = settingsActions.addAllowedExternalRequest =
+    jest.fn(() => () => {});
 
   mockPurchaseTicketsAttempt = controlActions.purchaseTicketsAttempt = jest.fn(
     () => () => {}
   );
-  mockStartTicketBuyerAttempt = controlActions.startTicketBuyerAttempt = jest.fn(
-    () => () => {}
-  );
+  mockStartTicketBuyerAttempt = controlActions.startTicketBuyerAttempt =
+    jest.fn(() => () => {});
   mockGetTicketAutoBuyerRunning = selectors.getTicketAutoBuyerRunning = jest.fn(
     () => false
   );

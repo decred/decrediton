@@ -60,16 +60,17 @@ import styles from "./Buttons.module.css";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
 // with extra fixed props)
-const mbb = (className, modalComponent, buttonComponent) => (p) => (
-  <ModalButton
-    {...{
-      ...p,
-      buttonComponent,
-      modalComponent: p.modalComponent || modalComponent,
-      className: classNames(className, p.className)
-    }}
-  />
-);
+const mbb = (className, modalComponent, buttonComponent) => (p) =>
+  (
+    <ModalButton
+      {...{
+        ...p,
+        buttonComponent,
+        modalComponent: p.modalComponent || modalComponent,
+        className: classNames(className, p.className)
+      }}
+    />
+  );
 
 const helpLinkButton = ({ icon, onClick, title, subtitle }) => (
   <HelpLink

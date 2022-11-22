@@ -7,11 +7,8 @@ import sharedStyles from "../../HomePage.module.css";
 import GovernanceNotification from "../../GovernanceNotification";
 
 const TransactionsTab = () => {
-  const {
-    balanceReceived,
-    balanceSent,
-    sentAndReceivedTransactions
-  } = useTransactions();
+  const { balanceReceived, balanceSent, sentAndReceivedTransactions } =
+    useTransactions();
   return (
     <div className={sharedStyles.overviewContentWrapper}>
       <div className={sharedStyles.overviewLeftWrapper}>

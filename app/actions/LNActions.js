@@ -46,176 +46,173 @@ export const LNWALLET_STARTUPSTAGE_SCBRESTORE =
 // create a new wallet account for LN operations.
 export const CREATE_LN_ACCOUNT = "**create ln account**";
 
-export const startDcrlnd = (
-  passphrase,
-  autopilotEnabled,
-  walletAccount,
-  scbFile
-) => async (dispatch, getState) => {
-  dispatch({ type: LNWALLET_STARTUP_ATTEMPT });
+export const startDcrlnd =
+  (passphrase, autopilotEnabled, walletAccount, scbFile) =>
+  async (dispatch, getState) => {
+    dispatch({ type: LNWALLET_STARTUP_ATTEMPT });
 
-  const {
-    grpc: { port }
-  } = getState();
-  const {
-    daemon: { walletName }
-  } = getState();
-  const isTestnet = sel.isTestNet(getState());
-  const walletPath = wallet.getWalletPath(isTestnet, walletName);
-  const walletPort = port;
-  const lnCfg = dispatch(getLNWalletConfig());
+    const {
+      grpc: { port }
+    } = getState();
+    const {
+      daemon: { walletName }
+    } = getState();
+    const isTestnet = sel.isTestNet(getState());
+    const walletPath = wallet.getWalletPath(isTestnet, walletName);
+    const walletPort = port;
+    const lnCfg = dispatch(getLNWalletConfig());
 
-  // Use the stored account if it exists, the specified account if it's a number
-  // or create an account specifically for LN usage.
-  let lnAccount = lnCfg.account;
-  let creating = false;
-  if (walletAccount === CREATE_LN_ACCOUNT) {
-    try {
-      const acctResp = await dispatch(
-        getNextAccountAttempt(passphrase, "LN Account")
-      );
-      if (acctResp instanceof Error) {
-        throw acctResp;
-      } else if (acctResp.error) {
-        throw acctResp.error;
+    // Use the stored account if it exists, the specified account if it's a number
+    // or create an account specifically for LN usage.
+    let lnAccount = lnCfg.account;
+    let creating = false;
+    if (walletAccount === CREATE_LN_ACCOUNT) {
+      try {
+        const acctResp = await dispatch(
+          getNextAccountAttempt(passphrase, "LN Account")
+        );
+        if (acctResp instanceof Error) {
+          throw acctResp;
+        } else if (acctResp.error) {
+          throw acctResp.error;
+        }
+        lnAccount = acctResp.getNextAccountResponse.accountNumber;
+        creating = true;
+      } catch (error) {
+        dispatch({ error, type: LNWALLET_CREATEACCOUNT_FAILED });
+        dispatch({ type: LNWALLET_STARTUP_FAILED });
+        throw error;
       }
-      lnAccount = acctResp.getNextAccountResponse.accountNumber;
+    } else if (isNumber(walletAccount)) {
+      lnAccount = walletAccount;
       creating = true;
+    }
+
+    const rpcCreds = wallet.getDcrdRpcCredentials();
+    const walletClientKeyCert = wallet.getDcrwalletGrpcKeyCert();
+
+    let dcrlndCreds;
+    let wuClient;
+
+    try {
+      dispatch({
+        stage: LNWALLET_STARTUPSTAGE_STARTDCRLND,
+        type: LNWALLET_STARTUP_CHANGEDSTAGE
+      });
+      const res = await ln.startDcrlnd(
+        lnAccount,
+        walletPort,
+        rpcCreds,
+        walletPath,
+        isTestnet,
+        autopilotEnabled
+      );
+      dcrlndCreds = res;
     } catch (error) {
-      dispatch({ error, type: LNWALLET_CREATEACCOUNT_FAILED });
       dispatch({ type: LNWALLET_STARTUP_FAILED });
-      throw error;
-    }
-  } else if (isNumber(walletAccount)) {
-    lnAccount = walletAccount;
-    creating = true;
-  }
-
-  const rpcCreds = wallet.getDcrdRpcCredentials();
-  const walletClientKeyCert = wallet.getDcrwalletGrpcKeyCert();
-
-  let dcrlndCreds;
-  let wuClient;
-
-  try {
-    dispatch({
-      stage: LNWALLET_STARTUPSTAGE_STARTDCRLND,
-      type: LNWALLET_STARTUP_CHANGEDSTAGE
-    });
-    const res = await ln.startDcrlnd(
-      lnAccount,
-      walletPort,
-      rpcCreds,
-      walletPath,
-      isTestnet,
-      autopilotEnabled
-    );
-    dcrlndCreds = res;
-  } catch (error) {
-    dispatch({ type: LNWALLET_STARTUP_FAILED });
-    dispatch({ error, type: LNWALLET_STARTDCRLND_FAILED });
-    return;
-  }
-
-  // Cleanup function for when the next few operations fail. At this point,
-  // dcrlnd is already running so if some error occurs we need to shut it down.
-  const cleanup = () => {
-    // Force dcrlnd to stop.
-    ln.stopDcrlnd();
-    dispatch({ type: LNWALLET_STARTUP_FAILED });
-
-    if (creating) {
-      // When the error happens during ln wallet creation, remove the dir so
-      // that the next attempt can try to create the wallet again. We do it
-      // after a timeout to ensure the previous shutdown has completed.
-      setTimeout(() => ln.removeDcrlnd(walletName, isTestnet), 2000);
-    }
-  };
-
-  try {
-    wuClient = await ln.getWalletUnlockerClient(
-      dcrlndCreds.address,
-      dcrlndCreds.port,
-      dcrlndCreds.certPath,
-      null
-    );
-
-    dispatch({
-      stage: LNWALLET_STARTUPSTAGE_UNLOCK,
-      type: LNWALLET_STARTUP_CHANGEDSTAGE
-    });
-    await ln.unlockWallet(wuClient, passphrase, walletClientKeyCert);
-  } catch (error) {
-    // An unimplemented error here probably means dcrlnd was already running,
-    // so just continue with the connection attempt.
-    if (error.code !== 12) {
-      // 12 === UNIMPLEMENTED.
-      // Otherwise, throw the error.
-      cleanup();
-      dispatch({ error, type: LNWALLET_UNLOCK_FAILED });
+      dispatch({ error, type: LNWALLET_STARTDCRLND_FAILED });
       return;
     }
-  }
 
-  let lnClient;
-  try {
-    dispatch({
-      stage: LNWALLET_STARTUPSTAGE_CONNECT,
-      type: LNWALLET_STARTUP_CHANGEDSTAGE
-    });
-    const { client } = await dispatch(
-      connectToLNWallet(
+    // Cleanup function for when the next few operations fail. At this point,
+    // dcrlnd is already running so if some error occurs we need to shut it down.
+    const cleanup = () => {
+      // Force dcrlnd to stop.
+      ln.stopDcrlnd();
+      dispatch({ type: LNWALLET_STARTUP_FAILED });
+
+      if (creating) {
+        // When the error happens during ln wallet creation, remove the dir so
+        // that the next attempt can try to create the wallet again. We do it
+        // after a timeout to ensure the previous shutdown has completed.
+        setTimeout(() => ln.removeDcrlnd(walletName, isTestnet), 2000);
+      }
+    };
+
+    try {
+      wuClient = await ln.getWalletUnlockerClient(
         dcrlndCreds.address,
         dcrlndCreds.port,
         dcrlndCreds.certPath,
-        dcrlndCreds.macaroonPath,
-        lnAccount
-      )
-    );
-    lnClient = client;
-  } catch (error) {
-    cleanup();
-    dispatch({ error, type: LNWALLET_CONNECT_FAILED });
-    return;
-  }
+        null
+      );
 
-  try {
-    dispatch({
-      stage: LNWALLET_STARTUPSTAGE_STARTUPSYNC,
-      type: LNWALLET_STARTUP_CHANGEDSTAGE
-    });
-    await dispatch(waitForDcrlndSynced(lnClient));
-  } catch (error) {
-    cleanup();
-    dispatch({ error, type: LNWALLET_STARTUPSYNC_FAILED });
-    return;
-  }
-
-  try {
-    dispatch({
-      stage: LNWALLET_STARTUPSTAGE_SCBRESTORE,
-      type: LNWALLET_STARTUP_CHANGEDSTAGE
-    });
-    scbFile && (await ln.restoreBackup(lnClient, scbFile));
-  } catch (error) {
-    cleanup();
-    if (String(error).indexOf("unable to unpack chan backup") > -1) {
-      // This error means the restore itself failed due to a MAC check error,
-      // so either the SCB file is damaged or the user is attempting to restore
-      // it on the wrong wallet/account.
-      dispatch({ error, type: LNWALLET_SCBRESTOREUNPACK_FAILED });
-    } else {
-      // This is a generic error in case something else goes wrong.
-      dispatch({ error, type: LNWALLET_SCBRESTORE_FAILED });
+      dispatch({
+        stage: LNWALLET_STARTUPSTAGE_UNLOCK,
+        type: LNWALLET_STARTUP_CHANGEDSTAGE
+      });
+      await ln.unlockWallet(wuClient, passphrase, walletClientKeyCert);
+    } catch (error) {
+      // An unimplemented error here probably means dcrlnd was already running,
+      // so just continue with the connection attempt.
+      if (error.code !== 12) {
+        // 12 === UNIMPLEMENTED.
+        // Otherwise, throw the error.
+        cleanup();
+        dispatch({ error, type: LNWALLET_UNLOCK_FAILED });
+        return;
+      }
     }
-    return;
-  }
 
-  // Startup only succeeded if we reached this point.
-  dispatch(setLNWalletConfig(lnAccount));
-  dispatch(loadLNStartupInfo());
-  dispatch({ type: LNWALLET_STARTUP_SUCCESS });
-};
+    let lnClient;
+    try {
+      dispatch({
+        stage: LNWALLET_STARTUPSTAGE_CONNECT,
+        type: LNWALLET_STARTUP_CHANGEDSTAGE
+      });
+      const { client } = await dispatch(
+        connectToLNWallet(
+          dcrlndCreds.address,
+          dcrlndCreds.port,
+          dcrlndCreds.certPath,
+          dcrlndCreds.macaroonPath,
+          lnAccount
+        )
+      );
+      lnClient = client;
+    } catch (error) {
+      cleanup();
+      dispatch({ error, type: LNWALLET_CONNECT_FAILED });
+      return;
+    }
+
+    try {
+      dispatch({
+        stage: LNWALLET_STARTUPSTAGE_STARTUPSYNC,
+        type: LNWALLET_STARTUP_CHANGEDSTAGE
+      });
+      await dispatch(waitForDcrlndSynced(lnClient));
+    } catch (error) {
+      cleanup();
+      dispatch({ error, type: LNWALLET_STARTUPSYNC_FAILED });
+      return;
+    }
+
+    try {
+      dispatch({
+        stage: LNWALLET_STARTUPSTAGE_SCBRESTORE,
+        type: LNWALLET_STARTUP_CHANGEDSTAGE
+      });
+      scbFile && (await ln.restoreBackup(lnClient, scbFile));
+    } catch (error) {
+      cleanup();
+      if (String(error).indexOf("unable to unpack chan backup") > -1) {
+        // This error means the restore itself failed due to a MAC check error,
+        // so either the SCB file is damaged or the user is attempting to restore
+        // it on the wrong wallet/account.
+        dispatch({ error, type: LNWALLET_SCBRESTOREUNPACK_FAILED });
+      } else {
+        // This is a generic error in case something else goes wrong.
+        dispatch({ error, type: LNWALLET_SCBRESTORE_FAILED });
+      }
+      return;
+    }
+
+    // Startup only succeeded if we reached this point.
+    dispatch(setLNWalletConfig(lnAccount));
+    dispatch(loadLNStartupInfo());
+    dispatch({ type: LNWALLET_STARTUP_SUCCESS });
+  };
 
 export const LNWALLET_DCRLND_STOPPED = "LNWALLET_DCRLND_STOPPED";
 
@@ -274,109 +271,107 @@ export const checkLnWallet = () => async (dispatch) => {
 
 export const LNWALLET_CONNECT_SUCCESS = "LNWALLET_CONNECT_SUCCESS";
 
-const connectToLNWallet = (
-  address,
-  port,
-  certPath,
-  macaroonPath,
-  account
-) => async (dispatch, getState) => {
-  const client = getState().ln.client;
-  if (client) {
-    // Already active and with a setup client.
-    return { client };
-  }
-
-  const sleepMs = 3000;
-  const sleepCount = 60 / (sleepMs / 1000);
-  const sleep = () => new Promise((resolve) => setTimeout(resolve, sleepMs));
-
-  // Attempt to connect to the lnrpc service of the wallet. Since the underlying
-  // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
-  // need to try a few times until we get a proper connection.
-  let lnClient, wtClient, inClient, apClient;
-  let lastError;
-  for (let i = 0; i < sleepCount; i++) {
-    try {
-      lnClient = await ln.getLightningClient(
-        address,
-        port,
-        certPath,
-        macaroonPath
-      );
-      wtClient = await ln.getWatchtowerClient(
-        address,
-        port,
-        certPath,
-        macaroonPath
-      );
-      inClient = await ln.getLNInvoiceClient(
-        address,
-        port,
-        certPath,
-        macaroonPath
-      );
-      apClient = await ln.getLNAutopilotClient(
-        address,
-        port,
-        certPath,
-        macaroonPath
-      );
-      // Force a getInfo call to ensure we're connected and the server provides
-      // the Lightning service.
-      await ln.getInfo(lnClient);
-      lastError = null;
-      break;
-    } catch (error) {
-      // An unimplemented error here probably means dcrlnd was just unlocked
-      // and is currently starting up the services. Wait a bit and try again.
-      if (error.code !== 12) {
-        // 12 === UNIMPLEMENTED.
-        throw error;
-      }
-      lastError = error;
-      await sleep();
+const connectToLNWallet =
+  (address, port, certPath, macaroonPath, account) =>
+  async (dispatch, getState) => {
+    const client = getState().ln.client;
+    if (client) {
+      // Already active and with a setup client.
+      return { client };
     }
-  }
-  if (lastError) throw lastError;
 
-  // Ensure the dcrlnd instance and decrediton are connected to the same(ish)
-  // wallet. For this test to fail the user would have had to manually change a
-  // lot of config files and it should only happen when reconnecting to a
-  // running instance, but we'll err on the side of being safe. We generate an
-  // address on the lnwallet and check if this is also an address owned by the
-  // wallet. This can still not completely ensure they are the same wallet
-  // (since this would also pass in the case of different running wallets using
-  // the same seed) but is good enough for our purposes.
-  const lnWalletAddr = await ln.newAddress(lnClient);
-  const validResp = await wallet.validateAddress(
-    sel.walletService(getState()),
-    lnWalletAddr
-  );
-  if (!validResp.isValid) {
-    throw new Error("Invalid address returned by lnwallet: " + lnWalletAddr);
-  }
-  if (!validResp.isMine) {
-    throw new Error("Wallet returned that address from lnwallet is not owned");
-  }
-  const addrAccount = validResp.accountNumber;
-  if (addrAccount != account) {
-    throw new Error(
-      `Wallet returned that address is not from the ln account; account=
-      ${addrAccount}`
+    const sleepMs = 3000;
+    const sleepCount = 60 / (sleepMs / 1000);
+    const sleep = () => new Promise((resolve) => setTimeout(resolve, sleepMs));
+
+    // Attempt to connect to the lnrpc service of the wallet. Since the underlying
+    // gRPC service of the dcrlnd node is restarted after it's unlocked, we might
+    // need to try a few times until we get a proper connection.
+    let lnClient, wtClient, inClient, apClient;
+    let lastError;
+    for (let i = 0; i < sleepCount; i++) {
+      try {
+        lnClient = await ln.getLightningClient(
+          address,
+          port,
+          certPath,
+          macaroonPath
+        );
+        wtClient = await ln.getWatchtowerClient(
+          address,
+          port,
+          certPath,
+          macaroonPath
+        );
+        inClient = await ln.getLNInvoiceClient(
+          address,
+          port,
+          certPath,
+          macaroonPath
+        );
+        apClient = await ln.getLNAutopilotClient(
+          address,
+          port,
+          certPath,
+          macaroonPath
+        );
+        // Force a getInfo call to ensure we're connected and the server provides
+        // the Lightning service.
+        await ln.getInfo(lnClient);
+        lastError = null;
+        break;
+      } catch (error) {
+        // An unimplemented error here probably means dcrlnd was just unlocked
+        // and is currently starting up the services. Wait a bit and try again.
+        if (error.code !== 12) {
+          // 12 === UNIMPLEMENTED.
+          throw error;
+        }
+        lastError = error;
+        await sleep();
+      }
+    }
+    if (lastError) throw lastError;
+
+    // Ensure the dcrlnd instance and decrediton are connected to the same(ish)
+    // wallet. For this test to fail the user would have had to manually change a
+    // lot of config files and it should only happen when reconnecting to a
+    // running instance, but we'll err on the side of being safe. We generate an
+    // address on the lnwallet and check if this is also an address owned by the
+    // wallet. This can still not completely ensure they are the same wallet
+    // (since this would also pass in the case of different running wallets using
+    // the same seed) but is good enough for our purposes.
+    const lnWalletAddr = await ln.newAddress(lnClient);
+    const validResp = await wallet.validateAddress(
+      sel.walletService(getState()),
+      lnWalletAddr
     );
-  }
+    if (!validResp.isValid) {
+      throw new Error("Invalid address returned by lnwallet: " + lnWalletAddr);
+    }
+    if (!validResp.isMine) {
+      throw new Error(
+        "Wallet returned that address from lnwallet is not owned"
+      );
+    }
+    const addrAccount = validResp.accountNumber;
+    if (addrAccount != account) {
+      throw new Error(
+        `Wallet returned that address is not from the ln account; account=
+      ${addrAccount}`
+      );
+    }
 
-  dispatch({
-    lnClient,
-    wtClient,
-    inClient,
-    apClient,
-    type: LNWALLET_CONNECT_SUCCESS
-  });
+    dispatch({
+      lnClient,
+      wtClient,
+      inClient,
+      apClient,
+      type: LNWALLET_CONNECT_SUCCESS
+    });
 
-  return { client: lnClient, wtClient };
-};
+    return { client: lnClient, wtClient };
+  };
 
 export const LNWALLET_WAITSYNC_PROGRESS = "LNWALLET_WAITSYNC_PROGRESS";
 
@@ -774,80 +769,83 @@ export const LNWALLET_OPENCHANNEL_FAILED = "LNWALLET_OPENCHANNEL_FAILED";
 export const LNWALLET_RECENTLY_OPENEDCHANNEL =
   "LNWALLET_RECENTLY_OPENEDCHANNEL";
 
-export const openChannel = (node, localAmt, pushAmt) => async (
-  dispatch,
-  getState
-) => {
-  const { client } = getState().ln;
-  if (!client) throw new Error("unconnected to ln wallet");
+export const openChannel =
+  (node, localAmt, pushAmt) => async (dispatch, getState) => {
+    const { client } = getState().ln;
+    if (!client) throw new Error("unconnected to ln wallet");
 
-  // Split the node string into a node pubkey and (optional) network address.
-  // If the network address is specified, then try to connect first.
+    // Split the node string into a node pubkey and (optional) network address.
+    // If the network address is specified, then try to connect first.
 
-  const split = node.split("@");
-  if (split.length > 2)
-    throw new Error("remote than one @ in the node address");
+    const split = node.split("@");
+    if (split.length > 2)
+      throw new Error("remote than one @ in the node address");
 
-  let nodePubKey;
+    let nodePubKey;
 
-  if (split.length == 2) {
-    // Try to connect first.
-    try {
-      await ln.connectPeer(client, split[0], split[1]);
-    } catch (error) {
-      const errorStr = "" + error;
-      if (errorStr.indexOf("already connected") === -1) {
-        // Any errors except "already connected to peer" are fatal failures.
-        dispatch({ error, type: LNWALLET_OPENCHANNEL_FAILED });
-        throw error;
+    if (split.length == 2) {
+      // Try to connect first.
+      try {
+        await ln.connectPeer(client, split[0], split[1]);
+      } catch (error) {
+        const errorStr = "" + error;
+        if (errorStr.indexOf("already connected") === -1) {
+          // Any errors except "already connected to peer" are fatal failures.
+          dispatch({ error, type: LNWALLET_OPENCHANNEL_FAILED });
+          throw error;
+        }
       }
+      nodePubKey = split[0];
+    } else {
+      nodePubKey = node;
     }
-    nodePubKey = split[0];
-  } else {
-    nodePubKey = node;
-  }
 
-  const dispatchUpdates = () => {
-    setTimeout(() => dispatch(updateLNChannelBalances()), 1000);
-    setTimeout(() => dispatch(updateChannelList()), 1000);
-    setTimeout(() => dispatch(updateLNWalletBalances()), 1000);
+    const dispatchUpdates = () => {
+      setTimeout(() => dispatch(updateLNChannelBalances()), 1000);
+      setTimeout(() => dispatch(updateChannelList()), 1000);
+      setTimeout(() => dispatch(updateLNWalletBalances()), 1000);
+    };
+
+    try {
+      await new Promise((resolve, reject) => {
+        const chanStream = ln.openChannel(
+          client,
+          nodePubKey,
+          localAmt,
+          pushAmt
+        );
+        chanStream.on("data", (update) => {
+          if (update.chanPending) {
+            resolve();
+            dispatch({ type: LNWALLET_OPENCHANNEL_CHANPENDING });
+            dispatchUpdates();
+            const txId = Buffer.from(update.chanPending.txid, "base64")
+              .reverse()
+              .toString("hex");
+            const channelPoint = `${txId}:${update.chanPending.outputIndex}`;
+
+            dispatch({
+              type: LNWALLET_RECENTLY_OPENEDCHANNEL,
+              channelPoint: channelPoint
+            });
+          }
+          if (update.chanOpen) {
+            dispatch({ type: LNWALLET_OPENCHANNEL_CHANOPEN });
+            dispatchUpdates();
+          }
+        });
+
+        chanStream.on("error", (error) => {
+          reject(error);
+        });
+      });
+
+      dispatchUpdates();
+    } catch (error) {
+      dispatch({ error, type: LNWALLET_OPENCHANNEL_FAILED });
+      throw error;
+    }
   };
-
-  try {
-    await new Promise((resolve, reject) => {
-      const chanStream = ln.openChannel(client, nodePubKey, localAmt, pushAmt);
-      chanStream.on("data", (update) => {
-        if (update.chanPending) {
-          resolve();
-          dispatch({ type: LNWALLET_OPENCHANNEL_CHANPENDING });
-          dispatchUpdates();
-          const txId = Buffer.from(update.chanPending.txid, "base64")
-            .reverse()
-            .toString("hex");
-          const channelPoint = `${txId}:${update.chanPending.outputIndex}`;
-
-          dispatch({
-            type: LNWALLET_RECENTLY_OPENEDCHANNEL,
-            channelPoint: channelPoint
-          });
-        }
-        if (update.chanOpen) {
-          dispatch({ type: LNWALLET_OPENCHANNEL_CHANOPEN });
-          dispatchUpdates();
-        }
-      });
-
-      chanStream.on("error", (error) => {
-        reject(error);
-      });
-    });
-
-    dispatchUpdates();
-  } catch (error) {
-    dispatch({ error, type: LNWALLET_OPENCHANNEL_FAILED });
-    throw error;
-  }
-};
 
 export const clearRecentlyOpenedChannelNodePubkey = () => (dispatch) => {
   dispatch({
@@ -899,61 +897,57 @@ export const closeChannel = (channelPoint, force) => (dispatch, getState) => {
 export const LNWALLET_FUNDWALLET_FAILED = "LNWALLET_FUNDWALLET_FAILED";
 export const LNWALLET_FUNDWALLET_SUCCESS = "LNWALLET_FUNDWALLET_SUCCESS";
 
-export const fundWallet = (amount, accountNb, passphrase) => async (
-  dispatch,
-  getState
-) => {
-  const { client } = getState().ln;
-  if (!client) throw new Error("unconnected to ln wallet");
+export const fundWallet =
+  (amount, accountNb, passphrase) => async (dispatch, getState) => {
+    const { client } = getState().ln;
+    if (!client) throw new Error("unconnected to ln wallet");
 
-  try {
-    const walletService = sel.walletService(getState());
-    const lnWalletAddr = await ln.newAddress(client);
-    const outputs = [{ destination: lnWalletAddr, amount }];
-    const txResp = await wallet.constructTransaction(
-      walletService,
-      accountNb,
-      0,
-      outputs
-    );
-    const unsignedTx = txResp.unsignedTransaction;
-    const signResp = await wallet.signTransaction(
-      walletService,
-      passphrase,
-      unsignedTx
-    );
-    const signedTx = signResp.transaction;
-    await wallet.publishTransaction(walletService, signedTx);
-    dispatch({ type: LNWALLET_FUNDWALLET_SUCCESS });
-    setTimeout(() => dispatch(updateLNWalletBalances(), 3000));
-  } catch (error) {
-    dispatch({ error, type: LNWALLET_FUNDWALLET_FAILED });
-    throw error;
-  }
-};
+    try {
+      const walletService = sel.walletService(getState());
+      const lnWalletAddr = await ln.newAddress(client);
+      const outputs = [{ destination: lnWalletAddr, amount }];
+      const txResp = await wallet.constructTransaction(
+        walletService,
+        accountNb,
+        0,
+        outputs
+      );
+      const unsignedTx = txResp.unsignedTransaction;
+      const signResp = await wallet.signTransaction(
+        walletService,
+        passphrase,
+        unsignedTx
+      );
+      const signedTx = signResp.transaction;
+      await wallet.publishTransaction(walletService, signedTx);
+      dispatch({ type: LNWALLET_FUNDWALLET_SUCCESS });
+      setTimeout(() => dispatch(updateLNWalletBalances(), 3000));
+    } catch (error) {
+      dispatch({ error, type: LNWALLET_FUNDWALLET_FAILED });
+      throw error;
+    }
+  };
 
 export const LNWALLET_WITHDRAWWALLET_FAILED = "LNWALLET_WITHDRAWWALLET_FAILED";
 export const LNWALLET_WITHDRAWWALLET_SUCCESS =
   "LNWALLET_WITHDRAWWALLET_SUCCESS";
 
-export const withdrawWallet = (amount, accountNb) => async (
-  dispatch,
-  getState
-) => {
-  const { client } = getState().ln;
-  if (!client) throw new Error("unconnected to ln wallet");
+export const withdrawWallet =
+  (amount, accountNb) => async (dispatch, getState) => {
+    const { client } = getState().ln;
+    if (!client) throw new Error("unconnected to ln wallet");
 
-  try {
-    const walletService = sel.walletService(getState());
-    const walletAddr = await wallet.getNextAddress(walletService, accountNb);
-    await ln.sendCoins(client, walletAddr.address, amount);
-    dispatch({ type: LNWALLET_WITHDRAWWALLET_SUCCESS });
-    setTimeout(() => dispatch(updateLNWalletBalances(), 3000));
-  } catch (error) {
-    dispatch({ error, type: LNWALLET_WITHDRAWWALLET_FAILED });
-    throw error;
-  }
-};
+    try {
+      const walletService = sel.walletService(getState());
+      const walletAddr = await wallet.getNextAddress(walletService, accountNb);
+      await ln.sendCoins(client, walletAddr.address, amount);
+      dispatch({ type: LNWALLET_WITHDRAWWALLET_SUCCESS });
+      setTimeout(() => dispatch(updateLNWalletBalances(), 3000));
+    } catch (error) {
+      dispatch({ error, type: LNWALLET_WITHDRAWWALLET_FAILED });
+      throw error;
+    }
+  };
 
 const getLNWalletConfig = () => (dispatch, getState) => {
   // This (and setWalletConfig) are less than ideal for dealing with config
@@ -1225,25 +1219,23 @@ export const LNWALLET_GETTRANSACTIONS_SUCCESS =
 export const LNWALLET_GETTRANSACTIONS_FAILED =
   "LNWALLET_GETTRANSACTIONS_FAILED";
 
-export const getTransactions = (startHeight, endHeight) => (
-  dispatch,
-  getState
-) => {
-  const { client } = getState().ln;
-  if (!client) return;
+export const getTransactions =
+  (startHeight, endHeight) => (dispatch, getState) => {
+    const { client } = getState().ln;
+    if (!client) return;
 
-  dispatch({ type: LNWALLET_GETTRANSACTIONS_ATTEMPT });
-  ln.getTransactions(client, startHeight, endHeight)
-    .then((transactions) => {
-      dispatch({
-        transactions,
-        type: LNWALLET_GETTRANSACTIONS_SUCCESS
+    dispatch({ type: LNWALLET_GETTRANSACTIONS_ATTEMPT });
+    ln.getTransactions(client, startHeight, endHeight)
+      .then((transactions) => {
+        dispatch({
+          transactions,
+          type: LNWALLET_GETTRANSACTIONS_SUCCESS
+        });
+      })
+      .catch((error) => {
+        dispatch({ error, type: LNWALLET_GETTRANSACTIONS_FAILED });
       });
-    })
-    .catch((error) => {
-      dispatch({ error, type: LNWALLET_GETTRANSACTIONS_FAILED });
-    });
-};
+  };
 
 export const goToChannelsTab = (pubKey) => (dispatch) =>
   dispatch(pushHistory(`/ln/channels?pubKey=${pubKey}`));

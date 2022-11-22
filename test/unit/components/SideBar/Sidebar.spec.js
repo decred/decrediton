@@ -505,9 +505,8 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
 });
 
 test("tests notification icon on the menu link", () => {
-  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting = jest.fn(
-    () => true
-  ));
+  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting =
+    jest.fn(() => true));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");
@@ -516,9 +515,8 @@ test("tests notification icon on the menu link", () => {
 });
 
 test("tests notification icon on the menu link (newNotYetVotedAgendasCount)", () => {
-  const mockNewNotYetVotedAgendasCount = (selectors.newNotYetVotedAgendasCount = jest.fn(
-    () => 3
-  ));
+  const mockNewNotYetVotedAgendasCount = (selectors.newNotYetVotedAgendasCount =
+    jest.fn(() => 3));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");
@@ -527,9 +525,8 @@ test("tests notification icon on the menu link (newNotYetVotedAgendasCount)", ()
 });
 
 test("tests notification icon on the menu link (newNotYetVotedActiveProposalsCount)", () => {
-  const mockNewNotYetVotedActiveProposalsCount = (selectors.newNotYetVotedActiveProposalsCount = jest.fn(
-    () => 3
-  ));
+  const mockNewNotYetVotedActiveProposalsCount =
+    (selectors.newNotYetVotedActiveProposalsCount = jest.fn(() => 3));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");

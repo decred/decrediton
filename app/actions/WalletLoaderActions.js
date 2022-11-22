@@ -126,66 +126,63 @@ export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
 export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
 
-export const createWalletRequest = (pubPass, privPass, seed, isNew) => (
-  dispatch,
-  getState
-) =>
-  new Promise((resolve, reject) => {
-    dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
-    return wallet
-      .createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
-      .then(() => {
-        const {
-          daemon: { walletName }
-        } = getState();
-        const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
-        config.delete(cfgConstants.DISCOVER_ACCOUNTS);
-        config.delete(cfgConstants.WALLET_CREATED_AS_NEW);
-        config.set(cfgConstants.DISCOVER_ACCOUNTS, isNew);
-        dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
-        dispatch({ type: CREATEWALLET_SUCCESS });
-        dispatch(getWalletServiceAttempt());
-        resolve(true);
-      })
-      .catch((error) => {
-        dispatch({ error, type: CREATEWALLET_FAILED });
-        reject(error);
-      });
-  });
+export const createWalletRequest =
+  (pubPass, privPass, seed, isNew) => (dispatch, getState) =>
+    new Promise((resolve, reject) => {
+      dispatch({ existing: !isNew, type: CREATEWALLET_ATTEMPT });
+      return wallet
+        .createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
+        .then(() => {
+          const {
+            daemon: { walletName }
+          } = getState();
+          const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
+          config.delete(cfgConstants.DISCOVER_ACCOUNTS);
+          config.delete(cfgConstants.WALLET_CREATED_AS_NEW);
+          config.set(cfgConstants.DISCOVER_ACCOUNTS, isNew);
+          dispatch({ complete: isNew, type: UPDATEDISCOVERACCOUNTS });
+          dispatch({ type: CREATEWALLET_SUCCESS });
+          dispatch(getWalletServiceAttempt());
+          resolve(true);
+        })
+        .catch((error) => {
+          dispatch({ error, type: CREATEWALLET_FAILED });
+          reject(error);
+        });
+    });
 
 export const CREATEWATCHONLYWALLET_ATTEMPT = "CREATEWATCHONLYWALLET_ATTEMPT";
 export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
 export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
 
-export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass = "") => (
-  dispatch,
-  getState
-) =>
-  new Promise((resolve, reject) => {
-    dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
-    return wallet
-      .createWatchingOnlyWallet(
-        getState().walletLoader.loader,
-        extendedPubKey,
-        pubPass
-      )
-      .then(() => {
-        const {
-          daemon: { walletName }
-        } = getState();
-        const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
-        config.set(cfgConstants.IS_WATCH_ONLY, true);
-        config.delete(cfgConstants.DISCOVER_ACCOUNTS);
-        wallet.setIsWatchingOnly(true);
-        dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
-        dispatch(getWalletServiceAttempt());
-        resolve(true);
-      })
-      .catch((error) => {
-        dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED });
-        reject(error);
-      });
-  });
+export const createWatchOnlyWalletRequest =
+  (extendedPubKey, pubPass = "") =>
+  (dispatch, getState) =>
+    new Promise((resolve, reject) => {
+      dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
+      return wallet
+        .createWatchingOnlyWallet(
+          getState().walletLoader.loader,
+          extendedPubKey,
+          pubPass
+        )
+        .then(() => {
+          const {
+            daemon: { walletName }
+          } = getState();
+          const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
+          config.set(cfgConstants.IS_WATCH_ONLY, true);
+          config.delete(cfgConstants.DISCOVER_ACCOUNTS);
+          wallet.setIsWatchingOnly(true);
+          dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
+          dispatch(getWalletServiceAttempt());
+          resolve(true);
+        })
+        .catch((error) => {
+          dispatch({ error, type: CREATEWATCHONLYWALLET_FAILED });
+          reject(error);
+        });
+    });
 
 export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
 export const OPENWALLET_INPUTPRIVPASS = "OPENWALLET_INPUTPRIVPASS";
@@ -194,62 +191,60 @@ export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
 export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
 export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
-export const openWalletAttempt = (pubPass, retryAttempt, selectedWallet) => (
-  dispatch,
-  getState
-) =>
-  new Promise((resolve, reject) => {
-    dispatch({ type: OPENWALLET_ATTEMPT });
-    return wallet
-      .openWallet(getState().walletLoader.loader, pubPass)
-      .then(async (response) => {
-        await dispatch(getWalletServiceAttempt());
-        wallet.setIsWatchingOnly(response.watchingOnly);
-        // needsPassPhrase is reset by OPENWALLET_SUCCESS, so store it here if
-        // we need to ask for the passphrase before starting the sync process.
-        const needsPassPhrase = getState().walletLoader.needsPassPhrase;
-        dispatch({
-          isWatchingOnly: response.watchingOnly,
-          type: OPENWALLET_SUCCESS
-        });
+export const openWalletAttempt =
+  (pubPass, retryAttempt, selectedWallet) => (dispatch, getState) =>
+    new Promise((resolve, reject) => {
+      dispatch({ type: OPENWALLET_ATTEMPT });
+      return wallet
+        .openWallet(getState().walletLoader.loader, pubPass)
+        .then(async (response) => {
+          await dispatch(getWalletServiceAttempt());
+          wallet.setIsWatchingOnly(response.watchingOnly);
+          // needsPassPhrase is reset by OPENWALLET_SUCCESS, so store it here if
+          // we need to ask for the passphrase before starting the sync process.
+          const needsPassPhrase = getState().walletLoader.needsPassPhrase;
+          dispatch({
+            isWatchingOnly: response.watchingOnly,
+            type: OPENWALLET_SUCCESS
+          });
 
-        if (needsPassPhrase) {
-          reject(OPENWALLET_INPUTPRIVPASS);
-          return;
-        }
-        resolve(true);
-      })
-      .catch(async (error) => {
-        // This error message happens after creating a new wallet as we already
-        // started it on creation. So we just ignore it.
-        if (error.message.includes("wallet already")) {
-          dispatch(getWalletServiceAttempt());
-          const isWatchingOnly = await wallet.getIsWatchingOnly();
-          dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
-          return resolve(true);
-        }
-        // Wallet with pub pass
-        if (error.message.includes("invalid passphrase:: wallet.Open")) {
-          if (retryAttempt) {
-            dispatch({ error, type: OPENWALLET_FAILED_INPUT });
-            return reject(OPENWALLET_FAILED_INPUT);
+          if (needsPassPhrase) {
+            reject(OPENWALLET_INPUTPRIVPASS);
+            return;
           }
-          return reject(OPENWALLET_INPUT);
-        }
+          resolve(true);
+        })
+        .catch(async (error) => {
+          // This error message happens after creating a new wallet as we already
+          // started it on creation. So we just ignore it.
+          if (error.message.includes("wallet already")) {
+            dispatch(getWalletServiceAttempt());
+            const isWatchingOnly = await wallet.getIsWatchingOnly();
+            dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
+            return resolve(true);
+          }
+          // Wallet with pub pass
+          if (error.message.includes("invalid passphrase:: wallet.Open")) {
+            if (retryAttempt) {
+              dispatch({ error, type: OPENWALLET_FAILED_INPUT });
+              return reject(OPENWALLET_FAILED_INPUT);
+            }
+            return reject(OPENWALLET_INPUT);
+          }
 
-        if (!selectedWallet.finished) {
-          const walletCfg = wallet.getWalletCfg(
-            isTestNet(getState()),
-            selectedWallet.value.wallet
-          );
-          error.walletCreatedAsNew = !!walletCfg.get(
-            cfgConstants.WALLET_CREATED_AS_NEW
-          );
-        }
-        dispatch({ error, type: OPENWALLET_FAILED });
-        reject(error);
-      });
-  });
+          if (!selectedWallet.finished) {
+            const walletCfg = wallet.getWalletCfg(
+              isTestNet(getState()),
+              selectedWallet.value.wallet
+            );
+            error.walletCreatedAsNew = !!walletCfg.get(
+              cfgConstants.WALLET_CREATED_AS_NEW
+            );
+          }
+          dispatch({ error, type: OPENWALLET_FAILED });
+          reject(error);
+        });
+    });
 
 export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
 export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
@@ -304,87 +299,85 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (privPass, isRetry) => (
-  dispatch,
-  getState
-) => {
-  const { syncAttemptRequest } = getState().walletLoader;
-  if (syncAttemptRequest) {
-    return;
-  }
-  const {
-    daemon: { walletName },
-    walletLoader: { discoverAccountsComplete }
-  } = getState();
+export const startRpcRequestFunc =
+  (privPass, isRetry) => (dispatch, getState) => {
+    const { syncAttemptRequest } = getState().walletLoader;
+    if (syncAttemptRequest) {
+      return;
+    }
+    const {
+      daemon: { walletName },
+      walletLoader: { discoverAccountsComplete }
+    } = getState();
 
-  const credentials = wallet.getDcrdRpcCredentials();
-  const discoverAccts = !discoverAccountsComplete && privPass;
-  const setPrivPass = discoverAccts
-    ? new Uint8Array(Buffer.from(privPass))
-    : null;
+    const credentials = wallet.getDcrdRpcCredentials();
+    const discoverAccts = !discoverAccountsComplete && privPass;
+    const setPrivPass = discoverAccts
+      ? new Uint8Array(Buffer.from(privPass))
+      : null;
 
-  return new Promise((resolve, reject) => {
-    if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
-    const { loader } = getState().walletLoader;
-    setTimeout(async () => {
-      const rpcSyncCall = await wallet.rpcSync(
-        loader,
-        credentials,
-        discoverAccts,
-        setPrivPass
-      );
-      dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
-      rpcSyncCall.on("data", async (response) => {
-        const synced = await dispatch(syncConsumer(response));
-        if (synced) {
-          return resolve();
-        }
-      });
-      rpcSyncCall.on("end", function () {
-        // Connection closed.
-      });
-      rpcSyncCall.on("error", function (status) {
-        status = status + "";
-        if (status.indexOf("Cancelled") < 0) {
-          if (isRetry) {
-            const { rpcRetryAttempts } = getState().walletLoader;
-            if (rpcRetryAttempts < MAX_RPC_RETRIES) {
-              dispatch({
-                rpcRetryAttempts: rpcRetryAttempts + 1,
-                type: STARTRPC_RETRY
-              });
-              setTimeout(
-                () => dispatch(startRpcRequestFunc(privPass, isRetry)),
-                RPC_RETRY_DELAY
-              );
-            } else {
-              dispatch({
-                error: `${status}.  You may need to edit ${wallet.getWalletPath(
-                  isTestNet(getState()),
-                  walletName
-                )} and try again`,
-                type: STARTRPC_FAILED
-              });
-            }
-          } else if (status.includes("wallet.Unlock: invalid passphrase")) {
-            // Wallet needs unlocking to discover accounts and passphrase
-            // is wrong.
-            dispatch({ error: status, type: SYNC_FAILED });
-            return reject(OPENWALLET_INPUTPRIVPASS);
-          } else if (
-            status.indexOf("invalid passphrase") > 0 ||
-            status.indexOf("Stream removed")
-          ) {
-            dispatch({ error: status, type: SYNC_FAILED });
-            reject(status);
-          } else {
-            dispatch(startRpcRequestFunc(privPass, true));
+    return new Promise((resolve, reject) => {
+      if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
+      const { loader } = getState().walletLoader;
+      setTimeout(async () => {
+        const rpcSyncCall = await wallet.rpcSync(
+          loader,
+          credentials,
+          discoverAccts,
+          setPrivPass
+        );
+        dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
+        rpcSyncCall.on("data", async (response) => {
+          const synced = await dispatch(syncConsumer(response));
+          if (synced) {
+            return resolve();
           }
-        }
-      });
-    }, 500);
-  });
-};
+        });
+        rpcSyncCall.on("end", function () {
+          // Connection closed.
+        });
+        rpcSyncCall.on("error", function (status) {
+          status = status + "";
+          if (status.indexOf("Cancelled") < 0) {
+            if (isRetry) {
+              const { rpcRetryAttempts } = getState().walletLoader;
+              if (rpcRetryAttempts < MAX_RPC_RETRIES) {
+                dispatch({
+                  rpcRetryAttempts: rpcRetryAttempts + 1,
+                  type: STARTRPC_RETRY
+                });
+                setTimeout(
+                  () => dispatch(startRpcRequestFunc(privPass, isRetry)),
+                  RPC_RETRY_DELAY
+                );
+              } else {
+                dispatch({
+                  error: `${status}.  You may need to edit ${wallet.getWalletPath(
+                    isTestNet(getState()),
+                    walletName
+                  )} and try again`,
+                  type: STARTRPC_FAILED
+                });
+              }
+            } else if (status.includes("wallet.Unlock: invalid passphrase")) {
+              // Wallet needs unlocking to discover accounts and passphrase
+              // is wrong.
+              dispatch({ error: status, type: SYNC_FAILED });
+              return reject(OPENWALLET_INPUTPRIVPASS);
+            } else if (
+              status.indexOf("invalid passphrase") > 0 ||
+              status.indexOf("Stream removed")
+            ) {
+              dispatch({ error: status, type: SYNC_FAILED });
+              reject(status);
+            } else {
+              dispatch(startRpcRequestFunc(privPass, true));
+            }
+          }
+        });
+      }, 500);
+    });
+  };
 
 export const WALLET_SELECTED = "WALLET_SELECTED";
 
@@ -706,14 +699,12 @@ export const stopUnfinishedWallet = () => async (dispatch) => {
   }
 };
 
-export const setAutoWalletLaunching = (autoWalletLaunching) => async (
-  dispatch,
-  getState
-) => {
-  dispatch(updateStateSettingsChanged({ autoWalletLaunching }, true));
-  const tempSettings = getState().settings.tempSettings;
-  const config = wallet.getGlobalCfg();
-  config.set(cfgConstants.AUTO_WALLET_LAUNCHING, autoWalletLaunching);
+export const setAutoWalletLaunching =
+  (autoWalletLaunching) => async (dispatch, getState) => {
+    dispatch(updateStateSettingsChanged({ autoWalletLaunching }, true));
+    const tempSettings = getState().settings.tempSettings;
+    const config = wallet.getGlobalCfg();
+    config.set(cfgConstants.AUTO_WALLET_LAUNCHING, autoWalletLaunching);
 
-  await dispatch(saveSettings(tempSettings));
-};
+    await dispatch(saveSettings(tempSettings));
+  };

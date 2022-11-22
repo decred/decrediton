@@ -105,8 +105,8 @@ beforeEach(() => {
   mockCreateWalletDex = dexActions.createWalletDex = jest.fn(() => () => {});
   mockLaunchDexWindow = dexActions.launchDexWindow = jest.fn(() => () => {});
   mockLoginDex = dexActions.loginDex = jest.fn(() => () => {});
-  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(() => () =>
-    Promise.resolve(testLog)
+  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(
+    () => () => Promise.resolve(testLog)
   );
 });
 
@@ -424,8 +424,8 @@ test("test when dex is ready", async () => {
   user.click(screen.getByText("Logs"));
 
   mockGetDexLogs.mockClear();
-  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(() => () =>
-    Promise.resolve(testLog2)
+  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(
+    () => () => Promise.resolve(testLog2)
   );
   act(() => {
     jest.advanceTimersByTime(2001);
@@ -442,8 +442,8 @@ test("receive error while getting error", async () => {
   selectors.dexReady = jest.fn(() => true);
   jest.useFakeTimers();
 
-  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(() => () =>
-    Promise.reject("error")
+  mockGetDexLogs = daemonActions.getDexLogs = jest.fn(
+    () => () => Promise.reject("error")
   );
   render(<DexPage />);
 

@@ -274,9 +274,8 @@ beforeEach(() => {
     Promise.resolve(testReleaseFetchReponse)
   );
   mockWalletLog = wallet.log = jest.fn(() => {});
-  mockUpdateStateSettingsChanged = settingsActions.updateStateSettingsChanged = jest.fn(
-    () => () => {}
-  );
+  mockUpdateStateSettingsChanged = settingsActions.updateStateSettingsChanged =
+    jest.fn(() => () => {});
   mockSaveSettings = settingsActions.saveSettings = jest.fn(() => () => {});
   mockStartDaemon = wallet.startDaemon = jest.fn(() =>
     Promise.resolve(testDaemonStartResponse)
@@ -310,9 +309,8 @@ beforeEach(() => {
     Promise.resolve(testStartWalletResponse)
   );
   mockSetPreviousWallet = wallet.setPreviousWallet = jest.fn(() => {});
-  mockGetVersionServiceAttempt = versionActions.getVersionServiceAttempt = jest.fn(
-    () => () => {}
-  );
+  mockGetVersionServiceAttempt = versionActions.getVersionServiceAttempt =
+    jest.fn(() => () => {});
   mockOpenWalletAttempt = walletLoaderActions.openWalletAttempt = jest.fn(
     () => () => {}
   );

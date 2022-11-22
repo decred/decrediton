@@ -91,9 +91,10 @@ export const useTicketAutoBuyer = () => {
     [dispatch]
   );
 
-  const onStopAutoBuyer = useCallback(() => dispatch(ca.ticketBuyerCancel()), [
-    dispatch
-  ]);
+  const onStopAutoBuyer = useCallback(
+    () => dispatch(ca.ticketBuyerCancel()),
+    [dispatch]
+  );
 
   const getRandomVSP = async (maxFeePercentage) => {
     let randomVSP;

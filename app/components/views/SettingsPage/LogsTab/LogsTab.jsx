@@ -24,17 +24,13 @@ const LogsTabBody = ({ setInterval, clearInterval }) => {
   } = useLogging();
 
   const getLogs = useCallback(async () => {
-    const [
-      rawDcrdLogs,
-      rawDcrwalletLogs,
-      decreditonLogsNew,
-      rawDcrlndLogs
-    ] = await Promise.all([
-      wallet.getDcrdLogs(),
-      wallet.getDcrwalletLogs(),
-      wallet.getDecreditonLogs(),
-      wallet.getDcrlndLogs()
-    ]);
+    const [rawDcrdLogs, rawDcrwalletLogs, decreditonLogsNew, rawDcrlndLogs] =
+      await Promise.all([
+        wallet.getDcrdLogs(),
+        wallet.getDcrwalletLogs(),
+        wallet.getDecreditonLogs(),
+        wallet.getDcrlndLogs()
+      ]);
     const dcrdLogsNew = Buffer.from(rawDcrdLogs).toString("utf8");
     const dcrwalletLogsNew = Buffer.from(rawDcrwalletLogs).toString("utf8");
     const dcrlndLogsNew = Buffer.from(rawDcrlndLogs).toString("utf8");

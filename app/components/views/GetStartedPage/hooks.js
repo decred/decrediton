@@ -64,10 +64,8 @@ export const useGetStarted = () => {
   const [PageComponent, setPageComponent] = useState(null);
   const [showNavLinks, setShowNavLinks] = useState(true);
   const [NavlinkComponent, setNavlinkComponent] = useState(null);
-  const [
-    nextStateAfterWalletLoading,
-    setNextStateAfterWalletLoading
-  ] = useState(null);
+  const [nextStateAfterWalletLoading, setNextStateAfterWalletLoading] =
+    useState(null);
 
   const [state, send] = useMachine(getStartedMachine, {
     actions: {
@@ -369,9 +367,10 @@ export const useGetStarted = () => {
     setShowNavLinks(true);
   }, [send]);
 
-  const onSendError = useCallback((error) => send({ type: "ERROR", error }), [
-    send
-  ]);
+  const onSendError = useCallback(
+    (error) => send({ type: "ERROR", error }),
+    [send]
+  );
 
   const onSendCreateWallet = useCallback(
     (isNew, isTrezor) => send({ type: "CREATE_WALLET", isNew, isTrezor }),

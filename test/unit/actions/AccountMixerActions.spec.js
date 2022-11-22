@@ -129,9 +129,10 @@ beforeEach(() => {
     set: mockWalletCfgSet
   }));
 
-  mockGetMixerAcctsSpendableBalances = clientActions.getMixerAcctsSpendableBalances = jest.fn(
-    () => () => Promise.resolve()
-  );
+  mockGetMixerAcctsSpendableBalances =
+    clientActions.getMixerAcctsSpendableBalances = jest.fn(
+      () => () => Promise.resolve()
+    );
   mockGetNextAccountAttempt = controlActions.getNextAccountAttempt = jest.fn(
     (_, accountName) => () => {
       if (accountName === testMixedAccountName) {
@@ -143,9 +144,8 @@ beforeEach(() => {
     }
   );
 
-  mockGetCoinjoinOutputspByAcctReq = wallet.getCoinjoinOutputspByAcctReq = jest.fn(
-    () => Promise.resolve(testGetCoinjoinOutputsByAccResponse)
-  );
+  mockGetCoinjoinOutputspByAcctReq = wallet.getCoinjoinOutputspByAcctReq =
+    jest.fn(() => Promise.resolve(testGetCoinjoinOutputsByAccResponse));
 });
 
 const testGetAccountMixerServiceAttempt = async (
@@ -265,10 +265,8 @@ test("test checkUnmixedAccountBalance - insufficient balance", async () => {
 });
 
 test("test runAccountMixer start and stop", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const events = {};
   mockMixerStreamer = {
@@ -550,9 +548,8 @@ test("test getCoinjoinOutputspByAcct", async () => {
 });
 
 test("test getCoinjoinOutputspByAcct - rejected", async () => {
-  mockGetCoinjoinOutputspByAcctReq = wallet.getCoinjoinOutputspByAcctReq = jest.fn(
-    () => Promise.reject(testError)
-  );
+  mockGetCoinjoinOutputspByAcctReq = wallet.getCoinjoinOutputspByAcctReq =
+    jest.fn(() => Promise.reject(testError));
   const store = createStore(cloneDeep(initialState));
   let receivedError;
   try {
@@ -567,9 +564,8 @@ test("test getCoinjoinOutputspByAcct - rejected", async () => {
 });
 
 test("test getCoinjoinOutputspByAcct - not valid response from wallet", async () => {
-  mockGetCoinjoinOutputspByAcctReq = wallet.getCoinjoinOutputspByAcctReq = jest.fn(
-    () => Promise.resolve({ wrappers_: null })
-  );
+  mockGetCoinjoinOutputspByAcctReq = wallet.getCoinjoinOutputspByAcctReq =
+    jest.fn(() => Promise.resolve({ wrappers_: null }));
   const store = createStore(cloneDeep(initialState));
   const result = await store.dispatch(
     accountMixerActions.getCoinjoinOutputspByAcct()

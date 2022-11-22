@@ -98,196 +98,193 @@ export const MATURINGHEIGHTS_CHANGED = "MATURINGHEIGHTS_CHANGED";
 
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).
-export const newTransactionsReceived = (
-  newlyMinedTransactions,
-  newlyUnminedTransactions
-) => async (dispatch, getState) => {
-  if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length)
-    return;
-  let {
-    unminedTransactions,
-    stakeTransactions,
-    regularTransactions,
-    recentRegularTransactions,
-    recentStakeTransactions
-  } = getState().grpc;
-  const { walletService, maturingBlockHeights } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-  // Normalize transactions with missing data.
-  // All transactions must being normalized before being dispatched to the
-  // selector.
-  newlyUnminedTransactions = await normalizeBatchTx(
-    walletService,
-    chainParams,
-    dispatch,
-    newlyUnminedTransactions
-  );
-  newlyMinedTransactions = await normalizeBatchTx(
-    walletService,
-    chainParams,
-    dispatch,
-    newlyMinedTransactions
-  );
-  // aux maps of [txhash] => tx (used to ensure no duplicate txs)
-  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
-    m[v.txHash] = v;
-    // update our txs selector value.
-    v.isStake
-      ? (stakeTransactions[v.txHash] = v)
-      : (regularTransactions[v.txHash] = v);
-    return m;
-  }, {});
-  let newlyUnminedMap = divideTransactions(newlyUnminedTransactions);
+export const newTransactionsReceived =
+  (newlyMinedTransactions, newlyUnminedTransactions) =>
+  async (dispatch, getState) => {
+    if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length)
+      return;
+    let {
+      unminedTransactions,
+      stakeTransactions,
+      regularTransactions,
+      recentRegularTransactions,
+      recentStakeTransactions
+    } = getState().grpc;
+    const { walletService, maturingBlockHeights } = getState().grpc;
+    const chainParams = sel.chainParams(getState());
+    // Normalize transactions with missing data.
+    // All transactions must being normalized before being dispatched to the
+    // selector.
+    newlyUnminedTransactions = await normalizeBatchTx(
+      walletService,
+      chainParams,
+      dispatch,
+      newlyUnminedTransactions
+    );
+    newlyMinedTransactions = await normalizeBatchTx(
+      walletService,
+      chainParams,
+      dispatch,
+      newlyMinedTransactions
+    );
+    // aux maps of [txhash] => tx (used to ensure no duplicate txs)
+    const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {
+      m[v.txHash] = v;
+      // update our txs selector value.
+      v.isStake
+        ? (stakeTransactions[v.txHash] = v)
+        : (regularTransactions[v.txHash] = v);
+      return m;
+    }, {});
+    let newlyUnminedMap = divideTransactions(newlyUnminedTransactions);
 
-  // get vsp tickets fee status in case there is a stake tx and we show the
-  // proper ticket value.
-  const vspHashes = {};
-  vspHashes[VSP_FEE_PROCESS_ERRORED] = await dispatch(
-    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED)
-  );
-  vspHashes[VSP_FEE_PROCESS_STARTED] = await dispatch(
-    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED)
-  );
-  vspHashes[VSP_FEE_PROCESS_PAID] = await dispatch(
-    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID)
-  );
-  vspHashes[VSP_FEE_PROCESS_CONFIRMED] = await dispatch(
-    getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED)
-  );
+    // get vsp tickets fee status in case there is a stake tx and we show the
+    // proper ticket value.
+    const vspHashes = {};
+    vspHashes[VSP_FEE_PROCESS_ERRORED] = await dispatch(
+      getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_ERRORED)
+    );
+    vspHashes[VSP_FEE_PROCESS_STARTED] = await dispatch(
+      getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_STARTED)
+    );
+    vspHashes[VSP_FEE_PROCESS_PAID] = await dispatch(
+      getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_PAID)
+    );
+    vspHashes[VSP_FEE_PROCESS_CONFIRMED] = await dispatch(
+      getVSPTicketsByFeeStatus(VSP_FEE_PROCESS_CONFIRMED)
+    );
 
-  // add feeStatus into unmined txs. With that there is no need to add into
-  // mined txs.
-  Object.keys(vspHashes).forEach((feeStatus) => {
-    vspHashes[feeStatus].forEach((ticketHash) => {
-      if (!newlyUnminedMap.stakeTransactions[ticketHash]) {
-        return;
-      }
-      newlyUnminedMap.stakeTransactions[ticketHash].feeStatus = feeStatus;
+    // add feeStatus into unmined txs. With that there is no need to add into
+    // mined txs.
+    Object.keys(vspHashes).forEach((feeStatus) => {
+      vspHashes[feeStatus].forEach((ticketHash) => {
+        if (!newlyUnminedMap.stakeTransactions[ticketHash]) {
+          return;
+        }
+        newlyUnminedMap.stakeTransactions[ticketHash].feeStatus = feeStatus;
+      });
     });
-  });
 
-  // update our txs selector value.
-  stakeTransactions = {
-    ...newlyUnminedMap.stakeTransactions,
-    ...stakeTransactions
-  };
-  regularTransactions = {
-    ...newlyUnminedMap.regularTransactions,
-    ...regularTransactions
-  };
-  // flat stake and regular unmined transactions.
-  newlyUnminedMap = {
-    ...newlyUnminedMap.stakeTransactions,
-    ...newlyUnminedMap.regularTransactions
-  };
+    // update our txs selector value.
+    stakeTransactions = {
+      ...newlyUnminedMap.stakeTransactions,
+      ...stakeTransactions
+    };
+    regularTransactions = {
+      ...newlyUnminedMap.regularTransactions,
+      ...regularTransactions
+    };
+    // flat stake and regular unmined transactions.
+    newlyUnminedMap = {
+      ...newlyUnminedMap.stakeTransactions,
+      ...newlyUnminedMap.regularTransactions
+    };
 
-  // update accounts related to the transaction balance.
-  const accountsToUpdate = checkAccountsToUpdate([
-    ...newlyUnminedTransactions,
-    ...newlyMinedTransactions
-  ]);
-  accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
-
-  // get new addresses for accounts which received decred
-  dispatch(
-    getNewAccountAddresses([
+    // update accounts related to the transaction balance.
+    const accountsToUpdate = checkAccountsToUpdate([
       ...newlyUnminedTransactions,
       ...newlyMinedTransactions
-    ])
-  );
+    ]);
+    accountsToUpdate.forEach((v) => dispatch(getBalanceUpdateAttempt(v, 0)));
 
-  // Update mixer accounts balances
-  const changeAccount = sel.getChangeAccount(getState());
-  dispatch(checkUnmixedAccountBalance(changeAccount));
-  dispatch(getMixerAcctsSpendableBalances());
+    // get new addresses for accounts which received decred
+    dispatch(
+      getNewAccountAddresses([
+        ...newlyUnminedTransactions,
+        ...newlyMinedTransactions
+      ])
+    );
 
-  const hasStakeTxs =
-    checkForStakeTransactions(newlyUnminedTransactions) ||
-    checkForStakeTransactions(newlyMinedTransactions);
-  if (hasStakeTxs) {
-    dispatch(getStakeInfoAttempt());
-  }
+    // Update mixer accounts balances
+    const changeAccount = sel.getChangeAccount(getState());
+    dispatch(checkUnmixedAccountBalance(changeAccount));
+    dispatch(getMixerAcctsSpendableBalances());
 
-  unminedTransactions = [
-    ...newlyUnminedTransactions,
-    ...unminedTransactions.filter(
-      (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
-    )
-  ];
-
-  // filterTxsArray is an aux function to filter the passed transactions so
-  // we avoid duplicated txs.
-  const filterTxsArray = (transactions) =>
-    transactions.filter((tx) => {
-      // remove transactions which are already at the old state of unmined
-      // transactions array to avoid duplicated txs. If the tx is already at
-      // the array, no need for re-adding it.
-      const txIsAtArray = unminedTransactions.find(
-        (unminedTx) => unminedTx.txHash === tx.txHash
-      );
-      if (txIsAtArray) {
-        return false;
-      }
-      // If it is not on the older array, nor the newly ones, we re-add it.
-      if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
-        return true;
-      }
-    });
-
-  // update recent regular and stake transactions selector
-  recentRegularTransactions = [
-    ...unminedTransactions,
-    ...newlyMinedTransactions,
-    ...filterTxsArray(recentRegularTransactions)
-  ].filter((tx) => !tx.isStake);
-
-  recentStakeTransactions = [
-    ...unminedTransactions,
-    ...newlyMinedTransactions,
-    ...filterTxsArray(recentStakeTransactions)
-  ].filter((tx) => tx.isStake);
-
-  // update maturing heights, so we can know when to update account balances
-  // on their specific blocks.
-  const newMaturingHeights = { ...maturingBlockHeights };
-  const mergeNewMaturingHeights = (hs) =>
-    Object.keys(hs).forEach((h) => {
-      const accounts = newMaturingHeights[h] || [];
-      hs[h].forEach((a) =>
-        accounts.indexOf(a) === -1 ? accounts.push(a) : null
-      );
-      newMaturingHeights[h] = accounts;
-    });
-  mergeNewMaturingHeights(
-    transactionsMaturingHeights(newlyMinedTransactions, chainParams)
-  );
-  dispatch({
-    maturingBlockHeights: newMaturingHeights,
-    type: MATURINGHEIGHTS_CHANGED
-  });
-
-  dispatch({
-    recentRegularTransactions,
-    recentStakeTransactions,
-    unminedTransactions,
-    newlyUnminedTransactions,
-    newlyMinedTransactions,
-    stakeTransactions,
-    regularTransactions,
-    type: NEW_TRANSACTIONS_RECEIVED
-  });
-
-  if (newlyMinedTransactions.length > 0) {
-    const {
-      startupStatsEndCalcTime,
-      startupStatsCalcSeconds
-    } = getState().statistics;
-    const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
-    if (secFromLastStats > 5 * startupStatsCalcSeconds) {
-      dispatch(getStartupStats());
+    const hasStakeTxs =
+      checkForStakeTransactions(newlyUnminedTransactions) ||
+      checkForStakeTransactions(newlyMinedTransactions);
+    if (hasStakeTxs) {
+      dispatch(getStakeInfoAttempt());
     }
-  }
-};
+
+    unminedTransactions = [
+      ...newlyUnminedTransactions,
+      ...unminedTransactions.filter(
+        (tx) => !newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]
+      )
+    ];
+
+    // filterTxsArray is an aux function to filter the passed transactions so
+    // we avoid duplicated txs.
+    const filterTxsArray = (transactions) =>
+      transactions.filter((tx) => {
+        // remove transactions which are already at the old state of unmined
+        // transactions array to avoid duplicated txs. If the tx is already at
+        // the array, no need for re-adding it.
+        const txIsAtArray = unminedTransactions.find(
+          (unminedTx) => unminedTx.txHash === tx.txHash
+        );
+        if (txIsAtArray) {
+          return false;
+        }
+        // If it is not on the older array, nor the newly ones, we re-add it.
+        if (!newlyMinedMap[tx.txHash] && !newlyUnminedMap[tx.txHash]) {
+          return true;
+        }
+      });
+
+    // update recent regular and stake transactions selector
+    recentRegularTransactions = [
+      ...unminedTransactions,
+      ...newlyMinedTransactions,
+      ...filterTxsArray(recentRegularTransactions)
+    ].filter((tx) => !tx.isStake);
+
+    recentStakeTransactions = [
+      ...unminedTransactions,
+      ...newlyMinedTransactions,
+      ...filterTxsArray(recentStakeTransactions)
+    ].filter((tx) => tx.isStake);
+
+    // update maturing heights, so we can know when to update account balances
+    // on their specific blocks.
+    const newMaturingHeights = { ...maturingBlockHeights };
+    const mergeNewMaturingHeights = (hs) =>
+      Object.keys(hs).forEach((h) => {
+        const accounts = newMaturingHeights[h] || [];
+        hs[h].forEach((a) =>
+          accounts.indexOf(a) === -1 ? accounts.push(a) : null
+        );
+        newMaturingHeights[h] = accounts;
+      });
+    mergeNewMaturingHeights(
+      transactionsMaturingHeights(newlyMinedTransactions, chainParams)
+    );
+    dispatch({
+      maturingBlockHeights: newMaturingHeights,
+      type: MATURINGHEIGHTS_CHANGED
+    });
+
+    dispatch({
+      recentRegularTransactions,
+      recentStakeTransactions,
+      unminedTransactions,
+      newlyUnminedTransactions,
+      newlyMinedTransactions,
+      stakeTransactions,
+      regularTransactions,
+      type: NEW_TRANSACTIONS_RECEIVED
+    });
+
+    if (newlyMinedTransactions.length > 0) {
+      const { startupStatsEndCalcTime, startupStatsCalcSeconds } =
+        getState().statistics;
+      const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
+      if (secFromLastStats > 5 * startupStatsCalcSeconds) {
+        dispatch(getStartupStats());
+      }
+    }
+  };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
 export const changeTransactionsFilter = (newFilter) => (dispatch, getState) => {
@@ -466,9 +463,8 @@ export const getStartupTransactions = () => async (dispatch, getState) => {
     }
   }
 
-  const { stakeTransactions, regularTransactions } = divideTransactions(
-    transactions
-  );
+  const { stakeTransactions, regularTransactions } =
+    divideTransactions(transactions);
 
   dispatch({
     type: GETSTARTUPTRANSACTIONS_SUCCESS,
@@ -840,46 +836,47 @@ export const transactionsMaturingHeights = (txs, chainParams) => {
 // getAmountFromTxInputs receives a decoded tx and adds the amount of
 // each input from the previous transaction. We need this because when decoding
 // a tx, the amount of the input is not decoded with it.
-export const getAmountFromTxInputs = (decodedTx) => async (
-  dispatch,
-  getState
-) => {
-  const { walletService } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-  try {
-    const inputWithAmount = decodedTx.inputs.map(
-      async ({ prevTxId, outputIndex }, i) => {
-        const oldTx = await wallet.getTransaction(walletService, prevTxId);
-        if (!oldTx) {
-          return Promise.reject(new Error(`Transaction ${prevTxId} not found`));
-        }
-        const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
-        const decodedOldTx = wallet.decodeRawTransaction(
-          rawTxBuffer,
-          chainParams
-        );
-        const oldOutput = decodedOldTx.outputs[outputIndex];
-        if (!oldOutput) {
-          return Promise.reject(
-            new Error(`Unknown outpoint ${prevTxId}:${outputIndex} not found`)
+export const getAmountFromTxInputs =
+  (decodedTx) => async (dispatch, getState) => {
+    const { walletService } = getState().grpc;
+    const chainParams = sel.chainParams(getState());
+    try {
+      const inputWithAmount = decodedTx.inputs.map(
+        async ({ prevTxId, outputIndex }, i) => {
+          const oldTx = await wallet.getTransaction(walletService, prevTxId);
+          if (!oldTx) {
+            return Promise.reject(
+              new Error(`Transaction ${prevTxId} not found`)
+            );
+          }
+          const rawTxBuffer = Buffer.from(hexToBytes(oldTx.rawTx));
+          const decodedOldTx = wallet.decodeRawTransaction(
+            rawTxBuffer,
+            chainParams
           );
+          const oldOutput = decodedOldTx.outputs[outputIndex];
+          if (!oldOutput) {
+            return Promise.reject(
+              new Error(`Unknown outpoint ${prevTxId}:${outputIndex} not found`)
+            );
+          }
+          decodedTx.inputs[i].amountIn =
+            decodedOldTx.outputs[outputIndex].value;
+          // we also save the outpoint address to perform sanity checkes on trezor txs.
+          decodedTx.inputs[i].outpointAddress =
+            decodedOldTx.outputs[outputIndex].decodedScript.address;
+          decodedTx.inputs[i].outpoint = `${prevTxId}:${outputIndex}`;
+          return decodedTx.inputs[i];
         }
-        decodedTx.inputs[i].amountIn = decodedOldTx.outputs[outputIndex].value;
-        // we also save the outpoint address to perform sanity checkes on trezor txs.
-        decodedTx.inputs[i].outpointAddress =
-          decodedOldTx.outputs[outputIndex].decodedScript.address;
-        decodedTx.inputs[i].outpoint = `${prevTxId}:${outputIndex}`;
-        return decodedTx.inputs[i];
-      }
-    );
+      );
 
-    decodedTx.inputs = await Promise.all(inputWithAmount);
+      decodedTx.inputs = await Promise.all(inputWithAmount);
 
-    return decodedTx;
-  } catch (e) {
-    return Promise.reject(e);
-  }
-};
+      return decodedTx;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
 
 // getTxFromInputs receives a decoded unsignedTx as parameter and gets the txs
 // which participate in the input.

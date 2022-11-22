@@ -4,9 +4,10 @@ import * as da from "actions/DaemonActions";
 
 export const useShutdown = () => {
   const dispatch = useDispatch();
-  const cleanShutdown = useCallback(() => dispatch(da.cleanShutdown()), [
-    dispatch
-  ]);
+  const cleanShutdown = useCallback(
+    () => dispatch(da.cleanShutdown()),
+    [dispatch]
+  );
 
   return { cleanShutdown };
 };

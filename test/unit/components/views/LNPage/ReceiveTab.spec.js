@@ -25,11 +25,11 @@ beforeEach(() => {
   selectors.lnChannels = jest.fn(() => mockChannels);
   selectors.lnChannelBalances = jest.fn(() => mockLnChannelBalance);
   selectors.lnInvoices = jest.fn(() => mockInvoices);
-  mockCancelInvoice = lnActions.cancelInvoice = jest.fn(() => () =>
-    Promise.resolve()
+  mockCancelInvoice = lnActions.cancelInvoice = jest.fn(
+    () => () => Promise.resolve()
   );
-  mockAddInvoice = lnActions.addInvoice = jest.fn(() => () =>
-    Promise.resolve()
+  mockAddInvoice = lnActions.addInvoice = jest.fn(
+    () => () => Promise.resolve()
   );
 });
 

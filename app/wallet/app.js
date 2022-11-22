@@ -90,36 +90,38 @@ const formatLogArgs = (msg, args) => {
 
 // Higher Order Function that wraps the promise-generating function f with log
 // calls. Calling f() **must** return a promise.
-export const withLog = (f, msg, opts = {}) => (...args) => {
-  if (opts.noArguments) {
-    log("info", msg);
-  } else {
-    const { logMsg } = formatLogArgs(msg, args);
-    log("info", logMsg);
-  }
+export const withLog =
+  (f, msg, opts = {}) =>
+  (...args) => {
+    if (opts.noArguments) {
+      log("info", msg);
+    } else {
+      const { logMsg } = formatLogArgs(msg, args);
+      log("info", logMsg);
+    }
 
-  return new Promise((resolve, reject) => {
-    f(...args)
-      .then((...res) => {
-        if (res.length === 1 && res[0] === undefined) {
-          log("debug", `${msg} returned without data`);
-        } else if (opts.noResponseData) {
-          log("debug", `${msg} returned [response data omitted]`);
-        } else {
-          const { logMsg } = formatLogArgs(`${msg} returned `, res);
-          log("debug", logMsg);
-        }
+    return new Promise((resolve, reject) => {
+      f(...args)
+        .then((...res) => {
+          if (res.length === 1 && res[0] === undefined) {
+            log("debug", `${msg} returned without data`);
+          } else if (opts.noResponseData) {
+            log("debug", `${msg} returned [response data omitted]`);
+          } else {
+            const { logMsg } = formatLogArgs(`${msg} returned `, res);
+            log("debug", logMsg);
+          }
 
-        resolve(...res);
-      })
-      .catch((err) => {
-        const { logMsg } = formatLogArgs(`${msg} errored `, [err]);
-        log("error", logMsg);
+          resolve(...res);
+        })
+        .catch((err) => {
+          const { logMsg } = formatLogArgs(`${msg} errored `, [err]);
+          log("error", logMsg);
 
-        reject(err);
-      });
-  });
-};
+          reject(err);
+        });
+    });
+  };
 
 export const withLogNoArgs = (f, msg, opts = {}) =>
   withLog(f, msg, logOptionNoArgs(opts));

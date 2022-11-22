@@ -243,12 +243,12 @@ beforeEach(() => {
   mockGetStakeInfoAttempt = clientActions.getStakeInfoAttempt = jest.fn(
     () => () => Promise.resolve()
   );
-  mockCheckUnmixedAccountBalance = accountMixerActions.checkUnmixedAccountBalance = jest.fn(
-    () => () => Promise.resolve()
-  );
-  mockGetMixerAcctsSpendableBalances = clientActions.getMixerAcctsSpendableBalances = jest.fn(
-    () => () => {}
-  );
+  mockCheckUnmixedAccountBalance =
+    accountMixerActions.checkUnmixedAccountBalance = jest.fn(
+      () => () => Promise.resolve()
+    );
+  mockGetMixerAcctsSpendableBalances =
+    clientActions.getMixerAcctsSpendableBalances = jest.fn(() => () => {});
 });
 
 test("test transactionNormalizer and ticketNormalizer", async () => {

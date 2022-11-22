@@ -10,7 +10,10 @@ export const invoke = async (...args) => {
 
 // Invocable generates a function that calls invoke for the given channel,
 // passing all args.
-export const invocable = (channel) => (...args) => invoke(channel, ...args);
+export const invocable =
+  (channel) =>
+  (...args) =>
+    invoke(channel, ...args);
 
 // This shims a streamed response returned by a gRPC call by using an EventEmitter
 // instance to proxy events. This is needed to avoid some serialization issues

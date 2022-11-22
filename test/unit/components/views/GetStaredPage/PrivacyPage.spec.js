@@ -25,9 +25,8 @@ beforeEach(() => {
   mockSetupDisabledPrivacy = daemonActions.setupDisabledPrivacy = jest.fn(
     () => () => {}
   );
-  mockUpdateStateSettingsChanged = settingsActions.updateStateSettingsChanged = jest.fn(
-    () => () => {}
-  );
+  mockUpdateStateSettingsChanged = settingsActions.updateStateSettingsChanged =
+    jest.fn(() => () => {});
   mockTempSettings = selectors.tempSettings = jest.fn(() => {
     return {
       allowedExternalRequests: []

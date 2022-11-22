@@ -111,8 +111,8 @@ beforeEach(() => {
   selectors.nextAddressAccount = jest.fn(() => mockDefaultAccount);
   selectors.currencyDisplay = jest.fn(() => DCR);
 
-  transactionActions.listUnspentOutputs = jest.fn(() => () =>
-    Promise.resolve(mockUnspentOutputs)
+  transactionActions.listUnspentOutputs = jest.fn(
+    () => () => Promise.resolve(mockUnspentOutputs)
   );
   mockGenQRCodeSVG = wallet.genQRCodeSVG = jest.fn(() => {});
   mockGetNextAddressAttempt = controlActions.getNextAddressAttempt = jest.fn(
