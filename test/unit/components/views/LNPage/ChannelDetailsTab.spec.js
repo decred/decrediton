@@ -109,7 +109,7 @@ test("open channel details", async () => {
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
-test("pending channel details", () => {
+test("pending channel details", async () => {
   mockChannelPoint = mockPendingChannels[0].channelPoint;
   render(<ChannelDetailsPage />);
 
@@ -141,7 +141,25 @@ test("pending channel details", () => {
   expect(screen.queryByText("Closing Tx:")).not.toBeInTheDocument();
   expect(screen.queryByText("Recovered Balance:")).not.toBeInTheDocument();
 
-  expect(queryCancelChannelButton()).not.toBeInTheDocument();
+  // show close button for pending channels too
+  const cancelChannelBt = getCancelChannelButton();
+  user.click(cancelChannelBt);
+  expect(
+    screen.getByText(/Attempt forced close of the channel/i)
+  ).toBeInTheDocument();
+
+  fireEvent.click(getConfirmButton());
+
+  await wait(() =>
+    expect(mockCloseChannel).toHaveBeenCalledWith(
+      mockPendingChannels[0].channelPoint,
+      true
+    )
+  );
+
+  expect(
+    screen.queryByText(/Attempt forced close of the channel/i)
+  ).not.toBeInTheDocument();
 });
 
 test("closed channel details", () => {
