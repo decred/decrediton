@@ -130,8 +130,9 @@ const getPending = () => screen.getByText("Pending");
 const getUnconfirmed = () => screen.getByText("Unconfirmed");
 const queryUnconfirmed = () => screen.queryByText("Unconfirmed");
 const queryPending = () => screen.queryByText("Pending");
-const getToAddressText = () =>
-  screen.getByText("To address:").parentElement.textContent;
+const getToAddressText = (isMulti) =>
+  screen.getByText(isMulti ? "To addresses:" : "To address:").parentElement
+    .textContent;
 const getTransactionFeeText = () =>
   screen.getByText("Transaction fee:").parentElement.textContent;
 const getWalletInputsText = () =>
@@ -173,8 +174,8 @@ test("regular sent pending tx from default account to an external address", asyn
   expect(getSentFromText()).toMatch("Sent FromdefaultUnconfirmed");
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(getPending()).toBeInTheDocument();
-  expect(getToAddressText()).toMatch(
-    "To address: TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY  TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsacvMFSMWcmxT7dj5UHqgrxB3PP6uwnEtY  TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk"
   );
   expect(getTransactionFeeText()).toMatch("Transaction fee:0.0000253 DCR");
 
@@ -191,7 +192,7 @@ test("regular sent pending tx from default account to an external address", asyn
   expect(getWalletOutputs()).toMatch("Wallet Outputschange9.9385181 DCR");
   // don't have any non wallet input
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8Zk 8.00000 DCR"
+    "Non Wallet OutputsTsZJt5A55AcCMp8iBu1rkNCxqJ3Bf1MC8ZkTsZJt5A55...3Bf1MC8Zk8.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -225,8 +226,8 @@ test("regular received mined tx to the default account", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryPending()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed5,269 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV  TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsVzSRzExt1NRzGwTqu8qyY12t8NH8yiGzV  TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -235,12 +236,12 @@ test("regular received mined tx to the default account", async () => {
   // don't have any wallet input
   expect(getWalletInputsText()).toMatch("Wallet Inputs");
   expect(getNonWalletInputsText()).toMatch(
-    "Non Wallet Inputs 3e68d75f9c2dbdcc3dd3e68fca736835e8d802a732938e17c3dad6b58faa28bf:1 3.00000 DCR aed4058ec3b9849d58b032768b6bd78ffe635b35fe230d7022b6ee7af7f319db:0 1.20000 DCR 19d0afa8310eed1f3112e028c7bed798b7f1b9aff41f1e8eb76d37a86439f96b:1 1.00000 DCR 14b5c15ec10861110b6a45eeb5d392b11b41e389c557ef32568b4718c0152778:0 388.51673938 DCR"
+    "Non Wallet Inputs3e68d75f9c2dbdcc3dd3e68fca736835e8d802a732938e17c3dad6b58faa28bf:13e68d75f9...faa28bf:13.00000 DCRaed4058ec3b9849d58b032768b6bd78ffe635b35fe230d7022b6ee7af7f319db:0aed4058ec...7f319db:01.20000 DCR19d0afa8310eed1f3112e028c7bed798b7f1b9aff41f1e8eb76d37a86439f96b:119d0afa83...439f96b:11.00000 DCR14b5c15ec10861110b6a45eeb5d392b11b41e389c557ef32568b4718c0152778:014b5c15ec...0152778:0388.51673938 DCR"
   );
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 100.00000 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault100.00000 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsbvHMveM1bTK35aP5Dd2tmFppipvw2faWA 293.71666428 DCR"
+    "Non Wallet OutputsTsbvHMveM1bTK35aP5Dd2tmFppipvw2faWATsbvHMveM...ipvw2faWA293.71666428 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -274,8 +275,8 @@ test("regular self transfer tx to unmixed account", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryPending()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed4 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh  TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsSBV4qZpZHS6QGVi6Zkp8kxBMS8EEF1bCh  TsgdFQemirW9EcAuz94SUCTePPaj5TDEcf8"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -286,7 +287,7 @@ test("regular self transfer tx to unmixed account", async () => {
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
   expect(getWalletOutputs()).toMatch(
-    "Wallet Outputs account-4 50.00000 DCR default 13.62441426 DCR"
+    "Wallet Outputsaccount-450.00000 DCRdefault13.62441426 DCR"
   );
   // don't have any non wallet input
   expect(getNonWalletOutputs()).toMatch("Non Wallet Outputs");
@@ -322,8 +323,8 @@ test("self coins from unmixed to mixed account", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryPending()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed11 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR  TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY  TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC  TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5  TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs  TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw  TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva  TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm  TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TshTsuJmLsbpFCPgFYkeR4nmbRqiAAjGvAR  TsUNW19FJpNjkGrsi1tusvkHYNoZVbvzLTY  TsfhYupZxcqyHMLmJDUZ9qLJxbD6VQkpriC  TsXPm8qFAc1niDd654jaJnRsSSWjBTKGmP5  TsjBaeiu9ZZC2aZ5d4wHRH9H8KeG4szwkEs  TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw  TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva  TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm  TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -331,14 +332,14 @@ test("self coins from unmixed to mixed account", async () => {
 
   expect(getWalletInputsText()).toMatch("Wallet Inputsaccount-450.00000 DCR");
   expect(getNonWalletInputsText()).toMatch(
-    "Non Wallet Inputs 1fb0d31823836168b59ea0d52d301905aa8c64c694b528e22e901d5b3cac7377:6 14.04694804 DCR 1fb0d31823836168b59ea0d52d301905aa8c64c694b528e22e901d5b3cac7377:13 16.50200823 DCR"
+    "Non Wallet Inputs1fb0d31823836168b59ea0d52d301905aa8c64c694b528e22e901d5b3cac7377:61fb0d3182...cac7377:614.04694804 DCR1fb0d31823836168b59ea0d52d301905aa8c64c694b528e22e901d5b3cac7377:131fb0d3182...ac7377:1316.50200823 DCR"
   );
 
   expect(getWalletOutputs()).toMatch(
     "Wallet Outputschange7.05029094 DCRchange10.73741824 DCRchange10.73741824 DCRchange10.73741824 DCRchange10.73741824 DCR"
   );
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsjwBN1UELsLfV6BZynGfH21qhyBb5PtFaw 5.76456469 DCR TsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzva 10.73741824 DCR TsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUm 3.3095045 DCR TsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3 10.73741824 DCR"
+    "Non Wallet OutputsTsjwBN1UELsLfV6BZynGfH21qhyBb5PtFawTsjwBN1UE...yBb5PtFaw5.76456469 DCRTsoPFWy8h8DFKiXXqYxWUaS9uguazs1bzvaTsoPFWy8h...uazs1bzva10.73741824 DCRTsVV7XBX2B8hj8c76FzWByoZ622DTiQxXUmTsVV7XBX2...2DTiQxXUm3.3095045 DCRTsoQB5qSKdNXJEwr2X5YbUJnBhHaPYv2pA3TsoQB5qSK...HaPYv2pA310.73741824 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -388,6 +389,9 @@ test("voted ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed4,572 confirmations");
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsZU4vitduHQ4JWY5hjXFpqWa4DmUsaLenU  TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 "
+  );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
@@ -397,9 +401,9 @@ test("voted ticket", async () => {
   );
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 122.71678363 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault122.71678363 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4n 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet OutputsTsYefqPSd4tBj2MFBaFirMhPK8hUUhMfa4nTsYefqPSd...hUUhMfa4n0.00000 DCRTsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2TsR28UZRp...hrNVvbYq20.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -460,14 +464,12 @@ test("vote tx", async () => {
 
   expect(getWalletInputsText()).toMatch("Wallet Inputsdefault67.85796485 DCR");
   expect(getNonWalletInputsText()).toMatch(
-    "Non Wallet Inputs 0000000000000000000000000000000000000000000000000000000000000000:4294967295 0.04323486 DCR"
+    "Non Wallet InputsStakebase0.04323486 DCR"
   );
 
-  expect(getWalletOutputs()).toMatch(
-    "Wallet Outputs account-15 67.90119971 DCR"
-  );
+  expect(getWalletOutputs()).toMatch("Wallet Outputsaccount-1567.90119971 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs [script] - OP_RETURN OP_DATA_36 e4d5021f882b7926497679f68b14dbf77fdd2a901b24560ab297789e00000000803b0e00 0.00000 DCR [script] - OP_RETURN OP_DATA_6 01000a000000 0.00000 DCR"
+    "Non Wallet Outputs[script] - OP_RETURN OP_DATA_36 e4d5021f882b7926497679f68b14dbf77fdd2a901b24560ab297789e00000000803b0e00[script] ...0803b0e000.00000 DCR[script] - OP_RETURN OP_DATA_6 01000a000000[script] ...00a0000000.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -530,7 +532,7 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
 
 test("missed ticket", async () => {
   mockTxHash =
-    "d05c30941362f0bf74b8ccbadea892b68de11ba8aa74fe13a170bb289d7426cc";
+    "30dd06049d763ab474dbc39ffbe4bbd0ad6825e5bdf21b67dc046fda3ce55774";
   const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
   mockStakeTransactionMap[mockTxHash] =
@@ -558,29 +560,31 @@ test("missed ticket", async () => {
 
   expect(getHeaderTitleIconClassName()).toMatch("missed");
   expect(getTitleText()).toMatch("Missed");
-  expect(getTicketCostText()).toMatch("Ticket Cost85.93625324 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost95.25589786 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
-  expect(getConfirmedText()).toMatch("Confirmed16,098 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: Tsc5FSv5cAm4sPNzogkq9qYwdx2Gj4XnEoC  TsUpkwUgWxgCumeS9xwHhVbMXcHGBeGfCLG  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getConfirmedText()).toMatch("Confirmed372,256 confirmations");
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TccM3W31vkNXUCosK4Y5vYrmtiWWjuecHFs  TsZRAVD9t8shxck66daNEhaWrWCsYV9e2Qp  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 "
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
   expect(queryRebroadcastTransaction()).not.toBeInTheDocument();
 
-  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault85.93628304 DCR");
+  expect(getWalletInputsText()).toMatch(
+    "Wallet Inputsaccount-695.25592746 DCR"
+  );
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 85.93625324 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsimported95.25589786 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsUpkwUgWxgCumeS9xwHhVbMXcHGBeGfCLG 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet OutputsTsZRAVD9t8shxck66daNEhaWrWCsYV9e2QpTsZRAVD9t...CsYV9e2Qp0.00000 DCRTsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2TsR28UZRp...hrNVvbYq20.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
-  expect(getHeightText()).toMatch("Height914582");
+  expect(getHeightText()).toMatch("Height558424");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-missed");
 
   user.click(screen.getByText("Back"));
@@ -635,7 +639,7 @@ test("revocation", async () => {
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 64.75413336 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault64.75413336 DCR");
   // don't have non wallet output
   expect(getNonWalletOutputs()).toMatch("Non Wallet Outputs");
 
@@ -694,7 +698,7 @@ test("revocation", async () => {
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 64.75413336 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault64.75413336 DCR");
   // don't have non wallet output
   expect(getNonWalletOutputs()).toMatch("Non Wallet Outputs");
 
@@ -742,8 +746,8 @@ test("revoked ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed109,009 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsnHm1YjaLMmnFsyGwt54D4P53aFaNqeESJ  Tse3z6zJhWhb5Eir4s7KjZRv4koC9fEkAYy  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -753,7 +757,7 @@ test("revoked ticket", async () => {
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 86.00218109 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault86.00218109 DCR");
   // don't have non wallet output
   expect(getNonWalletOutputs()).toMatch("Non Wallet Outputs");
 
@@ -800,8 +804,8 @@ test("immature ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed1 confirmation");
-  expect(getToAddressText()).toMatch(
-    "To address: TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK  TsTP4a61273kCXL9ZDgRKZsPrV6Emh3nxB7  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsSSWJRNEor8X6R33GSoo68p3yq3zFuGoVK  TsTP4a61273kCXL9ZDgRKZsPrV6Emh3nxB7  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -811,9 +815,9 @@ test("immature ticket", async () => {
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 67.85796485 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault67.85796485 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsTP4a61273kCXL9ZDgRKZsPrV6Emh3nxB7 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet OutputsTsTP4a61273kCXL9ZDgRKZsPrV6Emh3nxB7TsTP4a612...6Emh3nxB70.00000 DCRTsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2TsR28UZRp...hrNVvbYq20.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -860,8 +864,8 @@ test("live ticket", async () => {
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
   expect(queryUnconfirmed()).not.toBeInTheDocument();
   expect(getConfirmedText()).toMatch("Confirmed451 confirmations");
-  expect(getToAddressText()).toMatch(
-    "To address: TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4  TsRBbeBi7cpeoKsMEtzDDi2isLT6ETX8o2p  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TscyVUMxevtGhTuTvM6LkLnvQGU97kEyUg4  TsRBbeBi7cpeoKsMEtzDDi2isLT6ETX8o2p  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
   );
 
   expect(queryAbandonTransactionButton()).not.toBeInTheDocument();
@@ -871,9 +875,9 @@ test("live ticket", async () => {
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 67.85796485 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault67.85796485 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs TsRBbeBi7cpeoKsMEtzDDi2isLT6ETX8o2p 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet OutputsTsRBbeBi7cpeoKsMEtzDDi2isLT6ETX8o2pTsRBbeBi7...T6ETX8o2p0.00000 DCRTsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2TsR28UZRp...hrNVvbYq20.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -913,7 +917,7 @@ test("live ticket", async () => {
 
 test("unmined ticket", async () => {
   mockTxHash =
-    "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60";
+    "d6b457b87edf02391e9adb4021d830259178bc4c906129b55445f2918ad5fb6f";
   const rawTx = mockNormalizedStakeTransactions[mockTxHash].rawTx;
   const mockStakeTransactionMap = {};
   mockStakeTransactionMap[mockTxHash] =
@@ -936,11 +940,11 @@ test("unmined ticket", async () => {
   expect(getTitleText()).toMatch("Unmined");
   expect(getPending()).toBeInTheDocument();
   expect(getUnconfirmed()).toBeInTheDocument();
-  expect(getTicketCostText()).toMatch("Ticket Cost67.85796485 DCR");
+  expect(getTicketCostText()).toMatch("Ticket Cost0.20000 DCR");
 
   expect(getTransactionText()).toMatch(`Transaction:${mockTxHash}`);
-  expect(getToAddressText()).toMatch(
-    "To address: TsZxH8PTsbnWHg7ty2xFhUH9uzizLrNSAy7  Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2"
+  expect(getToAddressText(true)).toMatch(
+    "To addresses: TsRWjysgoNXTS7JAQXfsaAzts8UM3Dq3WUg  TseGZ7HkiWybyH6LnKdokifkFCn4cJYddm4  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 "
   );
 
   user.click(getAbandonTransactionButton());
@@ -949,15 +953,13 @@ test("unmined ticket", async () => {
   user.click(getRebroadcastTransaction());
   expect(mockPublishUnminedTransactionsAttempt).toHaveBeenCalled();
 
-  expect(getWalletInputsText()).toMatch(
-    "Wallet Inputsaccount-1567.85799465 DCR"
-  );
+  expect(getWalletInputsText()).toMatch("Wallet Inputsdefault0.2000298 DCR");
   // don't have non wallet input
   expect(getNonWalletInputsText()).toMatch("Non Wallet Inputs");
 
-  expect(getWalletOutputs()).toMatch("Wallet Outputs default 67.85796485 DCR");
+  expect(getWalletOutputs()).toMatch("Wallet Outputsdefault0.20000 DCR");
   expect(getNonWalletOutputs()).toMatch(
-    "Non Wallet Outputs Tsf35F2zDqv9EmDC1pTqixwNe5ytxyseRGr 0.00000 DCR TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 0.00000 DCR"
+    "Non Wallet OutputsTseGZ7HkiWybyH6LnKdokifkFCn4cJYddm4TseGZ7Hki...n4cJYddm40.00000 DCRTsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2TsR28UZRp...hrNVvbYq20.00000 DCR"
   );
 
   expect(screen.getByText(rawTx)).toBeInTheDocument();
@@ -1026,7 +1028,8 @@ test("show not yet fetched regular tx", async () => {
 });
 
 test("show not yet fetched stake tx", async () => {
-  mockTxHash = "not-yet-fetched-tx-hash";
+  mockTxHash =
+    "05fba7101e0d038bad81777f221189eebce9461d1181d961a284f32ed3664e07";
 
   const mockGetTransactionsResponse = {
     type: transactionActions.GETTRANSACTIONS_COMPLETE,
@@ -1040,12 +1043,8 @@ test("show not yet fetched stake tx", async () => {
   let counter = 0;
   transactionActions.getTransactions = jest.fn(() => (dispatch) => {
     if (counter++ > 3) {
-      mockGetTransactionsResponse.stakeTransactions[mockTxHash] = {
-        ...mockNormalizedStakeTransactions[
-          "65c1f46ce10d2bf2595de367ab8d1703162bb47d47f40fb550ecf9ec5d21ed60"
-        ],
-        txHash: mockTxHash
-      };
+      mockGetTransactionsResponse.stakeTransactions[mockTxHash] =
+        mockNormalizedStakeTransactions[mockTxHash];
     }
     return dispatch(mockGetTransactionsResponse);
   });

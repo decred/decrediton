@@ -22,7 +22,7 @@ import {
 import { en as enLocale } from "i18n/locales";
 import * as vspa from "actions/VSPActions";
 import { DCR, ATOMS } from "constants";
-import { mockStakeTransactions } from "../TransactionPage/mocks";
+import { mockNormalizedStakeTransactions } from "../TransactionPage/mocks.js";
 
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
@@ -191,12 +191,12 @@ const testCloseWalletButtonUnpaidTicketFee = async (
   status,
   expectDefaultModal = false
 ) => {
-  selectors.stakeTransactions = jest.fn(() => mockStakeTransactions);
+  selectors.stakeTransactions = jest.fn(() => mockNormalizedStakeTransactions);
   selectors.getVSPTicketsHashes = jest.fn(() => {
     return {
       [VSP_FEE_PROCESS_ERRORED]: [
-        Object.keys(mockStakeTransactions).find(
-          (hash) => mockStakeTransactions[hash].status === status
+        Object.keys(mockNormalizedStakeTransactions).find(
+          (hash) => mockNormalizedStakeTransactions[hash].status === status
         )
       ]
     };

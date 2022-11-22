@@ -51,7 +51,9 @@ const TxDirection = ({ account, isCred, overview }) => (
         values={{
           acc: (
             <div className={styles.status}>
-              <div className={styles.accountName}>{account}</div>
+              <div className={styles.accountName}>
+                <TruncatedText text={account} max={overview ? 10 : 20} />
+              </div>
             </div>
           )
         }}
@@ -91,7 +93,7 @@ const RegularTxRow = ({
       </span>
       {txDirection === TICKET_FEE ? (
         <div className={classNames("flex-row", styles.txDirection)}>
-          <TxDirection account={txAccountNameDebited} />
+          <TxDirection account={txAccountNameDebited} overview={overview} />
           <TxDirection
             account={txAccountNameCredited}
             isCred
