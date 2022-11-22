@@ -6,12 +6,8 @@ import { Subtitle } from "shared";
 import AddWatchtower from "./AddWatchtower";
 
 const Watchtowers = () => {
-  const {
-    addWatchtower,
-    removeWatchtower,
-    listWatchtowers,
-    towersList
-  } = useWatchtowers();
+  const { addWatchtower, removeWatchtower, listWatchtowers, towersList } =
+    useWatchtowers();
 
   return (
     <>

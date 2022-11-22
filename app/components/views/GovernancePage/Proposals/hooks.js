@@ -42,10 +42,10 @@ export function useProposalsListItem(token) {
 
   const proposals = useSelector(sel.proposals);
   const proposalsDetails = useSelector(sel.proposalsDetails);
-  const viewedProposalDetails = useMemo(() => proposalsDetails[token], [
-    token,
-    proposalsDetails
-  ]);
+  const viewedProposalDetails = useMemo(
+    () => proposalsDetails[token],
+    [token, proposalsDetails]
+  );
 
   const linkedProposal = useMemo(
     () =>

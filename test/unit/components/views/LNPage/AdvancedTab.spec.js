@@ -131,8 +131,8 @@ beforeEach(() => {
   mockExportBackup = lnActions.exportBackup = jest.fn(() => () => {});
   mockVerifyBackup = lnActions.verifyBackup = jest.fn(() => () => {});
   mockRemoveWatchtower = lnActions.removeWatchtower = jest.fn(() => () => {});
-  mockAddWatchtower = lnActions.addWatchtower = jest.fn(() => () =>
-    Promise.resolve()
+  mockAddWatchtower = lnActions.addWatchtower = jest.fn(
+    () => () => Promise.resolve()
   );
   mockGetNodeInfo = lnActions.getNodeInfo = jest.fn(() => () => {});
 });

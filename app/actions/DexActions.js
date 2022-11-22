@@ -218,73 +218,68 @@ export const DEX_CREATEWALLET_ATTEMPT = "DEX_CREATEWALLET_ATTEMPT";
 export const DEX_CREATEWALLET_SUCCESS = "DEX_CREATEWALLET_SUCCESS";
 export const DEX_CREATEWALLET_FAILED = "DEX_CREATEWALLET_FAILED";
 
-export const createWalletDex = (
-  passphrase,
-  appPassphrase,
-  accountName
-) => async (dispatch, getState) => {
-  dispatch({ type: DEX_CREATEWALLET_ATTEMPT });
-  if (!sel.dexActive(getState())) {
-    dispatch({ type: DEX_CREATEWALLET_FAILED, error: "Dex isn't active" });
-    return;
-  }
-  try {
-    const {
-      walletLoader: { dexRpcSettings }
-    } = getState();
-    const rpcCreds = dexRpcSettings;
-    const account = accountName;
-    const rpcuser = rpcCreds.rpcUser;
-    const rpcpass = rpcCreds.rpcPass;
-    const rpclisten = rpcCreds.rpcListen;
-    const rpccert = rpcCreds.rpcCert;
-    const assetID = 42;
-    const walletType = "dcrwalletRPC";
-    await dex.createWallet(
-      assetID,
-      walletType,
-      passphrase,
-      appPassphrase,
-      account,
-      rpcuser,
-      rpcpass,
-      rpclisten,
-      rpccert
-    );
-    dispatch({ type: DEX_CREATEWALLET_SUCCESS });
-    // Request current user information
-    dispatch(userDex());
-  } catch (error) {
-    dispatch({ type: DEX_CREATEWALLET_FAILED, error });
-    return;
-  }
-};
+export const createWalletDex =
+  (passphrase, appPassphrase, accountName) => async (dispatch, getState) => {
+    dispatch({ type: DEX_CREATEWALLET_ATTEMPT });
+    if (!sel.dexActive(getState())) {
+      dispatch({ type: DEX_CREATEWALLET_FAILED, error: "Dex isn't active" });
+      return;
+    }
+    try {
+      const {
+        walletLoader: { dexRpcSettings }
+      } = getState();
+      const rpcCreds = dexRpcSettings;
+      const account = accountName;
+      const rpcuser = rpcCreds.rpcUser;
+      const rpcpass = rpcCreds.rpcPass;
+      const rpclisten = rpcCreds.rpcListen;
+      const rpccert = rpcCreds.rpcCert;
+      const assetID = 42;
+      const walletType = "dcrwalletRPC";
+      await dex.createWallet(
+        assetID,
+        walletType,
+        passphrase,
+        appPassphrase,
+        account,
+        rpcuser,
+        rpcpass,
+        rpclisten,
+        rpccert
+      );
+      dispatch({ type: DEX_CREATEWALLET_SUCCESS });
+      // Request current user information
+      dispatch(userDex());
+    } catch (error) {
+      dispatch({ type: DEX_CREATEWALLET_FAILED, error });
+      return;
+    }
+  };
 
 export const DEX_SETWALLET_PASSWORD_ATTEMPT = "DEX_SETWALLET_PASSWORD_ATTEMPT";
 export const DEX_SETWALLET_PASSWORD_SUCCESS = "DEX_SETWALLET_PASSWORD_SUCCESS";
 export const DEX_SETWALLET_PASSWORD_FAILED = "DEX_SETWALLET_PASSWORD_FAILED";
 
-export const setWalletPasswordDex = (passphrase, appPassphrase) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({ type: DEX_SETWALLET_PASSWORD_ATTEMPT });
-  if (!sel.dexActive(getState())) {
-    dispatch({
-      type: DEX_SETWALLET_PASSWORD_FAILED,
-      error: "Dex isn't active"
-    });
-    return;
-  }
-  try {
-    const assetID = 42;
-    await dex.setWalletPassword(assetID, passphrase, appPassphrase);
-    dispatch({ type: DEX_SETWALLET_PASSWORD_SUCCESS });
-  } catch (error) {
-    dispatch({ type: DEX_SETWALLET_PASSWORD_FAILED, error });
-    return;
-  }
-};
+export const setWalletPasswordDex =
+  (passphrase, appPassphrase) => async (dispatch, getState) => {
+    dispatch({ type: DEX_SETWALLET_PASSWORD_ATTEMPT });
+    if (!sel.dexActive(getState())) {
+      dispatch({
+        type: DEX_SETWALLET_PASSWORD_FAILED,
+        error: "Dex isn't active"
+      });
+      return;
+    }
+    try {
+      const assetID = 42;
+      await dex.setWalletPassword(assetID, passphrase, appPassphrase);
+      dispatch({ type: DEX_SETWALLET_PASSWORD_SUCCESS });
+    } catch (error) {
+      dispatch({ type: DEX_SETWALLET_PASSWORD_FAILED, error });
+      return;
+    }
+  };
 
 export const DEX_USER_ATTEMPT = "DEX_USER_ATTEMPT";
 export const DEX_USER_SUCCESS = "DEX_USER_SUCCESS";
@@ -343,27 +338,25 @@ export const CREATEDEXACCOUNT_ATTEMPT = "CREATEDEXACCOUNT_ATTEMPT";
 export const CREATEDEXACCOUNT_FAILED = "CREATEDEXACCOUNT_FAILED";
 export const CREATEDEXACCOUNT_SUCCESS = "CREATEDEXACCOUNT_SUCCESS";
 
-export const createDexAccount = (passphrase, accountName) => async (
-  dispatch,
-  getState
-) => {
-  const {
-    daemon: { walletName }
-  } = getState();
+export const createDexAccount =
+  (passphrase, accountName) => async (dispatch, getState) => {
+    const {
+      daemon: { walletName }
+    } = getState();
 
-  try {
-    const walletConfig = wallet.getWalletCfg(
-      sel.isTestNet(getState()),
-      walletName
-    );
-    dispatch({ type: CREATEDEXACCOUNT_ATTEMPT });
-    await dispatch(getNextAccountAttempt(passphrase, accountName));
-    dispatch({ dexAccount: accountName, type: CREATEDEXACCOUNT_SUCCESS });
-    walletConfig.set(configConstants.DEX_ACCOUNT, accountName);
-  } catch (error) {
-    dispatch({ error, type: CREATEDEXACCOUNT_FAILED });
-  }
-};
+    try {
+      const walletConfig = wallet.getWalletCfg(
+        sel.isTestNet(getState()),
+        walletName
+      );
+      dispatch({ type: CREATEDEXACCOUNT_ATTEMPT });
+      await dispatch(getNextAccountAttempt(passphrase, accountName));
+      dispatch({ dexAccount: accountName, type: CREATEDEXACCOUNT_SUCCESS });
+      walletConfig.set(configConstants.DEX_ACCOUNT, accountName);
+    } catch (error) {
+      dispatch({ error, type: CREATEDEXACCOUNT_FAILED });
+    }
+  };
 
 export const SELECT_DEXACCOUNT_ATTEMPT = "SELECT_DEXACCOUNT_ATTEMPT";
 export const SELECT_DEXACCOUNT_FAILED = "SELECT_DEXACCOUNT_FAILED";

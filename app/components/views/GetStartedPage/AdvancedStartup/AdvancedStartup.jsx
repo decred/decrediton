@@ -24,9 +24,8 @@ export const AdvancedStartupBody = ({
   const [rpc_host, setRpcHostState] = useState(rpchost);
   const [rpc_port, setRpcPortState] = useState(rpcport);
   const [rpcUserHasFailedAttempt, setUserHasFailedAttempt] = useState(false);
-  const [rpcPasswordHasFailedAttempt, setPasswordHasFailedAttempt] = useState(
-    false
-  );
+  const [rpcPasswordHasFailedAttempt, setPasswordHasFailedAttempt] =
+    useState(false);
   const [rpcHostHasFailedAttempt, setHostHasFailedAttempt] = useState(false);
   const [rpcPortHasFailedAttempt, setPortHasFailedAttempt] = useState(false);
   const [rpcCertHasFailedAttempt, setCertHasFailedAttempt] = useState(false);

@@ -44,9 +44,8 @@ const HistoryTab = () => {
   const [index, setIndex] = useState(() =>
     Math.min(BATCH_TX_COUNT, transactions.length)
   );
-  const [noMoreTransactionsToShow, setNoMoreTransactionsToShow] = useState(
-    false
-  );
+  const [noMoreTransactionsToShow, setNoMoreTransactionsToShow] =
+    useState(false);
   const { search, listDirection } = transactionsFilter;
 
   const isMounted = useRef(false);
@@ -63,9 +62,8 @@ const HistoryTab = () => {
 
   const [searchText, setSearchText] = useState(search);
   const [selectedTxTypeKeys, setSelectedTxTypeKeys] = useState(selTxTypeKeys);
-  const [selectedSortOrderKey, setSelectedSortOrderKey] = useState(
-    listDirection
-  );
+  const [selectedSortOrderKey, setSelectedSortOrderKey] =
+    useState(listDirection);
   const [isChangingFilterTimer, setIsChangingFilterTimer] = useState(null);
 
   const loadMoreThreshold = 250 + Math.max(0, window.innerHeight - 765);
@@ -150,10 +148,10 @@ const HistoryTab = () => {
     });
   };
 
-  const visibleTransactions = useMemo(() => transactions.slice(0, index), [
-    index,
-    transactions
-  ]);
+  const visibleTransactions = useMemo(
+    () => transactions.slice(0, index),
+    [index, transactions]
+  );
 
   return !walletService ? (
     <ErrorScreen />

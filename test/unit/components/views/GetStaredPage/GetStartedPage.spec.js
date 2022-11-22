@@ -37,8 +37,8 @@ beforeEach(() => {
   mockDaemonWarning = selectors.daemonWarning = jest.fn(() => null);
   mockIsSPV = selectors.isSPV = jest.fn(() => false);
   mockAppVersion = selectors.appVersion = jest.fn(() => testAppVersion);
-  mockGetSelectedWallet = wlActions.getSelectedWallet = jest.fn(() => () =>
-    null
+  mockGetSelectedWallet = wlActions.getSelectedWallet = jest.fn(
+    () => () => null
   );
   mockGetAvailableWallets = daemonActions.getAvailableWallets = jest.fn(
     () => () => Promise.resolve({ availableWallets: [], previousWallet: null })
@@ -61,17 +61,17 @@ beforeEach(() => {
   wallet.getDcrlndLogs = jest.fn(() =>
     Promise.resolve(Buffer.from("", "utf-8"))
   );
-  mockConnectDaemon = daemonActions.connectDaemon = jest.fn(() => () =>
-    Promise.resolve(true)
+  mockConnectDaemon = daemonActions.connectDaemon = jest.fn(
+    () => () => Promise.resolve(true)
   );
-  mockStartDaemon = daemonActions.startDaemon = jest.fn(() => () =>
-    Promise.resolve(true)
+  mockStartDaemon = daemonActions.startDaemon = jest.fn(
+    () => () => Promise.resolve(true)
   );
-  mockSyncDaemon = daemonActions.syncDaemon = jest.fn(() => () =>
-    Promise.resolve()
+  mockSyncDaemon = daemonActions.syncDaemon = jest.fn(
+    () => () => Promise.resolve()
   );
-  mockCheckNetworkMatch = daemonActions.checkNetworkMatch = jest.fn(() => () =>
-    Promise.resolve()
+  mockCheckNetworkMatch = daemonActions.checkNetworkMatch = jest.fn(
+    () => () => Promise.resolve()
   );
   selectors.stakeTransactions = jest.fn(() => []);
 });
@@ -273,8 +273,8 @@ test("start regular daemon and receive sync daemon error", async () => {
     };
   });
   const testSyncErrorMsg = { error: "sync-error-msg" };
-  mockSyncDaemon = daemonActions.syncDaemon = jest.fn(() => () =>
-    Promise.reject(testSyncErrorMsg)
+  mockSyncDaemon = daemonActions.syncDaemon = jest.fn(
+    () => () => Promise.reject(testSyncErrorMsg)
   );
   mockGetDaemonSynced = selectors.getDaemonSynced = jest.fn(() => false);
   mockIsSPV = selectors.isSPV = jest.fn(() => false);
@@ -295,8 +295,8 @@ test("start regular daemon and receive network match error", async () => {
     };
   });
   const testNetworkMatchErrorMsg = "network-match-error-msg";
-  mockCheckNetworkMatch = daemonActions.checkNetworkMatch = jest.fn(() => () =>
-    Promise.reject(testNetworkMatchErrorMsg)
+  mockCheckNetworkMatch = daemonActions.checkNetworkMatch = jest.fn(
+    () => () => Promise.reject(testNetworkMatchErrorMsg)
   );
   mockGetDaemonSynced = selectors.getDaemonSynced = jest.fn(() => false);
   mockIsSPV = selectors.isSPV = jest.fn(() => false);

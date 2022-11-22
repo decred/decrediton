@@ -14,12 +14,8 @@ import { useApp } from "../hooks";
 import styles from "./App.module.css";
 
 const App = () => {
-  const {
-    hideAboutModalMacOS,
-    locale,
-    aboutModalMacOSVisible,
-    theme
-  } = useApp();
+  const { hideAboutModalMacOS, locale, aboutModalMacOSVisible, theme } =
+    useApp();
 
   return (
     <IntlProvider

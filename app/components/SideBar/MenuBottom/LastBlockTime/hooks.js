@@ -23,9 +23,8 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
         _lastBlockIsRecent = timeFromLastBlock < 60000;
         if (_lastBlockIsRecent) {
           updateRecentTimer.current = setTimeout(() => {
-            const { _lastBlockDate, _lastBlockIsRecent } = getBlockDate(
-              lastBlockTimestamp
-            );
+            const { _lastBlockDate, _lastBlockIsRecent } =
+              getBlockDate(lastBlockTimestamp);
             setLastBlockDate(_lastBlockDate);
             setLastBlockIsRecent(_lastBlockIsRecent);
           }, 60000 - timeFromLastBlock);
@@ -37,9 +36,8 @@ export function useLastBlockTime(lastBlockTimestamp, clearTimeout, setTimeout) {
   );
 
   useEffect(() => {
-    const { _lastBlockDate, _lastBlockIsRecent } = getBlockDate(
-      lastBlockTimestamp
-    );
+    const { _lastBlockDate, _lastBlockIsRecent } =
+      getBlockDate(lastBlockTimestamp);
     setLastBlockDate(_lastBlockDate);
     setLastBlockIsRecent(_lastBlockIsRecent);
   }, [lastBlockTimestamp, getBlockDate]);

@@ -385,10 +385,12 @@ export const locale = createSelector(
   }
 );
 
-export const txURLBuilder = createSelector([network], (network) => (txHash) =>
-  `https://${
-    network !== TESTNET ? "dcrdata" : "testnet"
-  }.decred.org/tx/${txHash}`
+export const txURLBuilder = createSelector(
+  [network],
+  (network) => (txHash) =>
+    `https://${
+      network !== TESTNET ? "dcrdata" : "testnet"
+    }.decred.org/tx/${txHash}`
 );
 
 export const blockURLBuilder = createSelector(

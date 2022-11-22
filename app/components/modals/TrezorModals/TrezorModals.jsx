@@ -19,10 +19,8 @@ const TrezorModals = () => {
     ...props
   } = useTrezor();
 
-  const [
-    wordAlreadyHasBeenRequested,
-    setWordAlreadyHasBeenRequested
-  ] = useState(false);
+  const [wordAlreadyHasBeenRequested, setWordAlreadyHasBeenRequested] =
+    useState(false);
   useEffect(() => {
     if (waitingForWord) {
       setWordAlreadyHasBeenRequested(true);

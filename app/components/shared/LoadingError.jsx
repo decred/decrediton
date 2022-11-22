@@ -12,9 +12,10 @@ const LoadingError = ({
   cancelButton
 }) => {
   const dispatch = useDispatch();
-  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [
-    dispatch
-  ]);
+  const goBackHistory = useCallback(
+    () => dispatch(cli.goBackHistory()),
+    [dispatch]
+  );
 
   return (
     <div className={styles.loadingError}>

@@ -93,31 +93,8 @@ const testPublishTransactionResponse = {
     "865628391fc121d1bd8e7f4542d7f12886e4a1a69216db168864c77359e89662"
 };
 const testScript = [
-  118,
-  169,
-  20,
-  40,
-  47,
-  141,
-  68,
-  49,
-  252,
-  243,
-  127,
-  23,
-  24,
-  82,
-  210,
-  183,
-  200,
-  29,
-  46,
-  125,
-  230,
-  190,
-  22,
-  136,
-  172
+  118, 169, 20, 40, 47, 141, 68, 49, 252, 243, 127, 23, 24, 82, 210, 183, 200,
+  29, 46, 125, 230, 190, 22, 136, 172
 ];
 const testChangeScriptByAccount = {
   [defaultAccountNumber]: testScript
@@ -251,9 +228,8 @@ beforeEach(() => {
       Promise.resolve();
     }
   );
-  mockSetNeedsVSPdProcessTickets = settingsActions.setNeedsVSPdProcessTickets = jest.fn(
-    () => () => {}
-  );
+  mockSetNeedsVSPdProcessTickets = settingsActions.setNeedsVSPdProcessTickets =
+    jest.fn(() => () => {});
   mockCallbackFunction = jest.fn(() => new Promise((r) => setTimeout(r, 10)));
   mockPurchaseTickets = wallet.purchaseTickets = jest.fn(() =>
     Promise.resolve({ ticketHashes: [] })
@@ -321,15 +297,13 @@ beforeEach(() => {
   mockGetPeerInfo = wallet.getPeerInfo = jest.fn(() =>
     Promise.resolve(testPeerInfoResponse)
   );
-  mockOnConfirmationDialogCallbacks = wallet.onConfirmationDialogCallbacks = jest.fn(
-    () => {}
-  );
+  mockOnConfirmationDialogCallbacks = wallet.onConfirmationDialogCallbacks =
+    jest.fn(() => {});
   mockConstructTransaction = wallet.constructTransaction = jest.fn(
     () => testConstructTxResponse
   );
-  mockConstructSendAllTransaction = wallet.constructSendAllTransaction = jest.fn(
-    () => testConstructTxResponse
-  );
+  mockConstructSendAllTransaction = wallet.constructSendAllTransaction =
+    jest.fn(() => testConstructTxResponse);
 });
 
 afterEach(() => {
@@ -635,10 +609,8 @@ test("test checkAllAccountsEncrypted", async () => {
 });
 
 test("test monitorLockableAccounts", async () => {
-  const {
-    addUnlockedAccount,
-    mockLockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { addUnlockedAccount, mockLockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   jest.useFakeTimers();
   const store = createStore(cloneDeep({ ...initialState }));
@@ -771,10 +743,8 @@ test("test monitorLockableAccounts - lockAccount failed", async () => {
 });
 
 test("test unlockAcctAndExecFn", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(cloneDeep({ ...initialState }));
   store.dispatch(
@@ -800,10 +770,8 @@ test("test unlockAcctAndExecFn", async () => {
 });
 
 test("test unlockAcctAndExecFn - unknown account", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(cloneDeep({ ...initialState }));
 
@@ -838,10 +806,8 @@ test("test unlockAcctAndExecFn - unknown account", async () => {
 });
 
 test("test unlockAcctAndExecFn - unencrypted account", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(cloneDeep({ ...initialState }));
 
@@ -875,11 +841,8 @@ test("test unlockAcctAndExecFn - unencrypted account", async () => {
 });
 
 test("test unlockAcctAndExecFn - callback function failed, lock after, multi accounts", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount,
-    mockGetAccountsAttempt
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount, mockGetAccountsAttempt } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   mockCallbackFunction = jest.fn(
     () => new Promise((_, reject) => setTimeout(reject(testError), 10))
@@ -932,10 +895,8 @@ test("test unlockAcctAndExecFn - callback function failed, lock after, multi acc
 });
 
 test("test unlockAcctAndExecFn - callback function failed, leave unlock", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   mockCallbackFunction = jest.fn(
     () => new Promise((_, reject) => setTimeout(reject(testError), 10))
@@ -1066,10 +1027,8 @@ test("test unlockAcctAndExecFn - unlock failed", async () => {
 });
 
 test("test unlockAcctAndExecFn - does not unlock change account if account mixer is running", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(
     cloneDeep({
@@ -1140,10 +1099,8 @@ test("test unlockAcctAndExecFn - relock failed - get accounts failed", async () 
 });
 
 test("test purchase tickets - in a private wallet, mixer is not running", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(
     cloneDeep({
@@ -1207,10 +1164,8 @@ test("test purchase tickets - in a private wallet, mixer is not running", async 
 });
 
 test("test purchase tickets - failed to unlock account", async () => {
-  const {
-    mockLockAccount,
-    addUnlockedAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, addUnlockedAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   addUnlockedAccount(changeAccountNumber);
 
   const events = {};
@@ -1275,11 +1230,8 @@ test("test purchase tickets - failed to unlock account", async () => {
 });
 
 test("test purchase tickets - in a private wallet, mixer is running", async () => {
-  const {
-    addUnlockedAccount,
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { addUnlockedAccount, mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   addUnlockedAccount(changeAccountNumber);
 
   const events = {};
@@ -1387,10 +1339,8 @@ test("test purchase tickets - in a private wallet, mixer is running", async () =
 });
 
 test("test purchase tickets - in a non private wallet", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(
     cloneDeep({
@@ -1432,10 +1382,8 @@ test("test purchase tickets - in a non private wallet", async () => {
 });
 
 test("test purchase tickets - in a watching wallet", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(
     cloneDeep({
@@ -1535,11 +1483,8 @@ test("test purchase tickets - bought expected number of tickets", async () => {
 });
 
 test("test purchase tickets - failed ", async () => {
-  const {
-    addUnlockedAccount,
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { addUnlockedAccount, mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   addUnlockedAccount(changeAccountNumber);
 
   const events = {};
@@ -1618,11 +1563,8 @@ test("test purchase tickets - failed ", async () => {
 });
 
 test("test purchase tickets - failed with insufficient balance", async () => {
-  const {
-    addUnlockedAccount,
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { addUnlockedAccount, mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   addUnlockedAccount(changeAccountNumber);
 
   const events = {};
@@ -1904,10 +1846,8 @@ test("test start ticket autobuyer in a non-private wallet - receive unknown erro
 });
 
 test("test signMessageAttempt", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(cloneDeep(initialState));
   await store.dispatch(
@@ -1947,10 +1887,8 @@ test("test signMessageAttempt - validateAddress failed", async () => {
   mockValidateAddress = wallet.validateAddress = jest.fn(() => {
     throw testError;
   });
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(cloneDeep(initialState));
   await store.dispatch(
@@ -1973,10 +1911,8 @@ test("test signMessageAttempt - validateAddress failed", async () => {
 });
 
 test("test signMessageAttempt - signMessage failed", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
 
   mockSignMessage = wallet.signMessage = jest.fn(() => {
     throw testError;
@@ -2478,10 +2414,8 @@ test("test changePassphraseAttempt - failed", async () => {
 });
 
 test("test signTransactionAttempt", async () => {
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   const store = createStore(
     cloneDeep({
       ...initialState,
@@ -2571,10 +2505,8 @@ test("test signTransactionAttempt - failed", async () => {
     throw testError;
   });
 
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   const store = createStore(cloneDeep(initialState));
   await store.dispatch(
     controlActions.signTransactionAttempt(
@@ -2612,10 +2544,8 @@ test("test signTransactionAttempt publish transaction failed", async () => {
   mockPublishTransaction = wallet.publishTransaction = jest.fn(() =>
     Promise.reject(testError)
   );
-  const {
-    mockLockAccount,
-    mockUnlockAccount
-  } = mockUnlockLockAndGetAccountsAttempt();
+  const { mockLockAccount, mockUnlockAccount } =
+    mockUnlockLockAndGetAccountsAttempt();
   const store = createStore(cloneDeep(initialState));
   await store.dispatch(
     controlActions.signTransactionAttempt(
@@ -2999,12 +2929,11 @@ test("test setAccountsPass - failed", async () => {
 test("test listenForConfirmationDialogRequests", async () => {
   let requestedCb;
   let hiddenCb;
-  mockOnConfirmationDialogCallbacks = wallet.onConfirmationDialogCallbacks = jest.fn(
-    (rcb, hcb) => {
+  mockOnConfirmationDialogCallbacks = wallet.onConfirmationDialogCallbacks =
+    jest.fn((rcb, hcb) => {
       requestedCb = rcb;
       hiddenCb = hcb;
-    }
-  );
+    });
   const store = createStore(cloneDeep(initialState));
   await store.dispatch(controlActions.listenForConfirmationDialogRequests());
 

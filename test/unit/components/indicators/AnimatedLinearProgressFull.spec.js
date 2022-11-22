@@ -31,9 +31,10 @@ test("tests default AnimatedLinearProgressFull", () => {
   const mockGetSelectedWallet = (selectors.getSelectedWallet = jest.fn(() => {
     return {};
   }));
-  const mockSyncFetchHeadersLastHeaderTime = (selectors.syncFetchHeadersLastHeaderTime = jest.fn(
-    () => testSyncFetchHeadersLastHeaderTime
-  ));
+  const mockSyncFetchHeadersLastHeaderTime =
+    (selectors.syncFetchHeadersLastHeaderTime = jest.fn(
+      () => testSyncFetchHeadersLastHeaderTime
+    ));
 
   let mockGetCurrentBlockCount = (selectors.getCurrentBlockCount = jest.fn(
     () => testCurrentBlockCount
@@ -169,8 +170,8 @@ test("dcrwallet log line is shown or log the error to console", async () => {
   );
 
   // test DcrwalletLogLine error
-  mockGetDcrwalletLogs = daemonActions.getDcrwalletLogs = jest.fn(() => () =>
-    Promise.reject()
+  mockGetDcrwalletLogs = daemonActions.getDcrwalletLogs = jest.fn(
+    () => () => Promise.reject()
   );
   act(() => {
     jest.advanceTimersByTime(2001);

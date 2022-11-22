@@ -385,138 +385,140 @@ export const closeDaemonRequest = () => async (dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet, hasPassPhrase) => (
-  dispatch,
-  getState
-) =>
-  new Promise((resolve, reject) => {
-    const start = async () => {
-      const { currentSettings } = getState().settings;
-      const network = currentSettings.network;
+export const startWallet =
+  (selectedWallet, hasPassPhrase) => (dispatch, getState) =>
+    new Promise((resolve, reject) => {
+      const start = async () => {
+        const { currentSettings } = getState().settings;
+        const network = currentSettings.network;
 
-      // if selected wallet is not send in the call of the method,
-      // it probably means it is a refresh, so we get the selected wallet
-      // stored in ipc memory.
-      if (!selectedWallet) {
-        selectedWallet = wallet.getSelectedWallet();
-      }
-      const isTestnet = network == "testnet";
-      const walletCfg = wallet.getWalletCfg(
-        isTestnet,
-        selectedWallet.value.wallet
-      );
+        // if selected wallet is not send in the call of the method,
+        // it probably means it is a refresh, so we get the selected wallet
+        // stored in ipc memory.
+        if (!selectedWallet) {
+          selectedWallet = wallet.getSelectedWallet();
+        }
+        const isTestnet = network == "testnet";
+        const walletCfg = wallet.getWalletCfg(
+          isTestnet,
+          selectedWallet.value.wallet
+        );
 
-      const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
-      const dexReady = walletCfg.get(cfgConstants.DEX_READY);
-      const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
-      const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
-      let rpcCreds = {};
-      if (enableDex) {
-        rpcCreds = {
-          rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
-          rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
-          rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
-          rpcCert: fs.joinPaths(
-            wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
-            "rpc.cert"
-          )
-        };
-      }
+        const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
+        const dexReady = walletCfg.get(cfgConstants.DEX_READY);
+        const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
+        const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
+        let rpcCreds = {};
+        if (enableDex) {
+          rpcCreds = {
+            rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
+            rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
+            rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
+            rpcCert: fs.joinPaths(
+              wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
+              "rpc.cert"
+            )
+          };
+        }
 
-      // Check to see if wallet config has old cspp.decred.org setting, will
-      // update to mix.decred.org
-      const currentCSPP = walletCfg.get(cfgConstants.CSPP_SERVER);
-      if (currentCSPP == CSPP_URL_LEGACY) {
-        walletCfg.set(cfgConstants.CSPP_SERVER, CSPP_URL);
-      }
+        // Check to see if wallet config has old cspp.decred.org setting, will
+        // update to mix.decred.org
+        const currentCSPP = walletCfg.get(cfgConstants.CSPP_SERVER);
+        if (currentCSPP == CSPP_URL_LEGACY) {
+          walletCfg.set(cfgConstants.CSPP_SERVER, CSPP_URL);
+        }
 
-      const walletStarted = await wallet.startWallet(
-        selectedWallet.value.wallet,
-        isTestnet,
-        rpcCreds,
-        selectedWallet.value.gapLimit,
-        selectedWallet.value.disableCoinTypeUpgrades
-      );
-      const { port } = walletStarted;
-      wallet.setPreviousWallet(selectedWallet);
+        const walletStarted = await wallet.startWallet(
+          selectedWallet.value.wallet,
+          isTestnet,
+          rpcCreds,
+          selectedWallet.value.gapLimit,
+          selectedWallet.value.disableCoinTypeUpgrades
+        );
+        const { port } = walletStarted;
+        wallet.setPreviousWallet(selectedWallet);
 
-      const walletName = selectedWallet.value.wallet;
-      const gapLimit = walletCfg.get(cfgConstants.GAP_LIMIT);
-      const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
-      const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
-      const discoverAccountsComplete = walletCfg.get(
-        cfgConstants.DISCOVER_ACCOUNTS
-      );
-      const lastPoliteiaAccessTime = walletCfg.get(
-        cfgConstants.POLITEIA_LAST_ACCESS_TIME
-      );
-      const lastPoliteiaAccessBlock = walletCfg.get(
-        cfgConstants.POLITEIA_LAST_ACCESS_BLOCK
-      );
-      const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
-      const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
-      const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
-      const changeAccount = walletCfg.get(cfgConstants.CHANGE_ACCOUNT_CFG);
-      const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
-      const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
-      const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
-      const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
-      const needsVSPdProcessManaged = walletCfg.get(
-        cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
-      );
-      const showStakingWarning = walletCfg.get(
-        cfgConstants.SHOW_STAKING_WARNING
-      );
+        const walletName = selectedWallet.value.wallet;
+        const gapLimit = walletCfg.get(cfgConstants.GAP_LIMIT);
+        const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
+        const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
+        const discoverAccountsComplete = walletCfg.get(
+          cfgConstants.DISCOVER_ACCOUNTS
+        );
+        const lastPoliteiaAccessTime = walletCfg.get(
+          cfgConstants.POLITEIA_LAST_ACCESS_TIME
+        );
+        const lastPoliteiaAccessBlock = walletCfg.get(
+          cfgConstants.POLITEIA_LAST_ACCESS_BLOCK
+        );
+        const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
+        const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
+        const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
+        const changeAccount = walletCfg.get(cfgConstants.CHANGE_ACCOUNT_CFG);
+        const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
+        const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
+        const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
+        const rememberedVspHost = walletCfg.get(
+          cfgConstants.REMEMBERED_VSP_HOST
+        );
+        const needsVSPdProcessManaged = walletCfg.get(
+          cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
+        );
+        const showStakingWarning = walletCfg.get(
+          cfgConstants.SHOW_STAKING_WARNING
+        );
 
-      const autobuyerSettings = walletCfg.get(cfgConstants.AUTOBUYER_SETTINGS);
-      dispatch({
-        type: SET_AUTOBUYER_SETTINGS,
-        autobuyerSettings
-      });
+        const autobuyerSettings = walletCfg.get(
+          cfgConstants.AUTOBUYER_SETTINGS
+        );
+        dispatch({
+          type: SET_AUTOBUYER_SETTINGS,
+          autobuyerSettings
+        });
 
-      walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
-      dispatch({
-        type: WALLETREADY,
-        walletName,
-        network,
-        hiddenAccounts,
-        port,
-        lastPoliteiaAccessTime,
-        lastPoliteiaAccessBlock
-      });
-      dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
-      dispatch({ type: SET_SHOW_STAKING_WARNING, showStakingWarning });
-      const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
-      dispatch({
-        type: WALLET_LOADER_SETTINGS,
-        discoverAccountsComplete,
-        needsPassPhrase,
-        enablePrivacy,
-        sendFromUnmixed,
-        mixedAccount,
-        changeAccount,
-        csppServer,
-        csppPort,
-        mixedAccountBranch,
-        enableDex,
-        dexReady,
-        dexAccount,
-        rpcCreds,
-        needsVSPdProcessManaged,
-        confirmDexSeed
-      });
-      selectedWallet.value.isTrezor && dispatch(enableTrezor());
-      await dispatch(getVersionServiceAttempt());
-      await dispatch(openWalletAttempt("", false, selectedWallet));
-      return discoverAccountsComplete;
-    };
+        walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
+        dispatch({
+          type: WALLETREADY,
+          walletName,
+          network,
+          hiddenAccounts,
+          port,
+          lastPoliteiaAccessTime,
+          lastPoliteiaAccessBlock
+        });
+        dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
+        dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
+        dispatch({ type: SET_SHOW_STAKING_WARNING, showStakingWarning });
+        const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
+        dispatch({
+          type: WALLET_LOADER_SETTINGS,
+          discoverAccountsComplete,
+          needsPassPhrase,
+          enablePrivacy,
+          sendFromUnmixed,
+          mixedAccount,
+          changeAccount,
+          csppServer,
+          csppPort,
+          mixedAccountBranch,
+          enableDex,
+          dexReady,
+          dexAccount,
+          rpcCreds,
+          needsVSPdProcessManaged,
+          confirmDexSeed
+        });
+        selectedWallet.value.isTrezor && dispatch(enableTrezor());
+        await dispatch(getVersionServiceAttempt());
+        await dispatch(openWalletAttempt("", false, selectedWallet));
+        return discoverAccountsComplete;
+      };
 
-    // TODO better treat errors here. Errors can fail silently.
-    start()
-      .then((discoverAccountsComplete) => resolve(discoverAccountsComplete))
-      .catch((err) => reject(err));
-  });
+      // TODO better treat errors here. Errors can fail silently.
+      start()
+        .then((discoverAccountsComplete) => resolve(discoverAccountsComplete))
+        .catch((err) => reject(err));
+    });
 
 export const decreditonInit = () => (dispatch) => {
   dispatch(registerForErrors());
@@ -702,33 +704,31 @@ export const generateRandomGradient = () => {
   return `linear-gradient(#${randomColor} 0%, #${invertedColor} 100%)`;
 };
 
-export const checkDisplayWalletGradients = (availableWallets) => (
-  dispatch,
-  getState
-) => {
-  const missingGradientWallets = [];
-  let availableGradients = [...preDefinedGradients];
-  availableWallets
-    .sort((a, b) => b.lastAccess - a.lastAccess)
-    .forEach(({ wallet, displayWalletGradient }) => {
-      if (!displayWalletGradient) {
-        missingGradientWallets.push(wallet);
-      } else {
-        availableGradients = availableGradients.filter(
-          (gradient) => gradient != displayWalletGradient
-        );
-      }
-    });
+export const checkDisplayWalletGradients =
+  (availableWallets) => (dispatch, getState) => {
+    const missingGradientWallets = [];
+    let availableGradients = [...preDefinedGradients];
+    availableWallets
+      .sort((a, b) => b.lastAccess - a.lastAccess)
+      .forEach(({ wallet, displayWalletGradient }) => {
+        if (!displayWalletGradient) {
+          missingGradientWallets.push(wallet);
+        } else {
+          availableGradients = availableGradients.filter(
+            (gradient) => gradient != displayWalletGradient
+          );
+        }
+      });
 
-  // set missing gradients
-  if (missingGradientWallets.length > 0) {
-    availableGradients.reverse();
-    missingGradientWallets.forEach((walletName) => {
-      const gradient = availableGradients.pop() ?? generateRandomGradient();
-      const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
-      config.set(cfgConstants.DISPLAY_WALLET_GRADIENT, gradient);
-    });
+    // set missing gradients
+    if (missingGradientWallets.length > 0) {
+      availableGradients.reverse();
+      missingGradientWallets.forEach((walletName) => {
+        const gradient = availableGradients.pop() ?? generateRandomGradient();
+        const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
+        config.set(cfgConstants.DISPLAY_WALLET_GRADIENT, gradient);
+      });
 
-    dispatch(getAvailableWallets());
-  }
-};
+      dispatch(getAvailableWallets());
+    }
+  };

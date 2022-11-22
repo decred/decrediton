@@ -62,27 +62,28 @@ beforeEach(() => {
   selectors.getDaemonSynced = jest.fn(() => true);
   selectors.isSPV = jest.fn(() => false);
   wlActions.getSelectedWallet = jest.fn(() => () => null);
-  mockCreateWallet = daemonActions.createWallet = jest.fn(() => () =>
-    Promise.resolve(testSelectedWallet)
+  mockCreateWallet = daemonActions.createWallet = jest.fn(
+    () => () => Promise.resolve(testSelectedWallet)
   );
-  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
-    Promise.reject(testCreateWalletRequestErrorMsg)
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(
+    () => () => Promise.reject(testCreateWalletRequestErrorMsg)
   );
 
-  mockGenerateSeed = wlActions.generateSeed = jest.fn(() => () =>
-    Promise.resolve({
-      seedMnemonic: testSeedMnemonic
-    })
+  mockGenerateSeed = wlActions.generateSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        seedMnemonic: testSeedMnemonic
+      })
   );
-  mockCancelCreateWallet = wlActions.cancelCreateWallet = jest.fn(() => () =>
-    Promise.resolve()
+  mockCancelCreateWallet = wlActions.cancelCreateWallet = jest.fn(
+    () => () => Promise.resolve()
   );
   selectors.maxWalletCount = jest.fn(() => 3);
   mockCopySeedToClipboard = clientActions.copySeedToClipboard = jest.fn(
     () => () => true
   );
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({ toString: () => "DECODE_ERROR" })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({ toString: () => "DECODE_ERROR" })
   );
   mockClipboardReadText = wallet.readFromClipboard.mockImplementation(
     () => testSeedMnemonic
@@ -269,10 +270,11 @@ test("test confim seed view", async () => {
   expect(createWalletButton.disabled).toBeTruthy();
 
   // fix invalid seed word, decode with success
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
   await clickOnSeedButton(testSeedArray.length - 1, true);
   await clickOnSeedButton(testSeedArray.length - 1, false);
@@ -285,21 +287,23 @@ test("test confim seed view", async () => {
 
 test("test confirm seed view in testnet mode (allows verification skip in dev)", async () => {
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
-  mockGenerateSeed = wlActions.generateSeed = jest.fn(() => () =>
-    Promise.resolve({
-      seedMnemonic: testSeedMnemonic,
-      seedBytes: 1
-    })
+  mockGenerateSeed = wlActions.generateSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        seedMnemonic: testSeedMnemonic,
+        seedBytes: 1
+      })
   );
   await goToConfirmView();
 
   const createWalletButton = screen.getByText(/create wallet/i);
   await testPrivatePassphraseInputs();
 
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
 
   await wait(() => expect(createWalletButton.disabled).toBe(false));
@@ -309,10 +313,11 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
 });
 
 test("test typing a valid seed word on existing seed view", async () => {
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
   await goToExistingSeedView();
 
@@ -340,8 +345,8 @@ test("pasting just 32 seed words on existing seed view", async () => {
 });
 
 test("pasting invalid seed words on existing seed view", async () => {
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({ toString: () => MISMATCH_ERROR })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({ toString: () => MISMATCH_ERROR })
   );
   await goToExistingSeedView();
 
@@ -350,13 +355,14 @@ test("pasting invalid seed words on existing seed view", async () => {
 });
 
 test("pasting valid seed words on existing seed view and receive create wallet request error", async () => {
-  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
-    Promise.reject(testCreateWalletRequestErrorMsg)
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(
+    () => () => Promise.reject(testCreateWalletRequestErrorMsg)
   );
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
   await goToExistingSeedView();
 
@@ -379,13 +385,14 @@ test("pasting valid seed words on existing seed view and receive create wallet r
 });
 
 test("pasting valid seed words on existing seed view and successfully create wallet", async () => {
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
-  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
-    Promise.resolve(true)
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(
+    () => () => Promise.resolve(true)
   );
   await goToExistingSeedView();
 
@@ -417,13 +424,14 @@ test("pasting valid seed words on existing seed view and successfully create wal
 });
 
 test("check passphrase errors on restore view", async () => {
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
-  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
-    Promise.resolve(true)
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(
+    () => () => Promise.resolve(true)
   );
   await goToExistingSeedView();
 
@@ -449,13 +457,14 @@ test("check passphrase errors on restore view", async () => {
 });
 
 test("create wallet button must be disabled if any of the inputs are invalid", async () => {
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
-  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(() => () =>
-    Promise.resolve(true)
+  mockCreateWalletRequest = wlActions.createWalletRequest = jest.fn(
+    () => () => Promise.resolve(true)
   );
   await goToExistingSeedView();
 
@@ -481,17 +490,18 @@ test("create wallet button must be disabled if any of the inputs are invalid", a
   expect(createWallet.disabled).toBe(false);
 
   // enter invalid seed word into the first input, button should be disabled
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({})
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({})
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[1]);
   await wait(() => expect(createWallet).toHaveAttribute("disabled"));
 
   // fix, button should be enabled
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testSeedArray
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testSeedArray
+      })
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
   await wait(() => expect(createWallet).not.toHaveAttribute("disabled"));
@@ -501,8 +511,8 @@ test("test POSITION_ERROR handling on restore view (missing words)", async () =>
   await goToExistingSeedView();
 
   // reject with an empty error object
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({})
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({})
   );
   const comboboxArray = screen.getAllByRole("combobox");
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
@@ -510,10 +520,11 @@ test("test POSITION_ERROR handling on restore view (missing words)", async () =>
   fillSeedWordEntryUsingEnterKey(comboboxArray[1], testSeedArray[1]);
   expect(screen.getByText("2.").parentNode.className).toMatch(/populated/);
 
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({
-      toString: () => `is ${POSITION_ERROR} 2, check for missing words`
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.reject({
+        toString: () => `is ${POSITION_ERROR} 2, check for missing words`
+      })
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[2], testSeedArray[2]);
   await wait(() =>
@@ -525,8 +536,8 @@ test("test POSITION_ERROR handling on restore view (mismatch error)", async () =
   await goToExistingSeedView();
 
   // reject with an empty error object
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({})
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({})
   );
   const comboboxArray = screen.getAllByRole("combobox");
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
@@ -534,8 +545,8 @@ test("test POSITION_ERROR handling on restore view (mismatch error)", async () =
   fillSeedWordEntryUsingEnterKey(comboboxArray[1], testSeedArray[1]);
   expect(screen.getByText("2.").parentNode.className).toMatch(/populated/);
 
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({ details: MISMATCH_ERROR })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({ details: MISMATCH_ERROR })
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[4], testSeedArray[4]);
   await wait(() =>
@@ -556,10 +567,11 @@ test("test POSITION_ERROR handling on restore view (mismatch error)", async () =
 test("test invalid POSITION_ERROR msg format handling on restore view", async () => {
   await goToExistingSeedView();
 
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({
-      details: `is ${POSITION_ERROR} at 4, check for missing words`
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.reject({
+        details: `is ${POSITION_ERROR} at 4, check for missing words`
+      })
   );
   const comboboxArray = screen.getAllByRole("combobox");
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
@@ -605,10 +617,11 @@ test("test hex input tab on restore view", async () => {
   expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
 
   // Next tests will require some return value from the mock getDecodedSeed.
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.resolve({
-      decodedSeed: testCompatibleHexSeed
-    })
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () =>
+      Promise.resolve({
+        decodedSeed: testCompatibleHexSeed
+      })
   );
 
   // Test valid (but short, incompatible) hex seed.
@@ -639,8 +652,8 @@ test("test hex input tab on restore view", async () => {
   expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
 
   // The next tests all assume a failed decode.
-  mockDecodeSeed = wlActions.decodeSeed = jest.fn(() => () =>
-    Promise.reject({})
+  mockDecodeSeed = wlActions.decodeSeed = jest.fn(
+    () => () => Promise.reject({})
   );
 
   // Test too long hex seed.

@@ -12,12 +12,14 @@ const useRescan = () => {
 
   const dispatch = useDispatch();
 
-  const rescanAttempt = useCallback(() => dispatch(ca.rescanAttempt()), [
-    dispatch
-  ]);
-  const rescanCancel = useCallback(() => dispatch(ca.rescanCancel()), [
-    dispatch
-  ]);
+  const rescanAttempt = useCallback(
+    () => dispatch(ca.rescanAttempt()),
+    [dispatch]
+  );
+  const rescanCancel = useCallback(
+    () => dispatch(ca.rescanCancel()),
+    [dispatch]
+  );
 
   return {
     rescanRequest,

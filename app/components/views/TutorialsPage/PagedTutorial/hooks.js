@@ -6,9 +6,10 @@ import * as ca from "actions/ClientActions";
 export const usePagedTutorial = () => {
   const location = useSelector(sel.location);
   const dispatch = useDispatch();
-  const onGoBackHistory = useCallback(() => dispatch(ca.goBackHistory()), [
-    dispatch
-  ]);
+  const onGoBackHistory = useCallback(
+    () => dispatch(ca.goBackHistory()),
+    [dispatch]
+  );
   return {
     location,
     onGoBackHistory

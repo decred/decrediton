@@ -26,12 +26,8 @@ const ProposalsListItem = ({
   version,
   isDarkTheme
 }) => {
-  const {
-    viewProposalDetailsHandler,
-    tsDate,
-    isTestnet,
-    linkedProposal
-  } = useProposalsListItem(token);
+  const { viewProposalDetailsHandler, tsDate, isTestnet, linkedProposal } =
+    useProposalsListItem(token);
   const isVoting = voteStatus === PROPOSAL_VOTING_ACTIVE;
   const isModified =
     (!isVoting && modifiedSinceLastAccess) ||

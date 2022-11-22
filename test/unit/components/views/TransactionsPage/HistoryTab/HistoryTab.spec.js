@@ -130,8 +130,8 @@ beforeEach(() => {
   selectors.constructTxRequestAttempt = jest.fn(() => false);
   selectors.getRunningIndicator = jest.fn(() => false);
   selectors.currencyDisplay = jest.fn(() => DCR);
-  transactionActions.listUnspentOutputs = jest.fn(() => () =>
-    Promise.resolve([])
+  transactionActions.listUnspentOutputs = jest.fn(
+    () => () => Promise.resolve([])
   );
   mockWalletService = selectors.walletService = jest.fn(() => {
     return {};
@@ -172,7 +172,8 @@ const incAllTestTxs = (mockGetTransactionsResponse, ts) => {
     ts || mockGetTransactionsResponse.getRegularTxsAux.lastTransaction.timestamp
   );
   mockGetTransactionsResponse.regularTransactions = txList;
-  mockGetTransactionsResponse.getRegularTxsAux.lastTransaction = lastTransaction;
+  mockGetTransactionsResponse.getRegularTxsAux.lastTransaction =
+    lastTransaction;
   return mockGetTransactionsResponse;
 };
 
@@ -468,9 +469,8 @@ test("show only sent txs which are coming from wallet and not from redux", async
 test("test tx sorting", async () => {
   jest.useFakeTimers();
 
-  const mockchangeTransactionsFilter = (transactionActions.changeTransactionsFilter = jest.fn(
-    () => () => {}
-  ));
+  const mockchangeTransactionsFilter =
+    (transactionActions.changeTransactionsFilter = jest.fn(() => () => {}));
 
   render(<TransactionsPage />, {
     initialState: cloneDeep(initialState)

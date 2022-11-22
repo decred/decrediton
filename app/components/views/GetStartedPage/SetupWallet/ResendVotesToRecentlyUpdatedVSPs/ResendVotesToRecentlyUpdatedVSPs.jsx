@@ -5,10 +5,8 @@ import styles from "./ResendVotesToRecentlyUpdatedVSPs.module.css";
 import { useResendVotesToRecentlyUpdatedVSPs } from "./hooks";
 
 const ResendVotesToRecentlyUpdatedVSPs = ({ cancel, send, vsps, votes }) => {
-  const {
-    resendVSPDVoteChoicesAttempt,
-    onResendVSPDVoteChoices
-  } = useResendVotesToRecentlyUpdatedVSPs();
+  const { resendVSPDVoteChoicesAttempt, onResendVSPDVoteChoices } =
+    useResendVotesToRecentlyUpdatedVSPs();
 
   const onSubmitContinue = (passphrase) =>
     onResendVSPDVoteChoices(vsps, passphrase)

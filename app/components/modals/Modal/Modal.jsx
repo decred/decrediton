@@ -7,13 +7,8 @@ import styles from "./Modal.module.css";
 import { useModal } from "./hooks";
 
 const Modal = showCheck(({ children, className, draggable, onCancelModal }) => {
-  const {
-    showingSidebarMenu,
-    expandSideBar,
-    mouseUp,
-    onKeyDown,
-    modalRef
-  } = useModal(onCancelModal);
+  const { showingSidebarMenu, expandSideBar, mouseUp, onKeyDown, modalRef } =
+    useModal(onCancelModal);
 
   const domNode = document.getElementById("modal-portal");
   if (!domNode) return null; // modal-portal not mounted yet.

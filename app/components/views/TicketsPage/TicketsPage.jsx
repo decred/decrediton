@@ -83,11 +83,8 @@ const tabs = [
 ];
 
 const TicketsPage = () => {
-  const {
-    showStakingWarning,
-    ticketPrice,
-    onAcceptStakingWarning
-  } = useTicketsPage();
+  const { showStakingWarning, ticketPrice, onAcceptStakingWarning } =
+    useTicketsPage();
   return showStakingWarning ? (
     <StandalonePage
       header={<StakingTabWarningHeader ticketPrice={ticketPrice} />}>

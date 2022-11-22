@@ -2,13 +2,8 @@ import { wallet } from "wallet-preload-shim";
 import { useLNPage } from "../hooks";
 
 export function useAdvancedTab() {
-  const {
-    exportBackup,
-    verifyBackup,
-    info,
-    scbPath,
-    scbUpdatedTime
-  } = useLNPage();
+  const { exportBackup, verifyBackup, info, scbPath, scbUpdatedTime } =
+    useLNPage();
 
   const onBackup = async () => {
     const { filePath } = await wallet.showSaveDialog();

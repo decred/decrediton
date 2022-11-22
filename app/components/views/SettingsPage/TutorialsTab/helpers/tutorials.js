@@ -4,8 +4,7 @@ const tutorials = {};
 
 tutorials.decredIntro = {
   title: "Decred Intro",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "decredIntroThumb",
   slides: [
     {
@@ -34,8 +33,7 @@ tutorials.decredIntro = {
 
 tutorials.ln = {
   title: "What is Lightning Network?",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "lnThumb",
   slides: [
     {
@@ -109,8 +107,7 @@ tutorials.ln = {
 
 tutorials.consensusCode = {
   title: "Consensus Code",
-  desc:
-    "Small description of decredIntroThumbthe tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of decredIntroThumbthe tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "consensusCodeThumb",
   slides: [
     {
@@ -126,8 +123,7 @@ tutorials.consensusCode = {
 
 tutorials.powPos = {
   title: "Hybrid PoW/PoS",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "powPosThumb",
   slides: [
     {
@@ -162,8 +158,7 @@ tutorials.powPos = {
 
 tutorials.tickets = {
   title: "Staking and Tickets",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "ticketsThumb",
   slides: [
     {
@@ -198,8 +193,7 @@ tutorials.tickets = {
 
 tutorials.staking = {
   title: "Core Functions of Staking",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "stakingThumb",
   slides: [
     {
@@ -234,8 +228,7 @@ tutorials.staking = {
 
 tutorials.lifecycle = {
   title: "Ticket Lifecycle",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "lifecycleThumb",
   slides: [
     {
@@ -303,8 +296,7 @@ tutorials.lifecycle = {
 
 tutorials.consensusVoting = {
   title: "Consensus Voting",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "consensusVotingThumb",
   slides: [
     {
@@ -354,8 +346,7 @@ tutorials.consensusVoting = {
 
 tutorials.blocks = {
   title: "Block Creation",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "blocksThumb",
   slides: [
     {
@@ -397,8 +388,7 @@ tutorials.blocks = {
 
 tutorials.identity = {
   title: "Identity (Pi/CMS)",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   slides: [
     {
       label: <T id="tutorials.identity.label1" m="Back-up your ID" />, // TODO

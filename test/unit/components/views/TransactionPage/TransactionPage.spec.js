@@ -62,12 +62,10 @@ beforeEach(() => {
   selectors.getAvailableVSPsPubkeys = jest.fn(
     () => mockAvailableMainnetVspsPubkeys
   );
-  mockAbandonTransactionAttempt = clientActions.abandonTransactionAttempt = jest.fn(
-    () => () => {}
-  );
-  mockPublishUnminedTransactionsAttempt = controlActions.publishUnminedTransactionsAttempt = jest.fn(
-    () => () => {}
-  );
+  mockAbandonTransactionAttempt = clientActions.abandonTransactionAttempt =
+    jest.fn(() => () => {});
+  mockPublishUnminedTransactionsAttempt =
+    controlActions.publishUnminedTransactionsAttempt = jest.fn(() => () => {});
   mockGoBackHistory = clientActions.goBackHistory = jest.fn(() => () => {});
   selectors.currentBlockHeight = jest.fn(() => testCurrentBlockHeight);
   wallet.getTransaction = jest.fn((_, txHash) => {

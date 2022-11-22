@@ -140,9 +140,7 @@ export const discoverAddresses = log(
 export const subscribeToBlockNotifications = log(
   (loader) =>
     new Promise((resolve, reject) =>
-      getClient(
-        loader
-      ).subscribeToBlockNotifications(
+      getClient(loader).subscribeToBlockNotifications(
         new SubscribeToBlockNotificationsRequest(),
         (error) => (error ? reject(error) : resolve())
       )

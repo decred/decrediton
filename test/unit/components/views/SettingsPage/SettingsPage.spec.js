@@ -113,9 +113,8 @@ beforeEach(() => {
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
   mockIsMainNet = selectors.isMainNet = jest.fn(() => false);
 
-  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
-    () => false
-  );
+  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled =
+    jest.fn(() => false);
   mockWalletService = selectors.walletService = jest.fn(() => {
     return {};
   });
@@ -138,9 +137,8 @@ beforeEach(() => {
   mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => false
   );
-  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
-    () => false
-  );
+  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt =
+    jest.fn(() => false);
   vspActions.discoverAvailableVSPs = jest.fn(() => () => {});
   wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
     Promise.resolve({
@@ -260,9 +258,8 @@ test("test close wallet button (account mixer is running) ", async () => {
 });
 
 test("test close wallet button (still finalizing ticket purchases) ", async () => {
-  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
-    () => true
-  );
+  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt =
+    jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -542,9 +539,8 @@ const testCheckBoxInputOnPrivacy = (label, configKey) => {
   user.click(screen.getByText("Privacy and Security"));
 
   const checkbox = screen.getByLabelText(label);
-  const defaultCheckedValue = testDefaultAllowedExternalRequests.includes(
-    configKey
-  );
+  const defaultCheckedValue =
+    testDefaultAllowedExternalRequests.includes(configKey);
 
   expect(checkbox.checked).toBe(defaultCheckedValue);
 
@@ -821,9 +817,8 @@ test("test update private passphrase, DEX is active, but dex account is empty st
 });
 
 test("update private passphrase is disabled", () => {
-  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
-    () => true
-  );
+  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled =
+    jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings

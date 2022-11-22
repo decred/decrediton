@@ -26,13 +26,8 @@ export const AdvancedTabHeader = () => (
 );
 
 const AdvancedTab = () => {
-  const {
-    info,
-    scbPath,
-    scbUpdatedTime,
-    onBackup,
-    onVerifyBackup
-  } = useAdvancedTab();
+  const { info, scbPath, scbUpdatedTime, onBackup, onVerifyBackup } =
+    useAdvancedTab();
 
   const { alias, identityPubkey } = info;
 
