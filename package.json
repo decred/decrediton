@@ -36,8 +36,8 @@
     "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
-    "prettify": "prettier --write 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'",
-    "prettify:diff": "prettier --list-different 'app/**/*.{js,jsx,css,json}' 'test/**/*.js'",
+    "prettify": "prettier --write app/**/*.{js,jsx,css,json} test/**/*.js",
+    "prettify:diff": "prettier --list-different app/**/*.{js,jsx,css,json} test/**/*.js",
     "deps-graphs": "node ./scripts/generateDepGraphs",
     "analyze": "source-map-explorer 'app/dist/*.js'",
     "analyze:gzip": "source-map-explorer 'app/dist/*.js' --gzip"
