@@ -730,24 +730,22 @@ export const SETTSPEND_POLICY_ATTEMPT = "SETTSPEND_POLICY_ATTEMPT";
 export const SETTSPEND_POLICY_FAILED = "SETTSPEND_POLICY_FAILED";
 export const SETTSPEND_POLICY_SUCCESS = "SETTSPEND_POLICY_SUCCESS";
 
-export const setTSpendPolicy = (hash, policy, passphrase) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({ payload: { hash, policy }, type: SETTSPEND_POLICY_ATTEMPT });
-  try {
-    await dispatch(
-      unlockAllAcctAndExecFn(passphrase, () =>
-        wallet.setTSpendPolicy(sel.votingService(getState()), hash, policy)
-      )
-    );
-    await dispatch(setVSPDVoteChoices(passphrase));
-    dispatch(getTSpendPolicies());
-    dispatch({ type: SETTSPEND_POLICY_SUCCESS });
-  } catch (error) {
-    dispatch({ error, type: SETTSPEND_POLICY_FAILED });
-  }
-};
+export const setTSpendPolicy =
+  (hash, policy, passphrase) => async (dispatch, getState) => {
+    dispatch({ payload: { hash, policy }, type: SETTSPEND_POLICY_ATTEMPT });
+    try {
+      await dispatch(
+        unlockAllAcctAndExecFn(passphrase, () =>
+          wallet.setTSpendPolicy(sel.votingService(getState()), hash, policy)
+        )
+      );
+      await dispatch(setVSPDVoteChoices(passphrase));
+      dispatch(getTSpendPolicies());
+      dispatch({ type: SETTSPEND_POLICY_SUCCESS });
+    } catch (error) {
+      dispatch({ error, type: SETTSPEND_POLICY_FAILED });
+    }
+  };
 
 export const SETTREASURY_POLICY_ATTEMPT = "SETTREASURY_POLICY_ATTEMPT";
 export const SETTREASURY_POLICY_FAILED = "SETTREASURY_POLICY_FAILED";
@@ -759,17 +757,12 @@ export const setTreasuryPolicy =
     try {
       await dispatch(
         unlockAllAcctAndExecFn(passphrase, () =>
-          wallet
-            .setTreasuryPolicy(sel.votingService(getState()), key, policy)
-            .then(() => {
-              dispatch({ type: SETTREASURY_POLICY_SUCCESS });
-              dispatch(getTreasuryPolicies());
-            })
-            .catch((error) =>
-              dispatch({ error, type: SETTREASURY_POLICY_FAILED })
-            )
+          wallet.setTreasuryPolicy(sel.votingService(getState()), key, policy)
         )
       );
+      await dispatch(setVSPDVoteChoices(passphrase));
+      dispatch(getTreasuryPolicies());
+      dispatch({ type: SETTREASURY_POLICY_SUCCESS });
     } catch (error) {
       dispatch({ error, type: SETTREASURY_POLICY_FAILED });
     }
