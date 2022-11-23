@@ -20,12 +20,8 @@ const availableProxyTypes = [
 ];
 
 const ProxySettings = ({ tempSettings, onChangeTempSettings }) => {
-  const {
-    proxyType,
-    proxyLocation,
-    setProxyType,
-    setProxyLocation
-  } = useProxySettings(tempSettings);
+  const { proxyType, proxyLocation, setProxyType, setProxyLocation } =
+    useProxySettings(tempSettings);
 
   const isProxySettingsChanged =
     proxyType !== tempSettings.proxyType ||
