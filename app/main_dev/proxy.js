@@ -11,10 +11,7 @@ import {
 
 export const setupProxy = (logger) =>
   new Promise((resolve, reject) => {
-    const cfg = getGlobalCfg();
-
-    const proxyType = cfg.get(cfgConstants.PROXY_TYPE);
-    const proxyLocation = cfg.get(cfgConstants.PROXY_LOCATION);
+    const { proxyType, proxyLocation } = getProxyTypeAndLocation();
 
     const proxyConfig = {
       pacScript: null,
@@ -58,3 +55,12 @@ export const setupProxy = (logger) =>
       })
       .catch(reject);
   });
+
+export const getProxyTypeAndLocation = () => {
+  const cfg = getGlobalCfg();
+
+  const proxyType = cfg.get(cfgConstants.PROXY_TYPE);
+  const proxyLocation = cfg.get(cfgConstants.PROXY_LOCATION);
+
+  return { proxyType, proxyLocation };
+};

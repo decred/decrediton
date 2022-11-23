@@ -393,7 +393,6 @@ test.each([
     { daemonStartAdvanced: true },
     true
   ],
-  ["Proxy Type", "HTTP", "PAC", { proxyType: PROXYTYPE_PAC }, false],
   [
     "Locale",
     testDefaultLocaleLabel,
@@ -467,13 +466,6 @@ test.each([
     testDefaultSpvConnectValue.join(","),
     testSpvConnectValue.join(","),
     { spvConnect: testSpvConnectValue },
-    false
-  ],
-  [
-    "Proxy Location",
-    testDefaultProxyLocation,
-    testProxyLocation,
-    { proxyLocation: testProxyLocation },
     false
   ]
 ])("change '%s' TextInput from '%s' to '%s' expeced %s", testTextFieldInput);
@@ -844,4 +836,44 @@ test("renders settings with trezor is NOT enabled", () => {
   expect(screen.queryByText("Trezor")).not.toBeInTheDocument();
   expect(mockIsTrezor).toHaveBeenCalled();
   mockIsTrezor.mockRestore();
+});
+
+test("test proxy settings", async () => {
+  render(<SettingsPage />, { initialState: { settings: testSettings } });
+
+  // set proxy type
+  const inputControl = screen.getByLabelText("Proxy Type");
+  const oldValue = "HTTP";
+  const option = "PAC";
+  const inputValueSpan = getOptionByNameAndType(oldValue, "singleValue");
+  expect(
+    screen.queryByRole("button", {
+      name: "Save proxy settings"
+    })
+  ).not.toBeInTheDocument();
+  expect(inputValueSpan.textContent).toMatch(oldValue);
+  const changeFn = () => {
+    user.click(inputControl);
+    user.click(getOptionByNameAndType(option, "option"));
+  };
+  changeFn();
+
+  // set proxy location
+  const proxyLocationInputControl = screen.getByLabelText("Proxy Location");
+  expect(proxyLocationInputControl.value).toMatch(testDefaultProxyLocation);
+  user.clear(proxyLocationInputControl);
+  user.type(proxyLocationInputControl, testProxyLocation);
+  // press enter
+  fireEvent.keyDown(proxyLocationInputControl, { key: "enter", keyCode: 13 });
+
+  user.click(screen.getByRole("button", { name: "Save proxy settings" }));
+  await wait(() => screen.getByText("Reset required"));
+  user.click(screen.getByRole("button", { name: "Confirm" }));
+
+  await wait(() =>
+    expect(mockSaveSettings).toHaveBeenCalledWith({
+      ...testCurrentSettings,
+      ...{ proxyType: PROXYTYPE_PAC, proxyLocation: testProxyLocation }
+    })
+  );
 });
