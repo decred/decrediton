@@ -53,8 +53,6 @@ const testSettings = {
     EXTERNALREQUEST_UPDATE_CHECK,
     EXTERNALREQUEST_DEX
   ],
-  proxyType: "new-proxy-type",
-  proxyLocation: "new-proxy-location",
   spvMode: false,
   spvModeFromCli: false,
   spvConnect: [],
@@ -251,10 +249,6 @@ test("test saveSettings - save alternative data", async () => {
     switch (key) {
       case ALLOWED_EXTERNAL_REQUESTS:
         return testSettingsCopy.allowedExternalRequests;
-      case PROXY_TYPE:
-        return testSettingsCopy.proxyType;
-      case PROXY_LOCATION:
-        return "old-proxy-location";
     }
   });
   const store = createStore(
@@ -287,12 +281,86 @@ test("test saveSettings - save alternative data", async () => {
   expect(mockResetTreasuryBalance).not.toHaveBeenCalled();
 
   // proxy has been changed, even though just the proxy location has been changed
-  expect(mockSetupProxy).toHaveBeenCalled();
+  expect(mockSetupProxy).not.toHaveBeenCalled();
 
   // don't a need network reset
   expect(mockCloseWalletRequest).not.toHaveBeenCalled();
   expect(mockCloseDaemonRequest).not.toHaveBeenCalled();
   expect(mockBackToCredentials).not.toHaveBeenCalled();
+
+  // allowed external requests has not been changed
+  expect(mockReloadAllowedExternalRequests).not.toHaveBeenCalled();
+
+  // wallet is not openned
+  expect(mockGetWalletCfg).not.toHaveBeenCalled();
+  expect(mockWalletCfgSet).not.toHaveBeenCalled();
+
+  expect(
+    isEqual(store.getState().settings.currentSettings, testSettingsCopy)
+  ).toBeTruthy();
+  expect(
+    isEqual(store.getState().settings.tempSettings, testSettingsCopy)
+  ).toBeTruthy();
+  expect(store.getState().settings.settingsChanged).toBeFalsy();
+});
+
+test("test saveSettings - proxy change needs wallet restart", async () => {
+  const testSettingsCopy = {
+    ...testSettings,
+    allowedExternalRequests: [
+      ...testSettings.allowedExternalRequests,
+      EXTERNALREQUEST_POLITEIA,
+      EXTERNALREQUEST_DCRDATA
+    ]
+  };
+  mockGlobalCfgGet = jest.fn((key) => {
+    switch (key) {
+      case ALLOWED_EXTERNAL_REQUESTS:
+        return testSettingsCopy.allowedExternalRequests;
+      case PROXY_TYPE:
+        return testSettingsCopy.proxyType;
+      case PROXY_LOCATION:
+        return "old-proxy-location";
+    }
+  });
+  const store = createStore(
+    cloneDeep({
+      ...initialState,
+      daemon: {},
+      settings: {
+        ...initialState.settings,
+        needNetworkReset: false,
+        currentSettings: {
+          ...initialState.settings.currentSettings,
+          network: TESTNET,
+          locale: testSettingsCopy.locale,
+          proxyType: "new-proxy-type",
+          proxyLocation: "new-proxy-location"
+        }
+      }
+    })
+  );
+  await store.dispatch(settingsActions.saveSettings(testSettingsCopy));
+
+  expect(mockGetGlobalCfg).toHaveBeenCalled();
+  // locale has not been changed
+  expect(mockChangeMenuLocale).not.toHaveBeenCalled();
+
+  // politeia is enabled now
+  expect(mockGetTokenAndInitialBatch).toHaveBeenCalled();
+  expect(mockResetInventoryAndProposals).not.toHaveBeenCalled();
+
+  // dcrdata is enabled now
+  expect(mockGetTreasuryBalance).toHaveBeenCalled();
+  expect(mockResetTreasuryBalance).not.toHaveBeenCalled();
+
+  // proxy has been changed, even though just the proxy location has been changed
+  expect(mockSetupProxy).toHaveBeenCalled();
+
+  // don't a need network reset
+  expect(mockCloseWalletRequest).toHaveBeenCalled();
+  expect(mockCloseDaemonRequest).toHaveBeenCalled();
+  expect(mockBackToCredentials).toHaveBeenCalled();
 
   // allowed external requests has not been changed
   expect(mockReloadAllowedExternalRequests).not.toHaveBeenCalled();
