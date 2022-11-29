@@ -1,1 +1,1 @@
-While the on-chain transactions require an average of 5 minutes for block confirmation, Lightning transactions are routed near-instantaneously. Lightning Network is made up of individual payment channels created by various Decred users. These form a network of lightning nodes that can route transactions among themselves.
+بينما تتطلب المعاملات على السلسلة 5 دقائق في المتوسط ​​للتأكيد، يتم توجيه معاملات الشبكة البرقية بشكل شبه فوري. تتكون الشبكة البرقية من قنوات دفع فردية أنشأها العديد من مستخدمي ديكريد. تشكل هذه شبكة من العقد التي يمكنها توجيه المعاملات فيما بينها.
