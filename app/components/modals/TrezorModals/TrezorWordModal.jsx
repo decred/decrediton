@@ -71,30 +71,43 @@ const TrezorWordModal = ({
       </p>
 
       <div className={styles.wordSelect}>
-        <Select
-          isAsync
-          isSearchable
-          defaultOptions
-          autoFocus
-          loadOptions={getSeedWords}
-          onChange={onWordChanged}
-          value={value}
-          placeholder={
-            <T
-              id="trezor.wordModal.selectPlaceholder"
-              m="Start typing word..."
-            />
-          }
-          onKeyDown={onSelectKeyDown}
-          isDisabled={!waitingForWord}
-        />
+        {waitingForWord ? (
+          <Select
+            isAsync
+            isSearchable
+            defaultOptions
+            autoFocus
+            loadOptions={getSeedWords}
+            onChange={onWordChanged}
+            value={value}
+            placeholder={
+              <T
+                id="trezor.wordModal.selectPlaceholder"
+                m="Start typing word..."
+              />
+            }
+            onKeyDown={onSelectKeyDown}
+            isDisabled={!waitingForWord}
+          />
+        ) : (
+          <Select
+            isDisabled
+            placeholder={
+              <T
+                id="trezor.wordModal.selectPlaceholderLoading"
+                m="loading..."
+              />
+            }
+          />
+        )}
       </div>
 
       <ButtonsToolbar
         {...{
           onCancelModal: onCancelWordModal,
           onSubmit,
-          loading: !waitingForWord
+          loading: !waitingForWord,
+          isValid: value
         }}
         className={styles.buttons}
       />
