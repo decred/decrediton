@@ -1,6 +1,6 @@
 import os from "os";
 import fs from "fs";
-import * as l from "../../../app/main_dev/logging";
+import * as l from "../../../app/main_dev/logging.js";
 import * as p from "../../../app/main_dev/paths";
 import { isEqual } from "lodash";
 
