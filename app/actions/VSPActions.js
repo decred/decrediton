@@ -294,43 +294,46 @@ export const GETVSPSPUBKEYS_SUCCESS = "GETVSPSPUBKEYS_SUCCESS";
 export const GETVSPSPUBKEYS_FAILED = "GETVSPSPUBKEYS_FAILED";
 
 // getVSPsPubkeys gets all available vsps and its pubkeys, so we can store it.
-export const getVSPsPubkeys = () => async (dispatch) => {
-  try {
+export const getVSPsPubkeys = () => (dispatch) =>
+  new Promise((resolve, reject) => {
     dispatch({ type: GETVSPSPUBKEYS_ATTEMPT });
-    const vsps = await dispatch(discoverAvailableVSPs());
-    if (!isArray(vsps)) {
-      throw new Error("INVALID_VSPS");
-    }
-    await Promise.all(
-      vsps.map((vsp) => {
-        return new Promise((resolve) =>
-          dispatch(getVSPInfo(vsp.host))
-            .then(({ pubkey }) => {
-              if (pubkey) {
-                vsp.pubkey = pubkey;
-                resolve(vsp);
-              } else {
-                resolve(null);
-              }
-            })
-            .catch(() => {
-              resolve(null);
-              // Skip to the next vsp.
-            })
-        );
-      })
-    ).then((result) => {
-      const availableVSPsPubkeys = result.filter((vsp) => !!vsp?.pubkey);
-      dispatch({
-        type: GETVSPSPUBKEYS_SUCCESS,
-        availableVSPsPubkeys
+    dispatch(discoverAvailableVSPs()).then((vsps) => {
+      if (!isArray(vsps)) {
+        dispatch({
+          type: GETVSPSPUBKEYS_FAILED,
+          error: new Error("INVALID_VSPS")
+        });
+        return reject("INVALID_VSPS");
+      }
+
+      Promise.all(
+        vsps.map((vsp) => {
+          return new Promise((resolveVspInfo) =>
+            dispatch(getVSPInfo(vsp.host))
+              .then(({ pubkey }) => {
+                if (pubkey) {
+                  vsp.pubkey = pubkey;
+                  resolveVspInfo(vsp);
+                } else {
+                  resolveVspInfo(null);
+                }
+              })
+              .catch(() => {
+                resolveVspInfo(null);
+                // Skip to the next vsp.
+              })
+          );
+        })
+      ).then((result) => {
+        const availableVSPsPubkeys = result.filter((vsp) => !!vsp?.pubkey);
+        dispatch({
+          type: GETVSPSPUBKEYS_SUCCESS,
+          availableVSPsPubkeys
+        });
+        resolve(availableVSPsPubkeys);
       });
-      return availableVSPsPubkeys;
     });
-  } catch (error) {
-    dispatch({ type: GETVSPSPUBKEYS_FAILED, error });
-  }
-};
+  });
 
 export const PROCESSMANAGEDTICKETS_ATTEMPT = "PROCESSMANAGEDTICKETS_ATTEMPT";
 export const PROCESSMANAGEDTICKETS_SUCCESS = "PROCESSMANAGEDTICKETS_SUCCESS";
@@ -340,14 +343,14 @@ export const PROCESSMANAGEDTICKETS_FAILED = "PROCESSMANAGEDTICKETS_FAILED";
 // synced, and sync them.
 export const processManagedTickets =
   (passphrase) => async (dispatch, getState) => {
+    dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
     const walletService = sel.walletService(getState());
     let availableVSPsPubkeys = sel.getAvailableVSPsPubkeys(getState());
 
-    if (!availableVSPsPubkeys) {
-      availableVSPsPubkeys = await dispatch(getVSPsPubkeys());
-    }
     try {
-      dispatch({ type: PROCESSMANAGEDTICKETS_ATTEMPT });
+      if (!availableVSPsPubkeys) {
+        availableVSPsPubkeys = await dispatch(getVSPsPubkeys());
+      }
       let feeAccount, changeAccount;
       const mixedAccount = sel.getMixedAccount(getState());
       if (mixedAccount) {
@@ -386,13 +389,6 @@ export const processManagedTickets =
       dispatch({ type: PROCESSMANAGEDTICKETS_SUCCESS });
     } catch (error) {
       dispatch({ type: PROCESSMANAGEDTICKETS_FAILED, error });
-      if (
-        String(error).indexOf(
-          "wallet.Unlock: invalid passphrase:: secretkey.DeriveKey"
-        ) > 0
-      ) {
-        throw "Invalid private passphrase, please try again.";
-      }
       throw error;
     }
   };

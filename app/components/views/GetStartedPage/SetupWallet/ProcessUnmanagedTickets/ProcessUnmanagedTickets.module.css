@@ -16,5 +16,13 @@
 }
 
 .buttonWrapper {
-  margin-top: 10px;
+  margin-top: 2rem;
+}
+
+.buttonWrapper .skipButton {
+  margin-left: 1rem;
+}
+
+.description {
+  margin-bottom: 1rem;
 }
