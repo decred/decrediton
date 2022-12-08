@@ -57,6 +57,38 @@ export const getVoteChoices = promisifyReq(
   "voteChoices",
   api.VoteChoicesRequest
 );
+export const getTSpendPolicies = log(
+  (walletService) =>
+    new Promise((ok, fail) => {
+      const request = new api.TSpendPoliciesRequest();
+      getClient(walletService).tSpendPolicies(request, (err, res) => {
+        if (err) {
+          fail(err);
+          return;
+        }
+        const resObj = res.toObject();
+        resObj.policiesList = res.getPoliciesList().map((r) => ({
+          hash: rawHashToHex(r.getHash()),
+          policy: r.getPolicy()
+        }));
+        ok(resObj);
+      });
+    }),
+  "Get TSpend Policies",
+  logOptionNoResponseData()
+);
+export const setTSpendPolicy = log(
+  (votingService, hash, policy) =>
+    new Promise((ok, fail) => {
+      const request = new api.SetTSpendPolicyRequest();
+      request.setHash(strHashToRaw(hash));
+      request.setPolicy(policy);
+      getClient(votingService).setTSpendPolicy(request, (err, res) =>
+        err ? fail(err) : ok(res.toObject())
+      );
+    }),
+  "Set TSpend Policy"
+);
 export const getTreasuryPolicies = log(
   (walletService) =>
     new Promise((ok, fail) => {
@@ -76,6 +108,18 @@ export const getTreasuryPolicies = log(
     }),
   "Get Treasury Policies",
   logOptionNoResponseData()
+);
+export const setTreasuryPolicy = log(
+  (votingService, key, policy) =>
+    new Promise((ok, fail) => {
+      const request = new api.SetTreasuryPolicyRequest();
+      request.setKey(hexToBytes(key));
+      request.setPolicy(policy);
+      getClient(votingService).setTreasuryPolicy(request, (err, res) =>
+        err ? fail(err) : ok(res.toObject())
+      );
+    }),
+  "Set Treasury Policy"
 );
 export const loadActiveDataFilters = promisifyReq(
   "loadActiveDataFilters",
@@ -196,19 +240,6 @@ export const setAgendaVote = log(
       );
     }),
   "Set Agenda Vote"
-);
-
-export const setTreasuryPolicy = log(
-  (votingService, key, policy) =>
-    new Promise((ok, fail) => {
-      const request = new api.SetTreasuryPolicyRequest();
-      request.setKey(hexToBytes(key));
-      request.setPolicy(policy);
-      getClient(votingService).setTreasuryPolicy(request, (err, res) =>
-        err ? fail(err) : ok(res.toObject())
-      );
-    }),
-  "Set Treasury Policy"
 );
 
 export const abandonTransaction = log(

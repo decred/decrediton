@@ -1260,6 +1260,11 @@ export const setTreasuryPolicyRequestAttempt = get([
   "grpc",
   "setTreasuryPolicyRequestAttempt"
 ]);
+export const tspendPolicies = get(["grpc", "getTSpendPoliciesResponse"]);
+export const setTSpendPolicyRequestAttempt = get([
+  "grpc",
+  "setTSpendPolicyRequestAttempt"
+]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([

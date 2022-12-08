@@ -1510,6 +1510,28 @@ function deserialize_walletrpc_SetPoolFeesResponse(buffer_arg) {
   return api_pb.SetPoolFeesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SetTSpendPolicyRequest(arg) {
+  if (!(arg instanceof api_pb.SetTSpendPolicyRequest)) {
+    throw new Error('Expected argument of type walletrpc.SetTSpendPolicyRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetTSpendPolicyRequest(buffer_arg) {
+  return api_pb.SetTSpendPolicyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SetTSpendPolicyResponse(arg) {
+  if (!(arg instanceof api_pb.SetTSpendPolicyResponse)) {
+    throw new Error('Expected argument of type walletrpc.SetTSpendPolicyResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetTSpendPolicyResponse(buffer_arg) {
+  return api_pb.SetTSpendPolicyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SetTreasuryPolicyRequest(arg) {
   if (!(arg instanceof api_pb.SetTreasuryPolicyRequest)) {
     throw new Error('Expected argument of type walletrpc.SetTreasuryPolicyRequest');
@@ -1860,6 +1882,28 @@ function serialize_walletrpc_SyncVSPTicketsResponse(arg) {
 
 function deserialize_walletrpc_SyncVSPTicketsResponse(buffer_arg) {
   return api_pb.SyncVSPTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_TSpendPoliciesRequest(arg) {
+  if (!(arg instanceof api_pb.TSpendPoliciesRequest)) {
+    throw new Error('Expected argument of type walletrpc.TSpendPoliciesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_TSpendPoliciesRequest(buffer_arg) {
+  return api_pb.TSpendPoliciesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_TSpendPoliciesResponse(arg) {
+  if (!(arg instanceof api_pb.TSpendPoliciesResponse)) {
+    throw new Error('Expected argument of type walletrpc.TSpendPoliciesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_TSpendPoliciesResponse(buffer_arg) {
+  return api_pb.TSpendPoliciesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_TicketBuyerConfigRequest(arg) {
@@ -3166,6 +3210,28 @@ var VotingServiceService = exports['walletrpc.VotingService'] = {
     requestDeserialize: deserialize_walletrpc_SetVoteChoicesRequest,
     responseSerialize: serialize_walletrpc_SetVoteChoicesResponse,
     responseDeserialize: deserialize_walletrpc_SetVoteChoicesResponse,
+  },
+  tSpendPolicies: {
+    path: '/walletrpc.VotingService/TSpendPolicies',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.TSpendPoliciesRequest,
+    responseType: api_pb.TSpendPoliciesResponse,
+    requestSerialize: serialize_walletrpc_TSpendPoliciesRequest,
+    requestDeserialize: deserialize_walletrpc_TSpendPoliciesRequest,
+    responseSerialize: serialize_walletrpc_TSpendPoliciesResponse,
+    responseDeserialize: deserialize_walletrpc_TSpendPoliciesResponse,
+  },
+  setTSpendPolicy: {
+    path: '/walletrpc.VotingService/SetTSpendPolicy',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SetTSpendPolicyRequest,
+    responseType: api_pb.SetTSpendPolicyResponse,
+    requestSerialize: serialize_walletrpc_SetTSpendPolicyRequest,
+    requestDeserialize: deserialize_walletrpc_SetTSpendPolicyRequest,
+    responseSerialize: serialize_walletrpc_SetTSpendPolicyResponse,
+    responseDeserialize: deserialize_walletrpc_SetTSpendPolicyResponse,
   },
   treasuryPolicies: {
     path: '/walletrpc.VotingService/TreasuryPolicies',

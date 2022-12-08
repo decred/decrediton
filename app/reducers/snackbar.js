@@ -58,7 +58,9 @@ import {
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS,
   SETTREASURY_POLICY_SUCCESS,
-  SETTREASURY_POLICY_FAILED
+  SETTREASURY_POLICY_FAILED,
+  SETTSPEND_POLICY_SUCCESS,
+  SETTSPEND_POLICY_FAILED
 } from "actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
@@ -524,6 +526,15 @@ const messages = defineMessages({
     id: "setTreasuryPolicy.updateVoteChoiceFailed",
     defaultMessage: "Set treasury policy failed: {originalError}"
   },
+  SETTSPEND_POLICY_SUCCESS: {
+    id: "setTSpendPolicy.updateVoteChoiceSuccess",
+    defaultMessage:
+      "Your tspend policy has been successfully updated! Thanks for participating in Decred's governance."
+  },
+  SETTSPEND_POLICY_FAILED: {
+    id: "setTSpendPolicy.updateVoteChoiceFailed",
+    defaultMessage: "Set tspend policy failed: {originalError}"
+  },
   CREATEMIXERACCOUNTS_SUCCESS: {
     id: "mixer.ntf.createdAcct",
     defaultMessage: "Accounts successfully created and mixer configured."
@@ -727,6 +738,7 @@ export default function snackbar(state = {}, action) {
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
     case SETTREASURY_POLICY_SUCCESS:
+    case SETTSPEND_POLICY_SUCCESS:
     case SETVSPDVOTECHOICE_PARTIAL_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
     case SETTINGS_SAVE:
@@ -812,6 +824,7 @@ export default function snackbar(state = {}, action) {
     case SPVSYNC_FAILED:
     case UPDATEVOTECHOICE_FAILED:
     case SETTREASURY_POLICY_FAILED:
+    case SETTSPEND_POLICY_FAILED:
     case GETACCOUNTEXTENDEDKEY_FAILED:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
