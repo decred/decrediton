@@ -5,9 +5,9 @@ import VoteSection from "../VoteSection";
 
 const TreasuryPolicyCard = ({
   piKey,
-  treasuryPolicies,
+  policies,
   policyOptions,
-  setTreasuryPolicy,
+  vote,
   isLoading
 }) => (
   <div className={styles.overview}>
@@ -20,10 +20,12 @@ const TreasuryPolicyCard = ({
 
     <VoteSection
       {...{
-        piKey,
-        treasuryPolicies,
+        votingFor: piKey,
         policyOptions,
-        setTreasuryPolicy,
+        vote,
+        initSelectedValue:
+          policies &&
+          (policies.find((tp) => tp.key === piKey)?.policy ?? "abstain"),
         isLoading
       }}
     />

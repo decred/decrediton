@@ -323,6 +323,52 @@ const TransactionContent = ({
                       {VSPTicketStatus.feetxstatus}
                     </div>
                   </div>
+                  {Object.keys(VSPTicketStatus.treasurypolicy).length > 0 && (
+                    <div className={styles.topRow}>
+                      <div className={styles.name}>
+                        <T id="txDetails.treasuryPolicy" m="Treasury Policy" />:
+                      </div>
+                      <div
+                        className={classNames(
+                          styles.value,
+                          styles.treasurypolicy
+                        )}>
+                        {Object.keys(VSPTicketStatus.treasurypolicy).map(
+                          (key) => (
+                            <>
+                              <span>{key}</span>
+                              <span>{VSPTicketStatus.treasurypolicy[key]}</span>
+                            </>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {Object.keys(VSPTicketStatus.tspendpolicy).length > 0 && (
+                    <div className={styles.topRow}>
+                      <div className={styles.name}>
+                        <T id="txDetails.tspendPolicy" m="TSpend Policy" />:
+                      </div>
+                      <div
+                        className={classNames(
+                          styles.value,
+                          styles.tspendpolicy
+                        )}>
+                        {Object.keys(VSPTicketStatus.tspendpolicy).map(
+                          (key) => (
+                            <>
+                              <span>{key}</span>
+                              <span>
+                                {VSPTicketStatus.tspendpolicy[key]
+                                  ? VSPTicketStatus.tspendpolicy[key]
+                                  : "abstain"}
+                              </span>
+                            </>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className={styles.topRow}>
