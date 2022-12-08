@@ -40,8 +40,8 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 contrib.go.opencensus.io/exporter/stackdriver v0.13.4/go.mod h1:aXENhDJ1Y4lIg4EUaVTwzvYETVNZk10Pu26tevFKLUc=
 decred.org/cspp/v2 v2.0.0 h1:b4fZrElRufz30rYnBZ2shhC8AjNVTN4i6TMzDi+hk44=
 decred.org/cspp/v2 v2.0.0/go.mod h1:0shJWKTWY3LxZEWGxtbER1Y45+HVjC0WZtj4bctSzCI=
-decred.org/dcrdex v0.5.6 h1:3tnf2vG+CJ5j4L/3t1Yo3oqh75/CiJCv60w7QRw9erA=
-decred.org/dcrdex v0.5.6/go.mod h1:PJz/P3v/3f1rO0gceRjVBXvEs+NWqrNC91OOuLqY6is=
+decred.org/dcrdex v0.5.7 h1:ix+nQNAHh5EbeKU4kgI4UbkB9qbyT8z51v5E+hPK1XI=
+decred.org/dcrdex v0.5.7/go.mod h1:PJz/P3v/3f1rO0gceRjVBXvEs+NWqrNC91OOuLqY6is=
 decred.org/dcrwallet/v2 v2.0.8 h1:ps0hU8SO2qnCjl4FxQxri8mO8MBWH4NRNW42hSN3E6o=
 decred.org/dcrwallet/v2 v2.0.8/go.mod h1:DEt4isEGSqMiMvo4scTX58oepPIwhTnaMCyTVPxCbzY=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
