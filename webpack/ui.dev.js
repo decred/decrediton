@@ -73,11 +73,6 @@ module.exports = merge(baseConfig, {
       }
     ]
   },
-  resolve: {
-    alias: {
-      "react-dom": "@hot-loader/react-dom"
-    }
-  },
 
   node: {
     // Trezor-connect currently fails without this.
