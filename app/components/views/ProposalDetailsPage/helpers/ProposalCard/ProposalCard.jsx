@@ -2,13 +2,9 @@ import styles from "./ProposalCard.module.css";
 import { classNames, StatusBar, Tooltip, Text, StatusTag } from "pi-ui";
 import { FormattedMessage as T } from "react-intl";
 import { PoliteiaLink } from "shared";
-import {
-  Event,
-  VOTE_ENDS_EVENT,
-  VOTE_ENDED_EVENT,
-  PROPOSAL_UPDATED_EVENT,
-  Join
-} from "../";
+import {Event, VOTE_ENDS_EVENT, VOTE_ENDED_EVENT, PROPOSAL_UPDATED_EVENT} from "../Event"
+import {Join} from "../Join"
+
 import { getStatusBarData, getProposalStatusTagProps } from "../../utils";
 
 const ProposalCard = ({
