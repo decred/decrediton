@@ -581,7 +581,7 @@
   "ln.channelsTab.openChannel.remoteBalance": "عن بعد",
   "ln.channelsTab.pushAmount": "دفع المبلغ (اختياري)",
   "ln.channelsTab.pushAmountPlaceholder": "مقدار وحدات ديكريد المراد دفعها للقناة",
-  "ln.closeChannelModa.descrForce": "محاولة الإغلاق القَسرِيّ للقناة؟,
+  "ln.closeChannelModa.descrForce": "محاولة الإغلاق القَسرِيّ للقناة؟",
   "ln.closeChannelModal.capacity": "السعة",
   "ln.closeChannelModal.channelPoint": "وجهة القناة",
   "ln.closeChannelModal.descr": "محاولة الإغلاق التعاوني للقناة؟",
