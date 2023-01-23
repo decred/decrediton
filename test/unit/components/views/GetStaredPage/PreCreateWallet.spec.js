@@ -2,7 +2,7 @@ import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import { fireEvent } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
@@ -90,19 +90,19 @@ beforeEach(() => {
 
 const goToGetStartedView = async () => {
   render(<GetStartedPage />);
-  return await wait(() => screen.getByText(/welcome to decrediton/i));
+  return await waitFor(() => screen.getByText(/welcome to decrediton/i));
 };
 
 const goToCreateNewWalletView = async () => {
   await goToGetStartedView();
   user.click(screen.getByText(/create a new wallet/i));
-  return await wait(() => screen.getByText("Wallet Name"));
+  return await waitFor(() => screen.getByText("Wallet Name"));
 };
 
 const goToRestoreWalletView = async () => {
   await goToGetStartedView();
   user.click(screen.getByText(/restore existing wallet/i));
-  return await wait(() => screen.getByText("Wallet Name"));
+  return await waitFor(() => screen.getByText("Wallet Name"));
 };
 
 test("test when createWallet has been rejected", async () => {
@@ -110,11 +110,11 @@ test("test when createWallet has been rejected", async () => {
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   user.click(screen.getByText(/creating/i));
-  await wait(() => screen.getByText(testWalletCreateErrorMsg));
+  await waitFor(() => screen.getByText(testWalletCreateErrorMsg));
   expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
 
   user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("daemon response success through createWallet function and createWalletPage has been reached", async () => {
@@ -125,7 +125,7 @@ test("daemon response success through createWallet function and createWalletPage
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   user.click(screen.getByText(/creating/i));
-  await wait(() => screen.getByText(/copy seed words to clipboard/i));
+  await waitFor(() => screen.getByText(/copy seed words to clipboard/i));
   expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet);
   expect(mockGenerateSeed).toHaveBeenCalled();
 });
@@ -151,7 +151,7 @@ test("test wallet name input on creating new wallet view", async () => {
   expect(walletNameInput).toHaveValue(testWalletName);
 
   user.click(continueButton);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testSelectedWallet)
   );
 });
@@ -181,7 +181,7 @@ test("test wallet name input on restore wallet", async () => {
   expect(walletNameInput).toHaveValue(testWalletName);
 
   user.click(continueButton);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
 });
@@ -211,12 +211,12 @@ test("test watch only control on restore wallet", async () => {
   fireEvent.change(masterPubKeyInput, {
     target: { value: testInvalidMasterPubKey }
   });
-  await wait(() =>
+  await waitFor(() => {
     expect(mockValidateMasterPubKey).toHaveBeenCalledWith(
       testInvalidMasterPubKey
-    )
-  );
-  expect(screen.getByText(/invalid master pubkey/i)).toBeInTheDocument();
+    );
+    expect(screen.getByText(/invalid master pubkey/i)).toBeInTheDocument();
+  });
   // test valid master pub key
   const testValidMasterPubKey = "test-valid-master-pub-key";
   mockValidateMasterPubKey = controlActions.validateMasterPubKey = jest.fn(
@@ -227,24 +227,31 @@ test("test watch only control on restore wallet", async () => {
   fireEvent.change(masterPubKeyInput, {
     target: { value: testValidMasterPubKey }
   });
-  await wait(() =>
-    expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey)
-  );
-  expect(screen.queryByText(/invalid master pubkey/i)).not.toBeInTheDocument();
+  await waitFor(() => {
+    expect(mockValidateMasterPubKey).toHaveBeenCalledWith(
+      testValidMasterPubKey
+    );
+    expect(
+      screen.queryByText(/invalid master pubkey/i)
+    ).not.toBeInTheDocument();
+  });
   // test empty input
   fireEvent.change(masterPubKeyInput, {
     target: { value: "" }
   });
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(/this field is required/i)).toBeInTheDocument()
   );
 
   fireEvent.change(masterPubKeyInput, {
     target: { value: testValidMasterPubKey }
   });
-  await wait(() =>
-    expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey)
+  await waitFor(() =>
+    expect(
+      screen.queryByText(/this field is required/i)
+    ).not.toBeInTheDocument()
   );
+  expect(mockValidateMasterPubKey).toHaveBeenCalledWith(testValidMasterPubKey);
   mockCreateWallet = daemonActions.createWallet = jest.fn(
     () => () => Promise.resolve(true)
   );
@@ -252,21 +259,19 @@ test("test watch only control on restore wallet", async () => {
   mockCreateWatchOnlyWalletRequest = wlActions.createWatchOnlyWalletRequest =
     jest.fn(() => () => Promise.resolve());
   user.click(continueButton);
-  await wait(() =>
-    expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
-  );
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
       testValidMasterPubKey,
       ""
     )
   );
+  expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet);
 }, 30000);
 
 test("test create trezor-backed wallet page (trezor device is NOT connected)", async () => {
   await goToGetStartedView();
   user.click(screen.getByText("Setup a Trezor Wallet").parentElement);
-  await wait(() => screen.getByText(/no trezor is detected/i));
+  await waitFor(() => screen.getByText(/no trezor is detected/i));
   expect(
     screen.getByText(/no trezor is detected/i).textContent
   ).toMatchInlineSnapshot(
@@ -277,7 +282,7 @@ test("test create trezor-backed wallet page (trezor device is NOT connected)", a
 
   // go back
   user.click(screen.getByText("Back"));
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("test create trezor-backed wallet page (trezor device is connected)", async () => {
@@ -309,10 +314,10 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
       }
     }
   });
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   user.click(screen.getByText("Setup a Trezor Wallet").parentElement);
 
-  await wait(() => screen.getByText("Wallet Name"));
+  await waitFor(() => screen.getByText("Wallet Name"));
   expect(mockEnableTrezor).toHaveBeenCalled();
 
   expect(screen.getByText(`${mockDeviceLabel} Trezor`)).toBeInTheDocument();
@@ -321,10 +326,10 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
 
   // go to trezor config view when device is connected
   user.click(screen.getByText("Device Setup"));
-  await wait(() => screen.getByText("Security"));
+  await waitFor(() => screen.getByText("Security"));
   // go back
   user.click(screen.getByText("Create a Wallet"));
-  await wait(() => screen.getByText("Wallet Name"));
+  await waitFor(() => screen.getByText("Wallet Name"));
 
   const continueButton = screen.getByText("Create Wallet");
   user.type(
@@ -333,9 +338,9 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
   );
 
   user.click(continueButton);
-  await wait(() => expect(screen.getByTestId("decred-loading")));
+  await waitFor(() => expect(screen.getByTestId("decred-loading")));
   expect(mockGetWalletCreationMasterPubKey).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
       testWalletCreationMasterPubKey,
       ""
@@ -355,16 +360,16 @@ test("trezor has to auto-disable when step back from create trezor-backed wallet
       }
     }
   });
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   user.click(screen.getByText("Setup a Trezor Wallet").parentElement);
 
-  await wait(() => screen.getByText("Wallet Name"));
+  await waitFor(() => screen.getByText("Wallet Name"));
   expect(mockEnableTrezor).toHaveBeenCalled();
   // did not receive deviceLabel
   expect(screen.getByText("New DCR Trezor")).toBeInTheDocument();
 
   user.click(screen.getByText(/cancel/i));
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   expect(mockDisableTrezor).toHaveBeenCalled();
 });
 
@@ -382,7 +387,7 @@ test("test testnet logo on creating new wallet view", async () => {
 
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
   user.click(screen.getByText(/creating/i));
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
 });
@@ -402,7 +407,7 @@ test("test testnet logo on restore wallet view", async () => {
 
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
   user.click(screen.getByText(/continue/i));
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
 });
@@ -434,7 +439,7 @@ test("test disable coin type upgrades and gap limit inputs on restore wallet", a
   user.type(gapLimitInput, testRestoreSelectedWallet.value.gapLimit);
 
   user.click(continueButton);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCreateWallet).toHaveBeenCalledWith(testRestoreSelectedWallet)
   );
 });

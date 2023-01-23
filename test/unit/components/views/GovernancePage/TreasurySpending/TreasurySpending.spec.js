@@ -1,6 +1,6 @@
 import TreasurySpendingTab from "components/views/GovernancePage/TreasurySpendingTab";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { within } from "@testing-library/dom";
 import * as sel from "selectors";
@@ -63,7 +63,7 @@ const expectedPiKeyResult = async (
   expectedPiKey
 ) => {
   if (!expectPassphraseError) {
-    await wait(() =>
+    await waitFor(() =>
       expect(mockSetTreasuryPolicy).toHaveBeenCalledWith(
         undefined, // votingService
         expectedPiKey,
@@ -77,7 +77,7 @@ const expectedPiKeyResult = async (
 
 const expectedTSpendResult = async (policy, expectPassphraseError) => {
   if (!expectPassphraseError) {
-    await wait(() =>
+    await waitFor(() =>
       expect(mockSetTSpendPolicy).toHaveBeenCalledWith(
         undefined, // votingService
         testTSpendHash,
@@ -97,8 +97,8 @@ const vote = async (
   expectedPiKey
 ) => {
   // vote on yes
-  const yesRadioBtn = within(container).getByText(policy).parentNode
-    .previousSibling;
+  const yesRadioBtn =
+    within(container).getByText(policy).parentNode.previousSibling;
   const updatePrefBtn = within(container).getByRole("button", {
     name: "Update Preference"
   });
@@ -130,7 +130,7 @@ const vote = async (
   user.click(continueBtn);
 
   await expectedResult(policy, expectPassphraseError, expectedPiKey);
-  await wait(() =>
+  await waitFor(() =>
     within(container).getByRole("button", {
       name: "Update Preference"
     })

@@ -2,7 +2,7 @@ import { ReceiveTab } from "components/views/TransactionsPage/ReceiveTab";
 import TransactionsPage from "components/views/TransactionsPage/";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
@@ -156,7 +156,7 @@ test("change destination account", async () => {
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
   expect(screen.getAllByText(mockDefaultAccount.name).length).toBe(2);
   user.click(screen.getByText(mockAccount2.name));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getAllByText(mockAccount2.name).length).toBe(1)
   );
   expect(mockGetNextAddressAttempt).toHaveBeenCalled();

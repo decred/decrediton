@@ -1,7 +1,7 @@
 import { ConnectPage } from "components/views/LNPage/ConnectPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as lna from "actions/LNActions";
@@ -169,11 +169,11 @@ test("test text toggles", async () => {
 
   expect(screen.queryByText(/attention:/i)).not.toBeInTheDocument();
   user.click(getUseExistingWalletAccountToggle());
-  await wait(() => screen.getByText(/attention:/i));
+  await waitFor(() => screen.getByText(/attention:/i));
 
   // go back
   user.click(getCreateNewWalletAccountToggle());
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(/attention:/i)).not.toBeInTheDocument()
   );
 });
@@ -200,7 +200,7 @@ test("test use existing account", async () => {
 
   expect(screen.queryByText(/attention:/i)).not.toBeInTheDocument();
   user.click(getUseExistingWalletAccountToggle());
-  await wait(() => screen.getByText(/attention:/i));
+  await waitFor(() => screen.getByText(/attention:/i));
 
   user.click(screen.getByText(mockDefaultAccount.name));
   user.click(screen.getByText(mockLnAccount.name));

@@ -1,7 +1,7 @@
 import SettingsPage from "components/views/SettingsPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, fireEvent, wait } from "@testing-library/react";
+import { screen, fireEvent, waitFor } from "@testing-library/react";
 
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
@@ -332,16 +332,16 @@ const testConfirmModal = async (
   confirmContent,
   confirmButtonLabel = "Confirm"
 ) => {
-  // wait for the confirm modal and cancel
-  await wait(() => screen.getByText(confirmHeaderText));
+  // waitFor for the confirm modal and cancel
+  await waitFor(() => screen.getByText(confirmHeaderText));
   if (confirmContent) {
     expect(screen.getByText(confirmContent)).toBeInTheDocument();
   }
   user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(confirmHeaderText)).not.toBeInTheDocument();
-  // wait for the confirm modal and confirm
+  // waitFor for the confirm modal and confirm
   changeFn();
-  await wait(() => screen.getByText(confirmHeaderText));
+  await waitFor(() => screen.getByText(confirmHeaderText));
   user.click(screen.getByRole("button", { name: confirmButtonLabel }));
 };
 
@@ -375,7 +375,7 @@ const testComboxBoxInput = async (
     await testConfirmModal(changeFn, "Reset required");
   }
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockSaveSettings).toHaveBeenCalledWith({
       ...testCurrentSettings,
       ...expectedChange
@@ -452,7 +452,7 @@ const testTextFieldInput = async (
     testConfirmModal("Save", "Reset required");
   }
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockSaveSettings).toHaveBeenCalledWith({
       ...testCurrentSettings,
       ...expectedChange
@@ -867,10 +867,10 @@ test("test proxy settings", async () => {
   fireEvent.keyDown(proxyLocationInputControl, { key: "enter", keyCode: 13 });
 
   user.click(screen.getByRole("button", { name: "Save proxy settings" }));
-  await wait(() => screen.getByText("Reset required"));
+  await waitFor(() => screen.getByText("Reset required"));
   user.click(screen.getByRole("button", { name: "Confirm" }));
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockSaveSettings).toHaveBeenCalledWith({
       ...testCurrentSettings,
       ...{ proxyType: PROXYTYPE_PAC, proxyLocation: testProxyLocation }

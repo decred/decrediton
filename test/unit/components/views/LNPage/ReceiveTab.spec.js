@@ -1,7 +1,7 @@
 import { ReceiveTab } from "components/views/LNPage/ReceiveTab";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -53,7 +53,7 @@ test("test invoice list and modal ", async () => {
   user.click(screen.getByRole("button", { name: "Cancel Invoice" }));
   expect(mockCancelInvoice).toHaveBeenCalledWith(mockInvoices[0].rHash);
   //modal has been closed
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.queryByText("Lightning Payment Request")
     ).not.toBeInTheDocument()
@@ -113,8 +113,10 @@ test("test add invoice form ", async () => {
     mockDescText,
     mockValidAmount * 100000000
   );
-  await wait(() => expect(descInput.value).toBe(""));
-  expect(amountInput.value).toBe("");
+  await waitFor(() => {
+    expect(descInput.value).toBe("");
+    expect(amountInput.value).toBe("");
+  });
 });
 
 test("0 invoice amount is allowed", async () => {
@@ -138,7 +140,7 @@ test("0 invoice amount is allowed", async () => {
   user.type(descInput, mockDescText);
   user.click(createInvoiceButton);
   expect(mockAddInvoice).toHaveBeenCalledWith(mockDescText, 0);
-  await wait(() => expect(descInput.value).toBe(""));
+  await waitFor(() => expect(descInput.value).toBe(""));
 });
 
 test("test filter control", async () => {
@@ -161,7 +163,7 @@ test("test filter control", async () => {
   user.click(filterMenuButton);
   user.click(screen.getAllByText("Canceled")[0]);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -172,7 +174,7 @@ test("test filter control", async () => {
   user.click(filterMenuButton);
   user.click(screen.getAllByText("Expired")[0]);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(/Invoice for/i)).not.toBeInTheDocument()
   );
   expect(screen.getByText(/no invoices found/i)).toBeInTheDocument();
@@ -198,7 +200,7 @@ test("test sort control", async () => {
   user.click(sortMenuButton);
   user.click(screen.getByText("Oldest"));
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -227,7 +229,7 @@ test("test search control", async () => {
   const searchInput = screen.getByPlaceholderText("Filter by Payment Hash");
   user.type(searchInput, "mock-rhash-2");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -240,7 +242,7 @@ test("test search control", async () => {
 
   user.type(searchInput, "mock-rhash-22");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -250,7 +252,7 @@ test("test search control", async () => {
 
   user.type(searchInput, "mock-rhash-22-12");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(/Invoice for/i)).not.toBeInTheDocument()
   );
   expect(screen.getByText(/no invoices found/i)).toBeInTheDocument();

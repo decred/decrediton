@@ -1,7 +1,7 @@
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import * as wla from "actions/WalletLoaderActions";
@@ -117,7 +117,7 @@ beforeEach(() => {
 
 test("render wallet chooser view", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockSortedAvailableWallets).toHaveBeenCalled();
   expect(mockGetSelectedWallet).toHaveBeenCalled();
@@ -161,7 +161,7 @@ test("render wallet chooser view", async () => {
 
 test("test editing wallets", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/edit wallets/i));
   expect(screen.getByText("Close")).toBeInTheDocument();
@@ -210,22 +210,22 @@ const launchWallet = async (ms) => {
     })
   );
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   const wallet = screen.getByText(testAvailableWallets[1].value.wallet);
   user.click(wallet);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockStartWallet).toHaveBeenCalledWith(testAvailableWallets[1])
   );
 };
 
 test("launch a wallet and click on Save button on Auto Wallet launching modal", async () => {
   await launchWallet();
-  await wait(() => screen.getByText("Finishing to load wallet"));
+  await waitFor(() => screen.getByText("Finishing to load wallet"));
 
   user.click(screen.getByRole("button", { name: "Open Wallet" }));
   user.click(screen.getByRole("button", { name: "Save" }));
-  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+  await waitFor(() => screen.queryByText("Automatic Wallet Launching"));
 
   expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
 
@@ -238,12 +238,12 @@ test("launch a wallet and click on Save button on Auto Wallet launching modal", 
 
 test("launch a wallet and click on checkbox, then the Save button on Auto Wallet launching modal", async () => {
   await launchWallet();
-  await wait(() => screen.getByText("Finishing to load wallet"));
+  await waitFor(() => screen.getByText("Finishing to load wallet"));
 
   user.click(screen.getByRole("button", { name: "Open Wallet" }));
   user.click(screen.getByRole("checkbox"));
   user.click(screen.getByRole("button", { name: "Save" }));
-  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+  await waitFor(() => screen.queryByText("Automatic Wallet Launching"));
 
   expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
   expect(mockSetAutoWalletLaunching).toHaveBeenCalledWith(false);
@@ -251,11 +251,11 @@ test("launch a wallet and click on checkbox, then the Save button on Auto Wallet
 
 test("launch a wallet and click on Ask me later button on Auto Wallet launching modal", async () => {
   await launchWallet();
-  await wait(() => screen.getByText("Finishing to load wallet"));
+  await waitFor(() => screen.getByText("Finishing to load wallet"));
 
   user.click(screen.getByRole("button", { name: "Open Wallet" }));
   user.click(screen.getByRole("button", { name: "Ask me later" }));
-  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+  await waitFor(() => screen.queryByText("Automatic Wallet Launching"));
 
   expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
   expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
@@ -263,11 +263,11 @@ test("launch a wallet and click on Ask me later button on Auto Wallet launching 
 
 test("launch a wallet and close Auto Wallet launching modal", async () => {
   await launchWallet();
-  await wait(() => screen.getByText("Finishing to load wallet"));
+  await waitFor(() => screen.getByText("Finishing to load wallet"));
 
   user.click(screen.getByRole("button", { name: "Open Wallet" }));
   user.click(screen.getByRole("button", { name: "Close" }));
-  await wait(() => screen.queryByText("Automatic Wallet Launching"));
+  await waitFor(() => screen.queryByText("Automatic Wallet Launching"));
 
   expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
   expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
@@ -277,28 +277,28 @@ test("launch a wallet and open wallet automatically ", async () => {
   selectors.autoWalletLaunching = jest.fn(() => true);
   await launchWallet();
 
-  expect(screen.getByText("Setup Wallet")).toBeInTheDocument();
+  await waitFor(() => screen.getByText("Setup Wallet"));
   expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
 });
 
 test("launch a wallet and cancel loading", async () => {
   await launchWallet(1000);
-  await wait(() => screen.getByText("Cancel Loading"));
+  await waitFor(() => screen.getByText("Cancel Loading"));
   user.click(screen.getByText("Cancel Loading"));
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   expect(mockSetAutoWalletLaunching).not.toHaveBeenCalled();
 });
 
 test("launch an encrypted wallet", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   mockStartWallet = daemonActions.startWallet = jest.fn(
     () => () => Promise.reject(OPENWALLET_INPUT)
   );
   user.click(screen.getByText(testAvailableWallets[0].value.wallet));
-  await wait(() => expect(mockStartWallet).toHaveBeenCalled());
-  expect(screen.getByText(/insert your pubkey/i)).toBeInTheDocument();
+  expect(mockStartWallet).toHaveBeenCalled();
+  await waitFor(() => screen.getByText(/insert your pubkey/i));
   expect(screen.getByText(/decrypt wallet/i)).toBeInTheDocument();
   expect(
     screen.getByText(/this wallet is encrypted/i).textContent
@@ -314,15 +314,15 @@ test("launch an encrypted wallet", async () => {
   // invalid passphrase
   user.type(publicPassphraseInput, testInvalidPassphrase);
   user.click(openWalletButton);
-  await wait(() =>
-    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
-      testInvalidPassphrase,
-      true
-    )
+  expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
+    testInvalidPassphrase,
+    true
   );
-  expect(
-    screen.getByText(/wrong public passphrase/i).textContent
-  ).toMatchInlineSnapshot('"Wrong public passphrase inserted."');
+  await waitFor(() =>
+    expect(
+      screen.getByText(/wrong public passphrase/i).textContent
+    ).toMatchInlineSnapshot('"Wrong public passphrase inserted."')
+  );
 
   // invalid passphrase & unknown error
   const UNKNOWN_ERROR = "UNKNOWN_ERROR";
@@ -331,13 +331,11 @@ test("launch an encrypted wallet", async () => {
   );
   user.type(publicPassphraseInput, testInvalidPassphrase);
   user.click(openWalletButton);
-  await wait(() =>
-    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
-      testInvalidPassphrase,
-      true
-    )
+  expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
+    testInvalidPassphrase,
+    true
   );
-  expect(screen.getByText(UNKNOWN_ERROR)).toBeInTheDocument();
+  await waitFor(() => screen.getByText(UNKNOWN_ERROR));
 
   // submit empty input by pressing enter
   user.clear(publicPassphraseInput);
@@ -350,7 +348,7 @@ test("launch an encrypted wallet", async () => {
     () => () => Promise.resolve(OPENWALLET_SUCCESS)
   );
   user.type(publicPassphraseInput, testValidPassphrase + "{enter}");
-  await wait(() =>
+  await waitFor(() =>
     expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
       testValidPassphrase,
       true
@@ -360,7 +358,7 @@ test("launch an encrypted wallet", async () => {
 
 test("ask for passphrase if account discovery is needed", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   mockStartWallet = daemonActions.startWallet = jest.fn(
     () => () => Promise.reject(OPENWALLET_INPUTPRIVPASS)
@@ -372,7 +370,8 @@ test("ask for passphrase if account discovery is needed", async () => {
     }
   );
   user.click(screen.getByText(testAvailableWallets[0].value.wallet));
-  await wait(() => expect(mockStartWallet).toHaveBeenCalled());
+  await waitFor(() => expect(mockStartWallet).toHaveBeenCalled());
+  await waitFor(() => screen.getByPlaceholderText(/private passphrase/i));
   let privatePassphraseInput =
     screen.getByPlaceholderText(/private passphrase/i);
   const testInvalidPassphrase = "invalid-passphrase";
@@ -391,13 +390,12 @@ test("ask for passphrase if account discovery is needed", async () => {
   // type invalid private key
   user.type(privatePassphraseInput, testInvalidPassphrase);
   user.click(continueButton);
-  await wait(() =>
-    expect(mockStartRpcRequestFunc).toHaveBeenCalledWith(
-      testInvalidPassphrase,
-      undefined
-    )
+  expect(mockStartRpcRequestFunc).toHaveBeenCalledWith(
+    testInvalidPassphrase,
+    undefined
   );
 
+  await waitFor(() => screen.getByPlaceholderText(/private passphrase/i));
   privatePassphraseInput = screen.getByPlaceholderText(/private passphrase/i);
   continueButton = screen.getByText("Continue");
   // submit empty input by pressing enter
@@ -411,7 +409,7 @@ test("ask for passphrase if account discovery is needed", async () => {
     () => () => Promise.resolve()
   );
   user.type(privatePassphraseInput, testValidPassphrase + "{enter}");
-  await wait(() =>
+  await waitFor(() =>
     expect(mockStartRpcRequestFunc).toHaveBeenCalledWith(
       testValidPassphrase,
       undefined
@@ -421,7 +419,7 @@ test("ask for passphrase if account discovery is needed", async () => {
 
 test("launch an encrypted wallet and ask private passphrase too if account discovery is needed", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   mockStartWallet = daemonActions.startWallet = jest.fn(
     () => () => Promise.reject(OPENWALLET_INPUT)
@@ -431,28 +429,24 @@ test("launch an encrypted wallet and ask private passphrase too if account disco
   );
 
   user.click(screen.getByText(testAvailableWallets[0].value.wallet));
-  await wait(() => expect(mockStartWallet).toHaveBeenCalled());
+  expect(mockStartWallet).toHaveBeenCalled();
+  await waitFor(() => screen.getByPlaceholderText(/public passphrase/i));
 
   const publicPassphraseInput =
     screen.getByPlaceholderText(/public passphrase/i);
   const testValidPassphrase = "valid-passphrase";
 
   user.type(publicPassphraseInput, testValidPassphrase + "{enter}");
-  await wait(() =>
-    expect(mockOpenWalletAttempt).toHaveBeenCalledWith(
-      testValidPassphrase,
-      true
-    )
-  );
+  expect(mockOpenWalletAttempt).toHaveBeenCalledWith(testValidPassphrase, true);
 
-  expect(
-    screen.getByText(/type passphrase to discover accounts/i)
-  ).toBeInTheDocument();
+  await waitFor(() =>
+    expect(screen.getByText(/type passphrase to discover accounts/i))
+  );
 });
 
 test("test isSyncingRPC in SPV mode and receive error from SPV sync", async () => {
   selectors.isSPV = jest.fn(() => true);
   wlActions.spvSyncAttempt = jest.fn(() => () => Promise.reject());
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });

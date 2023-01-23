@@ -1,7 +1,7 @@
 import HomePage from "components/views/HomePage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as cla from "actions/ClientActions";
@@ -121,7 +121,7 @@ test("test HomePage with an immature ticket", async () => {
 
   // go to Tickets tab
   user.click(screen.getByText("Tickets"));
-  await wait(() => screen.getByText(/voted ticket/i));
+  await waitFor(() => screen.getByText(/voted ticket/i));
   expect(
     screen.getByText(/active and locked ticket/i).parentNode.textContent
   ).toMatchInlineSnapshot(
@@ -135,7 +135,7 @@ test("test HomePage with an immature ticket", async () => {
 
   // go to Transactions tab
   user.click(screen.getByText("Transactions"));
-  await wait(() => screen.getByText(/sent/i));
+  await waitFor(() => screen.getByText(/sent/i));
   expect(
     screen.getAllByText(/received/i)[0].parentNode.textContent
   ).toMatchInlineSnapshot('"3.00000 DCRReceived"');

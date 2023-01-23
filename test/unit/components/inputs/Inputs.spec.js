@@ -16,7 +16,7 @@ import {
 } from "inputs";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import { useState } from "react";
 import * as wallet from "wallet";
@@ -417,7 +417,7 @@ test("open file with PathBrowseInput", async () => {
   });
   user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
-  await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
+  await waitFor(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 
   /* electron return only filePath */
   mockOnChange.mockRestore();
@@ -425,7 +425,7 @@ test("open file with PathBrowseInput", async () => {
   wallet.showOpenDialog.mockReturnValueOnce({ filePath: testFilePath });
   user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
-  await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
+  await waitFor(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 
   /* electron does not return filePaths or filePath */
   mockOnChange.mockRestore();
@@ -433,7 +433,9 @@ test("open file with PathBrowseInput", async () => {
   wallet.showOpenDialog.mockReturnValueOnce({});
   user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
-  await wait(() => expect(mockOnChange).not.toHaveBeenCalledWith(testFilePath));
+  await waitFor(() =>
+    expect(mockOnChange).not.toHaveBeenCalledWith(testFilePath)
+  );
 
   /* write path into input directly*/
   const filePathManual = "t";
@@ -442,7 +444,9 @@ test("open file with PathBrowseInput", async () => {
   user.clear(inputTag);
   user.type(inputTag, filePathManual);
   expect(wallet.showOpenDialog).not.toHaveBeenCalled();
-  await wait(() => expect(mockOnChange).toHaveBeenCalledWith(filePathManual));
+  await waitFor(() =>
+    expect(mockOnChange).toHaveBeenCalledWith(filePathManual)
+  );
 });
 
 test("save directory with PathBrowseInput", async () => {
@@ -455,5 +459,5 @@ test("save directory with PathBrowseInput", async () => {
   wallet.showSaveDialog.mockReturnValueOnce({ filePath: testFilePath });
   user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showSaveDialog).toHaveBeenCalledWith(anyArg());
-  await wait(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
+  await waitFor(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 });

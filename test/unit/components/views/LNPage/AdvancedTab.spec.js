@@ -1,7 +1,7 @@
 import { AdvancedTab } from "components/views/LNPage/AdvancedTab";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -160,14 +160,18 @@ test("test backup", async () => {
   const mockFilePath = "mockFilePath";
   wallet.showSaveDialog.mockReturnValueOnce({ filePath: mockFilePath });
   user.click(screen.getByText("Backup Now"));
-  await wait(() => expect(mockExportBackup).toHaveBeenCalledWith(mockFilePath));
+  await waitFor(() =>
+    expect(mockExportBackup).toHaveBeenCalledWith(mockFilePath)
+  );
 
   wallet.showOpenDialog.mockReturnValueOnce({
     filePaths: [mockFilePath],
     filePath: mockFilePath
   });
   user.click(screen.getByText("Verify Backup"));
-  await wait(() => expect(mockVerifyBackup).toHaveBeenCalledWith(mockFilePath));
+  await waitFor(() =>
+    expect(mockVerifyBackup).toHaveBeenCalledWith(mockFilePath)
+  );
 });
 
 test("test towers", () => {

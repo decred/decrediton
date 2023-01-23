@@ -1,6 +1,6 @@
 import AccountsPage from "components/views/AccountsPage";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
@@ -159,7 +159,7 @@ test("test the Primary account", async () => {
 
   // show account details
   user.click(account);
-  await wait(() => expect(getBalances()).toBeInTheDocument());
+  await waitFor(() => expect(getBalances()).toBeInTheDocument());
   expect(getBalancesTextContent()).toMatchInlineSnapshot(
     '"BalancesTotal95.51454006 DCRSpendable95.51454006 DCRImmature Rewards0.00000 DCRLocked By Tickets0.00000 DCRVoting Authority58.02257025 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
@@ -211,7 +211,7 @@ test("test the Primary account", async () => {
 
   // hide account details
   user.click(account);
-  await wait(() => expect(queryBalances()).not.toBeInTheDocument());
+  await waitFor(() => expect(queryBalances()).not.toBeInTheDocument());
 
   // default account is not hideable
   expect(queryHideButton()).not.toBeInTheDocument();
@@ -227,7 +227,7 @@ test("test a common account", async () => {
 
   // show account details
   user.click(commonAccount);
-  await wait(() => expect(getBalances()).toBeInTheDocument());
+  await waitFor(() => expect(getBalances()).toBeInTheDocument());
   expect(getBalancesTextContent()).toMatchInlineSnapshot(
     '"BalancesTotal481.25138665 DCRSpendable350.74115317 DCRImmature Rewards0.00000 DCRLocked By Tickets130.51023348 DCRVoting Authority130.51020368 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
@@ -240,7 +240,7 @@ test("test a common account", async () => {
 
   // hide common account details
   user.click(commonAccount);
-  await wait(() => expect(queryBalances()).not.toBeInTheDocument());
+  await waitFor(() => expect(queryBalances()).not.toBeInTheDocument());
 });
 
 test("test an empy account", async () => {
@@ -253,7 +253,7 @@ test("test an empy account", async () => {
 
   // show account details
   user.click(emtpyAccount);
-  await wait(() => expect(getBalances()).toBeInTheDocument());
+  await waitFor(() => expect(getBalances()).toBeInTheDocument());
   expect(getBalancesTextContent()).toMatchInlineSnapshot(
     '"BalancesTotal0.00000 DCRSpendable0.00000 DCRImmature Rewards0.00000 DCRLocked By Tickets0.00000 DCRVoting Authority0.00000 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );

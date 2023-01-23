@@ -1,7 +1,7 @@
 import { ChannelsTab } from "components/views/LNPage/ChannelsTab";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait, fireEvent } from "@testing-library/react";
+import { screen, waitFor, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
 import * as wl from "wallet";
@@ -98,14 +98,16 @@ test("test filter control", async () => {
   user.click(filterMenuButton);
   user.click(screen.getAllByText("Closed")[0]);
 
-  await wait(() => expect(screen.queryByText("Open")).not.toBeInTheDocument());
+  await waitFor(() =>
+    expect(screen.queryByText("Open")).not.toBeInTheDocument()
+  );
   expect(screen.queryByText("Pending")).not.toBeInTheDocument();
   expect(screen.getByText("Closed")).toBeInTheDocument();
 
   user.click(filterMenuButton);
   user.click(screen.getAllByText("Pending")[0]);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Closed")).not.toBeInTheDocument()
   );
   expect(screen.queryByText("Open")).not.toBeInTheDocument();
@@ -125,7 +127,9 @@ test("test search control", async () => {
     target: { value: "not valid channel point" }
   });
 
-  await wait(() => expect(screen.queryByText("Open")).not.toBeInTheDocument());
+  await waitFor(() =>
+    expect(screen.queryByText("Open")).not.toBeInTheDocument()
+  );
   expect(screen.queryByText("Pending")).not.toBeInTheDocument();
   expect(screen.queryByText("Closed")).not.toBeInTheDocument();
   expect(screen.getByText(/no channel found/i)).toBeInTheDocument();
@@ -133,11 +137,11 @@ test("test search control", async () => {
   fireEvent.change(searchInput, {
     target: { value: "cpp" }
   });
-  await wait(() => expect(screen.getByText("Pending")).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText("Pending")).toBeInTheDocument());
   fireEvent.change(searchInput, {
     target: { value: "" }
   });
-  await wait(() => expect(screen.getByText("Open")).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByText("Open")).toBeInTheDocument());
   expect(screen.getByText("Pending")).toBeInTheDocument();
   expect(screen.getByText("Closed")).toBeInTheDocument();
 });
@@ -180,19 +184,17 @@ test("test create form and receintly created modal", async () => {
   expect(createChannelBt.disabled).toBe(false);
 
   user.click(createChannelBt);
-  await wait(() =>
-    expect(mockOpenChannel).toHaveBeenCalledWith(
-      mockNode,
-      mockAmount * 100000000,
-      null //pushAmt is null on mainnet
-    )
+  expect(mockOpenChannel).toHaveBeenCalledWith(
+    mockNode,
+    mockAmount * 100000000,
+    null //pushAmt is null on mainnet
   );
 
   // inputs shoud be reseted now
-  expect(getNodeInput().value).toBe("");
-  expect(getAmountToCommitInput().value).toBe("");
+  await waitFor(() => expect(getNodeInput().value).toBe(""));
+  await waitFor(() => expect(getAmountToCommitInput().value).toBe(""));
 
-  await wait(() => screen.getByText("Channel Created"));
+  await waitFor(() => screen.getByText("Channel Created"));
 
   expect(
     screen.getAllByText("Open")[1].parentNode.parentNode.parentNode.textContent
@@ -219,7 +221,7 @@ test("test create form and receintly created modal", async () => {
 
   fireEvent.click(getConfirmButton());
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCloseChannel).toHaveBeenCalledWith(
       mockChannels[0].channelPoint,
       false
@@ -253,20 +255,20 @@ test("test push amount in testnet mode", async () => {
   expect(createChannelBt.disabled).toBe(false);
 
   user.click(createChannelBt);
-  await wait(() =>
-    expect(mockOpenChannel).toHaveBeenCalledWith(
-      mockNode,
-      mockAmount * 100000000,
-      mockPushAmount * 100000000
-    )
+  expect(mockOpenChannel).toHaveBeenCalledWith(
+    mockNode,
+    mockAmount * 100000000,
+    mockPushAmount * 100000000
   );
 
   // inputs shoud be reseted now
-  expect(getNodeInput().value).toBe("");
-  expect(getAmountToCommitInput().value).toBe("");
-  expect(getPushAmountToCommitInput().value).toBe("");
+  await waitFor(() => {
+    expect(getNodeInput().value).toBe("");
+    expect(getAmountToCommitInput().value).toBe("");
+    expect(getPushAmountToCommitInput().value).toBe("");
+  });
 
-  await wait(() => screen.getByText("Channel Created"));
+  await waitFor(() => screen.getByText("Channel Created"));
 });
 
 test("test failing channel create form", async () => {
@@ -289,7 +291,7 @@ test("test failing channel create form", async () => {
   expect(createChannelBt.disabled).toBe(true);
   expect(mockOpenChannel).toHaveBeenCalled();
 
-  await wait(() => expect(createChannelBt.disabled).toBe(false));
+  await waitFor(() => expect(createChannelBt.disabled).toBe(false));
 
   // inputs shoud NOT be reseted
   expect(getNodeInput().value).toBe(mockNode);
@@ -305,10 +307,10 @@ test("test paste and clear button", async () => {
   wallet.readFromClipboard.mockImplementation(() => mockPastedNodePubKey);
 
   user.click(getPasteButton());
-  await wait(() => expect(getNodeInput().value).toBe(mockPastedNodePubKey));
+  await waitFor(() => expect(getNodeInput().value).toBe(mockPastedNodePubKey));
 
   user.click(getClearButton());
-  await wait(() => expect(getNodeInput().value).toBe(""));
+  await waitFor(() => expect(getNodeInput().value).toBe(""));
 });
 
 test("test recent node list", () => {
@@ -363,12 +365,12 @@ test("test search for node modal", async () => {
   wallet.readFromClipboard.mockImplementation(() => mockPastedAlias);
 
   user.click(getSearchPasteBt());
-  await wait(() => expect(getSearchInput().value).toBe(mockPastedAlias));
+  await waitFor(() => expect(getSearchInput().value).toBe(mockPastedAlias));
   expect(getSearchResultsTitle().parentElement.textContent).toBe(
     "Search Results (2)mock-alias-1mock...ub-0mock-alias-2mock...ey-0"
   );
   user.click(getSearchClearBt());
-  await wait(() => expect(getSearchInput().value).toBe(""));
+  await waitFor(() => expect(getSearchInput().value).toBe(""));
 
   // type alias
   user.type(getSearchInput(), "mock-alias-0"); // alias of the first open channel's node

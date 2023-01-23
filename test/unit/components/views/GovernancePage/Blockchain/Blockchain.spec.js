@@ -1,6 +1,6 @@
 import Blockchain from "components/views/GovernancePage/Blockchain";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
@@ -139,7 +139,7 @@ test("test agenda search and sort controls", async () => {
   const eyeFilterMenu = screen.getByRole("button", { name: "EyeFilterMenu" });
   user.click(eyeFilterMenu);
   user.click(screen.getByText("Oldest"));
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/test-desc-/i)
@@ -172,7 +172,7 @@ test("test agenda search and sort controls", async () => {
   // Newest first
   user.click(eyeFilterMenu);
   user.click(screen.getByText("Newest"));
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/test-desc-/i)
@@ -183,7 +183,7 @@ test("test agenda search and sort controls", async () => {
 
 test("test one outdated vsp alert", async () => {
   render(<Blockchain />);
-  await wait(() => screen.getByText(/You have unspent tickets/i));
+  await waitFor(() => screen.getByText(/You have unspent tickets/i));
 
   expect(
     screen.getByText(/You have unspent tickets/i).textContent
@@ -196,7 +196,7 @@ test("test multiple outdated vsps alert", async () => {
   defaultMockAvailableMainnetVsps[0].outdated = true;
   selectors.getAvailableVSPs = jest.fn(() => defaultMockAvailableMainnetVsps);
   render(<Blockchain />);
-  await wait(() => screen.getByText(/You have unspent tickets/i));
+  await waitFor(() => screen.getByText(/You have unspent tickets/i));
 
   expect(
     screen.getByText(/You have unspent tickets/i).textContent

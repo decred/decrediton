@@ -1,7 +1,7 @@
 import { LoadingMoreTicketsIndicator } from "indicators";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 
 let mockStartRequestHeight;
@@ -49,12 +49,12 @@ test("test default LoadingMoreTickets", async () => {
 
   /* cancel listing Tickets */
   user.click(screen.getByRole("button"));
-  await wait(() => screen.getByText(/loading more tickets canceled/i));
+  await waitFor(() => screen.getByText(/loading more tickets canceled/i));
   expect(screen.getByText("Return listing tickets")).toBeInTheDocument();
 
   /* reenable listing Tickets */
   user.click(screen.getByRole("button"));
-  await wait(() => screen.getByText(/loading more tickets/i));
+  await waitFor(() => screen.getByText(/loading more tickets/i));
   expect(screen.getByText("Cancel listing tickets")).toBeInTheDocument();
 });
 

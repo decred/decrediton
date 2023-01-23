@@ -1,7 +1,7 @@
 import { HistoryTab } from "components/views/TransactionsPage/HistoryTab";
 import TransactionsPage from "components/views/TransactionsPage/";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor, act } from "@testing-library/react";
 import user from "@testing-library/user-event";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
@@ -265,9 +265,11 @@ test("test txList", async () => {
   })[1];
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Sent"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -284,9 +286,11 @@ test("test txList", async () => {
   // show sent and received txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Received"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -304,9 +308,11 @@ test("test txList", async () => {
   // show just received txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Sent"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -323,9 +329,11 @@ test("test txList", async () => {
   // show just received and Ticket Fee txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Ticket fee"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -346,9 +354,11 @@ test("test txList", async () => {
   user.click(getTxTypeFilterMenuItem("Ticket fee"));
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("All"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -364,9 +374,11 @@ test("test txList", async () => {
   // show just mixed txs
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Mixed"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -382,9 +394,11 @@ test("test txList", async () => {
   // show all txs again by toggle Mixed option
   user.click(txTypeFilterButton);
   user.click(getTxTypeFilterMenuItem("Mixed"));
-  jest.advanceTimersByTime(101);
+  act(() => {
+    jest.runAllTimers();
+  });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -402,8 +416,13 @@ test("test txList", async () => {
     screen.getByPlaceholderText("Filter by Address or Hash"),
     Object.keys(allTestTxs)[3]
   );
-  jest.advanceTimersByTime(101);
-  await wait(() => expect(getHistoryPageContent().childElementCount).toBe(1));
+  act(() => {
+    jest.runAllTimers();
+  });
+
+  await waitFor(() =>
+    expect(getHistoryPageContent().childElementCount).toBe(1)
+  );
 });
 
 test("show only sent txs which are coming from wallet and not from redux", async () => {
@@ -450,7 +469,7 @@ test("show only sent txs which are coming from wallet and not from redux", async
   user.click(getTxTypeFilterMenuItem("Sent"));
   jest.advanceTimersByTime(101);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(0)
   );
 
@@ -484,7 +503,7 @@ test("test tx sorting", async () => {
   user.click(txSortButton);
   user.click(screen.getByText("Oldest"));
   jest.advanceTimersByTime(101);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockchangeTransactionsFilter).toHaveBeenCalledWith({
       ...initialState.grpc.transactionsFilter,
       listDirection: "asc"
@@ -495,7 +514,7 @@ test("test tx sorting", async () => {
   user.click(txSortButton);
   user.click(screen.getByText("Newest"));
   jest.advanceTimersByTime(101);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockchangeTransactionsFilter).toHaveBeenCalledWith({
       ...initialState.grpc.transactionsFilter,
       listDirection: "desc"

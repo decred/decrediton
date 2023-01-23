@@ -2,7 +2,7 @@ import TrezorPageContent from "views/TrezorPage/TrezorPageContent";
 import TrezorPageSection from "views/TrezorPage/TrezorPageSection";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as trza from "actions/TrezorActions";
 
@@ -78,7 +78,7 @@ test("no trezor is detected", () => {
   expect(mockTrezorConnect).toHaveBeenCalled();
 });
 
-test("test pin protection switch", () => {
+test("test pin protection switch", async () => {
   const { store } = render(
     <TrezorPageContent ContainerComponent={TrezorPageSection} />
   );
@@ -95,13 +95,16 @@ test("test pin protection switch", () => {
 
   // features has been fetched
   store.dispatch({ type: trza.TRZ_GETFEATURES_SUCCESS, features });
-  expect(pinProtectionLabel.previousElementSibling.className).not.toBe(
-    "spinner"
-  );
-  expect(getDisablePinProtectionToggleTooltip()).toBeInTheDocument();
-  expect(pinProtectionLabel.textContent).toMatchInlineSnapshot(
-    '"Toggle PIN Protection (on)"'
-  );
+
+  await waitFor(() => {
+    expect(pinProtectionLabel.previousElementSibling.className).not.toBe(
+      "spinner"
+    );
+    expect(getDisablePinProtectionToggleTooltip()).toBeInTheDocument();
+    expect(pinProtectionLabel.textContent).toMatchInlineSnapshot(
+      '"Toggle PIN Protection (on)"'
+    );
+  });
 
   // click on switch
   user.click(
@@ -112,13 +115,16 @@ test("test pin protection switch", () => {
   // features has been fetched again
   features.pin_protection = false;
   store.dispatch({ type: trza.TRZ_GETFEATURES_SUCCESS, features });
-  expect(getEnablePinProtectionToggleTooltip()).toBeInTheDocument();
-  expect(pinProtectionLabel.textContent).toMatchInlineSnapshot(
-    '"Toggle PIN Protection (off)"'
-  );
+
+  await waitFor(() => {
+    expect(getEnablePinProtectionToggleTooltip()).toBeInTheDocument();
+    expect(pinProtectionLabel.textContent).toMatchInlineSnapshot(
+      '"Toggle PIN Protection (off)"'
+    );
+  });
 });
 
-test("test passphrase protection switch", () => {
+test("test passphrase protection switch", async () => {
   const { store } = render(
     <TrezorPageContent ContainerComponent={TrezorPageSection} />
   );
@@ -137,13 +143,15 @@ test("test passphrase protection switch", () => {
 
   // features has been fetched
   store.dispatch({ type: trza.TRZ_GETFEATURES_SUCCESS, features });
-  expect(passphraseProtectionLabel.previousElementSibling.className).not.toBe(
-    "spinner"
-  );
-  expect(getDisablePassphraseProtectionToggleTooltip()).toBeInTheDocument();
-  expect(passphraseProtectionLabel.textContent).toMatchInlineSnapshot(
-    '"Toggle Passphrase Protection (on)"'
-  );
+  await waitFor(() => {
+    expect(passphraseProtectionLabel.previousElementSibling.className).not.toBe(
+      "spinner"
+    );
+    expect(getDisablePassphraseProtectionToggleTooltip()).toBeInTheDocument();
+    expect(passphraseProtectionLabel.textContent).toMatchInlineSnapshot(
+      '"Toggle Passphrase Protection (on)"'
+    );
+  });
 
   // click on switch
   user.click(
@@ -155,13 +163,16 @@ test("test passphrase protection switch", () => {
   // features has been fetched again
   features.passphrase_protection = false;
   store.dispatch({ type: trza.TRZ_GETFEATURES_SUCCESS, features });
-  expect(getEnablePassphraseProtectionToggleTooltip()).toBeInTheDocument();
-  expect(passphraseProtectionLabel.textContent).toMatchInlineSnapshot(
-    '"Toggle Passphrase Protection (off)"'
-  );
+
+  await waitFor(() => {
+    expect(getEnablePassphraseProtectionToggleTooltip()).toBeInTheDocument();
+    expect(passphraseProtectionLabel.textContent).toMatchInlineSnapshot(
+      '"Toggle Passphrase Protection (off)"'
+    );
+  });
 });
 
-test("test passphrase on device protection switch", () => {
+test("test passphrase on device protection switch", async () => {
   const { store } = render(
     <TrezorPageContent ContainerComponent={TrezorPageSection} />
   );
@@ -181,15 +192,17 @@ test("test passphrase on device protection switch", () => {
 
   // features has been fetched
   store.dispatch({ type: trza.TRZ_GETFEATURES_SUCCESS, features });
-  expect(
-    passphraseOnDeviceProtectionLabel.previousElementSibling.className
-  ).not.toBe("spinner");
-  expect(
-    getDisablePassphraseOnDeviceProtectionToggleTooltip()
-  ).toBeInTheDocument();
-  expect(passphraseOnDeviceProtectionLabel.textContent).toMatchInlineSnapshot(
-    '"Toggle Passphrase Protection On Device (on)"'
-  );
+  await waitFor(() => {
+    expect(
+      passphraseOnDeviceProtectionLabel.previousElementSibling.className
+    ).not.toBe("spinner");
+    expect(
+      getDisablePassphraseOnDeviceProtectionToggleTooltip()
+    ).toBeInTheDocument();
+    expect(passphraseOnDeviceProtectionLabel.textContent).toMatchInlineSnapshot(
+      '"Toggle Passphrase Protection On Device (on)"'
+    );
+  });
 
   // click on switch
   user.click(
@@ -201,12 +214,14 @@ test("test passphrase on device protection switch", () => {
   // features has been fetched again
   features.passphrase_always_on_device = false;
   store.dispatch({ type: trza.TRZ_GETFEATURES_SUCCESS, features });
-  expect(
-    getEnablePassphraseOnDeviceProtectionToggleTooltip()
-  ).toBeInTheDocument();
-  expect(passphraseOnDeviceProtectionLabel.textContent).toMatchInlineSnapshot(
-    '"Toggle Passphrase Protection On Device (off)"'
-  );
+  await waitFor(() => {
+    expect(
+      getEnablePassphraseOnDeviceProtectionToggleTooltip()
+    ).toBeInTheDocument();
+    expect(passphraseOnDeviceProtectionLabel.textContent).toMatchInlineSnapshot(
+      '"Toggle Passphrase Protection On Device (off)"'
+    );
+  });
 });
 
 test("test `Label and Homescreen` section", () => {

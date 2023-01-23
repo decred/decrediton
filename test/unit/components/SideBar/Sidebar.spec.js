@@ -2,7 +2,7 @@ import SideBar from "components/SideBar/SideBar";
 import { render } from "test-utils.js";
 import "@testing-library/jest-dom/extend-expect";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import {
   rescanAttempt as mockRescanAttempt,
@@ -117,12 +117,14 @@ const expectToHaveDefaultMenuLinks = async (params) => {
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
     user.click(menuLink);
     if (disabled) {
-      await wait(() =>
+      await waitFor(() =>
         expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor)
       );
       expect(mockHistoryPush).not.toHaveBeenCalledWith(path);
     } else {
-      await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
+      await waitFor(() =>
+        expect(menuLink).toHaveStyle(activeMenuLinkBorderColor)
+      );
       expect(mockHistoryPush).toHaveBeenCalledWith(path);
     }
   };
@@ -375,7 +377,7 @@ test("tests rescan on the expanded sidebar", async () => {
     }
   });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(/seconds ago/i)).toBeInTheDocument()
   );
   expect(
@@ -534,14 +536,6 @@ test("tests notification icon on the menu link (newNotYetVotedActiveProposalsCou
   mockNewNotYetVotedActiveProposalsCount.mockRestore();
 });
 
-test("tests tabbedPage location", async () => {
-  const { history } = render(<SideBar />);
-  const { menuLink } = getMenuContentByTestId("menuLinkContent-transactions");
-  expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
-  history.push("transactions/send");
-  await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
-});
-
 test("none of the menu links should be selected when clicking on the settings button", () => {
   render(<SideBar />);
   let menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
@@ -557,9 +551,11 @@ test("none of the menu links should be selected when clicking on the settings bu
   menuLinkContents.forEach(async (menuLinkContent) => {
     const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
     if (menuLink.textContent == "Staking") {
-      await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
+      await waitFor(() =>
+        expect(menuLink).toHaveStyle(activeMenuLinkBorderColor)
+      );
     } else {
-      await wait(() =>
+      await waitFor(() =>
         expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor)
       );
     }

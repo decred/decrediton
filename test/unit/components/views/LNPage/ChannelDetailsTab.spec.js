@@ -1,7 +1,7 @@
 import ChannelDetailsPage from "components/views/LNPage/ChannelDetailsPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait, fireEvent } from "@testing-library/react";
+import { screen, waitFor, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
 import * as cli from "actions/ClientActions";
@@ -94,7 +94,7 @@ test("open channel details", async () => {
 
   fireEvent.click(getConfirmButton());
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCloseChannel).toHaveBeenCalledWith(
       mockChannels[0].channelPoint,
       false
@@ -150,7 +150,7 @@ test("pending channel details", async () => {
 
   fireEvent.click(getConfirmButton());
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCloseChannel).toHaveBeenCalledWith(
       mockPendingChannels[0].channelPoint,
       true
@@ -271,7 +271,7 @@ test("test force close pending status", () => {
   );
 });
 
-test("test wait close pending status", () => {
+test("test waitFor close pending status", () => {
   const mockLimboBalance = 2000000;
   selectors.lnPendingChannels = jest.fn(() => [
     {

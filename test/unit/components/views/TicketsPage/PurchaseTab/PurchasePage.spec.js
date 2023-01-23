@@ -2,7 +2,7 @@ import Purchase from "components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
 import TicketAutoBuyer from "components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { fireEvent, screen, wait } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as wal from "wallet";
@@ -120,27 +120,29 @@ test("render PurchasePage", async () => {
   // set stakepool
   user.click(screen.getByText("Select VSP..."));
   user.click(screen.getByText(mockAvailableVsps[1].host));
-  await wait(() =>
-    expect(screen.queryByText("Loading")).not.toBeInTheDocument()
-  );
+  await waitFor(() => {
+    user.click(screen.getByLabelText("Always use this VSP"));
+    expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+  });
 
   // check Always use this VSP checkbox
-  user.click(screen.getByLabelText("Always use this VSP"));
   expect(mockSetRememberedVspHost).toHaveBeenCalledWith({
     host: mockAvailableVsps[1].host,
     pubkey: mockVspInfo.data.pubkey
   });
 
-  // check summary
-  expect(screen.getByText("VSP Fee:").nextElementSibling.textContent).toMatch(
-    `${mockVspInfo.data.feepercentage} %`
-  );
-  expect(screen.getByText(/Total:/).textContent).toMatch(
-    `${mockTicketPrice / 100000000} ${DCR}`
-  );
-  expect(screen.getByText(/Remaining:/).textContent).toMatch(
-    `${(mockMixedAccount.spendable - mockTicketPrice) / 100000000} ${DCR}`
-  );
+  await waitFor(() => {
+    // check summary
+    expect(screen.getByText("VSP Fee:").nextElementSibling.textContent).toMatch(
+      `${mockVspInfo.data.feepercentage} %`
+    );
+    expect(screen.getByText(/Total:/).textContent).toMatch(
+      `${mockTicketPrice / 100000000} ${DCR}`
+    );
+    expect(screen.getByText(/Remaining:/).textContent).toMatch(
+      `${(mockMixedAccount.spendable - mockTicketPrice) / 100000000} ${DCR}`
+    );
+  });
 
   const purchaseButton = screen.getByText("Purchase");
   user.click(purchaseButton);
@@ -206,10 +208,10 @@ test("test autobuyer", async () => {
   const settingsButton = getSettingsButton();
   const toggleSwitch = getToggleSwitch();
   user.click(toggleSwitch);
-  await wait(() => getSettingsModalTitle());
+  await waitFor(() => getSettingsModalTitle());
 
   user.click(getSaveButton());
-  await wait(() => screen.getByText("Fill all fields."));
+  await waitFor(() => screen.getByText("Fill all fields."));
   const mockBalanceToMaintain = 14;
   user.type(
     screen.getByLabelText(/Balance to Maintain/i),
@@ -229,7 +231,7 @@ test("test autobuyer", async () => {
   const validMaxFeeInput = "10";
   user.type(getMaxFeeInput(), validMaxFeeInput);
   user.click(getSaveButton());
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.queryByText("Automatic ticket purchases")
     ).not.toBeInTheDocument()
@@ -243,7 +245,7 @@ test("test autobuyer", async () => {
   expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
   expect(getMaxFeeInput().value).toBe(validMaxFeeInput);
   user.click(screen.getByRole("button", { name: "Cancel" }));
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.queryByText("Automatic ticket purchases")
     ).not.toBeInTheDocument()
@@ -251,14 +253,14 @@ test("test autobuyer", async () => {
 
   // clicking again on switch should open the confirmation modal
   user.click(toggleSwitch);
-  await wait(() => screen.getByText(/start ticket buyer confirmation/i));
+  await waitFor(() => screen.getByText(/start ticket buyer confirmation/i));
 
   expect(screen.getByText(mockAvailableVsps[1].host)).toBeInTheDocument();
   expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument(); // cancel first
   user.click(screen.getByText("Cancel"));
   // try again
   user.click(getToggleSwitch());
-  await wait(() => screen.getByText(/start ticket buyer confirmation/i));
+  await waitFor(() => screen.getByText(/start ticket buyer confirmation/i));
   user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
   user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerAttempt).toHaveBeenCalledWith(
@@ -316,7 +318,7 @@ test("remembered vsp have been set", async () => {
   selectors.getRememberedVspHost = jest.fn(() => testRememberedVSP);
   render(<Purchase />, initialState);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Loading")).not.toBeInTheDocument()
   );
   expect(screen.getByText(testRememberedVSP.host)).toBeInTheDocument();
@@ -337,7 +339,7 @@ test("an outdated remembered vsp has been set, should be cleared", async () => {
   selectors.getRememberedVspHost = jest.fn(() => testRememberedVSP);
   render(<Purchase />, initialState);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Loading")).not.toBeInTheDocument()
   );
 
@@ -352,7 +354,7 @@ test("an outdated remembered vsp has been set, should be cleared", async () => {
 test("outdated vsp could not be selected", async () => {
   render(<Purchase />, initialState);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Loading")).not.toBeInTheDocument()
   );
 

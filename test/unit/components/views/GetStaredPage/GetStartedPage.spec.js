@@ -2,7 +2,7 @@ import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { DEFAULT_LIGHT_THEME_NAME } from "pi-ui";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
@@ -78,7 +78,7 @@ beforeEach(() => {
 
 test("render empty wallet chooser view", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   expect(screen.getByText(/logs/i)).toBeInTheDocument();
   expect(screen.getByText(/settings/i)).toBeInTheDocument();
@@ -93,28 +93,28 @@ test("render empty wallet chooser view", async () => {
   // check tutorials
   expect(screen.getByText(/learn about decred/i)).toBeInTheDocument();
   user.click(screen.getByText("Decred Intro"));
-  await wait(() => screen.getByText("Back"));
+  await waitFor(() => screen.getByText("Back"));
   // go back
   user.click(screen.getByText("Back").nextElementSibling);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   // open onboard tutorial again and go back by finishing it
   user.click(screen.getByText("Decred Intro"));
-  await wait(() => screen.getByText("Back"));
+  await waitFor(() => screen.getByText("Back"));
   // step forward
   const nextButton = screen.getByRole("button", { name: "Next" });
   user.click(nextButton);
   expect(screen.getAllByText("Governance systems").length).toBeTruthy();
   // finish
   user.click(nextButton);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   // check learn the basics
   user.click(screen.getByRole("button", { name: "Learn the Basics" }));
-  await wait(() => screen.getByText("Skip"));
+  await waitFor(() => screen.getByText("Skip"));
   // go back
   user.click(screen.getByText("Skip"));
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockGetDaemonSynced).toHaveBeenCalled();
   expect(mockIsSPV).toHaveBeenCalled();
@@ -129,7 +129,7 @@ test("render empty wallet chooser view in testnet mode", async () => {
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
 
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   expect(screen.getByTestId("getstarted-pagebody").className).toMatch(
     /testnetBody/
   );
@@ -143,10 +143,10 @@ test("render empty wallet chooser view and click-on&test release notes", async (
 
   const oldestVersionNumber = 130;
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/Release Info/i));
-  await wait(() => screen.getByText(/newer version/i));
+  await waitFor(() => screen.getByText(/newer version/i));
   const header = screen.getByText(/Decrediton (.*) Released/i);
   expect(header).toBeInTheDocument();
   const newestVersionNumber = readRenderedVersionNumber(header.textContent);
@@ -182,15 +182,15 @@ test("render empty wallet chooser view and click-on&test release notes", async (
 
   // go back to the wallet chooser view
   user.click(screen.getByText(/go back/i).nextElementSibling);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("click on settings link and go back", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/settings/i));
-  await wait(() => screen.getByText("Connectivity"));
+  await waitFor(() => screen.getByText("Connectivity"));
 
   // go back
   user.click(
@@ -198,19 +198,19 @@ test("click on settings link and go back", async () => {
       name: "Go back"
     })
   );
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("click on logs view", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/logs/i));
-  await wait(() => screen.queryByText(/system logs/i));
+  await waitFor(() => screen.queryByText(/system logs/i));
 
   // go back
   user.click(screen.getByText(/go back/i).nextElementSibling);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 
 test("test if app receive daemon connection data from cli", async () => {
@@ -229,7 +229,7 @@ test("test if app receive daemon connection data from cli", async () => {
   });
   render(<GetStartedPage />);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockConnectDaemon).toHaveBeenCalledWith(
       {
         rpc_user: rpcCreds.rpcUser,
@@ -258,7 +258,7 @@ test("start regular daemon and not receive available wallet", async () => {
   mockIsSPV = selectors.isSPV = jest.fn(() => false);
 
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockSyncDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).toHaveBeenCalled();
@@ -281,7 +281,7 @@ test("start regular daemon and receive sync daemon error", async () => {
 
   render(<GetStartedPage />);
   expect(screen.getByText("Starting Daemon...")).toBeInTheDocument();
-  await wait(() => expect(mockSyncDaemon).toHaveBeenCalled());
+  await waitFor(() => expect(mockSyncDaemon).toHaveBeenCalled());
   expect(screen.queryByText(/Learn about decred/i)).not.toBeInTheDocument();
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).not.toHaveBeenCalled();
@@ -302,7 +302,7 @@ test("start regular daemon and receive network match error", async () => {
   mockIsSPV = selectors.isSPV = jest.fn(() => false);
 
   render(<GetStartedPage />);
-  await wait(() => expect(mockSyncDaemon).toHaveBeenCalled());
+  await waitFor(() => expect(mockSyncDaemon).toHaveBeenCalled());
   expect(screen.queryByText(/Learn about decred/i)).not.toBeInTheDocument();
   expect(mockStartDaemon).toHaveBeenCalled();
   expect(mockCheckNetworkMatch).toHaveBeenCalled();
@@ -320,7 +320,7 @@ test("test daemon warning", async () => {
     () => testDaemonWarningText
   );
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(testDaemonWarningText));
+  await waitFor(() => screen.getByText(testDaemonWarningText));
   expect(mockDaemonWarning).toHaveBeenCalled();
   wl.getCLIOptions.mockRestore();
 });

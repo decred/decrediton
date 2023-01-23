@@ -31,7 +31,7 @@ import {
   ERR_INVALID_MASTERPUB_CHECKSUM,
   ERR_INVALID_MASTER_PUB_KEY
 } from "../../../app/helpers/addresses";
-import { wait } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { advanceBy, clear } from "jest-date-mock";
 import { act } from "react-dom/test-utils";
 
@@ -666,7 +666,7 @@ test("test monitorLockableAccounts", async () => {
   expect(mockGetVSPTrackedTickets).toHaveBeenCalled();
   expect(mockSetNeedsVSPdProcessTickets).not.toHaveBeenCalled();
   addUnlockedAccount(commitmentAccountNumber); // mock that commitmentAccountNumber has been unlocked
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       commitmentAccountNumber
@@ -686,7 +686,9 @@ test("test monitorLockableAccounts", async () => {
     advanceBy(31 * 1000);
     jest.advanceTimersByTime(31 * 1000);
   });
-  await wait(() => expect(mockSetNeedsVSPdProcessTickets).toHaveBeenCalled());
+  await waitFor(() =>
+    expect(mockSetNeedsVSPdProcessTickets).toHaveBeenCalled()
+  );
   expect(mockGetVSPTrackedTickets).toHaveBeenCalled();
   expect(mockLockAccount).not.toHaveBeenCalled();
   expect(store.getState().control.lockAccountError).toBeNull();
@@ -733,7 +735,7 @@ test("test monitorLockableAccounts - lockAccount failed", async () => {
 
   addUnlockedAccount(commitmentAccountNumber); // mock that commitmentAccountNumber has been unlocked
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       commitmentAccountNumber
@@ -761,7 +763,7 @@ test("test unlockAcctAndExecFn", async () => {
     testPassphrase,
     changeAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().control.unlockAndExecFnRunning).toBeFalsy()
   );
   expect(mockCallbackFunction).toHaveBeenCalledTimes(1);
@@ -887,7 +889,7 @@ test("test unlockAcctAndExecFn - callback function failed, lock after, multi acc
     testWalletService,
     mixedAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().control.unlockAndExecFnRunning).toBeFalsy()
   );
 
@@ -1050,7 +1052,7 @@ test("test unlockAcctAndExecFn - does not unlock change account if account mixer
     testPassphrase,
     changeAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().control.unlockAndExecFnRunning).toBeFalsy()
   );
   expect(mockCallbackFunction).toHaveBeenCalledTimes(1);
@@ -1147,7 +1149,7 @@ test("test purchase tickets - in a private wallet, mixer is not running", async 
     testWalletService,
     defaultAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       2,
       testWalletService,
@@ -1200,7 +1202,7 @@ test("test purchase tickets - failed to unlock account", async () => {
     )
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1264,7 +1266,7 @@ test("test purchase tickets - in a private wallet, mixer is running", async () =
 
   // mixer has been stoped
   expect(mockMixerStreamerCancel).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1296,14 +1298,14 @@ test("test purchase tickets - in a private wallet, mixer is running", async () =
   expect(mockUpdateUsedVSPs).toHaveBeenCalledWith(testVSP);
   expect(mockGetVSPTrackedTickets).toHaveBeenCalled();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       2,
       testWalletService,
       defaultAccountNumber
     )
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       3,
       testWalletService,
@@ -1333,7 +1335,7 @@ test("test purchase tickets - in a private wallet, mixer is running", async () =
     testPassphrase,
     changeAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.accountMixerRunning).toBeTruthy()
   );
 });
@@ -1364,7 +1366,7 @@ test("test purchase tickets - in a non private wallet", async () => {
     defaultAccountNumber
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       defaultAccountNumber
@@ -1429,7 +1431,7 @@ test("test purchase tickets - in a watching wallet", async () => {
   // Since we are currently using the default account for the ticket's
   // voting address we also need to unlock that account so communication
   // with the VSP may occur.
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1521,7 +1523,7 @@ test("test purchase tickets - failed ", async () => {
 
   // mixer has been stoped
   expect(mockMixerStreamerCancel).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1557,7 +1559,7 @@ test("test purchase tickets - failed ", async () => {
     testPassphrase,
     changeAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.accountMixerRunning).toBeTruthy()
   );
 });
@@ -1601,7 +1603,7 @@ test("test purchase tickets - failed with insufficient balance", async () => {
 
   // mixer has been stoped
   expect(mockMixerStreamerCancel).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1639,7 +1641,7 @@ test("test purchase tickets - failed with insufficient balance", async () => {
   // Since we are currently using the default account for the ticket's
   // voting address we also need to unlock that account so communication
   // with the VSP may occur.
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       2,
       testWalletService,
@@ -1667,7 +1669,7 @@ test("test purchase tickets - failed with insufficient balance", async () => {
     testPassphrase,
     changeAccountNumber
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.accountMixerRunning).toBeTruthy()
   );
 });
@@ -1695,7 +1697,7 @@ test("test start and stop ticket autobuyer start", async () => {
       testVSP
     )
   );
-  await wait(() => expect(mockUpdateUsedVSPs).toHaveBeenCalledWith(testVSP));
+  await waitFor(() => expect(mockUpdateUsedVSPs).toHaveBeenCalledWith(testVSP));
   expect(mockStartTicketAutoBuyer).toHaveBeenCalledWith(
     testTicketBuyerService,
     {
@@ -1721,11 +1723,11 @@ test("test start and stop ticket autobuyer start", async () => {
   store.dispatch(controlActions.ticketBuyerCancel());
   cbs.error("Cancelled");
   cbs.end();
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().vsp.ticketAutoBuyerRunning).toBeFalsy()
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1757,11 +1759,11 @@ test("test start ticket autobuyer - failed", async () => {
   expect(mockUpdateUsedVSPs).not.toHaveBeenCalled();
   expect(mockSetNeedsVSPdProcessTickets).not.toHaveBeenCalled();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().vsp.ticketAutoBuyerRunning).toBeFalsy()
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenNthCalledWith(
       1,
       testWalletService,
@@ -1813,7 +1815,7 @@ test("test start ticket autobuyer in a non-private wallet - receive unknown erro
     )
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockStartTicketAutoBuyer).toHaveBeenCalledWith(
       testTicketBuyerService,
       {
@@ -1833,11 +1835,11 @@ test("test start ticket autobuyer in a non-private wallet - receive unknown erro
 
   store.dispatch(controlActions.ticketBuyerCancel());
   cbs.error(testError);
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().vsp.ticketAutoBuyerRunning).toBeFalsy()
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       defaultAccountNumber
@@ -1875,7 +1877,7 @@ test("test signMessageAttempt", async () => {
     "IBkHEpGrzmwUIgl4BVSxgxMbRR2ksKUg1rqTEBOnv8fIMacjUMSg0uRQd8qgp1xLsvR21212W8lgadA7O8h++FY="
   );
   expect(store.getState().grpc.getSignMessageError).toBeNull();
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       defaultAccountNumber
@@ -1942,7 +1944,7 @@ test("test signMessageAttempt - signMessage failed", async () => {
   expect(store.getState().grpc.getSignMessageSignature).toBeNull();
   expect(store.getState().grpc.getSignMessageError).toBe(testError);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       defaultAccountNumber
@@ -2041,6 +2043,7 @@ test("test getNextChangeAddressAttempt - failed", async () => {
 });
 
 test("test renameAccountAttempt", async () => {
+  jest.useFakeTimers();
   const store = createStore(cloneDeep(initialState));
   await store.dispatch(
     controlActions.renameAccountAttempt(
@@ -2049,16 +2052,20 @@ test("test renameAccountAttempt", async () => {
     )
   );
 
-  expect(mockRenameAccount).toHaveBeenCalledWith(
-    testWalletService,
-    ticketBuyerAccountNumber,
-    testNewAccountName
-  );
+  act(() => {
+    jest.advanceTimersByTime(2001);
+  });
 
-  await wait(() =>
-    expect(store.getState().control.renameAccountResponse).toBe(
-      testRenameAccountResponse
-    )
+  await waitFor(() => {
+    expect(mockRenameAccount).toHaveBeenCalledWith(
+      testWalletService,
+      ticketBuyerAccountNumber,
+      testNewAccountName
+    );
+  });
+
+  expect(store.getState().control.renameAccountResponse).toBe(
+    testRenameAccountResponse
   );
   expect(store.getState().control.renameAccountError).toBeNull();
 });
@@ -2081,7 +2088,7 @@ test("test renameAccountAttempt - failed", async () => {
     testNewAccountName
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().control.renameAccountError).toBe(testError)
   );
   expect(store.getState().control.renameAccountResponse).toBe(undefined);
@@ -2218,7 +2225,7 @@ test("test rescanAttempt - failed", async () => {
 
   cbs.error(testError);
 
-  await wait(() => expect(catchedError).toBe(testError));
+  await waitFor(() => expect(catchedError).toBe(testError));
   expect(store.getState().control.rescanCall).toBeNull();
   expect(store.getState().control.rescanError).toBe(testError);
   expect(store.getState().control.rescanRequest).toStrictEqual({
@@ -2326,7 +2333,7 @@ test("test getNextAccountAttempt - getNexsetAccountPassphrase failed", async () 
   expect(store.getState().control.getNextAccountRequestAttempt).toBeFalsy();
   expect(store.getState().control.getNextAccountResponse).toBe(undefined);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().snackbar.messages).not.toBe(undefined)
   );
   expect(
@@ -2583,7 +2590,7 @@ test("test signTransactionAttempt publish transaction failed", async () => {
     testSignedSignature
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       store.getState().control.publishTransactionRequestAttempt
     ).toBeFalsy()
@@ -2613,7 +2620,7 @@ test("test discoverUsageAttempt", async () => {
   );
 
   expect(mockLoadActiveDataFilters).toHaveBeenCalledWith(testWalletService);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockRescan).toHaveBeenCalledWith(testWalletService, 0, undefined)
   );
   expect(store.getState().control.discoverUsageAttempt).toBeFalsy();
@@ -2768,7 +2775,7 @@ test("test verifyMessageAttempt  - failed", async () => {
     testMessage,
     testSignature
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.getVerifyMessageRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.getVerifyMessageError).toBe(testError);
@@ -2790,7 +2797,7 @@ test("test publishUnminedTransactionsAttempt", async () => {
   expect(mockPublishUnminedTransactions).toHaveBeenCalledWith(
     testWalletService
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().snackbar.messages).not.toBe(undefined)
   );
   expect(
@@ -2818,7 +2825,7 @@ test("test publishUnminedTransactionsAttempt - failed", async () => {
   expect(mockPublishUnminedTransactions).toHaveBeenCalledWith(
     testWalletService
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().snackbar.messages).not.toBe(undefined)
   );
   expect(store.getState().snackbar.messages[0].message.defaultMessage).toBe(

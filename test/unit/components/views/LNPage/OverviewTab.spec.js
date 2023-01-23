@@ -1,7 +1,7 @@
 import { OverviewTab } from "components/views/LNPage/OverviewTab";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait, act } from "@testing-library/react";
+import { screen, waitFor, act } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -113,7 +113,7 @@ test("test recent activity list", async () => {
   expect(screen.getByText("Channel Created")).toBeInTheDocument();
   user.click(screen.getByRole("button", { name: "Close Channel" }));
   act(() => user.click(screen.getByText("Confirm")));
-  await wait(() =>
+  await waitFor(() =>
     expect(mockCloseChannel).toHaveBeenCalledWith(
       mockChannels[0].channelPoint,
       false
@@ -136,7 +136,7 @@ test("test recent activity list", async () => {
   expect(screen.getByText("Lightning Payment Request")).toBeInTheDocument();
   user.click(screen.getByRole("button", { name: "Cancel Invoice" }));
   expect(mockCancelInvoice).toHaveBeenCalledWith(mockInvoices[0].rHash);
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.queryByText("Lightning Payment Request")
     ).not.toBeInTheDocument()
@@ -185,7 +185,7 @@ test("test search for nodes button", async () => {
   user.click(screen.getByText("mock...ub-0").parentElement.nextSibling);
   expect(screen.queryByText("Search For Nodes")).not.toBeInTheDocument();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockGoToChannelsTab).toHaveBeenCalledWith(
       mockPendingChannels[0].remotePubkey
     )

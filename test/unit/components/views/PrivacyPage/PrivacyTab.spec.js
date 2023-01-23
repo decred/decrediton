@@ -2,11 +2,12 @@ import PrivacyPage from "components/views/PrivacyPage";
 import PrivacyTab from "components/views/PrivacyPage/PrivacyTab";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT, DCR } from "constants";
 import * as sel from "selectors";
-import * as act from "actions/AccountMixerActions";
+import * as actM from "actions/AccountMixerActions";
 import * as wl from "wallet";
 import * as ca from "actions/ControlActions";
 import * as sa from "actions/SnackbarActions";
@@ -14,7 +15,7 @@ import * as sa from "actions/SnackbarActions";
 const selectors = sel;
 const wallet = wl;
 const controlActions = ca;
-const accountMixerActions = act;
+const accountMixerActions = actM;
 const snackbarActions = sa;
 
 const mockDefaultAccount = {
@@ -233,7 +234,7 @@ test("test insufficient unmixed account balance error message", async () => {
     )
   );
   render(<PrivacyTab />);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("Unmixed Balance").parentNode.className).toMatch(
       /balanceError/i
     )
@@ -246,7 +247,7 @@ test("test insufficient unmixed account balance error message", async () => {
 
 test("start coin mixer", async () => {
   render(<PrivacyTab />);
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.getByText("Unmixed Balance").parentNode.className
     ).not.toMatch(/balanceError/i)
@@ -348,7 +349,9 @@ test("Send to Unmixed Account form", async () => {
 
   user.type(amountInput, testAmount);
 
-  await wait(() => expect(mockConstructTransactionAttempt).toHaveBeenCalled());
+  await waitFor(() =>
+    expect(mockConstructTransactionAttempt).toHaveBeenCalled()
+  );
 
   user.click(
     screen.getByText("Send all funds from selected account").nextElementSibling
@@ -361,6 +364,7 @@ test("Send to Unmixed Account form", async () => {
 });
 
 test("check logs", async () => {
+  jest.useFakeTimers();
   mockGetPrivacyLogs = wallet.getPrivacyLogs = jest.fn(() =>
     Promise.resolve(mockLogLine)
   );
@@ -370,11 +374,15 @@ test("check logs", async () => {
 
   user.click(logsLabel);
 
-  await wait(() => expect(mockGetPrivacyLogs).toHaveBeenCalledTimes(2));
-  await wait(() => screen.getByText(mockLogLine));
+  act(() => {
+    jest.advanceTimersByTime(2001);
+  });
+
+  await waitFor(() => expect(mockGetPrivacyLogs).toHaveBeenCalledTimes(2));
+  await waitFor(() => screen.getByText(mockLogLine));
 
   user.click(logsLabel);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(mockLogLine)).not.toBeInTheDocument()
   );
 });

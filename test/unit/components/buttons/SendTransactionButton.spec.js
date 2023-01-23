@@ -1,5 +1,5 @@
 import { SendTransactionButton } from "buttons";
-import { render, wait } from "test-utils.js";
+import { render, waitFor } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 import * as tza from "actions/TrezorActions";
@@ -84,7 +84,7 @@ test("render SendTransactionButton when trezor is enabled", async () => {
     testUnsignedTransaction,
     testConstructTxResponse
   );
-  await wait(() => expect(mockOnSubmit).toHaveBeenCalled());
+  await waitFor(() => expect(mockOnSubmit).toHaveBeenCalled());
 });
 
 test("render loading default SendTransactionButton ", () => {

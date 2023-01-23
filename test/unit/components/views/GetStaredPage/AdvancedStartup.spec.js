@@ -1,7 +1,7 @@
 import GetStartedPage from "components/views/GetStartedPage/GetStartedPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wal from "wallet";
 import * as da from "actions/DaemonActions";
@@ -55,7 +55,7 @@ beforeEach(() => {
 
 test("test remote daemon form", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockIsAdvancedDaemon).toHaveBeenCalled();
   expect(mockGetRemoteCredentials).toHaveBeenCalled();
@@ -114,12 +114,14 @@ test("test remote daemon form", async () => {
   user.click(screen.getByText(/use remote daemon/i));
   expect(mockSetRemoteCredentials).toHaveBeenCalled();
   expect(mockConnectDaemon).toHaveBeenCalledWith(testRemoteCredentials, true);
-  await wait(() => screen.getByText(JSON.stringify(testConnectDaemonErrorMsg)));
+  await waitFor(() =>
+    screen.getByText(JSON.stringify(testConnectDaemonErrorMsg))
+  );
 });
 
 test("test local daemon form", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByTestId("switch"));
   expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
@@ -137,13 +139,13 @@ test("test local daemon form", async () => {
   expect(mockStartDaemon).toHaveBeenCalledWith({
     appdata: testDaemonDataDirectory
   });
-  await wait(() => screen.getByText(testStartDaemonErrorMsg));
+  await waitFor(() => screen.getByText(testStartDaemonErrorMsg));
 });
 
 test("test skip link", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/skip/i));
-  await wait(() => screen.getByText(testStartDaemonErrorMsg));
+  await waitFor(() => screen.getByText(testStartDaemonErrorMsg));
 });

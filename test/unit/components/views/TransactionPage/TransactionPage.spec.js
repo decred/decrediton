@@ -1,7 +1,7 @@
 import TransactionPage from "components/views/TransactionPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR, TestNetParams } from "constants";
 import * as sel from "selectors";
 import * as clia from "actions/ClientActions";
@@ -172,7 +172,7 @@ test("regular sent pending tx from default account to an external address", asyn
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("out");
   expect(getTitleText()).toMatch("-8.00000 DCR");
@@ -224,7 +224,7 @@ test("regular received mined tx to the default account", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("in");
   expect(getTitleText()).toMatch("100.00000 DCR");
@@ -273,7 +273,7 @@ test("regular self transfer tx to unmixed account", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("self");
   expect(getTitleText()).toMatch("-0.0000253 DCR");
@@ -321,7 +321,7 @@ test("self coins from unmixed to mixed account", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("mixed");
   expect(getTitleText()).toMatch("-0.0000361 DCR");
@@ -385,7 +385,7 @@ test("voted ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Ticket, Voted");
@@ -451,7 +451,7 @@ test("vote tx", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("vote");
   expect(getTitleText()).toMatch("Vote");
@@ -529,7 +529,7 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
     "Agenda Choices:Change maximum treasury expenditure policy as defined in DCP0007reverttreasurypolicyabstainEnable explicit version upgrades as defined in DCP0008explicitverupgradesabstainEnable automatic ticket revocations as defined in DCP0009autorevocationsabstainChange block reward subsidy split to 10/80/10 as defined in DCP0010changesubsidysplitabstainThis doesn't align with what the wallet currently has set (yes)"
@@ -562,7 +562,7 @@ test("missed ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("missed");
   expect(getTitleText()).toMatch("Missed");
@@ -624,7 +624,7 @@ test("revocation", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("revocation");
   expect(getTitleText()).toMatch("Revocation");
@@ -683,7 +683,7 @@ test("revocation", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("revocation");
   expect(getTitleText()).toMatch("Revocation");
@@ -742,7 +742,7 @@ test("revoked ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Ticket, Revoked");
@@ -801,7 +801,7 @@ test("immature ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("immature");
   expect(getTitleText()).toMatch("Immature");
@@ -861,7 +861,7 @@ test("live ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Live");
@@ -909,7 +909,7 @@ test("live ticket", async () => {
 
   user.click(screen.getByRole("button", { name: "Continue" }));
 
-  await wait(() => screen.getByText("Fee tx hash:"));
+  await waitFor(() => screen.getByText("Fee tx hash:"));
 
   expect(screen.getByText("Fee tx hash:").parentNode.textContent).toMatch(
     `Fee tx hash:${mockVSPTicketInfoResponse.data.feetxhash}`
@@ -946,7 +946,7 @@ test("unmined ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("unmined");
   expect(getTitleText()).toMatch("Unmined");
@@ -1036,7 +1036,7 @@ test("show not yet fetched regular tx", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 });
 
 test("show not yet fetched stake tx", async () => {
@@ -1090,7 +1090,7 @@ test("show not yet fetched stake tx", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 });
 
 test("show not yet fetched stake tx (won't find it)", async () => {
@@ -1145,5 +1145,5 @@ test("show not yet fetched stake tx (won't find it)", async () => {
     }
   });
 
-  await wait(() => screen.getByText("Transaction not found"));
+  await waitFor(() => screen.getByText("Transaction not found"));
 });

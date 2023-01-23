@@ -3,7 +3,7 @@ import SecurityTab from "components/views/PrivacyPage/SecurityTab";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
 import { fireEvent } from "@testing-library/react";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
@@ -66,10 +66,10 @@ test("type invalid address to validate", async () => {
     target: { value: "random text" }
   });
 
-  await wait(() => screen.getByText("Invalid address"));
+  await waitFor(() => screen.getByText("Invalid address"));
 
   user.clear(validateAddressInput);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Invalid address")).not.toBeInTheDocument()
   );
 });
@@ -100,7 +100,7 @@ test("type valid, not owned address to validate", async () => {
   fireEvent.change(validateAddressInput, {
     target: { value: "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd" }
   });
-  await wait(() => screen.getByText("Address Valid, Not Owned"));
+  await waitFor(() => screen.getByText("Address Valid, Not Owned"));
 });
 
 test("type valid, owned address to validate", async () => {
@@ -129,7 +129,7 @@ test("type valid, owned address to validate", async () => {
   fireEvent.change(validateAddressInput, {
     target: { value: "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd" }
   });
-  await wait(() => screen.getByText("Owned address"));
+  await waitFor(() => screen.getByText("Owned address"));
   expect(
     screen.getByText(/Account Number/i).parentElement.textContent
   ).toMatchInlineSnapshot('"Account Number4Branch1Index57"');
@@ -170,7 +170,7 @@ test("test signing message", async () => {
     target: { value: testMessage }
   });
 
-  await wait(() => expect(signMessageButton.disabled).toBe(false));
+  await waitFor(() => expect(signMessageButton.disabled).toBe(false));
 
   user.click(signMessageButton);
 
@@ -224,7 +224,7 @@ test("test signing message on a trezor-backed wallet", async () => {
     target: { value: testMessage }
   });
 
-  await wait(() => expect(signMessageButton.disabled).toBe(false));
+  await waitFor(() => expect(signMessageButton.disabled).toBe(false));
 
   user.click(signMessageButton);
 
@@ -266,7 +266,7 @@ test("test signing message using address not owning", async () => {
     target: { value: testMessage }
   });
 
-  await wait(() =>
+  await waitFor(() =>
     screen.getByText("Please enter a valid address owned by you")
   );
 });
@@ -302,7 +302,7 @@ test("test verify message", async () => {
   const testMessage = "secret message";
   const verifyMessageButton = getVerifyMessageButton();
   expect(verifyMessageButton.disabled).toBe(true);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockGetMessageVerificationServiceAttempt).toHaveBeenCalled()
   );
 
@@ -315,7 +315,7 @@ test("test verify message", async () => {
   fireEvent.change(getSignMessageMsgInput(), {
     target: { value: testMessage }
   });
-  await wait(() => expect(verifyMessageButton.disabled).toBe(false));
+  await waitFor(() => expect(verifyMessageButton.disabled).toBe(false));
 
   user.click(verifyMessageButton);
   expect(mockVerifyMessageAttempt).toHaveBeenCalledWith(
@@ -358,7 +358,7 @@ test("test verify invalid message", async () => {
   const testMessage = "secret message";
   const verifyMessageButton = getVerifyMessageButton();
   expect(verifyMessageButton.disabled).toBe(true);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockGetMessageVerificationServiceAttempt).toHaveBeenCalled()
   );
 
@@ -371,7 +371,7 @@ test("test verify invalid message", async () => {
   fireEvent.change(getSignMessageMsgInput(), {
     target: { value: testMessage }
   });
-  await wait(() => expect(verifyMessageButton.disabled).toBe(false));
+  await waitFor(() => expect(verifyMessageButton.disabled).toBe(false));
 
   user.click(verifyMessageButton);
   expect(mockVerifyMessageAttempt).toHaveBeenCalledWith(

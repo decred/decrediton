@@ -2,7 +2,7 @@ import { SendTab } from "components/views/TransactionsPage/SendTab";
 import TransactionsPage from "components/views/TransactionsPage/";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as ta from "actions/TransactionActions";
@@ -293,7 +293,7 @@ test("test amount input", async () => {
   fireEvent.change(sendToInput, {
     target: { value: mockValidAddress }
   });
-  await wait(() =>
+  await waitFor(() =>
     expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
       mockMixedAccountValue,
       0,
@@ -351,7 +351,7 @@ test("test `send to` input", async () => {
   fireEvent.change(sendToInput, {
     target: { value: mockAddress }
   });
-  await wait(() => expect(sendToInput.value).toBe(mockAddress));
+  await waitFor(() => expect(sendToInput.value).toBe(mockAddress));
   expect(screen.getByText(expectedErrorMsg)).toBeInTheDocument();
   expect(mockValidateAddress).toHaveBeenCalledWith(mockAddress);
 
@@ -365,7 +365,7 @@ test("test `send to` input", async () => {
   fireEvent.change(sendToInput, {
     target: { value: mockValidAddress }
   });
-  await wait(() => expect(sendToInput.value).toBe(mockValidAddress));
+  await waitFor(() => expect(sendToInput.value).toBe(mockValidAddress));
   expect(screen.queryByText(expectedErrorMsg)).not.toBeInTheDocument();
 
   await wait(() =>
@@ -379,7 +379,7 @@ test("test `send to` input", async () => {
 
   // test clear button
   user.click(getClearAddressButton());
-  await wait(() => expect(sendToInput.value).toBe(""));
+  await waitFor(() => expect(sendToInput.value).toBe(""));
 });
 
 test("test paste button", async () => {
@@ -395,7 +395,7 @@ test("test paste button", async () => {
   wallet.readFromClipboard.mockImplementation(() => mockPastedAddress);
 
   user.click(pasteButton);
-  await wait(() => expect(sendToInput.value).toBe(mockPastedAddress));
+  await waitFor(() => expect(sendToInput.value).toBe(mockPastedAddress));
 });
 
 test("construct a valid transaction", async () => {
@@ -441,7 +441,7 @@ test("`Sending from unmixed account` is allowed", async () => {
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
   expect(screen.getAllByText(mockMixedAccount.name).length).toBe(2);
   user.click(screen.getByText(mockEmptyAccount.name));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getAllByText(mockEmptyAccount.name).length).toBe(1)
   );
 
@@ -459,7 +459,7 @@ test("`Sending from unmixed account` is allowed", async () => {
   );
   user.click(screen.getByText(mockEmptyAccount.name));
   user.click(screen.getByText(mockAccount2.name));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
       `${mockAccount2.spendableAndUnit}100% of Account Balance`
     )
@@ -473,7 +473,9 @@ const fillOutputForm = async (index) => {
   fireEvent.change(sendToInput, {
     target: { value: mockOutputs[index].address }
   });
-  await wait(() => expect(sendToInput.value).toBe(mockOutputs[index].address));
+  await waitFor(() =>
+    expect(sendToInput.value).toBe(mockOutputs[index].address)
+  );
   const expectedOutputs = [];
 
   for (let i = 0; i <= index; i++) {
@@ -483,7 +485,7 @@ const fillOutputForm = async (index) => {
     });
   }
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
       mockMixedAccountValue,
       0,
@@ -539,7 +541,7 @@ test("send funds to another account", async () => {
   user.click(screen.getAllByRole("combobox")[1]);
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
   user.click(screen.getByText(mockAccount2.name));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
   );
   await wait(() =>
@@ -597,13 +599,14 @@ test("address input have to allow leading/trailing spaces", async () => {
   );
 
   user.click(pasteButton);
-  await wait(() => expect(sendToInput.value).toBe(mockPastedAddress));
+  await waitFor(() => expect(sendToInput.value).toBe(mockPastedAddress));
 
   // type address with trailing and leading spaces
   user.clear(sendToInput);
-  screen.debug();
   fireEvent.change(sendToInput, {
     target: { value: `   ${mockOutputs[index].address}     ` }
   });
-  await wait(() => expect(sendToInput.value).toBe(mockOutputs[index].address));
+  await waitFor(() =>
+    expect(sendToInput.value).toBe(mockOutputs[index].address)
+  );
 });

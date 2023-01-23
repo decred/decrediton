@@ -1,7 +1,7 @@
 import DexPage from "components/views/DexPage";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait, act } from "@testing-library/react";
+import { screen, waitFor, act } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DexActions";
 import * as dm from "actions/DaemonActions";
@@ -301,7 +301,7 @@ test("test create dex account", async () => {
   expect(screen.queryByText("mixed")).not.toBeInTheDocument();
   user.click(screen.getByText(mockAccount2.name));
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Select account")).not.toBeInTheDocument()
   );
 
@@ -412,7 +412,7 @@ test("test when dex is ready", async () => {
   render(<DexPage />);
   user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
 
-  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  await waitFor(() => expect(mockGetDexLogs).toHaveBeenCalled());
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
   user.click(screen.getByText("Logs"));
   expect(screen.getByText(testLog)).toBeInTheDocument();
@@ -431,10 +431,12 @@ test("test when dex is ready", async () => {
     jest.advanceTimersByTime(2001);
   });
 
-  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
-  expect(screen.getByText(testLog2)).toBeInTheDocument();
-  expect(screen.queryByText(testLog)).not.toBeInTheDocument();
-  expect(mockLaunchDexWindow).toHaveBeenCalled();
+  await waitFor(() => {
+    expect(mockGetDexLogs).toHaveBeenCalled();
+    expect(screen.getByText(testLog2)).toBeInTheDocument();
+    expect(screen.queryByText(testLog)).not.toBeInTheDocument();
+    expect(mockLaunchDexWindow).toHaveBeenCalled();
+  });
 });
 
 test("receive error while getting error", async () => {
@@ -447,7 +449,7 @@ test("receive error while getting error", async () => {
   );
   render(<DexPage />);
 
-  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  await waitFor(() => expect(mockGetDexLogs).toHaveBeenCalled());
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
   user.click(screen.getByText("Logs"));
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
@@ -457,6 +459,6 @@ test("receive error while getting error", async () => {
     jest.advanceTimersByTime(2001);
   });
 
-  await wait(() => expect(mockGetDexLogs).toHaveBeenCalled());
+  await waitFor(() => expect(mockGetDexLogs).toHaveBeenCalled());
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
 });

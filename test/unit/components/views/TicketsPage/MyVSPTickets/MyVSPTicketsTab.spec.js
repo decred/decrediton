@@ -1,6 +1,6 @@
 import TicketsPage from "components/views/TicketsPage/";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
@@ -301,7 +301,9 @@ test("test vsp ticket status list", async () => {
   expect(getHistoryPageContent().childElementCount).toBe(0);
   viewAllTxs(mockGetTransactionsResponse, chunkCount);
 
-  await wait(() => expect(getHistoryPageContent().childElementCount).toBe(17));
+  await waitFor(() =>
+    expect(getHistoryPageContent().childElementCount).toBe(17)
+  );
   expect(mockGetTransactions).toHaveBeenCalledTimes(
     Object.keys(allTestTxs).length / Object.keys(mockStakeTickets).length
   );
@@ -317,7 +319,9 @@ test("test vsp ticket status list", async () => {
   user.click(getTxTypeFilterMenuItem("Unpaid Fee"));
   jest.advanceTimersByTime(101);
 
-  await wait(() => expect(getHistoryPageContent().childElementCount).toBe(3));
+  await waitFor(() =>
+    expect(getHistoryPageContent().childElementCount).toBe(3)
+  );
 
   expect(screen.getAllByText("Processing").length).toBe(3);
   expect(mockGetTransactions).toHaveBeenCalledTimes(0);
@@ -329,7 +333,9 @@ test("test vsp ticket status list", async () => {
   user.click(getTxTypeFilterMenuItem("Paid Fee"));
   jest.advanceTimersByTime(101);
 
-  await wait(() => expect(getHistoryPageContent().childElementCount).toBe(3));
+  await waitFor(() =>
+    expect(getHistoryPageContent().childElementCount).toBe(3)
+  );
 
   expect(screen.getAllByText("Paid").length).toBe(3);
   expect(mockGetTransactions).toHaveBeenCalledTimes(0);
@@ -341,7 +347,9 @@ test("test vsp ticket status list", async () => {
   user.click(getTxTypeFilterMenuItem("Fee Error"));
   jest.advanceTimersByTime(101);
 
-  await wait(() => expect(getHistoryPageContent().childElementCount).toBe(3));
+  await waitFor(() =>
+    expect(getHistoryPageContent().childElementCount).toBe(3)
+  );
 
   expect(screen.getAllByText("Error").length).toBe(3);
   expect(mockGetTransactions).toHaveBeenCalledTimes(0);
@@ -353,7 +361,7 @@ test("test vsp ticket status list", async () => {
   user.click(getTxTypeFilterMenuItem("Confirmed Fee"));
   jest.advanceTimersByTime(101);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(3)
   );
 
@@ -376,7 +384,7 @@ test("test vsp ticket status list", async () => {
   user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
   user.click(screen.getByText("Select VSP..."));
   user.click(screen.getByText(mockAvailableVsps[1].host));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText("Loading")).not.toBeInTheDocument()
   );
 

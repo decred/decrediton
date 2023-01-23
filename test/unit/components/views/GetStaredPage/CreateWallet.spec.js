@@ -10,7 +10,7 @@ import {
   selectedSeedWordsCount
 } from "components/views/GetStartedPage/CreateWalletPage/ConfirmSeed/utils.js";
 
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as da from "actions/DaemonActions";
@@ -94,33 +94,33 @@ beforeEach(() => {
 
 const goToCopySeedView = async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   user.click(screen.getByText(/create a new wallet/i));
-  await wait(() => screen.getByText("Wallet Name"));
+  await waitFor(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText(/choose a name/i), testWalletName);
 
   user.click(screen.getByText(/creating/i));
-  await wait(() => screen.getByText(/copy seed words to clipboard/i));
+  await waitFor(() => screen.getByText(/copy seed words to clipboard/i));
 };
 
 const goToConfirmView = async () => {
   await goToCopySeedView();
   user.click(screen.getByText(/continue/i));
-  await wait(() => screen.getByText("Seed phrase verification"));
+  await waitFor(() => screen.getByText("Seed phrase verification"));
 };
 
 const goToRestoreView = async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton/i));
+  await waitFor(() => screen.getByText(/welcome to decrediton/i));
   user.click(screen.getByText(/restore existing wallet/i));
-  await wait(() => screen.getByText("Wallet Name"));
+  await waitFor(() => screen.getByText("Wallet Name"));
   user.type(screen.getByPlaceholderText("Choose a Name"), testWalletName);
 };
 
 const goToExistingSeedView = async () => {
   await goToRestoreView();
   user.click(screen.getByText("Continue"));
-  await wait(() => screen.getByText("Confirm Seed Key"));
+  await waitFor(() => screen.getByText("Confirm Seed Key"));
 };
 
 const testPrivatePassphraseInputs = async (
@@ -147,7 +147,7 @@ const testPrivatePassphraseInputs = async (
     fireEvent.change(repeatPrivatePassphraseInput, {
       target: { value: `mistyped ${testPassword}` }
     });
-    await wait(() => screen.getByText(/passphrases do not match/i));
+    await waitFor(() => screen.getByText(/passphrases do not match/i));
     user.clear(repeatPrivatePassphraseInput);
   }
   fireEvent.change(repeatPrivatePassphraseInput, {
@@ -163,7 +163,6 @@ const firePasteEvent = (combobox, text) => {
     }
   };
   const pasteEvent = createEvent.paste(combobox, eventProperties);
-  pasteEvent.clipboardData = eventProperties.clipboardData;
   fireEvent(combobox, pasteEvent);
 };
 
@@ -220,14 +219,14 @@ const clickOnSeedButton = async (i, clickToTheFake) => {
       if (buttons[index].textContent === word) {
         foundTheButton = true;
         user.click(buttons[index]);
-        await wait(() => expect(buttons[index].disabled).toBeTruthy());
+        await waitFor(() => expect(buttons[index].disabled).toBeTruthy());
       } else {
         index++;
       }
     } else if (buttons[index].textContent !== word) {
       foundTheButton = true;
       user.click(buttons[index]);
-      await wait(() => expect(buttons[index].disabled).toBeTruthy());
+      await waitFor(() => expect(buttons[index].disabled).toBeTruthy());
     } else {
       index++;
     }
@@ -278,11 +277,13 @@ test("test confim seed view", async () => {
   );
   await clickOnSeedButton(testSeedArray.length - 1, true);
   await clickOnSeedButton(testSeedArray.length - 1, false);
-  expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
-  expect(createWalletButton.disabled).toBeFalsy();
+  await waitFor(() => {
+    expect(mockDecodeSeed).toHaveBeenCalledWith(testSeedMnemonic);
+    expect(createWalletButton.disabled).toBeFalsy();
+  });
 
   user.click(createWalletButton);
-  await wait(() => expect(mockCreateWallet).toHaveBeenCalled());
+  await waitFor(() => expect(mockCreateWallet).toHaveBeenCalled());
 });
 
 test("test confirm seed view in testnet mode (allows verification skip in dev)", async () => {
@@ -306,7 +307,7 @@ test("test confirm seed view in testnet mode (allows verification skip in dev)",
       })
   );
 
-  await wait(() => expect(createWalletButton.disabled).toBe(false));
+  await waitFor(() => expect(createWalletButton.disabled).toBe(false));
   user.click(createWalletButton);
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockIsTestNet).toHaveBeenCalled();
@@ -329,7 +330,7 @@ test("test typing a valid seed word on existing seed view", async () => {
 
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
   expect(mockDecodeSeed).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("1.").parentNode.className).toMatch(/populated/)
   );
 });
@@ -341,7 +342,7 @@ test("pasting just 32 seed words on existing seed view", async () => {
 
   firePasteEvent(screen.getAllByRole("combobox")[0], testInvalidSeedMnemonic);
 
-  await wait(() => screen.getByText(/please paste a valid 33 word seed./i));
+  await waitFor(() => screen.getByText(/please paste a valid 33 word seed./i));
 });
 
 test("pasting invalid seed words on existing seed view", async () => {
@@ -351,7 +352,7 @@ test("pasting invalid seed words on existing seed view", async () => {
   await goToExistingSeedView();
 
   firePasteEvent(screen.getAllByRole("combobox")[0], testSeedMnemonic);
-  await wait(() => screen.getByText(/Error: seed is not valid./i));
+  await waitFor(() => screen.getByText(/Error: seed is not valid./i));
 });
 
 test("pasting valid seed words on existing seed view and receive create wallet request error", async () => {
@@ -368,7 +369,7 @@ test("pasting valid seed words on existing seed view and receive create wallet r
 
   firePasteEvent(screen.getAllByRole("combobox")[0], testSeedMnemonic);
 
-  await wait(() =>
+  await waitFor(() =>
     screen.getByText(
       /please make sure you also have a physical, written down copy of your seed./i
     )
@@ -380,7 +381,7 @@ test("pasting valid seed words on existing seed view and receive create wallet r
 
   // expect to jump back to the wallet choose view, and display
   // the error msg received from createWalletRequest
-  await wait(() => screen.getByText(testCreateWalletRequestErrorMsg));
+  await waitFor(() => screen.getByText(testCreateWalletRequestErrorMsg));
   screen.getByText(/choose the wallet to access/i);
 });
 
@@ -398,7 +399,7 @@ test("pasting valid seed words on existing seed view and successfully create wal
 
   firePasteEvent(screen.getAllByRole("combobox")[0], testSeedMnemonic);
 
-  await wait(() =>
+  await waitFor(() =>
     screen.getByText(
       /please make sure you also have a physical, written down copy of your seed./i
     )
@@ -418,7 +419,7 @@ test("pasting valid seed words on existing seed view and successfully create wal
   user.click(screen.getByText(/create wallet/i));
   expect(mockCreateWallet).toHaveBeenCalled();
   expect(mockCreateWalletRequest).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
@@ -471,7 +472,7 @@ test("create wallet button must be disabled if any of the inputs are invalid", a
   const comboboxArray = screen.getAllByRole("combobox");
   firePasteEvent(comboboxArray[0], testSeedMnemonic);
 
-  await wait(() =>
+  await waitFor(() =>
     screen.getByText(
       "*Please make sure you also have a physical, written down copy of your seed."
     )
@@ -494,7 +495,7 @@ test("create wallet button must be disabled if any of the inputs are invalid", a
     () => () => Promise.reject({})
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[1]);
-  await wait(() => expect(createWallet).toHaveAttribute("disabled"));
+  await waitFor(() => expect(createWallet).toHaveAttribute("disabled"));
 
   // fix, button should be enabled
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(
@@ -504,7 +505,7 @@ test("create wallet button must be disabled if any of the inputs are invalid", a
       })
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
-  await wait(() => expect(createWallet).not.toHaveAttribute("disabled"));
+  await waitFor(() => expect(createWallet).not.toHaveAttribute("disabled"));
 }, 30000);
 
 test("test POSITION_ERROR handling on restore view (missing words)", async () => {
@@ -527,7 +528,7 @@ test("test POSITION_ERROR handling on restore view (missing words)", async () =>
       })
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[2], testSeedArray[2]);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("3.").parentNode.className).toMatch(/error/)
   );
 }, 30000);
@@ -549,7 +550,7 @@ test("test POSITION_ERROR handling on restore view (mismatch error)", async () =
     () => () => Promise.reject({ details: MISMATCH_ERROR })
   );
   fillSeedWordEntryUsingEnterKey(comboboxArray[4], testSeedArray[4]);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("5.").parentNode.className).toMatch(/populated/)
   );
 
@@ -559,7 +560,7 @@ test("test POSITION_ERROR handling on restore view (mismatch error)", async () =
   expect(mockDecodeSeed).not.toHaveBeenCalled();
 
   fillSeedWordEntryUsingEnterKey(comboboxArray[5], testSeedArray[5]);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("6.").parentNode.className).toMatch(/populated/)
   );
 }, 30000);
@@ -577,7 +578,7 @@ test("test invalid POSITION_ERROR msg format handling on restore view", async ()
   fillSeedWordEntryUsingEnterKey(comboboxArray[0], testSeedArray[0]);
   fillSeedWordEntryUsingEnterKey(comboboxArray[1], testSeedArray[1]);
   fillSeedWordEntryUsingEnterKey(comboboxArray[3], testSeedArray[3]);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("4.").parentNode.className).toMatch(/populated/)
   );
 }, 30000);
@@ -629,27 +630,33 @@ test("test hex input tab on restore view", async () => {
   fireEvent.change(hexInput, {
     target: { value: testShortHexSeed }
   });
-  await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
-  expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
-  expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(mockDecodeSeed).toHaveBeenCalled();
+    expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
+    expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
+  });
 
   // Test valid and compatible hex seed
   user.clear(hexInput);
   fireEvent.change(hexInput, {
     target: { value: testCompatibleHexSeed }
   });
-  await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
-  expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
-  expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
+  await waitFor(() => {
+    expect(mockDecodeSeed).toHaveBeenCalled();
+    expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
+    expect(screen.queryByText(hexSeedWarningMsg)).not.toBeInTheDocument();
+  });
 
   // Test valid hex seed with max chars
   user.clear(hexInput);
   fireEvent.change(hexInput, {
     target: { value: testMaxHexSeed }
   });
-  await wait(() => expect(mockDecodeSeed).toHaveBeenCalled());
-  expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
-  expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(mockDecodeSeed).toHaveBeenCalled();
+    expect(screen.queryByText(hexSeedErrorMsg)).not.toBeInTheDocument();
+    expect(screen.getByText(hexSeedWarningMsg)).toBeInTheDocument();
+  });
 
   // The next tests all assume a failed decode.
   mockDecodeSeed = wlActions.decodeSeed = jest.fn(
@@ -708,7 +715,7 @@ test("middle mouse button down and paste on seed combobox", async () => {
 
   const combobox = screen.getAllByRole("combobox")[0];
   fireEvent.mouseDown(combobox, { which: 2 });
-  await wait(() => expect(mockClipboardReadText).toHaveBeenCalled());
+  await waitFor(() => expect(mockClipboardReadText).toHaveBeenCalled());
   for (let i = 0; i < testSeedArray.length; i++) {
     expect(getComboboxByName(testSeedArray[i])).toBeInTheDocument();
   }
@@ -718,8 +725,8 @@ test("test cancel button on existing seed view", async () => {
   await goToExistingSeedView();
 
   user.click(screen.getByText("Cancel"));
-  await wait(() => expect(mockCancelCreateWallet).toHaveBeenCalled());
-  await wait(() =>
+  await waitFor(() => expect(mockCancelCreateWallet).toHaveBeenCalled());
+  await waitFor(() =>
     expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
@@ -728,8 +735,8 @@ test("test cancel button on copy seed view", async () => {
   await goToCopySeedView();
 
   user.click(screen.getByText("Cancel"));
-  await wait(() => expect(mockCancelCreateWallet).toHaveBeenCalled());
-  await wait(() =>
+  await waitFor(() => expect(mockCancelCreateWallet).toHaveBeenCalled());
+  await waitFor(() =>
     expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
@@ -738,14 +745,14 @@ test("test back button on confirm view", async () => {
   await goToConfirmView();
 
   user.click(screen.getByText("Back"));
-  await wait(() => screen.getByText(/copy seed words to clipboard/i));
+  await waitFor(() => screen.getByText(/copy seed words to clipboard/i));
 });
 
 test("test go back button on existing seed view", async () => {
   await goToExistingSeedView();
 
   user.click(screen.getByText(/go back/i).nextElementSibling);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });
@@ -754,7 +761,7 @@ test("test go back button on copy seed view", async () => {
   await goToCopySeedView();
 
   user.click(screen.getByText(/go back/i).nextElementSibling);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(/choose the wallet to access/i)).toBeInTheDocument()
   );
 });

@@ -1,6 +1,6 @@
 import TicketsPage from "components/views/TicketsPage/";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
@@ -240,7 +240,7 @@ test("test tickets list", async () => {
   user.click(getTxTypeFilterMenuItem("live"));
   jest.advanceTimersByTime(101);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -260,7 +260,7 @@ test("test tickets list", async () => {
   user.click(getTxTypeFilterMenuItem("unmined"));
   jest.advanceTimersByTime(101);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -280,7 +280,7 @@ test("test tickets list", async () => {
   user.click(getTxTypeFilterMenuItem("All"));
   jest.advanceTimersByTime(101);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).not.toBe(
       Object.keys(allTestTxs).length
     )
@@ -300,7 +300,9 @@ test("test tickets list", async () => {
     Object.keys(allTestTxs)[3]
   );
   jest.advanceTimersByTime(101);
-  await wait(() => expect(getHistoryPageContent().childElementCount).toBe(1));
+  await waitFor(() =>
+    expect(getHistoryPageContent().childElementCount).toBe(1)
+  );
 });
 
 test("test ticket sorting", async () => {
@@ -324,7 +326,7 @@ test("test ticket sorting", async () => {
   user.click(txSortButton);
   user.click(screen.getByText("Oldest"));
   jest.advanceTimersByTime(101);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockChangeTransactionsFilter).toHaveBeenCalledWith({
       ...initialState.grpc.ticketsFilter,
       listDirection: "asc"
@@ -335,7 +337,7 @@ test("test ticket sorting", async () => {
   user.click(txSortButton);
   user.click(screen.getByText("Newest"));
   jest.advanceTimersByTime(101);
-  await wait(() =>
+  await waitFor(() =>
     expect(mockChangeTransactionsFilter).toHaveBeenCalledWith({
       ...initialState.grpc.ticketsFilter,
       listDirection: "desc"

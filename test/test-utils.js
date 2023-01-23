@@ -18,6 +18,8 @@ import {
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
 
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+
 beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
   jest.spyOn(console, "info").mockImplementation(() => {});
