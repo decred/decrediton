@@ -1,1 +1,1 @@
-Trzeba być świadomym, że aby odzyskać wszystkie środki z LN wymagane są [dane z kopii zapasowej](https://docs.decred.org/lightning-network/backups/) _w dodatku do ziarna Twojego portfela_.
+Trzeba być świadomym, że aby odzyskać wszystkie środki z Lightning Network wymagane są [dane z kopii zapasowej](https://docs.decred.org/lightning-network/backups/) _w dodatku do ziarna Twojego portfela_.
