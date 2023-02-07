@@ -245,7 +245,7 @@ const tabShouldBeChecked = (tab) =>
   expect(tab.firstElementChild.firstElementChild.className).toMatch("visited");
 
 test("test warning view", async () => {
-  const { user } = render(<ConnectPage />);
+  render(<ConnectPage />);
 
   const understandButton = getUnderstandButton();
   const nextButton = screen.getByRole("button", { name: "Next" });
