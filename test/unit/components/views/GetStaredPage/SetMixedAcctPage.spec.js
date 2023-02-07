@@ -98,7 +98,7 @@ test("test SetMixedAcctPage", async () => {
   expect(screen.queryByText(/you need to set/i)).not.toBeInTheDocument();
 
   expect(continueButton.disabled).toBe(false);
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(mockRenameAccountAttempt).toHaveBeenCalledWith(
     testCoinjoinSumByAcct[1].acctIdx,
     CHANGE_ACCOUNT

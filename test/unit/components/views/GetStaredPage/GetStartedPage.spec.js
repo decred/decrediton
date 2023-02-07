@@ -92,28 +92,28 @@ test("render empty wallet chooser view", async () => {
 
   // check tutorials
   expect(screen.getByText(/learn about decred/i)).toBeInTheDocument();
-  user.click(screen.getByText("Decred Intro"));
+  await user.click(screen.getByText("Decred Intro"));
   await waitFor(() => screen.getByText("Back"));
   // go back
-  user.click(screen.getByText("Back").nextElementSibling);
+  await user.click(screen.getByText("Back").nextElementSibling);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   // open onboard tutorial again and go back by finishing it
-  user.click(screen.getByText("Decred Intro"));
+  await user.click(screen.getByText("Decred Intro"));
   await waitFor(() => screen.getByText("Back"));
   // step forward
   const nextButton = screen.getByRole("button", { name: "Next" });
-  user.click(nextButton);
+  await user.click(nextButton);
   expect(screen.getAllByText("Governance systems").length).toBeTruthy();
   // finish
-  user.click(nextButton);
+  await user.click(nextButton);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   // check learn the basics
-  user.click(screen.getByRole("button", { name: "Learn the Basics" }));
+  await user.click(screen.getByRole("button", { name: "Learn the Basics" }));
   await waitFor(() => screen.getByText("Skip"));
   // go back
-  user.click(screen.getByText("Skip"));
+  await user.click(screen.getByText("Skip"));
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockGetDaemonSynced).toHaveBeenCalled();
@@ -145,43 +145,43 @@ test("render empty wallet chooser view and click-on&test release notes", async (
   render(<GetStartedPage />);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
-  user.click(screen.getByText(/Release Info/i));
+  await user.click(screen.getByText(/Release Info/i));
   await waitFor(() => screen.getByText(/newer version/i));
   const header = screen.getByText(/Decrediton (.*) Released/i);
   expect(header).toBeInTheDocument();
   const newestVersionNumber = readRenderedVersionNumber(header.textContent);
 
   // click on `newer version` button in vain
-  user.click(screen.getByText(/newer version/i));
+  await user.click(screen.getByText(/newer version/i));
   expect(+readRenderedVersionNumber(header.textContent)).toBe(
     +newestVersionNumber
   );
 
   // click on `older version` button until the oldest version reached
   const olderVersionButton = screen.getByText(/older version/i);
-  user.click(olderVersionButton);
+  await user.click(olderVersionButton);
   let olderVersionNumber = readRenderedVersionNumber(header.textContent);
   expect(+olderVersionNumber).toBeLessThan(+newestVersionNumber);
   do {
-    user.click(olderVersionButton);
+    await user.click(olderVersionButton);
     olderVersionNumber = readRenderedVersionNumber(header.textContent);
     expect(+olderVersionNumber).toBeLessThan(+newestVersionNumber);
   } while (+olderVersionNumber > +oldestVersionNumber);
 
   // click on `older version` button in vain
-  user.click(olderVersionButton);
+  await user.click(olderVersionButton);
   expect(+readRenderedVersionNumber(header.textContent)).toBe(
     +oldestVersionNumber
   );
 
   // go back to the newer versions view
-  user.click(screen.getByText(/newer version/i));
+  await user.click(screen.getByText(/newer version/i));
   expect(+readRenderedVersionNumber(header.textContent)).toBeGreaterThan(
     +oldestVersionNumber
   );
 
   // go back to the wallet chooser view
-  user.click(screen.getByText(/go back/i).nextElementSibling);
+  await user.click(screen.getByText(/go back/i).nextElementSibling);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 
@@ -189,11 +189,11 @@ test("click on settings link and go back", async () => {
   render(<GetStartedPage />);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
-  user.click(screen.getByText(/settings/i));
+  await user.click(screen.getByText(/settings/i));
   await waitFor(() => screen.getByText("Connectivity"));
 
   // go back
-  user.click(
+  await user.click(
     screen.getByRole("button", {
       name: "Go back"
     })
@@ -205,11 +205,11 @@ test("click on logs view", async () => {
   render(<GetStartedPage />);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
-  user.click(screen.getByText(/logs/i));
+  await user.click(screen.getByText(/logs/i));
   await waitFor(() => screen.queryByText(/system logs/i));
 
   // go back
-  user.click(screen.getByText(/go back/i).nextElementSibling);
+  await user.click(screen.getByText(/go back/i).nextElementSibling);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 });
 

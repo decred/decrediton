@@ -1,6 +1,5 @@
 import ChannelDetailsPage from "components/views/LNPage/ChannelDetailsPage";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen, waitFor, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -45,7 +44,7 @@ const getConfirmButton = () => screen.getByText("Confirm");
 
 test("open channel details", async () => {
   mockChannelPoint = mockChannels[0].channelPoint;
-  render(<ChannelDetailsPage />);
+  const { user } = render(<ChannelDetailsPage />);
 
   expect(screen.getByText("Open").previousSibling.alt).toBe("greenCheck");
   expect(
@@ -87,7 +86,7 @@ test("open channel details", async () => {
   );
 
   const cancelChannelBt = getCancelChannelButton();
-  user.click(cancelChannelBt);
+  await user.click(cancelChannelBt);
   expect(
     screen.getByText(/Attempt cooperative close of channel/i)
   ).toBeInTheDocument();
@@ -105,13 +104,13 @@ test("open channel details", async () => {
     screen.queryByText(/Attempt cooperative close of channel/i)
   ).not.toBeInTheDocument();
 
-  user.click(screen.getByTestId("goBackHistory"));
+  await user.click(screen.getByTestId("goBackHistory"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
 test("pending channel details", async () => {
   mockChannelPoint = mockPendingChannels[0].channelPoint;
-  render(<ChannelDetailsPage />);
+  const { user } = render(<ChannelDetailsPage />);
 
   expect(screen.getByText("Pending").previousSibling.alt).toBe("bluePending");
   expect(
@@ -143,7 +142,7 @@ test("pending channel details", async () => {
 
   // show close button for pending channels too
   const cancelChannelBt = getCancelChannelButton();
-  user.click(cancelChannelBt);
+  await user.click(cancelChannelBt);
   expect(
     screen.getByText(/Attempt forced close of the channel/i)
   ).toBeInTheDocument();

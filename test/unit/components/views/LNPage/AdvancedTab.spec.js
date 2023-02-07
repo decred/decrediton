@@ -1,6 +1,5 @@
 import { AdvancedTab } from "components/views/LNPage/AdvancedTab";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
@@ -148,7 +147,7 @@ test("test infos", () => {
 
 test("test backup", async () => {
   expect(process.env.TZ).toBe("UTC");
-  render(<AdvancedTab />);
+  const { user } = render(<AdvancedTab />);
   expect(screen.getByText(mockLnInfo.identityPubkey)).toBeInTheDocument();
   expect(
     screen.getByText(`SCB backup file location: ${mockLnSCBPath}`)
@@ -159,7 +158,7 @@ test("test backup", async () => {
 
   const mockFilePath = "mockFilePath";
   wallet.showSaveDialog.mockReturnValueOnce({ filePath: mockFilePath });
-  user.click(screen.getByText("Backup Now"));
+  await user.click(screen.getByText("Backup Now"));
   await waitFor(() =>
     expect(mockExportBackup).toHaveBeenCalledWith(mockFilePath)
   );
@@ -168,14 +167,14 @@ test("test backup", async () => {
     filePaths: [mockFilePath],
     filePath: mockFilePath
   });
-  user.click(screen.getByText("Verify Backup"));
+  await user.click(screen.getByText("Verify Backup"));
   await waitFor(() =>
     expect(mockVerifyBackup).toHaveBeenCalledWith(mockFilePath)
   );
 });
 
-test("test towers", () => {
-  render(<AdvancedTab />);
+test("test towers", async () => {
+  const { user } = render(<AdvancedTab />);
 
   // check first tower
   expect(
@@ -194,7 +193,7 @@ test("test towers", () => {
   );
 
   // check remove tower button
-  user.click(screen.getAllByText("Remove tower")[0].nextElementSibling);
+  await user.click(screen.getAllByText("Remove tower")[0].nextElementSibling);
   expect(mockRemoveWatchtower).toHaveBeenCalledWith(
     mockLnTowersList[0].pubkeyHex
   );
@@ -202,17 +201,17 @@ test("test towers", () => {
   // check add tower
   const mockTowerId = "mock-tower-id";
   const mockTowerAddress = "mock-tower-address";
-  user.type(screen.getByLabelText("Tower ID:"), mockTowerId);
-  user.type(screen.getByLabelText("Address:"), mockTowerAddress);
-  user.click(screen.getByText("Add"));
+  await user.type(screen.getByLabelText("Tower ID:"), mockTowerId);
+  await user.type(screen.getByLabelText("Address:"), mockTowerAddress);
+  await user.click(screen.getByText("Add"));
   expect(mockAddWatchtower).toHaveBeenCalledWith(mockTowerId, mockTowerAddress);
 });
 
-test("test query node", () => {
+test("test query node", async () => {
   selectors.lnNodeInfo = jest.fn(() => mockNodeInfo);
-  render(<AdvancedTab />);
+  const { user } = render(<AdvancedTab />);
 
-  user.type(screen.getByLabelText("Node ID"), mockNodeInfo.node.pubKey);
+  await user.type(screen.getByLabelText("Node ID"), mockNodeInfo.node.pubKey);
   expect(mockGetNodeInfo).toHaveBeenCalledWith(mockNodeInfo.node.pubKey);
   expect(
     screen.getByText(mockNodeInfo.node.alias).parentElement.textContent

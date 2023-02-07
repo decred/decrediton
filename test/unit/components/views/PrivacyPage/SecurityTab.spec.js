@@ -1,8 +1,6 @@
 import PrivacyPage from "components/views/PrivacyPage";
 import SecurityTab from "components/views/PrivacyPage/SecurityTab";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { fireEvent } from "@testing-library/react";
 import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
@@ -18,6 +16,11 @@ let mockSignMessageAttempt;
 let mockSignMessageAttemptTrezor;
 let mockGetMessageVerificationServiceAttempt;
 let mockVerifyMessageAttempt;
+
+const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
+const testSignature = "test-signature";
+const testMessage = "secret message";
+const testPassphrase = "testpassphrase";
 
 beforeEach(() => {
   selectors.walletService = jest.fn(() => {
@@ -58,17 +61,15 @@ const getVerifyMessageButton = () =>
   screen.getByRole("button", { name: "Verify Message" });
 
 test("type invalid address to validate", async () => {
-  render(<PrivacyPage />);
-  user.click(screen.getByText("Security Center"));
+  const { user } = render(<PrivacyPage />);
+  await user.click(screen.getByText("Security Center"));
 
   const validateAddressInput = getValidateAddressInput();
-  fireEvent.change(validateAddressInput, {
-    target: { value: "random text" }
-  });
+  await user.type(validateAddressInput, "random text");
 
   await waitFor(() => screen.getByText("Invalid address"));
 
-  user.clear(validateAddressInput);
+  await user.clear(validateAddressInput);
   await waitFor(() =>
     expect(screen.queryByText("Invalid address")).not.toBeInTheDocument()
   );
@@ -93,13 +94,11 @@ test("type valid, not owned address to validate", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
+  const { user } = render(<SecurityTab />);
 
   const validateAddressInput = getValidateAddressInput();
 
-  fireEvent.change(validateAddressInput, {
-    target: { value: "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd" }
-  });
+  await user.type(validateAddressInput, testAddress);
   await waitFor(() => screen.getByText("Address Valid, Not Owned"));
 });
 
@@ -122,13 +121,11 @@ test("type valid, owned address to validate", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
+  const { user } = render(<SecurityTab />);
 
   const validateAddressInput = getValidateAddressInput();
 
-  fireEvent.change(validateAddressInput, {
-    target: { value: "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd" }
-  });
+  await user.type(validateAddressInput, testAddress);
   await waitFor(() => screen.getByText("Owned address"));
   expect(
     screen.getByText(/Account Number/i).parentElement.textContent
@@ -156,31 +153,24 @@ test("test signing message", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
-  const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
-  const testMessage = "secret message";
+  const { user } = render(<SecurityTab />);
   const signMessageButton = getSignMessageButton();
-  const testPassphrase = "testpassphrase";
   expect(signMessageButton.disabled).toBe(true);
 
-  fireEvent.change(getSignMessageAddressInput(), {
-    target: { value: testAddress }
-  });
-  fireEvent.change(getSignMessageMsgInput(), {
-    target: { value: testMessage }
-  });
+  await user.type(getSignMessageAddressInput(), testAddress);
+  await user.type(getSignMessageMsgInput(), testMessage);
 
   await waitFor(() => expect(signMessageButton.disabled).toBe(false));
 
-  user.click(signMessageButton);
+  await user.click(signMessageButton);
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(signMessageButton);
-  user.type(getPrivatePassphraseInput(), testPassphrase);
+  await user.click(signMessageButton);
+  await user.type(getPrivatePassphraseInput(), testPassphrase);
 
-  user.click(getContinueButton());
+  await user.click(getContinueButton());
 
   expect(mockSignMessageAttempt).toHaveBeenCalledWith(
     testAddress,
@@ -211,22 +201,16 @@ test("test signing message on a trezor-backed wallet", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
-  const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
-  const testMessage = "secret message";
+  const { user } = render(<SecurityTab />);
   const signMessageButton = getSignMessageButton();
   expect(signMessageButton.disabled).toBe(true);
 
-  fireEvent.change(getSignMessageAddressInput(), {
-    target: { value: testAddress }
-  });
-  fireEvent.change(getSignMessageMsgInput(), {
-    target: { value: testMessage }
-  });
+  await user.type(getSignMessageAddressInput(), testAddress);
+  await user.type(getSignMessageMsgInput(), testMessage);
 
   await waitFor(() => expect(signMessageButton.disabled).toBe(false));
 
-  user.click(signMessageButton);
+  await user.click(signMessageButton);
 
   expect(mockSignMessageAttemptTrezor).toHaveBeenCalledWith(
     testAddress,
@@ -253,18 +237,12 @@ test("test signing message using address not owning", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
-  const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
-  const testMessage = "secret message";
+  const { user } = render(<SecurityTab />);
   const signMessageButton = getSignMessageButton();
   expect(signMessageButton.disabled).toBe(true);
 
-  fireEvent.change(getSignMessageAddressInput(), {
-    target: { value: testAddress }
-  });
-  fireEvent.change(getSignMessageMsgInput(), {
-    target: { value: testMessage }
-  });
+  await user.type(getSignMessageAddressInput(), testAddress);
+  await user.type(getSignMessageMsgInput(), testMessage);
 
   await waitFor(() =>
     screen.getByText("Please enter a valid address owned by you")
@@ -295,29 +273,20 @@ test("test verify message", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
-  user.click(getVerifyMessageToggleBt());
-  const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
-  const testSignature = "test-signature";
-  const testMessage = "secret message";
+  const { user } = render(<SecurityTab />);
+  await user.click(getVerifyMessageToggleBt());
   const verifyMessageButton = getVerifyMessageButton();
   expect(verifyMessageButton.disabled).toBe(true);
   await waitFor(() =>
     expect(mockGetMessageVerificationServiceAttempt).toHaveBeenCalled()
   );
 
-  fireEvent.change(getSignMessageAddressInput(), {
-    target: { value: testAddress }
-  });
-  fireEvent.change(getSignMessageSignatureInput(), {
-    target: { value: testSignature }
-  });
-  fireEvent.change(getSignMessageMsgInput(), {
-    target: { value: testMessage }
-  });
+  await user.type(getSignMessageAddressInput(), testAddress);
+  await user.type(getSignMessageSignatureInput(), testSignature);
+  await user.type(getSignMessageMsgInput(), testMessage);
   await waitFor(() => expect(verifyMessageButton.disabled).toBe(false));
 
-  user.click(verifyMessageButton);
+  await user.click(verifyMessageButton);
   expect(mockVerifyMessageAttempt).toHaveBeenCalledWith(
     testAddress,
     testMessage,
@@ -351,29 +320,20 @@ test("test verify invalid message", async () => {
         sigsRequired: 0
       })
   );
-  render(<SecurityTab />);
-  user.click(getVerifyMessageToggleBt());
-  const testAddress = "TsfDLrRkk9ciUuwfp2b8PawwnukYD7yAjGd";
-  const testSignature = "test-signature";
-  const testMessage = "secret message";
+  const { user } = render(<SecurityTab />);
+  await user.click(getVerifyMessageToggleBt());
   const verifyMessageButton = getVerifyMessageButton();
   expect(verifyMessageButton.disabled).toBe(true);
   await waitFor(() =>
     expect(mockGetMessageVerificationServiceAttempt).toHaveBeenCalled()
   );
 
-  fireEvent.change(getSignMessageAddressInput(), {
-    target: { value: testAddress }
-  });
-  fireEvent.change(getSignMessageSignatureInput(), {
-    target: { value: testSignature }
-  });
-  fireEvent.change(getSignMessageMsgInput(), {
-    target: { value: testMessage }
-  });
+  await user.type(getSignMessageAddressInput(), testAddress);
+  await user.type(getSignMessageSignatureInput(), testSignature);
+  await user.type(getSignMessageMsgInput(), testMessage);
   await waitFor(() => expect(verifyMessageButton.disabled).toBe(false));
 
-  user.click(verifyMessageButton);
+  await user.click(verifyMessageButton);
   expect(mockVerifyMessageAttempt).toHaveBeenCalledWith(
     testAddress,
     testMessage,
@@ -383,6 +343,6 @@ test("test verify invalid message", async () => {
   expect(screen.getByText("Invalid Signature")).toBeInTheDocument();
 
   // go back to Sign Message
-  user.click(getSignMessageToggleBt());
+  await user.click(getSignMessageToggleBt());
   expect(getSignMessageButton()).toBeInTheDocument();
 });

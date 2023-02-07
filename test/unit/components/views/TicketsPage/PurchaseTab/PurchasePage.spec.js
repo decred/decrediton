@@ -1,7 +1,7 @@
 import Purchase from "components/views/TicketsPage/PurchaseTab/PurchaseTab.jsx";
 import TicketAutoBuyer from "components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
@@ -109,21 +109,23 @@ beforeEach(() => {
 });
 
 test("render PurchasePage", async () => {
+  const user = userEvent.setup();
   render(<Purchase />, initialState);
 
   // check PrivacyInfo
-  user.click(screen.getByText("You are purchasing mixed tickets"));
+  await user.click(screen.getByText("You are purchasing mixed tickets"));
   expect(
     screen.getByText(/Purchasing mixed tickets can take some time/i)
   ).toBeInTheDocument();
 
   // set stakepool
-  user.click(screen.getByText("Select VSP..."));
-  user.click(screen.getByText(mockAvailableVsps[1].host));
+  await user.click(screen.getByText("Select VSP..."));
+  await user.click(screen.getByText(mockAvailableVsps[1].host));
   await waitFor(() => {
-    user.click(screen.getByLabelText("Always use this VSP"));
     expect(screen.queryByText("Loading")).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Always use this VSP")).toBeInTheDocument();
   });
+  await user.click(screen.getByLabelText("Always use this VSP"));
 
   // check Always use this VSP checkbox
   expect(mockSetRememberedVspHost).toHaveBeenCalledWith({
@@ -145,9 +147,9 @@ test("render PurchasePage", async () => {
   });
 
   const purchaseButton = screen.getByText("Purchase");
-  user.click(purchaseButton);
-  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
-  user.click(screen.getByText("Continue"));
+  await user.click(purchaseButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
+  await user.click(screen.getByText("Continue"));
   expect(mockPurchaseTicketsAttempt).toHaveBeenCalledWith(
     mockPassphrase,
     mockMixedAccount,
@@ -162,14 +164,14 @@ test("render PurchasePage", async () => {
   const inputTag = screen.getByLabelText("Amount");
 
   const moreButton = screen.getByRole("button", { name: "more" });
-  user.click(moreButton);
+  await user.click(moreButton);
   expect(inputTag.value).toBe("2");
 
   const lessButton = screen.getByRole("button", { name: "less" });
-  user.click(lessButton);
+  await user.click(lessButton);
   expect(inputTag.value).toBe("1");
   // remain 1
-  user.click(lessButton);
+  await user.click(lessButton);
   expect(inputTag.value).toBe("1");
 
   /* test arrow key */
@@ -178,17 +180,17 @@ test("render PurchasePage", async () => {
   fireEvent.keyDown(inputTag, { keyCode: 40 });
   expect(inputTag.value).toBe("1");
 
-  user.clear(inputTag);
+  await user.clear(inputTag);
   expect(inputTag.value).toBe("");
 
   // "" => 1
-  user.click(moreButton);
+  await user.click(moreButton);
   expect(inputTag.value).toBe("1");
 
   // not enough funds
   mockPurchaseTicketsAttempt.mockReset();
-  user.type(inputTag, "100000000");
-  user.click(purchaseButton);
+  await user.type(inputTag, "100000000");
+  await user.click(purchaseButton);
   expect(mockPurchaseTicketsAttempt).not.toHaveBeenCalled();
 });
 
@@ -204,33 +206,34 @@ const getSettingsModalTitle = () =>
 const getFillAllFieldsErrorMsg = () => screen.getByText("Fill all fields.");
 
 test("test autobuyer", async () => {
+  const user = userEvent.setup();
   render(<TicketAutoBuyer />, initialState);
   const settingsButton = getSettingsButton();
   const toggleSwitch = getToggleSwitch();
-  user.click(toggleSwitch);
+  await user.click(toggleSwitch);
   await waitFor(() => getSettingsModalTitle());
 
-  user.click(getSaveButton());
+  await user.click(getSaveButton());
   await waitFor(() => screen.getByText("Fill all fields."));
   const mockBalanceToMaintain = 14;
-  user.type(
+  await user.type(
     screen.getByLabelText(/Balance to Maintain/i),
     `${mockBalanceToMaintain}`
   );
-  user.click(getSaveButton());
+  await user.click(getSaveButton());
   expect(getFillAllFieldsErrorMsg()).toBeInTheDocument();
 
   // set account
-  user.click(screen.getByText("Select account"));
-  user.click(screen.getByText(mockMixedAccount.name));
+  await user.click(screen.getByText("Select account"));
+  await user.click(screen.getByText(mockMixedAccount.name));
   selectors.buyerAccount = jest.fn(() => mockMixedAccount);
 
-  user.click(getSaveButton());
+  await user.click(getSaveButton());
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
 
   const validMaxFeeInput = "10";
-  user.type(getMaxFeeInput(), validMaxFeeInput);
-  user.click(getSaveButton());
+  await user.type(getMaxFeeInput(), validMaxFeeInput);
+  await user.click(getSaveButton());
   await waitFor(() =>
     expect(
       screen.queryByText("Automatic ticket purchases")
@@ -238,13 +241,13 @@ test("test autobuyer", async () => {
   );
 
   // check settings
-  user.click(settingsButton);
+  await user.click(settingsButton);
   expect(screen.getByLabelText(/Balance to Maintain/i).value).toBe(
     `${mockBalanceToMaintain}`
   );
   expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
   expect(getMaxFeeInput().value).toBe(validMaxFeeInput);
-  user.click(screen.getByRole("button", { name: "Cancel" }));
+  await user.click(screen.getByRole("button", { name: "Cancel" }));
   await waitFor(() =>
     expect(
       screen.queryByText("Automatic ticket purchases")
@@ -252,17 +255,17 @@ test("test autobuyer", async () => {
   );
 
   // clicking again on switch should open the confirmation modal
-  user.click(toggleSwitch);
+  await user.click(toggleSwitch);
   await waitFor(() => screen.getByText(/start ticket buyer confirmation/i));
 
   expect(screen.getByText(mockAvailableVsps[1].host)).toBeInTheDocument();
   expect(screen.getByText(`${mockBalanceToMaintain}.00`)).toBeInTheDocument(); // cancel first
-  user.click(screen.getByText("Cancel"));
+  await user.click(screen.getByText("Cancel"));
   // try again
-  user.click(getToggleSwitch());
+  await user.click(getToggleSwitch());
   await waitFor(() => screen.getByText(/start ticket buyer confirmation/i));
-  user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
-  user.click(screen.getByText("Continue"));
+  await user.type(screen.getByLabelText("Private Passphrase"), mockPassphrase);
+  await user.click(screen.getByText("Continue"));
   expect(mockStartTicketBuyerAttempt).toHaveBeenCalledWith(
     mockPassphrase,
     mockMixedAccount,
@@ -275,25 +278,27 @@ test("test autobuyer", async () => {
   );
 });
 
-test("test autobuyer (autobuyer is runnning)", () => {
+test("test autobuyer (autobuyer is runnning)", async () => {
+  const user = userEvent.setup();
   mockGetTicketAutoBuyerRunning = selectors.getTicketAutoBuyerRunning = jest.fn(
     () => true
   );
   render(<TicketAutoBuyer />, initialState);
   expect(mockGetTicketAutoBuyerRunning).toHaveBeenCalled();
   expect(screen.getByText(/turn off auto buyer/i)).toBeInTheDocument();
-  user.click(getToggleSwitch());
+  await user.click(getToggleSwitch());
   expect(mockTicketBuyerCancel).toHaveBeenCalled();
 });
 
-test("test when VSP listing is not enabled ", () => {
+test("test when VSP listing is not enabled ", async () => {
+  const user = userEvent.setup();
   render(<Purchase />);
   expect(
     screen.getByText(
       /VSP listing from external API endpoint is currently disabled/i
     )
   ).toBeInTheDocument();
-  user.click(screen.getByRole("button", { name: "Enable VSP Listing" }));
+  await user.click(screen.getByRole("button", { name: "Enable VSP Listing" }));
   expect(mockAddAllowedExternalRequest).toHaveBeenCalledWith(
     EXTERNALREQUEST_STAKEPOOL_LISTING
   );
@@ -311,6 +316,7 @@ test("test `end of a ticket interval` state", () => {
 });
 
 test("remembered vsp have been set", async () => {
+  const user = userEvent.setup();
   const testRememberedVSP = {
     host: mockAvailableVsps[1].host,
     label: mockAvailableVsps[1].label
@@ -327,7 +333,7 @@ test("remembered vsp have been set", async () => {
   expect(mockSetRememberedVspHost).not.toHaveBeenCalled();
 
   // uncheck Always use this VSP checkbox
-  user.click(screen.getByLabelText("Always use this VSP"));
+  await user.click(screen.getByLabelText("Always use this VSP"));
   expect(mockSetRememberedVspHost).toHaveBeenCalledWith(null);
 });
 
@@ -352,16 +358,17 @@ test("an outdated remembered vsp has been set, should be cleared", async () => {
 });
 
 test("outdated vsp could not be selected", async () => {
+  const user = userEvent.setup();
   render(<Purchase />, initialState);
 
   await waitFor(() =>
     expect(screen.queryByText("Loading")).not.toBeInTheDocument()
   );
 
-  user.click(screen.getByText("Select VSP..."));
+  await user.click(screen.getByText("Select VSP..."));
   expect(screen.getByText("Out of date")).toBeInTheDocument();
   // there is (only) one out of date tooltip
-  user.click(screen.getByText(mockAvailableVsps[2].host));
+  await user.click(screen.getByText(mockAvailableVsps[2].host));
   // click on outdated vsp is not allowed:
   expect(screen.getByText("Select VSP...")).toBeInTheDocument();
 });

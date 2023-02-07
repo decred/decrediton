@@ -60,7 +60,7 @@ const testAgendaCardElements = (
 
 /* AgendaDetailsPage */
 
-const testAgendaDetailsPage = (
+const testAgendaDetailsPage = async (
   mockChoice,
   finished,
   passed,
@@ -104,7 +104,7 @@ const testAgendaDetailsPage = (
   expect(screen.getByRole("radio", { name: mockChoice }).checked).toBe(true);
 
   if (!finished && !isLoading && mockChoice != "yes") {
-    user.click(yesButton);
+    await user.click(yesButton);
     expect(mockSetSelectedChoice).toHaveBeenCalledWith("yes");
   }
 };

@@ -149,21 +149,21 @@ test("render default NumericInput", () => {
   expect(input.className).toMatch("numericInput");
 });
 
-test("render default IntegerInput", () => {
+test("render default IntegerInput", async () => {
   const { input, inputTag } = renderWrappedInput(IntegerInput);
   checkDefaultInput(input, inputTag);
   expect(input.className).toMatch("numericInput");
-  user.type(inputTag, "1.89a&%}");
+  await user.type(inputTag, "1.89a&%}");
   expect(inputTag.value).toBe("189");
 });
 
-test("render default FloatInput", () => {
+test("render default FloatInput", async () => {
   const { input, inputTag } = renderWrappedInput(FloatInput, {
     maxFracDigits: 3
   });
   checkDefaultInput(input, inputTag);
   expect(input.className).toMatch("numericInput");
-  user.type(inputTag, "1.89a&%4234}");
+  await user.type(inputTag, "1.89a&%4234}");
   expect(inputTag.value).toBe("1.894");
 });
 
@@ -187,7 +187,7 @@ test("render passphraseModalField", () => {
   expect(screen.getByLabelText(`${testLabel}:`)).toBeInTheDocument();
 });
 
-test("render default PasswordInput", () => {
+test("render default PasswordInput", async () => {
   const { input, inputTag } = renderInput(PasswordInput);
   checkDefaultInput(input, inputTag, "password");
   expect(inputTag.type).toBe("password");
@@ -195,10 +195,10 @@ test("render default PasswordInput", () => {
     name: "Toggle Passsword Visibility"
   });
 
-  user.click(togglePasswordVisibilityButton);
+  await user.click(togglePasswordVisibilityButton);
   expect(inputTag.type).toBe("text");
 
-  user.click(togglePasswordVisibilityButton);
+  await user.click(togglePasswordVisibilityButton);
   expect(inputTag.type).toBe("password");
 });
 
@@ -363,7 +363,7 @@ test("render input with unit in error state", () => {
   expect(unitElement.className).toMatch("error");
 });
 
-test("render default NumTicketsInput", () => {
+test("render default NumTicketsInput", async () => {
   const testInitValue = "1";
   const { input, inputTag } = renderNumTicketsInput({
     numTickets: testInitValue
@@ -373,17 +373,17 @@ test("render default NumTicketsInput", () => {
   expect(input.className).toMatch("integerInput");
   expect(screen.getByText("ticket")).toBeInTheDocument(); // single ticket
   //manual type a value
-  user.type(inputTag, "2.3");
+  await user.type(inputTag, "2.3");
   expect(inputTag.value).toBe("123");
   expect(screen.getByText("tickets")).toBeInTheDocument(); // multiple tickets
 
   /* test buttons */
   const lessButton = screen.getByRole("button", { name: "less" });
-  user.click(lessButton);
+  await user.click(lessButton);
   expect(inputTag.value).toBe("122");
 
   const moreButton = screen.getByRole("button", { name: "more" });
-  user.click(moreButton);
+  await user.click(moreButton);
   expect(inputTag.value).toBe("123");
 
   /* test arrow key */
@@ -415,23 +415,23 @@ test("open file with PathBrowseInput", async () => {
     filePaths: [testFilePath],
     filePath: testFilePath
   });
-  user.click(screen.getByRole("button", { name: "Select a path" }));
+  await user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
   await waitFor(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 
   /* electron return only filePath */
   mockOnChange.mockRestore();
-  user.clear(inputTag);
+  await user.clear(inputTag);
   wallet.showOpenDialog.mockReturnValueOnce({ filePath: testFilePath });
-  user.click(screen.getByRole("button", { name: "Select a path" }));
+  await user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
   await waitFor(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 
   /* electron does not return filePaths or filePath */
   mockOnChange.mockRestore();
-  user.clear(inputTag);
+  await user.clear(inputTag);
   wallet.showOpenDialog.mockReturnValueOnce({});
-  user.click(screen.getByRole("button", { name: "Select a path" }));
+  await user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showOpenDialog).toHaveBeenCalledWith(anyArg());
   await waitFor(() =>
     expect(mockOnChange).not.toHaveBeenCalledWith(testFilePath)
@@ -441,8 +441,8 @@ test("open file with PathBrowseInput", async () => {
   const filePathManual = "t";
   mockOnChange.mockRestore();
   wallet.showOpenDialog.mockRestore();
-  user.clear(inputTag);
-  user.type(inputTag, filePathManual);
+  await user.clear(inputTag);
+  await user.type(inputTag, filePathManual);
   expect(wallet.showOpenDialog).not.toHaveBeenCalled();
   await waitFor(() =>
     expect(mockOnChange).toHaveBeenCalledWith(filePathManual)
@@ -457,7 +457,7 @@ test("save directory with PathBrowseInput", async () => {
   checkDefaultInput(input, inputTag);
   expect(screen.getByText("Select a path")).toBeInTheDocument();
   wallet.showSaveDialog.mockReturnValueOnce({ filePath: testFilePath });
-  user.click(screen.getByRole("button", { name: "Select a path" }));
+  await user.click(screen.getByRole("button", { name: "Select a path" }));
   expect(wallet.showSaveDialog).toHaveBeenCalledWith(anyArg());
   await waitFor(() => expect(mockOnChange).toHaveBeenCalledWith(testFilePath));
 });

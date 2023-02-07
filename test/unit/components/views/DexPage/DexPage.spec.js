@@ -1,6 +1,5 @@
 import DexPage from "components/views/DexPage";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen, waitFor, act } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DexActions";
@@ -132,19 +131,19 @@ const getConnectDCRWalletButton = () =>
   screen.getByRole("button", { name: "Connect DCR Wallet" });
 const getLoginBtn = () => screen.queryByRole("button", { name: "Login" });
 
-test("enable dex view", () => {
+test("enable dex view", async () => {
   selectors.dexEnabled = jest.fn(() => false);
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
   const enableBtn = getEnableBtn();
-  user.click(enableBtn);
+  await user.click(enableBtn);
 
   expect(screen.getByText("Wallet restart required")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelBtn());
+  await user.click(getCancelBtn());
 
-  user.click(enableBtn);
-  user.click(getConfirmBtn());
+  await user.click(enableBtn);
+  await user.click(getConfirmBtn());
 
   expect(mockOnEnableDex).toHaveBeenCalled();
 });
@@ -166,41 +165,41 @@ test("dex is enabled, but not running", () => {
   );
 });
 
-const testPassphraseModal = () => {
+const testPassphraseModal = async (user) => {
   const contineBtn = getContinueBtn();
   const confirmInput = screen.getByLabelText("Confirm");
   const newPassphraseInput = screen.getByLabelText("New Passphrase");
-  user.clear(newPassphraseInput);
-  user.clear(confirmInput);
+  await user.clear(newPassphraseInput);
+  await user.clear(confirmInput);
   expect(contineBtn.disabled).toBeTruthy();
-  user.type(newPassphraseInput, testPassphrase);
+  await user.type(newPassphraseInput, testPassphrase);
   expect(contineBtn.disabled).toBeTruthy();
-  user.type(confirmInput, testPassphrase + "-2");
+  await user.type(confirmInput, testPassphrase + "-2");
   expect(contineBtn.disabled).toBeTruthy(); // disabled until Confirm is different
-  user.clear(confirmInput);
-  user.type(confirmInput, testPassphrase);
+  await user.clear(confirmInput);
+  await user.type(confirmInput, testPassphrase);
   expect(contineBtn.disabled).toBeFalsy();
 
-  user.click(contineBtn);
+  await user.click(contineBtn);
 };
 
-test("init dex without DEX seed", () => {
-  render(<DexPage />);
+test("init dex without DEX seed", async () => {
+  const { user } = render(<DexPage />);
   expect(screen.getByText("Set DEX Password")).toBeInTheDocument();
   const setDexPasshpraseBtn = getSetDexPasshpraseBtn();
-  user.click(setDexPasshpraseBtn);
+  await user.click(setDexPasshpraseBtn);
 
   //cancel first
-  user.click(getCancelBtn());
-  user.click(setDexPasshpraseBtn);
+  await user.click(getCancelBtn());
+  await user.click(setDexPasshpraseBtn);
 
-  testPassphraseModal();
+  await testPassphraseModal(user);
 
   expect(mockInitDex).toHaveBeenCalledWith(testPassphrase);
 });
 
-test("init dex with DEX seed", () => {
-  render(<DexPage />);
+test("init dex with DEX seed", async () => {
+  const { user } = render(<DexPage />);
   expect(screen.getByText("Set DEX Password")).toBeInTheDocument();
 
   const hasDexSeedInput = screen.getByLabelText(
@@ -209,28 +208,28 @@ test("init dex with DEX seed", () => {
 
   expect(queryDexSeedInput()).not.toBeInTheDocument();
   expect(hasDexSeedInput.checked).toBeFalsy();
-  user.click(hasDexSeedInput);
+  await user.click(hasDexSeedInput);
   expect(hasDexSeedInput.checked).toBeTruthy();
   // toggle off and back
-  user.click(hasDexSeedInput);
-  user.click(hasDexSeedInput);
+  await user.click(hasDexSeedInput);
+  await user.click(hasDexSeedInput);
 
   // continue without entering seed
-  user.click(getSetDexPasshpraseBtn());
-  testPassphraseModal();
+  await user.click(getSetDexPasshpraseBtn());
+  await testPassphraseModal(user);
   expect(mockInitDex).not.toHaveBeenCalled();
   expect(screen.getByText("You must enter a seed.")).toBeInTheDocument();
 
   // continue with entering seed
-  user.type(getDexSeedInput(), testSeed);
-  user.click(getSetDexPasshpraseBtn());
-  testPassphraseModal();
+  await user.type(getDexSeedInput(), testSeed);
+  await user.click(getSetDexPasshpraseBtn());
+  await testPassphraseModal(user);
   expect(mockInitDex).toHaveBeenCalledWith(testPassphrase, testSeed);
 });
 
-test("test confirm seed view", () => {
+test("test confirm seed view", async () => {
   selectors.dexInit = jest.fn(() => true);
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
   expect(screen.getByText("Confirm DEX Account Seed")).toBeInTheDocument();
   expect(
     screen.getByText("Please confirm your DEX account seed before proceeding.")
@@ -242,32 +241,32 @@ test("test confirm seed view", () => {
   );
 
   expect(screen.queryByText(testSeed)).not.toBeInTheDocument();
-  user.click(getRevealBtn());
+  await user.click(getRevealBtn());
   expect(screen.getByText(testSeed)).toBeInTheDocument();
 
-  user.click(getCopyButton());
+  await user.click(getCopyButton());
   expect(mockCopy).toHaveBeenCalledWith(testSeed);
 
-  user.click(getConfirmSubmitButton());
+  await user.click(getConfirmSubmitButton());
   expect(mockConfirmDexSeed).toHaveBeenCalled();
 });
 
-const testCreateDexAccountModal = () => {
+const testCreateDexAccountModal = async (user) => {
   const contineBtn = getContinueBtn();
   const newAccountNameInput = screen.getByLabelText("New Account Name");
   const privatePassphraseInput = screen.getByLabelText("Private Passphrase");
-  user.clear(privatePassphraseInput);
-  user.clear(newAccountNameInput);
+  await user.clear(privatePassphraseInput);
+  await user.clear(newAccountNameInput);
   expect(contineBtn.disabled).toBeTruthy();
-  user.type(privatePassphraseInput, testPassphrase);
-  user.type(newAccountNameInput, testAccountName);
-  user.click(contineBtn);
+  await user.type(privatePassphraseInput, testPassphrase);
+  await user.type(newAccountNameInput, testAccountName);
+  await user.click(contineBtn);
 };
 
 test("test create dex account", async () => {
   selectors.dexInit = jest.fn(() => true);
   selectors.confirmDexSeed = jest.fn(() => true);
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
   expect(
     screen.getByText(
       "A new account is required to be created to improve security for the wallet overall."
@@ -281,12 +280,12 @@ test("test create dex account", async () => {
 
   // create a new dex account
   const createDexAccountButton = getCreateDexAccountButton();
-  user.click(createDexAccountButton);
+  await user.click(createDexAccountButton);
   //cancel first
-  user.click(getCancelBtn());
+  await user.click(getCancelBtn());
 
-  user.click(createDexAccountButton);
-  testCreateDexAccountModal();
+  await user.click(createDexAccountButton);
+  await testCreateDexAccountModal(user);
 
   expect(mockCreateDexAccount).toHaveBeenCalledWith(
     testPassphrase,
@@ -296,38 +295,38 @@ test("test create dex account", async () => {
   // select an existing account
   const selectAnExistingAccountButton = getSelectAnExistingAccountButton();
   expect(selectAnExistingAccountButton.disabled).toBeTruthy();
-  user.click(screen.getByText("Select account"));
+  await user.click(screen.getByText("Select account"));
   // mixed account in not in the list
   expect(screen.queryByText("mixed")).not.toBeInTheDocument();
-  user.click(screen.getByText(mockAccount2.name));
+  await user.click(screen.getByText(mockAccount2.name));
 
   await waitFor(() =>
     expect(screen.queryByText("Select account")).not.toBeInTheDocument()
   );
 
   expect(selectAnExistingAccountButton.disabled).toBeFalsy();
-  user.click(selectAnExistingAccountButton);
+  await user.click(selectAnExistingAccountButton);
   expect(mockSelectDexAccount).toHaveBeenCalledWith(mockAccount2.name);
 });
 
-const testConnectDCRWalletModal = () => {
+const testConnectDCRWalletModal = async (user) => {
   const contineBtn = getContinueBtn();
   const privatePassphraseInput = screen.getByLabelText("Private Passphrase");
   const dexPassphraseInput = screen.getByLabelText("DEX Passphrase");
-  user.clear(privatePassphraseInput);
-  user.clear(dexPassphraseInput);
+  await user.clear(privatePassphraseInput);
+  await user.clear(dexPassphraseInput);
   expect(contineBtn.disabled).toBeTruthy();
-  user.type(privatePassphraseInput, testPassphrase);
-  user.type(dexPassphraseInput, testDexPassphrase);
-  user.click(contineBtn);
+  await user.type(privatePassphraseInput, testPassphrase);
+  await user.type(dexPassphraseInput, testDexPassphrase);
+  await user.click(contineBtn);
 };
 
-test("test connect dex wallet view", () => {
+test("test connect dex wallet view", async () => {
   selectors.dexInit = jest.fn(() => true);
   selectors.confirmDexSeed = jest.fn(() => true);
   selectors.dexAccount = jest.fn(() => mockAccount2.name);
 
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
 
   expect(screen.getByText("Connect DCR Wallet to DEX")).toBeInTheDocument();
   expect(
@@ -336,13 +335,13 @@ test("test connect dex wallet view", () => {
 
   const connectDCRWalletButton = getConnectDCRWalletButton();
 
-  user.click(connectDCRWalletButton);
+  await user.click(connectDCRWalletButton);
   //cancel first
-  user.click(getCancelBtn());
+  await user.click(getCancelBtn());
 
-  user.click(connectDCRWalletButton);
+  await user.click(connectDCRWalletButton);
 
-  testConnectDCRWalletModal();
+  await testConnectDCRWalletModal(user);
 
   expect(mockCreateWalletDex).toHaveBeenCalledWith(
     testPassphrase,
@@ -360,27 +359,27 @@ test("connecting DCR wallet is in progress", () => {
   expect(queryEnableBtn()).not.toBeInTheDocument();
 });
 
-test("test launch DEX view", () => {
+test("test launch DEX view", async () => {
   selectors.dexInit = jest.fn(() => true);
   selectors.confirmDexSeed = jest.fn(() => true);
   selectors.dexAccount = jest.fn(() => mockAccount2.name);
   selectors.dexDCRWalletRunning = jest.fn(() => true);
 
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
 
-  user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
+  await user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
 
   expect(mockLaunchDexWindow).toHaveBeenCalled();
 });
 
-test("test login view", () => {
+test("test login view", async () => {
   selectors.dexInit = jest.fn(() => true);
   selectors.confirmDexSeed = jest.fn(() => true);
   selectors.dexAccount = jest.fn(() => mockAccount2.name);
   selectors.dexDCRWalletRunning = jest.fn(() => true);
   selectors.loggedInDex = jest.fn(() => false);
 
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
 
   expect(screen.getByText("DEX Login")).toBeInTheDocument();
   expect(
@@ -389,17 +388,17 @@ test("test login view", () => {
 
   const loginButton = getLoginBtn();
 
-  user.click(loginButton);
+  await user.click(loginButton);
   //cancel first
-  user.click(getCancelBtn());
+  await user.click(getCancelBtn());
 
-  user.click(loginButton);
+  await user.click(loginButton);
 
   const contineBtn = getContinueBtn();
   const dexPassphraseInput = screen.getByLabelText("DEX Passphrase");
   expect(contineBtn.disabled).toBeTruthy();
-  user.type(dexPassphraseInput, testDexPassphrase);
-  user.click(contineBtn);
+  await user.type(dexPassphraseInput, testDexPassphrase);
+  await user.click(contineBtn);
 
   expect(mockLoginDex).toHaveBeenCalledWith(testDexPassphrase);
 });
@@ -409,19 +408,19 @@ test("test when dex is ready", async () => {
   selectors.dexReady = jest.fn(() => true);
   jest.useFakeTimers();
 
-  render(<DexPage />);
-  user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
+  const { user } = render(<DexPage />);
+  await user.click(screen.getByRole("button", { name: "Launch DEX Window" }));
 
   await waitFor(() => expect(mockGetDexLogs).toHaveBeenCalled());
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
-  user.click(screen.getByText("Logs"));
-  expect(screen.getByText(testLog)).toBeInTheDocument();
+  await user.click(screen.getByText("Logs"));
+  await waitFor(() => expect(screen.getByText(testLog)).toBeInTheDocument());
   // hide log
-  user.click(screen.getByText("Logs"));
+  await user.click(screen.getByText("Logs"));
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
 
   // show again
-  user.click(screen.getByText("Logs"));
+  await user.click(screen.getByText("Logs"));
 
   mockGetDexLogs.mockClear();
   mockGetDexLogs = daemonActions.getDexLogs = jest.fn(
@@ -447,11 +446,11 @@ test("receive error while getting error", async () => {
   mockGetDexLogs = daemonActions.getDexLogs = jest.fn(
     () => () => Promise.reject("error")
   );
-  render(<DexPage />);
+  const { user } = render(<DexPage />);
 
   await waitFor(() => expect(mockGetDexLogs).toHaveBeenCalled());
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
-  user.click(screen.getByText("Logs"));
+  await user.click(screen.getByText("Logs"));
   expect(screen.queryByText(testLog)).not.toBeInTheDocument();
 
   mockGetDexLogs.mockClear();

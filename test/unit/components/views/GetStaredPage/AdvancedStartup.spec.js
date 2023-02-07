@@ -67,9 +67,9 @@ test("test remote daemon form", async () => {
   );
 
   //test toggle control
-  user.click(screen.getByTestId("switch"));
+  await user.click(screen.getByTestId("switch"));
   expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
-  user.click(screen.getByTestId("switch"));
+  await user.click(screen.getByTestId("switch"));
 
   const rpcUsernameInput = screen.getByPlaceholderText(/rpc username/i);
   const rpcPasswordInput = screen.getByPlaceholderText(/rpc password/i);
@@ -84,26 +84,26 @@ test("test remote daemon form", async () => {
   expect(rpcHostInput.value).toMatch("");
   expect(rpcPortInput.value).toMatch("");
 
-  user.type(rpcUsernameInput, testRemoteCredentials.rpc_user);
-  user.type(rpcPasswordInput, testRemoteCredentials.rpc_pass);
-  user.type(rpcCertificatePathInput, testRemoteCredentials.rpc_cert);
-  user.type(rpcHostInput, testRemoteCredentials.rpc_host);
-  user.type(rpcPortInput, testRemoteCredentials.rpc_port);
+  await user.type(rpcUsernameInput, testRemoteCredentials.rpc_user);
+  await user.type(rpcPasswordInput, testRemoteCredentials.rpc_pass);
+  await user.type(rpcCertificatePathInput, testRemoteCredentials.rpc_cert);
+  await user.type(rpcHostInput, testRemoteCredentials.rpc_host);
+  await user.type(rpcPortInput, testRemoteCredentials.rpc_port);
 
-  user.clear(rpcUsernameInput);
-  user.clear(rpcPasswordInput);
-  user.clear(rpcCertificatePathInput);
-  user.clear(rpcHostInput);
-  user.clear(rpcPortInput);
+  await user.clear(rpcUsernameInput);
+  await user.clear(rpcPasswordInput);
+  await user.clear(rpcCertificatePathInput);
+  await user.clear(rpcHostInput);
+  await user.clear(rpcPortInput);
 
   expect(screen.getAllByText(/this field is required/i).length).toBe(5);
 
   // type rpc credentials again
-  user.type(rpcUsernameInput, testRemoteCredentials.rpc_user);
-  user.type(rpcPasswordInput, testRemoteCredentials.rpc_pass);
-  user.type(rpcCertificatePathInput, testRemoteCredentials.rpc_cert);
-  user.type(rpcHostInput, testRemoteCredentials.rpc_host);
-  user.type(rpcPortInput, testRemoteCredentials.rpc_port);
+  await user.type(rpcUsernameInput, testRemoteCredentials.rpc_user);
+  await user.type(rpcPasswordInput, testRemoteCredentials.rpc_pass);
+  await user.type(rpcCertificatePathInput, testRemoteCredentials.rpc_cert);
+  await user.type(rpcHostInput, testRemoteCredentials.rpc_host);
+  await user.type(rpcPortInput, testRemoteCredentials.rpc_port);
 
   expect(rpcUsernameInput.value).toMatch(testRemoteCredentials.rpc_user);
   expect(rpcPasswordInput.value).toMatch(testRemoteCredentials.rpc_pass);
@@ -111,7 +111,7 @@ test("test remote daemon form", async () => {
   expect(rpcHostInput.value).toMatch(testRemoteCredentials.rpc_host);
   expect(rpcPortInput.value).toMatch(testRemoteCredentials.rpc_port);
 
-  user.click(screen.getByText(/use remote daemon/i));
+  await user.click(screen.getByText(/use remote daemon/i));
   expect(mockSetRemoteCredentials).toHaveBeenCalled();
   expect(mockConnectDaemon).toHaveBeenCalledWith(testRemoteCredentials, true);
   await waitFor(() =>
@@ -123,18 +123,18 @@ test("test local daemon form", async () => {
   render(<GetStartedPage />);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
-  user.click(screen.getByTestId("switch"));
+  await user.click(screen.getByTestId("switch"));
   expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
   const daemonDataDirectoryInput = screen.getByPlaceholderText(
     "Daemon Data Directory"
   );
-  user.type(daemonDataDirectoryInput, testDaemonDataDirectory);
-  user.clear(daemonDataDirectoryInput);
+  await user.type(daemonDataDirectoryInput, testDaemonDataDirectory);
+  await user.clear(daemonDataDirectoryInput);
   expect(screen.getAllByText(/this field is required/i).length).toBe(1);
   // type data directory again
-  user.type(daemonDataDirectoryInput, testDaemonDataDirectory);
+  await user.type(daemonDataDirectoryInput, testDaemonDataDirectory);
 
-  user.click(screen.getByText(/start appdata daemon/i));
+  await user.click(screen.getByText(/start appdata daemon/i));
   expect(mockSetAppdataPath).toHaveBeenCalledWith(testDaemonDataDirectory);
   expect(mockStartDaemon).toHaveBeenCalledWith({
     appdata: testDaemonDataDirectory
@@ -146,6 +146,6 @@ test("test skip link", async () => {
   render(<GetStartedPage />);
   await waitFor(() => screen.getByText(/welcome to decrediton/i));
 
-  user.click(screen.getByText(/skip/i));
+  await user.click(screen.getByText(/skip/i));
   await waitFor(() => screen.getByText(testStartDaemonErrorMsg));
 });

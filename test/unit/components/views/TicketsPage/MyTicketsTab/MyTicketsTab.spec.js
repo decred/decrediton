@@ -1,7 +1,6 @@
 import TicketsPage from "components/views/TicketsPage/";
 import { render } from "test-utils.js";
 import { screen, waitFor } from "@testing-library/react";
-import user from "@testing-library/user-event";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
@@ -136,7 +135,8 @@ const incAllTestTxs = (mockGetTransactionsResponse, ts) => {
   return mockGetTransactionsResponse;
 };
 
-const viewAllTxs = (
+const viewAllTxs = async (
+  user,
   mockGetTransactionsResponse,
   chunkCount,
   blockHeightIndexes
@@ -148,7 +148,7 @@ const viewAllTxs = (
       chunkCount
   );
   while (queryLoadingMoreLabel()) {
-    user.click(getLoadingMoreLabel());
+    await user.click(getLoadingMoreLabel());
     mockGetTransactionsResponse = incAllTestTxs(mockGetTransactionsResponse);
     blockHeightIndexes.currentBlockHeight =
       blockHeightIndexes.currentBlockHeight - step;
@@ -205,21 +205,26 @@ test("test tickets list", async () => {
     mockGetTransactionsResponse,
     1587545280
   );
-  render(<TicketsPage />, {
+  const { user } = render(<TicketsPage />, {
     initialState: cloneDeep(initialState),
     currentSettings: {
       network: "testnet"
     }
   });
-  user.click(screen.getByText("Ticket History"));
+  await user.click(screen.getByText("Ticket History"));
 
-  user.click(screen.getByText("Cancel listing tickets").nextSibling);
+  await user.click(screen.getByText("Cancel listing tickets").nextSibling);
   expect(mockToggleGetTransactions).toHaveBeenCalledTimes(1);
 
   // Scroll down to the bottom.
   // The data should be fetched by getTransactions request
   expect(getHistoryPageContent().childElementCount).toBe(0);
-  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
+  await viewAllTxs(
+    user,
+    mockGetTransactionsResponse,
+    chunkCount,
+    blockHeightIndexes
+  );
   expect(getHistoryPageContent().childElementCount).toBe(
     Object.keys(allTestTxs).length
   );
@@ -236,8 +241,8 @@ test("test tickets list", async () => {
   const txTypeFilterButton = screen.getAllByRole("button", {
     name: "EyeFilterMenu"
   })[1];
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("live"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("live"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -246,7 +251,12 @@ test("test tickets list", async () => {
     )
   );
 
-  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
+  await viewAllTxs(
+    user,
+    mockGetTransactionsResponse,
+    chunkCount,
+    blockHeightIndexes
+  );
   let expectedVisibleItems = countTxsByType(allTestTxs, ["live"]);
 
   expect(screen.getAllByText("Live").length).toBe(expectedVisibleItems);
@@ -256,8 +266,8 @@ test("test tickets list", async () => {
 
   // show just unmined
   blockHeightIndexes.currentBlockHeight = 1000;
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("unmined"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("unmined"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -266,7 +276,12 @@ test("test tickets list", async () => {
     )
   );
 
-  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
+  await viewAllTxs(
+    user,
+    mockGetTransactionsResponse,
+    chunkCount,
+    blockHeightIndexes
+  );
   expectedVisibleItems = countTxsByType(allTestTxs, ["unmined"]);
 
   expect(screen.getAllByText("Unmined").length).toBe(expectedVisibleItems);
@@ -276,8 +291,8 @@ test("test tickets list", async () => {
 
   // show all tickets again
   blockHeightIndexes.currentBlockHeight = 1000;
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("All"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("All"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -286,7 +301,12 @@ test("test tickets list", async () => {
     )
   );
 
-  viewAllTxs(mockGetTransactionsResponse, chunkCount, blockHeightIndexes);
+  await viewAllTxs(
+    user,
+    mockGetTransactionsResponse,
+    chunkCount,
+    blockHeightIndexes
+  );
   expect(mockGetTransactions).toHaveBeenCalledTimes(0);
   expect(getHistoryPageContent().childElementCount).toBe(
     Object.keys(allTestTxs).length
@@ -295,7 +315,7 @@ test("test tickets list", async () => {
 
   // filter by hash id
   blockHeightIndexes.currentBlockHeight = 1000;
-  user.type(
+  await user.type(
     screen.getByPlaceholderText("Filter by Hash"),
     Object.keys(allTestTxs)[3]
   );
@@ -311,20 +331,20 @@ test("test ticket sorting", async () => {
   const mockChangeTransactionsFilter = (transactionActions.changeTicketsFilter =
     jest.fn(() => () => {}));
 
-  render(<TicketsPage />, {
+  const { user } = render(<TicketsPage />, {
     initialState: cloneDeep(initialState),
     currentSettings: {
       network: "testnet"
     }
   });
-  user.click(screen.getByText("Ticket History"));
+  await user.click(screen.getByText("Ticket History"));
 
   // change sorting, show the oldest first
   const txSortButton = screen.getAllByRole("button", {
     name: "EyeFilterMenu"
   })[0];
-  user.click(txSortButton);
-  user.click(screen.getByText("Oldest"));
+  await user.click(txSortButton);
+  await user.click(screen.getByText("Oldest"));
   jest.advanceTimersByTime(101);
   await waitFor(() =>
     expect(mockChangeTransactionsFilter).toHaveBeenCalledWith({
@@ -334,8 +354,8 @@ test("test ticket sorting", async () => {
   );
 
   // change back sorting, show the newest first
-  user.click(txSortButton);
-  user.click(screen.getByText("Newest"));
+  await user.click(txSortButton);
+  await user.click(screen.getByText("Newest"));
   jest.advanceTimersByTime(101);
   await waitFor(() =>
     expect(mockChangeTransactionsFilter).toHaveBeenCalledWith({
@@ -345,7 +365,7 @@ test("test ticket sorting", async () => {
   );
 });
 
-test("test no tickets", () => {
+test("test no tickets", async () => {
   const mockGetTransactionsResponse = {
     type: transactionActions.GETTRANSACTIONS_COMPLETE,
     getStakeTxsAux: { noMoreTransactions: true },
@@ -362,13 +382,13 @@ test("test no tickets", () => {
     ...cloneDeep(initialState)
   };
   initialStateMod.grpc.getStakeTxsAux.noMoreTransactions = true;
-  render(<TicketsPage />, {
+  const { user } = render(<TicketsPage />, {
     initialState: initialStateMod,
     currentSettings: {
       network: "testnet"
     }
   });
-  user.click(screen.getByText("Ticket History"));
-  user.click(getLoadingMoreLabel());
+  await user.click(screen.getByText("Ticket History"));
+  await user.click(getLoadingMoreLabel());
   expect(screen.getByText("No Tickets Found"));
 });

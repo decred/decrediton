@@ -1,6 +1,6 @@
 import SettingsPage from "components/views/SettingsPage";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 
 import * as sel from "selectors";
@@ -169,16 +169,18 @@ test("show error when there is no walletService", () => {
 });
 
 test("test close wallet button (there is no ongoing process) ", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  const changeFn = async () => {
+    await user.click(screen.getByRole("button", { name: "Close Wallet" }));
   };
-  changeFn();
+  await changeFn();
   await testConfirmModal(
+    user,
     changeFn,
     "Confirmation Required",
     `Are you sure you want to close ${testWalletName} and return to the launcher?`
@@ -199,23 +201,26 @@ const testCloseWalletButtonUnpaidTicketFee = async (
       ]
     };
   });
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  const changeFn = async () => {
+    await user.click(screen.getByRole("button", { name: "Close Wallet" }));
   };
-  changeFn();
+  await changeFn();
   if (expectDefaultModal) {
     await testConfirmModal(
+      user,
       changeFn,
       "Confirmation Required",
       `Are you sure you want to close ${testWalletName} and return to the launcher?`
     );
   } else {
     await testConfirmModal(
+      user,
       changeFn,
       "VSP Tickets Fee Error",
       /You have outstanding tickets that are not properly registered with a VSP/i,
@@ -239,17 +244,19 @@ test("test close wallet button (account mixer is running) ", async () => {
   mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => true
   );
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
   expect(mockGetAccountMixerRunning).toHaveBeenCalled();
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  const changeFn = async () => {
+    await user.click(screen.getByRole("button", { name: "Close Wallet" }));
   };
-  changeFn();
+  await changeFn();
   await testConfirmModal(
+    user,
     changeFn,
     "Account mixer is running",
     "Account mixer is currently running. Ongoing mixes will be cancelled and no more Decred will be mixed if you proceed.",
@@ -260,17 +267,19 @@ test("test close wallet button (account mixer is running) ", async () => {
 test("test close wallet button (still finalizing ticket purchases) ", async () => {
   mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt =
     jest.fn(() => true);
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
   expect(mockPurchaseTicketsRequestAttempt).toHaveBeenCalled();
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  const changeFn = async () => {
+    await user.click(screen.getByRole("button", { name: "Close Wallet" }));
   };
-  changeFn();
+  await changeFn();
   await testConfirmModal(
+    user,
     changeFn,
     "Purchasing Tickets",
     "Decrediton is still finalizing ticket purchases. Tickets may not be registered with the VSP if you proceed now, which can result in missed votes.",
@@ -280,17 +289,19 @@ test("test close wallet button (still finalizing ticket purchases) ", async () =
 
 test("test close wallet button (auto ticket buyer still running) ", async () => {
   selectors.getTicketAutoBuyerRunning = jest.fn(() => true);
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
   expect(mockPurchaseTicketsRequestAttempt).toHaveBeenCalled();
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
+  const changeFn = async () => {
+    await user.click(screen.getByRole("button", { name: "Close Wallet" }));
   };
-  changeFn();
+  await changeFn();
   await testConfirmModal(
+    user,
     changeFn,
     "Auto Ticket Buyer Still Running",
     "If you proceed, it will be closed and no more tickets will be purchased.",
@@ -327,6 +338,7 @@ const getOptionByNameAndType = (name, type) => {
 };
 
 const testConfirmModal = async (
+  user,
   changeFn,
   confirmHeaderText,
   confirmContent,
@@ -337,12 +349,12 @@ const testConfirmModal = async (
   if (confirmContent) {
     expect(screen.getByText(confirmContent)).toBeInTheDocument();
   }
-  user.click(screen.getByText("Cancel"));
+  await user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(confirmHeaderText)).not.toBeInTheDocument();
   // waitFor for the confirm modal and confirm
-  changeFn();
+  await changeFn();
   await waitFor(() => screen.getByText(confirmHeaderText));
-  user.click(screen.getByRole("button", { name: confirmButtonLabel }));
+  await user.click(screen.getByRole("button", { name: confirmButtonLabel }));
 };
 
 const testComboxBoxInput = async (
@@ -353,6 +365,7 @@ const testComboxBoxInput = async (
   needsConfirm,
   tabLabel = null
 ) => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -360,19 +373,19 @@ const testComboxBoxInput = async (
   });
   if (tabLabel) {
     // go to the specified tab
-    user.click(screen.getAllByText(tabLabel)[0]);
+    await user.click(screen.getAllByText(tabLabel)[0]);
   }
   const inputControl = screen.getByLabelText(labelName);
   const inputValueSpan = getOptionByNameAndType(oldValue, "singleValue");
   expect(inputValueSpan.textContent).toMatch(oldValue);
-  const changeFn = () => {
-    user.click(inputControl);
-    user.click(getOptionByNameAndType(option, "option"));
+  const changeFn = async () => {
+    await user.click(inputControl);
+    await user.click(getOptionByNameAndType(option, "option"));
   };
-  changeFn();
+  await changeFn();
 
   if (needsConfirm) {
-    await testConfirmModal(changeFn, "Reset required");
+    await testConfirmModal(user, changeFn, "Reset required");
   }
 
   await waitFor(() =>
@@ -434,14 +447,15 @@ const testTextFieldInput = async (
   expectedChange,
   needsConfirm
 ) => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: { settings: testSettings }
   });
 
   const inputControl = screen.getByLabelText(labelName);
   expect(inputControl.value).toMatch(oldValue);
-  user.clear(inputControl);
-  user.type(inputControl, newValue);
+  await user.clear(inputControl);
+  await user.type(inputControl, newValue);
   // press enter
   fireEvent.keyDown(inputControl, {
     key: "enter",
@@ -449,7 +463,7 @@ const testTextFieldInput = async (
   });
 
   if (needsConfirm) {
-    testConfirmModal("Save", "Reset required");
+    testConfirmModal(user, "Save", "Reset required");
   }
 
   await waitFor(() =>
@@ -470,13 +484,14 @@ test.each([
   ]
 ])("change '%s' TextInput from '%s' to '%s' expeced %s", testTextFieldInput);
 
-const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
+const testRadioButtonGroupInput = async (configKey, options, defaultValue) => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  user.click(screen.getByText("General"));
+  await user.click(screen.getByText("General"));
 
   options.forEach((option) =>
     expect(screen.getByLabelText(option.label).checked).toBe(
@@ -488,7 +503,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
   const otherOption = options.filter(
     (option) => option.value != defaultValue
   )[0];
-  user.click(screen.getByLabelText(otherOption.label));
+  await user.click(screen.getByLabelText(otherOption.label));
   options.forEach((option) =>
     expect(screen.getByLabelText(option.label).checked).toBe(
       option.value == otherOption.value
@@ -503,7 +518,7 @@ const testRadioButtonGroupInput = (configKey, options, defaultValue) => {
   const defaultOption = options.filter(
     (option) => option.value == defaultValue
   )[0];
-  user.click(screen.getByLabelText(defaultOption.label));
+  await user.click(screen.getByLabelText(defaultOption.label));
   options.forEach((option) =>
     expect(screen.getByLabelText(option.label).checked).toBe(
       option.value == defaultOption.value
@@ -522,13 +537,14 @@ test.each([
   ]
 ])("test '%s' RadioButtonGroup", testRadioButtonGroupInput);
 
-const testCheckBoxInputOnPrivacy = (label, configKey) => {
+const testCheckBoxInputOnPrivacy = async (label, configKey) => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  user.click(screen.getByText("Privacy and Security"));
+  await user.click(screen.getByText("Privacy and Security"));
 
   const checkbox = screen.getByLabelText(label);
   const defaultCheckedValue =
@@ -536,7 +552,7 @@ const testCheckBoxInputOnPrivacy = (label, configKey) => {
 
   expect(checkbox.checked).toBe(defaultCheckedValue);
 
-  user.click(checkbox);
+  await user.click(checkbox);
   expect(checkbox.checked).toBe(!defaultCheckedValue);
 
   const expectedChange = { ...testCurrentSettings };
@@ -560,20 +576,21 @@ test.each([
   ["Decred Block Explorer", EXTERNALREQUEST_DCRDATA]
 ])("test '%s' Checkbox", testCheckBoxInputOnPrivacy);
 
-test("test launcer CheckBox", () => {
+test("test launcer CheckBox", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  user.click(screen.getByText("General"));
+  await user.click(screen.getByText("General"));
 
   const checkbox = screen.getByLabelText(
     "Launch wallet immediately after loading completes"
   );
   expect(checkbox.checked).toBe(testDefaultAutoWalletLaunching);
 
-  user.click(checkbox);
+  await user.click(checkbox);
   expect(checkbox.checked).toBe(!testDefaultAutoWalletLaunching);
 
   const expectedChange = {
@@ -590,94 +607,98 @@ const getFieldRequiredErrorCount = () => {
   return inputErrors ? inputErrors.length : 0;
 };
 
-const testPassphraseInputRequiedErrorMsg = (label) => {
+const testPassphraseInputRequiedErrorMsg = async (user, label) => {
   const testString = "test-string";
 
   const inputErrorsCount = getFieldRequiredErrorCount();
   const input = screen.getByLabelText(label);
-  user.type(input, testString);
+  await user.type(input, testString);
   expect(input.value).toMatch(testString);
-  user.clear(input);
+  await user.clear(input);
 
   expect(getFieldRequiredErrorCount()).toBe(inputErrorsCount + 1);
 
   // type again, error message should disappear
-  user.type(input, testString);
+  await user.type(input, testString);
   expect(getFieldRequiredErrorCount()).toBe(inputErrorsCount);
 
   // clean up
-  user.clear(input);
+  await user.clear(input);
   expect(getFieldRequiredErrorCount()).toBe(inputErrorsCount + 1);
 };
 
-test("test update private passphrase", () => {
+test("test update private passphrase", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
     }
   });
-  user.click(screen.getByText("Privacy and Security"));
+  await user.click(screen.getByText("Privacy and Security"));
   const updateButton = screen.getByRole("button", {
     name: "Update Private Passphrase"
   });
   const modalHeaderText = "Change your passphrase";
   // click and cancel
-  user.click(updateButton);
+  await user.click(updateButton);
   expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
-  user.click(screen.getByText("Cancel"));
+  await user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(modalHeaderText)).not.toBeInTheDocument();
 
-  user.click(updateButton);
+  await user.click(updateButton);
   expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
 
   const continueButton = screen.getByText("Continue");
   expect(continueButton.disabled).toBe(true);
   // test 'This Field is required' error message
-  testPassphraseInputRequiedErrorMsg("Private Passphrase");
-  testPassphraseInputRequiedErrorMsg("New Private Passphrase");
-  testPassphraseInputRequiedErrorMsg("Confirm");
+  await testPassphraseInputRequiedErrorMsg(user, "Private Passphrase");
+  await testPassphraseInputRequiedErrorMsg(user, "New Private Passphrase");
+  await testPassphraseInputRequiedErrorMsg(user, "Confirm");
   expect(continueButton.disabled).toBe(true);
 
   // fill input fields
   const testPassphrase = "test-passphrase";
   const testNewPassphrase = "test-new-passphrase";
   const testConfirmPassphrase = "test-confirm-passphrase";
-  user.type(screen.getByLabelText(/^private passphrase/i), testPassphrase);
-  user.type(
+  await user.type(
+    screen.getByLabelText(/^private passphrase/i),
+    testPassphrase
+  );
+  await user.type(
     screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
   expect(continueButton.disabled).toBe(true);
-  user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
+  await user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
   expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
 
   // fix confirm passphrase
-  user.clear(screen.getByLabelText(/^confirm/i));
-  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  await user.clear(screen.getByLabelText(/^confirm/i));
+  await user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(
     screen.queryByText("Passwords does not match.")
   ).not.toBeInTheDocument();
   expect(continueButton.disabled).toBe(false);
 
   // clear confirm and new passphrases. should get an error message
-  user.clear(screen.getByLabelText(/^confirm/i));
-  user.clear(screen.getByLabelText(/^new private passphrase/i));
+  await user.clear(screen.getByLabelText(/^confirm/i));
+  await user.clear(screen.getByLabelText(/^new private passphrase/i));
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
   expect(continueButton.disabled).toBe(true);
 
   //refill inputs
-  user.type(
+  await user.type(
     screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
-  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  await user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
   expect(continueButton.disabled).toBe(false);
 
   expect(
     screen.queryByLabelText(/^DEX App Passsword/i)
   ).not.toBeInTheDocument();
-  user.click(screen.getByText("Continue"));
+  await user.click(screen.getByText("Continue"));
   expect(mockChangePassphrase).toHaveBeenCalledWith(
     testPassphrase,
     testNewPassphrase,
@@ -686,7 +707,8 @@ test("test update private passphrase", () => {
   );
 });
 
-test("test update private passphrase, DEX is active", () => {
+test("test update private passphrase, DEX is active", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings,
@@ -698,26 +720,26 @@ test("test update private passphrase, DEX is active", () => {
       }
     }
   });
-  user.click(screen.getByText("Privacy and Security"));
+  await user.click(screen.getByText("Privacy and Security"));
   const updateButton = screen.getByRole("button", {
     name: "Update Private Passphrase"
   });
   const modalHeaderText = "Change your passphrase";
   // click and cancel
-  user.click(updateButton);
+  await user.click(updateButton);
   expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
-  user.click(screen.getByText("Cancel"));
+  await user.click(screen.getByText("Cancel"));
   expect(screen.queryByText(modalHeaderText)).not.toBeInTheDocument();
 
-  user.click(updateButton);
+  await user.click(updateButton);
   expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
 
   const continueButton = screen.getByText("Continue");
   expect(continueButton.disabled).toBe(true);
   // test 'This Field is required' error message
-  testPassphraseInputRequiedErrorMsg("Private Passphrase");
-  testPassphraseInputRequiedErrorMsg("New Private Passphrase");
-  testPassphraseInputRequiedErrorMsg("Confirm");
+  await testPassphraseInputRequiedErrorMsg(user, "Private Passphrase");
+  await testPassphraseInputRequiedErrorMsg(user, "New Private Passphrase");
+  await testPassphraseInputRequiedErrorMsg(user, "Confirm");
   expect(continueButton.disabled).toBe(true);
 
   // fill input fields
@@ -725,40 +747,46 @@ test("test update private passphrase, DEX is active", () => {
   const testNewPassphrase = "test-new-passphrase";
   const testDEXAppPasspword = "test-dex-app-password";
   const testConfirmPassphrase = "test-confirm-passphrase";
-  user.type(screen.getByLabelText(/^private passphrase/i), testPassphrase);
-  user.type(
+  await user.type(
+    screen.getByLabelText(/^private passphrase/i),
+    testPassphrase
+  );
+  await user.type(
     screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
   expect(continueButton.disabled).toBe(true);
-  user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
+  await user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
   expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
 
   // fix confirm passphrase
-  user.clear(screen.getByLabelText(/^confirm/i));
-  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  await user.clear(screen.getByLabelText(/^confirm/i));
+  await user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(
     screen.queryByText("Passwords does not match.")
   ).not.toBeInTheDocument();
   expect(continueButton.disabled).toBe(false);
 
   // clear confirm and new passphrases. should get an error message
-  user.clear(screen.getByLabelText(/^confirm/i));
-  user.clear(screen.getByLabelText(/^new private passphrase/i));
+  await user.clear(screen.getByLabelText(/^confirm/i));
+  await user.clear(screen.getByLabelText(/^new private passphrase/i));
   expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
   expect(continueButton.disabled).toBe(true);
 
   //refill inputs
-  user.type(
+  await user.type(
     screen.getByLabelText(/^new private passphrase/i),
     testNewPassphrase
   );
-  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  await user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
   expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
   expect(continueButton.disabled).toBe(false);
 
-  user.type(screen.getByLabelText(/^DEX App Passsword/i), testDEXAppPasspword);
-  user.click(screen.getByText("Continue"));
+  await user.type(
+    screen.getByLabelText(/^DEX App Passsword/i),
+    testDEXAppPasspword
+  );
+  await user.click(screen.getByText("Continue"));
   expect(mockChangePassphrase).toHaveBeenCalledWith(
     testPassphrase,
     testNewPassphrase,
@@ -767,7 +795,8 @@ test("test update private passphrase, DEX is active", () => {
   );
 });
 
-test("test update private passphrase, DEX is active, but dex account is null", () => {
+test("test update private passphrase, DEX is active, but dex account is null", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings,
@@ -776,17 +805,18 @@ test("test update private passphrase, DEX is active, but dex account is null", (
       }
     }
   });
-  user.click(screen.getByText("Privacy and Security"));
+  await user.click(screen.getByText("Privacy and Security"));
   const updateButton = screen.getByRole("button", {
     name: "Update Private Passphrase"
   });
-  user.click(updateButton);
+  await user.click(updateButton);
   expect(
     screen.queryByLabelText(/^DEX App Passsword/i)
   ).not.toBeInTheDocument();
 });
 
-test("test update private passphrase, DEX is active, but dex account is empty string", () => {
+test("test update private passphrase, DEX is active, but dex account is empty string", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings,
@@ -798,17 +828,18 @@ test("test update private passphrase, DEX is active, but dex account is empty st
       }
     }
   });
-  user.click(screen.getByText("Privacy and Security"));
+  await user.click(screen.getByText("Privacy and Security"));
   const updateButton = screen.getByRole("button", {
     name: "Update Private Passphrase"
   });
-  user.click(updateButton);
+  await user.click(updateButton);
   expect(
     screen.queryByLabelText(/^DEX App Passsword/i)
   ).not.toBeInTheDocument();
 });
 
-test("update private passphrase is disabled", () => {
+test("update private passphrase is disabled", async () => {
+  const user = userEvent.setup();
   mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled =
     jest.fn(() => true);
   render(<SettingsPage />, {
@@ -816,9 +847,11 @@ test("update private passphrase is disabled", () => {
       settings: testSettings
     }
   });
-  user.click(screen.getByText("Privacy and Security"));
+  await user.click(screen.getByText("Privacy and Security"));
   expect(mockIsChangePassPhraseDisabled).toHaveBeenCalled();
-  user.click(screen.getByRole("button", { name: "Update Private Passphrase" }));
+  await user.click(
+    screen.getByRole("button", { name: "Update Private Passphrase" })
+  );
   expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
 });
 
@@ -839,6 +872,7 @@ test("renders settings with trezor is NOT enabled", () => {
 });
 
 test("test proxy settings", async () => {
+  const user = userEvent.setup();
   render(<SettingsPage />, { initialState: { settings: testSettings } });
 
   // set proxy type
@@ -852,23 +886,23 @@ test("test proxy settings", async () => {
     })
   ).not.toBeInTheDocument();
   expect(inputValueSpan.textContent).toMatch(oldValue);
-  const changeFn = () => {
-    user.click(inputControl);
-    user.click(getOptionByNameAndType(option, "option"));
+  const changeFn = async () => {
+    await user.click(inputControl);
+    await user.click(getOptionByNameAndType(option, "option"));
   };
-  changeFn();
+  await changeFn();
 
   // set proxy location
   const proxyLocationInputControl = screen.getByLabelText("Proxy Location");
   expect(proxyLocationInputControl.value).toMatch(testDefaultProxyLocation);
-  user.clear(proxyLocationInputControl);
-  user.type(proxyLocationInputControl, testProxyLocation);
+  await user.clear(proxyLocationInputControl);
+  await user.type(proxyLocationInputControl, testProxyLocation);
   // press enter
   fireEvent.keyDown(proxyLocationInputControl, { key: "enter", keyCode: 13 });
 
-  user.click(screen.getByRole("button", { name: "Save proxy settings" }));
+  await user.click(screen.getByRole("button", { name: "Save proxy settings" }));
   await waitFor(() => screen.getByText("Reset required"));
-  user.click(screen.getByRole("button", { name: "Confirm" }));
+  await user.click(screen.getByRole("button", { name: "Confirm" }));
 
   await waitFor(() =>
     expect(mockSaveSettings).toHaveBeenCalledWith({

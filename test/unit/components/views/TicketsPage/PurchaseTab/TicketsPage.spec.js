@@ -117,7 +117,7 @@ test("render TicketsPage - show staking warning", async () => {
   tabShouldBeUnchecked(tab3);
 
   // clicking on previousButton in vain
-  user.click(previousButton);
+  await user.click(previousButton);
   tabShouldBeActive(tab1);
   tabShouldBeUnchecked(tab1);
   tabShouldBeInactive(tab2);
@@ -126,7 +126,7 @@ test("render TicketsPage - show staking warning", async () => {
   tabShouldBeUnchecked(tab3);
 
   // clicking on previousArrowButton in vain
-  user.click(previousArrowButton);
+  await user.click(previousArrowButton);
   tabShouldBeActive(tab1);
   tabShouldBeUnchecked(tab1);
   tabShouldBeInactive(tab2);
@@ -135,7 +135,7 @@ test("render TicketsPage - show staking warning", async () => {
   tabShouldBeUnchecked(tab3);
 
   // move on to the second tab
-  user.click(nextButton);
+  await user.click(nextButton);
   tabShouldBeInactive(tab1);
   tabShouldBeChecked(tab1);
   tabShouldBeActive(tab2);
@@ -147,7 +147,7 @@ test("render TicketsPage - show staking warning", async () => {
   expect(understandButton.disabled).toBe(true);
 
   // move on to the third tab click on the next arrow
-  user.click(nextArrowButton);
+  await user.click(nextArrowButton);
   tabShouldBeInactive(tab1);
   tabShouldBeChecked(tab1);
   tabShouldBeInactive(tab2);
@@ -161,7 +161,7 @@ test("render TicketsPage - show staking warning", async () => {
   expect(nextButton.className).toMatch("disabled");
   expect(nextArrowButton.className).toMatch("disabled");
   // clicking on nextButton in vain
-  user.click(nextButton);
+  await user.click(nextButton);
   tabShouldBeInactive(tab1);
   tabShouldBeChecked(tab1);
   tabShouldBeInactive(tab2);
@@ -175,7 +175,7 @@ test("render TicketsPage - show staking warning", async () => {
   expect(nextArrowButton.className).toMatch("disabled");
 
   // clicking on nextArrowButton in vain
-  user.click(nextButton);
+  await user.click(nextButton);
   tabShouldBeInactive(tab1);
   tabShouldBeChecked(tab1);
   tabShouldBeInactive(tab2);
@@ -189,7 +189,7 @@ test("render TicketsPage - show staking warning", async () => {
   expect(nextArrowButton.className).toMatch("disabled");
 
   expect(screen.getByText(/before you continue/i)).toBeInTheDocument();
-  user.click(understandButton);
+  await user.click(understandButton);
 
   expect(mockWalletCfgSet).toHaveBeenCalledWith(
     cfgConstants.SHOW_STAKING_WARNING,

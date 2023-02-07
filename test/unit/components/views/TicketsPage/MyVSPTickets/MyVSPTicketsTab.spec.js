@@ -1,7 +1,6 @@
 import TicketsPage from "components/views/TicketsPage/";
 import { render } from "test-utils.js";
 import { screen, waitFor } from "@testing-library/react";
-import user from "@testing-library/user-event";
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
 import * as sel from "selectors";
 import * as ta from "actions/TransactionActions";
@@ -188,10 +187,10 @@ const incAllTestTxs = (mockGetTransactionsResponse, ts) => {
   return mockGetTransactionsResponse;
 };
 
-const viewAllTxs = (mockGetTransactionsResponse, chunkCount) => {
+const viewAllTxs = async (user, mockGetTransactionsResponse, chunkCount) => {
   let i = 1;
   while (queryLoadingMoreLabel()) {
-    user.click(getLoadingMoreLabel());
+    await user.click(getLoadingMoreLabel());
     mockGetTransactionsResponse = incAllTestTxs(mockGetTransactionsResponse);
     if (i++ == chunkCount) {
       mockGetTransactionsResponse.noMoreLiveTickets = true;
@@ -288,18 +287,18 @@ test("test vsp ticket status list", async () => {
     mockGetTransactionsResponse,
     1587545280
   );
-  render(<TicketsPage />, {
+  const { user } = render(<TicketsPage />, {
     initialState: cloneDeep(initialState),
     currentSettings: {
       network: "testnet"
     }
   });
-  user.click(screen.getByText("Ticket Status"));
+  await user.click(screen.getByText("Ticket Status"));
 
   // Scroll down to the bottom.
   // The data should be fetched by getTransactions request
   expect(getHistoryPageContent().childElementCount).toBe(0);
-  viewAllTxs(mockGetTransactionsResponse, chunkCount);
+  await viewAllTxs(user, mockGetTransactionsResponse, chunkCount);
 
   await waitFor(() =>
     expect(getHistoryPageContent().childElementCount).toBe(17)
@@ -315,8 +314,8 @@ test("test vsp ticket status list", async () => {
   const txTypeFilterButton = screen.getByRole("button", {
     name: "EyeFilterMenu"
   });
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("Unpaid Fee"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("Unpaid Fee"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -329,8 +328,8 @@ test("test vsp ticket status list", async () => {
 
   // show just paid fee ticket
   mockGetTransactions.mockClear();
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("Paid Fee"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("Paid Fee"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -343,8 +342,8 @@ test("test vsp ticket status list", async () => {
 
   // show just paid fee ticket
   mockGetTransactions.mockClear();
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("Fee Error"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("Fee Error"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -357,8 +356,8 @@ test("test vsp ticket status list", async () => {
 
   // show just confirmed fee ticket
   mockGetTransactions.mockClear();
-  user.click(txTypeFilterButton);
-  user.click(getTxTypeFilterMenuItem("Confirmed Fee"));
+  await user.click(txTypeFilterButton);
+  await user.click(getTxTypeFilterMenuItem("Confirmed Fee"));
   jest.advanceTimersByTime(101);
 
   await waitFor(() =>
@@ -373,22 +372,22 @@ test("test vsp ticket status list", async () => {
   const syncFaildVSPTicketsButton = screen.getByRole("button", {
     name: "Sync Failed VSP Tickets"
   });
-  user.click(syncFaildVSPTicketsButton);
+  await user.click(syncFaildVSPTicketsButton);
 
   // cancel first
-  user.click(screen.getByRole("button", { name: "Cancel" }));
+  await user.click(screen.getByRole("button", { name: "Cancel" }));
 
   // continue now
-  user.click(syncFaildVSPTicketsButton);
+  await user.click(syncFaildVSPTicketsButton);
   expect(screen.getByText("Confirmation Required")).toBeInTheDocument();
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(screen.getByText("Select VSP..."));
-  user.click(screen.getByText(mockAvailableVsps[1].host));
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(screen.getByText("Select VSP..."));
+  await user.click(screen.getByText(mockAvailableVsps[1].host));
   await waitFor(() =>
     expect(screen.queryByText("Loading")).not.toBeInTheDocument()
   );
 
-  user.click(screen.getByRole("button", { name: "Continue" }));
+  await user.click(screen.getByRole("button", { name: "Continue" }));
   expect(mockSyncVSPTicketsRequest).toHaveBeenCalledWith({
     account: mockMixedAccountValue,
     passphrase: testPassphrase,
@@ -397,7 +396,7 @@ test("test vsp ticket status list", async () => {
   });
 });
 
-test("test no tickets", () => {
+test("test no tickets", async () => {
   const mockGetTransactionsResponse = {
     type: transactionActions.GETTRANSACTIONS_COMPLETE,
     getStakeTxsAux: { noMoreTransactions: true },
@@ -414,12 +413,12 @@ test("test no tickets", () => {
     ...cloneDeep(initialState)
   };
   initialStateMod.grpc.getStakeTxsAux.noMoreTransactions = true;
-  render(<TicketsPage />, {
+  const { user } = render(<TicketsPage />, {
     initialState: initialStateMod,
     currentSettings: {
       network: "testnet"
     }
   });
-  user.click(screen.getByText("Ticket Status"));
+  await user.click(screen.getByText("Ticket Status"));
   expect(screen.getByText("No Tickets Found"));
 });

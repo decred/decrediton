@@ -1,7 +1,6 @@
 import { OverviewTab } from "components/views/LNPage/OverviewTab";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, waitFor, act } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -95,24 +94,25 @@ test("test account overview and net stats", () => {
 });
 
 test("test recent activity list", async () => {
-  render(<OverviewTab />);
+  const { user } = render(<OverviewTab />);
 
   // channel closed
   expect(screen.getByText("Channel Closed").parentElement.textContent).toBe(
     "Channel Closed 0.47381162 DCRcpc-0"
   );
-  user.click(screen.getByText("Channel Closed"));
+  await user.click(screen.getByText("Channel Closed"));
   expect(screen.getByText("Channel Created")).toBeInTheDocument();
-  user.click(screen.getByTestId("lnchannel-close-button"));
+  await user.click(screen.getByTestId("lnchannel-close-button"));
 
   // channel funding
   expect(screen.getByText("Channel Funding").parentElement.textContent).toBe(
     "Channel Funding 0.00000 DCRcpa-0"
   );
-  user.click(screen.getByText("Channel Funding"));
+  await user.click(screen.getByText("Channel Funding"));
   expect(screen.getByText("Channel Created")).toBeInTheDocument();
-  user.click(screen.getByRole("button", { name: "Close Channel" }));
-  act(() => user.click(screen.getByText("Confirm")));
+  await user.click(screen.getByRole("button", { name: "Close Channel" }));
+  await user.click(screen.getByText("Confirm"));
+
   await waitFor(() =>
     expect(mockCloseChannel).toHaveBeenCalledWith(
       mockChannels[0].channelPoint,
@@ -124,17 +124,17 @@ test("test recent activity list", async () => {
   expect(screen.getByText("Sent Payment").parentElement.textContent).toBe(
     "Sent Payment 0.20000 DCRmock-payment-hash-0"
   );
-  user.click(screen.getByText("Sent Payment"));
+  await user.click(screen.getByText("Sent Payment"));
   expect(screen.getByText("Lightning Payment")).toBeInTheDocument();
-  user.click(screen.getByTestId("lnpayment-close-button"));
+  await user.click(screen.getByTestId("lnpayment-close-button"));
 
   // invoice
   expect(screen.getAllByText("Invoice for")[0].parentElement.textContent).toBe(
     "Invoice for 0.00001 DCRmock-rhash-hex-21"
   );
-  user.click(screen.getAllByText("Invoice for")[1]);
+  await user.click(screen.getAllByText("Invoice for")[1]);
   expect(screen.getByText("Lightning Payment Request")).toBeInTheDocument();
-  user.click(screen.getByRole("button", { name: "Cancel Invoice" }));
+  await user.click(screen.getByRole("button", { name: "Cancel Invoice" }));
   expect(mockCancelInvoice).toHaveBeenCalledWith(mockInvoices[0].rHash);
   await waitFor(() =>
     expect(
@@ -143,9 +143,9 @@ test("test recent activity list", async () => {
   );
 
   // open a second invoice and close with the close button
-  user.click(screen.getAllByText("Invoice for")[0]);
+  await user.click(screen.getAllByText("Invoice for")[0]);
   expect(screen.getByText("Lightning Payment Request")).toBeInTheDocument();
-  user.click(screen.getByTestId("lninvoice-close-button"));
+  await user.click(screen.getByTestId("lninvoice-close-button"));
   expect(
     screen.queryByText("Lightning Payment Request")
   ).not.toBeInTheDocument();
@@ -174,15 +174,15 @@ test("test no activities yet", () => {
 });
 
 test("test search for nodes button", async () => {
-  render(<OverviewTab />);
+  const { user } = render(<OverviewTab />);
   const searchForNodesButton = screen.getByTestId("searchForNodesButton");
-  user.click(searchForNodesButton);
+  await user.click(searchForNodesButton);
 
   // click one of recent nodes
   expect(screen.getByText("Recent Nodes").nextSibling.textContent).toBe(
     "mock-alias-1mock...ub-0mock-alias-0mock...ey-0mock-alias-2mock...ey-0"
   );
-  user.click(screen.getByText("mock...ub-0").parentElement.nextSibling);
+  await user.click(screen.getByText("mock...ub-0").parentElement.nextSibling);
   expect(screen.queryByText("Search For Nodes")).not.toBeInTheDocument();
 
   await waitFor(() =>

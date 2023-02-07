@@ -70,11 +70,11 @@ const getPrivatePassphraseInput = () =>
 const queryPrivatePassphraseInput = () =>
   screen.queryByLabelText("Private Passphrase");
 
-test("skip ResendVotesToRecentlyUpdatedVSPs", () => {
+test("skip ResendVotesToRecentlyUpdatedVSPs", async () => {
   render(
     <ResendVotesToRecentlyUpdatedVSPs cancel={mockCancel} vsps={mockVSPs} />
   );
-  user.click(getSkipButton());
+  await user.click(getSkipButton());
   expect(mockCancel).toHaveBeenCalled();
 });
 
@@ -129,21 +129,21 @@ test("test resend votes", async () => {
   );
 
   const continueButton = getContinueButton();
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(getPrivatePassphraseInput()).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
   expect(queryPrivatePassphraseInput()).not.toBeInTheDocument();
 
   // continue again
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(getPrivatePassphraseInput()).toBeInTheDocument();
   const continuePassphraseButton = getAllContinueButton()[1];
   expect(continuePassphraseButton.disabled).toBeTruthy();
-  user.type(getPrivatePassphraseInput(), testPrivatePassphrase);
+  await user.type(getPrivatePassphraseInput(), testPrivatePassphrase);
   expect(continuePassphraseButton.disabled).toBeFalsy();
-  user.click(continuePassphraseButton);
+  await user.click(continuePassphraseButton);
   expect(queryPrivatePassphraseInput()).not.toBeInTheDocument();
 
   expect(mockResendVSPDVoteChoices).toHaveBeenCalledWith(
@@ -188,11 +188,11 @@ test("test resend votes failed", async () => {
   );
 
   // continue again
-  user.click(getContinueButton());
+  await user.click(getContinueButton());
   expect(getPrivatePassphraseInput()).toBeInTheDocument();
   const continuePassphraseButton = getAllContinueButton()[1];
-  user.type(getPrivatePassphraseInput(), testPrivatePassphrase);
-  user.click(continuePassphraseButton);
+  await user.type(getPrivatePassphraseInput(), testPrivatePassphrase);
+  await user.click(continuePassphraseButton);
   expect(queryPrivatePassphraseInput()).not.toBeInTheDocument();
 
   expect(mockResendVSPDVoteChoices).toHaveBeenCalledWith(

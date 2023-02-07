@@ -65,16 +65,18 @@ const getDisablePassphraseOnDeviceProtectionToggleTooltip = () =>
 const getEnablePassphraseOnDeviceProtectionToggleTooltip = () =>
   screen.getByText("Enable Passphrase On Device Protection");
 
-test("no trezor is detected", () => {
+test("no trezor is detected", async () => {
   selectors.trezorDevice = jest.fn(() => null);
-  render(<TrezorPageContent ContainerComponent={TrezorPageSection} />);
+  const { user } = render(
+    <TrezorPageContent ContainerComponent={TrezorPageSection} />
+  );
   expect(
     screen.getByText(/no trezor is detected/i).textContent
   ).toMatchInlineSnapshot(
     '"No Trezor is detected. Connect the Device and check if Trezor bridge is installed and running on latest firmware."'
   );
 
-  user.click(screen.getByText(/connect to trezor/i));
+  await user.click(screen.getByText(/connect to trezor/i));
   expect(mockTrezorConnect).toHaveBeenCalled();
 });
 
@@ -107,7 +109,7 @@ test("test pin protection switch", async () => {
   });
 
   // click on switch
-  user.click(
+  await user.click(
     getDisablePinProtectionToggleTooltip().nextElementSibling.firstElementChild
   );
   expect(mockTogglePinProtection).toHaveBeenCalled();
@@ -125,7 +127,7 @@ test("test pin protection switch", async () => {
 });
 
 test("test passphrase protection switch", async () => {
-  const { store } = render(
+  const { store, user } = render(
     <TrezorPageContent ContainerComponent={TrezorPageSection} />
   );
   const features = {
@@ -154,7 +156,7 @@ test("test passphrase protection switch", async () => {
   });
 
   // click on switch
-  user.click(
+  await user.click(
     getDisablePassphraseProtectionToggleTooltip().nextElementSibling
       .firstElementChild
   );
@@ -173,7 +175,7 @@ test("test passphrase protection switch", async () => {
 });
 
 test("test passphrase on device protection switch", async () => {
-  const { store } = render(
+  const { store, user } = render(
     <TrezorPageContent ContainerComponent={TrezorPageSection} />
   );
   const features = {
@@ -205,7 +207,7 @@ test("test passphrase on device protection switch", async () => {
   });
 
   // click on switch
-  user.click(
+  await user.click(
     getDisablePassphraseOnDeviceProtectionToggleTooltip().nextElementSibling
       .firstElementChild
   );
@@ -224,34 +226,41 @@ test("test passphrase on device protection switch", async () => {
   });
 });
 
-test("test `Label and Homescreen` section", () => {
-  render(<TrezorPageContent ContainerComponent={TrezorPageSection} />);
-  user.click(screen.getByLabelText("Use Decred Symbol on homescreen"));
+test("test `Label and Homescreen` section", async () => {
+  const { user } = render(
+    <TrezorPageContent ContainerComponent={TrezorPageSection} />
+  );
+  await user.click(screen.getByLabelText("Use Decred Symbol on homescreen"));
   expect(mockChangeToDecredHomeScreen).toHaveBeenCalled();
 
   // change device label
   const testDeviceLabel = "test-device-label";
-  user.type(screen.getByLabelText("Trezor Device Label"), testDeviceLabel);
-  user.click(screen.getByText("Change Label"));
+  await user.type(
+    screen.getByLabelText("Trezor Device Label"),
+    testDeviceLabel
+  );
+  await user.click(screen.getByText("Change Label"));
   expect(mockChangeLabel).toHaveBeenCalledWith(testDeviceLabel);
 });
 
-test("test `Device Setup and Recovery` and `Firmware Update` section", () => {
-  render(<TrezorPageContent ContainerComponent={TrezorPageSection} />);
-  user.click(screen.getByRole("button", { name: "Wipe Device" }));
+test("test `Device Setup and Recovery` and `Firmware Update` section", async () => {
+  const { user } = render(
+    <TrezorPageContent ContainerComponent={TrezorPageSection} />
+  );
+  await user.click(screen.getByRole("button", { name: "Wipe Device" }));
   expect(mockWipeDevice).toHaveBeenCalled();
 
-  user.click(screen.getByRole("button", { name: "Recover Device" }));
+  await user.click(screen.getByRole("button", { name: "Recover Device" }));
   expect(mockRecoverDevice).toHaveBeenCalled();
 
-  user.click(screen.getByRole("button", { name: "Initialize Device" }));
+  await user.click(screen.getByRole("button", { name: "Initialize Device" }));
   expect(mockInitDevice).toHaveBeenCalled();
 
-  user.click(screen.getByRole("button", { name: "Backup Device" }));
+  await user.click(screen.getByRole("button", { name: "Backup Device" }));
   expect(mockBackupDevice).toHaveBeenCalled();
 
   const testPath = "test-path";
-  user.type(screen.getByLabelText("Path to firmware file"), testPath);
-  user.click(screen.getByRole("button", { name: "Update Firmware" }));
+  await user.type(screen.getByLabelText("Path to firmware file"), testPath);
+  await user.click(screen.getByRole("button", { name: "Update Firmware" }));
   expect(mockUpdateFirmware).toHaveBeenCalledWith(testPath);
 });
