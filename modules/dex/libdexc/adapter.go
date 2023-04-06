@@ -355,7 +355,7 @@ func (c *CoreAdapter) login(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	return replyWithErrorCheck(c.core.Login([]byte(form.Pass)))
+	return replyWithErrorCheck("ok", c.core.Login([]byte(form.Pass)))
 }
 
 func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {
