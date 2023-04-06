@@ -3,26 +3,22 @@ import { useService } from "@xstate/react";
 import { IMMATURE, LIVE, UNMINED } from "constants/decrediton";
 import { FormattedMessage as T } from "react-intl";
 import SettingMixedAccount from "./SetMixedAcctPage/SetMixedAcctPage";
-import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets/ProcessUnmanagedTickets";
-import ProcessManagedTickets from "./ProcessManagedTickets/ProcessManagedTickets";
+import ProcessUnmanagedTickets from "./ProcessUnmanagedTickets";
+import ProcessManagedTickets from "./ProcessManagedTickets";
 import SettingAccountsPassphrase from "./SetAccountsPassphrase";
 import ResendVotesToRecentlyUpdatedVSPs from "./ResendVotesToRecentlyUpdatedVSPs";
 import { useDaemonStartup, useAccounts, usePrevious } from "hooks";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   checkAllAccountsEncrypted,
   setAccountsPass
 } from "actions/ControlActions";
 import {
-  getVSPsPubkeys,
   setCanDisableProcessManaged,
   getRecentlyUpdatedUsedVSPs,
   getNotAbstainVotes
 } from "actions/VSPActions";
 import { ExternalLink } from "shared";
-import { DecredLoading } from "indicators";
-import * as sel from "selectors";
-import { useSettings } from "hooks";
 
 export const useWalletSetup = (settingUpWalletRef) => {
   const dispatch = useDispatch();
@@ -32,16 +28,10 @@ export const useWalletSetup = (settingUpWalletRef) => {
   const {
     getCoinjoinOutputspByAcct,
     stakeTransactions,
-    onProcessManagedTickets,
     goToHome,
-    onProcessUnmanagedTickets,
-    isProcessingUnmanaged,
     isProcessingManaged,
     needsProcessManagedTickets
   } = useDaemonStartup();
-
-  const { isVSPListingEnabled } = useSettings();
-  const availableVSPs = useSelector(sel.getAvailableVSPs);
 
   const { mixedAccount } = useAccounts();
 
@@ -55,11 +45,6 @@ export const useWalletSetup = (settingUpWalletRef) => {
     (passphrase) => {
       return dispatch(setAccountsPass(passphrase));
     },
-    [dispatch]
-  );
-
-  const onGetVSPsPubkeys = useCallback(
-    () => dispatch(getVSPsPubkeys()),
     [dispatch]
   );
 
@@ -204,16 +189,6 @@ export const useWalletSetup = (settingUpWalletRef) => {
           }
         }
         break;
-      case "gettingVSPInfo":
-        // if no live tickets, we can skip it.
-        if (!hasLiveVSPdTickets) {
-          sendContinue();
-        } else {
-          component = h(DecredLoading);
-          await onGetVSPsPubkeys();
-          sendContinue();
-        }
-        break;
       case "processingManagedTickets":
         // if no live tickets, we can skip it.
         if (!hasLiveVSPdTickets || !needsProcessManagedTickets) {
@@ -221,28 +196,8 @@ export const useWalletSetup = (settingUpWalletRef) => {
         } else {
           component = h(ProcessManagedTickets, {
             error,
-            onSendContinue: sendContinue,
-            onSendError,
             send,
-            cancel: onSkipProcessManaged,
-            onProcessTickets: onProcessManagedTickets,
-            title: (
-              <T
-                id="getstarted.processManagedTickets.title"
-                m="Process Managed Tickets"
-              />
-            ),
-            isProcessingManaged: isProcessingManaged,
-            noVspSelection: true,
-            description: (
-              <T
-                id="getstarted.processManagedTickets.description"
-                m={`Your wallet appears to have live tickets. Processing managed
-                tickets confirms with the VSPs that all of your submitted tickets
-                are currently known and paid for by the VSPs. If you've already
-                confirmed your tickets then you may skip this step.`}
-              />
-            )
+            cancel: onSkipProcessManaged
           });
         }
         break;
@@ -276,24 +231,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
             send,
             onSendContinue: sendContinue,
             onSendError,
-            onProcessTickets: onProcessUnmanagedTickets,
-            isProcessingUnmanaged: isProcessingUnmanaged,
-            cancel: onSendBack,
-            availableVSPs: isVSPListingEnabled ? availableVSPs : [],
-            title: (
-              <T
-                id="getstarted.processUnmangedTickets.title"
-                m="Process Unmanaged Tickets"
-              />
-            ),
-            description: (
-              <T
-                id="getstarted.processUnmangedTickets.description"
-                m={`Looks like you have vsp ticket with unprocessed fee. If they are picked
-                  to vote and they are not linked with a vsp, they may miss, if you are not
-                  properly dealing with solo vote.`}
-              />
-            )
+            cancel: onSendBack
           });
         }
         break;
@@ -328,24 +266,18 @@ export const useWalletSetup = (settingUpWalletRef) => {
     getCoinjoinOutputspByAcct,
     goToHome,
     mixedAccount,
-    onProcessManagedTickets,
     send,
     stakeTransactions,
     sendContinue,
     isProcessingManaged,
-    isProcessingUnmanaged,
     needsProcessManagedTickets,
-    onProcessUnmanagedTickets,
     onSendBack,
     onSendError,
     previousState,
     current,
-    availableVSPs,
     onCheckAcctsPass,
     onProcessAccounts,
-    onGetVSPsPubkeys,
     onSkipProcessManaged,
-    isVSPListingEnabled,
     onGetRecentlyUpdatedUsedVSPs,
     onGetNotAbstainVotes
   ]);
