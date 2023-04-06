@@ -81,7 +81,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       if (privacyEnabled) {
         dispatch(getAccountMixerServiceAttempt());
       }
-      dispatch(discoverAvailableVSPs());
+      await dispatch(discoverAvailableVSPs());
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getPeerInfo());
       await dispatch(getTicketPriceAttempt());

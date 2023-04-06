@@ -1,26 +1,15 @@
-import { useState, useEffect } from "react";
 import { Subtitle } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
-import { VSPSelect } from "inputs";
+import { useDaemonStartup } from "hooks";
 
-export default ({
-  cancel,
-  send,
-  onProcessTickets,
-  title,
-  description,
-  noVspSelection,
-  error,
-  isProcessingManaged
-}) => {
-  const [isValid, setIsValid] = useState(false);
-  const [vsp, setVSP] = useState(null);
+export default ({ cancel, send, error }) => {
+  const { onProcessManagedTickets, isProcessingManaged } = useDaemonStartup();
 
   const onSubmitContinue = (passphrase) => {
     // send a continue so we can go to the loading state
-    onProcessTickets(passphrase)
+    onProcessManagedTickets(passphrase)
       .then(() => send({ type: "CONTINUE" }))
       .catch((error) => {
         send({ type: "ERROR", error });
@@ -28,23 +17,28 @@ export default ({
     return;
   };
 
-  useEffect(() => {
-    if (noVspSelection) {
-      setIsValid(true);
-      return;
-    }
-    if (vsp) {
-      setIsValid(true);
-    }
-  }, [vsp, noVspSelection]);
-
   return (
     <div className={styles.content}>
-      <Subtitle className={styles.subtitle} title={title} />
-      <div className={styles.description}>{description}</div>
-      {!noVspSelection && (
-        <VSPSelect className={styles.vspSelect} {...{ onChange: setVSP }} />
-      )}
+      <Subtitle
+        className={styles.subtitle}
+        title={
+          <T
+            id="getstarted.processManagedTickets.title"
+            m="Process Managed Tickets"
+          />
+        }
+      />
+      <div className={styles.description}>
+        {
+          <T
+            id="getstarted.processManagedTickets.description"
+            m={`Your wallet appears to have live tickets. Processing managed
+                 tickets confirms with the VSPs that all of your submitted tickets
+                 are currently known and paid for by the VSPs. If you've already
+                 confirmed your tickets then you may skip this step.`}
+          />
+        }
+      </div>
       {error && <div className="error">{error}</div>}
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
@@ -52,14 +46,15 @@ export default ({
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.mangedTickets.button" m="Continue" />}
-          disabled={!isValid || isProcessingManaged}
+          disabled={isProcessingManaged}
           loading={isProcessingManaged}
         />
-        {!isProcessingManaged && (
-          <InvisibleButton className={styles.skipButton} onClick={cancel}>
-            <T id="process.mangedTickets.button.skip" m="Skip" />
-          </InvisibleButton>
-        )}
+        <InvisibleButton
+          className={styles.skipButton}
+          onClick={cancel}
+          disabled={isProcessingManaged}>
+          <T id="process.mangedTickets.button.skip" m="Skip" />
+        </InvisibleButton>
       </div>
     </div>
   );
