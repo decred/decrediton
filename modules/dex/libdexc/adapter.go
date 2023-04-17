@@ -24,6 +24,7 @@ import (
 	_ "decred.org/dcrdex/client/asset/btc"
 	_ "decred.org/dcrdex/client/asset/dcr"
 	_ "decred.org/dcrdex/client/asset/doge"
+	_ "decred.org/dcrdex/client/asset/eth"
 	_ "decred.org/dcrdex/client/asset/ltc"
 	_ "decred.org/dcrdex/client/asset/zec"
 )
