@@ -4,7 +4,7 @@ import { StandaloneHeader } from "layout";
 
 const DexViewHeader = () => (
   <StandaloneHeader
-    title={<T id="dex.launchDexWindow.title" m="Launch Dex Window" />}
+    title={<T id="dex.launchDexWindow.title" m="Launch DEX Window" />}
     description={
       <T
         id="dex.launchDexWIndow.description"

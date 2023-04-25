@@ -160,7 +160,7 @@ test("dex is enabled, but not running", () => {
   selectors.dexActive = jest.fn(() => false);
   render(<DexPage />);
   expect(screen.getByText("DEX Error")).toBeInTheDocument();
-  expect(screen.getByText("Dex not running")).toBeInTheDocument();
+  expect(screen.getByText("DEX not running")).toBeInTheDocument();
   expect(screen.getByText(/Critical Error/).textContent).toMatchInlineSnapshot(
     '"Critical Error! DEX is not running.  Please restart and check logs if problem persists."'
   );
@@ -329,7 +329,7 @@ test("test connect dex wallet view", () => {
 
   render(<DexPage />);
 
-  expect(screen.getByText("Connect DCR Wallet to Dex")).toBeInTheDocument();
+  expect(screen.getByText("Connect DCR Wallet to DEX")).toBeInTheDocument();
   expect(
     screen.getByText("Connect your DCR wallet to the DEX.")
   ).toBeInTheDocument();
@@ -384,7 +384,7 @@ test("test login view", () => {
 
   expect(screen.getByText("DEX Login")).toBeInTheDocument();
   expect(
-    screen.getByText("Login and connect wallet to Dex")
+    screen.getByText("Login and connect wallet to DEX")
   ).toBeInTheDocument();
 
   const loginButton = getLoginBtn();
