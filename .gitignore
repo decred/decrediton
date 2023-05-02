@@ -20,3 +20,4 @@ coverage/
 .yarncache/
 deps-graphs
 modules/dex/libdexc/libdexc
+.idea
