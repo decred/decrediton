@@ -15,6 +15,20 @@
   margin-bottom: 25px;
 }
 
+.hadwareWalletWarning {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  text-align: center;
+  background-color: rgba(248, 215, 218, 1);
+  border-color: rgba(220, 53, 69, 1);
+  color: rgba(114, 28, 36, 1);
+}
+
 .inputWrapper {
   display: flex;
   flex-direction: column;
