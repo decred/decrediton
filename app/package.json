@@ -2,12 +2,12 @@
   "name": "decrediton",
   "productName": "decrediton",
   "version": "1.7.1",
-  "description": "Cross-platform decred gui based on Electron and React",
+  "description": "Graphical wallet for Decred supporting staking, privacy, and decentralized exchange.",
   "main": "./main.js",
   "author": {
-    "name": "Decred Team",
+    "name": "Decred",
     "email": "info@decred.org",
-    "url": "https://github.com/decred"
+    "url": "https://github.com/decred/decrediton"
   },
   "license": "ISC"
 }
