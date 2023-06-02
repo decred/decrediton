@@ -87,7 +87,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
       isCreateNewWallet,
       isRestoreNewWallet
     } = ctx;
-    const { isWatchingOnly, isTrezor } = selectedWallet.value;
+    const { isWatchingOnly, isTrezor, isLedger } = selectedWallet.value;
 
     let component, hasSoloTickets;
 
@@ -115,7 +115,7 @@ export const useWalletSetup = (settingUpWalletRef) => {
     switch (current.value) {
       case "settingAccountsPass": {
         // step not needed with trezor or watching only wallets.
-        if (isWatchingOnly || isTrezor) {
+        if (isWatchingOnly || isTrezor || isLedger) {
           sendContinue();
           return;
         }

@@ -16,8 +16,10 @@ const SendTransactionButton = ({
     unsignedTransaction,
     isSendingTransaction,
     isTrezor,
+    isLedger,
     onAttemptSignTransaction,
-    onAttemptSignTransactionTrezor
+    onAttemptSignTransactionTrezor,
+    onAttemptSignTransactionLedger
   } = useSendTransactionButton();
 
   const signTransaction = (privpass) => {
@@ -31,10 +33,25 @@ const SendTransactionButton = ({
     onSubmit?.();
   };
 
+  const signTransactionLedger = () => {
+    if (disabled) return;
+    onAttemptSignTransactionLedger?.(unsignedTransaction);
+    onSubmit?.();
+  };
+
   if (isTrezor) {
     return (
       <KeyBlueButton
         onClick={signTransactionTrezor}
+        disabled={disabled || isSendingTransaction}
+        loading={isSendingTransaction}>
+        {buttonLabel ? buttonLabel : <T id="send.sendBtn" m="Send" />}
+      </KeyBlueButton>
+    );
+  } else if (isLedger) {
+    return (
+      <KeyBlueButton
+        onClick={signTransactionLedger}
         disabled={disabled || isSendingTransaction}
         loading={isSendingTransaction}>
         {buttonLabel ? buttonLabel : <T id="send.sendBtn" m="Send" />}

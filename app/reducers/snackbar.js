@@ -106,6 +106,10 @@ import {
   TRZ_NOTBACKEDUP
 } from "actions/TrezorActions";
 import {
+  LDG_NOCONNECTEDDEVICE,
+  LDG_GETWALLETCREATIONMASTERPUBKEY_FAILED
+} from "actions/LedgerActions";
+import {
   NEW_TRANSACTIONS_RECEIVED,
   TRANSACTION_TYPES,
   DECODERAWTXS_FAILED
@@ -361,6 +365,16 @@ const messages = defineMessages({
     id: "trezor.notBackedUp",
     defaultMessage:
       "Trezor must be backed up in order to perform this operation."
+  },
+  LDG_NOCONNECTEDDEVICE: {
+    id: "ledger.noConnectedDevice",
+    defaultMessage:
+      "No Ledger device connected. Check the device connection and Ledger bridge."
+  },
+  LDG_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
+    id: "ledger.getWalletCreationMasterPubKey.failed",
+    defaultMessage:
+      "Failed to obtain master extended pubkey from Ledger device: {originalError}"
   },
   ERROR_IS_OBJECT: {
     id: "snackbar.errorObject",
@@ -839,6 +853,8 @@ export default function snackbar(state = {}, action) {
     case TRZ_NOTBACKEDUP:
     case TRZ_BACKUPDEVICE_FAILED:
     case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+    case LDG_NOCONNECTEDDEVICE:
+    case LDG_GETWALLETCREATIONMASTERPUBKEY_FAILED:
     case LNWALLET_CREATEACCOUNT_FAILED:
     case LNWALLET_STARTDCRLND_FAILED:
     case LNWALLET_CONNECT_FAILED:

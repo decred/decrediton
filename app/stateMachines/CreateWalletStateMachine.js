@@ -13,7 +13,9 @@ export const CreateWalletMachine = Machine({
     mnemonic: "",
     seed: "",
     passPhrase: "",
-    walletMasterPubKey: ""
+    walletMasterPubKey: "",
+    isTrezor: false,
+    isLedger: false
   },
   states: {
     createWalletInit: {
@@ -25,10 +27,6 @@ export const CreateWalletMachine = Machine({
         RESTORE_WATCHING_ONLY_WALLET: {
           target: "restoreWatchingOnly",
           cond: (c, event) => event.isWatchingOnly
-        },
-        RESTORE_TREZOR_WALLET: {
-          target: "restoreTrezor",
-          cond: (c, event) => event.isTrezor
         },
         RESTORE_WALLET: {
           target: "writeSeed",
@@ -120,11 +118,6 @@ export const CreateWalletMachine = Machine({
       }
     },
     restoreWatchingOnly: {
-      on: {
-        CONTINUE: "loading"
-      }
-    },
-    restoreTrezor: {
       on: {
         CONTINUE: "loading"
       }

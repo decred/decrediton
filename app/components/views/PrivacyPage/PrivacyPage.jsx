@@ -1,10 +1,12 @@
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
+import { useSelector } from "react-redux";
 import SecurityTab from "./SecurityTab";
 import PrivacyTab from "./PrivacyTab";
 import { usePrivacyPage } from "./hooks";
 import styles from "./PrivacyPage.module.css";
 import { SECURITY_ICON } from "constants";
+import * as sel from "selectors";
 
 export const PrivacyTabHeader = () => {
   const { mixedAccountName, changeAccountName } = usePrivacyPage();
@@ -46,21 +48,27 @@ const PrivacyPageHeader = () => (
 
 const PrivacyPage = () => {
   const { privacyEnabled } = usePrivacyPage();
-  const tabs = [
-    {
-      path: "/privacy/mixing",
-      content: PrivacyTab,
-      header: PrivacyTabHeader,
-      label: <T id="privacy.tab.privacy" m="Privacy" />,
-      disabled: !privacyEnabled
-    },
-    {
-      path: "/privacy/security",
-      content: SecurityTab,
-      header: PrivacyTabHeader,
-      label: <T id="privacy.tab.security.center" m="Security Center" />
-    }
-  ];
+  const isTrezor = useSelector(sel.isTrezor);
+  const mixingTab = {
+    path: "/privacy/mixing",
+    content: PrivacyTab,
+    header: PrivacyTabHeader,
+    label: <T id="privacy.tab.privacy" m="Privacy" />,
+    disabled: !privacyEnabled
+  };
+  const securityTab = {
+    path: "/privacy/security",
+    content: SecurityTab,
+    header: PrivacyTabHeader,
+    label: <T id="privacy.tab.security.center" m="Security Center" />
+  };
+  let tabs;
+  // Cannot currently mix with trezor and ledger hides this tab altogether.
+  if (isTrezor) {
+    tabs = [securityTab];
+  } else {
+    tabs = [mixingTab, securityTab];
+  }
   return <TabbedPage header={<PrivacyPageHeader />} tabs={tabs} />;
 };
 

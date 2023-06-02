@@ -54,8 +54,9 @@ const ReceivePage = ({
 
   // TODO: Enable ticket purchacing for Trezor.
   const isTrezor = useSelector(sel.isTrezor);
+  const isLedger = useSelector(sel.isLedger);
   let hardwareWalletWarning;
-  if (isTrezor) {
+  if (isTrezor || isLedger) {
     const warningStr =
       "Caution! Hardware wallets cannot spend from special/staking inputs. " +
       "Only use this address for receiving funds from normal transacitons. Do not " +

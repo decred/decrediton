@@ -274,7 +274,7 @@
     "@grpc/grpc-js": "1.7.3",
     "@hot-loader/react-dom": "16.14.0",
     "@ledgerhq/hw-app-btc": "^10.0.5",
-    "@ledgerhq/hw-transport-webusb": "^6.27.16",
+    "@ledgerhq/hw-transport-webusb": "6.27.1",
     "@peculiar/webcrypto": "1.4.3",
     "@xstate/react": "^0.8.1",
     "blake-hash": "^2.0.0",
@@ -297,7 +297,7 @@
     "minimist": "1.2.8",
     "mv": "^2.1.1",
     "node-polyfill-webpack-plugin": "1.1.4",
-    "pi-ui": "https://github.com/decred/pi-ui/",
+    "pi-ui": "https://github.com/decred/pi-ui#4daf214b901aa9f50547cf5645594cb76e7c9e51",
     "postcss": "8.4.24",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "7.8.3",
@@ -343,5 +343,8 @@
   "engines": {
     "node": ">=14.16",
     "yarn": "^1.22"
+  },
+  "resolutions": {
+    "@ledgerhq/hw-transport": "6.27.1"
   }
 }

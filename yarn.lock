@@ -1795,17 +1795,17 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@ledgerhq/devices@^8.0.4":
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-8.0.4.tgz#ebc7779adbbec2d046424603a481623eb3fbe306"
-  integrity sha512-dxOiWZmtEv1tgw70+rW8gviCRZUeGDUnxY6HUPiRqTAc0Ts2AXxiJChgAsPvIywWTGW+S67Nxq1oTZdpRbdt+A==
+"@ledgerhq/devices@^6.27.1":
+  version "6.27.1"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.27.1.tgz#3b13ab1d1ba8201e9e74a08f390560483978c962"
+  integrity sha512-jX++oy89jtv7Dp2X6gwt3MMkoajel80JFWcdc0HCouwDsV1mVJ3SQdwl/bQU0zd8HI6KebvUP95QTwbQLLK/RQ==
   dependencies:
-    "@ledgerhq/errors" "^6.12.7"
-    "@ledgerhq/logs" "^6.10.1"
+    "@ledgerhq/errors" "^6.10.0"
+    "@ledgerhq/logs" "^6.10.0"
     rxjs "6"
     semver "^7.3.5"
 
-"@ledgerhq/errors@^6.12.7":
+"@ledgerhq/errors@^6.10.0":
   version "6.12.7"
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.12.7.tgz#c7b630488d5713bc7b1e1682d6ab5d08918c69f1"
   integrity sha512-1BpjzFErPK7qPFx0oItcX0mNLJMplVAm2Dpl5urZlubewnTyyw5sahIBjU+8LLCWJ2eGEh/0wyvh0jMtR0n2Mg==
@@ -1828,26 +1828,26 @@
     tiny-secp256k1 "1.1.6"
     varuint-bitcoin "1.1.2"
 
-"@ledgerhq/hw-transport-webusb@^6.27.16":
-  version "6.27.16"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webusb/-/hw-transport-webusb-6.27.16.tgz#b8e20e772f78c312fc7f2ce3a469c99ecf59dc67"
-  integrity sha512-A3S2p5Rh9Ot402pWNZw8v5EpO3wOHP8ch/Dcz0AjInmwNouQ9nIYd1+eLSL7QiyG9X7+tuHxFF1IjrEgvAzQuQ==
+"@ledgerhq/hw-transport-webusb@6.27.1":
+  version "6.27.1"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webusb/-/hw-transport-webusb-6.27.1.tgz#62be3b2e5f0d54ae06d066571e4408a807d0f01f"
+  integrity sha512-n0ygJSeRpznrUfwtbDCLQOM5mA23YT/ngYY8HU46dzsVJHrHQ4jwBNJU48iKB+a9GhHyPAUpPNlWGTogvoVUxg==
   dependencies:
-    "@ledgerhq/devices" "^8.0.4"
-    "@ledgerhq/errors" "^6.12.7"
-    "@ledgerhq/hw-transport" "^6.28.5"
-    "@ledgerhq/logs" "^6.10.1"
+    "@ledgerhq/devices" "^6.27.1"
+    "@ledgerhq/errors" "^6.10.0"
+    "@ledgerhq/hw-transport" "^6.27.1"
+    "@ledgerhq/logs" "^6.10.0"
 
-"@ledgerhq/hw-transport@^6.28.5":
-  version "6.28.5"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.28.5.tgz#675193be2f695a596068145351da598316c25831"
-  integrity sha512-xmw5RhYbqExBBqTvOnOjN/RYNIGMBxFJ+zcYNfkfw/E+uEY3L7xq8Z7sC/n7URTT6xtEctElqduBJnBQE4OQtw==
+"@ledgerhq/hw-transport@6.27.1", "@ledgerhq/hw-transport@^6.27.1", "@ledgerhq/hw-transport@^6.28.5":
+  version "6.27.1"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.27.1.tgz#88072278f69c279cb6569352acd4ae2fec33ace3"
+  integrity sha512-hnE4/Fq1YzQI4PA1W0H8tCkI99R3UWDb3pJeZd6/Xs4Qw/q1uiQO+vNLC6KIPPhK0IajUfuI/P2jk0qWcMsuAQ==
   dependencies:
-    "@ledgerhq/devices" "^8.0.4"
-    "@ledgerhq/errors" "^6.12.7"
+    "@ledgerhq/devices" "^6.27.1"
+    "@ledgerhq/errors" "^6.10.0"
     events "^3.3.0"
 
-"@ledgerhq/logs@^6.10.1":
+"@ledgerhq/logs@^6.10.0", "@ledgerhq/logs@^6.10.1":
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.10.1.tgz#5bd16082261d7364eabb511c788f00937dac588d"
   integrity sha512-z+ILK8Q3y+nfUl43ctCPuR4Y2bIxk/ooCQFwZxhtci1EhAtMDzMAx2W25qx8G1PPL9UUOdnUax19+F0OjXoj4w==
@@ -10405,9 +10405,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
 
-"pi-ui@https://github.com/decred/pi-ui/":
+"pi-ui@https://github.com/decred/pi-ui#4daf214b901aa9f50547cf5645594cb76e7c9e51":
   version "1.1.0"
-  resolved "https://github.com/decred/pi-ui/#d7ca43e8bc65a45bbebd93b0101e58f3a6a170ab"
+  resolved "https://github.com/decred/pi-ui#4daf214b901aa9f50547cf5645594cb76e7c9e51"
   dependencies:
     clamp-js-main "^0.11.5"
     lodash "^4.17.15"
