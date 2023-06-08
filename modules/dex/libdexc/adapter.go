@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -282,6 +283,15 @@ func (c *CoreAdapter) setWalletPassword(raw json.RawMessage) (string, error) {
 	})
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
+	}
+	ws := c.core.WalletState(form.AssetID)
+	if ws == nil {
+		return "", errors.New("no wallet")
+	}
+	if ws.WalletType != "dcrwalletRPC" { // client/asset/dcr.walletTypeDcrwRPC
+		// Only change the wallet password if it's Decrediton's dcrwallet (as
+		// opposed to a native SPV wallet built into DEX).
+		return "", nil
 	}
 	return "", c.core.SetWalletPassword([]byte(form.AppPW), form.AssetID, []byte(form.Pass))
 }
