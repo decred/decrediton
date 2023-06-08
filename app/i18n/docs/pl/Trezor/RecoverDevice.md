@@ -1,0 +1,1 @@
+**_Uwaga!_** Decrediton obsługuje ziarna składające się tylko z 24 słów (256 bitów). Słowa do importowania portfeli dcrwallet i Trezor **nie są takie same**! Oznacza to, że nie można bezpośrednio zaimportować istniejącego nasiona Trezor do portfela programowego (lub odwrotnie: zaimportować istniejącego ziarna Decred składającego się z 33 słów do urządzenia sprzętowego).
