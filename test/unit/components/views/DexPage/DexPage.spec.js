@@ -138,7 +138,7 @@ test("enable dex view", () => {
   const enableBtn = getEnableBtn();
   user.click(enableBtn);
 
-  expect(screen.getByText("Wallet reset required")).toBeInTheDocument();
+  expect(screen.getByText("Wallet restart required")).toBeInTheDocument();
 
   // cancel first
   user.click(getCancelBtn());
