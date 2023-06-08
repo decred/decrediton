@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import copy from "clipboard-copy";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { ReceiveAccountsSelect, DcrInput } from "inputs";
@@ -14,6 +15,7 @@ import {
   TextHighlighted
 } from "pi-ui";
 import styles from "./ReceivePage.module.css";
+import * as sel from "selectors";
 
 const messages = defineMessages({
   amountPlaceholder: {
@@ -49,6 +51,21 @@ const ReceivePage = ({
   }
   const { theme } = useTheme();
   const iconColor = getThemeProperty(theme, "accent-blue");
+
+  // TODO: Enable ticket purchacing for Trezor.
+  const isTrezor = useSelector(sel.isTrezor);
+  let hardwareWalletWarning;
+  if (isTrezor) {
+    const warningStr =
+      "Caution! Hardware wallets cannot spend from special/staking inputs. " +
+      "Only use this address for receiving funds from normal transacitons. Do not " +
+      "use for staking or treasury related receives.";
+    hardwareWalletWarning = (
+      <label className={styles.hadwareWalletWarning}>
+        <T id="receive.hardwareWalletWarning" m={warningStr} />
+      </label>
+    );
+  }
 
   return (
     <>
@@ -93,6 +110,8 @@ const ReceivePage = ({
             </div>
           </div>
         </div>
+
+        {hardwareWalletWarning}
 
         <div className={styles.line}>
           <TextHighlighted

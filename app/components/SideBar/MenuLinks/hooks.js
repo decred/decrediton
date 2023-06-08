@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import { linkList, LN_KEY, DEX_KEY } from "./Links";
+import { linkList, LN_KEY, DEX_KEY, TICKETS_KEY, GOV_KEY } from "./Links";
 import { useHistory } from "react-router-dom";
 import { cloneDeep } from "fp";
 
@@ -46,8 +46,11 @@ export function useMenuLinks() {
     if (!lnEnabled) {
       links = links.filter((l) => l.key !== LN_KEY);
     }
+    // TODO: Enable ticket purchacing for Trezor.
     if (isTrezor) {
-      links = links.filter((l) => l.key !== DEX_KEY);
+      links = links.filter(
+        (l) => l.key !== DEX_KEY && l.key !== TICKETS_KEY && l.key !== GOV_KEY
+      );
     }
     return links.map((link) => ({
       ...link,
