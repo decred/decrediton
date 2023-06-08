@@ -23,6 +23,7 @@ import (
 	_ "decred.org/dcrdex/client/asset/bch"
 	_ "decred.org/dcrdex/client/asset/btc"
 	_ "decred.org/dcrdex/client/asset/dcr"
+	_ "decred.org/dcrdex/client/asset/dgb"
 	_ "decred.org/dcrdex/client/asset/doge"
 	_ "decred.org/dcrdex/client/asset/eth"
 	_ "decred.org/dcrdex/client/asset/ltc"
@@ -128,8 +129,9 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		// Onion applies ONLY to .onion addresses, unlike TorProxy, which is
 		// used for connections to all servers regardless of hostname. TODO:
 		// expose an option for the user to set this and TorProxy.
-		Onion:    "127.0.0.1:9050",
-		Language: form.Language,
+		Onion:            "127.0.0.1:9050",
+		Language:         form.Language,
+		NoAutoWalletLock: true, // Decrediton user locks it when done
 	})
 	if err != nil {
 		return fmt.Errorf("error creating client core: %v", err)

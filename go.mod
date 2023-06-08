@@ -3,7 +3,7 @@ module github.com/decred/decrediton
 go 1.18
 
 require (
-	decred.org/dcrdex v0.6.0
+	decred.org/dcrdex v0.6.1
 	github.com/decred/slog v1.2.0
 	github.com/jrick/logrotate v1.0.0
 )
