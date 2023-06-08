@@ -1,6 +1,6 @@
 {
   "name": "decrediton",
-  "productName": "decrediton",
+  "productName": "Decrediton",
   "version": "1.7.1",
   "description": "Graphical wallet for Decred supporting staking, privacy, and decentralized exchange.",
   "main": "./main.js",
