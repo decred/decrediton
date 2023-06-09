@@ -127,7 +127,7 @@ export function decodeVoteScript(network, outputScript) {
           name: "changesubsidysplitr2",
           choices: { 0x0020: "no", 0x0040: "yes" },
           defaultChoice: "abstain"
-        },
+        }
       ]
     },
     mainnet: {
@@ -215,7 +215,7 @@ export function decodeVoteScript(network, outputScript) {
           name: "changesubsidysplitr2",
           choices: { 0x0020: "no", 0x0040: "yes" },
           defaultChoice: "abstain"
-        },
+        }
       ]
     }
   };
