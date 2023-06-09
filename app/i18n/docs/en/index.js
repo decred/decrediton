@@ -32,6 +32,7 @@ export { default as ReleaseNote1_4_0 } from "./ReleaseNotes/v1.4.0.md";
 export { default as ReleaseNote1_5_0 } from "./ReleaseNotes/v1.5.0.md";
 export { default as ReleaseNote1_6_0 } from "./ReleaseNotes/v1.6.0.md";
 export { default as ReleaseNote1_7_0 } from "./ReleaseNotes/v1.7.0.md";
+export { default as ReleaseNote1_8_0 } from "./ReleaseNotes/v1.8.0.md";
 
 export { default as StakingTutorialPage01 } from "./StakingTutorial/Page01.md";
 export { default as StakingTutorialPage02 } from "./StakingTutorial/Page02.md";
