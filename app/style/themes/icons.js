@@ -155,6 +155,7 @@ const icons = {
   "release-image-v150": url(require("style/icons/release-note-v150.png")),
   "release-image-v160": url(require("style/icons/release-note-v160.png")),
   "release-image-v170": url(require("style/icons/release-note-v170.gif")),
+  "release-image-v180": url(require("style/icons/release-note-v180.png")),
   "tickets-loading-more-icon": url(
     require("style/icons/ticket_live_loop_decrediton_grey.gif")
   ),
