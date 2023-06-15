@@ -48,7 +48,9 @@ tutorials.ln = {
       images: ["LNSlideImage1"]
     },
     {
-      label: <T id="tutorials.ln.label6" m="Lightning is a 2nd Layer Network" />,
+      label: (
+        <T id="tutorials.ln.label6" m="Lightning is a 2nd Layer Network" />
+      ),
       doc: "LNWalletCreationWarningPage06",
       title: (
         <T
@@ -129,17 +131,13 @@ tutorials.powPos = {
     {
       label: <T id="tutorials.powPos.label1" m="PoW" />, // TODO
       doc: "PowPosPage01",
-      title: (
-        <T id="tutorials.powPos.title1" m="Proof-of-Work" />
-      ),
+      title: <T id="tutorials.powPos.title1" m="Proof-of-Work" />,
       images: ["powPosSlideImage1"]
     },
     {
       label: <T id="tutorials.powPos.label2" m="PoS" />, // TODO
       doc: "PowPosPage02",
-      title: (
-        <T id="tutorials.powPos.title2" m="Proof-of-Stake" />
-      ),
+      title: <T id="tutorials.powPos.title2" m="Proof-of-Stake" />,
       images: ["powPosSlideImage2"]
     },
     {
@@ -173,13 +171,9 @@ tutorials.tickets = {
       images: ["ticketsSlideImage1"]
     },
     {
-      label: (
-        <T id="tutorials.tickets.label2" m="Tickets have multiple uses" />
-      ), // TODO
+      label: <T id="tutorials.tickets.label2" m="Tickets have multiple uses" />, // TODO
       doc: "TicketsPage02",
-      title: (
-        <T id="tutorials.tickets.title2" m="Tickets have multiple uses" />
-      ),
+      title: <T id="tutorials.tickets.title2" m="Tickets have multiple uses" />,
       images: ["ticketsSlideImage2-1", "ticketsSlideImage2-2"]
     },
     {
@@ -232,23 +226,15 @@ tutorials.lifecycle = {
   thumbnailImage: "lifecycleThumb",
   slides: [
     {
-      label: (
-        <T id="tutorials.lifecycle.label1" m="Tickets to real rewards" />
-      ), // TODO
+      label: <T id="tutorials.lifecycle.label1" m="Tickets to real rewards" />, // TODO
       doc: "LifecyclePage01",
-      title: (
-        <T id="tutorials.lifecycle.title1" m="Tickets to real rewards" />
-      ),
+      title: <T id="tutorials.lifecycle.title1" m="Tickets to real rewards" />,
       images: ["lifecycleSlideImage1-1", "lifecycleSlideImage1-2"]
     },
     {
-      label: (
-        <T id="tutorials.lifecycle.label2" m="Ticket's Lifecycle" />
-      ), // TODO
+      label: <T id="tutorials.lifecycle.label2" m="Ticket's Lifecycle" />, // TODO
       doc: "LifecyclePage02",
-      title: (
-        <T id="tutorials.lifecycle.label2" m="Ticket's Lifecycle" />
-      ),
+      title: <T id="tutorials.lifecycle.label2" m="Ticket's Lifecycle" />,
       images: ["lifecycleSlideImage2"]
     },
     {
@@ -275,13 +261,9 @@ tutorials.lifecycle = {
       ]
     },
     {
-      label: (
-        <T id="tutorials.lifecycle.label6" m="Missed or Expired" />
-      ), // TODO
+      label: <T id="tutorials.lifecycle.label6" m="Missed or Expired" />, // TODO
       doc: "LifecyclePage06",
-      title: (
-        <T id="tutorials.lifecycle.title6" m="Missed or Expired" />
-      ),
+      title: <T id="tutorials.lifecycle.title6" m="Missed or Expired" />,
       images: [
         "lifecycleSlideImage6-1",
         "lifecycleSlideImage6-2",
