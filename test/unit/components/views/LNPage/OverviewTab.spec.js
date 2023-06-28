@@ -1,6 +1,6 @@
 import { OverviewTab } from "components/views/LNPage/OverviewTab";
 import { render } from "test-utils.js";
-import { screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -111,7 +111,7 @@ test("test recent activity list", async () => {
   await user.click(screen.getByText("Channel Funding"));
   expect(screen.getByText("Channel Created")).toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Close Channel" }));
-  await user.click(screen.getByText("Confirm"));
+  fireEvent.click(screen.getByText("Confirm"));
 
   await waitFor(() =>
     expect(mockCloseChannel).toHaveBeenCalledWith(

@@ -136,21 +136,7 @@ const expectToHaveDefaultMenuLinks = async (user, params) => {
     "/transactions",
     "On-chain Transactions"
   );
-  await expectToHaveMenuLink(
-    "menuLinkContent-governance",
-    "Governance",
-    "governanceIcon",
-    "/governance",
-    "Governance"
-  );
   if (!sidebarOnBottom || expandSideBar) {
-    await expectToHaveMenuLink(
-      "menuLinkContent-tickets",
-      "Staking",
-      "ticketsIcon",
-      "/tickets",
-      "Staking"
-    );
     await expectToHaveMenuLink(
       "menuLinkContent-accounts",
       "Accounts",
@@ -176,6 +162,20 @@ const expectToHaveDefaultMenuLinks = async (user, params) => {
         "dexIcon",
         "/dex",
         "DEX"
+      );
+      await expectToHaveMenuLink(
+        "menuLinkContent-tickets",
+        "Staking",
+        "ticketsIcon",
+        "/tickets",
+        "Staking"
+      );
+      await expectToHaveMenuLink(
+        "menuLinkContent-governance",
+        "Governance",
+        "governanceIcon",
+        "/governance",
+        "Governance"
       );
     }
   }
@@ -301,7 +301,9 @@ test("renders sidebar on the bottom", async () => {
   mockSidebarOnBottom.mockRestore();
 });
 
-test("renders sidebar with trezor enabled, should not find trezor menu, it have been moved to a separate tab under settings", async () => {
+test("renders sidebar with trezor enabled, should not find trezor menu,\
+  it have been moved to a separate tab under settings. Governance and Tickets\
+  should be hidden.", async () => {
   const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
   const { user } = render(<SideBar />);
   await expectToHaveDefaultMenuLinks(user, {

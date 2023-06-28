@@ -184,6 +184,14 @@ test("test multi notification", async () => {
   jest.useFakeTimers();
   user.click(snackbarSenderButton);
   user.click(snackbarSenderButton);
+  user.click(snackbarSenderButton);
+  await waitFor(() =>
+    expect(screen.getAllByTestId("snackbar-message").length).toBe(3)
+  );
+  // simulate that 10 * 500 seconds have passed
+  act(() => {
+    jest.advanceTimersByTime(5000);
+  });
   await waitFor(() =>
     expect(screen.getAllByTestId("snackbar-message").length).toBe(2)
   );
@@ -193,13 +201,6 @@ test("test multi notification", async () => {
   });
   await waitFor(() =>
     expect(screen.getAllByTestId("snackbar-message").length).toBe(1)
-  );
-  // simulate that 10 * 500 seconds have passed
-  act(() => {
-    jest.advanceTimersByTime(5000);
-  });
-  await waitFor(() =>
-    expect(screen.queryByTestId("snackbar-message")).not.toBeInTheDocument()
   );
 });
 

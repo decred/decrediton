@@ -10,6 +10,8 @@ import { DCR } from "constants";
 import { fireEvent } from "@testing-library/react";
 jest.mock("electron");
 export const GETNEXTADDRESS_SUCCESS = "GETNEXTADDRESS_SUCCESS";
+import debouce from "lodash/debounce";
+jest.mock("lodash/debounce");
 
 const mockMixedAccountValue = 6;
 const validAmount = 12;
@@ -102,6 +104,7 @@ const transactionActions = ta;
 const wallet = wl;
 
 beforeEach(() => {
+  debouce.mockImplementation((fn) => fn);
   mockIsTestNet = selectors.isTestNet = jest.fn(() => false);
   mockIsMainNet = selectors.isMainNet = jest.fn(() => false);
   mockWalletService = selectors.walletService = jest.fn(() => {
@@ -275,7 +278,7 @@ test("test amount input", async () => {
   // click on send all amount button
   await user.click(sendAllButton);
   expect(queryAmountInput()).not.toBeInTheDocument();
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
       `${mockMixedAccount.spendableAndUnit}100% of Account Balance`
     )
@@ -320,21 +323,39 @@ test("test amount input", async () => {
 
   // type arbitrary amount and check the percent value
   amountInput = getAmountInput();
-  await user.type(amountInput, "12");
-  expect(screen.getByText(/4.80% of account balance/i)).toBeInTheDocument();
+  fireEvent.change(amountInput, {
+    target: { value: "12" }
+  });
+  await waitFor(() =>
+    expect(screen.getByText(/4.80% of account balance/i)).toBeInTheDocument()
+  );
 
   // clear amountInput, should get error msg
-  await user.clear(amountInput);
-  expect(screen.getByText(/This field is required/i)).toBeInTheDocument();
+  fireEvent.change(amountInput, {
+    target: { value: "" }
+  });
+
+  await waitFor(() =>
+    expect(screen.getByText(/This field is required/i)).toBeInTheDocument()
+  );
 
   // retype validAmount
-  await user.type(amountInput, `${validAmount}`);
-  expect(screen.queryByText(/This field is required/i)).not.toBeInTheDocument();
+  fireEvent.change(amountInput, {
+    target: { value: `${validAmount}` }
+  });
+  await waitFor(() =>
+    expect(
+      screen.queryByText(/This field is required/i)
+    ).not.toBeInTheDocument()
+  );
 
   // type more than 100% amount
-  await user.clear(amountInput);
-  await user.type(amountInput, "234232");
-  expect(screen.getByText(/>100% of account balance/i)).toBeInTheDocument();
+  fireEvent.change(amountInput, {
+    target: { value: "234232" }
+  });
+  await waitFor(() =>
+    expect(screen.getByText(/>100% of account balance/i)).toBeInTheDocument()
+  );
 });
 
 test("test `send to` input", async () => {
@@ -367,7 +388,7 @@ test("test `send to` input", async () => {
   await waitFor(() => expect(sendToInput.value).toBe(mockValidAddress));
   expect(screen.queryByText(expectedErrorMsg)).not.toBeInTheDocument();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
       mockMixedAccountValue,
       0,
@@ -417,18 +438,21 @@ test("test paste button (paste address with trailing and leading spaces)", async
 });
 
 test("type address with trailing and leading spaces", async () => {
-  const { user } = render(<SendTab />);
+  render(<SendTab />);
 
   const sendToInput = getSendToInput();
   const amountInput = getAmountInput();
 
-  await user.type(amountInput, `${validAmount}`);
+  fireEvent.change(amountInput, {
+    target: { value: `${validAmount}` }
+  });
   // test paste button
   const mockPastedAddress = "mockPastedAddress";
 
   // type address with trailing and leading spaces
-  await user.clear(sendToInput);
-  await user.type(sendToInput, `   ${mockPastedAddress}     `);
+  fireEvent.change(sendToInput, {
+    target: { value: `   ${mockPastedAddress}     ` }
+  });
   await waitFor(() => expect(sendToInput.value).toBe(mockPastedAddress));
 });
 
@@ -474,20 +498,23 @@ test("`Sending from unmixed account` is allowed", async () => {
   expect(screen.getByText(mockDefaultAccount.name)).toBeInTheDocument();
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
   expect(screen.getAllByText(mockMixedAccount.name).length).toBe(2);
-  await user.click(screen.getByText(mockEmptyAccount.name));
-  await waitFor(() =>
-    expect(screen.getAllByText(mockEmptyAccount.name).length).toBe(1)
-  );
+  fireEvent.click(screen.getByText(mockEmptyAccount.name));
+  expect(screen.queryByText(mockMixedAccount.name)).not.toBeInTheDocument();
 
   // valid amount but the source account is empty
   const amountInput = getAmountInput();
-  await user.type(amountInput, `${validAmount}`);
+  fireEvent.change(amountInput, {
+    target: { value: `${validAmount}` }
+  });
+  await waitFor(() => expect(amountInput.value).toBe(`${validAmount}`));
 
   // changing account while sending all mode is on
   // should change the amount accordingly click on send all amount button
   await user.click(getSendAllButton());
-  expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
-    `${mockEmptyAccount.spendableAndUnit}100% of Account Balance`
+  await waitFor(() =>
+    expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
+      `${mockEmptyAccount.spendableAndUnit}100% of Account Balance`
+    )
   );
   await user.click(screen.getByText(mockEmptyAccount.name));
   await user.click(screen.getByText(mockAccount2.name));
@@ -501,7 +528,12 @@ test("`Sending from unmixed account` is allowed", async () => {
 const fillOutputForm = async (user, index) => {
   const amountInput = getAllAmountInput()[index];
   const sendToInput = getAllSendToInput()[index];
-  await user.type(amountInput, `${mockOutputs[index].amount}`);
+  fireEvent.change(amountInput, {
+    target: { value: `${mockOutputs[index].amount}` }
+  });
+  await waitFor(() =>
+    expect(amountInput.value).toBe(`${mockOutputs[index].amount}`)
+  );
   fireEvent.change(sendToInput, {
     target: { value: mockOutputs[index].address }
   });
@@ -568,7 +600,9 @@ test("send funds to another account", async () => {
 
   const sendSelfButton = getSendSelfButton();
 
-  await user.type(getAmountInput(), `${validAmount}`);
+  fireEvent.change(getAmountInput(), {
+    target: { value: `${validAmount}` }
+  });
   await user.click(sendSelfButton);
   await user.click(screen.getAllByRole("combobox")[1]);
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
@@ -577,13 +611,16 @@ test("send funds to another account", async () => {
   await waitFor(() =>
     expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
       mockMixedAccountValue,
       0,
       [{ amount: validAmount * 100000000, destination: mockNextAddress }],
       undefined
     )
+  );
+  await waitFor(() =>
+    expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
   );
   expect(mockGetNextAddressAttempt).toHaveBeenCalled();
 
