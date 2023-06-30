@@ -1460,7 +1460,7 @@
   "treasurySpending.title": "إنفاق الخزينة",
   "treasurySpending.updatePreference": "تحديث التفضيل",
   "treasurySpending.updateVoteChoiceModal.title": "أكد تصويتك",
-  "treasurySpending.votedFor": "تم التصويت لصالح::",
+  "treasurySpending.votedFor": "تم التصويت لصالح:",
   "treasurySpending.votingFor": "التصويت ل:",
   "trezor.backupDevice.success": "تم النسخ الاحتياطي لجهاز تريزور.",
   "trezor.changeHomeScreen.success": "تم تغيير شاشة تريزور الرئيسية بنجاح",
