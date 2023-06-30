@@ -606,11 +606,15 @@ test("send funds to another account", async () => {
   await user.click(sendSelfButton);
   await user.click(screen.getAllByRole("combobox")[1]);
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
-  selectors.publishTxResponse = jest.fn(() => "mocknewpublishtxresponse");
   await user.click(screen.getByText(mockAccount2.name));
+  await waitFor(
+    () => expect(mockGetNextAddressAttempt).toHaveBeenCalled(),
+    5000
+  );
   await waitFor(() =>
     expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
   );
+  selectors.publishTxResponse = jest.fn(() => "mocknewpublishtxresponse");
   await waitFor(() =>
     expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
       mockMixedAccountValue,
@@ -627,7 +631,7 @@ test("send funds to another account", async () => {
   // switch back from send to self mode
   await user.click(sendSelfButton);
   expect(screen.queryByText(mockAccount2.name)).not.toBeInTheDocument();
-});
+}, 10000);
 
 test("Privacy Mixer, Autobuyer or Purchase Ticket Attempt running", () => {
   selectors.getRunningIndicator = jest.fn(() => true);
