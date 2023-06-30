@@ -265,8 +265,8 @@ test("test warning view", () => {
 
   // initial state
   expect(understandButton.disabled).toBe(true);
-  expect(tab1.textContent).toBe("1/6Backup");
-  expect(tab2.textContent).toBe("2/6Lightning is a Layer 2 Network");
+  expect(tab1.textContent).toBe("1/6Important");
+  expect(tab2.textContent).toBe("2/6Lightning is a 2nd Layer Network");
   expect(tab3.textContent).toBe("3/6Staying Online");
   expect(tab4.textContent).toBe("4/6Watchtower Service");
   expect(tab5.textContent).toBe("5/6Channels and Confirmations");

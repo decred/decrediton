@@ -1,5 +1,1 @@
-A runthrough of the network upgrade process.
-
-A relatable dashboard-like interface that demonstrates the relationship between PoS and PoW upgrade processes on a Dashboard-like interface. Example: https://voting.decred.org/
-
-This reaffirms the point made in slide 1 where there is a direct relationship between parties who arbitrate one another.
+Once the new software with updated block and stake versions is in the wild, the network will begin the process of upgrading.  [Decred Voting](voting.decred.org) shows the required miner and voter upgrade progress.  Before the network can upgrade 95% of blocks in a moving window must be the new version.  To upgrade the vote version, in a 2016 block interval, 75% of the votes received must be of the new version.  Once both of these things occur, the network will begin voting at the start of the next Rule Change Activation Interval (8064 blocks).  

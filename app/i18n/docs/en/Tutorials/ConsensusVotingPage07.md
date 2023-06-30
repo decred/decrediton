@@ -1,5 +1,1 @@
-A section further clarifying Decred’s Hard Fork resistance.
-
-A visual representation of this showing a binary/boolean outcome/flow resulting from the activation of new network consensus rules.
-
-This further reiterates the initial emphasis on establishing consensus.
+This upgrade and voting process allows for all ticket holders to be able to have their voices heard and lets the network smoothly update the consensus rules.  

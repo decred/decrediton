@@ -1,5 +1,1 @@
-A basic runthrough of network infrastructure
-
-Graphic match between a blueprint and a final vision/design.
-
-This signifies Decred’s consensus voting’s ability to upgrade the network to enable the adoption of new technologies such as Lightning Network and more recently decentralized treasury.
+All consensus votes are first approved via off-chain voting on Politeia proposals.  The basics are laid out there, and once approved the required development work proceeds.  Once the development work has been completed, it is reviewed and merged into the codebase.  Then the network versions for block and stake versions are bumped.  This begins the network upgrade process.

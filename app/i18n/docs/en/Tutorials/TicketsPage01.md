@@ -1,1 +1,1 @@
-Decred holders can participate in the Proof-of-Stake (PoS) system by purchasing tickets.
+When tickets are purchased, the funds are essentially "time-locked" until they are called upon to vote or they expire.  Currently, tickets have approximately a 50% chance of voting within the first month of them being live.  If a ticket is not chosen to vote for approximately 144 days, they then expire and the funds are returned to the purchaser.
