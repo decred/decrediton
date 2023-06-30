@@ -92,9 +92,9 @@ const callDEX = (func, params) => {
   const argBuffer = Buffer.from(arg);
   const argPointer = getBufferPointer(argBuffer);
 
-  // All relevant DEX calls have been empirically determined to return less than
-  // about 6KB, so 50KB should be a reasonable size for the buffer.
-  const resBufferSz = 1000 * 50;
+  // Some DEX calls can have a large response, in particular the User response,
+  // so we set a healthy buffer size, 500kB.
+  const resBufferSz = 1000 * 500;
   const resBuffer = Buffer.alloc(resBufferSz);
   const resPointer = getBufferPointer(resBuffer);
 
