@@ -26,9 +26,7 @@ const LoadingPage = ({ onShowOnboardingTutorial }) => {
         "tickets",
         "staking",
         "lifecycle",
-        "consensusVoting",
-        "blocks",
-        "identity"
+        "consensusVoting"
       ].map((name) => (
         <TutorialOverview
           {...{

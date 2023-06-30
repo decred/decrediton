@@ -1,1 +1,1 @@
-Proof-of-Stake (PoS) developed a better alignment of interests, and computational efficiencies, though resulted in different shortcomings, most notably the “nothing-at-stake problem” and inherent risks of resulting in feudalism.
+Proof-of-Stake (PoS) provides a way for those with true "skin-in-the-game" to have a direct effect on the production of blocks.  Though with pure PoS, block creation leads to centralization once again.  

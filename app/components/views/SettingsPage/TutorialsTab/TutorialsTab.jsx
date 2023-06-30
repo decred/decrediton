@@ -48,9 +48,7 @@ const TutorialsTab = () => {
         "tickets",
         "staking",
         "lifecycle",
-        "consensusVoting",
-        "blocks",
-        "identity"
+        "consensusVoting"
       ].map((name) => (
         <TutorialOverview
           {...{
