@@ -163,7 +163,16 @@ test("test create new new account", async () => {
 });
 
 test("test text toggles", async () => {
-  const { user } = render(<ConnectPage />);
+  const { user } = render(<ConnectPage />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await goToCreateWalletView(user);
 
   expect(screen.queryByText(/attention:/i)).not.toBeInTheDocument();
@@ -194,7 +203,16 @@ test("test automatic channel creation", async () => {
 });
 
 test("test use existing account", async () => {
-  const { user } = render(<ConnectPage />);
+  const { user } = render(<ConnectPage />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await goToCreateWalletView(user);
 
   expect(screen.queryByText(/attention:/i)).not.toBeInTheDocument();

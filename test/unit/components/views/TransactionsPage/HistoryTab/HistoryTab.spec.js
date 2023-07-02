@@ -13,23 +13,6 @@ let mockWalletService;
 const selectors = sel;
 const transactionActions = ta;
 
-const initialState = {
-  grpc: {
-    transactionsFilter: {
-      search: null,
-      listDirection: "desc",
-      types: [],
-      directions: [],
-      maxAmount: null,
-      minAmount: null
-    },
-    regularTransactions: {},
-    getRegularTxsAux: {
-      noMoreTransactions: false
-    }
-  }
-};
-
 const getTestTxs = (startTs) => {
   const txList = {};
   const startDate = new Date(startTs * 1000);
@@ -102,6 +85,28 @@ const mockNextAddress = "TsiTfsjizPgzBrPxovheccayb4UbLRmQAqY";
 const mockTotalSpent = 5600005850;
 const mockEstimatedFee = 5850;
 const mockEstimatedSize = 585;
+
+const initialState = {
+  grpc: {
+    transactionsFilter: {
+      search: null,
+      listDirection: "desc",
+      types: [],
+      directions: [],
+      maxAmount: null,
+      minAmount: null
+    },
+    regularTransactions: {},
+    getRegularTxsAux: {
+      noMoreTransactions: false
+    }
+  },
+  control: {
+    getNextAddressResponse: {
+      accountNumber: mockDefaultAccount.value
+    }
+  }
+};
 
 beforeEach(() => {
   selectors.isTestNet = jest.fn(() => false);

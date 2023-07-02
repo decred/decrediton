@@ -66,6 +66,12 @@ const mockSpendingAccounts = [
   mockMixedAccount,
   mockUnMixedAccount
 ];
+
+const mockVisibleAccounts = [
+  mockDefaultAccount,
+  mockMixedAccount,
+  mockUnMixedAccount
+];
 const mockCsppServer = "mockCsppServer.decred.org";
 const mockCsppPort = "1234";
 const mockMixedAccountBranch = 0;
@@ -83,6 +89,7 @@ let mockDispatchSingleMessage;
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
   selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.visibleAccounts = jest.fn(() => mockVisibleAccounts);
   selectors.getPrivacyEnabled = jest.fn(() => true);
   selectors.isWatchingOnly = jest.fn(() => false);
   selectors.getMixedAccountName = jest.fn(() => mockMixedAccount.name);
@@ -91,7 +98,6 @@ beforeEach(() => {
   selectors.walletService = jest.fn(() => {
     return {};
   });
-  selectors.nextAddressAccount = jest.fn(() => mockUnMixedAccount);
   selectors.nextAddress = jest.fn(() => mockNextAddress);
   selectors.getRunningIndicator = jest.fn(() => false);
 
@@ -235,7 +241,16 @@ test("test insufficient unmixed account balance error message", async () => {
       (acc) => acc.value == acctId
     )
   );
-  render(<PrivacyTab />);
+  render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockUnMixedAccount.value
+        }
+      }
+    }
+  });
+
   await waitFor(() =>
     expect(screen.getByText("Unmixed Balance").parentNode.className).toMatch(
       /balanceError/i
@@ -248,7 +263,16 @@ test("test insufficient unmixed account balance error message", async () => {
 });
 
 test("start coin mixer", async () => {
-  const { user } = render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await waitFor(() =>
     expect(
       screen.getByText("Unmixed Balance").parentNode.className
@@ -289,7 +313,15 @@ test("start coin mixer", async () => {
 
 test("stop coin mixer", async () => {
   selectors.getAccountMixerRunning = jest.fn(() => true);
-  const { user } = render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   expect(screen.getByText("Mixer is running")).toBeInTheDocument();
   await user.click(getStopMixerButton());
@@ -299,14 +331,30 @@ test("stop coin mixer", async () => {
 
 test("mixer is disabled (Autobuyer running)", () => {
   selectors.getRunningIndicator = jest.fn(() => true);
-  render(<PrivacyTab />);
+  render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   expect(getSendToSelfButton().disabled).toBe(true);
   expect(getStartMixerButton().disabled).toBe(true);
 });
 
 test("allow sending from unmixed accounts", async () => {
-  const { user } = render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const checkbox = getPrivacyCheckbox();
 
@@ -333,7 +381,15 @@ test("allow sending from unmixed accounts", async () => {
 
 test("sending from unmixed accounts is allowed already", async () => {
   selectors.getAllowSendFromUnmixed = jest.fn(() => true);
-  const { user } = render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const checkbox = getPrivacyCheckbox();
   expect(checkbox.checked).toBe(true);
@@ -343,7 +399,16 @@ test("sending from unmixed accounts is allowed already", async () => {
 });
 
 test("Send to Unmixed Account form", async () => {
-  const { user } = render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   const sendToSelfBtn = getSendToSelfButton();
   const amountInput = screen.getByLabelText("Amount:");
   const testAmount = "12";
@@ -372,7 +437,15 @@ test("check logs", async () => {
   mockGetPrivacyLogs = wallet.getPrivacyLogs = jest.fn(() =>
     Promise.resolve(mockLogLine)
   );
-  const { user } = render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const logsLabel = screen.getByText("Logs");
 

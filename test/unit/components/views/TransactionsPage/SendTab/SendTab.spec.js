@@ -96,7 +96,6 @@ let mockIsMainNet;
 let mockWalletService;
 let mockConstructTransactionAttempt;
 let mockValidateAddress;
-let mockGetNextAddressAttempt;
 
 const selectors = sel;
 const controlActions = ca;
@@ -120,9 +119,7 @@ beforeEach(() => {
   selectors.estimatedSignedSize = jest.fn(() => mockEstimatedSize);
   selectors.totalSpent = jest.fn(() => mockTotalSpent);
   selectors.nextAddress = jest.fn(() => mockNextAddress);
-  selectors.nextAddressAccount = jest.fn(() => mockDefaultAccount);
   selectors.constructTxLowBalance = jest.fn(() => false);
-  selectors.publishTxResponse = jest.fn(() => "mockpublishtxresponse");
   selectors.getNotMixedAcctIfAllowed = jest.fn(() => [0, 2]);
   selectors.isTrezor = jest.fn(() => false);
   selectors.isWatchingOnly = jest.fn(() => false);
@@ -146,19 +143,17 @@ beforeEach(() => {
     };
   });
   controlActions.onClearTransaction = jest.fn(() => {});
-  mockGetNextAddressAttempt = controlActions.getNextAddressAttempt = jest.fn(
-    () => (dispatch) => {
-      const res = {
-        address: "mock-next-address",
-        accountNumber: mockAccount2.value
-      };
-      dispatch({
-        getNextAddressResponse: res,
-        type: GETNEXTADDRESS_SUCCESS
-      });
-      Promise.resolve(res);
-    }
-  );
+  controlActions.getNextAddressAttempt = jest.fn(() => (dispatch) => {
+    const res = {
+      address: "mock-next-address",
+      accountNumber: mockAccount2.value
+    };
+    dispatch({
+      getNextAddressResponse: res,
+      type: GETNEXTADDRESS_SUCCESS
+    });
+    Promise.resolve(res);
+  });
   transactionActions.listUnspentOutputs = jest.fn(
     () => () => Promise.resolve(mockUnspentOutputs)
   );
@@ -203,7 +198,15 @@ const getAllAmountInput = () => screen.getAllByLabelText("Amount");
 const getAllSendToInput = () => screen.getAllByLabelText("Send to");
 
 test("render SendTab within its parent", () => {
-  render(<TransactionsPage />);
+  render(<TransactionsPage />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const amountInput = getAmountInput();
   const sendToInput = getSendToInput();
@@ -251,7 +254,15 @@ test("render SendTab within its parent", () => {
 
 test("render SendTab within its parent in testnet mode", () => {
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
-  render(<TransactionsPage />);
+  render(<TransactionsPage />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   expect(screen.getByText(/testnet Decred addresses/i).textContent)
     .toMatchInlineSnapshot(`
@@ -261,7 +272,15 @@ test("render SendTab within its parent in testnet mode", () => {
 });
 
 test("test amount input", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   let amountInput = getAmountInput();
   const sendAllButton = getSendAllButton();
@@ -359,7 +378,15 @@ test("test amount input", async () => {
 });
 
 test("test `send to` input", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const amountInput = getAmountInput();
   const sendToInput = getSendToInput();
@@ -403,7 +430,15 @@ test("test `send to` input", async () => {
 });
 
 test("test paste button", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const sendToInput = getSendToInput();
   const pasteButton = getPasteButton();
@@ -419,7 +454,15 @@ test("test paste button", async () => {
 });
 
 test("test paste button (paste address with trailing and leading spaces)", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const sendToInput = getSendToInput();
   const pasteButton = getPasteButton();
@@ -438,7 +481,15 @@ test("test paste button (paste address with trailing and leading spaces)", async
 });
 
 test("type address with trailing and leading spaces", async () => {
-  render(<SendTab />);
+  render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const sendToInput = getSendToInput();
   const amountInput = getAmountInput();
@@ -457,7 +508,15 @@ test("type address with trailing and leading spaces", async () => {
 });
 
 test("construct a valid transaction", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   selectors.unsignedTransaction = jest.fn(() => 1);
   mockValidateAddress = controlActions.validateAddress = jest.fn(() => () => {
@@ -485,14 +544,31 @@ test("construct a valid transaction", async () => {
 
 test("test insufficient funds", () => {
   selectors.constructTxLowBalance = jest.fn(() => true);
-  render(<SendTab />);
+  render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   expect(getSendButton().disabled).toBe(true);
   expect(screen.getByText(/insufficient funds/i)).toBeInTheDocument();
 });
 
 test("`Sending from unmixed account` is allowed", async () => {
   selectors.getNotMixedAcctIfAllowed = jest.fn(() => []);
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   await user.click(screen.getByText(mockMixedAccount.name));
   expect(screen.getByText(mockDefaultAccount.name)).toBeInTheDocument();
@@ -560,7 +636,15 @@ const fillOutputForm = async (user, index) => {
 };
 
 test("test sending to multiple addresses", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   mockValidateAddress = controlActions.validateAddress = jest.fn(() => () => {
     return {
@@ -596,7 +680,15 @@ test("test sending to multiple addresses", async () => {
 });
 
 test("send funds to another account", async () => {
-  const { user } = render(<SendTab />);
+  const { user } = render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const sendSelfButton = getSendSelfButton();
 
@@ -604,17 +696,11 @@ test("send funds to another account", async () => {
     target: { value: `${validAmount}` }
   });
   await user.click(sendSelfButton);
-  await user.click(screen.getAllByRole("combobox")[1]);
-  selectors.nextAddressAccount = jest.fn(() => mockAccount2);
+  await user.click(screen.getByText(mockDefaultAccount.name));
   await user.click(screen.getByText(mockAccount2.name));
-  await waitFor(
-    () => expect(mockGetNextAddressAttempt).toHaveBeenCalled(),
-    5000
-  );
   await waitFor(() =>
-    expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
+    expect(screen.getAllByText(mockAccount2.name).length).toBe(1)
   );
-  selectors.publishTxResponse = jest.fn(() => "mocknewpublishtxresponse");
   await waitFor(() =>
     expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
       mockMixedAccountValue,
@@ -623,19 +709,25 @@ test("send funds to another account", async () => {
       undefined
     )
   );
-  await waitFor(() =>
-    expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
-  );
-  expect(mockGetNextAddressAttempt).toHaveBeenCalled();
-
   // switch back from send to self mode
   await user.click(sendSelfButton);
-  expect(screen.queryByText(mockAccount2.name)).not.toBeInTheDocument();
-}, 10000);
+  await waitFor(() =>
+    expect(screen.queryByText(mockAccount2.name)).not.toBeInTheDocument()
+  );
+});
 
 test("Privacy Mixer, Autobuyer or Purchase Ticket Attempt running", () => {
   selectors.getRunningIndicator = jest.fn(() => true);
-  render(<SendTab />);
+  render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   expect(getSendButton().disabled).toBe(true);
   expect(
     screen.getByText(
@@ -649,7 +741,16 @@ test("show unsigned raw transaction", () => {
   selectors.isWatchingOnly = jest.fn(() => true);
   selectors.isTrezor = jest.fn(() => false);
   selectors.unsignedRawTx = jest.fn(() => mockUnsignedRawTx);
-  render(<SendTab />);
+  render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   expect(screen.getByText(/Unsigned Raw Transaction:/)).toBeInTheDocument();
   expect(screen.getByText(mockUnsignedRawTx)).toBeInTheDocument();
 });
@@ -657,6 +758,15 @@ test("show unsigned raw transaction", () => {
 test("watching only trezor should show send button", () => {
   selectors.isWatchingOnly = jest.fn(() => true);
   selectors.isTrezor = jest.fn(() => true);
-  render(<SendTab />);
+  render(<SendTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   expect(getSendButton()).toBeInTheDocument();
 });

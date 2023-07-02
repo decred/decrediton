@@ -135,7 +135,16 @@ const getQRCodeButton = () => screen.getByText("QR code").nextElementSibling;
 const getModalCloseButton = () => screen.getByText("Close");
 
 test("render ReceiveTab within its parent", async () => {
-  const { user } = render(<TransactionsPage />);
+  const { user } = render(<TransactionsPage />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await user.click(screen.getByText("Receive"));
 
   expect(
@@ -146,7 +155,16 @@ test("render ReceiveTab within its parent", async () => {
 });
 
 test("change destination account", async () => {
-  const { user } = render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
   expect(screen.getByText(mockNextAddress)).toBeInTheDocument();
 
@@ -162,7 +180,16 @@ test("change destination account", async () => {
 });
 
 test("generate new address", async () => {
-  const { user } = render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await user.click(screen.getByText(/generate new address/i));
   expect(mockGetNextAddressAttempt).toHaveBeenCalled();
 });
@@ -181,13 +208,31 @@ test("show error when there is no walletService", () => {
 });
 
 test("test copy button", async () => {
-  const { user } = render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await user.click(getCopyButton());
   expect(mockCopy).toHaveBeenCalledWith(mockNextAddress);
 });
 
 test("test QR button", async () => {
-  const { user } = render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   await user.click(getQRCodeButton());
   expect(mockGenQRCodeSVG).toHaveBeenCalledWith(`decred:${mockNextAddress}`);
   expect(screen.getAllByText(mockNextAddress).length).toBe(2); // + modal
