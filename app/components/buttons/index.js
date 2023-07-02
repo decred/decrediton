@@ -7,15 +7,14 @@ export { default as PathButton } from "./PathButton/PathButton";
 export { default as RescanButton } from "./RescanButton/RescanButton";
 export { default as RescanCancelButton } from "./RescanButton/RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
-export { default as TicketsCogs } from "./TicketsCogs";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
-export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
 export { default as MixerSettingsIconButton } from "./MixerSettingsIconButton";
 export { default as ListUTXOsButton } from "./ListUTXOsButton";
 export { default as PiUiButton } from "./PiUiButton";
 export { default as InvisiblePiUiButton } from "./InvisiblePiUiButton";
 export { default as SearchForNodesButton } from "./SearchForNodesButton";
+export { default as DocButton } from "./DocButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
@@ -61,18 +60,19 @@ import styles from "./Buttons.module.css";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
 // with extra fixed props)
-const mbb = (className, modalComponent, buttonComponent) => (p) => (
-  <ModalButton
-    {...{
-      ...p,
-      buttonComponent,
-      modalComponent: p.modalComponent || modalComponent,
-      className: classNames(className, p.className)
-    }}
-  />
-);
+const mbb = (className, modalComponent, buttonComponent) => (p) =>
+  (
+    <ModalButton
+      {...{
+        ...p,
+        buttonComponent,
+        modalComponent: p.modalComponent || modalComponent,
+        className: classNames(className, p.className)
+      }}
+    />
+  );
 
-const helpLinkButtonNew = ({ icon, onClick, title, subtitle }) => (
+const helpLinkButton = ({ icon, onClick, title, subtitle }) => (
   <HelpLink
     icon={icon}
     onClick={onClick}
@@ -80,12 +80,6 @@ const helpLinkButtonNew = ({ icon, onClick, title, subtitle }) => (
     subtitle={subtitle}
     expand
   />
-);
-
-const helpLinkButton = ({ className, onClick, buttonLabel }) => (
-  <div className={className} onClick={onClick}>
-    {buttonLabel}
-  </div>
 );
 
 const PoliteiaLinkButton = ({ children, onClick }) => (
@@ -101,9 +95,9 @@ const InfoButton = ({ className, onClick }) => (
 export const HelpLinkInfoModal = mbb(
   null,
   DocumentationInfoModal,
-  helpLinkButtonNew
+  helpLinkButton
 );
-export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
+export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButton);
 export const InfoModalButton = mbb(styles.infoModalButton, InfoModal);
 export const InfoDocModalButton = mbb(
   styles.infoModalButton,
@@ -163,12 +157,6 @@ export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
 export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
-export const AddVSPButton = mbb(null, ConfirmModal, KeyBlueButton);
-export const ScriptRedeemableButton = mbb(
-  null,
-  DocumentationInfoModal,
-  helpLinkButton
-);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
 export const CloseWalletModalButton = mbb(
@@ -182,9 +170,4 @@ export const InvisibleConfirmPoliteiaModalButton = mbb(
   null,
   ConfirmModal,
   PoliteiaLinkButton
-);
-export const InvisibleConfirmModalButton = mbb(
-  null,
-  ConfirmModal,
-  InvisibleButton
 );

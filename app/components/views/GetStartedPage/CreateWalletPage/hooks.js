@@ -7,16 +7,18 @@ import * as ca from "actions/ControlActions";
 export const useCreateWallet = () => {
   const pageBodyTopRef = useSelector(sel.pageBodyTopRef);
   const dispatch = useDispatch();
-  const decodeSeed = useCallback((seed) => dispatch(wla.decodeSeed(seed)), [
-    dispatch
-  ]);
+  const decodeSeed = useCallback(
+    (seed) => dispatch(wla.decodeSeed(seed)),
+    [dispatch]
+  );
   const cancelCreateWallet = useCallback(
     () => dispatch(wla.cancelCreateWallet()),
     [dispatch]
   );
-  const generateSeed = useCallback(() => dispatch(wla.generateSeed()), [
-    dispatch
-  ]);
+  const generateSeed = useCallback(
+    () => dispatch(wla.generateSeed()),
+    [dispatch]
+  );
   // TODO implement pubpass
   const createWatchOnlyWalletRequest = useCallback(
     (extendedPubKey, pubPass = "") =>

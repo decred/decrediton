@@ -84,6 +84,10 @@
   background-image: var(--release-image-v170);
 }
 
+.image.v180 {
+  background-image: var(--release-image-v180);
+}
+
 @media (--bg-viewport) {
   .image {
     flex: 1;

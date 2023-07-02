@@ -1,0 +1,15 @@
+.noDeviceContainer {
+  margin-top: 100px;
+  width: 100%;
+  text-align: center;
+}
+
+.backBt {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .noDeviceContainer {
+    width: 355px;
+  }
+}

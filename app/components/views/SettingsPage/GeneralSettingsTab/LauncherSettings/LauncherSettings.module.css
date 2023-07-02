@@ -1,0 +1,10 @@
+.checkbox > span:first-of-type {
+  margin: 0;
+  padding-left: 0.8rem;
+}
+
+.checkbox > span:last-of-type {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  margin-left: 1rem;
+}

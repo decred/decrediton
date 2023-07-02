@@ -24,10 +24,10 @@ export const useProposalDetailsPage = () => {
   const proposalsDetails = useSelector(sel.proposalsDetails);
   const getProposalError = useSelector(sel.getProposalError);
 
-  const viewedProposalDetails = useMemo(() => proposalsDetails[token], [
-    token,
-    proposalsDetails
-  ]);
+  const viewedProposalDetails = useMemo(
+    () => proposalsDetails[token],
+    [token, proposalsDetails]
+  );
 
   const linkedProposal = useMemo(
     () =>
@@ -46,9 +46,10 @@ export const useProposalDetailsPage = () => {
     (token) => dispatch(gov.getProposalDetails(token)),
     [dispatch]
   );
-  const goBackHistory = useCallback(() => dispatch(cli.goBackHistory()), [
-    dispatch
-  ]);
+  const goBackHistory = useCallback(
+    () => dispatch(cli.goBackHistory()),
+    [dispatch]
+  );
 
   const [{ value: votingStatus }, send] = useMachine(fetchMachine, {
     actions: {

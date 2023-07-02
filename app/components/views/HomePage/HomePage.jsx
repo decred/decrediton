@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FormattedMessage as T } from "react-intl";
+import { useSelector } from "react-redux";
 import { classNames } from "pi-ui";
 import ErrorScreen from "ErrorScreen";
 import { useService } from "hooks";
@@ -10,6 +11,7 @@ import RecentTransactions from "./RecentTransactions";
 import RecentTickets from "./RecentTickets";
 import { BalanceTab, TicketsTab, TransactionsTab } from "./Tabs";
 import styles from "./HomePage.module.css";
+import * as sel from "selectors";
 
 const ROWS_NUMBER_ON_TABLE = 5;
 
@@ -19,23 +21,23 @@ const tabMessages = {
   transactions: <T id="home.tab.transactions" m="Transactions" />
 };
 
-const tabs = [
-  {
-    label: tabMessages.balance,
-    component: <BalanceTab />,
-    icon: styles.balanceIcon
-  },
-  {
-    label: tabMessages.tickets,
-    component: <TicketsTab />,
-    icon: styles.ticketsIcon
-  },
-  {
-    label: tabMessages.transactions,
-    component: <TransactionsTab />,
-    icon: styles.txIcon
-  }
-];
+const balanceTab = {
+  label: tabMessages.balance,
+  component: <BalanceTab />,
+  icon: styles.balanceIcon
+};
+
+const ticketsTab = {
+  label: tabMessages.tickets,
+  component: <TicketsTab />,
+  icon: styles.ticketsIcon
+};
+
+const transactionsTab = {
+  label: tabMessages.transactions,
+  component: <TransactionsTab />,
+  icon: styles.txIcon
+};
 
 export default () => {
   const { walletService } = useService();
@@ -51,6 +53,27 @@ export default () => {
     goToMyTickets,
     tsDate
   } = useHomePage();
+
+  // TODO: Enable ticket purchacing for Trezor.
+  const isTrezor = useSelector(sel.isTrezor);
+  let recentTickets, tabs;
+  if (isTrezor) {
+    tabs = [balanceTab, transactionsTab];
+  } else {
+    recentTickets = (
+      <RecentTickets
+        {...{
+          tickets,
+          getTransactionsRequestAttempt,
+          getAccountsResponse,
+          rowNumber: ROWS_NUMBER_ON_TABLE,
+          goToMyTickets,
+          tsDate
+        }}
+      />
+    );
+    tabs = [balanceTab, ticketsTab, transactionsTab];
+  }
 
   return walletService ? (
     <StandalonePage>
@@ -86,16 +109,7 @@ export default () => {
             tsDate
           }}
         />
-        <RecentTickets
-          {...{
-            tickets,
-            getTransactionsRequestAttempt,
-            getAccountsResponse,
-            rowNumber: ROWS_NUMBER_ON_TABLE,
-            goToMyTickets,
-            tsDate
-          }}
-        />
+        {recentTickets}
       </div>
     </StandalonePage>
   ) : (

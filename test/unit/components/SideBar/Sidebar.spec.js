@@ -40,7 +40,7 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
-const defaultMenuLinkBorderColor = "border-color: rgba(255, 255, 255, 1)"; //sidebar-color
+const defaultMenuLinkBorderColor = "border-color: rgba(249, 250, 250, 1)"; //sidebar-color
 const activeMenuLinkBorderColor = "border-color: rgba(46, 216, 163, 1)";
 const testCurrentBlockHeight = 12;
 const testBalances = [
@@ -170,19 +170,11 @@ const expectToHaveDefaultMenuLinks = async (params) => {
       "/privacy",
       "Privacy and Security"
     );
-    if (isTrezorEnabled) {
-      await expectToHaveMenuLink(
-        "menuLinkContent-trezor",
-        "Trezor",
-        "trezorIcon",
-        "/trezor",
-        "Trezor"
-      );
-    } else {
-      expect(
-        screen.queryByTestId("menuLinkContent-trezor")
-      ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("menuLinkContent-trezor")
+    ).not.toBeInTheDocument();
 
+    if (!isTrezorEnabled) {
       await expectToHaveMenuLink(
         "menuLinkContent-dex",
         "DEX",
@@ -313,7 +305,7 @@ test("renders sidebar on the bottom", () => {
   mockSidebarOnBottom.mockRestore();
 });
 
-test("renders sidebar with trezor enabled", () => {
+test("renders sidebar with trezor enabled, should not find trezor menu, it have been moved to a separate tab under settings", () => {
   const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
   render(<SideBar />);
   expectToHaveDefaultMenuLinks({
@@ -513,9 +505,8 @@ test("tests tooltip on Logo when accountMixerRunning mode is active", () => {
 });
 
 test("tests notification icon on the menu link", () => {
-  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting = jest.fn(
-    () => true
-  ));
+  const mockNewProposalsStartedVoting = (selectors.newProposalsStartedVoting =
+    jest.fn(() => true));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");
@@ -524,9 +515,8 @@ test("tests notification icon on the menu link", () => {
 });
 
 test("tests notification icon on the menu link (newNotYetVotedAgendasCount)", () => {
-  const mockNewNotYetVotedAgendasCount = (selectors.newNotYetVotedAgendasCount = jest.fn(
-    () => 3
-  ));
+  const mockNewNotYetVotedAgendasCount = (selectors.newNotYetVotedAgendasCount =
+    jest.fn(() => 3));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");
@@ -535,9 +525,8 @@ test("tests notification icon on the menu link (newNotYetVotedAgendasCount)", ()
 });
 
 test("tests notification icon on the menu link (newNotYetVotedActiveProposalsCount)", () => {
-  const mockNewNotYetVotedActiveProposalsCount = (selectors.newNotYetVotedActiveProposalsCount = jest.fn(
-    () => 3
-  ));
+  const mockNewNotYetVotedActiveProposalsCount =
+    (selectors.newNotYetVotedActiveProposalsCount = jest.fn(() => 3));
   render(<SideBar />);
   const { menuLink } = getMenuContentByTestId("menuLinkContent-governance");
   expect(menuLink).toHaveClass("notificationIcon");

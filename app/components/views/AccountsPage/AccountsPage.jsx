@@ -20,6 +20,7 @@ const AccountsPageHeader = React.memo(
         />
       }
       iconType={ACCOUNTS_ICON}
+      docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#accounts"
       actionButton={
         <WatchOnlyWarnNotification isActive={isCreateAccountDisabled}>
           <PassphraseModalButton
@@ -38,10 +39,8 @@ const AccountsPageHeader = React.memo(
 );
 
 const AccountsPage = () => {
-  const {
-    isCreateAccountDisabled,
-    onGetNextAccountAttempt
-  } = useAccountsPage();
+  const { isCreateAccountDisabled, onGetNextAccountAttempt } =
+    useAccountsPage();
 
   return (
     <StandalonePage

@@ -1,62 +1,44 @@
-import { useState, useEffect } from "react";
-import { Tooltip } from "pi-ui";
 import { Subtitle } from "shared";
-import { GoBackMsg } from "../../messages";
 import { FormattedMessage as T } from "react-intl";
 import { PassphraseModalButton, InvisibleButton } from "buttons";
 import styles from "./ProcessUnmanagedTickets.module.css";
-import { BackButton, BackButtonArea } from "../../helpers";
 import { VSPSelect } from "inputs";
+import { useProcessUnmanagedTickets } from "./hooks";
 
-export default ({
-  cancel,
-  send,
-  onProcessTickets,
-  title,
-  description,
-  noVspSelection,
-  isProcessingUnmanaged,
-  error,
-  availableVSPs
-}) => {
-  const [isValid, setIsValid] = useState(false);
-  const [vsp, setVSP] = useState(null);
-
-  const onSubmitContinue = (passphrase) => {
-    onProcessTickets(passphrase, vsp.host, vsp.pubkey)
-      .then(() => send({ type: "CONTINUE" }))
-      .catch((error) => {
-        send({ type: "ERROR", error });
-      });
-  };
-
-  useEffect(() => {
-    if (noVspSelection) {
-      setIsValid(true);
-      return;
-    }
-    if (vsp) {
-      setIsValid(true);
-    }
-  }, [vsp, noVspSelection]);
+export default ({ cancel, send, error }) => {
+  const {
+    isProcessingUnmanaged,
+    availableVSPs,
+    vsp,
+    setVSP,
+    onSubmitContinue
+  } = useProcessUnmanagedTickets({ send });
 
   return (
     <div className={styles.content}>
-      <BackButtonArea>
-        {isProcessingUnmanaged && (
-          <Tooltip content={<GoBackMsg />}>
-            <BackButton onClick={cancel} />
-          </Tooltip>
-        )}
-      </BackButtonArea>
-      <Subtitle className={styles.subtitle} title={title} />
-      <div className={styles.description}>{description}</div>
-      {!noVspSelection && (
-        <VSPSelect
-          className={styles.vspSelect}
-          {...{ onChange: setVSP, options: availableVSPs }}
-        />
-      )}
+      <Subtitle
+        className={styles.subtitle}
+        title={
+          <T
+            id="getstarted.processUnmangedTickets.title"
+            m="Process Unmanaged Tickets"
+          />
+        }
+      />
+      <div className={styles.description}>
+        {
+          <T
+            id="getstarted.processUnmangedTickets.description"
+            m={`Looks like you have vsp ticket with unprocessed fee.
+                If they are picked to vote and they are not linked with a vsp,
+                they may miss, if you are not properly dealing with solo vote.`}
+          />
+        }
+      </div>
+      <VSPSelect
+        className={styles.vspSelect}
+        {...{ onChange: setVSP, options: availableVSPs }}
+      />
       {error && <div className="error">{error}</div>}
       <div className={styles.buttonWrapper}>
         <PassphraseModalButton
@@ -64,14 +46,15 @@ export default ({
           modalClassName={styles.passphraseModal}
           onSubmit={onSubmitContinue}
           buttonLabel={<T id="process.unmangedTickets.button" m="Continue" />}
-          disabled={!isValid || isProcessingUnmanaged}
+          disabled={!vsp || isProcessingUnmanaged}
           loading={isProcessingUnmanaged}
         />
-        {!isProcessingUnmanaged && (
-          <InvisibleButton className={styles.skipButton} onClick={cancel}>
-            <T id="process.unmanagedTickets.button.skip" m="Skip" />
-          </InvisibleButton>
-        )}
+        <InvisibleButton
+          className={styles.skipButton}
+          onClick={cancel}
+          disabled={isProcessingUnmanaged}>
+          <T id="process.unmanagedTickets.button.skip" m="Skip" />
+        </InvisibleButton>
       </div>
     </div>
   );

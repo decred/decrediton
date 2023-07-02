@@ -1,4 +1,4 @@
-import AnimatedLinearProgressFull from "components/indicators/LinearProgress/AnimatedLinearProgressFull";
+import AnimatedLinearProgressFull from "components/indicators/AnimatedLinearProgressFull";
 import { render } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import * as sel from "selectors";
@@ -31,9 +31,10 @@ test("tests default AnimatedLinearProgressFull", () => {
   const mockGetSelectedWallet = (selectors.getSelectedWallet = jest.fn(() => {
     return {};
   }));
-  const mockSyncFetchHeadersLastHeaderTime = (selectors.syncFetchHeadersLastHeaderTime = jest.fn(
-    () => testSyncFetchHeadersLastHeaderTime
-  ));
+  const mockSyncFetchHeadersLastHeaderTime =
+    (selectors.syncFetchHeadersLastHeaderTime = jest.fn(
+      () => testSyncFetchHeadersLastHeaderTime
+    ));
 
   let mockGetCurrentBlockCount = (selectors.getCurrentBlockCount = jest.fn(
     () => testCurrentBlockCount
@@ -45,7 +46,7 @@ test("tests default AnimatedLinearProgressFull", () => {
     () => 3113
   ));
 
-  const checkLinearProgressBoxes = (expectedWidth, expectedBoxCount) => {
+  const checkLinearProgressBar = (expectedWidth) => {
     mockGetCurrentBlockCount = selectors.getCurrentBlockCount = jest.fn(
       () => testCurrentBlockCount
     );
@@ -58,13 +59,13 @@ test("tests default AnimatedLinearProgressFull", () => {
         )
       ).toBeInTheDocument();
     }
-    const textElement = screen.getByText(testProps.text);
-    expect(textElement.previousSibling.childNodes.length).toBe(
-      expectedBoxCount
-    );
-    const linearProgressBar = textElement.previousSibling.previousSibling;
-    expect(linearProgressBar).toHaveClass("linearProgressBar");
-    expect(linearProgressBar).toHaveStyle(`width: ${expectedWidth}%;`);
+
+    if (expectedWidth > 0) {
+      const textElement = screen.getByText(testProps.text);
+      const linearProgressBar = textElement.previousSibling;
+      expect(linearProgressBar).toHaveClass("linearProgressBar");
+      expect(linearProgressBar).toHaveStyle(`width: ${expectedWidth}%;`);
+    }
   };
 
   const { rerender } = render(<AnimatedLinearProgressFull {...testProps} />);
@@ -82,44 +83,45 @@ test("tests default AnimatedLinearProgressFull", () => {
     screen.getByText(/2 hours ago/i).closest("div.loaderBarEstimation")
       .textContent
   ).toBe("Time from last fetched header: 2 hours ago");
-  expect(screen.getByText(testProps.text)).toHaveClass(
-    `linearProgressText ${testProps.animationType}`
-  );
-  checkLinearProgressBoxes(0, 0);
+
+  expect(
+    screen.getByText(testProps.text).parentNode.nextSibling.firstChild
+  ).toHaveClass(`icon ${testProps.animationType}`);
+  checkLinearProgressBar(0);
 
   /* increase current block count */
   testCurrentBlockCount = 100267;
-  checkLinearProgressBoxes(20.653976323535773, 1);
+  checkLinearProgressBar(20.653976323535773);
 
   /* increase current block count */
   testCurrentBlockCount = 190267;
-  checkLinearProgressBoxes(39.19305567285529, 2);
+  checkLinearProgressBar(39.19305567285529);
 
   /* increase current block count */
   testCurrentBlockCount = 290267;
-  checkLinearProgressBoxes(59.79203272765474, 3);
+  checkLinearProgressBar(59.79203272765474);
 
   /* increase current block count */
   testCurrentBlockCount = 350267;
-  checkLinearProgressBoxes(72.15141896053441, 4);
+  checkLinearProgressBar(72.15141896053441);
 
   /* increase current block count */
   testCurrentBlockCount = 400267;
-  checkLinearProgressBoxes(82.45090748793415, 5);
+  checkLinearProgressBar(82.45090748793415);
 
   /* increase current block count */
   testCurrentBlockCount = 460267;
-  checkLinearProgressBoxes(94.81029372081382, 6);
+  checkLinearProgressBar(94.81029372081382);
 
   /* increase current block count */
   testCurrentBlockCount = testNeededBlocks;
-  checkLinearProgressBoxes(100, 0);
+  checkLinearProgressBar(100);
 
   // test error mode
   rerender(<AnimatedLinearProgressFull error={true} {...testProps} />);
-  expect(
-    screen.getByText(testProps.text).previousSibling.previousSibling
-  ).toHaveClass("linearProgressBar error");
+  expect(screen.getByText(testProps.text).previousSibling).toHaveClass(
+    "linearProgressBar error"
+  );
 
   mockIsSPV.mockRestore();
   mockGetNeededBlocks.mockRestore();
@@ -168,8 +170,8 @@ test("dcrwallet log line is shown or log the error to console", async () => {
   );
 
   // test DcrwalletLogLine error
-  mockGetDcrwalletLogs = daemonActions.getDcrwalletLogs = jest.fn(() => () =>
-    Promise.reject()
+  mockGetDcrwalletLogs = daemonActions.getDcrwalletLogs = jest.fn(
+    () => () => Promise.reject()
   );
   act(() => {
     jest.advanceTimersByTime(2001);
@@ -189,23 +191,20 @@ test("dcrwallet log line is shown or log the error to console", async () => {
 
 test("tests when deamon is synced", () => {
   const mockIsSPV = (selectors.isSPV = jest.fn(() => false));
+  const mockStakeTransactions = (selectors.stakeTransactions = jest.fn(
+    () => []
+  ));
   const mockGetDaemonSynced = (selectors.getDaemonSynced = jest.fn(() => true));
-  const { rerender } = render(<AnimatedLinearProgressFull {...testProps} />);
+  render(<AnimatedLinearProgressFull {...testProps} />);
 
   const textElement = screen.getByText(testProps.text);
-  expect(textElement).toHaveClass(
-    `linearProgressText ${testProps.animationType}`
-  );
-  expect(textElement.previousSibling).toHaveStyle("");
-  expect(textElement.previousSibling).toHaveClass("linearProgressBar");
-
-  // test error mode
-  rerender(<AnimatedLinearProgressFull error={true} {...testProps} />);
-  expect(screen.getByText(testProps.text).previousSibling).toHaveClass(
-    "linearProgressBar error"
-  );
+  expect(
+    screen.getByText(testProps.text).parentNode.nextSibling.firstChild
+  ).toHaveClass(`icon ${testProps.animationType}`);
+  expect(textElement.previousSibling).toBe(null);
 
   mockIsSPV.mockRestore();
+  mockStakeTransactions.mockRestore();
   mockGetDaemonSynced.mockRestore();
 });
 
@@ -214,23 +213,21 @@ test("tests when isSPV is true", () => {
   const mockGetDaemonSynced = (selectors.getDaemonSynced = jest.fn(
     () => false
   ));
-
-  const { rerender } = render(<AnimatedLinearProgressFull {...testProps} />);
+  const mockStakeTransactions = (selectors.stakeTransactions = jest.fn(
+    () => []
+  ));
+  render(<AnimatedLinearProgressFull {...testProps} />);
 
   const textElement = screen.getByText(testProps.text);
-  expect(textElement).toHaveClass(
-    `linearProgressText ${testProps.animationType}`
+  expect(textElement.parentNode.nextSibling.firstChild.nextSibling).toHaveClass(
+    `icon ${testProps.animationType}`
   );
-  expect(textElement.previousSibling).toHaveStyle("");
-  expect(textElement.previousSibling).toHaveClass("linearProgressBar");
-
-  // test error mode
-  rerender(<AnimatedLinearProgressFull error={true} {...testProps} />);
-  expect(screen.getByText(testProps.text).previousSibling).toHaveClass(
-    "linearProgressBar error"
+  expect(textElement.parentNode.nextSibling.firstChild.textContent).toMatch(
+    /spv mode/i
   );
 
   mockIsSPV.mockRestore();
+  mockStakeTransactions.mockRestore();
   mockGetDaemonSynced.mockRestore();
 });
 

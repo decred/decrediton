@@ -29,8 +29,6 @@ let mockWalletCfgGet;
 let mockWalletCfgSet;
 
 beforeEach(() => {
-  selectors.getIsLegacy = jest.fn(() => false);
-  selectors.stakePoolListingEnabled = jest.fn(() => true);
   selectors.getAvailableVSPs = jest.fn(() => mockAvailableVsps);
   selectors.spendingAccounts = jest.fn(() => [mockMixedAccount]);
   selectors.visibleAccounts = jest.fn(() => [mockMixedAccount]);
@@ -105,8 +103,8 @@ test("render TicketsPage - show staking warning", async () => {
 
   // initial state
   expect(understandButton.disabled).toBe(true);
-  expect(tab1.textContent).toBe("1/3Time-locking coins");
-  expect(tab2.textContent).toBe("2/3Tickets have multiple functions");
+  expect(tab1.textContent).toBe("1/3Buying tickets");
+  expect(tab2.textContent).toBe("2/3Tickets have multiple uses");
   expect(tab3.textContent).toBe("3/3Rewards");
   expect(previousButton.className).toMatch("disabled");
   expect(previousArrowButton.className).toMatch("disabled");

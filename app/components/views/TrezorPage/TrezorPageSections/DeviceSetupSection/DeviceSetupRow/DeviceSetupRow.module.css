@@ -1,0 +1,57 @@
+.deviceSetupRow {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+}
+
+.title {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: var(--main-dark-blue);
+  margin-bottom: 7px;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  margin-right: 13px;
+}
+
+.icon.TrezorWipeDevice {
+  background-image: var(--tz-wipe-device);
+}
+
+.icon.TrezorRecoverDevice {
+  background-image: var(--tz-recover-device);
+}
+
+.icon.TrezorInitDevice {
+  background-image: var(--tz-init-device);
+}
+
+.icon.TrezorBackupDevice {
+  background-image: var(--tz-backup-device);
+}
+
+.button {
+  height: 29px;
+  font-size: 13px;
+  line-height: 16.34px;
+  padding: 6px 10px;
+  margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .deviceSetupRow {
+    display: grid;
+    grid-template-columns: min-content auto;
+  }
+
+  .button {
+    grid-column: 1/3;
+  }
+}

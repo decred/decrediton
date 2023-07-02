@@ -4,8 +4,7 @@ const tutorials = {};
 
 tutorials.decredIntro = {
   title: "Decred Intro",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Learn how and why Decred was created.", // TODO
   thumbnailImage: "decredIntroThumb",
   slides: [
     {
@@ -24,7 +23,7 @@ tutorials.decredIntro = {
       title: (
         <T
           id="tutorials.decredIntro.title2"
-          m="Governance systems empower its community"
+          m="Governance systems empower its community of stakeholders."
         />
       ),
       images: ["decredIntroSlideImage2-1", "decredIntroSlideImage2-2"]
@@ -34,28 +33,29 @@ tutorials.decredIntro = {
 
 tutorials.ln = {
   title: "What is Lightning Network?",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Learn how we've the basics of Lightning Network, our 2nd layer implementation for super fast transactions.", // TODO
   thumbnailImage: "lnThumb",
   slides: [
     {
-      label: <T id="tutorials.ln.label1" m="Backup" />,
+      label: <T id="tutorials.ln.label1" m="Important" />,
       doc: "LNWalletCreationWarningPage01",
       title: (
         <T
           id="tutorials.ln.title1"
-          m="Backup data is needed in addition to wallet seed."
+          m="Import information to avoid lose of funds:"
         />
       ),
       images: ["LNSlideImage1"]
     },
     {
-      label: <T id="tutorials.ln.label6" m="Lightning is a Layer 2 Network" />,
+      label: (
+        <T id="tutorials.ln.label6" m="Lightning is a 2nd Layer Network" />
+      ),
       doc: "LNWalletCreationWarningPage06",
       title: (
         <T
           id="tutorials.ln.title6"
-          m="Lightning Network is a layer 2 network on top of the Decred blockchain, designed to facilitate micropayments more efficiently."
+          m="Lightning Network is a 2nd layer network on top of the Decred blockchain, designed to facilitate micropayments more efficiently."
         />
       ),
       images: ["LNSlideImage2"]
@@ -109,8 +109,7 @@ tutorials.ln = {
 
 tutorials.consensusCode = {
   title: "Consensus Code",
-  desc:
-    "Small description of decredIntroThumbthe tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "For most coins, consensus code does not allow for orderly upgrades.  Decred's voting system allows for smooth upgrades that are easily understood by everyone.", // TODO
   thumbnailImage: "consensusCodeThumb",
   slides: [
     {
@@ -126,24 +125,19 @@ tutorials.consensusCode = {
 
 tutorials.powPos = {
   title: "Hybrid PoW/PoS",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "With a hybrid system, we've taken the best of both PoW and PoS to obtain fair and secure block creation.", // TODO
   thumbnailImage: "powPosThumb",
   slides: [
     {
-      label: <T id="tutorials.powPos.label1" m="POW" />, // TODO
+      label: <T id="tutorials.powPos.label1" m="PoW" />, // TODO
       doc: "PowPosPage01",
-      title: (
-        <T id="tutorials.powPos.title1" m="1 CPU, 1 Vote – Proof-of-Work" />
-      ),
+      title: <T id="tutorials.powPos.title1" m="Proof-of-Work" />,
       images: ["powPosSlideImage1"]
     },
     {
-      label: <T id="tutorials.powPos.label2" m="POS" />, // TODO
+      label: <T id="tutorials.powPos.label2" m="PoS" />, // TODO
       doc: "PowPosPage02",
-      title: (
-        <T id="tutorials.powPos.title2" m="1 Coin, 1 Vote – Proof-Of Stake" />
-      ),
+      title: <T id="tutorials.powPos.title2" m="Proof-of-Stake" />,
       images: ["powPosSlideImage2"]
     },
     {
@@ -162,29 +156,24 @@ tutorials.powPos = {
 
 tutorials.tickets = {
   title: "Staking and Tickets",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Typically staking can be complicated, with tickets and votes it's easy to understand and see how your hard-earned DCR is being put to use.", // TODO
   thumbnailImage: "ticketsThumb",
   slides: [
     {
-      label: <T id="tutorials.tickets.label1" m="Time-locking coins" />, // TODO
+      label: <T id="tutorials.tickets.label1" m="Buying tickets" />, // TODO
       doc: "TicketsPage01",
       title: (
         <T
           id="tutorials.tickets.title1"
-          m="Tickets are created by time-locking coins"
+          m="Tickets can be purchased to participate in the PoS system."
         />
       ),
       images: ["ticketsSlideImage1"]
     },
     {
-      label: (
-        <T id="tutorials.tickets.label2" m="Tickets have multiple functions" />
-      ), // TODO
+      label: <T id="tutorials.tickets.label2" m="Tickets have multiple uses" />, // TODO
       doc: "TicketsPage02",
-      title: (
-        <T id="tutorials.tickets.title2" m="Tickets have multiple functions" />
-      ),
+      title: <T id="tutorials.tickets.title2" m="Tickets have multiple uses" />,
       images: ["ticketsSlideImage2-1", "ticketsSlideImage2-2"]
     },
     {
@@ -198,14 +187,13 @@ tutorials.tickets = {
 
 tutorials.staking = {
   title: "Core Functions of Staking",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Learn about the core functions of staking and how your votes lead to real changes.", // TODO
   thumbnailImage: "stakingThumb",
   slides: [
     {
-      label: <T id="tutorials.staking.label1" m="New block creation" />, // TODO
+      label: <T id="tutorials.staking.label1" m="Previous Block Validation" />, // TODO
       doc: "StakingPage01",
-      title: <T id="tutorials.staking.title1" m="New block creation" />,
+      title: <T id="tutorials.staking.title1" m="Previous Block Validation" />,
       images: ["stakingSlideImage1"]
     },
     {
@@ -234,31 +222,19 @@ tutorials.staking = {
 
 tutorials.lifecycle = {
   title: "Ticket Lifecycle",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Learn all about how a ticket is created, consumed and the rewards for voting.", // TODO
   thumbnailImage: "lifecycleThumb",
   slides: [
     {
-      label: (
-        <T id="tutorials.lifecycle.label1" m="Proof-of-Stake, Block Rewards" />
-      ), // TODO
+      label: <T id="tutorials.lifecycle.label1" m="Tickets to real rewards" />, // TODO
       doc: "LifecyclePage01",
-      title: (
-        <T id="tutorials.lifecycle.title1" m="Proof-of-Stake, Block Rewards" />
-      ),
+      title: <T id="tutorials.lifecycle.title1" m="Tickets to real rewards" />,
       images: ["lifecycleSlideImage1-1", "lifecycleSlideImage1-2"]
     },
     {
-      label: (
-        <T id="tutorials.lifecycle.label2" m="Ticket's different states" />
-      ), // TODO
+      label: <T id="tutorials.lifecycle.label2" m="Ticket's Lifecycle" />, // TODO
       doc: "LifecyclePage02",
-      title: (
-        <T
-          id="tutorials.lifecycle.title2"
-          m="Ticket goes through different states in their lifecycle"
-        />
-      ),
+      title: <T id="tutorials.lifecycle.label2" m="Ticket's Lifecycle" />,
       images: ["lifecycleSlideImage2"]
     },
     {
@@ -285,13 +261,9 @@ tutorials.lifecycle = {
       ]
     },
     {
-      label: (
-        <T id="tutorials.lifecycle.label6" m="“When Something Went Wrong”" />
-      ), // TODO
+      label: <T id="tutorials.lifecycle.label6" m="Missed or Expired" />, // TODO
       doc: "LifecyclePage06",
-      title: (
-        <T id="tutorials.lifecycle.title6" m="“When Something Went Wrong”" />
-      ),
+      title: <T id="tutorials.lifecycle.title6" m="Missed or Expired" />,
       images: [
         "lifecycleSlideImage6-1",
         "lifecycleSlideImage6-2",
@@ -303,8 +275,7 @@ tutorials.lifecycle = {
 
 tutorials.consensusVoting = {
   title: "Consensus Voting",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Learn all about how the consensus vote takes place and how your votes are tabulated.", // TODO
   thumbnailImage: "consensusVotingThumb",
   slides: [
     {
@@ -338,15 +309,15 @@ tutorials.consensusVoting = {
       images: ["consensusVotingSlideImage5"]
     },
     {
-      label: <T id="tutorials.consensusVoting.label6" m="Ticket Lifecycle" />, // TODO
+      label: <T id="tutorials.consensusVoting.label6" m="Outcomes" />, // TODO
       doc: "ConsensusVotingPage06",
-      title: <T id="tutorials.consensusVoting.title6" m="Ticket Lifecycle" />,
+      title: <T id="tutorials.consensusVoting.title6" m="Outcomes" />,
       images: ["consensusVotingSlideImage6"]
     },
     {
-      label: <T id="tutorials.consensusVoting.label7" m="Approval" />, // TODO
+      label: <T id="tutorials.consensusVoting.label7" m="Conclusion" />, // TODO
       doc: "ConsensusVotingPage07",
-      title: <T id="tutorials.consensusVoting.title7" m="Approval" />,
+      title: <T id="tutorials.consensusVoting.title7" m="Conclusion" />,
       images: ["consensusVotingSlideImage7"]
     }
   ]
@@ -354,8 +325,7 @@ tutorials.consensusVoting = {
 
 tutorials.blocks = {
   title: "Block Creation",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
   thumbnailImage: "blocksThumb",
   slides: [
     {
@@ -397,8 +367,7 @@ tutorials.blocks = {
 
 tutorials.identity = {
   title: "Identity (Pi/CMS)",
-  desc:
-    "Small description of the tutorial in 1-2 sentences. Small description of the tutorial in 1-2 sentences. ", // TODO
+  desc: "", // TODO
   slides: [
     {
       label: <T id="tutorials.identity.label1" m="Back-up your ID" />, // TODO

@@ -4,28 +4,13 @@ import { Tooltip, classNames } from "pi-ui";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
 import HeatmapStats from "./Heatmap/Heatmap";
-import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Subtitle } from "shared";
 import { useStatistics } from "./hooks.js";
 import styles from "./Statistics.module.css";
 
-const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
+const subtitleMenu = ({ hasStats }) => (
   <div className={styles.myTicketsStatsLinks}>
-    {allStakePoolStats.length > 0 && (
-      <Tooltip
-        contentClassName="my-tickets-tooltip"
-        content={<T id="mytickets.statistics.stakepoolstats.title" m="VSP" />}>
-        <Link
-          to="/tickets/statistics/stakepool"
-          activeClassName={classNames(
-            styles.myTicketsActiveChartLink,
-            styles.stakepool
-          )}
-          className={styles.stakepool}
-        />
-      </Tooltip>
-    )}
     {hasStats && (
       <>
         <Tooltip
@@ -72,20 +57,16 @@ const subtitleMenu = ({ allStakePoolStats, hasStats }) => (
 );
 
 const StatisticsTab = () => {
-  const {
-    getMyTicketsStatsRequest,
-    hasStats,
-    hasTickets,
-    allStakePoolStats
-  } = useStatistics();
+  const { getMyTicketsStatsRequest, hasStats, hasTickets } = useStatistics();
 
-  if (!hasTickets && allStakePoolStats.length === 0) return <NoStats />;
+  if (!hasTickets) return <NoStats />;
   return (
     <>
       <Subtitle
         title={<T id="statistics.subtitle" m="Statistics" />}
         className={styles.isRow}
-        children={subtitleMenu({ allStakePoolStats, hasStats })}
+        children={subtitleMenu({ hasStats })}
+        docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#statistics"
       />
       <div className={styles.charts}>
         {getMyTicketsStatsRequest ? (
@@ -101,26 +82,16 @@ const StatisticsTab = () => {
               component={StakeRewardsChartPage}
             />
             <Route
-              path="/tickets/statistics/stakepool"
-              component={StakePoolStats}
-            />
-            <Route
               path="/tickets/statistics/heatmap"
               component={HeatmapStats}
             />
-            {hasStats || allStakePoolStats.length > 0 ? (
+            {hasStats && (
               <Redirect
                 from="/tickets/statistics"
                 exact
-                to={
-                  allStakePoolStats.length > 0
-                    ? "/tickets/statistics/stakepool"
-                    : hasStats
-                    ? "/tickets/statistics/stakerewards"
-                    : ""
-                }
+                to={"/tickets/statistics/stakerewards"}
               />
-            ) : null}
+            )}
           </Switch>
         )}
       </div>

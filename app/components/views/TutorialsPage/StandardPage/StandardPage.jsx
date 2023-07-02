@@ -4,9 +4,8 @@ import { StepIndicator } from "indicators";
 import { Documentation } from "shared";
 import styles from "./StandardPage.module.css";
 
-export const MakeStandardPage = (image, docName) => (props) => (
-  <StandardPage {...props} docName={docName} image={image} />
-);
+export const MakeStandardPage = (image, docName) => (props) =>
+  <StandardPage {...props} docName={docName} image={image} />;
 
 const StandardPage = ({
   image,

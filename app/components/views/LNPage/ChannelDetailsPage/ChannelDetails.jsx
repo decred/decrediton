@@ -9,6 +9,7 @@ import {
 } from "./helpers";
 import { DetailsTable } from "shared";
 import { CloseChannelModalButton } from "buttons";
+import { CHANNEL_STATUS_CLOSED } from "constants";
 
 const ChannelDetails = () => {
   const { channel, goBackHistory, onCloseChannel } = useChannelDetails();
@@ -33,7 +34,7 @@ const ChannelDetails = () => {
         />
       </div>
 
-      {channel.active && (
+      {channel.status !== CHANNEL_STATUS_CLOSED && (
         <div className={styles.buttonContrainer}>
           <CloseChannelModalButton
             className={styles.closeButton}

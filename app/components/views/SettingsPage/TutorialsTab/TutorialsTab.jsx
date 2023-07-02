@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Subtitle } from "shared";
 import { TutorialOverview, TutorialPage, tutorials } from "./helpers";
 import { useTutorialsTab } from "./hooks";
+import styles from "./TutorialsTab.module.css";
 
 const TutorialsTab = () => {
   const {
@@ -35,7 +36,7 @@ const TutorialsTab = () => {
       }}
     />
   ) : (
-    <>
+    <div className={styles.container}>
       <Subtitle
         title={<T id="tutorials.learnAboutDecred" m="Learn about decred" />}
       />
@@ -47,9 +48,7 @@ const TutorialsTab = () => {
         "tickets",
         "staking",
         "lifecycle",
-        "consensusVoting",
-        "blocks",
-        "identity"
+        "consensusVoting"
       ].map((name) => (
         <TutorialOverview
           {...{
@@ -62,7 +61,7 @@ const TutorialsTab = () => {
           }}
         />
       ))}
-    </>
+    </div>
   );
 };
 

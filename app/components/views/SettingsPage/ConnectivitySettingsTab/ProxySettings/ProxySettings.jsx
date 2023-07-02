@@ -8,6 +8,8 @@ import {
 } from "constants";
 import styles from "./ProxySettings.module.css";
 import { Label, Box } from "../../helpers";
+import { useProxySettings } from "./hooks";
+import { Button } from "pi-ui";
 
 const availableProxyTypes = [
   { name: <T id="settings.proxy.type.none" m="No Proxy" />, value: null },
@@ -17,41 +19,57 @@ const availableProxyTypes = [
   { name: "SOCKS5", value: PROXYTYPE_SOCKS5 }
 ];
 
-const ProxySettings = ({ tempSettings, onChangeTempSettings }) => (
-  <Box className={styles.box}>
-    <div>
-      <Label id="proxy-type-input">
-        <T id="settings.proxy.type" m="Proxy Type" />
-      </Label>
-      <SettingsInput
-        selectWithBigFont
-        className={styles.input}
-        value={tempSettings.proxyType}
-        onChange={(newProxyType) =>
-          onChangeTempSettings({ proxyType: newProxyType.value })
-        }
-        valueKey="value"
-        labelKey="name"
-        ariaLabelledBy="proxy-type-input"
-        options={availableProxyTypes}
-      />
-    </div>
+const ProxySettings = ({ tempSettings, onChangeTempSettings }) => {
+  const { proxyType, proxyLocation, setProxyType, setProxyLocation } =
+    useProxySettings(tempSettings);
 
-    <div>
-      <Label id="proxy-location">
-        <T id="settings.proxy.location" m="Proxy Location" />
-      </Label>
-      <SettingsTextInput
-        newBiggerFontStyle
-        inputClassNames={styles.settingsTextInput}
-        id="proxyLocationInput"
-        value={tempSettings.proxyLocation}
-        ariaLabelledBy="proxy-location"
-        onChange={(value) => onChangeTempSettings({ proxyLocation: value })}
-      />
-    </div>
-  </Box>
-);
+  const isProxySettingsChanged =
+    proxyType !== tempSettings.proxyType ||
+    proxyLocation !== tempSettings.proxyLocation;
+
+  return (
+    <Box className={styles.box}>
+      <div>
+        <Label id="proxy-type-input">
+          <T id="settings.proxy.type" m="Proxy Type" />
+        </Label>
+        <SettingsInput
+          selectWithBigFont
+          className={styles.input}
+          value={proxyType}
+          onChange={(newProxyType) => setProxyType(newProxyType.value)}
+          valueKey="value"
+          labelKey="name"
+          ariaLabelledBy="proxy-type-input"
+          options={availableProxyTypes}
+        />
+      </div>
+
+      <div>
+        <Label id="proxy-location">
+          <T id="settings.proxy.location" m="Proxy Location" />
+        </Label>
+        <SettingsTextInput
+          newBiggerFontStyle
+          inputClassNames={styles.settingsTextInput}
+          id="proxyLocationInput"
+          value={proxyLocation}
+          ariaLabelledBy="proxy-location"
+          onChange={(value) => setProxyLocation(value)}
+        />
+      </div>
+
+      {isProxySettingsChanged && (
+        <Button
+          className={styles.submitButton}
+          size="sm"
+          onClick={() => onChangeTempSettings({ proxyType, proxyLocation })}>
+          <T id="settings.proxy.save" m="Save proxy settings" />
+        </Button>
+      )}
+    </Box>
+  );
+};
 
 ProxySettings.propTypes = {
   tempSettings: PropTypes.object.isRequired,

@@ -3,7 +3,6 @@ import {
   DISCOVERAVAILABLEVSPS_FAILED,
   GETVSPTICKETSTATUS_SUCCESS,
   HASVSPTICKETSERRORED,
-  TOGGLE_ISLEGACY,
   SET_REMEMBERED_VSP_HOST,
   SYNCVSPTICKETS_ATTEMPT,
   SYNCVSPTICKETS_FAILED,
@@ -28,14 +27,21 @@ import {
   GETUNSPENTUNEXPIREDVSPTICKETS_ATTEMPT,
   GETUNSPENTUNEXPIREDVSPTICKETS_SUCCESS,
   GETUNSPENTUNEXPIREDVSPTICKETS_FAILED,
+  UPDATE_USED_VSPS,
+  RESENDVSPDVOTECHOICES_ATTEMPT,
+  RESENDVSPDVOTECHOICES_SUCCESS,
+  RESENDVSPDVOTECHOICES_FAILED,
   GETVSP_TICKET_STATUS_ATTEMPT,
   GETVSP_TICKET_STATUS_SUCCESS,
-  GETVSP_TICKET_STATUS_FAILED
+  GETVSP_TICKET_STATUS_FAILED,
+  SET_ACCOUNT_FOR_TICKET_PURCHASE,
+  SET_SELECTED_VSP,
+  SET_NUM_TICKETS_TO_BUY
 } from "actions/VSPActions";
 import {
-  STARTTICKETBUYERV3_ATTEMPT,
-  STARTTICKETBUYERV3_SUCCESS,
-  STARTTICKETBUYERV3_FAILED,
+  STARTTICKETBUYER_ATTEMPT,
+  STARTTICKETBUYER_SUCCESS,
+  STARTTICKETBUYER_FAILED,
   STOPTICKETBUYER_SUCCESS
 } from "actions/ControlActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
@@ -54,9 +60,9 @@ export default function vsp(state = {}, action) {
         availableVSPs: null,
         availableVSPsError: action.error
       };
-    case STARTTICKETBUYERV3_ATTEMPT:
+    case STARTTICKETBUYER_ATTEMPT:
       return { ...state, ticketAutoBuyerRunning: false };
-    case STARTTICKETBUYERV3_SUCCESS:
+    case STARTTICKETBUYER_SUCCESS:
       return {
         ...state,
         ticketAutoBuyerRunning: true,
@@ -65,7 +71,7 @@ export default function vsp(state = {}, action) {
         balanceToMaintain: action.balanceToMaintain,
         account: action.account.name
       };
-    case STARTTICKETBUYERV3_FAILED:
+    case STARTTICKETBUYER_FAILED:
       return { ...state, ticketAutoBuyerRunning: false };
     case STOPTICKETBUYER_SUCCESS:
       return { ...state, ticketAutoBuyerRunning: false };
@@ -79,10 +85,10 @@ export default function vsp(state = {}, action) {
       };
     case HASVSPTICKETSERRORED:
       return { ...state, hasVSPTicketsError: action.hasVSPTicketsError };
-    case TOGGLE_ISLEGACY:
-      return { ...state, isLegacy: action.isLegacy };
     case SET_REMEMBERED_VSP_HOST:
       return { ...state, rememberedVspHost: action.rememberedVspHost };
+    case UPDATE_USED_VSPS:
+      return { ...state, usedVSPs: action.usedVSPs };
     case SYNCVSPTICKETS_ATTEMPT:
       return {
         ...state,
@@ -192,7 +198,11 @@ export default function vsp(state = {}, action) {
       return {
         ...state,
         trackedTickets: {},
-        needsProcessManagedTickets: true
+        needsProcessManagedTickets: true,
+        account: null,
+        selectedAccountForTicketPurchase: null,
+        selectedVSP: null,
+        numVSPicketsToBuy: 1
       };
     case GETVSP_ATTEMPT:
       return {
@@ -223,6 +233,19 @@ export default function vsp(state = {}, action) {
         getUnspentUnexpiredVspTicketsError: String(action.error),
         getUnspentUnexpiredVspTicketsAttempt: false
       };
+    case RESENDVSPDVOTECHOICES_ATTEMPT:
+      return { ...state, resendVSPDVoteChoicesAttempt: true };
+    case RESENDVSPDVOTECHOICES_SUCCESS:
+      return {
+        ...state,
+        resendVSPDVoteChoicesAttempt: false
+      };
+    case RESENDVSPDVOTECHOICES_FAILED:
+      return {
+        ...state,
+        resendVSPDVoteChoicesAttemptError: String(action.error),
+        resendVSPDVoteChoicesAttempt: false
+      };
     case GETVSP_TICKET_STATUS_ATTEMPT:
       return { ...state, getVSPTicketStatusAttempt: true };
     case GETVSP_TICKET_STATUS_SUCCESS:
@@ -235,6 +258,21 @@ export default function vsp(state = {}, action) {
         ...state,
         getVSPTicketStatusError: String(action.error),
         getVSPTicketStatusAttempt: false
+      };
+    case SET_ACCOUNT_FOR_TICKET_PURCHASE:
+      return {
+        ...state,
+        selectedAccountForTicketPurchase: action.account.name
+      };
+    case SET_SELECTED_VSP:
+      return {
+        ...state,
+        selectedVSP: action.selectedVSP
+      };
+    case SET_NUM_TICKETS_TO_BUY:
+      return {
+        ...state,
+        numVSPicketsToBuy: action.numVSPicketsToBuy
       };
     default:
       return state;

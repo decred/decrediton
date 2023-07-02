@@ -44,25 +44,22 @@ beforeEach(() => {
   mockSetRemoteCredentials = wallet.setRemoteCredentials = jest.fn(() => {});
   mockGetAppdataPath = wallet.getAppdataPath = jest.fn(() => "");
   mockSetAppdataPath = wallet.setAppdataPath = jest.fn(() => "");
-  mockConnectDaemon = daemonActions.connectDaemon = jest.fn(() => () =>
-    Promise.reject(testConnectDaemonErrorMsg)
+  mockConnectDaemon = daemonActions.connectDaemon = jest.fn(
+    () => () => Promise.reject(testConnectDaemonErrorMsg)
   );
-  mockStartDaemon = daemonActions.startDaemon = jest.fn(() => () =>
-    Promise.reject(testStartDaemonErrorMsg)
+  mockStartDaemon = daemonActions.startDaemon = jest.fn(
+    () => () => Promise.reject(testStartDaemonErrorMsg)
   );
   selectors.stakeTransactions = jest.fn(() => []);
 });
 
 test("test remote daemon form", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   expect(mockIsAdvancedDaemon).toHaveBeenCalled();
   expect(mockGetRemoteCredentials).toHaveBeenCalled();
   expect(mockGetAppdataPath).toHaveBeenCalled();
-  expect(
-    screen.getByText(/waiting for daemon connection.../i)
-  ).toBeInTheDocument();
   expect(
     screen.getByText(/complete one of the following/i).textContent
   ).toMatchInlineSnapshot(
@@ -76,9 +73,8 @@ test("test remote daemon form", async () => {
 
   const rpcUsernameInput = screen.getByPlaceholderText(/rpc username/i);
   const rpcPasswordInput = screen.getByPlaceholderText(/rpc password/i);
-  const rpcCertificatePathInput = screen.getByPlaceholderText(
-    /rpc certificate path/i
-  );
+  const rpcCertificatePathInput =
+    screen.getByPlaceholderText(/rpc certificate path/i);
   const rpcHostInput = screen.getByPlaceholderText(/rpc host/i);
   const rpcPortInput = screen.getByPlaceholderText(/rpc port/i);
 
@@ -123,7 +119,7 @@ test("test remote daemon form", async () => {
 
 test("test local daemon form", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByTestId("switch"));
   expect(screen.getByText("Daemon Data Directory:")).toBeInTheDocument();
@@ -146,7 +142,7 @@ test("test local daemon form", async () => {
 
 test("test skip link", async () => {
   render(<GetStartedPage />);
-  await wait(() => screen.getByText(/welcome to decrediton wallet/i));
+  await wait(() => screen.getByText(/welcome to decrediton/i));
 
   user.click(screen.getByText(/skip/i));
   await wait(() => screen.getByText(testStartDaemonErrorMsg));

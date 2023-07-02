@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSettings } from "hooks";
 import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "constants";
 
 import * as vspa from "actions/VSPActions";
 import * as ca from "actions/ControlActions.js";
-import { listUnspentOutputs } from "actions/TransactionActions";
 import * as sel from "selectors";
+import { isEqual } from "lodash/fp";
 
 export const usePurchaseTab = () => {
   const spvMode = useSelector(sel.isSPV);
@@ -18,14 +18,27 @@ export const usePurchaseTab = () => {
   const ticketPrice = useSelector(sel.ticketPrice);
   const availableVSPs = useSelector(sel.getAvailableVSPs);
   const availableVSPsError = useSelector(sel.getDiscoverAvailableVSPError);
-  const autoBuyerRunning = useSelector(sel.isTicketAutoBuyerEnabled);
   const ticketAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
-  const isLegacy = useSelector(sel.getIsLegacy);
   const isLoading = useSelector(sel.purchaseTicketsRequestAttempt);
   const notMixedAccounts = useSelector(sel.getNotMixedAccounts);
 
   const rememberedVspHost = useSelector(sel.getRememberedVspHost);
   const visibleAccounts = useSelector(sel.visibleAccounts);
+
+  const selectedAccountForTicketPurchase = useSelector(
+    sel.selectedAccountForTicketPurchase
+  );
+  const account = useMemo(() => {
+    const accountName =
+      selectedAccountForTicketPurchase || defaultSpendingAccount.name;
+    return visibleAccounts?.find((a) => isEqual(a.name, accountName));
+  }, [
+    visibleAccounts,
+    selectedAccountForTicketPurchase,
+    defaultSpendingAccount
+  ]);
+
+  const selectedVSP = useSelector(sel.selectedVSP);
 
   // VSP listing checks
   const { onAddAllowedRequestType, isVSPListingEnabled } = useSettings();
@@ -40,57 +53,67 @@ export const usePurchaseTab = () => {
     () => dispatch(vspa.discoverAvailableVSPs()),
     [dispatch]
   );
-  const onPurchaseTicketV3 = useCallback(
+  const purchaseTicketsAttempt = useCallback(
     (passphrase, account, numTickets, vsp) =>
-      dispatch(
-        ca.newPurchaseTicketsAttempt(passphrase, account, numTickets, vsp)
-      ),
-    [dispatch]
-  );
-  const onEnableTicketAutoBuyer = useCallback(
-    (passphrase, account, balanceToMaintain, vsp) =>
-      dispatch(
-        ca.startTicketBuyerV3Attempt(
-          passphrase,
-          account,
-          balanceToMaintain,
-          vsp
-        )
-      ),
-    [dispatch]
-  );
-  const onDisableTicketAutoBuyer = useCallback(
-    () => dispatch(ca.ticketBuyerCancel()),
+      dispatch(ca.purchaseTicketsAttempt(passphrase, account, numTickets, vsp)),
     [dispatch]
   );
 
-  const getVSPTicketsByFeeStatus = (feeStatus) => {
-    dispatch(vspa.getVSPTicketsByFeeStatus(feeStatus));
-  };
+  const setRememberedVspHost = useCallback(
+    (vsp) => dispatch(vspa.setRememberedVspHost(vsp)),
+    [dispatch]
+  );
 
-  const toggleIsLegacy = (isLegacy) => {
-    if (autoBuyerRunning) {
-      // stop runnig legacy autobuyer
-      dispatch(ca.ticketBuyerV2Cancel());
-    }
-    if (ticketAutoBuyerRunning) {
-      // stop running new autobuyer
-      dispatch(ca.ticketBuyerCancel());
-    }
-    dispatch(vspa.toggleIsLegacy(isLegacy));
-  };
+  const setAccount = useCallback(
+    (account) => {
+      dispatch({ type: vspa.SET_ACCOUNT_FOR_TICKET_PURCHASE, account });
+    },
+    [dispatch]
+  );
 
-  const setRememberedVspHost = (vsp) =>
-    dispatch(vspa.setRememberedVspHost(vsp));
-
-  const onListUnspentOutputs = (accountNum) =>
-    dispatch(listUnspentOutputs(accountNum));
+  const setVSP = useCallback(
+    (vsp) => {
+      if (!isEqual(selectedVSP, vsp)) {
+        dispatch({ type: vspa.SET_SELECTED_VSP, selectedVSP: vsp });
+      }
+    },
+    [dispatch, selectedVSP]
+  );
 
   // purchase cspp ticket
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
 
-  const getRunningIndicator = useSelector(sel.getRunningIndicator);
+  const vsp = useMemo(() => {
+    if (selectedVSP) {
+      return selectedVSP;
+    } else if (rememberedVspHost) {
+      // reset rememberedVspHost if it's outdated
+      if (
+        availableVSPs?.find(
+          (availableVSP) => availableVSP.host === rememberedVspHost.host
+        )?.outdated === true
+      ) {
+        setRememberedVspHost(null);
+        return null;
+      } else {
+        return { host: rememberedVspHost.host };
+      }
+    } else {
+      return null;
+    }
+  }, [rememberedVspHost, availableVSPs, selectedVSP, setRememberedVspHost]);
+
+  const numTicketsToBuy = useSelector(sel.numVSPicketsToBuy) ?? 1;
+  const setNumTicketsToBuy = useCallback(
+    (numTicketsToBuy) => {
+      dispatch({
+        type: vspa.SET_NUM_TICKETS_TO_BUY,
+        numVSPicketsToBuy: numTicketsToBuy
+      });
+    },
+    [dispatch]
+  );
 
   return {
     spvMode,
@@ -98,18 +121,12 @@ export const usePurchaseTab = () => {
     sidebarOnBottom,
     isWatchingOnly,
     spendingAccounts,
-    defaultSpendingAccount,
     discoverAvailableVSPs,
     ticketPrice,
-    onEnableTicketAutoBuyer,
-    onPurchaseTicketV3,
+    purchaseTicketsAttempt,
     availableVSPs: isVSPListingEnabled ? availableVSPs : [],
     availableVSPsError,
-    onDisableTicketAutoBuyer,
     ticketAutoBuyerRunning,
-    getVSPTicketsByFeeStatus,
-    isLegacy,
-    toggleIsLegacy,
     mixedAccount,
     changeAccount,
     isLoading,
@@ -118,8 +135,11 @@ export const usePurchaseTab = () => {
     notMixedAccounts,
     isVSPListingEnabled,
     onEnableVSPListing,
-    onListUnspentOutputs,
-    getRunningIndicator,
-    visibleAccounts
+    account,
+    setAccount,
+    vsp,
+    setVSP,
+    numTicketsToBuy,
+    setNumTicketsToBuy
   };
 };

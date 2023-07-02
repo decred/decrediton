@@ -3,10 +3,11 @@ import { CloseWalletModalButton } from "buttons";
 import { TabbedPage, TitleHeader, DescriptionHeader } from "layout";
 import LinksTab from "./LinksTab";
 import LogsTab from "./LogsTab";
-// import TutorialsTab from "./TutorialsTab";
+import TutorialsTab from "./TutorialsTab";
 import ConnectivitySettingsTab from "./ConnectivitySettingsTab";
 import GeneralSettingsTab from "./GeneralSettingsTab";
 import PrivacyandSecuritySettingsTab from "./PrivacyandSecuritySettingsTab";
+import { TrezorTab } from "./TrezorTab";
 import { useSettings, useService } from "hooks";
 import styles from "./SettingsPage.module.css";
 import { SETTINGS_ICON } from "constants";
@@ -38,6 +39,7 @@ const SettingsPageHeader = () => {
     <TitleHeader
       title={<T id="settings.title" m="Settings" />}
       iconType={SETTINGS_ICON}
+      docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#settings"
       optionalButton={
         <CloseWalletModalButton
           modalTitle={
@@ -56,6 +58,7 @@ const SettingsPageHeader = () => {
 const SettingsPage = () => {
   const { walletService } = useService();
   const { setThemeName } = useTheme();
+  const { isTrezor } = useSettings();
   const tabs = [
     {
       path: "/settings/connectivity",
@@ -76,19 +79,24 @@ const SettingsPage = () => {
       label: <T id="settings.tab.privacyandsecurity" m="Privacy and Security" />
     },
     {
+      disabled: !isTrezor,
+      path: "/settings/trezor",
+      content: TrezorTab,
+      header: SettingsTabHeader,
+      label: <T id="settings.tab.trezor" m="Trezor" />
+    },
+    {
       path: "/settings/links",
       content: LinksTab,
       header: SettingsTabHeader,
       label: <T id="settings.tab.sources" m="Sources" />
     },
-    /*
     {
       path: "/settings/tutorials",
       content: TutorialsTab,
       header: SettingsTabHeader,
       label: <T id="settings.tab.tutorials" m="Tutorials" />
     },
-    */
     {
       path: "/settings/logs",
       content: LogsTab,

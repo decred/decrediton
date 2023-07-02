@@ -124,13 +124,18 @@ beforeEach(() => {
   selectors.getNotMixedAcctIfAllowed = jest.fn(() => [0, 2]);
   selectors.isTrezor = jest.fn(() => false);
   selectors.isWatchingOnly = jest.fn(() => false);
-  selectors.isConstructingTransaction = jest.fn(() => false);
-  selectors.constructTxRequestAttempt = jest.fn(() => false);
   selectors.getRunningIndicator = jest.fn(() => false);
   selectors.currencyDisplay = jest.fn(() => DCR);
-  mockConstructTransactionAttempt = controlActions.constructTransactionAttempt = jest.fn(
-    () => () => {}
-  );
+  mockConstructTransactionAttempt = controlActions.constructTransactionAttempt =
+    jest.fn(() => (dispatch) => {
+      dispatch({
+        type: controlActions.CONSTRUCTTX_ATTEMPT,
+        constructTxRequestAttempt: true
+      });
+      dispatch({
+        type: controlActions.CONSTRUCTTX_SUCCESS
+      });
+    });
   mockValidateAddress = controlActions.validateAddress = jest.fn(() => () => {
     return {
       error: "ERR_INVALID_ADDR_TOOSHORT",
@@ -152,8 +157,8 @@ beforeEach(() => {
       Promise.resolve(res);
     }
   );
-  transactionActions.listUnspentOutputs = jest.fn(() => () =>
-    Promise.resolve(mockUnspentOutputs)
+  transactionActions.listUnspentOutputs = jest.fn(
+    () => () => Promise.resolve(mockUnspentOutputs)
   );
 });
 
@@ -271,8 +276,10 @@ test("test amount input", async () => {
   // click on send all amount button
   user.click(sendAllButton);
   expect(queryAmountInput()).not.toBeInTheDocument();
-  expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
-    `${mockMixedAccount.spendableAndUnit}100% of Account Balance`
+  await wait(() =>
+    expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
+      `${mockMixedAccount.spendableAndUnit}100% of Account Balance`
+    )
   );
   expect(addOutputButton.disabled).toBe(true);
 
@@ -360,11 +367,14 @@ test("test `send to` input", async () => {
   });
   await wait(() => expect(sendToInput.value).toBe(mockValidAddress));
   expect(screen.queryByText(expectedErrorMsg)).not.toBeInTheDocument();
-  expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
-    mockMixedAccountValue,
-    0,
-    [{ amount: validAmount * 100000000, destination: mockValidAddress }],
-    undefined
+
+  await wait(() =>
+    expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
+      mockMixedAccountValue,
+      0,
+      [{ amount: validAmount * 100000000, destination: mockValidAddress }],
+      undefined
+    )
   );
 
   // test clear button
@@ -442,8 +452,10 @@ test("`Sending from unmixed account` is allowed", async () => {
   // changing account while sending all mode is on
   // should change the amount accordingly click on send all amount button
   user.click(getSendAllButton());
-  expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
-    `${mockEmptyAccount.spendableAndUnit}100% of Account Balance`
+  await wait(() =>
+    expect(screen.getByText("Amount").nextElementSibling.textContent).toBe(
+      `${mockEmptyAccount.spendableAndUnit}100% of Account Balance`
+    )
   );
   user.click(screen.getByText(mockEmptyAccount.name));
   user.click(screen.getByText(mockAccount2.name));
@@ -471,11 +483,13 @@ const fillOutputForm = async (index) => {
     });
   }
 
-  expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
-    mockMixedAccountValue,
-    0,
-    expectedOutputs,
-    undefined
+  await wait(() =>
+    expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
+      mockMixedAccountValue,
+      0,
+      expectedOutputs,
+      undefined
+    )
   );
 };
 
@@ -524,16 +538,17 @@ test("send funds to another account", async () => {
   user.click(sendSelfButton);
   user.click(screen.getAllByRole("combobox")[1]);
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
-  selectors.publishTxResponse = jest.fn(() => "mocknewpublishtxresponse");
   user.click(screen.getByText(mockAccount2.name));
   await wait(() =>
     expect(screen.queryByText(mockDefaultAccount.name)).not.toBeInTheDocument()
   );
-  expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
-    mockMixedAccountValue,
-    0,
-    [{ amount: validAmount * 100000000, destination: mockNextAddress }],
-    undefined
+  await wait(() =>
+    expect(mockConstructTransactionAttempt).toHaveBeenCalledWith(
+      mockMixedAccountValue,
+      0,
+      [{ amount: validAmount * 100000000, destination: mockNextAddress }],
+      undefined
+    )
   );
   expect(mockGetNextAddressAttempt).toHaveBeenCalled();
 

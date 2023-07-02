@@ -1,0 +1,1 @@
+**_Warning!_** If this device contains an existing wallet, please ensure you have the seed in a secure and accessible location before performing a device wipe and recovery. Failure to do so will result in loss of funds.

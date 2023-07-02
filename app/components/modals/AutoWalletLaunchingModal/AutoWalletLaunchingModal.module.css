@@ -1,0 +1,50 @@
+.modal {
+  background-image: none;
+  padding: 30px 40px 20px 40px;
+  min-width: 52.1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  font-size: 28px;
+  line-height: 35px;
+  color: var(--grey-7);
+  margin-bottom: 20px;
+}
+.infoCloseButtonTop {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 10px;
+  width: 10px;
+  background-image: var(--x-grey);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.infoCloseButtonTop:hover {
+  opacity: 0.7;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 1179px) {
+  .modal {
+    width: 421px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 355px;
+  }
+}

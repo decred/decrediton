@@ -15,11 +15,7 @@ import {
   DEX_LOGOUT_FAILED,
   logoutDex
 } from "./DexActions";
-import {
-  TOGGLE_ISLEGACY,
-  SET_REMEMBERED_VSP_HOST,
-  SET_AUTOBUYER_SETTINGS
-} from "./VSPActions";
+import { SET_REMEMBERED_VSP_HOST, SET_AUTOBUYER_SETTINGS } from "./VSPActions";
 import { wallet, fs } from "wallet-preload-shim";
 import { push as pushHistory, goBack } from "connected-react-router";
 import { isTestNet } from "selectors";
@@ -28,6 +24,7 @@ import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
 import { CSPP_URL, CSPP_URL_LEGACY } from "constants";
+import { preDefinedGradients } from "helpers";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -53,8 +50,6 @@ export const DAEMON_WARNING = "DAEMON_WARNING";
 export const WALLET_ERROR = "WALLET_ERROR";
 export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
-export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
-export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
@@ -179,11 +174,12 @@ export const startDaemon = (params) => (dispatch, getState) =>
     // be started doing a long process (like a db upgrade), so we check is it
     // is starting, before dispatching a new DAEMONSTART_ATTEMPT.
     if (daemonStarting) {
-      return;
+      return resolve();
     }
     dispatch({ type: DAEMONSTART_ATTEMPT });
     if (daemonStarted) {
-      return dispatch({ type: DAEMONSTART_SUCCESS });
+      dispatch({ type: DAEMONSTART_SUCCESS });
+      return resolve();
     }
 
     return wallet
@@ -389,175 +385,140 @@ export const closeDaemonRequest = () => async (dispatch, getState) => {
   }
 };
 
-export const startWallet = (selectedWallet, hasPassPhrase) => (
-  dispatch,
-  getState
-) =>
-  new Promise((resolve, reject) => {
-    const start = async () => {
-      const { currentSettings } = getState().settings;
-      const network = currentSettings.network;
+export const startWallet =
+  (selectedWallet, hasPassPhrase) => (dispatch, getState) =>
+    new Promise((resolve, reject) => {
+      const start = async () => {
+        const { currentSettings } = getState().settings;
+        const network = currentSettings.network;
 
-      // if selected wallet is not send in the call of the method,
-      // it probably means it is a refresh, so we get the selected wallet
-      // stored in ipc memory.
-      if (!selectedWallet) {
-        selectedWallet = wallet.getSelectedWallet();
-      }
-      const isTestnet = network == "testnet";
-      const walletCfg = wallet.getWalletCfg(
-        isTestnet,
-        selectedWallet.value.wallet
-      );
-
-      const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
-      const dexReady = walletCfg.get(cfgConstants.DEX_READY);
-      const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
-      const askDexBtcSpv = walletCfg.get(cfgConstants.ASK_DEX_BTC_SPV);
-      const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
-      const dexBtcSpv = walletCfg.get(cfgConstants.DEX_BTC_SPV);
-      const btcWalletName = walletCfg.get(cfgConstants.BTCWALLET_NAME);
-      let rpcCreds = {};
-      if (enableDex) {
-        rpcCreds = {
-          rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
-          rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
-          rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
-          rpcCert: fs.joinPaths(
-            wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
-            "rpc.cert"
-          )
-        };
-      }
-
-      // Check to see if wallet config has old cspp.decred.org setting, will
-      // update to mix.decred.org
-      const currentCSPP = walletCfg.get(cfgConstants.CSPP_SERVER);
-      if (currentCSPP == CSPP_URL_LEGACY) {
-        walletCfg.set(cfgConstants.CSPP_SERVER, CSPP_URL);
-      }
-
-      const walletStarted = await wallet.startWallet(
-        selectedWallet.value.wallet,
-        isTestnet,
-        rpcCreds,
-        selectedWallet.value.gapLimit,
-        selectedWallet.value.disableCoinTypeUpgrades
-      );
-      const { port } = walletStarted;
-      wallet.setPreviousWallet(selectedWallet);
-
-      // TODO clean up this found stakepool
-      // we will not need to save at the config the current stakepool
-      // anymore as now it is not needed to register into one.
-      // we can save a favorite vsp, though.
-      const currentStakePoolConfig = walletCfg.get(cfgConstants.STAKEPOOLS);
-      let firstConfiguredStakePool = null;
-      if (currentStakePoolConfig !== undefined) {
-        for (let i = 0; i < currentStakePoolConfig.length; i++) {
-          if (
-            currentStakePoolConfig[i].ApiKey &&
-            currentStakePoolConfig[i].Network == network
-          ) {
-            firstConfiguredStakePool = currentStakePoolConfig[i];
-            break;
-          }
+        // if selected wallet is not send in the call of the method,
+        // it probably means it is a refresh, so we get the selected wallet
+        // stored in ipc memory.
+        if (!selectedWallet) {
+          selectedWallet = wallet.getSelectedWallet();
         }
-      }
-      const walletName = selectedWallet.value.wallet;
-      const gapLimit = walletCfg.get(cfgConstants.GAP_LIMIT);
-      const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
-      const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
-      const balanceToMaintain = walletCfg.get(cfgConstants.BALANCE_TO_MAINTAIN);
-      const discoverAccountsComplete = walletCfg.get(
-        cfgConstants.DISCOVER_ACCOUNTS
-      );
-      const selectedStakePool = firstConfiguredStakePool;
-      const lastPoliteiaAccessTime = walletCfg.get(
-        cfgConstants.POLITEIA_LAST_ACCESS_TIME
-      );
-      const lastPoliteiaAccessBlock = walletCfg.get(
-        cfgConstants.POLITEIA_LAST_ACCESS_BLOCK
-      );
-      const dismissBackupRedeemScript = walletCfg.get(
-        cfgConstants.DISMISS_BACKUP_MSG_REDEEM_SCRIPT
-      );
-      const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
-      const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
-      const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
-      const changeAccount = walletCfg.get(cfgConstants.CHANGE_ACCOUNT_CFG);
-      const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
-      const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
-      const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
-      const isLegacy = walletCfg.get(cfgConstants.VSP_IS_LEGACY);
-      const rememberedVspHost = walletCfg.get(cfgConstants.REMEMBERED_VSP_HOST);
-      const needsVSPdProcessManaged = walletCfg.get(
-        cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
-      );
-      const showStakingWarning = walletCfg.get(
-        cfgConstants.SHOW_STAKING_WARNING
-      );
+        const isTestnet = network == "testnet";
+        const walletCfg = wallet.getWalletCfg(
+          isTestnet,
+          selectedWallet.value.wallet
+        );
 
-      const autobuyerSettings = walletCfg.get(cfgConstants.AUTOBUYER_SETTINGS);
-      dispatch({
-        type: SET_AUTOBUYER_SETTINGS,
-        autobuyerSettings
-      });
+        const enableDex = walletCfg.get(cfgConstants.ENABLE_DEX);
+        const dexReady = walletCfg.get(cfgConstants.DEX_READY);
+        const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
+        const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
+        let rpcCreds = {};
+        if (enableDex) {
+          rpcCreds = {
+            rpcUser: walletCfg.get(cfgConstants.DEXWALLET_RPCUSERNAME),
+            rpcPass: walletCfg.get(cfgConstants.DEXWALLET_RPCPASSWORD),
+            rpcListen: walletCfg.get(cfgConstants.DEXWALLET_HOSTPORT),
+            rpcCert: fs.joinPaths(
+              wallet.getWalletPath(isTestnet, selectedWallet.value.wallet),
+              "rpc.cert"
+            )
+          };
+        }
 
-      walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
-      dispatch({
-        type: WALLETREADY,
-        walletName,
-        network,
-        hiddenAccounts,
-        port,
-        lastPoliteiaAccessTime,
-        lastPoliteiaAccessBlock
-      });
-      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
-      dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
-      dispatch({ type: TOGGLE_ISLEGACY, isLegacy });
-      dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
-      dispatch({
-        type: WALLET_STAKEPOOL_SETTINGS,
-        selectedStakePool,
-        currentStakePoolConfig,
-        dismissBackupRedeemScript
-      });
-      dispatch({ type: SET_SHOW_STAKING_WARNING, showStakingWarning });
-      const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
-      dispatch({
-        type: WALLET_LOADER_SETTINGS,
-        discoverAccountsComplete,
-        needsPassPhrase,
-        enablePrivacy,
-        sendFromUnmixed,
-        mixedAccount,
-        changeAccount,
-        csppServer,
-        csppPort,
-        mixedAccountBranch,
-        enableDex,
-        dexReady,
-        dexAccount,
-        rpcCreds,
-        btcWalletName,
-        needsVSPdProcessManaged,
-        askDexBtcSpv,
-        dexBtcSpv,
-        confirmDexSeed
-      });
-      selectedWallet.value.isTrezor && dispatch(enableTrezor());
-      await dispatch(getVersionServiceAttempt());
-      await dispatch(openWalletAttempt("", false, selectedWallet));
-      return discoverAccountsComplete;
-    };
+        // Check to see if wallet config has old cspp.decred.org setting, will
+        // update to mix.decred.org
+        const currentCSPP = walletCfg.get(cfgConstants.CSPP_SERVER);
+        if (currentCSPP == CSPP_URL_LEGACY) {
+          walletCfg.set(cfgConstants.CSPP_SERVER, CSPP_URL);
+        }
 
-    // TODO better treat errors here. Errors can fail silently.
-    start()
-      .then((discoverAccountsComplete) => resolve(discoverAccountsComplete))
-      .catch((err) => reject(err));
-  });
+        const walletStarted = await wallet.startWallet(
+          selectedWallet.value.wallet,
+          isTestnet,
+          rpcCreds,
+          selectedWallet.value.gapLimit,
+          selectedWallet.value.disableCoinTypeUpgrades
+        );
+        const { port } = walletStarted;
+        wallet.setPreviousWallet(selectedWallet);
+
+        const walletName = selectedWallet.value.wallet;
+        const gapLimit = walletCfg.get(cfgConstants.GAP_LIMIT);
+        const hiddenAccounts = walletCfg.get(cfgConstants.HIDDEN_ACCOUNTS);
+        const currencyDisplay = walletCfg.get(cfgConstants.CURRENCY_DISPLAY);
+        const discoverAccountsComplete = walletCfg.get(
+          cfgConstants.DISCOVER_ACCOUNTS
+        );
+        const lastPoliteiaAccessTime = walletCfg.get(
+          cfgConstants.POLITEIA_LAST_ACCESS_TIME
+        );
+        const lastPoliteiaAccessBlock = walletCfg.get(
+          cfgConstants.POLITEIA_LAST_ACCESS_BLOCK
+        );
+        const enablePrivacy = walletCfg.get(cfgConstants.ENABLE_PRIVACY);
+        const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
+        const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
+        const changeAccount = walletCfg.get(cfgConstants.CHANGE_ACCOUNT_CFG);
+        const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
+        const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
+        const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
+        const rememberedVspHost = walletCfg.get(
+          cfgConstants.REMEMBERED_VSP_HOST
+        );
+        const needsVSPdProcessManaged = walletCfg.get(
+          cfgConstants.NEEDS_VSPD_PROCESS_TICKETS
+        );
+        const showStakingWarning = walletCfg.get(
+          cfgConstants.SHOW_STAKING_WARNING
+        );
+
+        const autobuyerSettings = walletCfg.get(
+          cfgConstants.AUTOBUYER_SETTINGS
+        );
+        dispatch({
+          type: SET_AUTOBUYER_SETTINGS,
+          autobuyerSettings
+        });
+
+        walletCfg.set(cfgConstants.LAST_ACCESS, Date.now());
+        dispatch({
+          type: WALLETREADY,
+          walletName,
+          network,
+          hiddenAccounts,
+          port,
+          lastPoliteiaAccessTime,
+          lastPoliteiaAccessBlock
+        });
+        dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
+        dispatch({ type: SET_REMEMBERED_VSP_HOST, rememberedVspHost });
+        dispatch({ type: SET_SHOW_STAKING_WARNING, showStakingWarning });
+        const needsPassPhrase = !discoverAccountsComplete && !hasPassPhrase;
+        dispatch({
+          type: WALLET_LOADER_SETTINGS,
+          discoverAccountsComplete,
+          needsPassPhrase,
+          enablePrivacy,
+          sendFromUnmixed,
+          mixedAccount,
+          changeAccount,
+          csppServer,
+          csppPort,
+          mixedAccountBranch,
+          enableDex,
+          dexReady,
+          dexAccount,
+          rpcCreds,
+          needsVSPdProcessManaged,
+          confirmDexSeed
+        });
+        selectedWallet.value.isTrezor && dispatch(enableTrezor());
+        await dispatch(getVersionServiceAttempt());
+        await dispatch(openWalletAttempt("", false, selectedWallet));
+        return discoverAccountsComplete;
+      };
+
+      // TODO better treat errors here. Errors can fail silently.
+      start()
+        .then((discoverAccountsComplete) => resolve(discoverAccountsComplete))
+        .catch((err) => reject(err));
+    });
 
 export const decreditonInit = () => (dispatch) => {
   dispatch(registerForErrors());
@@ -645,7 +606,7 @@ export const syncDaemon = () => (dispatch, getState) =>
       const {
         daemon: { daemonSynced, timeStart, blockStart }
       } = getState();
-      if (daemonSynced) resolve();
+      if (daemonSynced) return resolve();
       return wallet
         .getBlockCount()
         .then((blockChainInfo) => {
@@ -661,11 +622,11 @@ export const syncDaemon = () => (dispatch, getState) =>
               return;
             }
 
-            if (blockStart === 0) {
+            if (!blockStart || !timeStart) {
               dispatch({
                 syncHeight,
                 currentBlockCount: blockCount,
-                timeStart: new Date(),
+                timeStart: Date.now(),
                 blockStart: blockCount,
                 type: DAEMONSYNCING_START
               });
@@ -673,7 +634,7 @@ export const syncDaemon = () => (dispatch, getState) =>
               const blocksLeft = syncHeight - blockCount;
               const blocksDiff = blockCount - blockStart;
               if (blocksDiff !== 0) {
-                const currentTime = new Date();
+                const currentTime = Date.now();
                 const timeSyncing = (currentTime - timeStart) / 1000;
                 const secondsLeft = Math.round(
                   (blocksLeft / blocksDiff) * timeSyncing
@@ -696,18 +657,6 @@ export const syncDaemon = () => (dispatch, getState) =>
     };
     updateBlockCount();
   });
-
-export const getDcrdLogs = () => {
-  wallet
-    .getDcrdLogs()
-    .then((logs) => {
-      return logs;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null, err;
-    });
-};
 
 export const getDcrdLastLineLogs = () => () =>
   new Promise((resolve, reject) =>
@@ -733,30 +682,6 @@ export const getPrivacyLogs = () => () =>
       .catch((err) => reject(err))
   );
 
-export const getDecreditonLogs = () => {
-  wallet
-    .getDecreditonLogs()
-    .then((logs) => {
-      return logs;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null, err;
-    });
-};
-
-export const getDcrlndLogs = () => {
-  wallet
-    .getDcrlndLogs()
-    .then((logs) => {
-      return logs;
-    })
-    .catch((err) => {
-      console.log(err);
-      return null, err;
-    });
-};
-
 export const GET_DEX_LOGS = "GET_DEX_LOGS";
 export const getDexLogs = () => (dispatch, getState) =>
   new Promise((resolve, reject) => {
@@ -770,3 +695,40 @@ export const getDexLogs = () => (dispatch, getState) =>
       .then((logs) => resolve(logs))
       .catch((err) => reject(err));
   });
+
+export const generateRandomGradient = () => {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const invertedColor = (Number(`0x1${randomColor}`) ^ 0xffffff)
+    .toString(16)
+    .substr(1);
+  return `linear-gradient(#${randomColor} 0%, #${invertedColor} 100%)`;
+};
+
+export const checkDisplayWalletGradients =
+  (availableWallets) => (dispatch, getState) => {
+    const missingGradientWallets = [];
+    let availableGradients = [...preDefinedGradients];
+    availableWallets
+      .sort((a, b) => b.lastAccess - a.lastAccess)
+      .forEach(({ wallet, displayWalletGradient }) => {
+        if (!displayWalletGradient) {
+          missingGradientWallets.push(wallet);
+        } else {
+          availableGradients = availableGradients.filter(
+            (gradient) => gradient != displayWalletGradient
+          );
+        }
+      });
+
+    // set missing gradients
+    if (missingGradientWallets.length > 0) {
+      availableGradients.reverse();
+      missingGradientWallets.forEach((walletName) => {
+        const gradient = availableGradients.pop() ?? generateRandomGradient();
+        const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
+        config.set(cfgConstants.DISPLAY_WALLET_GRADIENT, gradient);
+      });
+
+      dispatch(getAvailableWallets());
+    }
+  };

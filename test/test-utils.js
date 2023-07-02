@@ -22,6 +22,7 @@ beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
   jest.spyOn(console, "info").mockImplementation(() => {});
   jest.spyOn(console, "warn").mockImplementation(() => {});
+  jest.spyOn(console, "error").mockImplementation(() => {});
 });
 
 afterAll(() => {
@@ -53,6 +54,7 @@ function render(ui, renderOptions) {
   ) {
     currentSettings = { ...currentSettings, ...renderOptions.currentSettings };
   }
+  let store;
   const Wrapper = ({ children }) => {
     let initialState = {
       settings: {
@@ -73,7 +75,7 @@ function render(ui, renderOptions) {
     ) {
       initialState = { ...initialState, ...renderOptions.initialState };
     }
-    const store = createStore(initialState);
+    store = createStore(initialState);
     const ContainerApp = () => {
       return (
         <IntlProvider
@@ -109,7 +111,8 @@ function render(ui, renderOptions) {
 
   return {
     ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }),
-    history
+    history,
+    store
   };
 }
 

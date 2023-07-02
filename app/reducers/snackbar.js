@@ -7,17 +7,11 @@ import {
   DEX_ENABLE_FAILED,
   DEX_INIT_FAILED,
   DEX_CREATEWALLET_FAILED,
-  DEX_REGISTER_FAILED,
-  DEX_GETCONFIG_FAILED,
-  BTC_CREATEWALLET_FAILED,
   DEX_CHECKINIT_FAILED,
   DEX_LAUNCH_WINDOW_FAILED,
-  CHECK_BTC_CONFIG_FAILED,
   CREATEDEXACCOUNT_FAILED,
   DEX_LOGOUT_FAILED,
   DEX_USER_FAILED,
-  NEW_BTC_CONFIG_FAILED,
-  NEW_BTC_CONFIG_SUCCESS,
   DEX_EXPORT_SEED_FAILED
 } from "actions/DexActions";
 import {
@@ -27,13 +21,8 @@ import {
   PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_SUCCESS_LESS,
   PURCHASETICKETS_FAILED,
-  STARTTICKETBUYERV2_SUCCESS,
-  STARTTICKETBUYERV3_SUCCESS,
-  STARTTICKETBUYERV2_FAILED,
-  STOPTICKETBUYERV2_SUCCESS,
+  STARTTICKETBUYER_SUCCESS,
   STOPTICKETBUYER_SUCCESS,
-  IMPORTSCRIPT_MANUAL_SUCCESS,
-  IMPORTSCRIPT_MANUAL_FAILED,
   RENAMEACCOUNT_SUCCESS,
   RENAMEACCOUNT_FAILED,
   GETNEXTACCOUNT_SUCCESS,
@@ -46,23 +35,19 @@ import {
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS,
   PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
-  STARTTICKETBUYERV3_FAILED,
+  STARTTICKETBUYER_FAILED,
   SETACCOUNTSPASSPHRASE_FAILED,
   DISCOVERUSAGE_FAILED,
-  DISCOVERUSAGE_SUCCESS
+  DISCOVERUSAGE_SUCCESS,
+  LOCKACCOUNT_FAILED
 } from "actions/ControlActions";
 import {
-  UPDATESTAKEPOOLCONFIG_SUCCESS,
-  UPDATESTAKEPOOLCONFIG_FAILED,
-  SETSTAKEPOOLVOTECHOICES_FAILED,
-  REMOVESTAKEPOOLCONFIG,
-  ADDCUSTOMSTAKEPOOL_SUCCESS,
-  ADDCUSTOMSTAKEPOOL_FAILED,
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED,
   SYNCVSPTICKETS_SUCCESS,
   SYNCVSPTICKETS_FAILED,
   PROCESSMANAGEDTICKETS_FAILED,
   SETVSPDVOTECHOICE_FAILED,
+  SETVSPDVOTECHOICE_SINGLE_FAILED,
+  SETVSPDVOTECHOICE_PARTIAL_SUCCESS,
   GETVSP_TICKET_STATUS_FAILED
 } from "actions/VSPActions";
 import {
@@ -73,7 +58,9 @@ import {
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS,
   SETTREASURY_POLICY_SUCCESS,
-  SETTREASURY_POLICY_FAILED
+  SETTREASURY_POLICY_FAILED,
+  SETTSPEND_POLICY_SUCCESS,
+  SETTSPEND_POLICY_FAILED
 } from "actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
@@ -229,44 +216,6 @@ const messages = defineMessages({
     id: "tickets.errors.purchaseTicketsFailed",
     defaultMessage: "{originalError}"
   },
-  IMPORTSCRIPT_MANUAL_SUCCESS: {
-    id: "tickets.importScriptHeader",
-    defaultMessage: "You successfully imported a script"
-  },
-  IMPORTSCRIPT_MANUAL_FAILED: {
-    id: "tickets.errors.importScriptFailed",
-    defaultMessage: "{originalError}"
-  },
-  STARTAUTOBUYER_SUCCESS: {
-    id: "tickets.startAutoBuyerHeader",
-    defaultMessage: "Ticket buyer is now running."
-  },
-  STARTAUTOBUYER_FAILED: {
-    id: "tickets.errors.startAutoBuyerFailed",
-    defaultMessage: "{originalError}"
-  },
-  STOPAUTOBUYER_SUCCESS: {
-    id: "tickets.stopAutoBuyerHeader",
-    defaultMessage: "Ticket buyer is now stopped."
-  },
-  UPDATESTAKEPOOLCONFIG_SUCCESS: {
-    id: "tickets.updateStakePoolConfigHeader",
-    defaultMessage:
-      "You have successfully updated your legacy stakepool settings."
-  },
-  UPDATESTAKEPOOLCONFIG_FAILED: {
-    id: "tickets.errors.updateStakePoolConfigFailed",
-    defaultMessage: "{originalError}"
-  },
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED: {
-    id: "tickets.errors.refreshStakePoolInfo",
-    defaultMessage:
-      "Error refreshing stakepool data from {host}: {originalError}"
-  },
-  SETSTAKEPOOLVOTECHOICES_FAILED: {
-    id: "tickets.errors.setStakePoolVoteChoicesFailed",
-    defaultMessage: "{originalError}"
-  },
   RENAMEACCOUNT_SUCCESS: {
     id: "accounts.renameAccount",
     defaultMessage: "Successfully renamed account."
@@ -306,10 +255,6 @@ const messages = defineMessages({
     id: "daemon.connect.error",
     defaultMessage: "Error connecting to daemon"
   },
-  REMOVESTAKEPOOLCONFIG: {
-    id: "stakepools.removedStakePoolConfig",
-    defaultMessage: "Successfully removed StakePool config"
-  },
   SIGNMESSAGE_FAILED: {
     id: "security.sign.failed",
     defaultMessage: "{originalError}"
@@ -330,14 +275,6 @@ const messages = defineMessages({
     id: "export.completed",
     defaultMessage: "Export of file ‘{filename}’ completed!"
   },
-  ADDCUSTOMSTAKEPOOL_FAILED: {
-    id: "addCustomStakePool.failed",
-    defaultMessage: "Error trying to add custom stakepool: {originalError}"
-  },
-  ADDCUSTOMSTAKEPOOL_SUCCESS: {
-    id: "addCustomStakePool.success",
-    defaultMessage: "Successfully added stakepool {host}."
-  },
   GETACCOUNTEXTENDEDKEY_FAILED: {
     id: "accountExtendedKey.failed",
     defaultMessage: "Error getting account extended key: {originalError}"
@@ -346,21 +283,9 @@ const messages = defineMessages({
     id: "spvSync.Failed",
     defaultMessage: "Error syncing SPV wallet: {originalError}"
   },
-  STARTTICKETBUYERV2_SUCCESS: {
-    id: "runTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully started."
-  },
-  STARTTICKETBUYERV3_SUCCESS: {
+  STARTTICKETBUYER_SUCCESS: {
     id: "runTicketBuyerNew.Success",
     defaultMessage: "Ticket Buyer successfully started."
-  },
-  STARTTICKETBUYERV2_FAILED: {
-    id: "runTicketBuyer.Failed",
-    defaultMessage: "Invalid private password. Please try again."
-  },
-  STOPTICKETBUYERV2_SUCCESS: {
-    id: "stopTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully stopped."
   },
   STOPTICKETBUYER_SUCCESS: {
     id: "stopTicketBuyerNew.Success",
@@ -601,6 +526,15 @@ const messages = defineMessages({
     id: "setTreasuryPolicy.updateVoteChoiceFailed",
     defaultMessage: "Set treasury policy failed: {originalError}"
   },
+  SETTSPEND_POLICY_SUCCESS: {
+    id: "setTSpendPolicy.updateVoteChoiceSuccess",
+    defaultMessage:
+      "Your tspend policy has been successfully updated! Thanks for participating in Decred's governance."
+  },
+  SETTSPEND_POLICY_FAILED: {
+    id: "setTSpendPolicy.updateVoteChoiceFailed",
+    defaultMessage: "Set tspend policy failed: {originalError}"
+  },
   CREATEMIXERACCOUNTS_SUCCESS: {
     id: "mixer.ntf.createdAcct",
     defaultMessage: "Accounts successfully created and mixer configured."
@@ -629,11 +563,24 @@ const messages = defineMessages({
   SETVOTECHOICES_SUCCESS: {
     id: "set.vote.success",
     defaultMessage:
-      "You have successfully updated your wallet vote choices on any legacy stakepools you may have had set up."
+      "You have successfully updated your wallet vote choices on any VSP you may have had set up."
+  },
+  SETVSPDVOTECHOICE_PARTIAL_SUCCESS: {
+    id: "set.vote.partial.success",
+    defaultMessage:
+      "You have partially updated your wallet vote choices on any VSP you may have had set up."
   },
   SETVSPDVOTECHOICE_FAILED: {
     id: "set.vspdvote.failed",
     defaultMessage: "Set vspd vote choices failed: {originalError}"
+  },
+  SETVSPDVOTECHOICE_SINGLE_FAILED: {
+    id: "set.vspdvote.single.failed",
+    defaultMessage: "Set vspd vote choice failed on {host}. {originalError}"
+  },
+  SETVSPDVOTECHOICE_TIMEOUT_FAILED: {
+    id: "set.vspdvote.timeout.failed",
+    defaultMessage: "Set vspd vote choice timeout exceded on {host}"
   },
   GETVSP_TICKET_STATUS_FAILED: {
     id: "set.getvspticketstatus.failed",
@@ -659,18 +606,6 @@ const messages = defineMessages({
     id: "dex.connectWallet.failed",
     defaultMessage: "Connecting to DCR wallet Failed: {originalError}"
   },
-  DEX_REGISTER_FAILED: {
-    id: "dex.register.failed",
-    defaultMessage: "Paying DEX Fee Failed: {originalError}"
-  },
-  DEX_GETCONFIG_FAILED: {
-    id: "dex.getConfig.failed",
-    defaultMessage: "Getting DEX Config Failed: {originalError}"
-  },
-  BTC_CREATEWALLET_FAILED: {
-    id: "dex.connectBTCWallet.failed",
-    defaultMessage: "Connect to BTC wallet Failed: {originalError}"
-  },
   DEX_CHECKINIT_FAILED: {
     id: "dex.checkInit.failed",
     defaultMessage:
@@ -679,11 +614,6 @@ const messages = defineMessages({
   DEX_LAUNCH_WINDOW_FAILED: {
     id: "dex.launchWindow.failed",
     defaultMessage: "DEX Windows failed to be launched: {originalError}"
-  },
-  CHECK_BTC_CONFIG_FAILED: {
-    id: "dex.checkBTCConfig.failed",
-    defaultMessage:
-      "Failed to check an existing BTC Config file: {originalError}"
   },
   CREATEDEXACCOUNT_FAILED: {
     id: "dex.createDEXAccount.failed",
@@ -697,7 +627,7 @@ const messages = defineMessages({
     id: "dex.user.failed",
     defaultMessage: "Failed to retrieve user information: {originalError}"
   },
-  STARTTICKETBUYERV3_FAILED: {
+  STARTTICKETBUYER_FAILED: {
     id: "vsp.runautobuyer.failed",
     defaultMessage: "{originalError}"
   },
@@ -714,15 +644,6 @@ const messages = defineMessages({
     defaultMessage:
       "You have successfully discovered address usage.  Rescan now commencing."
   },
-  NEW_BTC_CONFIG_FAILED: {
-    id: "newBTCConfig.failed",
-    defaultMessage: "{originalError}"
-  },
-  NEW_BTC_CONFIG_SUCCESS: {
-    id: "newBTCConfig.success",
-    defaultMessage:
-      "You have successfully created a default bitcoin config.  Please restart your Bitcoin Core wallet for this config to be used as expected."
-  },
   DEX_EXPORT_SEED_FAILED: {
     id: "dex.export.seed.failed",
     defaultMessage: "{originalError}"
@@ -730,6 +651,10 @@ const messages = defineMessages({
   SETTINGS_SAVE: {
     id: "settings.saved",
     defaultMessage: "Settings saved successfully."
+  },
+  LOCKACCOUNT_FAILED: {
+    id: "accounts.lockFailed",
+    defaultMessage: "Failed to lock account: {originalError}"
   }
 });
 
@@ -765,7 +690,7 @@ export default function snackbar(state = {}, action) {
         break;
       }
 
-      type = tx.direction || TRANSACTION_TYPES[tx.type];
+      type = tx.txDirection || TRANSACTION_TYPES[tx.type];
       message = { ...tx, type };
       values = { message };
       break;
@@ -776,19 +701,13 @@ export default function snackbar(state = {}, action) {
     case RENAMEACCOUNT_SUCCESS:
     case GETNEXTACCOUNT_SUCCESS:
     case CHANGEPASSPHRASE_SUCCESS:
-    case IMPORTSCRIPT_MANUAL_SUCCESS:
-    case STARTTICKETBUYERV2_SUCCESS:
-    case STARTTICKETBUYERV3_SUCCESS:
-    case STOPTICKETBUYERV2_SUCCESS:
+    case STARTTICKETBUYER_SUCCESS:
     case STOPTICKETBUYER_SUCCESS:
-    case UPDATESTAKEPOOLCONFIG_SUCCESS:
-    case REMOVESTAKEPOOLCONFIG:
     case SEEDCOPIEDTOCLIPBOARD:
     case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     case ABANDONTRANSACTION_SUCCESS:
     case PURCHASETICKETS_SUCCESS:
     case PURCHASETICKETS_SUCCESS_LESS:
-    case ADDCUSTOMSTAKEPOOL_SUCCESS:
     case TRZ_CHANGEHOMESCREEN_SUCCESS:
     case TRZ_WIPEDEVICE_SUCCESS:
     case TRZ_RECOVERDEVICE_SUCCESS:
@@ -819,17 +738,15 @@ export default function snackbar(state = {}, action) {
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
     case SETTREASURY_POLICY_SUCCESS:
+    case SETTSPEND_POLICY_SUCCESS:
+    case SETVSPDVOTECHOICE_PARTIAL_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
-    case NEW_BTC_CONFIG_SUCCESS:
     case SETTINGS_SAVE:
       type = "Success";
       message = messages[action.type] || messages.defaultSuccessMessage;
 
       // custom values for some success messages
       switch (action.type) {
-        case ADDCUSTOMSTAKEPOOL_SUCCESS:
-          values = { host: action.poolInfo.Host };
-          break;
         case EXPORT_COMPLETED:
           values = { filename: action.filename };
           break;
@@ -892,11 +809,6 @@ export default function snackbar(state = {}, action) {
     case PUBLISHTX_FAILED:
     case ABANDONTRANSACTION_FAILED:
     case PURCHASETICKETS_FAILED:
-    case IMPORTSCRIPT_MANUAL_FAILED:
-    case UPDATESTAKEPOOLCONFIG_FAILED:
-    case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
-    case SETSTAKEPOOLVOTECHOICES_FAILED:
-    case ADDCUSTOMSTAKEPOOL_FAILED:
     case DECODERAWTXS_FAILED:
     case SIGNMESSAGE_FAILED:
     case VERIFYMESSAGE_FAILED:
@@ -912,8 +824,8 @@ export default function snackbar(state = {}, action) {
     case SPVSYNC_FAILED:
     case UPDATEVOTECHOICE_FAILED:
     case SETTREASURY_POLICY_FAILED:
+    case SETTSPEND_POLICY_FAILED:
     case GETACCOUNTEXTENDEDKEY_FAILED:
-    case STARTTICKETBUYERV2_FAILED:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEONDEVICE_FAILED:
@@ -954,26 +866,23 @@ export default function snackbar(state = {}, action) {
     case PROCESSMANAGEDTICKETS_FAILED:
     case SETVOTECHOICES_FAILED:
     case SETVSPDVOTECHOICE_FAILED:
+    case SETVSPDVOTECHOICE_SINGLE_FAILED:
     case GETVSP_TICKET_STATUS_FAILED:
     case DEX_STARTUP_FAILED:
     case DEX_LOGIN_FAILED:
     case DEX_ENABLE_FAILED:
     case DEX_INIT_FAILED:
     case DEX_CREATEWALLET_FAILED:
-    case DEX_REGISTER_FAILED:
-    case DEX_GETCONFIG_FAILED:
-    case BTC_CREATEWALLET_FAILED:
     case CREATEDEXACCOUNT_FAILED:
     case DEX_CHECKINIT_FAILED:
     case DEX_LAUNCH_WINDOW_FAILED:
-    case CHECK_BTC_CONFIG_FAILED:
     case DEX_LOGOUT_FAILED:
     case DEX_USER_FAILED:
-    case STARTTICKETBUYERV3_FAILED:
+    case STARTTICKETBUYER_FAILED:
     case SETACCOUNTSPASSPHRASE_FAILED:
     case DISCOVERUSAGE_FAILED:
-    case NEW_BTC_CONFIG_FAILED:
     case DEX_EXPORT_SEED_FAILED:
+    case LOCKACCOUNT_FAILED:
       type = "Error";
       if (
         action.error &&
@@ -996,7 +905,7 @@ export default function snackbar(state = {}, action) {
 
       // custom values for some error messages
       switch (action.type) {
-        case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
+        case SETVSPDVOTECHOICE_SINGLE_FAILED:
           values = { ...values, host: action.host };
       }
 

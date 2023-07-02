@@ -25,6 +25,7 @@ export const DISABLE_HARDWARE_ACCEL = "disable_hardware_accel";
 export const LN_ENABLED = "ln_enabled";
 export const TREZOR_DEBUG = "trezor_debug";
 export const UPGD_ELECTRON8 = "is_electron8";
+export const AUTO_WALLET_LAUNCHING = "auto_wallet_launching";
 
 // advanced daemon configs
 export const RPCUSER = "rpc_user";
@@ -50,7 +51,6 @@ export const setDaemonRemoteCredentials = (
 
 // Wallet config constants
 export const ENABLE_TICKET_BUYER = "enableticketbuyer";
-export const BALANCE_TO_MAINTAIN = "balancetomaintain";
 export const CURRENCY_DISPLAY = "currency_display";
 export const HIDDEN_ACCOUNTS = "hiddenaccounts";
 export const DISCOVER_ACCOUNTS = "discoveraccounts";
@@ -59,7 +59,6 @@ export const IS_WATCH_ONLY = "iswatchonly";
 export const POLITEIA_LAST_ACCESS_TIME = "politeia_last_access_time";
 export const POLITEIA_LAST_ACCESS_BLOCK = "politeia_last_access_block";
 export const TREZOR = "trezor";
-export const VSP_IS_LEGACY = "vsp_is_legacy";
 export const ENABLE_PRIVACY = "enableprivacy";
 export const LN_ACCOUNT = "ln_account";
 export const LN_ADDRESS = "ln_address";
@@ -68,15 +67,12 @@ export const LN_CERTPATH = "ln_certpath";
 export const LN_MACAROONPATH = "ln_macaroonpath";
 export const SEND_FROM_UNMIXED = "send_from_unmixed";
 export const MIXED_ACCOUNT_CFG = "mixedaccount";
-export const DISMISS_BACKUP_MSG_REDEEM_SCRIPT =
-  "dismiss_backup_msg_redeem_script";
 export const CHANGE_ACCOUNT_CFG = "changeaccount";
 export const CSPP_SERVER = "csppserver";
 export const CSPP_PORT = "csppport";
 export const MIXED_ACC_BRANCH = "mixedaccbranch";
 export const REMEMBERED_VSP_HOST = "remembered_vsp_host";
 export const LAST_ACCESS = "lastaccess";
-export const STAKEPOOLS = "stakepools";
 export const LN_WALLET_EXISTS = "ln_wallet_exists";
 export const USED_VSPS = "used_vsps";
 export const AUTOBUYER_SETTINGS = "autobuyer_settings";
@@ -86,17 +82,14 @@ export const DEX_READY = "dex_ready";
 export const DEXWALLET_RPCUSERNAME = "dexwallet_rpcuser";
 export const DEXWALLET_RPCPASSWORD = "dexwallet_rpcpass";
 export const DEXWALLET_HOSTPORT = "dexwallet_host";
-export const BTCWALLET_NAME = "btcwallet_name";
 export const NEEDS_VSPD_PROCESS_TICKETS = "needs_vspd_process_tickets";
-export const DEX_BTC_SPV = "dex_use_btc_spv";
-export const ASK_DEX_BTC_SPV = "ask_dex_use_btc_spv";
 export const CONFIRM_DEX_SEED = "confirm_dex_seed";
 export const WALLET_CREATED_AS_NEW = "wallet_created_as_new";
 export const SHOW_STAKING_WARNING = "show_staking_warning";
+export const DISPLAY_WALLET_GRADIENT = "display_wallet_gradient";
 
 export const WALLET_INITIAL_VALUE = {
   [ENABLE_TICKET_BUYER]: false,
-  [BALANCE_TO_MAINTAIN]: "0",
   [CURRENCY_DISPLAY]: DCR,
   [HIDDEN_ACCOUNTS]: [],
   [DISCOVER_ACCOUNTS]: true,
@@ -105,7 +98,6 @@ export const WALLET_INITIAL_VALUE = {
   [POLITEIA_LAST_ACCESS_TIME]: 0,
   [POLITEIA_LAST_ACCESS_BLOCK]: 0,
   [TREZOR]: false,
-  [VSP_IS_LEGACY]: false,
   // enable_privacy only shows the privacy menu on the wallet
   [ENABLE_PRIVACY]: true,
   [LN_ACCOUNT]: null,
@@ -115,7 +107,6 @@ export const WALLET_INITIAL_VALUE = {
   [LN_MACAROONPATH]: "",
   [SEND_FROM_UNMIXED]: false,
   [MIXED_ACCOUNT_CFG]: null,
-  [DISMISS_BACKUP_MSG_REDEEM_SCRIPT]: false,
   // change_account used when mixing
   [CHANGE_ACCOUNT_CFG]: null,
   [CSPP_SERVER]: "",
@@ -131,14 +122,8 @@ export const WALLET_INITIAL_VALUE = {
   [DEXWALLET_RPCPASSWORD]: "",
   [DEXWALLET_HOSTPORT]: "",
   [DEX_ACCOUNT]: null,
-  [DEX_BTC_SPV]: false,
-  [ASK_DEX_BTC_SPV]: false,
   [CONFIRM_DEX_SEED]: false,
   [AUTOBUYER_SETTINGS]: null,
-  // STAKEPOOLS is a legacy code which can be deleted after stopping giving
-  // support for old vsp versions.
-  [STAKEPOOLS]: [],
-
   // Force as true to ensure wallets with tickets prior to when this config was
   // introduced trigger a view of the "process managed tickets" page.
   [NEEDS_VSPD_PROCESS_TICKETS]: true,
@@ -170,5 +155,6 @@ export const INITIAL_VALUES = {
   [TREZOR_DEBUG]: false,
   [DISABLE_HARDWARE_ACCEL]: false,
   [LN_ENABLED]: false,
-  [UPGD_ELECTRON8]: false
+  [UPGD_ELECTRON8]: false,
+  [AUTO_WALLET_LAUNCHING]: false
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { FormattedMessage as T } from "react-intl";
 import TicketListPage from "./Page";
 import { useTicketsList } from "./hooks";
@@ -91,7 +91,7 @@ const selectTicketTypeFromFilter = (filter) => {
   return ticketType && ticketType.key;
 };
 
-const MyTickets = ({ toggleIsLegacy }) => {
+const MyTickets = () => {
   const {
     intl,
     tickets,
@@ -132,15 +132,20 @@ const MyTickets = ({ toggleIsLegacy }) => {
     }
   };
 
-  const visibleTickets = useMemo(() => tickets.slice(0, index), [
-    index,
-    tickets
-  ]);
+  const visibleTickets = useMemo(
+    () => tickets.slice(0, index),
+    [index, tickets]
+  );
 
+  const isMounted = useRef(false);
   useEffect(() => {
-    setIndex(BATCH_TX_COUNT);
-    setNoMoreTicketsToShow(false);
-  }, [ticketsFilter]);
+    if (isMounted.current) {
+      setIndex(BATCH_TX_COUNT);
+      setNoMoreTicketsToShow(false);
+    } else {
+      isMounted.current = true;
+    }
+  }, [ticketsFilter, isMounted]);
 
   const onChangeFilter = (filter) => {
     const newFilter = { ...ticketsFilter, ...filter };
@@ -183,7 +188,6 @@ const MyTickets = ({ toggleIsLegacy }) => {
         getTickets: onLoadMoreTickets,
         goBackHistory,
         noMoreTickets: noMoreTicketsToShow,
-        toggleIsLegacy,
         loadingQRs,
         QRs,
         QRsPage,

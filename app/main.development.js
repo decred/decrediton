@@ -1,13 +1,8 @@
-import fs from "fs";
+import fs, { readFileSync } from "fs";
 import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog, BrowserView } from "electron";
-import {
-  getCurrentBitcoinConfig,
-  newDefaultBitcoinConfig,
-  initGlobalCfg,
-  validateGlobalCfgFile
-} from "./config";
+import { initGlobalCfg, validateGlobalCfgFile } from "./config";
 import {
   appLocaleFromElectronLocale,
   default as locales
@@ -31,7 +26,6 @@ import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import {
   installSessionHandlers,
   reloadAllowedExternalRequests,
-  LEGACY_allowStakepoolRequests,
   allowVSPRequests,
   allowExternalRequest
 } from "./main_dev/externalRequests";
@@ -74,13 +68,11 @@ import {
   checkInitDex,
   initDex,
   createWalletDex,
+  setWalletPasswordDex,
   userDex,
   loginDex,
   logoutDex,
-  exportSeed,
-  getConfigDex,
-  preRegister,
-  registerDex
+  exportSeed
 } from "./main_dev/ipc";
 import {
   initTemplate,
@@ -281,7 +273,16 @@ const installExtensions = async () => {
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
     for (const name of extensions) {
       try {
-        await devtoolsInstaller(name, forceDownload);
+        const extName = await devtoolsInstaller(name, forceDownload);
+        const extPath = path.join(
+          `${app.getPath("userData")}/extensions/${name.id}`
+        );
+        const manifestRawData = readFileSync(`${extPath}/manifest.json`);
+        const manifest = JSON.parse(manifestRawData);
+        logger.log(
+          "info",
+          `Extension Installed: ${extName}. Version: ${manifest.version}`
+        );
       } catch (e) {
         console.log("Error installing extension: " + e);
       }
@@ -315,12 +316,6 @@ const handle = (channel, fn) =>
 
 ipcMain.on("reload-allowed-external-request", (event) => {
   reloadAllowedExternalRequests();
-  event.returnValue = true;
-});
-
-// LEGACY ipc request - REMOVE AFTER SUPPORTING VSP's API V1/V2
-ipcMain.on("allow-stakepool-host", (event, host) => {
-  LEGACY_allowStakepoolRequests(host);
   event.returnValue = true;
 });
 
@@ -409,12 +404,6 @@ handle("logout-dex", logoutDex);
 
 handle("create-wallet-dex", createWalletDex);
 
-handle("get-config-dex", getConfigDex);
-
-handle("preregister-dex", preRegister);
-
-handle("register-dex", registerDex);
-
 handle("user-dex", userDex);
 
 handle("start-dex", startDex);
@@ -422,6 +411,8 @@ handle("start-dex", startDex);
 handle("stop-dex", stopDex);
 
 handle("launch-dex-window", createDexWindow);
+
+handle("set-wallet-password-dex", setWalletPasswordDex);
 
 function createDexWindow(serverAddress) {
   dexWindow.loadURL("http://" + serverAddress);
@@ -446,15 +437,12 @@ function createDexWindow(serverAddress) {
         nodeIntegration: false,
         contextIsolation: true
       },
-      width: 1280,
-      height: 940
+      width: 1440,
+      height: 1000,
+      icon: __dirname + "/dcrdex.png"
     });
   });
 }
-
-handle("check-btc-config", getCurrentBitcoinConfig);
-
-handle("new-btc-config", newDefaultBitcoinConfig);
 
 handle("dcrlnd-creds", () => (GetDcrlndPID() !== -1 ? GetDcrlndCreds() : null));
 
@@ -789,7 +777,8 @@ app.on("ready", async () => {
       contextIsolation: true,
       webSecurity: true,
       enableRemoteModule: false,
-      preload: preloadPath
+      preload: preloadPath,
+      sandbox: false
     },
     icon: __dirname + "/icon.png"
   };
@@ -880,8 +869,9 @@ app.on("ready", async () => {
       nodeIntegration: false,
       contextIsolation: true
     },
-    width: 1280,
-    height: 940
+    width: 1440,
+    height: 1000,
+    icon: __dirname + "/dcrdex.png"
   });
 });
 

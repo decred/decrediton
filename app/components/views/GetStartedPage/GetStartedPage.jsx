@@ -5,7 +5,8 @@ import {
   LogsLinkMsg,
   SettingsLinkMsg,
   UpdateAvailableLink,
-  AboutModalButton
+  LearnBasicsMsg,
+  ReleaseInfoMsg
 } from "./messages";
 import { PageBody } from "layout";
 import { LoaderBarBottom } from "indicators";
@@ -15,8 +16,7 @@ import styles from "./GetStarted.module.css";
 const GetStarted = ({
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft,
-  appVersion
+  getEstimatedTimeLeft
 }) => {
   const {
     onShowLogs,
@@ -24,7 +24,9 @@ const GetStarted = ({
     updateAvailable,
     isTestNet,
     PageComponent,
-    showNavLinks
+    showNavLinks,
+    onShowTutorial,
+    onShowReleaseNotes
   } = useGetStarted();
 
   return (
@@ -41,13 +43,32 @@ const GetStarted = ({
               tooltipClassName={styles.updateAvailableTooltip}
             />
           )}
-          <AboutModalButton {...{ appVersion, updateAvailable }} />
           {showNavLinks && (
             <>
-              <InvisibleButton onClick={onShowSettings}>
+              <InvisibleButton
+                onClick={onShowTutorial}
+                className={classNames(
+                  styles.invisibleButton,
+                  styles.tutorialButton
+                )}>
+                <LearnBasicsMsg />
+              </InvisibleButton>
+              <InvisibleButton
+                onClick={onShowReleaseNotes}
+                className={classNames(
+                  styles.invisibleButton,
+                  styles.releaseNotesButton
+                )}>
+                <ReleaseInfoMsg />
+              </InvisibleButton>
+              <InvisibleButton
+                onClick={onShowSettings}
+                className={styles.invisibleButton}>
                 <SettingsLinkMsg />
               </InvisibleButton>
-              <InvisibleButton onClick={onShowLogs}>
+              <InvisibleButton
+                onClick={onShowLogs}
+                className={styles.invisibleButton}>
                 <LogsLinkMsg />
               </InvisibleButton>
             </>

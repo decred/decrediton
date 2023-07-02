@@ -23,11 +23,14 @@ const useSettings = () => {
   const needNetworkReset = useSelector(sel.needNetworkReset);
   const walletName = useSelector(sel.getWalletName);
   const walletReady = useSelector(sel.getWalletReady);
+  const isTrezor = useSelector(sel.isTrezor);
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {
-      const { newPassphrase, priv } = args;
-      dispatch(ca.changePassphraseAttempt(oldPass, newPassphrase, priv));
+      const { newPassphrase, priv, dexAppPassword } = args;
+      dispatch(
+        ca.changePassphraseAttempt(oldPass, newPassphrase, priv, dexAppPassword)
+      );
     },
     [dispatch]
   );
@@ -60,9 +63,10 @@ const useSettings = () => {
     [dispatch, isVSPListingEnabled]
   );
 
-  const onCloseWallet = useCallback(() => dispatch(wla.closeWalletRequest()), [
-    dispatch
-  ]);
+  const onCloseWallet = useCallback(
+    () => dispatch(wla.closeWalletRequest()),
+    [dispatch]
+  );
 
   const onAddAllowedRequestType = useCallback(
     (requestType) => dispatch(sa.addAllowedExternalRequest(requestType)),
@@ -119,6 +123,7 @@ const useSettings = () => {
     needNetworkReset,
     walletName,
     walletReady,
+    isTrezor,
     onAttemptChangePassphrase,
     onChangeTempSettings,
     onSaveSettings,

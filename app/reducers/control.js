@@ -19,10 +19,6 @@ import {
   IMPORTPRIVKEY_ATTEMPT,
   IMPORTPRIVKEY_FAILED,
   IMPORTPRIVKEY_SUCCESS,
-  IMPORTSCRIPT_ATTEMPT,
-  IMPORTSCRIPT_FAILED,
-  IMPORTSCRIPT_SUCCESS,
-  IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS,
   CHANGEPASSPHRASE_ATTEMPT,
   CHANGEPASSPHRASE_FAILED,
   CHANGEPASSPHRASE_SUCCESS,
@@ -41,28 +37,10 @@ import {
   PURCHASETICKETS_FAILED,
   PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_SUCCESS_LESS,
-  GETTICKETBUYERCONFIG_ATTEMPT,
-  GETTICKETBUYERCONFIG_FAILED,
-  GETTICKETBUYERCONFIG_SUCCESS,
-  SETTICKETBUYERCONFIG_ATTEMPT,
-  SETTICKETBUYERCONFIG_FAILED,
-  SETTICKETBUYERCONFIG_SUCCESS,
-  STARTAUTOBUYER_ATTEMPT,
-  STARTAUTOBUYER_FAILED,
-  STARTAUTOBUYER_SUCCESS,
-  STOPAUTOBUYER_ATTEMPT,
-  STOPAUTOBUYER_FAILED,
-  STOPAUTOBUYER_SUCCESS,
-  STARTTICKETBUYERV2_ATTEMPT,
-  STARTTICKETBUYERV2_FAILED,
-  STARTTICKETBUYERV2_SUCCESS,
-  STOPTICKETBUYERV2_ATTEMPT,
-  STOPTICKETBUYERV2_SUCCESS,
   CONSTRUCTTX_ATTEMPT,
   CONSTRUCTTX_FAILED,
   CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_FAILED_LOW_BALANCE,
-  SETBALANCETOMAINTAIN,
   MODAL_VISIBLE,
   MODAL_HIDDEN,
   SHOW_ABOUT_MODAL_MACOS,
@@ -72,7 +50,6 @@ import {
   GETACCOUNTEXTENDEDKEY_SUCCESS,
   HIDE_CANTCLOSE_MODAL,
   SHOW_CANTCLOSE_MODAL,
-  SAVE_LEGACY_AUTOBUYER_SETTINGS,
   SETACCOUNTPASSPHRASE_SUCCESS,
   UNLOCKANDEXECFN_ATTEMPT,
   UNLOCKANDEXECFN_FAILED,
@@ -88,9 +65,11 @@ import {
   SETACCOUNTSPASSPHRASE_SUCCESS,
   SETACCOUNTSPASSPHRASE_FAILED,
   SET_PAGEBODY_SCROLLHANDLER,
-  SET_PAGEBODY_TOP_REF
+  SET_PAGEBODY_TOP_REF,
+  LOCKACCOUNT_SUCCESS,
+  LOCKACCOUNT_ATTEMPT,
+  LOCKACCOUNT_FAILED
 } from "../actions/ControlActions";
-import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
 import {
@@ -229,33 +208,6 @@ export default function control(state = {}, action) {
         importPrivateKeyRequestAttempt: false,
         importPrivateKeyResponse: action.importPrivateKeyResponse
       };
-    case IMPORTSCRIPT_ATTEMPT:
-      return {
-        ...state,
-        importScriptError: null,
-        importScriptRequestAttempt: true
-      };
-    case IMPORTSCRIPT_FAILED:
-      return {
-        ...state,
-        importScriptError: String(action.error),
-        importScriptRequestAttempt: false,
-        purchaseTicketsRequestAttempt: false
-      };
-    case IMPORTSCRIPT_SUCCESS:
-      return {
-        ...state,
-        importScriptError: null,
-        importScriptRequestAttempt: false,
-        importScriptResponse: action.importScriptResponse
-      };
-    case IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS:
-      return {
-        ...state,
-        importScriptError: null,
-        importScriptRequestAttempt: false,
-        importScriptResponse: action.importScriptResponse
-      };
     case CHANGEPASSPHRASE_ATTEMPT:
       return {
         ...state,
@@ -345,7 +297,6 @@ export default function control(state = {}, action) {
         ...state,
         purchaseTicketsError: null,
         purchaseTicketsRequestAttempt: true,
-        numTicketsToBuy: action.numTicketsToBuy,
         // set modalVisible to false to hide blur effect instantly.
         // Without this, it is dismissed with delay. Some hint for later
         // investigation: the redux store updates fine, but the selector reads
@@ -357,8 +308,7 @@ export default function control(state = {}, action) {
       return {
         ...state,
         purchaseTicketsError: String(action.error),
-        purchaseTicketsRequestAttempt: false,
-        importScriptRequestAttempt: false
+        purchaseTicketsRequestAttempt: false
       };
     case PURCHASETICKETS_SUCCESS_LESS:
     case PURCHASETICKETS_SUCCESS:
@@ -366,129 +316,15 @@ export default function control(state = {}, action) {
         ...state,
         purchaseTicketsError: null,
         purchaseTicketsRequestAttempt: false,
-        purchaseTicketsResponse: action.purchaseTicketsResponse,
-        numTicketsToBuy: 1
+        purchaseTicketsResponse: action.purchaseTicketsResponse
       };
     case CREATE_UNSIGNEDTICKETS_SUCCESS:
       return {
         ...state,
         purchaseTicketsError: null,
         purchaseTicketsRequestAttempt: false,
-        purchaseTicketsResponse: action.purchaseTicketsResponse,
-        numTicketsToBuy: 1
+        purchaseTicketsResponse: action.purchaseTicketsResponse
       };
-    case GETTICKETBUYERCONFIG_ATTEMPT:
-      return {
-        ...state,
-        getTicketBuyerConfigError: null,
-        getTicketBuyerConfigRequestAttempt: true
-      };
-    case GETTICKETBUYERCONFIG_FAILED:
-      return {
-        ...state,
-        getTicketBuyerConfigError: String(action.error),
-        getTicketBuyerConfigRequestAttempt: false
-      };
-    case GETTICKETBUYERCONFIG_SUCCESS:
-      return {
-        ...state,
-        getTicketBuyerConfigRequestAttempt: false,
-        getTicketBuyerConfigResponse: action.ticketBuyerConfig
-      };
-    case SETTICKETBUYERCONFIG_ATTEMPT:
-      return {
-        ...state,
-        setTicketBuyerConfigError: null,
-        setTicketBuyerConfigRequestAttempt: true,
-        setTicketBuyerConfigResponse: null
-      };
-    case SETTICKETBUYERCONFIG_FAILED:
-      return {
-        ...state,
-        setTicketBuyerConfigError: action.error,
-        setTicketBuyerConfigRequestAttempt: false
-      };
-    case SETTICKETBUYERCONFIG_SUCCESS:
-      return {
-        ...state,
-        setTicketBuyerConfigRequestAttempt: false,
-        setTicketBuyerConfigResponse: action.success
-      };
-    case SETBALANCETOMAINTAIN:
-      return {
-        ...state,
-        balanceToMaintain: action.balanceToMaintain
-      };
-    case STARTAUTOBUYER_ATTEMPT:
-      return {
-        ...state,
-        startAutoBuyerError: null,
-        startAutoBuyerRequestAttempt: true
-      };
-    case STARTAUTOBUYER_FAILED:
-      return {
-        ...state,
-        startAutoBuyerError: String(action.error),
-        startAutoBuyerRequestAttempt: false
-      };
-    case STARTAUTOBUYER_SUCCESS:
-      return {
-        ...state,
-        startAutoBuyerError: null,
-        startAutoBuyerRequestAttempt: false,
-        startAutoBuyerResponse: action.startAutoBuyerResponse,
-        stopAutoBuyerResponse: null,
-        balanceToMaintain: action.balanceToMaintain
-      };
-    case STOPAUTOBUYER_ATTEMPT:
-      return {
-        ...state,
-        stopAutoBuyerError: null,
-        stopAutoBuyerRequestAttempt: true
-      };
-    case STOPAUTOBUYER_FAILED:
-      return {
-        ...state,
-        //stopAutoBuyerError: String(action.error),
-        stopAutoBuyerRequestAttempt: false
-      };
-    case STOPAUTOBUYER_SUCCESS:
-      return {
-        ...state,
-        stopAutoBuyerError: null,
-        stopAutoBuyerSuccess: action.success,
-        stopAutoBuyerRequestAttempt: false,
-        stopAutoBuyerResponse: action.stopAutoBuyerResponse,
-        startAutoBuyerSuccess: null,
-        startAutoBuyerResponse: null
-      };
-    case STARTTICKETBUYERV2_ATTEMPT:
-      return {
-        ...state,
-        startTicketBuyerAttempt: true,
-        startTicketBuyerError: null,
-        ticketBuyerConfig: action.ticketBuyerConfig
-      };
-    case STARTTICKETBUYERV2_FAILED:
-      return {
-        ...state,
-        startTicketBuyerAttempt: false,
-        startTicketBuyerError: action.error,
-        startAutoBuyerResponse: null
-      };
-    case STARTTICKETBUYERV2_SUCCESS:
-      return {
-        ...state,
-        startTicketBuyerAttempt: false,
-        startTicketBuyerError: null,
-        startAutoBuyerResponse: true,
-        ticketBuyerCall: action.ticketBuyerCall,
-        ticketBuyerAcct: action.ticketBuyerAcct
-      };
-    case STOPTICKETBUYERV2_ATTEMPT:
-      return { ...state };
-    case STOPTICKETBUYERV2_SUCCESS:
-      return { ...state, ticketBuyerCall: null, startAutoBuyerResponse: null };
     case CONSTRUCTTX_ATTEMPT:
       return {
         ...state,
@@ -515,8 +351,6 @@ export default function control(state = {}, action) {
         constructTxRequestAttempt: false,
         constructTxResponse: action.constructTxResponse
       };
-    case WALLET_AUTOBUYER_SETTINGS:
-      return { ...state, balanceToMaintain: action.balanceToMaintain };
     case EXPORT_STARTED:
       return { ...state, exportingData: true };
     case EXPORT_COMPLETED:
@@ -556,15 +390,7 @@ export default function control(state = {}, action) {
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
-        changeScriptByAccount: {},
-        ticketBuyerConfig: null
-      };
-    case SAVE_LEGACY_AUTOBUYER_SETTINGS:
-      return {
-        ...state,
-        legacyBalanceToMaintain: action.balanceToMaintain,
-        legacyAccount: action.account,
-        legacyVsp: action.vsp
+        changeScriptByAccount: {}
       };
     case MONITORLOCKACBLEACCOUNTS_STARTED:
       return {
@@ -640,6 +466,21 @@ export default function control(state = {}, action) {
       return {
         ...state,
         pageBodyTopRef: action.ref
+      };
+    case LOCKACCOUNT_ATTEMPT:
+      return {
+        ...state,
+        lockAccountError: null
+      };
+    case LOCKACCOUNT_SUCCESS:
+      return {
+        ...state,
+        lockAccountError: null
+      };
+    case LOCKACCOUNT_FAILED:
+      return {
+        ...state,
+        lockAccountError: action.error
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-**Warning!** Only use official firmware distributed by SatoshiLabs (Trezor
+**_Warning!_** Only use official firmware distributed by SatoshiLabs (Trezor
 manufacturer) or other very trusted sources. Using a non standard firmware
 or one obtained from an unreputable individual or company might result in **loss
 or stealing of funds**.

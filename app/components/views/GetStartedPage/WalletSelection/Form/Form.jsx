@@ -1,190 +1,292 @@
 import { FormattedMessage as T } from "react-intl";
-import { classNames, Tooltip } from "pi-ui";
+import { useIntl } from "react-intl";
+import {
+  classNames,
+  Tooltip,
+  Icon,
+  useTheme,
+  getThemeProperty,
+  ButtonIcon
+} from "pi-ui";
 import { RemoveWalletButton } from "buttons";
-import { FormattedRelative } from "shared";
-import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
-import { FormContainer, Row } from "../../helpers";
+import { FormattedRelative, Subtitle } from "shared";
+import { FormContainer, ContentContainer /* , Row */ } from "../../helpers";
 import styles from "./Form.module.css";
-
-const CreateRestoreButtons = ({ showCreateWalletForm }) => (
-  <>
-    <div
-      className={classNames(styles.displayWallet, styles.new)}
-      onClick={() => showCreateWalletForm(true)}>
-      <div className={classNames(styles.walletIcon, styles.createnew)} />
-      <div className={styles.displayWalletName}>
-        <NewSeedTabMsg />
-      </div>
-    </div>
-    <div
-      className={classNames(styles.displayWallet, styles.new)}
-      onClick={() => showCreateWalletForm(false)}>
-      <div className={classNames(styles.walletIcon, styles.restore)} />
-      <div className={styles.displayWalletName}>
-        <RestoreTabMsg />
-      </div>
-    </div>
-  </>
-);
-
-const WalletTypeLabel = ({ isWatchingOnly, finished, isTrezor, isPrivacy }) => {
-  if (isPrivacy) return <T id="walletselection.privacy" m="Privacy" />;
-  if (isTrezor) return <T id="walletselection.trezor" m="Trezor" />;
-  if (isWatchingOnly)
-    return <T id="walletselection.watchOnly" m="Watch Only" />;
-  if (!finished)
-    return <T id="walletselection.setupIncomplete" m="Setup incomplete" />;
-  return null;
-};
+import {
+  TutorialOverview,
+  tutorials
+} from "../../../SettingsPage/TutorialsTab/helpers";
+import {
+  LoaderTitleMsg,
+  LoaderTitleMsgChooseTheWalletToAccess,
+  messages
+} from "../../messages";
 
 const WalletSelectionForm = ({
   availableWallets,
   showCreateWalletForm,
+  showCreateTrezorBackedWalletForm,
   onRemoveWallet,
-  selectedWallet,
-  onChangeAvailableWallets,
   onToggleEditWallet,
   editWallets,
-  submitChosenWallet
-}) => (
-  <div>
-    <FormContainer>
-      <Row>
-        {availableWallets.map((wallet) => {
-          const selected =
-            selectedWallet &&
-            selectedWallet.value.wallet === wallet.value.wallet &&
-            wallet.network === selectedWallet.network;
-          return (
-            <div
-              className={
-                selected && !editWallets
-                  ? classNames(styles.displayWallet, styles.selected)
-                  : styles.displayWallet
-              }
-              key={wallet.label}
-              onClick={
-                !editWallets ? () => onChangeAvailableWallets(wallet) : null
-              }>
-              {editWallets && (
-                <div className={styles.displayWalletButtons}>
-                  <Tooltip
-                    content={
-                      <T
-                        id="walletselection.removeWalletButton"
-                        m="Remove Wallet"
-                      />
-                    }>
-                    <RemoveWalletButton
-                      className={classNames(
-                        styles.displayWalletButton,
-                        styles.remove
-                      )}
-                      modalTitle={
-                        <T
-                          id="walletselection.removeConfirmModal.title"
-                          m="Remove {wallet}"
-                          values={{
-                            wallet: (
-                              <span className="mono">
-                                {wallet.value.wallet}
-                              </span>
-                            )
-                          }}
-                        />
-                      }
-                      modalContent={
-                        <T
-                          id="walletselection.removeConfirmModal.content"
-                          m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."
-                        />
-                      }
-                      onSubmit={() => onRemoveWallet(wallet)}
-                    />
-                  </Tooltip>
-                </div>
-              )}
-              <div
-                className={
-                  selected && !editWallets
-                    ? classNames(styles.displayWalletComplete, styles.selected)
-                    : styles.displayWalletComplete
-                }>
-                <WalletTypeLabel
-                  isWatchingOnly={wallet.isWatchingOnly}
-                  isTrezor={wallet.value.isTrezor}
-                  finished={wallet.finished}
-                  isPrivacy={wallet.value.isPrivacy}
-                />
-              </div>
-              <div
-                className={
-                  selected && !editWallets
-                    ? classNames(styles.walletIcon, styles.selected)
-                    : classNames(styles.walletIcon, styles.wallet)
-                }
-              />
-              <div
-                className={
-                  selected && !editWallets
-                    ? classNames(styles.displayWalletName, styles.selected)
-                    : styles.displayWalletName
-                }>
-                {wallet.value.wallet}
-              </div>
-              <div
-                className={
-                  selected && !editWallets
-                    ? classNames(
-                        styles.displayWalletLastAccess,
-                        styles.selected
-                      )
-                    : styles.displayWalletLastAccess
-                }>
-                {wallet.lastAccess && (
+  submitChosenWallet,
+  onShowOnboardingTutorial
+}) => {
+  const { theme } = useTheme();
+  const intl = useIntl();
+  const trezorIconColor = getThemeProperty(theme, "light-blue");
+  const accentBlue = getThemeProperty(theme, "accent-blue");
+  const green = getThemeProperty(theme, "green-2");
+  const lightGreen = getThemeProperty(theme, "light-green");
+  const closeButtonColor = getThemeProperty(theme, "background-back-color");
+
+  const CreateButton = (props) => (
+    <ButtonIcon
+      type="create"
+      onClick={() => showCreateWalletForm(true)}
+      text={intl.formatMessage(messages.newSeedTabMsg)}
+      iconColor={accentBlue}
+      {...props}
+    />
+  );
+
+  const RestoreButton = (props) => (
+    <ButtonIcon
+      type="restore"
+      onClick={() => showCreateWalletForm(false)}
+      text={intl.formatMessage(messages.restoreTabMsg)}
+      iconColor={green}
+      iconBackgroundColor={lightGreen}
+      {...props}
+    />
+  );
+
+  const TrezorButton = (props) => (
+    <ButtonIcon
+      type="trezor"
+      onClick={() => showCreateTrezorBackedWalletForm()}
+      text={intl.formatMessage(messages.trezorTabMsg)}
+      iconColor={trezorIconColor}
+      {...props}
+    />
+  );
+
+  return (
+    <div className={styles.container}>
+      <ContentContainer>
+        <div>
+          <LoaderTitleMsg />,
+        </div>
+        <div>
+          <LoaderTitleMsgChooseTheWalletToAccess />
+        </div>
+      </ContentContainer>
+
+      <FormContainer>
+        <div className={styles.displayWalletContainer}>
+          {availableWallets.length > 0 ? (
+            <>
+              <div className={classNames(styles.buttons, "flex-row")}>
+                {editWallets ? (
+                  <ButtonIcon
+                    type="cancel"
+                    className={styles.close}
+                    onClick={onToggleEditWallet}
+                    iconColor={closeButtonColor}
+                    text={intl.formatMessage(messages.closeEditWallets)}
+                  />
+                ) : (
                   <>
-                    <T id="walletselection.lastAccess" m="Last accessed" />:{" "}
-                    <FormattedRelative
-                      value={wallet.lastAccess}
-                      updateInterval={1 * 1000}
+                    <CreateButton />
+                    <RestoreButton />
+                    <TrezorButton />
+                    <ButtonIcon
+                      type="edit"
+                      onClick={onToggleEditWallet}
+                      text={intl.formatMessage(messages.editWallets)}
                     />
                   </>
                 )}
               </div>
-              {!editWallets && selected && (
-                <>
+              {availableWallets.map((wallet) => {
+                return (
                   <div
-                    className={styles.displayWalletLaunch}
-                    onClick={() => submitChosenWallet({ selectedWallet })}>
-                    <T id="walletselection.launchWallet" m="Launch Wallet " />
+                    className={styles.displayWallet}
+                    key={wallet.label}
+                    onClick={
+                      !editWallets
+                        ? () => submitChosenWallet({ selectedWallet: wallet })
+                        : null
+                    }>
+                    <div
+                      style={
+                        wallet.displayWalletGradient && {
+                          background: wallet.displayWalletGradient
+                        }
+                      }
+                      className={styles.gradient}
+                    />
+                    <Icon
+                      type="wallet"
+                      size={38}
+                      className={styles.walletIcon}
+                    />
+                    <div className={styles.displayWalletName}>
+                      {wallet.value.wallet}
+                    </div>
+                    <div
+                      className={classNames(
+                        "flex-row",
+                        "justify-end",
+                        styles.walletTypeIcons
+                      )}>
+                      {editWallets ? (
+                        <div>
+                          <Tooltip
+                            content={
+                              <T
+                                id="walletselection.removeWalletButton"
+                                m="Remove Wallet"
+                              />
+                            }>
+                            <RemoveWalletButton
+                              className={classNames(
+                                styles.displayWalletButton,
+                                styles.remove
+                              )}
+                              modalTitle={
+                                <T
+                                  id="walletselection.removeConfirmModal.title"
+                                  m="Remove {wallet}"
+                                  values={{
+                                    wallet: (
+                                      <span className="mono">
+                                        {wallet.value.wallet}
+                                      </span>
+                                    )
+                                  }}
+                                />
+                              }
+                              modalContent={
+                                <T
+                                  id="walletselection.removeConfirmModal.content"
+                                  m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."
+                                />
+                              }
+                              onSubmit={() => onRemoveWallet(wallet)}
+                            />
+                          </Tooltip>
+                        </div>
+                      ) : (
+                        <>
+                          {wallet.value.isPrivacy && (
+                            <div>
+                              <Tooltip
+                                content={
+                                  <T id="walletselection.privacy" m="Privacy" />
+                                }>
+                                <Icon type="privacy" size={21} />
+                              </Tooltip>
+                            </div>
+                          )}
+                          {wallet.value.isLN && (
+                            <div>
+                              <Tooltip
+                                content={
+                                  <T id="walletselection.ln" m="Lightning" />
+                                }>
+                                <Icon type="ln" size={21} />
+                              </Tooltip>
+                            </div>
+                          )}
+                          {wallet.value.isTrezor && (
+                            <div>
+                              <Tooltip
+                                content={
+                                  <T id="walletselection.trezor" m="Trezor" />
+                                }>
+                                <Icon
+                                  type="trezor"
+                                  size={21}
+                                  iconColor={trezorIconColor}
+                                />
+                              </Tooltip>
+                            </div>
+                          )}
+                          {wallet.isWatchingOnly && (
+                            <div>
+                              <Tooltip
+                                content={
+                                  <T
+                                    id="walletselection.watchOnly"
+                                    m="Watch Only"
+                                  />
+                                }>
+                                <Icon type="watchOnly" size={21} />
+                              </Tooltip>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <div className={styles.displayWalletLastAccess}>
+                      {!wallet.finished ? (
+                        <T
+                          id="walletselection.setupIncomplete"
+                          m="Setup incomplete"
+                        />
+                      ) : (
+                        wallet.lastAccess && (
+                          <>
+                            <T
+                              id="walletselection.lastAccess"
+                              m="Last accessed"
+                            />
+                            :{" "}
+                            <FormattedRelative
+                              value={wallet.lastAccess}
+                              updateInterval={1 * 1000}
+                            />
+                          </>
+                        )
+                      )}
+                    </div>
                   </div>
-                  <span className={styles.launchArrowBounce}>&#8594;</span>
-                </>
-              )}
-            </div>
-          );
-        })}
-        <CreateRestoreButtons {...{ showCreateWalletForm }} />
-        {editWallets ? (
-          <Tooltip
-            content={<T id="walletselection.closeEditWallets" m="Close" />}>
-            <div
-              className={classNames(styles.editWalletsButton, styles.close)}
-              onClick={onToggleEditWallet}
-            />
-          </Tooltip>
-        ) : (
-          <Tooltip
-            content={<T id="walletselection.editWallets" m="Edit Wallets" />}>
-            <div
-              className={styles.editWalletsButton}
-              onClick={onToggleEditWallet}
-            />
-          </Tooltip>
-        )}
-      </Row>
-    </FormContainer>
-  </div>
-);
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <CreateButton className={styles.largeButtonIcon} />
+              <RestoreButton className={styles.largeButtonIcon} />
+              <TrezorButton className={styles.largeButtonIcon} />
+            </>
+          )}
+        </div>
+      </FormContainer>
+
+      <Subtitle
+        className={styles.subtitle}
+        title={
+          <T
+            id="getstarted.tutorials.learnAboutDecred"
+            m="Learn about decred"
+          />
+        }
+      />
+      {["decredIntro", "powPos", "lifecycle", "blocks"].map((name) => (
+        <TutorialOverview
+          {...{
+            key: name,
+            name,
+            tutorials,
+            viewTutorialHandler: onShowOnboardingTutorial,
+            showProgressBar: false
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default WalletSelectionForm;

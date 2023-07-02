@@ -1,0 +1,1 @@
+Creates a new Trezor device based Wallet and inputs a new seed into the device. Note! Follow the instructions on the device and write down the 24 seed words displayed one at a time. Failure to do so will result in loss of funds.

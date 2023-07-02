@@ -1,6 +1,6 @@
 .tabsContainer {
   height: calc(100vh - 17rem);
-  margin: -2rem -4rem 0 -4rem;
+  margin: -2rem -4rem;
 }
 
 .tabs {
@@ -9,7 +9,7 @@
 
 .tabsContent {
   padding-top: 1rem;
-  padding-left: 6rem;
+  padding-left: 0.2rem;
 }
 
 .tabHeader {

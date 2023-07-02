@@ -1,0 +1,15 @@
+{
+  "name": "dcrwin32ipc",
+  "version": "0.1.0",
+  "description": "Wraps anonymous pipe creation on Windows",
+  "private": true,
+  "scripts": {
+    "test": "node moduleTest.js",
+    "install": "node-gyp configure build",
+    "install-electron": "node-gyp rebuild --target=8.5.2 --arch=x64 --dist-url=https://electronjs.org/headers"
+  },
+  "gypfile": true,
+  "dependencies": {
+    "bindings": "~1.2.1"
+  }
+}

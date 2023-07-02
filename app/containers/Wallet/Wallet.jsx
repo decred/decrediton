@@ -16,7 +16,6 @@ import GovernancePage from "components/views/GovernancePage/GovernancePage";
 import ProposalDetailsPage from "components/views/ProposalDetailsPage/ProposalDetailsPage";
 import AgendaDetailsPage from "components/views/AgendaDetailsPage";
 import ChannelDetailsPage from "components/views/LNPage/ChannelDetailsPage";
-import TrezorPage from "components/views/TrezorPage";
 import LNPage from "components/views/LNPage";
 import DexPage from "components/views/DexPage";
 import SideBar from "components/SideBar/SideBar";
@@ -57,20 +56,22 @@ const Wallet = ({ setInterval }) => {
           <Route path="/tickets" component={TicketsPage} />
           <Route path="/tutorial" component={TutorialsPage} />
           <Route path="/governance" component={GovernancePage} />
-          <Route path="/trezor" component={TrezorPage} />
           <Route path="/ln" component={LNPage} />
           <Route path="/dex" component={DexPage} />
         </StaticSwitch>
         <Route
-          path="/transactions/history/:txHash"
-          component={TransactionPage}
+          path={[
+            "/transactions/history/:txHash",
+            "/tickets/vspTicketsStatus/:txHash",
+            "/tickets/mytickets/:txHash",
+            "/home/:txHash"
+          ]}
+          render={(props) => (
+            // use render property to make sure that every time a
+            // new TransactionPage component is created
+            <TransactionPage {...props} key={props.location.key} />
+          )}
         />
-        <Route path="/tickets/mytickets/:txHash" component={TransactionPage} />
-        <Route
-          path="/tickets/vspTicketsStatus/:txHash"
-          component={TransactionPage}
-        />
-        <Route path="/home/:txHash" component={TransactionPage} />
         <Route
           path="/proposal/details/:token"
           component={ProposalDetailsPage}

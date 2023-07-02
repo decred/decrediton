@@ -16,7 +16,6 @@ export { default as VerifyMessageInfo } from "./InfoModals/VerifyMessage.md";
 
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 export { default as WalletCreationWarning } from "./Warnings/WalletCreation.md";
-export { default as TrezorWipeWarning } from "./Warnings/TrezorWipe.md";
 export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwareUpdate.md";
 export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 export { default as LNForceCloseChannelWarning } from "./Warnings/LNForceCloseChannel.md";
@@ -33,6 +32,7 @@ export { default as ReleaseNote1_4_0 } from "./ReleaseNotes/v1.4.0.md";
 export { default as ReleaseNote1_5_0 } from "./ReleaseNotes/v1.5.0.md";
 export { default as ReleaseNote1_6_0 } from "./ReleaseNotes/v1.6.0.md";
 export { default as ReleaseNote1_7_0 } from "./ReleaseNotes/v1.7.0.md";
+export { default as ReleaseNote1_8_0 } from "./ReleaseNotes/v1.8.0.md";
 
 export { default as StakingTutorialPage01 } from "./StakingTutorial/Page01.md";
 export { default as StakingTutorialPage02 } from "./StakingTutorial/Page02.md";
@@ -86,3 +86,11 @@ export { default as IdentityPage01 } from "./Tutorials/IdentityPage01.md";
 export { default as IdentityPage02 } from "./Tutorials/IdentityPage02.md";
 export { default as IdentityPage03 } from "./Tutorials/IdentityPage03.md";
 export { default as IdentityPage04 } from "./Tutorials/IdentityPage04.md";
+
+export { default as TrezorDeviceSetup } from "./Trezor/DeviceSetup.md";
+export { default as TrezorBackupDevice } from "./Trezor/BackupDevice.md";
+export { default as TrezorInitDevice } from "./Trezor/InitDevice.md";
+export { default as TrezorRecoverDevice } from "./Trezor/RecoverDevice.md";
+export { default as TrezorWipeDevice } from "./Trezor/WipeDevice.md";
+export { default as PreCreateTrezorWallet1 } from "./Trezor/PreCreateTrezorWallet1.md";
+export { default as PreCreateTrezorWallet2 } from "./Trezor/PreCreateTrezorWallet2.md";

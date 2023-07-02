@@ -37,6 +37,7 @@ const ExportPage = ({
     <Subtitle
       title={<T id="export.subtitle" m="Export Transactions" />}
       className={classNames(styles.isRow)}
+      docUrl="https://docs.decred.org/wallets/decrediton/using-decrediton/#export"
       children={
         <div className={classNames(styles.contentTitleButtonsArea)}>
           <InfoModalButton

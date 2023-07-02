@@ -23,9 +23,10 @@ let mockIsSendingTransaction;
 
 beforeEach(() => {
   mockOnSubmit = jest.fn(() => {});
-  mockSignTransactionAttemptTrezor = trezorActions.signTransactionAttemptTrezor = jest.fn(
-    () => () => Promise.resolve()
-  );
+  mockSignTransactionAttemptTrezor =
+    trezorActions.signTransactionAttemptTrezor = jest.fn(
+      () => () => Promise.resolve()
+    );
   mockSignTransactionAttempt = controlActions.signTransactionAttempt = jest.fn(
     () => () => Promise.resolve()
   );

@@ -1,4 +1,4 @@
-**Ostrzeżenie!** Używaj tylko oficjalnego firmware'u dystrybuowanego przez SatoshiLabs (producenta
+**_Ostrzeżenie!_** Używaj tylko oficjalnego firmware'u dystrybuowanego przez SatoshiLabs (producenta
 urządzeń Trezor) lub innych zaufanych źródeł. Korzystanie z oprogramowania niestandardowego
 lub uzyskanego od nierzetelnych osób bądź firm może spowodować **utratę
 lub kradzież środków**.

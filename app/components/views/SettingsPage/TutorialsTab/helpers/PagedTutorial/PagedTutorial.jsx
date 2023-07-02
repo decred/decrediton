@@ -13,6 +13,8 @@ const PagedTutorial = ({
   setVisitedTabs,
   activeTabIndex,
   setActiveTabIndex,
+  className,
+  tabContentWrapperClassName,
   onFinish
 }) => {
   useMountEffect(() => {
@@ -65,7 +67,7 @@ const PagedTutorial = ({
   const spaceEvenly = slides.length < 4;
 
   return (
-    <div className={styles.tabsContainer}>
+    <div className={classNames(styles.tabsContainer, className)}>
       <button
         aria-label="Previous"
         className={classNames(
@@ -96,7 +98,11 @@ const PagedTutorial = ({
             }
             className={styles.tab}>
             <div className={styles.tabContent}>
-              <div className={styles.tabContentWrapper}>
+              <div
+                className={classNames(
+                  styles.tabContentWrapper,
+                  tabContentWrapperClassName
+                )}>
                 <div className={styles.stepIndicator}>{`${parseInt(i) + 1}/${
                   slides.length
                 }`}</div>
@@ -152,6 +158,8 @@ PagedTutorial.propTypes = {
   setVisitedTabs: PropTypes.func.isRequired,
   activeTabIndex: PropTypes.number,
   setActiveTabIndex: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  tabContentWrapperClassName: PropTypes.string,
   onFinish: PropTypes.func
 };
 

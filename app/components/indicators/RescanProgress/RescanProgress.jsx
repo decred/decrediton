@@ -1,4 +1,3 @@
-import { LinearProgressSmall } from "indicators";
 import { useRescan } from "hooks";
 import { FormattedMessage as T } from "react-intl";
 import { RescanButton, RescanCancelButton } from "buttons";
@@ -15,15 +14,6 @@ const RescanProgress = () => {
 
   return (
     <div className={styles.rescanProgressArea}>
-      <div className={styles.rescanProgressIndicator}>
-        <LinearProgressSmall
-          min={0}
-          max={1}
-          value={rescanCurrentBlock / rescanEndBlock}
-          className={styles.linearProgressSmall}
-          barClassName={styles.linearProgressSmallBar}
-        />
-      </div>
       <RescanButton {...{ rescanRequest }} />
       <T
         id="rescan.rescanning"

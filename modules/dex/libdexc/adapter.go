@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -23,7 +24,9 @@ import (
 	_ "decred.org/dcrdex/client/asset/bch"
 	_ "decred.org/dcrdex/client/asset/btc"
 	_ "decred.org/dcrdex/client/asset/dcr"
+	_ "decred.org/dcrdex/client/asset/dgb"
 	_ "decred.org/dcrdex/client/asset/doge"
+	_ "decred.org/dcrdex/client/asset/eth"
 	_ "decred.org/dcrdex/client/asset/ltc"
 	_ "decred.org/dcrdex/client/asset/zec"
 )
@@ -73,16 +76,17 @@ func NewCoreAdapter() *CoreAdapter {
 		"startServer": c.startServer,
 		"shutdown":    c.shutdown,
 		// Pass-throughs to Core
-		"Init":         c.init,
-		"ExportSeed":   c.exportSeed,
-		"CreateWallet": c.createWallet,
-		"UpdateWallet": c.updateWallet,
-		"User":         c.user,
-		"PreRegister":  c.discoverAcct,
-		"Register":     c.register,
-		"Login":        c.login,
-		"Logout":       c.logout,
-		"DexConfig":    c.getDexConfig,
+		"Init":              c.init,
+		"ExportSeed":        c.exportSeed,
+		"CreateWallet":      c.createWallet,
+		"UpdateWallet":      c.updateWallet,
+		"SetWalletPassword": c.setWalletPassword,
+		"User":              c.user,
+		"PreRegister":       c.discoverAcct,
+		"Register":          c.register,
+		"Login":             c.login,
+		"Logout":            c.logout,
+		"DexConfig":         c.getDexConfig,
 	}
 	c.wg = new(sync.WaitGroup)
 
@@ -126,8 +130,9 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		// Onion applies ONLY to .onion addresses, unlike TorProxy, which is
 		// used for connections to all servers regardless of hostname. TODO:
 		// expose an option for the user to set this and TorProxy.
-		Onion:    "127.0.0.1:9050",
-		Language: form.Language,
+		Onion:            "127.0.0.1:9050",
+		Language:         form.Language,
+		NoAutoWalletLock: true, // Decrediton user locks it when done
 	})
 	if err != nil {
 		return fmt.Errorf("error creating client core: %v", err)
@@ -184,7 +189,7 @@ func (c *CoreAdapter) shutdown(json.RawMessage) (string, error) {
 	c.kill()
 	c.wg.Wait()
 	c.webServer.Wait()
-	closeFileLogger()
+	// closeFileLogger() // commented until we resolve (*Core).tipChange potentially logging after core shutdown
 	atomic.SwapUint32(&c.inited, 0)
 	return "", nil
 }
@@ -270,6 +275,27 @@ func (c *CoreAdapter) updateWallet(raw json.RawMessage) (string, error) {
 	)
 }
 
+func (c *CoreAdapter) setWalletPassword(raw json.RawMessage) (string, error) {
+	form := new(struct {
+		AppPW   string `json:"appPass"`
+		AssetID uint32 `json:"assetID"`
+		Pass    string `json:"pass"`
+	})
+	if err := json.Unmarshal(raw, form); err != nil {
+		return "", err
+	}
+	ws := c.core.WalletState(form.AssetID)
+	if ws == nil {
+		return "", errors.New("no wallet")
+	}
+	if ws.WalletType != "dcrwalletRPC" { // client/asset/dcr.walletTypeDcrwRPC
+		// Only change the wallet password if it's Decrediton's dcrwallet (as
+		// opposed to a native SPV wallet built into DEX).
+		return "", nil
+	}
+	return "", c.core.SetWalletPassword([]byte(form.AppPW), form.AssetID, []byte(form.Pass))
+}
+
 func (c *CoreAdapter) createWallet(raw json.RawMessage) (string, error) {
 	form := new(struct {
 		AssetID uint32            `json:"assetID"`
@@ -342,7 +368,7 @@ func (c *CoreAdapter) login(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	return replyWithErrorCheck(c.core.Login([]byte(form.Pass)))
+	return replyWithErrorCheck("ok", c.core.Login([]byte(form.Pass)))
 }
 
 func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {

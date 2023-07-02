@@ -2,7 +2,8 @@ import { FormattedMessage as T } from "react-intl";
 
 export const LN_KEY = "ln";
 export const DEX_KEY = "dex";
-export const TREZOR_KEY = "trezor";
+export const TICKETS_KEY = "tickets";
+export const GOV_KEY = "governance";
 
 export const linkList = [
   {
@@ -28,6 +29,7 @@ export const linkList = [
     path: "/governance",
     link: <T id="sidebar.link.governance" m="Governance" />,
     icon: "governance",
+    key: GOV_KEY,
     notifProp: [
       "newProposalsStartedVoting",
       "newNotYetVotedAgendasCount",
@@ -39,6 +41,7 @@ export const linkList = [
     path: "/tickets",
     link: <T id="sidebar.link.staking" m="Staking" />,
     icon: "tickets",
+    key: TICKETS_KEY,
     ariaLabel: "Staking"
   },
   {
@@ -52,13 +55,6 @@ export const linkList = [
     link: <T id="sidebar.link.accounts" m="Accounts" />,
     icon: "accounts",
     ariaLabel: "Accounts"
-  },
-  {
-    path: "/trezor",
-    link: <T id="sidebar.link.trezor" m="Trezor" />,
-    icon: TREZOR_KEY,
-    key: TREZOR_KEY,
-    ariaLabel: "Trezor"
   },
   {
     path: "/dex",

@@ -13,13 +13,7 @@ import {
   transactionNtfnsStart,
   accountNtfnsStart
 } from "./NotificationActions";
-import {
-  refreshStakepoolPurchaseInformation,
-  setStakePoolVoteChoices,
-  getStakepoolStats,
-  getVSPTicketsByFeeStatus,
-  setVSPDVoteChoices
-} from "./VSPActions";
+import { getVSPTicketsByFeeStatus, setVSPDVoteChoices } from "./VSPActions";
 import { startDex } from "./DexActions";
 import { getStartupTransactions } from "./TransactionActions";
 import { getAccountMixerServiceAttempt } from "./AccountMixerActions";
@@ -64,6 +58,10 @@ export const goToActiveProposals = () => (dispatch) => {
   dispatch(pushHistory("/governance/proposals/activevote"));
 };
 
+export const goToTreasurySpending = () => (dispatch) => {
+  dispatch(pushHistory("/governance/treasury"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -83,16 +81,14 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       if (privacyEnabled) {
         dispatch(getAccountMixerServiceAttempt());
       }
-      dispatch(discoverAvailableVSPs());
+      await dispatch(discoverAvailableVSPs());
       await dispatch(getNextAddressAttempt(0));
       await dispatch(getPeerInfo());
       await dispatch(getTicketPriceAttempt());
       await dispatch(getNetworkAttempt());
-      await dispatch(refreshStakepoolPurchaseInformation());
       await dispatch(getVotingServiceAttempt());
       await dispatch(getAgendaServiceAttempt());
       await dispatch(getDecodeMessageServiceAttempt());
-      await dispatch(getStakepoolStats());
       await dispatch(getStartupWalletInfo());
       await dispatch(transactionNtfnsStart());
       await dispatch(accountNtfnsStart());
@@ -106,6 +102,7 @@ const startWalletServicesTrigger = () => (dispatch, getState) =>
       await dispatch(getVoteChoicesAttempt());
       await dispatch(monitorLockableAccounts());
       await dispatch(getTreasuryPolicies());
+      await dispatch(getTSpendPolicies());
 
       // Start Dex if dexEnabled and NOT SPV mode
       if (dexEnabled) {
@@ -279,53 +276,48 @@ export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
 export const GETBALANCE_FAILED = "GETBALANCE_FAILED";
 export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 
-const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (
-  dispatch
-) => {
-  const updatedBalance = {
-    accountNumber,
-    total: getBalanceResponse.total,
-    spendable: getBalanceResponse.spendable,
-    immatureReward: getBalanceResponse.immatureReward,
-    immatureStakeGeneration: getBalanceResponse.immatureStakeGeneration,
-    lockedByTickets: getBalanceResponse.lockedByTickets,
-    votingAuthority: getBalanceResponse.votingAuthority,
-    unconfirmed: getBalanceResponse.unconfirmed
+const getBalanceUpdateSuccess =
+  (accountNumber, getBalanceResponse) => (dispatch) => {
+    const updatedBalance = {
+      accountNumber,
+      total: getBalanceResponse.total,
+      spendable: getBalanceResponse.spendable,
+      immatureReward: getBalanceResponse.immatureReward,
+      immatureStakeGeneration: getBalanceResponse.immatureStakeGeneration,
+      lockedByTickets: getBalanceResponse.lockedByTickets,
+      votingAuthority: getBalanceResponse.votingAuthority,
+      unconfirmed: getBalanceResponse.unconfirmed
+    };
+
+    dispatch(updateAccount(updatedBalance));
+
+    return updatedBalance;
   };
 
-  dispatch(updateAccount(updatedBalance));
-
-  return updatedBalance;
-};
-
-export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (
-  dispatch,
-  getState
-) =>
-  wallet
-    .getBalance(sel.walletService(getState()), accountNumber, requiredConfs)
-    .then((resp) => dispatch(getBalanceUpdateSuccess(accountNumber, resp)))
-    .catch((error) => dispatch({ error, type: GETBALANCE_FAILED }));
+export const getBalanceUpdateAttempt =
+  (accountNumber, requiredConfs) => (dispatch, getState) =>
+    wallet
+      .getBalance(sel.walletService(getState()), accountNumber, requiredConfs)
+      .then((resp) => dispatch(getBalanceUpdateSuccess(accountNumber, resp)))
+      .catch((error) => dispatch({ error, type: GETBALANCE_FAILED }));
 
 export const GETACCOUNTNUMBER_ATTEMPT = "GETACCOUNTNUMBER_ATTEMPT";
 export const GETACCOUNTNUMBER_FAILED = "GETACCOUNTNUMBER_FAILED";
 export const GETACCOUNTNUMBER_SUCCESS = "GETACCOUNTNUMBER_SUCCESS";
 
-export const getAccountNumberAttempt = (accountName) => (
-  dispatch,
-  getState
-) => {
-  dispatch({ type: GETACCOUNTNUMBER_ATTEMPT });
-  wallet
-    .getAccountNumber(sel.walletService(getState()), accountName)
-    .then((resp) =>
-      dispatch({
-        getAccountNumberResponse: resp,
-        type: GETACCOUNTNUMBER_SUCCESS
-      })
-    )
-    .catch((error) => dispatch({ error, type: GETACCOUNTNUMBER_FAILED }));
-};
+export const getAccountNumberAttempt =
+  (accountName) => (dispatch, getState) => {
+    dispatch({ type: GETACCOUNTNUMBER_ATTEMPT });
+    wallet
+      .getAccountNumber(sel.walletService(getState()), accountName)
+      .then((resp) =>
+        dispatch({
+          getAccountNumberResponse: resp,
+          type: GETACCOUNTNUMBER_SUCCESS
+        })
+      )
+      .catch((error) => dispatch({ error, type: GETACCOUNTNUMBER_FAILED }));
+  };
 
 export const GETBESTBLOCK_ATTEMPT = "GETBESTBLOCK_ATTEMPT";
 export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
@@ -439,6 +431,7 @@ export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
     });
   } catch (error) {
     dispatch({ error, type: GETACCOUNTS_FAILED });
+    throw error;
   }
 };
 
@@ -665,14 +658,11 @@ export const GETVOTECHOICES_ATTEMPT = "GETVOTECHOICES_ATTEMPT";
 export const GETVOTECHOICES_FAILED = "GETVOTECHOICES_FAILED";
 export const GETVOTECHOICES_SUCCESS = "GETVOTECHOICES_SUCCESS";
 
-export const getVoteChoicesAttempt = (stakePool) => (dispatch, getState) => {
+export const getVoteChoicesAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVOTECHOICES_ATTEMPT });
   wallet
     .getVoteChoices(sel.votingService(getState()))
     .then((voteChoices) => {
-      if (stakePool) {
-        dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
-      }
       const voteChoicesConfig = voteChoices.choicesList.map((choice) => ({
         agendaId: choice.agendaId,
         choiceId: choice.choiceId
@@ -686,23 +676,17 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (agendaId, choiceId, passphrase) => (
-  dispatch,
-  getState
-) => {
-  dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
-  wallet
-    .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
-    .then(() => {
-      dispatch(setVSPDVoteChoices(passphrase));
-      const stakePools = sel.configuredStakePools(getState());
-      for (let i = 0; i < stakePools.length; i++) {
-        dispatch(getVoteChoicesAttempt(stakePools[i]));
-      }
-      dispatch(getVoteChoicesAttempt());
-    })
-    .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
-};
+export const setVoteChoicesAttempt =
+  (agendaId, choiceId, passphrase) => (dispatch, getState) => {
+    dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
+    wallet
+      .setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
+      .then(() => {
+        dispatch(setVSPDVoteChoices(passphrase));
+        dispatch(getVoteChoicesAttempt());
+      })
+      .catch((error) => dispatch({ error, type: SETVOTECHOICES_FAILED }));
+  };
 
 export const GETTREASURY_POLICIES_ATTEMPT = "GETTREASURY_POLICIES_ATTEMPT";
 export const GETTREASURY_POLICIES_FAILED = "GETTREASURY_POLICIES_FAILED";
@@ -723,33 +707,66 @@ export const getTreasuryPolicies = () => (dispatch, getState) => {
     });
 };
 
+export const GETTSPEND_POLICIES_ATTEMPT = "GETTSPEND_POLICIES_ATTEMPT";
+export const GETTSPEND_POLICIES_FAILED = "GETTSPEND_POLICIES_FAILED";
+export const GETTSPEND_POLICIES_SUCCESS = "GETTSPEND_POLICIES_SUCCESS";
+
+export const getTSpendPolicies = () => (dispatch, getState) => {
+  dispatch({ type: GETTSPEND_POLICIES_ATTEMPT });
+  wallet
+    .getTSpendPolicies(sel.votingService(getState()))
+    .then((tspendPolicies) =>
+      dispatch({
+        tspendPoliciesResponse: tspendPolicies.policiesList,
+        type: GETTSPEND_POLICIES_SUCCESS
+      })
+    )
+    .catch((error) => {
+      dispatch({ error, type: GETTSPEND_POLICIES_FAILED });
+    });
+};
+
+export const SETTSPEND_POLICY_ATTEMPT = "SETTSPEND_POLICY_ATTEMPT";
+export const SETTSPEND_POLICY_FAILED = "SETTSPEND_POLICY_FAILED";
+export const SETTSPEND_POLICY_SUCCESS = "SETTSPEND_POLICY_SUCCESS";
+
+export const setTSpendPolicy =
+  (hash, policy, passphrase) => async (dispatch, getState) => {
+    dispatch({ payload: { hash, policy }, type: SETTSPEND_POLICY_ATTEMPT });
+    try {
+      await dispatch(
+        unlockAllAcctAndExecFn(passphrase, () =>
+          wallet.setTSpendPolicy(sel.votingService(getState()), hash, policy)
+        )
+      );
+      await dispatch(setVSPDVoteChoices(passphrase));
+      dispatch(getTSpendPolicies());
+      dispatch({ type: SETTSPEND_POLICY_SUCCESS });
+    } catch (error) {
+      dispatch({ error, type: SETTSPEND_POLICY_FAILED });
+    }
+  };
+
 export const SETTREASURY_POLICY_ATTEMPT = "SETTREASURY_POLICY_ATTEMPT";
 export const SETTREASURY_POLICY_FAILED = "SETTREASURY_POLICY_FAILED";
 export const SETTREASURY_POLICY_SUCCESS = "SETTREASURY_POLICY_SUCCESS";
 
-export const setTreasuryPolicy = (key, policy, passphrase) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({ payload: { key, policy }, type: SETTREASURY_POLICY_ATTEMPT });
-  try {
-    await dispatch(
-      unlockAllAcctAndExecFn(passphrase, () =>
-        wallet
-          .setTreasuryPolicy(sel.votingService(getState()), key, policy)
-          .then(() => {
-            dispatch({ type: SETTREASURY_POLICY_SUCCESS });
-            dispatch(getTreasuryPolicies());
-          })
-          .catch((error) =>
-            dispatch({ error, type: SETTREASURY_POLICY_FAILED })
-          )
-      )
-    );
-  } catch (error) {
-    dispatch({ error, type: SETTREASURY_POLICY_FAILED });
-  }
-};
+export const setTreasuryPolicy =
+  (key, policy, passphrase) => async (dispatch, getState) => {
+    dispatch({ payload: { key, policy }, type: SETTREASURY_POLICY_ATTEMPT });
+    try {
+      await dispatch(
+        unlockAllAcctAndExecFn(passphrase, () =>
+          wallet.setTreasuryPolicy(sel.votingService(getState()), key, policy)
+        )
+      );
+      await dispatch(setVSPDVoteChoices(passphrase));
+      dispatch(getTreasuryPolicies());
+      dispatch({ type: SETTREASURY_POLICY_SUCCESS });
+    } catch (error) {
+      dispatch({ error, type: SETTREASURY_POLICY_FAILED });
+    }
+  };
 
 export const GETMESSAGEVERIFICATIONSERVICE_ATTEMPT =
   "GETMESSAGEVERIFICATIONSERVICE_ATTEMPT";
@@ -874,41 +891,37 @@ export const abandonTransactionAttempt = (txid) => (dispatch, getState) => {
     .catch((error) => dispatch({ error, type: ABANDONTRANSACTION_FAILED }));
 };
 
-export const getAcctSpendableBalance = (acctId) => async (
-  dispatch,
-  getState
-) => {
-  const acct = await wallet.getBalance(
-    sel.walletService(getState()),
-    acctId,
-    0
-  );
-  return acct?.spendable;
-};
+export const getAcctSpendableBalance =
+  (acctId) => async (dispatch, getState) => {
+    const acct = await wallet.getBalance(
+      sel.walletService(getState()),
+      acctId,
+      0
+    );
+    return acct?.spendable;
+  };
 
 export const MIXERACCOUNTS_SPENDABLE_BALANCE =
   "MIXERACCOUNTS_SPENDABLE_BALANCE";
-export const getMixerAcctsSpendableBalances = () => async (
-  dispatch,
-  getState
-) => {
-  const mixedAccount = sel.getMixedAccount(getState());
-  const changeAccount = sel.getChangeAccount(getState());
-  const balances = {};
-  if (!isUndefined(mixedAccount)) {
-    balances.mixedAccountSpendableBalance = await dispatch(
-      getAcctSpendableBalance(mixedAccount)
-    );
-  }
-  if (!isUndefined(changeAccount)) {
-    balances.changeAccountSpendableBalance = await dispatch(
-      getAcctSpendableBalance(changeAccount)
-    );
-  }
-  dispatch({
-    balances,
-    type: MIXERACCOUNTS_SPENDABLE_BALANCE
-  });
-};
+export const getMixerAcctsSpendableBalances =
+  () => async (dispatch, getState) => {
+    const mixedAccount = sel.getMixedAccount(getState());
+    const changeAccount = sel.getChangeAccount(getState());
+    const balances = {};
+    if (!isUndefined(mixedAccount)) {
+      balances.mixedAccountSpendableBalance = await dispatch(
+        getAcctSpendableBalance(mixedAccount)
+      );
+    }
+    if (!isUndefined(changeAccount)) {
+      balances.changeAccountSpendableBalance = await dispatch(
+        getAcctSpendableBalance(changeAccount)
+      );
+    }
+    dispatch({
+      balances,
+      type: MIXERACCOUNTS_SPENDABLE_BALANCE
+    });
+  };
 
 export const goToHomePage = () => (dispatch) => dispatch(pushHistory("/home"));

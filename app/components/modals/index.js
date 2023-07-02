@@ -1,4 +1,3 @@
-export { default as ImportScriptModal } from "./ImportScriptModal";
 export { default as AddAccountModal } from "./AddAccountModal";
 export { default as ChangePassphraseModal } from "./ChangePassphraseModal";
 export { default as InfoModal } from "./InfoModal";
@@ -10,7 +9,6 @@ export { default as ConfirmModal } from "./ConfirmModal";
 export { default as SeedCopyConfirmModal } from "./SeedCopyConfirmModal";
 export { default as SendFromUnmixedAccountModal } from "./SendFromUnmixedAccountModal";
 export { default as AboutModal } from "./AboutModal";
-export { default as BackupRedeemScriptModal } from "./BackupRedeemScriptModal";
 export { default as AddMixerAccountsModal } from "./AddMixerAccountsModal";
 export { default as SyncVSPFailedTickets } from "./SyncVSPFailedTickets";
 export { default as CantCloseModals } from "./CantCloseModals/CantCloseModals";
@@ -25,3 +23,4 @@ export { default as LNPaymentModal } from "./LNPaymentModal";
 export { default as LNChannelModal } from "./LNChannelModal";
 export { default as DiscoverUsageModal } from "./DiscoverUsageModal";
 export { default as SearchForNodesModal } from "./SearchForNodesModal";
+export { default as AutoWalletLaunchingModal } from "./AutoWalletLaunchingModal";

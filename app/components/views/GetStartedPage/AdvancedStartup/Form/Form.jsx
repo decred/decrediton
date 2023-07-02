@@ -5,7 +5,8 @@ import { KeyBlueButton, InvisibleButton } from "buttons";
 import RemoteDaemonForm from "../RemoteDaemonForm";
 import AppDataForm from "../AppDataForm";
 import styles from "./Form.module.css";
-import { FormContainer, ButtonsBar } from "../../helpers";
+import { FormContainer, ButtonsBar, ContentContainer } from "../../helpers";
+import { LoaderTitleMsg } from "../../messages";
 
 const AdvancedBodyBase = ({
   onShowRemote,
@@ -43,6 +44,11 @@ const AdvancedBodyBase = ({
 
   return (
     <>
+      <ContentContainer>
+        <div>
+          <LoaderTitleMsg />
+        </div>
+      </ContentContainer>
       <div className={styles.advancedDesc}>
         <T
           id="login.form.advanced.desc"

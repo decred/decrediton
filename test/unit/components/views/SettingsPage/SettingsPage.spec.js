@@ -22,7 +22,7 @@ import {
 import { en as enLocale } from "i18n/locales";
 import * as vspa from "actions/VSPActions";
 import { DCR, ATOMS } from "constants";
-import { mockStakeTransactions } from "../TransactionPage/mocks";
+import { mockNormalizedStakeTransactions } from "../TransactionPage/mocks.js";
 
 const ENABLED = "Enabled";
 const DISABLED = "Disabled";
@@ -60,6 +60,7 @@ const testDefaultAllowedExternalRequests = [
 ];
 const testDefaultUIAnimationsLabel = "Enabled";
 const testUIAnimationsLabel = "Disabled";
+const testDefaultAutoWalletLaunching = false;
 
 const testCurrentSettings = {
   locale: testDefaultLocale.key,
@@ -75,7 +76,8 @@ const testCurrentSettings = {
   gapLimit: testDefaultGapLimit,
   timezone: testDefaultTimezone,
   uiAnimations: testDefaultUIAnimationsLabel,
-  allowedExternalRequests: testDefaultAllowedExternalRequests
+  allowedExternalRequests: testDefaultAllowedExternalRequests,
+  autoWalletLaunching: testDefaultAutoWalletLaunching
 };
 const testSettings = {
   currentSettings: testCurrentSettings,
@@ -90,7 +92,6 @@ let mockTicketBuyerService;
 let mockSaveSettings;
 let mockChangePassphrase;
 let mockIsChangePassPhraseDisabled;
-let mockIsTicketAutoBuyerEnabled;
 let mockGetAccountMixerRunning;
 let mockPurchaseTicketsRequestAttempt;
 
@@ -112,9 +113,8 @@ beforeEach(() => {
   mockIsTestNet = selectors.isTestNet = jest.fn(() => true);
   mockIsMainNet = selectors.isMainNet = jest.fn(() => false);
 
-  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
-    () => false
-  );
+  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled =
+    jest.fn(() => false);
   mockWalletService = selectors.walletService = jest.fn(() => {
     return {};
   });
@@ -133,16 +133,12 @@ beforeEach(() => {
     () => () => {}
   );
 
-  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
-    () => false
-  );
   selectors.getTicketAutoBuyerRunning = jest.fn(() => false);
   mockGetAccountMixerRunning = selectors.getAccountMixerRunning = jest.fn(
     () => false
   );
-  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
-    () => false
-  );
+  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt =
+    jest.fn(() => false);
   vspActions.discoverAvailableVSPs = jest.fn(() => () => {});
   wallet.getVSPTicketsByFeeStatus = jest.fn(() =>
     Promise.resolve({
@@ -189,38 +185,16 @@ test("test close wallet button (there is no ongoing process) ", async () => {
   );
 });
 
-test("test close wallet button (ticket autobuyer is running) ", async () => {
-  mockIsTicketAutoBuyerEnabled = selectors.isTicketAutoBuyerEnabled = jest.fn(
-    () => true
-  );
-  render(<SettingsPage />, {
-    initialState: {
-      settings: testSettings
-    }
-  });
-  expect(mockIsTicketAutoBuyerEnabled).toHaveBeenCalled();
-  const changeFn = () => {
-    user.click(screen.getByRole("button", { name: "Close Wallet" }));
-  };
-  changeFn();
-  await testConfirmModal(
-    changeFn,
-    "Auto Ticket Buyer Still Running",
-    "If you proceed, it will be closed and no more tickets will be purchased.",
-    "Close Anyway"
-  );
-});
-
 const testCloseWalletButtonUnpaidTicketFee = async (
   status,
   expectDefaultModal = false
 ) => {
-  selectors.stakeTransactions = jest.fn(() => mockStakeTransactions);
+  selectors.stakeTransactions = jest.fn(() => mockNormalizedStakeTransactions);
   selectors.getVSPTicketsHashes = jest.fn(() => {
     return {
       [VSP_FEE_PROCESS_ERRORED]: [
-        Object.keys(mockStakeTransactions).find(
-          (hash) => mockStakeTransactions[hash].status === status
+        Object.keys(mockNormalizedStakeTransactions).find(
+          (hash) => mockNormalizedStakeTransactions[hash].status === status
         )
       ]
     };
@@ -284,9 +258,8 @@ test("test close wallet button (account mixer is running) ", async () => {
 });
 
 test("test close wallet button (still finalizing ticket purchases) ", async () => {
-  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt = jest.fn(
-    () => true
-  );
+  mockPurchaseTicketsRequestAttempt = selectors.purchaseTicketsRequestAttempt =
+    jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -305,7 +278,7 @@ test("test close wallet button (still finalizing ticket purchases) ", async () =
   );
 });
 
-test("test close wallet button (legacy auto ticket buyer still running) ", async () => {
+test("test close wallet button (auto ticket buyer still running) ", async () => {
   selectors.getTicketAutoBuyerRunning = jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
@@ -420,7 +393,6 @@ test.each([
     { daemonStartAdvanced: true },
     true
   ],
-  ["Proxy Type", "HTTP", "PAC", { proxyType: PROXYTYPE_PAC }, false],
   [
     "Locale",
     testDefaultLocaleLabel,
@@ -495,13 +467,6 @@ test.each([
     testSpvConnectValue.join(","),
     { spvConnect: testSpvConnectValue },
     false
-  ],
-  [
-    "Proxy Location",
-    testDefaultProxyLocation,
-    testProxyLocation,
-    { proxyLocation: testProxyLocation },
-    false
   ]
 ])("change '%s' TextInput from '%s' to '%s' expeced %s", testTextFieldInput);
 
@@ -557,7 +522,7 @@ test.each([
   ]
 ])("test '%s' RadioButtonGroup", testRadioButtonGroupInput);
 
-const testCheckBoxInput = (label, configKey) => {
+const testCheckBoxInputOnPrivacy = (label, configKey) => {
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -566,9 +531,8 @@ const testCheckBoxInput = (label, configKey) => {
   user.click(screen.getByText("Privacy and Security"));
 
   const checkbox = screen.getByLabelText(label);
-  const defaultCheckedValue = testDefaultAllowedExternalRequests.includes(
-    configKey
-  );
+  const defaultCheckedValue =
+    testDefaultAllowedExternalRequests.includes(configKey);
 
   expect(checkbox.checked).toBe(defaultCheckedValue);
 
@@ -594,7 +558,31 @@ test.each([
   ["Update Check", EXTERNALREQUEST_UPDATE_CHECK],
   ["Politeia", EXTERNALREQUEST_POLITEIA],
   ["Decred Block Explorer", EXTERNALREQUEST_DCRDATA]
-])("test '%s' Checkbox", testCheckBoxInput);
+])("test '%s' Checkbox", testCheckBoxInputOnPrivacy);
+
+test("test launcer CheckBox", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings
+    }
+  });
+  user.click(screen.getByText("General"));
+
+  const checkbox = screen.getByLabelText(
+    "Launch wallet immediately after loading completes"
+  );
+  expect(checkbox.checked).toBe(testDefaultAutoWalletLaunching);
+
+  user.click(checkbox);
+  expect(checkbox.checked).toBe(!testDefaultAutoWalletLaunching);
+
+  const expectedChange = {
+    ...testCurrentSettings,
+    autoWalletLaunching: !testDefaultAutoWalletLaunching
+  };
+
+  expect(mockSaveSettings).toHaveBeenCalledWith(expectedChange);
+});
 
 const getFieldRequiredErrorCount = () => {
   const inputErrorString = "This field is required";
@@ -686,18 +674,143 @@ test("test update private passphrase", () => {
   expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
   expect(continueButton.disabled).toBe(false);
 
+  expect(
+    screen.queryByLabelText(/^DEX App Passsword/i)
+  ).not.toBeInTheDocument();
   user.click(screen.getByText("Continue"));
   expect(mockChangePassphrase).toHaveBeenCalledWith(
     testPassphrase,
     testNewPassphrase,
-    true
+    true,
+    null
   );
 });
 
-test("update private passphrase is disabled", () => {
-  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled = jest.fn(
-    () => true
+test("test update private passphrase, DEX is active", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings,
+      dex: {
+        active: true
+      },
+      walletLoader: {
+        dexAccount: "test-dex-account-name"
+      }
+    }
+  });
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
+  const modalHeaderText = "Change your passphrase";
+  // click and cancel
+  user.click(updateButton);
+  expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
+  user.click(screen.getByText("Cancel"));
+  expect(screen.queryByText(modalHeaderText)).not.toBeInTheDocument();
+
+  user.click(updateButton);
+  expect(screen.getByText(modalHeaderText)).toBeInTheDocument();
+
+  const continueButton = screen.getByText("Continue");
+  expect(continueButton.disabled).toBe(true);
+  // test 'This Field is required' error message
+  testPassphraseInputRequiedErrorMsg("Private Passphrase");
+  testPassphraseInputRequiedErrorMsg("New Private Passphrase");
+  testPassphraseInputRequiedErrorMsg("Confirm");
+  expect(continueButton.disabled).toBe(true);
+
+  // fill input fields
+  const testPassphrase = "test-passphrase";
+  const testNewPassphrase = "test-new-passphrase";
+  const testDEXAppPasspword = "test-dex-app-password";
+  const testConfirmPassphrase = "test-confirm-passphrase";
+  user.type(screen.getByLabelText(/^private passphrase/i), testPassphrase);
+  user.type(
+    screen.getByLabelText(/^new private passphrase/i),
+    testNewPassphrase
   );
+  expect(continueButton.disabled).toBe(true);
+  user.type(screen.getByLabelText(/^confirm/i), testConfirmPassphrase);
+  expect(screen.getByText("Passwords does not match.")).toBeInTheDocument();
+
+  // fix confirm passphrase
+  user.clear(screen.getByLabelText(/^confirm/i));
+  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  expect(
+    screen.queryByText("Passwords does not match.")
+  ).not.toBeInTheDocument();
+  expect(continueButton.disabled).toBe(false);
+
+  // clear confirm and new passphrases. should get an error message
+  user.clear(screen.getByLabelText(/^confirm/i));
+  user.clear(screen.getByLabelText(/^new private passphrase/i));
+  expect(screen.getByText("Fill all fields.")).toBeInTheDocument();
+  expect(continueButton.disabled).toBe(true);
+
+  //refill inputs
+  user.type(
+    screen.getByLabelText(/^new private passphrase/i),
+    testNewPassphrase
+  );
+  user.type(screen.getByLabelText(/^confirm/i), testNewPassphrase);
+  expect(screen.queryByText("Fill all fields.")).not.toBeInTheDocument();
+  expect(continueButton.disabled).toBe(false);
+
+  user.type(screen.getByLabelText(/^DEX App Passsword/i), testDEXAppPasspword);
+  user.click(screen.getByText("Continue"));
+  expect(mockChangePassphrase).toHaveBeenCalledWith(
+    testPassphrase,
+    testNewPassphrase,
+    true,
+    testDEXAppPasspword
+  );
+});
+
+test("test update private passphrase, DEX is active, but dex account is null", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings,
+      dex: {
+        active: true
+      }
+    }
+  });
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
+  user.click(updateButton);
+  expect(
+    screen.queryByLabelText(/^DEX App Passsword/i)
+  ).not.toBeInTheDocument();
+});
+
+test("test update private passphrase, DEX is active, but dex account is empty string", () => {
+  render(<SettingsPage />, {
+    initialState: {
+      settings: testSettings,
+      dex: {
+        active: true
+      },
+      walletLoader: {
+        dexAccount: ""
+      }
+    }
+  });
+  user.click(screen.getByText("Privacy and Security"));
+  const updateButton = screen.getByRole("button", {
+    name: "Update Private Passphrase"
+  });
+  user.click(updateButton);
+  expect(
+    screen.queryByLabelText(/^DEX App Passsword/i)
+  ).not.toBeInTheDocument();
+});
+
+test("update private passphrase is disabled", () => {
+  mockIsChangePassPhraseDisabled = selectors.isChangePassPhraseDisabled =
+    jest.fn(() => true);
   render(<SettingsPage />, {
     initialState: {
       settings: testSettings
@@ -707,4 +820,60 @@ test("update private passphrase is disabled", () => {
   expect(mockIsChangePassPhraseDisabled).toHaveBeenCalled();
   user.click(screen.getByRole("button", { name: "Update Private Passphrase" }));
   expect(screen.queryByText("Change your passphrase")).not.toBeInTheDocument();
+});
+
+test("renders settings with trezor enabled", () => {
+  const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
+  render(<SettingsPage />);
+  expect(screen.getByText("Trezor")).toBeInTheDocument();
+  expect(mockIsTrezor).toHaveBeenCalled();
+  mockIsTrezor.mockRestore();
+});
+
+test("renders settings with trezor is NOT enabled", () => {
+  const mockIsTrezor = (selectors.isTrezor = jest.fn(() => false));
+  render(<SettingsPage />);
+  expect(screen.queryByText("Trezor")).not.toBeInTheDocument();
+  expect(mockIsTrezor).toHaveBeenCalled();
+  mockIsTrezor.mockRestore();
+});
+
+test("test proxy settings", async () => {
+  render(<SettingsPage />, { initialState: { settings: testSettings } });
+
+  // set proxy type
+  const inputControl = screen.getByLabelText("Proxy Type");
+  const oldValue = "HTTP";
+  const option = "PAC";
+  const inputValueSpan = getOptionByNameAndType(oldValue, "singleValue");
+  expect(
+    screen.queryByRole("button", {
+      name: "Save proxy settings"
+    })
+  ).not.toBeInTheDocument();
+  expect(inputValueSpan.textContent).toMatch(oldValue);
+  const changeFn = () => {
+    user.click(inputControl);
+    user.click(getOptionByNameAndType(option, "option"));
+  };
+  changeFn();
+
+  // set proxy location
+  const proxyLocationInputControl = screen.getByLabelText("Proxy Location");
+  expect(proxyLocationInputControl.value).toMatch(testDefaultProxyLocation);
+  user.clear(proxyLocationInputControl);
+  user.type(proxyLocationInputControl, testProxyLocation);
+  // press enter
+  fireEvent.keyDown(proxyLocationInputControl, { key: "enter", keyCode: 13 });
+
+  user.click(screen.getByRole("button", { name: "Save proxy settings" }));
+  await wait(() => screen.getByText("Reset required"));
+  user.click(screen.getByRole("button", { name: "Confirm" }));
+
+  await wait(() =>
+    expect(mockSaveSettings).toHaveBeenCalledWith({
+      ...testCurrentSettings,
+      ...{ proxyType: PROXYTYPE_PAC, proxyLocation: testProxyLocation }
+    })
+  );
 });

@@ -11,6 +11,14 @@
   font-size: 15px;
   line-height: 19px;
   margin-top: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.docButton {
+  outline: none;
+  margin-left: 0.5rem;
 }
 
 .iconSmall {
@@ -50,22 +58,6 @@
 .daemonLongInput {
   padding-left: 10px;
   width: 350px;
-}
-
-.trezorWallet {
-  font-size: 13px;
-  margin-left: 20px;
-  text-decoration: underline;
-  cursor: pointer;
-  color: var(--info-modal-button-bg);
-}
-
-.trezorWallet:hover {
-  opacity: 0.7;
-}
-
-.trezorDocs {
-  color: var(--link-color);
 }
 
 .buttonContrainer {

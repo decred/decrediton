@@ -11,9 +11,6 @@ import {
   DEX_LOGIN_ATTEMPT,
   DEX_LOGIN_SUCCESS,
   DEX_LOGIN_FAILED,
-  DEX_REGISTER_ATTEMPT,
-  DEX_REGISTER_SUCCESS,
-  DEX_REGISTER_FAILED,
   DEX_LAUNCH_WINDOW_ATTEMPT,
   DEX_LAUNCH_WINDOW_SUCCESS,
   DEX_LAUNCH_WINDOW_FAILED,
@@ -26,12 +23,6 @@ import {
   DEX_CREATEWALLET_ATTEMPT,
   DEX_CREATEWALLET_FAILED,
   DEX_CREATEWALLET_SUCCESS,
-  DEX_GETCONFIG_ATTEMPT,
-  DEX_GETCONFIG_FAILED,
-  DEX_GETCONFIG_SUCCESS,
-  DEX_PREREGISTER_ATTEMPT,
-  DEX_PREREGISTER_FAILED,
-  DEX_PREREGISTER_SUCCESS,
   CREATEDEXACCOUNT_ATTEMPT,
   CREATEDEXACCOUNT_FAILED,
   CREATEDEXACCOUNT_SUCCESS,
@@ -41,24 +32,16 @@ import {
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,
   DEX_LOGOUT_FAILED,
-  CHECK_BTC_CONFIG_ATTEMPT,
-  CHECK_BTC_CONFIG_FAILED,
-  CHECK_BTC_CONFIG_SUCCESS,
-  CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED,
-  CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL,
-  NEW_BTC_CONFIG_ATTEMPT,
-  NEW_BTC_CONFIG_SUCCESS,
-  NEW_BTC_CONFIG_FAILED,
-  BTC_CREATEWALLET_FAILED,
-  BTC_CREATEWALLET_ATTEMPT,
-  BTC_CREATEWALLET_SUCCESS,
   DEX_EXPORT_SEED_ATTEMPT,
   DEX_EXPORT_SEED_SUCCESS,
   DEX_EXPORT_SEED_FAILED,
   DEX_CONFIRM_SEED_ATTEMPT,
   DEX_CONFIRM_SEED_SUCCESS,
   DEX_CONFIRM_SEED_FAILED,
-  RESET_DEXACCOUNT
+  RESET_DEXACCOUNT,
+  DEX_SETWALLET_PASSWORD_ATTEMPT,
+  DEX_SETWALLET_PASSWORD_FAILED,
+  DEX_SETWALLET_PASSWORD_SUCCESS
 } from "../actions/DexActions";
 import { CLOSEWALLET_SUCCESS } from "actions/WalletLoaderActions";
 
@@ -126,27 +109,6 @@ export default function ln(state = {}, action) {
         loggedIn: true,
         loginError: null
       };
-    case DEX_REGISTER_ATTEMPT:
-      return {
-        ...state,
-        registerAttempt: true,
-        registered: false,
-        registerError: null
-      };
-    case DEX_REGISTER_FAILED:
-      return {
-        ...state,
-        registerAttempt: false,
-        registered: false,
-        registerError: action.error
-      };
-    case DEX_REGISTER_SUCCESS:
-      return {
-        ...state,
-        registerAttempt: false,
-        registered: true,
-        registerError: null
-      };
     case DEX_CREATEWALLET_ATTEMPT:
       return {
         ...state,
@@ -165,24 +127,23 @@ export default function ln(state = {}, action) {
         createWalletAttempt: false,
         createWalletError: null
       };
-
-    case BTC_CREATEWALLET_ATTEMPT:
+    case DEX_SETWALLET_PASSWORD_ATTEMPT:
       return {
         ...state,
-        btcCreateWalletAttempt: true,
-        btcCreateWalletError: null
+        setWalletPasswordAttempt: true,
+        setWalletPasswordError: null
       };
-    case BTC_CREATEWALLET_FAILED:
+    case DEX_SETWALLET_PASSWORD_FAILED:
       return {
         ...state,
-        btcCreateWalletAttempt: false,
-        btcCreateWalletError: action.error
+        setWalletPasswordAttempt: false,
+        setWalletPasswordError: action.error
       };
-    case BTC_CREATEWALLET_SUCCESS:
+    case DEX_SETWALLET_PASSWORD_SUCCESS:
       return {
         ...state,
-        btcCreateWalletAttempt: false,
-        btcCreateWalletError: null
+        setWalletPasswordAttempt: false,
+        setWalletPasswordError: null
       };
     case DEX_USER_ATTEMPT:
       return {
@@ -207,8 +168,7 @@ export default function ln(state = {}, action) {
     case DEX_INIT_ATTEMPT:
       return {
         ...state,
-        initAttempt: true,
-        registerError: null
+        initAttempt: true
       };
     case DEX_INIT_FAILED:
       return {
@@ -221,9 +181,7 @@ export default function ln(state = {}, action) {
         ...state,
         initAttempt: false,
         dexInit: true,
-        loggedIn: true,
-        registerError: null,
-        restoredFromSeed: action.fromSeed
+        loggedIn: true
       };
     case DEX_LAUNCH_WINDOW_ATTEMPT:
       return {
@@ -265,49 +223,6 @@ export default function ln(state = {}, action) {
         dexCheckInitAttempt: false,
         dexInit: action.res,
         dexInitError: null
-      };
-    case DEX_GETCONFIG_ATTEMPT:
-      return {
-        ...state,
-        getConfigAttempt: true,
-        config: null,
-        addr: null,
-        getConfigError: null
-      };
-    case DEX_GETCONFIG_FAILED:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        getConfigError: action.error
-      };
-    case DEX_GETCONFIG_SUCCESS:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        config: action.config,
-        addr: action.addr,
-        getConfigError: null
-      };
-    case DEX_PREREGISTER_ATTEMPT:
-      return {
-        ...state,
-        getConfigAttempt: true,
-        addr: null,
-        getConfigError: null
-      };
-    case DEX_PREREGISTER_FAILED:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        getConfigError: action.error
-      };
-    case DEX_PREREGISTER_SUCCESS:
-      return {
-        ...state,
-        getConfigAttempt: false,
-        addr: action.addr,
-        getConfigError: null,
-        alreadyPaid: action.alreadyPaid
       };
     case CREATEDEXACCOUNT_ATTEMPT:
       return {
@@ -371,59 +286,6 @@ export default function ln(state = {}, action) {
         openOrder: action.openOrder,
         logoutError: action.error
       };
-    case CHECK_BTC_CONFIG_ATTEMPT:
-      return {
-        ...state,
-        checkBtcConfigAttempt: true,
-        checkBtcConfigError: null,
-        btcConfigUpdateNeeded: false,
-        btcInstallNeeded: false
-      };
-    case CHECK_BTC_CONFIG_FAILED:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        checkBtcConfigError: action.error
-      };
-    case CHECK_BTC_CONFIG_SUCCESS:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        btcConfig: action.btcConfig
-      };
-    case CHECK_BTC_CONFIG_SUCCESS_UPDATE_NEEDED:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        btcConfigUpdateNeeded: true
-      };
-    case CHECK_BTC_CONFIG_SUCCESS_NEED_INSTALL:
-      return {
-        ...state,
-        checkBtcConfigAttempt: false,
-        btcInstallNeeded: true
-      };
-    case NEW_BTC_CONFIG_ATTEMPT:
-      return {
-        ...state,
-        newBTCConfigAttempt: true,
-        newBTCConfigError: null
-      };
-    case NEW_BTC_CONFIG_FAILED:
-      return {
-        ...state,
-        newBTCConfigAttempt: false,
-        newBTCConfigError: action.error
-      };
-    case NEW_BTC_CONFIG_SUCCESS:
-      return {
-        ...state,
-        newBTCConfigAttempt: false,
-        newBTCConfigError: null,
-        btcInstallNeeded: false,
-        btcConfigUpdateNeeded: false,
-        btcConfig: action.btcConfig
-      };
     case DEX_EXPORT_SEED_ATTEMPT:
       return {
         ...state,
@@ -465,21 +327,13 @@ export default function ln(state = {}, action) {
     case CLOSEWALLET_SUCCESS:
       return {
         ...state,
-        checkBtcConfigAttempt: false,
-        btcConfigUpdateNeeded: false,
-        btcInstallNeeded: false,
-        btcConfig: null,
-        checkBtcConfigError: null,
         openOrder: false,
         logoutError: null,
         dexSelectAccountAttempt: false,
         dexSelectAccountError: null,
         dexAccount: null,
-        getConfigAttempt: false,
-        addr: null,
         getConfigError: null,
-        alreadyPaid: false,
-        config: null
+        alreadyPaid: false
       };
     case RESET_DEXACCOUNT:
       return {

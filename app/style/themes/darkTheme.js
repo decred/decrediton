@@ -65,7 +65,6 @@ const darkTheme = {
   "text-toggle-button-border": "#1B2B54",
   "text-toggle-button-bg": "#1F325F",
   "text-toggle-button-inactive-text": "#2F4D8C",
-  "header-desc-lighter-color": "#99C1E3",
   "info-modal-button-bg": "#7DA7D9",
   "info-modal-button-text": "#0E152F",
   "agenda-card-bottom-cfg": "#99C1E3",
@@ -95,19 +94,15 @@ const darkTheme = {
   "tx-detail-raw-shadow":
     "linear-gradient(to top, rgb(243, 246, 246, 0.25) 10%, rgb(243, 246, 246, 0.20) 20%, rgb(243, 246, 246, 0) 70%)",
   "home-content-link": "#99C1E3",
-  "transfer-details-bg": "#152042",
   "filter-menu-arrow": "#99C1E3",
   "filter-menu-bg-hover": "#3C62B0",
   "menutab-hover": "#7DA7D9",
   "tooltip-container": "#1F325F",
   "loader-bg": "#223767",
-  "display-wallet-bg": "#152042",
   "select-border": "#608ACE",
   "transaction-account-name-bg": "#2F4D8C",
   "account-row-hover": "#1F325F",
   "chart-cursor-color": "#36579E",
-  "linear-progress-text-default": "#fff",
-  "linear-progress-text-initial": "#7DA7D9",
   "onboard-toolbar-shadow": "rgba(9,20,64,0.13)",
   "onboard-toolbar-background": "#152042",
   "background-copy-color": "#e9f8ff",
@@ -122,6 +117,7 @@ const darkTheme = {
   "proposal-text-markdown": "var(--background-container)",
   "background-address-copy-color": "#2F4D8C",
   "icons-shadow": "#09144036",
+  "icons-shadow-hover": "#09144036",
   "no-more-tickets-indicator-bg": "#2F4D8C",
   "input-copy-hover-color": "#78d9f8",
   "coinjoin-sum-color": "#7DA7D9",
@@ -138,6 +134,8 @@ const darkTheme = {
   "grey-5": "#3c62b0",
   "grey-6": "#B7DEEE",
   "grey-7": "#608ace",
+  "light-green": "#C6ECCB",
+  "green-2": "#2ED8A3",
   orange: "#ED6D47",
   "main-dark-blue": "#e9f8fe0",
   "light-blue": "#D4F0FD",
@@ -163,6 +161,8 @@ const darkTheme = {
   "ln-active-tab-color": "#0E152F",
   "ln-close-channel-button-bg": "#7DA7D9",
   "ln-close-channel-button-text": "#0E152F",
+  "trezor-pin-bt-border": "#C4CBD2",
+  "decred-logo-icon-color": "var(--input-color-default)",
 
   // override pi-ui's tab colors
   "tab-default-color": "var(--sidebar-color)", // default border
@@ -192,6 +192,7 @@ const darkTheme = {
 
   "button-icon-color-1": "#99C1E3",
   "button-icon-color-2": "#436EC3",
+  "launcher-link-color": "var(--disabled-color",
 
   "alert-icon-bg-color": "#feb8a5",
 
@@ -221,13 +222,10 @@ const darkTheme = {
   "testnet-logo": url(require("style/icons/testnetLogoDark.svg")),
   "mainnet-logo": url(require("style/icons/decredLogoDark.svg")),
   "create-wallet-icon": url(require("style/icons/createnewwalletDark.svg")),
-  "wallet-blue-icon": url(require("style/icons/walletBlueDark.svg")),
   "wallet-gray-icon": url(require("style/icons/walletGrayDark.svg")),
   blockchain: url(require("style/icons/blockchainDark.svg")),
   "blockchain-default": url(require("style/icons/blockchainDefaultDark.svg")),
   "blockchain-initial": url(require("style/icons/blockchainInitialDark.svg")),
-  "launcher-edit-wallets": url(require("style/icons/editDefaultDark.svg")),
-  "launcher-edit-wallets-hover": url(require("style/icons/editHoverDark.svg")),
   "onboarding-checkcircle": url(
     require("style/icons/onboardingCheckcircleDark.svg")
   ),
@@ -274,7 +272,6 @@ const darkTheme = {
   "wallet-tutorial-check-circle": url(
     require("style/icons/walletTutorialCheckcircleDark.svg")
   ),
-  "importscript-icon": url(require("style/icons/importScriptDark.svg")),
   "stakepool-stats-active-icon": url(
     require("style/icons/stakepoolsActiveDark.svg")
   ),
@@ -284,15 +281,9 @@ const darkTheme = {
   "tx-details-arrow-left": url(
     require("style/icons/txDetailsArrowLeftDark.svg")
   ),
-  "stake-pool-icon": url(require("style/icons/stakepoolDark.svg")),
-  "expiry-icon": url(require("style/icons/expiryDark.svg")),
-  "split-fee-icon": url(require("style/icons/splitFeeDark.svg")),
-  "pool-fee-icon": url(require("style/icons/poolFeesDark.svg")),
   "tickets-cogs-opened-icon": url(
     require("style/icons/ticketsCogsOpenedDark.svg")
   ),
-  "ticket-address-icon": url(require("style/icons/votingAddressDark.svg")),
-  "fee-address-icon": url(require("style/icons/poolFeeAddressDark.svg")),
   "sort-by-icon": url(require("style/icons/sortbyDark.svg")),
   "contextbutton-eye-default-icon": url(
     require("style/icons/contextbuttonEyeDefaultDark.svg")
@@ -370,7 +361,12 @@ const darkTheme = {
   "ln-network-capacity-icon": url(
     require("style/icons/LNNetworkCapacityIconDark.svg")
   ),
-  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg"))
+  "ln-nodes-eye-icon": url(require("style/icons/LNNodesEyeIcon.svg")),
+  "tz-wipe-device": url(require("style/icons/tzWipeDevice.svg")),
+  "tz-recover-device": url(require("style/icons/tzRecoverDevice.svg")),
+  "tz-init-device": url(require("style/icons/tzInitDevice.svg")),
+  "tz-backup-device": url(require("style/icons/tzBackupDevice.svg")),
+  "tz-create-bt": url(require("style/icons/tzCreateBt.svg"))
 };
 
 export default darkTheme;

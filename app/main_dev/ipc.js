@@ -22,9 +22,7 @@ import {
   initCheckDex,
   initDexCall,
   createWalletDexCall,
-  getDexConfigCall,
-  preRegisterCall,
-  registerDexCall,
+  setWalletPasswordDexCall,
   userDexCall,
   loginDexCall,
   logoutDexCall,
@@ -32,11 +30,11 @@ import {
   GetDexPID,
   closeDcrlnd,
   closeDex,
-  setDcrdRpcCredentials,
-  GetDexCreds
+  setDcrdRpcCredentials
 } from "./launch";
 import { MAINNET } from "constants";
 import * as cfgConstants from "constants/config";
+import { DEX_LOCALPAGE } from "./externalRequests";
 
 const logger = createLogger();
 let watchingOnlyWallet;
@@ -61,6 +59,8 @@ export const getAvailableWallets = (network) => {
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
     const finished = fs.existsSync(walletDbFilePath);
+    const isLN = cfg.get(cfgConstants.LN_WALLET_EXISTS);
+    const displayWalletGradient = cfg.get(cfgConstants.DISPLAY_WALLET_GRADIENT);
     availableWallets.push({
       network,
       wallet,
@@ -68,7 +68,9 @@ export const getAvailableWallets = (network) => {
       lastAccess,
       isWatchingOnly,
       isTrezor,
-      isPrivacy
+      isPrivacy,
+      isLN,
+      displayWalletGradient
     });
   });
 
@@ -250,8 +252,8 @@ export const startDex = async (walletPath, testnet, locale) => {
       "info",
       `Skipping restart of DEX as it is already running ${GetDexPID()}`
     );
-    const creds = GetDexCreds();
-    return { wasRunning: true, ...creds };
+    const serverAddress = DEX_LOCALPAGE;
+    return serverAddress;
   }
 
   try {
@@ -373,48 +375,28 @@ export const createWalletDex = async (
   }
 };
 
-export const getConfigDex = async (addr) => {
+export const setWalletPasswordDex = async (
+  assetID,
+  passphrase,
+  appPassphrase
+) => {
   if (!GetDexPID()) {
-    logger.log("info", "Skipping get config since dex is not runnning");
+    logger.log(
+      "info",
+      "Skipping setting wallet password since dex is not runnning"
+    );
     return false;
   }
 
   try {
-    const getDexConfig = await getDexConfigCall(addr);
-    return getDexConfig;
+    const setWalletPassword = await setWalletPasswordDexCall(
+      assetID,
+      passphrase,
+      appPassphrase
+    );
+    return setWalletPassword;
   } catch (e) {
-    logger.log("error", `error get config dex: ${e}`);
-    return e;
-  }
-};
-
-export const preRegister = async (appPass, addr) => {
-  if (!GetDexPID()) {
-    logger.log("info", "Skipping preregister since dex is not runnning");
-    return false;
-  }
-
-  try {
-    const registered = await preRegisterCall(appPass, addr);
-    console.log("registered already?", registered);
-    return registered;
-  } catch (e) {
-    logger.log("error", `error preregister dex: ${e}`);
-    return e;
-  }
-};
-
-export const registerDex = async (appPass, addr, fee) => {
-  if (!GetDexPID()) {
-    logger.log("info", "Skipping register since dex is not runnning");
-    return false;
-  }
-
-  try {
-    const register = await registerDexCall(appPass, addr, fee);
-    return register;
-  } catch (e) {
-    logger.log("error", `error register dex: ${e}`);
+    logger.log("error", `error set wallet password dex: ${e}`);
     return e;
   }
 };

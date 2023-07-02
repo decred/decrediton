@@ -4,18 +4,16 @@ import { useEffect } from "react";
 import { useWalletSetup } from "./hooks";
 import { FormattedMessage as T } from "react-intl";
 import { AnimatedLinearProgressFull } from "indicators";
-import { Header } from "../helpers";
 import styles from "./SetupWallet.module.css";
+import { LoaderBarContainer } from "../helpers";
 
 const SetupWallet = ({
-  settingUpWalletRef,
-  appVersion,
-  onShowTutorial,
-  onShowReleaseNotes
+  NavlinkComponent,
+  LoadingPageComponent,
+  settingUpWalletRef
 }) => {
-  const { getStateComponent, StateComponent } = useWalletSetup(
-    settingUpWalletRef
-  );
+  const { getStateComponent, StateComponent } =
+    useWalletSetup(settingUpWalletRef);
 
   useEffect(() => {
     getStateComponent();
@@ -23,22 +21,26 @@ const SetupWallet = ({
 
   return (
     <div>
-      {StateComponent && React.isValidElement(StateComponent) ? (
-        StateComponent
-      ) : (
-        <>
-          <Header {...{ onShowTutorial, onShowReleaseNotes, appVersion }} />
-          <div className={styles.loaderBar}>
-            <AnimatedLinearProgressFull
-              {...{
-                text: <T id="setupwallet.progressLabel" m="Setup Wallet" />,
-                animationType: styles.setupWallet,
-                hideTextBlock: true
-              }}
-            />
-          </div>
-        </>
-      )}
+      {NavlinkComponent && React.isValidElement(NavlinkComponent)
+        ? NavlinkComponent
+        : StateComponent && React.isValidElement(StateComponent)
+        ? StateComponent
+        : LoadingPageComponent &&
+          React.isValidElement(LoadingPageComponent) &&
+          LoadingPageComponent}
+      <LoaderBarContainer
+        className={styles.loaderBar}
+        loaderBar={
+          <AnimatedLinearProgressFull
+            {...{
+              text: <T id="setupwallet.progressLabel" m="Setup Wallet" />,
+              animationType: styles.setupWallet,
+              hideTextBlock: true,
+              hideOpenWalletButton: true
+            }}
+          />
+        }
+      />
     </div>
   );
 };

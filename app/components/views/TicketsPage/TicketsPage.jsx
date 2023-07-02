@@ -7,7 +7,7 @@ import {
 } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { BalanceDisplay } from "shared";
-import { default as PurchaseTab } from "./PurchaseTab/PurchaseTab";
+import PurchaseTab from "./PurchaseTab";
 import { default as StatisticsTab } from "./StatisticsTab/StatisticsTab";
 import MyTicketsTab from "./MyTicketsTab";
 import { default as VSPTicketsStatusTab } from "./VSPTicketsStatusTab/MyVSPTickets";
@@ -83,11 +83,8 @@ const tabs = [
 ];
 
 const TicketsPage = () => {
-  const {
-    showStakingWarning,
-    ticketPrice,
-    onAcceptStakingWarning
-  } = useTicketsPage();
+  const { showStakingWarning, ticketPrice, onAcceptStakingWarning } =
+    useTicketsPage();
   return showStakingWarning ? (
     <StandalonePage
       header={<StakingTabWarningHeader ticketPrice={ticketPrice} />}>

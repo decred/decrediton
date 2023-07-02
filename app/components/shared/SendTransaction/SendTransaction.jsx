@@ -1,11 +1,12 @@
 import { FormattedMessage as T } from "react-intl";
 import { useSendTransaction, useOutputs } from "./hooks";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useMountEffect } from "hooks";
 import { spring, presets } from "react-motion";
 import { baseOutput } from "./helpers";
 import { usePrevious } from "hooks";
 import Form from "./Form";
+import { debounce } from "lodash";
 
 const SendTransaction = ({
   onlySendSelfAllowed,
@@ -102,6 +103,9 @@ const SendTransaction = ({
         />
       );
     }
+    if (error) {
+      onClearTransaction();
+    }
     const ref = { ...outputs[index] };
     ref.data.amount = atomValue;
     ref.data.error.amount = error;
@@ -191,22 +195,30 @@ const SendTransaction = ({
     onSetOutputs(newOutputs);
   };
 
-  const hasError = useCallback(() => {
+  const hasError = (outputs) => {
     const outputHasError = (o) =>
       !o.data.amount ||
       o.data.destination.length === 0 ||
       o.data.error.amount ||
       o.data.error.address;
     return outputs.some(outputHasError);
-  }, [outputs]);
+  };
 
-  const isValid = () =>
-    !!(
-      !hasError() &&
-      unsignedTransaction &&
-      !isConstructingTransaction &&
-      !constructTxLowBalance
-    );
+  const isValid = useCallback(
+    () =>
+      !!(
+        !hasError(outputs) &&
+        unsignedTransaction &&
+        !isConstructingTransaction &&
+        !constructTxLowBalance
+      ),
+    [
+      outputs,
+      unsignedTransaction,
+      isConstructingTransaction,
+      constructTxLowBalance
+    ]
+  );
 
   const willEnter = () => ({
     opacity: 0
@@ -268,36 +280,43 @@ const SendTransaction = ({
     }));
   };
 
-  const onAttemptConstructTransaction = useCallback(() => {
-    const confirmations = 0;
-    setSendAllAmount(account.spendable);
-    if (hasError()) return;
-    if (!isSendAll) {
-      return attemptConstructTransaction(
-        account.value,
-        confirmations,
-        outputs.map(({ data }) => ({
-          amount: data.amount,
-          destination: data.destination
-        }))
-      );
-    } else {
-      return attemptConstructTransaction(
-        account.value,
-        confirmations,
-        outputs,
-        true
-      );
-    }
-  }, [
-    setSendAllAmount,
-    hasError,
-    isSendAll,
-    attemptConstructTransaction,
-    account.spendable,
-    account.value,
-    outputs
-  ]);
+  const onAttemptConstructTransaction = useCallback(
+    (outputs) => {
+      const confirmations = 0;
+      setSendAllAmount(account.spendable);
+      if (hasError(outputs)) return;
+      if (!isSendAll) {
+        return attemptConstructTransaction(
+          account.value,
+          confirmations,
+          outputs.map(({ data }) => ({
+            amount: data.amount,
+            destination: data.destination
+          }))
+        );
+      } else {
+        return attemptConstructTransaction(
+          account.value,
+          confirmations,
+          outputs,
+          true
+        );
+      }
+    },
+    [
+      setSendAllAmount,
+      isSendAll,
+      attemptConstructTransaction,
+      account.spendable,
+      account.value
+    ]
+  );
+
+  const onAttemptConstructTransactionCallback = useMemo(() => {
+    return debounce((outputs) => {
+      onAttemptConstructTransaction(outputs);
+    }, 300);
+  }, [onAttemptConstructTransaction]);
 
   // Executes on component updates
   useEffect(() => {
@@ -330,7 +349,7 @@ const SendTransaction = ({
     }
 
     if (prevOutputs != outputs || prevAccount != account) {
-      onAttemptConstructTransaction();
+      onAttemptConstructTransactionCallback(outputs);
     }
   }, [
     publishTxResponse,
@@ -344,7 +363,7 @@ const SendTransaction = ({
     outputs,
     prevOutputs,
     onSetOutputs,
-    onAttemptConstructTransaction,
+    onAttemptConstructTransactionCallback,
     onGetNextAddressAttempt,
     account,
     prevAccount,

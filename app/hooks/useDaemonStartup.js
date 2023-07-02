@@ -71,6 +71,9 @@ const useDaemonStartup = () => {
   );
   const syncFetchHeadersAttempt = useSelector(sel.syncFetchHeadersAttempt);
   const syncFetchHeadersCount = useSelector(sel.syncFetchHeadersCount);
+  const syncFetchHeadersFirstHeaderTime = useSelector(
+    sel.syncFetchHeadersFirstHeaderTime
+  );
   const syncFetchHeadersLastHeaderTime = useSelector(
     sel.syncFetchHeadersLastHeaderTime
   );
@@ -81,33 +84,41 @@ const useDaemonStartup = () => {
   const syncFetchHeadersComplete = useSelector(sel.syncFetchHeadersComplete);
   const syncFetchTimeStart = useSelector(sel.syncFetchTimeStart);
   const selectedWalletSelector = useSelector(sel.getSelectedWallet);
+  const startWalletServiceAttempt = useSelector(sel.startWalletServiceAttempt);
+  const autoWalletLaunching = useSelector(sel.autoWalletLaunching);
 
   // general methods
   // Methods for showing positions when first starting decrediton
-  const onShowTutorial = useCallback(() => dispatch(da.showTutorial()), [
-    dispatch
-  ]);
-  const onShowSpvChoice = useCallback(() => dispatch(da.showSpvChoice()), [
-    dispatch
-  ]);
-  const onShowPrivacy = useCallback(() => dispatch(da.showPrivacy()), [
-    dispatch
-  ]);
-  const onShowLanguage = useCallback(() => dispatch(da.showLanguage()), [
-    dispatch
-  ]);
-  const onShowGetStarted = useCallback(() => dispatch(da.showGetStarted()), [
-    dispatch
-  ]);
+  const onShowTutorial = useCallback(
+    () => dispatch(da.showTutorial()),
+    [dispatch]
+  );
+  const onShowSpvChoice = useCallback(
+    () => dispatch(da.showSpvChoice()),
+    [dispatch]
+  );
+  const onShowPrivacy = useCallback(
+    () => dispatch(da.showPrivacy()),
+    [dispatch]
+  );
+  const onShowLanguage = useCallback(
+    () => dispatch(da.showLanguage()),
+    [dispatch]
+  );
+  const onShowGetStarted = useCallback(
+    () => dispatch(da.showGetStarted()),
+    [dispatch]
+  );
   // language page
   const onSelectLanguage = useCallback(
     (selectedLanguage) => dispatch(da.selectLanguage(selectedLanguage)),
     [dispatch]
   );
   // spv page
-  const toggleSpv = useCallback((isSPV) => dispatch(da.toggleSpv(isSPV)), [
-    dispatch
-  ]);
+  const toggleSpv = useCallback(
+    (isSPV) => dispatch(da.toggleSpv(isSPV)),
+    [dispatch]
+  );
   // privacy page
   const setupStandardPrivacy = useCallback(
     () => dispatch(da.setupStandardPrivacy()),
@@ -118,13 +129,15 @@ const useDaemonStartup = () => {
     [dispatch]
   );
   // tutorial page
-  const finishTutorial = useCallback(() => dispatch(da.finishTutorial()), [
-    dispatch
-  ]);
+  const finishTutorial = useCallback(
+    () => dispatch(da.finishTutorial()),
+    [dispatch]
+  );
   // end of general methods
-  const finishPrivacy = useCallback(() => dispatch(da.finishPrivacy()), [
-    dispatch
-  ]);
+  const finishPrivacy = useCallback(
+    () => dispatch(da.finishPrivacy()),
+    [dispatch]
+  );
   // start daemon and wallet methods
   const onRetryStartRPC = useCallback(
     async (privPass, isRetry) =>
@@ -174,6 +187,10 @@ const useDaemonStartup = () => {
     (selectedWallet) => dispatch(da.startWallet(selectedWallet)),
     [dispatch]
   );
+  const onCloseWallet = useCallback(
+    () => dispatch(wla.closeWalletRequest()),
+    [dispatch]
+  );
   const onRemoveWallet = useCallback(
     (selectedWallet) => dispatch(da.removeWallet(selectedWallet)),
     [dispatch]
@@ -185,22 +202,26 @@ const useDaemonStartup = () => {
     (selectedWallet) => dispatch(da.createWallet(selectedWallet)),
     [dispatch]
   );
-  const onGetDcrdLogs = useCallback(() => dispatch(da.getDcrdLastLineLogs()), [
-    dispatch
-  ]);
-  const getDcrwalletLogs = useCallback(() => dispatch(da.getDcrwalletLogs()), [
-    dispatch
-  ]);
+  const onGetDcrdLogs = useCallback(
+    () => dispatch(da.getDcrdLastLineLogs()),
+    [dispatch]
+  );
+  const getDcrwalletLogs = useCallback(
+    () => dispatch(da.getDcrwalletLogs()),
+    [dispatch]
+  );
   const trezorLoadDeviceList = useCallback(
     () => dispatch(trza.loadDeviceList()),
     [dispatch]
   );
-  const trezorEnable = useCallback(() => dispatch(trza.enableTrezor()), [
-    dispatch
-  ]);
-  const trezorDisable = useCallback(() => dispatch(trza.disableTrezor()), [
-    dispatch
-  ]);
+  const trezorEnable = useCallback(
+    () => dispatch(trza.enableTrezor()),
+    [dispatch]
+  );
+  const trezorDisable = useCallback(
+    () => dispatch(trza.disableTrezor()),
+    [dispatch]
+  );
   const trezorAlertNoConnectedDevice = useCallback(
     () => dispatch(trza.alertNoConnectedDevice()),
     [dispatch]
@@ -233,6 +254,23 @@ const useDaemonStartup = () => {
     [dispatch]
   );
 
+  const stopUnfinishedWallet = useCallback(
+    () => dispatch(wla.stopUnfinishedWallet()),
+    [dispatch]
+  );
+
+  const checkDisplayWalletGradients = useCallback(
+    (availableWallets) =>
+      dispatch(da.checkDisplayWalletGradients(availableWallets)),
+    [dispatch]
+  );
+
+  const setAutoWalletLaunching = useCallback(
+    (autoWalletLaunching) =>
+      dispatch(wla.setAutoWalletLaunching(autoWalletLaunching)),
+    [dispatch]
+  );
+
   return {
     onShowTutorial,
     validateMasterPubKey,
@@ -246,6 +284,7 @@ const useDaemonStartup = () => {
     goToErrorPage,
     onRemoveWallet,
     onStartWallet,
+    onCloseWallet,
     onGetAvailableWallets,
     syncDaemon,
     checkNetworkMatch,
@@ -293,12 +332,15 @@ const useDaemonStartup = () => {
     syncFetchMissingCfiltersEnd,
     syncFetchHeadersAttempt,
     syncFetchHeadersCount,
+    syncFetchHeadersFirstHeaderTime,
     syncFetchHeadersLastHeaderTime,
     syncDiscoverAddressesAttempt,
     syncRescanAttempt,
     syncFetchHeadersComplete,
     syncFetchTimeStart,
     selectedWalletSelector,
+    startWalletServiceAttempt,
+    autoWalletLaunching,
     goToHome,
     setCoinjoinCfg,
     onGetDcrdLogs,
@@ -311,7 +353,10 @@ const useDaemonStartup = () => {
     isProcessingManaged,
     isProcessingUnmanaged,
     needsProcessManagedTickets,
-    isSettingAccountsPassphrase
+    stopUnfinishedWallet,
+    isSettingAccountsPassphrase,
+    checkDisplayWalletGradients,
+    setAutoWalletLaunching
   };
 };
 

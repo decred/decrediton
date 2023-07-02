@@ -3,12 +3,8 @@ import LanguageSelectPage from "./Page";
 import { useDaemonStartup } from "hooks";
 
 const LanguageSelect = () => {
-  const {
-    availableLanguages,
-    defaultLocale,
-    onSelectLanguage,
-    isTestNet
-  } = useDaemonStartup();
+  const { availableLanguages, defaultLocale, onSelectLanguage, isTestNet } =
+    useDaemonStartup();
 
   const defaultLang = useMemo(
     () =>

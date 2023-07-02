@@ -3,7 +3,6 @@ import Modal from "../Modal";
 import styles from "./AutoBuyerSettingsModal.module.css";
 import { DcrInput, AccountsSelect, FloatInput } from "inputs";
 import { PiUiButton, InvisiblePiUiButton } from "buttons";
-import { classNames } from "pi-ui";
 import { useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -34,12 +33,10 @@ const AutoBuyerSettingsModal = ({
   account,
   setAccount,
   isGetVSPAttempt,
-  vsp,
   notMixedAccounts,
   isValid,
   errorMsg,
   clicked,
-  VSPSelectControl,
   maxFeePercentage,
   setMaxFeePercentage
 }) => {
@@ -70,13 +67,6 @@ const AutoBuyerSettingsModal = ({
           filterAccounts={notMixedAccounts}
         />
       </label>
-      {VSPSelectControl && (
-        <label className={classNames(styles.label, "selectWithBigFont")}>
-          <T id="vsp.autobuyer.stakePoolLabel" m="VSP" />
-          {VSPSelectControl}
-        </label>
-      )}
-
       {setMaxFeePercentage && (
         <FloatInput
           newBiggerFontStyle
@@ -107,7 +97,7 @@ const AutoBuyerSettingsModal = ({
           disabled={isGetVSPAttempt}
           onClick={() =>
             onSubmit({
-              ...{ balanceToMaintain, account, vsp, maxFeePercentage }
+              ...{ balanceToMaintain, account, maxFeePercentage }
             })
           }>
           <T id="autoBuyerSettings.save" m="Save" />

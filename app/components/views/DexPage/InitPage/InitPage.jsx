@@ -8,10 +8,11 @@ import styles from "./InitPage.module.css";
 
 const InitPage = () => {
   const { onInitDex, onInitDexWithSeed, initDexAttempt } = useDex();
-  const { hasSeed, toggleHasSeed, seed, setSeed, onInitDexCall } = useInitPage({
-    onInitDex,
-    onInitDexWithSeed
-  });
+  const { hasSeed, toggleHasSeed, seed, setSeed, onInitDexCall, seedError } =
+    useInitPage({
+      onInitDex,
+      onInitDexWithSeed
+    });
 
   return (
     <div className={styles.container}>
@@ -46,14 +47,17 @@ const InitPage = () => {
         className="margin-top-s"
       />
       {hasSeed && (
-        <TextInput
-          id="dexSeed"
-          className={classNames("margin-top-m", styles.seedInput)}
-          required
-          value={seed}
-          onChange={(e) => setSeed(e.target.value)}
-          placeholder="DEX Seed"
-        />
+        <>
+          <TextInput
+            id="dexSeed"
+            className={classNames("margin-top-m", styles.seedInput)}
+            required
+            value={seed}
+            onChange={(e) => setSeed(e.target.value)}
+            placeholder="DEX Seed"
+          />
+          {seedError && <div className="error">{seedError}</div>}
+        </>
       )}
       <SetNewPassphraseModalButton
         className="margin-top-m"

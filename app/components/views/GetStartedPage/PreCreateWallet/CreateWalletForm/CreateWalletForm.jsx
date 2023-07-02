@@ -1,54 +1,12 @@
-import { FormattedMessage as T, defineMessages } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { classNames, Checkbox, Tooltip } from "pi-ui";
 import { TextInput, IntegerInput } from "inputs";
 import { KeyBlueButton, InvisibleButton } from "buttons";
-import { Collapse, ExternalLink } from "shared";
-import { NewSeedTabMsg, RestoreTabMsg } from "../../messages";
-import { Label, Input, Row } from "../../helpers";
+import { Collapse } from "shared";
+import { LoaderTitleMsg, messages } from "../../messages";
+import { Label, Input, Row, ContentContainer } from "../../helpers";
 import styles from "./CreateWalletForm.module.css";
-
-const messages = defineMessages({
-  messageWalletNamePlaceholder: {
-    id: "createwallet.walletname.placehlder",
-    defaultMessage: "Choose a Name"
-  },
-  messageWalletNameTooltip: {
-    id: "createwallet.walletname.tooltip",
-    defaultMessage:
-      "The name is used to identify your wallet. Restoring a wallet does not require the name to match the previous wallet name."
-  },
-  messageWalletWatchOnlyDescription: {
-    id: "createwallet.watchonly.description",
-    defaultMessage:
-      "A watch-only wallet has limited functionality. It can only be used to view the balance and monitor transaction history. You won't be able to spend any DCR associated with this wallet."
-  },
-  messageWalletTrezorDescription: {
-    id: "createwallet.trezor.description",
-    defaultMessage:
-      "Trezor is a hardware wallet. For more information, visit {link}"
-  },
-  messageWalletMasterPubKey: {
-    id: "createwallet.walletpubkey.placeholder",
-    defaultMessage: "Master Pub Key"
-  },
-  messageWalletMasterPubkeyError: {
-    id: "createwallet.walletWatchOnly.error",
-    defaultMessage: "Invalid Master Pubkey"
-  },
-  messageWalletDupeNameError: {
-    id: "createwallet.dupeWalletName.error",
-    defaultMessage: "Please choose an unused wallet name"
-  },
-  messageDisablecointypeupgrades: {
-    id: "createwallet.disablecointypeupgrades.description",
-    defaultMessage: "Never upgrade from legacy to SLIP0044 coin type keys"
-  },
-  messageGapLimit: {
-    id: "createwallet.gaplimit.description",
-    defaultMessage:
-      "Allowed unused address gap between used addresses of accounts"
-  }
-});
+import { DocButton } from "buttons";
 
 const CreateWalletForm = ({
   createWallet,
@@ -64,29 +22,38 @@ const CreateWalletForm = ({
   toggleWatchOnly,
   onChangeCreateWalletMasterPubKey,
   masterPubKeyError,
-  isTrezor,
-  toggleTrezor,
-  onShowTrezorConfig,
   isCreateNewWallet,
-  creatingWallet,
   disableCoinTypeUpgrades,
   toggleDisableCoinTypeUpgrades,
   gapLimit,
   setGapLimit
 }) => (
   <>
+    <ContentContainer>
+      <div>
+        <LoaderTitleMsg />
+      </div>
+    </ContentContainer>
     {isCreateNewWallet ? (
       <div className={styles.titleArea}>
         <div className={classNames(styles.iconSmall, styles.new)} />
         <div className={styles.title}>
-          <NewSeedTabMsg />
+          {intl.formatMessage(messages.newSeedTabMsg)}
+          <DocButton
+            className={styles.docButton}
+            docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#create-a-new-wallet"
+          />
         </div>
       </div>
     ) : (
       <div className={styles.titleArea}>
         <div className={classNames(styles.iconSmall, styles.restore)} />
         <div className={styles.title}>
-          <RestoreTabMsg />
+          {intl.formatMessage(messages.restoreTabMsg)}
+          <DocButton
+            className={styles.docButton}
+            docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#restore-existing-wallet"
+          />
         </div>
       </div>
     )}
@@ -167,38 +134,6 @@ const CreateWalletForm = ({
               <div className={styles.advancedOption}>
                 <Checkbox
                   label={
-                    <>
-                      <T id="createwallet.isTrezor.label" m="Trezor" />
-                      <span
-                        className={styles.trezorWallet}
-                        onClick={onShowTrezorConfig}>
-                        <T
-                          id="createWallet.isTrezor.setupLink"
-                          m="(setup device)"
-                        />
-                      </span>
-                    </>
-                  }
-                  id="trezor"
-                  description={intl.formatMessage(
-                    messages.messageWalletTrezorDescription,
-                    {
-                      link: (
-                        <ExternalLink
-                          className={styles.trezorDocs}
-                          href="https://docs.decred.org/wallets/decrediton/trezor/">
-                          docs.decred.org
-                        </ExternalLink>
-                      )
-                    }
-                  )}
-                  checked={isTrezor}
-                  onChange={toggleTrezor}
-                />
-              </div>
-              <div className={styles.advancedOption}>
-                <Checkbox
-                  label={
                     <T
                       id="createwallet.disableCoinTypeUpgrades.label"
                       m="Disable coin type upgrades"
@@ -238,7 +173,7 @@ const CreateWalletForm = ({
         <T id="advancedStartup.cancel" m="Cancel" />
       </InvisibleButton>
       <KeyBlueButton onClick={createWallet}>
-        {creatingWallet ? (
+        {isCreateNewWallet ? (
           <T id="wallet.creating.button" m="Creating" />
         ) : (
           <T id="wallet.create.button" m="Continue" />

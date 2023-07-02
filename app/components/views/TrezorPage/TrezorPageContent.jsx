@@ -1,34 +1,26 @@
 import { useTrezorPage } from "./hooks";
-import { FormattedMessage as T } from "react-intl";
 import {
   ChangeLabel,
-  ConfigButtons,
+  SecuritySection,
   FirmwareUpdate,
-  RecoveryButtons
+  DeviceSetupSection
 } from "./TrezorPageSections";
-import { InvisibleButton } from "buttons";
+import styles from "./TrezorPageContent.module.css";
+import NoDevicePage from "./NoDevicePage";
 
-const NoDevicePage = ({ onConnect }) => (
-  <>
-    <div>
-      <T
-        id="trezor.noDevice.message"
-        m="No Trezor device detected. Connect the device and check if Trezor bridge is installed and running."
-      />
-    </div>
-    <div>
-      <InvisibleButton onClick={onConnect}>
-        <T id="trezor.noDevice.btnConnect" m="Connect to Trezor" />
-      </InvisibleButton>
-    </div>
-  </>
-);
-
-const TrezorPageContent = () => {
+const TrezorPageContent = ({ ContainerComponent }) => {
   const {
     isPerformingUpdate,
     performingOperation,
     device,
+    performingTogglePinProtection,
+    performingTogglePassphraseProtection,
+    performingTogglePassphraseOnDeviceProtection,
+    pinProtection,
+    passphraseProtection,
+    passphraseOnDeviceProtection,
+    deviceLabel,
+    intl,
     connect,
     performingRecoverDevice,
     togglePinProtection,
@@ -46,11 +38,20 @@ const TrezorPageContent = () => {
   const loading = performingOperation || performingRecoverDevice;
 
   return !device ? (
-    <NoDevicePage onConnect={connect} />
+    <div className={styles.container}>
+      <NoDevicePage onConnect={connect} />
+    </div>
   ) : (
-    <>
-      <ConfigButtons
+    <div className={styles.container}>
+      <SecuritySection
         {...{
+          ContainerComponent,
+          performingTogglePinProtection,
+          performingTogglePassphraseProtection,
+          performingTogglePassphraseOnDeviceProtection,
+          pinProtection,
+          passphraseProtection,
+          passphraseOnDeviceProtection,
           togglePinProtection,
           togglePassPhraseProtection,
           togglePassphraseOnDevice,
@@ -58,9 +59,19 @@ const TrezorPageContent = () => {
           performingOperation: loading
         }}
       />
-      <ChangeLabel {...{ changeLabel, performingOperation: loading }} />
-      <RecoveryButtons
+      <ChangeLabel
         {...{
+          ContainerComponent,
+          deviceLabel,
+          intl,
+          changeLabel,
+          changeToDecredHomeScreen,
+          performingOperation: loading
+        }}
+      />
+      <DeviceSetupSection
+        {...{
+          ContainerComponent,
           wipeDevice,
           recoverDevice,
           initDevice,
@@ -70,12 +81,14 @@ const TrezorPageContent = () => {
       />
       <FirmwareUpdate
         {...{
+          ContainerComponent,
+          intl,
           updateFirmware,
           performingOperation: loading,
           isPerformingUpdate
         }}
       />
-    </>
+    </div>
   );
 };
 

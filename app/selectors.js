@@ -1,7 +1,6 @@
 import {
   compose,
   reduce,
-  filter,
   get,
   not,
   or,
@@ -9,19 +8,13 @@ import {
   eq,
   bool,
   map,
-  apply,
   some,
   uniq,
   createSelectorEager as createSelector
 } from "./fp";
 import { isNull } from "lodash";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
-import { decodeVoteScript, reverseHash, dateToLocal, dateToUTC } from "helpers";
-import {
-  EXTERNALREQUEST_STAKEPOOL_LISTING,
-  EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA
-} from "constants";
+import { dateToLocal, dateToUTC } from "helpers";
 import {
   POLITEIA_URL_TESTNET,
   POLITEIA_URL_MAINNET
@@ -41,12 +34,10 @@ import {
   UNIT_DIVISOR,
   TESTNET,
   MAINNET,
-  TRANSACTION_DIR_SENT,
-  TRANSACTION_DIR_RECEIVED,
-  TICKET_FEE,
-  VOTED
+  VOTED,
+  EXTERNALREQUEST_POLITEIA,
+  EXTERNALREQUEST_DCRDATA
 } from "constants";
-import { wallet } from "wallet-preload-shim";
 import { isArray } from "lodash";
 
 const EMPTY_ARRAY = []; // Maintaining identity (will) improve performance;
@@ -122,6 +113,10 @@ export const syncFetchHeadersCount = get([
   "walletLoader",
   "syncFetchHeadersCount"
 ]);
+export const syncFetchHeadersFirstHeaderTime = get([
+  "walletLoader",
+  "syncFirstFetchedHeaderTime"
+]);
 export const syncFetchHeadersLastHeaderTime = get([
   "walletLoader",
   "syncLastFetchedHeaderTime"
@@ -177,7 +172,8 @@ const availableWalletsSelect = createSelector([availableWallets], (wallets) =>
       network: wallet.network,
       finished: wallet.finished,
       isWatchingOnly: wallet.isWatchingOnly,
-      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null
+      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
+      displayWalletGradient: wallet.displayWalletGradient
     }),
     wallets
   )
@@ -346,6 +342,11 @@ export const unitDivisor = compose(
 );
 export const currentLocaleName = get(["settings", "currentSettings", "locale"]);
 export const timezone = get(["settings", "currentSettings", "timezone"]);
+export const autoWalletLaunching = get([
+  "settings",
+  "currentSettings",
+  "autoWalletLaunching"
+]);
 export const defaultLocaleName = createSelector(
   [currentLocaleName],
   (currentLocaleName) => {
@@ -384,10 +385,12 @@ export const locale = createSelector(
   }
 );
 
-export const txURLBuilder = createSelector([network], (network) => (txHash) =>
-  `https://${
-    network !== TESTNET ? "dcrdata" : "testnet"
-  }.decred.org/tx/${txHash}`
+export const txURLBuilder = createSelector(
+  [network],
+  (network) => (txHash) =>
+    `https://${
+      network !== TESTNET ? "dcrdata" : "testnet"
+    }.decred.org/tx/${txHash}`
 );
 
 export const blockURLBuilder = createSelector(
@@ -413,377 +416,14 @@ export const chainParams = compose(
   isTestNet
 );
 
-export const ticketNormalizer = createSelector(
-  [network, accounts, chainParams, txURLBuilder, blockURLBuilder],
-  (network, accounts, chainParams, txURLBuilder, blockURLBuilder) => {
-    return (ticket) => {
-      const {
-        txType,
-        status,
-        spender,
-        blockHash,
-        rawTx,
-        isStake,
-        height,
-        feeStatus
-      } = ticket;
-      // TODO refactor same code to be used in tickets and regular tx normalizers.
-      const findAccount = (num) =>
-        accounts.find((account) => account.accountNumber === num);
-      const getAccountName = (num) =>
-        ((act) => (act ? act.accountName : ""))(findAccount(num));
-      const txInputs = [];
-      const txOutputs = [];
-      const hasSpender = spender && spender.hash;
-      const isVote = status === VOTED;
-      const isPending = height <= 0;
-      // Some legacy vsp fees wallet will have tickets without `ticket` field
-      // and only with `spender` so we use it as fallback
-      const ticketTx = ticket.ticket || ticket.spender;
-      const ticketHash = ticketTx.txHash;
-      const spenderTx = hasSpender ? spender : null;
-      const txBlockHash = blockHash ? blockHash : null;
-      const txHash = ticket.txHash;
-      const txUrl = txURLBuilder(txHash);
-      const txBlockUrl = blockURLBuilder(txBlockHash);
-
-      const spenderHash = hasSpender ? spenderTx.txHash : null;
-      const hasCredits = ticketTx.credits.length > 0;
-      if (spenderTx) {
-        spenderTx.debits.reduce((total, debit) => {
-          const debitedAccount = debit.previousAccount;
-          const debitedAccountName = getAccountName(debitedAccount);
-          const amount = debit.previousAmount;
-          txInputs.push({
-            accountName: debitedAccountName,
-            amount,
-            index: debit.index
-          });
-          return total + amount;
-        }, 0);
-        spenderTx.credits.forEach((credit) => {
-          const amount = credit.amount;
-          const address = credit.address;
-          const creditedAccount = credit.account;
-          const creditedAccountName = getAccountName(creditedAccount);
-          txOutputs.push({
-            accountName: creditedAccountName,
-            amount,
-            address,
-            index: credit.index
-          });
-        });
-      } else {
-        ticketTx.debits.reduce((total, debit) => {
-          const debitedAccount = debit.previousAccount;
-          const debitedAccountName = getAccountName(debitedAccount);
-          const amount = debit.previousAmount;
-          txInputs.push({
-            accountName: debitedAccountName,
-            amount,
-            index: debit.index
-          });
-          return total + amount;
-        }, 0);
-
-        ticketTx.credits.forEach((credit) => {
-          const amount = credit.amount;
-          const address = credit.address;
-          const creditedAccount = credit.account;
-          const creditedAccountName = getAccountName(creditedAccount);
-          txOutputs.push({
-            accountName: creditedAccountName,
-            amount,
-            address,
-            index: credit.index
-          });
-        });
-      }
-
-      let ticketPrice = 0;
-      if (hasCredits) {
-        ticketPrice = ticketTx.credits[0].amount;
-      } else {
-        // we don't have a credit when we don't have the voting rights (unimported
-        // stakepool script, solo voting ticket, split ticket, etc)
-        const decodedTicketTx = wallet.decodeRawTransaction(
-          Buffer.from(ticketTx.rawTx, "hex"),
-          chainParams
-        );
-        ticketPrice = decodedTicketTx.outputs[0].value;
-      }
-
-      // ticket tx fee is the fee for the transaction where the ticket was bought
-      const ticketTxFee = ticketTx.fee;
-
-      // revocations have a tx fee that influences the stake rewards calc
-      const spenderTxFee = hasSpender ? spenderTx.fee : 0;
-
-      ticketTx.txUrl = txURLBuilder(ticketTx.txHash);
-
-      // ticket change is anything returned to the wallet on ticket purchase.
-      const isTicketChange = (c) => c.index > 0 && c.index % 2 === 0;
-      const ticketChange = ticketTx.credits.reduce(
-        (s, c) => (s + isTicketChange(c) ? c.amount : 0),
-        0
-      );
-
-      // ticket investment is the full amount paid by the wallet on the ticket purchase
-      let accountName = "";
-      const debitList = ticketTx.debits;
-      if (debitList.length > 0) {
-        accountName = getAccountName(debitList[0].previousAccount);
-      }
-      const ticketInvestment =
-        debitList.reduce((a, v) => a + v.previousAmount, 0) - ticketChange;
-
-      let ticketReward,
-        ticketStakeRewards,
-        ticketReturnAmount,
-        ticketPoolFee,
-        voteScript;
-      if (hasSpender) {
-        // everything returned to the wallet after voting/revoking
-        ticketReturnAmount = spenderTx.credits.reduce(
-          (a, v) => a + v.amount,
-          0
-        );
-
-        // this is liquid from applicable fees (i.e, what the wallet actually made)
-        ticketReward = ticketReturnAmount - ticketInvestment;
-
-        ticketStakeRewards = ticketReward / ticketInvestment;
-
-        const decodedSpenderTx = wallet.decodeRawTransaction(
-          Buffer.from(spenderTx.rawTx, "hex"),
-          chainParams
-        );
-
-        // Check pool fee. If there is a debit at index=0 of the ticket but not
-        // a corresponding credit at the expected index on the spender, then
-        // that was a pool fee.
-        const hasIndex0Debit = ticketTx.debits.some((d) => d.index === 0);
-        const hasIndex0Credit = spenderTx.credits.some((c) => {
-          // In votes, the first 2 outputs are voting block and vote bits
-          // OP_RETURNs, so ignore those.
-          return (isVote && c.index === 2) || (!isVote && c.index === 0);
-        });
-        if (hasIndex0Debit && !hasIndex0Credit) {
-          const poolFeeDebit = ticketTx.debits.find((d) => d.index === 0);
-          ticketPoolFee = poolFeeDebit.previousAmount;
-        }
-
-        if (isVote) {
-          voteScript = decodeVoteScript(
-            network,
-            decodedSpenderTx.outputs[1].script
-          );
-        }
-      }
-
-      return {
-        txHash,
-        txBlockHash,
-        spenderHash,
-        ticketHash,
-        ticketTx,
-        spenderTx,
-        ticketPrice,
-        ticketReward,
-        ticketChange,
-        ticketInvestment,
-        ticketTxFee,
-        ticketPoolFee,
-        ticketStakeRewards,
-        ticketReturnAmount,
-        voteScript,
-        spenderTxFee,
-        enterTimestamp: ticketTx.timestamp,
-        leaveTimestamp: hasSpender ? spenderTx.timestamp : null,
-        status: ticket.status,
-        rawTx,
-        tx: ticketTx,
-        txType,
-        isPending,
-        accountName,
-        txInputs,
-        txOutputs,
-        txHeight: ticket.height,
-        txUrl,
-        txBlockUrl,
-        isStake,
-        feeStatus
-      };
-    };
-  }
-);
-
-export const numTicketsToBuy = get(["control", "numTicketsToBuy"]);
-
-// transactionNormalizer normalizes regular decred's regular transactions
-export const transactionNormalizer = createSelector(
-  [accounts, txURLBuilder, blockURLBuilder, chainParams, getMixedAccountName],
-  (accounts, txURLBuilder, blockURLBuilder, chainParams, mixedAccountName) => {
-    const findAccount = (num) =>
-      accounts.find((account) => account.accountNumber === num);
-    const getAccountName = (num) =>
-      ((act) => (act ? act.accountName : ""))(findAccount(num));
-    return (origTx) => {
-      const {
-        blockHash,
-        height,
-        type,
-        txType,
-        timestamp,
-        txHash,
-        rawTx,
-        isMix,
-        outputs,
-        creditAddresses,
-        direction,
-        amount: origAmount
-      } = origTx;
-      const txUrl = txURLBuilder(txHash);
-      const txBlockHash = blockHash
-        ? reverseHash(Buffer.from(blockHash).toString("hex"))
-        : null;
-      const txBlockUrl = blockURLBuilder(txBlockHash);
-
-      let totalFundsReceived = 0;
-      let totalChange = 0;
-      const txInputs = [];
-      const txOutputs = [];
-      const fee = origTx.fee;
-      let debitedAccountName, creditedAccountName;
-      const totalDebit = origTx.debits.reduce((total, debit) => {
-        const debitedAccount = debit.previousAccount;
-        debitedAccountName = getAccountName(debitedAccount);
-        const amount = debit.previousAmount;
-        txInputs.push({
-          accountName: debitedAccountName,
-          amount,
-          index: debit.index
-        });
-        return total + amount;
-      }, 0);
-
-      let selfTx = false;
-      origTx.credits.forEach((credit) => {
-        const amount = credit.amount;
-        const address = credit.address;
-        const creditedAccount = credit.account;
-        const currentCreditedAccountName = getAccountName(creditedAccount);
-        // If we find a self credited account which isn't a change output
-        // & tx has one or more wallet inputs & no non-wallet outputs we consider
-        // the transaction as self trnsaction
-        if (
-          !credit.internal &&
-          txInputs.length > 0 &&
-          origTx.credits.length === outputs.length
-        ) {
-          selfTx = true;
-        }
-        // If we find credit which is not a change, then we pick
-        // it as receiver
-        if (!creditedAccountName || !credit.internal) {
-          creditedAccountName = currentCreditedAccountName;
-        }
-        txOutputs.push({
-          accountName: currentCreditedAccountName,
-          amount,
-          address,
-          index: credit.index
-        });
-        credit.internal
-          ? (totalChange += amount)
-          : (totalFundsReceived += amount);
-      });
-
-      const txDetails =
-        totalFundsReceived + totalChange + fee < totalDebit
-          ? {
-              txAmount: totalDebit - fee - totalChange - totalFundsReceived,
-              txDirection: TRANSACTION_DIR_SENT,
-              txAccountName: debitedAccountName
-            }
-          : totalFundsReceived + totalChange + fee === totalDebit
-          ? {
-              txAmount: fee,
-              txDirection: TICKET_FEE,
-              txAccountNameCredited: creditedAccountName,
-              txAccountNameDebited: debitedAccountName
-            }
-          : totalFundsReceived === 0 &&
-            totalChange > 0 &&
-            origAmount === totalChange &&
-            direction === TRANSACTION_DIR_RECEIVED
-          ? // probably this is an incoming atomic swap
-            {
-              txAmount: totalChange,
-              txDirection: TRANSACTION_DIR_RECEIVED,
-              txAccountName: creditedAccountName
-            }
-          : {
-              txAmount: totalFundsReceived,
-              txDirection: TRANSACTION_DIR_RECEIVED,
-              txAccountName: creditedAccountName
-            };
-
-      return {
-        txUrl,
-        txBlockUrl,
-        txHash,
-        txHeight: height,
-        txType,
-        timestamp,
-        isPending: height <= 0,
-        txFee: fee,
-        txInputs,
-        txOutputs,
-        txBlockHash,
-        txNumericType: type,
-        rawTx,
-        outputs,
-        creditAddresses,
-        mixedTx: isMix || debitedAccountName === mixedAccountName,
-        selfTx: !isMix && selfTx,
-        ...txDetails
-      };
-    };
-  }
-);
-
 // ****** Transactions selectors ********
 
 // transactions selectors before normalized
 // these selectors are maps, with tx hash as key, containing all transactions
 // which decrediton already known about them.
-const stakeTxs = get(["grpc", "stakeTransactions"]);
-const regularTxs = get(["grpc", "regularTransactions"]);
 
-// transactions selectors normalized.
-export const regularTransactions = createSelector(
-  [transactionNormalizer, regularTxs],
-  (normalizerFn, txsMap) => {
-    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
-      const tx = txsMap[txHash];
-      if (tx.isStake) return null;
-      normalizedMap[txHash] = normalizerFn(tx);
-      return normalizedMap;
-    }, {});
-  }
-);
-
-export const stakeTransactions = createSelector(
-  [ticketNormalizer, stakeTxs],
-  (normalizerFn, txsMap) => {
-    return Object.keys(txsMap).reduce((normalizedMap, txHash) => {
-      const tx = txsMap[txHash];
-      normalizedMap[txHash] = normalizerFn(tx);
-      return normalizedMap;
-    }, {});
-  }
-);
+export const regularTransactions = get(["grpc", "regularTransactions"]);
+export const stakeTransactions = get(["grpc", "stakeTransactions"]);
 
 export const startRequestHeight = get(["grpc", "startRequestHeight"]);
 
@@ -828,18 +468,12 @@ export const hasTickets = compose(
   stakeTransactions
 );
 
-const transactionsNormalizer = createSelector([transactionNormalizer], map);
-const ticketsNormalizer = createSelector([ticketNormalizer], map);
+export const homeHistoryTickets = get(["grpc", "recentStakeTransactions"]);
 
-export const homeHistoryTickets = createSelector(
-  [ticketsNormalizer, get(["grpc", "recentStakeTransactions"])],
-  apply
-);
-
-export const homeHistoryTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "recentRegularTransactions"])],
-  apply
-);
+export const homeHistoryTransactions = get([
+  "grpc",
+  "recentRegularTransactions"
+]);
 
 // ******* end of transactions selectors ************
 
@@ -860,14 +494,7 @@ export const canDisableProcessManaged = get([
 
 // ticket auto buyer
 export const getTicketAutoBuyerRunning = get(["vsp", "ticketAutoBuyerRunning"]);
-export const legacyBuyerVSP = get(["control", "legacyVsp"]);
-export const legacyBuyerBalanceToMaintain = get([
-  "control",
-  "legacyBalanceToMaintain"
-]);
-export const legacyBuyerAccount = get(["control", "legacyAccount"]);
 export const getHasVSPTicketsError = get(["vsp", "hasVSPTicketsError"]);
-export const getIsLegacy = () => false; // hide legacy purchase
 export const getRememberedVspHost = get(["vsp", "rememberedVspHost"]);
 
 export const getVSPTicketsHashes = get(["vsp", "vspTickets"]);
@@ -875,6 +502,10 @@ export const isGetVSPAttempt = get(["vsp", "getVSPAttempt"]);
 export const unspentUnexpiredVspTickets = get([
   "vsp",
   "unspentUnexpiredVspTickets"
+]);
+export const resendVSPDVoteChoicesAttempt = get([
+  "vsp",
+  "resendVSPDVoteChoicesAttempt"
 ]);
 
 export const isProcessingManaged = get(["vsp", "processManagedTicketsAttempt"]);
@@ -905,6 +536,13 @@ export const getVSPTrackedTicketsCommitAccounts = createSelector(
   }
 );
 export const getVSPTicketBuyerAccount = get(["vsp", "account"]);
+
+export const selectedAccountForTicketPurchase = get([
+  "vsp",
+  "selectedAccountForTicketPurchase"
+]);
+export const selectedVSP = get(["vsp", "selectedVSP"]);
+export const numVSPicketsToBuy = get(["vsp", "numVSPicketsToBuy"]);
 
 // ****************** end of vsp selectors ******************
 
@@ -977,6 +615,10 @@ export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
 export const getNoMoreLiveTickets = get(["grpc", "noMoreLiveTickets"]);
+export const startWalletServiceAttempt = get([
+  "grpc",
+  "startWalletServiceAttempt"
+]);
 
 export const rescanEndBlock = currentBlockHeight;
 export const rescanStartBlock = compose(
@@ -1192,21 +834,11 @@ export const changePassphraseSuccess = get([
   "control",
   "changePassphraseSuccess"
 ]);
-export const updatedStakePoolList = get(["stakepool", "updatedStakePoolList"]);
 export const allowedExternalRequests = get([
   "settings",
   "currentSettings",
   "allowedExternalRequests"
 ]);
-export const stakePoolListingEnabled = compose(
-  (l) => l.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1,
-  allowedExternalRequests
-);
-export const dismissBackupRedeemScript = get([
-  "stakepool",
-  "dismissBackupRedeemScript"
-]);
-
 export const isSigningMessage = get(["grpc", "getSignMessageRequestAttempt"]);
 export const signMessageError = get(["grpc", "getSignMessageError"]);
 export const signMessageSignature = get(["grpc", "getSignMessageSignature"]);
@@ -1278,9 +910,6 @@ export const totalSubsidy = compose(
 );
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
-export const ticketBuyerConfig = get(["control", "ticketBuyerConfig"]);
-
-export const balanceToMaintain = get(["control", "balanceToMaintain"]);
 
 const getTicketPriceResponse = get(["grpc", "getTicketPriceResponse"]);
 
@@ -1289,27 +918,10 @@ export const ticketPrice = compose(
   getTicketPriceResponse
 );
 
-const requiredStakepoolAPIVersion = get([
-  "grpc",
-  "requiredStakepoolAPIVersion"
-]);
-
-export const currentStakePoolConfigError = get([
-  "stakepool",
-  "currentStakePoolConfigError"
-]);
-
-export const purchaseTicketsError = get(["control", "purchaseTicketsError"]);
 export const purchaseTicketsSuccess = get([
   "control",
   "purchaseTicketsSuccess"
 ]);
-export const importScriptSuccess = get(["control", "importScriptSuccess"]);
-export const importScriptError = get(["control", "importScriptError"]);
-export const startAutoBuyerError = get(["control", "startAutoBuyerError"]);
-export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
-export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
-export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
 
 const purchaseTicketsResponse = get(["control", "purchaseTicketsResponse"]);
 
@@ -1323,88 +935,10 @@ export const ticketsList = createSelector(
   (res) => res && res.ticketsList.map((t) => Buffer.from(t).toString("hex"))
 );
 
-export const currentStakePoolConfig = get([
-  "stakepool",
-  "currentStakePoolConfig"
-]);
-
-const allStakePoolStats = get(["stakepool", "getStakePoolInfo"]);
-
-const allStakePoolStatsList = createSelector(
-  [allStakePoolStats, requiredStakepoolAPIVersion],
-  (pools, requiredVersion) =>
-    map(
-      (pool) => ({
-        ...pool,
-        label: pool.URL,
-        value: pool,
-        isVersionValid: pool.APIVersionsSupported[1] === requiredVersion
-      }),
-      pools
-    )
-);
-export const networkStakePoolStatsList = createSelector(
-  [allStakePoolStatsList, network],
-  (pools, network) => filter(compose(eq(network), get("Network")), pools)
-);
-
-const allStakePools = createSelector(
-  [currentStakePoolConfig, requiredStakepoolAPIVersion],
-  (pools, requiredVersion) =>
-    map(
-      (pool) => ({
-        ...pool,
-        label: pool.Host,
-        value: pool,
-        isVersionValid: pool.APIVersionsSupported[1] === requiredVersion
-      }),
-      pools
-    )
-);
-
-const networkStakePools = createSelector(
-  [allStakePools, network],
-  (pools, network) => filter(compose(eq(network), get("Network")), pools)
-);
-
-export const configuredStakePools = createSelector(
-  [networkStakePools],
-  filter(bool(get("ApiKey")))
-);
-
-export const unconfiguredStakePools = createSelector(
-  [networkStakePools],
-  filter(not(get("ApiKey")))
-);
-
-export const defaultStakePool = compose(get(0), configuredStakePools);
-export const selectedStakePool = get(["stakepool", "selectedStakePool"]);
-
-const currentStakePoolConfigRequest = get([
-  "stakepool",
-  "currentStakePoolConfigRequest"
-]);
-
 export const purchaseTicketsRequestAttempt = get([
   "control",
   "purchaseTicketsRequestAttempt"
 ]);
-
-const importScriptRequestAttempt = get([
-  "control",
-  "importScriptRequestAttempt"
-]);
-
-// LEGACY selectors.
-// Keep them while we still support old version of vsps.
-export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
-export const isAddingCustomStakePool = bool(
-  get(["stakePool", "addCustomStakePoolAttempt"])
-);
-export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
-export const isImportingScript = bool(importScriptRequestAttempt);
-
-// end of LEGACY selectors
 
 export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 
@@ -1726,6 +1260,11 @@ export const setTreasuryPolicyRequestAttempt = get([
   "grpc",
   "setTreasuryPolicyRequestAttempt"
 ]);
+export const tspendPolicies = get(["grpc", "getTSpendPoliciesResponse"]);
+export const setTSpendPolicyRequestAttempt = get([
+  "grpc",
+  "setTSpendPolicyRequestAttempt"
+]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([
@@ -1748,27 +1287,41 @@ export const trezorEnablePassphraseProtection = get([
 export const trezorPerformingOperation = get(["trezor", "performingOperation"]);
 export const trezorDevice = get(["trezor", "device"]);
 export const trezorLabel = get(["trezor", "deviceLabel"]);
+export const trezorPinProtection = get(["trezor", "pinProtection"]);
+export const trezorPerformingTogglePinProtection = get([
+  "trezor",
+  "performingTogglePinProtection"
+]);
+export const trezorPassphraseProtection = get([
+  "trezor",
+  "passphraseProtection"
+]);
+export const trezorPerformingTogglePassphraseProtection = get([
+  "trezor",
+  "performingTogglePassphraseProtection"
+]);
+export const trezorPassphraseOnDeviceProtection = get([
+  "trezor",
+  "passphraseOnDeviceProtection"
+]);
+export const trezorPerformingTogglePassphraseOnDeviceProtection = get([
+  "trezor",
+  "performingTogglePassphraseOnDeviceProtection"
+]);
 export const trezorWalletCreationMasterPubkeyAttempt = get([
   "trezor",
   "walletCreationMasterPubkeyAttempt"
 ]);
 
 // selectors for checking if decrediton can be closed.
-
-// TODO remove duplicated auto buyer running selector
-const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
-export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
-
 // getRunningIndicator is a indicator for indicate something is runnning on
 // decrediton, like the ticket auto buyer or the mixer.
 export const getRunningIndicator = or(
   getAccountMixerRunning,
   getTicketAutoBuyerRunning,
-  purchaseTicketsRequestAttempt,
-  isTicketAutoBuyerEnabled
+  purchaseTicketsRequestAttempt
 );
 
-export const restoredFromSeed = get(["dex", "restoredFromSeed"]);
 export const dexOrdersOpen = get(["dex", "openOrder"]);
 export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
@@ -1824,21 +1377,11 @@ export const dexActive = bool(get(["dex", "active"]));
 export const dexInit = bool(get(["dex", "dexInit"]));
 export const initDexAttempt = bool(get(["dex", "initAttempt"]));
 export const checkInitDexAttempt = bool(get(["dex", "dexCheckInitAttempt"]));
-export const registerDexAttempt = bool(get(["dex", "registerAttempt"]));
 export const createWalletDexAttempt = bool(get(["dex", "createWalletAttempt"]));
-export const btcCreateWalletDexAttempt = bool(
-  get(["dex", "btcCreateWalletAttempt"])
-);
 export const loginDexAttempt = bool(get(["dex", "loginAttempt"]));
 export const dexUser = get(["dex", "user"]);
 
 export const dexConnected = compose(
-  (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
-  dexUser
-);
-
-export const dexRegistered = compose(
-  // XXX check if any of the exchanges that come back from users request are registered
   (u) => u && u.exchanges && Object.keys(u.exchanges).length > 0,
   dexUser
 );
@@ -1853,43 +1396,9 @@ export const dexDCRWalletRunning = compose(
   dexUser
 );
 
-export const dexBTCWalletRunning = compose(
-  (user) =>
-    user &&
-    user.assets &&
-    user.assets["0"] &&
-    user.assets["0"].wallet &&
-    user.assets["0"].wallet.running,
-  dexUser
-);
-
-export const dexAddr = get(["dex", "addr"]);
-export const dexConfig = get(["dex", "config"]);
-export const alreadyPaid = get(["dex", "alreadyPaid"]);
-export const getConfigAttempt = get(["dex", "getConfigAttempt"]);
-export const askDexBtcSpv = get(["walletLoader", "askDexBtcSpv"]);
-export const dexBtcSpv = get(["walletLoader", "dexBtcSpv"]);
 export const dexSeed = get(["dex", "dexSeed"]);
 export const confirmDexSeed = get(["walletLoader", "confirmDexSeed"]);
 export const dexAccount = get(["walletLoader", "dexAccount"]);
-export const dexAccountNumber = createSelector(
-  [dexAccount, balances],
-  (dexAccount, balances) =>
-    !dexAccount
-      ? null
-      : balances
-          .filter(({ accountName }) => accountName === dexAccount)
-          .map(({ accountNumber }) => accountNumber)[0]
-);
-export const dexAccountSpendable = createSelector(
-  [dexAccount, balances],
-  (dexAccount, balances) =>
-    !dexAccount
-      ? null
-      : balances
-          .filter(({ accountName }) => accountName === dexAccount)
-          .map(({ spendable }) => spendable)[0]
-);
 export const dexAccountAttempt = bool(get(["dex", "dexAccountAttempt"]));
 export const dexSelectAccountAttempt = bool(
   get(["dex", "dexSelectAccountAttempt"])
@@ -1901,17 +1410,11 @@ export const defaultDEXServer = compose(
 );
 
 export const dexGetFeeError = get(["dex", "getConfigError"]);
-export const dexRegisterError = get(["dex", "registerError"]);
 export const dexLoginError = get(["dex", "loginError"]);
 export const dexLogoutError = get(["dex", "logoutError"]);
-export const dexCreateWalletError = get(["dex", "createWalletError"]);
 export const userError = get(["dex", "userError"]);
 export const initError = get(["dex", "initError"]);
 export const dexAccountError = get(["dex", "dexAccountError"]);
 export const dexEnableError = get(["dex", "enabledError"]);
-export const btcConfig = get(["dex", "btcConfig"]);
-export const btcInstallNeeded = get(["dex", "btcInstallNeeded"]);
-export const btcConfigUpdateNeeded = get(["dex", "btcConfigUpdateNeeded"]);
-export const btcWalletName = get(["walletLoader", "btcWalletName"]);
 
 export const getVSPInfoTimeoutTime = () => 5000;

@@ -1,6 +1,6 @@
 .container {
   color: var(--title-text-and-button-background);
-  padding-top: 57px;
+  padding: 8.3rem 0 0 0;
   position: relative;
 }
 
@@ -13,17 +13,11 @@
 }
 
 .blockchainSyncing {
-  padding-left: 56px;
   background-image: var(--loader-animation-blockchain-syncing) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .daemonWaiting {
-  padding-left: 56px;
   background-image: var(--loader-animation-daemon-waiting) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .daemonWaiting.initial {
@@ -31,38 +25,23 @@
 }
 
 .discoveringAddresses {
-  padding-left: 56px;
   background-image: var(--loader-animation-discovering-addresses) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .establishingRpc {
-  padding-left: 56px;
   background-image: var(--loader-animation-establishing-rpc) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .fetchingHeaders {
-  padding-left: 56px;
   background-image: var(--loader-animation-fetching-headers) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .finalizingSetup {
-  padding-left: 56px;
   background-image: var(--loader-animation-finalizing-setup) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .scanningBlocks {
-  padding-left: 56px;
   background-image: var(--loader-animation-scanning-blocks) !important;
-  background-position: 15px 15px;
-  background-size: 30px;
 }
 
 .updateAvailableLink {
@@ -81,6 +60,14 @@
   text-align: center;
 }
 
+.invisibleButton {
+  padding: 1.2rem 1.5rem 1.4rem 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 2rem;
+  color: var(--launcher-link-color);
+}
+
 @media (--sm-viewport) {
   .container {
     padding-top: 23px;
@@ -88,6 +75,12 @@
   }
 
   .topLinks {
-    right: -30px !important;
+    top: -4rem;
+    right: -1rem;
+  }
+
+  .tutorialButton,
+  .releaseNotesButton {
+    display: none;
   }
 }

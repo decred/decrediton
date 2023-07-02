@@ -48,6 +48,12 @@ import {
   SETTREASURY_POLICY_ATTEMPT,
   SETTREASURY_POLICY_FAILED,
   SETTREASURY_POLICY_SUCCESS,
+  GETTSPEND_POLICIES_ATTEMPT,
+  GETTSPEND_POLICIES_FAILED,
+  GETTSPEND_POLICIES_SUCCESS,
+  SETTSPEND_POLICY_ATTEMPT,
+  SETTSPEND_POLICY_FAILED,
+  SETTSPEND_POLICY_SUCCESS,
   GETBESTBLOCK_ATTEMPT,
   GETBESTBLOCK_FAILED,
   GETBESTBLOCK_SUCCESS,
@@ -106,8 +112,10 @@ import {
   NEW_TRANSACTIONS_RECEIVED,
   CHANGE_TRANSACTIONS_FILTER
 } from "actions/TransactionActions";
-import { GETVSPTICKETSTATUS_SUCCESS } from "actions/VSPActions";
-import { SETVSPDVOTECHOICE_FAILED } from "../actions/VSPActions";
+import {
+  GETVSPTICKETSTATUS_SUCCESS,
+  SETVSPDVOTECHOICE_FAILED
+} from "actions/VSPActions";
 
 export default function grpc(state = {}, action) {
   let newMaturingBlockHeights;
@@ -156,7 +164,8 @@ export default function grpc(state = {}, action) {
     case GETVSPTICKETSTATUS_SUCCESS:
       return {
         ...state,
-        stakeTransactions: action.stakeTransactions
+        stakeTransactions: action.stakeTransactions,
+        recentStakeTransactions: action.recentStakeTransactions
       };
     case CREATEMIXERACCOUNTS_ATTEMPT:
       return {
@@ -679,6 +688,42 @@ export default function grpc(state = {}, action) {
         ...state,
         setTreasuryPolicyRequestAttempt: false
       };
+    case GETTSPEND_POLICIES_ATTEMPT:
+      return {
+        ...state,
+        getTSpendPoliciesError: null,
+        getTSpendPoliciesRequestAttempt: true
+      };
+    case GETTSPEND_POLICIES_FAILED:
+      return {
+        ...state,
+        getTSpendPoliciesError: String(action.error),
+        getTSpendPoliciesRequestAttempt: false
+      };
+    case GETTSPEND_POLICIES_SUCCESS:
+      return {
+        ...state,
+        getTSpendPoliciesRequestAttempt: false,
+        getTSpendPoliciesResponse: action.tspendPoliciesResponse,
+        getTSpendPoliciesError: null
+      };
+    case SETTSPEND_POLICY_ATTEMPT:
+      return {
+        ...state,
+        setTSpendPolicyError: null,
+        setTSpendPolicyRequestAttempt: true
+      };
+    case SETTSPEND_POLICY_FAILED:
+      return {
+        ...state,
+        setTSpendPolicyError: String(action.error),
+        setTSpendPolicyRequestAttempt: false
+      };
+    case SETTSPEND_POLICY_SUCCESS:
+      return {
+        ...state,
+        setTSpendPolicyRequestAttempt: false
+      };
     case GETSTARTUPTRANSACTIONS_SUCCESS:
       return {
         ...state,
@@ -723,6 +768,8 @@ export default function grpc(state = {}, action) {
         },
         recentRegularTransactions: [],
         recentStakeTransactions: [],
+        regularTransactions: {},
+        stakeTransactions: {},
         ticketBuyerService: null,
         transactionsSinceLastOpened: null,
         votingService: null,

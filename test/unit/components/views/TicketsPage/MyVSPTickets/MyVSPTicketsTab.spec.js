@@ -8,7 +8,7 @@ import * as ta from "actions/TransactionActions";
 import * as wl from "wallet";
 import * as vspa from "actions/VSPActions";
 import { DCR } from "constants";
-import { mockStakeTransactions } from "../../TransactionPage/mocks";
+import { mockNormalizedStakeTransactions } from "../../TransactionPage/mocks";
 import { cloneDeep } from "fp";
 import {
   VSP_FEE_PROCESS_STARTED,
@@ -43,6 +43,7 @@ const initialState = {
       vspFeeStatus: null
     },
     stakeTransactions: {},
+    recentStakeTransactions: [],
     getStakeTxsAux: {
       noMoreTransactions: false
     }
@@ -57,9 +58,9 @@ const initialState = {
 };
 
 const mockStakeTickets = {};
-Object.keys(mockStakeTransactions).forEach((txHash) => {
-  if (mockStakeTransactions[txHash].txType === TICKET) {
-    mockStakeTickets[txHash] = mockStakeTransactions[txHash];
+Object.keys(mockNormalizedStakeTransactions).forEach((txHash) => {
+  if (mockNormalizedStakeTransactions[txHash].txType === TICKET) {
+    mockStakeTickets[txHash] = mockNormalizedStakeTransactions[txHash];
   }
 });
 

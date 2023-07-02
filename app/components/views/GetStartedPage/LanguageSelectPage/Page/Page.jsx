@@ -1,4 +1,4 @@
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, DocButton } from "buttons";
 import { LanguageSelectInput } from "inputs";
 import { PageBody } from "layout";
 import { FormattedMessage as T } from "react-intl";
@@ -14,8 +14,12 @@ const LanguageSelectPage = ({
 }) => (
   <PageBody data-testid="getstarted-pagebody" getStarted isTestNet={isTestNet}>
     <Content>
-      <Title>
+      <Title className={styles.title}>
         <T id="selectLang.title" m="Welcome to Decrediton Wallet" />
+        <DocButton
+          className={styles.docButton}
+          docUrl="https://docs.decred.org/wallets/decrediton/decrediton-setup/#open-and-set-up-decrediton"
+        />
       </Title>
       <SubTitle>
         <T id="selectLang.titleSub" m="Choose your language" />

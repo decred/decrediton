@@ -19,6 +19,7 @@ import {
   getChannelDetails
 } from "../ChannelDetailsPage/helpers";
 import { CloseChannelModalButton } from "buttons";
+import { CHANNEL_STATUS_CLOSED } from "constants";
 
 export const OverviewTabHeader = () => (
   <DescriptionHeader
@@ -157,7 +158,7 @@ const OverviewTab = () => {
             />
           }
           closeButton={
-            selectedChannel.active && (
+            selectedChannel.status !== CHANNEL_STATUS_CLOSED && (
               <CloseChannelModalButton
                 className={styles.modalCloseButton}
                 modalTitle={

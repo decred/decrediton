@@ -20,12 +20,6 @@ export const SetupWalletConfigMachine = Machine({
     },
     settingMixedAccount: {
       on: {
-        CONTINUE: "gettingVSPInfo"
-      }
-    },
-    gettingVSPInfo: {
-      on: {
-        BACK: "processingManagedTickets",
         CONTINUE: "processingManagedTickets"
       }
     },
@@ -43,10 +37,22 @@ export const SetupWalletConfigMachine = Machine({
     },
     processingUnmanagedTickets: {
       on: {
+        CONTINUE: "resendVotesToRecentlyUpdatedVSPs",
+        BACK: "resendVotesToRecentlyUpdatedVSPs",
+        ERROR: {
+          target: "processingUnmanagedTickets",
+          actions: assign({
+            error: (context, event) => event.error && event.error
+          })
+        }
+      }
+    },
+    resendVotesToRecentlyUpdatedVSPs: {
+      on: {
         CONTINUE: "goToHomeView",
         BACK: "goToHomeView",
         ERROR: {
-          target: "processingUnmanagedTickets",
+          target: "resendVotesToRecentlyUpdatedVSPs",
           actions: assign({
             error: (context, event) => event.error && event.error
           })

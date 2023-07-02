@@ -26,48 +26,34 @@ export const useDex = () => {
   const dexActive = useSelector(sel.dexActive);
   const dexInit = useSelector(sel.dexInit);
   const initDexAttempt = useSelector(sel.initDexAttempt);
-  const registerDexAttempt = useSelector(sel.registerDexAttempt);
   const createWalletDexAttempt = useSelector(sel.createWalletDexAttempt);
-  const btcCreateWalletDexAttempt = useSelector(sel.btcCreateWalletDexAttempt);
   const loginDexAttempt = useSelector(sel.loginDexAttempt);
   const loggedIn = useSelector(sel.loggedInDex);
-  const dexAddr = useSelector(sel.dexAddr);
-  const dexConfig = useSelector(sel.dexConfig);
   const dexConnected = useSelector(sel.dexConnected);
   const dexDCRWalletRunning = useSelector(sel.dexDCRWalletRunning);
-  const dexBTCWalletRunning = useSelector(sel.dexBTCWalletRunning);
   const dexReady = useSelector(sel.dexReady);
   const user = useSelector(sel.dexUser);
   const enableDexAttempt = useSelector(sel.enableDexAttempt);
   const dexAccount = useSelector(sel.dexAccount);
   const dexAccountAttempt = useSelector(sel.dexAccountAttempt);
   const dexSelectAccountAttempt = useSelector(sel.dexSelectAccountAttempt);
-  const defaultServerAddress = useSelector(sel.defaultDEXServer);
   const dexGetFeeError = useSelector(sel.dexGetFeeError);
-  const dexRegisterError = useSelector(sel.dexRegisterError);
   const dexLoginError = useSelector(sel.dexLoginError);
   const dexLogoutError = useSelector(sel.dexLogoutError);
-  const dexCreateWalletError = useSelector(sel.dexRegisterError);
   const userError = useSelector(sel.userError);
   const initError = useSelector(sel.initError);
   const dexAccountError = useSelector(sel.dexAccountError);
   const dexEnableError = useSelector(sel.dexEnableError);
-  const btcConfig = useSelector(sel.btcConfig);
-  const btcInstallNeeded = useSelector(sel.btcInstallNeeded);
-  const btcConfigUpdateNeeded = useSelector(sel.btcConfigUpdateNeeded);
-  const btcWalletName = useSelector(sel.btcWalletName);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const intl = useIntl();
-  const restoredFromSeed = useSelector(sel.restoredFromSeed);
-  const dexBtcSpv = useSelector(sel.dexBtcSpv);
-  const askDexBtcSpv = useSelector(sel.askDexBtcSpv);
   const confirmDexSeed = useSelector(sel.confirmDexSeed);
   const dexSeed = useSelector(sel.dexSeed);
 
   const onGetDexLogs = () => dispatch(dm.getDexLogs());
-  const onLaunchDexWindow = useCallback(() => dispatch(da.launchDexWindow()), [
-    dispatch
-  ]);
+  const onLaunchDexWindow = useCallback(
+    () => dispatch(da.launchDexWindow()),
+    [dispatch]
+  );
 
   const onInitDex = useCallback(
     (passphrase) => dispatch(da.initDex(passphrase)),
@@ -79,20 +65,9 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onRegisterDex = useCallback(
-    (passphrase) => dispatch(da.registerDex(passphrase)),
-    [dispatch]
-  );
-
   const onCreateWalletDex = useCallback(
     (passphrase, appPassphrase, account) =>
       dispatch(da.createWalletDex(passphrase, appPassphrase, account)),
-    [dispatch]
-  );
-
-  const onBTCCreateWalletDex = useCallback(
-    (passphrase, appPassphrase, walletname) =>
-      dispatch(da.btcCreateWalletDex(passphrase, appPassphrase, walletname)),
     [dispatch]
   );
 
@@ -101,9 +76,10 @@ export const useDex = () => {
     [dispatch]
   );
 
-  const onConfirmDexSeed = useCallback(() => dispatch(da.confirmDexSeed()), [
-    dispatch
-  ]);
+  const onConfirmDexSeed = useCallback(
+    () => dispatch(da.confirmDexSeed()),
+    [dispatch]
+  );
 
   const onCreateDexAccount = useCallback(
     (passphrase, name) => dispatch(da.createDexAccount(passphrase, name)),
@@ -115,34 +91,6 @@ export const useDex = () => {
   );
 
   const onEnableDex = useCallback(() => dispatch(da.enableDex()), [dispatch]);
-
-  const onPreregister = useCallback(
-    (passphrase, address) => dispatch(da.preRegisterDex(passphrase, address)),
-    [dispatch]
-  );
-
-  const onGetConfig = useCallback(
-    (address) => dispatch(da.getConfigDex(address)),
-    [dispatch]
-  );
-
-  const onCheckBTCConfig = useCallback(
-    (bitcoinDirectory) => dispatch(da.checkBTCConfig(bitcoinDirectory)),
-    [dispatch]
-  );
-
-  const onNewBTCConfig = useCallback(
-    (bitcoinDirectory) => dispatch(da.newBTCConfig(bitcoinDirectory)),
-    [dispatch]
-  );
-
-  const onUseBtcSpv = useCallback(() => dispatch(da.useBtcSpvDex(true)), [
-    dispatch
-  ]);
-
-  const onDoNotUseBtcSPV = useCallback(() => dispatch(da.useBtcSpvDex(false)), [
-    dispatch
-  ]);
 
   const { Page, Header } = useMemo(() => {
     let page, header;
@@ -160,13 +108,13 @@ export const useDex = () => {
         } else if (!confirmDexSeed) {
           page = <ConfirmDexSeed />;
           header = <ConfirmDexSeedHeader />;
-        } else if (dexDCRWalletRunning && (dexBTCWalletRunning || dexBtcSpv)) {
+        } else if (dexDCRWalletRunning) {
           page = <DexView />;
           header = <DexViewHeader />;
         } else if (!dexAccount) {
           page = <CreateDexAcctPage />;
           header = <CreateDexAcctPageHeader />;
-        } else if (!dexDCRWalletRunning || !dexBTCWalletRunning) {
+        } else if (!dexDCRWalletRunning) {
           page = <CreateWalletsPage />;
           header = <CreateWalletsPageHeader />;
         }
@@ -193,9 +141,7 @@ export const useDex = () => {
     dexInit,
     loggedIn,
     dexDCRWalletRunning,
-    dexBTCWalletRunning,
     dexAccount,
-    dexBtcSpv,
     confirmDexSeed
   ]);
   return {
@@ -205,25 +151,16 @@ export const useDex = () => {
     onInitDex,
     onInitDexWithSeed,
     initDexAttempt,
-    onRegisterDex,
     onGetDexLogs,
-    registerDexAttempt,
     onCreateWalletDex,
     createWalletDexAttempt,
-    onBTCCreateWalletDex,
-    btcCreateWalletDexAttempt,
     onLoginDex,
     loginDexAttempt,
     loggedIn,
-    dexAddr,
-    dexConfig,
     dexConnected,
     dexDCRWalletRunning,
-    dexBTCWalletRunning,
     onEnableDex,
     enableDexAttempt,
-    onGetConfig,
-    onPreregister,
     user,
     onLaunchDexWindow,
     onCreateDexAccount,
@@ -231,31 +168,17 @@ export const useDex = () => {
     dexAccount,
     dexAccountAttempt,
     dexSelectAccountAttempt,
-    defaultServerAddress,
     dexGetFeeError,
-    dexRegisterError,
     dexLoginError,
     dexLogoutError,
-    dexCreateWalletError,
     userError,
     initError,
     dexAccountError,
     dexEnableError,
-    btcConfig,
-    onCheckBTCConfig,
-    onNewBTCConfig,
-    btcInstallNeeded,
-    btcConfigUpdateNeeded,
-    btcWalletName,
     Page,
     Header,
     mixedAccount,
     intl,
-    restoredFromSeed,
-    onUseBtcSpv,
-    onDoNotUseBtcSPV,
-    dexBtcSpv,
-    askDexBtcSpv,
     confirmDexSeed,
     onConfirmDexSeed,
     dexSeed
