@@ -271,7 +271,7 @@
   "dependencies": {
     "@babel/eslint-parser": "7.19.1",
     "@formatjs/intl-utils": "^1.6.0",
-    "@grpc/grpc-js": "1.7.3",
+    "@grpc/grpc-js": "1.8.8",
     "@hot-loader/react-dom": "16.14.0",
     "@peculiar/webcrypto": "1.4.3",
     "@xstate/react": "^0.8.1",
