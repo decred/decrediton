@@ -325,7 +325,7 @@
     "sharedworker-loader": "^2.1.1",
     "source-map-support": "^0.5.16",
     "string-argv": "0.3.2",
-    "stylelint": "13.13.1",
+    "stylelint": "15.10.1",
     "stylelint-config-recommended": "^4.0.0",
     "timezone-mock": "1.3.6",
     "trezor-connect": "8.2.12-extended",
