@@ -1,0 +1,1 @@
+**_Avertissement!_** Si ce périphérique contient un portefeuille existant, veuillez vérifier que la graine est dans un emplacement sécurisé et accessible avant de réinitialiser le périphérique et d'en faire la restauration. Ne pas le faire pourrait impliquer une perte totale des fonds.

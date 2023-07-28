@@ -1,0 +1,1 @@
+Veuillez bien comprendre qu'une [sauvegarde des données](https://docs.decred.org/lightning-network/backups/) est nécessaire _en plus de votre graine de portefeuille_ pour restaurer tous vos fonds sur le Lightning Network.

@@ -1,0 +1,2 @@
+Lorsque les tickets sont achetés, les fonds associés sont soumis à un "verrou temporel" jusqu'à ce que les tickets soient appelés à voter ou s'ils expirent.  Actuellement, les tickets ont approximativement 50% de chances de voter durant le premier mois où ils sont en vie. Un ticket expire et les fonds associés sont remboursés à l'acheteur du ticket, si celui-ci n'est pas appelé à voter durant une période approximative de 144 jours.
+

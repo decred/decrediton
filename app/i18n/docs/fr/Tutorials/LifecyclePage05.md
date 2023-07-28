@@ -1,0 +1,1 @@
+Statistiquement, les tickets ont approximativement 50% de chance d'être sélectionné durant les 28 premiers jours. Lorsqu'un ticket est appelé au vote, son détenteur peut soumettre un vote qui lui permettra de recevoir en retour le prix d'achat de son ticket plus la récompense de bloc.

@@ -1,0 +1,1 @@
+Dans le passé, de nombreux projets se sont scindés en raison de l'absence de processus ordonné de mise à jour du consensus.  Pour l'éviter, nous avons institutionalisé le processus de mise à jour du réseau afin qu'il soit le moins douloureux et le plus ordonné que possible.

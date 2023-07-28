@@ -1,0 +1,1 @@
+Dès que le vote démarre, il se déroule durant l'entièreté de l'intervalle d'activation du changement de règles (8064 blocs), soit approximativement 4 semaines.  Les votes sont comptabilisés durant cet intervalle.  Les votes peuvent être soit oui, non ou abstention de vote.  Les votants ne sont pas pénalisés si ils s'abstiennent de voter sur un vote de consensus.

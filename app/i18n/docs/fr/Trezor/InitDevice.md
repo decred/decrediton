@@ -1,0 +1,1 @@
+Créer un nouveau portefeuille basé sur le périphérique Trezor et initialise le périphérique avec une nouvelle graine. Note! Suivez les instructions affichées sur le périphérique et recopiez les 24 mots de la graine qui seront affichés un à un. Ne pas le faire pourrait impliquer une perte totale des fonds.

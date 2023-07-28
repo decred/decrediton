@@ -1,0 +1,1 @@
+Tandis que les transactions sur la chaîne nécessitent en moyenne 5 minutes pour être confirmées, les transactions Lightning sont acheminées presque instantanément. Le réseau Lightning est composé d'un ensemble de canaux de paiements créés par les utilisateurs Decred. Il s'agit d'un réseau de nœuds qui peut acheminer les transactions entre eux.
