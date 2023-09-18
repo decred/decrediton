@@ -273,6 +273,8 @@
     "@formatjs/intl-utils": "^1.6.0",
     "@grpc/grpc-js": "1.7.3",
     "@hot-loader/react-dom": "16.14.0",
+    "@ledgerhq/hw-app-btc": "^10.0.5",
+    "@ledgerhq/hw-transport-webusb": "^6.27.16",
     "@peculiar/webcrypto": "1.4.3",
     "@xstate/react": "^0.8.1",
     "blake-hash": "^2.0.0",
