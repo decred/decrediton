@@ -71,7 +71,8 @@ export default function walletLoader(state = {}, action) {
       return {
         ...state,
         isWatchingOnly: action.isWatchingOnly,
-        isTrezor: action.isTrezor
+        isTrezor: action.isTrezor,
+        isLedger: action.isLedger
       };
     case WALLET_SELECTED:
       return { ...state, selectedWallet: action.selectedWallet };

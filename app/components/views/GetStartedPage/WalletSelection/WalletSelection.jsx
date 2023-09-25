@@ -30,6 +30,10 @@ const WalletSelectionBody = ({
     onSendCreateWallet(false, true);
   }, [onSendCreateWallet]);
 
+  const showCreateLedgerBackedWalletForm = useCallback(() => {
+    onSendCreateWallet(false, false, true);
+  }, [onSendCreateWallet]);
+
   return (
     <WalletSelectionForm
       {...{
@@ -43,6 +47,7 @@ const WalletSelectionBody = ({
         onToggleEditWallet,
         showCreateWalletForm,
         showCreateTrezorBackedWalletForm,
+        showCreateLedgerBackedWalletForm,
         onShowOnboardingTutorial
       }}
     />

@@ -4,6 +4,7 @@ export const LN_KEY = "ln";
 export const DEX_KEY = "dex";
 export const TICKETS_KEY = "tickets";
 export const GOV_KEY = "governance";
+export const PRIV_KEY = "privacy";
 
 export const linkList = [
   {
@@ -48,6 +49,7 @@ export const linkList = [
     path: "/privacy",
     link: <T id="sidebar.link.privacy" m="Privacy and Security" />,
     icon: "securitycntr",
+    key: PRIV_KEY,
     ariaLabel: "Privacy"
   },
   {

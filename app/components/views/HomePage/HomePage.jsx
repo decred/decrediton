@@ -56,8 +56,9 @@ export default () => {
 
   // TODO: Enable ticket purchacing for Trezor.
   const isTrezor = useSelector(sel.isTrezor);
+  const isLedger = useSelector(sel.isLedger);
   let recentTickets, tabs;
-  if (isTrezor) {
+  if (isTrezor || isLedger) {
     tabs = [balanceTab, transactionsTab];
   } else {
     recentTickets = (

@@ -14,7 +14,6 @@ import {
 const coin = "decred";
 
 import * as selectors from "selectors";
-import * as cfgConstants from "constants/config";
 
 export const LDG_LEDGER_ENABLED = "LDG_LEDGER_ENABLED";
 export const LDG_WALLET_CLOSED = "LDG_WALLET_CLOSED";
@@ -26,18 +25,7 @@ export const LDG_WALLET_CLOSED = "LDG_WALLET_CLOSED";
 // enableLedger only sets a value in the config. Ledger connections are made
 // per action then dropped.
 export const enableLedger = () => (dispatch, getState) => {
-  const walletName = selectors.getWalletName(getState());
-
-  if (walletName) {
-    const config = wallet.getWalletCfg(
-      selectors.isTestNet(getState()),
-      walletName
-    );
-    config.set(cfgConstants.LEDGER, true);
-  }
-
   dispatch({ type: LDG_LEDGER_ENABLED });
-
   connect()(dispatch, getState);
 };
 
@@ -143,13 +131,16 @@ export const LDG_GETWALLETCREATIONMASTERPUBKEY_SUCCESS =
   "LDG_GETWALLETCREATIONMASTERPUBKEY_SUCCESS";
 
 export const getWalletCreationMasterPubKey =
-  () => async (dispatch /*, getState*/) => {
+  () => async (dispatch, getState) => {
     dispatch({ type: LDG_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT });
     // TODO: Enable on mainnet.
-    const isTestnet = true;
+    const isTestnet = selectors.isTestNet(getState());
+    if (!isTestnet) {
+      throw "disabled on mainnet";
+    }
     try {
       const payload = await getPubKey(isTestnet);
-      const hdpk = ledgerHelpers.fixPubKeyChecksum(payload);
+      const hdpk = ledgerHelpers.fixPubKeyChecksum(payload, isTestnet);
       dispatch({ type: LDG_GETWALLETCREATIONMASTERPUBKEY_SUCCESS });
       return hdpk;
     } catch (error) {

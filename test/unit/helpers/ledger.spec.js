@@ -6,9 +6,9 @@ test("test ledger address path", () => {
 
 test("test ledger pubkey to hd key", () => {
   // testnet
-  expect(fixPubKeyChecksum("tpubVpeRVBDM14ydoJ7jCzTayDHiP6CU4NcbKEW6bWQGSghmi14BfNx3omc6GjV3AxbtkTYcPAedw48XywVgSyY8H9ef73zWWtoZ6MCMLLJiUyq")).toStrictEqual("tpubVpeRVBDM14ydoJ7jCzTayDHiP6CU4NcbKEW6bWQGSghmi14BfNx3omc6GjV3AxbtkTYcPAedw48XywVgSyY8H9ef73zWWtoZ6MCMLGM6GV3");
+  expect(fixPubKeyChecksum("tpubVpeRVBDM14ydoJ7jCzTayDHiP6CU4NcbKEW6bWQGSghmi14BfNx3omc6GjV3AxbtkTYcPAedw48XywVgSyY8H9ef73zWWtoZ6MCMLLJiUyq", true)).toStrictEqual("tpubVpeRVBDM14ydoJ7jCzTayDHiP6CU4NcbKEW6bWQGSghmi14BfNx3omc6GjV3AxbtkTYcPAedw48XywVgSyY8H9ef73zWWtoZ6MCMLGM6GV3");
   // mainet
-  expect(fixPubKeyChecksum("dpubZFs9f5ex4qxoiqCHVEnotAaYpZhCgwDAndMyLicfcXJysBmNxMyx7X3QHW2NiUN14KnekWcMQt4XwyF5wAqDPzbLcv59mQTRhL6foyvvqLK")).toStrictEqual("dpubZFs9f5ex4qxoiqCHVEnotAaYpZhCgwDAndMyLicfcXJysBmNxMyx7X3QHW2NiUN14KnekWcMQt4XwyF5wAqDPzbLcv59mQTRhL6fp1csmnS");
+  expect(fixPubKeyChecksum("dpubZFs9f5ex4qxoiqCHVEnotAaYpZhCgwDAndMyLicfcXJysBmNxMyx7X3QHW2NiUN14KnekWcMQt4XwyF5wAqDPzbLcv59mQTRhL6foyvvqLK", false)).toStrictEqual("dpubZFs9f5ex4qxoiqCHVEnotAaYpZhCgwDAndMyLicfcXJysBmNxMyx7X3QHW2NiUN14KnekWcMQt4XwyF5wAqDPzbLcv59mQTRhL6fp1csmnS");
 });
 
 function dispatchFn (inputs) {
