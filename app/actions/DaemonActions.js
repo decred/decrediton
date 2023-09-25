@@ -9,6 +9,7 @@ import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel, showCantCloseModal } from "./ControlActions";
 import { enableTrezor } from "./TrezorActions";
+import { enableLedger } from "./LedgerActions";
 import {
   DEX_LOGOUT_ATTEMPT,
   DEX_LOGOUT_SUCCESS,
@@ -309,7 +310,7 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 // selectedWallet = {
 //   label: newWalletName,
 //   value: {
-//    wallet: newWalletName, isWatchingOnly, isTrezor, isNew,
+//    wallet: newWalletName, isWatchingOnly, isTrezor, isLedger, isNew
 //    network: isTestNet ? "testnet" : "mainnet"
 //  }
 // }
@@ -336,7 +337,8 @@ export const createWallet = (selectedWallet) => (dispatch, getState) =>
         dispatch({
           isWatchingOnly: selectedWallet.value.isWatchingOnly,
           createNewWallet: selectedWallet.value.isNew,
-          isTrezor: selectedWallet.value.istrezor,
+          isTrezor: selectedWallet.value.isTrezor,
+          isLedger: selectedWallet.value.isLedger,
           type: WALLETCREATED
         });
         dispatch(setSelectedWallet(selectedWallet));
@@ -509,6 +511,7 @@ export const startWallet =
           confirmDexSeed
         });
         selectedWallet.value.isTrezor && dispatch(enableTrezor());
+        selectedWallet.value.isLedger && dispatch(enableLedger());
         await dispatch(getVersionServiceAttempt());
         await dispatch(openWalletAttempt("", false, selectedWallet));
         return discoverAccountsComplete;

@@ -56,6 +56,7 @@ export const getAvailableWallets = (network) => {
     const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
     const isWatchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
     const isTrezor = cfg.get(cfgConstants.TREZOR);
+    const isLedger = cfg.get(cfgConstants.LEDGER);
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
     const finished = fs.existsSync(walletDbFilePath);
@@ -68,6 +69,7 @@ export const getAvailableWallets = (network) => {
       lastAccess,
       isWatchingOnly,
       isTrezor,
+      isLedger,
       isPrivacy,
       isLN,
       displayWalletGradient

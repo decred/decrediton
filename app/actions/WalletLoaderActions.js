@@ -18,7 +18,7 @@ import {
   getBestBlockHeightAttempt
 } from "./ClientActions";
 import { WALLETREMOVED_FAILED } from "./DaemonActions";
-import { isTestNet, trezorDevice } from "selectors";
+import { isTestNet, trezorDevice, ledgerDevice } from "selectors";
 import { walletrpc as api } from "middleware/walletrpc/api_pb";
 import { push as pushHistory } from "connected-react-router";
 import { stopNotifcations } from "./NotificationActions";
@@ -28,6 +28,7 @@ import * as cfgConstants from "constants/config";
 import { RESCAN_PROGRESS } from "./ControlActions";
 import { stopAccountMixer } from "./AccountMixerActions";
 import { TRZ_WALLET_CLOSED } from "actions/TrezorActions";
+import { LDG_WALLET_CLOSED } from "actions/LedgerActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 
 const { SyncNotificationType } = api;
@@ -156,7 +157,7 @@ export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
 export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
 
 export const createWatchOnlyWalletRequest =
-  (extendedPubKey, pubPass = "") =>
+  (extendedPubKey, isLedger, isTrezor, pubPass = "") =>
   (dispatch, getState) =>
     new Promise((resolve, reject) => {
       dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
@@ -172,6 +173,12 @@ export const createWatchOnlyWalletRequest =
           } = getState();
           const config = wallet.getWalletCfg(isTestNet(getState()), walletName);
           config.set(cfgConstants.IS_WATCH_ONLY, true);
+          if (isTrezor) {
+            config.set(cfgConstants.TREZOR, true);
+          }
+          if (isLedger) {
+            config.set(cfgConstants.LEDGER, true);
+          }
           config.delete(cfgConstants.DISCOVER_ACCOUNTS);
           wallet.setIsWatchingOnly(true);
           dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
@@ -269,6 +276,7 @@ const finalCloseWallet = () => async (dispatch, getState) => {
     await wallet.stopWallet();
     dispatch({ type: CLOSEWALLET_SUCCESS });
     if (trezorDevice(getState())) dispatch({ type: TRZ_WALLET_CLOSED });
+    if (ledgerDevice(getState())) dispatch({ type: LDG_WALLET_CLOSED });
     dispatch(pushHistory("/getstarted/initial"));
   } catch (error) {
     dispatch({ error, type: CLOSEWALLET_FAILED });

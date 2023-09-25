@@ -14,7 +14,16 @@ export function addressPath(branch, index) {
 
 // fixPubKeyChecksum replaces the sha256 checksum, or last four bytes, of a
 // pubkey with a blake256 checksum.
-export function fixPubKeyChecksum(pubKey) {
+export function fixPubKeyChecksum(pubKey, isTestnet) {
+  const mainnetPubPrefix = "dpub";
+  const testnetPubPrefix = "tpub";
+  if (isTestnet) {
+    if (pubKey.slice(0, 4) !== testnetPubPrefix) {
+      throw "pubkey is not for testnet";
+    }
+  } else if (pubKey.slice(0, 4) !== mainnetPubPrefix) {
+    throw "pubkey is not for mainnet";
+  }
   const buff = bs58.decode(pubKey).slice(0, -4);
   const firstPass = blake("blake256").update(Buffer.from(buff)).digest();
   const secondPass = blake("blake256").update(firstPass).digest();

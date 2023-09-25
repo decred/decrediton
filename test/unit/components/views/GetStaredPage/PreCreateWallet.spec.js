@@ -19,6 +19,7 @@ const testSelectedWallet = {
   value: {
     isNew: true,
     isTrezor: false,
+    isLedger: false,
     isWatchingOnly: false,
     network: "mainnet",
     wallet: testWalletName,
@@ -258,6 +259,8 @@ test("test watch only control on restore wallet", async () => {
   await wait(() =>
     expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
       testValidMasterPubKey,
+      undefined,
+      undefined,
       ""
     )
   );
@@ -286,7 +289,7 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
   });
   const testRestoreSelectedWallet = {
     ...testSelectedWallet,
-    value: { ...testSelectedWallet.value, isNew: false, isTrezor: true },
+    value: { ...testSelectedWallet.value, isNew: false, isTrezor: true, isLedger: false },
     isWatchingOnly: true
   };
 
@@ -338,6 +341,8 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
   await wait(() =>
     expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
       testWalletCreationMasterPubKey,
+      undefined,
+      true,
       ""
     )
   );

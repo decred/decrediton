@@ -24,6 +24,7 @@ const useSettings = () => {
   const walletName = useSelector(sel.getWalletName);
   const walletReady = useSelector(sel.getWalletReady);
   const isTrezor = useSelector(sel.isTrezor);
+  const isLedger = useSelector(sel.isLedger);
 
   const onAttemptChangePassphrase = useCallback(
     (oldPass, args) => {
@@ -124,6 +125,7 @@ const useSettings = () => {
     walletName,
     walletReady,
     isTrezor,
+    isLedger,
     onAttemptChangePassphrase,
     onChangeTempSettings,
     onSaveSettings,

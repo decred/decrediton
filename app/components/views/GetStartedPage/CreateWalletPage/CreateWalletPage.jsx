@@ -103,18 +103,16 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
     cancelCreateWallet
   ]);
 
-  const onCreateWatchOnly = useCallback(() => {
-    createWatchOnlyWalletRequest(walletMasterPubKey)
-      .then(() => sendEvent({ type: "WALLET_CREATED" }))
-      .catch((error) => sendEvent({ type: "ERROR", error }));
-    // we send a continue so we go to loading state
-    sendContinue();
-  }, [
-    createWatchOnlyWalletRequest,
-    sendEvent,
-    sendContinue,
-    walletMasterPubKey
-  ]);
+  const onCreateWatchOnly = useCallback(
+    (isLedger, isTrezor) => {
+      createWatchOnlyWalletRequest(walletMasterPubKey, isLedger, isTrezor)
+        .then(() => sendEvent({ type: "WALLET_CREATED" }))
+        .catch((error) => sendEvent({ type: "ERROR", error }));
+      // we send a continue so we go to loading state
+      sendContinue();
+    },
+    [createWatchOnlyWalletRequest, sendEvent, sendContinue, walletMasterPubKey]
+  );
 
   const getStateComponent = useCallback(() => {
     const { mnemonic, error } = current.context;
@@ -188,7 +186,8 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
   ]);
 
   useEffect(() => {
-    const { isNew, walletMasterPubKey, mnemonic } = current.context;
+    const { isNew, walletMasterPubKey, mnemonic, isLedger, isTrezor } =
+      current.context;
     switch (current.value) {
       case "createWalletInit":
         setIsNew(isNew);
@@ -222,7 +221,7 @@ const CreateWalletPage = ({ createWalletRef, onSendBack }) => {
         checkIsValid();
         break;
       case "restoreWatchingOnly":
-        onCreateWatchOnly();
+        onCreateWatchOnly(isLedger, isTrezor);
         break;
       case "finished":
         break;
