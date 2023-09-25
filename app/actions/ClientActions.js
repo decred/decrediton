@@ -184,7 +184,7 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   const grpcCertAndKey = wallet.getDcrwalletGrpcKeyCert();
-  wallet
+  return wallet
     .getWalletService(
       sel.isTestNet(getState()),
       walletName,
