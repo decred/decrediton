@@ -33,7 +33,7 @@ tutorials.decredIntro = {
 
 tutorials.ln = {
   title: "What is Lightning Network?",
-  desc: "Learn how we've the basics of Lightning Network, our 2nd layer implementation for super fast transactions.", // TODO
+  desc: "Learn the basics of Lightning Network, our 2nd layer implementation for super fast transactions.", // TODO
   thumbnailImage: "lnThumb",
   slides: [
     {
@@ -42,7 +42,7 @@ tutorials.ln = {
       title: (
         <T
           id="tutorials.ln.title1"
-          m="Import information to avoid lose of funds:"
+          m="Import information to avoid loss of funds:"
         />
       ),
       images: ["LNSlideImage1"]
@@ -109,7 +109,7 @@ tutorials.ln = {
 
 tutorials.consensusCode = {
   title: "Consensus Code",
-  desc: "For most coins, consensus code does not allow for orderly upgrades.  Decred's voting system allows for smooth upgrades that are easily understood by everyone.", // TODO
+  desc: "Most other coins don't upgrade consensus code in a fair or decentralized way.  Decred's voting system allows for smooth upgrades that are easily understood.", // TODO
   thumbnailImage: "consensusCodeThumb",
   slides: [
     {
@@ -125,7 +125,7 @@ tutorials.consensusCode = {
 
 tutorials.powPos = {
   title: "Hybrid PoW/PoS",
-  desc: "With a hybrid system, we've taken the best of both PoW and PoS to obtain fair and secure block creation.", // TODO
+  desc: "With a hybrid system, we've taken the best features of both PoW and PoS to obtain fair and secure block creation.", // TODO
   thumbnailImage: "powPosThumb",
   slides: [
     {
@@ -156,7 +156,7 @@ tutorials.powPos = {
 
 tutorials.tickets = {
   title: "Staking and Tickets",
-  desc: "Typically staking can be complicated, with tickets and votes it's easy to understand and see how your hard-earned DCR is being put to use.", // TODO
+  desc: "Staking doesn't have to be complicated. Decred's system of tickets and votes makes it easy to understand how your hard-earned DCR can be put to use.", // TODO
   thumbnailImage: "ticketsThumb",
   slides: [
     {
@@ -187,7 +187,7 @@ tutorials.tickets = {
 
 tutorials.staking = {
   title: "Core Functions of Staking",
-  desc: "Learn about the core functions of staking and how your votes lead to real changes.", // TODO
+  desc: "Learn about the core functions of staking, and how your votes lead to real changes.", // TODO
   thumbnailImage: "stakingThumb",
   slides: [
     {
@@ -222,7 +222,7 @@ tutorials.staking = {
 
 tutorials.lifecycle = {
   title: "Ticket Lifecycle",
-  desc: "Learn all about how a ticket is created, consumed and the rewards for voting.", // TODO
+  desc: "Learn all about how a ticket is created, consumed, and the rewards for voting.", // TODO
   thumbnailImage: "lifecycleThumb",
   slides: [
     {

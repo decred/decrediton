@@ -1,7 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import * as sel from "selectors";
-import { linkList, LN_KEY, DEX_KEY, TICKETS_KEY, GOV_KEY } from "./Links";
+import {
+  linkList,
+  LN_KEY,
+  DEX_KEY,
+  TICKETS_KEY,
+  GOV_KEY,
+  PRIV_KEY
+} from "./Links";
 import { useHistory } from "react-router-dom";
 import { cloneDeep } from "fp";
 
@@ -10,6 +17,7 @@ export function useMenuLinks() {
   const sidebarOnBottom = useSelector(sel.sidebarOnBottom);
   const expandSideBar = useSelector(sel.expandSideBar);
   const isTrezor = useSelector(sel.isTrezor);
+  const isLedger = useSelector(sel.isLedger);
   const lnEnabled = useSelector(sel.lnEnabled);
 
   const newActiveVoteProposalsCount = useSelector(
@@ -47,10 +55,13 @@ export function useMenuLinks() {
       links = links.filter((l) => l.key !== LN_KEY);
     }
     // TODO: Enable ticket purchacing for Trezor.
-    if (isTrezor) {
+    if (isTrezor || isLedger) {
       links = links.filter(
         (l) => l.key !== DEX_KEY && l.key !== TICKETS_KEY && l.key !== GOV_KEY
       );
+    }
+    if (isLedger) {
+      links = links.filter((l) => l.key !== PRIV_KEY);
     }
     return links.map((link) => ({
       ...link,
@@ -59,7 +70,7 @@ export function useMenuLinks() {
         0
       )
     }));
-  }, [notifProps, isTrezor, lnEnabled]);
+  }, [notifProps, isTrezor, lnEnabled, isLedger]);
 
   const [activeTabIndex, setActiveTabIndex] = useState(-1);
   const history = useHistory();

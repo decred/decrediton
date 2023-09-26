@@ -24,6 +24,7 @@ const testSelectedWallet = {
   value: {
     isNew: true,
     isTrezor: false,
+    isLedger: false,
     isWatchingOnly: false,
     network: "mainnet",
     wallet: testWalletName,

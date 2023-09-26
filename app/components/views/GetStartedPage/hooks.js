@@ -26,6 +26,7 @@ import styles from "./GetStarted.module.css";
 import { isObject } from "lodash";
 import { wallet } from "wallet-preload-shim";
 import TrezorLoaderBarContainer from "views/GetStartedPage/PreCreateWallet/TrezorLoaderBarContainer";
+import LedgerLoaderBarContainer from "views/GetStartedPage/PreCreateWallet/LedgerLoaderBarContainer";
 import { LoaderBarContainer } from "./helpers";
 
 export const useGetStarted = () => {
@@ -164,7 +165,7 @@ export const useGetStarted = () => {
       isAtStartWallet: (context) => {
         const { selectedWallet } = context;
         const { passPhrase } = context;
-        const { isWatchingOnly, isTrezor } = selectedWallet.value;
+        const { isWatchingOnly, isTrezor, isLedger } = selectedWallet.value;
         const hasPassPhrase = !!passPhrase;
         onStartWallet(selectedWallet, hasPassPhrase)
           .then((discoverAccountsComplete) => {
@@ -174,7 +175,8 @@ export const useGetStarted = () => {
               !discoverAccountsComplete &&
               !passPhrase &&
               !isWatchingOnly &&
-              !isTrezor
+              !isTrezor &&
+              !isLedger
             ) {
               // Need to discover accounts and the passphrase isn't stored in
               // context, so ask for the private passphrase before continuing.
@@ -373,7 +375,8 @@ export const useGetStarted = () => {
   );
 
   const onSendCreateWallet = useCallback(
-    (isNew, isTrezor) => send({ type: "CREATE_WALLET", isNew, isTrezor }),
+    (isNew, isTrezor, isLedger) =>
+      send({ type: "CREATE_WALLET", isNew, isTrezor, isLedger }),
     [send]
   );
 
@@ -409,12 +412,13 @@ export const useGetStarted = () => {
   );
 
   const onShowCreateWallet = useCallback(
-    ({ isNew, walletMasterPubKey, isTrezor }) =>
+    ({ isNew, walletMasterPubKey, isTrezor, isLedger }) =>
       send({
         type: "SHOW_CREATE_WALLET",
         isNew,
         walletMasterPubKey,
-        isTrezor
+        isTrezor,
+        isLedger
       }),
     [send]
   );
@@ -489,7 +493,8 @@ export const useGetStarted = () => {
         isTrezor,
         isSPV,
         createWalletRef,
-        settingUpWalletRef
+        settingUpWalletRef,
+        isLedger
       } = state.context;
       let component, text, animationType, PageComponent;
 
@@ -560,9 +565,19 @@ export const useGetStarted = () => {
                 m="Create a trezor wallet..."
               />
             );
-            hideHeader = isTrezor;
-            showLoaderBar = isTrezor;
-            loaderBarContainer = isTrezor ? TrezorLoaderBarContainer : null;
+            text = isLedger && (
+              <T
+                id="loaderBar.preCreateLedgerWalletCreate"
+                m="Create a ledger wallet..."
+              />
+            );
+            hideHeader = isTrezor || isLedger;
+            showLoaderBar = isTrezor || isLedger;
+            loaderBarContainer = isTrezor
+              ? TrezorLoaderBarContainer
+              : isLedger
+              ? LedgerLoaderBarContainer
+              : null;
             component = h(PreCreateWalletForm, {
               onShowCreateWallet,
               onSendContinue,
@@ -570,6 +585,7 @@ export const useGetStarted = () => {
               onSendError,
               isCreateNewWallet,
               isTrezor,
+              isLedger,
               error
             });
             break;

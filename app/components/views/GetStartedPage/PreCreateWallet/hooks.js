@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useDaemonStartup } from "hooks";
 import * as trza from "actions/TrezorActions";
+import * as ldgr from "actions/LedgerActions";
 
 export const usePreCreateWallet = ({
   onSendContinue,
@@ -9,7 +10,8 @@ export const usePreCreateWallet = ({
   onSendError,
   isCreateNewWallet,
   onShowCreateWallet,
-  isTrezor
+  isTrezor,
+  isLedger
 }) => {
   const {
     isSPV,
@@ -22,7 +24,12 @@ export const usePreCreateWallet = ({
     trezorGetWalletCreationMasterPubKey,
     onCreateWallet,
     trezorEnable,
-    validateMasterPubKey
+    validateMasterPubKey,
+    ledgerDevice,
+    ledgerEnable,
+    ledgerDisable,
+    ledgerAlertNoConnectedDevice,
+    ledgerGetWalletCreationMasterPubKey
   } = useDaemonStartup();
   const [newWalletName, setNewWalletName] = useState("");
   const [isWatchingOnly, setIsWatchingOnly] = useState(false);
@@ -38,8 +45,11 @@ export const usePreCreateWallet = ({
     if (isTrezor) {
       trezorDisable();
     }
+    if (isLedger) {
+      ledgerDisable();
+    }
     onSendBack();
-  }, [isTrezor, trezorDisable, onSendBack]);
+  }, [isTrezor, trezorDisable, onSendBack, isLedger, ledgerDisable]);
 
   const onChangeCreateWalletName = useCallback(
     (newWalletName) => {
@@ -83,7 +93,18 @@ export const usePreCreateWallet = ({
     } else {
       trezorDisable();
     }
-  }, [isTrezor, trezorEnable, trezorDisable]);
+    if (isLedger) {
+      return ledgerEnable();
+    }
+    return ledgerDisable();
+  }, [
+    isTrezor,
+    trezorEnable,
+    trezorDisable,
+    isLedger,
+    ledgerEnable,
+    ledgerDisable
+  ]);
 
   const toggleDisableCoinTypeUpgrades = () =>
     setDisableCoinTypeUpgrades((value) => !value);
@@ -96,6 +117,7 @@ export const usePreCreateWallet = ({
         wallet: newWalletName,
         isWatchingOnly,
         isTrezor: !!isTrezor,
+        isLedger: !!isLedger,
         isNew,
         network: isTestNet ? "testnet" : "mainnet",
         gapLimit,
@@ -112,8 +134,10 @@ export const usePreCreateWallet = ({
       return;
     }
     if (isTrezor && !trezorDevice) {
-      trezorAlertNoConnectedDevice();
-      return;
+      return trezorAlertNoConnectedDevice();
+    }
+    if (isLedger && !ledgerDevice) {
+      return ledgerAlertNoConnectedDevice();
     }
     // onSendContinue action so getStartedStateMachine can go to
     // creatingWallet state.
@@ -130,6 +154,18 @@ export const usePreCreateWallet = ({
         )
       );
     }
+    if (isLedger) {
+      walletSelected.isWatchingOnly = true;
+      return ledgerGetWalletCreationMasterPubKey().then((walletMasterPubKey) =>
+        onCreateWallet(walletSelected).then(() =>
+          onShowCreateWallet({
+            isNew,
+            walletMasterPubKey,
+            isLedger: true
+          })
+        )
+      );
+    }
 
     return onCreateWallet(walletSelected)
       .then(() => onShowCreateWallet({ isNew, walletMasterPubKey }))
@@ -138,6 +174,7 @@ export const usePreCreateWallet = ({
     isCreateNewWallet,
     isTestNet,
     isTrezor,
+    isLedger,
     isWatchingOnly,
     masterPubKeyError,
     newWalletName,
@@ -147,6 +184,9 @@ export const usePreCreateWallet = ({
     trezorAlertNoConnectedDevice,
     trezorDevice,
     trezorGetWalletCreationMasterPubKey,
+    ledgerAlertNoConnectedDevice,
+    ledgerDevice,
+    ledgerGetWalletCreationMasterPubKey,
     walletMasterPubKey,
     walletNameError,
     gapLimit,
@@ -172,6 +212,7 @@ export const usePreCreateWallet = ({
 
   const dispatch = useDispatch();
   const connectTrezor = useCallback(() => dispatch(trza.connect()), [dispatch]);
+  const connectLedger = useCallback(() => dispatch(ldgr.connect()), [dispatch]);
 
   return {
     availableWallets,
@@ -194,6 +235,8 @@ export const usePreCreateWallet = ({
     toggleDisableCoinTypeUpgrades,
     gapLimit,
     setGapLimit,
-    connectTrezor
+    ledgerDevice,
+    connectTrezor,
+    connectLedger
   };
 };

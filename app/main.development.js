@@ -873,6 +873,18 @@ app.on("ready", async () => {
     height: 1000,
     icon: __dirname + "/dcrdex.png"
   });
+
+  mainWindow.webContents.session.setDevicePermissionHandler((details) => {
+    // Allow Ledger devices which share a unique vendor ID.
+    if (
+      details.deviceType === "usb" &&
+      details.device &&
+      details.device.vendorId === 0x2c97
+    ) {
+      return true;
+    }
+    return false;
+  });
 });
 
 app.on("before-quit", async (event) => {

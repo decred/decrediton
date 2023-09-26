@@ -26,6 +26,7 @@ const WalletSelectionForm = ({
   availableWallets,
   showCreateWalletForm,
   showCreateTrezorBackedWalletForm,
+  showCreateLedgerBackedWalletForm,
   onRemoveWallet,
   onToggleEditWallet,
   editWallets,
@@ -39,6 +40,7 @@ const WalletSelectionForm = ({
   const green = getThemeProperty(theme, "green-2");
   const lightGreen = getThemeProperty(theme, "light-green");
   const closeButtonColor = getThemeProperty(theme, "background-back-color");
+  const ledgerIconColor = getThemeProperty(theme, "input-color-default");
 
   const CreateButton = (props) => (
     <ButtonIcon
@@ -67,6 +69,16 @@ const WalletSelectionForm = ({
       onClick={() => showCreateTrezorBackedWalletForm()}
       text={intl.formatMessage(messages.trezorTabMsg)}
       iconColor={trezorIconColor}
+      {...props}
+    />
+  );
+
+  const LedgerButton = (props) => (
+    <ButtonIcon
+      type="ledger"
+      onClick={() => showCreateLedgerBackedWalletForm()}
+      text={intl.formatMessage(messages.ledgerTabMsg)}
+      iconColor={ledgerIconColor}
       {...props}
     />
   );
@@ -100,6 +112,7 @@ const WalletSelectionForm = ({
                     <CreateButton />
                     <RestoreButton />
                     <TrezorButton />
+                    <LedgerButton />
                     <ButtonIcon
                       type="edit"
                       onClick={onToggleEditWallet}
@@ -213,6 +226,20 @@ const WalletSelectionForm = ({
                               </Tooltip>
                             </div>
                           )}
+                          {wallet.value.isLedger && (
+                            <div>
+                              <Tooltip
+                                content={
+                                  <T id="walletselection.ledger" m="Ledger" />
+                                }>
+                                <Icon
+                                  type="ledger"
+                                  size={21}
+                                  iconColor={ledgerIconColor}
+                                />
+                              </Tooltip>
+                            </div>
+                          )}
                           {wallet.isWatchingOnly && (
                             <div>
                               <Tooltip
@@ -260,6 +287,7 @@ const WalletSelectionForm = ({
               <CreateButton className={styles.largeButtonIcon} />
               <RestoreButton className={styles.largeButtonIcon} />
               <TrezorButton className={styles.largeButtonIcon} />
+              <LedgerButton className={styles.largeButtonIcon} />
             </>
           )}
         </div>

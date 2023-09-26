@@ -883,7 +883,7 @@ test("test createWallet", async () => {
     selectedWallet.value.isWatchingOnly
   );
   expect(store.getState().walletLoader.isTrezor).toBe(
-    selectedWallet.value.istrezor
+    selectedWallet.value.isTrezor
   );
 
   expect(mockWalletCfgSet).toHaveBeenCalledWith(

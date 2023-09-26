@@ -405,6 +405,11 @@ const initialState = {
     performingTogglePassphraseOnDeviceProtection: false,
     deviceLabel: undefined
   },
+  ledger: {
+    enabled: false,
+    device: false,
+    walletCreationMasterPubkeyAttempt: false
+  },
   ln: {
     enabled: globalCfg.get(cfgConstants.LN_ENABLED),
     active: false,

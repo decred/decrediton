@@ -108,7 +108,8 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return err
 	}
-	err := os.MkdirAll(filepath.Dir(form.DBPath), 0700)
+	dexDir := filepath.Dir(form.DBPath)
+	err := os.MkdirAll(dexDir, 0700)
 	if err != nil {
 		return err
 	}
@@ -117,6 +118,16 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	err = os.MkdirAll(filepath.Dir(form.LogFilename), 0700)
 	if err != nil {
 		return err
+	}
+
+	extensionModeFile := filepath.Join(dexDir, "dextension.conf")
+	if _, err := os.Stat(extensionModeFile); err != nil {
+		if !os.IsNotExist(err) {
+			return fmt.Errorf("error checking extension file: %w", err)
+		}
+		if err := os.WriteFile(extensionModeFile, []byte(extensionModeConfigJSON), 0644); err != nil {
+			return fmt.Errorf("error writing extension mode configuration: %w", err)
+		}
 	}
 
 	c.logMaker = initLogging(filepath.Dir(form.LogFilename), form.LogFilename, form.LogLevel.String(), false)
@@ -130,9 +141,10 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		// Onion applies ONLY to .onion addresses, unlike TorProxy, which is
 		// used for connections to all servers regardless of hostname. TODO:
 		// expose an option for the user to set this and TorProxy.
-		Onion:            "127.0.0.1:9050",
-		Language:         form.Language,
-		NoAutoWalletLock: true, // Decrediton user locks it when done
+		Onion:             "127.0.0.1:9050",
+		Language:          form.Language,
+		NoAutoWalletLock:  true, // Decrediton user locks it when done
+		ExtensionModeFile: extensionModeFile,
 	})
 	if err != nil {
 		return fmt.Errorf("error creating client core: %v", err)
@@ -378,3 +390,23 @@ func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {
 	}
 	return "", nil
 }
+
+const extensionModeConfigJSON = `
+{
+	"restrictedWallets": {
+		"dcr": {
+			"hiddenFields": [
+				"account",
+				"unmixedaccount",
+				"tradingaccount",
+				"username",
+				"password",
+				"rpclisten",
+				"rpccert"
+			],
+			"disableWalletType": true,
+			"disablePassword": true
+		}
+	}
+}
+`

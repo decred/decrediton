@@ -9,7 +9,6 @@ import {
   addressPath
 } from "helpers/trezor";
 import { publishTransactionAttempt } from "./ControlActions";
-import * as cfgConstants from "constants/config";
 import {
   MODEL1_DECRED_HOMESCREEN,
   MODELT_DECRED_HOMESCREEN
@@ -49,16 +48,6 @@ export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
 // enableTrezor attepts to start a connection with connect if none exist and
 // connect to a trezor device.
 export const enableTrezor = () => (dispatch, getState) => {
-  const walletName = selectors.getWalletName(getState());
-
-  if (walletName) {
-    const config = wallet.getWalletCfg(
-      selectors.isTestNet(getState()),
-      walletName
-    );
-    config.set(cfgConstants.TREZOR, true);
-  }
-
   dispatch({ type: TRZ_TREZOR_ENABLED });
 
   if (!setListeners) {

@@ -59,6 +59,7 @@ export const IS_WATCH_ONLY = "iswatchonly";
 export const POLITEIA_LAST_ACCESS_TIME = "politeia_last_access_time";
 export const POLITEIA_LAST_ACCESS_BLOCK = "politeia_last_access_block";
 export const TREZOR = "trezor";
+export const LEDGER = "ledger";
 export const ENABLE_PRIVACY = "enableprivacy";
 export const LN_ACCOUNT = "ln_account";
 export const LN_ADDRESS = "ln_address";
@@ -98,6 +99,7 @@ export const WALLET_INITIAL_VALUE = {
   [POLITEIA_LAST_ACCESS_TIME]: 0,
   [POLITEIA_LAST_ACCESS_BLOCK]: 0,
   [TREZOR]: false,
+  [LEDGER]: false,
   // enable_privacy only shows the privacy menu on the wallet
   [ENABLE_PRIVACY]: true,
   [LN_ACCOUNT]: null,
