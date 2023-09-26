@@ -13,6 +13,13 @@ import {
 
 const coin = "decred";
 
+// This error will happen when ledger is on the home screen, but it is called
+// "UNKNOWN_ERROR" so may be something else.
+const wrongScreenStatus = 25873;
+// This error indicates the wrong app, like the btc app, is open and will say
+// CLA_NOT_SUPPORTED
+const wrongAppStatus = 28160;
+
 import * as selectors from "selectors";
 
 export const LDG_LEDGER_ENABLED = "LDG_LEDGER_ENABLED";
@@ -133,11 +140,7 @@ export const LDG_GETWALLETCREATIONMASTERPUBKEY_SUCCESS =
 export const getWalletCreationMasterPubKey =
   () => async (dispatch, getState) => {
     dispatch({ type: LDG_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT });
-    // TODO: Enable on mainnet.
     const isTestnet = selectors.isTestNet(getState());
-    if (!isTestnet) {
-      throw "disabled on mainnet";
-    }
     try {
       const payload = await getPubKey(isTestnet);
       const hdpk = ledgerHelpers.fixPubKeyChecksum(payload, isTestnet);
@@ -155,11 +158,24 @@ function doWithTransport(fn) {
       return fn(transport).then((r) =>
         transport
           .close()
-          .catch((/*e*/) => {}) // throw?
+          .catch((e) => {
+            throw e;
+          })
           .then(() => r)
       );
     })
     .catch((e) => {
+      const notDecred = "the decred ledger app is not open on the device";
+      if (e.statusCode && e.message) {
+        switch (e.statusCode) {
+          case wrongScreenStatus:
+            e.message = notDecred;
+            throw e;
+          case wrongAppStatus:
+            e.message = notDecred;
+            throw e;
+        }
+      }
       throw e;
     });
 }
