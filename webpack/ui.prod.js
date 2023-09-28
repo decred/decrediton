@@ -49,7 +49,7 @@ module.exports = merge(baseConfig, {
     new CopyWebpackPlugin({
       patterns: [
         // Copy the generated trezor iframe and code.
-        { from: "./app/dist-trezor", to: "" }
+        { from: "./app/trezor-prebuild/build", to: "" }
       ]
     }),
 
