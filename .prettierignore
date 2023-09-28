@@ -3,7 +3,7 @@
 /bin
 /node_modules
 /app/dist
-/app/dist-trezor
+/app/trezor-prebuild/build
 /app/middleware/ln/*_pb.js
 /app/middleware/ln/google/api/*_pb.js
 /app/middleware/walletrpc/*_pb.js

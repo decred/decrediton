@@ -1,6 +1,5 @@
 *~
 app/dist/
-app/dist-trezor/
 app/main.js
 app/main.js.map
 app/main.js.LICENSE.txt
