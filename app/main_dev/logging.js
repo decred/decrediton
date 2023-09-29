@@ -8,6 +8,7 @@ let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 let dcrlndLogs = Buffer.from("");
 let dexcLogs = Buffer.from("");
+let trezordLogs = Buffer.from("");
 let privacyLogs = Buffer.from("");
 
 let logger;
@@ -163,6 +164,10 @@ export const AddToDexcLog = (destIO, data, debug) => {
   dexcLogs = AddToLog(destIO, dexcLogs, data, debug);
 };
 
+export const AddToTrezordLog = (destIO, data, debug) => {
+  trezordLogs = AddToLog(destIO, trezordLogs, data, debug);
+};
+
 export const AddToPrivacyLog = (destIO, data, debug) => {
   // if log contains any of those messages we consider it a privacy log.
   const privacyLogsArray = [
@@ -186,6 +191,8 @@ export const GetDcrdLogs = () => dcrdLogs;
 export const GetDcrwalletLogs = () => dcrwalletLogs;
 
 export const GetDcrlndLogs = () => dcrlndLogs;
+
+export const GetTrezordLogs = () => trezordLogs;
 
 export const GetDexcLogs = () => dexcLogs;
 
@@ -221,6 +228,7 @@ export function ClearDcrwalletLogs() {
   dcrwalletLogs = Buffer.from("");
   dcrlndLogs = Buffer.from("");
   dexcLogs = Buffer.from("");
+  trezordLogs = Buffer.from("");
 }
 
 // dcrd upgrades warning.

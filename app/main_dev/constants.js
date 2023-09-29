@@ -18,7 +18,7 @@ Options
   --rpccert          Specify RPC Certificate
   --rpcconnect       Specify RPC connection in 'host:port' or 'host' format (latter uses the default RPC port). Note that different ports are used for RPC and SPV connections.
   --extrawalletargs  Pass extra arguments to dcrwallet.
-  --custombinpath    Custom path for dcrd/dcrwallet/dcrctl binaries.
+  --custombinpath    Custom path for dcrd/dcrwallet/dcrctl/trezord-go binaries.
 `;
 
 export const VERSION_MESSAGE = `${app.name} version ${app.getVersion()}`;

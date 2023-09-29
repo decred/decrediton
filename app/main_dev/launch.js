@@ -14,6 +14,7 @@ import {
   AddToDcrdLog,
   AddToDcrwalletLog,
   AddToDcrlndLog,
+  AddToTrezordLog,
   GetDcrdLogs,
   GetDcrwalletLogs,
   lastErrorLine,
@@ -52,10 +53,15 @@ const logger = createLogger(debug);
 
 let dex = null;
 
-let dcrdPID, dcrwPID, dcrlndPID;
+let dcrdPID, dcrwPID, dcrlndPID, trezordPID;
 
 // windows-only stuff
-let dcrwPipeRx, dcrwPipeTx, dcrwTxStream, dcrdPipeRx, dcrlndPipeRx;
+let dcrwPipeRx,
+  dcrwPipeTx,
+  dcrwTxStream,
+  dcrdPipeRx,
+  dcrlndPipeRx,
+  trezordPipeRx;
 
 // general data that needs to keep consistency while decrediton is running.
 let dcrwPort;
@@ -131,6 +137,7 @@ function closeClis() {
   if (dcrdPID && dcrdPID !== -1) closeDCRD();
   if (dcrwPID && dcrwPID !== -1) closeDCRW();
   if (dcrlndPID && dcrlndPID !== -1) closeDcrlnd();
+  if (trezordPID && trezordPID !== -1) closeTrezord();
   if (dex) closeDex();
 }
 
@@ -264,6 +271,28 @@ export const closeDcrlnd = () => {
   }
   return true;
 };
+
+export function closeTrezord() {
+  if (trezordPID === -1) {
+    // process is not started by decrediton
+    return true;
+  }
+  if (isRunning(trezordPID) && os.platform() != "win32") {
+    logger.log("info", "Sending SIGINT to trezord at pid:" + trezordPID);
+    process.kill(trezordPID, "SIGINT");
+    trezordPID = null;
+  } else if (isRunning(trezordPID)) {
+    try {
+      const dcrwin32ipc = require("dcrwin32ipc/build/Release/dcrwin32ipc.node");
+      dcrwin32ipc.closePipe(trezordPipeRx);
+      trezordPID = null;
+    } catch (e) {
+      logger.log("error", "Error closing trezord piperx: " + e);
+      return false;
+    }
+  }
+  return true;
+}
 
 export const closeDex = () => {
   logger.log("info", "closing dex " + dex);
@@ -930,6 +959,68 @@ export const launchDCRLnd = (
     return resolve(dcrlndCreds);
   });
 
+export const launchTrezord = () =>
+  new Promise((resolve, reject) => {
+    if (trezordPID === -1) {
+      resolve();
+    }
+
+    const trezordExe = getExecutablePath("trezord-go", argv.custombinpath);
+    if (!fs.existsSync(trezordExe)) {
+      logger.log(
+        "error",
+        "The trezord-go executable does not exist. Expected to find it at " +
+          trezordExe
+      );
+      reject("The trezord-go executable does not exist at " + trezordExe);
+    }
+
+    const args = [];
+    if (os.platform() == "win32") {
+      try {
+        const dcrwin32ipc = require("dcrwin32ipc/build/Release/dcrwin32ipc.node");
+        trezordPipeRx = dcrwin32ipc.createPipe("out");
+        args.push(format("--piperx=%d", trezordPipeRx.readEnd));
+      } catch (e) {
+        logger.log(
+          "error",
+          "can't find proper module to launch trezord-go: " + e
+        );
+      }
+    }
+
+    logger.log("info", `Starting ${trezordExe}`);
+
+    const trezord = spawn(trezordExe, args, {
+      detached: os.platform() === "win32",
+      stdio: ["ignore", "pipe", "pipe"]
+    });
+
+    trezord.on("error", function (err) {
+      reject(err);
+    });
+
+    trezord.on("close", (code) => {
+      logger.log("info", `trezord-go exited with code ${code}`);
+    });
+
+    trezord.stdout.on("data", (data) => {
+      AddToTrezordLog(process.stdout, data, debug);
+      resolve(data.toString("utf-8"));
+    });
+
+    trezord.stderr.on("data", (data) => {
+      AddToTrezordLog(process.stderr, data, debug);
+      resolve(data.toString("utf-8"));
+    });
+
+    trezordPID = trezord.pid;
+    logger.log("info", "trezord-go started with pid:" + trezordPID);
+
+    trezord.unref();
+    return;
+  });
+
 const Mainnet = 0;
 const Testnet = 1;
 
@@ -1066,9 +1157,11 @@ export const GetDcrlndCreds = () => dcrlndCreds;
 export const GetDexPID = () => dex;
 export const GetDexCreds = () => dexCreds;
 
+export const GetTrezordPID = () => trezordPID;
+
 export const readExesVersion = (app, grpcVersions) => {
   const args = ["--version"];
-  const exes = ["dcrd", "dcrwallet", "dcrctl"];
+  const exes = ["dcrd", "dcrwallet", "dcrctl", "trezord-go"];
   const versions = {
     grpc: grpcVersions,
     decrediton: app.getVersion()

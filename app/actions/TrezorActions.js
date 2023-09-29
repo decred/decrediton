@@ -1,4 +1,5 @@
 import { wallet, fs } from "wallet-preload-shim";
+import { trezord } from "wallet-preload-shim";
 import * as selectors from "selectors";
 import { hexToBytes, str2utf8hex, rawToHex } from "helpers";
 import {
@@ -47,13 +48,14 @@ export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
 
 // enableTrezor attepts to start a connection with connect if none exist and
 // connect to a trezor device.
-export const enableTrezor = () => (dispatch, getState) => {
+export const enableTrezor = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TREZOR_ENABLED });
 
   if (!setListeners) {
     setDeviceListeners(dispatch, getState);
     setListeners = true;
   }
+  await trezord.start();
   connect()(dispatch, getState);
 };
 
@@ -104,7 +106,8 @@ export const TRZ_TREZOR_DISABLED = "TRZ_TREZOR_DISABLED";
 // disableTrezor disables trezor integration for the current wallet. Note
 // that it does **not** disable in the config, so the wallet will restart as a
 // trezor wallet next time it's opened.
-export const disableTrezor = () => (dispatch) => {
+export const disableTrezor = () => async (dispatch) => {
+  await trezord.stop();
   dispatch({ type: TRZ_TREZOR_DISABLED });
 };
 
