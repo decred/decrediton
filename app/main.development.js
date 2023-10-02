@@ -62,6 +62,8 @@ import {
   startDcrlnd,
   stopDcrlnd,
   removeDcrlnd,
+  startTrezord,
+  stopTrezord,
   lnScbInfo,
   startDex,
   stopDex,
@@ -409,6 +411,10 @@ handle("user-dex", userDex);
 handle("start-dex", startDex);
 
 handle("stop-dex", stopDex);
+
+handle("start-trezord", startTrezord);
+
+handle("stop-trezord", stopTrezord);
 
 handle("launch-dex-window", createDexWindow);
 

@@ -1,6 +1,6 @@
 *~
 app/dist/
-app/dist-trezor/
+app/trezor-prebuild/build/
 app/main.js
 app/main.js.map
 app/i18n/lib/
