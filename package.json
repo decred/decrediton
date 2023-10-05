@@ -298,7 +298,7 @@
     "mv": "^2.1.1",
     "node-polyfill-webpack-plugin": "1.1.4",
     "pi-ui": "https://github.com/decred/pi-ui#4daf214b901aa9f50547cf5645594cb76e7c9e51",
-    "postcss": "8.4.24",
+    "postcss": "8.4.31",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "7.8.3",
     "prop-types": "15.8.1",
