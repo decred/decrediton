@@ -10,4 +10,4 @@
 
 **Récompenses Immatures** Récompenses de blocs qui sont en cours de maturité (par exemple des récompenses de minage PdT/PoW).
 
-**Récompenses Immatures de Staking** Ce solde indique les récompenses d'enjeu (stake) et les révocations qui sont en attente de maturité (256 blocs sur le mainnet).
+**Récompenses Immatures d'Enjeu (Staking)** Ce solde indique les récompenses d'enjeu (stake) et les révocations qui sont en attente de maturité (256 blocs sur le mainnet).

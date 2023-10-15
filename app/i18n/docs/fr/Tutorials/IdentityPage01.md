@@ -1,3 +1,3 @@
-General ID functionality
-will become more important than the login+password pair
-Take good care of it or game over
+La Fonction de ID Générale
+deviendra plus importante que la combinaison du nom d'utilisateur et du mot de passe
+Prenez-en bien soin ou c'est terminé

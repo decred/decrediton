@@ -1,1 +1,1 @@
-In Politeia, proposals, comments, comment votes, and now also updates, are signed with identity's key. These messages can have high impact on decision making and spending, so these signatures might become more important.
+Dans Politeia, les propositions, commentaires, les votes sur les commentaires et maintenant aussi les mises à jour, sont signés avec la clé liée à l'identité. Ces messages peuvent avoir un grand impact sur la prise de décision et les dépenses, ce qui pourrait rendre les signatures plus importantes au fil du temps.

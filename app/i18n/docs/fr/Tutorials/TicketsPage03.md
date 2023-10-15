@@ -1,1 +1,1 @@
-Les tickets qui ont été choisis et ont été appelés à voter reçoivent une partie de la récompense totale de bloc, cette dernière incite ainsi à l'usage des "verrous temporels" sur les DCRs pour acquérir des tickets,
+Comme incitatif à verrouiller temporellement les DCR dans un ticket, ceux qui sont appelés à voter reçoivent une partie de la récompense totale de bloc.

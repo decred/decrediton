@@ -8,6 +8,6 @@ Vous devez rester connecté à internet pour la durée complète de l'échange. 
 
 Démarrez toujours vos portefeuilles externes en premier et arrêter les en dernier.
 
-Pendant un échange, si vous ou votre contrepartie n'agissez pas, aura pour conséquence de révoquer la rencontre pour échange après une période définie. Si vous subissez une révocation, gardez votre logiciel DEX et les portefeuilles démarrés jusqu'au remboursement complet. Il peut se passer 20 heures dépendant si vous étiez le faiseur (maker) ou le preneur (taker) dans l'échange.
+Pendant un échange, si vous ou votre contrepartie n'agissez pas, cela aura pour conséquence de révoquer l'association pour échange après une période définie. Si vous subissez une révocation, gardez votre logiciel DEX et les portefeuilles ouverts jusqu'au remboursement complet. Il peut se passer 20 heures avant le remboursement selon que vous étiez le faiseur (maker) ou le preneur (taker) dans l'échange.
 
-Si vous avez besoin de support, veuillez-vous rendre sur [la chat room #dex sur Matrix](https://matrix.to/#/!mlRZqBtfWHrcmgdTWB:decred.org?via=decred.org&via=matrix.org&via=planetdecred.org).
+Si vous avez besoin de support, veuillez-vous rendre sur [le canal #dex sur Matrix](https://matrix.to/#/!mlRZqBtfWHrcmgdTWB:decred.org?via=decred.org&via=matrix.org&via=planetdecred.org).

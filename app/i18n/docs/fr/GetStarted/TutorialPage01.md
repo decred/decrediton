@@ -6,4 +6,4 @@ La blockchain contient toutes les données transactionnelles de Decred et utilis
 
 Ce système hybride limite les faiblesses que les systèmes PdE/PoS et PdT/PoW ont individuellement. De plus il constitue un pilier essentiel pour la **gouvernance intelligente** du projet.
 
-La participation généralisée au **staking (PdE/PoS)** et au **minage (PdT/PoW)** aide à protéger la neutralité du réseau et récompense les participants avec des nouveaux DCR créé depuis la récompense de bloc.
+La participation généralisée à **la preuve d'enjeu (PdE/PoS)** et au **minage (PdT/PoW)** aide à protéger la neutralité du réseau et récompense les participants avec des nouveaux DCR créé via la récompense de bloc.

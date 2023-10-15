@@ -5,5 +5,5 @@ ou le vol de vos fonds**.
 
 Vérifiez également que vous avez accès à votre graine (seed), qu’elle est valide et qu’elle
 correspond bien aux fonds dans ce portefeuille. Les mises à jour du microprogramme
-peuvent causer l’effacement de toutes les données du périphérique,
-ce qui nécessitera par conséquent une opération de récupération.
+peuvent causer l’effacement de toutes les données du dispositif,
+ce qui nécessitera par conséquent une opération de récupération par la suite.

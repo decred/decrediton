@@ -1,1 +1,1 @@
-Le vote de consensus requiert que 75% des votes soit assignés à un sens ou à un autre pour que ce vote soit finalisé.  De plus, pour qu'un vote soit considéré comme valide, il faut aussi que le nombre total de votes dépasse le cap des 10% du quorum.
+Le vote de consensus requiert que 75% des votes soit assignés à un sens ou à un autre pour que ce vote soit finalisé.  De plus, pour qu'un vote soit considéré comme valide, il faut aussi que le nombre total de votes dépasse le quorum établit à 10%.
