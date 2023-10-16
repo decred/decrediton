@@ -1,7 +1,7 @@
 Stakeshuffle nécessite deux comptes dédiés - un compte "mixé" et un compte
 "non mixé".
 
-Quand le mixeur est activé, Des Decred seront transférés depuis le compte non mixé
+Quand le mixeur est activé, des Decred seront transférés depuis le compte non mixé
 vers le compte mixé.
 
 Les transactions mixées sont créées à toutes les 10 minutes, mais seulement si assez
