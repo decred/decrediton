@@ -1,9 +1,6 @@
-Les portefeuilles sont générés de façon déterministe par une graine de portefeuille. La graine est une clé principale de votre portefeuille et l'ensemble du portefeuille peut être recréé à tout moment en l'utilisant. En cas d'oubli de la phrase secrète de chiffrement ou de destruction du portefeuille, la graine peut être utilisée pour récupérer le portefeuille.
+**Notez les mots de la graine (seed) dans l'ordre exact, puis conservez la en lieu sûr.**
+La prochaine étape de la création consistera en une re-saisie de cette graine pour confirmer qu'elle a été notée correctement.
 
-**Notez la graine suivante et rangez-la en lieu sûr.**
+*Avertissement*: Le fait de ne pas garder cette graine privée pourrait entrainer le vol de l'intégralité de votre portefeuille.  Vous ne devez en aucun cas révéler cette graine à quiconque.
 
-La prochaine invite nécessite la saisie de cette graine pour confirmer qu'elle a été enregistrée.
-
-Pour éviter une perte définitive de votre portefeuille, veillez à sauvegarder la graine avant de continuer.
-
-*Avertissement* : Si vous ne maintenez pas cette graine privée, cela peut provoquer le vol de l'ensemble de votre portefeuille. Vous ne devez en aucun cas révéler cette graine à quiconque.
+La graine est la clé principale de votre portefeuille. L'intégralité du portefeuille peut être recréé à tout moment à partir de celle-ci. Si la clé d'encryption de la phrase secrète est oubliée ou si le portefeuille est détruit, vous pourrez utiliser la graine pour restaurer le portefeuille.

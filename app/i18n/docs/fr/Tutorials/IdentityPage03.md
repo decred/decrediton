@@ -1,0 +1,1 @@
+In CMS, identity is already used to sign invoices and comments, and possibly DCCs and DCC votes (not sure, need to check). In the future, I hope it will be also used to sign proposal owner's approval of billing against the proposal (and without such approval billing will not be allowed).
