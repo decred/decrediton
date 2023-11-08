@@ -417,7 +417,7 @@ export const purchaseTicketsAttempt =
         })
       );
     } catch (error) {
-      console.log({ error });
+      dispatch({ error, type: PURCHASETICKETS_FAILED });
     } finally {
       if (needToRestartMixer) {
         const mixedAccount = sel.getMixedAccount(getState());
