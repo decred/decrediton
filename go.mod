@@ -3,7 +3,7 @@ module github.com/decred/decrediton
 go 1.18
 
 require (
-	decred.org/dcrdex v0.6.3
+	decred.org/dcrdex v0.6.4-0.20231108162140-173198c3865d
 	github.com/decred/slog v1.2.0
 	github.com/jrick/logrotate v1.0.0
 )
@@ -16,7 +16,7 @@ require (
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/VictoriaMetrics/fastcache v1.6.0 // indirect
 	github.com/aead/siphash v1.0.1 // indirect
-	github.com/agl/ed25519 v0.0.0-20170116200512-5312a6153412 // indirect
+	github.com/agl/ed25519 v0.0.0-20170116200512-5312a6153412 // indirect; indirectdecred.org/dcrdex v0.6.3
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/btcsuite/btcd v0.23.4 // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.2 // indirect

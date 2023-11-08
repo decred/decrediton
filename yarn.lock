@@ -1325,10 +1325,10 @@
   optionalDependencies:
     global-agent "^3.0.0"
 
-"@electron/rebuild@3.2.13":
-  version "3.2.13"
-  resolved "https://registry.yarnpkg.com/@electron/rebuild/-/rebuild-3.2.13.tgz#98fbb98981b1a86162546a2ab91b2355569cca4c"
-  integrity sha512-DH9Ol4JCnHDYVOD0fKWq+Qqbn/0WU1O6QR0mIpMXEVU4YFM4PlaqNC9K36mGShNBxxGFotZCMDrB1wl/iHM12g==
+"@electron/rebuild@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@electron/rebuild/-/rebuild-3.3.0.tgz#6ba0ae1cb545b2e314901d2ac175ca9c03a2e3da"
+  integrity sha512-S1vgpzIOS1wCJmsYjdLz97MTUV6UTLcMk/HE3w90HYtVxvW+PQdwxLbgsrECX2bysqcnmM5a0K6mXj/gwVgYtQ==
   dependencies:
     "@malept/cross-spawn-promise" "^2.0.0"
     chalk "^4.0.0"
@@ -1336,7 +1336,7 @@
     detect-libc "^2.0.1"
     fs-extra "^10.0.0"
     got "^11.7.0"
-    node-abi "^3.0.0"
+    node-abi "^3.45.0"
     node-api-version "^0.1.4"
     node-gyp "^9.0.0"
     ora "^5.1.0"
@@ -5783,10 +5783,10 @@ electron-to-chromium@^1.4.411:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.416.tgz#7291f704168d3842ae4da3ae9fdc7bfbeb97d116"
   integrity sha512-AUYh0XDTb2vrj0rj82jb3P9hHSyzQNdTPYWZIhPdCOui7/vpme7+HTE07BE5jwuqg/34TZ8ktlRz6GImJ4IXjA==
 
-electron@27.0.3:
-  version "27.0.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-27.0.3.tgz#dc843d95700b33d88e71b458082b66f37ca901c5"
-  integrity sha512-VaB9cI1se+mUtz366NP+zxFVnkHLbCBNO4wwouw3FuGyX/m7/Bv1I89JhWOBv78tC+n11ZYMrVD23Jf6EZgVcg==
+electron@26.4.3:
+  version "26.4.3"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-26.4.3.tgz#b5ac6919449103dda3be787d44fd221456200d7a"
+  integrity sha512-2U+hYgGQck+/b8+B48JMTcE6UWYDC4BBrLNigmjkpOsPUdVuVJXafXHUN6QKxDxZhbwoc5pbk/xpTFOBP1UCOA==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^18.11.18"
@@ -9720,10 +9720,10 @@ node-abi@^2.7.0:
   dependencies:
     semver "^5.4.1"
 
-node-abi@^3.0.0:
-  version "3.43.0"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.43.0.tgz#468dc09af3c262ef2fb3a0d2ff34cf8fba61952a"
-  integrity sha512-QB0MMv+tn9Ur2DtJrc8y09n0n6sw88CyDniWSX2cHW10goQXYPK9ZpFJOktDS4ron501edPX6h9i7Pg+RnH5nQ==
+node-abi@^3.45.0:
+  version "3.51.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.51.0.tgz#970bf595ef5a26a271307f8a4befa02823d4e87d"
+  integrity sha512-SQkEP4hmNWjlniS5zdnfIXTk1x7Ome85RDzHlTbBtzE97Gfwz/Ipw4v/Ryk20DWIy3yCNVLVlGKApCnmvYoJbA==
   dependencies:
     semver "^7.3.5"
 
