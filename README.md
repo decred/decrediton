@@ -190,6 +190,8 @@ To start decrediton from command-line (assuming it is installed in `/Application
 
 ### Windows
 
+Requires at least Windows 10.
+
 Windows is tricky, due to some things working better on MSYS2, while some things
 only working on cmd.exe, and native module building being very tough to get
 right.
