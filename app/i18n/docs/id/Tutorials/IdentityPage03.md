@@ -1,0 +1,1 @@
+Di CMS, identitas sudah digunakan untuk menandatangani faktur dan komentar, dan mungkin DCC dan suara DCC (tidak yakin, perlu dicek). Di masa depan, saya berharap ini juga akan digunakan untuk menandatangani persetujuan pemilik proposal atas penagihan terhadap proposal (dan tanpa persetujuan tersebut, penagihan tidak akan diizinkan).

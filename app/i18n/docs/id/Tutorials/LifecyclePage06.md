@@ -1,0 +1,1 @@
+Jika tiket dipanggil untuk memilih tetapi tidak merespon tepat waktu, tiket dianggap 'tidak terjawab'.  Tiket yang terlewat ini akan mengakibatkan pencabutan yang memungkinkan dana tiket dikembalikan kepada pemegang tiket.  Ini adalah proses yang sama untuk tiket yang kedaluwarsa setelah ~144 hari.  Pencabutan tiket saat ini dibuat secara otomatis sesuai dengan aturan konsensus.

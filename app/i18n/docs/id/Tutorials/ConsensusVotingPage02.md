@@ -1,0 +1,1 @@
+Pemungutan Suara Konsensus pada intinya memerlukan 75% suara agar pemungutan suara dapat diselesaikan. Dan agar suatu pemungutan suara dianggap sah, jumlah suara harus berada di atas kuorom dasar yaitu 10%.

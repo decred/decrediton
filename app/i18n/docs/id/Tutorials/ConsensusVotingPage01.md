@@ -1,0 +1,1 @@
+Di masa lalu, banyak proyek terpecah karena tidak adanya proses yang teratur untuk meningkatkan konsensus. Untuk menghindari hal ini, kami telah menerapkan proses peningkatan jaringan yang diupayakan senyaman dan seteratur mungkin.

@@ -1,0 +1,1 @@
+**_Peringatan!_** Jika perangkat ini berisi wallet yang sudah ada, pastikan Anda memiliki seed di lokasi yang aman dan mudah diakses sebelum melakukan penghapusan dan pemulihan perangkat. Kegagalan untuk melakukan hal tersebut akan mengakibatkan hilangnya dana.

@@ -1,0 +1,1 @@
+Proof-of-Stake (PoS) memberikan cara bagi mereka yang memiliki "skin-in-the-game" yang sebenarnya untuk memiliki efek langsung pada produksi blok. Meskipun dengan PoS murni, pembuatan blok sekali lagi mengarah pada sentralisasi.

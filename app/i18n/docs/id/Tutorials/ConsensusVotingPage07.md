@@ -1,0 +1,1 @@
+Proses peningkatan dan pemungutan suara ini memungkinkan semua pemegang tiket agar suaranya didengar dan memungkinkan jaringan memperbarui aturan konsensus dengan lancar.

@@ -1,0 +1,1 @@
+Membuat Dompet berbasis perangkat Trezor baru dan memasukkan seed baru ke dalam perangkat. Catatan! Ikuti instruksi pada perangkat dan tuliskan 24 kata seed yang ditampilkan satu per satu. Kegagalan untuk melakukannya akan mengakibatkan hilangnya dana.

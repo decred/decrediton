@@ -1,0 +1,1 @@
+Secara statistik, tiket memiliki peluang sekitar 50% untuk dipilih dalam 28 hari pertama.  Ketika tiket dipanggil untuk memilih, pemiliknya dapat mengirimkan suara, yang kemudian memungkinkan mereka untuk menerima harga tiket ditambah hadiah suara sebagai imbalannya.

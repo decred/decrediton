@@ -1,0 +1,1 @@
+Sekarang Anda seharusnya sudah lebih memahami siklus hidup sebuah tiket, jadi mulailah staking Decred Anda dan berpartisipasi di komunitas!

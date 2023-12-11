@@ -1,0 +1,1 @@
+Karena sifat rumit dari kode konsensus dalam proyek mata uang kripto, tindakan luar biasa harus diambil untuk memastikan bahwa proyek tersebut berperilaku sesuai rencana dalam semua skenario yang mungkin terjadi. Decred memiliki beberapa insinyur konsensus terkemuka di dunia yang bekerja untuk mengembangkan cara-cara baru yang menarik untuk meningkatkan ekosistem Decred.

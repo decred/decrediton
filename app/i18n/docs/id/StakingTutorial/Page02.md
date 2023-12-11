@@ -1,0 +1,5 @@
+Ketika tiket dibeli, biaya tiket terkunci di dompet Anda hingga tiket digunakan untuk memilih, atau dicabut. Tiket masuk ke dalam mempool, kemudian ke dalam pool tiket di mana tiket tersebut diundi secara acak untuk memilih. Ada kemungkinan 99,5% bahwa tiket akan memberikan suara. Rata-rata tiket akan memberikan suara dalam 28 hari, tetapi tiket yang masih berada di pool yang belum diundi setelah 142 hari akan dicabut. DCR yang digunakan untuk membeli tiket akan dilepaskan dari penguncian saat tiket tersebut memberikan suara atau saat tiket dicabut.
+
+Ketika sebuah proposal ditetapkan untuk pemungutan suara di Politeia, sebuah snapshot dari kumpulan tiket akan diambil pada saat pemungutan suara. Semua tiket akan memiliki hak untuk memberikan suara pada proposal dalam proses off chain.
+
+Karena validasi blok tidak dapat diubah, keputusan yang dibuat pada semua tiket yang dipilih dapat dilacak secara publik. Partisipasi aktif dalam staking membantu mengamankan jaringan Decred, jaringan, memastikan kualitas Proof-of-Work, dan menentukan arah masa depan Decred.

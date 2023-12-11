@@ -1,0 +1,1 @@
+Pahami bahwa pihak lawan yang jahat dapat mencuri dana dari dompet _episodic_ kecuali jika mereka menggunakan layanan [watchtower](https://docs.decred.org/lightning-network/watchtowers/).

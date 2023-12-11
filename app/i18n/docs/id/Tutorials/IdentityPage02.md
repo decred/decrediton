@@ -1,0 +1,1 @@
+Di Politeia, proposal, komentar, suara komentar, dan sekarang juga pembaruan, ditandatangani dengan kunci identitas. Pesan-pesan ini dapat berdampak besar pada pengambilan keputusan dan pengeluaran, sehingga tanda tangan ini menjadi lebih penting.

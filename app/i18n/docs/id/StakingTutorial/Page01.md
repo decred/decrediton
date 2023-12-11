@@ -1,0 +1,3 @@
+Pemegang Decred dapat berpartisipasi dalam proses Staking (Proof-of-Stake) dengan membeli tiket. Tiket ini digunakan untuk memberikan suara pada Proof-of-Work penambang untuk memvalidasi perubahan pada blockchain Decred, atau pada proposal tata kelola dalam sistem Politeia.
+
+Staking untuk memverifikasi PoW sangat bermanfaat, karena setiap suara yang diberikan akan mendapatkan bagian dari Decred Block Reward. Biasanya, lima tiket disertakan dalam setiap blok, yang berarti setiap pemegang tiket menerima 16% dari total hadiah blok.

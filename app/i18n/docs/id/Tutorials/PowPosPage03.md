@@ -1,0 +1,1 @@
+Untuk menghindari setiap kekurangan ini, Decred menggunakan model hybrid yang memungkinkan produksi blok oleh PoW, namun validasi blok tersebut dilakukan oleh PoS. Hal ini memungkinkan kita untuk mendapatkan yang terbaik dari kedua sistem dan menciptakan sistem checks and balances yang dapat menghindari masalah sentralisasi yang telah terjadi selama bertahun-tahun.

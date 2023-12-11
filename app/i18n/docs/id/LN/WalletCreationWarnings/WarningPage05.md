@@ -1,0 +1,1 @@
+Akun dompet yang digunakan untuk operasi Lightning Network tetap tidak terkunci ketika Lightning digunakan. Dana dari akun tersebut berisiko diakses oleh siapa pun yang memiliki akses jarak jauh atau fisik ke komputer Anda. Disarankan untuk menggunakan akun terpisah (atau lebih baik lagi, dompet terpisah) dengan jumlah dana yang kecil untuk meminimalkan risiko.

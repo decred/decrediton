@@ -1,0 +1,1 @@
+Ketika ditambang menjadi sebuah blok, mereka menjadi 'belum matang'.  Setelah 256 blok (sekitar 21 jam), mereka menjadi 'matang' dan siap dipilih untuk pemungutan suara.

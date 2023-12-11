@@ -1,0 +1,1 @@
+Setelah pemungutan suara dimulai, berjalanlah untuk seluruh Interval Aktivasi Perubahan Aturan (8064 blok) sekitar 4 minggu. Suara dihitung sepanjang interval tersebut. Pemungutan suara bisa ya, tidak, atau abstain seluruhnya. Pemilih tidak dikenakan sanksi karena abstain dalam pemungutan suara konsensus.

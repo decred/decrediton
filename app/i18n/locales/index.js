@@ -135,6 +135,14 @@ const zh_HK = {
   formats: defaultFormats
 };
 
+const id = {
+  key: "id",
+  language: "id-ID",
+  description: "Bahasa Indonesia",
+  messages: require("../translations/id.json"),
+  formats: defaultFormats
+};
+
 const locales = [
   ar,
   de,
@@ -148,7 +156,8 @@ const locales = [
   pl,
   pt_BR,
   zh,
-  zh_HK
+  zh_HK,
+  id
 ];
 
 export default locales;
@@ -206,6 +215,10 @@ export function appLocaleFromElectronLocale(electronLocale) {
     case "zh-HK":
     case "zh-TW":
       return "zh-HK";
+
+    case "id":
+    case "id-ID":
+      return "id-ID";  
 
     default:
       return "en";

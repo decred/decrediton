@@ -1,0 +1,3 @@
+Seperti yang mungkin sudah Anda pahami, staking dan tiket memiliki tiga fungsi inti. Pertama dan bisa dibilang yang paling penting adalah validasi blok sebelumnya.
+
+Tiket yang dipilih ditawarkan kemampuan untuk memberikan suara pada validitas blok sebelumnya. Jadi, misalnya, jika blok sebelumnya bukan versi yang ingin Anda dukung atau tidak berisi transaksi apa pun, pemilih dapat memberikan suara menentang blok tersebut. Jika blok sebelumnya menerima mayoritas suara yang menentang validasinya, maka semua blok 'reguler' dimasukkan kembali ke dalam mempool dan perlu ditambang lagi di blok berikutnya. Selain itu, penambang PoW dari blok tersebut tidak lagi menerima hadiah pembuatan bloknya.

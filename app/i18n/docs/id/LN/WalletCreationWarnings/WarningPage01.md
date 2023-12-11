@@ -1,0 +1,1 @@
+Pahami bahwa [cadangkan data](https://docs.decred.org/lightning-network/backups/) diperlukan sebagai tambahan dari seed dompet Anda untuk memulihkan semua dana Lightning Network.

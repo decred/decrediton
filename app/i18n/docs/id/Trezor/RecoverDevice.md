@@ -1,0 +1,1 @@
+**_Catatan!_** Decrediton hanya mendukung 24 kata (256 bit). Kata-kata untuk impor dcrwallet dan Trezor **berbeda**! Ini berarti Anda tidak dapat secara langsung mengimpor seed Trezor yang sudah ada di dalam dompet perangkat lunak (atau sebaliknya: mengimpor seed Decred 33 kata yang sudah ada ke perangkat perangkat keras).

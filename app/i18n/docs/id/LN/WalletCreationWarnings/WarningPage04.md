@@ -1,0 +1,3 @@
+Sebuah saluran dibuka dengan mengunci sejumlah DCR ke dalam 'transaksi pendanaan' on-chain. Hal ini secara otomatis menciptakan 2 dari 2 dompet multisig di jaringan Decred, dengan setiap pengguna menerima salah satu kunci (biasanya membutuhkan hingga 6 konfirmasi (blok) untuk tersedia).
+
+Transaksi Lightning Network off-chain dapat dilakukan dengan keyakinan penegakan on-chain, ketika sebuah saluran ditutup, saldonya akan dicatat ke blockchain Decred.

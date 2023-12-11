@@ -1,0 +1,1 @@
+Sementara transaksi on-chain membutuhkan rata-rata 5 menit untuk konfirmasi, transaksi Lightning dirutekan hampir seketika. Jaringan Lightning terdiri dari saluran pembayaran individual yang dibuat oleh berbagai pengguna Decred. Ini membentuk jaringan node yang dapat merutekan transaksi di antara mereka sendiri.

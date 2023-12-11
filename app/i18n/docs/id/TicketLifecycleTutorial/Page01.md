@@ -1,0 +1,1 @@
+Membeli tiket untuk PoS cukup mudah, tetapi apa yang terjadi setelah Anda membelinya? Sebuah tiket akan melalui beberapa tahap dalam masa pakainya:

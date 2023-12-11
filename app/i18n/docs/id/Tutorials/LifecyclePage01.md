@@ -1,0 +1,1 @@
+Ketika sebuah tiket dipilih, pemegangnya akan diberi kesempatan untuk memberikan suara.  Suara ini diberikan sebagian dari total subsidi hadiah blok tersebut.  Saat ini, ketika 5 suara dipilih untuk sebuah blok, mereka membagi 80% dari total subsidi blok.

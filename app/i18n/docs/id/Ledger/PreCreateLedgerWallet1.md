@@ -1,0 +1,3 @@
+Anda harus menggunakan Ledger yang sudah diatur "Perangkat Dompet", perangkat yang sudah diinisialisasi dengan seed dan aplikasi decred yang sudah diinstal. Perangkat baru harus diinisialisasi melalui [ledger live](https://www.ledger.com/ledger-live/) dan aplikasi yang telah didekreditkan diunduh dan diinstal di sana.
+
+Dompet yang didukung Ledger dapat digunakan dengan beberapa mata uang kripto tanpa konflik. Dengan kata lain, jika Anda sudah menggunakan dompet perangkat Anda dengan koin lain, Anda dapat terus menggunakannya dan menggunakan seed yang sama untuk dompet Decrediton Anda.

@@ -1,0 +1,1 @@
+Sistem konsensus Decred yang menggunakan hybrid PoW/PoS, di mana PoS dapat menimpa PoW, merupakan jawaban atas masalah Bitcoin di mana penambang PoW memonopoli penegakan konsensus melalui akses penulisan eksklusif ke buku besar.

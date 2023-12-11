@@ -1,0 +1,1 @@
+Sebagai insentif untuk DCR yang mengunci waktu untuk tiket, mereka yang terpilih akan diberikan sebagian dari total subsidi blok sebagai hadiah.

@@ -1,0 +1,1 @@
+Decred diciptakan untuk mengatasi krisis tata kelola dalam Bitcoin. Decred telah membangun sistem hibrida Proof-of-Work/Proof-of-Stake, yang menempatkan pemegang mata uang Decred bertanggung jawab atas tata kelolanya untuk memastikan ketertiban dan keadilan dalam pengambilan keputusan dan proses penyelesaian sengketa.
