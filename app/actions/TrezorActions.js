@@ -23,14 +23,13 @@ import {
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
-
-const session = require("trezor-connect").default;
-const {
+import {
   TRANSPORT_EVENT,
   UI,
   UI_EVENT,
   DEVICE_EVENT
-} = require("trezor-connect");
+} from "@trezor/connect-web";
+const session = require("@trezor/connect-web").default;
 const CHANGE = "device-changed";
 const DISCONNECT = "device-disconnect";
 const CONNECT = "device-connect";
@@ -40,8 +39,6 @@ const TRANSPORT_ERROR = "transport-error";
 const TRANSPORT_START = "transport-start";
 const BOOTLOADER_MODE = "bootloader";
 
-let setListeners = false;
-
 export const TRZ_WALLET_CLOSED = "TRZ_WALLET_CLOSED";
 export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
 
@@ -49,11 +46,6 @@ export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
 // connect to a trezor device.
 export const enableTrezor = () => (dispatch, getState) => {
   dispatch({ type: TRZ_TREZOR_ENABLED });
-
-  if (!setListeners) {
-    setDeviceListeners(dispatch, getState);
-    setListeners = true;
-  }
   connect()(dispatch, getState);
 };
 
@@ -61,11 +53,10 @@ export const initTransport = async (session, debug) => {
   await session
     .init({
       connectSrc: "./",
-      env: "web",
+      transports: ["BridgeTransport"],
       lazyLoad: false,
       popup: false,
       transportReconnect: false,
-      webusb: false,
       manifest: {
         email: "joegruffins@gmail.com",
         appUrl: "https://github.com/decred/decrediton"
@@ -82,6 +73,8 @@ export const TRZ_CONNECT_FAILED = "TRZ_CONNECT_FAILED";
 export const TRZ_CONNECT_SUCCESS = "TRZ_CONNECT_SUCCESS";
 
 export const connect = () => async (dispatch, getState) => {
+  // connected refers to the transport being up and is connected to
+  // TRZ_DEVICETRANSPORT_START and TRZ_DEVICETRANSPORT_LOST.
   const {
     trezor: { connected, connectAttempt }
   } = getState();
@@ -90,6 +83,9 @@ export const connect = () => async (dispatch, getState) => {
 
   wallet.allowExternalRequest(EXTERNALREQUEST_TREZOR_BRIDGE);
 
+  // If there was a previous connection, dispose will reset it.
+  await session.dispose();
+  setDeviceListeners(dispatch, getState);
   const debug = getState().trezor.debug;
   await initTransport(session, debug).catch((error) => {
     dispatch({ error, type: TRZ_CONNECT_FAILED });
@@ -288,6 +284,18 @@ function setDeviceListeners(dispatch, getState) {
 
       case UI.FIRMWARE_PROGRESS: {
         console.log("Trezor update progress: " + event.payload.progress + "%");
+        break;
+      }
+
+      case UI.SELECT_DEVICE: {
+        if (event.payload.devices.length > 0) {
+          session.uiResponse({
+            type: UI.RECEIVE_DEVICE,
+            payload: event.payload.devices[0]
+          });
+        } else {
+          // no devices connected, waiting for connection
+        }
       }
     }
   });
