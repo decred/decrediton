@@ -22,6 +22,7 @@ install:
   - go get -u -v github.com/decred/dcrd
   - go get -u -v github.com/decred/dcrwallet
   - go get -u -v github.com/Masterminds/glide
+  - go get -u -v github.com/trezor/trezord-go
   - go get -u github.com/golang/dep/cmd/dep
   - cd %GOPATH%\\src\\github.com\\decred\\dcrd
   - glide i
@@ -29,11 +30,15 @@ install:
   - cd ../dcrwallet
   - dep ensure
   - go install
+  - cd ../trezord-go
+  - dep ensure
+  - go install
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir bin
   - cp %GOPATH%\\bin\\dcrd.exe bin/
   - cp %GOPATH%\\bin\\dcrctl.exe bin/
   - cp %GOPATH%\\bin\\dcrwallet.exe bin/
+  - cp %GOPATH%\\bin\\trezord-go.exe bin/
   - npm install
 
 build_script:

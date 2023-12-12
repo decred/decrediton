@@ -18,6 +18,9 @@ import {
   launchDCRLnd,
   GetDcrlndPID,
   GetDcrlndCreds,
+  launchTrezord,
+  GetTrezordPID,
+  closeTrezord,
   launchDex,
   initCheckDex,
   initDexCall,
@@ -247,6 +250,26 @@ export const startDcrlnd = async (
     return e;
   }
 };
+
+export const startTrezord = async () => {
+  if (GetTrezordPID() && GetTrezordPID() !== -1) {
+    logger.log(
+      "info",
+      `Skipping restart of trezord-go as it is already running ${GetTrezordPID()}`
+    );
+    return { wasRunning: true };
+  }
+
+  try {
+    const started = await launchTrezord();
+    return started;
+  } catch (e) {
+    logger.log("error", `error launching trezord-go: ${e}`);
+    return e;
+  }
+};
+
+export const stopTrezord = () => closeTrezord();
 
 export const startDex = async (walletPath, testnet, locale) => {
   if (GetDexPID()) {
