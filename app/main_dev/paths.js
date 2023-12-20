@@ -37,11 +37,7 @@ export function getWalletsDirectoryPath() {
 // getWalletsDirectoryPathNetwork gets the wallets directory.
 // Example in unix if testnet equals true: ~/.config/decrediton/wallets/testnet
 export function getWalletsDirectoryPathNetwork(testnet) {
-  return path.join(
-    getAppDataDirectory(),
-    "wallets",
-    testnet ? TESTNET : MAINNET
-  );
+  return path.join(getWalletsDirectoryPath(), testnet ? TESTNET : MAINNET);
 }
 
 // getWalletPath returns the directory of a selected wallet byt its name.
@@ -54,9 +50,7 @@ export function getWalletPath(testnet, walletName = "") {
 // walletPath represents the wallet name decrediton has loaded.
 export function getWalletDb(testnet, walletPath) {
   return path.join(
-    getWalletsDirectoryPath(),
-    testnet ? TESTNET : MAINNET,
-    walletPath,
+    getWalletPath(testnet, walletPath),
     testnet ? "testnet3" : MAINNET,
     "wallet.db"
   );
@@ -90,12 +84,11 @@ export function getDcrdRpcCert(appDataPath) {
   return path.resolve(appDataPath ? appDataPath : getDcrdPath(), "rpc.cert");
 }
 
-export function getCertsPath(name, custombinpath) {
-  const binPath = custombinpath
-    ? custombinpath
-    : process.env.NODE_ENV === "development"
-    ? path.join(__dirname, "..", "certs")
-    : path.join(process.resourcesPath, "certs");
+export function getCertsPath() {
+  const binPath =
+    process.env.NODE_ENV === "development"
+      ? path.join(__dirname, "..", "certs")
+      : path.join(process.resourcesPath, "certs");
 
   return binPath;
 }

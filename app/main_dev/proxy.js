@@ -39,7 +39,7 @@ export const setupProxy = (logger) =>
       default:
         if (proxyType) {
           logger.log("error", "Unknown proxy type " + proxyType);
-          reject("Unknown proxy type: " + proxyType);
+          return reject("Unknown proxy type: " + proxyType);
         }
     }
 
