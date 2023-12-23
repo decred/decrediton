@@ -395,4 +395,23 @@ tutorials.identity = {
     }
   ]
 };
+
+export const tutorialList = [
+  "decredIntro",
+  "ln",
+  "consensusCode",
+  "powPos",
+  "tickets",
+  "staking",
+  "lifecycle",
+  "consensusVoting"
+];
+
+export const tutorialShortList = [
+  "decredIntro",
+  "powPos",
+  "lifecycle",
+  "consensusCode"
+];
+
 export default tutorials;
