@@ -14,7 +14,8 @@ import { FormContainer, ContentContainer /* , Row */ } from "../../helpers";
 import styles from "./Form.module.css";
 import {
   TutorialOverview,
-  tutorials
+  tutorials,
+  tutorialShortList
 } from "../../../SettingsPage/TutorialsTab/helpers";
 import {
   LoaderTitleMsg,
@@ -302,7 +303,7 @@ const WalletSelectionForm = ({
           />
         }
       />
-      {["decredIntro", "powPos", "lifecycle", "blocks"].map((name) => (
+      {tutorialShortList.map((name) => (
         <TutorialOverview
           {...{
             key: name,
