@@ -454,8 +454,9 @@ const testTextFieldInput = async (
 
   const inputControl = screen.getByLabelText(labelName);
   expect(inputControl.value).toMatch(oldValue);
-  await user.clear(inputControl);
-  await user.type(inputControl, newValue);
+  fireEvent.change(inputControl, {
+    target: { value: newValue }
+  });
   // press enter
   fireEvent.keyDown(inputControl, {
     key: "enter",
