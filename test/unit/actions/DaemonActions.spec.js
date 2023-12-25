@@ -56,7 +56,7 @@ import { createStore } from "test-utils.js";
 import * as wal from "wallet";
 import { act } from "react-dom/test-utils";
 import { advanceBy, clear } from "jest-date-mock";
-import { wait } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { preDefinedGradients } from "helpers";
 
 const wallet = wal;
@@ -1603,7 +1603,7 @@ test("test syncDaemon", async () => {
     advanceBy(1000);
     jest.advanceTimersByTime(1000);
   });
-  await wait(() => expect(mockGetBlockCount).toHaveBeenCalled());
+  await waitFor(() => expect(mockGetBlockCount).toHaveBeenCalled());
   expect(store.getState().daemon.daemonSynced).toBeFalsy();
   expect(store.getState().daemon.currentBlockCount).toBe(
     testBlockChainInfo.blockCount
@@ -1622,7 +1622,7 @@ test("test syncDaemon", async () => {
     jest.advanceTimersByTime(1000);
   });
   testDateNow += 1000;
-  await wait(() => expect(mockGetBlockCount).toHaveBeenCalled());
+  await waitFor(() => expect(mockGetBlockCount).toHaveBeenCalled());
   expect(store.getState().daemon.currentBlockCount).toBe(
     testBlockChainInfo.blockCount
   );
@@ -1636,7 +1636,7 @@ test("test syncDaemon", async () => {
   });
   testDateNow += 2000;
 
-  await wait(() => expect(mockSetHeightSynced).toHaveBeenCalled());
+  await waitFor(() => expect(mockSetHeightSynced).toHaveBeenCalled());
 
   expect(store.getState().daemon.daemonSynced).toBeTruthy();
 });

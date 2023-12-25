@@ -4,6 +4,7 @@ import * as ca from "actions/ControlActions";
 import { baseOutput } from "./helpers";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { usePrevious } from "hooks";
+import { compose, get, eq } from "lodash/fp";
 
 export function useSendTransaction() {
   const defaultSpendingAccount = useSelector(
@@ -16,7 +17,16 @@ export function useSendTransaction() {
   const estimatedSignedSize = useSelector(sel.estimatedSignedSize);
   const totalSpent = useSelector(sel.totalSpent);
   const nextAddress = useSelector(sel.nextAddress);
-  const nextAddressAccount = useSelector(sel.nextAddressAccount, shallowEqual);
+  const getNextAddressResponse = useSelector(sel.getNextAddressResponse);
+  const visibleAccounts = useSelector(sel.visibleAccounts);
+
+  const nextAddressAccountNumber = getNextAddressResponse
+    ? getNextAddressResponse.accountNumber
+    : null;
+
+  const nextAddressAccount = visibleAccounts.find(
+    compose(eq(nextAddressAccountNumber), get("value"))
+  );
   const constructTxLowBalance = useSelector(sel.constructTxLowBalance);
   const publishTxResponse = useSelector(sel.publishTxResponse);
   const notMixedAccounts = useSelector(

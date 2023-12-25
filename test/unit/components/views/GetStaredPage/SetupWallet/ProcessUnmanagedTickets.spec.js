@@ -1,7 +1,6 @@
 import ProcessUnmanagedTickets from "components/views/GetStartedPage/SetupWallet/ProcessUnmanagedTickets";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
-import user from "@testing-library/user-event";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wal from "wallet";
 import * as arrs from "../../../../../../app/helpers/arrays";
@@ -123,8 +122,8 @@ const initialState = {
   }
 };
 
-test("skip ProcessUnmanagedTickets and show error", () => {
-  render(
+test("skip ProcessUnmanagedTickets and show error", async () => {
+  const { user } = render(
     <ProcessUnmanagedTickets
       send={mockSend}
       cancel={mockCancel}
@@ -132,38 +131,41 @@ test("skip ProcessUnmanagedTickets and show error", () => {
     />
   );
   expect(screen.getByText(testError)).toBeInTheDocument();
-  user.click(getSkipButton());
+  await user.click(getSkipButton());
   expect(mockCancel).toHaveBeenCalled();
 });
 
 test("do ProcessUnmanagedTickets - in a private wallet", async () => {
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
   expect(continueButton.disabled).toBe(true);
 
-  user.click(screen.getByText("Select VSP..."));
-  user.click(screen.getByText(mockAvailableMainnetVsps[0].host));
+  await user.click(screen.getByText("Select VSP..."));
+  await user.click(screen.getByText(mockAvailableMainnetVsps[0].host));
   expect(screen.getByText("Loading")).toBeInTheDocument();
-  await wait(() => expect(getContinueButton().disabled).toBeFalsy());
+  await waitFor(() => expect(getContinueButton().disabled).toBeFalsy());
   expect(screen.queryByText("Loading")).not.toBeInTheDocument();
   expect(
     screen.getByText(mockAvailableMainnetVsps[0].host)
   ).toBeInTheDocument();
 
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessUnmanagedTickets).toHaveBeenCalledWith(
     testWalletService,
@@ -202,32 +204,35 @@ test("do ProcessUnmanagedTickets - in a default wallet", async () => {
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
   expect(continueButton.disabled).toBe(true);
 
-  user.click(screen.getByText("Select VSP..."));
-  user.click(screen.getByText(mockAvailableMainnetVsps[0].host));
+  await user.click(screen.getByText("Select VSP..."));
+  await user.click(screen.getByText(mockAvailableMainnetVsps[0].host));
   expect(screen.getByText("Loading")).toBeInTheDocument();
-  await wait(() => expect(getContinueButton().disabled).toBeFalsy());
+  await waitFor(() => expect(getContinueButton().disabled).toBeFalsy());
   expect(screen.queryByText("Loading")).not.toBeInTheDocument();
   expect(
     screen.getByText(mockAvailableMainnetVsps[0].host)
   ).toBeInTheDocument();
 
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessUnmanagedTickets).toHaveBeenCalledWith(
     testWalletService,
@@ -264,40 +269,42 @@ test("do ProcessUnmanagedTickets - in a default wallet", async () => {
 
 test("do ProcessUnmanagedTickets - vsp listing is not enabled", async () => {
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState: cloneDeep({
-      ...initialState,
-      settings: {
-        ...initialState.settings,
-        tempSettings: {
-          ...initialState.settings.tempSettings,
-          allowedExternalRequests: []
+  const { user } = render(
+    <ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState: cloneDeep({
+        ...initialState,
+        settings: {
+          ...initialState.settings,
+          tempSettings: {
+            ...initialState.settings.tempSettings,
+            allowedExternalRequests: []
+          }
         }
-      }
-    })
-  });
+      })
+    }
+  );
 
   const continueButton = getContinueButton();
   expect(continueButton.disabled).toBe(true);
 
-  user.type(screen.getByRole("combobox"), testCustomVspHost);
-  user.click(screen.getByText(`Create "${testCustomVspHost}"`));
-  expect(screen.getByText("Loading")).toBeInTheDocument();
-  await wait(() =>
+  await user.type(screen.getByRole("combobox"), testCustomVspHost);
+  await user.click(screen.getByText(`Create "${testCustomVspHost}"`));
+  await waitFor(() =>
     expect(screen.getByText(testCustomVspHost)).toBeInTheDocument()
   );
 
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessUnmanagedTickets).toHaveBeenCalledWith(
     testWalletService,
@@ -339,29 +346,32 @@ test("do ProcessUnManagedTickets - failed", async () => {
     }
   );
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessUnmanagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
   expect(continueButton.disabled).toBe(true);
 
-  user.click(screen.getByText("Select VSP..."));
-  user.click(screen.getByText(mockAvailableMainnetVsps[0].host));
-  expect(screen.getByText("Loading")).toBeInTheDocument();
-  await wait(() => expect(getContinueButton().disabled).toBeFalsy());
+  await user.click(screen.getByText("Select VSP..."));
+  await user.click(screen.getByText(mockAvailableMainnetVsps[0].host));
+  await waitFor(() => screen.getByText("Loading"));
+  await waitFor(() => expect(getContinueButton().disabled).toBeFalsy());
   expect(screen.queryByText("Loading")).not.toBeInTheDocument();
   expect(
     screen.getByText(mockAvailableMainnetVsps[0].host)
   ).toBeInTheDocument();
 
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessUnmanagedTickets).toHaveBeenCalledWith(
     testWalletService,

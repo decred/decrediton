@@ -52,7 +52,7 @@ const mockTitle = "mock-title";
 const mockClassName = "mock-classname";
 const mockHeaderClassName = "mock-header-classname";
 
-test("check non-expandable table", () => {
+test("check non-expandable table", async () => {
   render(
     <DetailsTable
       data={mockData}
@@ -65,18 +65,18 @@ test("check non-expandable table", () => {
   expect(title.className).toMatch(mockHeaderClassName);
   expect(title.parentNode.className).toMatch(mockClassName);
   expect(screen.getByText(`${mockData[0].label}:`)).toBeInTheDocument();
-  user.click(title);
+  await user.click(title);
   expect(screen.getByText(`${mockData[0].label}:`)).toBeInTheDocument();
 });
 
-test("check expandable table", () => {
+test("check expandable table", async () => {
   render(<DetailsTable data={mockData} title={mockTitle} expandable />);
   const title = screen.getByText(mockTitle);
 
   expect(screen.queryByText(`${mockData[0].label}:`)).not.toBeInTheDocument();
 
   //open details
-  user.click(title);
+  await user.click(title);
   expect(screen.getByText(`${mockData[0].label}:`)).toBeInTheDocument();
   expect(screen.getByText(`${mockData[1].label}:`)).toBeInTheDocument();
   expect(screen.getByText(mockData[0].value)).toBeInTheDocument();
@@ -110,6 +110,6 @@ test("check expandable table", () => {
   ).toBeInTheDocument();
 
   //close details
-  user.click(title);
+  await user.click(title);
   expect(screen.queryByText(`${mockData[0].label}:`)).not.toBeInTheDocument();
 });

@@ -3,6 +3,7 @@ import AccountsSelect from "./AccountsSelect";
 import { useSelector, useDispatch } from "react-redux";
 import * as ca from "actions/ControlActions";
 import * as sel from "selectors";
+import { compose, get, eq } from "lodash/fp";
 
 function ReceiveAccountsSelect({
   onChange,
@@ -12,7 +13,16 @@ function ReceiveAccountsSelect({
 }) {
   const dispatch = useDispatch();
   const mixedAccount = useSelector(sel.getMixedAccount);
-  const nextAddressAccount = useSelector(sel.nextAddressAccount);
+  const getNextAddressResponse = useSelector(sel.getNextAddressResponse);
+  const visibleAccounts = useSelector(sel.visibleAccounts);
+
+  const nextAddressAccountNumber = getNextAddressResponse
+    ? getNextAddressResponse.accountNumber
+    : null;
+
+  const nextAddressAccount = visibleAccounts.find(
+    compose(eq(nextAddressAccountNumber), get("value"))
+  );
 
   const getNextAddressAttempt = useCallback(
     (value) => dispatch(ca.getNextAddressAttempt(value)),

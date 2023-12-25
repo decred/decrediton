@@ -1,7 +1,6 @@
 import ProcessManagedTickets from "components/views/GetStartedPage/SetupWallet/ProcessManagedTickets";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
-import user from "@testing-library/user-event";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as wal from "wallet";
 import * as arrs from "../../../../../../app/helpers/arrays";
@@ -108,37 +107,40 @@ const initialState = {
   }
 };
 
-test("skip ProcessManagedTickets and show error", () => {
-  render(
+test("skip ProcessManagedTickets and show error", async () => {
+  const { user } = render(
     <ProcessManagedTickets
       send={mockSend}
       cancel={mockCancel}
       error={testError}
     />
   );
-  user.click(getSkipButton());
+  await user.click(getSkipButton());
   expect(screen.getByText(testError)).toBeInTheDocument();
   expect(mockCancel).toHaveBeenCalled();
 });
 
 test("do ProcessManagedTickets - in a private wallet", async () => {
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessManagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessManagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
-  user.click(continueButton);
+  await user.click(continueButton);
 
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessManagedTickets).toHaveBeenNthCalledWith(
     1,
@@ -201,22 +203,25 @@ test("do ProcessManagedTickets - in a default wallet, available vps pubkeys have
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessManagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessManagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
-  user.click(continueButton);
+  await user.click(continueButton);
 
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessManagedTickets).toHaveBeenNthCalledWith(
     1,
@@ -279,22 +284,25 @@ test("do ProcessManagedTickets - in a default wallet, available vps pubkeys have
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
   mockUnlockLockAndGetAccountsAttempt();
-  render(<ProcessManagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessManagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
-  user.click(continueButton);
+  await user.click(continueButton);
 
   expect(screen.getByText("Passphrase")).toBeInTheDocument();
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(continueButton);
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.click(continueButton);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockProcessManagedTickets).toHaveBeenNthCalledWith(
     1,
@@ -355,16 +363,19 @@ test("do ProcessManagedTickets - failed to fetch vsps", async () => {
   mockGetAllVSPs = wallet.getAllVSPs = jest.fn(() => {
     throw testError;
   });
-  render(<ProcessManagedTickets send={mockSend} cancel={mockCancel} />, {
-    initialState
-  });
+  const { user } = render(
+    <ProcessManagedTickets send={mockSend} cancel={mockCancel} />,
+    {
+      initialState
+    }
+  );
   const continueButton = getContinueButton();
-  user.click(continueButton);
+  await user.click(continueButton);
 
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
-  user.click(getModalContinueButton());
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.click(getModalContinueButton());
 
-  await wait(() => expect(mockSend).toHaveBeenCalled());
+  await waitFor(() => expect(mockSend).toHaveBeenCalled());
 
   expect(mockGetAllVSPs).toHaveBeenCalled();
   expect(mockProcessManagedTickets).not.toHaveBeenCalled();

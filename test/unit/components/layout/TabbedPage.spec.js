@@ -60,7 +60,7 @@ beforeEach(() => {
   selectors.uiAnimations = jest.fn(() => true);
 });
 
-test("test tabs with animation", () => {
+test("test tabs with animation", async () => {
   render(<TabbedPage header={<TestPageHeader />} tabs={tabs} />);
 
   expect(screen.getByText(testPageHeaderTitle)).toBeInTheDocument();
@@ -70,17 +70,17 @@ test("test tabs with animation", () => {
   expect(screen.getByText(testDesc1)).toBeInTheDocument();
 
   // move to the second tab
-  user.click(screen.getByText(testLabel2));
+  await user.click(screen.getByText(testLabel2));
   expect(screen.getByText(testContent2)).toBeInTheDocument();
   expect(screen.getByText(testDesc2)).toBeInTheDocument();
 
   // move to the third tab
-  user.click(screen.getByText(testLabel3));
+  await user.click(screen.getByText(testLabel3));
   expect(screen.getByText(testContent3)).toBeInTheDocument();
   expect(screen.getByText(testDesc3)).toBeInTheDocument();
 });
 
-test("test tabs without animation", () => {
+test("test tabs without animation", async () => {
   selectors.uiAnimations = jest.fn(() => false);
   render(<TabbedPage header={<TestPageHeader />} tabs={tabs} />);
 
@@ -91,12 +91,12 @@ test("test tabs without animation", () => {
   expect(screen.getByText(testDesc1)).toBeInTheDocument();
 
   // move to the second tab
-  user.click(screen.getByText(testLabel2));
+  await user.click(screen.getByText(testLabel2));
   expect(screen.getByText(testContent2)).toBeInTheDocument();
   expect(screen.getByText(testDesc2)).toBeInTheDocument();
 
   // move to the third tab
-  user.click(screen.getByText(testLabel3));
+  await user.click(screen.getByText(testLabel3));
   expect(screen.getByText(testContent3)).toBeInTheDocument();
   expect(screen.getByText(testDesc3)).toBeInTheDocument();
 });
