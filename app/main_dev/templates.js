@@ -95,6 +95,13 @@ const darwinTemplate = (mainWindow, loadCustomTranslation, locale) => [
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
         }
+      },
+      {
+        label: locale.messages["appMenu.loadCustomTranslation"],
+        accelerator: "",
+        click() {
+          loadCustomTranslation();
+        }
       }
     ]
   },
