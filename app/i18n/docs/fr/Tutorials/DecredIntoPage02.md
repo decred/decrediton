@@ -1,0 +1,1 @@
+Le système de consensus de Decred est basé sur le mode hybride PdT/PdE (PoW/PoS) dans lequel la PdE (PoS) peut refuser la PdT (PoW). Il s'agit d'une réponse au problème de Bitcoin où les mineurs PdT (PoW) détiennent le monopole dans l'application du consensus via leur droits exclusifs d'écriture sur le registre.

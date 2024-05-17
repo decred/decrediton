@@ -1,0 +1,1 @@
+Lorsqu'un ticket est 'en vie', il a la même chance d'être sélectionné que tous les autres tickets actuellement dans le pool de tickets. Le pool de tickets a une taille approximative de 40960. Pour essayer de maintenir cette taille idéale, le prix des tickets varie en fonction du nombre de tickets dans le pool et de la différence avec la taille idéale.

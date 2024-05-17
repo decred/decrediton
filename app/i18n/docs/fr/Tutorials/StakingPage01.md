@@ -1,0 +1,3 @@
+La participation à la preuve d'enjeu (staking) et les tickets ont trois fonctionnalités essentielles. La première et possiblement la plus importante est la validation des blocs précédents.
+
+Les tickets qui sont sélectionnés peuvent voter sur la validité du bloc précédent. Ainsi, un votant pourrait choisir de voter contre le bloc précédent si ce bloc n'avait pas une version supportée ou s'il ne contenait aucune transaction. Si le bloc précédent reçoit une majorité de votes opposés à sa validation, toutes les transactions 'régulières' sont alors réintégrées au mempool et devront être minées à nouveau dans un futur bloc. À noter que le mineur PdT (PoW) du bloc invalidé ne recevra pas de récompense pour la création du bloc.

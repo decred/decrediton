@@ -1,0 +1,1 @@
+Decred a été créé pour adresser à une crise de gouvernance liée à Bitcoin. Decred a construit un système hybride Preuve-de-travail/Preuve-d'enjeu (Proof-of-Work/Proof-of-Stake), qui confie aux détenteurs de monnaie Decred la responsabilité de sa gouvernance et d'assurer le maintien de l'ordre et de l'équité dans le processus de prise de décisions et de résolution des litiges.
