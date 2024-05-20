@@ -323,7 +323,7 @@ const connectToLNWallet =
       } catch (error) {
         // An unimplemented error here probably means dcrlnd was just unlocked
         // and is currently starting up the services. Wait a bit and try again.
-        if (error.code !== 12) {
+        if (error.code !== 12 && error.toString().indexOf("in the process of starting up") == -1) {
           // 12 === UNIMPLEMENTED.
           throw error;
         }
