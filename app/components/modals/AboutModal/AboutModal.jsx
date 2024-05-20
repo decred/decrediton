@@ -59,7 +59,7 @@ const AboutModal = ({ show, onCancelModal }) => {
             )}
           </div>
           <div className={styles.bottomAreaMiddle}>
-            Copyright &copy; 2020-2022{" "}
+            Copyright &copy; 2020-2024{" "}
             <ExternalLink href="https://decred.org">Decred</ExternalLink>
           </div>
           <div className={styles.bottomAreaRight}>
