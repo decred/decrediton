@@ -136,6 +136,8 @@ function deserialize_wtclientrpc_Tower(buffer_arg) {
 }
 
 
+// WatchtowerClient is a service that grants access to the watchtower client
+// functionality of the daemon.
 var WatchtowerClientService = exports['wtclientrpc.WatchtowerClient'] = {
   //
 // AddTower adds a new watchtower reachable at the given address and

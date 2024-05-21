@@ -2,7 +2,7 @@
 
 'use strict';
 var walletunlocker_pb = require('./walletunlocker_pb.js').lnrpc;
-var rpc_pb = require('./rpc_pb.js').lnrpc;
+var lightning_pb = require('./lightning_pb.js').lnrpc;
 
 function serialize_lnrpc_ChangePasswordRequest(arg) {
   if (!(arg instanceof walletunlocker_pb.ChangePasswordRequest)) {
