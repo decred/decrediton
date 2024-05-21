@@ -6,7 +6,9 @@ import {
   getAppDataDirectory,
   getDcrdPath,
   getCertsPath,
-  getSitePath
+  userDataPath,
+  getSitePath,
+  getBuildPath
 } from "./paths";
 import { getWalletCfg, getGlobalCfg } from "../config";
 import {
@@ -46,6 +48,7 @@ import { makeRandomString, isPlainString as isString } from "helpers/strings";
 import { makeFileBackup } from "helpers/files";
 import { DEX_LOCALPAGE } from "./externalRequests";
 import { getProxyTypeAndLocation } from "./proxy";
+import SudoerUnix from 'electron-sudo';
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -1020,6 +1023,43 @@ export const launchTrezord = () =>
     trezord.unref();
     return;
   });
+
+const FILE_NAME = '51-trezor.rules';
+
+export const copyTrezorUdevRules = async () => {
+    logger.log('info', `Beginning of udev rules`);
+    // Udev is installed on linux distros.
+    if (os.platform() != "linux") {
+      return;
+    }
+
+    const resourceRules = `${getBuildPath()}/${FILE_NAME}`;
+    const userRules = `${userDataPath()}/${FILE_NAME}`;
+    const distRules = `/etc/udev/rules.d/${FILE_NAME}`;
+
+    // If rules already exist nothing to do.
+    if (fs.existsSync(distRules)) {
+      return;
+    }
+
+    if (!fs.existsSync(userRules)) {
+      logger.log('info', `Create user data rules: ${userRules}`);
+      try {
+        // copy rules from app resources (/tmp/...) to user data files (~/.cache/...)
+        // this step is required. `pkexec` returns "Permission denied" error when copying directly from app resources.
+        await fs.promises.copyFile(resourceRules, userRules);
+        // chmod to read-only
+        await fs.promises.chmod(userRules, 0o444);
+      } catch (err) {
+        throw(`user data rules error ${err}`);
+      }
+    }
+
+    logger.log('info', `Create distro rules: ${distRules}`);
+    let options = {name: 'electron sudo application'},
+    sudoer = new SudoerUnix(options);
+    await sudoer.copy(userRules, distRules);
+  };
 
 const Mainnet = 0;
 const Testnet = 1;

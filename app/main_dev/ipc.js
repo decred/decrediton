@@ -18,6 +18,7 @@ import {
   launchDCRLnd,
   GetDcrlndPID,
   GetDcrlndCreds,
+  copyTrezorUdevRules,
   launchTrezord,
   GetTrezordPID,
   closeTrezord,
@@ -261,8 +262,14 @@ export const startTrezord = async () => {
   }
 
   try {
-    const started = await launchTrezord();
-    return started;
+    await copyTrezorUdevRules();
+  } catch (e) {
+    logger.log("error", `error copying trezor udev rules: ${e}`);
+    return e;
+  }
+
+  try {
+    launchTrezord();
   } catch (e) {
     logger.log("error", `error launching trezord-go: ${e}`);
     return e;

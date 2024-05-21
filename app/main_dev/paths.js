@@ -1,6 +1,7 @@
 import path from "path";
 import os from "os";
 import fs from "fs";
+import { app } from "electron";
 import { initWalletCfg, newWalletConfigCreation } from "../config";
 import { TESTNET, MAINNET } from "constants";
 
@@ -21,6 +22,10 @@ export function getAppDataDirectory() {
   } else {
     return path.join(os.homedir(), ".config", "decrediton");
   }
+}
+
+export function userDataPath() {
+  return app.getPath('userData');
 }
 
 // getGlobalCfgPath gets decrediton's config.json file.
@@ -305,4 +310,10 @@ export function getSitePath(custombinpath) {
     : path.join(process.resourcesPath, "bin");
 
   return path.join(sitePath, "site");
+}
+
+export function getBuildPath() {
+  return process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "..", "build")
+    : path.join(process.resourcesPath, "build");
 }
