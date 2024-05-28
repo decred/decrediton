@@ -48,13 +48,15 @@ import {
   TRZ_INITDEVICE_ATTEMPT,
   TRZ_INITDEVICE_FAILED,
   TRZ_INITDEVICE_SUCCESS,
+  TRZ_TREZORD_STARTED,
   TRZ_UPDATEFIRMWARE_ATTEMPT,
   TRZ_UPDATEFIRMWARE_FAILED,
   TRZ_UPDATEFIRMWARE_SUCCESS,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_ATTEMPT,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
   TRZ_GETWALLETCREATIONMASTERPUBKEY_SUCCESS,
-  TRZ_GETFEATURES_SUCCESS
+  TRZ_GETFEATURES_SUCCESS,
+  TRZ_UDEV_ERROR
 } from "actions/TrezorActions";
 import {
   SIGNTX_ATTEMPT,
@@ -77,7 +79,8 @@ export default function trezor(state = {}, action) {
     case TRZ_CONNECT_SUCCESS:
       return {
         ...state,
-        connectAttempt: false
+        connectAttempt: false,
+        udevError: false
       };
     case TRZ_CONNECT_FAILED:
       return {
@@ -89,6 +92,7 @@ export default function trezor(state = {}, action) {
       return {
         ...state,
         transportError: false,
+        initted: true,
         connected: true
       };
     case TRZ_DEVICETRANSPORT_LOST:
@@ -97,6 +101,7 @@ export default function trezor(state = {}, action) {
         transportError: action.error,
         device: null,
         deviceLabel: "",
+        initted: false,
         pinProtection: undefined,
         passphraseProtection: undefined,
         passphraseOnDeviceProtection: undefined,
@@ -120,8 +125,6 @@ export default function trezor(state = {}, action) {
     case TRZ_WALLET_CLOSED:
       return {
         ...state,
-        device: null,
-        deviceLabel: "",
         pinProtection: undefined,
         passphraseProtection: undefined,
         passphraseOnDeviceProtection: undefined,
@@ -222,6 +225,8 @@ export default function trezor(state = {}, action) {
     case TRZ_WIPEDEVICE_ATTEMPT:
     case TRZ_INITDEVICE_ATTEMPT:
       return { ...state, performingOperation: true };
+    case TRZ_TREZORD_STARTED:
+      return { ...state, trezordStarted: true };
     case TRZ_TOGGLEPINPROTECTION_ATTEMPT:
       return {
         ...state,
@@ -326,7 +331,12 @@ export default function trezor(state = {}, action) {
         performingTogglePassphraseOnDeviceProtection: false
       };
     case CLOSEWALLET_SUCCESS:
-      return { ...state, enabled: false };
+      return { ...state };
+    case TRZ_UDEV_ERROR:
+      return {
+        ...state,
+        udevError: true
+      };
     default:
       return state;
   }
