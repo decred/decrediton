@@ -1,6 +1,6 @@
 import * as client from "middleware/ln/client";
 import fs from "fs";
-import { lnrpc as pb } from "middleware/ln/rpc_pb";
+import { lnrpc as pb } from "middleware/ln/lightning_pb";
 import { lnrpc as wupb } from "middleware/ln/walletunlocker_pb";
 import { invoicesrpc as inpb } from "middleware/ln/invoices_pb";
 import { autopilotrpc as appb } from "middleware/ln/autopilot_pb";

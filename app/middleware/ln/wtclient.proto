@@ -4,6 +4,38 @@ package wtclientrpc;
 
 option go_package = "github.com/decred/dcrlnd/lnrpc/wtclientrpc";
 
+// WatchtowerClient is a service that grants access to the watchtower client
+// functionality of the daemon.
+service WatchtowerClient {
+    /*
+    AddTower adds a new watchtower reachable at the given address and
+    considers it for new sessions. If the watchtower already exists, then
+    any new addresses included will be considered when dialing it for
+    session negotiations and backups.
+    */
+    rpc AddTower (AddTowerRequest) returns (AddTowerResponse);
+
+    /*
+    RemoveTower removes a watchtower from being considered for future session
+    negotiations and from being used for any subsequent backups until it's added
+    again. If an address is provided, then this RPC only serves as a way of
+    removing the address from the watchtower instead.
+    */
+    rpc RemoveTower (RemoveTowerRequest) returns (RemoveTowerResponse);
+
+    // ListTowers returns the list of watchtowers registered with the client.
+    rpc ListTowers (ListTowersRequest) returns (ListTowersResponse);
+
+    // GetTowerInfo retrieves information for a registered watchtower.
+    rpc GetTowerInfo (GetTowerInfoRequest) returns (Tower);
+
+    // Stats returns the in-memory statistics of the client since startup.
+    rpc Stats (StatsRequest) returns (StatsResponse);
+
+    // Policy returns the active watchtower client policy configuration.
+    rpc Policy (PolicyRequest) returns (PolicyResponse);
+}
+
 message AddTowerRequest {
     // The identifying public key of the watchtower to add.
     bytes pubkey = 1;
@@ -59,6 +91,9 @@ message TowerSession {
     the justice transaction in the event of a channel breach.
     */
     uint32 sweep_atoms_per_byte = 4;
+
+    // Upstream, this is used for the sweep_sats_per_vbyte field.
+    reserved 5;
 }
 
 message Tower {
@@ -117,7 +152,19 @@ message StatsResponse {
     uint32 num_sessions_exhausted = 5;
 }
 
+enum PolicyType {
+    // Selects the policy from the legacy tower client.
+    LEGACY = 0;
+
+    // Selects the policy from the anchor tower client.
+    ANCHOR = 1;
+}
+
 message PolicyRequest {
+    /*
+    The client type from which to retrieve the active offering policy.
+    */
+    PolicyType policy_type = 1;
 }
 
 message PolicyResponse {
@@ -132,34 +179,7 @@ message PolicyResponse {
     justice transactions in response to channel breaches.
     */
     uint32 sweep_atoms_per_byte = 2;
-}
 
-service WatchtowerClient {
-    /*
-    AddTower adds a new watchtower reachable at the given address and
-    considers it for new sessions. If the watchtower already exists, then
-    any new addresses included will be considered when dialing it for
-    session negotiations and backups.
-    */
-    rpc AddTower (AddTowerRequest) returns (AddTowerResponse);
-
-    /*
-    RemoveTower removes a watchtower from being considered for future session
-    negotiations and from being used for any subsequent backups until it's added
-    again. If an address is provided, then this RPC only serves as a way of
-    removing the address from the watchtower instead.
-    */
-    rpc RemoveTower (RemoveTowerRequest) returns (RemoveTowerResponse);
-
-    // ListTowers returns the list of watchtowers registered with the client.
-    rpc ListTowers (ListTowersRequest) returns (ListTowersResponse);
-
-    // GetTowerInfo retrieves information for a registered watchtower.
-    rpc GetTowerInfo (GetTowerInfoRequest) returns (Tower);
-
-    // Stats returns the in-memory statistics of the client since startup.
-    rpc Stats (StatsRequest) returns (StatsResponse);
-
-    // Policy returns the active watchtower client policy configuration.
-    rpc Policy (PolicyRequest) returns (PolicyResponse);
+    // Upstream, this is used for the sweep_sats_per_vbyte field.
+    reserved 3;
 }

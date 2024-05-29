@@ -22,6 +22,7 @@ goog.exportSymbol('wtclientrpc.ListTowersRequest', null, proto);
 goog.exportSymbol('wtclientrpc.ListTowersResponse', null, proto);
 goog.exportSymbol('wtclientrpc.PolicyRequest', null, proto);
 goog.exportSymbol('wtclientrpc.PolicyResponse', null, proto);
+goog.exportSymbol('wtclientrpc.PolicyType', null, proto);
 goog.exportSymbol('wtclientrpc.RemoveTowerRequest', null, proto);
 goog.exportSymbol('wtclientrpc.RemoveTowerResponse', null, proto);
 goog.exportSymbol('wtclientrpc.StatsRequest', null, proto);
@@ -2271,7 +2272,7 @@ proto.wtclientrpc.PolicyRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.wtclientrpc.PolicyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    policyType: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -2308,6 +2309,10 @@ proto.wtclientrpc.PolicyRequest.deserializeBinaryFromReader = function(msg, read
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {!proto.wtclientrpc.PolicyType} */ (reader.readEnum());
+      msg.setPolicyType(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2337,6 +2342,31 @@ proto.wtclientrpc.PolicyRequest.prototype.serializeBinary = function() {
  */
 proto.wtclientrpc.PolicyRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getPolicyType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional PolicyType policy_type = 1;
+ * @return {!proto.wtclientrpc.PolicyType}
+ */
+proto.wtclientrpc.PolicyRequest.prototype.getPolicyType = function() {
+  return /** @type {!proto.wtclientrpc.PolicyType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {!proto.wtclientrpc.PolicyType} value
+ * @return {!proto.wtclientrpc.PolicyRequest} returns this
+ */
+proto.wtclientrpc.PolicyRequest.prototype.setPolicyType = function(value) {
+  return jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -2499,5 +2529,13 @@ proto.wtclientrpc.PolicyResponse.prototype.setSweepAtomsPerByte = function(value
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.wtclientrpc.PolicyType = {
+  LEGACY: 0,
+  ANCHOR: 1
+};
 
 goog.object.extend(exports, proto);
