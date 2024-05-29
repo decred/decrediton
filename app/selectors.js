@@ -1103,6 +1103,7 @@ export const confirmationDialogModalVisible = bool(
 
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
+export const trezorUdevError = get(["trezor", "udevError"]);
 
 export const isLedger = get(["ledger", "enabled"]);
 

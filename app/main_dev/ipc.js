@@ -21,6 +21,7 @@ import {
   launchTrezord,
   GetTrezordPID,
   closeTrezord,
+  needsUdevRules,
   launchDex,
   initCheckDex,
   initDexCall,
@@ -249,6 +250,10 @@ export const startDcrlnd = async (
     logger.log("error", `error launching dcrlnd: ${e}`);
     return e;
   }
+};
+
+export const needUdevRules = () => {
+  return { needs: needsUdevRules() };
 };
 
 export const startTrezord = async () => {

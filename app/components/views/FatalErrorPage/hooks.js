@@ -7,6 +7,7 @@ export function useFatalErrorPage() {
   const isAdvancedDaemon = useSelector(sel.isAdvancedDaemon);
   const daemonError = useSelector(sel.daemonError);
   const walletError = useSelector(sel.walletError);
+  const trezorUdevError = useSelector(sel.trezorUdevError);
 
   const shutdownApp = () => dispatch(da.shutdownApp());
   const backToCredentials = () => dispatch(da.backToCredentials());
@@ -18,6 +19,7 @@ export function useFatalErrorPage() {
     isAdvancedDaemon,
     shutdownApp,
     backToCredentials,
-    deleteDaemonData
+    deleteDaemonData,
+    trezorUdevError
   };
 }

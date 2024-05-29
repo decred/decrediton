@@ -272,6 +272,17 @@ export const closeDcrlnd = () => {
   return true;
 };
 
+export function needsUdevRules() {
+  if (os.platform() != "linux") {
+    return false;
+  }
+  const distRules = "/etc/udev/rules.d/51-trezor.rules";
+  if (fs.existsSync(distRules)) {
+    return false;
+  }
+  return true;
+}
+
 export function closeTrezord() {
   if (trezordPID === -1) {
     // process is not started by decrediton
