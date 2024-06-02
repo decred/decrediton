@@ -1,7 +1,6 @@
 import AccountsPage from "components/views/AccountsPage";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
-import user from "@testing-library/user-event";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as cla from "actions/ClientActions";
@@ -149,7 +148,7 @@ const queryHideButton = () => screen.queryByText("Hide");
 const getShowButton = () => screen.getByText("Show").nextElementSibling;
 
 test("test the Primary account", async () => {
-  render(<AccountsPage />);
+  const { user } = render(<AccountsPage />);
 
   // default account
   const account = screen.getByText("Primary Account");
@@ -158,8 +157,8 @@ test("test the Primary account", async () => {
   );
 
   // show account details
-  user.click(account);
-  await wait(() => expect(getBalances()).toBeInTheDocument());
+  await user.click(account);
+  await waitFor(() => expect(getBalances()).toBeInTheDocument());
   expect(getBalancesTextContent()).toMatchInlineSnapshot(
     '"BalancesTotal95.51454006 DCRSpendable95.51454006 DCRImmature Rewards0.00000 DCRLocked By Tickets0.00000 DCRVoting Authority58.02257025 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
@@ -168,7 +167,7 @@ test("test the Primary account", async () => {
   );
   expect(getExtendedPublicKeyValue()).toBe("Hidden");
   // reveal pubKey
-  user.click(getRevealPubkeyButton());
+  await user.click(getRevealPubkeyButton());
   expect(mockGetAccountExtendedKeyAttempt).toHaveBeenCalledWith(
     mockBalances[0].accountNumber
   );
@@ -177,31 +176,31 @@ test("test the Primary account", async () => {
   ).toBeInTheDocument();
 
   // hide pubKey
-  user.click(getHidePubkeyButton());
+  await user.click(getHidePubkeyButton());
   expect(getExtendedPublicKeyValue()).toBe("Hidden");
 
   // rename account, but cancel first
-  user.click(getRenameAccountButton());
-  user.click(screen.getByText("Cancel"));
+  await user.click(getRenameAccountButton());
+  await user.click(screen.getByText("Cancel"));
 
   // try rename without giving the name
-  user.click(getRenameAccountButton());
-  user.click(screen.getByText("Rename"));
+  await user.click(getRenameAccountButton());
+  await user.click(screen.getByText("Rename"));
   expect(screen.getByText("This field is required")).toBeInTheDocument();
 
   const newAccountNameInput = screen.getByPlaceholderText("New Account Name");
   // try rename typing a too long name
-  user.click(getRenameAccountButton());
+  await user.click(getRenameAccountButton());
   const tooLongAccountName = new Array(100).join("a");
-  user.type(newAccountNameInput, tooLongAccountName);
+  await user.type(newAccountNameInput, tooLongAccountName);
   expect(newAccountNameInput.value.length).toBe(50);
 
   // rename account
   const testAccountName = "test-account-name";
-  user.clear(newAccountNameInput);
-  user.type(newAccountNameInput, testAccountName);
+  await user.clear(newAccountNameInput);
+  await user.type(newAccountNameInput, testAccountName);
   expect(screen.queryByText("This field is required")).not.toBeInTheDocument();
-  user.click(screen.getByText("Rename"));
+  await user.click(screen.getByText("Rename"));
   expect(mockRenameAccountAttempt).toHaveBeenCalledWith(
     mockBalances[0].accountNumber,
     testAccountName
@@ -210,15 +209,15 @@ test("test the Primary account", async () => {
   expect(mockGetAccountsAttempt).toHaveBeenCalled();
 
   // hide account details
-  user.click(account);
-  await wait(() => expect(queryBalances()).not.toBeInTheDocument());
+  await user.click(account);
+  await waitFor(() => expect(queryBalances()).not.toBeInTheDocument());
 
   // default account is not hideable
   expect(queryHideButton()).not.toBeInTheDocument();
 });
 
 test("test a common account", async () => {
-  render(<AccountsPage />);
+  const { user } = render(<AccountsPage />);
 
   const commonAccount = screen.getByText(mockBalances[1].accountName);
   expect(commonAccount.nextElementSibling.textContent).toMatchInlineSnapshot(
@@ -226,8 +225,8 @@ test("test a common account", async () => {
   );
 
   // show account details
-  user.click(commonAccount);
-  await wait(() => expect(getBalances()).toBeInTheDocument());
+  await user.click(commonAccount);
+  await waitFor(() => expect(getBalances()).toBeInTheDocument());
   expect(getBalancesTextContent()).toMatchInlineSnapshot(
     '"BalancesTotal481.25138665 DCRSpendable350.74115317 DCRImmature Rewards0.00000 DCRLocked By Tickets130.51023348 DCRVoting Authority130.51020368 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
@@ -239,12 +238,12 @@ test("test a common account", async () => {
   expect(queryHideButton()).not.toBeInTheDocument();
 
   // hide common account details
-  user.click(commonAccount);
-  await wait(() => expect(queryBalances()).not.toBeInTheDocument());
+  await user.click(commonAccount);
+  await waitFor(() => expect(queryBalances()).not.toBeInTheDocument());
 });
 
 test("test an empy account", async () => {
-  render(<AccountsPage />);
+  const { user } = render(<AccountsPage />);
 
   const emtpyAccount = screen.getByText(mockBalances[2].accountName);
   expect(emtpyAccount.nextElementSibling.textContent).toMatchInlineSnapshot(
@@ -252,8 +251,8 @@ test("test an empy account", async () => {
   );
 
   // show account details
-  user.click(emtpyAccount);
-  await wait(() => expect(getBalances()).toBeInTheDocument());
+  await user.click(emtpyAccount);
+  await waitFor(() => expect(getBalances()).toBeInTheDocument());
   expect(getBalancesTextContent()).toMatchInlineSnapshot(
     '"BalancesTotal0.00000 DCRSpendable0.00000 DCRImmature Rewards0.00000 DCRLocked By Tickets0.00000 DCRVoting Authority0.00000 DCRImmature Staking Rewards0.00000 DCRUnconfirmed0.00000 DCR"'
   );
@@ -262,45 +261,48 @@ test("test an empy account", async () => {
   );
 
   // test hide button
-  user.click(getHideButton());
+  await user.click(getHideButton());
   expect(mockHideAccount).toHaveBeenCalledWith(mockBalances[2].accountNumber);
 
   // test show button
-  user.click(getShowButton());
+  await user.click(getShowButton());
   expect(mockShowAccount).toHaveBeenCalledWith(mockBalances[2].accountNumber);
 });
 
-test("test imported account", () => {
-  render(<AccountsPage />);
+test("test imported account", async () => {
+  const { user } = render(<AccountsPage />);
 
   // default account
   const account = screen.getByText("imported");
   expect(account.nextElementSibling.textContent).toMatchInlineSnapshot(
     '"0.00000 DCRSpendable:0.00000 DCR"'
   );
-  user.click(account);
+  await user.click(account);
 
   expect(queryBalances()).not.toBeInTheDocument();
 });
 
-test("test add new account", () => {
-  render(<AccountsPage />);
+test("test add new account", async () => {
+  const { user } = render(<AccountsPage />);
   const addNewButton = screen.getByText("Add New");
-  user.click(addNewButton);
+  await user.click(addNewButton);
 
   expect(getCreateNewAccountModalTitle()).toBeInTheDocument();
   // cancel first
-  user.click(screen.getByText("Cancel"));
+  await user.click(screen.getByText("Cancel"));
   expect(queryCreateNewAccountModalTitle()).not.toBeInTheDocument();
 
-  user.click(addNewButton);
+  await user.click(addNewButton);
   expect(getCreateNewAccountModalTitle()).toBeInTheDocument();
 
   const testPrivatePassphrase = "test-priv-pass";
   const testAccountName = "test-account-name";
-  user.type(screen.getByLabelText("Private Passphrase"), testPrivatePassphrase);
-  user.type(screen.getByLabelText("New Account Name"), testAccountName);
-  user.click(screen.getByText("Continue"));
+  await user.type(
+    screen.getByLabelText("Private Passphrase"),
+    testPrivatePassphrase
+  );
+  await user.type(screen.getByLabelText("New Account Name"), testAccountName);
+  await user.click(screen.getByText("Continue"));
   expect(mockGetNextAccountAttempt).toHaveBeenCalledWith(
     testPrivatePassphrase,
     testAccountName

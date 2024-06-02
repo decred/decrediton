@@ -4,7 +4,7 @@ import { screen } from "@testing-library/react";
 import * as sel from "selectors";
 import * as da from "actions/DaemonActions";
 import { act } from "react-dom/test-utils";
-import { wait } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 
 const testProps = {
   min: 0,
@@ -165,7 +165,7 @@ test("dcrwallet log line is shown or log the error to console", async () => {
   act(() => {
     jest.advanceTimersByTime(2001);
   });
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(testDcrwalletLogLine)).toBeInTheDocument()
   );
 
@@ -176,7 +176,7 @@ test("dcrwallet log line is shown or log the error to console", async () => {
   act(() => {
     jest.advanceTimersByTime(2001);
   });
-  await wait(() => expect(mockConsoleLog).toHaveBeenCalled());
+  await waitFor(() => expect(mockConsoleLog).toHaveBeenCalled());
 
   mockGetDcrdLastLineLogs.mockRestore();
   mockConsoleLog.mockRestore();

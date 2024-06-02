@@ -717,7 +717,10 @@ export const buyerAccount = createSelector(
 );
 export const buyerMaxFeePercentage = get(["vsp", "maxFeePercentage"]);
 
-const getNextAddressResponse = get(["control", "getNextAddressResponse"]);
+export const getNextAddressResponse = get([
+  "control",
+  "getNextAddressResponse"
+]);
 const nextAddressAccountNumber = compose(
   (res) => (res ? res.accountNumber : null),
   getNextAddressResponse
