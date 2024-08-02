@@ -1,4 +1,5 @@
-import { addressPath, fixPubKeyChecksum, signArg } from "helpers/ledger";
+import { addressPath, fixPubKeyChecksum, signArg, writeUint64LE } from "helpers/ledger";
+import toBuffer from "typedarray-to-buffer";
 
 test("test ledger address path", () => {
   expect(addressPath(1, 2)).toStrictEqual("44'/42'/0'/1/2");
@@ -23,4 +24,15 @@ test("test ledger constructing arg to sign", async () => {
   const want = { "inputs": [[{ "version": { "type": "Buffer", "data": [1, 0, 0, 0] }, "inputs": [{ "prevout": { "type": "Buffer", "data": [190, 88, 113, 195, 66, 31, 243, 153, 137, 144, 206, 251, 150, 202, 127, 142, 8, 231, 7, 40, 136, 96, 242, 146, 144, 23, 185, 229, 207, 170, 116, 152, 0, 0, 0, 0] }, "script": { "type": "Buffer", "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }, "sequence": { "type": "Buffer", "data": [255, 255, 255, 255] }, "tree": { "type": "Buffer", "data": [0] } }], "outputs": [{ "amount": { "type": "Buffer", "data": [140, 174, 90, 6, 0, 0, 0, 0] }, "script": { "type": "Buffer", "data": [118, 169, 20, 48, 70, 200, 250, 47, 33, 119, 236, 175, 143, 189, 11, 151, 85, 235, 112, 233, 41, 210, 151, 136, 172] } }, { "amount": { "type": "Buffer", "data": [176, 196, 18, 0, 0, 0, 0, 0] }, "script": { "type": "Buffer", "data": [118, 169, 20, 210, 81, 146, 28, 152, 87, 121, 24, 21, 233, 119, 80, 175, 206, 164, 143, 189, 48, 86, 138, 136, 172] } }], "locktime": { "type": "Buffer", "data": [0, 0, 0, 0] }, "nExpiryHeight": { "type": "Buffer", "data": [0, 0, 0, 0] } }, 0]], "associatedKeysets": ["44'/42'/0'/1/71"], "changePath": "44'/42'/0'/1/72", "outputScriptHex": { "type": "Buffer", "data": [2, 250, 223, 71, 6, 0, 0, 0, 0, 0, 0, 25, 118, 169, 20, 189, 103, 126, 122, 149, 36, 44, 45, 84, 34, 126, 57, 40, 206, 216, 137, 204, 58, 174, 167, 136, 172, 176, 196, 18, 0, 0, 0, 0, 0, 0, 0, 25, 118, 169, 20, 210, 81, 146, 28, 152, 87, 121, 24, 21, 233, 119, 80, 175, 206, 164, 143, 189, 48, 86, 138, 136, 172] }, "lockTime": 0, "sigHashType": 1, "segwit": false, "expiryHeight": { "type": "Buffer", "data": [0, 0, 0, 0] }, "useTrustedInputForSegwit": false, "additionals": ["decred"] };
   const data = await signArg(txHex, null, null, mockDispatch);
   expect(JSON.stringify(data)).toStrictEqual(JSON.stringify(want));
+});
+
+test("test writeUint64LE", () => {
+  expect(writeUint64LE(0)).toStrictEqual(toBuffer([0, 0, 0, 0, 0, 0, 0, 0]));
+  expect(writeUint64LE(1)).toStrictEqual(toBuffer([1, 0, 0, 0, 0, 0, 0, 0]));
+  expect(writeUint64LE(0xffffffff)).toStrictEqual(toBuffer([255, 255, 255, 255, 0, 0, 0, 0]));
+  expect(writeUint64LE(0x100000000)).toStrictEqual(toBuffer([0, 0, 0, 0, 1, 0, 0, 0]));
+  // Numbers somewhere over ~2^48 lose precision and do not work.
+  expect(writeUint64LE(0xffffffff0000)).toStrictEqual(toBuffer([0, 0, 255, 255, 255, 255, 0, 0]));
+  expect(writeUint64LE(0xffffffffffff)).toStrictEqual(toBuffer([255, 255, 255, 255, 255, 255, 0, 0]));
+  expect(writeUint64LE(6300978765321)).toStrictEqual(toBuffer([9, 222, 153, 15, 187, 5, 0, 0]));
 });
