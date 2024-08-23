@@ -5,6 +5,8 @@ import * as bs58 from "bs58";
 import toBuffer from "typedarray-to-buffer";
 import { getTxFromInputs } from "../actions/TransactionActions";
 
+const ONE_OVER_MAX_UINT32 = 0x100000000;
+
 export function addressPath(branch, index) {
   const prefix = "44'/42'/0'/";
   const i = (index || 0).toString();
@@ -46,12 +48,16 @@ function writeUint32LE(n) {
   return buff;
 }
 
-function writeUint64LE(n) {
+// Exported for testing.
+//
+// TODO: Electron cannot handle a uint64 with full precision so one cannot be
+// passed to this function. Maybe we should find a better way to pass this value.
+export function writeUint64LE(n) {
   const buff = new Buffer(8);
-  const lower = 0xffffffff & n;
   // bitshift right (>>>) does not seem to throw away the lower half, so
   // dividing and throwing away the remainder.
-  const upper = Math.floor(n / 0xffffffff);
+  const upper = Math.floor(n / ONE_OVER_MAX_UINT32);
+  const lower = n % ONE_OVER_MAX_UINT32;
   buff.writeUInt32LE(lower, 0);
   buff.writeUInt32LE(upper, 4);
   return buff;
@@ -133,7 +139,7 @@ export async function signArg(txHex, chainParams, walletService, dispatch) {
       }
     }
     if (!verboseInp) {
-      throw "cound not find input";
+      throw "could not find input";
     }
     const prevOut = inputToTx(verboseInp);
     const idx = inp.outputIndex;
