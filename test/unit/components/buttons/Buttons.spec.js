@@ -7,7 +7,6 @@ import {
   SlateGrayButton
 } from "buttons";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
 const testClassName = "test-class-name";
@@ -18,8 +17,8 @@ let mockOnClick;
 beforeEach(() => {
   mockOnClick = jest.fn(() => {});
 });
-test("render default Button", () => {
-  render(
+test("render default Button", async () => {
+  const { user } = render(
     <Button className={testClassName} onClick={mockOnClick} style={testStyle}>
       {testButtonLabel}
     </Button>
@@ -30,19 +29,19 @@ test("render default Button", () => {
   expect(button.className).toMatch(testClassName);
   expect(button.style.margin).toMatch(testStyle.margin);
   expect(button.disabled).toBe(false);
-  user.click(button);
+  await user.click(button);
   expect(mockOnClick).toHaveBeenCalled();
 });
 
-test("render disabled Button", () => {
-  render(
+test("render disabled Button", async () => {
+  const { user } = render(
     <Button onClick={mockOnClick} disabled>
       {testButtonLabel}
     </Button>
   );
 
   const button = screen.getByRole("button");
-  user.click(button);
+  await user.click(button);
   expect(button.disabled).toBe(true);
   expect(mockOnClick).not.toHaveBeenCalled();
 });

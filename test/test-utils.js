@@ -1,4 +1,5 @@
 import { render as rtlRender } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 import { createMemoryHistory } from "history";
 import configureStore from "store/configureStore";
@@ -17,6 +18,8 @@ import {
   DEFAULT_DARK_THEME_NAME,
   DEFAULT_LIGHT_THEME_NAME
 } from "pi-ui";
+
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
 beforeAll(() => {
   jest.spyOn(console, "groupCollapsed").mockImplementation(() => {});
@@ -43,6 +46,7 @@ const themes = {
 
 function render(ui, renderOptions) {
   const history = createMemoryHistory();
+  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
   let currentSettings = {
     locale: locale.key,
     theme: DEFAULT_LIGHT_THEME_NAME,
@@ -112,7 +116,8 @@ function render(ui, renderOptions) {
   return {
     ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }),
     history,
-    store
+    store,
+    user
   };
 }
 

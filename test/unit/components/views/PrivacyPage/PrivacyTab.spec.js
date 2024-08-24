@@ -1,12 +1,12 @@
 import PrivacyPage from "components/views/PrivacyPage";
 import PrivacyTab from "components/views/PrivacyPage/PrivacyTab";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 
 import { MIXED_ACCOUNT, CHANGE_ACCOUNT, DCR } from "constants";
 import * as sel from "selectors";
-import * as act from "actions/AccountMixerActions";
+import * as actM from "actions/AccountMixerActions";
 import * as wl from "wallet";
 import * as ca from "actions/ControlActions";
 import * as sa from "actions/SnackbarActions";
@@ -14,7 +14,7 @@ import * as sa from "actions/SnackbarActions";
 const selectors = sel;
 const wallet = wl;
 const controlActions = ca;
-const accountMixerActions = act;
+const accountMixerActions = actM;
 const snackbarActions = sa;
 
 const mockDefaultAccount = {
@@ -66,6 +66,12 @@ const mockSpendingAccounts = [
   mockMixedAccount,
   mockUnMixedAccount
 ];
+
+const mockVisibleAccounts = [
+  mockDefaultAccount,
+  mockMixedAccount,
+  mockUnMixedAccount
+];
 const mockCsppServer = "mockCsppServer.decred.org";
 const mockCsppPort = "1234";
 const mockMixedAccountBranch = 0;
@@ -83,6 +89,7 @@ let mockDispatchSingleMessage;
 beforeEach(() => {
   selectors.currencyDisplay = jest.fn(() => DCR);
   selectors.defaultSpendingAccount = jest.fn(() => mockMixedAccount);
+  selectors.visibleAccounts = jest.fn(() => mockVisibleAccounts);
   selectors.getPrivacyEnabled = jest.fn(() => true);
   selectors.isWatchingOnly = jest.fn(() => false);
   selectors.getMixedAccountName = jest.fn(() => mockMixedAccount.name);
@@ -91,7 +98,6 @@ beforeEach(() => {
   selectors.walletService = jest.fn(() => {
     return {};
   });
-  selectors.nextAddressAccount = jest.fn(() => mockUnMixedAccount);
   selectors.nextAddress = jest.fn(() => mockNextAddress);
   selectors.getRunningIndicator = jest.fn(() => false);
 
@@ -156,24 +162,24 @@ const getPrivacyCheckbox = () => screen.getByTestId("privacyCheckbox");
 const getSendToSelfButton = () =>
   screen.getByRole("button", { name: "Send to Self" });
 
-test("create default mixer accounts on `Privacy Configuration` view", () => {
+test("create default mixer accounts on `Privacy Configuration` view", async () => {
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
   selectors.balances = jest.fn(() => []);
-  render(<PrivacyPage />);
-  user.click(screen.getByText("Privacy"));
+  const { user } = render(<PrivacyPage />);
+  await user.click(screen.getByText("Privacy"));
 
   expect(screen.getByText("Privacy Configuration")).toBeInTheDocument();
   const testPassphrase = "test-passphrase";
-  user.click(getCreateDefaultAccountsButton());
-  user.type(getPrivatePassphraseInput(), testPassphrase);
+  await user.click(getCreateDefaultAccountsButton());
+  await user.type(getPrivatePassphraseInput(), testPassphrase);
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(getCreateDefaultAccountsButton());
-  user.type(getPrivatePassphraseInput(), testPassphrase);
-  user.click(getContinueButton());
+  await user.click(getCreateDefaultAccountsButton());
+  await user.type(getPrivatePassphraseInput(), testPassphrase);
+  await user.click(getContinueButton());
 
   expect(mockCreateNeededAccounts).toHaveBeenCalledWith(
     testPassphrase,
@@ -182,10 +188,10 @@ test("create default mixer accounts on `Privacy Configuration` view", () => {
   );
 });
 
-test("create needed mixer accounts on `Privacy Configuration` view", () => {
+test("create needed mixer accounts on `Privacy Configuration` view", async () => {
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
-  render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />);
   expect(
     screen.getByText(
       /It looks like you already have one of the default accounts/i
@@ -198,20 +204,23 @@ test("create needed mixer accounts on `Privacy Configuration` view", () => {
   const testPassphrase = "test-passphrase";
   const testMixedAccountName = "test-mixed-account-name";
   const testUnMixedAccountName = "test-unmixed-account-name";
-  user.click(getCreateNeededAccountsButton());
-  user.type(getPrivatePassphraseInput(), testPassphrase);
+  await user.click(getCreateNeededAccountsButton());
+  await user.type(getPrivatePassphraseInput(), testPassphrase);
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(getCreateNeededAccountsButton());
-  user.type(getPrivatePassphraseInput(), testPassphrase);
-  user.type(screen.getByLabelText("Mixed Account Name"), testMixedAccountName);
-  user.type(
+  await user.click(getCreateNeededAccountsButton());
+  await user.type(getPrivatePassphraseInput(), testPassphrase);
+  await user.type(
+    screen.getByLabelText("Mixed Account Name"),
+    testMixedAccountName
+  );
+  await user.type(
     screen.getByLabelText("Unmixed Account Name"),
     testUnMixedAccountName
   );
-  user.click(getContinueButton());
+  await user.click(getContinueButton());
 
   expect(mockCreateNeededAccounts).toHaveBeenCalledWith(
     testPassphrase,
@@ -232,8 +241,17 @@ test("test insufficient unmixed account balance error message", async () => {
       (acc) => acc.value == acctId
     )
   );
-  render(<PrivacyTab />);
-  await wait(() =>
+  render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockUnMixedAccount.value
+        }
+      }
+    }
+  });
+
+  await waitFor(() =>
     expect(screen.getByText("Unmixed Balance").parentNode.className).toMatch(
       /balanceError/i
     )
@@ -245,8 +263,17 @@ test("test insufficient unmixed account balance error message", async () => {
 });
 
 test("start coin mixer", async () => {
-  render(<PrivacyTab />);
-  await wait(() =>
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
+  await waitFor(() =>
     expect(
       screen.getByText("Unmixed Balance").parentNode.className
     ).not.toMatch(/balanceError/i)
@@ -265,15 +292,15 @@ test("start coin mixer", async () => {
   ).toMatchInlineSnapshot('"249.79547928 DCRMixed Balance"');
 
   const testPassphrase = "test-passphrase";
-  user.click(startMixerButton);
+  await user.click(startMixerButton);
 
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(startMixerButton);
+  await user.click(startMixerButton);
 
-  user.type(getPrivatePassphraseInput(), testPassphrase);
-  user.click(getContinueButton());
+  await user.type(getPrivatePassphraseInput(), testPassphrase);
+  await user.click(getContinueButton());
 
   expect(mockRunAccountMixer).toHaveBeenCalledWith({
     changeAccount: mockUnMixedAccount.accountNumber,
@@ -284,116 +311,174 @@ test("start coin mixer", async () => {
   });
 });
 
-test("stop coin mixer", () => {
+test("stop coin mixer", async () => {
   selectors.getAccountMixerRunning = jest.fn(() => true);
-  render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   expect(screen.getByText("Mixer is running")).toBeInTheDocument();
-  user.click(getStopMixerButton());
+  await user.click(getStopMixerButton());
 
   expect(mockStopAccountMixer).toHaveBeenCalled();
 });
 
 test("mixer is disabled (Autobuyer running)", () => {
   selectors.getRunningIndicator = jest.fn(() => true);
-  render(<PrivacyTab />);
+  render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   expect(getSendToSelfButton().disabled).toBe(true);
   expect(getStartMixerButton().disabled).toBe(true);
 });
 
-test("allow sending from unmixed accounts", () => {
-  render(<PrivacyTab />);
+test("allow sending from unmixed accounts", async () => {
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const checkbox = getPrivacyCheckbox();
 
   expect(checkbox.checked).toBe(false);
-  user.click(checkbox);
+  await user.click(checkbox);
 
   expect(screen.getByText("Sending from Unmixed Accounts")).toBeInTheDocument();
   expect(getEnableSendingFromUnmixedAccountButton().disabled).toBe(true);
   // cancel first
-  user.click(getCancelButton());
+  await user.click(getCancelButton());
 
-  user.click(checkbox);
+  await user.click(checkbox);
 
   // type random text, enable button should stay disabled
-  user.type(getConfirmInput(), "random text");
+  await user.type(getConfirmInput(), "random text");
   expect(getEnableSendingFromUnmixedAccountButton().disabled).toBe(true);
 
-  user.clear(getConfirmInput());
-  user.type(getConfirmInput(), "I understand the risks");
-  user.click(getEnableSendingFromUnmixedAccountButton());
+  await user.clear(getConfirmInput());
+  await user.type(getConfirmInput(), "I understand the risks");
+  await user.click(getEnableSendingFromUnmixedAccountButton());
 
   expect(mockToggleAllowSendFromUnmixed).toHaveBeenCalledWith(true);
 });
 
-test("sending from unmixed accounts is allowed already", () => {
+test("sending from unmixed accounts is allowed already", async () => {
   selectors.getAllowSendFromUnmixed = jest.fn(() => true);
-  render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const checkbox = getPrivacyCheckbox();
   expect(checkbox.checked).toBe(true);
 
-  user.click(checkbox);
+  await user.click(checkbox);
   expect(mockToggleAllowSendFromUnmixed).toHaveBeenCalledWith(false);
 });
 
 test("Send to Unmixed Account form", async () => {
-  render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   const sendToSelfBtn = getSendToSelfButton();
   const amountInput = screen.getByLabelText("Amount:");
   const testAmount = "12";
   expect(sendToSelfBtn.disabled).toBe(true);
 
-  user.type(amountInput, testAmount);
+  await user.type(amountInput, testAmount);
 
-  await wait(() => expect(mockConstructTransactionAttempt).toHaveBeenCalled());
+  await waitFor(() =>
+    expect(mockConstructTransactionAttempt).toHaveBeenCalled()
+  );
 
-  user.click(
+  await user.click(
     screen.getByText("Send all funds from selected account").nextElementSibling
   );
   expect(screen.getByText("Amount:").nextElementSibling.textContent).toBe(
     "19.00000 DCR"
   );
-  user.click(screen.getByText("Cancel sending all funds").nextElementSibling);
+  await user.click(
+    screen.getByText("Cancel sending all funds").nextElementSibling
+  );
   expect(screen.getByLabelText("Amount:").value).toBe("");
 });
 
 test("check logs", async () => {
+  jest.useFakeTimers();
   mockGetPrivacyLogs = wallet.getPrivacyLogs = jest.fn(() =>
     Promise.resolve(mockLogLine)
   );
-  render(<PrivacyTab />);
+  const { user } = render(<PrivacyTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
 
   const logsLabel = screen.getByText("Logs");
 
-  user.click(logsLabel);
+  await user.click(logsLabel);
 
-  await wait(() => expect(mockGetPrivacyLogs).toHaveBeenCalledTimes(2));
-  await wait(() => screen.getByText(mockLogLine));
+  act(() => {
+    jest.advanceTimersByTime(2001);
+  });
 
-  user.click(logsLabel);
-  await wait(() =>
+  await waitFor(() => expect(mockGetPrivacyLogs).toHaveBeenCalledTimes(2));
+  await waitFor(() => screen.getByText(mockLogLine));
+
+  await user.click(logsLabel);
+  await waitFor(() =>
     expect(screen.queryByText(mockLogLine)).not.toBeInTheDocument()
   );
 });
 
-test("privacy configuration have to be disabled in watching only (already have mixed or unmixed account)", () => {
+test("privacy configuration have to be disabled in watching only (already have mixed or unmixed account)", async () => {
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
   selectors.isWatchingOnly = jest.fn(() => true);
-  render(<PrivacyTab />);
-  user.click(getCreateNeededAccountsButton());
+  const { user } = render(<PrivacyTab />);
+  await user.click(getCreateNeededAccountsButton());
   expect(mockDispatchSingleMessage).toHaveBeenCalledTimes(1);
 });
 
-test("privacy configuration have to be disabled in watching only ", () => {
+test("privacy configuration have to be disabled in watching only ", async () => {
   selectors.getMixedAccount = jest.fn(() => null);
   selectors.getChangeAccount = jest.fn(() => null);
   selectors.isWatchingOnly = jest.fn(() => true);
   selectors.balances = jest.fn(() => []);
-  render(<PrivacyTab />);
-  user.click(getCreateDefaultAccountsButton());
+  const { user } = render(<PrivacyTab />);
+  await user.click(getCreateDefaultAccountsButton());
   expect(mockDispatchSingleMessage).toHaveBeenCalledTimes(1);
 });

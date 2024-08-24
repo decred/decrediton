@@ -1,7 +1,6 @@
 import { ReceiveTab } from "components/views/LNPage/ReceiveTab";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -34,7 +33,7 @@ beforeEach(() => {
 });
 
 test("test invoice list and modal ", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />);
 
   expect(
     screen
@@ -47,45 +46,45 @@ test("test invoice list and modal ", async () => {
   ]);
 
   // click on the first (open) invoice and check modal
-  user.click(screen.getByText("Not Paid Yet"));
+  await user.click(screen.getByText("Not Paid Yet"));
   expect(screen.getAllByText("Not Paid Yet").length).toBe(2);
   expect(screen.getByText(mockInvoices[0].paymentRequest)).toBeInTheDocument();
-  user.click(screen.getByRole("button", { name: "Cancel Invoice" }));
+  await user.click(screen.getByRole("button", { name: "Cancel Invoice" }));
   expect(mockCancelInvoice).toHaveBeenCalledWith(mockInvoices[0].rHash);
   //modal has been closed
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.queryByText("Lightning Payment Request")
     ).not.toBeInTheDocument()
   );
 
   // click on the second (settled) invoice and check modal
-  user.click(screen.getByText("Received"));
+  await user.click(screen.getByText("Received"));
   expect(screen.getAllByText("Received").length).toBe(2);
   expect(screen.getByText(mockInvoices[1].paymentRequest)).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Cancel Invoice" }).disabled).toBe(
     true
   );
-  user.click(screen.getByTestId("lninvoice-close-button"));
+  await user.click(screen.getByTestId("lninvoice-close-button"));
   expect(
     screen.queryByText("Lightning Payment Request")
   ).not.toBeInTheDocument();
 
   // click on the second (canceled) invoice and check modal
-  user.click(screen.getByText("Canceled"));
+  await user.click(screen.getByText("Canceled"));
   expect(screen.getAllByText("Canceled").length).toBe(2);
   expect(screen.getByText(mockInvoices[2].paymentRequest)).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Cancel Invoice" }).disabled).toBe(
     true
   );
-  user.click(screen.getByTestId("lninvoice-close-button"));
+  await user.click(screen.getByTestId("lninvoice-close-button"));
   expect(
     screen.queryByText("Lightning Payment Request")
   ).not.toBeInTheDocument();
 });
 
 test("test add invoice form ", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />);
 
   const mockTooLargeAmount = "10";
   const mockValidAmount = "0.0001";
@@ -95,30 +94,32 @@ test("test add invoice form ", async () => {
     name: "Create Invoice"
   });
   expect(createInvoiceButton.disabled).toBe(false);
-  user.type(amountInput, mockTooLargeAmount);
+  await user.type(amountInput, mockTooLargeAmount);
   expect(
     screen.getByText(/cannot request more than total receive capacity/i)
   ).toBeInTheDocument();
-  user.clear(amountInput);
-  user.type(amountInput, mockValidAmount);
+  await user.clear(amountInput);
+  await user.type(amountInput, mockValidAmount);
   expect(
     screen.queryByText(/cannot request more than total receive capacity/i)
   ).not.toBeInTheDocument();
   expect(createInvoiceButton.disabled).toBe(false);
 
   const descInput = screen.getByLabelText("Description");
-  user.type(descInput, mockDescText);
-  user.click(createInvoiceButton);
+  await user.type(descInput, mockDescText);
+  await user.click(createInvoiceButton);
   expect(mockAddInvoice).toHaveBeenCalledWith(
     mockDescText,
     mockValidAmount * 100000000
   );
-  await wait(() => expect(descInput.value).toBe(""));
-  expect(amountInput.value).toBe("");
+  await waitFor(() => {
+    expect(descInput.value).toBe("");
+    expect(amountInput.value).toBe("");
+  });
 });
 
 test("0 invoice amount is allowed", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />);
 
   const mockZeroAmount = "0.000";
   const mockDescText = "mock-desc-text";
@@ -128,21 +129,21 @@ test("0 invoice amount is allowed", async () => {
   });
   expect(createInvoiceButton.disabled).toBe(false);
 
-  user.type(amountInput, mockZeroAmount);
+  await user.type(amountInput, mockZeroAmount);
   expect(createInvoiceButton.disabled).toBe(false);
 
-  user.clear(amountInput);
+  await user.clear(amountInput);
   expect(createInvoiceButton.disabled).toBe(false);
 
   const descInput = screen.getByLabelText("Description");
-  user.type(descInput, mockDescText);
-  user.click(createInvoiceButton);
+  await user.type(descInput, mockDescText);
+  await user.click(createInvoiceButton);
   expect(mockAddInvoice).toHaveBeenCalledWith(mockDescText, 0);
-  await wait(() => expect(descInput.value).toBe(""));
+  await waitFor(() => expect(descInput.value).toBe(""));
 });
 
 test("test filter control", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />);
 
   expect(
     screen
@@ -158,10 +159,10 @@ test("test filter control", async () => {
     name: "EyeFilterMenu"
   })[1];
 
-  user.click(filterMenuButton);
-  user.click(screen.getAllByText("Canceled")[0]);
+  await user.click(filterMenuButton);
+  await user.click(screen.getAllByText("Canceled")[0]);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -169,17 +170,17 @@ test("test filter control", async () => {
     ).toStrictEqual([`Invoice for 0.00001 DCR${mockInvoices[2].rHashHex}`])
   );
 
-  user.click(filterMenuButton);
-  user.click(screen.getAllByText("Expired")[0]);
+  await user.click(filterMenuButton);
+  await user.click(screen.getAllByText("Expired")[0]);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(/Invoice for/i)).not.toBeInTheDocument()
   );
   expect(screen.getByText(/no invoices found/i)).toBeInTheDocument();
 });
 
 test("test sort control", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />);
 
   expect(
     screen
@@ -195,10 +196,10 @@ test("test sort control", async () => {
     name: "EyeFilterMenu"
   })[0];
 
-  user.click(sortMenuButton);
-  user.click(screen.getByText("Oldest"));
+  await user.click(sortMenuButton);
+  await user.click(screen.getByText("Oldest"));
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -212,7 +213,7 @@ test("test sort control", async () => {
 });
 
 test("test search control", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />);
 
   expect(
     screen
@@ -225,9 +226,9 @@ test("test search control", async () => {
   ]);
 
   const searchInput = screen.getByPlaceholderText("Filter by Payment Hash");
-  user.type(searchInput, "mock-rhash-2");
+  await user.type(searchInput, "mock-rhash-2");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -238,9 +239,9 @@ test("test search control", async () => {
     ])
   );
 
-  user.type(searchInput, "mock-rhash-22");
+  await user.type(searchInput, "mock-rhash-22");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Invoice for/i)
@@ -248,9 +249,9 @@ test("test search control", async () => {
     ).toStrictEqual([`Invoice for 0.00001 DCR${mockInvoices[2].rHashHex}`])
   );
 
-  user.type(searchInput, "mock-rhash-22-12");
+  await user.type(searchInput, "mock-rhash-22-12");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(/Invoice for/i)).not.toBeInTheDocument()
   );
   expect(screen.getByText(/no invoices found/i)).toBeInTheDocument();

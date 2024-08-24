@@ -1,7 +1,6 @@
 import { SendTab } from "components/views/LNPage/SendTab";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as lna from "actions/LNActions";
@@ -99,14 +98,12 @@ const getClearButton = () =>
   screen.getByRole("button", { name: "Clear Address" });
 
 test("test send form with valid lightning request", async () => {
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   const reqCodeInput = getReqCodeInput();
-  user.type(reqCodeInput, mockReqCode);
-  await wait(() =>
-    expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode)
-  );
-  expect(screen.getByText("Valid Lightning Request")).toBeInTheDocument();
+  await user.type(reqCodeInput, mockReqCode);
+  expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode);
+  await waitFor(() => screen.getByText("Valid Lightning Request"));
   expect(screen.getByText("Amount").parentNode.textContent).toMatch(
     "Amount0.01000 DCR"
   );
@@ -126,7 +123,7 @@ test("test send form with valid lightning request", async () => {
   expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
   // open details
   const details = screen.getByText("Details");
-  user.click(details);
+  await user.click(details);
 
   expect(screen.getByText("CLTV Expiry:").parentNode.textContent).toMatch(
     `CLTV Expiry:${mockValidDecodedPayRequest.cltvExpiry}`
@@ -139,10 +136,10 @@ test("test send form with valid lightning request", async () => {
   );
 
   // close details
-  user.click(details);
+  await user.click(details);
   expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
 
-  user.click(getSendButton());
+  await user.click(getSendButton());
   expect(mockSendPayment).toHaveBeenCalledWith(mockReqCode, 0);
 });
 
@@ -150,14 +147,12 @@ test("test send form with expired lightning request (with empty fallbackAddr)", 
   mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(
     () => () => Promise.resolve(mockExpiredDecodedPayRequest)
   );
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   const reqCodeInput = getReqCodeInput();
-  user.type(reqCodeInput, mockReqCode);
-  await wait(() =>
-    expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode)
-  );
-  expect(screen.getByText("Invoice expired")).toBeInTheDocument();
+  await user.type(reqCodeInput, mockReqCode);
+  expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode);
+  await waitFor(() => screen.getByText("Invoice expired"));
   expect(screen.getByText("Expiration Time").parentNode.textContent).toMatch(
     "Expiration TimeExpired 1 hour ago"
   );
@@ -165,14 +160,14 @@ test("test send form with expired lightning request (with empty fallbackAddr)", 
   expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
   // open details
   const details = screen.getByText("Details");
-  user.click(details);
+  await user.click(details);
 
   expect(screen.getByText("Fallback Address:").parentNode.textContent).toMatch(
     "Fallback Address:(empty fallback address)"
   );
 
   // close details
-  user.click(details);
+  await user.click(details);
   expect(screen.queryByText("CLTV Expiry:")).not.toBeInTheDocument();
 
   expect(querySendButton()).not.toBeInTheDocument();
@@ -183,31 +178,29 @@ test("test send form with invalid lightning request", async () => {
   mockDecodePayRequest = lnActions.decodePayRequest = jest.fn(
     () => () => Promise.reject(mockErrorResp)
   );
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   const reqCodeInput = getReqCodeInput();
-  user.type(reqCodeInput, mockReqCode);
-  await wait(() =>
-    expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode)
-  );
-  expect(screen.getByText(mockErrorResp)).toBeInTheDocument();
+  await user.type(reqCodeInput, mockReqCode);
+  expect(mockDecodePayRequest).toHaveBeenCalledWith(mockReqCode);
+  await waitFor(() => screen.getByText(mockErrorResp));
 });
 
 test("test paste and clear button", async () => {
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   const mockPastedPayReq = "mockPastedPayReq";
   wallet.readFromClipboard.mockImplementation(() => mockPastedPayReq);
 
-  user.click(getPasteButton());
-  await wait(() => expect(getReqCodeInput().value).toBe(mockPastedPayReq));
+  await user.click(getPasteButton());
+  await waitFor(() => expect(getReqCodeInput().value).toBe(mockPastedPayReq));
 
-  user.click(getClearButton());
-  await wait(() => expect(getReqCodeInput().value).toBe(""));
+  await user.click(getClearButton());
+  await waitFor(() => expect(getReqCodeInput().value).toBe(""));
 });
 
 test("test payment list and modal ", async () => {
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   expect(
     screen
@@ -220,33 +213,33 @@ test("test payment list and modal ", async () => {
   ]);
 
   // click on the first (outstanding) payment and check modal
-  user.click(screen.getByText("Pending"));
+  await user.click(screen.getByText("Pending"));
   expect(screen.getAllByText("Pending").length).toBe(2);
   //modal has been closed
-  user.click(screen.getByTestId("lnpayment-close-button"));
-  await wait(() =>
+  await user.click(screen.getByTestId("lnpayment-close-button"));
+  await waitFor(() =>
     expect(screen.queryByText("Lightning Payment")).not.toBeInTheDocument()
   );
 
   // click on the second (failed) payment and check modal
-  user.click(screen.getByText("Failed"));
+  await user.click(screen.getByText("Failed"));
   expect(screen.getAllByText("Failed").length).toBe(2);
   expect(
     screen.getByText(mockFailedPayment[0].decoded.paymentHash)
   ).toBeInTheDocument();
-  user.click(screen.getByTestId("lnpayment-close-button"));
+  await user.click(screen.getByTestId("lnpayment-close-button"));
   expect(screen.queryByText("Lightning Payment")).not.toBeInTheDocument();
 
   // click on the second (confirmed) payment and check modal
-  user.click(screen.getByText("Confirmed"));
+  await user.click(screen.getByText("Confirmed"));
   expect(screen.getAllByText("Confirmed").length).toBe(2);
   expect(screen.getByText(mockPayments[0].paymentHash)).toBeInTheDocument();
-  user.click(screen.getByTestId("lnpayment-close-button"));
+  await user.click(screen.getByTestId("lnpayment-close-button"));
   expect(screen.queryByText("Lightning Payment")).not.toBeInTheDocument();
 });
 
 test("test sort control", async () => {
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   expect(
     screen
@@ -262,10 +255,10 @@ test("test sort control", async () => {
     name: "EyeFilterMenu"
   })[0];
 
-  user.click(sortMenuButton);
-  user.click(screen.getByText("Oldest"));
+  await user.click(sortMenuButton);
+  await user.click(screen.getByText("Oldest"));
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Sent Payment/i)
@@ -279,7 +272,7 @@ test("test sort control", async () => {
 });
 
 test("test search control", async () => {
-  render(<SendTab />);
+  const { user } = render(<SendTab />);
 
   expect(
     screen
@@ -292,9 +285,9 @@ test("test search control", async () => {
   ]);
 
   const searchInput = screen.getByPlaceholderText("Filter by Payment Hash");
-  user.type(searchInput, "payment-hash-0");
+  await user.type(searchInput, "payment-hash-0");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/Sent Payment/i)
@@ -305,9 +298,9 @@ test("test search control", async () => {
     ])
   );
 
-  user.type(searchInput, "mock-hash-22-12");
+  await user.type(searchInput, "mock-hash-22-12");
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(/Sent Payment/i)).not.toBeInTheDocument()
   );
   expect(screen.getByText(/no payment found/i)).toBeInTheDocument();

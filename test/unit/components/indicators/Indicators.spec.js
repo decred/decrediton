@@ -72,7 +72,7 @@ test("render StakeyBounceXs", () => {
   expect(stakeyBounceXs.firstElementChild.className).toMatch("stakeyBounce");
 });
 
-test("render StepIndicator", () => {
+test("render StepIndicator", async () => {
   const mockOnGotoPage = jest.fn(() => {});
   const testCurrentPageIndex = 2;
   const testPageCount = 4;
@@ -99,7 +99,7 @@ test("render StepIndicator", () => {
     }
   });
 
-  user.click(uncheckedStepIndicator);
+  await user.click(uncheckedStepIndicator);
   expect(mockOnGotoPage).toHaveBeenCalledWith(uncheckedStepIndicatorIndex);
 });
 

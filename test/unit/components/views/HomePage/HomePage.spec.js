@@ -1,7 +1,6 @@
 import HomePage from "components/views/HomePage";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR } from "constants";
 import * as sel from "selectors";
 import * as cla from "actions/ClientActions";
@@ -105,7 +104,7 @@ test("walletService is undefined", () => {
 });
 
 test("test HomePage with an immature ticket", async () => {
-  render(<HomePage />);
+  const { user } = render(<HomePage />);
 
   expect(
     screen.getByText("Current Total Balance").parentNode.textContent
@@ -120,8 +119,8 @@ test("test HomePage with an immature ticket", async () => {
   );
 
   // go to Tickets tab
-  user.click(screen.getByText("Tickets"));
-  await wait(() => screen.getByText(/voted ticket/i));
+  await user.click(screen.getByText("Tickets"));
+  await waitFor(() => screen.getByText(/voted ticket/i));
   expect(
     screen.getByText(/active and locked ticket/i).parentNode.textContent
   ).toMatchInlineSnapshot(
@@ -134,8 +133,8 @@ test("test HomePage with an immature ticket", async () => {
   );
 
   // go to Transactions tab
-  user.click(screen.getByText("Transactions"));
-  await wait(() => screen.getByText(/sent/i));
+  await user.click(screen.getByText("Transactions"));
+  await waitFor(() => screen.getByText(/sent/i));
   expect(
     screen.getAllByText(/received/i)[0].parentNode.textContent
   ).toMatchInlineSnapshot('"3.00000 DCRReceived"');
@@ -159,9 +158,9 @@ test("test HomePage with an immature ticket", async () => {
 
   // see all transactions
   const seeAllLinks = screen.getAllByText(/See all/i);
-  user.click(seeAllLinks[0]);
+  await user.click(seeAllLinks[0]);
   expect(mockGoToTransactionHistory).toHaveBeenCalledTimes(1);
-  user.click(seeAllLinks[1]);
+  await user.click(seeAllLinks[1]);
   expect(mockGoToMyTickets).toHaveBeenCalledTimes(1);
 });
 

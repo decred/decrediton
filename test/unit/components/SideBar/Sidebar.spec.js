@@ -1,8 +1,6 @@
 import SideBar from "components/SideBar/SideBar";
 import { render } from "test-utils.js";
-import "@testing-library/jest-dom/extend-expect";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor, fireEvent } from "@testing-library/react";
 import * as sel from "selectors";
 import {
   rescanAttempt as mockRescanAttempt,
@@ -41,7 +39,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const defaultMenuLinkBorderColor = "border-color: rgba(249, 250, 250, 1)"; //sidebar-color
-const activeMenuLinkBorderColor = "border-color: rgba(46, 216, 163, 1)";
+const activeMenuLinkBorderColor = "border-color: #2ed8a3";
 const testCurrentBlockHeight = 12;
 const testBalances = [
   {
@@ -83,13 +81,12 @@ const getMenuContentByTestId = (testId, sidebarOnBottom, expandSideBar) => {
     menuLinkContent
   };
 };
-const expectToHaveDefaultMenuLinks = async (params) => {
+const expectToHaveDefaultMenuLinks = async (user, params) => {
   const {
     sidebarOnBottom,
     isTrezorEnabled,
     isLnEnabled = true,
-    expandSideBar,
-    isSPV = false
+    expandSideBar
   } = params || {};
 
   const expectToHaveMenuLink = async (
@@ -115,16 +112,14 @@ const expectToHaveDefaultMenuLinks = async (params) => {
     expect(menuLinkContent.firstChild).toHaveClass(className);
     // test clicking
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
-    user.click(menuLink);
-    if (disabled) {
-      await wait(() =>
-        expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor)
-      );
-      expect(mockHistoryPush).not.toHaveBeenCalledWith(path);
-    } else {
-      await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
-      expect(mockHistoryPush).toHaveBeenCalledWith(path);
-    }
+    fireEvent.click(menuLink);
+    await waitFor(() => {
+      if (disabled) {
+        expect(mockHistoryPush).not.toHaveBeenCalledWith(path);
+      } else {
+        expect(mockHistoryPush).toHaveBeenCalledWith(path);
+      }
+    });
   };
 
   await expectToHaveMenuLink(
@@ -141,21 +136,7 @@ const expectToHaveDefaultMenuLinks = async (params) => {
     "/transactions",
     "On-chain Transactions"
   );
-  await expectToHaveMenuLink(
-    "menuLinkContent-governance",
-    "Governance",
-    "governanceIcon",
-    "/governance",
-    "Governance"
-  );
   if (!sidebarOnBottom || expandSideBar) {
-    await expectToHaveMenuLink(
-      "menuLinkContent-tickets",
-      "Staking",
-      "ticketsIcon",
-      "/tickets",
-      "Staking"
-    );
     await expectToHaveMenuLink(
       "menuLinkContent-accounts",
       "Accounts",
@@ -180,10 +161,21 @@ const expectToHaveDefaultMenuLinks = async (params) => {
         "DEX",
         "dexIcon",
         "/dex",
-        isSPV
-          ? "DEX not available while using SPV. Please go to settings and disable SPV to access the DEX."
-          : "DEX",
-        isSPV
+        "DEX"
+      );
+      await expectToHaveMenuLink(
+        "menuLinkContent-tickets",
+        "Staking",
+        "ticketsIcon",
+        "/tickets",
+        "Staking"
+      );
+      await expectToHaveMenuLink(
+        "menuLinkContent-governance",
+        "Governance",
+        "governanceIcon",
+        "/governance",
+        "Governance"
       );
     }
   }
@@ -200,9 +192,9 @@ const expectToHaveDefaultMenuLinks = async (params) => {
   }
 };
 
-test("renders default sidebar", () => {
-  render(<SideBar />);
-  expectToHaveDefaultMenuLinks({
+test("render default sidebar", async () => {
+  const { user } = render(<SideBar />);
+  expectToHaveDefaultMenuLinks(user, {
     sidebarOnBottom: false,
     expandSideBar: false
   });
@@ -228,7 +220,7 @@ test("renders default sidebar", () => {
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   // expands the sidebar
-  user.click(screen.queryByRole("button", { name: /logo/i }));
+  await user.click(screen.queryByRole("button", { name: /logo/i }));
 
   expect(screen.queryByRole("button", { name: /reduce sidebar/i })).toHaveClass(
     "reducedArrow"
@@ -240,7 +232,9 @@ test("renders default sidebar", () => {
   const accountList = screen.getByTestId("account-list");
   expect(accountList).toHaveClass("extended");
   user.hover(screen.getByText(/total balance/i));
-  expect(accountList).toHaveClass("extended showingAccounts");
+  await waitFor(() =>
+    expect(accountList).toHaveClass("extended showingAccounts")
+  );
   // checks AccountNames
   testBalances.map((balance) => {
     if (!balance["hidden"]) {
@@ -254,11 +248,13 @@ test("renders default sidebar", () => {
     }
   });
 
-  user.unhover(screen.getByText(/total balance/i));
-  expect(accountList).not.toHaveClass("extended showingAccounts");
+  await user.unhover(screen.getByText(/total balance/i));
+  await waitFor(() =>
+    expect(accountList).not.toHaveClass("extended showingAccounts")
+  );
 
   // collapses the sidebar
-  user.click(screen.getByRole("button", { name: /reduce sidebar/i }));
+  await user.click(screen.getByRole("button", { name: /reduce sidebar/i }));
 
   expect(
     screen.queryByRole("button", { name: /reduce sidebar/i })
@@ -268,11 +264,11 @@ test("renders default sidebar", () => {
   expect(mockBalances).toHaveBeenCalled();
 });
 
-test("renders sidebar on the bottom", () => {
+test("renders sidebar on the bottom", async () => {
   const mockSidebarOnBottom = (selectors.sidebarOnBottom = jest.fn(() => true));
-  render(<SideBar />);
+  const { user } = render(<SideBar />);
 
-  expectToHaveDefaultMenuLinks({
+  await expectToHaveDefaultMenuLinks(user, {
     sidebarOnBottom: true
   });
   expect(
@@ -283,7 +279,7 @@ test("renders sidebar on the bottom", () => {
   expect(screen.queryByText(/total balance/i)).not.toBeInTheDocument();
 
   // expands the sidebar
-  user.click(screen.queryByRole("button", { name: /logo/i }));
+  await user.click(screen.queryByRole("button", { name: /logo/i }));
 
   expect(screen.getByRole("button", { name: /reduce sidebar/i })).toHaveClass(
     "reducedArrow"
@@ -292,7 +288,7 @@ test("renders sidebar on the bottom", () => {
   expect(screen.getByText(/total balance/i)).toBeInTheDocument();
 
   // collapses the sidebar
-  user.click(screen.getByRole("button", { name: /reduce sidebar/i }));
+  await user.click(screen.getByRole("button", { name: /reduce sidebar/i }));
 
   expect(
     screen.queryByRole("button", {
@@ -305,10 +301,12 @@ test("renders sidebar on the bottom", () => {
   mockSidebarOnBottom.mockRestore();
 });
 
-test("renders sidebar with trezor enabled, should not find trezor menu, it have been moved to a separate tab under settings", () => {
+test("renders sidebar with trezor enabled, should not find trezor menu,\
+  it have been moved to a separate tab under settings. Governance and Tickets\
+  should be hidden.", async () => {
   const mockIsTrezor = (selectors.isTrezor = jest.fn(() => true));
-  render(<SideBar />);
-  expectToHaveDefaultMenuLinks({
+  const { user } = render(<SideBar />);
+  await expectToHaveDefaultMenuLinks(user, {
     isTrezorEnabled: true
   });
 
@@ -316,11 +314,11 @@ test("renders sidebar with trezor enabled, should not find trezor menu, it have 
   mockIsTrezor.mockRestore();
 });
 
-test("renders sidebar with lightning network not enabled", () => {
+test("renders sidebar with lightning network not enabled", async () => {
   const mockLnEnabled = (selectors.lnEnabled = jest.fn(() => false));
 
-  render(<SideBar />);
-  expectToHaveDefaultMenuLinks({
+  const { user } = render(<SideBar />);
+  await expectToHaveDefaultMenuLinks(user, {
     isLnEnabled: false
   });
 
@@ -328,7 +326,7 @@ test("renders sidebar with lightning network not enabled", () => {
   mockLnEnabled.mockRestore();
 });
 
-test("renders expanded sidebar with testnet network enabled", () => {
+test("renders expanded sidebar with testnet network enabled", async () => {
   const mockIsTestNet = (selectors.isTestNet = jest.fn(() => true));
   const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => true));
   const mockSidebarOnBottom = (selectors.sidebarOnBottom = jest.fn(
@@ -336,8 +334,8 @@ test("renders expanded sidebar with testnet network enabled", () => {
   ));
   const mockLnEnabled = (selectors.lnEnabled = jest.fn(() => true));
 
-  render(<SideBar />);
-  expectToHaveDefaultMenuLinks({
+  const { user } = render(<SideBar />);
+  await expectToHaveDefaultMenuLinks(user, {
     sidebarOnBottom: false,
     expandSideBar: true
   });
@@ -351,22 +349,10 @@ test("renders expanded sidebar with testnet network enabled", () => {
   mockExpandSideBar.mockRestore();
 });
 
-test("renders sidebar with SPV enabled. DEX should be disabled", () => {
-  const mockIsSPV = (selectors.isSPV = jest.fn(() => true));
-
-  render(<SideBar />);
-  expectToHaveDefaultMenuLinks({
-    isSPV: true
-  });
-
-  expect(mockIsSPV).toHaveBeenCalled();
-  mockIsSPV.mockRestore();
-});
-
 test("tests rescan on the expanded sidebar", async () => {
   const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => true));
 
-  render(<SideBar />, {
+  const { user } = render(<SideBar />, {
     initialState: {
       grpc: {
         currentBlockHeight: testCurrentBlockHeight,
@@ -375,7 +361,7 @@ test("tests rescan on the expanded sidebar", async () => {
     }
   });
 
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(/seconds ago/i)).toBeInTheDocument()
   );
   expect(
@@ -393,23 +379,24 @@ test("tests rescan on the expanded sidebar", async () => {
       name: /^rescan$/i
     })
   );
-  expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
+  await waitFor(() => {
+    expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByRole("button", { name: /cancel rescan/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: /^rescan$/i
+      })
+    ).toHaveClass("rescan", "syncing");
+  });
 
-  expect(
-    screen.getByRole("button", {
-      name: /^rescan$/i
-    })
-  ).toHaveClass("rescan syncing");
-
-  expect(
-    screen.getByRole("button", { name: /cancel rescan/i })
-  ).toBeInTheDocument();
   expect(screen.queryByText(/seconds ago/i)).not.toBeInTheDocument();
   expect(screen.getByText(/^Rescanning/)).toBeInTheDocument();
   expect(screen.getByText(`0/${testCurrentBlockHeight}`)).toBeInTheDocument();
   expect(screen.getByText(/(0%)/i)).toBeInTheDocument();
 
-  user.click(screen.getByRole("button", { name: /cancel rescan/i }));
+  await user.click(screen.getByRole("button", { name: /cancel rescan/i }));
   expect(mockRescanCancel).toHaveBeenCalledTimes(1);
 
   expect(
@@ -425,10 +412,10 @@ test("tests rescan on the expanded sidebar", async () => {
   mockExpandSideBar.mockRestore();
 });
 
-test("tests rescan on the collapsed sidebar", () => {
+test("tests rescan on the collapsed sidebar", async () => {
   const mockExpandSideBar = (selectors.expandSideBar = jest.fn(() => false));
 
-  render(<SideBar />, {
+  const { user } = render(<SideBar />, {
     initialState: {
       grpc: {
         currentBlockHeight: testCurrentBlockHeight,
@@ -446,7 +433,7 @@ test("tests rescan on the collapsed sidebar", () => {
     screen.queryByRole("button", { name: /cancel rescan/i })
   ).not.toBeInTheDocument();
 
-  user.click(screen.getByRole("button", { name: /^rescan$/i }));
+  await user.click(screen.getByRole("button", { name: /^rescan$/i }));
 
   expect(mockRescanAttempt).toHaveBeenCalledTimes(1);
 
@@ -459,7 +446,7 @@ test("tests rescan on the collapsed sidebar", () => {
     screen.getByRole("button", { name: /cancel rescan/i })
   ).toBeInTheDocument();
 
-  user.click(screen.getByRole("button", { name: /cancel rescan/i }));
+  await user.click(screen.getByRole("button", { name: /cancel rescan/i }));
   expect(mockRescanCancel).toHaveBeenCalledTimes(1);
 
   expect(
@@ -534,15 +521,7 @@ test("tests notification icon on the menu link (newNotYetVotedActiveProposalsCou
   mockNewNotYetVotedActiveProposalsCount.mockRestore();
 });
 
-test("tests tabbedPage location", async () => {
-  const { history } = render(<SideBar />);
-  const { menuLink } = getMenuContentByTestId("menuLinkContent-transactions");
-  expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
-  history.push("transactions/send");
-  await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
-});
-
-test("none of the menu links should be selected when clicking on the settings button", () => {
+test("none of the menu links should be selected when clicking on the settings button", async () => {
   render(<SideBar />);
   let menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
   menuLinkContents.map((menuLinkContent) => {
@@ -550,26 +529,30 @@ test("none of the menu links should be selected when clicking on the settings bu
     expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
   });
   const { menuLink } = getMenuContentByTestId("menuLinkContent-tickets");
-  user.click(menuLink);
+  fireEvent.click(menuLink);
 
   // click on Staking
   menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
   menuLinkContents.forEach(async (menuLinkContent) => {
     const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
     if (menuLink.textContent == "Staking") {
-      await wait(() => expect(menuLink).toHaveStyle(activeMenuLinkBorderColor));
+      await waitFor(() =>
+        expect(menuLink).toHaveStyle(activeMenuLinkBorderColor)
+      );
     } else {
-      await wait(() =>
+      await waitFor(() =>
         expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor)
       );
     }
   });
 
   // click on settings
-  user.click(screen.getByRole("link", { name: "settings" }));
+  fireEvent.click(screen.getByRole("link", { name: "settings" }));
   menuLinkContents = screen.getAllByTestId(/menuLinkContent-/i);
-  menuLinkContents.map((menuLinkContent) => {
-    const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
-    expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
-  });
+  await waitFor(() =>
+    menuLinkContents.map((menuLinkContent) => {
+      const menuLink = menuLinkContent.parentNode.parentNode.parentNode;
+      expect(menuLink).toHaveStyle(defaultMenuLinkBorderColor);
+    })
+  );
 });

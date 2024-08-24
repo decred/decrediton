@@ -29,7 +29,7 @@ beforeEach(() => {
   selectors.stakeTransactions = jest.fn(() => []);
 });
 
-test("render language select page", () => {
+test("render language select page", async () => {
   render(<LanguageSelectPage />);
   expect(screen.getByText(/welcome to decrediton/i)).toBeInTheDocument();
   expect(screen.getByText(/choose your language/i)).toBeInTheDocument();
@@ -45,7 +45,7 @@ test("render language select page", () => {
     ).not.toBeInTheDocument();
   }
 
-  user.click(screen.getByText(testLocalesArray[0].description));
+  await user.click(screen.getByText(testLocalesArray[0].description));
   expect(mockSortedLocales).toHaveBeenCalled();
   mockSortedLocales.mockRestore();
 
@@ -56,7 +56,7 @@ test("render language select page", () => {
     ).toBeInTheDocument();
   }
 
-  user.click(
+  await user.click(
     screen.getByText(testLocalesArray[testLocalesArray.length - 1].description)
   );
   // just the choosen language should be visible
@@ -69,7 +69,7 @@ test("render language select page", () => {
     ).not.toBeInTheDocument();
   }
 
-  user.click(screen.getByText(/continue/i));
+  await user.click(screen.getByText(/continue/i));
   expect(mockSelectLanguage).toHaveBeenCalledWith({
     ...testLocalesArray[testLocalesArray.length - 1],
     label: testLocalesArray[testLocalesArray.length - 1].description,

@@ -1,4 +1,4 @@
-import { wait } from "@testing-library/dom";
+import { waitFor } from "@testing-library/dom";
 import * as ama from "actions/AccountMixerActions";
 import * as cla from "actions/ClientActions";
 import * as cta from "actions/ControlActions";
@@ -299,7 +299,7 @@ test("test runAccountMixer start and stop", async () => {
     })
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockUnlockAccount).toHaveBeenCalledWith(
       testWalletService,
       testPassphrase,
@@ -307,7 +307,7 @@ test("test runAccountMixer start and stop", async () => {
     )
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockRunAccountMixerRequest).toHaveBeenCalledWith(
       testAccountMixerService,
       {
@@ -318,7 +318,7 @@ test("test runAccountMixer start and stop", async () => {
       }
     )
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.accountMixerRunning).toBeTruthy()
   );
   mockOnEvent("data");
@@ -335,7 +335,7 @@ test("test runAccountMixer start and stop", async () => {
   mockOnEvent("end");
   expect(store.getState().grpc.mixerStreamerError).toBe(testError);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockLockAccount).toHaveBeenCalledWith(
       testWalletService,
       changeAccountNumber
@@ -344,7 +344,7 @@ test("test runAccountMixer start and stop", async () => {
 
   expect(mockCleanPrivacyLogs).toHaveBeenCalled();
   expect(mockMixerStreamerCancel).toHaveBeenCalled();
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.accountMixerRunning).toBeFalsy()
   );
   expect(store.getState().grpc.mixerStreamer).toBeNull();
@@ -376,7 +376,7 @@ test("test runAccountMixer - unlockAcctAndExecFn failed", async () => {
     })
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(mockUnlockAccount).toHaveBeenCalledWith(
       testWalletService,
       testPassphrase,
@@ -384,7 +384,7 @@ test("test runAccountMixer - unlockAcctAndExecFn failed", async () => {
     )
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.mixerStreamerError).toBe(testError)
   );
 });

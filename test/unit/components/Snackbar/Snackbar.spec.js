@@ -1,7 +1,7 @@
 import Snackbar from "components/Snackbar";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { useDispatch } from "react-redux";
 import { WatchOnlyWarnNotification } from "shared";
 import * as sel from "selectors";
@@ -75,7 +75,7 @@ test("test WatchOnlyWarnNotification without animation", async () => {
     </>
   );
   user.click(screen.getByText("watch-only-warn-notification"));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByTestId("snackbar-message").textContent).toMatch(
       "This functionality is disabled for watch-only Wallets"
     )
@@ -107,7 +107,7 @@ test("test a newlyMinedTransaction snackbar message", async () => {
     </>
   );
   user.click(screen.getByTestId("snackbarSenderButton"));
-  await wait(() => screen.getByTestId("transaction-notification"));
+  await waitFor(() => screen.getByTestId("transaction-notification"));
   expect(screen.getByText(String(testFee))).toBeInTheDocument();
   expect(screen.getByText(String(testAmount))).toBeInTheDocument();
   expect(screen.getAllByText(testTxHash).length).toBe(2); //one link and one tooltip
@@ -141,7 +141,7 @@ test("test a newlyUnminedTransaction(Voted) snackbar message without direction a
     </>
   );
   user.click(screen.getByTestId("snackbarSenderButton"));
-  await wait(() => screen.getByTestId("transaction-notification"));
+  await waitFor(() => screen.getByTestId("transaction-notification"));
   expect(screen.getByText(String(testFee))).toBeInTheDocument();
   expect(screen.getByText(String(testAmount))).toBeInTheDocument();
   expect(screen.getAllByText(testTxHash).length).toBe(2); //one link and one tooltip
@@ -159,47 +159,48 @@ test("test multi notification", async () => {
   );
   const snackbarSenderButton = screen.getByTestId("snackbarSenderButton");
   user.click(snackbarSenderButton);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByTestId("snackbar-message")).toBeInTheDocument()
   );
   expect(mockUiAnimations).toHaveBeenCalled();
   user.click(snackbarSenderButton);
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getAllByTestId("snackbar-message").length).toBe(2)
   );
 
   //close one of the snackbar
   user.click(screen.getByRole("button", { name: "Close" }));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getAllByTestId("snackbar-message").length).toBe(1)
   );
 
   //close the rest
   user.click(screen.getByRole("button", { name: "Close" }));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByTestId("snackbar-message")).not.toBeInTheDocument()
   );
 
-  //open again two snackbar notification and wait until they're disappearing
+  //open again two snackbar notification and waitFor until they're disappearing
   jest.useFakeTimers();
   user.click(snackbarSenderButton);
   user.click(snackbarSenderButton);
-  await wait(() =>
+  user.click(snackbarSenderButton);
+  await waitFor(() =>
+    expect(screen.getAllByTestId("snackbar-message").length).toBe(3)
+  );
+  // simulate that 10 * 500 seconds have passed
+  act(() => {
+    jest.advanceTimersByTime(5000);
+  });
+  await waitFor(() =>
     expect(screen.getAllByTestId("snackbar-message").length).toBe(2)
   );
   // simulate that 10 * 500 seconds have passed
   act(() => {
     jest.advanceTimersByTime(5000);
   });
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getAllByTestId("snackbar-message").length).toBe(1)
-  );
-  // simulate that 10 * 500 seconds have passed
-  act(() => {
-    jest.advanceTimersByTime(5000);
-  });
-  await wait(() =>
-    expect(screen.queryByTestId("snackbar-message")).not.toBeInTheDocument()
   );
 });
 
@@ -211,7 +212,7 @@ const testMessage = async (sender, expectedMessage) => {
     </>
   );
   user.click(screen.getByTestId("snackbarSenderButton"));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByTestId("snackbar-message").textContent).toMatch(
       expectedMessage
     )
