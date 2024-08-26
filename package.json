@@ -342,7 +342,7 @@
     "grpc-tools": "1.11.3"
   },
   "engines": {
-    "node": ">=14.16",
+    "node": ">=18.20",
     "yarn": "^1.22"
   },
   "resolutions": {
