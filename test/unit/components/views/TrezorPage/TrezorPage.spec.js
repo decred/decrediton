@@ -38,6 +38,7 @@ beforeEach(() => {
   mockInitDevice = trezorActions.initDevice = jest.fn(() => () => {});
   mockBackupDevice = trezorActions.backupDevice = jest.fn(() => () => {});
   mockUpdateFirmware = trezorActions.updateFirmware = jest.fn(() => () => {});
+  trezorActions.getFeatures = jest.fn(() => () => {});
 
   mockChangeLabel = trezorActions.changeLabel = jest.fn(() => () => {});
 

@@ -64,6 +64,7 @@ import {
   removeDcrlnd,
   startTrezord,
   stopTrezord,
+  needUdevRules,
   lnScbInfo,
   startDex,
   stopDex,
@@ -411,6 +412,8 @@ handle("user-dex", userDex);
 handle("start-dex", startDex);
 
 handle("stop-dex", stopDex);
+
+handle("needs-udev-rules", needUdevRules);
 
 handle("start-trezord", startTrezord);
 
