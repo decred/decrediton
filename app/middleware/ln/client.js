@@ -4,7 +4,7 @@ const grpc = require("@grpc/grpc-js");
 import fs from "fs";
 import { trackClient } from "middleware/grpc/clientTracking";
 
-const proto = require("./rpc_grpc_pb.js");
+const proto = require("./lightning_grpc_pb.js");
 const services = grpc.loadPackageDefinition(proto).lnrpc;
 
 const wuProto = require("./walletunlocker_grpc_pb.js");
