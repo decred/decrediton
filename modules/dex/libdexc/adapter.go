@@ -169,7 +169,7 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 
 	mmCM := dex.NewConnectionMaster(c.mm)
 	if err := mmCM.ConnectOnce(c.ctx); err != nil {
-		return fmt.Errorf("Error connecting market maker")
+		return fmt.Errorf("error connecting market maker: %w", err)
 	}
 	c.wg.Add(1)
 	go func() {
