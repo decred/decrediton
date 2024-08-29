@@ -44,6 +44,8 @@ decred.org/dcrdex v1.0.0-rc3.0.20240823215722-bd2ee25df1d3 h1:XRGiShxzIpjm8CGNaG
 decred.org/dcrdex v1.0.0-rc3.0.20240823215722-bd2ee25df1d3/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
 decred.org/dcrdex v1.0.0-rc3.0.20240826112332-436d31f5929f h1:k9VTP0seHukT3Sxxwcv8VYCED84dYIM95UN84YNfMfo=
 decred.org/dcrdex v1.0.0-rc3.0.20240826112332-436d31f5929f/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
+decred.org/dcrdex v1.0.0-rc3.0.20240829103114-917902468ae9 h1:h6Bzb7Kwy923kgPpDRD15WvNpGqoDq3hwJkULeki8Xk=
+decred.org/dcrdex v1.0.0-rc3.0.20240829103114-917902468ae9/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
 decred.org/dcrwallet/v4 v4.1.1 h1:imwPBboytp1PH6V8q7/JLTHiKgj/Scq9a3I1WmnJv0Y=
 decred.org/dcrwallet/v4 v4.1.1/go.mod h1:WxerkRcUGVreJsAI0ptCBPUujPUmWncbdYbme8Kl5r0=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
