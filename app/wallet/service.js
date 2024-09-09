@@ -41,7 +41,7 @@ const promisify =
     );
 
 export const getWalletService = promisify(client.getWalletService);
-export const getTicketBuyerService = promisify(client.getTicketBuyerV2Service);
+export const getTicketBuyerService = promisify(client.getTicketBuyerService);
 export const getVotingService = promisify(client.getVotingService);
 export const getAgendaService = promisify(client.getAgendaService);
 export const getMessageVerificationService = promisify(

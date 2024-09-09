@@ -44,8 +44,8 @@ const getServiceClient =
   };
 
 export const getWalletService = getServiceClient(services.WalletService);
-export const getTicketBuyerV2Service = getServiceClient(
-  services.TicketBuyerV2Service
+export const getTicketBuyerService = getServiceClient(
+  services.TicketBuyerService
 );
 export const loader = getServiceClient(services.WalletLoaderService);
 export const getSeedService = getServiceClient(services.SeedService);
