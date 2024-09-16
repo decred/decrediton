@@ -21,14 +21,7 @@ import (
 	"github.com/decred/slog"
 
 	// Register the supported assets.
-	_ "decred.org/dcrdex/client/asset/bch"
-	_ "decred.org/dcrdex/client/asset/btc"
-	_ "decred.org/dcrdex/client/asset/dcr"
-	_ "decred.org/dcrdex/client/asset/dgb"
-	_ "decred.org/dcrdex/client/asset/doge"
-	_ "decred.org/dcrdex/client/asset/eth"
-	_ "decred.org/dcrdex/client/asset/ltc"
-	_ "decred.org/dcrdex/client/asset/zec"
+	_ "decred.org/dcrdex/client/asset/importall"
 )
 
 type callHandler func(json.RawMessage) (string, error)
