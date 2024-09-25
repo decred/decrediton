@@ -36,7 +36,8 @@ const PurchaseTicketsForm = ({
   rememberedVspHost,
   toggleRememberVspHostCheckBox,
   notMixedAccounts,
-  getRunningIndicator
+  getRunningIndicator,
+  isPurchasingTicketsTrezor
 }) => {
   const intl = useIntl();
   return (
@@ -149,7 +150,10 @@ const PurchaseTicketsForm = ({
       </div>
       <div className={styles.buttonsArea}>
         {isWatchingOnly ? (
-          <PiUiButton disabled={!isValid} onClick={onPurchaseTickets}>
+          <PiUiButton
+            disabled={!isValid}
+            loading={isPurchasingTicketsTrezor}
+            onClick={onPurchaseTickets}>
             {purchaseLabel()}
           </PiUiButton>
         ) : isLoading ? (
