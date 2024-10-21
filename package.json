@@ -323,7 +323,7 @@
     "redux-thunk": "2.4.2",
     "remark-gfm": "1.0.0",
     "reselect": "4.1.8",
-    "secp256k1": "4.0.3",
+    "secp256k1": "4.0.4",
     "sharedworker-loader": "^2.1.1",
     "source-map-support": "^0.5.16",
     "string-argv": "0.3.2",
