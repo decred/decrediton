@@ -397,8 +397,8 @@ func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {
 
 const extensionModeConfigJSON = `
 {
-	"name", "Decrediton",
-	"useDEXBranding: true,
+	"name": "Decrediton",
+	"useDEXBranding": true,
 	"restrictedWallets": {
 		"dcr": {
 			"hiddenFields": [

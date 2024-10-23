@@ -40,14 +40,8 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 contrib.go.opencensus.io/exporter/stackdriver v0.13.4/go.mod h1:aXENhDJ1Y4lIg4EUaVTwzvYETVNZk10Pu26tevFKLUc=
 decred.org/cspp/v2 v2.2.0 h1:VSOUC1w0Wo+QOGS0r1XO6TLnO16X67KuvpDmRRYyr08=
 decred.org/cspp/v2 v2.2.0/go.mod h1:9nO3bfvCheOPIFZw5f6sRQ42CjBFB5RKSaJ9Iq6G4MA=
-decred.org/dcrdex v1.0.0-rc3.0.20240823215722-bd2ee25df1d3 h1:XRGiShxzIpjm8CGNaGVHz4qJS0hWIiW4ZCTxQ/Lp094=
-decred.org/dcrdex v1.0.0-rc3.0.20240823215722-bd2ee25df1d3/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
-decred.org/dcrdex v1.0.0-rc3.0.20240826112332-436d31f5929f h1:k9VTP0seHukT3Sxxwcv8VYCED84dYIM95UN84YNfMfo=
-decred.org/dcrdex v1.0.0-rc3.0.20240826112332-436d31f5929f/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
-decred.org/dcrdex v1.0.0-rc3.0.20240829103114-917902468ae9 h1:h6Bzb7Kwy923kgPpDRD15WvNpGqoDq3hwJkULeki8Xk=
-decred.org/dcrdex v1.0.0-rc3.0.20240829103114-917902468ae9/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
-decred.org/dcrdex v1.0.0 h1:LIXhw+JSbX9sKC9ch7Zce8NObJdO3y1xGsijrQnhsBs=
-decred.org/dcrdex v1.0.0/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
+decred.org/dcrdex v1.0.1-0.20241018152201-a839a77939e4 h1:9tlJpZvePqWPN7ehoDkSV7aR7YhmQ3F4exaiM7NzOb4=
+decred.org/dcrdex v1.0.1-0.20241018152201-a839a77939e4/go.mod h1:EDykASO1l5Uh4QVfbbuz16Ed9pw6WZf0NuFGBkSrkIw=
 decred.org/dcrwallet/v4 v4.1.1 h1:imwPBboytp1PH6V8q7/JLTHiKgj/Scq9a3I1WmnJv0Y=
 decred.org/dcrwallet/v4 v4.1.1/go.mod h1:WxerkRcUGVreJsAI0ptCBPUujPUmWncbdYbme8Kl5r0=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
