@@ -3,7 +3,7 @@ module github.com/decred/decrediton
 go 1.21
 
 require (
-	decred.org/dcrdex v1.0.1-0.20241018152201-a839a77939e4
+	decred.org/dcrdex v1.0.1
 	github.com/decred/slog v1.2.0
 	github.com/jrick/logrotate v1.0.0
 )
@@ -92,7 +92,7 @@ require (
 	github.com/decred/dcrd/dcrutil/v4 v4.0.2 // indirect
 	github.com/decred/dcrd/gcs/v4 v4.1.0 // indirect
 	github.com/decred/dcrd/hdkeychain/v3 v3.1.2 // indirect
-	github.com/decred/dcrd/lru v1.1.1 // indirect
+	github.com/decred/dcrd/lru v1.1.2 // indirect
 	github.com/decred/dcrd/rpc/jsonrpc/types/v4 v4.3.0 // indirect
 	github.com/decred/dcrd/rpcclient/v8 v8.0.1 // indirect
 	github.com/decred/dcrd/txscript/v4 v4.1.1 // indirect
@@ -130,8 +130,8 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/lightninglabs/gozmq v0.0.0-20191113021534-d20a764486bf // indirect
-	github.com/lightninglabs/neutrino v0.16.0 // indirect
-	github.com/lightninglabs/neutrino/cache v1.1.1 // indirect
+	github.com/lightninglabs/neutrino v0.16.1-0.20240814152458-81d6cd2d2da5 // indirect
+	github.com/lightninglabs/neutrino/cache v1.1.2 // indirect
 	github.com/lightningnetwork/lnd/clock v1.0.1 // indirect
 	github.com/lightningnetwork/lnd/queue v1.0.1 // indirect
 	github.com/lightningnetwork/lnd/ticker v1.0.0 // indirect
@@ -152,7 +152,7 @@ require (
 	github.com/prometheus/common v0.39.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/rogpeppe/go-internal v1.9.0 // indirect
+	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/syndtr/goleveldb v1.0.1-0.20220614013038-64ee5596c38a // indirect
