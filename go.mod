@@ -3,13 +3,13 @@ module github.com/decred/decrediton
 go 1.21
 
 require (
-	decred.org/dcrdex v1.0.2
+	decred.org/dcrdex v1.0.3
 	github.com/decred/slog v1.2.0
 	github.com/jrick/logrotate v1.0.0
 )
 
 require (
-	decred.org/dcrwallet/v4 v4.2.0 // indirect
+	decred.org/dcrwallet/v4 v4.3.0 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/bits-and-blooms/bitset v1.10.0 // indirect
 	github.com/cockroachdb/fifo v0.0.0-20240606204812-0bbfbd93a7ce // indirect
@@ -21,9 +21,9 @@ require (
 	github.com/dcrlabs/bchwallet v0.0.0-20240114124852-0e95005810be // indirect
 	github.com/dcrlabs/ltcwallet v0.0.0-20240823165752-3e026e8da010 // indirect
 	github.com/decred/dcrd/container/lru v1.0.0 // indirect
-	github.com/decred/dcrd/crypto/rand v1.0.0 // indirect
-	github.com/decred/dcrd/mixing v0.4.2 // indirect
-	github.com/decred/vspd/client/v4 v4.0.0 // indirect
+	github.com/decred/dcrd/crypto/rand v1.0.1 // indirect
+	github.com/decred/dcrd/mixing v0.5.0 // indirect
+	github.com/decred/vspd/client/v4 v4.0.1 // indirect
 	github.com/decred/vspd/types/v2 v2.1.0 // indirect
 	github.com/decred/vspd/types/v3 v3.0.0 // indirect
 	github.com/ethereum/c-kzg-4844 v1.0.0 // indirect
@@ -42,7 +42,7 @@ require (
 )
 
 require (
-	decred.org/cspp/v2 v2.3.0 // indirect
+	decred.org/cspp/v2 v2.4.0 // indirect
 	github.com/AndreasBriese/bbloom v0.0.0-20190825152654-46b345b51c96 // indirect
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
@@ -125,7 +125,7 @@ require (
 	github.com/huin/goupnp v1.3.0 // indirect
 	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
 	github.com/jrick/bitset v1.0.0 // indirect
-	github.com/jrick/wsrpc/v2 v2.3.5 // indirect
+	github.com/jrick/wsrpc/v2 v2.3.8 // indirect
 	github.com/kkdai/bstream v1.0.0 // indirect
 	github.com/klauspost/compress v1.16.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
@@ -164,13 +164,13 @@ require (
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
 	github.com/zquestz/grab v0.0.0-20190224022517-abcee96e61b1 // indirect
 	go.etcd.io/bbolt v1.3.9 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/net v0.33.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/term v0.27.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/term v0.29.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
